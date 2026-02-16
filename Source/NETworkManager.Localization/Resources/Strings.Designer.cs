@@ -8836,11 +8836,40 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restore ähnelt.
+        /// </summary>
+        public static string Restore {
+            get {
+                return ResourceManager.GetString("Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Restore default location ähnelt.
         /// </summary>
         public static string RestoreDefaultLocation {
             get {
                 return ResourceManager.GetString("RestoreDefaultLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restore default location? ähnelt.
+        /// </summary>
+        public static string RestoreDefaultLocationQuestion {
+            get {
+                return ResourceManager.GetString("RestoreDefaultLocationQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The default path is restored and the application is restarted afterwards.
+        ///
+        ///You can copy the “settings.json” file from &quot;{0}&quot; to &quot;{1}&quot; to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten. ähnelt.
+        /// </summary>
+        public static string RestoreDefaultLocationSettingsMessage {
+            get {
+                return ResourceManager.GetString("RestoreDefaultLocationSettingsMessage", resourceCulture);
             }
         }
         

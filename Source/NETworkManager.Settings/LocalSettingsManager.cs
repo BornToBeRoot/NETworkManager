@@ -94,6 +94,9 @@ public static class LocalSettingsManager
 
             Log.Info("Local settings loaded successfully.");
 
+            // Reset change tracking
+            Current.SettingsChanged = false;
+
             return;
         }
             

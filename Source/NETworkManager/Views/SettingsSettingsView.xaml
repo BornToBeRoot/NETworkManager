@@ -9,6 +9,7 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
+             xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              mc:Ignorable="d" Loaded="UserControl_Loaded"
              d:DataContext="{d:DesignInstance viewModels:SettingsSettingsViewModel}">
     <UserControl.Resources>
@@ -19,18 +20,29 @@
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Location}" />
         <TextBox x:Name="TextBoxLocation" 
-                 mah:TextBoxHelper.Watermark="{x:Static localization:Strings.EnterLocationDots}"                 
-                 Style="{StaticResource BrowseFolderTextBox}"
+                 mah:TextBoxHelper.Watermark="{x:Static localization:Strings.EnterLocationDots}"                                  
                  mah:TextBoxHelper.ButtonCommand="{Binding BrowseLocationFolderCommand}"
                  AllowDrop="True"
                  Drop="TextBoxLocation_Drop"
-                 PreviewDragOver="TextBoxLocation_PreviewDragOver"
-                 IsEnabled="{Binding IsLocationManagedByPolicy, Converter={StaticResource BooleanReverseConverter}}"
+                 PreviewDragOver="TextBoxLocation_PreviewDragOver"                 
                  Margin="0,0,0,10">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BrowseFolderTextBox}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLocationManagedByPolicy}" Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsPortable}" Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+
             <TextBox.Text>
                 <Binding Path="Location" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />                        
+                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -42,8 +54,19 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Grid.Row="0"
-                        Orientation="Horizontal"
-                        Visibility="{Binding IsLocationManagedByPolicy, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                        Orientation="Horizontal">
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLocationManagedByPolicy}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsPortable}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
                 <Button Style="{StaticResource ImageWithTextButton}"
                         HorizontalAlignment="Left" Margin="0,0,10,0" >
                     <Button.Content>
@@ -63,8 +86,10 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Button Style="{StaticResource ImageWithTextButton}"
-                        HorizontalAlignment="Left">
+                <Button Command="{Binding RestoreDefaultLocationCommand}"
+                        HorizontalAlignment="Left"
+                        Visibility="{Binding IsDefaultLocation, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                        Style="{StaticResource ImageWithTextButton}">                    
                     <Button.Content>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -95,6 +120,33 @@
                            Style="{StaticResource AccentTextBlock}"
                            VerticalAlignment="Center" />
             </StackPanel>
+            <Grid Grid.Column="0" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsPortable}" Value="True" />
+                                    <Condition Binding="{Binding IsLocationManagedByPolicy}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Rectangle Grid.Column="0" Style="{StaticResource InfoImageRectangle}" Width="24" Height="24"
+                 HorizontalAlignment="Right" />
+                <TextBlock Grid.Column="2" Text="{x:Static localization:Strings.LocationCannotBeChangedInThePortableVersion}"
+                 TextWrapping="Wrap" Style="{StaticResource InfoTextBlock}" />
+            </Grid>
             <Button Grid.Column="2" Grid.Row="0"
                     Command="{Binding OpenLocationCommand}"
                     Style="{StaticResource ImageWithTextButton}">
@@ -115,7 +167,7 @@
                     </Grid>
                 </Button.Content>
             </Button>
-        </Grid>        
+        </Grid>
         <TextBlock Style="{StaticResource HeaderTextBlock}" 
                    Text="{x:Static localization:Strings.Backup}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.CreateDailyBackup}"

@@ -106,10 +106,28 @@ public static class SettingsManager
 
         // 3. Fall back to portable or default location
         if (ConfigurationManager.Current.IsPortable)
-            return Path.Combine(AssemblyManager.Current.Location, SettingsFolderName);
+            return GetPortableSettingsFolderLocation();
         else
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                    AssemblyManager.Current.Name, SettingsFolderName);
+            return GetDefaultSettingsFolderLocation();
+    }
+
+    /// <summary>
+    ///     Method to get the default settings folder location in the user's Documents directory.
+    /// </summary>
+    /// <returns>Path to the default settings folder location.</returns>
+    public static string GetDefaultSettingsFolderLocation()
+    {
+        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            AssemblyManager.Current.Name, SettingsFolderName);
+    }
+
+    /// <summary>
+    ///     Method to get the portable settings folder location (in the same directory as the application).
+    /// </summary>  
+    /// <returns>Path to the portable settings folder location.</returns>
+    public static string GetPortableSettingsFolderLocation()
+    {
+        return Path.Combine(AssemblyManager.Current.Location, SettingsFolderName);
     }
 
     /// <summary>
@@ -242,6 +260,7 @@ public static class SettingsManager
 
             Log.Info("Settings loaded successfully.");
 
+            // Reset change tracking
             Current.SettingsChanged = false;
 
             return;
