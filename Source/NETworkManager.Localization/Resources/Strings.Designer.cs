@@ -1456,6 +1456,26 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Change location? ähnelt.
+        /// </summary>
+        public static string ChangeLocationQuestion {
+            get {
+                return ResourceManager.GetString("ChangeLocationQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The location is changed and the application is restarted afterwards.
+        ///
+        ///You can copy the “settings.json” file from &quot;{0}&quot; to &quot;{1}&quot; to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten. ähnelt.
+        /// </summary>
+        public static string ChangeLocationSettingsMessage {
+            get {
+                return ResourceManager.GetString("ChangeLocationSettingsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Changelog ähnelt.
         /// </summary>
         public static string Changelog {

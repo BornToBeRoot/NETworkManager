@@ -205,22 +205,29 @@ public class SettingsSettingsViewModel : ViewModelBase
         Location = path;
     }
 
-    public ICommand ChangeLocationCommand => new RelayCommand(_ => ChangeLocationAction());
+    public ICommand ChangeLocationCommand => new RelayCommand(_ => ChangeLocationAction().ConfigureAwait(false));
 
     private async Task ChangeLocationAction()
     {
-        /*
-       var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
-            Strings.ChangeSettingsLocationQuestion,
-            Strings.SettingsLocationWillBeChangedAndApplicationWillBeRestartedMessage,
-            ChildWindowIcon.Question,
-            Strings.Apply);
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
+             Strings.ChangeLocationQuestion,
+             string.Format(Strings.ChangeLocationSettingsMessage, SettingsManager.GetSettingsFolderLocation(), Location),
+             ChildWindowIcon.Question,
+             Strings.Change);
 
+        if (!result)
+            return;
+
+        // Save settings at the current location before changing it to prevent
+        // unintended saves to the new location (e.g., triggered by background timer or the app close & restart).
+        SettingsManager.Save();
+
+        // Set new location
+        LocalSettingsManager.Current.SettingsFolderLocation = Location;
         LocalSettingsManager.Save();
 
         // Restart the application
         (Application.Current.MainWindow as MainWindow)?.RestartApplication();
-        */
     }
 
     public ICommand RestoreDefaultLocationCommand => new RelayCommand(_ => RestoreDefaultLocationActionAsync().ConfigureAwait(false));
@@ -229,15 +236,19 @@ public class SettingsSettingsViewModel : ViewModelBase
     {
         var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.RestoreDefaultLocationQuestion,
-            string.Format(Strings.RestoreDefaultLocationSettingsMessage, SettingsManager.GetSettingsFolderLocation(),SettingsManager.GetDefaultSettingsFolderLocation()),
+            string.Format(Strings.RestoreDefaultLocationSettingsMessage, SettingsManager.GetSettingsFolderLocation(), SettingsManager.GetDefaultSettingsFolderLocation()),
             ChildWindowIcon.Question,
             Strings.Restore);
 
         if (!result)
             return;
 
-        LocalSettingsManager.Current.SettingsFolderLocation = null;
+        // Save settings at the current location before changing it to prevent
+        // unintended saves to the new location (e.g., triggered by background timer or the app close & restart).
+        SettingsManager.Save();
 
+        // Clear custom location to revert to default
+        LocalSettingsManager.Current.SettingsFolderLocation = null;
         LocalSettingsManager.Save();
 
         // Restart the application

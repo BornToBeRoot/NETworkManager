@@ -3977,4 +3977,12 @@ If you click Cancel, the profile file will remain unencrypted.</value>
 
 You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
   </data>
+  <data name="ChangeLocationQuestion" xml:space="preserve">
+    <value>Change location?</value>
+  </data>
+  <data name="ChangeLocationSettingsMessage" xml:space="preserve">
+    <value>The location is changed and the application is restarted afterwards.
+
+You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+  </data>
 </root>

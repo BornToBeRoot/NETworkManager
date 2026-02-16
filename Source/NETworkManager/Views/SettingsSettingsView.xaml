@@ -68,7 +68,10 @@
                     </Style>
                 </StackPanel.Style>
                 <Button Style="{StaticResource ImageWithTextButton}"
-                        HorizontalAlignment="Left" Margin="0,0,10,0" >
+                        Command="{Binding ChangeLocationCommand}"
+                        Visibility="{Binding IsLocationChanged, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                        HorizontalAlignment="Left" 
+                        Margin="0,0,10,0" >
                     <Button.Content>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -81,7 +84,7 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Grid.Row="0"
-                                       Text="{x:Static localization:Strings.Apply}"
+                                       Text="{x:Static localization:Strings.Change}"
                                        Style="{StaticResource ButtonWithImageTextBlock}" />
                         </Grid>
                     </Button.Content>
