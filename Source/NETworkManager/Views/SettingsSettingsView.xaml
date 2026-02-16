@@ -8,16 +8,34 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+             xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              mc:Ignorable="d" Loaded="UserControl_Loaded"
              d:DataContext="{d:DesignInstance viewModels:SettingsSettingsViewModel}">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Location}" />
-        <TextBox x:Name="TextBoxLocation" Text="{Binding Location}" Style="{StaticResource ReadOnlyTextBox}"
-                 IsEnabled="False" Margin="0,0,0,10" />
-        <Grid>
+        <TextBox x:Name="TextBoxLocation" 
+                 mah:TextBoxHelper.Watermark="{x:Static localization:Strings.EnterLocationDots}"                 
+                 Style="{StaticResource BrowseFolderTextBox}"
+                 mah:TextBoxHelper.ButtonCommand="{Binding BrowseLocationFolderCommand}"
+                 AllowDrop="True"
+                 Drop="TextBoxLocation_Drop"
+                 PreviewDragOver="TextBoxLocation_PreviewDragOver"
+                 IsEnabled="{Binding IsLocationManagedByPolicy, Converter={StaticResource BooleanReverseConverter}}"
+                 Margin="0,0,0,10">
+            <TextBox.Text>
+                <Binding Path="Location" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />                        
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Grid Margin="0,0,0,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="10" />
@@ -25,21 +43,61 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Grid.Row="0"
                         Orientation="Horizontal"
-                        Visibility="{Binding IsLocationManagedByPolicy, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                        Margin="0,0,0,10">
+                        Visibility="{Binding IsLocationManagedByPolicy, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                <Button Style="{StaticResource ImageWithTextButton}"
+                        HorizontalAlignment="Left" Margin="0,0,10,0" >
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentSaveOutline}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Grid.Row="0"
+                                       Text="{x:Static localization:Strings.Apply}"
+                                       Style="{StaticResource ButtonWithImageTextBlock}" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <Button Style="{StaticResource ImageWithTextButton}"
+                        HorizontalAlignment="Left">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FolderOutline}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Grid.Row="0"
+                                       Text="{x:Static localization:Strings.RestoreDefaultLocation}"
+                                       Style="{StaticResource ButtonWithImageTextBlock}" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="0"
+                        Orientation="Horizontal"
+                        Visibility="{Binding IsLocationManagedByPolicy, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                 <Rectangle Width="24" Height="24" Fill="{DynamicResource MahApps.Brushes.Accent}" VerticalAlignment="Center" Margin="0,0,5,0">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ShieldLock}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
-                <TextBlock Text="{x:Static localization:Strings.SettingManagedByAdministrator}"                       
-                       Style="{StaticResource AccentTextBlock}"
-                       VerticalAlignment="Center" />
+                <TextBlock Text="{x:Static localization:Strings.SettingManagedByAdministrator}"
+                           Style="{StaticResource AccentTextBlock}"
+                           VerticalAlignment="Center" />
             </StackPanel>
             <Button Grid.Column="2" Grid.Row="0"
                     Command="{Binding OpenLocationCommand}"
-                    Style="{StaticResource ImageWithTextButton}"
-                    Margin="0,0,0,20">
+                    Style="{StaticResource ImageWithTextButton}">
                 <Button.Content>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -51,13 +109,15 @@
                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FolderOpen}" />
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.OpenLocation}"
-                               Style="{StaticResource ButtonWithImageTextBlock}" />
+                        <TextBlock Grid.Column="1" Grid.Row="0"
+                                   Text="{x:Static localization:Strings.OpenLocation}"
+                                   Style="{StaticResource ButtonWithImageTextBlock}" />
                     </Grid>
                 </Button.Content>
             </Button>
-        </Grid>
-        <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Backup}" />
+        </Grid>        
+        <TextBlock Style="{StaticResource HeaderTextBlock}" 
+                   Text="{x:Static localization:Strings.Backup}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.CreateDailyBackup}"
                   IsOn="{Binding IsDailyBackupEnabled}" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.MaximumNumberOfBackups}"

@@ -3,6 +3,7 @@ using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -113,6 +114,25 @@ public class SettingsSettingsViewModel : ViewModelBase
     #endregion
 
     #region Methods
+    public ICommand BrowseLocationFolderCommand => new RelayCommand(p => BrowseLocationFolderAction());
+
+    private void BrowseLocationFolderAction()
+    {
+        using var dialog = new System.Windows.Forms.FolderBrowserDialog();
+        
+        if (Directory.Exists(Location))
+            dialog.SelectedPath = Location;
+
+        var dialogResult = dialog.ShowDialog();
+
+        if (dialogResult == System.Windows.Forms.DialogResult.OK)
+            Location = dialog.SelectedPath;
+    }
+
+    public void SetLocationPathFromDragDrop(string path)
+    {
+        Location = path;
+    }
 
     private async Task ResetSettings()
     {

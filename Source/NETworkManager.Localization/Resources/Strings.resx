@@ -3963,4 +3963,7 @@ If you click Cancel, the profile file will remain unencrypted.</value>
   <data name="SettingManagedByAdministrator" xml:space="preserve">
     <value>This setting is managed by your administrator.</value>
   </data>
+  <data name="RestoreDefaultLocation" xml:space="preserve">
+    <value>Restore default location</value>
+  </data>
 </root>
