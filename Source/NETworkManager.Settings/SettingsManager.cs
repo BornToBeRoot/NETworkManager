@@ -139,6 +139,9 @@ public static class SettingsManager
     /// <returns>The validated full path if valid; otherwise, null.</returns>
     private static string ValidateSettingsFolderPath(string path, string pathSource, string fallbackMessage)
     {
+        // Expand environment variables first (e.g. %userprofile%\settings -> C:\Users\...\settings)
+        path = Environment.ExpandEnvironmentVariables(path);
+
         // Validate that the path is rooted (absolute)
         if (!Path.IsPathRooted(path))
         {
@@ -159,7 +162,7 @@ public static class SettingsManager
                 return null;
             }
 
-            return fullPath;
+            return fullPath.TrimEnd('\\');
         }
         catch (ArgumentException ex)
         {

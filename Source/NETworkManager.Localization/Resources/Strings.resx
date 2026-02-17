@@ -3985,4 +3985,7 @@ You can copy the “settings.json” file from "{0}" to "{1}" to migrate your pr
 
 You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
   </data>
+  <data name="EnterValidFolderPath" xml:space="preserve">
+    <value>Enter a valid folder path!</value>
+  </data>
 </root>

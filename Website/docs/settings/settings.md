@@ -24,7 +24,7 @@ This setting can be controlled by administrators using a system-wide policy. See
 **Policy Property:** `SettingsFolderLocation`
 
 **Values:**
-- Absolute path (e.g., `C:\\CustomPath\\NETworkManager\\Settings`) - Force a custom settings folder location for all users
+- Path like `C:\\Path\\To\\Settings` or `%UserProfile%\\NETworkManager\\Settings` - Force a custom settings folder location for all users
 - Omit the property - Allow the default location logic to apply (portable vs. non-portable)
 
 **Example:**

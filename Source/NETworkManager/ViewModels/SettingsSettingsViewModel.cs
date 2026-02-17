@@ -13,6 +13,9 @@ namespace NETworkManager.ViewModels;
 public class SettingsSettingsViewModel : ViewModelBase
 {
     #region Variables
+    /// <summary>
+    /// Gets or sets the action to execute when the associated object is closed.
+    /// </summary>    
     public Action CloseAction { get; set; }
 
     /// <summary>
@@ -143,6 +146,9 @@ public class SettingsSettingsViewModel : ViewModelBase
 
     #region Constructor, LoadSettings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SettingsSettingsViewModel" /> class and loads the current settings.
+    /// </summary>    
     public SettingsSettingsViewModel()
     {
         _isLoading = true;
@@ -152,14 +158,13 @@ public class SettingsSettingsViewModel : ViewModelBase
         _isLoading = false;
     }
 
+    /// <summary>
+    /// Loads the application settings from the current settings folder location.
+    /// </summary>    
     private void LoadSettings()
     {
         Location = SettingsManager.GetSettingsFolderLocation();
         IsDefaultLocation = string.Equals(Location, SettingsManager.GetDefaultSettingsFolderLocation(), StringComparison.OrdinalIgnoreCase);
-
-        Debug.WriteLine(Location);
-        Debug.WriteLine(SettingsManager.GetDefaultSettingsFolderLocation());
-
         IsDailyBackupEnabled = SettingsManager.Current.Settings_IsDailyBackupEnabled;
         MaximumNumberOfBackups = SettingsManager.Current.Settings_MaximumNumberOfBackups;
     }
@@ -168,15 +173,27 @@ public class SettingsSettingsViewModel : ViewModelBase
 
     #region ICommands & Actions
 
+    /// <summary>
+    /// Gets the command that opens a location when executed.
+    /// </summary>    
     public ICommand OpenLocationCommand => new RelayCommand(_ => OpenLocationAction());
 
+    /// <summary>
+    /// Opens the settings folder location in Windows Explorer.
+    /// </summary>    
     private static void OpenLocationAction()
     {
         Process.Start("explorer.exe", SettingsManager.GetSettingsFolderLocation());
     }
 
+    /// <summary>
+    /// Gets the command that resets the application settings to their default values.
+    /// </summary>    
     public ICommand ResetSettingsCommand => new RelayCommand(_ => ResetSettingsAction());
 
+    /// <summary>
+    /// Resets the application settings to their default values.
+    /// </summary>    
     private void ResetSettingsAction()
     {
         ResetSettings().ConfigureAwait(false);
@@ -185,8 +202,18 @@ public class SettingsSettingsViewModel : ViewModelBase
     #endregion
 
     #region Methods
+    /// <summary>
+    /// Gets the command that opens the location folder selection dialog.
+    /// </summary>    
     public ICommand BrowseLocationFolderCommand => new RelayCommand(p => BrowseLocationFolderAction());
 
+    /// <summary>
+    /// Opens a dialog that allows the user to select a folder location and updates the Location property with the
+    /// selected path if the user confirms the selection.
+    /// </summary>
+    /// <remarks>If the Location property is set to a valid directory path, it is pre-selected in the dialog.
+    /// This method does not return a value and is intended for use in a user interface context where folder selection
+    /// is required.</remarks>
     private void BrowseLocationFolderAction()
     {
         using var dialog = new System.Windows.Forms.FolderBrowserDialog();
@@ -200,13 +227,28 @@ public class SettingsSettingsViewModel : ViewModelBase
             Location = dialog.SelectedPath;
     }
 
+    /// <summary>
+    /// Sets the location path based on the provided drag-and-drop input.
+    /// </summary>
+    /// <param name="path">The path to set as the location. This value cannot be null or empty.</param>
     public void SetLocationPathFromDragDrop(string path)
     {
         Location = path;
     }
 
+    /// <summary>
+    /// Gets the command that initiates the action to change the location.
+    /// </summary>    
     public ICommand ChangeLocationCommand => new RelayCommand(_ => ChangeLocationAction().ConfigureAwait(false));
 
+    /// <summary>
+    /// Prompts the user to confirm and then changes the location of the application's settings folder.
+    /// </summary>
+    /// <remarks>This method displays a confirmation dialog to the user before changing the settings folder
+    /// location. If the user confirms, it saves the current settings, updates the settings folder location, and
+    /// restarts the application to apply the changes. No action is taken if the user cancels the confirmation
+    /// dialog.</remarks>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     private async Task ChangeLocationAction()
     {
         var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
@@ -230,8 +272,19 @@ public class SettingsSettingsViewModel : ViewModelBase
         (Application.Current.MainWindow as MainWindow)?.RestartApplication();
     }
 
+    /// <summary>
+    /// Gets the command that restores the default location settings asynchronously.
+    /// </summary>    
     public ICommand RestoreDefaultLocationCommand => new RelayCommand(_ => RestoreDefaultLocationActionAsync().ConfigureAwait(false));
 
+    /// <summary>
+    /// Restores the application's settings folder location to the default path after obtaining user confirmation.
+    /// </summary>
+    /// <remarks>This method prompts the user to confirm the restoration of the default settings location. If
+    /// the user confirms, it saves the current settings, clears any custom location, and restarts the application to
+    /// apply the changes. Use this method when you want to revert to the default settings folder and ensure all changes
+    /// are properly saved and applied.</remarks>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     private async Task RestoreDefaultLocationActionAsync()
     {
         var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
@@ -255,6 +308,13 @@ public class SettingsSettingsViewModel : ViewModelBase
         (Application.Current.MainWindow as MainWindow)?.RestartApplication();
     }
 
+    /// <summary>
+    /// Resets the application settings to their default values and restarts the application after user confirmation.
+    /// </summary>
+    /// <remarks>Displays a confirmation dialog to the user before proceeding. If the user confirms, the
+    /// settings are reinitialized to their defaults and the application is restarted. No action is taken if the user
+    /// cancels the confirmation dialog.</remarks>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     private async Task ResetSettings()
     {
         var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,

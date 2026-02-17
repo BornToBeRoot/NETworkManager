@@ -3588,6 +3588,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid folder path! ähnelt.
+        /// </summary>
+        public static string EnterValidFolderPath {
+            get {
+                return ResourceManager.GetString("EnterValidFolderPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid hostname! ähnelt.
         /// </summary>
         public static string EnterValidHostname {

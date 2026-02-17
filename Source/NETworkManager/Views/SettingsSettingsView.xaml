@@ -38,11 +38,11 @@
                     </Style.Triggers>
                 </Style>
             </TextBox.Style>
-
             <TextBox.Text>
                 <Binding Path="Location" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
                         <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <validators:DirectoryPathWithEnvironmentVariablesValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
@@ -67,11 +67,19 @@
                         </Style.Triggers>
                     </Style>
                 </StackPanel.Style>
-                <Button Style="{StaticResource ImageWithTextButton}"
-                        Command="{Binding ChangeLocationCommand}"
+                <Button Command="{Binding ChangeLocationCommand}"
                         Visibility="{Binding IsLocationChanged, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                         HorizontalAlignment="Left" 
                         Margin="0,0,10,0" >
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxLocation}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <Button.Content>
                         <Grid>
                             <Grid.ColumnDefinitions>

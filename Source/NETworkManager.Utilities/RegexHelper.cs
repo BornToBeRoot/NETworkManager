@@ -85,6 +85,30 @@ public static partial class RegexHelper
     [GeneratedRegex($@"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|{SpecialRangeRegex})\.){{3}}((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|{SpecialRangeRegex})$")]
     public static partial Regex IPv4AddressSpecialRangeRegex();
 
+    /// <summary>
+    /// Provides a compiled regular expression that matches valid hostnames or fully qualified domain names (FQDNs) like
+    /// server-01 or server-01.example.com.
+    /// </summary>
+    /// <returns> A <see cref="Regex"/> instance that matches valid hostnames or FQDNs.</returns>
+    [GeneratedRegex($@"^{HostnameOrDomainValues}$")]
+    public static partial Regex HostnameOrDomainRegex();
+
+    /// <summary>
+    /// Creates a regular expression that matches a local directory path or one using environment variables,
+    /// like "C:\Temp", "C:\My Settings", "%AppData%\settings".
+    /// </summary>    
+    /// <returns>A <see cref="Regex"/> instance that matches valid local directory paths.</returns>
+    [GeneratedRegex($@"^(?:%[^%]+%|[a-zA-Z]\:)(\\[a-zA-Z0-9_\-\s\.]+)+\\?$")]
+    public static partial Regex DirectoryPathWithEnvironmentVariablesRegex();
+
+    /// <summary>
+    /// Creates a regular expression that matches a UNC path like "\\server\share", "\\server\c$\settings".
+    /// The share name may end with $ for hidden shares.
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> instance that matches valid UNC paths.</returns>
+    [GeneratedRegex($@"^\\\\[a-zA-Z0-9_\-\.]+(\\[a-zA-Z0-9_\-\s\.]+\$?)(\\[a-zA-Z0-9_\-\s\.]+)*\\?$")]
+    public static partial Regex UncPathRegex();
+
     // Match a MAC-Address 000000000000 00:00:00:00:00:00, 00-00-00-00-00-00-00 or 0000.0000.0000
     public const string MACAddressRegex =
         @"^^[A-Fa-f0-9]{12}$|^[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}$|^[A-Fa-f0-9]{4}.[A-Fa-f0-9]{4}.[A-Fa-f0-9]{4}$$";
@@ -107,16 +131,6 @@ public static partial class RegexHelper
     public const string SpecialRangeRegex =
         @"\[((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)-(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))([,]((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)|((?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)-(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))))*\]";
 
-
-
-    /// <summary>
-    /// Provides a compiled regular expression that matches valid hostnames or fully qualified domain names (FQDNs) like
-    /// server-01 or server-01.example.com.
-    /// </summary>
-    /// <returns> A <see cref="Regex"/> instance that matches valid hostnames or FQDNs.</returns>
-    [GeneratedRegex($@"^{HostnameOrDomainValues}$")]
-    public static partial Regex HostnameOrDomainRegex();
-
     // Match a hostname with cidr like server-01.example.com/24
     public const string HostnameOrDomainWithCidrRegex = $@"^{HostnameOrDomainValues}\/{CidrRegexValues}$";
 
@@ -133,9 +147,6 @@ public static partial class RegexHelper
 
     // Match a port between 1-65535
     public const string PortRegex = $@"^{PortValues}$";
-
-    // Match any filepath (like "c:\temp\") --> https://www.codeproject.com/Tips/216238/Regular-Expression-to-Validate-File-Path-and-Exten
-    public const string FilePathRegex = @"^(?:[\w]\:|\\)(\\[a-z_\-\s0-9\.]+)+$";
 
     // Match any fullname (like "c:\temp\test.txt") --> https://www.codeproject.com/Tips/216238/Regular-Expression-to-Validate-File-Path-and-Exten
     public const string FullNameRegex =
