@@ -151,7 +151,7 @@ public static class SettingsManager
         // Validate that the path doesn't contain invalid characters
         try
         {
-            // This will throw ArgumentException, NotSupportedException, or SecurityException if the path is invalid
+            // This will throw ArgumentException, NotSupportedException, SecurityException, PathTooLongException, or IOException if the path is invalid
             var fullPath = Path.GetFullPath(path);
 
             // Check if the path is a directory (not a file)
@@ -176,6 +176,16 @@ public static class SettingsManager
         catch (SecurityException ex)
         {
             Log.Error($"Insufficient permissions to access {pathSource} SettingsFolderLocation: {path}. Falling back to {fallbackMessage}.", ex);
+            return null;
+        }
+        catch (PathTooLongException ex)
+        {
+            Log.Error($"{pathSource} SettingsFolderLocation path is too long: {path}. Falling back to {fallbackMessage}.", ex);
+            return null;
+        }
+        catch (IOException ex)
+        {
+            Log.Error($"{pathSource} SettingsFolderLocation caused an I/O error: {path}. Falling back to {fallbackMessage}.", ex);
             return null;
         }
     }

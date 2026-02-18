@@ -87,7 +87,22 @@ public partial class App
         PolicyManager.Load();
 
         // Load (or initialize) local settings
-        LocalSettingsManager.Load();
+        try
+        {
+            LocalSettingsManager.Load();
+        }
+        catch (IOException ex)
+        {
+            Log.Error("Could not load local settings due to an I/O error! Using default local settings.", ex);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            Log.Error("Could not load local settings due to insufficient permissions! Using default local settings.", ex);
+        }
+        catch (JsonException ex)
+        {
+            Log.Error("Could not load local settings! Local settings JSON is corrupted or invalid. Using default local settings.", ex);
+        }
         
         // Load (or initialize) settings
         try

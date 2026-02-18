@@ -101,12 +101,20 @@ public static class LocalSettingsManager
                 {
                     Current = JsonSerializer.Deserialize<LocalSettingsInfo>(jsonString, JsonOptions);
 
-                    Log.Info("Local settings loaded successfully.");
+                    // Check if deserialization returned null (e.g., file contains "null")
+                    if (Current == null)
+                    {
+                        Log.Warn("Local settings deserialized to null, initializing new local settings.");
+                    }
+                    else
+                    {
+                        Log.Info("Local settings loaded successfully.");
 
-                    // Reset change tracking
-                    Current.SettingsChanged = false;
+                        // Reset change tracking
+                        Current.SettingsChanged = false;
 
-                    return;
+                        return;
+                    }
                 }
             }
             catch (Exception ex)
