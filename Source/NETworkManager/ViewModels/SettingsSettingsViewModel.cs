@@ -76,7 +76,7 @@ public class SettingsSettingsViewModel : ViewModelBase
     /// <summary>
     /// Private field of <see cref="IsDefaultLocation" /> property.
     /// </summary>
-    public bool _isDefaultLocation;
+    private bool _isDefaultLocation;
 
     /// <summary>
     /// Indicates whether the current location is the default settings folder location.
