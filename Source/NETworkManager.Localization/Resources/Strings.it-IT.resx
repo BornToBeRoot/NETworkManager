@@ -4064,4 +4064,29 @@ Se selezioni 'Annulla', il file del profilo non verrà crittografato.</value>
   <data name="SettingManagedByAdministrator" xml:space="preserve">
     <value>This setting is managed by your administrator.</value>
   </data>
+  <data name="RestoreDefaultLocation" xml:space="preserve">
+    <value>Restore default location</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="RestoreDefaultLocationQuestion" xml:space="preserve">
+    <value>Restore default location?</value>
+  </data>
+  <data name="RestoreDefaultLocationSettingsMessage" xml:space="preserve">
+    <value>The default path is restored and the application is restarted afterwards.
+
+You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+  </data>
+  <data name="ChangeLocationQuestion" xml:space="preserve">
+    <value>Change location?</value>
+  </data>
+  <data name="ChangeLocationSettingsMessage" xml:space="preserve">
+    <value>The location is changed and the application is restarted afterwards.
+
+You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+  </data>
+  <data name="EnterValidFolderPath" xml:space="preserve">
+    <value>Enter a valid folder path!</value>
+  </data>
 </root>
