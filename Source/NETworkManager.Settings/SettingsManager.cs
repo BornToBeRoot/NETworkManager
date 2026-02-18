@@ -161,7 +161,7 @@ public static class SettingsManager
                 return null;
             }
 
-            return fullPath.TrimEnd('\\');
+            return Path.TrimEndingDirectorySeparator(fullPath);
         }
         catch (ArgumentException ex)
         {
