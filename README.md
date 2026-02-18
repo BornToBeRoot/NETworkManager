@@ -8,7 +8,7 @@
     Streamline and simplify your network administration and troubleshooting with <strong>NETworkManager</strong>. Connect, monitor, and troubleshoot your network and server infrastructure using built-in tools like Remote Desktop (RDP), PuTTY (SSH, Serial, etc.), PowerShell (WSL, K9s, etc.) and TigerVNC (VNC). Perform in-depth network diagnostics with features including WiFi Analyzer, IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, LLDP/CDP Capture, and <a href="https://borntoberoot.net/NETworkManager/docs/introduction">many more</a> — all in a clean, unified interface.
   </p>
   <p>
-    Organize hosts and networks in profiles with seamless access across all features. Profile files can be encrypted to protect your sensitive data and used to separate different customers or environments. NETworkManager is enterprise-ready with an MSI installer, signed binaries, and support for package managers like Chocolatey, Evergreen, and WinGet. Available in over 16 languages with customizable light/dark themes and accent colors.
+    Organize hosts and networks in profiles with seamless access across all features. Profile files can be encrypted to protect your sensitive data and used to separate different customers or environments. NETworkManager is enterprise-ready with an MSI installer, signed binaries, system-wide policies for centralized configuration, and support for package managers like Chocolatey, Evergreen, and WinGet. Available in over 16 languages with customizable light/dark themes and accent colors.
   </p>
   <p>
     <a href="https://borntoberoot.net/NETworkManager/download" target="_blank">
@@ -73,7 +73,7 @@ Here's why you'll love it:
 - 🔍 **Analyze & Troubleshoot** - Deep network diagnostics with WiFi Analyzer, IP Scanner, Port Scanners, Ping Monitor, Traceroute, DNS Lookup, LLDP/CDP Capture, and <a href="https://borntoberoot.net/NETworkManager/docs/introduction">many more</a>.
 - 🔐 **Secure Profiles** - Organize hosts and networks in profiles with seamless access across all features. Encrypt profile files and separate them by customer or environment.
 - 💎 **Open Source & Free** - No ads, no subscriptions, no selling your data, fully community-driven.
-- 🏢 **Enterprise-Ready** - MSI installer, signed binaries, and package manager support (Chocolatey, Evergreen, and WinGet).
+- 🏢 **Enterprise-Ready** - MSI installer, signed binaries, [system-wide policies](https://borntoberoot.net/NETworkManager/docs/system-wide-policies) for centralized configuration, and package manager support (Chocolatey, Evergreen, and WinGet).
 - 🎨 **Personalized Experience** - Available in 16+ languages, with customizable light/dark themes and accent colors.
 
 📖 Explore all features in detail in our [documentation](https://borntoberoot.net/NETworkManager/docs/introduction).
