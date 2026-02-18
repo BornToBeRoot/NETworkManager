@@ -115,7 +115,7 @@ public static class LocalSettingsManager
             }
         }
 
-        // Initialize new settings if loading failed or file does not exist
+        // Initialize new local settings if file does not exist or loading failed
         Initialize();
     }
 

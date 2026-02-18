@@ -266,43 +266,68 @@ public static class SettingsManager
         // Check if JSON file exists
         if (File.Exists(filePath))
         {
-            Log.Info($"Loading settings from: {filePath}");
+            try
+            {
+                Log.Info($"Loading settings from: {filePath}");
 
-            Current = DeserializeFromFile(filePath);
+                Current = DeserializeFromFile(filePath);
 
-            Log.Info("Settings loaded successfully.");
+                Log.Info("Settings loaded successfully.");
 
-            // Reset change tracking
-            Current.SettingsChanged = false;
+                // Reset change tracking
+                Current.SettingsChanged = false;
 
-            return;
+                return;
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Failed to load settings from: {filePath}", ex);
+
+                Backup(filePath,
+                    GetSettingsFolderLocation(),
+                    $"{TimestampHelper.GetTimestamp()}_corrupted_{Path.GetFileName(filePath)}");
+
+                ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
+            }
         }
-
         // Check if legacy XML file exists and migrate it
-        if (File.Exists(legacyFilePath))
+        else if (File.Exists(legacyFilePath))
         {
-            Log.Info("Legacy XML settings file found. Migrating to JSON format...");
+            try
+            {
+                Log.Info("Legacy XML settings file found. Migrating to JSON format...");
 
-            Current = DeserializeFromXmlFile(legacyFilePath);
+                Current = DeserializeFromXmlFile(legacyFilePath);
 
-            Current.SettingsChanged = false;
+                Current.SettingsChanged = false;
 
-            // Save in new JSON format
-            Save();
+                // Save in new JSON format
+                Save();
 
-            // Create a backup of the legacy XML file and delete the original
-            Backup(legacyFilePath,
-                GetSettingsBackupFolderLocation(),
-                TimestampHelper.GetTimestampFilename(GetLegacySettingsFileName()));
+                // Create a backup of the legacy XML file and delete the original
+                Backup(legacyFilePath,
+                    GetSettingsBackupFolderLocation(),
+                    TimestampHelper.GetTimestampFilename(GetLegacySettingsFileName()));
 
-            File.Delete(legacyFilePath);
+                File.Delete(legacyFilePath);
 
-            Log.Info("Settings migration from XML to JSON completed successfully.");
+                Log.Info("Settings migration from XML to JSON completed successfully.");
 
-            return;
+                return;
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Failed to load legacy settings from: {legacyFilePath}", ex);
+
+                Backup(legacyFilePath,
+                    GetSettingsFolderLocation(),
+                    $"{TimestampHelper.GetTimestamp()}_corrupted_{Path.GetFileName(legacyFilePath)}");
+
+                ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
+            }
         }
 
-        // Initialize the default settings if there is no settings file.
+        // Initialize new settings if file does not exist or loading failed
         Initialize();
     }
 

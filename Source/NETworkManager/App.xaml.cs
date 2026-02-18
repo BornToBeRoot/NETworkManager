@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
@@ -88,21 +86,12 @@ public partial class App
 
         // Load (or initialize) local settings
         LocalSettingsManager.Load();
-        
-        // Load (or initialize) settings
-        try
-        {
-            if (CommandLineManager.Current.ResetSettings)
-                SettingsManager.Initialize();
-            else
-                SettingsManager.Load();
-        }
-        catch (Exception ex)
-        {
-            Log.Error("Could not load application settings!", ex);
 
-            HandleCorruptedSettingsFile();
-        }        
+        // Load (or initialize) settings
+        if (CommandLineManager.Current.ResetSettings)
+            SettingsManager.Initialize();
+        else
+            SettingsManager.Load();
 
         // Upgrade settings if necessary
         var settingsVersion = Version.Parse(SettingsManager.Current.Version);
@@ -207,27 +196,6 @@ public partial class App
         // Show main window
         Log.Info("Set StartupUri to MainWindow.xaml...");
         StartupUri = new Uri("MainWindow.xaml", UriKind.Relative);
-    }
-
-    /// <summary>
-    ///     Handles a corrupted settings file by creating a backup and initializing default settings.
-    /// </summary>
-    private void HandleCorruptedSettingsFile()
-    {
-        // Create backup of corrupted file
-        var destinationFile =
-            $"{TimestampHelper.GetTimestamp()}_corrupted_" + SettingsManager.GetSettingsFileName();
-
-        File.Copy(SettingsManager.GetSettingsFilePath(),
-            Path.Combine(SettingsManager.GetSettingsFolderLocation(), destinationFile));
-
-        Log.Info($"A backup of the corrupted settings file has been saved under {destinationFile}");
-
-        // Initialize default application settings
-        Log.Info("Initialize default application settings...");
-
-        SettingsManager.Initialize();
-        ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
     }
 
     /// <summary>
