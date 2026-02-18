@@ -10,4 +10,7 @@ public class PolicyInfo
 {
     [JsonPropertyName("Update_CheckForUpdatesAtStartup")]
     public bool? Update_CheckForUpdatesAtStartup { get; set; }
+
+    [JsonPropertyName("SettingsFolderLocation")]
+    public string? SettingsFolderLocation { get; set; }
 }

@@ -5,6 +5,7 @@ using NETworkManager.Utilities;
 using System;
 using System.IO;
 using System.Linq;
+using System.Security;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml.Serialization;
@@ -77,10 +78,116 @@ public static class SettingsManager
     /// <returns>Path to the settings folder.</returns>
     public static string GetSettingsFolderLocation()
     {
-        return ConfigurationManager.Current.IsPortable
-            ? Path.Combine(AssemblyManager.Current.Location, SettingsFolderName)
-            : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                AssemblyManager.Current.Name, SettingsFolderName);
+        // 1. Policy override takes precedence (for IT administrators)
+        if (!string.IsNullOrWhiteSpace(PolicyManager.Current?.SettingsFolderLocation))
+        {
+            var validatedPath = ValidateSettingsFolderPath(
+                PolicyManager.Current.SettingsFolderLocation,
+                "Policy-provided",
+                "next priority");
+
+            if (validatedPath != null)
+                return validatedPath;
+        }
+
+        // 2. Custom user-configured path (not available in portable mode)
+        if (!ConfigurationManager.Current.IsPortable &&
+            !string.IsNullOrWhiteSpace(LocalSettingsManager.Current?.SettingsFolderLocation))
+        {
+            var validatedPath = ValidateSettingsFolderPath(
+                LocalSettingsManager.Current.SettingsFolderLocation,
+                "Custom",
+                "default location");
+
+            if (validatedPath != null)
+                return validatedPath;
+        }
+
+        // 3. Fall back to portable or default location
+        if (ConfigurationManager.Current.IsPortable)
+            return GetPortableSettingsFolderLocation();
+        else
+            return GetDefaultSettingsFolderLocation();
+    }
+
+    /// <summary>
+    ///     Method to get the default settings folder location in the user's Documents directory.
+    /// </summary>
+    /// <returns>Path to the default settings folder location.</returns>
+    public static string GetDefaultSettingsFolderLocation()
+    {
+        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            AssemblyManager.Current.Name, SettingsFolderName);
+    }
+
+    /// <summary>
+    ///     Method to get the portable settings folder location (in the same directory as the application).
+    /// </summary>  
+    /// <returns>Path to the portable settings folder location.</returns>
+    public static string GetPortableSettingsFolderLocation()
+    {
+        return Path.Combine(AssemblyManager.Current.Location, SettingsFolderName);
+    }
+
+    /// <summary>
+    ///     Validates a settings folder path for correctness and accessibility.
+    /// </summary>
+    /// <param name="path">The path to validate.</param>
+    /// <param name="pathSource">Description of the path source for logging (e.g., "Policy-provided", "Custom").</param>
+    /// <param name="fallbackMessage">Message describing what happens on validation failure (e.g., "next priority", "default location").</param>
+    /// <returns>The validated full path if valid; otherwise, null.</returns>
+    private static string ValidateSettingsFolderPath(string path, string pathSource, string fallbackMessage)
+    {
+        // Expand environment variables first (e.g. %userprofile%\settings -> C:\Users\...\settings)
+        path = Environment.ExpandEnvironmentVariables(path);
+
+        // Validate that the path is rooted (absolute)
+        if (!Path.IsPathRooted(path))
+        {
+            Log.Error($"{pathSource} SettingsFolderLocation is not an absolute path: {path}. Falling back to {fallbackMessage}.");
+            return null;
+        }
+
+        // Validate that the path doesn't contain invalid characters
+        try
+        {
+            // This will throw ArgumentException, NotSupportedException, SecurityException, PathTooLongException, or IOException if the path is invalid
+            var fullPath = Path.GetFullPath(path);
+
+            // Check if the path is a directory (not a file)
+            if (File.Exists(fullPath))
+            {
+                Log.Error($"{pathSource} SettingsFolderLocation is a file, not a directory: {path}. Falling back to {fallbackMessage}.");
+                return null;
+            }
+
+            return Path.TrimEndingDirectorySeparator(fullPath);
+        }
+        catch (ArgumentException ex)
+        {
+            Log.Error($"{pathSource} SettingsFolderLocation contains invalid characters: {path}. Falling back to {fallbackMessage}.", ex);
+            return null;
+        }
+        catch (NotSupportedException ex)
+        {
+            Log.Error($"{pathSource} SettingsFolderLocation format is not supported: {path}. Falling back to {fallbackMessage}.", ex);
+            return null;
+        }
+        catch (SecurityException ex)
+        {
+            Log.Error($"Insufficient permissions to access {pathSource} SettingsFolderLocation: {path}. Falling back to {fallbackMessage}.", ex);
+            return null;
+        }
+        catch (PathTooLongException ex)
+        {
+            Log.Error($"{pathSource} SettingsFolderLocation path is too long: {path}. Falling back to {fallbackMessage}.", ex);
+            return null;
+        }
+        catch (IOException ex)
+        {
+            Log.Error($"{pathSource} SettingsFolderLocation caused an I/O error: {path}. Falling back to {fallbackMessage}.", ex);
+            return null;
+        }
     }
 
     /// <summary>
@@ -129,7 +236,6 @@ public static class SettingsManager
     {
         return Path.Combine(GetSettingsFolderLocation(), GetLegacySettingsFileName());
     }
-
     #endregion
 
     #region Initialize, load and save
@@ -139,6 +245,8 @@ public static class SettingsManager
     /// </summary>
     public static void Initialize()
     {
+        Log.Info("Initializing new settings.");
+
         Current = new SettingsInfo
         {
             Version = AssemblyManager.Current.Version.ToString()
@@ -158,38 +266,68 @@ public static class SettingsManager
         // Check if JSON file exists
         if (File.Exists(filePath))
         {
-            Current = DeserializeFromFile(filePath);
+            try
+            {
+                Log.Info($"Loading settings from: {filePath}");
 
-            Current.SettingsChanged = false;
+                Current = DeserializeFromFile(filePath);
 
-            return;
+                Log.Info("Settings loaded successfully.");
+
+                // Reset change tracking
+                Current.SettingsChanged = false;
+
+                return;
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Failed to load settings from: {filePath}", ex);
+
+                Backup(filePath,
+                    GetSettingsFolderLocation(),
+                    $"{TimestampHelper.GetTimestamp()}_corrupted_{Path.GetFileName(filePath)}");
+
+                ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
+            }
         }
-
         // Check if legacy XML file exists and migrate it
-        if (File.Exists(legacyFilePath))
+        else if (File.Exists(legacyFilePath))
         {
-            Log.Info("Legacy XML settings file found. Migrating to JSON format...");
+            try
+            {
+                Log.Info("Legacy XML settings file found. Migrating to JSON format...");
 
-            Current = DeserializeFromXmlFile(legacyFilePath);
+                Current = DeserializeFromXmlFile(legacyFilePath);
 
-            Current.SettingsChanged = false;
+                Current.SettingsChanged = false;
 
-            // Save in new JSON format
-            Save();
+                // Save in new JSON format
+                Save();
 
-            // Create a backup of the legacy XML file and delete the original
-            Backup(legacyFilePath,
-                GetSettingsBackupFolderLocation(),
-                TimestampHelper.GetTimestampFilename(GetLegacySettingsFileName()));
+                // Create a backup of the legacy XML file and delete the original
+                Backup(legacyFilePath,
+                    GetSettingsBackupFolderLocation(),
+                    TimestampHelper.GetTimestampFilename(GetLegacySettingsFileName()));
 
-            File.Delete(legacyFilePath);
+                File.Delete(legacyFilePath);
 
-            Log.Info("Settings migration from XML to JSON completed successfully.");
+                Log.Info("Settings migration from XML to JSON completed successfully.");
 
-            return;
+                return;
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"Failed to load legacy settings from: {legacyFilePath}", ex);
+
+                Backup(legacyFilePath,
+                    GetSettingsFolderLocation(),
+                    $"{TimestampHelper.GetTimestamp()}_corrupted_{Path.GetFileName(legacyFilePath)}");
+
+                ConfigurationManager.Current.ShowSettingsResetNoteOnStartup = true;
+            }
         }
 
-        // Initialize the default settings if there is no settings file.
+        // Initialize new settings if file does not exist or loading failed
         Initialize();
     }
 
@@ -235,24 +373,18 @@ public static class SettingsManager
         // Create backup before modifying
         CreateDailyBackupIfNeeded();
 
-        // Serialize the settings to a file
-        SerializeToFile(GetSettingsFilePath());
+        // Serialize to file
+        var filePath = GetSettingsFilePath();
 
-        // Set the setting changed to false after saving them as file...
-        Current.SettingsChanged = false;
-    }
-
-    /// <summary>
-    ///     Method to serialize the settings to a JSON file.
-    /// </summary>
-    /// <param name="filePath">Path to the settings file.</param>
-    private static void SerializeToFile(string filePath)
-    {
         var jsonString = JsonSerializer.Serialize(Current, JsonOptions);
 
         File.WriteAllText(filePath, jsonString);
-    }
 
+        Log.Info($"Settings saved to {filePath}");
+
+        // Reset change tracking
+        Current.SettingsChanged = false;
+    }
     #endregion
 
     #region Backup

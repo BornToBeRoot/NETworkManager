@@ -17,6 +17,34 @@ Folder where the application settings are stored.
 | Setup / Archiv | `%UserProfile%\Documents\NETworkManager\Settings` |
 | Portable       | `<APP_FOLDER>\Settings`                           |
 
+:::info System-Wide Policy
+
+<details>
+<summary>Click to expand</summary>
+
+This setting can be controlled by administrators using a system-wide policy. See [System-Wide Policies](../system-wide-policies.md) for more information.
+
+**Policy Property:** `SettingsFolderLocation`
+
+**Values:**
+
+- Absolute path (e.g., `C:\\Path\\To\\Settings`)
+- Path with environment variables (e.g., `%UserProfile%\\NETworkManager\\Settings`)
+- UNC path (e.g., `\\\\server\\share$\\NETworkManager\\Settings`)
+- Omit the property to allow the default location logic to apply (portable vs. non-portable)
+
+**Example:**
+
+```json
+{
+  "SettingsFolderLocation": "%UserProfile%\\NETworkManager\\Settings"
+}
+```
+
+</details>
+
+:::
+
 :::note
 
 **Recommendation**  
@@ -24,12 +52,14 @@ It is strongly recommended to regularly back up your settings files.
 
 **Automatic backups**  
 NETworkManager automatically creates a backup of the settings files before applying any changes. See [Create daily backup](#create-daily-backup) and [Maximum number of backups](#maximum-number-of-backups) for configuration options.
+
 - Location: `Settings\Backups` subfolder
 - Naming: timestamped (e.g. `yyyyMMddHHmmss_Settings.json`)
 - Frequency: **once per day** at most (even if multiple changes occur)
 - Retention: keeps the **10 most recent backups** (default)
 
-**Restoring settings**  
+**Restoring settings**
+
 1. Completely close NETworkManager
 2. Locate the desired backup in `Settings\Backups`
 3. Copy the file(s) back to the original folder (overwriting existing files)

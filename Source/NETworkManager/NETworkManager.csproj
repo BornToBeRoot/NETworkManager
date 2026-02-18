@@ -8,10 +8,6 @@
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <PlatformTarget>x64</PlatformTarget>
         <SelfContained>false</SelfContained>
-        <!-- Publish a single file can't be used when accessing assembly file path
-        <PublishSingleFile>true</PublishSingleFile>
-        <PublishReadyToRun>true</PublishReadyToRun>
-        -->		
         <CsWinRTWindowsMetadata>sdk</CsWinRTWindowsMetadata>        
         <UseWPF>true</UseWPF>
         <UseWindowsForms>true</UseWindowsForms>		
@@ -62,7 +58,7 @@
         <PackageReference Include="AirspaceFixer" Version="1.0.6" />
         <PackageReference Include="DnsClient" Version="1.8.0" />
         <PackageReference Include="gong-wpf-dragdrop" Version="4.0.0" />
-        <PackageReference Include="IPNetwork2" Version="3.4.851" />
+        <PackageReference Include="IPNetwork2" Version="3.4.853" />
         <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.7" />
         <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
         <PackageReference Include="log4net" Version="3.2.0" />
@@ -73,9 +69,8 @@
         <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="6.2.1" />
         <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="6.2.1" />
         <PackageReference Include="MahApps.Metro.SimpleChildWindow" Version="2.2.1" />
-        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3650.58" />
-        <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
-        
+        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3800.47" />
+        <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />        
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
         <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.5.4" />

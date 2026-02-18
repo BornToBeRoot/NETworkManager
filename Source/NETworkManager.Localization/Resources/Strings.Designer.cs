@@ -1456,6 +1456,26 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Change location? ähnelt.
+        /// </summary>
+        public static string ChangeLocationQuestion {
+            get {
+                return ResourceManager.GetString("ChangeLocationQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The location is changed and the application is restarted afterwards.
+        ///
+        ///You can copy the “settings.json” file from &quot;{0}&quot; to &quot;{1}&quot; to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten. ähnelt.
+        /// </summary>
+        public static string ChangeLocationSettingsMessage {
+            get {
+                return ResourceManager.GetString("ChangeLocationSettingsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Changelog ähnelt.
         /// </summary>
         public static string Changelog {
@@ -3564,6 +3584,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EnterValidFilePath {
             get {
                 return ResourceManager.GetString("EnterValidFilePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter a valid folder path! ähnelt.
+        /// </summary>
+        public static string EnterValidFolderPath {
+            get {
+                return ResourceManager.GetString("EnterValidFolderPath", resourceCulture);
             }
         }
         
@@ -8836,6 +8865,44 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restore ähnelt.
+        /// </summary>
+        public static string Restore {
+            get {
+                return ResourceManager.GetString("Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restore default location ähnelt.
+        /// </summary>
+        public static string RestoreDefaultLocation {
+            get {
+                return ResourceManager.GetString("RestoreDefaultLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restore default location? ähnelt.
+        /// </summary>
+        public static string RestoreDefaultLocationQuestion {
+            get {
+                return ResourceManager.GetString("RestoreDefaultLocationQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The default path is restored and the application is restarted afterwards.
+        ///
+        ///You can copy the “settings.json” file from &quot;{0}&quot; to &quot;{1}&quot; to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten. ähnelt.
+        /// </summary>
+        public static string RestoreDefaultLocationSettingsMessage {
+            get {
+                return ResourceManager.GetString("RestoreDefaultLocationSettingsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Restore defaults ähnelt.
         /// </summary>
         public static string RestoreDefaults {
@@ -9214,6 +9281,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die This setting is managed by your administrator. ähnelt.
+        /// </summary>
+        public static string SettingManagedByAdministrator {
+            get {
+                return ResourceManager.GetString("SettingManagedByAdministrator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Settings ähnelt.
         /// </summary>
         public static string Settings {
@@ -9268,15 +9344,6 @@ namespace NETworkManager.Localization.Resources {
         public static string SettingsHaveBeenReset {
             get {
                 return ResourceManager.GetString("SettingsHaveBeenReset", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die This setting is managed by your administrator. ähnelt.
-        /// </summary>
-        public static string SettingManagedByAdministrator {
-            get {
-                return ResourceManager.GetString("SettingManagedByAdministrator", resourceCulture);
             }
         }
         

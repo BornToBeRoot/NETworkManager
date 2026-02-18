@@ -36,7 +36,8 @@ The `config.json` file uses a simple JSON structure to define policy values. An 
 
 ```json
 {
-  "Update_CheckForUpdatesAtStartup": false
+  "Update_CheckForUpdatesAtStartup": false,
+  "SettingsFolderLocation": "C:\\CustomPath\\NETworkManager\\Settings"
 }
 ```
 

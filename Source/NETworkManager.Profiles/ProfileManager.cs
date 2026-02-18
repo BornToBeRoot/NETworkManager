@@ -616,10 +616,10 @@ public static class ProfileManager
     {
         var loadedProfileUpdated = false;
 
-        Log.Info($"Load profile file: {profileFileInfo.Path}");
-
         if (File.Exists(profileFileInfo.Path))
         {
+            Log.Info($"Loading profile file from: {profileFileInfo.Path}");
+
             // Encrypted profile file
             if (profileFileInfo.IsEncrypted)
             {
@@ -734,6 +734,8 @@ public static class ProfileManager
 
         // Notify subscribers that profiles have been loaded/updated
         ProfilesUpdated(false);
+
+        Log.Info("Profile file loaded successfully.");
     }
 
     /// <summary>

@@ -73,6 +73,7 @@ public static class PolicyManager
                 if (string.IsNullOrWhiteSpace(jsonString))
                 {
                     Current = new PolicyInfo();
+
                     Log.Info("Config file is empty, no system-wide policies loaded.");
                 }
                 else
@@ -83,6 +84,7 @@ public static class PolicyManager
 
                     // Log enabled settings
                     Log.Info($"System-wide policy - Update_CheckForUpdatesAtStartup: {Current.Update_CheckForUpdatesAtStartup?.ToString() ?? "Not set"}");
+                    Log.Info($"System-wide policy - SettingsFolderLocation: {Current.SettingsFolderLocation ?? "Not set"}");
                 }
             }
             catch (Exception ex)

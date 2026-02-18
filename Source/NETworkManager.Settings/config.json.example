@@ -1,3 +1,4 @@
 {
-  "Update_CheckForUpdatesAtStartup": false
+  "Update_CheckForUpdatesAtStartup": false,
+  "SettingsFolderLocation": "C:\\CustomPath\\NETworkManager\\Settings"
 }
