@@ -86,19 +86,38 @@ public static class LocalSettingsManager
 
         if (File.Exists(filePath))
         {
-            Log.Info($"Loading local settings from: {filePath}");
+            try
+            {
+                Log.Info($"Loading local settings from: {filePath}");
 
-            var jsonString = File.ReadAllText(filePath);
-            Current = JsonSerializer.Deserialize<LocalSettingsInfo>(jsonString, JsonOptions);
+                var jsonString = File.ReadAllText(filePath);
 
-            Log.Info("Local settings loaded successfully.");
+                // Treat empty or JSON "null" as "no settings" instead of crashing
+                if (string.IsNullOrWhiteSpace(jsonString))
+                {
+                    Log.Info("Local settings file is empty, initializing new local settings.");
+                }
+                else
+                {
+                    Current = JsonSerializer.Deserialize<LocalSettingsInfo>(jsonString, JsonOptions);
 
-            // Reset change tracking
-            Current.SettingsChanged = false;
+                    Log.Info("Local settings loaded successfully.");
 
-            return;
+                    // Reset change tracking
+                    Current.SettingsChanged = false;
+
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                {
+                    Log.Error($"Failed to load local settings from: {filePath}", ex);
+                }
+            }
         }
 
+        // Initialize new settings if loading failed or file does not exist
         Initialize();
     }
 

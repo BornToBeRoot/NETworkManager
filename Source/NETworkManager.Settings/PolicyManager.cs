@@ -73,6 +73,7 @@ public static class PolicyManager
                 if (string.IsNullOrWhiteSpace(jsonString))
                 {
                     Current = new PolicyInfo();
+
                     Log.Info("Config file is empty, no system-wide policies loaded.");
                 }
                 else

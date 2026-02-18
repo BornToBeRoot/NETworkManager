@@ -88,7 +88,7 @@ public partial class App
 
         // Load (or initialize) local settings
         LocalSettingsManager.Load();
-
+        
         // Load (or initialize) settings
         try
         {
@@ -97,18 +97,12 @@ public partial class App
             else
                 SettingsManager.Load();
         }
-        catch (InvalidOperationException ex)
+        catch (Exception ex)
         {
             Log.Error("Could not load application settings!", ex);
 
             HandleCorruptedSettingsFile();
-        }
-        catch (JsonException ex)
-        {
-            Log.Error("Could not load application settings! JSON file is corrupted or invalid.", ex);
-
-            HandleCorruptedSettingsFile();
-        }
+        }        
 
         // Upgrade settings if necessary
         var settingsVersion = Version.Parse(SettingsManager.Current.Version);
