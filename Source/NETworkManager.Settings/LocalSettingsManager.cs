@@ -99,7 +99,7 @@ public static class LocalSettingsManager
 
             return;
         }
-            
+
         Initialize();
     }
 
