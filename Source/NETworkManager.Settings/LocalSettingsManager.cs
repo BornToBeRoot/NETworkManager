@@ -99,29 +99,19 @@ public static class LocalSettingsManager
                 }
                 else
                 {
-                    Current = JsonSerializer.Deserialize<LocalSettingsInfo>(jsonString, JsonOptions);
+                    Current = JsonSerializer.Deserialize<LocalSettingsInfo>(jsonString, JsonOptions) ?? new LocalSettingsInfo();
 
-                    // Check if deserialization returned null (e.g., file contains "null")
-                    if (Current == null)
-                    {
-                        Log.Warn("Local settings deserialized to null, initializing new local settings.");
-                    }
-                    else
-                    {
-                        Log.Info("Local settings loaded successfully.");
+                    Log.Info("Local settings loaded successfully.");
 
-                        // Reset change tracking
-                        Current.SettingsChanged = false;
+                    // Reset change tracking
+                    Current.SettingsChanged = false;
 
-                        return;
-                    }
+                    return;
                 }
             }
             catch (Exception ex)
             {
-                {
-                    Log.Error($"Failed to load local settings from: {filePath}", ex);
-                }
+                Log.Error($"Failed to load local settings from: {filePath}", ex);
             }
         }
 
