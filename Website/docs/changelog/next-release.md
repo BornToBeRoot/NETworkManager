@@ -49,9 +49,11 @@ Release date: **xx.xx.2025**
   - Check for updates at startup (see [Update > Check for updates at startup](../settings/update.md#check-for-updates-at-startup) documentation for more information)
   - Settings folder location (see [Settings > Location](../settings/settings.md#location) documentation for more information)
 
+  <br />
+
   :::note
 
-  If you have specific requirements for system-wide policies in your organization, please submit a feature request via the [GitHub issue tracker](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose).
+  If you have specific requirements for system-wide policies in your organization, please submit a feature request via the [GitHub issue tracker](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose) which helps to prioritize development of new policies.
 
   :::
 
@@ -61,6 +63,7 @@ Release date: **xx.xx.2025**
 **DNS Lookup**
 
 - Allow direct dns server input (`<hostname>|<ipadress>:<port>` - `<port>` is optional) in the lookup view in addition to select from a list of configured servers. [#3261](https://github.com/BornToBeRoot/NETworkManager/pull/3261)
+
   See the [DNS Lookup](../application/dns-lookup.md) documentation for more information.
 
 **Remote Desktop**
@@ -172,3 +175,4 @@ Release date: **xx.xx.2025**
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
 - Add Junie/Gemini 3 generated XML documentation headers for roughly half of the ViewModels. This might help with readability. [#3251](https://github.com/BornToBeRoot/NETworkManager/pull/3251)
 - Generate project guidelines for Rider's coding agent Junie using itself as generator. [#3250](https://github.com/BornToBeRoot/NETworkManager/pull/3250)
+- `Agents.md` file added to document the use of AI agents in the project and provide guidelines for their use.

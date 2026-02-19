@@ -17,10 +17,8 @@ Folder where the application settings are stored.
 | Setup / Archiv | `%UserProfile%\Documents\NETworkManager\Settings` |
 | Portable       | `<APP_FOLDER>\Settings`                           |
 
-:::info System-Wide Policy
-
-<details>
-<summary>Click to expand</summary>
+<details className="alert alert--info">
+<summary>System-Wide Policy</summary>
 
 This setting can be controlled by administrators using a system-wide policy. See [System-Wide Policies](../system-wide-policies.md) for more information.
 
@@ -42,8 +40,6 @@ This setting can be controlled by administrators using a system-wide policy. See
 ```
 
 </details>
-
-:::
 
 :::note
 
