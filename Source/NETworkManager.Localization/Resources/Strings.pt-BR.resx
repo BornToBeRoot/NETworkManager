@@ -3964,28 +3964,28 @@ Se clicar em Cancelar, o arquivo de perfil permanecerá descriptografado.</value
     <value>Esta configuração é gerenciada pelo seu administrador.</value>
   </data>
   <data name="RestoreDefaultLocation" xml:space="preserve">
-    <value>Restore default location</value>
+    <value>Restaurar local padrão</value>
   </data>
   <data name="Restore" xml:space="preserve">
-    <value>Restore</value>
+    <value>Restaurar</value>
   </data>
   <data name="RestoreDefaultLocationQuestion" xml:space="preserve">
-    <value>Restore default location?</value>
+    <value>Restaurar local padrão?</value>
   </data>
   <data name="RestoreDefaultLocationSettingsMessage" xml:space="preserve">
-    <value>The default path is restored and the application is restarted afterwards.
+    <value>O caminho padrão é restaurado e o aplicativo é reiniciado em seguida.
 
-You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+Você pode copiar o arquivo "settings.json" de "{0}" para "{1}" para migar suas configurações anteriores, se necessário. O aplicativo precisa ser fechado para prevenir que as configurações sejam sobrescritas.</value>
   </data>
   <data name="ChangeLocationQuestion" xml:space="preserve">
-    <value>Change location?</value>
+    <value>Alterar local?</value>
   </data>
   <data name="ChangeLocationSettingsMessage" xml:space="preserve">
-    <value>The location is changed and the application is restarted afterwards.
+    <value>O local é alterado e o aplicativo é reiniciado em seguida.
 
-You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+Você pode copiar o arquivo "settings.json" de "{0}" para "{1}" para migar suas configurações anteriores, se necessário. O aplicativo precisa ser fechado para prevenir que as configurações sejam sobrescritas.</value>
   </data>
   <data name="EnterValidFolderPath" xml:space="preserve">
-    <value>Enter a valid folder path!</value>
+    <value>Entre um caminho válido para uma pasta!</value>
   </data>
 </root>
