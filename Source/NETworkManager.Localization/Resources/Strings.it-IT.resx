@@ -4062,31 +4062,31 @@ Se selezioni 'Annulla', il file del profilo non verrà crittografato.</value>
     <value>Numero di backup conservati prima che quello più vecchio venga eliminato.</value>
   </data>
   <data name="SettingManagedByAdministrator" xml:space="preserve">
-    <value>This setting is managed by your administrator.</value>
+    <value>Questa impostazione è gestita dall'amministratore.</value>
   </data>
   <data name="RestoreDefaultLocation" xml:space="preserve">
-    <value>Restore default location</value>
+    <value>Ripristina percorso predefinito</value>
   </data>
   <data name="Restore" xml:space="preserve">
-    <value>Restore</value>
+    <value>Ripristina</value>
   </data>
   <data name="RestoreDefaultLocationQuestion" xml:space="preserve">
-    <value>Restore default location?</value>
+    <value>Vuoi ripristinare il percorso predefinito?</value>
   </data>
   <data name="RestoreDefaultLocationSettingsMessage" xml:space="preserve">
-    <value>The default path is restored and the application is restarted afterwards.
+    <value>Verrà ripristinato il percorso predefinito e successivamente l'applicazione verrà riavviata.
 
-You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+Per migrare le impostazioni precedenti, se necessario, è possibile copiare il file "settings.json" da "{0}" in "{1}".  Per evitare che le impostazioni vengano sovrascritte conviene prima chiudere l'applicazione.</value>
   </data>
   <data name="ChangeLocationQuestion" xml:space="preserve">
-    <value>Change location?</value>
+    <value>Vuoi modificare il percorso?</value>
   </data>
   <data name="ChangeLocationSettingsMessage" xml:space="preserve">
-    <value>The location is changed and the application is restarted afterwards.
+    <value>Il percorso verrà modificato e successivamente l'applicazione verrà  riavviata.
 
-You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+Per migrare le impostazioni precedenti, se necessario, è possibile copiare il file "settings.json" da "{0}" a "{1}". Per evitare che le impostazioni vengano sovrascritte conviene prima chiudere l'applicazione.</value>
   </data>
   <data name="EnterValidFolderPath" xml:space="preserve">
-    <value>Enter a valid folder path!</value>
+    <value>Inserisci un percorso valido!</value>
   </data>
 </root>
