@@ -27,3 +27,10 @@ pull_request_rules:
     actions:
       merge:
         method: squash
+  - name: assign next-release milestone to automated pull requests
+    conditions:
+      - author~=^(dependabot|transifex-integration|imgbot)\[bot\]$
+      - milestone!=next-release
+    actions:
+      milestone:
+        title: next-release
