@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunknetworkmanager=globalThis.webpackChunknetworkmanager||[]).push([[8366],{6594(o){o.exports=JSON.parse('{"authors":[{"name":"BornToBeRoot","title":"Maintainer of NETworkManager","url":"https://github.com/BornToBeRoot","imageURL":"https://github.com/BornToBeRoot.png","key":"borntoberoot","page":null,"count":6}]}')}}]);

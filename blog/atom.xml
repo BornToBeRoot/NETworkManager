@@ -2,11 +2,88 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://borntoberoot.net/NETworkManager/blog</id>
     <title>NETworkManager Blog</title>
-    <updated>2025-10-23T00:00:00.000Z</updated>
+    <updated>2026-02-19T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://borntoberoot.net/NETworkManager/blog"/>
     <subtitle>NETworkManager Blog</subtitle>
     <icon>https://borntoberoot.net/NETworkManager/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[System-Wide Policies for Enterprise Deployments]]></title>
+        <id>https://borntoberoot.net/NETworkManager/blog/system-wide-policies</id>
+        <link href="https://borntoberoot.net/NETworkManager/blog/system-wide-policies"/>
+        <updated>2026-02-19T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[NETworkManager now supports system-wide policies, giving administrators centralized control over application settings across all users on a machine. This feature is available since the pre-release version 2026.02.19.0 and can now be tested.]]></summary>
+        <content type="html"><![CDATA[<p>NETworkManager now supports system-wide policies, giving administrators centralized control over application settings across all users on a machine. This feature is available since the <a href="https://github.com/BornToBeRoot/NETworkManager/releases" target="_blank" rel="noopener noreferrer" class="">pre-release version 2026.02.19.0</a> and can now be tested.</p>
+<p><img decoding="async" loading="lazy" alt="System-wide policy indicator" src="https://borntoberoot.net/NETworkManager/assets/images/system-wide-policy-indicator-cf235b9935f6426da4c97e2ec5c77446.png" width="1200" height="600" class="img_ev3q"></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-are-system-wide-policies">What Are System-Wide Policies?<a href="https://borntoberoot.net/NETworkManager/blog/system-wide-policies#what-are-system-wide-policies" class="hash-link" aria-label="Direct link to What Are System-Wide Policies?" title="Direct link to What Are System-Wide Policies?" translate="no">​</a></h2>
+<p>System-wide policies allow administrators to enforce specific settings for all users on a machine. These policies override user-specific settings and provide centralized control over application behavior in enterprise environments.</p>
+<p>When a policy is active, the corresponding setting is locked in the UI and displays a shield icon along with a message indicating that the setting is managed by an administrator. Users can see the enforced value but cannot change it.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-to-configure-policies">How to Configure Policies<a href="https://borntoberoot.net/NETworkManager/blog/system-wide-policies#how-to-configure-policies" class="hash-link" aria-label="Direct link to How to Configure Policies" title="Direct link to How to Configure Policies" translate="no">​</a></h2>
+<p>Policies are defined in a <code>config.json</code> file placed in the application installation directory (the same folder as <code>NETworkManager.exe</code>). When this file exists, the application loads the policies at startup and applies them with precedence over user settings. An example file (<code>config.json.example</code>) is included in the application installation directory for reference.</p>
+<p><strong>File location:</strong></p>
+<ul>
+<li class=""><strong>Installed version</strong>: <code>C:\Program Files\NETworkManager\config.json</code> (or your custom installation path)</li>
+<li class=""><strong>Portable version</strong>: Same directory as <code>NETworkManager.exe</code></li>
+</ul>
+<p><strong>File format:</strong></p>
+<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token property" style="color:#36acaa">"Policy_Name"</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></span></code></pre></div></div>
+<p>Property names follow the pattern <code>Section_SettingName</code>. You can find the available policy names and values in the corresponding <a href="https://borntoberoot.net/NETworkManager/docs/category/settings" target="_blank" rel="noopener noreferrer" class="">setting's documentation</a>.</p>
+<h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="example-policy">Example Policy<a href="https://borntoberoot.net/NETworkManager/blog/system-wide-policies#example-policy" class="hash-link" aria-label="Direct link to Example Policy" title="Direct link to Example Policy" translate="no">​</a></h3>
+<p>For example, the <a href="https://borntoberoot.net/NETworkManager/docs/settings/update" target="_blank" rel="noopener noreferrer" class=""><code>Update_CheckForUpdatesAtStartup</code></a> policy controls whether the application checks for new program versions on GitHub when the application is launched.</p>
+<p><strong>Values:</strong></p>
+<ul>
+<li class=""><code>true</code> — Force enable automatic update checks at startup for all users</li>
+<li class=""><code>false</code> — Force disable automatic update checks at startup for all users</li>
+<li class="">Omit the property — Allow users to control this setting themselves</li>
+</ul>
+<p><strong>Example <code>config.json</code>:</strong></p>
+<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token property" style="color:#36acaa">"Update_CheckForUpdatesAtStartup"</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">false</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></span></code></pre></div></div>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><ul>
+<li class="">The file must be named exactly <code>config.json</code></li>
+<li class="">The file must contain valid JSON syntax</li>
+<li class="">Changes to the file require restarting the application to take effect</li>
+<li class="">If the file doesn't exist or contains invalid JSON, it will be ignored and user settings will apply</li>
+</ul></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="deploying-policies">Deploying Policies<a href="https://borntoberoot.net/NETworkManager/blog/system-wide-policies#deploying-policies" class="hash-link" aria-label="Direct link to Deploying Policies" title="Direct link to Deploying Policies" translate="no">​</a></h2>
+<ol>
+<li class="">
+<p><strong>Create the configuration file</strong> — Use the <code>config.json.example</code> as a template, rename it to <code>config.json</code>, and set your desired policy values.</p>
+</li>
+<li class="">
+<p><strong>Deploy to installation directory</strong> — Place the <code>config.json</code> file in the same directory as <code>NETworkManager.exe</code>. For MSI installations, this is typically <code>C:\Program Files\NETworkManager\</code>.</p>
+</li>
+<li class="">
+<p><strong>Deploy methods:</strong></p>
+<ul>
+<li class="">Group Policy — copy the file to the installation directory (use Group Policy preferences or a startup script)</li>
+<li class="">Configuration management tools — SCCM/ConfigMgr, Microsoft Intune, Ansible, etc.</li>
+<li class="">Scripts and deployment toolkits — PowerShell scripts, PSAppDeployToolkit</li>
+<li class="">Manual deployment — hand-copy for small-scale rollouts</li>
+</ul>
+</li>
+<li class="">
+<p><strong>Verification:</strong></p>
+<ul>
+<li class="">Launch the application</li>
+<li class="">Navigate to Settings &gt; Update (e.g., "Check for updates at startup")</li>
+<li class="">Verify the shield icon and the administrator message appear and that the control is disabled</li>
+</ul>
+</li>
+</ol>
+<div class="theme-admonition theme-admonition-warning admonition_xJq3 alert alert--warning"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>warning</div><div class="admonitionContent_BuS1"><p>Ensure the <code>config.json</code> file has appropriate permissions so that regular users cannot modify it. On standard installations in <code>Program Files</code>, this is automatically enforced by Windows file permissions.</p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="request-more-policies">Request More Policies<a href="https://borntoberoot.net/NETworkManager/blog/system-wide-policies#request-more-policies" class="hash-link" aria-label="Direct link to Request More Policies" title="Direct link to Request More Policies" translate="no">​</a></h2>
+<p>Additional policy options will be added in future releases to provide more granular control over application behavior. If you have specific requirements for system-wide policies in your organization, please submit a feature request via the <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new/choose" target="_blank" rel="noopener noreferrer" class="">GitHub issue tracker</a> to help us prioritize.</p>
+<p>More information is available in the <a href="https://borntoberoot.net/NETworkManager/docs/system-wide-policies" target="_blank" rel="noopener noreferrer" class="">official documentation</a>.</p>
+<p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>.</p>]]></content>
+        <author>
+            <name>BornToBeRoot</name>
+            <uri>https://github.com/BornToBeRoot</uri>
+        </author>
+        <category label="policies" term="policies"/>
+        <category label="enterprise" term="enterprise"/>
+        <category label="settings" term="settings"/>
+        <category label="new feature" term="new feature"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Improved light theme readability]]></title>
         <id>https://borntoberoot.net/NETworkManager/blog/improved-light-theme-readability</id>
