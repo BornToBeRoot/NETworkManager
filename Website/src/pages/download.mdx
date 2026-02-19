@@ -165,6 +165,12 @@ Install silent with the following command:
 .\NETworkManager_{VERSION}_Setup.msi /quiet /norestart
 ```
 
+## Enterprise Deployment / Policies
+
+NETworkManager supports system-wide policies that allow administrators to enforce specific settings for all users on a machine — for example, disabling the automatic update check at startup. Policies are defined in a `config.json` file placed in the application installation directory and can be deployed via Group Policy, Intune, SCCM, or any other configuration management tool.
+
+See the [System-Wide Policies](/docs/system-wide-policies) documentation for details on available policy options and how to configure them.
+
 ## Package Manager
 
 NETworkManager is available through the following package managers:
