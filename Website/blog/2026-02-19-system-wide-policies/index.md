@@ -34,7 +34,7 @@ Policies are defined in a `config.json` file placed in the application installat
 }
 ```
 
-Property names follow the pattern `Section_SettingName`. You can find the available policy names and values in the corresponding [setting's documentation](https://borntoberoot.net/NETworkManager/docs/settings).
+Property names follow the pattern `Section_SettingName`. You can find the available policy names and values in the corresponding [setting's documentation](https://borntoberoot.net/NETworkManager/docs/category/settings).
 
 ### Available Policies
 
