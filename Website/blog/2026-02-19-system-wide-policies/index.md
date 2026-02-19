@@ -36,9 +36,9 @@ Policies are defined in a `config.json` file placed in the application installat
 
 Property names follow the pattern `Section_SettingName`. You can find the available policy names and values in the corresponding [setting's documentation](https://borntoberoot.net/NETworkManager/docs/category/settings).
 
-### Available Policies
+### Example Policy
 
-The first available policy is [`Update_CheckForUpdatesAtStartup`](https://borntoberoot.net/NETworkManager/docs/settings/update), which controls whether the application checks for new program versions on GitHub when the application is launched.
+For example, the [`Update_CheckForUpdatesAtStartup`](https://borntoberoot.net/NETworkManager/docs/settings/update) policy controls whether the application checks for new program versions on GitHub when the application is launched.
 
 **Values:**
 
@@ -75,7 +75,10 @@ The first available policy is [`Update_CheckForUpdatesAtStartup`](https://bornto
    - Scripts and deployment toolkits — PowerShell scripts, PSAppDeployToolkit
    - Manual deployment — hand-copy for small-scale rollouts
 
-4. **Verification** — Launch the application, navigate to Settings > [Update](https://borntoberoot.net/NETworkManager/docs/settings/update) (e.g., "Check for updates at startup"), and verify the shield icon and the administrator message appear and that the control is disabled.
+4. **Verification:**
+   - Launch the application
+   - Navigate to Settings > Update (e.g., "Check for updates at startup")
+   - Verify the shield icon and the administrator message appear and that the control is disabled
 
 :::warning
 
@@ -85,7 +88,7 @@ Ensure the `config.json` file has appropriate permissions so that regular users 
 
 ## Request More Policies
 
-Additional policy options will be added in future releases to provide more granular control over application behavior. If you have specific requirements for system-wide policies in your organization, please submit a feature request via the [GitHub issue tracker](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose).
+Additional policy options will be added in future releases to provide more granular control over application behavior. If you have specific requirements for system-wide policies in your organization, please submit a feature request via the [GitHub issue tracker](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose) to help us prioritize.
 
 More information is available in the [official documentation](https://borntoberoot.net/NETworkManager/docs/system-wide-policies).
 
