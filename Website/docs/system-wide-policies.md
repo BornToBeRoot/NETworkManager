@@ -74,7 +74,7 @@ For enterprise deployments:
 
 4. **Verification**:
    - Launch the application
-   - Navigate to Settings > Update (e.g., "Check for updates at startup")
+   - Navigate to Setting you've modified (e.g., Settings > Update > "Check for updates at startup")    
    - Verify the shield icon and the administrator message appear and that the control is disabled
    - Confirm the displayed value matches the policy
 
@@ -95,9 +95,9 @@ Ensure the `config.json` file has appropriate permissions so that regular users 
 
 **Policy values not showing in UI:**
 - Ensure the property name matches exactly (see the corresponding setting's documentation for the property name)
-- Verify the value is a boolean (`true` or `false`), not a string (`"true"` or `"false"`)
+- Verify the value has the correct data type (e.g. boolean `true` not string `"true"`)
 - Check that there are no syntax errors in the JSON file
 
 ## Future Policies
 
-Additional policy options will be added in future releases to provide more granular control over application behavior. If you have specific requirements for system-wide policies in your organization, please submit a feature request via the [GitHub issue tracker](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose).
+Additional policy options will be added in future releases to provide more granular control over application behavior. If you have specific requirements for system-wide policies in your organization, please submit a feature request via the [GitHub issue tracker](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose) to help us prioritize new policy options based on user demand.
