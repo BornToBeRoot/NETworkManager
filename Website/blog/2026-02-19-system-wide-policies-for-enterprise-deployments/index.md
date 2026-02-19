@@ -1,5 +1,5 @@
 ---
-slug: system-wide-policies
+slug: system-wide-policies-for-enterprise-deployments
 title: System-Wide Policies for Enterprise Deployments
 authors: [borntoberoot]
 tags: [policies, enterprise, settings, new feature]
