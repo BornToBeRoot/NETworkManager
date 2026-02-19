@@ -90,13 +90,10 @@ Ensure the `config.json` file has appropriate permissions so that regular users 
 - Verify the file is named exactly `config.json` (not `config.json.txt`)
 - Check that the JSON syntax is valid (use a JSON validator)
 - Confirm the file is in the correct directory (same as `NETworkManager.exe`)
-- Restart the application after creating or modifying the file
-- Check the application logs for any error messages related to policy loading
-
-**Policy values not showing in UI:**
 - Ensure the property name matches exactly (see the corresponding setting's documentation for the property name)
 - Verify the value has the correct data type (e.g. boolean `true` not string `"true"`)
-- Check that there are no syntax errors in the JSON file
+- Restart the application after creating or modifying the file
+- Check the application logs for any error messages related to policy loading
 
 ## Future Policies
 
