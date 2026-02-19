@@ -57,6 +57,14 @@ Release date: **xx.xx.2025**
 
   :::
 
+**Settings**
+
+- Settings folder location can now be changed by the user in the settings (see [Settings > Location](../settings/settings.md#location) documentation for more information). Additionally, it can be configured via a system-wide policy, allowing administrators to enforce a specific location for all users. [#3324](https://github.com/BornToBeRoot/NETworkManager/pull/3324)
+
+**Update**
+
+- The update check at startup can now be configured via a system-wide policy, allowing administrators to control whether the application checks for updates (see [Update > Check for updates at startup](../settings/update.md#check-for-updates-at-startup) documentation for more information). [#3313](https://github.com/BornToBeRoot/NETworkManager/pull/3313)
+
 - New language Ukrainian (`uk-UA`) has been added. Thanks to [@vadickkt](https://github.com/vadickkt) [#3240](https://github.com/BornToBeRoot/NETworkManager/pull/3240)
 - Migrated all dialogs to child windows for improved usability and accessibility. [#3271](https://github.com/BornToBeRoot/NETworkManager/pull/3271)
 
