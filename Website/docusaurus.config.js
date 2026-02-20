@@ -24,7 +24,12 @@ const config = {
 
   onBrokenLinks: "throw",
   onBrokenAnchors: "throw",
-  onBrokenMarkdownLinks: "throw",
+
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: "throw",
+    },
+  },
 
   i18n: {
     defaultLocale: "en",
@@ -175,7 +180,6 @@ const config = {
             from: [
               "/docs/changelog/2025-6-13-0",
               "/docs/changelog/2025-7-9-0",
-              "/docs/changelog/2025-6-13-0",
             ],
             to: "/docs/changelog/2025-8-10-0",
           },
