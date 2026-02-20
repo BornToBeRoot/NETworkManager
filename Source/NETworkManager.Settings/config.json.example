@@ -1,4 +1,5 @@
 {
   "Update_CheckForUpdatesAtStartup": false,
-  "SettingsFolderLocation": "C:\\CustomPath\\NETworkManager\\Settings"
+  "Settings_FolderLocation": "C:\\CustomPath\\NETworkManager\\Settings",
+  "Profiles_FolderLocation": "C:\\CustomPath\\NETworkManager\\Profiles"
 }

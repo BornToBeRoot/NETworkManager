@@ -7,6 +7,7 @@ using NETworkManager.Views;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -34,7 +35,51 @@ public class SettingsProfilesViewModel : ViewModelBase
             if (value == _location)
                 return;
 
+            if (!_isLoading)
+                IsLocationChanged = !string.Equals(value, ProfileManager.GetProfilesFolderLocation(), StringComparison.OrdinalIgnoreCase);
+
             _location = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Indicates whether the profiles location is managed by a system-wide policy.
+    /// </summary>
+    public bool IsLocationManagedByPolicy => !string.IsNullOrWhiteSpace(PolicyManager.Current?.Profiles_FolderLocation);
+
+    private bool _isLocationChanged;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the location has changed.
+    /// </summary>
+    public bool IsLocationChanged
+    {
+        get => _isLocationChanged;
+        set
+        {
+            if (value == _isLocationChanged)
+                return;
+
+            _isLocationChanged = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private bool _isDefaultLocation;
+
+    /// <summary>
+    /// Indicates whether the current location is the default profiles folder location.
+    /// </summary>
+    public bool IsDefaultLocation
+    {
+        get => _isDefaultLocation;
+        set
+        {
+            if (value == _isDefaultLocation)
+                return;
+
+            _isDefaultLocation = value;
             OnPropertyChanged();
         }
     }
@@ -126,6 +171,7 @@ public class SettingsProfilesViewModel : ViewModelBase
     private void LoadSettings()
     {
         Location = ProfileManager.GetProfilesFolderLocation();
+        IsDefaultLocation = string.Equals(Location, ProfileManager.GetDefaultProfilesFolderLocation(), StringComparison.OrdinalIgnoreCase);
         IsDailyBackupEnabled = SettingsManager.Current.Profiles_IsDailyBackupEnabled;
         MaximumNumberOfBackups = SettingsManager.Current.Profiles_MaximumNumberOfBackups;
     }
@@ -139,6 +185,101 @@ public class SettingsProfilesViewModel : ViewModelBase
     private static void OpenLocationAction()
     {
         Process.Start("explorer.exe", ProfileManager.GetProfilesFolderLocation());
+    }
+
+    /// <summary>
+    /// Gets the command that opens the location folder selection dialog.
+    /// </summary>    
+    public ICommand BrowseLocationFolderCommand => new RelayCommand(p => BrowseLocationFolderAction());
+
+    /// <summary>
+    /// Opens a dialog that allows the user to select a folder location and updates the Location property with the
+    /// selected path if the user confirms the selection.
+    /// </summary>
+    private void BrowseLocationFolderAction()
+    {
+        using var dialog = new System.Windows.Forms.FolderBrowserDialog();
+
+        if (Directory.Exists(Location))
+            dialog.SelectedPath = Location;
+
+        var dialogResult = dialog.ShowDialog();
+
+        if (dialogResult == System.Windows.Forms.DialogResult.OK)
+            Location = dialog.SelectedPath;
+    }
+
+    /// <summary>
+    /// Sets the location path based on the provided drag-and-drop input.
+    /// </summary>
+    /// <param name="path">The path to set as the location.</param>
+    public void SetLocationPathFromDragDrop(string path)
+    {
+        Location = path;
+    }
+
+    /// <summary>
+    /// Gets the command that initiates the action to change the location.
+    /// </summary>    
+    public ICommand ChangeLocationCommand => new RelayCommand(_ => ChangeLocationAction().ConfigureAwait(false));
+
+    /// <summary>
+    /// Prompts the user to confirm and then changes the location of the profiles folder.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    private async Task ChangeLocationAction()
+    {
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
+             Strings.ChangeLocationQuestion,
+             string.Format(Strings.ChangeLocationProfilesMessage, ProfileManager.GetProfilesFolderLocation(), Location),
+             ChildWindowIcon.Question,
+             Strings.Change);
+
+        if (!result)
+            return;
+
+        // Save settings at the current location before changing it to prevent
+        // unintended saves to the new location (e.g., triggered by background timer or the app close & restart).
+        SettingsManager.Save();
+
+        // Set new location in SettingsInfo
+        SettingsManager.Current.Profiles_CustomProfilesFolderLocation = Location;
+        SettingsManager.Save();
+
+        // Restart the application
+        (Application.Current.MainWindow as MainWindow)?.RestartApplication();
+    }
+
+    /// <summary>
+    /// Gets the command that restores the default location.
+    /// </summary>    
+    public ICommand RestoreDefaultLocationCommand => new RelayCommand(_ => RestoreDefaultLocationActionAsync().ConfigureAwait(false));
+
+    /// <summary>
+    /// Restores the profiles folder location to the default path after obtaining user confirmation.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    private async Task RestoreDefaultLocationActionAsync()
+    {
+        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
+            Strings.RestoreDefaultLocationQuestion,
+            string.Format(Strings.RestoreDefaultLocationProfilesMessage, ProfileManager.GetProfilesFolderLocation(), ProfileManager.GetDefaultProfilesFolderLocation()),
+            ChildWindowIcon.Question,
+            Strings.Restore);
+
+        if (!result)
+            return;
+
+        // Save settings at the current location before changing it to prevent
+        // unintended saves to the new location (e.g., triggered by background timer or the app close & restart).
+        SettingsManager.Save();
+
+        // Clear custom location to revert to default
+        SettingsManager.Current.Profiles_CustomProfilesFolderLocation = null;
+        SettingsManager.Save();
+
+        // Restart the application
+        (Application.Current.MainWindow as MainWindow)?.RestartApplication();
     }
 
     public ICommand AddProfileFileCommand => new RelayCommand(async _ => await AddProfileFileAction().ConfigureAwait(false));

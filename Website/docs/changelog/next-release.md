@@ -48,6 +48,7 @@ Release date: **xx.xx.2025**
   Currently supported policies include (more will be added in future releases):
   - Check for updates at startup (see [Update > Check for updates at startup](../settings/update.md#check-for-updates-at-startup) documentation for more information)
   - Settings folder location (see [Settings > Location](../settings/settings.md#location) documentation for more information)
+  - Profiles folder location (see [Profiles > Location](../settings/profiles.md#location) documentation for more information)
 
   <br />
 
@@ -60,6 +61,10 @@ Release date: **xx.xx.2025**
 **Settings**
 
 - Settings folder location can now be changed by the user in the settings (see [Settings > Location](../settings/settings.md#location) documentation for more information). Additionally, it can be configured via a system-wide policy, allowing administrators to enforce a specific location for all users. [#3324](https://github.com/BornToBeRoot/NETworkManager/pull/3324)
+
+**Profiles**
+
+- Profiles folder location can now be changed by the user in the settings (see [Profiles > Location](../settings/profiles.md#location) documentation for more information). Additionally, it can be configured via a system-wide policy, allowing administrators to enforce a specific location for all users.
 
 **Update**
 

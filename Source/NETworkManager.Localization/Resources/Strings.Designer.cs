@@ -1476,6 +1476,17 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The location is changed and the application is restarted afterwards.
+        ///
+        ///You can copy your profile files from &quot;{0}&quot; to &quot;{1}&quot; to migrate your previous profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten. ähnelt.
+        /// </summary>
+        public static string ChangeLocationProfilesMessage {
+            get {
+                return ResourceManager.GetString("ChangeLocationProfilesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Changelog ähnelt.
         /// </summary>
         public static string Changelog {
@@ -8899,6 +8910,17 @@ namespace NETworkManager.Localization.Resources {
         public static string RestoreDefaultLocationSettingsMessage {
             get {
                 return ResourceManager.GetString("RestoreDefaultLocationSettingsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The default path is restored and the application is restarted afterwards.
+        ///
+        ///You can copy your profile files from &quot;{0}&quot; to &quot;{1}&quot; to migrate your previous profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten. ähnelt.
+        /// </summary>
+        public static string RestoreDefaultLocationProfilesMessage {
+            get {
+                return ResourceManager.GetString("RestoreDefaultLocationProfilesMessage", resourceCulture);
             }
         }
         

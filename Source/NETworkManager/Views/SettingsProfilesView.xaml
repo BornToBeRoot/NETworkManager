@@ -10,36 +10,178 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
+             xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
+             xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsProfilesViewModel}"
              Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Style="{StaticResource ResourceKey=HeaderTextBlock}"
                    Text="{x:Static Member=localization:Strings.Location}" />
-        <TextBox x:Name="TextBoxLocation" Text="{Binding Location}"
-                 Style="{StaticResource ResourceKey=ReadOnlyTextBox}" IsEnabled="False" Margin="0,0,0,10" />
-        <Button Command="{Binding OpenLocationCommand}" Style="{StaticResource ResourceKey=ImageWithTextButton}"
-                HorizontalAlignment="Right" Margin="0,0,0,20">
-            <Button.Content>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Rectangle Grid.Column="0" Grid.Row="0"
-                               Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FolderOpen}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                    <TextBlock Grid.Column="1" Text="{x:Static Member=localization:Strings.OpenLocation}"
-                               Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
-                </Grid>
-            </Button.Content>
-        </Button>
+        <TextBox x:Name="TextBoxLocation"
+                 mah:TextBoxHelper.Watermark="{x:Static localization:Strings.EnterLocationDots}"
+                 mah:TextBoxHelper.ButtonCommand="{Binding BrowseLocationFolderCommand}"
+                 AllowDrop="True"
+                 Drop="TextBoxLocation_Drop"
+                 PreviewDragOver="TextBoxLocation_PreviewDragOver"
+                 Margin="0,0,0,10">
+            <TextBox.Style>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BrowseFolderTextBox}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsLocationManagedByPolicy}" Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsPortable}" Value="True">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+            <TextBox.Text>
+                <Binding Path="Location" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <validators:DirectoryPathWithEnvironmentVariablesValidator ValidatesOnTargetUpdated="True" />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <Grid Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="10" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Grid.Row="0"
+                        Orientation="Horizontal">
+                <StackPanel.Style>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsLocationManagedByPolicy}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsPortable}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Button Command="{Binding ChangeLocationCommand}"
+                        Visibility="{Binding IsLocationChanged, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                        HorizontalAlignment="Left" 
+                        Margin="0,0,10,0" >
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=(Validation.HasError), ElementName=TextBoxLocation}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentSaveOutline}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Grid.Row="0"
+                                       Text="{x:Static localization:Strings.Change}"
+                                       Style="{StaticResource ButtonWithImageTextBlock}" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <Button Command="{Binding RestoreDefaultLocationCommand}"
+                        HorizontalAlignment="Left"
+                        Visibility="{Binding IsDefaultLocation, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                        Style="{StaticResource ImageWithTextButton}">                    
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FolderOutline}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Grid.Row="0"
+                                       Text="{x:Static localization:Strings.RestoreDefaultLocation}"
+                                       Style="{StaticResource ButtonWithImageTextBlock}" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="0"
+                        Orientation="Horizontal"
+                        Visibility="{Binding IsLocationManagedByPolicy, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                <Rectangle Width="24" Height="24" Fill="{DynamicResource MahApps.Brushes.Accent}" VerticalAlignment="Center" Margin="0,0,5,0">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ShieldLock}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <TextBlock Text="{x:Static localization:Strings.SettingManagedByAdministrator}"
+                           Style="{StaticResource AccentTextBlock}"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+            <Grid Grid.Column="0" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.Style>
+                    <Style TargetType="{x:Type Grid}">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsPortable}" Value="True" />
+                                    <Condition Binding="{Binding IsLocationManagedByPolicy}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
+                <Rectangle Grid.Column="0" Style="{StaticResource InfoImageRectangle}" Width="24" Height="24"
+                 HorizontalAlignment="Right" />
+                <TextBlock Grid.Column="2" Text="{x:Static localization:Strings.LocationCannotBeChangedInThePortableVersion}"
+                 TextWrapping="Wrap" Style="{StaticResource InfoTextBlock}" />
+            </Grid>
+            <Button Grid.Column="2" Grid.Row="0"
+                    Command="{Binding OpenLocationCommand}"
+                    Style="{StaticResource ImageWithTextButton}">
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FolderOpen}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Grid.Row="0"
+                                   Text="{x:Static localization:Strings.OpenLocation}"
+                                   Style="{StaticResource ButtonWithImageTextBlock}" />
+                    </Grid>
+                </Button.Content>
+            </Button>
+        </Grid>
         <TextBlock Style="{StaticResource ResourceKey=HeaderTextBlock}"
                    Text="{x:Static Member=localization:Strings.ProfileFiles}" />
         <DataGrid x:Name="DataGridProfileLocations" ItemsSource="{Binding ProfileFiles}" SelectionMode="Single"

@@ -84,7 +84,8 @@ public static class PolicyManager
 
                     // Log enabled settings
                     Log.Info($"System-wide policy - Update_CheckForUpdatesAtStartup: {Current.Update_CheckForUpdatesAtStartup?.ToString() ?? "Not set"}");
-                    Log.Info($"System-wide policy - SettingsFolderLocation: {Current.SettingsFolderLocation ?? "Not set"}");
+                    Log.Info($"System-wide policy - Settings_FolderLocation: {Current.Settings_FolderLocation ?? "Not set"}");
+                    Log.Info($"System-wide policy - Profiles_FolderLocation: {Current.Profiles_FolderLocation ?? "Not set"}");
                 }
             }
             catch (Exception ex)

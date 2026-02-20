@@ -622,6 +622,25 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    private string _profiles_CustomProfilesFolderLocation;
+
+    /// <summary>
+    /// Custom profiles folder location set by the user.
+    /// When set, overrides the default profiles folder location.
+    /// </summary>
+    public string Profiles_CustomProfilesFolderLocation
+    {
+        get => _profiles_CustomProfilesFolderLocation;
+        set
+        {
+            if (value == _profiles_CustomProfilesFolderLocation)
+                return;
+
+            _profiles_CustomProfilesFolderLocation = value;
+            OnPropertyChanged();
+        }
+    }
+
     // Settings
     private bool _settings_IsDailyBackupEnabled = GlobalStaticConfiguration.Settings_IsDailyBackupEnabled;
 

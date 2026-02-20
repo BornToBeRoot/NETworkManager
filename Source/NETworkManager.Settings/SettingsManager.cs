@@ -79,10 +79,10 @@ public static class SettingsManager
     public static string GetSettingsFolderLocation()
     {
         // 1. Policy override takes precedence (for IT administrators)
-        if (!string.IsNullOrWhiteSpace(PolicyManager.Current?.SettingsFolderLocation))
+        if (!string.IsNullOrWhiteSpace(PolicyManager.Current?.Settings_FolderLocation))
         {
             var validatedPath = ValidateSettingsFolderPath(
-                PolicyManager.Current.SettingsFolderLocation,
+                PolicyManager.Current.Settings_FolderLocation,
                 "Policy-provided",
                 "next priority");
 
@@ -92,10 +92,10 @@ public static class SettingsManager
 
         // 2. Custom user-configured path (not available in portable mode)
         if (!ConfigurationManager.Current.IsPortable &&
-            !string.IsNullOrWhiteSpace(LocalSettingsManager.Current?.SettingsFolderLocation))
+            !string.IsNullOrWhiteSpace(LocalSettingsManager.Current?.Settings_FolderLocation))
         {
             var validatedPath = ValidateSettingsFolderPath(
-                LocalSettingsManager.Current.SettingsFolderLocation,
+                LocalSettingsManager.Current.Settings_FolderLocation,
                 "Custom",
                 "default location");
 
@@ -144,7 +144,7 @@ public static class SettingsManager
         // Validate that the path is rooted (absolute)
         if (!Path.IsPathRooted(path))
         {
-            Log.Error($"{pathSource} SettingsFolderLocation is not an absolute path: {path}. Falling back to {fallbackMessage}.");
+            Log.Error($"{pathSource} Settings_FolderLocation is not an absolute path: {path}. Falling back to {fallbackMessage}.");
             return null;
         }
 
@@ -157,7 +157,7 @@ public static class SettingsManager
             // Check if the path is a directory (not a file)
             if (File.Exists(fullPath))
             {
-                Log.Error($"{pathSource} SettingsFolderLocation is a file, not a directory: {path}. Falling back to {fallbackMessage}.");
+                Log.Error($"{pathSource} Settings_FolderLocation is a file, not a directory: {path}. Falling back to {fallbackMessage}.");
                 return null;
             }
 
@@ -165,27 +165,27 @@ public static class SettingsManager
         }
         catch (ArgumentException ex)
         {
-            Log.Error($"{pathSource} SettingsFolderLocation contains invalid characters: {path}. Falling back to {fallbackMessage}.", ex);
+            Log.Error($"{pathSource} Settings_FolderLocation contains invalid characters: {path}. Falling back to {fallbackMessage}.", ex);
             return null;
         }
         catch (NotSupportedException ex)
         {
-            Log.Error($"{pathSource} SettingsFolderLocation format is not supported: {path}. Falling back to {fallbackMessage}.", ex);
+            Log.Error($"{pathSource} Settings_FolderLocation format is not supported: {path}. Falling back to {fallbackMessage}.", ex);
             return null;
         }
         catch (SecurityException ex)
         {
-            Log.Error($"Insufficient permissions to access {pathSource} SettingsFolderLocation: {path}. Falling back to {fallbackMessage}.", ex);
+            Log.Error($"Insufficient permissions to access {pathSource} Settings_FolderLocation: {path}. Falling back to {fallbackMessage}.", ex);
             return null;
         }
         catch (PathTooLongException ex)
         {
-            Log.Error($"{pathSource} SettingsFolderLocation path is too long: {path}. Falling back to {fallbackMessage}.", ex);
+            Log.Error($"{pathSource} Settings_FolderLocation path is too long: {path}. Falling back to {fallbackMessage}.", ex);
             return null;
         }
         catch (IOException ex)
         {
-            Log.Error($"{pathSource} SettingsFolderLocation caused an I/O error: {path}. Falling back to {fallbackMessage}.", ex);
+            Log.Error($"{pathSource} Settings_FolderLocation caused an I/O error: {path}. Falling back to {fallbackMessage}.", ex);
             return null;
         }
     }

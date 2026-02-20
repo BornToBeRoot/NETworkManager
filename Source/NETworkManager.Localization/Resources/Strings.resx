@@ -3988,4 +3988,14 @@ You can copy the “settings.json” file from "{0}" to "{1}" to migrate your pr
   <data name="EnterValidFolderPath" xml:space="preserve">
     <value>Enter a valid folder path!</value>
   </data>
+  <data name="ChangeLocationProfilesMessage" xml:space="preserve">
+    <value>The location is changed and the application is restarted afterwards.
+
+You can copy your profile files from “{0}” to “{1}” to migrate your previous profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten.</value>
+  </data>
+  <data name="RestoreDefaultLocationProfilesMessage" xml:space="preserve">
+    <value>The default path is restored and the application is restarted afterwards.
+
+You can copy your profile files from “{0}” to “{1}” to migrate your previous profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten.</value>
+  </data>
 </root>

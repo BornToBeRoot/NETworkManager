@@ -197,14 +197,121 @@ public static class ProfileManager
 
     /// <summary>
     ///     Method to get the path of the profiles folder.
+    ///     Priority: 1. Policy override, 2. Custom user path (from SettingsInfo), 3. Portable/default.
     /// </summary>
     /// <returns>Path to the profiles folder.</returns>
     public static string GetProfilesFolderLocation()
     {
-        return ConfigurationManager.Current.IsPortable
-            ? Path.Combine(AssemblyManager.Current.Location, ProfilesFolderName)
-            : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                AssemblyManager.Current.Name, ProfilesFolderName);
+        // 1. Policy override takes precedence (for IT administrators)
+        if (!string.IsNullOrWhiteSpace(PolicyManager.Current?.Profiles_FolderLocation))
+        {
+            var validatedPath = ValidateProfilesFolderPath(
+                PolicyManager.Current.Profiles_FolderLocation,
+                "Policy-provided",
+                "next priority");
+
+            if (validatedPath != null)
+                return validatedPath;
+        }
+
+        // 2. Custom user-configured path (not available in portable mode)
+        if (!ConfigurationManager.Current.IsPortable &&
+            !string.IsNullOrWhiteSpace(SettingsManager.Current?.Profiles_CustomProfilesFolderLocation))
+        {
+            var validatedPath = ValidateProfilesFolderPath(
+                SettingsManager.Current.Profiles_CustomProfilesFolderLocation,
+                "Custom",
+                "default location");
+
+            if (validatedPath != null)
+                return validatedPath;
+        }
+
+        // 3. Fall back to portable or default location
+        if (ConfigurationManager.Current.IsPortable)
+            return GetPortableProfilesFolderLocation();
+        else
+            return GetDefaultProfilesFolderLocation();
+    }
+
+    /// <summary>
+    ///     Method to get the default profiles folder location in the user's Documents directory.
+    /// </summary>
+    /// <returns>Path to the default profiles folder location.</returns>
+    public static string GetDefaultProfilesFolderLocation()
+    {
+        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            AssemblyManager.Current.Name, ProfilesFolderName);
+    }
+
+    /// <summary>
+    ///     Method to get the portable profiles folder location (in the same directory as the application).
+    /// </summary>
+    /// <returns>Path to the portable profiles folder location.</returns>
+    public static string GetPortableProfilesFolderLocation()
+    {
+        return Path.Combine(AssemblyManager.Current.Location, ProfilesFolderName);
+    }
+
+    /// <summary>
+    ///     Validates a profiles folder path for correctness and accessibility.
+    /// </summary>
+    /// <param name="path">The path to validate.</param>
+    /// <param name="pathSource">Description of the path source for logging (e.g., "Policy-provided", "Custom").</param>
+    /// <param name="fallbackMessage">Message describing what happens on validation failure (e.g., "next priority", "default location").</param>
+    /// <returns>The validated full path if valid; otherwise, null.</returns>
+    private static string ValidateProfilesFolderPath(string path, string pathSource, string fallbackMessage)
+    {
+        // Expand environment variables first (e.g. %userprofile%\profiles -> C:\Users\...\profiles)
+        path = Environment.ExpandEnvironmentVariables(path);
+
+        // Validate that the path is rooted (absolute)
+        if (!Path.IsPathRooted(path))
+        {
+            Log.Error($"{pathSource} Profiles_FolderLocation is not an absolute path: {path}. Falling back to {fallbackMessage}.");
+            return null;
+        }
+
+        // Validate that the path doesn't contain invalid characters
+        try
+        {
+            // This will throw ArgumentException, NotSupportedException, SecurityException, PathTooLongException, or IOException if the path is invalid
+            var fullPath = Path.GetFullPath(path);
+
+            // Check if the path is a directory (not a file)
+            if (File.Exists(fullPath))
+            {
+                Log.Error($"{pathSource} Profiles_FolderLocation is a file, not a directory: {path}. Falling back to {fallbackMessage}.");
+                return null;
+            }
+
+            return Path.TrimEndingDirectorySeparator(fullPath);
+        }
+        catch (ArgumentException ex)
+        {
+            Log.Error($"{pathSource} Profiles_FolderLocation contains invalid characters: {path}. Falling back to {fallbackMessage}.", ex);
+            return null;
+        }
+        catch (NotSupportedException ex)
+        {
+            Log.Error($"{pathSource} Profiles_FolderLocation format is not supported: {path}. Falling back to {fallbackMessage}.", ex);
+            return null;
+        }
+        catch (SecurityException ex)
+        {
+            Log.Error($"Insufficient permissions to access {pathSource} Profiles_FolderLocation: {path}. Falling back to {fallbackMessage}.", ex);
+            return null;
+        }
+        catch (PathTooLongException ex)
+        {
+            Log.Error($"{pathSource} Profiles_FolderLocation path is too long: {path}. Falling back to {fallbackMessage}.", ex);
+            return null;
+        }
+        catch (IOException ex)
+        {
+            Log.Error($"{pathSource} Profiles_FolderLocation caused an I/O error: {path}. Falling back to {fallbackMessage}.", ex);
+            return null;
+        }
     }
 
     /// <summary>

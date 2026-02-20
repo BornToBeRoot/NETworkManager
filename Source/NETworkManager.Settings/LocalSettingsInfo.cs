@@ -34,23 +34,23 @@ public class LocalSettingsInfo
     [JsonIgnore] public bool SettingsChanged { get; set; }
 
     /// <summary>
-    /// Private field for the <see cref="SettingsFolderLocation" /> property."
+    /// Private field for the <see cref="Settings_FolderLocation" /> property."
     /// </summary>
-    private string _settingsFolderLocation;
+    private string _settings_FolderLocation;
 
     /// <summary>
     ///  Location of the folder where the local settings file is stored.
     ///  This can be changed by the user to move the settings file to a different location.
     /// </summary>
-    public string SettingsFolderLocation
+    public string Settings_FolderLocation
     {
-        get => _settingsFolderLocation;
+        get => _settings_FolderLocation;
         set
         {
-            if (_settingsFolderLocation == value)
+            if (_settings_FolderLocation == value)
                 return;
 
-            _settingsFolderLocation = value;
+            _settings_FolderLocation = value;
             OnPropertyChanged();
         }
     }

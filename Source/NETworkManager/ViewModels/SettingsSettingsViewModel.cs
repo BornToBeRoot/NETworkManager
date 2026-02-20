@@ -50,7 +50,7 @@ public class SettingsSettingsViewModel : ViewModelBase
     /// <summary>
     ///     Indicates whether the settings location is managed by a system-wide policy.
     /// </summary>
-    public bool IsLocationManagedByPolicy => !string.IsNullOrWhiteSpace(PolicyManager.Current?.SettingsFolderLocation);
+    public bool IsLocationManagedByPolicy => !string.IsNullOrWhiteSpace(PolicyManager.Current?.Settings_FolderLocation);
 
     /// <summary>
     /// Private field of <see cref="IsLocationChanged" /> property.
@@ -265,7 +265,7 @@ public class SettingsSettingsViewModel : ViewModelBase
         SettingsManager.Save();
 
         // Set new location
-        LocalSettingsManager.Current.SettingsFolderLocation = Location;
+        LocalSettingsManager.Current.Settings_FolderLocation = Location;
         LocalSettingsManager.Save();
 
         // Restart the application
@@ -301,7 +301,7 @@ public class SettingsSettingsViewModel : ViewModelBase
         SettingsManager.Save();
 
         // Clear custom location to revert to default
-        LocalSettingsManager.Current.SettingsFolderLocation = null;
+        LocalSettingsManager.Current.Settings_FolderLocation = null;
         LocalSettingsManager.Save();
 
         // Restart the application
