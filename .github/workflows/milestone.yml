@@ -8,7 +8,7 @@ jobs:
   assign-milestone:
     name: Assign next-release milestone
     runs-on: ubuntu-latest
-    if: contains(fromJSON('["dependabot[bot]", "transifex-integration[bot]", "imgbot[bot]", "copilot[bot]"]'), github.event.pull_request.user.login)
+    if: contains(fromJSON('["dependabot[bot]", "transifex-integration[bot]", "imgbot[bot]", "Copilot"]'), github.event.pull_request.user.login)
     permissions:
       issues: write
       pull-requests: write
