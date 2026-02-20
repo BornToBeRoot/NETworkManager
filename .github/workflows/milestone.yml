@@ -1,0 +1,38 @@
+name: Assign milestone to automated PRs
+
+on:
+  pull_request_target:
+    types: [opened, reopened]
+
+jobs:
+  assign-milestone:
+    name: Assign next-release milestone
+    runs-on: ubuntu-latest
+    if: contains(fromJSON('["dependabot[bot]", "transifex-integration[bot]", "imgbot[bot]"]'), github.event.pull_request.user.login)
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Assign milestone
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const milestones = await github.rest.issues.listMilestones({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open'
+            });
+
+            const milestone = milestones.data.find(m => m.title === 'next-release');
+
+            if (!milestone) {
+              core.warning('Milestone "next-release" not found');
+              return;
+            }
+
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              milestone: milestone.number
+            });
