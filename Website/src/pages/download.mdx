@@ -95,16 +95,6 @@ import styles from "./styles.module.css";
   </div>
 </div>
 
-## Which version should I download?
-
-NETworkManager is available in three different versions:
-
-| Version | Description |
-|---|---|
-| **Setup** (MSI Installer) | Recommended for most users. Installs system-wide and requires administrator privileges. Settings and profiles are stored in `~\Documents\NETworkManager`. Suitable for centralized deployment via Intune, SCCM, etc. |
-| **Portable** (ZIP Archive) | Run without installation — ideal for a USB stick or network share. Settings and profiles are stored next to the executable. To upgrade, copy the `Profiles` and `Settings` directories to the new version. |
-| **Archive** (ZIP Archive) | Similar to Portable, but stores settings and profiles in `~\Documents\NETworkManager`. Useful for custom deployment scenarios (e.g. Terminal Server). |
-
 <details className="alert alert--secondary">
   <summary>Checksums</summary>
   <div>
@@ -119,6 +109,16 @@ NETworkManager is available in three different versions:
     <pre><code>Get-FileHash -Path .\NETworkManager_&#123;VERSION&#125;_Setup.msi -Algorithm SHA256</code></pre>
   </div>
 </details>
+
+## Which version should I download?
+
+NETworkManager is available in three different versions:
+
+| Version | Description |
+|---|---|
+| **Setup** (MSI Installer) | Recommended for most users. Installs system-wide and requires administrator privileges. Settings and profiles are stored in `~\Documents\NETworkManager`. Suitable for centralized deployment via Intune, SCCM, etc. |
+| **Portable** (ZIP Archive) | Run without installation — ideal for a USB stick or network share. Settings and profiles are stored next to the executable. To upgrade, copy the `Profiles` and `Settings` directories to the new version. |
+| **Archive** (ZIP Archive) | Similar to Portable, but stores settings and profiles in `~\Documents\NETworkManager`. Useful for custom deployment scenarios (e.g. Terminal Server). |
 
 ## System requirements
 
