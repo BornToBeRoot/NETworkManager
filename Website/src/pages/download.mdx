@@ -95,38 +95,15 @@ import styles from "./styles.module.css";
   </div>
 </div>
 
-<details>
-  <summary>
-    <p>What version should I download?</p>
-  </summary>
-  <div>
-    <p>NETworkManager is available in three different versions:</p>
-    <ul>
-      <li>
-        <b>Setup</b> (MSI-Installer)<br />
-        Recommended for most users, installs NETworkManager for all users
-        on the system. Requires administrator privileges. Settings and profiles
-        are stored in the user profile directory under
-        <code>~\Documents\NETworkManager</code>. Can also be used for
-        centralized deployment via Intune, SCCM, etc.
-      </li>
-      <li>
-        <b>Portable</b> (ZIP-Archive)<br />
-        Run NETworkManager without installation, e.g. from a USB stick or
-        network share. Settings and profiles are stored in the same directory
-        as the executable. Upgrades are supported by copying the
-        <code>Profiles</code> and <code>Settings</code> directories
-        to the new version.
-      </li>
-      <li>
-        <b>Archive</b> (ZIP-Archive)<br />
-        Similar to Portable, but stores profiles and settings in the user profile
-        directory under <code>~\Documents\NETworkManager</code>. This version might
-        be useful for custom deployment scenarios (e.g. Terminal Server, Intune, etc.).
-      </li>
-    </ul>
-  </div>
-</details>
+## Which version should I download?
+
+NETworkManager is available in three different versions:
+
+| Version | Description |
+|---|---|
+| **Setup** (MSI Installer) | Recommended for most users. Installs system-wide and requires administrator privileges. Settings and profiles are stored in `~\Documents\NETworkManager`. Suitable for centralized deployment via Intune, SCCM, etc. |
+| **Portable** (ZIP Archive) | Run without installation — ideal for a USB stick or network share. Settings and profiles are stored next to the executable. To upgrade, copy the `Profiles` and `Settings` directories to the new version. |
+| **Archive** (ZIP Archive) | Similar to Portable, but stores settings and profiles in `~\Documents\NETworkManager`. Useful for custom deployment scenarios (e.g. Terminal Server). |
 
 <details className="alert alert--secondary">
   <summary>Checksums</summary>
@@ -138,17 +115,8 @@ import styles from "./styles.module.css";
     <pre><code>6DE9B68E178C5096AD0514CF2B5FA11F8C582070783EAB41C6EF1838EEBA9602</code></pre>
     <b>Archive</b> (ZIP Archive)
     <pre><code>F0E684FFB1C7F03642735403D6D30F75839A3B21E698624D219964363948442F</code></pre>
-    <p>You can verify the checksum with one of the following commands:</p>
-    <pre>
-      <code class="language-powershell">
-        &#35; PowerShell
-        Get-FileHash -Path .\NETworkManager_&#123;VERSION&#125;_Setup.msi -Algorithm SHA256
-
-        &#35; Linux
-        sha256sum -c NETworkManager_&#123;VERSION&#125;_SHA256SUMS
-      </code>
-    </pre>
-
+    <p>Verify a checksum using PowerShell:</p>
+    <pre><code>Get-FileHash -Path .\NETworkManager_&#123;VERSION&#125;_Setup.msi -Algorithm SHA256</code></pre>
   </div>
 </details>
 
@@ -159,7 +127,7 @@ import styles from "./styles.module.css";
 
 ## Silent install
 
-Install silent with the following command:
+Install the Setup (MSI) silently using the following command:
 
 ```
 .\NETworkManager_{VERSION}_Setup.msi /quiet /norestart
