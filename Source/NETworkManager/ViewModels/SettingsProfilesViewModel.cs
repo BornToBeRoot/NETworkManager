@@ -231,7 +231,7 @@ public class SettingsProfilesViewModel : ViewModelBase
     {
         var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
              Strings.ChangeLocationQuestion,
-             string.Format(Strings.ChangeLocationProfilesMessage, ProfileManager.GetProfilesFolderLocation(), Location),
+             string.Format(Strings.ChangeProfilesLocationMessage, ProfileManager.GetProfilesFolderLocation(), Location),
              ChildWindowIcon.Question,
              Strings.Change);
 
@@ -263,7 +263,7 @@ public class SettingsProfilesViewModel : ViewModelBase
     {
         var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.RestoreDefaultLocationQuestion,
-            string.Format(Strings.RestoreDefaultLocationProfilesMessage, ProfileManager.GetProfilesFolderLocation(), ProfileManager.GetDefaultProfilesFolderLocation()),
+            string.Format(Strings.RestoreDefaultProfilesLocationMessage, ProfileManager.GetProfilesFolderLocation(), ProfileManager.GetDefaultProfilesFolderLocation()),
             ChildWindowIcon.Question,
             Strings.Restore);
 

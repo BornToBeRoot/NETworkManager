@@ -253,7 +253,7 @@ public class SettingsSettingsViewModel : ViewModelBase
     {
         var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
              Strings.ChangeLocationQuestion,
-             string.Format(Strings.ChangeLocationSettingsMessage, SettingsManager.GetSettingsFolderLocation(), Location),
+             string.Format(Strings.ChangeSettingsLocationMessage, SettingsManager.GetSettingsFolderLocation(), Location),
              ChildWindowIcon.Question,
              Strings.Change);
 
@@ -289,7 +289,7 @@ public class SettingsSettingsViewModel : ViewModelBase
     {
         var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.RestoreDefaultLocationQuestion,
-            string.Format(Strings.RestoreDefaultLocationSettingsMessage, SettingsManager.GetSettingsFolderLocation(), SettingsManager.GetDefaultSettingsFolderLocation()),
+            string.Format(Strings.RestoreDefaultSettingsLocationMessage, SettingsManager.GetSettingsFolderLocation(), SettingsManager.GetDefaultSettingsFolderLocation()),
             ChildWindowIcon.Question,
             Strings.Restore);
 
