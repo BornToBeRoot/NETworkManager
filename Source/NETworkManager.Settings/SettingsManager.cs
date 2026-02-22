@@ -484,6 +484,10 @@ public static class SettingsManager
         if (fromVersion < new Version(2025, 8, 11, 0))
             UpgradeTo_2025_8_11_0();
 
+        // 2026.2.22.0
+        if (fromVersion < new Version(2026, 2, 22, 0))
+            UpgradeTo_2026_2_22_0();
+
         // Latest
         if (fromVersion < toVersion)
             UpgradeToLatest(toVersion);
@@ -620,15 +624,13 @@ public static class SettingsManager
     }
 
     /// <summary>
-    ///     Method to apply changes for the latest version.
+    ///     Method to apply changes for version 2026.2.22.0.
     /// </summary>
-    /// <param name="version">Latest version.</param>
-    private static void UpgradeToLatest(Version version)
+    private static void UpgradeTo_2026_2_22_0()
     {
-        Log.Info($"Apply upgrade to {version}...");
+        Log.Info("Apply upgrade to 2026.2.22.0...");
 
         // DNS Lookup
-
         Log.Info("Migrate DNS Lookup settings to new structure...");
 
         Current.DNSLookup_SelectedDNSServer_v2 = Current.DNSLookup_SelectedDNSServer?.Name;
@@ -636,7 +638,6 @@ public static class SettingsManager
         Log.Info($"Selected DNS server set to \"{Current.DNSLookup_SelectedDNSServer_v2}\"");
 
         // AWS Session Manager
-
         Log.Info("Removing deprecated app \"AWS Session Manager\", if it exists...");
 
         var appToRemove = Current.General_ApplicationList
@@ -663,6 +664,15 @@ public static class SettingsManager
 
             Current.General_ApplicationList.Remove(appToRemove);
         }
+    }
+
+    /// <summary>
+    ///     Method to apply changes for the latest version.
+    /// </summary>
+    /// <param name="version">Latest version.</param>
+    private static void UpgradeToLatest(Version version)
+    {
+        Log.Info($"Apply upgrade to {version}...");       
     }
     #endregion
 }
