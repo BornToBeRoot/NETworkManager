@@ -69,11 +69,32 @@
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </StackPanel.Style>
+                </StackPanel.Style>                
+                <Button Command="{Binding RestoreDefaultLocationCommand}"
+                        HorizontalAlignment="Left"
+                        Margin="0,0,10,0"
+                        Visibility="{Binding IsDefaultLocation, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                        Style="{StaticResource ImageWithTextButton}">                    
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FolderArrowLeftOutline}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Grid.Row="0"
+                                       Text="{x:Static localization:Strings.RestoreDefaultLocation}"
+                                       Style="{StaticResource ButtonWithImageTextBlock}" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
                 <Button Command="{Binding ChangeLocationCommand}"
                         Visibility="{Binding IsLocationChanged, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                        HorizontalAlignment="Left" 
-                        Margin="0,0,10,0" >
+                        HorizontalAlignment="Left">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
                             <Style.Triggers>
@@ -95,29 +116,8 @@
                                 </Rectangle.OpacityMask>
                             </Rectangle>
                             <TextBlock Grid.Column="1" Grid.Row="0"
-                                       Text="{x:Static localization:Strings.Change}"
-                                       Style="{StaticResource ButtonWithImageTextBlock}" />
-                        </Grid>
-                    </Button.Content>
-                </Button>
-                <Button Command="{Binding RestoreDefaultLocationCommand}"
-                        HorizontalAlignment="Left"
-                        Visibility="{Binding IsDefaultLocation, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
-                        Style="{StaticResource ImageWithTextButton}">                    
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FolderOutline}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Grid.Row="0"
-                                       Text="{x:Static localization:Strings.RestoreDefaultLocation}"
-                                       Style="{StaticResource ButtonWithImageTextBlock}" />
+                       Text="{x:Static localization:Strings.Change}"
+                       Style="{StaticResource ButtonWithImageTextBlock}" />
                         </Grid>
                     </Button.Content>
                 </Button>
@@ -156,10 +156,14 @@
                         </Style.Triggers>
                     </Style>
                 </Grid.Style>
-                <Rectangle Grid.Column="0" Style="{StaticResource InfoImageRectangle}" Width="24" Height="24"
-                 HorizontalAlignment="Right" />
-                <TextBlock Grid.Column="2" Text="{x:Static localization:Strings.LocationCannotBeChangedInThePortableVersion}"
-                 TextWrapping="Wrap" Style="{StaticResource InfoTextBlock}" />
+                <Rectangle Grid.Column="0" Grid.Row="0"
+                           Style="{StaticResource InfoImageRectangle}" 
+                           Width="24" Height="24"
+                           HorizontalAlignment="Right" />
+                <TextBlock Grid.Column="2" Grid.Row="0"
+                           Text="{x:Static localization:Strings.LocationCannotBeChangedInThePortableVersion}"
+                           TextWrapping="Wrap" 
+                           Style="{StaticResource InfoTextBlock}" />
             </Grid>
             <Button Grid.Column="2" Grid.Row="0"
                     Command="{Binding OpenLocationCommand}"
