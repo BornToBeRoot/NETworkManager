@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Whois servers by domain from IANA
-Generated 12/14/2025 16:20:36-->
+Generated 02/22/2026 04:04:11-->
 <WhoisServers>
   <WhoisServer>
     <TLD>AAA</TLD>
@@ -2167,10 +2167,6 @@ Generated 12/14/2025 16:20:36-->
     </Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>GOO</TLD>
-    <Server>whois.nic.gmo</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>GOODYEAR</TLD>
     <Server>whois.nic.goodyear</Server>
   </WhoisServer>
@@ -3247,8 +3243,7 @@ Generated 12/14/2025 16:20:36-->
   </WhoisServer>
   <WhoisServer>
     <TLD>MC</TLD>
-    <Server>
-    </Server>
+    <Server>whois.nic.mc</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>MCKINSEY</TLD>
@@ -5527,10 +5522,6 @@ Generated 12/14/2025 16:20:36-->
     <Server>whois.nic.wme</Server>
   </WhoisServer>
   <WhoisServer>
-    <TLD>WOLTERSKLUWER</TLD>
-    <Server>whois.nic.wolterskluwer</Server>
-  </WhoisServer>
-  <WhoisServer>
     <TLD>WOODSIDE</TLD>
     <Server>whois.nic.woodside</Server>
   </WhoisServer>
@@ -6313,12 +6304,6 @@ Generated 12/14/2025 16:20:36-->
   </WhoisServer>
   <WhoisServer>
     <TLD>ZW</TLD>
-    <Server>
-    </Server>
-  </WhoisServer>
-  <WhoisServer>
-    <TLD>
-    </TLD>
     <Server>
     </Server>
   </WhoisServer>
