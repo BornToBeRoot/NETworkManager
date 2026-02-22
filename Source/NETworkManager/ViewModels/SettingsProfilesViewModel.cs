@@ -271,7 +271,7 @@ public class SettingsProfilesViewModel : ViewModelBase
             return;
 
         // Save profiles at the current location before changing it to prevent
-        // unintended saves to the new location (e.g., triggered by the app close & restart).
+        // unintended saves to the new location (e.g., triggered by background timer or the app close & restart).
         ProfileManager.Save();
 
         // Set new location in SettingsInfo
@@ -302,7 +302,7 @@ public class SettingsProfilesViewModel : ViewModelBase
             return;
 
         // Save profiles at the current location before changing it to prevent
-        // unintended saves to the new location (e.g., triggered by the app close & restart).
+        // unintended saves to the new location (e.g., triggered by background timer or the app close & restart).
         ProfileManager.Save();
 
         // Clear custom location to revert to default
