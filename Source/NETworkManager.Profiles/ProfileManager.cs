@@ -197,14 +197,65 @@ public static class ProfileManager
 
     /// <summary>
     ///     Method to get the path of the profiles folder.
+    ///     Priority:
+    ///     1. Policy override (for IT administrators)
+    ///     2. Custom user-configured path (not available in portable mode)
+    ///     3. Portable (same directory as the application) or default location (Documents folder)
     /// </summary>
     /// <returns>Path to the profiles folder.</returns>
     public static string GetProfilesFolderLocation()
     {
-        return ConfigurationManager.Current.IsPortable
-            ? Path.Combine(AssemblyManager.Current.Location, ProfilesFolderName)
-            : Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-                AssemblyManager.Current.Name, ProfilesFolderName);
+        // 1. Policy override takes precedence (for IT administrators)
+        if (!string.IsNullOrWhiteSpace(PolicyManager.Current?.Profiles_FolderLocation))
+        {
+            var validatedPath = DirectoryHelper.ValidateFolderPath(
+                PolicyManager.Current.Profiles_FolderLocation,
+                "Policy-provided",
+                nameof(PolicyInfo.Profiles_FolderLocation),
+                "next priority");
+
+            if (validatedPath != null)
+                return validatedPath;
+        }
+
+        // 2. Custom user-configured path (not available in portable mode)
+        if (!ConfigurationManager.Current.IsPortable &&
+            !string.IsNullOrWhiteSpace(SettingsManager.Current?.Profiles_FolderLocation))
+        {
+            var validatedPath = DirectoryHelper.ValidateFolderPath(
+                SettingsManager.Current.Profiles_FolderLocation,
+                "Custom",
+                nameof(SettingsInfo.Profiles_FolderLocation),
+                "default location");
+
+            if (validatedPath != null)
+                return validatedPath;
+        }
+
+        // 3. Fall back to portable or default location
+        if (ConfigurationManager.Current.IsPortable)
+            return GetPortableProfilesFolderLocation();
+        else
+            return GetDefaultProfilesFolderLocation();
+    }
+
+    /// <summary>
+    ///     Method to get the default profiles folder location in the user's Documents directory.
+    /// </summary>
+    /// <returns>Path to the default profiles folder location.</returns>
+    public static string GetDefaultProfilesFolderLocation()
+    {
+        return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+            AssemblyManager.Current.Name, ProfilesFolderName);
+    }
+
+    /// <summary>
+    ///     Method to get the portable profiles folder location (in the same directory as the application).
+    /// </summary>
+    /// <returns>Path to the portable profiles folder location.</returns>
+    public static string GetPortableProfilesFolderLocation()
+    {
+        return Path.Combine(AssemblyManager.Current.Location, ProfilesFolderName);
     }
 
     /// <summary>

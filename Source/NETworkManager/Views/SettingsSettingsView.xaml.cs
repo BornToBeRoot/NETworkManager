@@ -31,13 +31,15 @@ public partial class SettingsSettingsView
 
         var files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-        if (files != null)
+        if (files is { Length: > 0 })
             _viewModel.SetLocationPathFromDragDrop(files[0]);
     }
 
     private void TextBoxLocation_PreviewDragOver(object sender, DragEventArgs e)
     {
-        e.Effects = DragDropEffects.Copy;
+        e.Effects = e.Data.GetDataPresent(DataFormats.FileDrop)
+          ? DragDropEffects.Copy
+          : DragDropEffects.None;
         e.Handled = true;
     }
 }

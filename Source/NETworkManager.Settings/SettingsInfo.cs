@@ -576,7 +576,22 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    // Profiles    
+    // Profiles
+    private string _profiles_FolderLocation;
+
+    public string Profiles_FolderLocation
+    {
+        get => _profiles_FolderLocation;
+        set
+        {
+            if (value == _profiles_FolderLocation)
+                return;
+
+            _profiles_FolderLocation = value;
+            OnPropertyChanged();
+        }
+    }
+
     private string _profiles_LastSelected;
 
     public string Profiles_LastSelected
