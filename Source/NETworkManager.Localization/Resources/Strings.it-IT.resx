@@ -4073,20 +4073,30 @@ Se selezioni 'Annulla', il file del profilo non verrà crittografato.</value>
   <data name="RestoreDefaultLocationQuestion" xml:space="preserve">
     <value>Vuoi ripristinare il percorso predefinito?</value>
   </data>
-  <data name="RestoreDefaultLocationSettingsMessage" xml:space="preserve">
-    <value>Verrà ripristinato il percorso predefinito e successivamente l'applicazione verrà riavviata.
+  <data name="RestoreDefaultSettingsLocationMessage" xml:space="preserve">
+    <value>The default settings location is restored and the application is restarted afterwards.
 
-Per migrare le impostazioni precedenti, se necessario, è possibile copiare il file "settings.json" da "{0}" in "{1}".  Per evitare che le impostazioni vengano sovrascritte conviene prima chiudere l'applicazione.</value>
+You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
   </data>
   <data name="ChangeLocationQuestion" xml:space="preserve">
     <value>Vuoi modificare il percorso?</value>
   </data>
-  <data name="ChangeLocationSettingsMessage" xml:space="preserve">
-    <value>Il percorso verrà modificato e successivamente l'applicazione verrà  riavviata.
+  <data name="ChangeSettingsLocationMessage" xml:space="preserve">
+    <value>The settings location is changed and the application is restarted afterwards.
 
-Per migrare le impostazioni precedenti, se necessario, è possibile copiare il file "settings.json" da "{0}" a "{1}". Per evitare che le impostazioni vengano sovrascritte conviene prima chiudere l'applicazione.</value>
+You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
   </data>
   <data name="EnterValidFolderPath" xml:space="preserve">
     <value>Inserisci un percorso valido!</value>
+  </data>
+  <data name="ChangeProfilesLocationMessage" xml:space="preserve">
+    <value>The profiles location is changed and the application is restarted afterwards.
+
+You can copy your profile files from “{0}” to “{1}” to migrate your existing profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten.</value>
+  </data>
+  <data name="RestoreDefaultProfilesLocationMessage" xml:space="preserve">
+    <value>The default profiles location is restored and the application is restarted afterwards.
+
+You can copy your profile files from “{0}” to “{1}” to migrate your existing profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten.</value>
   </data>
 </root>
