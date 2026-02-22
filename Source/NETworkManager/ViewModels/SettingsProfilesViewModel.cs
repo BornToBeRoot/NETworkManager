@@ -270,6 +270,10 @@ public class SettingsProfilesViewModel : ViewModelBase
         if (!result)
             return;
 
+        // Save profiles at the current location before changing it to prevent
+        // unintended saves to the new location (e.g., triggered by the app close & restart).
+        ProfileManager.Save();
+
         // Set new location in SettingsInfo
         SettingsManager.Current.Profiles_FolderLocation = Location;
 
@@ -296,6 +300,10 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         if (!result)
             return;
+
+        // Save profiles at the current location before changing it to prevent
+        // unintended saves to the new location (e.g., triggered by the app close & restart).
+        ProfileManager.Save();
 
         // Clear custom location to revert to default
         SettingsManager.Current.Profiles_FolderLocation = null;

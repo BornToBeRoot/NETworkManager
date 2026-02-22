@@ -213,7 +213,7 @@ public class SettingsSettingsViewModel : ViewModelBase
     public ICommand ChangeLocationCommand => new RelayCommand(_ => ChangeLocationAction().ConfigureAwait(false));
 
     /// <summary>
-    /// Prompts the user to confirm and then changes the location of the profiles folder.
+    /// Prompts the user to confirm and then changes the location of the settings folder.
     /// </summary>
     /// <returns>A task that represents the asynchronous operation.</returns>
     private async Task ChangeLocationAction()
