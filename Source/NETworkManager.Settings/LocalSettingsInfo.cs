@@ -34,7 +34,7 @@ public class LocalSettingsInfo
     [JsonIgnore] public bool SettingsChanged { get; set; }
 
     /// <summary>
-    /// Private field for the <see cref="Settings_FolderLocation" /> property."
+    /// Private field for the <see cref="Settings_FolderLocation" /> property.
     /// </summary>
     private string _settings_FolderLocation;
 
