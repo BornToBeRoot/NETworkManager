@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Service Name and Transport Protocol Port Number Registry
-Generated 12/14/2025 16:20:08-->
+Generated 02/22/2026 04:03:38-->
 <Ports>
   <Port>
     <Number>0</Number>
@@ -70030,6 +70030,18 @@ Generated 12/14/2025 16:20:08-->
   <Port>
     <Number>11430</Number>
     <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>11434</Number>
+    <Protocol>tcp</Protocol>
+    <Name>ollama</Name>
+    <Description>Ollama</Description>
+  </Port>
+  <Port>
+    <Number>11434</Number>
+    <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
   </Port>
