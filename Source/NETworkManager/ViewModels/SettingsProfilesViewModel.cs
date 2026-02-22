@@ -243,7 +243,7 @@ public class SettingsProfilesViewModel : ViewModelBase
         SettingsManager.Save();
 
         // Set new location in SettingsInfo
-        SettingsManager.Current.Profiles_CustomProfilesFolderLocation = Location;
+        SettingsManager.Current.Profiles_FolderLocation = Location;
         SettingsManager.Save();
 
         // Restart the application
@@ -275,7 +275,7 @@ public class SettingsProfilesViewModel : ViewModelBase
         SettingsManager.Save();
 
         // Clear custom location to revert to default
-        SettingsManager.Current.Profiles_CustomProfilesFolderLocation = null;
+        SettingsManager.Current.Profiles_FolderLocation = null;
         SettingsManager.Save();
 
         // Restart the application

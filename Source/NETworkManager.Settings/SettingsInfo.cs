@@ -576,7 +576,22 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    // Profiles    
+    // Profiles
+    private string _profiles_FolderLocation;
+
+    public string Profiles_FolderLocation
+    {
+        get => _profiles_FolderLocation;
+        set
+        {
+            if (value == _profiles_FolderLocation)
+                return;
+
+            _profiles_FolderLocation = value;
+            OnPropertyChanged();
+        }
+    }
+
     private string _profiles_LastSelected;
 
     public string Profiles_LastSelected
@@ -618,25 +633,6 @@ public class SettingsInfo : INotifyPropertyChanged
                 return;
 
             _profiles_MaximumNumberOfBackups = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private string _profiles_CustomProfilesFolderLocation;
-
-    /// <summary>
-    /// Custom profiles folder location set by the user.
-    /// When set, overrides the default profiles folder location.
-    /// </summary>
-    public string Profiles_CustomProfilesFolderLocation
-    {
-        get => _profiles_CustomProfilesFolderLocation;
-        set
-        {
-            if (value == _profiles_CustomProfilesFolderLocation)
-                return;
-
-            _profiles_CustomProfilesFolderLocation = value;
             OnPropertyChanged();
         }
     }
