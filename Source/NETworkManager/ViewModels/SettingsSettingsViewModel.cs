@@ -159,8 +159,8 @@ public class SettingsSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Loads the application settings from the current settings folder location.
-    /// </summary>    
+    /// Load view specific settings.
+    /// </summary>
     private void LoadSettings()
     {
         Location = SettingsManager.GetSettingsFolderLocation();
@@ -172,6 +172,27 @@ public class SettingsSettingsViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
+    /// <summary>
+    /// Gets the command that opens the location folder selection dialog.
+    /// </summary>    
+    public ICommand BrowseLocationFolderCommand => new RelayCommand(p => BrowseLocationFolderAction());
+
+    /// <summary>
+    /// Opens a dialog that allows the user to select a folder location and updates the Location property with the
+    /// selected path if the user confirms the selection.
+    /// </summary>    
+    private void BrowseLocationFolderAction()
+    {
+        using var dialog = new System.Windows.Forms.FolderBrowserDialog();
+
+        if (Directory.Exists(Location))
+            dialog.SelectedPath = Location;
+
+        var dialogResult = dialog.ShowDialog();
+
+        if (dialogResult == System.Windows.Forms.DialogResult.OK)
+            Location = dialog.SelectedPath;
+    }
 
     /// <summary>
     /// Gets the command that opens a location when executed.
@@ -187,67 +208,13 @@ public class SettingsSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets the command that resets the application settings to their default values.
-    /// </summary>    
-    public ICommand ResetSettingsCommand => new RelayCommand(_ => ResetSettingsAction());
-
-    /// <summary>
-    /// Resets the application settings to their default values.
-    /// </summary>    
-    private void ResetSettingsAction()
-    {
-        ResetSettings().ConfigureAwait(false);
-    }
-
-    #endregion
-
-    #region Methods
-    /// <summary>
-    /// Gets the command that opens the location folder selection dialog.
-    /// </summary>    
-    public ICommand BrowseLocationFolderCommand => new RelayCommand(p => BrowseLocationFolderAction());
-
-    /// <summary>
-    /// Opens a dialog that allows the user to select a folder location and updates the Location property with the
-    /// selected path if the user confirms the selection.
-    /// </summary>
-    /// <remarks>If the Location property is set to a valid directory path, it is pre-selected in the dialog.
-    /// This method does not return a value and is intended for use in a user interface context where folder selection
-    /// is required.</remarks>
-    private void BrowseLocationFolderAction()
-    {
-        using var dialog = new System.Windows.Forms.FolderBrowserDialog();
-
-        if (Directory.Exists(Location))
-            dialog.SelectedPath = Location;
-
-        var dialogResult = dialog.ShowDialog();
-
-        if (dialogResult == System.Windows.Forms.DialogResult.OK)
-            Location = dialog.SelectedPath;
-    }
-
-    /// <summary>
-    /// Sets the location path based on the provided drag-and-drop input.
-    /// </summary>
-    /// <param name="path">The path to set as the location. This value cannot be null or empty.</param>
-    public void SetLocationPathFromDragDrop(string path)
-    {
-        Location = path;
-    }
-
-    /// <summary>
     /// Gets the command that initiates the action to change the location.
     /// </summary>    
     public ICommand ChangeLocationCommand => new RelayCommand(_ => ChangeLocationAction().ConfigureAwait(false));
 
     /// <summary>
-    /// Prompts the user to confirm and then changes the location of the application's settings folder.
+    /// Prompts the user to confirm and then changes the location of the profiles folder.
     /// </summary>
-    /// <remarks>This method displays a confirmation dialog to the user before changing the settings folder
-    /// location. If the user confirms, it saves the current settings, updates the settings folder location, and
-    /// restarts the application to apply the changes. No action is taken if the user cancels the confirmation
-    /// dialog.</remarks>
     /// <returns>A task that represents the asynchronous operation.</returns>
     private async Task ChangeLocationAction()
     {
@@ -309,19 +276,21 @@ public class SettingsSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Resets the application settings to their default values and restarts the application after user confirmation.
+    /// Gets the command that resets the application settings to their default values.
+    /// </summary>    
+    public ICommand ResetSettingsCommand => new RelayCommand(_ => ResetSettingsAction().ConfigureAwait(false));
+
+    /// <summary>
+    /// Resets the application settings to their default values.
     /// </summary>
-    /// <remarks>Displays a confirmation dialog to the user before proceeding. If the user confirms, the
-    /// settings are reinitialized to their defaults and the application is restarted. No action is taken if the user
-    /// cancels the confirmation dialog.</remarks>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    private async Task ResetSettings()
+    private async Task ResetSettingsAction()
     {
         var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
-            Strings.ResetSettingsQuestion,
-            Strings.SettingsAreResetAndApplicationWillBeRestartedMessage,
-            ChildWindowIcon.Question,
-            Strings.Reset);
+           Strings.ResetSettingsQuestion,
+           Strings.SettingsAreResetAndApplicationWillBeRestartedMessage,
+           ChildWindowIcon.Question,
+           Strings.Reset);
 
         if (!result)
             return;
@@ -332,5 +301,17 @@ public class SettingsSettingsViewModel : ViewModelBase
         // Restart the application
         (Application.Current.MainWindow as MainWindow)?.RestartApplication();
     }
+
+    #endregion
+
+    #region Methods
+    /// <summary>
+    /// Sets the location path based on the provided drag-and-drop input.
+    /// </summary>
+    /// <param name="path">The path to set as the location.</param>
+    public void SetLocationPathFromDragDrop(string path)
+    {
+        Location = path;
+    }       
     #endregion
 }

@@ -48,6 +48,9 @@ public class SettingsProfilesViewModel : ViewModelBase
     /// </summary>
     public bool IsLocationManagedByPolicy => !string.IsNullOrWhiteSpace(PolicyManager.Current?.Profiles_FolderLocation);
 
+    /// <summary>
+    /// Private field of <see cref="IsLocationChanged" /> property.
+    /// </summary>
     private bool _isLocationChanged;
 
     /// <summary>
@@ -66,6 +69,9 @@ public class SettingsProfilesViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Private field of <see cref="IsDefaultLocation" /> property.
+    /// </summary>
     private bool _isDefaultLocation;
 
     /// <summary>
@@ -84,8 +90,14 @@ public class SettingsProfilesViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Private field of <see cref="ProfileFiles" /> property.
+    /// </summary>
     private readonly ICollectionView _profileFiles;
 
+    /// <summary>
+    /// Gets the collection view of profile files.
+    /// </summary>    
     public ICollectionView ProfileFiles
     {
         get => _profileFiles;
@@ -99,8 +111,15 @@ public class SettingsProfilesViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Private field of <see cref="SelectedProfileFile" /> property.
+    /// </summary>
+
     private ProfileFileInfo _selectedProfileFile;
 
+    /// <summary>
+    /// Gets or sets the currently selected profile file information.
+    /// </summary>    
     public ProfileFileInfo SelectedProfileFile
     {
         get => _selectedProfileFile;
@@ -114,8 +133,15 @@ public class SettingsProfilesViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Private field of <see cref="IsDailyBackupEnabled" /> property.
+    /// </summary>
     private bool _isDailyBackupEnabled;
 
+
+    /// <summary>
+    /// Gets or sets a value indicating whether daily backups are enabled.
+    /// </summary>
     public bool IsDailyBackupEnabled
     {
         get => _isDailyBackupEnabled;
@@ -132,8 +158,14 @@ public class SettingsProfilesViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Private field of <see cref="MaximumNumberOfBackups" /> property.
+    /// </summary>
     private int _maximumNumberOfBackups;
 
+    /// <summary>
+    /// Gets or sets the maximum number of backups to keep.
+    /// </summary>
     public int MaximumNumberOfBackups
     {
         get => _maximumNumberOfBackups;
@@ -153,6 +185,9 @@ public class SettingsProfilesViewModel : ViewModelBase
 
     #region Constructor, LoadSettings
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="SettingsProfilesViewModel" /> class and loads the current profile files.
+    /// </summary>    
     public SettingsProfilesViewModel()
     {
         _isLoading = true;
@@ -168,6 +203,9 @@ public class SettingsProfilesViewModel : ViewModelBase
         _isLoading = false;
     }
 
+    /// <summary>
+    /// Load view specific settings.
+    /// </summary>
     private void LoadSettings()
     {
         Location = ProfileManager.GetProfilesFolderLocation();
@@ -179,14 +217,6 @@ public class SettingsProfilesViewModel : ViewModelBase
     #endregion
 
     #region ICommands & Actions
-
-    public ICommand OpenLocationCommand => new RelayCommand(_ => OpenLocationAction());
-
-    private static void OpenLocationAction()
-    {
-        Process.Start("explorer.exe", ProfileManager.GetProfilesFolderLocation());
-    }
-
     /// <summary>
     /// Gets the command that opens the location folder selection dialog.
     /// </summary>    
@@ -209,14 +239,16 @@ public class SettingsProfilesViewModel : ViewModelBase
             Location = dialog.SelectedPath;
     }
 
+
     /// <summary>
-    /// Sets the location path based on the provided drag-and-drop input.
-    /// </summary>
-    /// <param name="path">The path to set as the location.</param>
-    public void SetLocationPathFromDragDrop(string path)
+    /// Gets the command that initiates the action to change the location.
+    /// </summary>    
+    public ICommand OpenLocationCommand => new RelayCommand(_ => OpenLocationAction());
+
+    private static void OpenLocationAction()
     {
-        Location = path;
-    }
+        Process.Start("explorer.exe", ProfileManager.GetProfilesFolderLocation());
+    }    
 
     /// <summary>
     /// Gets the command that initiates the action to change the location.
@@ -238,13 +270,8 @@ public class SettingsProfilesViewModel : ViewModelBase
         if (!result)
             return;
 
-        // Save settings at the current location before changing it to prevent
-        // unintended saves to the new location (e.g., triggered by background timer or the app close & restart).
-        SettingsManager.Save();
-
         // Set new location in SettingsInfo
         SettingsManager.Current.Profiles_FolderLocation = Location;
-        SettingsManager.Save();
 
         // Restart the application
         (Application.Current.MainWindow as MainWindow)?.RestartApplication();
@@ -270,14 +297,9 @@ public class SettingsProfilesViewModel : ViewModelBase
         if (!result)
             return;
 
-        // Save settings at the current location before changing it to prevent
-        // unintended saves to the new location (e.g., triggered by background timer or the app close & restart).
-        SettingsManager.Save();
-
         // Clear custom location to revert to default
         SettingsManager.Current.Profiles_FolderLocation = null;
-        SettingsManager.Save();
-
+        
         // Restart the application
         (Application.Current.MainWindow as MainWindow)?.RestartApplication();
     }
@@ -550,5 +572,16 @@ public class SettingsProfilesViewModel : ViewModelBase
             .FirstOrDefault(p => p.Name.Equals(profileName, StringComparison.OrdinalIgnoreCase));
     }
 
+    #endregion
+
+    #region Methods
+    /// <summary>
+    /// Sets the location path based on the provided drag-and-drop input.
+    /// </summary>
+    /// <param name="path">The path to set as the location.</param>
+    public void SetLocationPathFromDragDrop(string path)
+    {
+        Location = path;
+    }
     #endregion
 }
