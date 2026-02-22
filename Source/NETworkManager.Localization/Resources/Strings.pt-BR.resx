@@ -3973,29 +3973,29 @@ Se clicar em Cancelar, o arquivo de perfil permanecerá descriptografado.</value
     <value>Restaurar local padrão?</value>
   </data>
   <data name="RestoreDefaultSettingsLocationMessage" xml:space="preserve">
-    <value>The default settings location is restored and the application is restarted afterwards.
+    <value>O caminho padrão das configurações é restaurado e o aplicativo é reiniciado em seguida.
 
-You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+Você pode copiar o arquivo "settings.json" de "{0}" para "{1}" para migar suas configurações anteriores, se necessário. O aplicativo precisa ser fechado para prevenir que as configurações sejam sobrescritas.</value>
   </data>
   <data name="ChangeLocationQuestion" xml:space="preserve">
     <value>Alterar local?</value>
   </data>
   <data name="ChangeSettingsLocationMessage" xml:space="preserve">
-    <value>The settings location is changed and the application is restarted afterwards.
+    <value>O local das configurações é alterado e o aplicativo é reiniciado em seguida.
 
-You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+Você pode copiar o arquivo "settings.json" de "{0}" para "{1}" para migar suas configurações anteriores, se necessário. O aplicativo precisa ser fechado para prevenir que as configurações sejam sobrescritas.</value>
   </data>
   <data name="EnterValidFolderPath" xml:space="preserve">
     <value>Entre um caminho válido para uma pasta!</value>
   </data>
   <data name="ChangeProfilesLocationMessage" xml:space="preserve">
-    <value>The profiles location is changed and the application is restarted afterwards.
+    <value>O local dos perfis é alterado e o aplicativo é reiniciado em seguida.
 
-You can copy your profile files from “{0}” to “{1}” to migrate your existing profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten.</value>
+Você pode copiar seus arquivos de perfil de "{0}" para "{1}" para migrar seus perfis existentes, se necessário. O aplicativo precisa ser fechado para prevenir que os perfis sejam sobrescritos.</value>
   </data>
   <data name="RestoreDefaultProfilesLocationMessage" xml:space="preserve">
-    <value>The default profiles location is restored and the application is restarted afterwards.
+    <value>O local padrão dos perfis é alterado e o aplicativo é reiniciado em seguida.
 
-You can copy your profile files from “{0}” to “{1}” to migrate your existing profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten.</value>
+Você pode copiar seus arquivos de perfil de "{0}" para "{1}" para migrar seus perfis existentes, se necessário. O aplicativo precisa ser fechado para prevenir que os perfis sejam sobrescritos.</value>
   </data>
 </root>
