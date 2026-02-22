@@ -3944,4 +3944,57 @@ If you click Cancel, the profile file will remain unencrypted.</value>
   <data name="ToolTip_RestartRequired" xml:space="preserve">
     <value>A restart is required to apply changes such as language settings.</value>
   </data>
+  <data name="CouldNotParseOrResolveDNSServers" xml:space="preserve">
+    <value>Could not parse or resolve any of the specified DNS servers.</value>
+  </data>
+  <data name="CouldNotParseX" xml:space="preserve">
+    <value>Could not parse "{0}".</value>
+  </data>
+  <data name="MaximumNumberOfBackups" xml:space="preserve">
+    <value>Maximum number of backups</value>
+  </data>
+  <data name="CreateDailyBackup" xml:space="preserve">
+    <value>Create daily backup</value>
+  </data>
+  <data name="HelpMessage_MaximumNumberOfBackups" xml:space="preserve">
+    <value>Number of backups that are retained before the oldest one is deleted.</value>
+  </data>
+  <data name="SettingManagedByAdministrator" xml:space="preserve">
+    <value>This setting is managed by your administrator.</value>
+  </data>
+  <data name="RestoreDefaultLocation" xml:space="preserve">
+    <value>Restore default location</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="RestoreDefaultLocationQuestion" xml:space="preserve">
+    <value>Restore default location?</value>
+  </data>
+  <data name="RestoreDefaultSettingsLocationMessage" xml:space="preserve">
+    <value>The default settings location is restored and the application is restarted afterwards.
+
+You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+  </data>
+  <data name="ChangeLocationQuestion" xml:space="preserve">
+    <value>Change location?</value>
+  </data>
+  <data name="ChangeSettingsLocationMessage" xml:space="preserve">
+    <value>The settings location is changed and the application is restarted afterwards.
+
+You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+  </data>
+  <data name="EnterValidFolderPath" xml:space="preserve">
+    <value>Enter a valid folder path!</value>
+  </data>
+  <data name="ChangeProfilesLocationMessage" xml:space="preserve">
+    <value>The profiles location is changed and the application is restarted afterwards.
+
+You can copy your profile files from “{0}” to “{1}” to migrate your existing profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten.</value>
+  </data>
+  <data name="RestoreDefaultProfilesLocationMessage" xml:space="preserve">
+    <value>The default profiles location is restored and the application is restarted afterwards.
+
+You can copy your profile files from “{0}” to “{1}” to migrate your existing profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten.</value>
+  </data>
 </root>
