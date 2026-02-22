@@ -58,13 +58,13 @@ Release date: **xx.xx.2025**
 
   :::
 
+**Profiles**
+
+- Profiles folder location can now be changed by the user in the settings (see [Profiles > Location](../settings/profiles.md#location) documentation for more information). Additionally, it can be configured via a system-wide policy, allowing administrators to enforce a specific location for all users. [#3340](https://github.com/BornToBeRoot/NETworkManager/pull/3340)
+
 **Settings**
 
 - Settings folder location can now be changed by the user in the settings (see [Settings > Location](../settings/settings.md#location) documentation for more information). Additionally, it can be configured via a system-wide policy, allowing administrators to enforce a specific location for all users. [#3324](https://github.com/BornToBeRoot/NETworkManager/pull/3324)
-
-**Profiles**
-
-- Profiles folder location can now be changed by the user in the settings (see [Profiles > Location](../settings/profiles.md#location) documentation for more information). Additionally, it can be configured via a system-wide policy, allowing administrators to enforce a specific location for all users.
 
 **Update**
 
