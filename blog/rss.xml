@@ -4,7 +4,7 @@
         <title>NETworkManager Blog</title>
         <link>https://borntoberoot.net/NETworkManager/blog</link>
         <description>NETworkManager Blog</description>
-        <lastBuildDate>Thu, 19 Feb 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 22 Feb 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
@@ -12,7 +12,7 @@
             <title><![CDATA[System-Wide Policies for Enterprise Deployments]]></title>
             <link>https://borntoberoot.net/NETworkManager/blog/system-wide-policies-for-enterprise-deployments</link>
             <guid>https://borntoberoot.net/NETworkManager/blog/system-wide-policies-for-enterprise-deployments</guid>
-            <pubDate>Thu, 19 Feb 2026 00:00:00 GMT</pubDate>
+            <pubDate>Sun, 22 Feb 2026 00:00:00 GMT</pubDate>
             <description><![CDATA[NETworkManager now supports system-wide policies, giving administrators centralized control over application settings across all users on a machine. This feature is available since the pre-release version 2026.02.19.0 and can now be tested.]]></description>
             <content:encoded><![CDATA[<p>NETworkManager now supports system-wide policies, giving administrators centralized control over application settings across all users on a machine. This feature is available since the <a href="https://github.com/BornToBeRoot/NETworkManager/releases" target="_blank" rel="noopener noreferrer" class="">pre-release version 2026.02.19.0</a> and can now be tested.</p>
 <p><img decoding="async" loading="lazy" alt="System-wide policy indicator" src="https://borntoberoot.net/NETworkManager/assets/images/system-wide-policy-indicator-cf235b9935f6426da4c97e2ec5c77446.png" width="1200" height="600" class="img_ev3q"></p>
@@ -30,15 +30,27 @@
 <div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token property" style="color:#36acaa">"Policy_Name"</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">true</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></span></code></pre></div></div>
 <p>Property names follow the pattern <code>Section_SettingName</code>. You can find the available policy names and values in the corresponding <a href="https://borntoberoot.net/NETworkManager/docs/category/settings" target="_blank" rel="noopener noreferrer" class="">setting's documentation</a>.</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="example-policy">Example Policy<a href="https://borntoberoot.net/NETworkManager/blog/system-wide-policies-for-enterprise-deployments#example-policy" class="hash-link" aria-label="Direct link to Example Policy" title="Direct link to Example Policy" translate="no">​</a></h3>
-<p>For example, the <a href="https://borntoberoot.net/NETworkManager/docs/settings/update" target="_blank" rel="noopener noreferrer" class=""><code>Update_CheckForUpdatesAtStartup</code></a> policy controls whether the application checks for new program versions on GitHub when the application is launched.</p>
+<p>For example, the <a href="https://borntoberoot.net/NETworkManager/docs/settings/update" target="_blank" rel="noopener noreferrer" class=""><code>Update_CheckForUpdatesAtStartup</code></a> policy controls whether the application checks for new program versions on GitHub when the application is launched. The <a href="https://borntoberoot.net/NETworkManager/docs/settings/profiles" target="_blank" rel="noopener noreferrer" class=""><code>Profiles_FolderLocation</code></a> and <a href="https://borntoberoot.net/NETworkManager/docs/settings/settings" target="_blank" rel="noopener noreferrer" class=""><code>Settings_FolderLocation</code></a> policies allow administrators to redirect profile and settings storage to a centralized location, such as a network share or a custom local path.</p>
 <p><strong>Values:</strong></p>
+<ul>
+<li class=""><code>Update_CheckForUpdatesAtStartup</code>:<!-- -->
 <ul>
 <li class=""><code>true</code> — Force enable automatic update checks at startup for all users</li>
 <li class=""><code>false</code> — Force disable automatic update checks at startup for all users</li>
 <li class="">Omit the property — Allow users to control this setting themselves</li>
 </ul>
+</li>
+<li class=""><code>Profiles_FolderLocation</code> / <code>Settings_FolderLocation</code>:<!-- -->
+<ul>
+<li class="">Absolute path (e.g., <code>C:\\Path\\To\\Profiles</code>)</li>
+<li class="">Path with environment variables (e.g., <code>%UserProfile%\\NETworkManager\\Settings</code>)</li>
+<li class="">UNC path (e.g., <code>\\\\Server\\Shared\\NETworkManager\\Profiles</code>)</li>
+<li class="">Omit the property — Allow the default location logic to apply</li>
+</ul>
+</li>
+</ul>
 <p><strong>Example <code>config.json</code>:</strong></p>
-<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token property" style="color:#36acaa">"Update_CheckForUpdatesAtStartup"</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">false</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></span></code></pre></div></div>
+<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_QJqH"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token punctuation" style="color:#393A34">{</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token property" style="color:#36acaa">"Update_CheckForUpdatesAtStartup"</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token boolean" style="color:#36acaa">false</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token property" style="color:#36acaa">"Profiles_FolderLocation"</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"\\\\Server\\Shared\\NETworkManager\\Profiles"</span><span class="token punctuation" style="color:#393A34">,</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  </span><span class="token property" style="color:#36acaa">"Settings_FolderLocation"</span><span class="token operator" style="color:#393A34">:</span><span class="token plain"> </span><span class="token string" style="color:#e3116c">"%UserProfile%\\NETworkManager\\Settings"</span><span class="token plain"></span><br></span><span class="token-line" style="color:#393A34"><span class="token plain"></span><span class="token punctuation" style="color:#393A34">}</span><br></span></code></pre></div></div>
 <div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><ul>
 <li class="">The file must be named exactly <code>config.json</code></li>
 <li class="">The file must contain valid JSON syntax</li>
