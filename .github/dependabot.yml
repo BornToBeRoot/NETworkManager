@@ -7,8 +7,6 @@ updates:
   target-branch: main
   commit-message:
     prefix: "Dependency (dependabot/nuget):"
-  labels:
-  - ":heavy_check_mark: dependencies"
 - package-ecosystem: "dotnet-sdk"
   directory: "/Source"
   ignore:
@@ -20,8 +18,6 @@ updates:
   target-branch: main
   commit-message:
     prefix: "Dependency (dependabot/dotnet-sdk):"
-  labels:
-  - ":heavy_check_mark: dependencies"
 - package-ecosystem: "npm"
   directory: "/Website"
   schedule:
@@ -29,5 +25,3 @@ updates:
   target-branch: main
   commit-message:
     prefix: "Dependency (dependabot/npm):"
-  labels:
-  - ":heavy_check_mark: dependencies"
