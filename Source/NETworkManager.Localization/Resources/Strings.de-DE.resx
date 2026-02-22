@@ -3972,20 +3972,30 @@ Wenn Sie auf „Abbrechen“ klicken, bleibt die Profildatei unverschlüsselt.</
   <data name="RestoreDefaultLocationQuestion" xml:space="preserve">
     <value>Standard-Speicherort wiederherstellen?</value>
   </data>
-  <data name="RestoreDefaultLocationSettingsMessage" xml:space="preserve">
-    <value>Der Speicherort wird wiederhergestellt und die Anwendung anschließend neu gestartet.
+  <data name="RestoreDefaultSettingsLocationMessage" xml:space="preserve">
+    <value>Der Standardspeicherort für Einstellungen wird wiederhergestellt und die Anwendung anschließend neu gestartet.
 
 Bei Bedarf können Sie die Datei „settings.json“ von „{0}“ nach „{1}“ kopieren, um Ihre bisherigen Einstellungen zu migrieren. Dazu muss die Anwendung geschlossen sein, damit die Einstellungen nicht überschrieben werden.</value>
   </data>
   <data name="ChangeLocationQuestion" xml:space="preserve">
     <value>Pfad ändern?</value>
   </data>
-  <data name="ChangeLocationSettingsMessage" xml:space="preserve">
-    <value>Der Speicherort wird geändert und die Anwendung anschließend neu gestartet.
+  <data name="ChangeSettingsLocationMessage" xml:space="preserve">
+    <value>Der Speicherort für Einstellungen wird geändert und die Anwendung anschließend neu gestartet.
 
-Bei Bedarf können Sie die Datei „settings.json“ von „{0}“ nach „{1}“ kopieren, um Ihre bisherigen Einstellungen zu übertragen. Dazu muss die Anwendung geschlossen sein, damit die Einstellungen nicht überschrieben werden.</value>
+Bei Bedarf können Sie die Datei „settings.json“ von „{0}“ nach „{1}“ kopieren, um Ihre bisherigen Einstellungen zu migrieren. Dazu muss die Anwendung geschlossen sein, damit die Einstellungen nicht überschrieben werden.</value>
   </data>
   <data name="EnterValidFolderPath" xml:space="preserve">
     <value>Geben Sie einen gültigen Ordnerpfad ein!</value>
+  </data>
+  <data name="ChangeProfilesLocationMessage" xml:space="preserve">
+    <value>Der Speicherort für Profile wird geändert und die Anwendung anschließend neu gestartet.
+
+Bei Bedarf können Sie die Profiledateien von „{0}“ nach „{1}“ kopieren, um Ihre bisherigen Profile zu migrieren. Dazu muss die Anwendung geschlossen sein, damit die Profile nicht überschrieben werden.</value>
+  </data>
+  <data name="RestoreDefaultProfilesLocationMessage" xml:space="preserve">
+    <value>Der Standardspeicherort für Profile wird wiederhergestellt und die Anwendung anschließend neu gestartet.
+
+Bei Bedarf können Sie die Profildateien von „{0}“ nach „{1}“ kopieren, um Ihre bisherigen Profile zu migrieren. Dazu muss die Anwendung geschlossen sein, damit die Profile nicht überschrieben werden.</value>
   </data>
 </root>
