@@ -3964,38 +3964,38 @@ Windows の「設定」&gt;「プライバシーとセキュリティ」&gt;「�
     <value>この設定は管理者によって管理されています。</value>
   </data>
   <data name="RestoreDefaultLocation" xml:space="preserve">
-    <value>Restore default location</value>
+    <value>既定の場所を復元</value>
   </data>
   <data name="Restore" xml:space="preserve">
-    <value>Restore</value>
+    <value>復元</value>
   </data>
   <data name="RestoreDefaultLocationQuestion" xml:space="preserve">
-    <value>Restore default location?</value>
+    <value>既定の場所を復元しますか?</value>
   </data>
   <data name="RestoreDefaultSettingsLocationMessage" xml:space="preserve">
-    <value>The default settings location is restored and the application is restarted afterwards.
+    <value>デフォルトの設定場所が復元され、その後アプリケーションが再起動されます。
 
-You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+必要に応じて、"settings.json"ファイルを "{0}" から "{1}" にコピーして、以前の設定を移行できます。設定が上書きされないように、この操作を行うにはアプリケーションを閉じる必要があります。</value>
   </data>
   <data name="ChangeLocationQuestion" xml:space="preserve">
-    <value>Change location?</value>
+    <value>場所を変更しますか?</value>
   </data>
   <data name="ChangeSettingsLocationMessage" xml:space="preserve">
-    <value>The settings location is changed and the application is restarted afterwards.
+    <value>デフォルトの設定場所が復元され、その後アプリケーションが再起動されます。
 
-You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+必要に応じて、"settings.json"ファイルを "{0}" から "{1}" にコピーして、以前の設定を移行できます。設定が上書きされないように、この操作を行うにはアプリケーションを閉じる必要があります。</value>
   </data>
   <data name="EnterValidFolderPath" xml:space="preserve">
-    <value>Enter a valid folder path!</value>
+    <value>有効なフォルダーパスを入力してください!</value>
   </data>
   <data name="ChangeProfilesLocationMessage" xml:space="preserve">
-    <value>The profiles location is changed and the application is restarted afterwards.
+    <value>プロファイルの場所が変更され、その後アプリケーションが再起動されます。
 
-You can copy your profile files from “{0}” to “{1}” to migrate your existing profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten.</value>
+必要に応じて、プロファイルファイルを “{0}” から “{1}” にコピーして既存のプロファイルを移行できます。プロファイルが上書きされないように、この操作を行うにはアプリケーションを終了してください。</value>
   </data>
   <data name="RestoreDefaultProfilesLocationMessage" xml:space="preserve">
-    <value>The default profiles location is restored and the application is restarted afterwards.
+    <value>プロファイルの既定の場所が復元され、その後アプリケーションが再起動されます。
 
-You can copy your profile files from “{0}” to “{1}” to migrate your existing profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten.</value>
+必要に応じて、プロファイルファイルを “{0}” から “{1}” にコピーして、既存のプロファイルを移行できます。プロファイルが上書きされないように、この操作を行うにはアプリケーションを終了してください。</value>
   </data>
 </root>
