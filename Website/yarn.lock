@@ -7428,10 +7428,10 @@ react-fast-compare@^3.2.0:
     react-fast-compare "^3.2.0"
     shallowequal "^1.1.0"
 
-react-image-gallery@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/react-image-gallery/-/react-image-gallery-2.1.1.tgz#87b02929b759fd7311aa3c681603bad5e52fb435"
-  integrity sha512-DwrlormVgpibaQkicn6qZGz6pll519xajT06zvE64nZGapiudTB3pdPh8Rp1lZ3Iy+N+u9T3NlZl91XTAxN+zg==
+react-image-gallery@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/react-image-gallery/-/react-image-gallery-2.1.2.tgz#17bef1af1e0a5281dc86e2774db48821ce8e0ef6"
+  integrity sha512-H+/elQ75DwdRbGJcAd4LnGDac115YxWp6u4d2O1jThkRVJMkJuQFLPvcnhGu5YFNwqk+tywg0c4D4SuQZ0KvGA==
 
 react-is@^16.13.1, react-is@^16.6.0, react-is@^16.7.0:
   version "16.13.1"
