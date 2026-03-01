@@ -24,6 +24,10 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
 
     private void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
     {
+        if (IsConnected && _appWin != IntPtr.Zero)
+            NativeMethods.SendMessage(_appWin, (uint)NativeMethods.WM.DPICHANGED_AFTERPARENT, IntPtr.Zero,
+                IntPtr.Zero);
+
         ResizeEmbeddedWindow();
     }
 
