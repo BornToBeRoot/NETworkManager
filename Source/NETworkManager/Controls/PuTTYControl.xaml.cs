@@ -22,6 +22,11 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
         ResizeEmbeddedWindow();
     }
 
+    private void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
+    {
+        ResizeEmbeddedWindow();
+    }
+
     #endregion
 
     #region Variables

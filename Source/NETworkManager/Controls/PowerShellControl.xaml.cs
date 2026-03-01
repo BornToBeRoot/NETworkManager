@@ -21,6 +21,11 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
         ResizeEmbeddedWindow();
     }
 
+    private void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
+    {
+        ResizeEmbeddedWindow();
+    }
+
     #endregion
 
     #region Variables
