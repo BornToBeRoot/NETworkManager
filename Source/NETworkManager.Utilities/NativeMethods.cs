@@ -40,7 +40,7 @@ public class NativeMethods
     public enum WM : uint
     {
         SYSCOMMAND = 0x0112,
-        DPICHANGED_AFTERPARENT = 0x02E3
+        DPICHANGED = 0x02E0
     }
 
     #endregion
@@ -76,6 +76,9 @@ public class NativeMethods
 
     [DllImport("user32.dll", CharSet = CharSet.Auto)]
     public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+    [DllImport("user32.dll", CharSet = CharSet.Auto)]
+    public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
     [DllImport("user32.dll", SetLastError = true)]
     public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int cx, int cy, bool repaint);

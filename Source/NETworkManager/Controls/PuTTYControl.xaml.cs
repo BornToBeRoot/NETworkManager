@@ -24,11 +24,19 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
 
     private void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
     {
-        if (IsConnected && _appWin != IntPtr.Zero)
-            NativeMethods.SendMessage(_appWin, (uint)NativeMethods.WM.DPICHANGED_AFTERPARENT, IntPtr.Zero,
-                IntPtr.Zero);
-
+        // Resize first so the embedded window is physically on the new monitor,
+        // then post WM_DPICHANGED with the explicit new DPI in wParam so the
+        // embedded process rescales its fonts without relying on a cross-process
+        // GetDpiForWindow() call (which is unreliable after SetParent across processes).
         ResizeEmbeddedWindow();
+
+        if (IsConnected && _appWin != IntPtr.Zero)
+        {
+            var dpiX = (int)e.NewDpi.PixelsPerInchX;
+            var dpiY = (int)e.NewDpi.PixelsPerInchY;
+            var wParam = new IntPtr(unchecked((int)(uint)((dpiX & 0xFFFF) | ((dpiY & 0xFFFF) << 16))));
+            NativeMethods.PostMessage(_appWin, (uint)NativeMethods.WM.DPICHANGED, wParam, IntPtr.Zero);
+        }
     }
 
     #endregion
