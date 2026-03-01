@@ -17,25 +17,54 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
 {
     #region Events
 
+    private bool _isDpiChanging;
+
     private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         ResizeEmbeddedWindow();
     }
 
-    private void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
+    private async void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
     {
-        // Resize first so the embedded window is physically on the new monitor,
-        // then post WM_DPICHANGED with the explicit new DPI in wParam so the
-        // embedded process rescales its fonts without relying on a cross-process
-        // GetDpiForWindow() call (which is unreliable after SetParent across processes).
-        ResizeEmbeddedWindow();
+        if (!IsConnected || _appWin == IntPtr.Zero || _isDpiChanging)
+            return;
 
-        if (IsConnected && _appWin != IntPtr.Zero)
+        _isDpiChanging = true;
+
+        try
         {
-            var dpiX = (int)e.NewDpi.PixelsPerInchX;
-            var dpiY = (int)e.NewDpi.PixelsPerInchY;
-            var wParam = new IntPtr(unchecked((int)(uint)((dpiX & 0xFFFF) | ((dpiY & 0xFFFF) << 16))));
-            NativeMethods.PostMessage(_appWin, (uint)NativeMethods.WM.DPICHANGED, wParam, IntPtr.Zero);
+            // Windows does not forward DPI change notifications across process boundaries
+            // after SetParent. Workaround: temporarily detach the embedded window back to
+            // a top-level window on the new monitor. Windows then delivers WM_DPICHANGED
+            // natively to the process's own message loop so it can rescale its fonts,
+            // exactly as it would when running standalone. Then re-embed and resize.
+            var screen = System.Windows.Forms.Screen.FromHandle(WindowHost.Handle);
+
+            NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Hide);
+            NativeMethods.SetParent(_appWin, IntPtr.Zero);
+
+            // Place the window on the new monitor so Windows sends it WM_DPICHANGED.
+            // The size (800x600) is a reasonable placeholder; the final dimensions are
+            // set by ResizeEmbeddedWindow() after re-embedding.
+            NativeMethods.SetWindowPos(_appWin, IntPtr.Zero,
+                screen.Bounds.X + screen.Bounds.Width / 2,
+                screen.Bounds.Y + screen.Bounds.Height / 2,
+                800, 600, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+
+            // 250 ms gives the process's message loop time to dequeue and handle
+            // WM_DPICHANGED, which Windows delivers asynchronously for cross-thread windows.
+            await Task.Delay(250);
+
+            if (!IsConnected || _appWin == IntPtr.Zero)
+                return;
+
+            NativeMethods.SetParent(_appWin, WindowHost.Handle);
+            ResizeEmbeddedWindow();
+            NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.ShowNoActivate);
+        }
+        finally
+        {
+            _isDpiChanging = false;
         }
     }
 

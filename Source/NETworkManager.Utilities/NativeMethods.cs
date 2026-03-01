@@ -39,8 +39,7 @@ public class NativeMethods
 
     public enum WM : uint
     {
-        SYSCOMMAND = 0x0112,
-        DPICHANGED = 0x02E0
+        SYSCOMMAND = 0x0112
     }
 
     #endregion
