@@ -62,7 +62,7 @@ Release date: **xx.xx.2026**
 
 **General**
 
-- Fix null dereferences in various validators and converters. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
+- Fix null dereferences in various validators and converters. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 
 ## Dependencies, Refactoring & Documentation
 
