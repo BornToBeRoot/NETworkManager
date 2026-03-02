@@ -33,7 +33,7 @@ Release date: **xx.xx.2026**
 - DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PuTTY window now receives an explicit `WM_DPICHANGED` message with the new DPI value packed into `wParam`, since the OS does not forward this message across process boundaries after `SetParent`. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
 
 
-- Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
+- Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 
 ## Improvements
 
