@@ -19,8 +19,6 @@ Release date: **xx.xx.2026**
 
 ## What's new?
 
-- Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
-
 **PowerShell**
 
 - DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PowerShell (conhost) window now rescales its font automatically using the Windows Console API (`AttachConsole` + `SetCurrentConsoleFontEx`), bypassing the OS limitation that prevents `WM_DPICHANGED` from being forwarded to cross-process child windows. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
@@ -28,6 +26,10 @@ Release date: **xx.xx.2026**
 **PuTTY**
 
 - DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PuTTY window now receives an explicit `WM_DPICHANGED` message with the new DPI value packed into `wParam`, since the OS does not forward this message across process boundaries after `SetParent`. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
+
+**Firewall**
+
+- Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
 
 ## Improvements
 
@@ -41,7 +43,6 @@ Release date: **xx.xx.2026**
 
 ## Bug Fixes
 
-- Fix null dereferences in various validators and converters. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 **PowerShell**
 
 - Fixed incorrect initial embedded window size on high-DPI monitors. The `WindowsFormsHost` panel now sets its initial dimensions in physical pixels using the current DPI scale factor, ensuring the PowerShell window fills the panel correctly at startup. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
@@ -53,6 +54,10 @@ Release date: **xx.xx.2026**
 **TigerVNC**
 
 - Fixed incorrect initial embedded window size on high-DPI monitors. The `WindowsFormsHost` panel now sets its initial dimensions in physical pixels using the current DPI scale factor, ensuring the TigerVNC window fills the panel correctly at startup. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
+
+**General**
+
+- Fix null dereferences in various validators and converters. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
 
 ## Dependencies, Refactoring & Documentation
 
