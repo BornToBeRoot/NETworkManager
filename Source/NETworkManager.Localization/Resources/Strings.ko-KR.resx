@@ -3942,6 +3942,9 @@ Windows 설정 &gt; 개인정보 보호 및 보안 &gt; 위치를 열고 데스�
   <data name="ToolTip_RestartRequired" xml:space="preserve">
     <value>A restart is required to apply changes such as language settings.</value>
   </data>
+  <data name="NetworkProfile" xml:space="preserve">
+    <value>Network profile</value>
+  </data>
   <data name="CouldNotParseOrResolveDNSServers" xml:space="preserve">
     <value>Could not parse or resolve any of the specified DNS servers.</value>
   </data>
@@ -4006,5 +4009,161 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   </data>
   <data name="ToolTip_Reload" xml:space="preserve">
     <value>Reload</value>
+  </data>
+  <data name="NetworkConnectionProfile" xml:space="preserve">
+    <value>Network connection profile</value>
+  </data>
+  <data name="ToolTip_NetProfileNotConfigured" xml:space="preserve">
+    <value>Do not change system configuration</value>
+  </data>
+  <data name="Outbound" xml:space="preserve">
+    <value>Outbound</value>
+  </data>
+  <data name="Private_Short3" xml:space="preserve">
+    <value>Prv</value>
+  </data>
+  <data name="Private" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="Public" xml:space="preserve">
+    <value>Public</value>
+  </data>
+  <data name="RemotePorts" xml:space="preserve">
+    <value>Remote ports</value>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="LocalPorts" xml:space="preserve">
+    <value>Local ports</value>
+  </data>
+  <data name="Inbound" xml:space="preserve">
+    <value>Inbound</value>
+  </data>
+  <data name="NotConfigured" xml:space="preserve">
+    <value>Not configured</value>
+  </data>
+  <data name="PipeNotAllowed" xml:space="preserve">
+    <value>Character ‘|’ is not allowed.</value>
+  </data>
+  <data name="Allow" xml:space="preserve">
+    <value>Allow</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="EnterPathToExe" xml:space="preserve">
+    <value>Enter path to *.exe file.</value>
+  </data>
+  <data name="SelectDots" xml:space="preserve">
+    <value>Select…</value>
+  </data>
+  <data name="RuleDescription" xml:space="preserve">
+    <value>Description of the firewall rule</value>
+  </data>
+  <data name="Public_Short3" xml:space="preserve">
+    <value>Pub</value>
+  </data>
+  <data name="Domain_Short3" xml:space="preserve">
+    <value>Dom</value>
+  </data>
+  <data name="InputLengthExceeded" xml:space="preserve">
+    <value>Input does exceed valid length</value>
+  </data>
+  <data name="Firewall" xml:space="preserve">
+    <value>Firewall</value>
+  </data>
+  <data name="CombineLocalAndRemotePortHistory" xml:space="preserve">
+    <value>Combine local and remote port history</value>
+  </data>
+  <data name="UseWindowsPortListSyntax" xml:space="preserve">
+    <value>Use Windows port list syntax</value>
+  </data>
+  <data name="WindowsFirewallSettings" xml:space="preserve">
+    <value>Windows firewall settings</value>
+  </data>
+  <data name="DeleteAll" xml:space="preserve">
+    <value>Delete all</value>
+  </data>
+  <data name="ClearRulesInWindows" xml:space="preserve">
+    <value>Clear rules in Windows</value>
+  </data>
+  <data name="InterfaceType" xml:space="preserve">
+    <value>Interface type</value>
+  </data>
+  <data name="Wired" xml:space="preserve">
+    <value>Wired</value>
+  </data>
+  <data name="Wireless" xml:space="preserve">
+    <value>Wireless</value>
+  </data>
+  <data name="RemoteAccess" xml:space="preserve">
+    <value>Remote access</value>
+  </data>
+  <data name="EnterLessThan10001PortsOrPortRanges" xml:space="preserve">
+    <value>Enter less than 10001 ports or port ranges</value>
+  </data>
+  <data name="AtLeastOneNetworkProfileMustBeSelected" xml:space="preserve">
+    <value>At least one network profile must be selected!</value>
+  </data>
+  <data name="PipeNotAllowedWhenFirewallEnabled" xml:space="preserve">
+    <value>Character ‘|’ is not allowed while Firewall profile is enabled.</value>
+  </data>
+  <data name="RuleHasConfigurationError" xml:space="preserve">
+    <value>The rule has a configuration error</value>
+  </data>
+  <data name="ProgramNameTooLong" xml:space="preserve">
+    <value>Choose a program that does not exceed 256 characters including path!</value>
+  </data>
+  <data name="ErasePortHistory" xml:space="preserve">
+    <value>Erase port history</value>
+  </data>
+  <data name="EraseLocalPortHistory" xml:space="preserve">
+    <value>Erase the local port history</value>
+  </data>
+  <data name="EraseRemotePortHistory" xml:space="preserve">
+    <value>Erase the remote port history</value>
+  </data>
+  <data name="EnterPositiveInteger" xml:space="preserve">
+    <value>Enter positive integer!</value>
+  </data>
+  <data name="MaxLengthOfPortEntries" xml:space="preserve">
+    <value>Maximum length of port entries</value>
+  </data>
+  <data name="Firewall_ToolTip_Add" xml:space="preserve">
+    <value>Add firewall rule</value>
+  </data>
+  <data name="Firewall_ToolTip_Apply" xml:space="preserve">
+    <value>Apply firewall rules</value>
+  </data>
+  <data name="Firewall_ToolTip_Clear" xml:space="preserve">
+    <value>Clear all firewall rules</value>
+  </data>
+  <data name="Firewall_ToolTip_ClearWindows" xml:space="preserve">
+    <value>Clear NETworkManager rules in Windows firewall</value>
+  </data>
+  <data name="Firewall_ToolTip_Delete" xml:space="preserve">
+    <value>Delete selected or last firewall rule</value>
+  </data>
+  <data name="Ctrl" xml:space="preserve">
+    <value>Ctrl</value>
+  </data>
+  <data name="Alt" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="Shift" xml:space="preserve">
+    <value>Shift</value>
+  </data>
+  <data name="Del" xml:space="preserve">
+    <value>Del</value>
+  </data>
+  <data name="Firewall_ToolTip_OpenWindowsFirewall" xml:space="preserve">
+    <value>Open Windows firewall settings</value>
+  </data>
+  <data name="FirewallRules" xml:space="preserve">
+    <value>Firewall rules</value>
   </data>
 </root>
