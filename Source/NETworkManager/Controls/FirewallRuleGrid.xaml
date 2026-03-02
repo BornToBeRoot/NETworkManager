@@ -1,0 +1,679 @@
+﻿<UserControl
+    x:Class="NETworkManager.Controls.FirewallRuleGrid"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
+    xmlns:firewall="clr-namespace:NETworkManager.Models.Firewall;assembly=NETworkManager.Models"
+    xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+    xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+    xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
+    xmlns:localControls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+    xmlns:typedProxies="clr-namespace:NETworkManager.Utilities.WPF.TypedBindingProxies;assembly=NETworkManager.Utilities.WPF"
+    xmlns:wpfUtils="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+    mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:FirewallViewModel}">
+    <UserControl.Resources>
+        <converters:EnumToStringConverter x:Key="EnumToStringConverter" />
+        <converters:BoolArrayToFwRuleCategoriesConverter x:Key="BoolArrayToFwRuleCategoriesConverter" />
+        <converters:EnumToIntConverter x:Key="EnumToIntConverter" />
+        <converters:PortRangeToPortSpecificationConverter x:Key="PortRangeToPortSpecificationConverter" />
+        <converters:SizeFactorConverter x:Key="SizeFactorConverter" />
+        <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
+        <typedProxies:FrameworkElementProxy
+            x:Key="FrameworkElementProxy"
+            Data="{Binding ElementName=RuleGrid}" />
+        <converters:FirewallRuleViewModelVisibilityConverter
+            x:Key="FirewallIFirewallRuleViewModelVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid ClipToBounds="True">
+        <controls:MultiSelectDataGrid
+            x:Name="RuleGrid"
+            PreviewKeyDown="DataGridRow_PreviewKeyDown"
+            Sorting="RuleGrid_OnSorting"
+            ItemsSource="{Binding Path=FirewallRules, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItem="{Binding Path=SelectedRule, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItemsList="{Binding Path=SelectedRules, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            FocusVisualStyle="{x:Null}"
+            RowDetailsVisibilityMode="Collapsed"
+            EnableRowVirtualization="True"
+            UseLayoutRounding="True"
+            SnapsToDevicePixels="True"
+            ScrollViewer.CanContentScroll="True"
+            VirtualizingPanel.IsVirtualizing="True"
+            VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+            VirtualizingPanel.IsContainerVirtualizable="True"
+            VirtualizingPanel.VirtualizationMode="Recycling"
+            VirtualizingPanel.ScrollUnit="Pixel">
+            <controls:MultiSelectDataGrid.Resources>
+                <!-- Apparently everything else is ignored. -->
+                <!-- Without this, the horizontal bar will flicker up on resizes. -->
+                <Style TargetType="{x:Type ScrollViewer}">
+                    <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+                    <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                </Style>
+                <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                    <MenuItem
+                        Header="{x:Static localization:Strings.Add}"
+                        Command="{Binding AddRuleCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Add}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="{x:Static localization:Strings.Delete}"
+                              Command="{Binding DeleteRulesCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Delete}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Header="{x:Static localization:Strings.Apply}"
+                        Command="{Binding ApplyConfigurationCommand}"
+                        Visibility="{Binding IsClone,
+                        Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Check}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </controls:MultiSelectDataGrid.Resources>
+            <controls:MultiSelectDataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
+                    <EventSetter Event="MouseDoubleClick" Handler="Row_OnDoubleClick" />
+                    <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}" />
+                    <Setter Property="BorderThickness" Value="1" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding HasError}" Value="True">
+                            <Setter Property="BorderBrush" Value="#b95353" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=HasError}" Value="False" />
+                                <Condition
+                                    Binding="{Binding Path=IsSelected,
+                                    RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}"
+                                    Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource MahApps.Brushes.Accent}" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=HasError}" Value="False" />
+                                <Condition
+                                    Binding="{Binding Path=IsSelected,
+                                    RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}"
+                                    Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Background}" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </controls:MultiSelectDataGrid.RowStyle>
+            <controls:MultiSelectDataGrid.Columns>
+                <DataGridTemplateColumn Header="" Width="24" CanUserResize="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="ButtonBase_OnClick" Style="{StaticResource CleanButton}">
+                                <Rectangle
+                                    x:Name="ExpandRowDetails" Height="16" Width="16"
+                                    Fill="{DynamicResource MahApps.Brushes.Gray8}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronUp}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </Button>
+                            <DataTemplate.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Path=DetailsVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}"
+                                    Value="Visible">
+                                    <Setter TargetName="ExpandRowDetails" Property="OpacityMask">
+                                        <Setter.Value>
+                                            <VisualBrush Stretch="Uniform"
+                                                         Visual="{iconPacks:Material Kind=ChevronDown}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="ExpandRowDetails" Property="Fill"
+                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray6}" />
+                                </Trigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn
+                    Header="{x:Static localization:Strings.Name}"
+                    Binding="{Binding Name,
+                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SortMemberPath="Name"
+                    Width="20*" />
+                <DataGridTextColumn
+                    Header="{x:Static localization:Strings.Protocol}"
+                    Binding="{Binding Protocol,
+                    Converter={StaticResource EnumToStringConverter}}"
+                    SortMemberPath="Protocol"
+                    Width="8*">
+                </DataGridTextColumn>
+                <DataGridTextColumn
+                    Header="{x:Static localization:Strings.Direction}"
+                    Binding="{Binding Direction,
+                    Converter={StaticResource EnumToStringConverter}}"
+                    SortMemberPath="Direction"
+                    Width="8*" />
+                <DataGridTextColumn
+                    Header="{x:Static localization:Strings.LocalPorts}"
+                    Binding="{Binding LocalPorts,
+                    Converter={StaticResource PortRangeToPortSpecificationConverter}}"
+                    SortMemberPath="LocalPorts"
+                    Width="10*"
+                    MinWidth="50"
+                    Visibility="{Binding Data.DataContext.FirewallRules,
+                    Source={StaticResource FrameworkElementProxy},
+                    Converter={StaticResource FirewallIFirewallRuleViewModelVisibilityConverter},
+                    ConverterParameter=LocalPorts}" />
+                <DataGridTextColumn
+                    Header="{x:Static localization:Strings.RemotePorts}"
+                    Binding="{Binding RemotePorts,
+                    Converter={StaticResource PortRangeToPortSpecificationConverter}}"
+                    SortMemberPath="RemotePorts"
+                    Width="10*"
+                    MinWidth="50"
+                    Visibility="{Binding Data.DataContext.FirewallRules,
+                    Source={StaticResource FrameworkElementProxy},
+                    Converter={StaticResource FirewallIFirewallRuleViewModelVisibilityConverter},
+                    ConverterParameter=RemotePorts}" />
+                <DataGridTextColumn
+                    Header="{x:Static localization:Strings.Program}"
+                    Binding="{Binding FallbackValue={x:Null}, Path=Program.Executable.Name, Mode=OneWay}"
+                    SortMemberPath="Program"
+                    Width="10*"
+                    Visibility="{Binding Data.DataContext.FirewallRules,
+                    Source={StaticResource FrameworkElementProxy},
+                    Converter={StaticResource FirewallIFirewallRuleViewModelVisibilityConverter},
+                    ConverterParameter=Program}" />
+                <DataGridTextColumn
+                    Header="{x:Static localization:Strings.NetworkProfile}"
+                    Binding="{Binding NetworkProfiles, Mode=OneWay,
+                    Converter={StaticResource BoolArrayToFwRuleCategoriesConverter},
+                    UpdateSourceTrigger=PropertyChanged}"
+                    SortMemberPath="NetworkProfile"
+                    Width="15*" />
+                <DataGridTextColumn
+                    Header="{x:Static localization:Strings.InterfaceType}"
+                    Binding="{Binding InterfaceType,
+                    Converter={StaticResource EnumToStringConverter}}"
+                    SortMemberPath="InterfaceType"
+                    Width="15*" />
+                <DataGridTextColumn
+                    Header="{x:Static localization:Strings.Action}"
+                    Binding="{Binding Action,
+                    Converter={StaticResource EnumToStringConverter}}"
+                    SortMemberPath="Action"
+                    Width="10*" />
+            </controls:MultiSelectDataGrid.Columns>
+            <controls:MultiSelectDataGrid.RowDetailsTemplate>
+                <DataTemplate x:Name="RowDataTemplate" DataType="{x:Type viewModels:FirewallRuleViewModel}">
+                    <!-- Highlight the border when the row is selected -->
+                    <Border 
+                        BorderThickness="1,0,1,1"
+                        Background="{DynamicResource MahApps.Brushes.Window.Background}">
+                        <Border.Style>
+                            <Style TargetType="{x:Type TypeName=Border}">
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}"
+                                        Value="False">
+                                        <Setter 
+                                            Property="BorderBrush"
+                                            Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                                    </DataTrigger>
+                                    <!-- Draw a red border on validation errors -->
+                                    <DataTrigger
+                                        Binding="{Binding Path=HasError}" Value="True">
+                                        <Setter 
+                                            Property="BorderBrush"
+                                            Value="#b95353" />
+                                    </DataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Path=HasError}" Value="False" />
+                                            <Condition
+                                                Binding="{Binding Path=IsSelected,
+                                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}"
+                                                Value="True" />
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter 
+                                                Property="BorderBrush"
+                                                Value="{DynamicResource MahApps.Brushes.Accent}" />
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Path=HasError}" Value="False" />
+                                            <Condition
+                                                Binding="{Binding Path=IsSelected,
+                                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}"
+                                                Value="False" />
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.Setters>
+                                            <Setter 
+                                                Property="BorderBrush"
+                                                Value="{DynamicResource MahApps.Brushes.DataGrid.Selection.Background}" />
+                                        </MultiDataTrigger.Setters>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        <Grid Margin="20">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="3*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.Resources>
+                                <Style 
+                                    TargetType="{x:Type TextBlock}"
+                                    BasedOn="{StaticResource CenterTextBlock}">
+                                    <Setter 
+                                        Property="Foreground" 
+                                        Value="{DynamicResource 
+                                        ResourceKey=MahApps.Brushes.Gray5}" />
+                                </Style>
+                            </Grid.Resources>
+                            <!-- First config column -->
+                            <Grid Grid.Row="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <!-- User defined name -->
+                                <TextBlock 
+                                    Grid.Column="0" Grid.Row="0"
+                                    Text="{x:Static localization:Strings.Name}"
+                                    Style="{StaticResource BoldTextBlock}" />
+                                <TextBox 
+                                    x:Name="TextBoxRuleUserName" Grid.Column="0" Grid.Row="2"
+                                    mah:TextBoxHelper.Watermark="{Binding DefaultName}"
+                                    Height="30"
+                                    TextWrapping="NoWrap"
+                                    MaxLines="1"
+                                    AcceptsReturn="False"
+                                    MaxLength="{Binding MaxLengthName}"
+                                    Style="{StaticResource DefaultTextBox}"
+                                    wpfUtils:ValidationHelper.ObserveValidation="True">
+                                    <wpfUtils:ValidationHelper.HasError>
+                                        <Binding Path="NameHasError" Mode="OneWayToSource"
+                                                 UpdateSourceTrigger="PropertyChanged" />
+                                    </wpfUtils:ValidationHelper.HasError>
+                                    <TextBox.Text>
+                                        <Binding 
+                                            Path="UserDefinedName" Mode="TwoWay"
+                                            UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validators:FirewallRuleNoPipeValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:FirewallRuleNameValidator 
+                                                    ValidatesOnTargetUpdated="True"
+                                                    ValidationStep="UpdatedValue" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <!-- Description -->
+                                <TextBlock Grid.Column="0" Grid.Row="4"
+                                           Text="{x:Static localization:Strings.Description}"
+                                           Style="{StaticResource BoldTextBlock}" />
+                                <TextBox
+                                    Grid.Row="6"
+                                    Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, 
+                                    AncestorType=Grid},
+                                    Path=ActualHeight, 
+                                    Converter={StaticResource SizeFactorConverter}, 
+                                    ConverterParameter=0.6}"
+                                    FontSize="{Binding ElementName=TextBoxProgram, Path=FontSize}"
+                                    VerticalScrollBarVisibility="Auto"
+                                    VerticalContentAlignment="Top"
+                                    AcceptsReturn="True"
+                                    MaxLength="9999"
+                                    wpfUtils:ValidationHelper.ObserveValidation="True"
+                                    mah:TextBoxHelper.Watermark="{x:Static localization:Strings.RuleDescription}"
+                                    Style="{StaticResource DefaultTextBox}"
+                                    TextWrapping="Wrap">
+                                    <wpfUtils:ValidationHelper.HasError>
+                                        <Binding Path="DescriptionHasError" Mode="OneWayToSource"
+                                                 UpdateSourceTrigger="PropertyChanged" />
+                                    </wpfUtils:ValidationHelper.HasError>
+                                    <TextBox.Text>
+                                        <Binding Path="Description" 
+                                                 Mode="TwoWay" 
+                                                 UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validators:FirewallRuleNoPipeValidator 
+                                                    ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </Grid>
+                            <!-- Second config column -->
+                            <Grid Grid.Row="0" Grid.Column="2" Name="SecondConfigColumn">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <!-- Protocol -->
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Text="{x:Static localization:Strings.Protocol}"
+                                    Style="{StaticResource BoldTextBlock}" />
+                                <ComboBox
+                                    x:Name="ComboBoxProtocol" Grid.Row="2"
+                                    Height="{Binding ElementName=TextBoxRuleUserName,
+                                    Path=ActualHeight}"
+                                    Style="{StaticResource DefaultComboBox}"
+                                    ItemsSource="{Binding
+                                    Source={x:Static localControls:FirewallRuleEnumTranslation.ProtocolNames}}"
+                                    SelectedIndex="{Binding Protocol,
+                                    Converter={StaticResource EnumToIntConverter}}"
+                                    SelectedItem="{Binding Protocol,
+                                    Converter={StaticResource EnumToStringConverter},
+                                    Mode=TwoWay,
+                                    UpdateSourceTrigger=PropertyChanged}" />
+                                <!-- Direction -->
+                                <TextBlock
+                                    Grid.Row="4"
+                                    Text="{x:Static localization:Strings.Direction}"
+                                    Style="{StaticResource BoldTextBlock}" />
+                                <ComboBox
+                                    Grid.Row="6"
+                                    Height="{Binding ElementName=TextBoxRuleUserName,
+                                          Path=ActualHeight}"
+                                    Style="{StaticResource DefaultComboBox}"
+                                    ItemsSource="{Binding
+                                          Source={x:Static localControls:FirewallRuleEnumTranslation.DirectionNames}}"
+                                    SelectedIndex="{Binding Direction,
+                                          Converter={StaticResource EnumToIntConverter}}"
+                                    SelectedItem="{Binding Direction,
+                                          UpdateSourceTrigger=PropertyChanged,
+                                          Mode=TwoWay,
+                                          Converter={StaticResource EnumToStringConverter}}" />
+                                <!-- Local ports -->
+                                <TextBlock
+                                    Grid.Column="0" Grid.Row="8"
+                                    Text="{x:Static localization:Strings.LocalPorts}"
+                                    Style="{StaticResource BoldTextBlock}" />
+                                <ComboBox
+                                    Grid.Column="0" Grid.Row="10"
+                                    x:Name="ComboBoxLocalPorts"
+                                    LostFocus="ComboBoxPorts_OnLostFocus"
+                                    Tag="{x:Static firewall:FirewallPortLocation.LocalPorts}"
+                                    IsEnabled="{Binding PortsEnabled}"
+                                    Height="{Binding ElementName=TextBoxRuleUserName,
+                                    Path=ActualHeight}"
+                                    ItemsSource="{Binding LocalPortsHistoryView}"
+                                    SelectedIndex="{Binding LocalPortsIndex}"
+                                    mah:TextBoxHelper.Watermark="{Binding PortWatermark}"
+                                    mah:ComboBoxHelper.MaxLength="{Binding
+                                    Path=Data.DataContext.MaxLengthHistory,
+                                    Source={StaticResource FrameworkElementProxy}}"
+                                    Style="{StaticResource HistoryComboBox}">
+                                    <ComboBox.Resources>
+                                        <Style TargetType="{x:Type Popup}">
+                                            <Setter
+                                                Property="MaxWidth"
+                                                Value="{Binding Path=ActualWidth,
+                                                    ElementName=ComboBoxLocalPorts}" />
+                                        </Style>
+                                    </ComboBox.Resources>
+                                    <ComboBox.Text>
+                                        <Binding Path="LocalPorts" 
+                                                 Mode="TwoWay" 
+                                                 UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validators:EmptyOrFirewallPortRangeValidator
+                                                    ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                            <Binding.Converter>
+                                                <converters:PortRangeToPortSpecificationConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </ComboBox.Text>
+                                </ComboBox>
+                                <!-- Remote ports -->
+                                <TextBlock
+                                    Grid.Column="0" Grid.Row="12"
+                                    Text="{x:Static localization:Strings.RemotePorts}"
+                                    Style="{StaticResource BoldTextBlock}" />
+                                <ComboBox
+                                    Grid.Column="0" Grid.Row="14"
+                                    x:Name="ComboBoxRemotePorts"
+                                    LostFocus="ComboBoxPorts_OnLostFocus"
+                                    Tag="{x:Static firewall:FirewallPortLocation.RemotePorts}"
+                                    Height="{Binding ElementName=TextBoxRuleUserName,
+                                    Path=ActualHeight}"
+                                    IsEnabled="{Binding PortsEnabled}"
+                                    ItemsSource="{Binding RemotePortsHistoryView}"
+                                    SelectedIndex="{Binding RemotePortsIndex}"
+                                    mah:TextBoxHelper.Watermark="{Binding PortWatermark}"
+                                    mah:ComboBoxHelper.MaxLength="{Binding
+                                    Path=Data.DataContext.MaxLengthHistory,
+                                    Source={StaticResource FrameworkElementProxy}}"
+                                    Style="{StaticResource HistoryComboBox}">
+                                    <ComboBox.Resources>
+                                        <Style TargetType="{x:Type Popup}">
+                                            <Setter Property="MaxWidth"
+                                                    Value="{Binding Path=ActualWidth,
+                                                    ElementName=ComboBoxRemotePorts}" />
+                                        </Style>
+                                    </ComboBox.Resources>
+                                    <ComboBox.Text>
+                                        <Binding Path="RemotePorts" 
+                                                 Mode="TwoWay" 
+                                                 UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validators:EmptyOrFirewallPortRangeValidator
+                                                    ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                            <Binding.Converter>
+                                                <converters:PortRangeToPortSpecificationConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </ComboBox.Text>
+                                </ComboBox>
+                            </Grid>
+                            <!-- Third config column -->
+                            <Grid Grid.Row="0" Grid.Column="4" x:Name="ThirdConfigColumn">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <!-- Program -->
+                                <TextBlock Grid.Column="0" Grid.Row="0"
+                                           Text="{x:Static localization:Strings.Program}"
+                                           Style="{StaticResource BoldTextBlock}" />
+                                <TextBox
+                                    Grid.Row="2"
+                                    MaxLength="259"
+                                    Height="{Binding ElementName=TextBoxRuleUserName,
+                                    Path=ActualHeight}"
+                                    x:Name="TextBoxProgram"
+                                    VerticalContentAlignment="Center"
+                                    mah:TextBoxHelper.Watermark="{x:Static localization:Strings.Program}"
+                                    mah:TextBoxHelper.ButtonCommand="{Binding SelectProgramCommand}"
+                                    wpfUtils:ValidationHelper.ObserveValidation="True"
+                                    Style="{StaticResource BrowseFolderTextBox}">
+                                    <wpfUtils:ValidationHelper.HasError>
+                                        <Binding Path="ProgramHasError" Mode="OneWayToSource"
+                                                 UpdateSourceTrigger="PropertyChanged"/>
+                                    </wpfUtils:ValidationHelper.HasError>
+                                    <TextBox.Text>
+                                        <Binding Path="Program" 
+                                                 Mode="TwoWay" 
+                                                 UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validators:EmptyOrFileExistsValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyOrFilePathValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:EmptyOrFileIsExeValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:ProgramNameLengthValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                            <Binding.Converter>
+                                                <converters:FirewallRuleProgramConverter />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <!-- Network profiles -->
+                                <TextBlock
+                                    Grid.Column="0" Grid.Row="4"
+                                    Text="{x:Static localization:Strings.NetworkProfile}"
+                                    Style="{StaticResource BoldTextBlock}" />
+                                <StackPanel Grid.Row="6" Margin="0 5 0 5"
+                                            Orientation="Horizontal">
+                                    <CheckBox
+                                        Content="{x:Static localization:Strings.Domain}"
+                                        Style="{StaticResource DefaultCheckBox}"
+                                        Margin="0 0 10 0">
+                                        <CheckBox.IsChecked>
+                                            <Binding Path="NetworkProfileDomain"
+                                                     Mode="TwoWay"
+                                                     UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <validators:AnyNetworkProfileValidator
+                                                        ValidationStep="UpdatedValue"
+                                                        ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </CheckBox.IsChecked>
+                                    </CheckBox>
+                                    <CheckBox
+                                        Style="{StaticResource DefaultCheckBox}"
+                                        Content="{x:Static localization:Strings.Private}"
+                                        Margin="0 0 10 0">
+                                        <CheckBox.IsChecked>
+                                            <Binding Path="NetworkProfilePrivate"
+                                                     Mode="TwoWay"
+                                                     UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <validators:AnyNetworkProfileValidator
+                                                        ValidationStep="UpdatedValue"
+                                                        ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </CheckBox.IsChecked>
+                                    </CheckBox>
+                                    <CheckBox
+                                        Style="{StaticResource DefaultCheckBox}"
+                                        Content="{x:Static localization:Strings.Public}"
+                                        Margin="0">
+                                        <CheckBox.IsChecked>
+                                            <Binding Path="NetworkProfilePublic"
+                                                     Mode="TwoWay"
+                                                     UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <validators:AnyNetworkProfileValidator
+                                                        ValidationStep="UpdatedValue"
+                                                        ValidatesOnTargetUpdated="True" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </CheckBox.IsChecked>
+                                    </CheckBox>
+                                </StackPanel>
+                                <!-- Interface type -->
+                                <TextBlock Grid.Row="8"
+                                           Text="{x:Static localization:Strings.InterfaceType}"
+                                           Style="{StaticResource BoldTextBlock}" />
+                                <ComboBox
+                                    x:Name="ComboBoxInterfaceType" Grid.Row="10"
+                                    Height="{Binding ElementName=TextBoxRuleUserName,
+                                    Path=ActualHeight}"
+                                    Style="{StaticResource DefaultComboBox}"
+                                    ItemsSource="{Binding
+                                    Source={x:Static localControls:FirewallRuleEnumTranslation.InterfaceTypeNames}}"
+                                    SelectedIndex="{Binding InterfaceType,
+                                    Converter={StaticResource EnumToIntConverter}}"
+                                    SelectedItem="{Binding InterfaceType,
+                                    Converter={StaticResource EnumToStringConverter},
+                                    Mode=TwoWay,
+                                    UpdateSourceTrigger=PropertyChanged}" />
+                                <!-- Action -->
+                                <TextBlock
+                                    Grid.Column="0" Grid.Row="12"
+                                    Text="{x:Static localization:Strings.Action}"
+                                    Style="{StaticResource BoldTextBlock}" />
+                                <ComboBox
+                                    Grid.Row="14"
+                                    Height="{Binding ElementName=TextBoxRuleUserName,
+                                    Path=ActualHeight}"
+                                    Style="{StaticResource DefaultComboBox}"
+                                    ItemsSource="{Binding
+                                    Source={x:Static localControls:FirewallRuleEnumTranslation.ActionNames}}"
+                                    SelectedIndex="{Binding Action,
+                                    Converter={StaticResource EnumToIntConverter}}"
+                                    SelectedItem="{Binding Action,
+                                    UpdateSourceTrigger=PropertyChanged,
+                                    Mode=TwoWay,
+                                    Converter={StaticResource EnumToStringConverter}}" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </controls:MultiSelectDataGrid.RowDetailsTemplate>
+        </controls:MultiSelectDataGrid>
+    </Grid>
+</UserControl>

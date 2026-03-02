@@ -14,11 +14,13 @@
                                xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                                xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
                                xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+                               xmlns:typedProxies="clr-namespace:NETworkManager.Utilities.WPF.TypedBindingProxies;assembly=NETworkManager.Utilities.WPF"
                                xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
                                xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                                xmlns:profiles="clr-namespace:NETworkManager.Profiles;assembly=NETworkManager.Profiles"
+                               xmlns:controls="clr-namespace:NETworkManager.Controls"
                                xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-                               xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"                               
+                               xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
                                CloseButtonCommand="{Binding CancelCommand}"
                                Style="{StaticResource DefaultChildWindow}"
                                Loaded="ChildWindow_OnLoaded"
@@ -42,6 +44,8 @@
         <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" />
         <converters:StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter
             x:Key="StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter" />
+        <converters:FirewallRuleViewModelBooleanOrConverter x:Key="FirewallRuleViewModelBooleanOrConverter" />
+        <converters:IntZeroToFalseConverter x:Key="IntZeroToFalseConverter" />
     </simpleChildWindow:ChildWindow.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -60,6 +64,7 @@
                     <ListBox x:Name="ListBoxViews" ItemsSource="{Binding ProfileViews}" Margin="0,0,10,0">
                         <ListBox.Resources>
                             <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                            <typedProxies:ProfileViewModelProxy x:Key="ViewModelProxy" Data="{Binding }" />
                         </ListBox.Resources>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
@@ -771,7 +776,7 @@
                                                         <MultiDataTrigger.Setters>
                                                             <Setter Property="Visibility" Value="Visible" />
                                                         </MultiDataTrigger.Setters>
-                                                    </MultiDataTrigger>                                                    
+                                                    </MultiDataTrigger>
                                                     <!-- TigerVNC -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
@@ -1081,6 +1086,53 @@
                                                             <Setter Property="Visibility" Value="Visible" />
                                                         </MultiDataTrigger.Setters>
                                                     </MultiDataTrigger>
+                                                    <!-- Firewall -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding 
+                                                                Path=(profiles:ProfileViewInfo.Name)}"
+                                                                Value="{x:Static profiles:ProfileName.Firewall}" />
+                                                            <Condition
+                                                                Binding="{Binding Path=Data.
+                                                                Firewall_Enabled,
+                                                                Source={StaticResource ViewModelProxy}}"
+                                                                Value="True" />
+                                                            <Condition 
+                                                                Binding="{Binding 
+                                                                Path=Data.Firewall_IViewModel
+                                                                .FirewallRulesInterface,
+                                                                Source={StaticResource ViewModelProxy},
+                                                                Converter={StaticResource 
+                                                                ResourceKey=FirewallRuleViewModelBooleanOrConverter},
+                                                                ConverterParameter=HasError}"
+                                                                Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding (profiles:ProfileViewInfo.Name)}"
+                                                                Value="{x:Static profiles:ProfileName.Firewall}" />
+                                                            <Condition
+                                                                Binding="{Binding 
+                                                                Path=Data.Firewall_Enabled, 
+                                                                Source={StaticResource ViewModelProxy}}"
+                                                                Value="True" />
+                                                            <Condition
+                                                                Binding="{Binding 
+                                                                Path=Data.Firewall_IViewModel
+                                                                .FirewallRulesInterface.Count,
+                                                                Source={StaticResource ViewModelProxy}}"
+                                                                Value="0" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Rectangle.Style>
@@ -1138,7 +1190,7 @@
                                                                  Value="{x:Static profiles:ProfileName.PuTTY}">
                                                         <Setter Property="IsChecked"
                                                                 Value="{Binding DataContext.PuTTY_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type simpleChildWindow:ChildWindow}}}" />
-                                                    </DataTrigger>                                                    
+                                                    </DataTrigger>
                                                     <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}"
                                                                  Value="{x:Static profiles:ProfileName.TigerVNC}">
                                                         <Setter Property="IsChecked"
@@ -1168,6 +1220,14 @@
                                                                  Value="{x:Static profiles:ProfileName.IPGeolocation}">
                                                         <Setter Property="IsChecked"
                                                                 Value="{Binding DataContext.IPGeolocation_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type simpleChildWindow:ChildWindow}}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}"
+                                                                 Value="{x:Static profiles:ProfileName.Firewall}">
+                                                        <Setter Property="IsChecked"
+                                                                Value="{Binding DataContext.Firewall_Enabled,
+                                                                UpdateSourceTrigger=PropertyChanged,
+                                                                RelativeSource={RelativeSource FindAncestor,
+                                                                AncestorType={x:Type simpleChildWindow:ChildWindow}}}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -1210,7 +1270,8 @@
                 </ScrollViewer>
             </Border>
             <TabControl Grid.Column="1" Margin="10"
-                        SelectedIndex="{Binding ElementName=ListBoxViews, Path=SelectedIndex}">
+                        SelectedIndex="{Binding ElementName=ListBoxViews, Path=SelectedIndex}"
+                        SelectionChanged="TabControl_OnSelectionChanged">
                 <TabControl.Resources>
                     <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource ProfileTabItem}" />
                 </TabControl.Resources>
@@ -1249,6 +1310,8 @@
                                         <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:FirewallRuleNoPipeValidator ValidatesOnTargetUpdated="True"
+                                                        ValidationStep="UpdatedValue" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -2093,8 +2156,10 @@
                                         <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                                     </Rectangle.Resources>
                                 </Rectangle>
-                                <TextBlock Grid.Column="0" Grid.Row="12" Text="{x:Static localization:Strings.AdminConsoleSession}" />
-                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="12" OffContent="" OnContent="" IsOn="{Binding RemoteDesktop_AdminSession}" />
+                                <TextBlock Grid.Column="0" Grid.Row="12"
+                                           Text="{x:Static localization:Strings.AdminConsoleSession}" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="12" OffContent="" OnContent=""
+                                                  IsOn="{Binding RemoteDesktop_AdminSession}" />
                                 <TextBlock Grid.Column="0" Grid.Row="14" Grid.ColumnSpan="4"
                                            Text="{x:Static localization:Strings.OverrideDefaultSettings}"
                                            Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0" />
@@ -2218,7 +2283,7 @@
                                                    Value="{Binding RemoteDesktop_AuthenticationLevel}" Maximum="3"
                                                    Minimum="0" Interval="1"
                                                    IsEnabled="{Binding RemoteDesktop_OverrideAuthenticationLevel}" />
-                                <Rectangle Grid.Column="3" Grid.Row="26" 
+                                <Rectangle Grid.Column="3" Grid.Row="26"
                                            Width="24" Height="24"
                                            ToolTip="{x:Static localization:Strings.HelpMessage_RDPAuthenticationLevel}"
                                            Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
@@ -2236,7 +2301,7 @@
                                 <TextBlock Grid.Column="0" Grid.Row="30"
                                            Text="{x:Static localization:Strings.ServerName}" Margin="24,0,0,0"
                                            VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
-                                <TextBox x:Name="TextBoxRemoteDesktopGatewayServerHostname" 
+                                <TextBox x:Name="TextBoxRemoteDesktopGatewayServerHostname"
                                          Grid.Column="2" Grid.Row="30"
                                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGatewayDomain}">
                                     <TextBox.Style>
@@ -3127,7 +3192,7 @@
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>
-                </TabItem>               
+                </TabItem>
                 <TabItem Header="{x:Static localization:Strings.TigerVNC}">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding TigerVNC_Enabled}" Margin="0,0,0,20">
@@ -3933,6 +3998,90 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
+                <TabItem Header="{x:Static localization:Strings.Firewall}">
+                    <Grid IsEnabled="{Binding Firewall_Enabled}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <controls:FirewallRuleGrid Margin="10 10 10 0" Grid.Row="0"
+                                                   DataContext="{Binding Firewall_ViewModel}"
+                                                   x:Name="FirewallRuleGrid" />
+                        <StackPanel Orientation="Horizontal" Grid.Row="1"
+                                    DataContext="{Binding Firewall_ViewModel}">
+                            <Button Margin="10"
+                                    Style="{StaticResource ImageWithTextButton}"
+                                    Command="{Binding AddRuleCommand}"
+                                    ToolTip="{Binding ToolTipAdd}">
+                                <Button.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform"
+                                                             Visual="{iconPacks:Modern Kind=Add}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{x:Static localization:Strings.Add}"
+                                                   Style="{StaticResource ButtonWithImageTextBlock}" />
+                                    </Grid>
+                                </Button.Content>
+                            </Button>
+                            <Button Margin="10"
+                                    Style="{StaticResource ImageWithTextButton}"
+                                    Command="{Binding DeleteRulesCommand}"
+                                    IsEnabled="{Binding Path=FirewallRules.Count,
+                                    Converter={StaticResource IntZeroToFalseConverter}}"
+                                    ToolTip="{Binding ToolTipDelete}">
+                                <Button.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform"
+                                                             Visual="{iconPacks:Modern Kind=Delete}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{x:Static localization:Strings.Delete}"
+                                                   Style="{StaticResource ButtonWithImageTextBlock}" />
+                                    </Grid>
+                                </Button.Content>
+                            </Button>
+                            <Button Margin="10"
+                                    Style="{StaticResource ImageWithTextButton}"
+                                    Command="{Binding DeleteAllRulesCommand}"
+                                    IsEnabled="{Binding Path=FirewallRules.Count,
+                                    Converter={StaticResource IntZeroToFalseConverter}}"
+                                    ToolTip="{Binding ToolTipClear}">
+                                <Button.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform"
+                                                             Visual="{iconPacks:Modern Kind=ListDelete}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{x:Static localization:Strings.DeleteAll}"
+                                                   Style="{StaticResource ButtonWithImageTextBlock}" />
+                                    </Grid>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
             </TabControl>
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
@@ -4341,7 +4490,7 @@
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
                                 </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>                            
+                            </MultiDataTrigger>
                             <!-- TigerVNC -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
@@ -4511,14 +4660,27 @@
                                     <Setter Property="IsEnabled" Value="False" />
                                 </MultiDataTrigger.Setters>
                             </MultiDataTrigger>
-                            <!-- IP Geolocation -->
+                            <!-- Firewall -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=IPGeolocation_Enabled}" Value="True" />
-                                    <Condition Binding="{Binding Path=IPGeolocation_InheritHost}" Value="False" />
+                                    <Condition Binding="{Binding Path=Firewall_Enabled}" Value="True" />
                                     <Condition
-                                        Binding="{Binding ElementName=TextBoxIPGeolocationHost, Path=(Validation.HasError)}"
+                                        Binding="{Binding Path=Firewall_ViewModel.FirewallRules,
+                                    Converter={StaticResource FirewallRuleViewModelBooleanOrConverter},
+                                    ConverterParameter=HasError}"
                                         Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=Firewall_Enabled}" Value="True" />
+                                    <Condition
+                                        Binding="{Binding
+                                    Path=Firewall_ViewModel.FirewallRules.Count}"
+                                        Value="0" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
