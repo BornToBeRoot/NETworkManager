@@ -32,7 +32,7 @@ Release date: **xx.xx.2026**
 
 - Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 
-- Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
+- Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 
 ## Improvements
 
@@ -64,7 +64,7 @@ Release date: **xx.xx.2026**
 
 **General**
 
-- Fix null dereferences in various validators and converters. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+- Fix null dereferences in various validators and converters. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 
 ## Dependencies, Refactoring & Documentation
 
