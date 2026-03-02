@@ -43,6 +43,8 @@ public static class ProfileViewManager
         new ProfileViewInfo(ProfileName.Whois, ApplicationManager.GetIcon(ApplicationName.Whois),
             ProfileGroup.Application),
         new ProfileViewInfo(ProfileName.IPGeolocation, ApplicationManager.GetIcon(ApplicationName.IPGeolocation),
+            ProfileGroup.Application),
+        new ProfileViewInfo(ProfileName.Firewall, ApplicationManager.GetIcon(ApplicationName.Firewall),
             ProfileGroup.Application)
     };
 }

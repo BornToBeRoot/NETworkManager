@@ -673,6 +673,12 @@ public static class SettingsManager
     private static void UpgradeToLatest(Version version)
     {
         Log.Info($"Apply upgrade to {version}...");       
+        
+        Log.Info($"Add new app {nameof(ApplicationName.Firewall)}.");
+        
+        Current.General_ApplicationList.Insert(
+            ApplicationManager.GetDefaultList().ToList().FindIndex(x => x.Name == ApplicationName.Firewall),
+            ApplicationManager.GetDefaultList().First(x => x.Name == ApplicationName.Firewall));
     }
     #endregion
 }

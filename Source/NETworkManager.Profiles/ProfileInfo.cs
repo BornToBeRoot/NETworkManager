@@ -1,4 +1,5 @@
-﻿using NETworkManager.Controls;
+﻿using System.Collections.Generic;
+using NETworkManager.Controls;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
@@ -6,6 +7,7 @@ using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using System.Security;
 using System.Xml.Serialization;
+using NETworkManager.Models.Firewall;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable PropertyCanBeMadeInitOnly.Global
@@ -230,6 +232,10 @@ public class ProfileInfo
         IPGeolocation_Enabled = profile.IPGeolocation_Enabled;
         IPGeolocation_InheritHost = profile.IPGeolocation_InheritHost;
         IPGeolocation_Host = profile.IPGeolocation_Host;
+        
+        // Firewall
+        Firewall_Enabled = profile.Firewall_Enabled;
+        Firewall_Rules = profile.Firewall_Rules;
     }
 
     /// <summary>
@@ -473,4 +479,7 @@ public class ProfileInfo
     public bool IPGeolocation_Enabled { get; set; }
     public bool IPGeolocation_InheritHost { get; set; } = true;
     public string IPGeolocation_Host { get; set; }
+    
+    public bool Firewall_Enabled { get; set; }
+    public List<FirewallRule> Firewall_Rules { get; set; }
 }

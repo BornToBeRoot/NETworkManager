@@ -64,6 +64,8 @@ public static class SettingsViewManager
         new SettingsViewInfo(SettingsName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN),
             SettingsGroup.Application),
         new SettingsViewInfo(SettingsName.BitCalculator, ApplicationManager.GetIcon(ApplicationName.BitCalculator),
+            SettingsGroup.Application),
+        new SettingsViewInfo(SettingsName.Firewall, ApplicationManager.GetIcon(ApplicationName.Firewall),
             SettingsGroup.Application)
     };
 }

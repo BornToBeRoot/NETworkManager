@@ -20,6 +20,7 @@
         <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
+        <ProjectReference Include="..\NETworkManager.Interfaces\NETworkManager.Interfaces.csproj" />
         <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj" />
         <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
         <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj" />

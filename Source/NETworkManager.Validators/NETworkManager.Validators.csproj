@@ -21,6 +21,7 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj" />
+        <ProjectReference Include="..\NETworkManager.Interfaces\NETworkManager.Interfaces.csproj" />
         <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
     </ItemGroup>
 </Project>
