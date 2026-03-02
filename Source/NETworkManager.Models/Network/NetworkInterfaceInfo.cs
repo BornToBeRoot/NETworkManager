@@ -118,4 +118,9 @@ public class NetworkInterfaceInfo
     ///     DNS server(s).
     /// </summary>
     public IPAddress[] DNSServer { get; set; }
+    
+    /// <summary>
+    ///     Firewall network category (Private, Public, Domain)
+    /// </summary>
+    public NetworkProfiles Profiles { get; set; }
 }
