@@ -19,26 +19,26 @@ Release date: **xx.xx.2026**
 
 ## What's new?
 
-- Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
+- Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 
 ## Improvements
 
-- Reuse existing validators and converters where applicable. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
-- Support commands exceeding the commandline limit in PowershellHelper. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
-- Fix warnings in NetworkInterfaceView. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
-- Add various converters and validators [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
-- Allow to click validation errors out of the way. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
-- Add validation error template on checkboxes. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
-- Allow style changes when ViewModels recognize configuration errors. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
+- Reuse existing validators and converters where applicable. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+- Support commands exceeding the commandline limit in PowershellHelper. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+- Fix warnings in NetworkInterfaceView. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+- Add various converters and validators [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+- Allow to click validation errors out of the way. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+- Add validation error template on checkboxes. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+- Allow style changes when ViewModels recognize configuration errors. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 
 ## Bug Fixes
 
-- Fix null dereferences in various validators and converters. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
+- Fix null dereferences in various validators and converters. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
-- Add code documentation in various places. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
+- Add code documentation in various places. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 - Refactor ListHelper.Modify as generic method.
