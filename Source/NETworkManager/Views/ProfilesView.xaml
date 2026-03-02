@@ -434,7 +434,7 @@
                                 <Style.Triggers>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding Path=Groups.Count}" Value="0" />
+                                            <Condition Binding="{Binding Path=Groups.IsEmpty}" Value="True" />
                                             <Condition Binding="{Binding Path=IsSearching}" Value="False" />
                                         </MultiDataTrigger.Conditions>
                                         <MultiDataTrigger.Setters>
@@ -443,7 +443,7 @@
                                     </MultiDataTrigger>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding Path=Profiles.Count}" Value="0" />
+                                            <Condition Binding="{Binding Path=Profiles.IsEmpty}" Value="True" />
                                             <Condition Binding="{Binding Path=IsSearching}" Value="False" />
                                         </MultiDataTrigger.Conditions>
                                         <MultiDataTrigger.Setters>
