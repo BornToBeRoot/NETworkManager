@@ -16,8 +16,6 @@ public partial class ProfileChildWindow
         InitializeComponent();
 
         // Set the width and height of the child window based on the parent window size
-        ChildWindowMaxWidth = 1050;
-        ChildWindowMaxHeight = 650;
         ChildWindowWidth = parentWindow.ActualWidth * 0.85;
         ChildWindowHeight = parentWindow.ActualHeight * 0.85;
 
