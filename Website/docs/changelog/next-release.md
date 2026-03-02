@@ -1,7 +1,5 @@
 ---
 sidebar_position: 0
-description: "Changelog for the next NETworkManager release — upcoming features, improvements, and bug fixes."
-keywords: [NETworkManager, changelog, release notes, next release, upcoming features, bug fixes]
 ---
 
 # Next Release
@@ -20,7 +18,6 @@ Release date: **xx.xx.2026**
 ## Breaking Changes
 
 ## What's new?
-
 **Firewall**
 
 - Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
@@ -33,8 +30,6 @@ Release date: **xx.xx.2026**
 
 - DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PuTTY window now receives an explicit `WM_DPICHANGED` message with the new DPI value packed into `wParam`, since the OS does not forward this message across process boundaries after `SetParent`. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
 
-- Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
-
 ## Improvements
 
 - Reuse existing validators and converters where applicable. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
@@ -44,7 +39,6 @@ Release date: **xx.xx.2026**
 - Allow to click validation errors out of the way. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 - Add validation error template on checkboxes. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 - Allow style changes when ViewModels recognize configuration errors. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
-- Redesign Status Window to make it more compact [#3359](https://github.com/BornToBeRoot/NETworkManager/pull/3359)
 
 ## Bug Fixes
 
@@ -63,8 +57,6 @@ Release date: **xx.xx.2026**
 **TigerVNC**
 
 - Fixed incorrect initial embedded window size on high-DPI monitors. The `WindowsFormsHost` panel now sets its initial dimensions in physical pixels using the current DPI scale factor, ensuring the TigerVNC window fills the panel correctly at startup. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
-
-- Fix null dereferences in various validators and converters. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
 
 ## Dependencies, Refactoring & Documentation
 
