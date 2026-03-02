@@ -21,6 +21,10 @@ Release date: **xx.xx.2026**
 
 ## What's new?
 
+**Firewall**
+
+- Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+
 **PowerShell**
 
 - DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PowerShell (conhost) window now rescales its font automatically using the Windows Console API (`AttachConsole` + `SetCurrentConsoleFontEx`), bypassing the OS limitation that prevents `WM_DPICHANGED` from being forwarded to cross-process child windows. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
@@ -33,17 +37,20 @@ Release date: **xx.xx.2026**
 
 ## Improvements
 
+- Reuse existing validators and converters where applicable. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+- Support commands exceeding the commandline limit in PowershellHelper. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+- Fix warnings in NetworkInterfaceView. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+- Add various converters and validators [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+- Allow to click validation errors out of the way. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+- Add validation error template on checkboxes. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+- Allow style changes when ViewModels recognize configuration errors. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 - Redesign Status Window to make it more compact [#3359](https://github.com/BornToBeRoot/NETworkManager/pull/3359)
 
-- Reuse existing validators and converters where applicable. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
-- Support commands exceeding the commandline limit in PowershellHelper. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
-- Fix warnings in NetworkInterfaceView. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
-- Add various converters and validators [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
-- Allow to click validation errors out of the way. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
-- Add validation error template on checkboxes. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
-- Allow style changes when ViewModels recognize configuration errors. [#xxxx](https://github.com/BornToBeRoot/NETworkManager/pull/xxxx)
-
 ## Bug Fixes
+
+**General**
+
+- Fix null dereferences in various validators and converters. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 
 **PowerShell**
 
@@ -64,3 +71,5 @@ Release date: **xx.xx.2026**
 - Code cleanup & refactoring
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
+- Add code documentation in various places. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+- Refactor ListHelper.Modify as generic method.
