@@ -10,7 +10,7 @@ namespace NETworkManager.Validators;
 ///     Check if the filename is a valid file name (like "text.txt"). The file name does not have to exist on the local
 ///     system.
 /// </summary>
-public class FileNameValidator : ValidationRule
+public partial class FileNameValidator : ValidationRule
 {
     /// <summary>
     ///     Check if the filename is a valid file name (like "text.txt"). The filen ame does not have to exist on the local
@@ -24,8 +24,11 @@ public class FileNameValidator : ValidationRule
         var filename = (string)value;
 
         // Check if the filename has valid chars and a dot.
-        return filename.IndexOfAny(Path.GetInvalidFileNameChars()) < 0 && new Regex(@"^.+\..+$").IsMatch(filename)
+        return (filename?.IndexOfAny(Path.GetInvalidFileNameChars()) ?? 1) < 0 && FileRegex().IsMatch(filename)
             ? ValidationResult.ValidResult
             : new ValidationResult(false, Strings.EnterValidFileName);
     }
+
+    [GeneratedRegex(@"^.+\..+$")]
+    private static partial Regex FileRegex();
 }
