@@ -42,9 +42,9 @@ public class Firewall
             string nextRule = string.Empty;
             try
             {
-                nextRule += $"New-NetFirewallRule -DisplayName '{rule.Name}'";
+                nextRule += $"New-NetFirewallRule -DisplayName '{SanitizeStringArguments(rule.Name)}'";
                 if (!string.IsNullOrEmpty(rule.Description))
-                    nextRule += $" -Description '{rule.Description}'";
+                    nextRule += $" -Description '{SanitizeStringArguments(rule.Description)}'";
                 nextRule += $" -Direction {Enum.GetName(rule.Direction)}";
                 if (rule.LocalPorts.Count > 0
                     && rule.Protocol is FirewallProtocol.TCP or FirewallProtocol.UDP)
@@ -64,7 +64,7 @@ public class Firewall
                     try
                     {
                         if (File.Exists(rule.Program.Name))
-                            nextRule += $" -Program '{rule.Program.Name}'";
+                            nextRule += $" -Program '{SanitizeStringArguments(rule.Program.Name)}'";
                         else
                             continue;
                     }
@@ -124,6 +124,11 @@ public class Firewall
     private static string GetClearAllRulesCommand()
     {
         return $"Remove-NetFirewallRule -DisplayName 'NwM_*'";
+    }
+
+    private static string SanitizeStringArguments(string value)
+    {
+        return value.Replace("'", "''");
     }
     
     /// <summary>
