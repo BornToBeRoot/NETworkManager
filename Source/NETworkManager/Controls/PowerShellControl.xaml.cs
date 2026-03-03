@@ -16,55 +16,26 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
 {
     #region Events
 
-    private bool _isDpiChanging;
-
     private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         ResizeEmbeddedWindow();
     }
 
-    private async void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
+    private void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
     {
-        if (!IsConnected || _appWin == IntPtr.Zero || _isDpiChanging)
+        ResizeEmbeddedWindow();
+
+        if (!IsConnected || _process == null || _process.HasExited)
             return;
 
-        _isDpiChanging = true;
-
-        try
-        {
-            // Windows does not forward DPI change notifications across process boundaries
-            // after SetParent. Workaround: temporarily detach the embedded window back to
-            // a top-level window on the new monitor. Windows then delivers WM_DPICHANGED
-            // natively to the process's own message loop so it can rescale its fonts,
-            // exactly as it would when running standalone. Then re-embed and resize.
-            var screen = System.Windows.Forms.Screen.FromHandle(WindowHost.Handle);
-
-            NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Hide);
-            NativeMethods.SetParent(_appWin, IntPtr.Zero);
-
-            // Place the window on the new monitor so Windows sends it WM_DPICHANGED.
-            // The size (800x600) is a reasonable placeholder; the final dimensions are
-            // set by ResizeEmbeddedWindow() after re-embedding.
-            NativeMethods.SetWindowPos(_appWin, IntPtr.Zero,
-                screen.Bounds.X + screen.Bounds.Width / 2,
-                screen.Bounds.Y + screen.Bounds.Height / 2,
-                800, 600, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
-
-            // 250 ms gives the process's message loop time to dequeue and handle
-            // WM_DPICHANGED, which Windows delivers asynchronously for cross-thread windows.
-            await Task.Delay(250);
-
-            if (!IsConnected || _appWin == IntPtr.Zero)
-                return;
-
-            NativeMethods.SetParent(_appWin, WindowHost.Handle);
-            ResizeEmbeddedWindow();
-            NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.ShowNoActivate);
-        }
-        finally
-        {
-            _isDpiChanging = false;
-        }
+        // PowerShell runs inside conhost.exe, a console host process. The Windows
+        // Console API (kernel32.dll) provides cross-process access to the console's
+        // font settings, so we can rescale fonts directly without any window message
+        // passing — completely bypassing the WM_DPICHANGED cross-process delivery
+        // problem that affects the PuTTY (non-console) embedding approach.
+        NativeMethods.TryRescaleConsoleFont(
+            (uint)_process.Id,
+            e.NewDpi.PixelsPerInchX / e.OldDpi.PixelsPerInchX);
     }
 
     #endregion
@@ -211,7 +182,13 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
 
                 if (_appWin != IntPtr.Zero)
                 {
+                    // Enable mixed-DPI hosting on this thread before SetParent so that
+                    // Windows routes DPI notifications to the cross-process child window.
+                    // SetThreadDpiHostingBehavior is available on Windows 10 1803+.
+                    var prevDpiHosting = NativeMethods.SetThreadDpiHostingBehavior(
+                        NativeMethods.DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_MIXED);
                     NativeMethods.SetParent(_appWin, WindowHost.Handle);
+                    NativeMethods.SetThreadDpiHostingBehavior(prevDpiHosting);
 
                     // Show window before set style and resize
                     NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);

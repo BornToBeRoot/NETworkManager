@@ -33,31 +33,42 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
 
         try
         {
-            // Windows does not forward DPI change notifications across process boundaries
-            // after SetParent. Workaround: temporarily detach the embedded window back to
-            // a top-level window on the new monitor. Windows then delivers WM_DPICHANGED
-            // natively to the process's own message loop so it can rescale its fonts,
-            // exactly as it would when running standalone. Then re-embed and resize.
-            var screen = System.Windows.Forms.Screen.FromHandle(WindowHost.Handle);
+            // Use MonitorFromWindow for reliable physical-pixel coordinates — WinForms's
+            // Screen.FromHandle can return DPI-virtualized (wrong) coordinates on
+            // PerMonitorV2 setups.
+            var bounds = NativeMethods.GetMonitorBoundsForWindow(WindowHost.Handle);
+            int cx = bounds.left + (bounds.right - bounds.left) / 2;
+            int cy = bounds.top + (bounds.bottom - bounds.top) / 2;
 
-            NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Hide);
+            // Windows sends WM_DPICHANGED only to *visible* top-level windows that move
+            // across a monitor DPI boundary.  The previous approach hid the window before
+            // detaching, which prevented the trigger.  Fix: detach first (window stays
+            // visible), then reposition on the new monitor.
+            //
+            // Clear WS_CHILD in case SetParent set it; a WS_CHILD window is not treated
+            // as top-level and will not receive WM_DPICHANGED.
+            long style = NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
+            if ((style & NativeMethods.WS_CHILD) != 0)
+            {
+                style &= ~NativeMethods.WS_CHILD;
+                NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
+            }
+
             NativeMethods.SetParent(_appWin, IntPtr.Zero);
 
-            // Place the window on the new monitor so Windows sends it WM_DPICHANGED.
-            // The size (800x600) is a reasonable placeholder; the final dimensions are
-            // set by ResizeEmbeddedWindow() after re-embedding.
-            NativeMethods.SetWindowPos(_appWin, IntPtr.Zero,
-                screen.Bounds.X + screen.Bounds.Width / 2,
-                screen.Bounds.Y + screen.Bounds.Height / 2,
-                800, 600, NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
+            // Place as a 1×1 window at the centre of the new monitor, behind all other
+            // windows (HWND_BOTTOM).  SWP_SHOWWINDOW ensures the window is visible so
+            // Windows detects the monitor change and delivers WM_DPICHANGED natively.
+            NativeMethods.SetWindowPos(_appWin, NativeMethods.HWND_BOTTOM, cx, cy, 1, 1,
+                NativeMethods.SWP_NOACTIVATE | NativeMethods.SWP_SHOWWINDOW);
 
-            // 250 ms gives the process's message loop time to dequeue and handle
-            // WM_DPICHANGED, which Windows delivers asynchronously for cross-thread windows.
-            await Task.Delay(250);
+            // Give the process time to dequeue and handle WM_DPICHANGED.
+            await Task.Delay(300);
 
             if (!IsConnected || _appWin == IntPtr.Zero)
                 return;
 
+            NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Hide);
             NativeMethods.SetParent(_appWin, WindowHost.Handle);
             ResizeEmbeddedWindow();
             NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.ShowNoActivate);
@@ -224,7 +235,13 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
 
                     if (!_process.HasExited)
                     {
+                        // Enable mixed-DPI hosting on this thread before SetParent so that
+                        // Windows routes DPI notifications to the cross-process child window.
+                        // SetThreadDpiHostingBehavior is available on Windows 10 1803+.
+                        var prevDpiHosting = NativeMethods.SetThreadDpiHostingBehavior(
+                            NativeMethods.DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_MIXED);
                         NativeMethods.SetParent(_appWin, WindowHost.Handle);
+                        NativeMethods.SetThreadDpiHostingBehavior(prevDpiHosting);
 
                         // Show window before set style and resize
                         NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
