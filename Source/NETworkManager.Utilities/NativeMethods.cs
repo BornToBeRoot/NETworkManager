@@ -158,6 +158,13 @@ public class NativeMethods
     [DllImport("user32.dll")]
     public static extern DPI_HOSTING_BEHAVIOR SetThreadDpiHostingBehavior(DPI_HOSTING_BEHAVIOR value);
 
+    /// <summary>
+    /// Returns the DPI (dots per inch) value for the monitor that contains the specified window.
+    /// Returns 0 if the window handle is invalid. Available on Windows 10 version 1607+.
+    /// </summary>
+    [DllImport("user32.dll")]
+    public static extern uint GetDpiForWindow(IntPtr hWnd);
+
     [DllImport("user32.dll")]
     public static extern IntPtr MonitorFromWindow(IntPtr hWnd, uint dwFlags);
 

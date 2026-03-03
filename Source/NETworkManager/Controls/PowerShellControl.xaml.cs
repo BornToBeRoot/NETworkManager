@@ -182,6 +182,11 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
 
                 if (_appWin != IntPtr.Zero)
                 {
+                    // Capture the DPI of conhost's window before embedding. The process
+                    // might have started on a different monitor than ours, so its font
+                    // may be scaled for a different DPI. We correct this after embedding.
+                    var initialWindowDpi = NativeMethods.GetDpiForWindow(_appWin);
+
                     // Enable mixed-DPI hosting on this thread before SetParent so that
                     // Windows routes DPI notifications to the cross-process child window.
                     // SetThreadDpiHostingBehavior is available on Windows 10 1803+.
@@ -204,6 +209,15 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
                     // Requires a short delay because it's not applied immediately
                     await Task.Delay(250);
                     ResizeEmbeddedWindow();
+
+                    // If conhost started at a different DPI than our monitor (e.g. it
+                    // spawned on a secondary monitor with a different scale factor),
+                    // correct the font now so WindowsFormsHost_DpiChanged always starts
+                    // from the right baseline for relative scaling.
+                    var currentPanelDpi = NativeMethods.GetDpiForWindow(WindowHost.Handle);
+                    if (initialWindowDpi != currentPanelDpi)
+                        NativeMethods.TryRescaleConsoleFont((uint)_process.Id,
+                            (double)currentPanelDpi / initialWindowDpi);
                 }
             }
             else
