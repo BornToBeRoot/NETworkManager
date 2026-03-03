@@ -20,10 +20,10 @@ public class NativeMethods
     public const uint MONITOR_DEFAULTTONEAREST = 0x00000002;
 
     /// <summary>Places the window at the bottom of the Z order (behind all others).</summary>
-    public static readonly IntPtr HWND_BOTTOM = new IntPtr(1);
+    public static readonly IntPtr HWND_BOTTOM = new(1);
 
     /// <summary>The value returned by CreateFile on failure.</summary>
-    public static readonly IntPtr INVALID_HANDLE_VALUE = new IntPtr(-1);
+    public static readonly IntPtr INVALID_HANDLE_VALUE = new(-1);
 
     #endregion
 
@@ -74,15 +74,6 @@ public class NativeMethods
         public int left, top, right, bottom;
     }
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    public struct MONITORINFO
-    {
-        public int cbSize;
-        public RECT rcMonitor;
-        public RECT rcWork;
-        public uint dwFlags;
-    }
-
     [StructLayout(LayoutKind.Sequential)]
     public struct COORD
     {
@@ -105,10 +96,7 @@ public class NativeMethods
     #endregion
 
     #region Pinvoke/Win32 Methods
-
-    [DllImport("user32.dll")]
-    public static extern IntPtr GetForegroundWindow();
-
+        
     [DllImport("user32.dll", SetLastError = true)]
     public static extern long SetParent(IntPtr hWndChild, IntPtr hWndParent);
 
@@ -136,12 +124,6 @@ public class NativeMethods
     [DllImport("user32.dll", CharSet = CharSet.Auto)]
     public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
-    [DllImport("user32.dll", CharSet = CharSet.Auto)]
-    public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
-
-    [DllImport("user32.dll", SetLastError = true)]
-    public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int cx, int cy, bool repaint);
-
     [DllImport("user32.dll")]
     public static extern bool ShowWindow(IntPtr hWnd, WindowShowStyle nCmdShow);
 
@@ -165,11 +147,8 @@ public class NativeMethods
     [DllImport("user32.dll")]
     public static extern uint GetDpiForWindow(IntPtr hWnd);
 
-    [DllImport("user32.dll")]
-    public static extern IntPtr MonitorFromWindow(IntPtr hWnd, uint dwFlags);
-
-    [DllImport("user32.dll", CharSet = CharSet.Auto)]
-    public static extern bool GetMonitorInfo(IntPtr hMonitor, ref MONITORINFO lpmi);
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
 
     [DllImport("kernel32.dll", SetLastError = true)]
     public static extern bool AttachConsole(uint dwProcessId);
@@ -194,19 +173,7 @@ public class NativeMethods
 
     #endregion
 
-    #region Helpers
-
-    /// <summary>
-    /// Returns the physical-pixel bounding rectangle of the monitor that contains
-    /// the specified window (nearest monitor if the window is off-screen).
-    /// </summary>
-    public static RECT GetMonitorBoundsForWindow(IntPtr hWnd)
-    {
-        var hMonitor = MonitorFromWindow(hWnd, MONITOR_DEFAULTTONEAREST);
-        var mi = new MONITORINFO { cbSize = Marshal.SizeOf<MONITORINFO>() };
-        GetMonitorInfo(hMonitor, ref mi);
-        return mi.rcMonitor;
-    }
+    #region Helpers       
 
     /// <summary>
     /// Attaches to <paramref name="processId"/>'s console and rescales its current font
@@ -252,6 +219,42 @@ public class NativeMethods
         finally
         {
             FreeConsole();
+        }
+    }
+
+    /// <summary>
+    /// Sends a <c>WM_DPICHANGED</c> message to a GUI window (e.g. PuTTY) so it can
+    /// rescale its fonts and layout internally. This is necessary because
+    /// <c>WM_DPICHANGED</c> is not reliably forwarded to cross-process child windows
+    /// embedded via <c>SetParent</c>. Requires PuTTY 0.75+ to take effect.
+    /// </summary>
+    public static void TrySendDpiChangedMessage(IntPtr hWnd, double oldDpi, double newDpi)
+    {
+        if (hWnd == IntPtr.Zero)
+            return;
+
+        if (Math.Abs(newDpi - oldDpi) < 0.01)
+            return;
+
+        const uint WM_DPICHANGED = 0x02E0;
+
+        var newDpiInt = (int)Math.Round(newDpi);
+        var wParam = (IntPtr)((newDpiInt << 16) | newDpiInt); // HIWORD = Y DPI, LOWORD = X DPI
+
+        // Build the suggested new rect from the current window position.
+        var rect = new RECT();
+        GetWindowRect(hWnd, ref rect);
+
+        // lParam must point to a RECT with the suggested new size/position.
+        var lParam = Marshal.AllocHGlobal(Marshal.SizeOf<RECT>());
+        try
+        {
+            Marshal.StructureToPtr(rect, lParam, false);
+            SendMessage(hWnd, WM_DPICHANGED, wParam, lParam);
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(lParam);
         }
     }
 

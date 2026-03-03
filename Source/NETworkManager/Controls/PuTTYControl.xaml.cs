@@ -17,8 +17,6 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
 {
     #region Events
 
-    private bool _isDpiChanging;
-
     private void WindowGrid_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         ResizeEmbeddedWindow();
@@ -26,76 +24,20 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
 
     private async void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
     {
-        if (!IsConnected || _appWin == IntPtr.Zero || _isDpiChanging)
+        ResizeEmbeddedWindow();
+
+        if (!IsConnected || _process == null || _process.HasExited)
             return;
 
-        await TriggerDpiUpdateAsync();
+        // PuTTY is a GUI application (not console-based), so the Console Font API
+        // (AttachConsole/SetCurrentConsoleFontEx) does not apply. Instead, send
+        // WM_DPICHANGED directly to the PuTTY window so it can rescale its fonts
+        // and layout internally — bypassing the cross-process delivery limitation.
+        NativeMethods.TrySendDpiChangedMessage(
+            _appWin,
+            e.OldDpi.PixelsPerInchX,
+            e.NewDpi.PixelsPerInchX);
     }
-
-    /// <summary>
-    /// Detaches PuTTY's window, places it visibly on the current monitor so Windows
-    /// delivers WM_DPICHANGED natively to PuTTY's message loop, then re-embeds it.
-    /// Called both on initial connect (if DPIs differ) and on every DPI change.
-    /// </summary>
-    private async Task TriggerDpiUpdateAsync()
-    {
-        if (_isDpiChanging || !IsConnected || _appWin == IntPtr.Zero)
-            return;
-
-        _isDpiChanging = true;
-
-        try
-        {
-            // Use MonitorFromWindow for reliable physical-pixel coordinates — WinForms's
-            // Screen.FromHandle can return DPI-virtualized (wrong) coordinates on
-            // PerMonitorV2 setups.
-            var bounds = NativeMethods.GetMonitorBoundsForWindow(WindowHost.Handle);
-            int cx = bounds.left + (bounds.right - bounds.left) / 2;
-            int cy = bounds.top + (bounds.bottom - bounds.top) / 2;
-
-            // Temporarily restore WS_POPUP so that after SetParent(null) Windows treats
-            // the window as a proper top-level popup. Without WS_POPUP (stripped during
-            // embedding), the window has no recognised top-level style and Windows
-            // skips sending WM_DPICHANGED to it entirely.
-            // Also clear WS_CHILD if SetParent happened to set it.
-            long style = NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
-            style &= ~NativeMethods.WS_CHILD;
-            style |= NativeMethods.WS_POPUP;
-            NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
-
-            NativeMethods.SetParent(_appWin, IntPtr.Zero);
-
-            // Place as an 800×600 window at the centre of the target monitor, behind
-            // all other windows (HWND_BOTTOM). SWP_SHOWWINDOW makes it visible so
-            // Windows detects the monitor's DPI and delivers WM_DPICHANGED natively.
-            // A 1×1 window is below the threshold Windows uses for DPI detection.
-            NativeMethods.SetWindowPos(_appWin, NativeMethods.HWND_BOTTOM, cx, cy, 800, 600,
-                NativeMethods.SWP_NOACTIVATE | NativeMethods.SWP_SHOWWINDOW);
-
-            // Give PuTTY's message loop time to dequeue and handle WM_DPICHANGED.
-            await Task.Delay(300);
-
-            if (!IsConnected || _appWin == IntPtr.Zero)
-                return;
-
-            NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Hide);
-            NativeMethods.SetParent(_appWin, WindowHost.Handle);
-
-            // Remove WS_POPUP after re-embedding; keeping it on a child window can
-            // cause painting to overflow the parent panel (see issue #167).
-            style = NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
-            style &= ~NativeMethods.WS_POPUP;
-            NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
-
-            ResizeEmbeddedWindow();
-            NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.ShowNoActivate);
-        }
-        finally
-        {
-            _isDpiChanging = false;
-        }
-    }
-
     #endregion
 
     #region Variables
@@ -252,8 +194,9 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
 
                     if (!_process.HasExited)
                     {
-                        // Capture PuTTY's DPI before embedding. If it started on a
-                        // different monitor than ours, we correct below via detach/reattach.
+                        // Capture PuTTY's window DPI before embedding. The process
+                        // might have started on a different monitor than ours, so its font
+                        // may be scaled for a different DPI. We correct this after embedding.
                         var initialWindowDpi = NativeMethods.GetDpiForWindow(_appWin);
 
                         // Enable mixed-DPI hosting on this thread before SetParent so that
@@ -267,11 +210,9 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
                         // Show window before set style and resize
                         NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
 
-                        // Remove border etc.
+                        // Remove border etc.                        
                         long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
-                        style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP |
-                                   NativeMethods
-                                       .WS_THICKFRAME); // NativeMethods.WS_POPUP --> Overflow? (https://github.com/BornToBeRoot/NETworkManager/issues/167)
+                        style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
                         NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
 
                         IsConnected = true;
@@ -282,11 +223,13 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
 
                         ResizeEmbeddedWindow();
 
-                        // If PuTTY started on a different DPI monitor than ours, trigger
-                        // a DPI correction now so its font matches the current monitor.
+                        // If PuTTY started at a different DPI than our panel (e.g. it
+                        // spawned on a secondary monitor with a different scale factor),
+                        // send WM_DPICHANGED so PuTTY rescales its fonts to match.
                         var currentPanelDpi = NativeMethods.GetDpiForWindow(WindowHost.Handle);
                         if (initialWindowDpi != currentPanelDpi)
-                            await TriggerDpiUpdateAsync();
+                            NativeMethods.TrySendDpiChangedMessage(_appWin,
+                                initialWindowDpi, currentPanelDpi);
                     }
                 }
             }
