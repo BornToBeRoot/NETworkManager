@@ -22,17 +22,14 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
         ResizeEmbeddedWindow();
     }
 
-    private async void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
+    private void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
     {
         ResizeEmbeddedWindow();
 
-        if (!IsConnected || _process == null || _process.HasExited)
+        if (!IsConnected)
             return;
 
-        // PuTTY is a GUI application (not console-based), so the Console Font API
-        // (AttachConsole/SetCurrentConsoleFontEx) does not apply. Instead, send
-        // WM_DPICHANGED directly to the PuTTY window so it can rescale its fonts
-        // and layout internally — bypassing the cross-process delivery limitation.
+        // Send WM_DPICHANGED to the embedded window so it can rescale fonts and UI elements.
         NativeMethods.TrySendDpiChangedMessage(
             _appWin,
             e.OldDpi.PixelsPerInchX,
@@ -194,18 +191,10 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
 
                     if (!_process.HasExited)
                     {
-                        // Capture PuTTY's window DPI before embedding. The process
-                        // might have started on a different monitor than ours, so its font
-                        // may be scaled for a different DPI. We correct this after embedding.
+                        // Capture DPI before embedding to correct font scaling afterwards
                         var initialWindowDpi = NativeMethods.GetDpiForWindow(_appWin);
 
-                        // Enable mixed-DPI hosting on this thread before SetParent so that
-                        // Windows routes DPI notifications to the cross-process child window.
-                        // SetThreadDpiHostingBehavior is available on Windows 10 1803+.
-                        var prevDpiHosting = NativeMethods.SetThreadDpiHostingBehavior(
-                            NativeMethods.DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_MIXED);
                         NativeMethods.SetParent(_appWin, WindowHost.Handle);
-                        NativeMethods.SetThreadDpiHostingBehavior(prevDpiHosting);
 
                         // Show window before set style and resize
                         NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
@@ -217,19 +206,16 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
 
                         IsConnected = true;
 
-                        // Resize embedded application & refresh
-                        // Requires a short delay because it's not applied immediately
+                        // Resize after short delay — not applied immediately
                         await Task.Delay(250);
 
                         ResizeEmbeddedWindow();
 
-                        // If PuTTY started at a different DPI than our panel (e.g. it
-                        // spawned on a secondary monitor with a different scale factor),
-                        // send WM_DPICHANGED so PuTTY rescales its fonts to match.
+                        // Correct DPI if PuTTY started at a different DPI than our panel
                         var currentPanelDpi = NativeMethods.GetDpiForWindow(WindowHost.Handle);
+
                         if (initialWindowDpi != currentPanelDpi)
-                            NativeMethods.TrySendDpiChangedMessage(_appWin,
-                                initialWindowDpi, currentPanelDpi);
+                            NativeMethods.TrySendDpiChangedMessage(_appWin, initialWindowDpi, currentPanelDpi);
                     }
                 }
             }

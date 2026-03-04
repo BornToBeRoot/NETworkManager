@@ -25,14 +25,10 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
     {
         ResizeEmbeddedWindow();
 
-        if (!IsConnected || _process == null || _process.HasExited)
+        if (!IsConnected)
             return;
 
-        // PowerShell runs inside conhost.exe, a console host process. The Windows
-        // Console API (kernel32.dll) provides cross-process access to the console's
-        // font settings, so we can rescale fonts directly without any window message
-        // passing — completely bypassing the WM_DPICHANGED cross-process delivery
-        // problem that affects the PuTTY (non-console) embedding approach.
+        // Rescale the console font of the embedded conhost process so it remains the same physical size when the DPI changes.
         NativeMethods.TryRescaleConsoleFont(
             (uint)_process.Id,
             e.NewDpi.PixelsPerInchX / e.OldDpi.PixelsPerInchX);
@@ -182,18 +178,10 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
 
                 if (_appWin != IntPtr.Zero)
                 {
-                    // Capture the DPI of conhost's window before embedding. The process
-                    // might have started on a different monitor than ours, so its font
-                    // may be scaled for a different DPI. We correct this after embedding.
+                    // Capture DPI before embedding to correct font scaling afterwards
                     var initialWindowDpi = NativeMethods.GetDpiForWindow(_appWin);
 
-                    // Enable mixed-DPI hosting on this thread before SetParent so that
-                    // Windows routes DPI notifications to the cross-process child window.
-                    // SetThreadDpiHostingBehavior is available on Windows 10 1803+.
-                    var prevDpiHosting = NativeMethods.SetThreadDpiHostingBehavior(
-                        NativeMethods.DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_MIXED);
                     NativeMethods.SetParent(_appWin, WindowHost.Handle);
-                    NativeMethods.SetThreadDpiHostingBehavior(prevDpiHosting);
 
                     // Show window before set style and resize
                     NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
@@ -205,19 +193,16 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
 
                     IsConnected = true;
 
-                    // Resize embedded application & refresh
-                    // Requires a short delay because it's not applied immediately
+                    // Resize after short delay — not applied immediately
                     await Task.Delay(250);
+
                     ResizeEmbeddedWindow();
 
-                    // If conhost started at a different DPI than our monitor (e.g. it
-                    // spawned on a secondary monitor with a different scale factor),
-                    // correct the font now so WindowsFormsHost_DpiChanged always starts
-                    // from the right baseline for relative scaling.
+                    // Correct font if conhost started at a different DPI than our panel
                     var currentPanelDpi = NativeMethods.GetDpiForWindow(WindowHost.Handle);
+
                     if (initialWindowDpi != currentPanelDpi)
-                        NativeMethods.TryRescaleConsoleFont((uint)_process.Id,
-                            (double)currentPanelDpi / initialWindowDpi);
+                        NativeMethods.TryRescaleConsoleFont((uint)_process.Id, (double)currentPanelDpi / initialWindowDpi);
                 }
             }
             else
