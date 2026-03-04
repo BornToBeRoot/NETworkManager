@@ -5,7 +5,7 @@ Create a new connection or profile with the following settings:
 - Remote console: `False`
 - Command: `<FilePath> <Arguments>`
 
-  ```PowerShell
+  ```powershell
   # Connect to WSL
   wsl -d <DISTRIBUTION>
 

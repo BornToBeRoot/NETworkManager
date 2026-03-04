@@ -70,7 +70,7 @@ In addition, further actions can be performed using the buttons at the bottom le
 
     The following command is executed in an elevated PowerShell to enable the `dhcpstaticipcoexistence` option:
 
-    ```PowerShell
+    ```powershell
     netsh interface ipv4 set interface interface="Ethernet" dhcpstaticipcoexistence=enabled
     ```
 
@@ -82,7 +82,7 @@ In addition, further actions can be performed using the buttons at the bottom le
 
     :::
 
-  - **Remove IPv4 addres...** - Opens a dialog where you can select an IPv4 address to remove from the selected network adapter.
+  - **Remove IPv4 address...** - Opens a dialog where you can select an IPv4 address to remove from the selected network adapter.
 
     :::note
 
@@ -90,7 +90,7 @@ In addition, further actions can be performed using the buttons at the bottom le
 
     If you have previously added an additional IPv4 address to a network adapter that is configured for DHCP, the `netsh` option `dhcpstaticipcoexistence` remains active. To disable it, run the following command in an elevated PowerShell:
 
-    ```PowerShell
+    ```powershell
     netsh interface ipv4 set interface interface="Ethernet" dhcpstaticipcoexistence=disabled
     ```
 
