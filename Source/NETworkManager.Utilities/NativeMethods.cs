@@ -13,14 +13,8 @@ public class NativeMethods
     public const int WS_THICKFRAME = 0x00040000;
     public const int SWP_NOZORDER = 0x0004;
     public const int SWP_NOACTIVATE = 0x0010;
-    public const int SWP_SHOWWINDOW = 0x0040;
     public const long WS_POPUP = 0x80000000L;
     public const long WS_CAPTION = 0x00C00000L;
-    public const long WS_CHILD = 0x40000000L;
-    public const uint MONITOR_DEFAULTTONEAREST = 0x00000002;
-
-    /// <summary>Places the window at the bottom of the Z order (behind all others).</summary>
-    public static readonly IntPtr HWND_BOTTOM = new(1);
 
     /// <summary>The value returned by CreateFile on failure.</summary>
     public static readonly IntPtr INVALID_HANDLE_VALUE = new(-1);
@@ -49,19 +43,6 @@ public class NativeMethods
     public enum WM : uint
     {
         SYSCOMMAND = 0x0112
-    }
-
-    /// <summary>
-    /// Controls how a thread hosts child windows with different DPI awareness contexts.
-    /// Set to <see cref="DPI_HOSTING_BEHAVIOR_MIXED"/> before calling SetParent with a
-    /// cross-process child window to enable DPI notification forwarding.
-    /// Available on Windows 10 1803 (build 17134) and later.
-    /// </summary>
-    public enum DPI_HOSTING_BEHAVIOR
-    {
-        DPI_HOSTING_BEHAVIOR_INVALID = -1,
-        DPI_HOSTING_BEHAVIOR_DEFAULT = 0,
-        DPI_HOSTING_BEHAVIOR_MIXED = 1
     }
 
     #endregion
@@ -129,16 +110,6 @@ public class NativeMethods
 
     [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
     public static extern bool SetForegroundWindow(IntPtr hWnd);
-
-    /// <summary>
-    /// Sets the DPI hosting behavior for windows created or reparented on the calling thread.
-    /// Call with <see cref="DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_MIXED"/> before
-    /// SetParent to opt into mixed-DPI hosting and enable DPI notification routing for
-    /// child windows. Returns the previous behavior so it can be restored.
-    /// Windows 10 1803+ only.
-    /// </summary>
-    [DllImport("user32.dll")]
-    public static extern DPI_HOSTING_BEHAVIOR SetThreadDpiHostingBehavior(DPI_HOSTING_BEHAVIOR value);
 
     /// <summary>
     /// Returns the DPI (dots per inch) value for the monitor that contains the specified window.
