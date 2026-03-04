@@ -70,7 +70,7 @@ private static extern bool SetCurrentConsoleFontEx(IntPtr hConsoleOutput,
     bool bMaximumWindow, ref CONSOLE_FONT_INFOEX lpConsoleCurrentFontEx);
 ```
 
-### Rescale helper
+### Font rescale helper
 
 ```csharp
 /// <summary>
@@ -174,6 +174,8 @@ PuTTY is a standard Win32 GUI application, not a console. The Console API does n
 
 `WM_DPICHANGED` carries the new DPI packed into `wParam` (LOWORD = DPI X, HIWORD = DPI Y) and a `RECT*` in `lParam` with the suggested new window rect:
 
+### DPI message helper
+
 ```csharp
 /// <summary>
 /// Sends WM_DPICHANGED to a GUI window so it can rescale its fonts and layout.
@@ -231,7 +233,7 @@ private void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
 }
 ```
 
-### Fixing the initial DPI baseline for PuTTY
+### Fixing the initial DPI baseline
 
 Same issue as PowerShell: PuTTY may start on a different monitor. Because PuTTY is a GUI process, the console API does not apply — but the explicit `WM_DPICHANGED` message works for the initial correction too:
 
