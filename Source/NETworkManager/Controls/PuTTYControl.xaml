@@ -19,7 +19,8 @@
     </local:UserControlBase.Resources>
     <Grid SizeChanged="WindowGrid_SizeChanged">
         <!-- Background color will prevent flickering when app inside the panel is closed -->
-        <WindowsFormsHost Background="{DynamicResource MahApps.Brushes.Window.Background}" Margin="10">
+        <WindowsFormsHost Background="{DynamicResource MahApps.Brushes.Window.Background}" Margin="10"
+                          DpiChanged="WindowsFormsHost_DpiChanged">
             <WindowsFormsHost.Style>
                 <Style TargetType="{x:Type WindowsFormsHost}">
                     <Style.Triggers>

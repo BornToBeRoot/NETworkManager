@@ -1,6 +1,7 @@
 ---
 slug: system-wide-policies-for-enterprise-deployments
 title: System-Wide Policies for Enterprise Deployments
+description: "NETworkManager now supports system-wide policies, giving administrators centralized control over application settings across all users on a machine. This article explains how to configure and deploy these policies in enterprise environments."
 authors: [borntoberoot]
 tags: [policies, enterprise, settings, new feature]
 ---

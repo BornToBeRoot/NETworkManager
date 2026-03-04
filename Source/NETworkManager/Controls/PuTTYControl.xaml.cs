@@ -22,6 +22,19 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
         ResizeEmbeddedWindow();
     }
 
+    private void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
+    {
+        ResizeEmbeddedWindow();
+
+        if (!IsConnected)
+            return;
+
+        // Send WM_DPICHANGED to the embedded window so it can rescale fonts and UI elements.
+        NativeMethods.TrySendDpiChangedMessage(
+            _appWin,
+            e.OldDpi.PixelsPerInchX,
+            e.NewDpi.PixelsPerInchX);
+    }
     #endregion
 
     #region Variables
@@ -90,8 +103,10 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
 
         // Fix 1: The control is not visible by default, thus height and width is not set. If the values are not set, the size does not scale properly
         // Fix 2: Somehow the initial size need to be 20px smaller than the actual size after using Dragablz (https://github.com/BornToBeRoot/NETworkManager/pull/2678)
-        WindowHost.Height = (int)ActualHeight - 20;
-        WindowHost.Width = (int)ActualWidth - 20;
+        // Fix 3: The size needs to be scaled by the DPI, otherwise the embedded window is too small on high DPI screens (https://github.com/BornToBeRoot/NETworkManager/pull/3352)
+        var dpi = System.Windows.Media.VisualTreeHelper.GetDpi(this);
+        WindowHost.Height = (int)((ActualHeight - 20) * dpi.DpiScaleY);
+        WindowHost.Width = (int)((ActualWidth - 20) * dpi.DpiScaleX);
 
         Connect().ConfigureAwait(false);
 
@@ -178,25 +193,31 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
 
                     if (!_process.HasExited)
                     {
+                        // Capture DPI before embedding to correct font scaling afterwards
+                        var initialWindowDpi = NativeMethods.GetDpiForWindow(_appWin);
+
                         NativeMethods.SetParent(_appWin, WindowHost.Handle);
 
                         // Show window before set style and resize
                         NativeMethods.ShowWindow(_appWin, NativeMethods.WindowShowStyle.Maximize);
 
-                        // Remove border etc.
+                        // Remove border etc.                        
                         long style = (int)NativeMethods.GetWindowLong(_appWin, NativeMethods.GWL_STYLE);
-                        style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP |
-                                   NativeMethods
-                                       .WS_THICKFRAME); // NativeMethods.WS_POPUP --> Overflow? (https://github.com/BornToBeRoot/NETworkManager/issues/167)
+                        style &= ~(NativeMethods.WS_CAPTION | NativeMethods.WS_POPUP | NativeMethods.WS_THICKFRAME);
                         NativeMethods.SetWindowLongPtr(_appWin, NativeMethods.GWL_STYLE, new IntPtr(style));
 
                         IsConnected = true;
 
-                        // Resize embedded application & refresh
-                        // Requires a short delay because it's not applied immediately
+                        // Resize after short delay — not applied immediately
                         await Task.Delay(250);
 
                         ResizeEmbeddedWindow();
+
+                        // Correct DPI if PuTTY started at a different DPI than our panel
+                        var currentPanelDpi = NativeMethods.GetDpiForWindow(WindowHost.Handle);
+
+                        if (initialWindowDpi != currentPanelDpi)
+                            NativeMethods.TrySendDpiChangedMessage(_appWin, initialWindowDpi, currentPanelDpi);
                     }
                 }
             }
