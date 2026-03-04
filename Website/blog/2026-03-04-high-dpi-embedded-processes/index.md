@@ -13,7 +13,17 @@ This article documents the investigation and the two different solutions NETwork
 
 ## The Embedding Technique
 
-NETworkManager uses `WindowsFormsHost` to host a native Win32 `Panel` (WinForms `Panel`), and then calls `SetParent` to re-parent a foreign process window into that panel:
+NETworkManager is a C#/WPF application that uses `WindowsFormsHost` to host a native Win32 `Panel` (WinForms `Panel`), and then calls `SetParent` to re-parent a foreign process window into that panel.
+
+The XAML wires up the `DpiChanged` event and embeds a WinForms `Panel` as the hosting surface:
+
+```xaml
+<WindowsFormsHost DpiChanged="WindowsFormsHost_DpiChanged">
+    <windowsForms:Panel x:Name="WindowHost" />
+</WindowsFormsHost>
+```
+
+The C# code-behind then calls `SetParent` to embed the external process window:
 
 ```csharp
 // Make the external process window a child of our WinForms panel
@@ -32,16 +42,6 @@ This works fine visually — the external window appears seamlessly inside the W
 WPF applications declare `PerMonitorV2` DPI awareness in their manifest. When the application's `HwndSource` (the root Win32 window) moves to a different DPI monitor, Windows walks the entire Win32 window tree within the **same process** and sends `WM_DPICHANGED` / `WM_DPICHANGED_AFTERPARENT` to every child. The `WindowsFormsHost` → `WindowHost` chain is all in-process, so it receives `DpiChanged` events correctly.
 
 The problem is that `_appWin` is owned by a **completely separate process** (PuTTY, conhost). From the Windows DWM compositor's perspective it is now a child window of your panel, but the DPI notification system only walks intra-process window trees. The external child window never receives any DPI message.
-
-### What Does Not Work
-
-Before arriving at the solutions below, several approaches were tried:
-
-| Attempt | Why it failed |
-|---------|---------------|
-| Send `WM_DPICHANGED_AFTERPARENT` (0x02E3) | Causes the process to call `GetDpiForWindow` on itself — returns the DPI of its **current monitor** (now wrong because it is a child, not a top-level window) |
-| Send `WM_DPICHANGED` (0x02E0) with explicit DPI in wParam | Works only for newer PuTTY builds (0.75+) that handle this message; breaks for older builds and doesn't help console processes at all |
-| Hide → detach → move → re-embed | **Hiding** the window before detaching prevents the trigger: Windows only sends `WM_DPICHANGED` to **visible** top-level windows that cross a monitor DPI boundary |
 
 ## Solution A — Console Host Processes (PowerShell, cmd)
 
@@ -127,6 +127,9 @@ private void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
     if (!IsConnected)
         return;
 
+    // Rescale the console font using the new/old DPI ratio via the Console API.
+    // WM_DPICHANGED is never forwarded to cross-process child windows,
+    // so we use AttachConsole + SetCurrentConsoleFontEx instead.
     NativeMethods.TryRescaleConsoleFont(
         (uint)_process.Id,
         e.NewDpi.PixelsPerInchX / e.OldDpi.PixelsPerInchX);
@@ -217,6 +220,9 @@ private void WindowsFormsHost_DpiChanged(object sender, DpiChangedEventArgs e)
     if (!IsConnected)
         return;
 
+    // Send WM_DPICHANGED explicitly to the PuTTY window with the new DPI.
+    // WM_DPICHANGED is never forwarded to cross-process child windows after SetParent,
+    // so we inject the message directly.
     NativeMethods.TrySendDpiChangedMessage(
         _appWin,
         e.OldDpi.PixelsPerInchX,
@@ -267,16 +273,10 @@ The `-20` offset compensates for a layout quirk introduced by the Dragablz tab c
 
 ## Summary
 
-| Process type | DPI change handler | Initial DPI correction |
-|---|---|---|
-| **Console host** (conhost.exe) | `AttachConsole` + `SetCurrentConsoleFontEx` with `newDpi / oldDpi` scale factor | Same — compare `GetDpiForWindow` before and after embed |
-| **GUI process** (PuTTY, any Win32 app) | Send `WM_DPICHANGED` (0x02E0) with explicit new DPI | Same — send `WM_DPICHANGED` from old to new DPI |
-| Both | `WindowsFormsHost` initial size set in physical pixels via `VisualTreeHelper.GetDpi` | — |
+When you embed a foreign process window via `SetParent`, Windows never forwards DPI change notifications across process boundaries. For console host processes (PowerShell, cmd) use the Windows Console API (`AttachConsole` + `SetCurrentConsoleFontEx`) to rescale fonts directly; for GUI processes (PuTTY) send `WM_DPICHANGED` (0x02E0) explicitly with the new DPI packed into `wParam`. In both cases, apply an initial DPI correction after `SetParent` by comparing `GetDpiForWindow` before and after embedding, and set the `WindowsFormsHost` initial size in physical pixels using `VisualTreeHelper.GetDpi`.
 
 The full implementation is available in the NETworkManager source:
 
 - [`NETworkManager.Utilities/NativeMethods.cs`](https://github.com/BornToBeRoot/NETworkManager/blob/main/Source/NETworkManager.Utilities/NativeMethods.cs) — all P/Invoke declarations and helpers
 - [`NETworkManager/Controls/PowerShellControl.xaml.cs`](https://github.com/BornToBeRoot/NETworkManager/blob/main/Source/NETworkManager/Controls/PowerShellControl.xaml.cs) — console host approach
 - [`NETworkManager/Controls/PuTTYControl.xaml.cs`](https://github.com/BornToBeRoot/NETworkManager/blob/main/Source/NETworkManager/Controls/PuTTYControl.xaml.cs) — GUI process approach
-
-If you encounter a similar cross-process embedding scenario, open an [issue on GitHub](https://github.com/BornToBeRoot/NETworkManager/issues) — we are happy to discuss edge cases.
