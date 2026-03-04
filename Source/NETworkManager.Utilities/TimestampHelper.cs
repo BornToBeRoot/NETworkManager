@@ -12,13 +12,24 @@ public static class TimestampHelper
     }
 
     /// <summary>
-    /// Generates a filename by prefixing the specified filename with a timestamp string.
+    /// Generates a filename by prefixing the specified filename with a timestamp string and an optional version string.
     /// </summary>
     /// <param name="fileName">The original filename to be prefixed with a timestamp. Cannot be null or empty.</param>
-    /// <returns>A string containing the timestamp followed by an underscore and the original filename.</returns>
-    public static string GetTimestampFilename(string fileName)
+    /// <param name="version">
+    /// An optional version string to include between the timestamp and the filename. If provided, dots in the
+    /// version are replaced with dashes (e.g., "2026.3.4.0" becomes "2026-3-4-0").
+    /// </param>
+    /// <returns>
+    /// A string in the format <c>&lt;timestamp&gt;_&lt;version&gt;_&lt;fileName&gt;</c> when a version is
+    /// provided, or <c>&lt;timestamp&gt;_&lt;fileName&gt;</c> otherwise.
+    /// </returns>
+    public static string GetTimestampFilename(string fileName, string version = null)
     {
-        return $"{GetTimestamp()}_{fileName}";
+        var versionSegment = string.IsNullOrWhiteSpace(version)
+            ? string.Empty
+            : $"_{version.Replace('.', '-')}";
+
+        return $"{GetTimestamp()}{versionSegment}_{fileName}";
     }
 
     /// <summary>

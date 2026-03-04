@@ -1317,7 +1317,7 @@ public static class ProfileManager
             // Create backup
             Backup(LoadedProfileFile.Path,
                 GetProfilesBackupFolderLocation(),
-                TimestampHelper.GetTimestampFilename(profileFileName));
+                TimestampHelper.GetTimestampFilename(profileFileName, AssemblyManager.Current.Version.ToString()));
 
             // Cleanup old backups
             CleanupBackups(GetProfilesBackupFolderLocation(),

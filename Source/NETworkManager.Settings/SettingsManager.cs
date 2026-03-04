@@ -366,7 +366,7 @@ public static class SettingsManager
             // Create backup
             Backup(GetSettingsFilePath(),
                 GetSettingsBackupFolderLocation(),
-                TimestampHelper.GetTimestampFilename(GetSettingsFileName()));
+                TimestampHelper.GetTimestampFilename(GetSettingsFileName(), AssemblyManager.Current.Version.ToString()));
 
             // Cleanup old backups
             CleanupBackups(GetSettingsBackupFolderLocation(),
