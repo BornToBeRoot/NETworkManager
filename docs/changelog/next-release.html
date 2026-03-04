@@ -5,8 +5,8 @@
 <meta name="generator" content="Docusaurus v3.9.2">
 <title data-rh="true">Next Release | NETworkManager</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://borntoberoot.net/NETworkManager/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://borntoberoot.net/NETworkManager/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://borntoberoot.net/NETworkManager/docs/changelog/next-release"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Next Release | NETworkManager"><meta data-rh="true" name="description" content="Version: Next release"><meta data-rh="true" property="og:description" content="Version: Next release"><link data-rh="true" rel="icon" href="/NETworkManager/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://borntoberoot.net/NETworkManager/docs/changelog/next-release"><link data-rh="true" rel="alternate" href="https://borntoberoot.net/NETworkManager/docs/changelog/next-release" hreflang="en"><link data-rh="true" rel="alternate" href="https://borntoberoot.net/NETworkManager/docs/changelog/next-release" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Changelog","item":"https://borntoberoot.net/NETworkManager/docs/category/changelog"},{"@type":"ListItem","position":2,"name":"Next Release","item":"https://borntoberoot.net/NETworkManager/docs/changelog/next-release"}]}</script><link rel="alternate" type="application/rss+xml" href="/NETworkManager/blog/rss.xml" title="NETworkManager RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/NETworkManager/blog/atom.xml" title="NETworkManager Atom Feed"><link rel="stylesheet" href="/NETworkManager/assets/css/styles.48bb1fa2.css">
-<script src="/NETworkManager/assets/js/runtime~main.7d9cd760.js" defer="defer"></script>
-<script src="/NETworkManager/assets/js/main.835f57c8.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.7139ac0f.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/main.91c782b7.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <svg style="display: none;"><defs>
@@ -23,8 +23,28 @@ Release date: <strong>xx.xx.2025</strong></p>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="breaking-changes">Breaking Changes<a href="#breaking-changes" class="hash-link" aria-label="Direct link to Breaking Changes" title="Direct link to Breaking Changes" translate="no">​</a></h2>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-new">What&#x27;s new?<a href="#whats-new" class="hash-link" aria-label="Direct link to What&#x27;s new?" title="Direct link to What&#x27;s new?" translate="no">​</a></h2>
+<p><strong>PowerShell</strong></p>
+<ul>
+<li class="">DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PowerShell (conhost) window now rescales its font automatically using the Windows Console API (<code>AttachConsole</code> + <code>SetCurrentConsoleFontEx</code>), bypassing the OS limitation that prevents <code>WM_DPICHANGED</code> from being forwarded to cross-process child windows. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3352" target="_blank" rel="noopener noreferrer" class="">#3352</a></li>
+</ul>
+<p><strong>PuTTY</strong></p>
+<ul>
+<li class="">DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PuTTY window now receives an explicit <code>WM_DPICHANGED</code> message with the new DPI value packed into <code>wParam</code>, since the OS does not forward this message across process boundaries after <code>SetParent</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3352" target="_blank" rel="noopener noreferrer" class="">#3352</a></li>
+</ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="improvements">Improvements<a href="#improvements" class="hash-link" aria-label="Direct link to Improvements" title="Direct link to Improvements" translate="no">​</a></h2>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="bug-fixes">Bug Fixes<a href="#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes" translate="no">​</a></h2>
+<p><strong>PowerShell</strong></p>
+<ul>
+<li class="">Fixed incorrect initial embedded window size on high-DPI monitors. The <code>WindowsFormsHost</code> panel now sets its initial dimensions in physical pixels using the current DPI scale factor, ensuring the PowerShell window fills the panel correctly at startup. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3352" target="_blank" rel="noopener noreferrer" class="">#3352</a></li>
+</ul>
+<p><strong>PuTTY</strong></p>
+<ul>
+<li class="">Fixed incorrect initial embedded window size on high-DPI monitors. The <code>WindowsFormsHost</code> panel now sets its initial dimensions in physical pixels using the current DPI scale factor, ensuring the PuTTY window fills the panel correctly at startup. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3352" target="_blank" rel="noopener noreferrer" class="">#3352</a></li>
+</ul>
+<p><strong>TigerVNC</strong></p>
+<ul>
+<li class="">Fixed incorrect initial embedded window size on high-DPI monitors. The <code>WindowsFormsHost</code> panel now sets its initial dimensions in physical pixels using the current DPI scale factor, ensuring the TigerVNC window fills the panel correctly at startup. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3352" target="_blank" rel="noopener noreferrer" class="">#3352</a></li>
+</ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="dependencies-refactoring--documentation">Dependencies, Refactoring &amp; Documentation<a href="#dependencies-refactoring--documentation" class="hash-link" aria-label="Direct link to Dependencies, Refactoring &amp; Documentation" title="Direct link to Dependencies, Refactoring &amp; Documentation" translate="no">​</a></h2>
 <ul>
 <li class="">Code cleanup &amp; refactoring</li>
