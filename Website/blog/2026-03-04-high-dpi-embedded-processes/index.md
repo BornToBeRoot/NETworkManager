@@ -1,6 +1,7 @@
 ---
 slug: high-dpi-embedded-processes
 title: "High DPI for Embedded Processes in WPF: Making SetParent Work Across Monitor Scales"
+description: "When you embed a foreign process window via SetParent in WPF, it never receives DPI change notifications across process boundaries. This article shows how to rescale fonts for embedded console hosts (PowerShell) using the Console API, and for GUI processes (PuTTY) by sending WM_DPICHANGED explicitly."
 authors: [borntoberoot]
 tags: [wpf, dpi, windows, c#, win32, putty, powershell]
 ---
