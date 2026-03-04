@@ -163,9 +163,15 @@ const config = {
           {
             // Redirect latest changelog to the newest version
             from: ["/docs/changelog/latest"],
-            to: "/docs/changelog/2025-10-18-0",
+            to: "/docs/changelog/2026-2-22-0",
           },
           // Redirect pre-versions to the corresponding new versions
+          {
+            from: [              
+              "/docs/changelog/2026-3-4-0",
+            ],
+            to: "/docs/changelog/next-release",
+          },
           {
             from: [
               "/docs/changelog/2025-11-1-0",
@@ -175,7 +181,7 @@ const config = {
               "/docs/changelog/2025-12-28-0",
               "/docs/changelog/2026-2-19-0",
             ],
-            to: "/docs/changelog/next-release",
+            to: "/docs/changelog/2026-2-22-0",
           },
           {
             from: [
