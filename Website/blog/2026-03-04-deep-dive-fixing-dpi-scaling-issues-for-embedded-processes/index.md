@@ -264,15 +264,13 @@ private void UserControl_Loaded(object sender, RoutedEventArgs e)
 
     // VisualTreeHelper.GetDpi returns DpiScaleX/Y as a ratio (1.0 = 96 DPI, 1.5 = 144 DPI).
     var dpi = System.Windows.Media.VisualTreeHelper.GetDpi(this);
-    WindowHost.Height = (int)((ActualHeight - 20) * dpi.DpiScaleY);
-    WindowHost.Width  = (int)((ActualWidth  - 20) * dpi.DpiScaleX);
+    WindowHost.Height = (int)(ActualHeight * dpi.DpiScaleY);
+    WindowHost.Width  = (int)(ActualWidth  * dpi.DpiScaleX);
 
     Connect().ConfigureAwait(false);
     _initialized = true;
 }
 ```
-
-The `-20` offset compensates for a layout quirk introduced by the Dragablz tab control (see [pull request #2678](https://github.com/BornToBeRoot/NETworkManager/pull/2678)).
 
 ## Summary
 
