@@ -9,7 +9,7 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[High DPI for Embedded Processes in WPF: Making SetParent Work Across Monitor Scales]]></title>
+            <title><![CDATA[Deep Dive: Fixing DPI Scaling Issues for Embedded Processes]]></title>
             <link>https://borntoberoot.net/NETworkManager/blog/high-dpi-embedded-processes</link>
             <guid>https://borntoberoot.net/NETworkManager/blog/high-dpi-embedded-processes</guid>
             <pubDate>Wed, 04 Mar 2026 00:00:00 GMT</pubDate>
