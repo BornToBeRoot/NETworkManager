@@ -102,8 +102,10 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
 
         // Fix 1: The control is not visible by default, thus height and width is not set. If the values are not set, the size does not scale properly
         // Fix 2: Somehow the initial size need to be 20px smaller than the actual size after using Dragablz (https://github.com/BornToBeRoot/NETworkManager/pull/2678)
-        WindowHost.Height = (int)ActualHeight - 20;
-        WindowHost.Width = (int)ActualWidth - 20;
+        // Fix 3: The size needs to be scaled by the DPI, otherwise the embedded window is too small on high DPI screens (https://github.com/BornToBeRoot/NETworkManager/pull/3352)
+        var dpi = System.Windows.Media.VisualTreeHelper.GetDpi(this);
+        WindowHost.Height = (int)((ActualHeight - 20) * dpi.DpiScaleY);
+        WindowHost.Width = (int)((ActualWidth - 20) * dpi.DpiScaleX);
 
         Connect().ConfigureAwait(false);
 
