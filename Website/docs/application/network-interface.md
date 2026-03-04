@@ -82,7 +82,7 @@ In addition, further actions can be performed using the buttons at the bottom le
 
     :::
 
-  - **Remove IPv4 addres...** - Opens a dialog where you can select an IPv4 address to remove from the selected network adapter.
+  - **Remove IPv4 address...** - Opens a dialog where you can select an IPv4 address to remove from the selected network adapter.
 
     :::note
 
