@@ -14,7 +14,7 @@ Displays the help dialog.
 
 **Example:**
 
-```PowerShell
+```powershell
 NETworkManager.exe --help
 ```
 
@@ -24,7 +24,7 @@ Resets all application settings.
 
 **Example:**
 
-```PowerShell
+```powershell
 NETworkManager.exe --reset-settings
 ```
 
@@ -62,7 +62,7 @@ Start a specific application on startup.
 
 **Example:**
 
-```PowerShell
+```powershell
 NETworkManager.exe --application:PingMonitor
 ```
 
@@ -76,7 +76,7 @@ Indicates whether the application was started automatically (via autostart).
 
 **Example:**
 
-```PowerShell
+```powershell
 NETworkManager.exe --autostart
 ```
 
@@ -86,6 +86,6 @@ Process ID of the old application process to wait for it to end if the applicati
 
 **Example:**
 
-```PowerShell
+```powershell
 NETworkManager.exe --restart-pid:35674
 ```

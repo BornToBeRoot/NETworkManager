@@ -18,7 +18,7 @@ NETworkManager is a C#/WPF application that uses `WindowsFormsHost` to host a na
 
 The XAML wires up the `DpiChanged` event and embeds a WinForms `Panel` as the hosting surface:
 
-```xaml
+```xml
 <WindowsFormsHost DpiChanged="WindowsFormsHost_DpiChanged">
     <windowsForms:Panel x:Name="WindowHost" />
 </WindowsFormsHost>
