@@ -48,6 +48,7 @@ const config = {
         },
         blog: {
           showReadingTime: true,
+          blogSidebarCount: "ALL",
           editUrl:
             "https://github.com/bornToBeRoot/NETworkManager/tree/main/Website/",
         },
