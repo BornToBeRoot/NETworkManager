@@ -93,35 +93,79 @@
                 </ContextMenu>
             </controls:MultiSelectDataGrid.Resources>
             <controls:MultiSelectDataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
+                <Style TargetType="{x:Type DataGridRow}"
+                       BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
                     <EventSetter Event="MouseDoubleClick" Handler="Row_OnDoubleClick" />
                     <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}" />
-                    <Setter Property="BorderThickness" Value="1" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding HasError}" Value="True">
+                        <!-- Be aware that you need Bindings in all conditions for Multi/DataTriggers. -->
+                        <!-- Triggers containing just Property conditions can use Multi/DataTrigger. -->
+                        <Trigger Property="DetailsVisibility" Value="Visible">
+                            <Trigger.Setters>
+                                <Setter Property="BorderThickness" Value="1 1 1 0" />
+                            </Trigger.Setters>
+                        </Trigger>
+                        <Trigger Property="DetailsVisibility" Value="Collapsed">
+                            <Trigger.Setters>
+                                <Setter Property="BorderThickness" Value="1" />
+                            </Trigger.Setters>
+                        </Trigger>
+                        <DataTrigger Value="True">
+                            <DataTrigger.Binding>
+                                <Binding Path="HasError" />
+                            </DataTrigger.Binding>
                             <Setter Property="BorderBrush" Value="#b95353" />
                         </DataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding Path=HasError}" Value="False" />
-                                <Condition
-                                    Binding="{Binding Path=IsSelected,
-                                    RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}"
-                                    Value="True" />
+                                <Condition Binding="{Binding Path=HasError}" Value="True" />
+                                <Condition Binding="{Binding IsSelected,
+                                RelativeSource={RelativeSource Self}}" Value="True" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
-                                <Setter
-                                    Property="BorderBrush"
-                                    Value="{DynamicResource MahApps.Brushes.Accent}" />
+                                <Setter Property="Background" Value="#803939" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=HasError}" Value="True" />
+                                <Condition Binding="{Binding IsMouseOver,
+                                RelativeSource={RelativeSource Self}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="Background" Value="#803939" />
                             </MultiDataTrigger.Setters>
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding Path=HasError}" Value="False" />
-                                <Condition
-                                    Binding="{Binding Path=IsSelected,
-                                    RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}"
-                                    Value="False" />
+                                <Condition Binding="{Binding DetailsVisibility,
+                                RelativeSource={RelativeSource Mode=Self}}" Value="Visible" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=HasError}"
+                                           Value="False" />
+                                <Condition Binding="{Binding IsSelected,
+                                RelativeSource={RelativeSource Self}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=HasError}" Value="False" />
+                                <Condition Binding="{Binding
+                                Path=IsSelected, RelativeSource={RelativeSource
+                                Mode=FindAncestor, AncestorType=DataGridRow}}" Value="False" />
+                                <Condition Binding="{Binding Path=DetailsVisibility,
+                                RelativeSource={RelativeSource Mode=Self}}"
+                                           Value="Collapsed" />
                             </MultiDataTrigger.Conditions>
                             <MultiDataTrigger.Setters>
                                 <Setter
@@ -238,10 +282,10 @@
                 <DataTemplate x:Name="RowDataTemplate" DataType="{x:Type viewModels:FirewallRuleViewModel}">
                     <!-- Highlight the border when the row is selected -->
                     <Border 
-                        BorderThickness="1,0,1,1"
+                        BorderThickness="0,0,0,1"
                         Background="{DynamicResource MahApps.Brushes.Window.Background}">
                         <Border.Style>
-                            <Style TargetType="{x:Type TypeName=Border}">
+                            <Style TargetType="{x:Type Border}">
                                 <Style.Triggers>
                                     <DataTrigger
                                         Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}"
@@ -262,7 +306,8 @@
                                             <Condition Binding="{Binding Path=HasError}" Value="False" />
                                             <Condition
                                                 Binding="{Binding Path=IsSelected,
-                                            RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}"
+                                            RelativeSource={RelativeSource Mode=FindAncestor,
+                                            AncestorType=DataGridRow}}"
                                                 Value="True" />
                                         </MultiDataTrigger.Conditions>
                                         <MultiDataTrigger.Setters>
