@@ -82,6 +82,9 @@
             <HintPath>$(TargetDir)\lib\MSTSCLib.dll</HintPath>
         </Reference>
         <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
+        <Compile Update="Controls\FirewallRuleEnumTranslations.cs">
+          <DependentUpon>FirewallRuleGrid.xaml</DependentUpon>
+        </Compile>
     </ItemGroup>
 
     <ItemGroup>
@@ -92,6 +95,7 @@
         <ProjectReference Include="..\NETworkManager.Localization\NETworkManager.Localization.csproj" />
         <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
         <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj" />
+        <ProjectReference Include="..\NETworkManager.Interfaces\NETworkManager.Interfaces.csproj" />
         <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj" />
         <ProjectReference Include="..\NETworkManager.Update\NETworkManager.Update.csproj" />
         <ProjectReference Include="..\NETworkManager.Utilities.WPF\NETworkManager.Utilities.WPF.csproj" />
@@ -137,6 +141,11 @@
           <SubType>Designer</SubType>
         </Page>
         <Page Update="Views\MessageConfirmationChildWindow.xaml">
+          <Generator>MSBuild:Compile</Generator>
+          <XamlRuntime>Wpf</XamlRuntime>
+          <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Controls\FirewallRuleGrid.xaml">
           <Generator>MSBuild:Compile</Generator>
           <XamlRuntime>Wpf</XamlRuntime>
           <SubType>Designer</SubType>

@@ -16,12 +16,14 @@ using System.Security;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
+using NETworkManager.Interfaces.ViewModels;
+using NETworkManager.Models.Firewall;
 
 // ReSharper disable InconsistentNaming
 
 namespace NETworkManager.ViewModels;
 
-public class ProfileViewModel : ViewModelBase
+public class ProfileViewModel : ViewModelBase, IProfileViewModel
 {
     #region Constructor
 
@@ -39,6 +41,14 @@ public class ProfileViewModel : ViewModelBase
 
         var profileInfo = profile ?? new ProfileInfo();
 
+        #region LoadViewModel
+        // Load ViewModels implementing ICloneable and Singleton pattern.
+        
+        // Firewall
+        Firewall_ViewModel = (IFirewallViewModel.Instance as FirewallViewModel)
+            ?.Clone() as FirewallViewModel;
+        #endregion
+        
         Name = profileInfo.Name;
 
         if (editMode == ProfileEditMode.Copy)
@@ -326,10 +336,14 @@ public class ProfileViewModel : ViewModelBase
             : profileInfo.IPGeolocation_Enabled;
         IPGeolocation_InheritHost = profileInfo.IPGeolocation_InheritHost;
         IPGeolocation_Host = profileInfo.IPGeolocation_Host;
+        
+        // Firewall
+        Firewall_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.Firewall
+            : profileInfo.Firewall_Enabled;
 
         _isLoading = false;
     }
-
     #endregion
 
     #region Methods
@@ -375,6 +389,14 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
+    public List<FirewallRule> GetFirewallRules()
+    {
+        List<FirewallRule> list = [];
+        list.AddRange(Firewall_ViewModel?.FirewallRules?.Select(model => model?.ToRule(true))
+                          .Where(model => model != null)
+                      ?? []);
+        return list;
+    }
     #endregion
 
     #region Variables
@@ -396,6 +418,12 @@ public class ProfileViewModel : ViewModelBase
         {
             if (value == _name)
                 return;
+            if ((Firewall_Enabled || _isLoading) && !value.Contains('|'))
+            {
+                Firewall_ViewModel?.ProfileName = value;
+                OnPropertyChanged(nameof(Firewall_ViewModel));
+                OnPropertyChanged(nameof(Firewall_IViewModel));
+            }
 
             _name = value;
             OnPropertyChanged();
@@ -3205,9 +3233,44 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
     #endregion
 
+    #region Firewall
+
+    public bool Firewall_Enabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(Name));
+        }
+    }
+
+    public IFirewallViewModel Firewall_IViewModel
+    {
+        get => Firewall_ViewModel;
+        set => Firewall_ViewModel = (FirewallViewModel)value;
+    }
+    
+    public FirewallViewModel Firewall_ViewModel
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    #endregion
+    
     #endregion
 
     #region ICommands & Actions
@@ -3256,6 +3319,5 @@ public class ProfileViewModel : ViewModelBase
 
         TagsCollection.Remove(tag);
     }
-
     #endregion
 }

@@ -145,5 +145,10 @@ public enum ApplicationName
     /// <summary>
     ///     ARP table application.
     /// </summary>
-    ARPTable
+    ARPTable,
+    
+    /// <summary>
+    ///    Firewall application.
+    /// </summary>
+    Firewall,
 }

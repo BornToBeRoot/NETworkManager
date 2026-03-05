@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dragablz", "3rdparty\Dragab
 EndProject
 Project("{B7DD6F7E-DEF8-4E67-B5B7-07EF123DB6F0}") = "NETworkManager.Setup", "NETworkManager.Setup\NETworkManager.Setup.wixproj", "{B474758D-E657-4DA6-AB2B-63764C5FBAF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NETworkManager.Interfaces", "NETworkManager.Interfaces\NETworkManager.Interfaces.csproj", "{F25AA52C-7203-4F3D-B9B2-915DFFD25294}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -338,6 +340,26 @@ Global
 		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Release|x64.Build.0 = Release|x64
 		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Release|x86.ActiveCfg = Release|x86
 		{B474758D-E657-4DA6-AB2B-63764C5FBAF1}.Release|x86.Build.0 = Release|x86
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Debug|ARM.Build.0 = Debug|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Debug|x64.Build.0 = Debug|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Debug|x86.Build.0 = Debug|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Release|ARM.ActiveCfg = Release|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Release|ARM.Build.0 = Release|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Release|ARM64.Build.0 = Release|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Release|x64.ActiveCfg = Release|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Release|x64.Build.0 = Release|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Release|x86.ActiveCfg = Release|Any CPU
+		{F25AA52C-7203-4F3D-B9B2-915DFFD25294}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

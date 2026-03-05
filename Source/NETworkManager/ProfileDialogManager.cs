@@ -269,7 +269,11 @@ public static class ProfileDialogManager
             IPGeolocation_InheritHost = instance.IPGeolocation_InheritHost,
             IPGeolocation_Host = instance.IPGeolocation_InheritHost
                 ? instance.Host?.Trim()
-                : instance.IPGeolocation_Host?.Trim()
+                : instance.IPGeolocation_Host?.Trim(),
+                
+            // Firewall
+            Firewall_Enabled = instance.Firewall_Enabled,
+            Firewall_Rules = instance.GetFirewallRules()
         };
     }
 
