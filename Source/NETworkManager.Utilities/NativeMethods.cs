@@ -16,6 +16,9 @@ public class NativeMethods
     public const long WS_POPUP = 0x80000000L;
     public const long WS_CAPTION = 0x00C00000L;
 
+    /// <summary>The value returned by CreateFile on failure.</summary>
+    public static readonly IntPtr INVALID_HANDLE_VALUE = new(-1);
+
     #endregion
 
     #region Enum
@@ -44,11 +47,37 @@ public class NativeMethods
 
     #endregion
 
+    #region Structs
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT
+    {
+        public int left, top, right, bottom;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct COORD
+    {
+        public short X;
+        public short Y;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    public struct CONSOLE_FONT_INFOEX
+    {
+        public uint cbSize;
+        public uint nFont;
+        public COORD dwFontSize;
+        public uint FontFamily;
+        public uint FontWeight;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        public string FaceName;
+    }
+
+    #endregion
+
     #region Pinvoke/Win32 Methods
-
-    [DllImport("user32.dll")]
-    public static extern IntPtr GetForegroundWindow();
-
+        
     [DllImport("user32.dll", SetLastError = true)]
     public static extern long SetParent(IntPtr hWndChild, IntPtr hWndParent);
 
@@ -76,14 +105,129 @@ public class NativeMethods
     [DllImport("user32.dll", CharSet = CharSet.Auto)]
     public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
-    [DllImport("user32.dll", SetLastError = true)]
-    public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int cx, int cy, bool repaint);
-
     [DllImport("user32.dll")]
     public static extern bool ShowWindow(IntPtr hWnd, WindowShowStyle nCmdShow);
 
     [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
     public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+    /// <summary>
+    /// Returns the DPI (dots per inch) value for the monitor that contains the specified window.
+    /// Returns 0 if the window handle is invalid. Available on Windows 10 version 1607+.
+    /// </summary>
+    [DllImport("user32.dll")]
+    public static extern uint GetDpiForWindow(IntPtr hWnd);
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    public static extern bool AttachConsole(uint dwProcessId);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    public static extern bool FreeConsole();
+
+    [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+    private static extern IntPtr CreateFile(string lpFileName, uint dwDesiredAccess, uint dwShareMode,
+        IntPtr lpSecurityAttributes, uint dwCreationDisposition, uint dwFlagsAndAttributes, IntPtr hTemplateFile);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern bool CloseHandle(IntPtr hObject);
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+    private static extern bool GetCurrentConsoleFontEx(IntPtr hConsoleOutput, bool bMaximumWindow,
+        ref CONSOLE_FONT_INFOEX lpConsoleCurrentFontEx);
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+    private static extern bool SetCurrentConsoleFontEx(IntPtr hConsoleOutput, bool bMaximumWindow,
+        ref CONSOLE_FONT_INFOEX lpConsoleCurrentFontEx);
+
+    #endregion
+
+    #region Helpers       
+
+    /// <summary>
+    /// Attaches to <paramref name="processId"/>'s console and rescales its current font
+    /// by <paramref name="scaleFactor"/> using <c>SetCurrentConsoleFontEx</c>.
+    /// This is a cross-process-safe approach that bypasses WM_DPICHANGED message passing
+    /// entirely. Works for any conhost-based console (PowerShell, cmd, etc.).
+    /// </summary>
+    public static void TryRescaleConsoleFont(uint processId, double scaleFactor)
+    {
+        if (Math.Abs(scaleFactor - 1.0) < 0.01)
+            return;
+
+        if (!AttachConsole(processId))
+            return;
+
+        const uint GENERIC_READ_WRITE = 0xC0000000u;
+        const uint FILE_SHARE_READ_WRITE = 3u;
+        const uint OPEN_EXISTING = 3u;
+
+        var hOut = CreateFile("CONOUT$", GENERIC_READ_WRITE, FILE_SHARE_READ_WRITE,
+            IntPtr.Zero, OPEN_EXISTING, 0u, IntPtr.Zero);
+
+        try
+        {
+            if (hOut == INVALID_HANDLE_VALUE)
+                return;
+
+            try
+            {
+                var fi = new CONSOLE_FONT_INFOEX { cbSize = (uint)Marshal.SizeOf<CONSOLE_FONT_INFOEX>() };
+                if (GetCurrentConsoleFontEx(hOut, false, ref fi))
+                {
+                    fi.dwFontSize.Y = (short)Math.Max(1, (int)Math.Round(fi.dwFontSize.Y * scaleFactor));
+                    fi.cbSize = (uint)Marshal.SizeOf<CONSOLE_FONT_INFOEX>();
+                    SetCurrentConsoleFontEx(hOut, false, ref fi);
+                }
+            }
+            finally
+            {
+                CloseHandle(hOut);
+            }
+        }
+        finally
+        {
+            FreeConsole();
+        }
+    }
+
+    /// <summary>
+    /// Sends a <c>WM_DPICHANGED</c> message to a GUI window (e.g. PuTTY) so it can
+    /// rescale its fonts and layout internally. This is necessary because
+    /// <c>WM_DPICHANGED</c> is not reliably forwarded to cross-process child windows
+    /// embedded via <c>SetParent</c>. Requires PuTTY 0.75+ to take effect.
+    /// </summary>
+    public static void TrySendDpiChangedMessage(IntPtr hWnd, double oldDpi, double newDpi)
+    {
+        if (hWnd == IntPtr.Zero)
+            return;
+
+        if (Math.Abs(newDpi - oldDpi) < 0.01)
+            return;
+
+        const uint WM_DPICHANGED = 0x02E0;
+
+        var newDpiInt = (int)Math.Round(newDpi);
+        var wParam = (IntPtr)((newDpiInt << 16) | newDpiInt); // HIWORD = Y DPI, LOWORD = X DPI
+
+        // Build the suggested new rect from the current window position.
+        var rect = new RECT();
+        GetWindowRect(hWnd, ref rect);
+
+        // lParam must point to a RECT with the suggested new size/position.
+        var lParam = Marshal.AllocHGlobal(Marshal.SizeOf<RECT>());
+        try
+        {
+            Marshal.StructureToPtr(rect, lParam, false);
+            SendMessage(hWnd, WM_DPICHANGED, wParam, lParam);
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(lParam);
+        }
+    }
 
     #endregion
 }

@@ -1,6 +1,7 @@
 ---
 slug: introducing-hosts-file-editor
 title: Introducing Hosts File Editor
+description: "NETworkManager 2025.8.10.0 introduced a new feature, the `Hosts File Editor`. You can now easily manage and edit your system's hosts file in a user-friendly interface."
 authors: [borntoberoot]
 tags: [hosts file, dns, new feature]
 ---
