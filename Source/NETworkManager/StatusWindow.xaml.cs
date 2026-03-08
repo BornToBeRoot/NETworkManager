@@ -3,7 +3,9 @@ using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -19,9 +21,11 @@ public partial class StatusWindow : INotifyPropertyChanged
         InitializeComponent();
         DataContext = this;
 
+        Title = $"NETworkManager {AssemblyManager.Current.Version} - {Localization.Resources.Strings.NetworkStatus}";
+
         _mainWindow = mainWindow;
 
-        _dispatcherTimerClose.Interval = new TimeSpan(0, 0, 0, 0, 250);
+        _dispatcherTimerClose.Interval = TimeSpan.FromMilliseconds(16);
         _dispatcherTimerClose.Tick += DispatcherTimerTime_Tick;
 
         _networkConnectionView = new NetworkConnectionWidgetView();
@@ -43,8 +47,8 @@ public partial class StatusWindow : INotifyPropertyChanged
 
     #region Variables
 
-    // Set priority to make the ui smoother
-    private readonly DispatcherTimer _dispatcherTimerClose = new(DispatcherPriority.Normal);
+    private readonly DispatcherTimer _dispatcherTimerClose = new(DispatcherPriority.Render);
+    private readonly Stopwatch _stopwatch = new();
 
     private readonly MainWindow _mainWindow;
     private readonly NetworkConnectionWidgetView _networkConnectionView;
@@ -64,9 +68,9 @@ public partial class StatusWindow : INotifyPropertyChanged
         }
     }
 
-    private int _timeMax;
+    private double _timeMax;
 
-    public int TimeMax
+    public double TimeMax
     {
         get => _timeMax;
         private set
@@ -79,9 +83,9 @@ public partial class StatusWindow : INotifyPropertyChanged
         }
     }
 
-    private int _time;
+    private double _time;
 
-    public int Time
+    public double Time
     {
         get => _time;
         set
@@ -153,6 +157,8 @@ public partial class StatusWindow : INotifyPropertyChanged
         // Check the network connection
         Check();
 
+        enableCloseTimer = true;
+
         // Close the window after a certain time
         if (enableCloseTimer)
         {
@@ -162,13 +168,16 @@ public partial class StatusWindow : INotifyPropertyChanged
 
         // Focus the window
         Activate();
+
+        Debug.WriteLine(Height);
     }
 
     private void SetupCloseTimer()
     {
-        Time = SettingsManager.Current.Status_WindowCloseTime * 4;
-        TimeMax = Time;
+        TimeMax = SettingsManager.Current.Status_WindowCloseTime;
+        Time = TimeMax;
 
+        _stopwatch.Restart();
         ShowTime = true;
         _dispatcherTimerClose.Start();
     }
@@ -189,14 +198,18 @@ public partial class StatusWindow : INotifyPropertyChanged
         Hide();
     }
 
-    private void DispatcherTimerTime_Tick(object sender, EventArgs e)
+    private async void DispatcherTimerTime_Tick(object sender, EventArgs e)
     {
-        Time--;
+        Time = Math.Max(0.0, TimeMax - _stopwatch.Elapsed.TotalSeconds);
 
         if (Time > 0)
             return;
 
         _dispatcherTimerClose.Stop();
+        _stopwatch.Stop();
+
+        await Task.Delay(250);
+
         ShowTime = false;
 
         Hide();

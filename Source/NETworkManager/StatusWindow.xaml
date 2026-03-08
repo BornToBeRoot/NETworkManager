@@ -8,49 +8,88 @@
                  xmlns:resources="clr-namespace:NETworkManager.Properties"
                  xmlns:networkManager="clr-namespace:NETworkManager"
                  xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                  mc:Ignorable="d" d:DataContext="{d:DesignInstance networkManager:StatusWindow}"
-                 Title="{x:Static resources:Resources.NETworkManager_ProjectName}"
+                 TitleAlignment="Left"
                  Style="{DynamicResource DefaultWindow}"
-                 Deactivated="MetroWindow_Deactivated"
-                 Height="280" Width="950"
+                 Deactivated="MetroWindow_Deactivated"                 
                  Topmost="True"
                  ShowInTaskbar="False"
+                 Width="950"
+                 Height="241"                 
                  ResizeMode="NoResize"
                  IsWindowDraggable="False"
                  ShowMinButton="False"
                  ShowMaxRestoreButton="False"
-                 ShowCloseButton="False"
-                 ShowTitleBar="False"
+                 ShowCloseButton="True"
+                 ShowTitleBar="True"
                  Closing="MetroWindow_Closing">
     <mah:MetroWindow.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:TimeToStrokeDashOffsetConverter x:Key="TimeToStrokeDashOffsetConverter" />
     </mah:MetroWindow.Resources>
-    <Grid Margin="10">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="10" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <ContentControl x:Name="ContentControlNetworkConnection" Grid.Row="0" />
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <mah:MetroProgressBar Grid.Column="0" Minimum="0" Maximum="{Binding TimeMax}" Value="{Binding Time}"
-                                      Visibility="{Binding ShowTime, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                                      VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="150" />
-                <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Content="{x:Static localization:Strings.Reload}" Command="{Binding ReloadCommand}"
-                            Style="{StaticResource DefaultButton}" Margin="0,0,10,0" />
-                    <Button Content="{x:Static localization:Strings.Show}" Command="{Binding ShowMainWindowCommand}"
-                            Style="{StaticResource DefaultButton}" Margin="0,0,10,0" />
-                    <Button Content="{x:Static localization:Strings.Close}" Command="{Binding CloseCommand}"
-                            Style="{StaticResource DefaultButton}" />
-                </StackPanel>
+    <mah:MetroWindow.LeftWindowCommands>
+        <mah:WindowCommands ShowSeparators="False">
+            <!-- Countdown progress ring -->
+            <Grid Width="20" Height="20"
+                  Visibility="{Binding ShowTime, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                  VerticalAlignment="Center"
+                  Margin="10,0,0,0">
+                <!-- Track (background ring) -->
+                <Ellipse StrokeThickness="2.5"
+                         Stroke="{DynamicResource MahApps.Brushes.Accent}"
+                         Opacity="0.2" />
+                <!-- Foreground arc that shrinks as time counts down -->
+                <Ellipse StrokeThickness="2.5"
+                         Stroke="{DynamicResource MahApps.Brushes.Accent}"
+                         StrokeDashCap="Round"
+                         StrokeDashArray="22 100"
+                         RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <RotateTransform Angle="-90" />
+                    </Ellipse.RenderTransform>
+                    <Ellipse.StrokeDashOffset>
+                        <MultiBinding Converter="{StaticResource TimeToStrokeDashOffsetConverter}"
+                                      ConverterParameter="22.0">
+                            <Binding Path="Time" />
+                            <Binding Path="TimeMax" />
+                        </MultiBinding>
+                    </Ellipse.StrokeDashOffset>
+                </Ellipse>
             </Grid>
-        </Grid>
-    </Grid>
+        </mah:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands ShowSeparators="False">            
+            <Button Command="{Binding Path=ReloadCommand}"
+                    ToolTip="{x:Static Member=localization:Strings.ToolTip_RunCommandWithHotKey}"
+                    Cursor="Hand"
+                    Focusable="False"
+                    Margin="0,0,5,0">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="16"
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding Path=ShowMainWindowCommand}"                    
+                    ToolTip="{x:Static Member=localization:Strings.ToolTip_RunCommandWithHotKey}"
+                    Cursor="Hand"
+                    Focusable="False"
+                    Margin="0,0,5,0">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="16"
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=OpenInNew}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </StackPanel>
+            </Button>            
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+    <ContentControl Margin="10,5,10,10" x:Name="ContentControlNetworkConnection" />
 </mah:MetroWindow>

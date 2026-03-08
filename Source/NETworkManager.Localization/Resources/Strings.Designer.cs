@@ -6121,6 +6121,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Network connection ähnelt.
+        /// </summary>
+        public static string NetworkConnection {
+            get {
+                return ResourceManager.GetString("NetworkConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Network connections.... ähnelt.
         /// </summary>
         public static string NetworkConnectionsDots {
@@ -6180,6 +6189,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Networks {
             get {
                 return ResourceManager.GetString("Networks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Network Status ähnelt.
+        /// </summary>
+        public static string NetworkStatus {
+            get {
+                return ResourceManager.GetString("NetworkStatus", resourceCulture);
             }
         }
         
