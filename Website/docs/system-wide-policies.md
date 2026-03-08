@@ -1,5 +1,7 @@
 ---
 sidebar_position: 6
+description: "Configure system-wide policies for NETworkManager in enterprise environments. Enforce settings for all users via config.json, deployable through Group Policy, Intune, or SCCM."
+keywords: [NETworkManager, system-wide policies, enterprise deployment, Group Policy, Intune, SCCM, centralized configuration, IT administration]
 ---
 
 # System-Wide Policies

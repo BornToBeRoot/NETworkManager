@@ -1,5 +1,7 @@
 ---
 sidebar_position: 4
+description: "Organize hosts and networks in groups and profiles with individual settings. NETworkManager supports encrypted profile files and multi-environment management."
+keywords: [NETworkManager, groups, profiles, profile management, encrypted profiles, host organization, network profiles]
 ---
 
 # Groups and Profiles

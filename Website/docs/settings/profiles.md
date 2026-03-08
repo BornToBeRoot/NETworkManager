@@ -1,5 +1,7 @@
 ---
 sidebar_position: 9
+description: "Configure where NETworkManager stores profile files. Manage profile file locations for setup, portable, and custom deployment scenarios."
+keywords: [NETworkManager, profile settings, profile file location, profile storage, profile management]
 ---
 
 # Profiles

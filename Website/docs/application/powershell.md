@@ -1,5 +1,7 @@
 ---
 sidebar_position: 9
+description: "Launch local or remote PowerShell consoles with NETworkManager. Supports tabbed sessions, profiles, and integration with WSL, AWS SSM, and K9s."
+keywords: [NETworkManager, PowerShell, PowerShell remoting, terminal, command line, WSL, K9s, AWS SSM, remote console]
 ---
 
 # PowerShell

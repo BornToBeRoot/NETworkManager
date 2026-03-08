@@ -1,5 +1,7 @@
 ---
 sidebar_position: 6
+description: "Configure keyboard shortcuts in NETworkManager to quickly bring the application to the foreground from the system tray."
+keywords: [NETworkManager, hotkeys, keyboard shortcuts, key bindings, system tray shortcut]
 ---
 
 # HotKeys

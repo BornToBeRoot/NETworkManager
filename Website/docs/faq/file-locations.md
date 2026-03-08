@@ -1,3 +1,8 @@
+---
+description: "Find where NETworkManager stores its files including profiles, settings, and themes for both Setup (MSI) and Portable installations."
+keywords: [NETworkManager, file locations, profile location, settings location, installation path, portable path]
+---
+
 # File locations
 
 ## Where are files stored?

@@ -10,7 +10,7 @@ import { themes as prismThemes } from "prism-react-renderer";
 const config = {
   title: "NETworkManager",
   tagline:
-    "A powerful tool for managing networks and troubleshoot network problems!",
+    "A powerful tool for managing networks and troubleshooting network problems!",
   favicon: "img/favicon.ico",
 
   url: "https://borntoberoot.net",
@@ -35,6 +35,39 @@ const config = {
     defaultLocale: "en",
     locales: ["en"],
   },
+
+  headTags: [
+    {
+      tagName: "script",
+      attributes: {
+        type: "application/ld+json",
+      },
+      innerHTML: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        name: "NETworkManager",
+        applicationCategory: "NetworkApplication",
+        operatingSystem: "Windows 10, Windows 11, Windows Server",
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+        },
+        description:
+          "A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.",
+        url: "https://borntoberoot.net/NETworkManager",
+        downloadUrl:
+          "https://borntoberoot.net/NETworkManager/download",
+        author: {
+          "@type": "Person",
+          name: "BornToBeRoot",
+          url: "https://github.com/BornToBeRoot",
+        },
+        license:
+          "https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE",
+      }),
+    },
+  ],
 
   presets: [
     [
@@ -62,8 +95,15 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      // Replace with your project's social card
-      image: "img/docusaurus-social-card.jpg",
+      image: "img/social-card.png",
+      metadata: [
+        {
+          name: "keywords",
+          content:
+            "NETworkManager, network manager, network tools, IP scanner, port scanner, ping monitor, traceroute, DNS lookup, remote desktop, SSH, PuTTY, PowerShell, VNC, WiFi analyzer, subnet calculator, SNMP, network troubleshooting, Windows network tool, open source",
+        },
+        { name: "author", content: "BornToBeRoot" },
+      ],
       navbar: {
         title: "NETworkManager",
         logo: {

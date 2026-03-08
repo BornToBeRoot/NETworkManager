@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+description: "Change the NETworkManager user interface language. Available in 16+ languages with community translations via Transifex."
+keywords: [NETworkManager, language settings, localization, translations, multilingual, Transifex]
 ---
 
 # Language

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 0
+description: "Configure which applications appear in the NETworkManager sidebar and adjust general application behavior including thread pool settings."
+keywords: [NETworkManager, general settings, sidebar configuration, application settings, thread pool]
 ---
 
 # General

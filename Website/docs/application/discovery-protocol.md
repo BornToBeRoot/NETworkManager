@@ -1,5 +1,7 @@
 ---
 sidebar_position: 17
+description: "Capture LLDP and CDP frames to discover connected network switches and routers. NETworkManager Discovery Protocol shows device name, port, and VLAN information."
+keywords: [NETworkManager, LLDP, CDP, discovery protocol, network discovery, switch identification, VLAN]
 ---
 
 # Discovery Protocol

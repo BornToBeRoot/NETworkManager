@@ -1,5 +1,7 @@
 ---
 sidebar_position: 11
+description: "AWS Session Manager integration for NETworkManager (removed). Connect to EC2 instances using PowerShell with the AWS SSM plugin instead."
+keywords: [NETworkManager, AWS Session Manager, EC2, SSM plugin, remote session, AWS]
 ---
 
 # AWS Session Manager

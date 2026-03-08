@@ -1,5 +1,7 @@
 ---
 sidebar_position: 8
+description: "Connect to remote computers via RDP with NETworkManager Remote Desktop. Features tabbed sessions, profile management, and fullscreen support."
+keywords: [NETworkManager, remote desktop, RDP client, remote connection, remote access, Windows Remote Desktop, RDP manager]
 ---
 
 # Remote Desktop

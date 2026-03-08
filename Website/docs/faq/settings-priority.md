@@ -1,3 +1,8 @@
+---
+description: "Understand how NETworkManager prioritizes settings across global, group, and profile levels. The most specific setting always takes precedence."
+keywords: [NETworkManager, settings priority, settings hierarchy, global settings, group settings, profile settings, configuration priority]
+---
+
 # Settings Priority
 
 ## How does NETworkManager prioritize settings across different levels (global, group, profile)?

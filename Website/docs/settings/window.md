@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+description: "Configure NETworkManager window behavior including minimize to system tray, close-to-tray, and startup visibility options."
+keywords: [NETworkManager, window settings, system tray, minimize to tray, close behavior]
 ---
 
 # Window

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+description: "Analyze available WiFi networks with details on channels, signal strength, and encryption. NETworkManager WiFi Analyzer supports 2.4, 5, and 6 GHz bands."
+keywords: [NETworkManager, WiFi analyzer, wireless networks, WiFi channels, signal strength, WiFi scanner, 5GHz, 6GHz]
 ---
 
 # WiFi

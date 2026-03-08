@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://borntoberoot.net/NETworkManager/sitemap.xml

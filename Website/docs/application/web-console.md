@@ -1,5 +1,7 @@
 ---
 sidebar_position: 13
+description: "Access web interfaces of network devices directly within NETworkManager. The embedded Web Console uses WebView2 for browsing servers, switches, and routers."
+keywords: [NETworkManager, web console, embedded browser, WebView2, network device management, web interface]
 ---
 
 # Web Console

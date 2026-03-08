@@ -1,5 +1,7 @@
 ---
 sidebar_position: 20
+description: "Retrieve geolocation data for public IP addresses and domain names using NETworkManager. Shows country, city, ISP, and other network information via ip-api.com."
+keywords: [NETworkManager, IP geolocation, IP location, GeoIP, IP lookup, IP address location, geolocation tool]
 ---
 
 # IP Geolocation

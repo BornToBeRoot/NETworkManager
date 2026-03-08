@@ -1,5 +1,7 @@
 ---
 sidebar_position: 7
+description: "Configure NETworkManager to start automatically with Windows and optionally launch minimized to the system tray."
+keywords: [NETworkManager, autostart, start with Windows, auto launch, startup, minimized start]
 ---
 
 # Autostart

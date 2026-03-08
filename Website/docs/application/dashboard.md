@@ -1,5 +1,7 @@
 ---
 sidebar_position: 0
+description: "View the status of your network connection at a glance. The NETworkManager Dashboard monitors adapter changes and checks router and internet connectivity."
+keywords: [NETworkManager, dashboard, network status, network connection, network monitoring, connectivity check]
 ---
 
 # Dashboard

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 8
+description: "Configure automatic update checks in NETworkManager. Enable or disable checking for new versions at application startup."
+keywords: [NETworkManager, update settings, automatic updates, version check, software update]
 ---
 
 # Update

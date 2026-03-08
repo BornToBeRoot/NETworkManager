@@ -1,3 +1,8 @@
+---
+description: "Learn how to run command-line applications like WSL, AWS SSM, and K9s within NETworkManager using PowerShell profiles and local console settings."
+keywords: [NETworkManager, PowerShell, command-line apps, WSL, AWS SSM, K9s, CLI applications, local console]
+---
+
 # PowerShell with command-line applications
 
 Create a new connection or profile with the following settings:

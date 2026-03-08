@@ -1,5 +1,7 @@
 ---
 sidebar_position: 10
+description: "Configure where NETworkManager stores its settings files. Manage settings file location and portable vs. installed deployment paths."
+keywords: [NETworkManager, settings location, settings file, configuration storage, settings management]
 ---
 
 # Settings

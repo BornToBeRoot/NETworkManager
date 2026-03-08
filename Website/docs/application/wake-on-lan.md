@@ -1,5 +1,7 @@
 ---
 sidebar_position: 18
+description: "Send magic packets to wake computers from sleep or shutdown states using NETworkManager Wake on LAN. Supports custom ports and broadcast addresses."
+keywords: [NETworkManager, Wake on LAN, WoL, magic packet, remote wake, power on, network wake]
 ---
 
 # Wake on LAN

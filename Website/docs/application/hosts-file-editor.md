@@ -1,5 +1,7 @@
 ---
 sidebar_position: 16
+description: "View, add, edit, enable, or disable entries in the Windows hosts file with NETworkManager. Features automatic daily backups and a user-friendly interface."
+keywords: [NETworkManager, hosts file editor, Windows hosts file, DNS override, hosts file management, edit hosts file]
 ---
 
 # Hosts File Editor

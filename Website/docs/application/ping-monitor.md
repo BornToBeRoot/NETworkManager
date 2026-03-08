@@ -1,5 +1,7 @@
 ---
 sidebar_position: 5
+description: "Monitor the reachability of one or multiple hosts with continuous ICMP echo requests. NETworkManager Ping Monitor tracks uptime and latency in real time."
+keywords: [NETworkManager, ping monitor, ICMP ping, host monitoring, network uptime, latency monitor, continuous ping]
 ---
 
 # Ping Monitor

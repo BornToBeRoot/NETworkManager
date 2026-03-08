@@ -1,5 +1,7 @@
 ---
 sidebar_position: 3
+description: "Scan for active devices in your network using ICMP and TCP port checks. NETworkManager IP Scanner supports IP ranges, CIDR subnets, and hostnames."
+keywords: [NETworkManager, IP scanner, network scanner, ping sweep, host discovery, ICMP scanner, subnet scan]
 ---
 
 # IP Scanner

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 12
+description: "Connect to remote computers via VNC using the embedded TigerVNC client in NETworkManager. Features tabbed sessions and hardware-accelerated Tight encoding."
+keywords: [NETworkManager, TigerVNC, VNC client, remote desktop, VNC connection, remote access, VNC viewer]
 ---
 
 # TigerVNC

@@ -1,5 +1,7 @@
 ---
 sidebar_position: 4
+description: "Scan for open TCP ports on network hosts. NETworkManager Port Scanner supports flexible host and port range inputs for comprehensive port scanning."
+keywords: [NETworkManager, port scanner, TCP port scan, open ports, network security, port checker, port scanning tool]
 ---
 
 # Port Scanner

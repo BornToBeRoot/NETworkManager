@@ -1,5 +1,7 @@
 ---
 sidebar_position: 7
+description: "Query DNS servers for A, AAAA, CNAME, MX, NS, PTR, and other record types. NETworkManager DNS Lookup supports custom and predefined DNS server profiles."
+keywords: [NETworkManager, DNS lookup, DNS query, DNS records, name resolution, MX record, A record, DNS tool]
 ---
 
 # DNS Lookup

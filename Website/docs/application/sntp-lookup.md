@@ -1,5 +1,7 @@
 ---
 sidebar_position: 15
+description: "Query SNTP time servers and compare network time with your local clock. NETworkManager SNTP Lookup shows time offsets for accurate synchronization."
+keywords: [NETworkManager, SNTP lookup, NTP, time server, time synchronization, network time, clock offset]
 ---
 
 # SNTP Lookup

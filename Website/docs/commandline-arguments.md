@@ -1,5 +1,7 @@
 ---
 sidebar_position: 5
+description: "NETworkManager command line arguments reference. Launch with --help, --reset-settings, and other CLI options for automation and scripting."
+keywords: [NETworkManager, command line arguments, CLI, command line options, automation, scripting, parameters]
 ---
 
 # Command Line Arguments

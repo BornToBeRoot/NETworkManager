@@ -1,5 +1,7 @@
 ---
 sidebar_position: 10
+description: "Connect via SSH, Telnet, or serial port using the embedded PuTTY client in NETworkManager. Supports tabbed sessions and profile-based connections."
+keywords: [NETworkManager, PuTTY, SSH client, Telnet, serial port, remote connection, SSH manager]
 ---
 
 # PuTTY

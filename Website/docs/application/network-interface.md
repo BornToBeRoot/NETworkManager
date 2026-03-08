@@ -1,5 +1,7 @@
 ---
 sidebar_position: 1
+description: "View detailed information about all network adapters, monitor bandwidth usage, and configure IP addresses and DNS servers with NETworkManager."
+keywords: [NETworkManager, network interface, network adapter, bandwidth monitor, IP configuration, DNS configuration, network settings]
 ---
 
 # Network Interface

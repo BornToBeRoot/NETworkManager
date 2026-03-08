@@ -1,5 +1,7 @@
 ---
 sidebar_position: 14
+description: "Monitor and manage network devices via SNMP v1, v2c, and v3 with NETworkManager. Supports get, walk, and set operations with configurable security levels."
+keywords: [NETworkManager, SNMP, SNMP v3, network monitoring, SNMP get, SNMP walk, SNMP set, network management]
 ---
 
 # SNMP

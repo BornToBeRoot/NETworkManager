@@ -1,5 +1,7 @@
 ---
 sidebar_position: 4
+description: "Configure custom DNS servers used by NETworkManager for name resolution across all network tools."
+keywords: [NETworkManager, network settings, DNS server configuration, custom DNS, name resolution]
 ---
 
 # Network

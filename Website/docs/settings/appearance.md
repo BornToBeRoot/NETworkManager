@@ -1,5 +1,7 @@
 ---
 sidebar_position: 2
+description: "Customize NETworkManager appearance with dark and light themes, accent colors, and custom theme files powered by MahApps.Metro."
+keywords: [NETworkManager, appearance settings, dark theme, light theme, accent colors, custom theme, MahApps.Metro]
 ---
 
 # Appearance

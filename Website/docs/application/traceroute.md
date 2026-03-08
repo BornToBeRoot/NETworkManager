@@ -1,5 +1,7 @@
 ---
 sidebar_position: 6
+description: "Trace the route packets take to reach a destination host using ICMP. NETworkManager Traceroute visualizes network hops and response times."
+keywords: [NETworkManager, traceroute, network hops, route tracing, network path, ICMP trace, network diagnostics]
 ---
 
 # Traceroute

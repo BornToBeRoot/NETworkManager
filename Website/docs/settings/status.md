@@ -1,5 +1,7 @@
 ---
 sidebar_position: 5
+description: "Configure the NETworkManager status window that appears on network adapter changes and connectivity events."
+keywords: [NETworkManager, status settings, status window, network change notification, connectivity status]
 ---
 
 # Status
