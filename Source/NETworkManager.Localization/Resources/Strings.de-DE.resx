@@ -3998,4 +3998,16 @@ Bei Bedarf können Sie die Profiledateien von „{0}“ nach „{1}“ kopieren,
 
 Bei Bedarf können Sie die Profildateien von „{0}“ nach „{1}“ kopieren, um Ihre bisherigen Profile zu migrieren. Dazu muss die Anwendung geschlossen sein, damit die Profile nicht überschrieben werden.</value>
   </data>
+  <data name="NetworkConnection" xml:space="preserve">
+    <value>Network connection</value>
+  </data>
+  <data name="NetworkStatus" xml:space="preserve">
+    <value>Network Status</value>
+  </data>
+  <data name="ToolTip_Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="ToolTip_Reload" xml:space="preserve">
+    <value>Reload</value>
+  </data>
 </root>
