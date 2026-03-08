@@ -82,6 +82,15 @@ Here's why you'll love it:
 
 Get started with NETworkManager today! Download pre-built, [signed](https://borntoberoot.net/NETworkManager/download#code-signing-policy) binaries (setup, portable, or archive) from our [download page](https://borntoberoot.net/NETworkManager/download) with detailed install instructions (e.g., silent install). Files are hosted on [GitHub Releases](https://github.com/BornToBeRoot/NETworkManager/releases/latest).
 
+<div align="center">
+  <a href="https://borntoberoot.net/NETworkManager/download" target="_blank">
+    <img alt="Download Now" src="https://img.shields.io/badge/🚀_Download_Now-00abbd?style=for-the-badge&labelColor=1c2526" height="48" />
+  </a>
+</div>
+
+> [!TIP]
+> Pre-release versions with the latest features and fixes are (sometimes) available for testing on [GitHub Releases](https://github.com/BornToBeRoot/NETworkManager/releases). Please note that pre-release versions may be unstable and are not recommended for production use. Please report any issues you encounter on [GitHub Issues](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose).
+
 Install and update via package managers for a hassle-free setup:
 
 - **Chocolatey**:
@@ -106,8 +115,6 @@ Install and update via package managers for a hassle-free setup:
   ```
 
   Evergreen PowerShell module (e.g. to automate image building or SCCM/Intune updates): <https://github.com/eucpilots/evergreen-module>
-
-> Pre-release versions with the latest features and fixes are (sometimes) available for testing on [GitHub Releases](https://github.com/BornToBeRoot/NETworkManager/releases). Please note that pre-release versions may be unstable and are not recommended for production use. Please report any issues you encounter on [GitHub Issues](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose).
 
 ## 💖 Donate
 
