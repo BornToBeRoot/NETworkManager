@@ -1,9 +1,10 @@
 ---
 slug: deep-dive-fixing-dpi-scaling-for-embedded-processes-in-wpf
 title: "Deep Dive: Fixing DPI Scaling for Embedded Processes in WPF"
-description: "When you embed a foreign process window via SetParent in WPF, it never receives DPI change notifications across process boundaries. This article shows how to rescale fonts for embedded console hosts (PowerShell) using the Console API, and for GUI processes (PuTTY) by sending WM_DPICHANGED explicitly."
+description: "How NETworkManager fixes DPI scaling for embedded PowerShell and PuTTY windows in WPF using the Console API and WM_DPICHANGED."
 authors: [borntoberoot]
 tags: [wpf, dpi, windows, c#, win32, putty, powershell]
+keywords: [WPF, DPI scaling, SetParent, PowerShell, PuTTY, Win32, WM_DPICHANGED, high DPI, multi-monitor, C#]
 ---
 
 Modern Windows setups with multiple monitors at different scale factors (100 %, 125 %, 150 %, …) expose a hard Win32 limitation the moment you embed a foreign process window into your own application via `SetParent`. Windows simply does not forward `WM_DPICHANGED` across process boundaries.

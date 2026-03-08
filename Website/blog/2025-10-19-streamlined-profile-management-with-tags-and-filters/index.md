@@ -1,9 +1,10 @@
 ---
 slug: streamlined-profile-management-with-tags-and-filters
 title: Streamlined Profile Management with Tags & Filters
-description: "NETworkManager 2025.10.18.0 brings a streamlined approach to profile management with the introduction of Tags and Filtering. You can now add or remove tags directly within each profile, making it effortless to organize and quickly locate your hosts and networks."
+description: "NETworkManager 2025.10.18.0 introduces tags and filtering for profiles. Add or remove tags to organize and quickly locate your hosts and networks."
 authors: [borntoberoot]
 tags: [profile management, tags, new feature]
+keywords: [NETworkManager, profile management, tags, filters, network profiles, host management]
 ---
 
 NETworkManager 2025.10.18.0 brings a streamlined approach to profile management with the introduction of Tags and Filtering.

@@ -1,9 +1,10 @@
 ---
 slug: system-wide-policies-for-enterprise-deployments
 title: System-Wide Policies for Enterprise Deployments
-description: "NETworkManager now supports system-wide policies, giving administrators centralized control over application settings across all users on a machine. This article explains how to configure and deploy these policies in enterprise environments."
+description: "NETworkManager now supports system-wide policies for centralized control over settings across all users — ideal for enterprise deployments."
 authors: [borntoberoot]
 tags: [policies, enterprise, settings, new feature]
+keywords: [NETworkManager, system-wide policies, enterprise, deployment, Intune, SCCM, Group Policy, configuration management]
 ---
 
 NETworkManager now supports system-wide policies, giving administrators centralized control over application settings across all users on a machine. This feature is available since the [pre-release version 2026.02.19.0](https://github.com/BornToBeRoot/NETworkManager/releases) and can now be tested.

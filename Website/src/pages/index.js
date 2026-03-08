@@ -218,7 +218,7 @@ export default function Home() {
 
   return (
     <Layout
-      title="Free Open-Source Network Management Tool for Windows"
+      title="A powerful open-source tool for managing networks and troubleshooting network problems!"
       description="NETworkManager - A powerful open-source tool for managing networks and troubleshooting network problems. 25+ built-in network tools for daily use."
     >
       <HomepageHeader />

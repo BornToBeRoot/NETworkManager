@@ -4,6 +4,7 @@ title: Introducing Code Signing for Binaries
 description: "Starting with NETworkManager version 2024.5.24.0, the binaries and the installer are now signed with a code signing certificate."
 authors: [borntoberoot]
 tags: [code-signing, binaries, installer]
+keywords: [NETworkManager, code signing, binaries, installer, SignPath, certificate, security]
 ---
 
 Starting with NETworkManager version 2024.5.24.0, the binaries and the installer are now signed with a code signing certificate.

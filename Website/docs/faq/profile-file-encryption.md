@@ -1,5 +1,5 @@
 ---
-description: "Learn how NETworkManager encrypts profile files using AES-256-CBC with PBKDF2 key derivation. Understand the security model and how to enable or disable encryption."
+description: "Learn how NETworkManager encrypts profile files using AES-256-CBC with PBKDF2 key derivation. Understand the security model and encryption settings."
 keywords: [NETworkManager, profile encryption, AES-256, PBKDF2, encrypted profiles, secure profiles, password protection]
 ---
 
