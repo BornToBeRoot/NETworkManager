@@ -4099,4 +4099,16 @@ Per migrare le impostazioni precedenti, se necessario, è possibile copiare il f
 
 er migrare le impostazioni precedenti, se necessario, è possibile copiare il file "settings.json" da "{0}" a "{1}". A questo scopo è necessario prima chiudere l'applicazione per evitare che le impostazioni vengano sovrascritte.</value>
   </data>
+  <data name="NetworkConnection" xml:space="preserve">
+    <value>Network connection</value>
+  </data>
+  <data name="NetworkStatus" xml:space="preserve">
+    <value>Network Status</value>
+  </data>
+  <data name="ToolTip_Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="ToolTip_Reload" xml:space="preserve">
+    <value>Reload</value>
+  </data>
 </root>
