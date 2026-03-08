@@ -571,7 +571,7 @@
     <value>Zeige die folgende Anwendung beim starten:</value>
   </data>
   <data name="Slogan" xml:space="preserve">
-    <value>Ein leistungsstarkes Tool zum Verwalten von Netzwerken und zur Behebung von Netzwerkproblemen!</value>
+    <value>A powerful open-source tool for managing networks and troubleshooting network problems!</value>
   </data>
   <data name="Speed" xml:space="preserve">
     <value>Geschwindigkeit</value>
@@ -3999,15 +3999,15 @@ Bei Bedarf können Sie die Profiledateien von „{0}“ nach „{1}“ kopieren,
 Bei Bedarf können Sie die Profildateien von „{0}“ nach „{1}“ kopieren, um Ihre bisherigen Profile zu migrieren. Dazu muss die Anwendung geschlossen sein, damit die Profile nicht überschrieben werden.</value>
   </data>
   <data name="NetworkConnection" xml:space="preserve">
-    <value>Network connection</value>
+    <value>Netzwerkverbindung</value>
   </data>
   <data name="NetworkStatus" xml:space="preserve">
-    <value>Network Status</value>
+    <value>Netzwerkstatus</value>
   </data>
   <data name="ToolTip_Show" xml:space="preserve">
-    <value>Show</value>
+    <value>Anzeigen</value>
   </data>
   <data name="ToolTip_Reload" xml:space="preserve">
-    <value>Reload</value>
+    <value>Aktualisieren</value>
   </data>
 </root>
