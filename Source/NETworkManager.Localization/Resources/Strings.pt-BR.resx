@@ -3998,4 +3998,16 @@ Você pode copiar seus arquivos de perfil de "{0}" para "{1}" para migrar seus p
 
 Você pode copiar seus arquivos de perfil de "{0}" para "{1}" para migrar seus perfis existentes, se necessário. O aplicativo precisa ser fechado para prevenir que os perfis sejam sobrescritos.</value>
   </data>
+  <data name="NetworkConnection" xml:space="preserve">
+    <value>Network connection</value>
+  </data>
+  <data name="NetworkStatus" xml:space="preserve">
+    <value>Network Status</value>
+  </data>
+  <data name="ToolTip_Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="ToolTip_Reload" xml:space="preserve">
+    <value>Reload</value>
+  </data>
 </root>
