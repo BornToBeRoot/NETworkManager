@@ -88,8 +88,10 @@ public partial class TigerVNCControl : UserControlBase, IDragablzTabItem
             return;
 
         // Fix 1: The control is not visible by default, thus height and width is not set. If the values are not set, the size does not scale properly
-        WindowHost.Height = (int)ActualHeight;
-        WindowHost.Width = (int)ActualWidth;
+        // Fix 2: The size needs to be scaled by the DPI, otherwise the embedded window is too small on high DPI screens (https://github.com/BornToBeRoot/NETworkManager/pull/3352)
+        var dpi = System.Windows.Media.VisualTreeHelper.GetDpi(this);
+        WindowHost.Height = (int)(ActualHeight * dpi.DpiScaleY);
+        WindowHost.Width = (int)(ActualWidth * dpi.DpiScaleX);
 
         Connect().ConfigureAwait(false);
 

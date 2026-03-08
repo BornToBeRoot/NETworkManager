@@ -1,6 +1,7 @@
 ---
 slug: welcome
 title: Welcome
+description: "Welcome to the new NETworkManager website, blod and documentation. It's build with Docusaurus, a static website generator, and hosted on GitHub Pages."
 authors: [borntoberoot]
 tags: [welcome, docusaurus]
 ---
