@@ -168,8 +168,6 @@ public partial class StatusWindow : INotifyPropertyChanged
 
         // Focus the window
         Activate();
-
-        Debug.WriteLine(Height);
     }
 
     private void SetupCloseTimer()
