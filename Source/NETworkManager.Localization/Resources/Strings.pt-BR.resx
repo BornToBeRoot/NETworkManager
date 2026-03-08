@@ -571,7 +571,7 @@
     <value>Exibir seguinte aplicativo ao iniciar:</value>
   </data>
   <data name="Slogan" xml:space="preserve">
-    <value>Uma ferramenta poderosa para gerenciar redes e solucionar problemas de rede!</value>
+    <value>Uma poderosa ferramenta de código aberto para gerenciar e solucionar problemas de rede!</value>
   </data>
   <data name="Speed" xml:space="preserve">
     <value>Velocidade</value>
@@ -3997,5 +3997,17 @@ Você pode copiar seus arquivos de perfil de "{0}" para "{1}" para migrar seus p
     <value>O local padrão dos perfis é alterado e o aplicativo é reiniciado em seguida.
 
 Você pode copiar seus arquivos de perfil de "{0}" para "{1}" para migrar seus perfis existentes, se necessário. O aplicativo precisa ser fechado para prevenir que os perfis sejam sobrescritos.</value>
+  </data>
+  <data name="NetworkConnection" xml:space="preserve">
+    <value>Conexão de rede</value>
+  </data>
+  <data name="NetworkStatus" xml:space="preserve">
+    <value>Status da rede</value>
+  </data>
+  <data name="ToolTip_Show" xml:space="preserve">
+    <value>Exibir</value>
+  </data>
+  <data name="ToolTip_Reload" xml:space="preserve">
+    <value>Recarregar</value>
   </data>
 </root>
