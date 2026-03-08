@@ -2,7 +2,7 @@
   <img alt="NETworkManager Logo" src="https://github.com/BornToBeRoot/NETworkManager/blob/main/Images/NETworkManager_128x128.png?raw=true" width="128" />
   <h1>NETworkManager</h1>
   <p>
-    <b>A powerful tool for managing networks and troubleshoot network problems!</b>
+    <b>A powerful tool for managing networks and troubleshooting network problems!</b>
   </p>
   <p>
     Streamline and simplify your network administration and troubleshooting with <strong>NETworkManager</strong>. Connect, monitor, and troubleshoot your network and server infrastructure using built-in tools like Remote Desktop (RDP), PuTTY (SSH, Serial, etc.), PowerShell (WSL, K9s, etc.) and TigerVNC (VNC). Perform in-depth network diagnostics with features including WiFi Analyzer, IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, LLDP/CDP Capture, and <a href="https://borntoberoot.net/NETworkManager/docs/introduction">many more</a> — all in a clean, unified interface.

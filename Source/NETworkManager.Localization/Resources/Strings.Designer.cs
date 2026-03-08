@@ -9649,7 +9649,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die A powerful tool for managing networks and troubleshoot network problems! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die A powerful tool for managing networks and troubleshooting network problems! ähnelt.
         /// </summary>
         public static string Slogan {
             get {

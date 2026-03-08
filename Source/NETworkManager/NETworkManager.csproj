@@ -22,7 +22,7 @@
         <PackageLicenseFile>NETworkManager.txt</PackageLicenseFile>
         <PackageIcon>NETworkManager.ico</PackageIcon>
         <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-        <Description>A powerful tool for managing networks and troubleshoot network problems!</Description>
+        <Description>A powerful tool for managing networks and troubleshooting network problems!</Description>
     </PropertyGroup>
     <PropertyGroup>
         <BeautySharedRuntimeMode>False</BeautySharedRuntimeMode>
