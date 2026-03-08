@@ -1,0 +1,10 @@
+# Security Policy for NETworkManager
+# https://securitytxt.org/
+
+Contact: mailto:security@borntoberoot.net
+Contact: https://github.com/BornToBeRoot/NETworkManager/security/advisories/new
+Contact: https://x.com/_BornToBeRoot
+Expires: 2030-12-31T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://borntoberoot.net/NETworkManager/.well-known/security.txt
+Policy: https://github.com/BornToBeRoot/NETworkManager/security/policy

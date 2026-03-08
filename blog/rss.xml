@@ -13,7 +13,7 @@
             <link>https://borntoberoot.net/NETworkManager/blog/deep-dive-fixing-dpi-scaling-for-embedded-processes-in-wpf</link>
             <guid>https://borntoberoot.net/NETworkManager/blog/deep-dive-fixing-dpi-scaling-for-embedded-processes-in-wpf</guid>
             <pubDate>Wed, 04 Mar 2026 00:00:00 GMT</pubDate>
-            <description><![CDATA[When you embed a foreign process window via SetParent in WPF, it never receives DPI change notifications across process boundaries. This article shows how to rescale fonts for embedded console hosts (PowerShell) using the Console API, and for GUI processes (PuTTY) by sending WM_DPICHANGED explicitly.]]></description>
+            <description><![CDATA[How NETworkManager fixes DPI scaling for embedded PowerShell and PuTTY windows in WPF using the Console API and WM_DPICHANGED.]]></description>
             <content:encoded><![CDATA[<p>Modern Windows setups with multiple monitors at different scale factors (100 %, 125 %, 150 %, …) expose a hard Win32 limitation the moment you embed a foreign process window into your own application via <code>SetParent</code>. Windows simply does not forward <code>WM_DPICHANGED</code> across process boundaries.</p>
 <p>This article documents the investigation and the two different solutions NETworkManager uses for its embedded <strong>PowerShell</strong> (a console host process) and <strong>PuTTY</strong> (a GUI process) tabs — together with the complete, relevant C# source code.</p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-embedding-technique">The Embedding Technique<a href="https://borntoberoot.net/NETworkManager/blog/deep-dive-fixing-dpi-scaling-for-embedded-processes-in-wpf#the-embedding-technique" class="hash-link" aria-label="Direct link to The Embedding Technique" title="Direct link to The Embedding Technique" translate="no">​</a></h2>
@@ -74,7 +74,7 @@
             <link>https://borntoberoot.net/NETworkManager/blog/system-wide-policies-for-enterprise-deployments</link>
             <guid>https://borntoberoot.net/NETworkManager/blog/system-wide-policies-for-enterprise-deployments</guid>
             <pubDate>Sun, 22 Feb 2026 00:00:00 GMT</pubDate>
-            <description><![CDATA[NETworkManager now supports system-wide policies, giving administrators centralized control over application settings across all users on a machine. This article explains how to configure and deploy these policies in enterprise environments.]]></description>
+            <description><![CDATA[NETworkManager now supports system-wide policies for centralized control over settings across all users — ideal for enterprise deployments.]]></description>
             <content:encoded><![CDATA[<p>NETworkManager now supports system-wide policies, giving administrators centralized control over application settings across all users on a machine. This feature is available since the <a href="https://github.com/BornToBeRoot/NETworkManager/releases" target="_blank" rel="noopener noreferrer" class="">pre-release version 2026.02.19.0</a> and can now be tested.</p>
 <p><img decoding="async" loading="lazy" alt="System-wide policy indicator" src="https://borntoberoot.net/NETworkManager/assets/images/system-wide-policy-indicator-cf235b9935f6426da4c97e2ec5c77446.png" width="1200" height="600" class="img_ev3q"></p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-are-system-wide-policies">What Are System-Wide Policies?<a href="https://borntoberoot.net/NETworkManager/blog/system-wide-policies-for-enterprise-deployments#what-are-system-wide-policies" class="hash-link" aria-label="Direct link to What Are System-Wide Policies?" title="Direct link to What Are System-Wide Policies?" translate="no">​</a></h2>
@@ -155,11 +155,11 @@
             <category>new feature</category>
         </item>
         <item>
-            <title><![CDATA[Improved light theme readability]]></title>
+            <title><![CDATA[Improved Light Theme Readability]]></title>
             <link>https://borntoberoot.net/NETworkManager/blog/improved-light-theme-readability</link>
             <guid>https://borntoberoot.net/NETworkManager/blog/improved-light-theme-readability</guid>
             <pubDate>Thu, 23 Oct 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[The latest release of NETworkManager (version 2025.10.18.0) introduces major enhancements to the light theme, improving both readability and overall user experience. This article highlights the changes made to the light theme and how they enhance usability.]]></description>
+            <description><![CDATA[NETworkManager 2025.10.18.0 brings major enhancements to the light theme with improved readability, contrast, and overall user experience.]]></description>
             <content:encoded><![CDATA[<p>The latest release of NETworkManager (version 2025.10.18.0) introduces major enhancements to the light theme, improving both readability and overall user experience.</p>
 <p>In this version, the code that handles theming has been completely rewritten, providing granular control over colors and styles. This allows users to fine-tune the light and dark themes independently, ensuring better contrast, visibility, and accessibility across the interface.</p>
 <p>The light theme has already received several improvements to enhance readability, and more adjustments are planned for future releases based on user feedback. So please don’t hesitate to share your thoughts on the <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">GitHub issue tracker</a>.</p>
@@ -175,7 +175,7 @@
             <link>https://borntoberoot.net/NETworkManager/blog/streamlined-profile-management-with-tags-and-filters</link>
             <guid>https://borntoberoot.net/NETworkManager/blog/streamlined-profile-management-with-tags-and-filters</guid>
             <pubDate>Sun, 19 Oct 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[NETworkManager 2025.10.18.0 brings a streamlined approach to profile management with the introduction of Tags and Filtering. You can now add or remove tags directly within each profile, making it effortless to organize and quickly locate your hosts and networks.]]></description>
+            <description><![CDATA[NETworkManager 2025.10.18.0 introduces tags and filtering for profiles. Add or remove tags to organize and quickly locate your hosts and networks.]]></description>
             <content:encoded><![CDATA[<p>NETworkManager 2025.10.18.0 brings a streamlined approach to profile management with the introduction of Tags and Filtering.</p>
 <p>You can now add or remove tags directly within each profile, making it effortless to organize and quickly locate your hosts and networks.</p>
 <p><img decoding="async" loading="lazy" alt="Profile Tags &amp;amp; Filters" src="https://borntoberoot.net/NETworkManager/assets/images/profile-tags-and-filters-58db70a009ccc6bb5dec2e975e10f95e.gif" width="1024" height="768" class="img_ev3q"></p>
@@ -199,7 +199,7 @@
             <link>https://borntoberoot.net/NETworkManager/blog/introducing-hosts-file-editor</link>
             <guid>https://borntoberoot.net/NETworkManager/blog/introducing-hosts-file-editor</guid>
             <pubDate>Sat, 06 Sep 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[NETworkManager 2025.8.10.0 introduced a new feature, the `Hosts File Editor`. You can now easily manage and edit your system's hosts file in a user-friendly interface.]]></description>
+            <description><![CDATA[NETworkManager 2025.8.10.0 introduces the Hosts File Editor. Easily manage and edit your system's hosts file in a user-friendly interface.]]></description>
             <content:encoded><![CDATA[<p>NETworkManager 2025.8.10.0 introduced a new feature, the <code>Hosts File Editor</code>. You can now easily manage and edit your system's hosts file in a user-friendly interface.</p>
 <p>As a sysadmin or developer, you often need to modify the hosts file in order to override DNS settings for specific domains, redirect traffic, or test websites locally.</p>
 <p><img decoding="async" loading="lazy" alt="Hosts File Editor" src="https://borntoberoot.net/NETworkManager/assets/images/hosts-file-editor-30d579f84578d3c768a537ec0d71e1e7.gif" width="1200" height="800" class="img_ev3q"></p>
@@ -240,9 +240,9 @@ The signed binaries are then uploaded to the <a href="https://github.com/BornToB
             <link>https://borntoberoot.net/NETworkManager/blog/welcome</link>
             <guid>https://borntoberoot.net/NETworkManager/blog/welcome</guid>
             <pubDate>Mon, 01 Jan 2024 00:00:00 GMT</pubDate>
-            <description><![CDATA[Welcome to the new NETworkManager website, blod and documentation. It's build with Docusaurus, a static website generator, and hosted on GitHub Pages.]]></description>
-            <content:encoded><![CDATA[<p>Welcome to the new NETworkManager website, blod and documentation.</p>
-<p>It's build with <a href="https://docusaurus.io/" target="_blank" rel="noopener noreferrer" class="">Docusaurus</a>, a static website generator, and hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer" class="">GitHub Pages</a>.</p>
+            <description><![CDATA[Welcome to the new NETworkManager website, blog and documentation. It's built with Docusaurus, a static website generator, and hosted on GitHub Pages.]]></description>
+            <content:encoded><![CDATA[<p>Welcome to the new NETworkManager website, blog and documentation.</p>
+<p>It's built with <a href="https://docusaurus.io/" target="_blank" rel="noopener noreferrer" class="">Docusaurus</a>, a static website generator, and hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer" class="">GitHub Pages</a>.</p>
 <p>You can help to improve the documentation by submitting a <a href="https://github.com/BornToBeRoot/NETworkManager" target="_blank" rel="noopener noreferrer" class="">pull request</a>.</p>]]></content:encoded>
             <category>welcome</category>
             <category>docusaurus</category>
