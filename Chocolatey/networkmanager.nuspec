@@ -17,9 +17,9 @@
     <bugTrackerUrl>https://github.com/BornToBeRoot/NETworkManager/issues</bugTrackerUrl>
     <releaseNotes>https://borntoberoot.net/NETworkManager/docs/changelog/2026-2-22-0</releaseNotes>
     <tags>wifi ipscanner portscanner traceroute pingmonitor dns remotedesktop putty lldp</tags>
-    <summary>A powerful tool for managing networks and troubleshooting network problems!</summary>
+    <summary>A powerful open-source tool for managing networks and troubleshooting network problems!</summary>
     <description>
-      A powerful tool for managing networks and troubleshooting network problems!
+      A powerful open-source tool for managing networks and troubleshooting network problems!
       
       More infos: https://borntoberoot.net/NETworkManager/
     </description>

@@ -13,7 +13,7 @@ PackageName: NETworkManager
 PackageUrl: https://borntoberoot.net/NETworkManager
 License: GNU General Public License v3.0
 LicenseUrl: https://raw.githubusercontent.com/BornToBeRoot/NETworkManager/master/LICENSE
-ShortDescription: A powerful tool for managing networks and troubleshooting network problems!
+ShortDescription: A powerful open-source tool for managing networks and troubleshooting network problems!
 Moniker: networkmanager
 Tags:
 - dns

@@ -10,7 +10,7 @@ import { themes as prismThemes } from "prism-react-renderer";
 const config = {
   title: "NETworkManager",
   tagline:
-    "A powerful tool for managing networks and troubleshooting network problems!",
+    "A powerful open-source tool for managing networks and troubleshooting network problems!",
   favicon: "img/favicon.ico",
 
   url: "https://borntoberoot.net",

@@ -47,7 +47,7 @@ function HomepageHeader() {
               <b>NETworkManager</b>
             </p>
             <p className={styles.heroProjectTagline}>
-              A powerful tool for <b>managing</b> networks and{" "}
+              A powerful open-source tool for <b>managing</b> networks and{" "}
               <b>troubleshooting</b> network problems!
             </p>
           </span>
@@ -219,7 +219,7 @@ export default function Home() {
   return (
     <Layout
       title="Free Open-Source Network Management Tool for Windows"
-      description="NETworkManager is a free, open-source tool for managing networks and troubleshooting network problems on Windows. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), WiFi Analyzer, Subnet Calculator, and 20+ more built-in network tools."
+      description="NETworkManager - A powerful open-source tool for managing networks and troubleshooting network problems. 25+ built-in network tools for daily use."
     >
       <HomepageHeader />
       <main>

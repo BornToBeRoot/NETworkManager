@@ -17,7 +17,7 @@
                               Directory="ProgramMenuFolder"
                               Advertise="true"
                               Icon="icon.ico"
-                              Description="A powerful tool for managing networks and troubleshooting network problems!"/>
+                              Description="A powerful open-source tool for managing networks and troubleshooting network problems!"/>
                 </File>
             </Component>
 
@@ -28,7 +28,7 @@
                           Directory="DesktopFolder"
                           Target="[#NETworkManagerExecutable]"
                           Icon="icon.ico"
-                          Description="A powerful tool for managing networks and troubleshooting network problems!"/>
+                          Description="A powerful open-source tool for managing networks and troubleshooting network problems!"/>
             </Component>
         </ComponentGroup>
     </Fragment>
