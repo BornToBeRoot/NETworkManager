@@ -29,6 +29,8 @@ Release date: **xx.xx.2025**
 
 ## Improvements
 
+- Redesign Status Window to make it more compact [#3359](https://github.com/BornToBeRoot/NETworkManager/pull/3359)
+
 ## Bug Fixes
 
 **PowerShell**
