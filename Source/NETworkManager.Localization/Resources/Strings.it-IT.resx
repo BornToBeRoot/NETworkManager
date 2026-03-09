@@ -571,7 +571,7 @@
     <value>Visualizza la seguente applicazione all'avvio:</value>
   </data>
   <data name="Slogan" xml:space="preserve">
-    <value>A powerful open-source tool for managing networks and troubleshooting network problems!</value>
+    <value>Un potente strumento open source per la gestione delle reti e la risoluzione dei problemi di rete!</value>
   </data>
   <data name="Speed" xml:space="preserve">
     <value>Velocità</value>
@@ -4100,15 +4100,15 @@ Per migrare le impostazioni precedenti, se necessario, è possibile copiare il f
 er migrare le impostazioni precedenti, se necessario, è possibile copiare il file "settings.json" da "{0}" a "{1}". A questo scopo è necessario prima chiudere l'applicazione per evitare che le impostazioni vengano sovrascritte.</value>
   </data>
   <data name="NetworkConnection" xml:space="preserve">
-    <value>Network connection</value>
+    <value>Connessione di rete</value>
   </data>
   <data name="NetworkStatus" xml:space="preserve">
-    <value>Network Status</value>
+    <value>Stato rete</value>
   </data>
   <data name="ToolTip_Show" xml:space="preserve">
-    <value>Show</value>
+    <value>Visualizza</value>
   </data>
   <data name="ToolTip_Reload" xml:space="preserve">
-    <value>Reload</value>
+    <value>Ricarica</value>
   </data>
 </root>
