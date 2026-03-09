@@ -6435,7 +6435,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Network connections.....
         ///   Looks up a localized string similar to Network connection profile.
         /// </summary>
         public static string NetworkConnectionProfile {
@@ -6526,7 +6525,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Network time.
         ///   Looks up a localized string similar to Network time.
         /// </summary>
         public static string NetworkTime {
@@ -10109,7 +10107,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A powerful tool for managing networks and troubleshoot network problems!.
+        ///   Looks up a localized string similar to A powerful open-source tool for managing networks and troubleshooting network problems!.
         /// </summary>
         public static string Slogan {
             get {
