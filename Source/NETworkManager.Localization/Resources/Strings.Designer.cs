@@ -6436,6 +6436,16 @@ namespace NETworkManager.Localization.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to Network connections.....
+        ///   Looks up a localized string similar to Network connection profile.
+        /// </summary>
+        public static string NetworkConnectionProfile {
+            get {
+                return ResourceManager.GetString("NetworkConnectionProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Network connections.....
         /// </summary>
         public static string NetworkConnectionsDots {
             get {
@@ -6516,6 +6526,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network time.
         ///   Looks up a localized string similar to Network time.
         /// </summary>
         public static string NetworkTime {
@@ -10098,7 +10109,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A powerful open-source tool for managing networks and troubleshooting network problems!.
+        ///   Looks up a localized string similar to A powerful tool for managing networks and troubleshoot network problems!.
         /// </summary>
         public static string Slogan {
             get {
