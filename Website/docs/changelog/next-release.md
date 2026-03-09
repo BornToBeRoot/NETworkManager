@@ -1,5 +1,7 @@
 ---
 sidebar_position: 0
+description: "Changelog for the next NETworkManager release — upcoming features, improvements, and bug fixes."
+keywords: [NETworkManager, changelog, release notes, next release, upcoming features, bug fixes]
 ---
 
 # Next Release
