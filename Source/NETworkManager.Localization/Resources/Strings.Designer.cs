@@ -6435,15 +6435,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Network connection profile.
-        /// </summary>
-        public static string NetworkConnectionProfile {
-            get {
-                return ResourceManager.GetString("NetworkConnectionProfile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Network connections.....
         /// </summary>
         public static string NetworkConnectionsDots {
