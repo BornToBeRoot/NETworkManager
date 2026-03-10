@@ -10,7 +10,7 @@ public partial class FirewallSettingsView
     /// <summary>
     /// DataContext for the view.
     /// </summary>
-    private readonly FirewallSettingsViewModel _viewModel = 
+    private readonly FirewallSettingsViewModel _viewModel =
             FirewallSettingsViewModel.Instance;
 
     /// <summary>

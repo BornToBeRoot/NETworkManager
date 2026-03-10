@@ -14,7 +14,7 @@ public enum NetworkProfiles
     /// Network has an Active Directory (AD) controller and you are authenticated.
     /// </summary>
     Domain,
-    
+
     /// <summary>
     /// Network is private. Firewall will allow most connections.
     /// </summary>

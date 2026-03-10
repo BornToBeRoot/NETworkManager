@@ -43,12 +43,12 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
 
         #region LoadViewModel
         // Load ViewModels implementing ICloneable and Singleton pattern.
-        
+
         // Firewall
         Firewall_ViewModel = (IFirewallViewModel.Instance as FirewallViewModel)
             ?.Clone() as FirewallViewModel;
         #endregion
-        
+
         Name = profileInfo.Name;
 
         if (editMode == ProfileEditMode.Copy)
@@ -336,7 +336,7 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
             : profileInfo.IPGeolocation_Enabled;
         IPGeolocation_InheritHost = profileInfo.IPGeolocation_InheritHost;
         IPGeolocation_Host = profileInfo.IPGeolocation_Host;
-        
+
         // Firewall
         Firewall_Enabled = editMode == ProfileEditMode.Add
             ? applicationName == ApplicationName.Firewall
@@ -3256,7 +3256,7 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
         get => Firewall_ViewModel;
         set => Firewall_ViewModel = (FirewallViewModel)value;
     }
-    
+
     public FirewallViewModel Firewall_ViewModel
     {
         get;
@@ -3270,7 +3270,7 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
     }
 
     #endregion
-    
+
     #endregion
 
     #region ICommands & Actions

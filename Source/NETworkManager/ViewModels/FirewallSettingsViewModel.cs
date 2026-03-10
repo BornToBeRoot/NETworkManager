@@ -8,15 +8,15 @@ namespace NETworkManager.ViewModels;
 public class FirewallSettingsViewModel : ViewModelBase
 {
     private static readonly Lazy<FirewallSettingsViewModel> Lazy = new(() => new FirewallSettingsViewModel());
-    
+
     public static FirewallSettingsViewModel Instance => Lazy.Value;
-    
+
     #region Variables
     /// <summary>
     /// The view model is loading initial settings.
     /// </summary>
     private readonly bool _isLoading;
-    
+
     /// <summary>
     /// Setting for combining the port history of local and remote ports.
     /// </summary>
@@ -34,7 +34,7 @@ public class FirewallSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     /// <summary>
     /// Setting to use the port separator comma instead of semicolon like it is used in WF.msc.
     /// </summary>
@@ -54,7 +54,7 @@ public class FirewallSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     /// <summary>
     /// Whether the remote ports history has entries.
     /// </summary>
@@ -84,7 +84,7 @@ public class FirewallSettingsViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-    
+
     /// <summary>
     /// Configurable length of history entries.
     /// </summary>
@@ -113,7 +113,7 @@ public class FirewallSettingsViewModel : ViewModelBase
         LoadSettings();
         _isLoading = false;
     }
-    
+
     /// <summary>
     /// Load the settings via <see cref="SettingsManager"/>.
     /// </summary>
@@ -128,7 +128,7 @@ public class FirewallSettingsViewModel : ViewModelBase
             MaxLengthHistory = -1;
     }
     #endregion
-    
+
     #region Commands
     /// <summary>
     /// Command for <see cref="ClearLocalPortHistoryAction" />.
@@ -143,7 +143,7 @@ public class FirewallSettingsViewModel : ViewModelBase
         SettingsManager.Current.Firewall_LocalPortsHistoryConfig.Clear();
         LocalPortsHaveItems = false;
     }
-    
+
     /// <summary>
     /// Command for <see cref="ClearRemotePortHistoryAction" />.
     /// </summary>
@@ -157,6 +157,6 @@ public class FirewallSettingsViewModel : ViewModelBase
         SettingsManager.Current.Firewall_RemotePortsHistoryConfig.Clear();
         RemotePortsHaveItems = false;
     }
-    
+
     #endregion
 }

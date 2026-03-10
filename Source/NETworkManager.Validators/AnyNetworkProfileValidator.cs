@@ -26,14 +26,14 @@ public class AnyNetworkProfileValidator : ValidationRule
         }
         if (bindingExpression.DataItem is true)
             return ValidationResult.ValidResult;
-        
+
         bool[] currentValues =
         [
             viewModel.NetworkProfileDomain,
             viewModel.NetworkProfilePrivate,
             viewModel.NetworkProfilePublic
         ];
-        
+
         return currentValues.Any(x => x) ? ValidationResult.ValidResult
             : new ValidationResult(false, Strings.AtLeastOneNetworkProfileMustBeSelected);
     }

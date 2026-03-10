@@ -61,7 +61,7 @@ public sealed class EnumToStringConverter : IValueConverter
                 return fallback;
             return result;
         }
-        
+
         var enumString = Enum.GetName(enumValue.GetType(), value);
         if (enumString is null)
             return string.Empty;

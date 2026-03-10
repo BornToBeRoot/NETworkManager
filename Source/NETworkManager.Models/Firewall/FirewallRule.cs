@@ -90,14 +90,14 @@ public class FirewallRule
     } = new bool[3];
 
     public FirewallInterfaceType InterfaceType { get; set; } = FirewallInterfaceType.Any;
-    
+
     /// <summary>
     /// Represents the operation to be performed or executed.
     /// </summary>
     public FirewallRuleAction Action { get; set; } = FirewallRuleAction.Block;
-    
+
     #endregion
-    
+
     #region Constructors
 
     /// <summary>
@@ -109,7 +109,7 @@ public class FirewallRule
     {
     }
     #endregion
-    
+
     #region Methods
 
     /// <summary>

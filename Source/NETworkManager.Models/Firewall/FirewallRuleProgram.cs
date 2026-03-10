@@ -33,7 +33,7 @@ public class FirewallRuleProgram : ICloneable
     }
 
     #endregion
-    
+
     #region Constructor
     /// <summary>
     /// Required for serialization.
@@ -41,7 +41,7 @@ public class FirewallRuleProgram : ICloneable
     public FirewallRuleProgram()
     {
     }
-    
+
     /// <summary>
     /// Construct program reference for firewall rule.
     /// </summary>
@@ -53,7 +53,7 @@ public class FirewallRuleProgram : ICloneable
         Name = exe.FullName;
     }
     #endregion
-    
+
     #region Methods
     /// <summary>
     /// Convert the full file path to string.
@@ -63,7 +63,7 @@ public class FirewallRuleProgram : ICloneable
     {
         return Executable?.FullName;
     }
-    
+
     /// <summary>
     /// Clone instance.
     /// </summary>

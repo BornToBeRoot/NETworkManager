@@ -56,7 +56,7 @@ namespace NETworkManager.Converters
 
         private ConcurrentDictionary<string, PropertyInfo> Cache { get; } = new();
     }
-    
+
     // Concrete implementation for XAML usage
     public class FirewallRuleViewModelBooleanOrConverter : CollectionPropertyBooleanOrConverter<IFirewallRuleViewModel>;
 }

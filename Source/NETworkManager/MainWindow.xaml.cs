@@ -1018,7 +1018,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             case ApplicationName.Firewall:
                 _firewallView?.OnViewHide();
                 break;
-            
+
             default:
                 Log.Error("Cannot hide unknown application view: " + name);
                 break;

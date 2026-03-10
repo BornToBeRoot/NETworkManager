@@ -134,12 +134,12 @@ public enum DocumentationIdentifier
     ///     ARP Table documentation page.
     /// </summary>
     ApplicationArpTable,
-    
+
     /// <summary>
     /// Firewall documentation page.
     /// </summary>
     ApplicationFirewall,
-    
+
     /// <summary>
     ///     Settings\General documentation page.
     /// </summary>

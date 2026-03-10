@@ -32,7 +32,7 @@ namespace NETworkManager.Converters
                 propertyInfo = typeof(T).GetProperty(propertyName);
                 Cache.TryAdd(propertyName, propertyInfo);
             }
-            
+
             if (propertyInfo == null)
                 return Visibility.Collapsed;
 

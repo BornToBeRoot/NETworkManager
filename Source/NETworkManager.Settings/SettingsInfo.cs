@@ -4503,7 +4503,7 @@ public class SettingsInfo : INotifyPropertyChanged
     /// See <see cref="FirewallSettingsViewModel" /> for details.
     /// </summary>
     #region Firewall
-    
+
     public bool Firewall_CombinePortHistory
     {
         get;
@@ -4528,11 +4528,11 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = false;
-    
+
     public List<string> Firewall_LocalPortsHistoryConfig { get; set; }
-    
+
     public List<string> Firewall_RemotePortsHistoryConfig { get; set; }
-    
+
     public List<FirewallRule> Firewall_FirewallRules
     {
         get;
@@ -4584,7 +4584,7 @@ public class SettingsInfo : INotifyPropertyChanged
     } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     #endregion
-    
+
     #endregion
 
     #region Constructor

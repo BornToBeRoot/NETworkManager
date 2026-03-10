@@ -13,19 +13,19 @@ public static class FirewallRuleEnumTranslation
     /// </summary>
     public static string[] ActionNames =>
         FirewallRuleViewModel.GetEnumTranslation(typeof(FirewallRuleAction));
-    
+
     /// <summary>
     /// Names of the directions.
     /// </summary>
     public static string[] DirectionNames =>
         FirewallRuleViewModel.GetEnumTranslation(typeof(FirewallRuleDirection));
-    
+
     /// <summary>
     /// Names of the protocols.
     /// </summary>
     public static string[] ProtocolNames =>
         FirewallRuleViewModel.GetEnumTranslation(typeof(FirewallProtocol));
-    
+
     /// <summary>
     /// Names of the interface types.
     /// </summary>

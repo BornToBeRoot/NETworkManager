@@ -21,9 +21,9 @@ public class Firewall
     /// The Logger.
     /// </summary>
     private readonly ILog _logger = LogManager.GetLogger(typeof(Firewall));
-    
+
     #endregion
-    
+
     #region Methods
 
     /// <summary>
@@ -130,7 +130,7 @@ public class Firewall
     {
         return value.Replace("'", "''");
     }
-    
+
     /// <summary>
     /// Applies firewall rules asynchronously by invoking the ApplyRules method in a separate task.
     /// </summary>

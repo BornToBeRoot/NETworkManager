@@ -13,7 +13,7 @@ public class EmptyOrFilePathValidator : ValidationRule
             return field;
         }
     }
-    
+
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
         if (value is not string strValue || string.IsNullOrEmpty(strValue))

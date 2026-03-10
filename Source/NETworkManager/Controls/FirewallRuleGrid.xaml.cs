@@ -41,18 +41,18 @@ public partial class FirewallRuleGrid
     /// Last remote port string, which was added.
     /// </summary>
     private static string _lastRemotePortsString = string.Empty;
-    
+
     /// <summary>
     /// List of TextBlock content to ignore on double clicks.
     /// </summary>
-    private static readonly string[] IgnoredTextBlocks = [ Strings.Domain, Strings.Private, Strings.Public ];
-    
+    private static readonly string[] IgnoredTextBlocks = [Strings.Domain, Strings.Private, Strings.Public];
+
     public FirewallRuleGrid()
     {
         InitializeComponent();
         RestoreRuleGridFocus();
     }
-    
+
     #region Events
     /// <summary>
     /// Handle new valid ports and add them to the history.
@@ -77,7 +77,7 @@ public partial class FirewallRuleGrid
         string formattedText = converter.ConvertBack(list, typeof(string), null, null) as string;
         if (string.IsNullOrWhiteSpace(formattedText))
             return;
-        
+
         // Direct visual update: Find the internal TextBox and force formatting the text.
         // This bypasses ComboBox.Text property synchronization issues during LostFocus.
         if (GetVisualChild<TextBox>(comboBox) is { } textBox)
@@ -120,7 +120,7 @@ public partial class FirewallRuleGrid
                 break;
         }
     }
-    
+
     /// <summary>
     /// Toggle row visibility.
     /// </summary>
@@ -170,7 +170,7 @@ public partial class FirewallRuleGrid
         }
     }
 
-    
+
     /// <summary>
     /// Set the data context of the context menu.
     /// </summary>
@@ -181,7 +181,7 @@ public partial class FirewallRuleGrid
         if (sender is ContextMenu menu)
             menu.DataContext = DataContext;
     }
-    
+
     /// <summary>
     /// Keyboard control
     /// </summary>
@@ -196,7 +196,7 @@ public partial class FirewallRuleGrid
 
         if (sender is not MultiSelectDataGrid grid)
             return;
-        
+
         if (DataContext is not FirewallViewModel dataContext)
             return;
 
@@ -289,7 +289,7 @@ public partial class FirewallRuleGrid
                 break;
         }
     }
-    
+
     /// <summary>
     /// Gets a DataGridCell from a given DataGrid, given row and column accounting for virtualization.
     /// </summary>
@@ -309,7 +309,7 @@ public partial class FirewallRuleGrid
 
         return presenter?.ItemContainerGenerator.ContainerFromIndex(column) as DataGridCell;
     }
-    
+
     /// <summary>
     /// Get the first child of a Visual, which is not null. 
     /// </summary>
@@ -377,7 +377,7 @@ public partial class FirewallRuleGrid
             Keyboard.Focus(RuleGrid);
         }), DispatcherPriority.Input);
     }
-    
+
     /// <summary>
     /// Delegate the refocusing to <see cref="RestoreRuleGridFocus"/> on sorting,
     /// but with another dispatcher context.

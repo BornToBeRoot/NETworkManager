@@ -97,7 +97,7 @@ public static class DocumentationManager
 
         new DocumentationInfo(DocumentationIdentifier.ApplicationArpTable,
             @"docs/application/arp-table"),
-        
+
         new DocumentationInfo(DocumentationIdentifier.ApplicationFirewall,
             @"docs/application/firewall"),
 
