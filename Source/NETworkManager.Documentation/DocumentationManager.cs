@@ -66,6 +66,12 @@ public static class DocumentationManager
         new DocumentationInfo(DocumentationIdentifier.ApplicationSntpLookup,
             @"docs/application/sntp-lookup"),
 
+        new DocumentationInfo(DocumentationIdentifier.ApplicationHostsFileEditor,
+            @"docs/application/hosts-file-editor"),
+
+        new DocumentationInfo(DocumentationIdentifier.ApplicationFirewall,
+            @"docs/application/firewall"),
+
         new DocumentationInfo(DocumentationIdentifier.ApplicationDiscoveryProtocol,
             @"docs/application/discovery-protocol"),
 
@@ -95,9 +101,6 @@ public static class DocumentationManager
 
         new DocumentationInfo(DocumentationIdentifier.ApplicationArpTable,
             @"docs/application/arp-table"),
-
-        new DocumentationInfo(DocumentationIdentifier.ApplicationFirewall,
-            @"docs/application/firewall"),
 
         new DocumentationInfo(DocumentationIdentifier.SettingsGeneral,
             @"docs/settings/general"),
@@ -214,7 +217,9 @@ public static class DocumentationManager
             ApplicationName.WebConsole => DocumentationIdentifier.ApplicationWebConsole,
             ApplicationName.SNMP => DocumentationIdentifier.ApplicationSnmp,
             ApplicationName.SNTPLookup => DocumentationIdentifier.ApplicationSntpLookup,
+            ApplicationName.HostsFileEditor => DocumentationIdentifier.ApplicationHostsFileEditor,
             ApplicationName.DiscoveryProtocol => DocumentationIdentifier.ApplicationDiscoveryProtocol,
+            ApplicationName.Firewall => DocumentationIdentifier.ApplicationFirewall,
             ApplicationName.WakeOnLAN => DocumentationIdentifier.ApplicationWakeOnLan,
             ApplicationName.Whois => DocumentationIdentifier.ApplicationWhois,
             ApplicationName.IPGeolocation => DocumentationIdentifier.ApplicationIPGeolocation,
@@ -259,8 +264,10 @@ public static class DocumentationManager
             SettingsName.PowerShell => GetIdentifierByApplicationName(ApplicationName.PowerShell),
             SettingsName.PuTTY => GetIdentifierByApplicationName(ApplicationName.PuTTY),
             SettingsName.TigerVNC => GetIdentifierByApplicationName(ApplicationName.TigerVNC),
+            SettingsName.WebConsole => GetIdentifierByApplicationName(ApplicationName.WebConsole),
             SettingsName.SNMP => GetIdentifierByApplicationName(ApplicationName.SNMP),
             SettingsName.SNTPLookup => GetIdentifierByApplicationName(ApplicationName.SNTPLookup),
+            SettingsName.Firewall => GetIdentifierByApplicationName(ApplicationName.Firewall),
             SettingsName.WakeOnLAN => GetIdentifierByApplicationName(ApplicationName.WakeOnLAN),
             SettingsName.BitCalculator => GetIdentifierByApplicationName(ApplicationName.BitCalculator),
             _ => DocumentationIdentifier.Default

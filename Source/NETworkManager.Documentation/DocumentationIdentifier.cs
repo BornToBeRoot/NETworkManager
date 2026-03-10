@@ -81,9 +81,19 @@ public enum DocumentationIdentifier
     ApplicationSnmp,
 
     /// <summary>
-    ///     SNTP lookup documentation page.
+    ///     SNTP Lookup documentation page.
     /// </summary>
     ApplicationSntpLookup,
+
+    /// <summary>
+    ///     Hosts File Editor documentation page.
+    /// </summary>
+    ApplicationHostsFileEditor,
+
+    /// <summary>
+    /// Firewall documentation page.
+    /// </summary>
+    ApplicationFirewall,
 
     /// <summary>
     ///     Discovery Protocol documentation page.
@@ -134,11 +144,6 @@ public enum DocumentationIdentifier
     ///     ARP Table documentation page.
     /// </summary>
     ApplicationArpTable,
-
-    /// <summary>
-    /// Firewall documentation page.
-    /// </summary>
-    ApplicationFirewall,
 
     /// <summary>
     ///     Settings\General documentation page.
