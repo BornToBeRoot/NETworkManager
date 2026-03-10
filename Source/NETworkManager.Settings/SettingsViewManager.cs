@@ -4,11 +4,22 @@ using NETworkManager.Models;
 
 namespace NETworkManager.Settings;
 
+/// <summary>
+/// Provides access to a categorized list of all available settings views for the application.
+/// </summary>
+/// <remarks>The settings views are grouped into general and application-specific categories, each represented by
+/// a SettingsViewInfo object containing the view's name, icon, and group classification. This class is intended to
+/// facilitate configuration and display of settings within the application.</remarks>
 public static class SettingsViewManager
 {
-    // List of all applications
-    public static List<SettingsViewInfo> List => new()
-    {
+    /// <summary>
+    /// Gets a static, categorized list of available settings view information for the application.
+    /// </summary>
+    /// <remarks>The collection includes both general and application-specific settings, each represented by a
+    /// SettingsViewInfo object containing the setting's name, icon, and group. This list enables easy access to
+    /// configuration options and is intended for use in settings navigation or display scenarios.</remarks>
+    public static List<SettingsViewInfo> List =>
+    [
         // General
         new SettingsViewInfo(SettingsName.General, new PackIconModern { Kind = PackIconModernKind.Layer },
             SettingsGroup.General),
@@ -61,11 +72,11 @@ public static class SettingsViewManager
             SettingsGroup.Application),
         new SettingsViewInfo(SettingsName.SNTPLookup, ApplicationManager.GetIcon(ApplicationName.SNTPLookup),
             SettingsGroup.Application),
+        new SettingsViewInfo(SettingsName.Firewall, ApplicationManager.GetIcon(ApplicationName.Firewall),
+            SettingsGroup.Application),
         new SettingsViewInfo(SettingsName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN),
             SettingsGroup.Application),
         new SettingsViewInfo(SettingsName.BitCalculator, ApplicationManager.GetIcon(ApplicationName.BitCalculator),
-            SettingsGroup.Application),
-        new SettingsViewInfo(SettingsName.Firewall, ApplicationManager.GetIcon(ApplicationName.Firewall),
-            SettingsGroup.Application)
-    };
+            SettingsGroup.Application),        
+    ];
 }

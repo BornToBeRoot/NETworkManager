@@ -98,6 +98,11 @@ public enum ApplicationName
     HostsFileEditor,
 
     /// <summary>
+    ///    Firewall application.
+    /// </summary>
+    Firewall,
+
+    /// <summary>
     ///     Discovery protocol application.
     /// </summary>
     DiscoveryProtocol,
@@ -145,10 +150,5 @@ public enum ApplicationName
     /// <summary>
     ///     ARP table application.
     /// </summary>
-    ARPTable,
-
-    /// <summary>
-    ///    Firewall application.
-    /// </summary>
-    Firewall,
+    ARPTable,    
 }
