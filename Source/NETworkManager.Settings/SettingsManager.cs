@@ -674,6 +674,7 @@ public static class SettingsManager
     {
         Log.Info($"Apply upgrade to {version}...");
 
+        // Add Firewall application
         Log.Info($"Add new app {nameof(ApplicationName.Firewall)}.");
 
         Current.General_ApplicationList.Insert(
