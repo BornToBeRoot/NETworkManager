@@ -20,7 +20,10 @@ Release date: **xx.xx.2026**
 ## Breaking Changes
 
 ## What's new?
+
 **Firewall**
+
+- Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. Special thanks to [@labre-rdc](https://github.com/labre-rdc) [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 
 **PowerShell**
 
@@ -29,10 +32,6 @@ Release date: **xx.xx.2026**
 **PuTTY**
 
 - DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PuTTY window now receives an explicit `WM_DPICHANGED` message with the new DPI value packed into `wParam`, since the OS does not forward this message across process boundaries after `SetParent`. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
-
-- Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
-
-- Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 
 ## Improvements
 
