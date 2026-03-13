@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using NETworkManager.ViewModels;
 
@@ -21,7 +22,8 @@ public partial class FirewallView
     {
         InitializeComponent();
 
-        _viewModel = FirewallViewModel.Instance as FirewallViewModel;
+        _viewModel = FirewallViewModel.Instance as FirewallViewModel
+                     ?? throw new ArgumentNullException(nameof(FirewallViewModel));
         DataContext = _viewModel;
         _viewModel?.CommandExecuted += AnyButton_OnClick;
         FirewallRuleGrid.DataContext = _viewModel;
@@ -44,8 +46,8 @@ public partial class FirewallView
     /// </summary>
     public void OnViewHide()
     {
-        _viewModel.OnViewHide();
-        if (_viewModel.IsViewActive)
+        _viewModel?.OnViewHide();
+        if (_viewModel?.IsViewActive ?? false)
             FirewallRuleGrid?.RestoreRuleGridFocus();
     }
 
@@ -54,7 +56,7 @@ public partial class FirewallView
     /// </summary>
     public void OnViewVisible()
     {
-        _viewModel.OnViewVisible();
+        _viewModel?.OnViewVisible();
         FirewallRuleGrid?.RestoreRuleGridFocus();
     }
 
