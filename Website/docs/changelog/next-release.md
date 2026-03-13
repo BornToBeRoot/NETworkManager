@@ -61,10 +61,6 @@ Release date: **xx.xx.2026**
 
 - Fixed incorrect initial embedded window size on high-DPI monitors. The `WindowsFormsHost` panel now sets its initial dimensions in physical pixels using the current DPI scale factor, ensuring the TigerVNC window fills the panel correctly at startup. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
 
-**General**
-
-- Fix null dereferences in various validators and converters. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
-
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring
