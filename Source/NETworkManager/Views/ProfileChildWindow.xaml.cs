@@ -88,4 +88,10 @@ public partial class ProfileChildWindow
         }
         // else if (other TabItems ...)
     }
+
+    private void ProfileChildWindow_OnUnloaded(object sender, RoutedEventArgs e)
+    {
+        (DataContext as ProfileViewModel)
+            ?.Firewall_ViewModel?.CommandExecuted -= Firewall_ViewModelOnCommandExecuted;
+    }
 }

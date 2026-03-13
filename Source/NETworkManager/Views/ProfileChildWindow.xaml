@@ -24,6 +24,7 @@
                                CloseButtonCommand="{Binding CancelCommand}"
                                Style="{StaticResource DefaultChildWindow}"
                                Loaded="ChildWindow_OnLoaded"
+                               Unloaded="ProfileChildWindow_OnUnloaded"
                                mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ProfileViewModel}">
     <simpleChildWindow:ChildWindow.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
