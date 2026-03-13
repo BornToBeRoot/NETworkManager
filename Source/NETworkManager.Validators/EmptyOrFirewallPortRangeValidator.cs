@@ -24,7 +24,7 @@ public class EmptyOrFirewallPortRangeValidator : ValidationRule
 
                 if (int.TryParse(portRange[0], out var startPort) && int.TryParse(portRange[1], out var endPort))
                 {
-                    if (startPort is < 0 or > 65536 || endPort is < 0 or > 65536 &&
+                    if (startPort is < 0 or > 65536 || endPort is < 0 or > 65536 ||
                         startPort > endPort)
                         isValid = false;
                 }
