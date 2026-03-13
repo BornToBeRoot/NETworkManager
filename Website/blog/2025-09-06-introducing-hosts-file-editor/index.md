@@ -29,6 +29,6 @@ allowing you to restore previous versions if needed.
 
 Upgrade now to the [latest version of NETworkManager](https://borntoberoot.net/NETworkManager/download) to use this feature.
 
-More information is available in the [official documentation](https://borntoberoot.net/NETworkManager/download/docs/application/hosts-file-editor).
+More information is available in the [official documentation](https://borntoberoot.net/NETworkManager/docs/application/hosts-file-editor).
 
 If you find any issues or have suggestions for improvement, please open an [issue on GitHub](https://github.com/BornToBeRoot/NETworkManager/issues).
