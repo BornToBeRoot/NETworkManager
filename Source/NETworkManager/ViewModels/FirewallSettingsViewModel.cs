@@ -111,6 +111,7 @@ public class FirewallSettingsViewModel : ViewModelBase
         _isLoading = true;
 
         LoadSettings();
+        
         _isLoading = false;
     }
 
@@ -124,6 +125,8 @@ public class FirewallSettingsViewModel : ViewModelBase
         LocalPortsHaveItems = SettingsManager.Current.Firewall_LocalPortsHistoryConfig?.Count > 0;
         RemotePortsHaveItems = SettingsManager.Current.Firewall_RemotePortsHistoryConfig?.Count > 0;
         MaxLengthHistory = SettingsManager.Current.Firewall_MaxLengthHistory;
+        // This default value is only present when the settings are initialized for the first time,
+        // because Int32Validator does not allow 0 or negative values as input.
         if (MaxLengthHistory is 0)
             MaxLengthHistory = -1;
     }
