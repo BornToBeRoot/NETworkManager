@@ -25,9 +25,10 @@ public class PortRangeToPortSpecificationConverter : IValueConverter
             var portList = input.Split(portDelimiter);
             foreach (var port in portList)
             {
-                if (port.Contains(rangeDelimiter))
+                var trimmedPort = port.Trim();
+                if (trimmedPort.Contains(rangeDelimiter))
                 {
-                    var portRange = port.Split(rangeDelimiter);
+                    var portRange = trimmedPort.Split(rangeDelimiter);
                     if (!int.TryParse(portRange[0], out var startPort))
                         return null;
                     if (!int.TryParse(portRange[1], out var endPort))
