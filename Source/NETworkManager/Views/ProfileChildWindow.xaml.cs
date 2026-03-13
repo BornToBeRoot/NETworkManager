@@ -46,7 +46,7 @@ public partial class ProfileChildWindow
         {
             TextBoxName.Focus();
             (DataContext as ProfileViewModel)
-                ?.Firewall_ViewModel?.CommandExecuted += Firewall_ViewModelOnCommandExecuted; 
+                ?.Firewall_ViewModel?.CommandExecuted += Firewall_ViewModelOnCommandExecuted;
         }));
     }
 

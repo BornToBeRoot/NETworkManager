@@ -15,7 +15,8 @@ public class FirewallRuleNoPipeValidator : ValidationRule
         if (value is not BindingExpression bindingExpression)
         {
             valueToCheck = value?.ToString();
-        } else if (bindingExpression.DataItem is not IProfileViewModel viewModel)
+        }
+        else if (bindingExpression.DataItem is not IProfileViewModel viewModel)
         {
             return new ValidationResult(false,
                 "No ViewModel could be found. Is the ValidationStep set correctly?");

@@ -248,7 +248,7 @@ public class SettingsProfilesViewModel : ViewModelBase
     private static void OpenLocationAction()
     {
         Process.Start("explorer.exe", ProfileManager.GetProfilesFolderLocation());
-    }    
+    }
 
     /// <summary>
     /// Gets the command that initiates the action to change the location.
@@ -307,7 +307,7 @@ public class SettingsProfilesViewModel : ViewModelBase
 
         // Clear custom location to revert to default
         SettingsManager.Current.Profiles_FolderLocation = null;
-        
+
         // Restart the application
         (Application.Current.MainWindow as MainWindow)?.RestartApplication();
     }

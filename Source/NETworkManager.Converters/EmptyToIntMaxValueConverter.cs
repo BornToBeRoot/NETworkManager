@@ -8,7 +8,7 @@ public class EmptyToIntMaxValueConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        const int fallback = int.MaxValue; 
+        const int fallback = int.MaxValue;
         if (targetType == typeof(int))
         {
             if (value is not string strValue)

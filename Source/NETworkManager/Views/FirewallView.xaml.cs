@@ -13,7 +13,7 @@ public partial class FirewallView
     /// View model for the view.
     /// </summary>
     private readonly FirewallViewModel _viewModel;
-    
+
     /// <summary>
     /// Initialize view.
     /// </summary>
@@ -26,7 +26,7 @@ public partial class FirewallView
         _viewModel?.CommandExecuted += AnyButton_OnClick;
         FirewallRuleGrid.DataContext = _viewModel;
     }
-    
+
     #region Events
     /// <summary>
     /// Set data context for menus.
@@ -38,7 +38,7 @@ public partial class FirewallView
         if (sender is ContextMenu menu)
             menu.DataContext = _viewModel;
     }
-    
+
     /// <summary>
     /// Offload event for toggling view to the view model.
     /// </summary>
@@ -48,7 +48,7 @@ public partial class FirewallView
         if (_viewModel.IsViewActive)
             FirewallRuleGrid?.RestoreRuleGridFocus();
     }
-    
+
     /// <summary>
     /// Offload event for showing the view after editing settings to view model.
     /// </summary>
@@ -57,7 +57,7 @@ public partial class FirewallView
         _viewModel.OnViewVisible();
         FirewallRuleGrid?.RestoreRuleGridFocus();
     }
-    
+
     /// <summary>
     /// Set the focus to the RuleGrid when loading is finished.
     /// </summary>

@@ -25,7 +25,7 @@ public static class ValidationHelper
     public static void SetHasError(DependencyObject element, bool value) => element.SetValue(HasErrorProperty, value);
 
     public static bool GetHasError(DependencyObject element) => (bool)element.GetValue(HasErrorProperty);
-    
+
     // Observe validation errors directly. Required unless NotifyOnValidationErrors is set.
     public static readonly DependencyProperty ObserveValidationProperty = DependencyProperty.RegisterAttached(
         "ObserveValidation",
@@ -47,7 +47,7 @@ public static class ValidationHelper
             // Listen to the Validation.HasError property changes directly
             var descriptor = DependencyPropertyDescriptor.FromProperty(Validation.HasErrorProperty, typeof(FrameworkElement));
             descriptor.AddValueChanged(element, OnValidationHasErrorChanged);
-            
+
             // Initial sync
             SetHasError(element, Validation.GetHasError(element));
         }

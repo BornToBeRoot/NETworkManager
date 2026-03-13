@@ -20,9 +20,10 @@ Release date: **xx.xx.2026**
 ## Breaking Changes
 
 ## What's new?
+
 **Firewall**
 
-- Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
+- Firewall application has been added for adding NETworkManager controlled Windows firewall rules with profile support. Special thanks to [@labre-rdc](https://github.com/labre-rdc) [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 
 **PowerShell**
 
@@ -59,6 +60,10 @@ Release date: **xx.xx.2026**
 **TigerVNC**
 
 - Fixed incorrect initial embedded window size on high-DPI monitors. The `WindowsFormsHost` panel now sets its initial dimensions in physical pixels using the current DPI scale factor, ensuring the TigerVNC window fills the panel correctly at startup. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
+
+**General**
+
+- Fix null dereferences in various validators and converters. [#3353](https://github.com/BornToBeRoot/NETworkManager/pull/3353)
 
 ## Dependencies, Refactoring & Documentation
 

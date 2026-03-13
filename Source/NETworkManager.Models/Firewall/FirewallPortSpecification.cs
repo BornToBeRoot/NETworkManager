@@ -41,7 +41,7 @@ public class FirewallPortSpecification
         Start = -1;
         End = -1;
     }
-    
+
     /// <summary>
     /// Represents the specification for a firewall port, detailing its configuration
     /// and rules for inbound or outbound network traffic.

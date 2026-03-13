@@ -56,7 +56,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
     /// Base Constructor is running. 
     /// </summary>
     private readonly bool _isLoading;
-    
+
     /// <summary>
     /// Settings are loaded.
     /// </summary>
@@ -71,7 +71,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
     /// The last value of the UseWindowsPortSyntax setting.
     /// </summary>
     private bool _lastUseWindowsPortSyntax;
-    
+
     /// <summary>
     /// This model has been cloned.
     /// </summary>
@@ -92,7 +92,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
             OnPropertyChanged();
         }
     }
-    
+
     /// <summary>
     /// Firewall rule config being saved on application exit.
     /// </summary>
@@ -172,15 +172,15 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
     }
 
     public string ToolTipAdd => $"{Strings.Firewall_ToolTip_Add}: {Strings.Ctrl}+N";
-    
+
     public string ToolTipDelete => $"{Strings.Firewall_ToolTip_Delete}: {Strings.Ctrl}+D; {Strings.Del}";
-    
+
     public string ToolTipClear => $"{Strings.Firewall_ToolTip_Clear}: {Strings.Ctrl}+{Strings.Shift}+C";
 
     public string ToolTipApply => $"{Strings.Firewall_ToolTip_Apply}: {Strings.Ctrl}+A";
 
     public string ToolTipOpenWindowsFirewall => $"{Strings.Firewall_ToolTip_OpenWindowsFirewall}: {Strings.Ctrl}+W";
-    
+
     public string ToolTipClearWindows => $"{Strings.Firewall_ToolTip_ClearWindows}: {Strings.Ctrl}+{Strings.Shift}+{Strings.Alt}+C";
     #region Profiles
 
@@ -483,7 +483,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
         LoadSettings();
         _isLoading = false;
     }
-    
+
     /// <summary>
     /// Get an instance avoiding the base initialization. Solely used on cloning.
     /// </summary>
@@ -505,9 +505,9 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
     #region Events
 
     public event CommandExecutedEventHandler CommandExecuted;
-    
+
     public delegate void CommandExecutedEventHandler(object sender, RoutedEventArgs args);
-        
+
     /// <summary>
     /// Update config if a rule has been changed.
     /// </summary>
@@ -517,7 +517,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
     {
         UpdateRulesConfig();
     }
-    
+
     /// <summary>
     /// Store values if ports are being added to the history.
     /// </summary>
@@ -530,7 +530,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
         foreach (var rule in FirewallRules)
             rule.StorePortValues();
     }
-    
+
     /// <summary>
     /// Restore port values after the history has been changed.
     /// </summary>
@@ -543,7 +543,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
         foreach (var rule in FirewallRules)
             rule.RestorePortValues();
     }
-    
+
     /// <summary>
     /// Toggle the view.
     /// </summary>
@@ -999,7 +999,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
             GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
     }
     #endregion ProfileCommands
-    
+
     /// <summary>
     /// Command responsible for applying the current configuration settings,
     /// ensuring the changes are validated and executed within the context of the application.
@@ -1045,12 +1045,13 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
 
     public ICommand DeleteAllRulesCommand => new RelayCommand(_ => DeleteAllRulesAction());
 
-    private void DeleteAllRulesAction() {
+    private void DeleteAllRulesAction()
+    {
         FirewallRules.Clear();
         UpdateRulesConfig();
         CommandExecuted?.Invoke(this, null);
     }
-    
+
     /// <summary>
     /// Command for <see cref="AddRuleAction" />.
     /// </summary>
@@ -1124,12 +1125,12 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
         FirewallRules?.Remove(ruleToDelete);
         UpdateRulesConfig();
     }
-    
+
     /// <summary>
     /// Command for deleting the shown rules in the Windows firewall.
     /// </summary>
     public static ICommand DeleteWindowsRulesCommand => new RelayCommand(_ => DeleteWindowsRulesAction());
-    
+
     /// <summary>
     /// Clear the Windows firewall rules starting with "NwM_".
     /// </summary>
@@ -1179,7 +1180,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
 
         _tempProfileWidth = SettingsManager.Current.Firewall_ProfileWidth;
     }
-    
+
     /// <summary>
     /// Load the firewall rules from settings if no profiles are available.
     /// </summary>
@@ -1200,7 +1201,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
         }
         OnPropertyChanged(nameof(FirewallRules));
     }
-    
+
     /// <summary>
     /// Update the configuration for either the current profile or the default config
     /// if no profile is selected.
@@ -1219,7 +1220,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
         OnPropertyChanged(nameof(FirewallRules));
         OnPropertyChanged(nameof(FirewallRulesInterface));
     }
-    
+
     /// <summary>
     /// Replace the separator in the port histories if the settings have been changed.
     /// </summary>
@@ -1258,7 +1259,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
 
         _lastUseWindowsPortSyntax = currentWindowsPortSyntax;
     }
-    
+
     /// <summary>
     /// Apply the firewall rules to Windows firewall configuration.
     /// </summary>
@@ -1282,7 +1283,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
             IsConfigurationRunning = false;
         }
     }
-    
+
     /// <summary>
     /// Apply the firewall rules from a profile to the Windows firewall configuration.
     /// </summary>
@@ -1306,7 +1307,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
     }
 
     #endregion
-    
+
     /// <summary>
     /// Clone this instance.
     /// </summary>

@@ -26,7 +26,7 @@ public enum SettingsName
     WebConsole,
     SNMP,
     SNTPLookup,
+    Firewall,
     WakeOnLAN,
-    BitCalculator,
-    Firewall
+    BitCalculator, 
 }

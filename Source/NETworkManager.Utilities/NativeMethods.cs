@@ -77,7 +77,7 @@ public class NativeMethods
     #endregion
 
     #region Pinvoke/Win32 Methods
-        
+
     [DllImport("user32.dll", SetLastError = true)]
     public static extern long SetParent(IntPtr hWndChild, IntPtr hWndParent);
 

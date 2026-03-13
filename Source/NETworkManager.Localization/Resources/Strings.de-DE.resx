@@ -3913,7 +3913,7 @@ Rechtsklick für weitere Optionen.</value>
     <value>Match</value>
   </data>
   <data name="Any" xml:space="preserve">
-    <value>Beliebig</value>
+    <value>Any</value>
   </data>
   <data name="AddGroupDots" xml:space="preserve">
     <value>Gruppe hinzufügen...</value>
@@ -3944,9 +3944,6 @@ Wenn Sie auf „Abbrechen“ klicken, bleibt die Profildatei unverschlüsselt.</
   </data>
   <data name="ToolTip_RestartRequired" xml:space="preserve">
     <value>Ein Neustart ist erforderlich, um Änderungen wie Spracheinstellungen zu übernehmen.</value>
-  </data>
-  <data name="NetworkProfile" xml:space="preserve">
-    <value>Netzwerkprofil</value>
   </data>
   <data name="CouldNotParseOrResolveDNSServers" xml:space="preserve">
     <value>Keiner der angegebenen DNS-Server konnte geparst oder aufgelöst werden.</value>
@@ -4000,165 +3997,6 @@ Bei Bedarf können Sie die Profiledateien von „{0}“ nach „{1}“ kopieren,
     <value>Der Standardspeicherort für Profile wird wiederhergestellt und die Anwendung anschließend neu gestartet.
 
 Bei Bedarf können Sie die Profildateien von „{0}“ nach „{1}“ kopieren, um Ihre bisherigen Profile zu migrieren. Dazu muss die Anwendung geschlossen sein, damit die Profile nicht überschrieben werden.</value>
-  </data>
-  <data name="NetworkConnectionProfile" xml:space="preserve">
-    <value>Netzwerkprofiltyp</value>
-  </data>
-  <data name="ToolTip_NetProfileNotConfigured" xml:space="preserve">
-    <value>Systemkonfiguration nicht verändern</value>
-  </data>
-  <data name="Public" xml:space="preserve">
-    <value>Öffentlich</value>
-  </data>
-  <data name="Private" xml:space="preserve">
-    <value>Privat</value>
-  </data>
-  <data name="NotConfigured" xml:space="preserve">
-    <value>Nicht konfiguriert</value>
-  </data>
-  <data name="Deselect" xml:space="preserve">
-    <value>Nichts auswählen</value>
-  </data>
-  <data name="Direction" xml:space="preserve">
-    <value>Richtung</value>
-  </data>
-  <data name="LocalPorts" xml:space="preserve">
-    <value>Lokale Ports</value>
-  </data>
-  <data name="RemotePorts" xml:space="preserve">
-    <value>Remote Ports</value>
-  </data>
-  <data name="Inbound" xml:space="preserve">
-    <value>Eingehend</value>
-  </data>
-  <data name="Outbound" xml:space="preserve">
-    <value>Ausgehend</value>
-  </data>
-  <data name="PipeNotAllowed" xml:space="preserve">
-    <value>Das Zeichen ‚|’ darf nicht enthalten sein.</value>
-  </data>
-  <data name="Private_Short3" xml:space="preserve">
-    <value>Prv</value>
-  </data>
-  <data name="Allow" xml:space="preserve">
-    <value>Zulassen</value>
-  </data>
-  <data name="Block" xml:space="preserve">
-    <value>Blockieren</value>
-  </data>
-  <data name="Action" xml:space="preserve">
-    <value>Aktion</value>
-  </data>
-  <data name="EnterPathToExe" xml:space="preserve">
-    <value>Geben Sie den Pfad zu einer *.exe Datei an.</value>
-  </data>
-  <data name="SelectDots" xml:space="preserve">
-    <value>Auswählen…</value>
-  </data>
-  <data name="RuleDescription" xml:space="preserve">
-    <value>Beschreibung der Firewallregel</value>
-  </data>
-  <data name="Public_Short3" xml:space="preserve">
-    <value>Öfl</value>
-  </data>
-  <data name="Domain_Short3" xml:space="preserve">
-    <value>Dom</value>
-  </data>
-  <data name="InputLengthExceeded" xml:space="preserve">
-    <value>Zulässige Eingabelänge überschritten</value>
-  </data>
-  <data name="Firewall" xml:space="preserve">
-    <value>Firewall</value>
-  </data>
-  <data name="CombineLocalAndRemotePortHistory" xml:space="preserve">
-    <value>Verlauf von lokalen und entfernten Ports kombinieren</value>
-  </data>
-  <data name="UseWindowsPortListSyntax" xml:space="preserve">
-    <value>Windows Portlistensyntax verwenden</value>
-  </data>
-  <data name="WindowsFirewallSettings" xml:space="preserve">
-    <value>Windows Firewall Einstellungen</value>
-  </data>
-  <data name="DeleteAll" xml:space="preserve">
-    <value>Alle löschen</value>
-  </data>
-  <data name="ClearRulesInWindows" xml:space="preserve">
-    <value>Regeln in Windows löschen</value>
-  </data>
-  <data name="InterfaceType" xml:space="preserve">
-    <value>Schnittstellentyp</value>
-  </data>
-  <data name="Wired" xml:space="preserve">
-    <value>Kabelgebunden</value>
-  </data>
-  <data name="Wireless" xml:space="preserve">
-    <value>Kabellos</value>
-  </data>
-  <data name="RemoteAccess" xml:space="preserve">
-    <value>Fernzugriff</value>
-  </data>
-  <data name="EnterLessThan10001PortsOrPortRanges" xml:space="preserve">
-    <value>Geben Sie weniger als 10001 Ports oder Portbereiche an</value>
-  </data>
-  <data name="AtLeastOneNetworkProfileMustBeSelected" xml:space="preserve">
-    <value>Mindestens ein Netzwerkprofil muss gewählt werden.</value>
-  </data>
-  <data name="PipeNotAllowedWhenFirewallEnabled" xml:space="preserve">
-    <value>Das Zeichen ‚|’ darf nicht enthalten sein solange das Firewallprofil aktiv ist.</value>
-  </data>
-  <data name="RuleHasConfigurationError" xml:space="preserve">
-    <value>Die Regel enthält einen Konfigurationsfehler</value>
-  </data>
-  <data name="ProgramNameTooLong" xml:space="preserve">
-    <value>Wählen Sie ein Programm aus, das mit Pfad nicht länger als 256 Zeichen ist.</value>
-  </data>
-  <data name="ErasePortHistory" xml:space="preserve">
-    <value>Eingebaverlauf der Ports löschen</value>
-  </data>
-  <data name="EraseLocalPortHistory" xml:space="preserve">
-    <value>Eingabeverlauf lokaler Ports löschen</value>
-  </data>
-  <data name="EraseRemotePortHistory" xml:space="preserve">
-    <value>Eingabeverlauf entfernter Ports löschen</value>
-  </data>
-  <data name="EnterPositiveInteger" xml:space="preserve">
-    <value>Geben Sie positive Ganzzahl ein!</value>
-  </data>
-  <data name="MaxLengthOfPortEntries" xml:space="preserve">
-    <value>Maximale Länge von Porteinträgen</value>
-  </data>
-  <data name="Firewall_ToolTip_Add" xml:space="preserve">
-    <value>Firewall Regel hinzufügen</value>
-  </data>
-  <data name="Firewall_ToolTip_Delete" xml:space="preserve">
-    <value>Ausgewählte oder letzte Firewall Regel löschen</value>
-  </data>
-  <data name="Firewall_ToolTip_Apply" xml:space="preserve">
-    <value>Firewall Regeln anwenden</value>
-  </data>
-  <data name="Firewall_ToolTip_Clear" xml:space="preserve">
-    <value>Alle Firewall Regeln löschen</value>
-  </data>
-  <data name="Firewall_ToolTip_ClearWindows" xml:space="preserve">
-    <value>NETworkManager Regeln in Windows Firewall löschen</value>
-  </data>
-  <data name="Ctrl" xml:space="preserve">
-    <value>Strg</value>
-  </data>
-  <data name="Alt" xml:space="preserve">
-    <value>Alt</value>
-  </data>
-  <data name="Shift" xml:space="preserve">
-    <value>Umschalt</value>
-  </data>
-  <data name="Del" xml:space="preserve">
-    <value>Entf</value>
-  </data>
-  <data name="Firewall_ToolTip_OpenWindowsFirewall" xml:space="preserve">
-    <value>Windows Firewall Einstellungen öffnen</value>
-  </data>
-  <data name="FirewallRules" xml:space="preserve">
-    <value>Firewall Regeln</value>
   </data>
   <data name="NetworkConnection" xml:space="preserve">
     <value>Netzwerkverbindung</value>

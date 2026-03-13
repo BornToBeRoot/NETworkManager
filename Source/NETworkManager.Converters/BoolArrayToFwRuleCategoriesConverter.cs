@@ -30,7 +30,7 @@ public class BoolArrayToFwRuleCategoriesConverter : IValueConverter
 
         if (boolArray.All(b => b))
             return Strings.All;
-            
+
         for (var i = 0; i < expectedLength; i++)
         {
             if (boolArray[i])
