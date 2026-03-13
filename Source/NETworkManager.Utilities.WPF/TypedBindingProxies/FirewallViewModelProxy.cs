@@ -31,6 +31,6 @@ public class FirewallViewModelProxy : Freezable
     /// </returns>
     protected override Freezable CreateInstanceCore()
     {
-        return new BindingProxy();
+        return new FirewallViewModelProxy();
     }
 }

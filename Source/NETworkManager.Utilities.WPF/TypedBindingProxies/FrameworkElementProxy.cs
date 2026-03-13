@@ -30,6 +30,6 @@ public class FrameworkElementProxy : Freezable
     /// </returns>
     protected override Freezable CreateInstanceCore()
     {
-        return new BindingProxy();
+        return new FrameworkElementProxy();
     }
 }
