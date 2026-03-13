@@ -78,4 +78,9 @@ public partial class FirewallView
     {
         FirewallRuleGrid?.RestoreRuleGridFocus();
     }
+
+    private void FirewallView_OnUnloaded(object sender, RoutedEventArgs e)
+    {
+        _viewModel?.CommandExecuted -= AnyButton_OnClick;
+    }
 }

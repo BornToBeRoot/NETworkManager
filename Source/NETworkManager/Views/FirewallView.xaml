@@ -18,7 +18,8 @@
     xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
     dialogs:DialogParticipation.Register="{Binding}"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:FirewallViewModel}"
-    Loaded="FirewallView_OnLoaded">
+    Loaded="FirewallView_OnLoaded"
+    Unloaded="FirewallView_OnUnloaded">
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
