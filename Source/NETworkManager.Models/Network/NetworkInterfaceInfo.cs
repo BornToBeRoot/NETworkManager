@@ -122,5 +122,6 @@ public class NetworkInterfaceInfo
     /// <summary>
     ///     Firewall network category (Private, Public, Domain)
     /// </summary>
-    public NetworkProfiles Profiles { get; set; }
+    // NOT IMPLEMENTED YET
+    //public NetworkProfiles Profiles { get; set; }    
 }
