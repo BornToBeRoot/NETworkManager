@@ -28,194 +28,198 @@
         <converters:IntZeroToFalseConverter x:Key="IntZeroToFalseConverter" />
         <vmProxy:FirewallViewModelProxy Data="{Binding}" x:Key="ViewModelProxy" />
     </UserControl.Resources>
-    <Grid Margin="10">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition 
-                MinWidth="{x:Static settings:GlobalStaticConfiguration.Profile_WidthCollapsed}"
-                Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                MaxWidth="{x:Static settings:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
+            <ColumnDefinition MinWidth="{x:Static settings:GlobalStaticConfiguration.Profile_WidthCollapsed}"
+                          Width="{Binding ProfileWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          MaxWidth="{x:Static settings:GlobalStaticConfiguration.Profile_MaxWidthExpanded}" />
         </Grid.ColumnDefinitions>
-        <Grid Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="8*" />
-                <ColumnDefinition Width="2*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock
+        <TabControl Grid.Row="0" Style="{StaticResource DefaultTabControl}">
+            <TabItem Header="{x:Static localization:Strings.Firewall}">
+
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="8*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
                 Style="{StaticResource ResourceKey=HeaderTextBlock}"
                 Text="{x:Static Member=localization:Strings.FirewallRules}" />
-            <!-- Force shrinking of the grid with the window -->
-            <Border 
+                    <!-- Force shrinking of the grid with the window -->
+                    <Border 
                 Grid.Row="1" Grid.Column="0"
                 Background="Transparent"
                 BorderBrush="Transparent">
-                <controls:FirewallRuleGrid x:Name="FirewallRuleGrid"/>
-            </Border>
-            <StackPanel Grid.Row="1" Grid.Column="1" Margin="10, 0, 10, 0" MinWidth="50">
-                <Button Margin="0,0,0,10" Command="{Binding AddRuleCommand}"
+                        <controls:FirewallRuleGrid x:Name="FirewallRuleGrid"/>
+                    </Border>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Margin="10, 0, 10, 0" MinWidth="50">
+                        <Button Margin="0,0,0,10" Command="{Binding AddRuleCommand}"
                         Style="{StaticResource ImageWithTextButton}"
                         ToolTip="{Binding ToolTipAdd}">
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Add}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock 
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Add}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock 
                                 Grid.Column="1"
                                 Text="{x:Static localization:Strings.Add}"
                                 Style="{StaticResource ButtonWithImageTextBlock}" />
-                        </Grid>
-                    </Button.Content>
-                </Button>
-                <Button 
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                        <Button 
                     Margin="0,0,0,10"
                     Style="{StaticResource ImageWithTextButton}"
                     Command="{Binding DeleteRulesCommand}"
                     IsEnabled="{Binding Path=FirewallRules.Count,
                     Converter={StaticResource IntZeroToFalseConverter}}"
                     ToolTip="{Binding ToolTipDelete}">
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Delete}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1"
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Delete}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock Grid.Column="1"
                                        Text="{x:Static localization:Strings.Delete}"
                                        Style="{StaticResource ButtonWithImageTextBlock}" />
-                        </Grid>
-                    </Button.Content>
-                </Button>
-                <Button 
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                        <Button 
                     Margin="0,0,0,10"
                     Style="{StaticResource ImageWithTextButton}"
                     Command="{Binding DeleteAllRulesCommand}"
                     IsEnabled="{Binding Path=FirewallRules.Count,
                     Converter={StaticResource IntZeroToFalseConverter}}"
                     ToolTip="{Binding ToolTipClear}">
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListDelete}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock 
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListDelete}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock 
                                 Grid.Column="1"
                                 Text="{x:Static localization:Strings.DeleteAll}"
                                 Style="{StaticResource ButtonWithImageTextBlock}" />
-                        </Grid>
-                    </Button.Content>
-                </Button>
-                <Button 
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                        <Button 
                     Margin="0,0,0,20"
                     Style="{StaticResource ImageWithTextButton}"
                     Command="{Binding ApplyConfigurationCommand}"
                     IsEnabled="{Binding Path=FirewallRules.Count,
                     Converter={StaticResource IntZeroToFalseConverter}}"
                     ToolTip="{Binding ToolTipApply}">
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Checkmark}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock 
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Checkmark}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock 
                                 Grid.Column="1"
                                 Text="{x:Static localization:Strings.Apply}"
                                 Style="{StaticResource ButtonWithImageTextBlock}" />
-                        </Grid>
-                    </Button.Content>
-                </Button>
-                <Button Margin="0,20,0,10"
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                        <Button Margin="0,20,0,10"
                         Style="{StaticResource ImageWithTextButton}"
                         Command="{Binding OpenWindowsFirewallCommand}"
                         ToolTip="{Binding ToolTipOpenWindowsFirewall}">
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush
                                         Stretch="Uniform"
                                         Visual="{iconPacks:FontAwesome Kind=WindowsBrands}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock 
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock 
                                 Grid.Column="1"
                                 Text="{x:Static localization:Strings.WindowsFirewallSettings}"
                                 Style="{StaticResource ButtonWithImageTextBlock}" TextWrapping="Wrap" />
-                        </Grid>
-                    </Button.Content>
-                </Button>
-                <!-- Since the command is static, we need to raise the Click event here -->
-                <Button Margin="0,0,0,10"
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                        <!-- Since the command is static, we need to raise the Click event here -->
+                        <Button Margin="0,0,0,10"
                         Style="{StaticResource ImageWithTextButton}"
                         Command="{x:Static viewModels:FirewallViewModel.DeleteWindowsRulesCommand}"
                         ToolTip="{Binding ToolTipClearWindows}"
                         Click="AnyButton_OnClick">
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=EraserSolid}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock 
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=EraserSolid}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock 
                                 Grid.Column="1"
                                 Text="{x:Static localization:Strings.ClearRulesInWindows}"
                                 Style="{StaticResource ButtonWithImageTextBlock}" TextWrapping="Wrap" />
-                        </Grid>
-                    </Button.Content>
-                </Button>
-            </StackPanel>
-        </Grid>
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
         <GridSplitter Grid.Column="1" Grid.Row="0"
-                      Focusable="False"
-                      Style="{StaticResource ProfileGridSplitter}" />
+       Focusable="False"
+       Style="{StaticResource ProfileGridSplitter}" />
         <Expander Grid.Column="2" Grid.Row="0"
-                  x:Name="ExpanderProfiles"
-                  Header="{x:Static localization:Strings.Profiles}"
-                  Style="{StaticResource ProfileExpander}"
-                  IsExpanded="{Binding ExpandProfileView}">
+   x:Name="ExpanderProfiles"
+   Header="{x:Static localization:Strings.Profiles}"
+   Style="{StaticResource ProfileExpander}"
+   IsExpanded="{Binding ExpandProfileView}">
             <Grid>
                 <Grid
-                    Visibility="{Binding
-                    Source={x:Static settings:ConfigurationManager.Current},
-                    Path=ProfileManagerIsEnabled,
-                    Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+     Visibility="{Binding
+     Source={x:Static settings:ConfigurationManager.Current},
+     Path=ProfileManagerIsEnabled,
+     Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="10" />
@@ -232,19 +236,19 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <ToggleButton 
-                            Grid.Column="0" Grid.Row="0"
-                            IsChecked="{Binding ExpandProfileView}"
-                            Focusable="False">
+             Grid.Column="0" Grid.Row="0"
+             IsChecked="{Binding ExpandProfileView}"
+             Focusable="False">
                             <ToggleButton.Style>
                                 <Style TargetType="{x:Type ToggleButton}"
-                                       BasedOn="{StaticResource MahApps.Styles.Button.Circle}">
+                        BasedOn="{StaticResource MahApps.Styles.Button.Circle}">
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type ToggleButton}">
                                                 <ContentPresenter 
-                                                    HorizontalAlignment="Center"
-                                                    VerticalAlignment="Center"
-                                                    RecognizesAccessKey="True" />
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"
+                                     RecognizesAccessKey="True" />
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
@@ -257,13 +261,13 @@
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter 
-                                            Property="Fill"
-                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+                             Property="Fill"
+                             Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter 
-                                                    Property="Fill"
-                                                    Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                     Property="Fill"
+                                     Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>
@@ -271,48 +275,48 @@
                             </Rectangle>
                         </ToggleButton>
                         <TextBox 
-                            VerticalAlignment="Center" Grid.Column="2" Grid.Row="0"
-                            Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
-                            Style="{StaticResource SearchTextBox}" />
+             VerticalAlignment="Center" Grid.Column="2" Grid.Row="0"
+             Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
+             Style="{StaticResource SearchTextBox}" />
                         <Button 
-                            Grid.Column="4" Grid.Row="0"
-                            x:Name="ButtonProfileFilter"
-                            Focusable="False"
-                            Style="{StaticResource ResourceKey=CleanButton}"
-                            Command="{Binding Path=OpenProfileFilterCommand}"
-                            ToolTip="{x:Static Member=localization:Strings.FilterProfilesDots}">
+             Grid.Column="4" Grid.Row="0"
+             x:Name="ButtonProfileFilter"
+             Focusable="False"
+             Style="{StaticResource ResourceKey=CleanButton}"
+             Command="{Binding Path=OpenProfileFilterCommand}"
+             ToolTip="{x:Static Member=localization:Strings.FilterProfilesDots}">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.Resources>
                                     <VisualBrush 
-                                        x:Key="VisualFilter" Stretch="Uniform"
-                                        Visual="{iconPacks:Material Kind=FilterOutline}" />
+                         x:Key="VisualFilter" Stretch="Uniform"
+                         Visual="{iconPacks:Material Kind=FilterOutline}" />
                                     <VisualBrush 
-                                        x:Key="VisualFilterRemove" Stretch="Uniform"
-                                        Visual="{iconPacks:Material Kind=FilterMultipleOutline}" />
+                         x:Key="VisualFilterRemove" Stretch="Uniform"
+                         Visual="{iconPacks:Material Kind=FilterMultipleOutline}" />
                                 </Rectangle.Resources>
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type TypeName=Rectangle}">
                                         <Setter 
-                                            Property="OpacityMask"
-                                            Value="{StaticResource ResourceKey=VisualFilter}" />
+                             Property="OpacityMask"
+                             Value="{StaticResource ResourceKey=VisualFilter}" />
                                         <Setter 
-                                            Property="Fill"
-                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+                             Property="Fill"
+                             Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
                                             <DataTrigger 
-                                                Binding="{Binding Path=IsProfileFilterSet}" 
-                                                Value="True">
+                                 Binding="{Binding Path=IsProfileFilterSet}" 
+                                 Value="True">
                                                 <Setter 
-                                                    Property="OpacityMask"
-                                                    Value="{StaticResource ResourceKey=VisualFilterRemove}" />
+                                     Property="OpacityMask"
+                                     Value="{StaticResource ResourceKey=VisualFilterRemove}" />
                                             </DataTrigger>
                                             <DataTrigger
-                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, 
-                                                AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}"
-                                                Value="True">
+                                 Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, 
+                                 AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}"
+                                 Value="True">
                                                 <Setter 
-                                                    Property="Fill"
-                                                    Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
+                                     Property="Fill"
+                                     Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -320,14 +324,14 @@
                             </Rectangle>
                         </Button>
                         <Popup 
-                            Grid.Column="0" PlacementTarget="{Binding ElementName=ButtonProfileFilter}"
-                            Placement="Bottom" StaysOpen="False"
-                            IsOpen="{Binding ProfileFilterIsOpen}"
-                            Width="220">
+             Grid.Column="0" PlacementTarget="{Binding ElementName=ButtonProfileFilter}"
+             Placement="Bottom" StaysOpen="False"
+             IsOpen="{Binding ProfileFilterIsOpen}"
+             Width="220">
                             <Border 
-                                Background="{DynamicResource MahApps.Brushes.Window.Background}"
-                                BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
-                                BorderThickness="1">
+                 Background="{DynamicResource MahApps.Brushes.Window.Background}"
+                 BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                 BorderThickness="1">
                                 <Grid Margin="10">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -341,19 +345,19 @@
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <TextBlock 
-                                        Grid.Column="0" Grid.Row="0"
-                                        Text="{x:Static Member=localization:Strings.FilterByTags}"
-                                        Style="{StaticResource InfoTextBlock}" />
+                         Grid.Column="0" Grid.Row="0"
+                         Text="{x:Static Member=localization:Strings.FilterByTags}"
+                         Style="{StaticResource InfoTextBlock}" />
                                     <ScrollViewer 
-                                        Grid.Column="0" Grid.Row="2"
-                                        VerticalScrollBarVisibility="Auto"
-                                        HorizontalScrollBarVisibility="Hidden"
-                                        Visibility="{Binding Path=ProfileFilterTags.Count,
-                                        Converter={StaticResource 
-                                        ResourceKey=IntNotZeroToVisibilityCollapsedConverter}}">
+                         Grid.Column="0" Grid.Row="2"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Hidden"
+                         Visibility="{Binding Path=ProfileFilterTags.Count,
+                         Converter={StaticResource 
+                         ResourceKey=IntNotZeroToVisibilityCollapsedConverter}}">
                                         <ItemsControl 
-                                            ItemsSource="{Binding Path=ProfileFilterTagsView}"
-                                            Width="200">
+                             ItemsSource="{Binding Path=ProfileFilterTagsView}"
+                             Width="200">
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
                                                     <WrapPanel />
@@ -361,66 +365,66 @@
                                             </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate DataType="{x:Type 
-                                                TypeName=profiles:ProfileFilterTagsInfo}">
+                                 TypeName=profiles:ProfileFilterTagsInfo}">
                                                     <CheckBox 
-                                                        Margin="0,5,10,5"
-                                                        Content="{Binding Name}"
-                                                        IsChecked="{Binding IsSelected}"
-                                                        Style="{StaticResource DefaultCheckBox}" />
+                                         Margin="0,5,10,5"
+                                         Content="{Binding Name}"
+                                         IsChecked="{Binding IsSelected}"
+                                         Style="{StaticResource DefaultCheckBox}" />
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
                                     </ScrollViewer>
                                     <TextBlock 
-                                        Grid.Column="0" Grid.Row="2"
-                                        Text="{x:Static localization:Strings.NoTagsFound}"
-                                        Visibility="{Binding Path=ProfileFilterTags.Count,
-                                        Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}"
-                                        Style="{StaticResource MessageTextBlock}" />
+                         Grid.Column="0" Grid.Row="2"
+                         Text="{x:Static localization:Strings.NoTagsFound}"
+                         Visibility="{Binding Path=ProfileFilterTags.Count,
+                         Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}"
+                         Style="{StaticResource MessageTextBlock}" />
                                     <TextBlock 
-                                        Grid.Column="0" Grid.Row="4"
-                                        Text="{x:Static localization:Strings.Match}"
-                                        Style="{StaticResource InfoTextBlock}" />
+                         Grid.Column="0" Grid.Row="4"
+                         Text="{x:Static localization:Strings.Match}"
+                         Style="{StaticResource InfoTextBlock}" />
                                     <StackPanel 
-                                        Grid.Column="0" Grid.Row="6"
-                                        Orientation="Horizontal">
+                         Grid.Column="0" Grid.Row="6"
+                         Orientation="Horizontal">
                                         <RadioButton 
-                                            Content="{x:Static localization:Strings.Any}"
-                                            IsChecked="{Binding Path=ProfileFilterTagsMatchAny}" />
+                             Content="{x:Static localization:Strings.Any}"
+                             IsChecked="{Binding Path=ProfileFilterTagsMatchAny}" />
                                         <RadioButton 
-                                            Content="{x:Static localization:Strings.All}"
-                                            IsChecked="{Binding Path=ProfileFilterTagsMatchAll}"
-                                            Margin="10,0,0,0" />
+                             Content="{x:Static localization:Strings.All}"
+                             IsChecked="{Binding Path=ProfileFilterTagsMatchAll}"
+                             Margin="10,0,0,0" />
                                     </StackPanel>
                                     <StackPanel 
-                                        Grid.Column="0" Grid.Row="8"
-                                        Orientation="Horizontal" HorizontalAlignment="Right">
+                         Grid.Column="0" Grid.Row="8"
+                         Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Button 
-                                            Command="{Binding ApplyProfileFilterCommand}"
-                                            Style="{StaticResource ImageButton}"
-                                            ToolTip="{x:Static localization:Strings.ApplyFilter}">
+                             Command="{Binding ApplyProfileFilterCommand}"
+                             Style="{StaticResource ImageButton}"
+                             ToolTip="{x:Static localization:Strings.ApplyFilter}">
                                             <Rectangle 
-                                                Width="16" Height="16"
-                                                Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                 Width="16" Height="16"
+                                 Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                 <Rectangle.OpacityMask>
                                                     <VisualBrush 
-                                                        Stretch="Uniform"
-                                                        Visual="{iconPacks:Material Kind=ContentSaveOutline}" />
+                                         Stretch="Uniform"
+                                         Visual="{iconPacks:Material Kind=ContentSaveOutline}" />
                                                 </Rectangle.OpacityMask>
                                             </Rectangle>
                                         </Button>
                                         <Button 
-                                            Command="{Binding ClearProfileFilterCommand}"
-                                            Style="{StaticResource ImageButton}"
-                                            ToolTip="{x:Static localization:Strings.ClearFilter}"
-                                            Margin="10,0,0,0">
+                             Command="{Binding ClearProfileFilterCommand}"
+                             Style="{StaticResource ImageButton}"
+                             ToolTip="{x:Static localization:Strings.ClearFilter}"
+                             Margin="10,0,0,0">
                                             <Rectangle 
-                                                Width="20" Height="20"
-                                                Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                 Width="20" Height="20"
+                                 Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                                 <Rectangle.OpacityMask>
                                                     <VisualBrush 
-                                                        Stretch="Uniform"
-                                                        Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
+                                         Stretch="Uniform"
+                                         Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
                                                 </Rectangle.OpacityMask>
                                             </Rectangle>
                                         </Button>
@@ -429,11 +433,11 @@
                             </Border>
                         </Popup>
                         <Button 
-                            Grid.Column="6" Grid.Row="0"
-                            Focusable="False"
-                            Style="{StaticResource CleanButton}"
-                            Command="{Binding AddProfileCommand}"
-                            ToolTip="{x:Static localization:Strings.AddProfileDots}">
+             Grid.Column="6" Grid.Row="0"
+             Focusable="False"
+             Style="{StaticResource CleanButton}"
+             Command="{Binding AddProfileCommand}"
+             ToolTip="{x:Static localization:Strings.AddProfileDots}">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
@@ -441,15 +445,15 @@
                                 <Rectangle.Style>
                                     <Style TargetType="{x:Type Rectangle}">
                                         <Setter Property="Fill" 
-                                                Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                 Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
                                             <DataTrigger
-                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, 
-                                                AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                                Value="True">
+                                 Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, 
+                                 AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                 Value="True">
                                                 <Setter 
-                                                    Property="Fill"
-                                                    Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                     Property="Fill"
+                                     Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -458,17 +462,17 @@
                         </Button>
                     </Grid>
                     <ListBox 
-                        Grid.Column="0" Grid.Row="2" ItemsSource="{Binding Profiles}"
-                        Visibility="{Binding IsSearching, 
-                        Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
-                        SelectedItem="{Binding SelectedProfile}"
-                        Style="{StaticResource ProfileListBox}"
-                        ScrollViewer.CanContentScroll="True"
-                        VirtualizingPanel.IsVirtualizing="True"
-                        VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-                        VirtualizingPanel.IsContainerVirtualizable="True"
-                        VirtualizingPanel.VirtualizationMode="Recycling"
-                        VirtualizingPanel.ScrollUnit="Item">
+         Grid.Column="0" Grid.Row="2" ItemsSource="{Binding Profiles}"
+         Visibility="{Binding IsSearching, 
+         Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+         SelectedItem="{Binding SelectedProfile}"
+         Style="{StaticResource ProfileListBox}"
+         ScrollViewer.CanContentScroll="True"
+         VirtualizingPanel.IsVirtualizing="True"
+         VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+         VirtualizingPanel.IsContainerVirtualizable="True"
+         VirtualizingPanel.VirtualizationMode="Recycling"
+         VirtualizingPanel.ScrollUnit="Item">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel IsItemsHost="True" />
@@ -477,61 +481,61 @@
                         <ListBox.Resources>
                             <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                 <MenuItem 
-                                    Header="{x:Static localization:Strings.Apply}"
-                                    Command="{Binding ApplyProfileConfigCommand}">
+                     Header="{x:Static localization:Strings.Apply}"
+                     Command="{Binding ApplyProfileConfigCommand}">
                                     <MenuItem.Icon>
                                         <Rectangle 
-                                            Width="16" Height="16"
-                                            Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                             Width="16" Height="16"
+                             Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush 
-                                                    Stretch="Uniform"
-                                                    Visual="{iconPacks:Material Kind=ContentSave}" />
+                                     Stretch="Uniform"
+                                     Visual="{iconPacks:Material Kind=ContentSave}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem 
-                                    Header="{x:Static localization:Strings.EditDots}"
-                                    Command="{Binding EditProfileCommand}">
+                     Header="{x:Static localization:Strings.EditDots}"
+                     Command="{Binding EditProfileCommand}">
                                     <MenuItem.Icon>
                                         <Rectangle 
-                                            Width="16" Height="16"
-                                            Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                             Width="16" Height="16"
+                             Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush 
-                                                    Stretch="Uniform"
-                                                    Visual="{iconPacks:Modern Kind=Edit}" />
+                                     Stretch="Uniform"
+                                     Visual="{iconPacks:Modern Kind=Edit}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem 
-                                    Header="{x:Static localization:Strings.CopyAsDots}"
-                                    Command="{Binding CopyAsProfileCommand}">
+                     Header="{x:Static localization:Strings.CopyAsDots}"
+                     Command="{Binding CopyAsProfileCommand}">
                                     <MenuItem.Icon>
                                         <Rectangle 
-                                            Width="16" Height="16"
-                                            Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                             Width="16" Height="16"
+                             Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush 
-                                                    Stretch="Uniform"
-                                                    Visual="{iconPacks:Material Kind=ContentDuplicate}" />
+                                     Stretch="Uniform"
+                                     Visual="{iconPacks:Material Kind=ContentDuplicate}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem 
-                                    Header="{x:Static localization:Strings.Delete}"
-                                    Command="{Binding DeleteProfileCommand}">
+                     Header="{x:Static localization:Strings.Delete}"
+                     Command="{Binding DeleteProfileCommand}">
                                     <MenuItem.Icon>
                                         <Rectangle 
-                                            Width="16" Height="16"
-                                            Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                             Width="16" Height="16"
+                             Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush 
-                                                    Stretch="Uniform"
-                                                    Visual="{iconPacks:Material Kind=Close}" />
+                                     Stretch="Uniform"
+                                     Visual="{iconPacks:Material Kind=Close}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                     </MenuItem.Icon>
@@ -540,9 +544,9 @@
                         </ListBox.Resources>
                         <ListBox.InputBindings>
                             <KeyBinding 
-                                Command="{Binding EditProfileCommand}" Key="F2" />
+                 Command="{Binding EditProfileCommand}" Key="F2" />
                             <KeyBinding 
-                                Command="{Binding DeleteProfileCommand}" Key="Delete" />
+                 Command="{Binding DeleteProfileCommand}" Key="Delete" />
                         </ListBox.InputBindings>
                         <ListBox.GroupStyle>
                             <GroupStyle>
@@ -552,12 +556,12 @@
                                             <Setter.Value>
                                                 <ControlTemplate>
                                                     <externalControls:GroupExpander
-                                                        Style="{StaticResource DefaultExpander}"
-                                                        StateStore="{Binding Path=DataContext
-                                                        .GroupExpanderStateStore, 
-                                                        RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                                        GroupName="{Binding 
-                                                        Path=(CollectionViewGroup.Name)}">
+                                         Style="{StaticResource DefaultExpander}"
+                                         StateStore="{Binding Path=DataContext
+                                         .GroupExpanderStateStore, 
+                                         RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                         GroupName="{Binding 
+                                         Path=(CollectionViewGroup.Name)}">
                                                         <Expander.Header>
                                                             <Grid>
                                                                 <Grid.ColumnDefinitions>
@@ -567,46 +571,46 @@
                                                                 </Grid.ColumnDefinitions>
                                                                 <Grid.ContextMenu>
                                                                     <ContextMenu
-                                                                        Style="{StaticResource 
-                                                                        ResourceKey=DefaultContextMenu}">
+                                                         Style="{StaticResource 
+                                                         ResourceKey=DefaultContextMenu}">
                                                                         <MenuItem
-                                                                            Header="{x:Static
-                                                                            Member=localization:Strings.ExpandAll}"
-                                                                            Command="{Binding 
-                                                                            Path=Data
-                                                                            .ExpandAllProfileGroupsCommand, 
-                                                                            Source={StaticResource 
-                                                                            ResourceKey=ViewModelProxy}}">
+                                                             Header="{x:Static
+                                                             Member=localization:Strings.ExpandAll}"
+                                                             Command="{Binding 
+                                                             Path=Data
+                                                             .ExpandAllProfileGroupsCommand, 
+                                                             Source={StaticResource 
+                                                             ResourceKey=ViewModelProxy}}">
                                                                             <MenuItem.Icon>
                                                                                 <Rectangle Width="16" Height="16"
-                                                                                    Fill="{DynamicResource 
-                                                                                    ResourceKey=MahApps.Brushes.Gray3}">
+                                                                     Fill="{DynamicResource 
+                                                                     ResourceKey=MahApps.Brushes.Gray3}">
                                                                                     <Rectangle.OpacityMask>
                                                                                         <VisualBrush
-                                                                                            Stretch="Uniform"
-                                                                                            Visual="{iconPacks:Material 
-                                                                                            Kind=PlusBoxMultipleOutline}" />
+                                                                             Stretch="Uniform"
+                                                                             Visual="{iconPacks:Material 
+                                                                             Kind=PlusBoxMultipleOutline}" />
                                                                                     </Rectangle.OpacityMask>
                                                                                 </Rectangle>
                                                                             </MenuItem.Icon>
                                                                         </MenuItem>
                                                                         <MenuItem
-                                                                            Header="{x:Static 
-                                                                            Member=localization:Strings.CollapseAll}"
-                                                                            Command="{Binding 
-                                                                            Path=Data
-                                                                            .CollapseAllProfileGroupsCommand,
-                                                                            Source={StaticResource
-                                                                            ViewModelProxy}}">
+                                                             Header="{x:Static 
+                                                             Member=localization:Strings.CollapseAll}"
+                                                             Command="{Binding 
+                                                             Path=Data
+                                                             .CollapseAllProfileGroupsCommand,
+                                                             Source={StaticResource
+                                                             ViewModelProxy}}">
                                                                             <MenuItem.Icon>
                                                                                 <Rectangle Width="16" Height="16"
-                                                                                    Fill="{DynamicResource
-                                                                                    ResourceKey=MahApps.Brushes.Gray3}">
+                                                                     Fill="{DynamicResource
+                                                                     ResourceKey=MahApps.Brushes.Gray3}">
                                                                                     <Rectangle.OpacityMask>
                                                                                         <VisualBrush
-                                                                                            Stretch="Uniform"
-                                                                                            Visual="{iconPacks:Material
-                                                                                            Kind=MinusBoxMultipleOutline}" />
+                                                                             Stretch="Uniform"
+                                                                             Visual="{iconPacks:Material
+                                                                             Kind=MinusBoxMultipleOutline}" />
                                                                                     </Rectangle.OpacityMask>
                                                                                 </Rectangle>
                                                                             </MenuItem.Icon>
@@ -614,59 +618,59 @@
                                                                     </ContextMenu>
                                                                 </Grid.ContextMenu>
                                                                 <Rectangle 
-                                                                    Grid.Column="0" Grid.ColumnSpan="3"
-                                                                    Fill="Transparent" />
+                                                     Grid.Column="0" Grid.ColumnSpan="3"
+                                                     Fill="Transparent" />
                                                                 <TextBlock 
-                                                                    Grid.Column="0"
-                                                                    Text="{Binding
-                                                                    Path=(CollectionViewGroup.Name)}"
-                                                                    Style="{DynamicResource
-                                                                    ResourceKey=ProfileGroupTextBlock}" />
+                                                     Grid.Column="0"
+                                                     Text="{Binding
+                                                     Path=(CollectionViewGroup.Name)}"
+                                                     Style="{DynamicResource
+                                                     ResourceKey=ProfileGroupTextBlock}" />
                                                                 <Button 
-                                                                    Grid.Column="2"
-                                                                    ToolTip="{x:Static
-                                                                    localization:Strings.EditGroupDots}"
-                                                                    Command="{Binding
-                                                                    DataContext.EditGroupCommand,
-                                                                    RelativeSource={RelativeSource
-                                                                    Mode=FindAncestor,
-                                                                    AncestorType={x:Type ListBox}}}"
-                                                                    CommandParameter="{Binding
-                                                                    (CollectionViewGroup.Name)}"
-                                                                    Visibility="{Binding IsMouseOver,
-                                                                    RelativeSource={RelativeSource Mode=FindAncestor, 
-                                                                    AncestorType={x:Type Grid}},
-                                                                    Converter={StaticResource
-                                                                    BooleanToVisibilityCollapsedConverter}}"
-                                                                    Style="{StaticResource CleanButton}">
+                                                     Grid.Column="2"
+                                                     ToolTip="{x:Static
+                                                     localization:Strings.EditGroupDots}"
+                                                     Command="{Binding
+                                                     DataContext.EditGroupCommand,
+                                                     RelativeSource={RelativeSource
+                                                     Mode=FindAncestor,
+                                                     AncestorType={x:Type ListBox}}}"
+                                                     CommandParameter="{Binding
+                                                     (CollectionViewGroup.Name)}"
+                                                     Visibility="{Binding IsMouseOver,
+                                                     RelativeSource={RelativeSource Mode=FindAncestor, 
+                                                     AncestorType={x:Type Grid}},
+                                                     Converter={StaticResource
+                                                     BooleanToVisibilityCollapsedConverter}}"
+                                                     Style="{StaticResource CleanButton}">
                                                                     <Rectangle 
-                                                                        Width="16" Height="16">
+                                                         Width="16" Height="16">
                                                                         <Rectangle.OpacityMask>
                                                                             <VisualBrush 
-                                                                                Stretch="Uniform"
-                                                                                Visual="{iconPacks:Modern Kind=Edit}" />
+                                                                 Stretch="Uniform"
+                                                                 Visual="{iconPacks:Modern Kind=Edit}" />
                                                                         </Rectangle.OpacityMask>
                                                                         <Rectangle.Style>
                                                                             <Style
-                                                                                TargetType="{x:Type
-                                                                                Rectangle}">
+                                                                 TargetType="{x:Type
+                                                                 Rectangle}">
                                                                                 <Setter 
-                                                                                    Property="Fill"
-                                                                                    Value="{DynamicResource
-                                                                                    ResourceKey=MahApps.Brushes.Gray3}" />
+                                                                     Property="Fill"
+                                                                     Value="{DynamicResource
+                                                                     ResourceKey=MahApps.Brushes.Gray3}" />
                                                                                 <Style.Triggers>
                                                                                     <DataTrigger
-                                                                                        Binding="{Binding
-                                                                                        RelativeSource={RelativeSource
-                                                                                        Mode=FindAncestor,
-                                                                                        AncestorType={x:Type
-                                                                                        Button}},
-                                                                                        Path=IsMouseOver}"
-                                                                                        Value="True">
+                                                                         Binding="{Binding
+                                                                         RelativeSource={RelativeSource
+                                                                         Mode=FindAncestor,
+                                                                         AncestorType={x:Type
+                                                                         Button}},
+                                                                         Path=IsMouseOver}"
+                                                                         Value="True">
                                                                                         <Setter
-                                                                                            Property="Fill"
-                                                                                            Value="{DynamicResource
-                                                                                            ResourceKey=MahApps.Brushes.Gray5}" />
+                                                                             Property="Fill"
+                                                                             Value="{DynamicResource
+                                                                             ResourceKey=MahApps.Brushes.Gray5}" />
                                                                                     </DataTrigger>
                                                                                 </Style.Triggers>
                                                                             </Style>
@@ -686,11 +690,11 @@
                         </ListBox.GroupStyle>
                         <ListBox.ItemContainerStyle>
                             <Style 
-                                TargetType="{x:Type ListBoxItem}"
-                                BasedOn="{StaticResource MahApps.Styles.ListBoxItem}">
+                 TargetType="{x:Type ListBoxItem}"
+                 BasedOn="{StaticResource MahApps.Styles.ListBoxItem}">
                                 <Setter 
-                                    Property="ContextMenu" 
-                                    Value="{StaticResource ListBoxItemContextMenu}" />
+                     Property="ContextMenu" 
+                     Value="{StaticResource ListBoxItemContextMenu}" />
                                 <Setter Property="VerticalContentAlignment" Value="Stretch" />
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             </Style>
@@ -702,27 +706,27 @@
                                         <ToolTip MinWidth="250">
                                             <StackPanel Margin="10">
                                                 <TextBlock 
-                                                    Text="{Binding Host}"
-                                                    Style="{StaticResource DefaultTextBlock}" />
+                                     Text="{Binding Host}"
+                                     Style="{StaticResource DefaultTextBlock}" />
                                                 <Separator 
-                                                    Background="{DynamicResource MahApps.Brushes.Gray8}"
-                                                    Margin="0,10" />
+                                     Background="{DynamicResource MahApps.Brushes.Gray8}"
+                                     Margin="0,10" />
                                                 <TextBlock 
-                                                    Text="{Binding Description}"
-                                                    Style="{StaticResource InfoTextBlock}"
-                                                    TextWrapping="Wrap" />
+                                     Text="{Binding Description}"
+                                     Style="{StaticResource InfoTextBlock}"
+                                     TextWrapping="Wrap" />
                                             </StackPanel>
                                         </ToolTip>
                                     </Grid.ToolTip>
                                     <TextBlock 
-                                        Text="{Binding Name}" 
-                                        Style="{StaticResource CenterTextBlock}" />
+                         Text="{Binding Name}" 
+                         Style="{StaticResource CenterTextBlock}" />
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                     <mah:ProgressRing 
-                        Grid.Row="2" Height="50" Width="50" IsActive="{Binding IsSearching}" />
+         Grid.Row="2" Height="50" Width="50" IsActive="{Binding IsSearching}" />
                     <Grid Grid.Row="2" VerticalAlignment="Center">
                         <Grid.Style>
                             <Style TargetType="{x:Type Grid}">
@@ -731,11 +735,11 @@
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
                                             <Condition 
-                                                Binding="{Binding Profiles.IsEmpty}" 
-                                                Value="True" />
+                                 Binding="{Binding Profiles.IsEmpty}" 
+                                 Value="True" />
                                             <Condition 
-                                                Binding="{Binding IsSearching}" 
-                                                Value="False" />
+                                 Binding="{Binding IsSearching}" 
+                                 Value="False" />
                                         </MultiDataTrigger.Conditions>
                                         <MultiDataTrigger.Setters>
                                             <Setter Property="Visibility" Value="Visible" />
@@ -747,21 +751,21 @@
                         <Button HorizontalAlignment="Center" Focusable="False">
                             <Button.Style>
                                 <Style 
-                                    TargetType="{x:Type Button}" 
-                                    BasedOn="{StaticResource CleanButton}">
+                     TargetType="{x:Type Button}" 
+                     BasedOn="{StaticResource CleanButton}">
                                     <Setter 
-                                        Property="Command" 
-                                        Value="{Binding AddProfileCommand}" />
+                         Property="Command" 
+                         Value="{Binding AddProfileCommand}" />
                                     <Style.Triggers>
                                         <DataTrigger
-                                            Binding="{Binding Path=IsProfileFilterSet}"
-                                            Value="True">
+                             Binding="{Binding Path=IsProfileFilterSet}"
+                             Value="True">
                                             <Setter 
-                                                Property="Command" 
-                                                Value="{Binding Path=ClearProfileFilterCommand}" />
+                                 Property="Command" 
+                                 Value="{Binding Path=ClearProfileFilterCommand}" />
                                             <Setter 
-                                                Property="ToolTip"
-                                                Value="{x:Static localization:Strings.ClearFilter}" />
+                                 Property="ToolTip"
+                                 Value="{x:Static localization:Strings.ClearFilter}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -774,36 +778,36 @@
                                 <Rectangle Grid.Column="0" Width="20" Height="20">
                                     <Rectangle.Resources>
                                         <VisualBrush 
-                                            x:Key="VisualPlus" Stretch="Uniform"
-                                            Visual="{iconPacks:Material Kind=Plus}" />
+                             x:Key="VisualPlus" Stretch="Uniform"
+                             Visual="{iconPacks:Material Kind=Plus}" />
                                         <VisualBrush 
-                                            x:Key="VisualClear" Stretch="Uniform"
-                                            Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
+                             x:Key="VisualClear" Stretch="Uniform"
+                             Visual="{iconPacks:Material Kind=FilterRemoveOutline}" />
                                     </Rectangle.Resources>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
                                             <Setter 
-                                                Property="OpacityMask" 
-                                                Value="{StaticResource VisualPlus}" />
+                                 Property="OpacityMask" 
+                                 Value="{StaticResource VisualPlus}" />
                                             <Setter 
-                                                Property="Fill" 
-                                                Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                 Property="Fill" 
+                                 Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                             <Style.Triggers>
                                                 <DataTrigger
-                                                    Binding="{Binding RelativeSource={RelativeSource 
-                                                    Mode=FindAncestor,
-                                                    AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                                    Value="True">
+                                     Binding="{Binding RelativeSource={RelativeSource 
+                                     Mode=FindAncestor,
+                                     AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                     Value="True">
                                                     <Setter 
-                                                        Property="Fill"
-                                                        Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                         Property="Fill"
+                                         Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                 </DataTrigger>
                                                 <DataTrigger
-                                                    Binding="{Binding Path=IsProfileFilterSet}"
-                                                    Value="True">
+                                     Binding="{Binding Path=IsProfileFilterSet}"
+                                     Value="True">
                                                     <Setter 
-                                                        Property="OpacityMask"
-                                                        Value="{StaticResource VisualClear}" />
+                                         Property="OpacityMask"
+                                         Value="{StaticResource VisualClear}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -812,28 +816,28 @@
                                 <TextBlock Grid.Column="1">
                                     <TextBlock.Style>
                                         <Style 
-                                            TargetType="{x:Type TextBlock}"
-                                            BasedOn="{StaticResource MessageTextBlock}">
+                             TargetType="{x:Type TextBlock}"
+                             BasedOn="{StaticResource MessageTextBlock}">
                                             <Setter 
-                                                Property="Text"
-                                                Value="{x:Static localization:Strings.NoProfilesFoundCreateOne}" />
+                                 Property="Text"
+                                 Value="{x:Static localization:Strings.NoProfilesFoundCreateOne}" />
                                             <Style.Triggers>
                                                 <DataTrigger
-                                                    Binding="{Binding RelativeSource={RelativeSource 
-                                                    Mode=FindAncestor,
-                                                    AncestorType={x:Type Button}},
-                                                    Path=IsMouseOver}"
-                                                    Value="True">
+                                     Binding="{Binding RelativeSource={RelativeSource 
+                                     Mode=FindAncestor,
+                                     AncestorType={x:Type Button}},
+                                     Path=IsMouseOver}"
+                                     Value="True">
                                                     <Setter 
-                                                        Property="Foreground"
-                                                        Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                         Property="Foreground"
+                                         Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                 </DataTrigger>
                                                 <DataTrigger
-                                                    Binding="{Binding Path=IsProfileFilterSet}"
-                                                    Value="True">
+                                     Binding="{Binding Path=IsProfileFilterSet}"
+                                     Value="True">
                                                     <Setter 
-                                                        Property="Text"
-                                                        Value="{x:Static localization:Strings.NothingFound}" />
+                                         Property="Text"
+                                         Value="{x:Static localization:Strings.NothingFound}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -844,10 +848,10 @@
                     </Grid>
                 </Grid>
                 <Grid
-                    Visibility="{Binding 
-                    Source={x:Static settings:ConfigurationManager.Current}, 
-                    Path=ProfileManagerIsEnabled, 
-                    Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+     Visibility="{Binding 
+     Source={x:Static settings:ConfigurationManager.Current}, 
+     Path=ProfileManagerIsEnabled, 
+     Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                     <Grid.RowDefinitions>
                         <!-- Adjust the Height without TextBox -->
                         <RowDefinition Height="27" />
@@ -855,21 +859,21 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <ToggleButton 
-                        Grid.Row="0" Grid.Column="0"
-                        IsChecked="{Binding ExpandProfileView}"
-                        HorizontalAlignment="Left"
-                        Focusable="False">
+         Grid.Row="0" Grid.Column="0"
+         IsChecked="{Binding ExpandProfileView}"
+         HorizontalAlignment="Left"
+         Focusable="False">
                         <ToggleButton.Style>
                             <Style 
-                                TargetType="{x:Type ToggleButton}"
-                                BasedOn="{StaticResource MahApps.Styles.Button.Circle}">
+                 TargetType="{x:Type ToggleButton}"
+                 BasedOn="{StaticResource MahApps.Styles.Button.Circle}">
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type ToggleButton}">
                                             <ContentPresenter 
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                RecognizesAccessKey="True" />
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 RecognizesAccessKey="True" />
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -885,8 +889,8 @@
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
                                             <Setter 
-                                                Property="Fill"
-                                                Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                 Property="Fill"
+                                 Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -896,68 +900,68 @@
                     <Grid Grid.Column="0" Grid.Row="2">
                         <!-- Unlock profile button -->
                         <Button 
-                            HorizontalAlignment="Center" VerticalAlignment="Center"
-                            Focusable="False"
-                            Command="{Binding 
-                            Path=(networkManager:MainWindow.UnlockProfileCommand),
-                            RelativeSource={RelativeSource Mode=FindAncestor,
-                            AncestorType={x:Type TypeName=mah:MetroWindow}}}"
-                            Style="{StaticResource CleanButton}"
-                            Visibility="{Binding
-                            Source={x:Static Member=settings:ConfigurationManager.Current}, 
-                            Path=ProfileManagerShowUnlock,
-                            Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+             HorizontalAlignment="Center" VerticalAlignment="Center"
+             Focusable="False"
+             Command="{Binding 
+             Path=(networkManager:MainWindow.UnlockProfileCommand),
+             RelativeSource={RelativeSource Mode=FindAncestor,
+             AncestorType={x:Type TypeName=mah:MetroWindow}}}"
+             Style="{StaticResource CleanButton}"
+             Visibility="{Binding
+             Source={x:Static Member=settings:ConfigurationManager.Current}, 
+             Path=ProfileManagerShowUnlock,
+             Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Rectangle
-                                    Grid.Column="0" Grid.Row="0"
-                                    Width="20" Height="20">
+                     Grid.Column="0" Grid.Row="0"
+                     Width="20" Height="20">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush
-                                            Stretch="Uniform"
-                                            Visual="{iconPacks:Modern Kind=InterfacePassword}" />
+                             Stretch="Uniform"
+                             Visual="{iconPacks:Modern Kind=InterfacePassword}" />
                                     </Rectangle.OpacityMask>
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
                                             <Setter
-                                                Property="Fill"
-                                                Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                 Property="Fill"
+                                 Value="{DynamicResource MahApps.Brushes.Gray3}" />
                                             <Style.Triggers>
                                                 <DataTrigger
-                                                    Binding="{Binding
-                                                    RelativeSource={RelativeSource Mode=FindAncestor,
-                                                    AncestorType={x:Type Button}},
-                                                    Path=IsMouseOver}"
-                                                    Value="True">
+                                     Binding="{Binding
+                                     RelativeSource={RelativeSource Mode=FindAncestor,
+                                     AncestorType={x:Type Button}},
+                                     Path=IsMouseOver}"
+                                     Value="True">
                                                     <Setter
-                                                        Property="Fill"
-                                                        Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                         Property="Fill"
+                                         Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
                                 <TextBlock
-                                    Grid.Column="1" Grid.Row="0"
-                                    Text="{x:Static localization:Strings.UnlockTheProfileFileMessage}">
+                     Grid.Column="1" Grid.Row="0"
+                     Text="{x:Static localization:Strings.UnlockTheProfileFileMessage}">
                                     <TextBlock.Style>
                                         <Style
-                                            TargetType="{x:Type TextBlock}"
-                                            BasedOn="{StaticResource MessageTextBlock}">
+                             TargetType="{x:Type TextBlock}"
+                             BasedOn="{StaticResource MessageTextBlock}">
                                             <Style.Triggers>
                                                 <DataTrigger
-                                                    Binding="{Binding
-                                                    RelativeSource={RelativeSource
-                                                    Mode=FindAncestor,
-                                                    AncestorType={x:Type Button}},
-                                                    Path=IsMouseOver}"
-                                                    Value="True">
+                                     Binding="{Binding
+                                     RelativeSource={RelativeSource
+                                     Mode=FindAncestor,
+                                     AncestorType={x:Type Button}},
+                                     Path=IsMouseOver}"
+                                     Value="True">
                                                     <Setter
-                                                        Property="Foreground"
-                                                        Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                         Property="Foreground"
+                                         Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -967,14 +971,14 @@
                         </Button>
                         <!-- Profile Manager error message -->
                         <TextBlock
-                            Text="{Binding
-                            Source={x:Static Member=settings:ConfigurationManager.Current},
-                            Path=ProfileManagerErrorMessage}"
-                            Visibility="{Binding
-                            Source={x:Static Member=settings:ConfigurationManager.Current},
-                            Path=ProfileManagerShowUnlock,
-                            Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
-                            Style="{StaticResource ResourceKey=MessageTextBlock}" />
+             Text="{Binding
+             Source={x:Static Member=settings:ConfigurationManager.Current},
+             Path=ProfileManagerErrorMessage}"
+             Visibility="{Binding
+             Source={x:Static Member=settings:ConfigurationManager.Current},
+             Path=ProfileManagerShowUnlock,
+             Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+             Style="{StaticResource ResourceKey=MessageTextBlock}" />
                     </Grid>
                 </Grid>
             </Grid>
