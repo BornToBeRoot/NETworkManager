@@ -18,4 +18,7 @@
     <ItemGroup>
         <PackageReference Include="MahApps.Metro" Version="2.4.11" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\NETworkManager.Interfaces\NETworkManager.Interfaces.csproj" />
+    </ItemGroup>
 </Project>

@@ -312,6 +312,6 @@ public class SettingsSettingsViewModel : ViewModelBase
     public void SetLocationPathFromDragDrop(string path)
     {
         Location = path;
-    }       
+    }
     #endregion
 }

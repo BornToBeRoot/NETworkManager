@@ -3,6 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
+using NETworkManager.Localization.Resources;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
@@ -16,8 +18,6 @@ public partial class ProfileChildWindow
         InitializeComponent();
 
         // Set the width and height of the child window based on the parent window size
-        ChildWindowMaxWidth = 1050;
-        ChildWindowMaxHeight = 650;
         ChildWindowWidth = parentWindow.ActualWidth * 0.85;
         ChildWindowHeight = parentWindow.ActualHeight * 0.85;
 
@@ -29,11 +29,24 @@ public partial class ProfileChildWindow
             };
     }
 
+    private void Firewall_ViewModelOnCommandExecuted(object sender, RoutedEventArgs args)
+    {
+        FirewallRuleGrid?.RestoreRuleGridFocus();
+    }
+
+    /// <summary>
+    /// - Set the focus to Name on the General Tab.
+    /// - Subscribe to ViewModel events as necessary.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ChildWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
             TextBoxName.Focus();
+            (DataContext as ProfileViewModel)
+                ?.Firewall_ViewModel?.CommandExecuted += Firewall_ViewModelOnCommandExecuted;
         }));
     }
 
@@ -53,5 +66,32 @@ public partial class ProfileChildWindow
     private void ScrollViewer_ManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
     {
         e.Handled = true;
+    }
+
+    /// <summary>
+    /// Handle application views when their tab is selected.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void TabControl_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (!IsLoaded || !IsVisible)
+            return;
+
+        if (sender is not TabControl tabControl)
+            return;
+        if (tabControl.SelectedItem is not TabItem item)
+            return;
+        if (item.Header.ToString() == Strings.Firewall)
+        {
+            FirewallRuleGrid?.RestoreRuleGridFocus();
+        }
+        // else if (other TabItems ...)
+    }
+
+    private void ProfileChildWindow_OnUnloaded(object sender, RoutedEventArgs e)
+    {
+        (DataContext as ProfileViewModel)
+            ?.Firewall_ViewModel?.CommandExecuted -= Firewall_ViewModelOnCommandExecuted;
     }
 }
