@@ -16,22 +16,23 @@ public class FirewallRuleProgram : ICloneable
     /// </summary>
     [JsonIgnore]
     [XmlIgnore]
-    public FileInfo Executable { private set; get; }
+    public FileInfo Executable { private init; get; }
 
+    /// <summary>
+    /// Represents the name associated with the object.
+    /// </summary>
     public string Name
     {
         get;
-        set
+        private init
         {
             if (string.IsNullOrWhiteSpace(value))
                 return;
+
             Executable = new FileInfo(value);
-            if (!Executable.Exists)
-                return;
             field = value;
         }
     }
-
     #endregion
 
     #region Constructor
@@ -40,6 +41,7 @@ public class FirewallRuleProgram : ICloneable
     /// </summary>
     public FirewallRuleProgram()
     {
+        
     }
 
     /// <summary>

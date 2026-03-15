@@ -8,6 +8,19 @@ namespace NETworkManager.Utilities;
 public static class PowerShellHelper
 {
     /// <summary>
+    ///   Path to the PowerShell executable. Using "powershell.exe" allows the system to resolve it from the PATH,
+    ///   ensuring compatibility across different Windows versions and configurations.
+    /// </summary>
+    private const string Powershell = "powershell.exe";
+
+    /// <summary>
+    ///   Base options for PowerShell execution:
+    ///   -NoProfile: Prevents loading the user's PowerShell profile, ensuring a clean environment.
+    ///   -NoLogo: Suppresses the PowerShell logo, providing a cleaner output.
+    /// </summary>
+    private const string BaseOpts = "-NoProfile -NoLogo";
+
+    /// <summary>
     ///     Execute a PowerShell command. Writes a temporary script file if the command is longer than Windows limits.
     /// </summary>
     /// <param name="command">Command to execute.</param>
@@ -16,30 +29,27 @@ public static class PowerShellHelper
     ///     the user.
     /// </param>
     /// <param name="windowStyle">Window style of the PowerShell console (Default: Hidden)</param>
-    public static void ExecuteCommand(string command, bool asAdmin = false,
-        ProcessWindowStyle windowStyle = ProcessWindowStyle.Hidden)
+    public static void ExecuteCommand(string command, bool asAdmin = false, ProcessWindowStyle windowStyle = ProcessWindowStyle.Hidden)
     {
-        string scriptPath = string.Empty;
-        string powershell = "powershell.exe";
-        string baseOpts = "-NoProfile -NoLogo";
-        string commandOpts = $" -Command {command}";
-        // Handle Windows command line length limit of 32 767 characters
-        if (powershell.Length
-            + baseOpts.Length
-            + commandOpts.Length > 32767)
+        string scriptPath = null;
+        var commandOpts = $" -Command {command}";
+
+        // Handle Windows command line length limit of 32,767 characters.
+        if (Powershell.Length + BaseOpts.Length + commandOpts.Length > 32767)
         {
-            var tempDir = Path.GetTempPath();
-            scriptPath = Path.Combine(tempDir, $"NwM_{Guid.NewGuid()}_Temp.ps1");
+            scriptPath = Path.Combine(Path.GetTempPath(), $"NETworkManager_{Guid.NewGuid()}.ps1");
+            
             File.WriteAllText(scriptPath, command);
+            
             commandOpts = $" -ExecutionPolicy Bypass -File \"{scriptPath}\"";
         }
 
         try
         {
-            var info = new ProcessStartInfo()
+            var info = new ProcessStartInfo
             {
-                FileName = powershell,
-                Arguments = $"{baseOpts} {commandOpts}",
+                FileName = Powershell,
+                Arguments = $"{BaseOpts}{commandOpts}",
                 UseShellExecute = true,
                 WindowStyle = windowStyle
             };
@@ -56,11 +66,12 @@ public static class PowerShellHelper
         {
             if (e.NativeErrorCode != 1223)
                 throw;
+            
             // Nothing to handle on UAC cancellation
         }
         finally
         {
-            if (scriptPath != string.Empty)
+            if (scriptPath != null)
             {
                 try
                 {
@@ -72,6 +83,5 @@ public static class PowerShellHelper
                 }
             }
         }
-
     }
 }

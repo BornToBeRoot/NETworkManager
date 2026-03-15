@@ -14,6 +14,7 @@ public enum FirewallRuleAction
     /// Represents the action to allow network traffic.
     /// </summary>
     Allow,
+    
     // Unsupported for now
     //AllowIPsec
 }

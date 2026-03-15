@@ -9,6 +9,7 @@ public enum FirewallPortLocation
     /// Ports of local host.
     /// </summary>
     LocalPorts,
+    
     /// <summary>
     /// Ports of remote host.
     /// </summary>

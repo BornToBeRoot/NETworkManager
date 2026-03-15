@@ -107,6 +107,7 @@ public class FirewallRule
     /// </summary>
     public FirewallRule()
     {
+        
     }
     #endregion
 
@@ -119,16 +120,20 @@ public class FirewallRule
     /// <param name="separator">Separator character to use</param>
     /// <param name="spacing">Separate entries with a space.</param>
     /// <returns>A separated string containing all the port numbers from the input collection.</returns>
-    public static string PortsToString(List<FirewallPortSpecification> ports, char separator = ';',
-        bool spacing = true)
+    public static string PortsToString(List<FirewallPortSpecification> ports, char separator = ';', bool spacing = true)
     {
         if (ports.Count is 0)
             return string.Empty;
-        string whitespace = spacing ? "  " : string.Empty;
+        
+        var whitespace = spacing ? "  " : string.Empty;
+        
         var builder = new StringBuilder();
+        
         foreach (var port in ports)
             builder.Append($"{port}{separator}{whitespace}");
-        int offset = spacing ? 2 : 1;
+        
+        var offset = spacing ? 2 : 1;
+        
         return builder.ToString()[..^offset];
     }
     #endregion

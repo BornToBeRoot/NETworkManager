@@ -60,6 +60,7 @@ public class FirewallPortSpecification
     {
         if (Start is 0)
             return string.Empty;
+        
         return End is -1 or 0 ? $"{Start}" : $"{Start}-{End}";
     }
 }

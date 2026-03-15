@@ -1,6 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-namespace NETworkManager.ViewModels;
+﻿namespace NETworkManager.ViewModels;
 
 using NETworkManager.Interfaces.ViewModels;
 using System.Windows;
@@ -36,8 +34,11 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
         {
             if (field is not null)
                 return field;
+
             field = new FirewallViewModel();
+
             IFirewallViewModel.SetInstance(field);
+
             return field;
         }
     }
@@ -182,6 +183,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
     public string ToolTipOpenWindowsFirewall => $"{Strings.Firewall_ToolTip_OpenWindowsFirewall}: {Strings.Ctrl}+W";
 
     public string ToolTipClearWindows => $"{Strings.Firewall_ToolTip_ClearWindows}: {Strings.Ctrl}+{Strings.Shift}+{Strings.Alt}+C";
+
     #region Profiles
 
     /// <summary>
@@ -768,6 +770,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
     #endregion
 
     #region Action and commands
+
     #region ProfileCommands
     /// <summary>
     /// Command responsible for applying the profile configuration settings.
@@ -1039,7 +1042,9 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
             CommandExecuted?.Invoke(this, null);
             return;
         }
+
         PowerShellHelper.ExecuteCommand("WF.msc");
+
         CommandExecuted?.Invoke(this, null);
     }
 

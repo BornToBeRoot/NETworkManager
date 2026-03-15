@@ -2,7 +2,7 @@
 
 namespace NETworkManager.Utilities;
 /// <summary>
-/// Helps to modify a list to implement history combo boxes.
+/// Helper class for modifying lists by adding new entries and removing old ones if the list exceeds a specified length.
 /// </summary>
 public static class ListHelper
 {
@@ -17,16 +17,16 @@ public static class ListHelper
     /// <returns>Modified list with the new entry added and oldest entries removed if necessary.</returns>
     public static List<T> Modify<T>(List<T> list, T entry, int length)
     {
+        var removedEntry = false;
+
         int index;
-        bool removedEntry = false;
-        do
+        
+        while ((index = list.IndexOf(entry)) != -1)
         {
-            index = list.IndexOf(entry);
-            if (index is -1)
-                break;
             list.RemoveAt(index);
             removedEntry = true;
-        } while (index >= 0);
+        }
+
         if (!removedEntry && list.Count == length)
             list.RemoveAt(length - 1);
 
