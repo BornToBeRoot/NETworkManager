@@ -16,7 +16,16 @@ public class FirewallRuleProgram : ICloneable
     /// </summary>
     [JsonIgnore]
     [XmlIgnore]
-    public FileInfo Executable { private init; get; }
+    public FileInfo Executable {
+        private set;
+        get
+        {
+            if (field is null && Name is not null)
+                field = new FileInfo(Name);
+
+            return field;
+        }
+    }
 
     /// <summary>
     /// Represents the name associated with the object.
@@ -24,7 +33,10 @@ public class FirewallRuleProgram : ICloneable
     public string Name
     {
         get;
-        private init
+        // Public modifier required for deserialization
+        // ReSharper disable once MemberCanBePrivate.Global
+        // ReSharper disable once PropertyCanBeMadeInitOnly.Global
+        set
         {
             if (string.IsNullOrWhiteSpace(value))
                 return;
@@ -37,11 +49,11 @@ public class FirewallRuleProgram : ICloneable
 
     #region Constructor
     /// <summary>
-    /// Required for serialization.
+    /// Public empty constructor is required for de-/serialization.
     /// </summary>
+    // ReSharper disable once MemberCanBePrivate.Global
     public FirewallRuleProgram()
     {
-        
     }
 
     /// <summary>
@@ -50,7 +62,8 @@ public class FirewallRuleProgram : ICloneable
     /// <param name="pathToExe"></param>
     public FirewallRuleProgram(string pathToExe)
     {
-        var exe = new FileInfo(pathToExe ?? string.Empty);
+        ArgumentNullException.ThrowIfNull(pathToExe);
+        var exe = new FileInfo(pathToExe);
         Executable = exe;
         Name = exe.FullName;
     }
@@ -72,7 +85,15 @@ public class FirewallRuleProgram : ICloneable
     /// <returns>An instance clone.</returns>
     public object Clone()
     {
-        return new FirewallRuleProgram(Executable?.FullName);
+        try
+        {
+            return new FirewallRuleProgram(Executable?.FullName);
+        }
+        catch (ArgumentNullException)
+        {
+            return new FirewallRuleProgram();
+        }
+        
     }
 
     #endregion

@@ -24,7 +24,7 @@ public class FirewallRuleProgramConverter : IValueConverter
                 var exe = new FirewallRuleProgram(program);
                 return exe;
             }
-            catch (FileNotFoundException)
+            catch (ArgumentNullException)
             {
                 return null;
             }
