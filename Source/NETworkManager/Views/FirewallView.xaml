@@ -57,10 +57,11 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="20" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal">
-                            <Button Margin="0,0,10,0"
+                        <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Margin="5"
+                                    MinWidth="20"
                                     Command="{Binding AddRuleCommand}"
                                     Style="{StaticResource ImageWithTextButton}"
                                     ToolTip="{Binding ToolTipAdd}">
@@ -77,12 +78,15 @@
                                         </Rectangle>
                                         <TextBlock Grid.Column="1"
                                                    Text="{x:Static localization:Strings.Add}"
-                                                   Style="{StaticResource ButtonWithImageTextBlock}" />
+                                                   Style="{StaticResource ButtonWithImageTextBlock}"
+                                                   TextWrapping="Wrap"
+                                                   TextTrimming="CharacterEllipsis" />
                                     </Grid>
                                 </Button.Content>
                             </Button>
-                            <Button Margin="0,0,10,0"
+                            <Button Margin="5"
                                     Style="{StaticResource ImageWithTextButton}"
+                                    MinWidth="20"
                                     Command="{Binding DeleteRulesCommand}"
                                     IsEnabled="{Binding Path=FirewallRules.Count, Converter={StaticResource IntZeroToFalseConverter}}"
                                     ToolTip="{Binding ToolTipDelete}">
@@ -99,12 +103,15 @@
                                         </Rectangle>
                                         <TextBlock Grid.Column="1"
                                                    Text="{x:Static localization:Strings.Delete}"
-                                                   Style="{StaticResource ButtonWithImageTextBlock}" />
+                                                   Style="{StaticResource ButtonWithImageTextBlock}"
+                                                   TextWrapping="Wrap"
+                                                   TextTrimming="CharacterEllipsis" />
                                     </Grid>
                                 </Button.Content>
                             </Button>
-                            <Button Margin="0,0,10,0"
+                            <Button Margin="5"
                                     Style="{StaticResource ImageWithTextButton}"
+                                    MinWidth="20"
                                     Command="{Binding DeleteAllRulesCommand}"
                                     IsEnabled="{Binding Path=FirewallRules.Count, Converter={StaticResource IntZeroToFalseConverter}}"
                                     ToolTip="{Binding ToolTipClear}">
@@ -121,12 +128,15 @@
                                         </Rectangle>
                                         <TextBlock Grid.Column="1"
                                                    Text="{x:Static localization:Strings.DeleteAll}"
-                                                   Style="{StaticResource ButtonWithImageTextBlock}" />
+                                                   Style="{StaticResource ButtonWithImageTextBlock}"
+                                                   TextWrapping="Wrap"
+                                                   TextTrimming="CharacterEllipsis" />
                                     </Grid>
                                 </Button.Content>
                             </Button>
-                            <Button Margin="0,0,0,0"
+                            <Button Margin="5"
                                     Style="{StaticResource ImageWithTextButton}"
+                                    MinWidth="20"
                                     Command="{Binding ApplyConfigurationCommand}"
                                     IsEnabled="{Binding Path=FirewallRules.Count, Converter={StaticResource IntZeroToFalseConverter}}"
                                     ToolTip="{Binding ToolTipApply}">
@@ -143,14 +153,17 @@
                                         </Rectangle>
                                         <TextBlock Grid.Column="1"
                                                    Text="{x:Static localization:Strings.Apply}"
-                                                   Style="{StaticResource ButtonWithImageTextBlock}" />
+                                                   Style="{StaticResource ButtonWithImageTextBlock}"
+                                                   TextWrapping="Wrap"
+                                                   TextTrimming="CharacterEllipsis" />
                                     </Grid>
                                 </Button.Content>
                             </Button>
-                        </StackPanel>
-                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left">
-                            <Button Margin="0,0,10,0"
+                        </WrapPanel>
+                        <WrapPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left">
+                            <Button Margin="5"
                                     Style="{StaticResource ImageWithTextButton}"
+                                    MinWidth="20"
                                     Command="{Binding OpenWindowsFirewallCommand}"
                                     ToolTip="{Binding ToolTipOpenWindowsFirewall}">
                                 <Button.Content>
@@ -168,13 +181,15 @@
                                         <TextBlock Grid.Column="1"
                                                    Text="{x:Static localization:Strings.WindowsFirewallSettings}"
                                                    Style="{StaticResource ButtonWithImageTextBlock}"
-                                                   TextWrapping="Wrap" />
+                                                   TextWrapping="Wrap"
+                                                   TextTrimming="CharacterEllipsis" />
                                     </Grid>
                                 </Button.Content>
                             </Button>
                             <!-- Since the command is static, we need to raise the Click event here -->
-                            <Button Margin="0,0,0,0"
+                            <Button Margin="5"
                                     Style="{StaticResource ImageWithTextButton}"
+                                    MinWidth="20"
                                     Command="{x:Static viewModels:FirewallViewModel.DeleteWindowsRulesCommand}"
                                     ToolTip="{Binding ToolTipClearWindows}"
                                     Click="AnyButton_OnClick">
@@ -193,11 +208,12 @@
                                         <TextBlock Grid.Column="1"
                                                    Text="{x:Static localization:Strings.ClearRulesInWindows}"
                                                    Style="{StaticResource ButtonWithImageTextBlock}"
-                                                   TextWrapping="Wrap" />
+                                                   TextWrapping="Wrap"
+                                                   TextTrimming="CharacterEllipsis" />
                                     </Grid>
                                 </Button.Content>
                             </Button>
-                        </StackPanel>
+                        </WrapPanel>
                     </Grid>
                 </Grid>
             </TabItem>
