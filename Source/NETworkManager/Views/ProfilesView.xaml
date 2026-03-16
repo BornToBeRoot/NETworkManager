@@ -415,6 +415,10 @@
                                                 Binding="{Binding (profiles:ProfileInfo.WebConsole_Enabled)}"
                                                 SortMemberPath="WebConsole_Enabled" MinWidth="80" Width="Auto" />
                         <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}"
+                                                Header="{x:Static localization:Strings.Firewall}"
+                                                Binding="{Binding (profiles:ProfileInfo.Firewall_Enabled)}"
+                                                SortMemberPath="Firewall_Enabled" MinWidth="80" Width="Auto" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}"
                                                 Header="{x:Static localization:Strings.WakeOnLAN}"
                                                 Binding="{Binding (profiles:ProfileInfo.WakeOnLAN_Enabled)}"
                                                 SortMemberPath="WakeOnLAN_Enabled" MinWidth="80" Width="Auto" />
@@ -422,10 +426,6 @@
                                                 Header="{x:Static localization:Strings.Whois}"
                                                 Binding="{Binding (profiles:ProfileInfo.Whois_Enabled)}"
                                                 SortMemberPath="Whois_Enabled" MinWidth="80" Width="Auto" />
-                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}"
-                                                Header="{x:Static localization:Strings.Firewall}"
-                                                Binding="{Binding (profiles:ProfileInfo.Firewall_Enabled)}"
-                                                SortMemberPath="Firewall_Enabled" MinWidth="80" Width="Auto" />
                     </DataGrid.Columns>
                 </controls:MultiSelectDataGrid>
                 <mah:ProgressRing Grid.Column="0" Grid.Row="1"

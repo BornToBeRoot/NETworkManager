@@ -3086,6 +3086,41 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
 
     #endregion
 
+    #region Firewall
+
+    public bool Firewall_Enabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(Name));
+        }
+    }
+
+    public IFirewallViewModel Firewall_IViewModel
+    {
+        get => Firewall_ViewModel;
+        set => Firewall_ViewModel = (FirewallViewModel)value;
+    }
+
+    public FirewallViewModel Firewall_ViewModel
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    #endregion Firewall
+    
     #region Wake on LAN
 
     private bool _wakeOnLAN_Enabled;
@@ -3233,42 +3268,6 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
             OnPropertyChanged();
         }
     }
-    #endregion
-
-    #region Firewall
-
-    public bool Firewall_Enabled
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-            OnPropertyChanged(nameof(Name));
-        }
-    }
-
-    public IFirewallViewModel Firewall_IViewModel
-    {
-        get => Firewall_ViewModel;
-        set => Firewall_ViewModel = (FirewallViewModel)value;
-    }
-
-    public FirewallViewModel Firewall_ViewModel
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
     #endregion
 
     #endregion

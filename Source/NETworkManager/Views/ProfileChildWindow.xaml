@@ -1014,6 +1014,53 @@
                                                             <Setter Property="Visibility" Value="Visible" />
                                                         </MultiDataTrigger.Setters>
                                                     </MultiDataTrigger>
+                                                    <!-- Firewall -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding 
+                                                                Path=(profiles:ProfileViewInfo.Name)}"
+                                                                Value="{x:Static profiles:ProfileName.Firewall}" />
+                                                            <Condition
+                                                                Binding="{Binding Path=Data.
+                                                                Firewall_Enabled,
+                                                                Source={StaticResource ViewModelProxy}}"
+                                                                Value="True" />
+                                                            <Condition 
+                                                                Binding="{Binding 
+                                                                Path=Data.Firewall_IViewModel
+                                                                .FirewallRulesInterface,
+                                                                Source={StaticResource ViewModelProxy},
+                                                                Converter={StaticResource 
+                                                                ResourceKey=FirewallRuleViewModelBooleanOrConverter},
+                                                                ConverterParameter=HasError}"
+                                                                Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding (profiles:ProfileViewInfo.Name)}"
+                                                                Value="{x:Static profiles:ProfileName.Firewall}" />
+                                                            <Condition
+                                                                Binding="{Binding 
+                                                                Path=Data.Firewall_Enabled, 
+                                                                Source={StaticResource ViewModelProxy}}"
+                                                                Value="True" />
+                                                            <Condition
+                                                                Binding="{Binding 
+                                                                Path=Data.Firewall_IViewModel
+                                                                .FirewallRulesInterface.Count,
+                                                                Source={StaticResource ViewModelProxy}}"
+                                                                Value="0" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
                                                     <!-- Wake on LAN -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
@@ -1082,53 +1129,6 @@
                                                             <Condition
                                                                 Binding="{Binding ElementName=TextBoxIPGeolocationHost, Path=(Validation.HasError)}"
                                                                 Value="True" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <MultiDataTrigger.Setters>
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </MultiDataTrigger.Setters>
-                                                    </MultiDataTrigger>
-                                                    <!-- Firewall -->
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition
-                                                                Binding="{Binding 
-                                                                Path=(profiles:ProfileViewInfo.Name)}"
-                                                                Value="{x:Static profiles:ProfileName.Firewall}" />
-                                                            <Condition
-                                                                Binding="{Binding Path=Data.
-                                                                Firewall_Enabled,
-                                                                Source={StaticResource ViewModelProxy}}"
-                                                                Value="True" />
-                                                            <Condition 
-                                                                Binding="{Binding 
-                                                                Path=Data.Firewall_IViewModel
-                                                                .FirewallRulesInterface,
-                                                                Source={StaticResource ViewModelProxy},
-                                                                Converter={StaticResource 
-                                                                ResourceKey=FirewallRuleViewModelBooleanOrConverter},
-                                                                ConverterParameter=HasError}"
-                                                                Value="True" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <MultiDataTrigger.Setters>
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </MultiDataTrigger.Setters>
-                                                    </MultiDataTrigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition
-                                                                Binding="{Binding (profiles:ProfileViewInfo.Name)}"
-                                                                Value="{x:Static profiles:ProfileName.Firewall}" />
-                                                            <Condition
-                                                                Binding="{Binding 
-                                                                Path=Data.Firewall_Enabled, 
-                                                                Source={StaticResource ViewModelProxy}}"
-                                                                Value="True" />
-                                                            <Condition
-                                                                Binding="{Binding 
-                                                                Path=Data.Firewall_IViewModel
-                                                                .FirewallRulesInterface.Count,
-                                                                Source={StaticResource ViewModelProxy}}"
-                                                                Value="0" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
                                                             <Setter Property="Visibility" Value="Visible" />
@@ -3825,6 +3825,90 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
+                <TabItem Header="{x:Static localization:Strings.Firewall}">
+                    <Grid IsEnabled="{Binding Firewall_Enabled}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <controls:FirewallRuleGrid Margin="10 10 10 0" Grid.Row="0"
+                                                   DataContext="{Binding Firewall_ViewModel}"
+                                                   x:Name="FirewallRuleGrid" />
+                        <StackPanel Orientation="Horizontal" Grid.Row="1"
+                                    DataContext="{Binding Firewall_ViewModel}">
+                            <Button Margin="10"
+                                    Style="{StaticResource ImageWithTextButton}"
+                                    Command="{Binding AddRuleCommand}"
+                                    ToolTip="{Binding ToolTipAdd}">
+                                <Button.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform"
+                                                             Visual="{iconPacks:Modern Kind=Add}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{x:Static localization:Strings.Add}"
+                                                   Style="{StaticResource ButtonWithImageTextBlock}" />
+                                    </Grid>
+                                </Button.Content>
+                            </Button>
+                            <Button Margin="10"
+                                    Style="{StaticResource ImageWithTextButton}"
+                                    Command="{Binding DeleteRulesCommand}"
+                                    IsEnabled="{Binding Path=FirewallRules.Count,
+                                    Converter={StaticResource IntZeroToFalseConverter}}"
+                                    ToolTip="{Binding ToolTipDelete}">
+                                <Button.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform"
+                                                             Visual="{iconPacks:Modern Kind=Delete}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{x:Static localization:Strings.Delete}"
+                                                   Style="{StaticResource ButtonWithImageTextBlock}" />
+                                    </Grid>
+                                </Button.Content>
+                            </Button>
+                            <Button Margin="10"
+                                    Style="{StaticResource ImageWithTextButton}"
+                                    Command="{Binding DeleteAllRulesCommand}"
+                                    IsEnabled="{Binding Path=FirewallRules.Count,
+                                    Converter={StaticResource IntZeroToFalseConverter}}"
+                                    ToolTip="{Binding ToolTipClear}">
+                                <Button.Content>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform"
+                                                             Visual="{iconPacks:Modern Kind=ListDelete}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{x:Static localization:Strings.DeleteAll}"
+                                                   Style="{StaticResource ButtonWithImageTextBlock}" />
+                                    </Grid>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
                 <TabItem Header="{x:Static localization:Strings.WakeOnLAN}">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding WakeOnLAN_Enabled}" Margin="0,0,0,20">
@@ -3998,90 +4082,6 @@
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>
-                </TabItem>
-                <TabItem Header="{x:Static localization:Strings.Firewall}">
-                    <Grid IsEnabled="{Binding Firewall_Enabled}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <controls:FirewallRuleGrid Margin="10 10 10 0" Grid.Row="0"
-                                                   DataContext="{Binding Firewall_ViewModel}"
-                                                   x:Name="FirewallRuleGrid" />
-                        <StackPanel Orientation="Horizontal" Grid.Row="1"
-                                    DataContext="{Binding Firewall_ViewModel}">
-                            <Button Margin="10"
-                                    Style="{StaticResource ImageWithTextButton}"
-                                    Command="{Binding AddRuleCommand}"
-                                    ToolTip="{Binding ToolTipAdd}">
-                                <Button.Content>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform"
-                                                             Visual="{iconPacks:Modern Kind=Add}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{x:Static localization:Strings.Add}"
-                                                   Style="{StaticResource ButtonWithImageTextBlock}" />
-                                    </Grid>
-                                </Button.Content>
-                            </Button>
-                            <Button Margin="10"
-                                    Style="{StaticResource ImageWithTextButton}"
-                                    Command="{Binding DeleteRulesCommand}"
-                                    IsEnabled="{Binding Path=FirewallRules.Count,
-                                    Converter={StaticResource IntZeroToFalseConverter}}"
-                                    ToolTip="{Binding ToolTipDelete}">
-                                <Button.Content>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform"
-                                                             Visual="{iconPacks:Modern Kind=Delete}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{x:Static localization:Strings.Delete}"
-                                                   Style="{StaticResource ButtonWithImageTextBlock}" />
-                                    </Grid>
-                                </Button.Content>
-                            </Button>
-                            <Button Margin="10"
-                                    Style="{StaticResource ImageWithTextButton}"
-                                    Command="{Binding DeleteAllRulesCommand}"
-                                    IsEnabled="{Binding Path=FirewallRules.Count,
-                                    Converter={StaticResource IntZeroToFalseConverter}}"
-                                    ToolTip="{Binding ToolTipClear}">
-                                <Button.Content>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform"
-                                                             Visual="{iconPacks:Modern Kind=ListDelete}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{x:Static localization:Strings.DeleteAll}"
-                                                   Style="{StaticResource ButtonWithImageTextBlock}" />
-                                    </Grid>
-                                </Button.Content>
-                            </Button>
-                        </StackPanel>
-                    </Grid>
                 </TabItem>
             </TabControl>
         </Grid>
@@ -4625,6 +4625,32 @@
                                     <Setter Property="IsEnabled" Value="False" />
                                 </MultiDataTrigger.Setters>
                             </MultiDataTrigger>
+                            <!-- Firewall -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=Firewall_Enabled}" Value="True" />
+                                    <Condition
+                                        Binding="{Binding Path=Firewall_ViewModel.FirewallRules,
+                                    Converter={StaticResource FirewallRuleViewModelBooleanOrConverter},
+                                    ConverterParameter=HasError}"
+                                        Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=Firewall_Enabled}" Value="True" />
+                                    <Condition
+                                        Binding="{Binding
+                                    Path=Firewall_ViewModel.FirewallRules.Count}"
+                                        Value="0" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
                             <!-- Wake on LAN -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
@@ -4656,32 +4682,6 @@
                                     <Condition
                                         Binding="{Binding ElementName=TextBoxWhoisDomain, Path=(Validation.HasError)}"
                                         Value="True" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                            <!-- Firewall -->
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=Firewall_Enabled}" Value="True" />
-                                    <Condition
-                                        Binding="{Binding Path=Firewall_ViewModel.FirewallRules,
-                                    Converter={StaticResource FirewallRuleViewModelBooleanOrConverter},
-                                    ConverterParameter=HasError}"
-                                        Value="True" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Path=Firewall_Enabled}" Value="True" />
-                                    <Condition
-                                        Binding="{Binding
-                                    Path=Firewall_ViewModel.FirewallRules.Count}"
-                                        Value="0" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />

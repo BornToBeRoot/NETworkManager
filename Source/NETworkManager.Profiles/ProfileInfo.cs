@@ -218,6 +218,10 @@ public class ProfileInfo
         SNMP_PrivacyProvider = profile.SNMP_PrivacyProvider;
         SNMP_Priv = profile.SNMP_Priv;
 
+        // Firewall
+        Firewall_Enabled = profile.Firewall_Enabled;
+        Firewall_Rules = profile.Firewall_Rules;
+        
         // Wake on LAN
         WakeOnLAN_Enabled = profile.WakeOnLAN_Enabled;
         WakeOnLAN_MACAddress = profile.WakeOnLAN_MACAddress;
@@ -232,10 +236,6 @@ public class ProfileInfo
         IPGeolocation_Enabled = profile.IPGeolocation_Enabled;
         IPGeolocation_InheritHost = profile.IPGeolocation_InheritHost;
         IPGeolocation_Host = profile.IPGeolocation_Host;
-
-        // Firewall
-        Firewall_Enabled = profile.Firewall_Enabled;
-        Firewall_Rules = profile.Firewall_Rules;
     }
 
     /// <summary>
@@ -468,6 +468,9 @@ public class ProfileInfo
     public SNMPV3PrivacyProvider SNMP_PrivacyProvider { get; set; } = GlobalStaticConfiguration.SNMP_PrivacyProvider;
     [XmlIgnore] public SecureString SNMP_Priv { get; set; }
 
+    public bool Firewall_Enabled { get; set; }
+    public List<FirewallRule> Firewall_Rules { get; set; }
+    
     public bool WakeOnLAN_Enabled { get; set; }
     public string WakeOnLAN_MACAddress { get; set; }
     public string WakeOnLAN_Broadcast { get; set; }
@@ -479,7 +482,4 @@ public class ProfileInfo
     public bool IPGeolocation_Enabled { get; set; }
     public bool IPGeolocation_InheritHost { get; set; } = true;
     public string IPGeolocation_Host { get; set; }
-
-    public bool Firewall_Enabled { get; set; }
-    public List<FirewallRule> Firewall_Rules { get; set; }
 }
