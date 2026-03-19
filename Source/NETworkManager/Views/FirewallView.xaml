@@ -59,159 +59,45 @@
                             <ColumnDefinition Width="20" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <WrapPanel Grid.Column="2" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button Margin="5"
-                                    MinWidth="20"
-                                    Command="{Binding AddRuleCommand}"
-                                    Style="{StaticResource ImageWithTextButton}"
-                                    ToolTip="{Binding ToolTipAdd}">
-                                <Button.Content>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Add}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{x:Static localization:Strings.Add}"
-                                                   Style="{StaticResource ButtonWithImageTextBlock}"
-                                                   TextWrapping="Wrap"
-                                                   TextTrimming="CharacterEllipsis" />
-                                    </Grid>
-                                </Button.Content>
-                            </Button>
-                            <Button Margin="5"
-                                    Style="{StaticResource ImageWithTextButton}"
-                                    MinWidth="20"
-                                    Command="{Binding DeleteRulesCommand}"
-                                    IsEnabled="{Binding Path=FirewallRules.Count, Converter={StaticResource IntZeroToFalseConverter}}"
-                                    ToolTip="{Binding ToolTipDelete}">
-                                <Button.Content>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Delete}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{x:Static localization:Strings.Delete}"
-                                                   Style="{StaticResource ButtonWithImageTextBlock}"
-                                                   TextWrapping="Wrap"
-                                                   TextTrimming="CharacterEllipsis" />
-                                    </Grid>
-                                </Button.Content>
-                            </Button>
-                            <Button Margin="5"
-                                    Style="{StaticResource ImageWithTextButton}"
-                                    MinWidth="20"
-                                    Command="{Binding DeleteAllRulesCommand}"
-                                    IsEnabled="{Binding Path=FirewallRules.Count, Converter={StaticResource IntZeroToFalseConverter}}"
-                                    ToolTip="{Binding ToolTipClear}">
-                                <Button.Content>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=ListDelete}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{x:Static localization:Strings.DeleteAll}"
-                                                   Style="{StaticResource ButtonWithImageTextBlock}"
-                                                   TextWrapping="Wrap"
-                                                   TextTrimming="CharacterEllipsis" />
-                                    </Grid>
-                                </Button.Content>
-                            </Button>
-                            <Button Margin="5"
-                                    Style="{StaticResource ImageWithTextButton}"
-                                    MinWidth="20"
-                                    Command="{Binding ApplyConfigurationCommand}"
-                                    IsEnabled="{Binding Path=FirewallRules.Count, Converter={StaticResource IntZeroToFalseConverter}}"
-                                    ToolTip="{Binding ToolTipApply}">
-                                <Button.Content>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Checkmark}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{x:Static localization:Strings.Apply}"
-                                                   Style="{StaticResource ButtonWithImageTextBlock}"
-                                                   TextWrapping="Wrap"
-                                                   TextTrimming="CharacterEllipsis" />
-                                    </Grid>
-                                </Button.Content>
+                        <WrapPanel Grid.Column="0" Grid.Row="0" 
+                                   Orientation="Horizontal" 
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left">
+                            <Button Command="{Binding Path=OpenWindowsFirewallCommand}"
+                                    ToolTip="{Binding ToolTipOpenWindowsFirewall}"
+                                    Style="{StaticResource ImageWithTextButton}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=WindowsBrands}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.WindowsFirewallSettings}"                                         
+                                               Style="{StaticResource ButtonWithImageTextBlock}" />
+                                </Grid>
                             </Button>
                         </WrapPanel>
-                        <WrapPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left">
-                            <Button Margin="5"
-                                    Style="{StaticResource ImageWithTextButton}"
-                                    MinWidth="20"
-                                    Command="{Binding OpenWindowsFirewallCommand}"
-                                    ToolTip="{Binding ToolTipOpenWindowsFirewall}">
-                                <Button.Content>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform"
-                                                             Visual="{iconPacks:FontAwesome Kind=WindowsBrands}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{x:Static localization:Strings.WindowsFirewallSettings}"
-                                                   Style="{StaticResource ButtonWithImageTextBlock}"
-                                                   TextWrapping="Wrap"
-                                                   TextTrimming="CharacterEllipsis" />
-                                    </Grid>
-                                </Button.Content>
-                            </Button>
-                            <!-- Since the command is static, we need to raise the Click event here -->
-                            <Button Margin="5"
-                                    Style="{StaticResource ImageWithTextButton}"
-                                    MinWidth="20"
-                                    Command="{x:Static viewModels:FirewallViewModel.DeleteWindowsRulesCommand}"
-                                    ToolTip="{Binding ToolTipClearWindows}"
-                                    Click="AnyButton_OnClick">
-                                <Button.Content>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform"
-                                                             Visual="{iconPacks:FontAwesome Kind=EraserSolid}" />
-                                            </Rectangle.OpacityMask>
-                                        </Rectangle>
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{x:Static localization:Strings.ClearRulesInWindows}"
-                                                   Style="{StaticResource ButtonWithImageTextBlock}"
-                                                   TextWrapping="Wrap"
-                                                   TextTrimming="CharacterEllipsis" />
-                                    </Grid>
-                                </Button.Content>
+                        <WrapPanel Grid.Column="2" Grid.Row="0" 
+                                   Orientation="Horizontal" VerticalAlignment="Center"
+                                   HorizontalAlignment="Right">
+                            <Button Command="{Binding Path=AddEntryCommand}" Style="{StaticResource ImageWithTextButton}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddEntryDots}"                                         
+                                               Style="{StaticResource ButtonWithImageTextBlock}" />
+                                </Grid>
                             </Button>
                         </WrapPanel>
                     </Grid>

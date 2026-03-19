@@ -223,7 +223,8 @@
                                    VerticalAlignment="Center" />
                     </WrapPanel>
                     <WrapPanel Grid.Column="2" Grid.Row="0" 
-                               Orientation="Horizontal" VerticalAlignment="Center"
+                               Orientation="Horizontal" 
+                               VerticalAlignment="Center"
                                HorizontalAlignment="Right">
                         <Button Command="{Binding AddEntryCommand}" Style="{StaticResource ImageWithTextButton}">
                             <Grid>

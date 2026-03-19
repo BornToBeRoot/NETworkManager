@@ -220,8 +220,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
             //ConfigurationManager.OnDialogOpen();
 
             // Use built-in message box because we have visual issues in the dragablz window
-            System.Windows.MessageBox.Show(string.Format("{0}\n\nMessage:\n{1}",
-                    Strings.CouldNotSendKeystroke, ex.Message), Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+            System.Windows.MessageBox.Show($"{Strings.CouldNotSendKeystroke}\n\nMessage:\n{ex.Message}", Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 
             //ConfigurationManager.OnDialogClose();
         }
