@@ -657,6 +657,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private SNMPHostView _snmpHostView;
     private SNTPLookupHostView _sntpLookupHostView;
     private HostsFileEditorView _hostsFileEditorView;
+    private FirewallView _firewallView;
     private DiscoveryProtocolView _discoveryProtocolView;
     private WakeOnLANView _wakeOnLanView;
     private SubnetCalculatorHostView _subnetCalculatorHostView;
@@ -667,16 +668,13 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private ConnectionsView _connectionsView;
     private ListenersView _listenersView;
     private ARPTableView _arpTableView;
-    private FirewallView _firewallView;
-
 
     /// <summary>
     ///     Method when the application view becomes visible (again). Either when switching the applications
     ///     or after opening and closing the settings.
     /// </summary>
     /// <param name="name">Name of the application</param>
-    /// <param name="fromSettings">Indicates whether the settings were previously open</param>
-    private void OnApplicationViewVisible(ApplicationName name, bool fromSettings = false)
+    private void OnApplicationViewVisible(ApplicationName name)
     {
         switch (name)
         {
@@ -808,6 +806,14 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
                 ContentControlApplication.Content = _hostsFileEditorView;
                 break;
+            case ApplicationName.Firewall:
+                if (_firewallView is null)
+                    _firewallView = new FirewallView();
+                else
+                    _firewallView.OnViewVisible();
+
+                ContentControlApplication.Content = _firewallView;
+                break;
             case ApplicationName.DiscoveryProtocol:
                 if (_discoveryProtocolView == null)
                     _discoveryProtocolView = new DiscoveryProtocolView();
@@ -888,15 +894,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
                 ContentControlApplication.Content = _arpTableView;
                 break;
-            case ApplicationName.Firewall:
-                if (_firewallView is null)
-                    _firewallView = new FirewallView();
-                else
-                    _firewallView.OnViewVisible();
-
-                ContentControlApplication.Content = _firewallView;
-                break;
-
             default:
                 Log.Error("Cannot show unknown application view: " + name);
                 break;
@@ -955,6 +952,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             case ApplicationName.HostsFileEditor:
                 _hostsFileEditorView?.OnViewHide();
                 break;
+            case ApplicationName.Firewall:
+                _firewallView?.OnViewHide();
+                break;
             case ApplicationName.DiscoveryProtocol:
                 _discoveryProtocolView?.OnViewHide();
                 break;
@@ -985,10 +985,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             case ApplicationName.ARPTable:
                 _arpTableView?.OnViewHide();
                 break;
-            case ApplicationName.Firewall:
-                _firewallView?.OnViewHide();
-                break;
-
             default:
                 Log.Error("Cannot hide unknown application view: " + name);
                 break;
@@ -1040,9 +1036,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         switch (data.Application)
         {
             case ApplicationName.Dashboard:
-                break;
             case ApplicationName.NetworkInterface:
-                break;
             case ApplicationName.WiFi:
                 break;
             case ApplicationName.IPScanner:
@@ -1078,30 +1072,19 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 _snmpHostView.AddTab(data.Args);
                 break;
             case ApplicationName.SNTPLookup:
-                break;
+            case ApplicationName.HostsFileEditor:
+            case ApplicationName.Firewall:
             case ApplicationName.DiscoveryProtocol:
-                break;
             case ApplicationName.WakeOnLAN:
-                break;
             case ApplicationName.Whois:
-                break;
             case ApplicationName.IPGeolocation:
-                break;
             case ApplicationName.SubnetCalculator:
-                break;
             case ApplicationName.BitCalculator:
-                break;
             case ApplicationName.Lookup:
-                break;
             case ApplicationName.Connections:
-                break;
             case ApplicationName.Listeners:
-                break;
             case ApplicationName.ARPTable:
                 break;
-            case ApplicationName.Firewall:
-                break;
-            case ApplicationName.None:
             default:
                 Log.Error($"Cannot redirect data to unknown application: {data.Application}");
                 break;
@@ -1341,7 +1324,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
 
         // Refresh the application view
-        OnApplicationViewVisible(SelectedApplication.Name, true);
+        OnApplicationViewVisible(SelectedApplication.Name);
     }
 
     #endregion
@@ -1444,14 +1427,20 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    ///   Called after profiles are loaded (e.g. to load dynamic profiles once the profile file is decrypted).
+    /// </summary>
+    /// <param name="name">Name of the currently selected application, used to perform application-specific actions after loading.</param>
     private void OnProfilesLoaded(ApplicationName name)
     {
+        /*
         switch (name)
         {
-            case ApplicationName.Firewall:
-                (_firewallView?.DataContext as FirewallViewModel)?.OnProfilesLoaded();
+            case ApplicationName.XXX:
+                // Do stuff...
                 break;
         }
+        */
     }
 
     /// <summary>
