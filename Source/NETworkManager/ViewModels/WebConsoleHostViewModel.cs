@@ -307,7 +307,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
     private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
     {
-        ((args.DragablzItem.Content as DragablzTabItem)?.View as WebConsoleControl)?.CloseTab();
+        ((args.DragablzItem.Content as DragablzTabItem)?.View as IDragablzTabItem)?.CloseTab();
     }
 
     public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction());

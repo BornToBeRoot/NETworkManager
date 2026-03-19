@@ -298,7 +298,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
     {
-        ((args.DragablzItem.Content as DragablzTabItem)?.View as TigerVNCControl)?.CloseTab();
+        ((args.DragablzItem.Content as DragablzTabItem)?.View as IDragablzTabItem)?.CloseTab();
     }
 
     private bool Connect_CanExecute(object obj)

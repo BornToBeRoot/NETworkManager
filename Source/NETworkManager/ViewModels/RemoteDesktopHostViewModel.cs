@@ -487,7 +487,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
     private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
     {
-        ((args.DragablzItem.Content as DragablzTabItem)?.View as RemoteDesktopControl)?.CloseTab();
+        ((args.DragablzItem.Content as DragablzTabItem)?.View as IDragablzTabItem)?.CloseTab();
     }
 
     #endregion

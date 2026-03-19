@@ -394,7 +394,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
 
     private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
     {
-        ((args.DragablzItem.Content as DragablzTabItem)?.View as WhoisView)?.CloseTab();
+        ((args.DragablzItem.Content as DragablzTabItem)?.View as IDragablzTabItem)?.CloseTab();
     }
 
     #endregion

@@ -536,7 +536,7 @@ public class DNSLookupHostViewModel : ViewModelBase, IProfileManager
     /// </summary>
     private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
     {
-        ((args.DragablzItem.Content as DragablzTabItem)?.View as DNSLookupView)?.CloseTab();
+        ((args.DragablzItem.Content as DragablzTabItem)?.View as IDragablzTabItem)?.CloseTab();
     }
 
     #endregion
