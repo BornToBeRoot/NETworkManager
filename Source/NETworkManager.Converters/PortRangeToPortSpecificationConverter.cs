@@ -15,7 +15,7 @@ public class PortRangeToPortSpecificationConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        char portDelimiter = SettingsManager.Current.Firewall_UseWindowsPortSyntax ? ',' : ';';
+        char portDelimiter = ';';
         if (targetType == typeof(List<FirewallPortSpecification>))
         {
             if (value is not string input)

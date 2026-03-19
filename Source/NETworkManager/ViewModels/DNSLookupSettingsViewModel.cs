@@ -217,29 +217,6 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         }
     }
 
-    /*
-     * Disabled until more query types are implemented.
-
-
-    private bool _showOnlyMostCommonQueryTypes;
-
-    public bool ShowOnlyMostCommonQueryTypes
-    {
-        get => _showOnlyMostCommonQueryTypes;
-        set
-        {
-            if (value == _showOnlyMostCommonQueryTypes)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes = value;
-
-            _showOnlyMostCommonQueryTypes = value;
-            OnPropertyChanged();
-        }
-    }
-    */
-
     /// <summary>
     /// Backing field for <see cref="UseTCPOnly"/>.
     /// </summary>
@@ -353,7 +330,6 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         UseCache = SettingsManager.Current.DNSLookup_UseCache;
         QueryClasses = [.. Enum.GetValues<QueryClass>().Cast<QueryClass>().OrderBy(x => x.ToString())];
         QueryClass = QueryClasses.First(x => x == SettingsManager.Current.DNSLookup_QueryClass);
-        //ShowOnlyMostCommonQueryTypes = SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes;
         UseTCPOnly = SettingsManager.Current.DNSLookup_UseTCPOnly;
         Retries = SettingsManager.Current.DNSLookup_Retries;
         Timeout = SettingsManager.Current.DNSLookup_Timeout;

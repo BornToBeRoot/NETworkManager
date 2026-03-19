@@ -104,8 +104,10 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
             if (value == field)
                 return;
             field = value;
+            /*
             if ((!_isLoading || _loadingSettings) && (Profiles?.IsEmpty ?? true) && !IsClone)
                 SettingsManager.Current.Firewall_FirewallRules = value;
+            */
         }
     }
 
@@ -551,9 +553,11 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
     /// </summary>
     public void OnViewHide()
     {
+        /*
         IsViewActive = !IsViewActive;
         if (IsViewActive)
             UpdatePortHistorySeparator();
+            */
     }
 
     /// <summary>
@@ -563,6 +567,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
     public void OnViewVisible()
     {
         IsViewActive = true;
+        /*
         bool combined = SettingsManager.Current.Firewall_CombinePortHistory;
         if (SettingsManager.Current.Firewall_LocalPortsHistoryConfig.Count
             < FirewallRuleViewModel.LocalPortsHistory.Count)
@@ -603,6 +608,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
         if (!combined) return;
         foreach (var rule in FirewallRules)
             rule.RestorePortValues();
+            */
     }
 
     /// Handles the ProfilesUpdated event from the ProfileManager.
@@ -634,11 +640,13 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
 
     public void OnProfilesLoaded()
     {
+        /*
         var firstGroupProfiles = (Profiles?.Groups?.FirstOrDefault() as CollectionViewGroup)?.Items;
         if (firstGroupProfiles?.Count is 0 or null)
             LoadRulesFromSettings();
         else
             SelectedProfile = firstGroupProfiles.FirstOrDefault() as ProfileInfo;
+            */
     }
 
     #endregion Events
@@ -864,6 +872,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
     /// </summary>
     private async void DeleteProfileAction()
     {
+/*
         try
         {
             await ProfileDialogManager
@@ -885,6 +894,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
         {
             // Prevent a process crash on errors.
         }
+        */
     }
 
     /// <summary>
@@ -1154,6 +1164,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
     private void LoadSettings()
     {
         _loadingSettings = true;
+        /*
         // Load port history
         var localPortHistory = SettingsManager.Current.Firewall_LocalPortsHistoryConfig;
         if (localPortHistory?.Count > 0)
@@ -1175,7 +1186,8 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
         _loadingSettings = false;
 
         _lastUseWindowsPortSyntax = SettingsManager.Current.Firewall_UseWindowsPortSyntax;
-
+        */
+        
         // Load profile view settings
         ExpandProfileView = SettingsManager.Current.Firewall_ExpandProfileView;
 
@@ -1184,27 +1196,6 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
             : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
         _tempProfileWidth = SettingsManager.Current.Firewall_ProfileWidth;
-    }
-
-    /// <summary>
-    /// Load the firewall rules from settings if no profiles are available.
-    /// </summary>
-    private void LoadRulesFromSettings()
-    {
-        SelectedProfile = null;
-        ProfileName = null;
-        FirewallRules = [];
-        if (SettingsManager.Current.Firewall_FirewallRules is null)
-            return;
-        foreach (var rule in SettingsManager.Current.Firewall_FirewallRules)
-        {
-            FirewallRules.Add(new FirewallRuleViewModel(rule, SelectedProfile?.Name));
-            var addedRule = FirewallRules.Last();
-            addedRule.OnRuleChanged += OnRulesChanged;
-            addedRule.OnAddingPortsToHistory += OnAddingPortsToHistory;
-            addedRule.OnAddedPortsToHistory += OnAddedPortsToHistory;
-        }
-        OnPropertyChanged(nameof(FirewallRules));
     }
 
     /// <summary>
@@ -1225,46 +1216,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
         OnPropertyChanged(nameof(FirewallRules));
         OnPropertyChanged(nameof(FirewallRulesInterface));
     }
-
-    /// <summary>
-    /// Replace the separator in the port histories if the settings have been changed.
-    /// </summary>
-    private void UpdatePortHistorySeparator()
-    {
-        // Check whether UseWindowsPortSyntax has been changed.
-        var currentWindowsPortSyntax = SettingsManager.Current.Firewall_UseWindowsPortSyntax;
-        if (_lastUseWindowsPortSyntax == currentWindowsPortSyntax)
-            return;
-        // Replace history separators
-        var localPortsHistory = FirewallRuleViewModel.LocalPortsHistory;
-        var remotePortsHistory = FirewallRuleViewModel.RemotePortsHistory;
-        char fromSeparator = currentWindowsPortSyntax ? ';' : ',';
-        char toSeparator = currentWindowsPortSyntax ? ',' : ';';
-        if (localPortsHistory != null)
-        {
-            FirewallRuleViewModel.LocalPortsHistory =
-                new ObservableCollection<string>(localPortsHistory
-                    .Select(x => x?.Replace(fromSeparator, toSeparator)));
-        }
-
-        if (remotePortsHistory != null)
-        {
-            FirewallRuleViewModel.RemotePortsHistory =
-                new ObservableCollection<string>(remotePortsHistory
-                    .Select(x => x?.Replace(fromSeparator, toSeparator)));
-        }
-
-        // Update the combined ports history if enabled
-        foreach (var rule in FirewallRules)
-        {
-            if (SettingsManager.Current.Firewall_CombinePortHistory)
-                FirewallRuleViewModel.UpdateCombinedPortsHistory();
-            rule.PortWatermark = rule.PortWatermark?.Replace(fromSeparator, toSeparator);
-        }
-
-        _lastUseWindowsPortSyntax = currentWindowsPortSyntax;
-    }
-
+   
     /// <summary>
     /// Apply the firewall rules to Windows firewall configuration.
     /// </summary>

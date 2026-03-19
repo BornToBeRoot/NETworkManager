@@ -588,22 +588,12 @@ public class FirewallRuleViewModel : ViewModelBase, ICloneable, IFirewallRuleVie
         NetworkProfiles = [true, true, true];
         ProfileName = "Default";
         PortWatermark = StaticStrings.ExamplePortScanRange;
-        if (SettingsManager.Current.Firewall_UseWindowsPortSyntax)
-            PortWatermark = PortWatermark.Replace(";", ",");
-
+        
         // Set the collection views for port histories
-        if (SettingsManager.Current.Firewall_CombinePortHistory)
-        {
-            LocalPortsHistoryView = CollectionViewSource.GetDefaultView(CombinedPortsHistory);
-            RemotePortsHistoryView = CollectionViewSource.GetDefaultView(CombinedPortsHistory);
-        }
-        else
-        {
             LocalPortsHistoryView = CollectionViewSource.
                 GetDefaultView(LocalPortsHistory);
             RemotePortsHistoryView = CollectionViewSource.
                 GetDefaultView(RemotePortsHistory);
-        }
     }
 
     /// <summary>
@@ -617,12 +607,14 @@ public class FirewallRuleViewModel : ViewModelBase, ICloneable, IFirewallRuleVie
         Protocol = rule.Protocol;
         LocalPorts = rule.LocalPorts;
         RemotePorts = rule.RemotePorts;
+        /*
         if (SettingsManager.Current.Firewall_CombinePortHistory)
         {
             char separator = SettingsManager.Current.Firewall_UseWindowsPortSyntax ? ',' : ';';
             LocalPortsIndex = CombinedPortsHistory.IndexOf(FirewallRule.PortsToString(LocalPorts, separator));
             RemotePortsIndex = CombinedPortsHistory.IndexOf(FirewallRule.PortsToString(RemotePorts, separator));
         }
+        */
         Program = rule.Program;
         Description = rule.Description;
         Action = rule.Action;
@@ -668,7 +660,7 @@ public class FirewallRuleViewModel : ViewModelBase, ICloneable, IFirewallRuleVie
                 }
                 else
                 {
-                    char separator = SettingsManager.Current.Firewall_UseWindowsPortSyntax ? ',' : ';';
+                    char separator = ';';
                     if (LocalPorts?.Count > 0)
                     {
                         nextToken = $"_loc:{FirewallRule.PortsToString(LocalPorts, separator, false)}";
@@ -815,8 +807,7 @@ public class FirewallRuleViewModel : ViewModelBase, ICloneable, IFirewallRuleVie
         if (!string.IsNullOrWhiteSpace(_lastLocalPortValue))
         {
             // Find appropriate index
-            int tmpLocalIndex = SettingsManager.Current.Firewall_CombinePortHistory ?
-                CombinedPortsHistory.IndexOf(_lastLocalPortValue) : LocalPortsHistory.IndexOf(_lastLocalPortValue);
+            int tmpLocalIndex = LocalPortsHistory.IndexOf(_lastLocalPortValue);
             // Restore field value 
             if (tmpLocalIndex != -1
                 && converter.Convert(_lastLocalPortValue, typeof(List<FirewallPortSpecification>),
@@ -832,8 +823,7 @@ public class FirewallRuleViewModel : ViewModelBase, ICloneable, IFirewallRuleVie
         // Same for remote ports
         if (!string.IsNullOrWhiteSpace(_lastRemotePortValue))
         {
-            int tmpRemoteIndex = SettingsManager.Current.Firewall_CombinePortHistory ?
-                CombinedPortsHistory.IndexOf(_lastRemotePortValue) : RemotePortsHistory.IndexOf(_lastRemotePortValue);
+            int tmpRemoteIndex = RemotePortsHistory.IndexOf(_lastRemotePortValue);
             if (tmpRemoteIndex != -1
                 && converter.Convert(_lastRemotePortValue, typeof(List<FirewallPortSpecification>),
                     null, null) is List<FirewallPortSpecification> convertedPorts)
@@ -887,6 +877,7 @@ public class FirewallRuleViewModel : ViewModelBase, ICloneable, IFirewallRuleVie
         list.ForEach(x => portHistory.Add(x));
 
         // Update history config
+        /*
         switch (firewallPortType)
         {
             case FirewallPortLocation.LocalPorts:
@@ -900,10 +891,10 @@ public class FirewallRuleViewModel : ViewModelBase, ICloneable, IFirewallRuleVie
                 FirewallSettingsViewModel.Instance.RemotePortsHaveItems = true;
                 break;
         }
+        */
 
         // Update the combined history if configured
-        if (SettingsManager.Current.Firewall_CombinePortHistory)
-            UpdateCombinedPortsHistory();
+        
         OnAddedPortsToHistoryEvent();
     }
 
@@ -912,9 +903,6 @@ public class FirewallRuleViewModel : ViewModelBase, ICloneable, IFirewallRuleVie
     /// </summary>
     public static void UpdateCombinedPortsHistory()
     {
-        if (!SettingsManager.Current.Firewall_CombinePortHistory)
-            return;
-
         // This will as a side effect reset all unchanged combobox fields in all rules, because its source is empty
         // StorePorts() and RestorePorts() are required to circumvent this.
         CombinedPortsHistory.Clear();

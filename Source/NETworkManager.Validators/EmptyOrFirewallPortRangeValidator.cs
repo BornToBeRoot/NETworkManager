@@ -13,7 +13,7 @@ public class EmptyOrFirewallPortRangeValidator : ValidationRule
             return ValidationResult.ValidResult;
 
         var isValid = true;
-        char portSeparator = SettingsManager.Current.Firewall_UseWindowsPortSyntax ? ',' : ';';
+        char portSeparator = ';';
         var portList = ((string)value).Replace(" ", "").Split(portSeparator);
         if (portList.Length > 10000)
             return new ValidationResult(false, Strings.EnterLessThan10001PortsOrPortRanges);

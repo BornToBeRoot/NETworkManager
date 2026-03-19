@@ -7,15 +7,8 @@ namespace NETworkManager.Views;
 /// </summary>
 public partial class FirewallSettingsView
 {
-    /// <summary>
-    /// DataContext for the view.
-    /// </summary>
-    private readonly FirewallSettingsViewModel _viewModel =
-            FirewallSettingsViewModel.Instance;
-
-    /// <summary>
-    /// Construct the view.
-    /// </summary>
+    private readonly FirewallSettingsViewModel _viewModel = new();
+    
     public FirewallSettingsView()
     {
         InitializeComponent();
