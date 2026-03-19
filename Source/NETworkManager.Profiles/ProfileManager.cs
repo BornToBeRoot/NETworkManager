@@ -74,28 +74,17 @@ public static class ProfileManager
     /// <summary>
     ///     Currently loaded profile file.
     /// </summary>
-    private static ProfileFileInfo _loadedProfileFile;
-
-    /// <summary>
-    ///     Currently loaded profile file.
-    /// </summary>
     public static ProfileFileInfo LoadedProfileFile
     {
-        get => _loadedProfileFile;
+        get;
         private set
         {
-            if (Equals(value, _loadedProfileFile))
+            if (Equals(value, field))
                 return;
 
-            _loadedProfileFile = value;
+            field = value;
         }
     }
-
-    /// <summary>
-    ///     Currently loaded profile file data (wrapper containing groups and metadata).
-    ///     This is updated during load/save operations.
-    /// </summary>
-    private static ProfileFileData _loadedProfileFileData = new();
 
     /// <summary>
     ///     Currently loaded profile file data (wrapper containing groups and metadata).
@@ -103,15 +92,15 @@ public static class ProfileManager
     /// </summary>
     public static ProfileFileData LoadedProfileFileData
     {
-        get => _loadedProfileFileData;
+        get;
         private set
         {
-            if (Equals(value, _loadedProfileFileData))
+            if (Equals(value, field))
                 return;
 
-            _loadedProfileFileData = value;
+            field = value;
         }
-    }
+    } = new();
 
     #endregion
 

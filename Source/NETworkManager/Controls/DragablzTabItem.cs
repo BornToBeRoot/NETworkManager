@@ -11,11 +11,6 @@ namespace NETworkManager.Controls;
 public class DragablzTabItem : ViewModelBase
 {
     /// <summary>
-    ///     Private field for the <see cref="Header" /> property.
-    /// </summary>
-    private string _header;
-
-    /// <summary>
     ///     Creates a new instance of the <see cref="DragablzTabItem" /> class.
     /// </summary>
     /// <param name="header">Header of the tab.</param>
@@ -33,13 +28,13 @@ public class DragablzTabItem : ViewModelBase
     /// </summary>
     public string Header
     {
-        get => _header;
+        get;
         private set
         {
-            if (value == _header)
+            if (value == field)
                 return;
 
-            _header = value;
+            field = value;
             OnPropertyChanged();
         }
     }

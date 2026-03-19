@@ -40,38 +40,34 @@ public class ProfileFileData : INotifyPropertyChanged
     [JsonIgnore]
     public bool ProfilesChanged { get; set; }
 
-    private int _version = 1;
-
     /// <summary>
     ///     Schema version for handling future migrations.
     /// </summary>
     public int Version
     {
-        get => _version;
+        get;
         set
         {
-            if (value == _version)
+            if (value == field)
                 return;
 
-            _version = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private DateTime? _lastBackup;
+    } = 1;
 
     /// <summary>
     ///     Date of the last backup (used for daily backup tracking).
     /// </summary>
     public DateTime? LastBackup
     {
-        get => _lastBackup;
+        get;
         set
         {
-            if (value == _lastBackup)
+            if (value == field)
                 return;
 
-            _lastBackup = value;
+            field = value;
             OnPropertyChanged();
         }
     }

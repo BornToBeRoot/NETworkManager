@@ -32,22 +32,17 @@ public class IPGeolocationViewModel : ViewModelBase
     private bool _closed;
 
     /// <summary>
-    /// Backing field for <see cref="Host"/>.
-    /// </summary>
-    private string _host;
-
-    /// <summary>
     /// Gets or sets the host to query.
     /// </summary>
     public string Host
     {
-        get => _host;
+        get;
         set
         {
-            if (value == _host)
+            if (value == field)
                 return;
 
-            _host = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -58,106 +53,81 @@ public class IPGeolocationViewModel : ViewModelBase
     public ICollectionView HostHistoryView { get; }
 
     /// <summary>
-    /// Backing field for <see cref="IsRunning"/>.
-    /// </summary>
-    private bool _isRunning;
-
-    /// <summary>
     /// Gets or sets a value indicating whether the query is running.
     /// </summary>
     public bool IsRunning
     {
-        get => _isRunning;
+        get;
         set
         {
-            if (value == _isRunning)
+            if (value == field)
                 return;
 
-            _isRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="IsResultVisible"/>.
-    /// </summary>
-    private bool _isResultVisible;
 
     /// <summary>
     /// Gets or sets a value indicating whether the result is visible.
     /// </summary>
     public bool IsResultVisible
     {
-        get => _isResultVisible;
+        get;
         set
         {
-            if (value == _isResultVisible)
+            if (value == field)
                 return;
 
-            _isResultVisible = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="Result"/>.
-    /// </summary>
-    private IPGeolocationInfo _result;
 
     /// <summary>
     /// Gets the IP geolocation result.
     /// </summary>
     public IPGeolocationInfo Result
     {
-        get => _result;
+        get;
         private set
         {
-            if (value == _result)
+            if (value == field)
                 return;
 
-            _result = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="IsStatusMessageDisplayed"/>.
-    /// </summary>
-    private bool _isStatusMessageDisplayed;
 
     /// <summary>
     /// Gets or sets a value indicating whether the status message is displayed.
     /// </summary>
     public bool IsStatusMessageDisplayed
     {
-        get => _isStatusMessageDisplayed;
+        get;
         set
         {
-            if (value == _isStatusMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isStatusMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="StatusMessage"/>.
-    /// </summary>
-    private string _statusMessage;
 
     /// <summary>
     /// Gets the status message.
     /// </summary>
     public string StatusMessage
     {
-        get => _statusMessage;
+        get;
         private set
         {
-            if (value == _statusMessage)
+            if (value == field)
                 return;
 
-            _statusMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }

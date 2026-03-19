@@ -40,74 +40,66 @@ public class MessageConfirmationViewModel : ViewModelBase
     /// </summary>
     public ICommand CancelCommand { get; }
 
-    private readonly string _message;
-
     /// <summary>
     /// Gets the message to display.
     /// </summary>
     public string Message
     {
-        get => _message;
+        get;
         private init
         {
-            if (value == _message)
+            if (value == field)
                 return;
 
-            _message = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private readonly string _confirmButtonText;
 
     /// <summary>
     /// Gets the text for the confirm button.
     /// </summary>
     public string ConfirmButtonText
     {
-        get => _confirmButtonText;
+        get;
         private init
         {
-            if (value == _confirmButtonText)
+            if (value == field)
                 return;
 
-            _confirmButtonText = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private readonly string _cancelButtonText;
 
     /// <summary>
     /// Gets the text for the cancel button.
     /// </summary>
     public string CancelButtonText
     {
-        get => _cancelButtonText;
+        get;
         private init
         {
-            if (value == _cancelButtonText)
+            if (value == field)
                 return;
 
-            _cancelButtonText = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ChildWindowIcon _icon;
 
     /// <summary>
     /// Gets the icon to display.
     /// </summary>
     public ChildWindowIcon Icon
     {
-        get => _icon;
+        get;
         private init
         {
-            if (value == _icon)
+            if (value == field)
                 return;
 
-            _icon = value;
+            field = value;
             OnPropertyChanged();
         }
     }

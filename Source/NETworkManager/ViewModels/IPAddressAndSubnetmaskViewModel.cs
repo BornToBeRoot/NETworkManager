@@ -10,16 +10,6 @@ namespace NETworkManager.ViewModels;
 public class IPAddressAndSubnetmaskViewModel : ViewModelBase
 {
     /// <summary>
-    /// Backing field for <see cref="IPAddress"/>.
-    /// </summary>
-    private string _ipAddress;
-
-    /// <summary>
-    /// Backing field for <see cref="Subnetmask"/>.
-    /// </summary>
-    private string _subnetmask;
-
-    /// <summary>
     /// Initializes a new instance of the <see cref="IPAddressAndSubnetmaskViewModel"/> class.
     /// </summary>
     /// <param name="okCommand">The action to execute when OK is clicked.</param>
@@ -46,13 +36,13 @@ public class IPAddressAndSubnetmaskViewModel : ViewModelBase
     /// </summary>
     public string IPAddress
     {
-        get => _ipAddress;
+        get;
         set
         {
-            if (value == _ipAddress)
+            if (value == field)
                 return;
 
-            _ipAddress = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -62,13 +52,13 @@ public class IPAddressAndSubnetmaskViewModel : ViewModelBase
     /// </summary>
     public string Subnetmask
     {
-        get => _subnetmask;
+        get;
         set
         {
-            if (value == _subnetmask)
+            if (value == field)
                 return;
 
-            _subnetmask = value;
+            field = value;
             OnPropertyChanged();
         }
     }

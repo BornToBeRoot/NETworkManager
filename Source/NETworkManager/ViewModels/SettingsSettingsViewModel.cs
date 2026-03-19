@@ -24,25 +24,21 @@ public class SettingsSettingsViewModel : ViewModelBase
     private readonly bool _isLoading;
 
     /// <summary>
-    /// Private field of <see cref="Location" /> property.
-    /// </summary>
-    private string _location;
-
-    /// <summary>
     /// Gets or sets the file system path to the settings location.
     /// </summary>    
     public string Location
     {
-        get => _location;
+        get;
         set
         {
-            if (value == _location)
+            if (value == field)
                 return;
 
             if (!_isLoading)
-                IsLocationChanged = !string.Equals(value, SettingsManager.GetSettingsFolderLocation(), StringComparison.OrdinalIgnoreCase);
+                IsLocationChanged = !string.Equals(value, SettingsManager.GetSettingsFolderLocation(),
+                    StringComparison.OrdinalIgnoreCase);
 
-            _location = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -53,91 +49,71 @@ public class SettingsSettingsViewModel : ViewModelBase
     public bool IsLocationManagedByPolicy => !string.IsNullOrWhiteSpace(PolicyManager.Current?.Settings_FolderLocation);
 
     /// <summary>
-    /// Private field of <see cref="IsLocationChanged" /> property.
-    /// </summary>
-    private bool _isLocationChanged;
-
-    /// <summary>
     /// Gets or sets a value indicating whether the location has changed.
     /// </summary>
     public bool IsLocationChanged
     {
-        get => _isLocationChanged;
+        get;
         set
         {
-            if (value == _isLocationChanged)
+            if (value == field)
                 return;
 
-            _isLocationChanged = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Private field of <see cref="IsDefaultLocation" /> property.
-    /// </summary>
-    private bool _isDefaultLocation;
 
     /// <summary>
     /// Indicates whether the current location is the default settings folder location.
     /// </summary>
     public bool IsDefaultLocation
     {
-        get => _isDefaultLocation;
+        get;
         set
         {
-            if (value == _isDefaultLocation)
+            if (value == field)
                 return;
 
-            _isDefaultLocation = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Private field of <see cref="IsDailyBackupEnabled" /> property.
-    /// </summary>
-    private bool _isDailyBackupEnabled;
 
     /// <summary>
     /// Gets or sets a value indicating whether daily backups are enabled.
     /// </summary>
     public bool IsDailyBackupEnabled
     {
-        get => _isDailyBackupEnabled;
+        get;
         set
         {
-            if (value == _isDailyBackupEnabled)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Settings_IsDailyBackupEnabled = value;
 
-            _isDailyBackupEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Private field of <see cref="MaximumNumberOfBackups" /> property.
-    /// </summary>
-    private int _maximumNumberOfBackups;
 
     /// <summary>
     /// Gets or sets the maximum number of backups to keep.
     /// </summary>
     public int MaximumNumberOfBackups
     {
-        get => _maximumNumberOfBackups;
+        get;
         set
         {
-            if (value == _maximumNumberOfBackups)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Settings_MaximumNumberOfBackups = value;
 
-            _maximumNumberOfBackups = value;
+            field = value;
             OnPropertyChanged();
         }
     }

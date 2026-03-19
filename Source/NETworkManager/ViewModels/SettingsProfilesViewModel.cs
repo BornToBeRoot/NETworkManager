@@ -25,20 +25,19 @@ public class SettingsProfilesViewModel : ViewModelBase
 
     private readonly bool _isLoading;
 
-    private string _location;
-
     public string Location
     {
-        get => _location;
+        get;
         set
         {
-            if (value == _location)
+            if (value == field)
                 return;
 
             if (!_isLoading)
-                IsLocationChanged = !string.Equals(value, ProfileManager.GetProfilesFolderLocation(), StringComparison.OrdinalIgnoreCase);
+                IsLocationChanged = !string.Equals(value, ProfileManager.GetProfilesFolderLocation(),
+                    StringComparison.OrdinalIgnoreCase);
 
-            _location = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -49,94 +48,68 @@ public class SettingsProfilesViewModel : ViewModelBase
     public bool IsLocationManagedByPolicy => !string.IsNullOrWhiteSpace(PolicyManager.Current?.Profiles_FolderLocation);
 
     /// <summary>
-    /// Private field of <see cref="IsLocationChanged" /> property.
-    /// </summary>
-    private bool _isLocationChanged;
-
-    /// <summary>
     /// Gets or sets a value indicating whether the location has changed.
     /// </summary>
     public bool IsLocationChanged
     {
-        get => _isLocationChanged;
+        get;
         set
         {
-            if (value == _isLocationChanged)
+            if (value == field)
                 return;
 
-            _isLocationChanged = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Private field of <see cref="IsDefaultLocation" /> property.
-    /// </summary>
-    private bool _isDefaultLocation;
 
     /// <summary>
     /// Indicates whether the current location is the default profiles folder location.
     /// </summary>
     public bool IsDefaultLocation
     {
-        get => _isDefaultLocation;
+        get;
         set
         {
-            if (value == _isDefaultLocation)
+            if (value == field)
                 return;
 
-            _isDefaultLocation = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Private field of <see cref="ProfileFiles" /> property.
-    /// </summary>
-    private readonly ICollectionView _profileFiles;
 
     /// <summary>
     /// Gets the collection view of profile files.
     /// </summary>    
     public ICollectionView ProfileFiles
     {
-        get => _profileFiles;
+        get;
         private init
         {
-            if (value == _profileFiles)
+            if (value == field)
                 return;
 
-            _profileFiles = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Private field of <see cref="SelectedProfileFile" /> property.
-    /// </summary>
-
-    private ProfileFileInfo _selectedProfileFile;
 
     /// <summary>
     /// Gets or sets the currently selected profile file information.
     /// </summary>    
     public ProfileFileInfo SelectedProfileFile
     {
-        get => _selectedProfileFile;
+        get;
         set
         {
-            if (Equals(value, _selectedProfileFile))
+            if (Equals(value, field))
                 return;
 
-            _selectedProfileFile = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Private field of <see cref="IsDailyBackupEnabled" /> property.
-    /// </summary>
-    private bool _isDailyBackupEnabled;
 
 
     /// <summary>
@@ -144,43 +117,39 @@ public class SettingsProfilesViewModel : ViewModelBase
     /// </summary>
     public bool IsDailyBackupEnabled
     {
-        get => _isDailyBackupEnabled;
+        get;
         set
         {
-            if (value == _isDailyBackupEnabled)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Profiles_IsDailyBackupEnabled = value;
 
-            _isDailyBackupEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Private field of <see cref="MaximumNumberOfBackups" /> property.
-    /// </summary>
-    private int _maximumNumberOfBackups;
 
     /// <summary>
     /// Gets or sets the maximum number of backups to keep.
     /// </summary>
     public int MaximumNumberOfBackups
     {
-        get => _maximumNumberOfBackups;
+        get;
         set
         {
-            if (value == _maximumNumberOfBackups)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Profiles_MaximumNumberOfBackups = value;
 
-            _maximumNumberOfBackups = value;
+            field = value;
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, LoadSettings

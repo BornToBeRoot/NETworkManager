@@ -106,22 +106,17 @@ public class ListenersViewModel : ViewModelBase
     private readonly DispatcherTimer _autoRefreshTimer = new();
 
     /// <summary>
-    /// Backing field for <see cref="Search"/>.
-    /// </summary>
-    private string _search;
-
-    /// <summary>
     /// Gets or sets the search text.
     /// </summary>
     public string Search
     {
-        get => _search;
+        get;
         set
         {
-            if (value == _search)
+            if (value == field)
                 return;
 
-            _search = value;
+            field = value;
 
             ResultsView.Refresh();
 
@@ -130,25 +125,20 @@ public class ListenersViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Backing field for <see cref="Results"/>.
-    /// </summary>
-    private ObservableCollection<ListenerInfo> _results = new();
-
-    /// <summary>
     /// Gets or sets the collection of listener results.
     /// </summary>
     public ObservableCollection<ListenerInfo> Results
     {
-        get => _results;
+        get;
         set
         {
-            if (value == _results)
+            if (value == field)
                 return;
 
-            _results = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = new();
 
     /// <summary>
     /// Gets the collection view for the listener results.
@@ -156,67 +146,52 @@ public class ListenersViewModel : ViewModelBase
     public ICollectionView ResultsView { get; }
 
     /// <summary>
-    /// Backing field for <see cref="SelectedResult"/>.
-    /// </summary>
-    private ListenerInfo _selectedResult;
-
-    /// <summary>
     /// Gets or sets the currently selected listener result.
     /// </summary>
     public ListenerInfo SelectedResult
     {
-        get => _selectedResult;
+        get;
         set
         {
-            if (value == _selectedResult)
+            if (value == field)
                 return;
 
-            _selectedResult = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="SelectedResults"/>.
-    /// </summary>
-    private IList _selectedResults = new ArrayList();
 
     /// <summary>
     /// Gets or sets the list of selected listener results.
     /// </summary>
     public IList SelectedResults
     {
-        get => _selectedResults;
+        get;
         set
         {
-            if (Equals(value, _selectedResults))
+            if (Equals(value, field))
                 return;
 
-            _selectedResults = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="AutoRefreshEnabled"/>.
-    /// </summary>
-    private bool _autoRefreshEnabled;
+    } = new ArrayList();
 
     /// <summary>
     /// Gets or sets a value indicating whether auto-refresh is enabled.
     /// </summary>
     public bool AutoRefreshEnabled
     {
-        get => _autoRefreshEnabled;
+        get;
         set
         {
-            if (value == _autoRefreshEnabled)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Listeners_AutoRefreshEnabled = value;
 
-            _autoRefreshEnabled = value;
+            field = value;
 
             // Start timer to refresh automatically
             if (value)
@@ -239,25 +214,20 @@ public class ListenersViewModel : ViewModelBase
     public ICollectionView AutoRefreshTimes { get; }
 
     /// <summary>
-    /// Backing field for <see cref="SelectedAutoRefreshTime"/>.
-    /// </summary>
-    private AutoRefreshTimeInfo _selectedAutoRefreshTime;
-
-    /// <summary>
     /// Gets or sets the selected auto-refresh time.
     /// </summary>
     public AutoRefreshTimeInfo SelectedAutoRefreshTime
     {
-        get => _selectedAutoRefreshTime;
+        get;
         set
         {
-            if (value == _selectedAutoRefreshTime)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Listeners_AutoRefreshTime = value;
 
-            _selectedAutoRefreshTime = value;
+            field = value;
 
             if (AutoRefreshEnabled)
             {
@@ -270,64 +240,49 @@ public class ListenersViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Backing field for <see cref="IsRefreshing"/>.
-    /// </summary>
-    private bool _isRefreshing;
-
-    /// <summary>
     /// Gets or sets a value indicating whether the view model is currently refreshing.
     /// </summary>
     public bool IsRefreshing
     {
-        get => _isRefreshing;
+        get;
         set
         {
-            if (value == _isRefreshing)
+            if (value == field)
                 return;
 
-            _isRefreshing = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="IsStatusMessageDisplayed"/>.
-    /// </summary>
-    private bool _isStatusMessageDisplayed;
 
     /// <summary>
     /// Gets or sets a value indicating whether the status message is displayed.
     /// </summary>
     public bool IsStatusMessageDisplayed
     {
-        get => _isStatusMessageDisplayed;
+        get;
         set
         {
-            if (value == _isStatusMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isStatusMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="StatusMessage"/>.
-    /// </summary>
-    private string _statusMessage;
 
     /// <summary>
     /// Gets or sets the status message.
     /// </summary>
     public string StatusMessage
     {
-        get => _statusMessage;
+        get;
         set
         {
-            if (value == _statusMessage)
+            if (value == field)
                 return;
 
-            _statusMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }

@@ -32,17 +32,15 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
     public IInterTabClient InterTabClient { get; }
 
-    private string _interTabPartition;
-
     public string InterTabPartition
     {
-        get => _interTabPartition;
+        get;
         set
         {
-            if (value == _interTabPartition)
+            if (value == field)
                 return;
 
-            _interTabPartition = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -52,64 +50,56 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     private readonly bool _isLoading;
     private bool _isViewActive = true;
 
-    private int _selectedTabIndex;
-
     public int SelectedTabIndex
     {
-        get => _selectedTabIndex;
+        get;
         set
         {
-            if (value == _selectedTabIndex)
+            if (value == field)
                 return;
 
-            _selectedTabIndex = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     #region Profiles
 
-    private ICollectionView _profiles;
-
     public ICollectionView Profiles
     {
-        get => _profiles;
+        get;
         private set
         {
-            if (value == _profiles)
+            if (value == field)
                 return;
 
-            _profiles = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ProfileInfo _selectedProfile = new();
 
     public ProfileInfo SelectedProfile
     {
-        get => _selectedProfile;
+        get;
         set
         {
-            if (value == _selectedProfile)
+            if (value == field)
                 return;
 
-            _selectedProfile = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _search;
+    } = new();
 
     public string Search
     {
-        get => _search;
+        get;
         set
         {
-            if (value == _search)
+            if (value == field)
                 return;
 
-            _search = value;
+            field = value;
 
             // Start searching...
             if (!_searchDisabled)
@@ -122,32 +112,28 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private bool _isSearching;
-
     public bool IsSearching
     {
-        get => _isSearching;
+        get;
         set
         {
-            if (value == _isSearching)
+            if (value == field)
                 return;
 
-            _isSearching = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _profileFilterIsOpen;
-
     public bool ProfileFilterIsOpen
     {
-        get => _profileFilterIsOpen;
+        get;
         set
         {
-            if (value == _profileFilterIsOpen)
+            if (value == field)
                 return;
 
-            _profileFilterIsOpen = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -156,71 +142,62 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
 
     private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
 
-    private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
-
     public bool ProfileFilterTagsMatchAny
     {
-        get => _profileFilterTagsMatchAny;
+        get;
         set
         {
-            if (value == _profileFilterTagsMatchAny)
+            if (value == field)
                 return;
 
-            _profileFilterTagsMatchAny = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _profileFilterTagsMatchAll;
+    } = GlobalStaticConfiguration.Profile_TagsMatchAny;
 
     public bool ProfileFilterTagsMatchAll
     {
-        get => _profileFilterTagsMatchAll;
+        get;
         set
         {
-            if (value == _profileFilterTagsMatchAll)
+            if (value == field)
                 return;
 
-            _profileFilterTagsMatchAll = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isProfileFilterSet;
 
     public bool IsProfileFilterSet
     {
-        get => _isProfileFilterSet;
+        get;
         set
         {
-            if (value == _isProfileFilterSet)
+            if (value == field)
                 return;
 
-            _isProfileFilterSet = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
-    public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
+    public GroupExpanderStateStore GroupExpanderStateStore { get; } = new();
 
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
 
-    private bool _expandProfileView;
-
     public bool ExpandProfileView
     {
-        get => _expandProfileView;
+        get;
         set
         {
-            if (value == _expandProfileView)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_ExpandProfileView = value;
 
-            _expandProfileView = value;
+            field = value;
 
             if (_canProfileWidthChange)
                 ResizeProfile(false);
@@ -229,21 +206,19 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private GridLength _profileWidth;
-
     public GridLength ProfileWidth
     {
-        get => _profileWidth;
+        get;
         set
         {
-            if (value == _profileWidth)
+            if (value == field)
                 return;
 
             if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
                 GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.RemoteDesktop_ProfileWidth = value.Value;
 
-            _profileWidth = value;
+            field = value;
 
             if (_canProfileWidthChange)
                 ResizeProfile(true);

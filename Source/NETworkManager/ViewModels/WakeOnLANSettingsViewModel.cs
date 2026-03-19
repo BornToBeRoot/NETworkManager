@@ -8,20 +8,18 @@ public class WakeOnLANSettingsViewModel : ViewModelBase
 
     private readonly bool _isLoading;
 
-    private int _defaultPort;
-
     public int DefaultPort
     {
-        get => _defaultPort;
+        get;
         set
         {
-            if (value == _defaultPort)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.WakeOnLAN_Port = value;
 
-            _defaultPort = value;
+            field = value;
             OnPropertyChanged();
         }
     }

@@ -9,8 +9,6 @@ namespace NETworkManager.ViewModels;
 
 public class WebConsoleConnectViewModel : ViewModelBase
 {
-    private string _url;
-
     public WebConsoleConnectViewModel(Action<WebConsoleConnectViewModel> connectCommand,
         Action<WebConsoleConnectViewModel> cancelHandler)
     {
@@ -27,13 +25,13 @@ public class WebConsoleConnectViewModel : ViewModelBase
 
     public string Url
     {
-        get => _url;
+        get;
         set
         {
-            if (value == _url)
+            if (value == field)
                 return;
 
-            _url = value;
+            field = value;
             OnPropertyChanged();
         }
     }

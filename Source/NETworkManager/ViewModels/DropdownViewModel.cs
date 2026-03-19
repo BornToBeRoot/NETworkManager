@@ -12,21 +12,6 @@ namespace NETworkManager.ViewModels;
 public class DropDownViewModel : ViewModelBase
 {
     /// <summary>
-    /// Backing field for <see cref="ValueDescription"/>.
-    /// </summary>
-    private readonly string _valueDescription;
-
-    /// <summary>
-    /// Backing field for <see cref="Values"/>.
-    /// </summary>
-    private readonly List<string> _values;
-
-    /// <summary>
-    /// Backing field for <see cref="SelectedValue"/>.
-    /// </summary>
-    private string _selectedValue;
-
-    /// <summary>
     /// Initializes a new instance of the <see cref="DropDownViewModel"/> class.
     /// </summary>
     /// <param name="okCommand">The action to execute when OK is clicked.</param>
@@ -60,13 +45,13 @@ public class DropDownViewModel : ViewModelBase
     /// </summary>
     public string ValueDescription
     {
-        get => _valueDescription;
+        get;
         private init
         {
-            if (value == _valueDescription)
+            if (value == field)
                 return;
 
-            _valueDescription = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -76,13 +61,13 @@ public class DropDownViewModel : ViewModelBase
     /// </summary>
     public List<string> Values
     {
-        get => _values;
+        get;
         private init
         {
-            if (value == _values)
+            if (value == field)
                 return;
 
-            _values = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -92,13 +77,13 @@ public class DropDownViewModel : ViewModelBase
     /// </summary>
     public string SelectedValue
     {
-        get => _selectedValue;
+        get;
         set
         {
-            if (value == _selectedValue)
+            if (value == field)
                 return;
 
-            _selectedValue = value;
+            field = value;
             OnPropertyChanged();
         }
     }

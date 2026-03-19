@@ -33,20 +33,18 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     /// </summary>
     public IInterTabClient InterTabClient { get; }
 
-    private string _interTabPartition;
-
     /// <summary>
     /// Gets or sets the InterTab partition identifier.
     /// </summary>
     public string InterTabPartition
     {
-        get => _interTabPartition;
+        get;
         set
         {
-            if (value == _interTabPartition)
+            if (value == field)
                 return;
 
-            _interTabPartition = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -59,76 +57,68 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     private readonly bool _isLoading;
     private bool _isViewActive = true;
 
-    private int _selectedTabIndex;
-
     /// <summary>
     /// Gets or sets the index of the selected tab.
     /// </summary>
     public int SelectedTabIndex
     {
-        get => _selectedTabIndex;
+        get;
         set
         {
-            if (value == _selectedTabIndex)
+            if (value == field)
                 return;
 
-            _selectedTabIndex = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     #region Profiles
 
-    private ICollectionView _profiles;
-
     /// <summary>
     /// Gets the collection of filtered profiles.
     /// </summary>
     public ICollectionView Profiles
     {
-        get => _profiles;
+        get;
         private set
         {
-            if (value == _profiles)
+            if (value == field)
                 return;
 
-            _profiles = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ProfileInfo _selectedProfile = new();
 
     /// <summary>
     /// Gets or sets the selected profile.
     /// </summary>
     public ProfileInfo SelectedProfile
     {
-        get => _selectedProfile;
+        get;
         set
         {
-            if (value == _selectedProfile)
+            if (value == field)
                 return;
 
-            _selectedProfile = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _search;
+    } = new();
 
     /// <summary>
     /// Gets or sets the search query for filtering profiles.
     /// </summary>
     public string Search
     {
-        get => _search;
+        get;
         set
         {
-            if (value == _search)
+            if (value == field)
                 return;
 
-            _search = value;
+            field = value;
 
             // Start searching...
             if (!_searchDisabled)
@@ -141,38 +131,34 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private bool _isSearching;
-
     /// <summary>
     /// Gets or sets a value indicating whether a search is currently active.
     /// </summary>
     public bool IsSearching
     {
-        get => _isSearching;
+        get;
         set
         {
-            if (value == _isSearching)
+            if (value == field)
                 return;
 
-            _isSearching = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _profileFilterIsOpen;
 
     /// <summary>
     /// Gets or sets a value indicating whether the profile filter flyout is open.
     /// </summary>
     public bool ProfileFilterIsOpen
     {
-        get => _profileFilterIsOpen;
+        get;
         set
         {
-            if (value == _profileFilterIsOpen)
+            if (value == field)
                 return;
 
-            _profileFilterIsOpen = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -184,87 +170,77 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
 
     private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
 
-    private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
-
     /// <summary>
     /// Gets or sets a value indicating whether to match any selected tag in the filter.
     /// </summary>
     public bool ProfileFilterTagsMatchAny
     {
-        get => _profileFilterTagsMatchAny;
+        get;
         set
         {
-            if (value == _profileFilterTagsMatchAny)
+            if (value == field)
                 return;
 
-            _profileFilterTagsMatchAny = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _profileFilterTagsMatchAll;
+    } = GlobalStaticConfiguration.Profile_TagsMatchAny;
 
     /// <summary>
     /// Gets or sets a value indicating whether to match all selected tags in the filter.
     /// </summary>
     public bool ProfileFilterTagsMatchAll
     {
-        get => _profileFilterTagsMatchAll;
+        get;
         set
         {
-            if (value == _profileFilterTagsMatchAll)
+            if (value == field)
                 return;
 
-            _profileFilterTagsMatchAll = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isProfileFilterSet;
 
     /// <summary>
     /// Gets or sets a value indicating whether a profile filter is currently applied.
     /// </summary>
     public bool IsProfileFilterSet
     {
-        get => _isProfileFilterSet;
+        get;
         set
         {
-            if (value == _isProfileFilterSet)
+            if (value == field)
                 return;
 
-            _isProfileFilterSet = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
-
     /// <summary>
     /// Gets the store for group expander states.
     /// </summary>
-    public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
+    public GroupExpanderStateStore GroupExpanderStateStore { get; } = new();
 
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
-
-    private bool _expandProfileView;
 
     /// <summary>
     /// Gets or sets a value indicating whether the profile view is expanded.
     /// </summary>
     public bool ExpandProfileView
     {
-        get => _expandProfileView;
+        get;
         set
         {
-            if (value == _expandProfileView)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PortScanner_ExpandProfileView = value;
 
-            _expandProfileView = value;
+            field = value;
 
             if (_canProfileWidthChange)
                 ResizeProfile(false);
@@ -273,24 +249,22 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private GridLength _profileWidth;
-
     /// <summary>
     /// Gets or sets the width of the profile view.
     /// </summary>
     public GridLength ProfileWidth
     {
-        get => _profileWidth;
+        get;
         set
         {
-            if (value == _profileWidth)
+            if (value == field)
                 return;
 
             if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
                 GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.PortScanner_ProfileWidth = value.Value;
 
-            _profileWidth = value;
+            field = value;
 
             if (_canProfileWidthChange)
                 ResizeProfile(true);

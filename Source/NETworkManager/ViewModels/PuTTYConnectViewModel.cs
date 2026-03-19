@@ -10,35 +10,6 @@ namespace NETworkManager.ViewModels;
 
 public class PuTTYConnectViewModel : ViewModelBase
 {
-    private string _additionalCommandLine;
-
-    private int _baud;
-
-    private ConnectionMode _connectionMode;
-
-    private string _host;
-
-    private int _port;
-
-    private string _privateKeyFile;
-
-
-    private string _profile;
-
-    private string _serialLine;
-
-    private bool _useRAW;
-
-    private bool _useRlogin;
-
-    private string _username;
-
-    private bool _useSerial;
-
-    private bool _useSSH;
-
-    private bool _useTelnet;
-
     public PuTTYConnectViewModel(Action<PuTTYConnectViewModel> connectCommand,
         Action<PuTTYConnectViewModel> cancelHandler, string host = null)
     {
@@ -66,23 +37,23 @@ public class PuTTYConnectViewModel : ViewModelBase
 
     public ConnectionMode ConnectionMode
     {
-        get => _connectionMode;
+        get;
         set
         {
-            if (value == _connectionMode)
+            if (value == field)
                 return;
 
-            _connectionMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public bool UseSSH
     {
-        get => _useSSH;
+        get;
         set
         {
-            if (value == _useSSH)
+            if (value == field)
                 return;
 
             if (value)
@@ -91,17 +62,17 @@ public class PuTTYConnectViewModel : ViewModelBase
                 ConnectionMode = ConnectionMode.SSH;
             }
 
-            _useSSH = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public bool UseTelnet
     {
-        get => _useTelnet;
+        get;
         set
         {
-            if (value == _useTelnet)
+            if (value == field)
                 return;
 
             if (value)
@@ -110,17 +81,17 @@ public class PuTTYConnectViewModel : ViewModelBase
                 ConnectionMode = ConnectionMode.Telnet;
             }
 
-            _useTelnet = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public bool UseSerial
     {
-        get => _useSerial;
+        get;
         set
         {
-            if (value == _useSerial)
+            if (value == field)
                 return;
 
             if (value)
@@ -129,17 +100,17 @@ public class PuTTYConnectViewModel : ViewModelBase
                 ConnectionMode = ConnectionMode.Serial;
             }
 
-            _useSerial = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public bool UseRlogin
     {
-        get => _useRlogin;
+        get;
         set
         {
-            if (value == _useRlogin)
+            if (value == field)
                 return;
 
             if (value)
@@ -148,17 +119,17 @@ public class PuTTYConnectViewModel : ViewModelBase
                 ConnectionMode = ConnectionMode.Rlogin;
             }
 
-            _useRlogin = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public bool UseRAW
     {
-        get => _useRAW;
+        get;
         set
         {
-            if (value == _useRAW)
+            if (value == field)
                 return;
 
             if (value)
@@ -167,111 +138,111 @@ public class PuTTYConnectViewModel : ViewModelBase
                 ConnectionMode = ConnectionMode.RAW;
             }
 
-            _useRAW = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public string Host
     {
-        get => _host;
+        get;
         set
         {
-            if (value == _host)
+            if (value == field)
                 return;
 
-            _host = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public string SerialLine
     {
-        get => _serialLine;
+        get;
         set
         {
-            if (value == _serialLine)
+            if (value == field)
                 return;
 
-            _serialLine = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public int Port
     {
-        get => _port;
+        get;
         set
         {
-            if (value == _port)
+            if (value == field)
                 return;
 
-            _port = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public int Baud
     {
-        get => _baud;
+        get;
         set
         {
-            if (value == _baud)
+            if (value == field)
                 return;
 
-            _baud = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public string Username
     {
-        get => _username;
+        get;
         set
         {
-            if (value == _username)
+            if (value == field)
                 return;
 
-            _username = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public string PrivateKeyFile
     {
-        get => _privateKeyFile;
+        get;
         set
         {
-            if (value == _privateKeyFile)
+            if (value == field)
                 return;
 
-            _privateKeyFile = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public string Profile
     {
-        get => _profile;
+        get;
         set
         {
-            if (value == _profile)
+            if (value == field)
                 return;
 
-            _profile = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public string AdditionalCommandLine
     {
-        get => _additionalCommandLine;
+        get;
         set
         {
-            if (value == _additionalCommandLine)
+            if (value == field)
                 return;
 
-            _additionalCommandLine = value;
+            field = value;
             OnPropertyChanged();
         }
     }

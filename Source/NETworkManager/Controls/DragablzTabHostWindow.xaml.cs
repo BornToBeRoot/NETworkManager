@@ -97,47 +97,41 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         ApplicationName.PuTTY
     ];
 
-    private ApplicationName _applicationName;
-
     public ApplicationName ApplicationName
     {
-        get => _applicationName;
+        get;
         set
         {
-            if (value == _applicationName)
+            if (value == field)
                 return;
 
-            _applicationName = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _interTabPartition;
 
     public string InterTabPartition
     {
-        get => _interTabPartition;
+        get;
         set
         {
-            if (value == _interTabPartition)
+            if (value == field)
                 return;
 
-            _interTabPartition = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _headerContextMenuIsOpen;
-
     public bool HeaderContextMenuIsOpen
     {
-        get => _headerContextMenuIsOpen;
+        get;
         set
         {
-            if (value == _headerContextMenuIsOpen)
+            if (value == field)
                 return;
 
-            _headerContextMenuIsOpen = value;
+            field = value;
             OnPropertyChanged();
         }
     }

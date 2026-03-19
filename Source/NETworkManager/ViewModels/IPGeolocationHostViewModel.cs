@@ -34,22 +34,17 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     public IInterTabClient InterTabClient { get; }
 
     /// <summary>
-    /// Backing field for <see cref="InterTabPartition"/>.
-    /// </summary>
-    private string _interTabPartition;
-
-    /// <summary>
     /// Gets or sets the inter-tab partition key.
     /// </summary>
     public string InterTabPartition
     {
-        get => _interTabPartition;
+        get;
         set
         {
-            if (value == _interTabPartition)
+            if (value == field)
                 return;
 
-            _interTabPartition = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -63,22 +58,17 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     private bool _isViewActive = true;
 
     /// <summary>
-    /// Backing field for <see cref="SelectedTabIndex"/>.
-    /// </summary>
-    private int _selectedTabIndex;
-
-    /// <summary>
     /// Gets or sets the index of the selected tab.
     /// </summary>
     public int SelectedTabIndex
     {
-        get => _selectedTabIndex;
+        get;
         set
         {
-            if (value == _selectedTabIndex)
+            if (value == field)
                 return;
 
-            _selectedTabIndex = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -86,64 +76,49 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     #region Profiles
 
     /// <summary>
-    /// Backing field for <see cref="Profiles"/>.
-    /// </summary>
-    private ICollectionView _profiles;
-
-    /// <summary>
     /// Gets the collection view of profiles.
     /// </summary>
     public ICollectionView Profiles
     {
-        get => _profiles;
+        get;
         private set
         {
-            if (value == _profiles)
+            if (value == field)
                 return;
 
-            _profiles = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="SelectedProfile"/>.
-    /// </summary>
-    private ProfileInfo _selectedProfile = new();
 
     /// <summary>
     /// Gets or sets the selected profile.
     /// </summary>
     public ProfileInfo SelectedProfile
     {
-        get => _selectedProfile;
+        get;
         set
         {
-            if (value == _selectedProfile)
+            if (value == field)
                 return;
 
-            _selectedProfile = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="Search"/>.
-    /// </summary>
-    private string _search;
+    } = new();
 
     /// <summary>
     /// Gets or sets the search text.
     /// </summary>
     public string Search
     {
-        get => _search;
+        get;
         set
         {
-            if (value == _search)
+            if (value == field)
                 return;
 
-            _search = value;
+            field = value;
 
             // Start searching...
             if (!_searchDisabled)
@@ -157,43 +132,33 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     }
 
     /// <summary>
-    /// Backing field for <see cref="IsSearching"/>.
-    /// </summary>
-    private bool _isSearching;
-
-    /// <summary>
     /// Gets or sets a value indicating whether a search is in progress.
     /// </summary>
     public bool IsSearching
     {
-        get => _isSearching;
+        get;
         set
         {
-            if (value == _isSearching)
+            if (value == field)
                 return;
 
-            _isSearching = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ProfileFilterIsOpen"/>.
-    /// </summary>
-    private bool _profileFilterIsOpen;
 
     /// <summary>
     /// Gets or sets a value indicating whether the profile filter is open.
     /// </summary>
     public bool ProfileFilterIsOpen
     {
-        get => _profileFilterIsOpen;
+        get;
         set
         {
-            if (value == _profileFilterIsOpen)
+            if (value == field)
                 return;
 
-            _profileFilterIsOpen = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -209,94 +174,73 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
 
     /// <summary>
-    /// Backing field for <see cref="ProfileFilterTagsMatchAny"/>.
-    /// </summary>
-    private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
-
-    /// <summary>
     /// Gets or sets a value indicating whether any tag match is sufficient for filtering.
     /// </summary>
     public bool ProfileFilterTagsMatchAny
     {
-        get => _profileFilterTagsMatchAny;
+        get;
         set
         {
-            if (value == _profileFilterTagsMatchAny)
+            if (value == field)
                 return;
 
-            _profileFilterTagsMatchAny = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="ProfileFilterTagsMatchAll"/>.
-    /// </summary>
-    private bool _profileFilterTagsMatchAll;
+    } = GlobalStaticConfiguration.Profile_TagsMatchAny;
 
     /// <summary>
     /// Gets or sets a value indicating whether all tags must match for filtering.
     /// </summary>
     public bool ProfileFilterTagsMatchAll
     {
-        get => _profileFilterTagsMatchAll;
+        get;
         set
         {
-            if (value == _profileFilterTagsMatchAll)
+            if (value == field)
                 return;
 
-            _profileFilterTagsMatchAll = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="IsProfileFilterSet"/>.
-    /// </summary>
-    private bool _isProfileFilterSet;
 
     /// <summary>
     /// Gets or sets a value indicating whether a profile filter is set.
     /// </summary>
     public bool IsProfileFilterSet
     {
-        get => _isProfileFilterSet;
+        get;
         set
         {
-            if (value == _isProfileFilterSet)
+            if (value == field)
                 return;
 
-            _isProfileFilterSet = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
-    public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
+    public GroupExpanderStateStore GroupExpanderStateStore { get; } = new();
 
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
-
-    /// <summary>
-    /// Backing field for <see cref="ExpandProfileView"/>.
-    /// </summary>
-    private bool _expandProfileView;
 
     /// <summary>
     /// Gets or sets a value indicating whether the profile view is expanded.
     /// </summary>
     public bool ExpandProfileView
     {
-        get => _expandProfileView;
+        get;
         set
         {
-            if (value == _expandProfileView)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.IPGeolocation_ExpandProfileView = value;
 
-            _expandProfileView = value;
+            field = value;
 
             if (_canProfileWidthChange)
                 ResizeProfile(false);
@@ -306,26 +250,21 @@ public class IPGeolocationHostViewModel : ViewModelBase, IProfileManager
     }
 
     /// <summary>
-    /// Backing field for <see cref="ProfileWidth"/>.
-    /// </summary>
-    private GridLength _profileWidth;
-
-    /// <summary>
     /// Gets or sets the width of the profile view.
     /// </summary>
     public GridLength ProfileWidth
     {
-        get => _profileWidth;
+        get;
         set
         {
-            if (value == _profileWidth)
+            if (value == field)
                 return;
 
             if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
                 GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.IPGeolocation_ProfileWidth = value.Value;
 
-            _profileWidth = value;
+            field = value;
 
             if (_canProfileWidthChange)
                 ResizeProfile(true);

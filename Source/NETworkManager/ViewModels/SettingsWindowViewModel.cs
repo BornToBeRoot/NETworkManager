@@ -8,110 +8,98 @@ public class SettingsWindowViewModel : ViewModelBase
 
     private readonly bool _isLoading;
 
-    private bool _minimizeInsteadOfTerminating;
-
     public bool MinimizeInsteadOfTerminating
     {
-        get => _minimizeInsteadOfTerminating;
+        get;
         set
         {
-            if (value == _minimizeInsteadOfTerminating)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Window_MinimizeInsteadOfTerminating = value;
 
-            _minimizeInsteadOfTerminating = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _minimizeToTrayInsteadOfTaskbar;
-
     public bool MinimizeToTrayInsteadOfTaskbar
     {
-        get => _minimizeToTrayInsteadOfTaskbar;
+        get;
         set
         {
-            if (value == _minimizeToTrayInsteadOfTaskbar)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Window_MinimizeToTrayInsteadOfTaskbar = value;
 
-            _minimizeToTrayInsteadOfTaskbar = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _confirmClose;
-
     public bool ConfirmClose
     {
-        get => _confirmClose;
+        get;
         set
         {
-            if (value == _confirmClose)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Window_ConfirmClose = value;
 
             OnPropertyChanged();
-            _confirmClose = value;
+            field = value;
         }
     }
 
-    private bool _multipleInstances;
-
     public bool MultipleInstances
     {
-        get => _multipleInstances;
+        get;
         set
         {
-            if (value == _multipleInstances)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Window_MultipleInstances = value;
 
             OnPropertyChanged();
-            _multipleInstances = value;
+            field = value;
         }
     }
 
-    private bool _alwaysShowIconInTray;
-
     public bool AlwaysShowIconInTray
     {
-        get => _alwaysShowIconInTray;
+        get;
         set
         {
-            if (value == _alwaysShowIconInTray)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.TrayIcon_AlwaysShowIcon = value;
 
-            _alwaysShowIconInTray = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _splashScreenEnabled;
-
     public bool SplashScreenEnabled
     {
-        get => _splashScreenEnabled;
+        get;
         set
         {
-            if (value == _splashScreenEnabled)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.SplashScreen_Enabled = value;
 
-            _splashScreenEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }

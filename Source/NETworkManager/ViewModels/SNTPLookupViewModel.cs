@@ -32,111 +32,97 @@ public class SNTPLookupViewModel : ViewModelBase
 
     public ICollectionView SNTPServers { get; }
 
-    private ServerConnectionInfoProfile _sntpServer = new();
-
     public ServerConnectionInfoProfile SNTPServer
     {
-        get => _sntpServer;
+        get;
         set
         {
-            if (value == _sntpServer)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.SNTPLookup_SelectedSNTPServer = value;
 
-            _sntpServer = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _isRunning;
+    } = new();
 
     public bool IsRunning
     {
-        get => _isRunning;
+        get;
         set
         {
-            if (value == _isRunning)
+            if (value == field)
                 return;
 
-            _isRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ObservableCollection<SNTPLookupInfo> _results = [];
 
     public ObservableCollection<SNTPLookupInfo> Results
     {
-        get => _results;
+        get;
         set
         {
-            if (Equals(value, _results))
+            if (Equals(value, field))
                 return;
 
-            _results = value;
+            field = value;
         }
-    }
+    } = [];
 
     public ICollectionView ResultsView { get; }
 
-    private SNTPLookupInfo _selectedResult;
-
     public SNTPLookupInfo SelectedResult
     {
-        get => _selectedResult;
+        get;
         set
         {
-            if (value == _selectedResult)
+            if (value == field)
                 return;
 
-            _selectedResult = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private IList _selectedResults = new ArrayList();
 
     public IList SelectedResults
     {
-        get => _selectedResults;
+        get;
         set
         {
-            if (Equals(value, _selectedResults))
+            if (Equals(value, field))
                 return;
 
-            _selectedResults = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _isStatusMessageDisplayed;
+    } = new ArrayList();
 
     public bool IsStatusMessageDisplayed
     {
-        get => _isStatusMessageDisplayed;
+        get;
         set
         {
-            if (value == _isStatusMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isStatusMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _statusMessage;
-
     public string StatusMessage
     {
-        get => _statusMessage;
+        get;
         private set
         {
-            if (value == _statusMessage)
+            if (value == field)
                 return;
 
-            _statusMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }

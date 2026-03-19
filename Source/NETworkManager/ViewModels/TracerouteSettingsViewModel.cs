@@ -8,92 +8,82 @@ public class TracerouteSettingsViewModel : ViewModelBase
 
     private readonly bool _isLoading;
 
-    private int _maximumHops;
-
     public int MaximumHops
     {
-        get => _maximumHops;
+        get;
         set
         {
-            if (value == _maximumHops)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Traceroute_MaximumHops = value;
 
-            _maximumHops = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private int _timeout;
-
     public int Timeout
     {
-        get => _timeout;
+        get;
         set
         {
-            if (value == _timeout)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Traceroute_Timeout = value;
 
-            _timeout = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private int _buffer;
-
     public int Buffer
     {
-        get => _buffer;
+        get;
         set
         {
-            if (value == _buffer)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Traceroute_Buffer = value;
 
-            _buffer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _resolveHostname;
-
     public bool ResolveHostname
     {
-        get => _resolveHostname;
+        get;
         set
         {
-            if (value == _resolveHostname)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Traceroute_ResolveHostname = value;
 
-            _resolveHostname = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _checkIPApiIPGeolocation;
-
     public bool CheckIPApiIPGeolocation
     {
-        get => _checkIPApiIPGeolocation;
+        get;
         set
         {
-            if (value == _checkIPApiIPGeolocation)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Traceroute_CheckIPApiIPGeolocation = value;
 
-            _checkIPApiIPGeolocation = value;
+            field = value;
             OnPropertyChanged();
         }
     }
