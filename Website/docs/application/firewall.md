@@ -131,7 +131,9 @@ entries, but, as expected, it remains empty if you skip that.
 
 ![Firewall - Rule configuration](../img/firewall--ruleConfiguration.png)
 
-The rule details view contains the configuration of each rule.
+The rule details view contains the configuration of each rule. If rule
+configuration contains invalid configuration fields, it will be skipped
+when applying the list.
 
 ### Name ###
 
@@ -218,10 +220,8 @@ remote device to connect to your network interface.
 
 You can restrict the rule to a specific program here. The file must
 have a case insensitive *.exe file extension. Leaving it empty applies
-to all programs. The file must exist. If the file is deleted, the rule
-will be skipped, because the Windows firewall would then apply the
-rule to all programs. The rule and the input field will be marked red
-in that case.
+to all programs. The file must exist. The rule and the input field will
+be marked red in that case.
 
 **Type:** `String`
 
