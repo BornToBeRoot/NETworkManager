@@ -19,4 +19,8 @@ public interface IFirewallViewModel
     {
         Instance = viewModel;
     }
+
+    public void StorePorts();
+
+    public void RestorePorts();
 }

@@ -108,7 +108,15 @@ public class SettingsViewModel : ViewModelBase
         set
         {
             if (value == _selectedSettingsView)
+            {
+                switch (_selectedSettingsView.Name)
+                {
+                    case SettingsName.Firewall:
+                        _firewallSettingsView.OnViewVisible();
+                        break;
+                }
                 return;
+            }
 
             if (value != null)
                 ChangeSettingsContent(value);
@@ -348,7 +356,8 @@ public class SettingsViewModel : ViewModelBase
                 break;
             case SettingsName.Firewall:
                 _firewallSettingsView ??= new FirewallSettingsView();
-
+                _firewallSettingsView.OnViewVisible();
+                
                 SettingsContent = _firewallSettingsView;
                 break;
         }

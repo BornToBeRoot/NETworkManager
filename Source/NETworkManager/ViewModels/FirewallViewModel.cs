@@ -564,21 +564,15 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
     {
         IsViewActive = true;
         bool combined = SettingsManager.Current.Firewall_CombinePortHistory;
-        if (SettingsManager.Current.Firewall_LocalPortsHistoryConfig.Count
-            < FirewallRuleViewModel.LocalPortsHistory.Count)
-        {
-            FirewallRuleViewModel.LocalPortsHistory.Clear();
-            if (combined)
-                FirewallRuleViewModel.CombinedPortsHistory.Clear();
-        }
-        if (SettingsManager.Current.Firewall_RemotePortsHistoryConfig.Count
-            < FirewallRuleViewModel.RemotePortsHistory.Count)
-        {
-            FirewallRuleViewModel.RemotePortsHistory.Clear();
-            if (combined)
-                FirewallRuleViewModel.CombinedPortsHistory.Clear();
-        }
+        // Check whether any of the port histories has been cleared in the settings
+        bool localPortsCleared = SettingsManager.Current.Firewall_LocalPortsHistoryConfig?.Count
+                                 < FirewallRuleViewModel.LocalPortsHistory.Count;
+        bool remotePortsCleared = SettingsManager.Current.Firewall_RemotePortsHistoryConfig?.Count
+                                  < FirewallRuleViewModel.RemotePortsHistory.Count;
         MaxLengthHistory = SettingsManager.Current.Firewall_MaxLengthHistory;
+        // We need to store port values whenever clearing the HistoryView, because WPF
+        // would also remove the entered values otherwise. We also handle changes of the combined
+        // setting here by recreating the views.
         foreach (var rule in FirewallRules)
         {
             if (combined)
@@ -591,6 +585,8 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
             }
             else
             {
+                if (localPortsCleared || remotePortsCleared)
+                    rule.StorePortValues();
                 rule.LocalPortsHistoryView = CollectionViewSource
                     .GetDefaultView(FirewallRuleViewModel.LocalPortsHistory);
                 rule.RemotePortsHistoryView = CollectionViewSource
@@ -598,9 +594,26 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
             }
             rule.MaxLengthHistory = SettingsManager.Current.Firewall_MaxLengthHistory;
         }
+        // Now that the port entries are stored, we can safely clear the history.
+        if (localPortsCleared)
+        {
+            FirewallRuleViewModel.LocalPortsHistory ??= [];
+            FirewallRuleViewModel.LocalPortsHistory.Clear();
+            if (combined)
+                FirewallRuleViewModel.CombinedPortsHistory?.Clear();
+        }
+
+        if (remotePortsCleared)
+        {
+            FirewallRuleViewModel.RemotePortsHistory ??= [];
+            FirewallRuleViewModel.RemotePortsHistory.Clear();
+            if (combined)
+                FirewallRuleViewModel.CombinedPortsHistory?.Clear();
+        }
         // Also calls FirewallRuleViewModel.UpdateCombinedPortHistory()
         UpdatePortHistorySeparator();
-        if (!combined) return;
+        if (!combined && !localPortsCleared && !remotePortsCleared) return;
+        // Restore port entries when required.
         foreach (var rule in FirewallRules)
             rule.RestorePortValues();
     }
@@ -1325,6 +1338,18 @@ public class FirewallViewModel : ViewModelBase, IProfileManager, ICloneable, IFi
                 FirewallRules.Select(rule => rule.Clone() as FirewallRuleViewModel)),
         };
         return clone;
+    }
+
+    public void StorePorts()
+    {
+        foreach (var rule in FirewallRules)
+            rule.StorePortValues();
+    }
+
+    public void RestorePorts()
+    {
+        foreach (var rule in FirewallRules)
+            rule.RestorePortValues();
     }
     #endregion Methods
 

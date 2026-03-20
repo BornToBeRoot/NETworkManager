@@ -30,17 +30,9 @@ public partial class FirewallRuleGrid
     /// </remarks>
     private static readonly Mutex LocalPortsAdding = new();
     /// <summary>
-    /// Last local port string, which was added.
-    /// </summary>
-    private static string _lastLocalPortsString = string.Empty;
-    /// <summary>
     /// Mutex for remote ports being added to the history.
     /// </summary>
     private static readonly Mutex RemotePortsAdding = new();
-    /// <summary>
-    /// Last remote port string, which was added.
-    /// </summary>
-    private static string _lastRemotePortsString = string.Empty;
 
     /// <summary>
     /// List of TextBlock content to ignore on double clicks.
@@ -89,13 +81,9 @@ public partial class FirewallRuleGrid
         switch (portType)
         {
             case FirewallPortLocation.LocalPorts:
-                if (_lastLocalPortsString == formattedText)
-                    return;
-
                 try
                 {
                     LocalPortsAdding?.WaitOne();
-                    _lastLocalPortsString = formattedText;
                     dataContext.AddPortsToHistory(formattedText, portType);
                 }
                 finally
@@ -104,13 +92,9 @@ public partial class FirewallRuleGrid
                 }
                 break;
             case FirewallPortLocation.RemotePorts:
-                if (_lastRemotePortsString == formattedText)
-                    return;
-
                 try
                 {
                     RemotePortsAdding?.WaitOne();
-                    _lastRemotePortsString = formattedText;
                     dataContext.AddPortsToHistory(formattedText, portType);
                 }
                 finally

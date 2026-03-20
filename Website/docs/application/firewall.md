@@ -122,8 +122,10 @@ you can switch this option freely.
 
 ### Erase port history ###
 
-If you have played around too much with the port entries, you have the
-option here to erase the local or remote port history.
+If you have played around too much with the port entries you have the
+option here to erase the local or remote port history. The history
+will gradually rebuild its entries when you select existing port
+entries, but, as expected, it remains empty if you skip that.
 
 ## Rule configuration ##
 

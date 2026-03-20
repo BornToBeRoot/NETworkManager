@@ -818,11 +818,11 @@ public class FirewallRuleViewModel : ViewModelBase, ICloneable, IFirewallRuleVie
             int tmpLocalIndex = SettingsManager.Current.Firewall_CombinePortHistory ?
                 CombinedPortsHistory.IndexOf(_lastLocalPortValue) : LocalPortsHistory.IndexOf(_lastLocalPortValue);
             // Restore field value 
-            if (tmpLocalIndex != -1
-                && converter.Convert(_lastLocalPortValue, typeof(List<FirewallPortSpecification>),
+            if (converter.Convert(_lastLocalPortValue, typeof(List<FirewallPortSpecification>),
                     null, null) is List<FirewallPortSpecification> convertedPorts)
                 LocalPorts = convertedPorts;
-            LocalPortsIndex = tmpLocalIndex;
+            if (tmpLocalIndex != -1)
+                LocalPortsIndex = tmpLocalIndex;
 
 
         }
@@ -834,11 +834,11 @@ public class FirewallRuleViewModel : ViewModelBase, ICloneable, IFirewallRuleVie
         {
             int tmpRemoteIndex = SettingsManager.Current.Firewall_CombinePortHistory ?
                 CombinedPortsHistory.IndexOf(_lastRemotePortValue) : RemotePortsHistory.IndexOf(_lastRemotePortValue);
-            if (tmpRemoteIndex != -1
-                && converter.Convert(_lastRemotePortValue, typeof(List<FirewallPortSpecification>),
+            if (converter.Convert(_lastRemotePortValue, typeof(List<FirewallPortSpecification>),
                     null, null) is List<FirewallPortSpecification> convertedPorts)
                 RemotePorts = convertedPorts;
-            RemotePortsIndex = tmpRemoteIndex;
+            if (tmpRemoteIndex != -1)
+                RemotePortsIndex = tmpRemoteIndex;
         }
         // Reset stored value
         _lastRemotePortValue = string.Empty;
@@ -892,12 +892,10 @@ public class FirewallRuleViewModel : ViewModelBase, ICloneable, IFirewallRuleVie
             case FirewallPortLocation.LocalPorts:
                 LocalPortsHistory = portHistory;
                 SettingsManager.Current.Firewall_LocalPortsHistoryConfig = list;
-                FirewallSettingsViewModel.Instance.LocalPortsHaveItems = true;
                 break;
             case FirewallPortLocation.RemotePorts:
                 RemotePortsHistory = portHistory;
                 SettingsManager.Current.Firewall_RemotePortsHistoryConfig = list;
-                FirewallSettingsViewModel.Instance.RemotePortsHaveItems = true;
                 break;
         }
 

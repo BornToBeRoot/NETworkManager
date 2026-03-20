@@ -4529,9 +4529,29 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = false;
 
-    public List<string> Firewall_LocalPortsHistoryConfig { get; set; }
+    public List<string> Firewall_LocalPortsHistoryConfig
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 
-    public List<string> Firewall_RemotePortsHistoryConfig { get; set; }
+    public List<string> Firewall_RemotePortsHistoryConfig {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+            field = value;
+            OnPropertyChanged();
+        }
+        
+    }
 
     public List<FirewallRule> Firewall_FirewallRules
     {

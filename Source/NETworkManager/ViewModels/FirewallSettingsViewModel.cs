@@ -56,21 +56,6 @@ public class FirewallSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Whether the remote ports history has entries.
-    /// </summary>
-    public bool RemotePortsHaveItems
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
     /// Whether the local ports history has entries.
     /// </summary>
     public bool LocalPortsHaveItems
@@ -85,6 +70,21 @@ public class FirewallSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Whether the remote ports history has entries.
+    /// </summary>
+    public bool RemotePortsHaveItems
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+            field = value;
+            OnPropertyChanged();
+        }
+    }  
+    
     /// <summary>
     /// Configurable length of history entries.
     /// </summary>
@@ -122,16 +122,16 @@ public class FirewallSettingsViewModel : ViewModelBase
     {
         CombinePortHistory = SettingsManager.Current.Firewall_CombinePortHistory;
         UseWindowsPortSyntax = SettingsManager.Current.Firewall_UseWindowsPortSyntax;
+        MaxLengthHistory = SettingsManager.Current.Firewall_MaxLengthHistory;
         LocalPortsHaveItems = SettingsManager.Current.Firewall_LocalPortsHistoryConfig?.Count > 0;
         RemotePortsHaveItems = SettingsManager.Current.Firewall_RemotePortsHistoryConfig?.Count > 0;
-        MaxLengthHistory = SettingsManager.Current.Firewall_MaxLengthHistory;
-        // This default value is only present when the settings are initialized for the first time,
+        // This default value is only present when the settings are initialized for the first time
         // because Int32Validator does not allow 0 or negative values as input.
         if (MaxLengthHistory is 0)
             MaxLengthHistory = -1;
     }
     #endregion
-
+    
     #region Commands
     /// <summary>
     /// Command for <see cref="ClearLocalPortHistoryAction" />.
@@ -143,7 +143,7 @@ public class FirewallSettingsViewModel : ViewModelBase
     /// </summary>
     private void ClearLocalPortHistoryAction()
     {
-        SettingsManager.Current.Firewall_LocalPortsHistoryConfig.Clear();
+        SettingsManager.Current.Firewall_LocalPortsHistoryConfig?.Clear();
         LocalPortsHaveItems = false;
     }
 
@@ -157,9 +157,14 @@ public class FirewallSettingsViewModel : ViewModelBase
     /// </summary>
     private void ClearRemotePortHistoryAction()
     {
-        SettingsManager.Current.Firewall_RemotePortsHistoryConfig.Clear();
+        SettingsManager.Current.Firewall_RemotePortsHistoryConfig?.Clear();
         RemotePortsHaveItems = false;
     }
 
+    public void OnViewVisible()
+    {
+        LocalPortsHaveItems = SettingsManager.Current.Firewall_LocalPortsHistoryConfig?.Count > 0;
+        RemotePortsHaveItems = SettingsManager.Current.Firewall_RemotePortsHistoryConfig?.Count > 0;
+    }
     #endregion
 }

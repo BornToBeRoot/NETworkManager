@@ -21,4 +21,9 @@ public partial class FirewallSettingsView
         InitializeComponent();
         DataContext = _viewModel;
     }
+
+    public void OnViewVisible()
+    {
+        _viewModel.OnViewVisible();
+    }
 }
