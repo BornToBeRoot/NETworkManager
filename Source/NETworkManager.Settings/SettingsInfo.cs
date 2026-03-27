@@ -1,4 +1,4 @@
-﻿using DnsClient;
+using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Controls;
 using NETworkManager.Models;
@@ -2678,6 +2678,24 @@ public class SettingsInfo : INotifyPropertyChanged
                 return;
 
             _remoteDesktop_ProfileWidth = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string _remoteDesktop_ActiveDirectoryImportLdapSearchBase;
+
+    /// <summary>
+    ///     Last LDAP search base (OU DN) used for Remote Desktop Active Directory computer import.
+    /// </summary>
+    public string RemoteDesktop_ActiveDirectoryImportLdapSearchBase
+    {
+        get => _remoteDesktop_ActiveDirectoryImportLdapSearchBase;
+        set
+        {
+            if (value == _remoteDesktop_ActiveDirectoryImportLdapSearchBase)
+                return;
+
+            _remoteDesktop_ActiveDirectoryImportLdapSearchBase = value;
             OnPropertyChanged();
         }
     }
