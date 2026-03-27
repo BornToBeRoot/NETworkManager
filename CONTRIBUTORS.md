@@ -13,6 +13,7 @@ List of all contributors.
 - EBWeist
 - mdawsonuk
 - labre_rdc
+- Tyrix
 
 ## Translators / reviewers on Transifex
 
