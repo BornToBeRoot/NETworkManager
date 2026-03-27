@@ -422,6 +422,21 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    public ICommand ImportComputersFromActiveDirectoryCommand =>
+        new RelayCommand(_ => ImportComputersFromActiveDirectoryAction());
+
+    private void ImportComputersFromActiveDirectoryAction()
+    {
+        var suggestedTargetGroup = SelectedProfile?.Group;
+        if (string.IsNullOrWhiteSpace(suggestedTargetGroup))
+            suggestedTargetGroup = ProfileManager.GetGroupNames().FirstOrDefault() ?? string.Empty;
+
+        ProfileDialogManager
+            .ShowImportComputersFromActiveDirectoryDialog(Application.Current.MainWindow, this,
+                suggestedTargetGroup)
+            .ConfigureAwait(false);
+    }
+
     private bool ModifyProfile_CanExecute(object obj)
     {
         return SelectedProfile is { IsDynamic: false };

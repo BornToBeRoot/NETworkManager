@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.SimpleChildWindow;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -565,6 +565,32 @@ public static class ProfileDialogManager
             return;
 
         ProfileManager.RemoveProfiles(profiles);
+    }
+
+    public static Task ShowImportComputersFromActiveDirectoryDialog(Window parentWindow,
+        IProfileManagerMinimal viewModel, string suggestedTargetGroup)
+    {
+        var childWindow = new ImportAdComputersChildWindow(parentWindow);
+
+        void CloseChild()
+        {
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            viewModel.OnProfileManagerDialogClose();
+        }
+
+        var childWindowViewModel =
+            new ImportAdComputersViewModel(parentWindow, suggestedTargetGroup ?? string.Empty, CloseChild);
+
+        childWindow.Title = Strings.ImportComputersFromActiveDirectory;
+        childWindow.DataContext = childWindowViewModel;
+
+        viewModel.OnProfileManagerDialogOpen();
+
+        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
     #endregion
