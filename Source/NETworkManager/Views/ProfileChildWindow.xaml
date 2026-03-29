@@ -24,7 +24,6 @@
                                CloseButtonCommand="{Binding CancelCommand}"
                                Style="{StaticResource DefaultChildWindow}"
                                Loaded="ChildWindow_OnLoaded"
-                               Unloaded="ProfileChildWindow_OnUnloaded"
                                mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ProfileViewModel}">
     <simpleChildWindow:ChildWindow.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
@@ -1208,6 +1207,11 @@
                                                                 Value="{Binding DataContext.SNMP_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type simpleChildWindow:ChildWindow}}}" />
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}"
+                                                                 Value="{x:Static profiles:ProfileName.Firewall}">
+                                                        <Setter Property="IsChecked"
+                                                                Value="{Binding DataContext.Firewall_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type simpleChildWindow:ChildWindow}}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}"
                                                                  Value="{x:Static profiles:ProfileName.WakeOnLAN}">
                                                         <Setter Property="IsChecked"
                                                                 Value="{Binding DataContext.WakeOnLAN_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type simpleChildWindow:ChildWindow}}}" />
@@ -1221,14 +1225,6 @@
                                                                  Value="{x:Static profiles:ProfileName.IPGeolocation}">
                                                         <Setter Property="IsChecked"
                                                                 Value="{Binding DataContext.IPGeolocation_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type simpleChildWindow:ChildWindow}}}" />
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}"
-                                                                 Value="{x:Static profiles:ProfileName.Firewall}">
-                                                        <Setter Property="IsChecked"
-                                                                Value="{Binding DataContext.Firewall_Enabled,
-                                                                UpdateSourceTrigger=PropertyChanged,
-                                                                RelativeSource={RelativeSource FindAncestor,
-                                                                AncestorType={x:Type simpleChildWindow:ChildWindow}}}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -1271,8 +1267,7 @@
                 </ScrollViewer>
             </Border>
             <TabControl Grid.Column="1" Margin="10"
-                        SelectedIndex="{Binding ElementName=ListBoxViews, Path=SelectedIndex}"
-                        SelectionChanged="TabControl_OnSelectionChanged">
+                        SelectedIndex="{Binding ElementName=ListBoxViews, Path=SelectedIndex}">
                 <TabControl.Resources>
                     <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource ProfileTabItem}" />
                 </TabControl.Resources>
@@ -1311,8 +1306,6 @@
                                         <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <validators:FirewallRuleNoPipeValidator ValidatesOnTargetUpdated="True"
-                                                        ValidationStep="UpdatedValue" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>

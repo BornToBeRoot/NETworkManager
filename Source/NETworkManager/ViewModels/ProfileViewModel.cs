@@ -16,14 +16,12 @@ using System.Security;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
-using NETworkManager.Interfaces.ViewModels;
-using NETworkManager.Models.Firewall;
 
 // ReSharper disable InconsistentNaming
 
 namespace NETworkManager.ViewModels;
 
-public class ProfileViewModel : ViewModelBase, IProfileViewModel
+public class ProfileViewModel : ViewModelBase
 {
     #region Constructor
 
@@ -40,14 +38,6 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         var profileInfo = profile ?? new ProfileInfo();
-
-        #region LoadViewModel
-        // Load ViewModels implementing ICloneable and Singleton pattern.
-
-        // Firewall
-        Firewall_ViewModel = (IFirewallViewModel.Instance as FirewallViewModel)
-            ?.Clone() as FirewallViewModel;
-        #endregion
 
         Name = profileInfo.Name;
 
@@ -316,6 +306,11 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
         SNMP_PrivacyProvider = SNMP_PrivacyProviders.FirstOrDefault(x => x == profileInfo.SNMP_PrivacyProvider);
         SNMP_Priv = profileInfo.SNMP_Priv;
 
+        // Firewall
+        Firewall_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.Firewall
+            : profileInfo.Firewall_Enabled;
+        
         // Wake on LAN
         WakeOnLAN_Enabled = editMode == ProfileEditMode.Add
             ? applicationName == ApplicationName.WakeOnLAN
@@ -336,11 +331,6 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
             : profileInfo.IPGeolocation_Enabled;
         IPGeolocation_InheritHost = profileInfo.IPGeolocation_InheritHost;
         IPGeolocation_Host = profileInfo.IPGeolocation_Host;
-
-        // Firewall
-        Firewall_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.Firewall
-            : profileInfo.Firewall_Enabled;
 
         _isLoading = false;
     }
@@ -388,15 +378,6 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
                 break;
         }
     }
-
-    public List<FirewallRule> GetFirewallRules()
-    {
-        List<FirewallRule> list = [];
-        list.AddRange(Firewall_ViewModel?.FirewallRules?.Select(model => model?.ToRule(true))
-                          .Where(model => model != null)
-                      ?? []);
-        return list;
-    }
     #endregion
 
     #region Variables
@@ -416,13 +397,7 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
         {
             if (value == field)
                 return;
-            if ((Firewall_Enabled || _isLoading) && !value.Contains('|'))
-            {
-                Firewall_ViewModel?.ProfileName = value;
-                OnPropertyChanged(nameof(Firewall_ViewModel));
-                OnPropertyChanged(nameof(Firewall_IViewModel));
-            }
-
+           
             field = value;
             OnPropertyChanged();
         }
@@ -517,7 +492,7 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
     public ObservableSetCollection<string> TagsCollection
     {
         get;
-        set
+        private init
         {
             if (Equals(value, field))
                 return;
@@ -525,7 +500,7 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
             field = value;
             OnPropertyChanged();
         }
-    } = [];
+    }
 
     #endregion
 
@@ -556,7 +531,7 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
             field = value;
             OnPropertyChanged();
         }
-    } = true;
+    }
 
     public bool NetworkInterface_EnableStaticIPAddress
     {
@@ -624,7 +599,7 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
             field = value;
             OnPropertyChanged();
         }
-    } = true;
+    }
 
     public bool NetworkInterface_EnableStaticDNS
     {
@@ -2767,24 +2742,7 @@ public class ProfileViewModel : ViewModelBase, IProfileViewModel
             OnPropertyChanged(nameof(Name));
         }
     }
-
-    public IFirewallViewModel Firewall_IViewModel
-    {
-        get => Firewall_ViewModel;
-        set => Firewall_ViewModel = (FirewallViewModel)value;
-    }
-
-    public FirewallViewModel Firewall_ViewModel
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-            field = value;
-            OnPropertyChanged();
-        }
-    }
+  
     #endregion Firewall
     
     #region Wake on LAN

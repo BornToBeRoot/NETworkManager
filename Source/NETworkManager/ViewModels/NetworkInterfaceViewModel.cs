@@ -899,9 +899,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Gets the command to apply the profile configuration.
     /// </summary>
-    public ICommand ApplyProfileConfigCommand => new RelayCommand(_ => ApplyProfileProfileAction());
-
-    private void ApplyProfileProfileAction()
+    public ICommand ApplyProfileCommand => new RelayCommand(_ => ApplyProfileAction());
+    
+    private void ApplyProfileAction()
     {
         ApplyConfigurationFromProfile().ConfigureAwait(false);
     }
@@ -1397,13 +1397,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         try
         {
-            ProcessStartInfo info = new()
-            {
-                FileName = "NCPA.cpl",
-                UseShellExecute = true
-            };
-
-            Process.Start(info);
+            ExternalProcessStarter.RunProcess("NCPA.cpl");
         }
         catch (Exception ex)
         {

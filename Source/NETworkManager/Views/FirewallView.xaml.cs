@@ -1,6 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
@@ -13,7 +13,7 @@ public partial class FirewallView
     /// <summary>
     /// View model for the view.
     /// </summary>
-    private readonly FirewallViewModel _viewModel;
+    private readonly FirewallViewModel _viewModel = new();
 
     /// <summary>
     /// Initialize view.
@@ -21,12 +21,7 @@ public partial class FirewallView
     public FirewallView()
     {
         InitializeComponent();
-
-        _viewModel = FirewallViewModel.Instance as FirewallViewModel
-                     ?? throw new ArgumentNullException(nameof(FirewallViewModel));
         DataContext = _viewModel;
-        _viewModel?.CommandExecuted += AnyButton_OnClick;
-        FirewallRuleGrid.DataContext = _viewModel;
     }
 
     #region Events
@@ -40,15 +35,19 @@ public partial class FirewallView
         if (sender is ContextMenu menu)
             menu.DataContext = _viewModel;
     }
+    
+    private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (e.ChangedButton == MouseButton.Left)
+            _viewModel.ApplyProfileCommand.Execute(null);
+    }
 
     /// <summary>
     /// Offload event for toggling view to the view model.
     /// </summary>
     public void OnViewHide()
     {
-        _viewModel?.OnViewHide();
-        if (_viewModel?.IsViewActive ?? false)
-            FirewallRuleGrid?.RestoreRuleGridFocus();
+        _viewModel.OnViewHide();
     }
 
     /// <summary>
@@ -56,33 +55,7 @@ public partial class FirewallView
     /// </summary>
     public void OnViewVisible()
     {
-        _viewModel?.OnViewVisible();
-        FirewallRuleGrid?.RestoreRuleGridFocus();
-    }
-
-    /// <summary>
-    /// Set the focus to the RuleGrid when loading is finished.
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void FirewallView_OnLoaded(object sender, RoutedEventArgs e)
-    {
-        FirewallRuleGrid?.RestoreRuleGridFocus();
+        _viewModel.OnViewVisible();
     }
     #endregion
-
-    /// <summary>
-    /// Set the focus to the rule grid when a button is clicked.
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void AnyButton_OnClick(object sender, RoutedEventArgs e)
-    {
-        FirewallRuleGrid?.RestoreRuleGridFocus();
-    }
-
-    private void FirewallView_OnUnloaded(object sender, RoutedEventArgs e)
-    {
-        _viewModel?.CommandExecuted -= AnyButton_OnClick;
-    }
 }

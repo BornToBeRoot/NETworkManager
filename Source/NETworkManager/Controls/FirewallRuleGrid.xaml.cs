@@ -207,13 +207,13 @@ public partial class FirewallRuleGrid
         switch (e.Key)
         {
             case Key.A when Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl):
-                dataContext.ApplyConfigurationCommand.Execute(null);
+                //dataContext.ApplyConfigurationCommand.Execute(null);
                 e.Handled = true;
                 break;
             case Key.D when Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl):
             case Key.Delete:
                 int index = RuleGrid.SelectedIndex;
-                dataContext.DeleteRulesCommand.Execute(null);
+                //dataContext.DeleteRulesCommand.Execute(null);
                 if (grid.HasItems)
                 {
                     // Select the same index or the last item if we deleted the end
@@ -229,16 +229,16 @@ public partial class FirewallRuleGrid
             case Key.C when (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
                             && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
                             && (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt)):
-                FirewallViewModel.DeleteWindowsRulesCommand.Execute(null);
+               // FirewallViewModel.DeleteWindowsRulesCommand.Execute(null);
                 e.Handled = true;
                 break;
             case Key.C when (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
                             && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)):
-                dataContext.DeleteAllRulesCommand.Execute(null);
+                //dataContext.DeleteAllRulesCommand.Execute(null);
                 e.Handled = true;
                 break;
             case Key.N when Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl):
-                dataContext.AddRuleCommand.Execute(null);
+                //dataContext.AddRuleCommand.Execute(null);
                 e.Handled = true;
                 break;
             case Key.Right when row?.DetailsVisibility == Visibility.Collapsed:
@@ -271,7 +271,7 @@ public partial class FirewallRuleGrid
                     grid.UpdateLayout();
                     row = grid.ItemContainerGenerator.ContainerFromIndex(grid.SelectedIndex) as DataGridRow;
                     var viewModel = grid.DataContext as FirewallViewModel;
-                    viewModel?.SelectedRule = item;
+                    //viewModel?.SelectedRule = item;
                 }
                 FocusManager.SetFocusedElement(FocusManager.GetFocusScope(grid), null);
                 Keyboard.ClearFocus();
@@ -284,7 +284,7 @@ public partial class FirewallRuleGrid
                 e.Handled = true;
                 break;
             case Key.W when Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl):
-                dataContext.OpenWindowsFirewallCommand.Execute(null);
+                //dataContext.OpenWindowsFirewallCommand.Execute(null);
                 e.Handled = true;
                 break;
         }

@@ -1601,7 +1601,7 @@
                             <ListBox.Resources>
                                 <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                     <MenuItem Header="{x:Static localization:Strings.Apply}"
-                                              Command="{Binding ApplyProfileConfigCommand}">
+                                              Command="{Binding ApplyProfileCommand}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16"
                                                        Fill="{DynamicResource MahApps.Brushes.Gray3}">
