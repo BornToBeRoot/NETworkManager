@@ -415,6 +415,10 @@
                                                 Binding="{Binding (profiles:ProfileInfo.WebConsole_Enabled)}"
                                                 SortMemberPath="WebConsole_Enabled" MinWidth="80" Width="Auto" />
                         <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}"
+                                                Header="{x:Static localization:Strings.Firewall}"
+                                                Binding="{Binding (profiles:ProfileInfo.Firewall_Enabled)}"
+                                                SortMemberPath="Firewall_Enabled" MinWidth="80" Width="Auto" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}"
                                                 Header="{x:Static localization:Strings.WakeOnLAN}"
                                                 Binding="{Binding (profiles:ProfileInfo.WakeOnLAN_Enabled)}"
                                                 SortMemberPath="WakeOnLAN_Enabled" MinWidth="80" Width="Auto" />
@@ -434,7 +438,7 @@
                                 <Style.Triggers>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding Path=Groups.Count}" Value="0" />
+                                            <Condition Binding="{Binding Path=Groups.IsEmpty}" Value="True" />
                                             <Condition Binding="{Binding Path=IsSearching}" Value="False" />
                                         </MultiDataTrigger.Conditions>
                                         <MultiDataTrigger.Setters>
@@ -443,7 +447,7 @@
                                     </MultiDataTrigger>
                                     <MultiDataTrigger>
                                         <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding Path=Profiles.Count}" Value="0" />
+                                            <Condition Binding="{Binding Path=Profiles.IsEmpty}" Value="True" />
                                             <Condition Binding="{Binding Path=IsSearching}" Value="False" />
                                         </MultiDataTrigger.Conditions>
                                         <MultiDataTrigger.Setters>

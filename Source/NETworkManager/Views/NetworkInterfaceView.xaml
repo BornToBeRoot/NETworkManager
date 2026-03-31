@@ -37,7 +37,6 @@
             x:Key="IPAddressSubnetmaskTupleArrayToStringConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
-        <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" />
         <converters:OperationalStatusToStringConverter x:Key="OperationalStatusToStringConverter" />
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <converters:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
@@ -104,7 +103,7 @@
                                                 <StackPanel Margin="10,0,0,0">
                                                     <TextBlock Text="{Binding Path=Name}" />
                                                     <TextBlock Text="{Binding Path=Description}"
-                                                               Foreground="{DynamicResource MahApps.Brushes.Gray3}" />
+                                                               Foreground="{StaticResource MahApps.Brushes.Gray3}" />
                                                 </StackPanel>
                                             </StackPanel>
                                         </DataTemplate>
@@ -729,7 +728,7 @@
                                                 <StackPanel Margin="10,0,0,0">
                                                     <TextBlock Text="{Binding Path=Name}" />
                                                     <TextBlock Text="{Binding Path=Description}"
-                                                               Foreground="{DynamicResource MahApps.Brushes.Gray3}" />
+                                                               Foreground="{StaticResource MahApps.Brushes.Gray3}" />
                                                 </StackPanel>
                                             </StackPanel>
                                         </DataTemplate>
@@ -838,7 +837,7 @@
                                 <liveChart:Axis MinValue="0" LabelFormatter="{Binding FormatterSpeed}">
                                     <liveChart:Axis.Separator>
                                         <liveChart:Separator StrokeThickness="1"
-                                                             Stroke="{DynamicResource MahApps.Brushes.Gray8}"
+                                                             Stroke="{StaticResource MahApps.Brushes.Gray8}"
                                                              StrokeDashArray="10" />
                                     </liveChart:Axis.Separator>
                                 </liveChart:Axis>
@@ -968,7 +967,7 @@
                                                     <StackPanel Margin="10,0,0,0">
                                                         <TextBlock Text="{Binding Path=Name}" />
                                                         <TextBlock Text="{Binding Path=Description}"
-                                                                   Foreground="{DynamicResource MahApps.Brushes.Gray3}" />
+                                                                   Foreground="{StaticResource MahApps.Brushes.Gray3}" />
                                                     </StackPanel>
                                                 </StackPanel>
                                             </DataTemplate>
@@ -1050,10 +1049,13 @@
                                         </Rectangle>
                                     </Button>
                                     <TextBlock Grid.Column="0" Grid.Row="1"
-                                               Foreground="{DynamicResource MahApps.Brushes.Accent}"
                                                Text="{x:Static localization:Strings.ConnectTheNetworkCardToConfigureIt}"
                                                Visibility="{Binding CanConfigure, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
-                                               Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0" />
+                                               Style="{DynamicResource DefaultTextBlock}" Margin="0,10,0,0">
+                                        <TextBlock.Foreground>
+                                            <StaticResource ResourceKey="MahApps.Brushes.Accent" />
+                                        </TextBlock.Foreground>
+                                    </TextBlock>
                                 </Grid>
                             </StackPanel>
                             <TextBlock Grid.Row="1" Style="{StaticResource HeaderTextBlock}"
@@ -1148,7 +1150,7 @@
                                                             <TextBlock Grid.Column="1" VerticalAlignment="Center"
                                                                        Style="{StaticResource DefaultTextBlock}"
                                                                        Text="{Binding Path=CIDR,StringFormat=/{0}}"
-                                                                       Foreground="{DynamicResource GrayBrush2}" />
+                                                                       Foreground="{StaticResource MahApps.Brushes.Gray2}" />
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>
@@ -1255,7 +1257,7 @@
                                 </Style>
                             </mahAppsControls:MetroProgressBar.Style>
                         </mahAppsControls:MetroProgressBar>
-                        <TextBlock Grid.Row="3" Foreground="{DynamicResource MahApps.Brushes.Accent}"
+                        <TextBlock Grid.Row="3" Foreground="{StaticResource MahApps.Brushes.Accent}"
                                    Text="{Binding StatusMessage}"
                                    Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                                    Style="{DynamicResource StatusMessageTextBlock}" Margin="0,0,0,10" />
@@ -1470,7 +1472,7 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button>
-                            <Popup PlacementTarget="{Binding ElementName=ButtonProfileFilter}"
+                            <Popup Grid.Column="0" PlacementTarget="{Binding ElementName=ButtonProfileFilter}"
                                    Placement="Bottom" StaysOpen="False"
                                    IsOpen="{Binding ProfileFilterIsOpen}"
                                    Width="220">
@@ -1495,7 +1497,7 @@
                                         <ScrollViewer Grid.Column="0" Grid.Row="2"
                                                       VerticalScrollBarVisibility="Auto"
                                                       HorizontalScrollBarVisibility="Hidden"
-                                                      Visibility="{Binding Path=ProfileFilterTagsView.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
+                                                      Visibility="{Binding Path=ProfileFilterTagsView.IsEmpty, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                             <ItemsControl ItemsSource="{Binding ProfileFilterTagsView}"
                                                           Width="200">
                                                 <ItemsControl.ItemsPanel>
@@ -1514,7 +1516,7 @@
                                         </ScrollViewer>
                                         <TextBlock Grid.Column="0" Grid.Row="2"
                                                    Text="{x:Static localization:Strings.NoTagsFound}"
-                                                   Visibility="{Binding Path=ProfileFilterTagsView.Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}"
+                                                   Visibility="{Binding Path=ProfileFilterTagsView.IsEmpty, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                                                    Style="{StaticResource MessageTextBlock}" />
                                         <TextBlock Grid.Column="0" Grid.Row="4"
                                                    Text="{x:Static localization:Strings.Match}"
@@ -1783,7 +1785,7 @@
                                     <Style.Triggers>
                                         <MultiDataTrigger>
                                             <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding Profiles.Count}" Value="0" />
+                                                <Condition Binding="{Binding Profiles.IsEmpty}" Value="True" />
                                                 <Condition Binding="{Binding IsSearching}" Value="False" />
                                             </MultiDataTrigger.Conditions>
                                             <MultiDataTrigger.Setters>

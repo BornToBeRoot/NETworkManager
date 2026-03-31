@@ -108,7 +108,15 @@ public class SettingsViewModel : ViewModelBase
         set
         {
             if (value == _selectedSettingsView)
+            {
+                switch (_selectedSettingsView.Name)
+                {
+                    case SettingsName.Firewall:
+                        _firewallSettingsView.OnViewVisible();
+                        break;
+                }
                 return;
+            }
 
             if (value != null)
                 ChangeSettingsContent(value);
@@ -144,6 +152,7 @@ public class SettingsViewModel : ViewModelBase
     private SNTPLookupSettingsView _sntpLookupSettingsView;
     private WakeOnLANSettingsView _wakeOnLANSettingsView;
     private BitCalculatorSettingsView _bitCalculatorSettingsView;
+    private FirewallSettingsView _firewallSettingsView;
 
     #endregion
 
@@ -344,6 +353,12 @@ public class SettingsViewModel : ViewModelBase
                 _bitCalculatorSettingsView ??= new BitCalculatorSettingsView();
 
                 SettingsContent = _bitCalculatorSettingsView;
+                break;
+            case SettingsName.Firewall:
+                _firewallSettingsView ??= new FirewallSettingsView();
+                _firewallSettingsView.OnViewVisible();
+                
+                SettingsContent = _firewallSettingsView;
                 break;
         }
     }

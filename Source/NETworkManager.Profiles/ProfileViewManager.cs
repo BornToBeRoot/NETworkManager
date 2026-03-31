@@ -4,11 +4,23 @@ using NETworkManager.Models;
 
 namespace NETworkManager.Profiles;
 
+/// <summary>
+/// Provides centralized access to all available profile views within the application.
+/// </summary>
+/// <remarks>The ProfileViewManager class exposes a static list of ProfileViewInfo objects, each representing a
+/// distinct application or tool, such as network utilities and monitoring features. This enables developers to
+/// enumerate and display profile views, each associated with an icon and a profile group, for use in user interfaces or
+/// configuration scenarios.</remarks>
 public static class ProfileViewManager
 {
-    // List of all applications
-    public static List<ProfileViewInfo> List => new()
-    {
+    /// <summary>
+    /// Gets a static collection of predefined profile view information, organized by general and application profiles.
+    /// </summary>
+    /// <remarks>The collection contains instances of ProfileViewInfo representing various network and
+    /// application tools, each associated with an icon and a profile group. Use this property to access commonly used
+    /// profiles for display or selection purposes.</remarks>
+    public static List<ProfileViewInfo> List =>
+    [
         // General
         new ProfileViewInfo(ProfileName.General, new PackIconModern { Kind = PackIconModernKind.Box },
             ProfileGroup.General),
@@ -38,11 +50,13 @@ public static class ProfileViewManager
             ProfileGroup.Application),
         new ProfileViewInfo(ProfileName.SNMP, ApplicationManager.GetIcon(ApplicationName.SNMP),
             ProfileGroup.Application),
+          new ProfileViewInfo(ProfileName.Firewall, ApplicationManager.GetIcon(ApplicationName.Firewall),
+            ProfileGroup.Application),
         new ProfileViewInfo(ProfileName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN),
             ProfileGroup.Application),
         new ProfileViewInfo(ProfileName.Whois, ApplicationManager.GetIcon(ApplicationName.Whois),
             ProfileGroup.Application),
         new ProfileViewInfo(ProfileName.IPGeolocation, ApplicationManager.GetIcon(ApplicationName.IPGeolocation),
-            ProfileGroup.Application)
-    };
+            ProfileGroup.Application),      
+    ];
 }

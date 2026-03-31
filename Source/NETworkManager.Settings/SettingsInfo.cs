@@ -9,11 +9,13 @@ using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
+using NETworkManager.Models.Firewall;
 
 // ReSharper disable InconsistentNaming
 
@@ -4493,6 +4495,113 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
+    #endregion
+
+    /// <summary>
+    /// Settings for the <see cref="ApplicationName.Firewall" /> application.
+    /// See <see cref="FirewallSettingsViewModel" /> for details.
+    /// </summary>
+    #region Firewall
+
+    public bool Firewall_CombinePortHistory
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = true;
+
+    public bool Firewall_UseWindowsPortSyntax
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+            field = value;
+            OnPropertyChanged();
+        }
+    } = false;
+
+    public List<string> Firewall_LocalPortsHistoryConfig
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public List<string> Firewall_RemotePortsHistoryConfig {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+            field = value;
+            OnPropertyChanged();
+        }
+        
+    }
+
+    public List<FirewallRule> Firewall_FirewallRules
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public int Firewall_MaxLengthHistory
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool Firewall_ExpandProfileView
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
+
+    public double Firewall_ProfileWidth
+    {
+        get;
+        set
+        {
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     #endregion
 

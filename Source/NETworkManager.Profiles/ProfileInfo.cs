@@ -1,4 +1,5 @@
-﻿using NETworkManager.Controls;
+﻿using System.Collections.Generic;
+using NETworkManager.Controls;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
@@ -6,6 +7,7 @@ using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using System.Security;
 using System.Xml.Serialization;
+using NETworkManager.Models.Firewall;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable PropertyCanBeMadeInitOnly.Global
@@ -216,6 +218,10 @@ public class ProfileInfo
         SNMP_PrivacyProvider = profile.SNMP_PrivacyProvider;
         SNMP_Priv = profile.SNMP_Priv;
 
+        // Firewall
+        Firewall_Enabled = profile.Firewall_Enabled;
+        Firewall_Rules = profile.Firewall_Rules;
+        
         // Wake on LAN
         WakeOnLAN_Enabled = profile.WakeOnLAN_Enabled;
         WakeOnLAN_MACAddress = profile.WakeOnLAN_MACAddress;
@@ -462,6 +468,9 @@ public class ProfileInfo
     public SNMPV3PrivacyProvider SNMP_PrivacyProvider { get; set; } = GlobalStaticConfiguration.SNMP_PrivacyProvider;
     [XmlIgnore] public SecureString SNMP_Priv { get; set; }
 
+    public bool Firewall_Enabled { get; set; }
+    public List<FirewallRule> Firewall_Rules { get; set; }
+    
     public bool WakeOnLAN_Enabled { get; set; }
     public string WakeOnLAN_MACAddress { get; set; }
     public string WakeOnLAN_Broadcast { get; set; }

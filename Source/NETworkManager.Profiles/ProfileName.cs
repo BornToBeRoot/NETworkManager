@@ -15,7 +15,8 @@ public enum ProfileName
     TigerVNC,
     WebConsole,
     SNMP,
+    Firewall,
     WakeOnLAN,
     Whois,
-    IPGeolocation
+    IPGeolocation, 
 }
