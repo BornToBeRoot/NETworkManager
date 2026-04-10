@@ -4,8 +4,7 @@
     <Style x:Key="DefaultCheckBox" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource MahApps.Styles.CheckBox}">
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="Validation.ErrorTemplate" Value="{StaticResource OuterOffsetErrorTemplate}" />
+        <Setter Property="FontSize" Value="14" />        
     </Style>
 
     <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource DefaultCheckBox}" />
