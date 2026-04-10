@@ -57,8 +57,8 @@ public class SettingsWindowViewModel : ViewModelBase
             if (!_isLoading)
                 SettingsManager.Current.Window_ConfirmClose = value;
 
-            OnPropertyChanged();
             _confirmClose = value;
+            OnPropertyChanged();            
         }
     }
 
@@ -75,8 +75,8 @@ public class SettingsWindowViewModel : ViewModelBase
             if (!_isLoading)
                 SettingsManager.Current.Window_MultipleInstances = value;
 
-            OnPropertyChanged();
             _multipleInstances = value;
+            OnPropertyChanged();         
         }
     }
 
