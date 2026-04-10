@@ -30,9 +30,11 @@ public class BindingProxy : Freezable
         set => SetValue(DataProperty, value);
     }
 
-    /// Creates a new instance of the BindingProxy class.
+    /// <summary>
+    /// Creates a new instance of the <see cref="BindingProxy"/> class.
+    /// </summary>
     /// <returns>
-    /// A new instance of the BindingProxy class.
+    /// A new instance of the <see cref="BindingProxy"/> class.
     /// </returns>
     protected override Freezable CreateInstanceCore()
     {

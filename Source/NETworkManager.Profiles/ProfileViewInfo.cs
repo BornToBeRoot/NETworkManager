@@ -16,9 +16,9 @@ public class ProfileViewInfo
     /// <summary>
     /// Initializes a new instance of the ProfileViewInfo class with the specified profile name, icon, and group.
     /// </summary>
-    /// <param name="name">The name of the profile to associate with this view. Cannot be null.</param>
+    /// <param name="name">The name of the profile to associate with this view. Must be a valid ProfileName instance.</param>
     /// <param name="icon">The icon representing the profile. Cannot be null.</param>
-    /// <param name="group">The group to which the profile belongs. Cannot be null.</param>
+    /// <param name="group">The group to which the profile belongs. Must be a valid ProfileGroup instance.</param>
     public ProfileViewInfo(ProfileName name, Canvas icon, ProfileGroup group)
     {
         Name = name;
