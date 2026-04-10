@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NETworkManager.Utilities;
 /// <summary>
@@ -25,7 +26,7 @@ public static class ListHelper
         }
 
         if (length <= 0)
-            return list;
+            throw new ArgumentOutOfRangeException(nameof(length), "Length must be greater than zero.");
 
         while (list.Count >= length)
             list.RemoveAt(list.Count - 1);
