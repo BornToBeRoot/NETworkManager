@@ -36,7 +36,7 @@
         <converters:IPAddressSubnetmaskTupleArrayToStringConverter
             x:Key="IPAddressSubnetmaskTupleArrayToStringConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
-        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
+        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />        
         <converters:OperationalStatusToStringConverter x:Key="OperationalStatusToStringConverter" />
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <converters:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
@@ -1150,7 +1150,7 @@
                                                             <TextBlock Grid.Column="1" VerticalAlignment="Center"
                                                                        Style="{StaticResource DefaultTextBlock}"
                                                                        Text="{Binding Path=CIDR,StringFormat=/{0}}"
-                                                                       Foreground="{StaticResource MahApps.Brushes.Gray2}" />
+                                                                       Foreground="{DynamicResource MahApps.Brushes.Gray2}" />
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>
@@ -1472,7 +1472,8 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button>
-                            <Popup Grid.Column="0" PlacementTarget="{Binding ElementName=ButtonProfileFilter}"
+                            <Popup Grid.Column="0" Grid.Row="0"
+                                   PlacementTarget="{Binding ElementName=ButtonProfileFilter}"
                                    Placement="Bottom" StaysOpen="False"
                                    IsOpen="{Binding ProfileFilterIsOpen}"
                                    Width="220">
