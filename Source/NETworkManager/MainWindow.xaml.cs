@@ -110,14 +110,12 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private bool _isInTray;
     private bool _isClosing;
 
-    private bool _applicationViewIsExpanded;
-
     public bool ApplicationViewIsExpanded
     {
-        get => _applicationViewIsExpanded;
+        get;
         set
         {
-            if (value == _applicationViewIsExpanded)
+            if (value == field)
                 return;
 
             if (!_isLoading)
@@ -126,85 +124,75 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             if (!value)
                 ClearSearchOnApplicationListMinimize();
 
-            _applicationViewIsExpanded = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _textBoxApplicationSearchIsFocused;
 
     public bool TextBoxApplicationSearchIsFocused
     {
-        get => _textBoxApplicationSearchIsFocused;
+        get;
         set
         {
-            if (value == _textBoxApplicationSearchIsFocused)
+            if (value == field)
                 return;
 
             if (!value)
                 ClearSearchOnApplicationListMinimize();
 
-            _textBoxApplicationSearchIsFocused = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _applicationViewIsOpen;
 
     public bool ApplicationViewIsOpen
     {
-        get => _applicationViewIsOpen;
+        get;
         set
         {
-            if (value == _applicationViewIsOpen)
+            if (value == field)
                 return;
 
             if (!value)
                 ClearSearchOnApplicationListMinimize();
 
-            _applicationViewIsOpen = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _applicationViewIsMouseOver;
 
     public bool ApplicationViewIsMouseOver
     {
-        get => _applicationViewIsMouseOver;
+        get;
         set
         {
-            if (value == _applicationViewIsMouseOver)
+            if (value == field)
                 return;
 
             if (!value)
                 ClearSearchOnApplicationListMinimize();
 
-            _applicationViewIsMouseOver = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ICollectionView _applications;
 
     public ICollectionView Applications
     {
-        get => _applications;
+        get;
         private set
         {
-            if (value == _applications)
+            if (value == field)
                 return;
 
-            _applications = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private ApplicationInfo _selectedApplication;
-
     public ApplicationInfo SelectedApplication
     {
-        get => _selectedApplication;
+        get;
         set
         {
             // Do not change the application view if the application view is loading
@@ -216,14 +204,14 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 return;
 
             // Don't update the application view if the application is the same
-            if (Equals(value, _selectedApplication))
+            if (Equals(value, field))
                 return;
 
             if (value != null && !_applicationViewIsEmpty)
             {
                 // Hide the old application view
-                if (_selectedApplication != null)
-                    OnApplicationViewHide(_selectedApplication.Name);
+                if (field != null)
+                    OnApplicationViewHide(field.Name);
 
                 // Show the new application view
                 OnApplicationViewVisible(value.Name);
@@ -232,7 +220,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 ConfigurationManager.Current.CurrentApplication = value.Name;
             }
 
-            _selectedApplication = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -241,17 +229,15 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private bool _applicationViewIsEmpty;
 
-    private string _applicationSearch = string.Empty;
-
     public string ApplicationSearch
     {
-        get => _applicationSearch;
+        get;
         set
         {
-            if (value == _applicationSearch)
+            if (value == field)
                 return;
 
-            _applicationSearch = value;
+            field = value;
 
             // Store the current selected application name
             if (SelectedApplication != null)
@@ -278,114 +264,100 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
             OnPropertyChanged();
         }
-    }
+    } = string.Empty;
 
     private SettingsView _settingsView;
 
-    private bool _settingsViewIsOpen;
-
     public bool SettingsViewIsOpen
     {
-        get => _settingsViewIsOpen;
+        get;
         set
         {
-            if (value == _settingsViewIsOpen)
+            if (value == field)
                 return;
 
-            _settingsViewIsOpen = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _flyoutRunCommandIsOpen;
 
     public bool FlyoutRunCommandIsOpen
     {
-        get => _flyoutRunCommandIsOpen;
+        get;
         set
         {
-            if (value == _flyoutRunCommandIsOpen)
+            if (value == field)
                 return;
 
-            _flyoutRunCommandIsOpen = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isRestartRequired;
 
     public bool IsRestartRequired
     {
-        get => _isRestartRequired;
+        get;
         set
         {
-            if (value == _isRestartRequired)
+            if (value == field)
                 return;
 
-            _isRestartRequired = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isUpdateAvailable;
 
     public bool IsUpdateAvailable
     {
-        get => _isUpdateAvailable;
+        get;
         set
         {
-            if (value == _isUpdateAvailable)
+            if (value == field)
                 return;
 
-            _isUpdateAvailable = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _updateReleaseUrl;
 
     public string UpdateReleaseUrl
     {
-        get => _updateReleaseUrl;
+        get;
         private set
         {
-            if (value == _updateReleaseUrl)
+            if (value == field)
                 return;
 
-            _updateReleaseUrl = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ICollectionView _profileFiles;
 
     public ICollectionView ProfileFiles
     {
-        get => _profileFiles;
+        get;
         private set
         {
-            if (value == _profileFiles)
+            if (value == field)
                 return;
 
-            _profileFiles = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private ProfileFileInfo _selectedProfileFile;
-
     public ProfileFileInfo SelectedProfileFile
     {
-        get => _selectedProfileFile;
+        get;
         set
         {
             if (_isProfileFilesLoading)
                 return;
 
-            if (value != null && value.Equals(_selectedProfileFile))
+            if (value != null && value.Equals(field))
                 return;
 
-            _selectedProfileFile = value;
+            field = value;
 
             if (value != null)
             {
@@ -400,17 +372,15 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
     }
 
-    private bool _isProfileFileDropDownOpened;
-
     public bool IsProfileFileDropDownOpened
     {
-        get => _isProfileFileDropDownOpened;
+        get;
         set
         {
-            if (value == _isProfileFileDropDownOpened)
+            if (value == field)
                 return;
 
-            _isProfileFileDropDownOpened = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -687,6 +657,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private SNMPHostView _snmpHostView;
     private SNTPLookupHostView _sntpLookupHostView;
     private HostsFileEditorView _hostsFileEditorView;
+    private FirewallView _firewallView;
     private DiscoveryProtocolView _discoveryProtocolView;
     private WakeOnLANView _wakeOnLanView;
     private SubnetCalculatorHostView _subnetCalculatorHostView;
@@ -698,14 +669,12 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private ListenersView _listenersView;
     private ARPTableView _arpTableView;
 
-
     /// <summary>
     ///     Method when the application view becomes visible (again). Either when switching the applications
     ///     or after opening and closing the settings.
     /// </summary>
     /// <param name="name">Name of the application</param>
-    /// <param name="fromSettings">Indicates whether the settings were previously open</param>
-    private void OnApplicationViewVisible(ApplicationName name, bool fromSettings = false)
+    private void OnApplicationViewVisible(ApplicationName name)
     {
         switch (name)
         {
@@ -837,6 +806,14 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
                 ContentControlApplication.Content = _hostsFileEditorView;
                 break;
+            case ApplicationName.Firewall:
+                if (_firewallView is null)
+                    _firewallView = new FirewallView();
+                else
+                    _firewallView.OnViewVisible();
+
+                ContentControlApplication.Content = _firewallView;
+                break;
             case ApplicationName.DiscoveryProtocol:
                 if (_discoveryProtocolView == null)
                     _discoveryProtocolView = new DiscoveryProtocolView();
@@ -917,7 +894,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
                 ContentControlApplication.Content = _arpTableView;
                 break;
-
             default:
                 Log.Error("Cannot show unknown application view: " + name);
                 break;
@@ -975,6 +951,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
             case ApplicationName.HostsFileEditor:
                 _hostsFileEditorView?.OnViewHide();
+                break;
+            case ApplicationName.Firewall:
+                _firewallView?.OnViewHide();
                 break;
             case ApplicationName.DiscoveryProtocol:
                 _discoveryProtocolView?.OnViewHide();
@@ -1057,9 +1036,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         switch (data.Application)
         {
             case ApplicationName.Dashboard:
-                break;
             case ApplicationName.NetworkInterface:
-                break;
             case ApplicationName.WiFi:
                 break;
             case ApplicationName.IPScanner:
@@ -1095,28 +1072,19 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 _snmpHostView.AddTab(data.Args);
                 break;
             case ApplicationName.SNTPLookup:
-                break;
+            case ApplicationName.HostsFileEditor:
+            case ApplicationName.Firewall:
             case ApplicationName.DiscoveryProtocol:
-                break;
             case ApplicationName.WakeOnLAN:
-                break;
             case ApplicationName.Whois:
-                break;
             case ApplicationName.IPGeolocation:
-                break;
             case ApplicationName.SubnetCalculator:
-                break;
             case ApplicationName.BitCalculator:
-                break;
             case ApplicationName.Lookup:
-                break;
             case ApplicationName.Connections:
-                break;
             case ApplicationName.Listeners:
-                break;
             case ApplicationName.ARPTable:
                 break;
-            case ApplicationName.None:
             default:
                 Log.Error($"Cannot redirect data to unknown application: {data.Application}");
                 break;
@@ -1143,47 +1111,41 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     #region Variables
 
-    private ICollectionView _runCommands;
-
     public ICollectionView RunCommands
     {
-        get => _runCommands;
+        get;
         private set
         {
-            if (value == _runCommands)
+            if (value == field)
                 return;
 
-            _runCommands = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private RunCommandInfo _selectedRunCommand;
 
     public RunCommandInfo SelectedRunCommand
     {
-        get => _selectedRunCommand;
+        get;
         set
         {
-            if (value == _selectedRunCommand)
+            if (value == field)
                 return;
 
-            _selectedRunCommand = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _runCommandSearch;
-
     public string RunCommandSearch
     {
-        get => _runCommandSearch;
+        get;
         set
         {
-            if (value == _runCommandSearch)
+            if (value == field)
                 return;
 
-            _runCommandSearch = value;
+            field = value;
 
             RefreshRunCommandsView();
 
@@ -1362,7 +1324,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
 
         // Refresh the application view
-        OnApplicationViewVisible(SelectedApplication.Name, true);
+        OnApplicationViewVisible(SelectedApplication.Name);
     }
 
     #endregion
@@ -1465,9 +1427,20 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
     }
 
+    /// <summary>
+    ///   Called after profiles are loaded (e.g. to load dynamic profiles once the profile file is decrypted).
+    /// </summary>
+    /// <param name="name">Name of the currently selected application, used to perform application-specific actions after loading.</param>
     private void OnProfilesLoaded(ApplicationName name)
     {
-
+        /*
+        switch (name)
+        {
+            case ApplicationName.XXX:
+                // Do stuff...
+                break;
+        }
+        */
     }
 
     /// <summary>
