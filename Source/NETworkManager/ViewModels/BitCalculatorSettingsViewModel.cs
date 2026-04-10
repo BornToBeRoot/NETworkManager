@@ -24,19 +24,14 @@ public class BitCalculatorSettingsViewModel : ViewModelBase
     public List<BitCaluclatorNotation> Notations { get; private set; }
 
     /// <summary>
-    /// Backing field for <see cref="Notation"/>.
-    /// </summary>
-    private BitCaluclatorNotation _notation;
-
-    /// <summary>
     /// Gets or sets the selected notation.
     /// </summary>
     public BitCaluclatorNotation Notation
     {
-        get => _notation;
+        get;
         set
         {
-            if (value == _notation)
+            if (value == field)
                 return;
 
 
@@ -44,7 +39,7 @@ public class BitCalculatorSettingsViewModel : ViewModelBase
                 SettingsManager.Current.BitCalculator_Notation = value;
 
 
-            _notation = value;
+            field = value;
             OnPropertyChanged();
         }
     }

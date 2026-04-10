@@ -11,31 +11,6 @@ namespace NETworkManager.ViewModels;
 public class CredentialsChangePasswordViewModel : ViewModelBase
 {
     /// <summary>
-    ///     Private variable for <see cref="IsPasswordEmpty" />.
-    /// </summary>
-    private bool _isPasswordEmpty = true;
-
-    /// <summary>
-    ///     Private variable for <see cref="IsRepeatedPasswordEqual" />.
-    /// </summary>
-    private bool _isRepeatedPasswordEqual;
-
-    /// <summary>
-    ///     Private variable for <see cref="NewPassword" />.
-    /// </summary>
-    private SecureString _newPassword = new();
-
-    /// <summary>
-    ///     Private variable for <see cref="NewPasswordRepeat" />.
-    /// </summary>
-    private SecureString _newPasswordRepeat = new();
-
-    /// <summary>
-    ///     Private variable for <see cref="Password" />.
-    /// </summary>
-    private SecureString _password = new();
-
-    /// <summary>
     ///     Initialize a new class <see cref="CredentialsChangePasswordViewModel" /> with <see cref="OKCommand" /> and
     ///     <see cref="CancelCommand" />.
     /// </summary>
@@ -63,86 +38,86 @@ public class CredentialsChangePasswordViewModel : ViewModelBase
     /// </summary>
     public SecureString Password
     {
-        get => _password;
+        get;
         set
         {
-            if (value == _password)
+            if (value == field)
                 return;
 
-            _password = value;
+            field = value;
 
             ValidatePassword();
 
             OnPropertyChanged();
         }
-    }
+    } = new();
 
     /// <summary>
     ///     New password as <see cref="SecureString" />.
     /// </summary>
     public SecureString NewPassword
     {
-        get => _newPassword;
+        get;
         set
         {
-            if (value == _newPassword)
+            if (value == field)
                 return;
 
-            _newPassword = value;
+            field = value;
 
             ValidatePassword();
 
             OnPropertyChanged();
         }
-    }
+    } = new();
 
     /// <summary>
     ///     Repeated new password as <see cref="SecureString" />.
     /// </summary>
     public SecureString NewPasswordRepeat
     {
-        get => _newPasswordRepeat;
+        get;
         set
         {
-            if (value == _newPasswordRepeat)
+            if (value == field)
                 return;
 
-            _newPasswordRepeat = value;
+            field = value;
 
             ValidatePassword();
 
             OnPropertyChanged();
         }
-    }
+    } = new();
 
     /// <summary>
     ///     Indicate if one of the password fields are empty.
     /// </summary>
     public bool IsPasswordEmpty
     {
-        get => _isPasswordEmpty;
+        get;
         set
         {
-            if (value == _isPasswordEmpty)
+            if (value == field)
                 return;
 
-            _isPasswordEmpty = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = true;
 
     /// <summary>
     ///     Indicate if the <see cref="NewPassword" /> is equal to the <see cref="NewPasswordRepeat" />.
     /// </summary>
     public bool IsRepeatedPasswordEqual
     {
-        get => _isRepeatedPasswordEqual;
+        get;
         set
         {
-            if (value == _isRepeatedPasswordEqual)
+            if (value == field)
                 return;
 
-            _isRepeatedPasswordEqual = value;
+            field = value;
             OnPropertyChanged();
         }
     }

@@ -21,47 +21,41 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
     private readonly Guid _tabId;
     private readonly WebConsoleSessionInfo _sessionInfo;
 
-    private bool _isLoading;
-
     public bool IsLoading
     {
-        get => _isLoading;
+        get;
         set
         {
-            if (value == _isLoading)
+            if (value == field)
                 return;
 
-            _isLoading = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _firstLoad = true;
 
     public bool FirstLoad
     {
-        get => _firstLoad;
+        get;
         set
         {
-            if (value == _firstLoad)
+            if (value == field)
                 return;
 
-            _firstLoad = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _url;
+    } = true;
 
     public string Url
     {
-        get => _url;
+        get;
         set
         {
-            if (value == _url)
+            if (value == field)
                 return;
 
-            _url = value;
+            field = value;
             OnPropertyChanged();
         }
     }

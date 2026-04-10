@@ -30,21 +30,19 @@ public class BandwidthMeter
 
     #region Variables
 
-    private double _updateInterval = 1000;
-
     public double UpdateInterval
     {
-        get => _updateInterval;
+        get;
         set
         {
-            if (value == _updateInterval)
+            if (value == field)
                 return;
 
             _timer.Interval = TimeSpan.FromMilliseconds(value);
 
-            _updateInterval = value;
+            field = value;
         }
-    }
+    } = 1000;
 
     public bool IsRunning => _timer.IsEnabled;
 

@@ -8,22 +8,17 @@ namespace NETworkManager.Profiles;
 public class ProfileFilterTagsInfo : PropertyChangedBase
 {
     /// <summary>
-    /// Private field for <see cref="IsSelected"/>.
-    /// </summary>
-    private bool _isSelected;
-
-    /// <summary>
     /// Indicates whether the tag is selected for filtering.
     /// </summary>
     public bool IsSelected
     {
-        get => _isSelected;
+        get;
         set
         {
-            if (_isSelected == value)
+            if (field == value)
                 return;
 
-            _isSelected = value;
+            field = value;
             OnPropertyChanged();
         }
     }
