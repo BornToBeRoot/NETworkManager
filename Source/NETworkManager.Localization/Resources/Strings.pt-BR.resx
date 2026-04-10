@@ -4010,4 +4010,13 @@ Você pode copiar seus arquivos de perfil de "{0}" para "{1}" para migrar seus p
   <data name="ToolTip_Reload" xml:space="preserve">
     <value>Recarregar</value>
   </data>
+  <data name="Firewall" xml:space="preserve">
+    <value>Firewall</value>
+  </data>
+  <data name="FirewallRules" xml:space="preserve">
+    <value>Firewall rules</value>
+  </data>
+  <data name="WindowsFirewallSettings" xml:space="preserve">
+    <value>Windows Firewall settings</value>
+  </data>
 </root>
