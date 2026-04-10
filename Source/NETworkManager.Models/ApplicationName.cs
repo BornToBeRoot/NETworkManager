@@ -98,6 +98,11 @@ public enum ApplicationName
     HostsFileEditor,
 
     /// <summary>
+    ///    Firewall application.
+    /// </summary>
+    Firewall,
+
+    /// <summary>
     ///     Discovery protocol application.
     /// </summary>
     DiscoveryProtocol,
