@@ -17,18 +17,18 @@ public static class ListHelper
     /// <returns>Modified list with the new entry added and oldest entries removed if necessary.</returns>
     public static List<T> Modify<T>(List<T> list, T entry, int length)
     {
-        var removedEntry = false;
-
         int index;
-        
+
         while ((index = list.IndexOf(entry)) != -1)
         {
             list.RemoveAt(index);
-            removedEntry = true;
         }
 
-        if (!removedEntry && list.Count == length)
-            list.RemoveAt(length - 1);
+        if (length <= 0)
+            return list;
+
+        while (list.Count >= length)
+            list.RemoveAt(list.Count - 1);
 
         list.Insert(0, entry);
 
