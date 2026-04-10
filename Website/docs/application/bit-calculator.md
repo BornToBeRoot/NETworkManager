@@ -1,5 +1,5 @@
 ---
-sidebar_position: 22
+sidebar_position: 23
 description: "Convert between data units like bits, bytes, kilobits, megabytes, and more with NETworkManager Bit Calculator. Supports binary and decimal notation."
 keywords: [NETworkManager, bit calculator, data unit converter, bits to bytes, bandwidth calculator, data conversion]
 ---

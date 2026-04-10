@@ -47,127 +47,113 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     private readonly bool _isLoading;
     private bool _isViewActive = true;
 
-    private bool _isNetworkInterfaceLoading;
-
     /// <summary>
     /// Gets or sets a value indicating whether network interfaces are currently loading.
     /// </summary>
     public bool IsNetworkInterfaceLoading
     {
-        get => _isNetworkInterfaceLoading;
+        get;
         set
         {
-            if (value == _isNetworkInterfaceLoading)
+            if (value == field)
                 return;
 
-            _isNetworkInterfaceLoading = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _canConfigure;
 
     /// <summary>
     /// Gets or sets a value indicating whether configuration is allowed.
     /// </summary>
     public bool CanConfigure
     {
-        get => _canConfigure;
+        get;
         set
         {
-            if (value == _canConfigure)
+            if (value == field)
                 return;
 
-            _canConfigure = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isConfigurationRunning;
 
     /// <summary>
     /// Gets or sets a value indicating whether a configuration operation is running.
     /// </summary>
     public bool IsConfigurationRunning
     {
-        get => _isConfigurationRunning;
+        get;
         set
         {
-            if (value == _isConfigurationRunning)
+            if (value == field)
                 return;
 
-            _isConfigurationRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isStatusMessageDisplayed;
 
     /// <summary>
     /// Gets or sets a value indicating whether the status message is displayed.
     /// </summary>
     public bool IsStatusMessageDisplayed
     {
-        get => _isStatusMessageDisplayed;
+        get;
         set
         {
-            if (value == _isStatusMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isStatusMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _statusMessage;
 
     /// <summary>
     /// Gets the status message.
     /// </summary>
     public string StatusMessage
     {
-        get => _statusMessage;
+        get;
         private set
         {
-            if (value == _statusMessage)
+            if (value == field)
                 return;
 
-            _statusMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     #region NetworkInterfaces, SelectedNetworkInterface
 
-    private ObservableCollection<NetworkInterfaceInfo> _networkInterfaces = [];
-
     /// <summary>
     /// Gets the collection of network interfaces.
     /// </summary>
     public ObservableCollection<NetworkInterfaceInfo> NetworkInterfaces
     {
-        get => _networkInterfaces;
+        get;
         private set
         {
-            if (value == _networkInterfaces)
+            if (value == field)
                 return;
 
-            _networkInterfaces = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private NetworkInterfaceInfo _selectedNetworkInterface;
+    } = [];
 
     /// <summary>
     /// Gets or sets the currently selected network interface.
     /// </summary>
     public NetworkInterfaceInfo SelectedNetworkInterface
     {
-        get => _selectedNetworkInterface;
+        get;
         set
         {
-            if (value == _selectedNetworkInterface)
+            if (value == field)
                 return;
 
             if (value != null)
@@ -185,7 +171,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
                 CanConfigure = value.IsOperational;
             }
 
-            _selectedNetworkInterface = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -196,147 +182,132 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private long _bandwidthTotalBytesSentTemp;
 
-    private long _bandwidthTotalBytesSent;
-
     /// <summary>
     /// Gets or sets the total bytes sent.
     /// </summary>
     public long BandwidthTotalBytesSent
     {
-        get => _bandwidthTotalBytesSent;
+        get;
         set
         {
-            if (value == _bandwidthTotalBytesSent)
+            if (value == field)
                 return;
 
-            _bandwidthTotalBytesSent = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     private long _bandwidthTotalBytesReceivedTemp;
-    private long _bandwidthTotalBytesReceived;
 
     /// <summary>
     /// Gets or sets the total bytes received.
     /// </summary>
     public long BandwidthTotalBytesReceived
     {
-        get => _bandwidthTotalBytesReceived;
+        get;
         set
         {
-            if (value == _bandwidthTotalBytesReceived)
+            if (value == field)
                 return;
 
-            _bandwidthTotalBytesReceived = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private long _bandwidthDiffBytesSent;
 
     /// <summary>
     /// Gets or sets the difference in bytes sent.
     /// </summary>
     public long BandwidthDiffBytesSent
     {
-        get => _bandwidthDiffBytesSent;
+        get;
         set
         {
-            if (value == _bandwidthDiffBytesSent)
+            if (value == field)
                 return;
 
-            _bandwidthDiffBytesSent = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private long _bandwidthDiffBytesReceived;
 
     /// <summary>
     /// Gets or sets the difference in bytes received.
     /// </summary>
     public long BandwidthDiffBytesReceived
     {
-        get => _bandwidthDiffBytesReceived;
+        get;
         set
         {
-            if (value == _bandwidthDiffBytesReceived)
+            if (value == field)
                 return;
 
-            _bandwidthDiffBytesReceived = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private long _bandwidthBytesReceivedSpeed;
 
     /// <summary>
     /// Gets or sets the speed of bytes received.
     /// </summary>
     public long BandwidthBytesReceivedSpeed
     {
-        get => _bandwidthBytesReceivedSpeed;
+        get;
         set
         {
-            if (value == _bandwidthBytesReceivedSpeed)
+            if (value == field)
                 return;
 
-            _bandwidthBytesReceivedSpeed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private long _bandwidthBytesSentSpeed;
 
     /// <summary>
     /// Gets or sets the speed of bytes sent.
     /// </summary>
     public long BandwidthBytesSentSpeed
     {
-        get => _bandwidthBytesSentSpeed;
+        get;
         set
         {
-            if (value == _bandwidthBytesSentSpeed)
+            if (value == field)
                 return;
 
-            _bandwidthBytesSentSpeed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private DateTime _bandwidthStartTime;
 
     /// <summary>
     /// Gets or sets the start time of the bandwidth measurement.
     /// </summary>
     public DateTime BandwidthStartTime
     {
-        get => _bandwidthStartTime;
+        get;
         set
         {
-            if (value == _bandwidthStartTime)
+            if (value == field)
                 return;
 
-            _bandwidthStartTime = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private TimeSpan _bandwidthMeasuredTime;
 
     /// <summary>
     /// Gets or sets the duration of the bandwidth measurement.
     /// </summary>
     public TimeSpan BandwidthMeasuredTime
     {
-        get => _bandwidthMeasuredTime;
+        get;
         set
         {
-            if (value == _bandwidthMeasuredTime)
+            if (value == field)
                 return;
 
-            _bandwidthMeasuredTime = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -345,166 +316,148 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     #region Config
 
-    private bool _configEnableDynamicIPAddress = true;
-
     /// <summary>
     /// Gets or sets a value indicating whether to enable dynamic IP address (DHCP).
     /// </summary>
     public bool ConfigEnableDynamicIPAddress
     {
-        get => _configEnableDynamicIPAddress;
+        get;
         set
         {
-            if (value == _configEnableDynamicIPAddress)
+            if (value == field)
                 return;
 
-            _configEnableDynamicIPAddress = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _configEnableStaticIPAddress;
+    } = true;
 
     /// <summary>
     /// Gets or sets a value indicating whether to enable static IP address.
     /// </summary>
     public bool ConfigEnableStaticIPAddress
     {
-        get => _configEnableStaticIPAddress;
+        get;
         set
         {
-            if (value == _configEnableStaticIPAddress)
+            if (value == field)
                 return;
 
             ConfigEnableStaticDNS = true;
 
-            _configEnableStaticIPAddress = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _configIPAddress;
 
     /// <summary>
     /// Gets or sets the static IP address.
     /// </summary>
     public string ConfigIPAddress
     {
-        get => _configIPAddress;
+        get;
         set
         {
-            if (value == _configIPAddress)
+            if (value == field)
                 return;
 
-            _configIPAddress = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _configSubnetmask;
 
     /// <summary>
     /// Gets or sets the subnet mask.
     /// </summary>
     public string ConfigSubnetmask
     {
-        get => _configSubnetmask;
+        get;
         set
         {
-            if (value == _configSubnetmask)
+            if (value == field)
                 return;
 
-            _configSubnetmask = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _configGateway;
 
     /// <summary>
     /// Gets or sets the default gateway.
     /// </summary>
     public string ConfigGateway
     {
-        get => _configGateway;
+        get;
         set
         {
-            if (value == _configGateway)
+            if (value == field)
                 return;
 
-            _configGateway = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _configEnableDynamicDNS = true;
 
     /// <summary>
     /// Gets or sets a value indicating whether to enable dynamic DNS (DHCP).
     /// </summary>
     public bool ConfigEnableDynamicDNS
     {
-        get => _configEnableDynamicDNS;
+        get;
         set
         {
-            if (value == _configEnableDynamicDNS)
+            if (value == field)
                 return;
 
-            _configEnableDynamicDNS = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _configEnableStaticDNS;
+    } = true;
 
     /// <summary>
     /// Gets or sets a value indicating whether to enable static DNS.
     /// </summary>
     public bool ConfigEnableStaticDNS
     {
-        get => _configEnableStaticDNS;
+        get;
         set
         {
-            if (value == _configEnableStaticDNS)
+            if (value == field)
                 return;
 
-            _configEnableStaticDNS = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _configPrimaryDNSServer;
 
     /// <summary>
     /// Gets or sets the primary DNS server.
     /// </summary>
     public string ConfigPrimaryDNSServer
     {
-        get => _configPrimaryDNSServer;
+        get;
         set
         {
-            if (value == _configPrimaryDNSServer)
+            if (value == field)
                 return;
 
-            _configPrimaryDNSServer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _configSecondaryDNSServer;
 
     /// <summary>
     /// Gets or sets the secondary DNS server.
     /// </summary>
     public string ConfigSecondaryDNSServer
     {
-        get => _configSecondaryDNSServer;
+        get;
         set
         {
-            if (value == _configSecondaryDNSServer)
+            if (value == field)
                 return;
 
-            _configSecondaryDNSServer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -513,35 +466,31 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     #region Profiles
 
-    private ICollectionView _profiles;
-
     /// <summary>
     /// Gets the collection of profiles.
     /// </summary>
     public ICollectionView Profiles
     {
-        get => _profiles;
+        get;
         private set
         {
-            if (value == _profiles)
+            if (value == field)
                 return;
 
-            _profiles = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ProfileInfo _selectedProfile = new();
 
     /// <summary>
     /// Gets or sets the selected profile.
     /// </summary>
     public ProfileInfo SelectedProfile
     {
-        get => _selectedProfile;
+        get;
         set
         {
-            if (value == _selectedProfile)
+            if (value == field)
                 return;
 
             if (value != null)
@@ -557,25 +506,23 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
                 ConfigSecondaryDNSServer = value.NetworkInterface_SecondaryDNSServer;
             }
 
-            _selectedProfile = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _search;
+    } = new();
 
     /// <summary>
     /// Gets or sets the search text.
     /// </summary>
     public string Search
     {
-        get => _search;
+        get;
         set
         {
-            if (value == _search)
+            if (value == field)
                 return;
 
-            _search = value;
+            field = value;
 
             // Start searching...
             if (!_searchDisabled)
@@ -588,38 +535,34 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private bool _isSearching;
-
     /// <summary>
     /// Gets or sets a value indicating whether a search is in progress.
     /// </summary>
     public bool IsSearching
     {
-        get => _isSearching;
+        get;
         set
         {
-            if (value == _isSearching)
+            if (value == field)
                 return;
 
-            _isSearching = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _profileFilterIsOpen;
 
     /// <summary>
     /// Gets or sets a value indicating whether the profile filter is open.
     /// </summary>
     public bool ProfileFilterIsOpen
     {
-        get => _profileFilterIsOpen;
+        get;
         set
         {
-            if (value == _profileFilterIsOpen)
+            if (value == field)
                 return;
 
-            _profileFilterIsOpen = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -634,87 +577,77 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// </summary>
     public ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; set; } = [];
 
-    private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
-
     /// <summary>
     /// Gets or sets a value indicating whether to match any profile filter tag.
     /// </summary>
     public bool ProfileFilterTagsMatchAny
     {
-        get => _profileFilterTagsMatchAny;
+        get;
         set
         {
-            if (value == _profileFilterTagsMatchAny)
+            if (value == field)
                 return;
 
-            _profileFilterTagsMatchAny = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _profileFilterTagsMatchAll;
+    } = GlobalStaticConfiguration.Profile_TagsMatchAny;
 
     /// <summary>
     /// Gets or sets a value indicating whether to match all profile filter tags.
     /// </summary>
     public bool ProfileFilterTagsMatchAll
     {
-        get => _profileFilterTagsMatchAll;
+        get;
         set
         {
-            if (value == _profileFilterTagsMatchAll)
+            if (value == field)
                 return;
 
-            _profileFilterTagsMatchAll = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isProfileFilterSet;
 
     /// <summary>
     /// Gets or sets a value indicating whether a profile filter is set.
     /// </summary>
     public bool IsProfileFilterSet
     {
-        get => _isProfileFilterSet;
+        get;
         set
         {
-            if (value == _isProfileFilterSet)
+            if (value == field)
                 return;
 
-            _isProfileFilterSet = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
-
     /// <summary>
     /// Gets the store for group expander states.
     /// </summary>
-    public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
+    public GroupExpanderStateStore GroupExpanderStateStore { get; } = new();
 
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
-
-    private bool _expandProfileView;
 
     /// <summary>
     /// Gets or sets a value indicating whether to expand the profile view.
     /// </summary>
     public bool ExpandProfileView
     {
-        get => _expandProfileView;
+        get;
         set
         {
-            if (value == _expandProfileView)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.NetworkInterface_ExpandProfileView = value;
 
-            _expandProfileView = value;
+            field = value;
 
             if (_canProfileWidthChange)
                 ResizeProfile(false);
@@ -723,24 +656,22 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private GridLength _profileWidth;
-
     /// <summary>
     /// Gets or sets the width of the profile view.
     /// </summary>
     public GridLength ProfileWidth
     {
-        get => _profileWidth;
+        get;
         set
         {
-            if (value == _profileWidth)
+            if (value == field)
                 return;
 
             if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
                 GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.NetworkInterface_ProfileWidth = value.Value;
 
-            _profileWidth = value;
+            field = value;
 
             if (_canProfileWidthChange)
                 ResizeProfile(true);
@@ -968,9 +899,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Gets the command to apply the profile configuration.
     /// </summary>
-    public ICommand ApplyProfileConfigCommand => new RelayCommand(_ => ApplyProfileProfileAction());
-
-    private void ApplyProfileProfileAction()
+    public ICommand ApplyProfileCommand => new RelayCommand(_ => ApplyProfileAction());
+    
+    private void ApplyProfileAction()
     {
         ApplyConfigurationFromProfile().ConfigureAwait(false);
     }
@@ -1466,13 +1397,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         try
         {
-            ProcessStartInfo info = new()
-            {
-                FileName = "NCPA.cpl",
-                UseShellExecute = true
-            };
-
-            Process.Start(info);
+            ExternalProcessStarter.RunProcess("NCPA.cpl");
         }
         catch (Exception ex)
         {

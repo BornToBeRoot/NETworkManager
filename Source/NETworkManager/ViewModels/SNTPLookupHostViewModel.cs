@@ -16,34 +16,30 @@ public class SNTPLookupHostViewModel : ViewModelBase
 
     public IInterTabClient InterTabClient { get; }
 
-    private string _interTabPartition;
-
     public string InterTabPartition
     {
-        get => _interTabPartition;
+        get;
         set
         {
-            if (value == _interTabPartition)
+            if (value == field)
                 return;
 
-            _interTabPartition = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-    private int _selectedTabIndex;
-
     public int SelectedTabIndex
     {
-        get => _selectedTabIndex;
+        get;
         set
         {
-            if (value == _selectedTabIndex)
+            if (value == field)
                 return;
 
-            _selectedTabIndex = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -86,7 +82,7 @@ public class SNTPLookupHostViewModel : ViewModelBase
 
     private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
     {
-        ((args.DragablzItem.Content as DragablzTabItem)?.View as DNSLookupView)?.CloseTab();
+        ((args.DragablzItem.Content as DragablzTabItem)?.View as IDragablzTabItem)?.CloseTab();
     }
 
     #endregion

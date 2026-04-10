@@ -56,51 +56,36 @@ public class HostsFileEditorEntryViewModel : ViewModelBase
     public HostsFileEntry Entry { get; } = null;
 
     /// <summary>
-    /// Private field of <see cref="IsEnabled" /> property.
-    /// </summary>
-    private bool _isEnabled;
-
-    /// <summary>
     /// Indicates whether the entry is enabled or not.
     /// </summary>
     public bool IsEnabled
     {
-        get => _isEnabled;
+        get;
         set
         {
-            if (value == _isEnabled)
+            if (value == field)
                 return;
 
-            _isEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Private field of <see cref="IPAddress" /> property.
-    /// </summary>
-    private string _ipAddress;
 
     /// <summary>
     /// IP address of the host.
     /// </summary>
     public string IPAddress
     {
-        get => _ipAddress;
+        get;
         set
         {
-            if (value == _ipAddress)
+            if (value == field)
                 return;
 
-            _ipAddress = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Private field of <see cref="Hostname" /> property.
-    /// </summary>
-    private string _hostname;
 
     /// <summary>
     /// Host name(s) of the host. Multiple host names are separated by a
@@ -108,34 +93,29 @@ public class HostsFileEditorEntryViewModel : ViewModelBase
     /// </summary>
     public string Hostname
     {
-        get => _hostname;
+        get;
         set
         {
-            if (value == _hostname)
+            if (value == field)
                 return;
 
-            _hostname = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Private field of <see cref="Comment" /> property.
-    /// </summary>
-    private string _comment;
 
     /// <summary>
     /// Comment of the host.
     /// </summary>
     public string Comment
     {
-        get => _comment;
+        get;
         set
         {
-            if (value == _comment)
+            if (value == field)
                 return;
 
-            _comment = value;
+            field = value;
             OnPropertyChanged();
         }
     }

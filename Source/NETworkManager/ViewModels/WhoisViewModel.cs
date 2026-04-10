@@ -27,94 +27,82 @@ public class WhoisViewModel : ViewModelBase
     private bool _firstLoad = true;
     private bool _closed;
 
-    private string _domain;
-
     public string Domain
     {
-        get => _domain;
+        get;
         set
         {
-            if (value == _domain)
+            if (value == field)
                 return;
 
-            _domain = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public ICollectionView WebsiteUriHistoryView { get; }
 
-    private bool _isRunning;
-
     public bool IsRunning
     {
-        get => _isRunning;
+        get;
         set
         {
-            if (value == _isRunning)
+            if (value == field)
                 return;
 
-            _isRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isResultVisible;
 
     public bool IsResultVisible
     {
-        get => _isResultVisible;
+        get;
         set
         {
-            if (value == _isResultVisible)
+            if (value == field)
                 return;
 
-            _isResultVisible = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _result;
 
     public string Result
     {
-        get => _result;
+        get;
         set
         {
-            if (value == _result)
+            if (value == field)
                 return;
 
-            _result = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isStatusMessageDisplayed;
 
     public bool IsStatusMessageDisplayed
     {
-        get => _isStatusMessageDisplayed;
+        get;
         set
         {
-            if (value == _isStatusMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isStatusMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _statusMessage;
-
     public string StatusMessage
     {
-        get => _statusMessage;
+        get;
         private set
         {
-            if (value == _statusMessage)
+            if (value == field)
                 return;
 
-            _statusMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }

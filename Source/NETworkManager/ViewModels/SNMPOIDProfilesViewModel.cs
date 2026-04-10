@@ -11,10 +11,6 @@ namespace NETworkManager.ViewModels;
 
 public class SNMPOIDProfilesViewModel : ViewModelBase
 {
-    private string _search;
-
-    private SNMPOIDProfileInfo _selectedOIDProfile;
-
     public SNMPOIDProfilesViewModel(Action<SNMPOIDProfilesViewModel> okCommand,
         Action<SNMPOIDProfilesViewModel> cancelHandler)
     {
@@ -47,13 +43,13 @@ public class SNMPOIDProfilesViewModel : ViewModelBase
 
     public string Search
     {
-        get => _search;
+        get;
         set
         {
-            if (value == _search)
+            if (value == field)
                 return;
 
-            _search = value;
+            field = value;
 
             OIDProfiles.Refresh();
 
@@ -67,13 +63,13 @@ public class SNMPOIDProfilesViewModel : ViewModelBase
 
     public SNMPOIDProfileInfo SelectedOIDProfile
     {
-        get => _selectedOIDProfile;
+        get;
         set
         {
-            if (Equals(value, _selectedOIDProfile))
+            if (Equals(value, field))
                 return;
 
-            _selectedOIDProfile = value;
+            field = value;
             OnPropertyChanged();
         }
     }

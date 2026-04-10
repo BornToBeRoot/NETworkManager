@@ -11,128 +11,116 @@ public class PingMonitorSettingsViewModel : ViewModelBase
 
     private readonly bool _isLoading;
 
-    private int _timeout;
-
     /// <summary>
     /// Gets or sets the timeout in milliseconds.
     /// </summary>
     public int Timeout
     {
-        get => _timeout;
+        get;
         set
         {
-            if (value == _timeout)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PingMonitor_Timeout = value;
 
-            _timeout = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _buffer;
 
     /// <summary>
     /// Gets or sets the buffer size in bytes.
     /// </summary>
     public int Buffer
     {
-        get => _buffer;
+        get;
         set
         {
-            if (value == _buffer)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PingMonitor_Buffer = value;
 
-            _buffer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _ttl;
 
     /// <summary>
     /// Gets or sets the time to live (TTL).
     /// </summary>
     public int TTL
     {
-        get => _ttl;
+        get;
         set
         {
-            if (value == _ttl)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PingMonitor_TTL = value;
 
-            _ttl = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _dontFragment;
 
     /// <summary>
     /// Gets or sets a value indicating whether the Don't Fragment flag is set.
     /// </summary>
     public bool DontFragment
     {
-        get => _dontFragment;
+        get;
         set
         {
-            if (value == _dontFragment)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PingMonitor_DontFragment = value;
 
-            _dontFragment = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _waitTime;
 
     /// <summary>
     /// Gets or sets the wait time between pings in milliseconds.
     /// </summary>
     public int WaitTime
     {
-        get => _waitTime;
+        get;
         set
         {
-            if (value == _waitTime)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PingMonitor_WaitTime = value;
 
-            _waitTime = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _expandHostView;
 
     /// <summary>
     /// Gets or sets a value indicating whether the host view is expanded.
     /// </summary>
     public bool ExpandHostView
     {
-        get => _expandHostView;
+        get;
         set
         {
-            if (value == _expandHostView)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PingMonitor_ExpandHostView = value;
 
-            _expandHostView = value;
+            field = value;
             OnPropertyChanged();
         }
     }

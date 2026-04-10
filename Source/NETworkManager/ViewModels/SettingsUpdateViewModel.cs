@@ -8,20 +8,18 @@ public class SettingsUpdateViewModel : ViewModelBase
 
     private readonly bool _isLoading;
 
-    private bool _checkForUpdatesAtStartup;
-
     public bool CheckForUpdatesAtStartup
     {
-        get => _checkForUpdatesAtStartup;
+        get;
         set
         {
-            if (value == _checkForUpdatesAtStartup)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Update_CheckForUpdatesAtStartup = value;
 
-            _checkForUpdatesAtStartup = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -31,39 +29,35 @@ public class SettingsUpdateViewModel : ViewModelBase
     /// </summary>
     public bool IsUpdateCheckManagedByPolicy => PolicyManager.Current?.Update_CheckForUpdatesAtStartup.HasValue == true;
 
-    private bool _checkForPreReleases;
-
     public bool CheckForPreReleases
     {
-        get => _checkForPreReleases;
+        get;
         set
         {
-            if (value == _checkForPreReleases)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Update_CheckForPreReleases = value;
 
-            _checkForPreReleases = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
 
-    private bool _enableExperimentalFeatures;
-
     public bool EnableExperimentalFeatures
     {
-        get => _enableExperimentalFeatures;
+        get;
         set
         {
-            if (value == _enableExperimentalFeatures)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Experimental_EnableExperimentalFeatures = value;
 
-            _enableExperimentalFeatures = value;
+            field = value;
             OnPropertyChanged();
         }
     }

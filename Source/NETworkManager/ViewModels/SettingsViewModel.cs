@@ -18,17 +18,15 @@ public class SettingsViewModel : ViewModelBase
 {
     #region Variables
 
-    private int _selectedTabIndex;
-
     public int SelectedTabIndex
     {
-        get => _selectedTabIndex;
+        get;
         set
         {
-            if (value == _selectedTabIndex)
+            if (value == field)
                 return;
 
-            _selectedTabIndex = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -37,17 +35,15 @@ public class SettingsViewModel : ViewModelBase
 
     private SettingsName _searchLastSelectedSettingsName;
 
-    private string _search;
-
     public string Search
     {
-        get => _search;
+        get;
         set
         {
-            if (value == _search)
+            if (value == field)
                 return;
 
-            _search = value;
+            field = value;
 
             // Store the current selected settings view name
             if (SelectedSettingsView != null)
@@ -70,50 +66,44 @@ public class SettingsViewModel : ViewModelBase
         }
     }
 
-    private bool _searchNothingFound;
-
     public bool SearchNothingFound
     {
-        get => _searchNothingFound;
+        get;
         set
         {
-            if (value == _searchNothingFound)
+            if (value == field)
                 return;
 
-            _searchNothingFound = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private UserControl _settingsContent;
 
     public UserControl SettingsContent
     {
-        get => _settingsContent;
+        get;
         private set
         {
-            if (Equals(value, _settingsContent))
+            if (Equals(value, field))
                 return;
 
-            _settingsContent = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private SettingsViewInfo _selectedSettingsView;
-
     public SettingsViewInfo SelectedSettingsView
     {
-        get => _selectedSettingsView;
+        get;
         set
         {
-            if (value == _selectedSettingsView)
+            if (value == field)
                 return;
 
             if (value != null)
                 ChangeSettingsContent(value);
 
-            _selectedSettingsView = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -144,6 +134,7 @@ public class SettingsViewModel : ViewModelBase
     private SNTPLookupSettingsView _sntpLookupSettingsView;
     private WakeOnLANSettingsView _wakeOnLANSettingsView;
     private BitCalculatorSettingsView _bitCalculatorSettingsView;
+    private FirewallSettingsView _firewallSettingsView;
 
     #endregion
 
@@ -344,6 +335,11 @@ public class SettingsViewModel : ViewModelBase
                 _bitCalculatorSettingsView ??= new BitCalculatorSettingsView();
 
                 SettingsContent = _bitCalculatorSettingsView;
+                break;
+            case SettingsName.Firewall:
+                _firewallSettingsView ??= new FirewallSettingsView();
+
+                SettingsContent = _firewallSettingsView;
                 break;
         }
     }

@@ -18,14 +18,12 @@ public class PowerShellSettingsViewModel : ViewModelBase
     #region Variables
     private readonly bool _isLoading;
 
-    private string _applicationFilePath;
-
     public string ApplicationFilePath
     {
-        get => _applicationFilePath;
+        get;
         set
         {
-            if (value == _applicationFilePath)
+            if (value == field)
                 return;
 
             if (!_isLoading)
@@ -33,91 +31,81 @@ public class PowerShellSettingsViewModel : ViewModelBase
 
             IsConfigured = !string.IsNullOrEmpty(value);
 
-            _applicationFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _command;
-
     public string Command
     {
-        get => _command;
+        get;
         set
         {
-            if (value == _command)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PowerShell_Command = value;
 
-            _command = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _additionalCommandLine;
-
     public string AdditionalCommandLine
     {
-        get => _additionalCommandLine;
+        get;
         set
         {
-            if (value == _additionalCommandLine)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PowerShell_AdditionalCommandLine = value;
 
-            _additionalCommandLine = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private List<ExecutionPolicy> _executionPolicies = new();
 
     public List<ExecutionPolicy> ExecutionPolicies
     {
-        get => _executionPolicies;
+        get;
         set
         {
-            if (value == _executionPolicies)
+            if (value == field)
                 return;
 
-            _executionPolicies = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ExecutionPolicy _executionPolicy;
+    } = new();
 
     public ExecutionPolicy ExecutionPolicy
     {
-        get => _executionPolicy;
+        get;
         set
         {
-            if (value == _executionPolicy)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PowerShell_ExecutionPolicy = value;
 
-            _executionPolicy = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _isConfigured;
-
     public bool IsConfigured
     {
-        get => _isConfigured;
+        get;
         set
         {
-            if (value == _isConfigured)
+            if (value == field)
                 return;
 
-            _isConfigured = value;
+            field = value;
             OnPropertyChanged();
         }
     }
