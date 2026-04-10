@@ -36,8 +36,7 @@
         <converters:IPAddressSubnetmaskTupleArrayToStringConverter
             x:Key="IPAddressSubnetmaskTupleArrayToStringConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
-        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
-        <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" />
+        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />        
         <converters:OperationalStatusToStringConverter x:Key="OperationalStatusToStringConverter" />
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <converters:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
@@ -1148,7 +1147,7 @@
                                                             <TextBlock Grid.Column="1" VerticalAlignment="Center"
                                                                        Style="{StaticResource DefaultTextBlock}"
                                                                        Text="{Binding Path=CIDR,StringFormat=/{0}}"
-                                                                       Foreground="{DynamicResource GrayBrush2}" />
+                                                                       Foreground="{DynamicResource MahApps.Brushes.Gray2}" />
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>
@@ -1470,7 +1469,8 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button>
-                            <Popup PlacementTarget="{Binding ElementName=ButtonProfileFilter}"
+                            <Popup Grid.Column="0" Grid.Row="0"
+                                   PlacementTarget="{Binding ElementName=ButtonProfileFilter}"
                                    Placement="Bottom" StaysOpen="False"
                                    IsOpen="{Binding ProfileFilterIsOpen}"
                                    Width="220">
@@ -1599,7 +1599,7 @@
                             <ListBox.Resources>
                                 <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                     <MenuItem Header="{x:Static localization:Strings.Apply}"
-                                              Command="{Binding ApplyProfileConfigCommand}">
+                                              Command="{Binding ApplyProfileCommand}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16"
                                                        Fill="{DynamicResource MahApps.Brushes.Gray3}">
