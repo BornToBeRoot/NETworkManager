@@ -53,47 +53,41 @@ public partial class StatusWindow : INotifyPropertyChanged
     private readonly MainWindow _mainWindow;
     private readonly NetworkConnectionWidgetView _networkConnectionView;
 
-    private bool _showTime;
-
     public bool ShowTime
     {
-        get => _showTime;
+        get;
         set
         {
-            if (value == _showTime)
+            if (value == field)
                 return;
 
-            _showTime = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private double _timeMax;
 
     public double TimeMax
     {
-        get => _timeMax;
+        get;
         private set
         {
-            if (value == _timeMax)
+            if (value == field)
                 return;
 
-            _timeMax = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private double _time;
-
     public double Time
     {
-        get => _time;
+        get;
         set
         {
-            if (value == _time)
+            if (value == field)
                 return;
 
-            _time = value;
+            field = value;
             OnPropertyChanged();
         }
     }

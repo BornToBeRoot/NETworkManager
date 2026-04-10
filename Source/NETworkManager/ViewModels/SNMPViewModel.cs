@@ -101,17 +101,15 @@ public class SNMPViewModel : ViewModelBase
     private readonly bool _isLoading;
     private bool _closed;
 
-    private string _host;
-
     public string Host
     {
-        get => _host;
+        get;
         set
         {
-            if (value == _host)
+            if (value == field)
                 return;
 
-            _host = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -120,20 +118,18 @@ public class SNMPViewModel : ViewModelBase
 
     public IEnumerable<SNMPMode> Modes { get; set; }
 
-    private SNMPMode _mode;
-
     public SNMPMode Mode
     {
-        get => _mode;
+        get;
         set
         {
-            if (value == _mode)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.SNMP_Mode = value;
 
-            _mode = value;
+            field = value;
             OnPropertyChanged();
 
             // Re-validate OID if mode changed
@@ -143,35 +139,31 @@ public class SNMPViewModel : ViewModelBase
 
     public IEnumerable<SNMPVersion> Versions { get; }
 
-    private SNMPVersion _version;
-
     public SNMPVersion Version
     {
-        get => _version;
+        get;
         set
         {
-            if (value == _version)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.SNMP_Version = value;
 
-            _version = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _oid;
-
     public string Oid
     {
-        get => _oid;
+        get;
         set
         {
-            if (value == _oid)
+            if (value == field)
                 return;
 
-            _oid = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -180,296 +172,260 @@ public class SNMPViewModel : ViewModelBase
 
     public IEnumerable<SNMPV3Security> Securities { get; }
 
-    private SNMPV3Security _security;
-
     public SNMPV3Security Security
     {
-        get => _security;
+        get;
         set
         {
-            if (value == _security)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.SNMP_Security = value;
 
-            _security = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isCommunityEmpty = true; // Initial it's empty
 
     public bool IsCommunityEmpty
     {
-        get => _isCommunityEmpty;
+        get;
         set
         {
-            if (value == _isCommunityEmpty)
+            if (value == field)
                 return;
 
-            _isCommunityEmpty = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private SecureString _community;
+    } = true;
 
     public SecureString Community
     {
-        get => _community;
+        get;
         set
         {
-            if (value == _community)
+            if (value == field)
                 return;
 
             // Validate the community string
             IsCommunityEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
-            _community = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _username;
-
     public string Username
     {
-        get => _username;
+        get;
         set
         {
-            if (value == _username)
+            if (value == field)
                 return;
 
-            _username = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public IEnumerable<SNMPV3AuthenticationProvider> AuthenticationProviders { get; }
 
-    private SNMPV3AuthenticationProvider _authenticationProvider;
-
     public SNMPV3AuthenticationProvider AuthenticationProvider
     {
-        get => _authenticationProvider;
+        get;
         set
         {
-            if (value == _authenticationProvider)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.SNMP_AuthenticationProvider = value;
 
-            _authenticationProvider = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isAuthEmpty = true; // Initial it's empty
 
     public bool IsAuthEmpty
     {
-        get => _isAuthEmpty;
+        get;
         set
         {
-            if (value == _isAuthEmpty)
+            if (value == field)
                 return;
 
-            _isAuthEmpty = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private SecureString _auth;
+    } = true;
 
     public SecureString Auth
     {
-        get => _auth;
+        get;
         set
         {
-            if (value == _auth)
+            if (value == field)
                 return;
 
             // Validate the auth string
             IsAuthEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
-            _auth = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public IEnumerable<SNMPV3PrivacyProvider> PrivacyProviders { get; }
 
-    private SNMPV3PrivacyProvider _privacyProvider;
-
     public SNMPV3PrivacyProvider PrivacyProvider
     {
-        get => _privacyProvider;
+        get;
         set
         {
-            if (value == _privacyProvider)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.SNMP_PrivacyProvider = value;
 
-            _privacyProvider = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isPrivEmpty = true; // Initial it's empty
 
     public bool IsPrivEmpty
     {
-        get => _isPrivEmpty;
+        get;
         set
         {
-            if (value == _isPrivEmpty)
+            if (value == field)
                 return;
 
-            _isPrivEmpty = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private SecureString _priv;
+    } = true;
 
     public SecureString Priv
     {
-        get => _priv;
+        get;
         set
         {
-            if (value == _priv)
+            if (value == field)
                 return;
 
             // Validate the auth string
             IsPrivEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
-            _priv = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _data = string.Empty;
 
     public string Data
     {
-        get => _data;
+        get;
         set
         {
-            if (value == _data)
+            if (value == field)
                 return;
 
-            _data = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _isRunning;
+    } = string.Empty;
 
     public bool IsRunning
     {
-        get => _isRunning;
+        get;
         set
         {
-            if (value == _isRunning)
+            if (value == field)
                 return;
 
-            _isRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _cancelScan;
 
     public bool CancelScan
     {
-        get => _cancelScan;
+        get;
         set
         {
-            if (value == _cancelScan)
+            if (value == field)
                 return;
 
-            _cancelScan = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ObservableCollection<SNMPInfo> _queryResults = [];
 
     public ObservableCollection<SNMPInfo> QueryResults
     {
-        get => _queryResults;
+        get;
         set
         {
-            if (Equals(value, _queryResults))
+            if (Equals(value, field))
                 return;
 
-            _queryResults = value;
+            field = value;
         }
-    }
+    } = [];
 
     public ICollectionView ResultsView { get; }
 
-    private SNMPInfo _selectedResult;
-
     public SNMPInfo SelectedResult
     {
-        get => _selectedResult;
+        get;
         set
         {
-            if (value == _selectedResult)
+            if (value == field)
                 return;
 
-            _selectedResult = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private IList _selectedResults = new ArrayList();
 
     public IList SelectedResults
     {
-        get => _selectedResults;
+        get;
         set
         {
-            if (Equals(value, _selectedResults))
+            if (Equals(value, field))
                 return;
 
-            _selectedResults = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = new ArrayList();
 
-
-    private bool _isStatusMessageDisplayed;
 
     public bool IsStatusMessageDisplayed
     {
-        get => _isStatusMessageDisplayed;
+        get;
         set
         {
-            if (value == _isStatusMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isStatusMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _statusMessage;
-
     public string StatusMessage
     {
-        get => _statusMessage;
+        get;
         private set
         {
-            if (value == _statusMessage)
+            if (value == field)
                 return;
 
-            _statusMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }

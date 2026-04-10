@@ -46,238 +46,183 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     private int _secondsRemaining;
 
     /// <summary>
-    /// Backing field for <see cref="FirstRun"/>.
-    /// </summary>
-    private bool _firstRun = true;
-
-    /// <summary>
     /// Gets or sets a value indicating whether this is the first run.
     /// </summary>
     public bool FirstRun
     {
-        get => _firstRun;
+        get;
         set
         {
-            if (value == _firstRun)
+            if (value == field)
                 return;
 
-            _firstRun = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="Protocols"/>.
-    /// </summary>
-    private List<DiscoveryProtocol> _protocols = new();
+    } = true;
 
     /// <summary>
     /// Gets the list of available discovery protocols.
     /// </summary>
     public List<DiscoveryProtocol> Protocols
     {
-        get => _protocols;
+        get;
         private set
         {
-            if (value == _protocols)
+            if (value == field)
                 return;
 
-            _protocols = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="SelectedProtocol"/>.
-    /// </summary>
-    private DiscoveryProtocol _selectedProtocol;
+    } = new();
 
     /// <summary>
     /// Gets or sets the selected discovery protocol.
     /// </summary>
     public DiscoveryProtocol SelectedProtocol
     {
-        get => _selectedProtocol;
+        get;
         set
         {
-            if (value == _selectedProtocol)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.DiscoveryProtocol_Protocol = value;
 
-            _selectedProtocol = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="Durations"/>.
-    /// </summary>
-    private List<int> _durations;
 
     /// <summary>
     /// Gets the list of available durations.
     /// </summary>
     public List<int> Durations
     {
-        get => _durations;
+        get;
         private set
         {
-            if (value == _durations)
+            if (value == field)
                 return;
 
-            _durations = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="SelectedDuration"/>.
-    /// </summary>
-    private int _selectedDuration;
 
     /// <summary>
     /// Gets or sets the selected duration.
     /// </summary>
     public int SelectedDuration
     {
-        get => _selectedDuration;
+        get;
         set
         {
-            if (value == _selectedDuration)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.DiscoveryProtocol_Duration = value;
 
-            _selectedDuration = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="IsCapturing"/>.
-    /// </summary>
-    private bool _isCapturing;
 
     /// <summary>
     /// Gets or sets a value indicating whether the capture is running.
     /// </summary>
     public bool IsCapturing
     {
-        get => _isCapturing;
+        get;
         set
         {
-            if (value == _isCapturing)
+            if (value == field)
                 return;
 
-            _isCapturing = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="TimeRemainingMessage"/>.
-    /// </summary>
-    private string _timeRemainingMessage;
 
     /// <summary>
     /// Gets the message for the remaining time.
     /// </summary>
     public string TimeRemainingMessage
     {
-        get => _timeRemainingMessage;
+        get;
         private set
         {
-            if (value == _timeRemainingMessage)
+            if (value == field)
                 return;
 
-            _timeRemainingMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="IsStatusMessageDisplayed"/>.
-    /// </summary>
-    private bool _isStatusMessageDisplayed;
 
     /// <summary>
     /// Gets or sets a value indicating whether the status message is displayed.
     /// </summary>
     public bool IsStatusMessageDisplayed
     {
-        get => _isStatusMessageDisplayed;
+        get;
         set
         {
-            if (value == _isStatusMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isStatusMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="StatusMessage"/>.
-    /// </summary>
-    private string _statusMessage;
 
     /// <summary>
     /// Gets the status message.
     /// </summary>
     public string StatusMessage
     {
-        get => _statusMessage;
+        get;
         private set
         {
-            if (value == _statusMessage)
+            if (value == field)
                 return;
 
-            _statusMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="DiscoveryPackageReceived"/>.
-    /// </summary>
-    private bool _discoveryPackageReceived;
 
     /// <summary>
     /// Gets or sets a value indicating whether a discovery package has been received.
     /// </summary>
     public bool DiscoveryPackageReceived
     {
-        get => _discoveryPackageReceived;
+        get;
         set
         {
-            if (value == _discoveryPackageReceived)
+            if (value == field)
                 return;
 
-            _discoveryPackageReceived = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="DiscoveryPackage"/>.
-    /// </summary>
-    private DiscoveryProtocolPackageInfo _discoveryPackage;
 
     /// <summary>
     /// Gets the received discovery package.
     /// </summary>
     public DiscoveryProtocolPackageInfo DiscoveryPackage
     {
-        get => _discoveryPackage;
+        get;
         private set
         {
-            if (value == _discoveryPackage)
+            if (value == field)
                 return;
 
-            _discoveryPackage = value;
+            field = value;
             OnPropertyChanged();
         }
     }

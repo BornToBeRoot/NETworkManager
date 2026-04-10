@@ -27,125 +27,113 @@ public class PortScannerSettingsViewModel : ViewModelBase
     /// </summary>
     public ICollectionView PortProfiles { get; }
 
-    private PortProfileInfo _selectedPortProfile = new();
-
     /// <summary>
     /// Gets or sets the selected port profile.
     /// </summary>
     public PortProfileInfo SelectedPortProfile
     {
-        get => _selectedPortProfile;
+        get;
         set
         {
-            if (value == _selectedPortProfile)
+            if (value == field)
                 return;
 
-            _selectedPortProfile = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _showAllResults;
+    } = new();
 
     /// <summary>
     /// Gets or sets a value indicating whether to show all results (open and closed ports).
     /// </summary>
     public bool ShowAllResults
     {
-        get => _showAllResults;
+        get;
         set
         {
-            if (value == _showAllResults)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PortScanner_ShowAllResults = value;
 
-            _showAllResults = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _timeout;
 
     /// <summary>
     /// Gets or sets the timeout for port scanning in milliseconds.
     /// </summary>
     public int Timeout
     {
-        get => _timeout;
+        get;
         set
         {
-            if (value == _timeout)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PortScanner_Timeout = value;
 
-            _timeout = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _resolveHostname;
 
     /// <summary>
     /// Gets or sets a value indicating whether to resolve hostnames.
     /// </summary>
     public bool ResolveHostname
     {
-        get => _resolveHostname;
+        get;
         set
         {
-            if (value == _resolveHostname)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PortScanner_ResolveHostname = value;
 
-            _resolveHostname = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _maxHostThreads;
 
     /// <summary>
     /// Gets or sets the maximum number of threads for scanning hosts.
     /// </summary>
     public int MaxHostThreads
     {
-        get => _maxHostThreads;
+        get;
         set
         {
-            if (value == _maxHostThreads)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PortScanner_MaxHostThreads = value;
 
-            _maxHostThreads = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _maxPortThreads;
 
     /// <summary>
     /// Gets or sets the maximum number of threads for scanning ports.
     /// </summary>
     public int MaxPortThreads
     {
-        get => _maxPortThreads;
+        get;
         set
         {
-            if (value == _maxPortThreads)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PortScanner_MaxPortThreads = value;
 
-            _maxPortThreads = value;
+            field = value;
             OnPropertyChanged();
         }
     }

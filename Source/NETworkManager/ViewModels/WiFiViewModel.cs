@@ -36,74 +36,64 @@ public class WiFiViewModel : ViewModelBase
     private readonly DispatcherTimer _autoRefreshTimer = new();
     private readonly DispatcherTimer _hideConnectionStatusMessageTimer = new();
 
-    private bool _sdkContractAvailable;
-
     public bool SdkContractAvailable
     {
-        get => _sdkContractAvailable;
+        get;
         set
         {
-            if (value == _sdkContractAvailable)
+            if (value == field)
                 return;
 
-            _sdkContractAvailable = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _wiFiAdapterAccessEnabled;
 
     public bool WiFiAdapterAccessEnabled
     {
-        get => _wiFiAdapterAccessEnabled;
+        get;
         set
         {
-            if (value == _wiFiAdapterAccessEnabled)
+            if (value == field)
                 return;
 
-            _wiFiAdapterAccessEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isAdaptersLoading;
 
     public bool IsAdaptersLoading
     {
-        get => _isAdaptersLoading;
+        get;
         set
         {
-            if (value == _isAdaptersLoading)
+            if (value == field)
                 return;
 
-            _isAdaptersLoading = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private List<WiFiAdapterInfo> _adapters = [];
 
     public List<WiFiAdapterInfo> Adapters
     {
-        get => _adapters;
+        get;
         private set
         {
-            if (value == _adapters)
+            if (value == field)
                 return;
 
-            _adapters = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private WiFiAdapterInfo _selectedAdapters;
+    } = [];
 
     public WiFiAdapterInfo SelectedAdapter
     {
-        get => _selectedAdapters;
+        get;
         set
         {
-            if (value == _selectedAdapters)
+            if (value == field)
                 return;
 
             if (value != null)
@@ -114,40 +104,36 @@ public class WiFiViewModel : ViewModelBase
                 ScanAsync(value).ConfigureAwait(false);
             }
 
-            _selectedAdapters = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isNetworksLoading;
 
     public bool IsNetworksLoading
     {
-        get => _isNetworksLoading;
+        get;
         set
         {
-            if (value == _isNetworksLoading)
+            if (value == field)
                 return;
 
-            _isNetworksLoading = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _autoRefreshEnabled;
-
     public bool AutoRefreshEnabled
     {
-        get => _autoRefreshEnabled;
+        get;
         set
         {
-            if (value == _autoRefreshEnabled)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.WiFi_AutoRefreshEnabled = value;
 
-            _autoRefreshEnabled = value;
+            field = value;
 
             // Start timer to refresh automatically
             if (value)
@@ -166,20 +152,18 @@ public class WiFiViewModel : ViewModelBase
 
     public ICollectionView AutoRefreshTimes { get; }
 
-    private AutoRefreshTimeInfo _selectedAutoRefreshTime;
-
     public AutoRefreshTimeInfo SelectedAutoRefreshTime
     {
-        get => _selectedAutoRefreshTime;
+        get;
         set
         {
-            if (value == _selectedAutoRefreshTime)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.WiFi_AutoRefreshTime = value;
 
-            _selectedAutoRefreshTime = value;
+            field = value;
 
             if (AutoRefreshEnabled)
             {
@@ -191,17 +175,15 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    private string _search;
-
     public string Search
     {
-        get => _search;
+        get;
         set
         {
-            if (value == _search)
+            if (value == field)
                 return;
 
-            _search = value;
+            field = value;
 
             NetworksView.Refresh();
 
@@ -209,20 +191,18 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    private bool _show2dot4GHzNetworks;
-
     public bool Show2dot4GHzNetworks
     {
-        get => _show2dot4GHzNetworks;
+        get;
         set
         {
-            if (value == _show2dot4GHzNetworks)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.WiFi_Show2dot4GHzNetworks = value;
 
-            _show2dot4GHzNetworks = value;
+            field = value;
 
             NetworksView.Refresh();
 
@@ -230,20 +210,18 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    private bool _show5GHzNetworks;
-
     public bool Show5GHzNetworks
     {
-        get => _show5GHzNetworks;
+        get;
         set
         {
-            if (value == _show5GHzNetworks)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.WiFi_Show5GHzNetworks = value;
 
-            _show5GHzNetworks = value;
+            field = value;
 
             NetworksView.Refresh();
 
@@ -251,20 +229,18 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    private bool _show6GHzNetworks;
-
     public bool Show6GHzNetworks
     {
-        get => _show6GHzNetworks;
+        get;
         set
         {
-            if (value == _show6GHzNetworks)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.WiFi_Show6GHzNetworks = value;
 
-            _show6GHzNetworks = value;
+            field = value;
 
             NetworksView.Refresh();
 
@@ -272,52 +248,46 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    private ObservableCollection<WiFiNetworkInfo> _networks = new();
-
     public ObservableCollection<WiFiNetworkInfo> Networks
     {
-        get => _networks;
+        get;
         set
         {
-            if (value != null && value == _networks)
+            if (value != null && value == field)
                 return;
 
-            _networks = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = new();
 
     public ICollectionView NetworksView { get; }
 
-    private WiFiNetworkInfo _selectedNetwork;
-
     public WiFiNetworkInfo SelectedNetwork
     {
-        get => _selectedNetwork;
+        get;
         set
         {
-            if (value == _selectedNetwork)
+            if (value == field)
                 return;
 
-            _selectedNetwork = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private IList _selectedNetworks = new ArrayList();
 
     public IList SelectedNetworks
     {
-        get => _selectedNetworks;
+        get;
         set
         {
-            if (Equals(value, _selectedNetworks))
+            if (Equals(value, field))
                 return;
 
-            _selectedNetworks = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = new ArrayList();
 
     public SeriesCollection Radio2dot4GHzSeries { get; set; } = [];
 
@@ -342,92 +312,80 @@ public class WiFiViewModel : ViewModelBase
     public Func<double, string> FormattedDbm { get; set; } =
         value => $"- {100 - value} dBm"; // Reverse y-axis 0 to -100
 
-    private bool _isStatusMessageDisplayed;
-
     public bool IsStatusMessageDisplayed
     {
-        get => _isStatusMessageDisplayed;
+        get;
         set
         {
-            if (value == _isStatusMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isStatusMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isBackgroundSearchRunning;
 
     public bool IsBackgroundSearchRunning
     {
-        get => _isBackgroundSearchRunning;
+        get;
         set
         {
-            if (value == _isBackgroundSearchRunning)
+            if (value == field)
                 return;
 
-            _isBackgroundSearchRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _statusMessage;
 
     public string StatusMessage
     {
-        get => _statusMessage;
+        get;
         private set
         {
-            if (value == _statusMessage)
+            if (value == field)
                 return;
 
-            _statusMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isConnecting;
 
     public bool IsConnecting
     {
-        get => _isConnecting;
+        get;
         set
         {
-            if (value == _isConnecting)
+            if (value == field)
                 return;
 
-            _isConnecting = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isConnectionStatusMessageDisplayed;
 
     public bool IsConnectionStatusMessageDisplayed
     {
-        get => _isConnectionStatusMessageDisplayed;
+        get;
         set
         {
-            if (value == _isConnectionStatusMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isConnectionStatusMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _connectionStatusMessage;
-
     public string ConnectionStatusMessage
     {
-        get => _connectionStatusMessage;
+        get;
         private set
         {
-            if (value == _connectionStatusMessage)
+            if (value == field)
                 return;
 
-            _connectionStatusMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }

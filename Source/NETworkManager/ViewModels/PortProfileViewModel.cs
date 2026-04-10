@@ -15,14 +15,6 @@ public class PortProfileViewModel : ViewModelBase
 
     private readonly string _previousPortAsString;
 
-    private bool _infoChanged;
-
-    private bool _isEdited;
-
-    private string _name;
-
-    private string _ports;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="PortProfileViewModel"/> class.
     /// </summary>
@@ -68,13 +60,13 @@ public class PortProfileViewModel : ViewModelBase
     /// </summary>
     public string Name
     {
-        get => _name;
+        get;
         set
         {
-            if (_name == value)
+            if (field == value)
                 return;
 
-            _name = value;
+            field = value;
 
             if (!_isLoading)
                 Validate();
@@ -88,13 +80,13 @@ public class PortProfileViewModel : ViewModelBase
     /// </summary>
     public string Ports
     {
-        get => _ports;
+        get;
         set
         {
-            if (_ports == value)
+            if (field == value)
                 return;
 
-            _ports = value;
+            field = value;
 
             if (!_isLoading)
                 Validate();
@@ -108,13 +100,13 @@ public class PortProfileViewModel : ViewModelBase
     /// </summary>
     public bool InfoChanged
     {
-        get => _infoChanged;
+        get;
         set
         {
-            if (value == _infoChanged)
+            if (value == field)
                 return;
 
-            _infoChanged = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -124,13 +116,13 @@ public class PortProfileViewModel : ViewModelBase
     /// </summary>
     public bool IsEdited
     {
-        get => _isEdited;
+        get;
         set
         {
-            if (value == _isEdited)
+            if (value == field)
                 return;
 
-            _isEdited = value;
+            field = value;
             OnPropertyChanged();
         }
     }

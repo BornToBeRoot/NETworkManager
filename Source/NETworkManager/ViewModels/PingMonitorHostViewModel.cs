@@ -39,20 +39,18 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private string _group = Strings.Hosts; // Default group name
 
-    private string _host;
-
     /// <summary>
     ///     Gets or sets the host to ping.
     /// </summary>
     public string Host
     {
-        get => _host;
+        get;
         set
         {
-            if (value == _host)
+            if (value == field)
                 return;
 
-            _host = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -62,170 +60,152 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     /// </summary>
     public ICollectionView HostHistoryView { get; }
 
-    private bool _isRunning;
-
     /// <summary>
     ///     Gets or sets a value indicating whether the ping monitor is running.
     /// </summary>
     public bool IsRunning
     {
-        get => _isRunning;
+        get;
         set
         {
-            if (value == _isRunning)
+            if (value == field)
                 return;
 
-            _isRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isCanceling;
 
     /// <summary>
     ///     Gets or sets a value indicating whether the ping monitor is canceling.
     /// </summary>
     public bool IsCanceling
     {
-        get => _isCanceling;
+        get;
         set
         {
-            if (value == _isCanceling)
+            if (value == field)
                 return;
 
-            _isCanceling = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isStatusMessageDisplayed;
 
     /// <summary>
     ///     Gets or sets a value indicating whether the status message is displayed.
     /// </summary>
     public bool IsStatusMessageDisplayed
     {
-        get => _isStatusMessageDisplayed;
+        get;
         set
         {
-            if (value == _isStatusMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isStatusMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _statusMessage;
 
     /// <summary>
     ///     Gets the status message.
     /// </summary>
     public string StatusMessage
     {
-        get => _statusMessage;
+        get;
         private set
         {
-            if (value == _statusMessage)
+            if (value == field)
                 return;
 
-            _statusMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ObservableCollection<PingMonitorView> _hosts = [];
 
     /// <summary>
     ///     Gets or sets the list of ping monitor views.
     /// </summary>
     public ObservableCollection<PingMonitorView> Hosts
     {
-        get => _hosts;
+        get;
         set
         {
-            if (value != null && value == _hosts)
+            if (value != null && value == field)
                 return;
 
-            _hosts = value;
+            field = value;
         }
-    }
+    } = [];
 
     /// <summary>
     ///     Gets the view for the hosts.
     /// </summary>
     public ICollectionView HostsView { get; }
 
-    private PingMonitorView _selectedHost;
-
     /// <summary>
     ///     Gets or sets the selected host.
     /// </summary>
     public PingMonitorView SelectedHost
     {
-        get => _selectedHost;
+        get;
         set
         {
-            if (value == _selectedHost)
+            if (value == field)
                 return;
 
-            _selectedHost = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     #region Profiles
 
-    private ICollectionView _profiles;
-
     /// <summary>
     ///     Gets the view for the profiles.
     /// </summary>
     public ICollectionView Profiles
     {
-        get => _profiles;
+        get;
         private set
         {
-            if (value == _profiles)
+            if (value == field)
                 return;
 
-            _profiles = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ProfileInfo _selectedProfile;
 
     /// <summary>
     ///     Gets or sets the selected profile.
     /// </summary>
     public ProfileInfo SelectedProfile
     {
-        get => _selectedProfile;
+        get;
         set
         {
-            if (value == _selectedProfile)
+            if (value == field)
                 return;
 
-            _selectedProfile = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _search;
 
     /// <summary>
     ///     Gets or sets the search text.
     /// </summary>
     public string Search
     {
-        get => _search;
+        get;
         set
         {
-            if (value == _search)
+            if (value == field)
                 return;
 
-            _search = value;
+            field = value;
 
             // Start searching...
             if (!_searchDisabled)
@@ -238,38 +218,34 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private bool _isSearching;
-
     /// <summary>
     ///     Gets or sets a value indicating whether a search is in progress.
     /// </summary>
     public bool IsSearching
     {
-        get => _isSearching;
+        get;
         set
         {
-            if (value == _isSearching)
+            if (value == field)
                 return;
 
-            _isSearching = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _profileFilterIsOpen;
 
     /// <summary>
     ///     Gets or sets a value indicating whether the profile filter is open.
     /// </summary>
     public bool ProfileFilterIsOpen
     {
-        get => _profileFilterIsOpen;
+        get;
         set
         {
-            if (value == _profileFilterIsOpen)
+            if (value == field)
                 return;
 
-            _profileFilterIsOpen = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -281,87 +257,77 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
 
-    private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
-
     /// <summary>
     ///     Gets or sets a value indicating whether to match any profile filter tag.
     /// </summary>
     public bool ProfileFilterTagsMatchAny
     {
-        get => _profileFilterTagsMatchAny;
+        get;
         set
         {
-            if (value == _profileFilterTagsMatchAny)
+            if (value == field)
                 return;
 
-            _profileFilterTagsMatchAny = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _profileFilterTagsMatchAll;
+    } = GlobalStaticConfiguration.Profile_TagsMatchAny;
 
     /// <summary>
     ///     Gets or sets a value indicating whether to match all profile filter tags.
     /// </summary>
     public bool ProfileFilterTagsMatchAll
     {
-        get => _profileFilterTagsMatchAll;
+        get;
         set
         {
-            if (value == _profileFilterTagsMatchAll)
+            if (value == field)
                 return;
 
-            _profileFilterTagsMatchAll = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isProfileFilterSet;
 
     /// <summary>
     ///     Gets or sets a value indicating whether the profile filter is set.
     /// </summary>
     public bool IsProfileFilterSet
     {
-        get => _isProfileFilterSet;
+        get;
         set
         {
-            if (value == _isProfileFilterSet)
+            if (value == field)
                 return;
 
-            _isProfileFilterSet = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
-
     /// <summary>
     ///     Gets the group expander state store.
     /// </summary>
-    public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
+    public GroupExpanderStateStore GroupExpanderStateStore { get; } = new();
 
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
-
-    private bool _expandProfileView;
 
     /// <summary>
     ///     Gets or sets a value indicating whether the profile view is expanded.
     /// </summary>
     public bool ExpandProfileView
     {
-        get => _expandProfileView;
+        get;
         set
         {
-            if (value == _expandProfileView)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PingMonitor_ExpandProfileView = value;
 
-            _expandProfileView = value;
+            field = value;
 
             if (_canProfileWidthChange)
                 ResizeProfile(false);
@@ -370,24 +336,22 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private GridLength _profileWidth;
-
     /// <summary>
     ///     Gets or sets the width of the profile view.
     /// </summary>
     public GridLength ProfileWidth
     {
-        get => _profileWidth;
+        get;
         set
         {
-            if (value == _profileWidth)
+            if (value == field)
                 return;
 
             if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
                 GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.PingMonitor_ProfileWidth = value.Value;
 
-            _profileWidth = value;
+            field = value;
 
             if (_canProfileWidthChange)
                 ResizeProfile(true);

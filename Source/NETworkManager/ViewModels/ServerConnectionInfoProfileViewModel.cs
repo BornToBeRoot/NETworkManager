@@ -72,115 +72,101 @@ public class ServerConnectionInfoProfileViewModel : ViewModelBase
 
     #region Helper
 
-    private readonly List<string> _usedNames;
-
     // ReSharper disable once MemberCanBePrivate.Global
     // Used by the view in a BindingProxy
     public List<string> UsedNames
     {
-        get => _usedNames;
+        get;
         init
         {
-            if (value == _usedNames)
+            if (value == field)
                 return;
 
-            _usedNames = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _allowOnlyIPAddress;
-
     public bool AllowOnlyIPAddress
     {
-        get => _allowOnlyIPAddress;
+        get;
         set
         {
-            if (value == _allowOnlyIPAddress)
+            if (value == field)
                 return;
 
-            _allowOnlyIPAddress = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     #endregion
 
-    private string _name;
-
     public string Name
     {
-        get => _name;
+        get;
         set
         {
-            if (_name == value)
+            if (field == value)
                 return;
 
-            _name = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private readonly ObservableCollection<ServerConnectionInfo> _servers;
 
     public ObservableCollection<ServerConnectionInfo> Servers
     {
-        get => _servers;
+        get;
         private init
         {
-            if (value == _servers)
+            if (value == field)
                 return;
 
-            _servers = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private IList _selectedServers = new ArrayList();
 
     public IList SelectedServers
     {
-        get => _selectedServers;
+        get;
         set
         {
-            if (Equals(value, _selectedServers))
+            if (Equals(value, field))
                 return;
 
-            _selectedServers = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = new ArrayList();
 
     public string ServerWatermark { get; private set; }
 
-    private string _server;
-
     public string Server
     {
-        get => _server;
+        get;
         set
         {
-            if (_server == value)
+            if (field == value)
                 return;
 
-            _server = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public string PortWatermark { get; private set; }
 
-    private int _port;
-
     public int Port
     {
-        get => _port;
+        get;
         set
         {
-            if (_port == value)
+            if (field == value)
                 return;
 
-            _port = value;
+            field = value;
             OnPropertyChanged();
         }
     }

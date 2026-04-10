@@ -16,71 +16,63 @@ public class SettingsGeneralViewModel : ViewModelBase
 
     public ICollectionView Applications { get; private set; }
 
-    private ApplicationInfo _applicationSelectedItem;
-
     public ApplicationInfo ApplicationSelectedItem
     {
-        get => _applicationSelectedItem;
+        get;
         set
         {
-            if (Equals(value, _applicationSelectedItem))
+            if (Equals(value, field))
                 return;
 
-            _applicationSelectedItem = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private int _backgroundJobInterval;
-
     public int BackgroundJobInterval
     {
-        get => _backgroundJobInterval;
+        get;
         set
         {
-            if (value == _backgroundJobInterval)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.General_BackgroundJobInterval = value;
 
-            _backgroundJobInterval = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private int _threadPoolAdditionalMinThreads;
-
     public int ThreadPoolAdditionalMinThreads
     {
-        get => _threadPoolAdditionalMinThreads;
+        get;
         set
         {
-            if (value == _threadPoolAdditionalMinThreads)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.General_ThreadPoolAdditionalMinThreads = value;
 
-            _threadPoolAdditionalMinThreads = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private int _historyListEntries;
-
     public int HistoryListEntries
     {
-        get => _historyListEntries;
+        get;
         set
         {
-            if (value == _historyListEntries)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.General_HistoryListEntries = value;
 
-            _historyListEntries = value;
+            field = value;
             OnPropertyChanged();
         }
     }

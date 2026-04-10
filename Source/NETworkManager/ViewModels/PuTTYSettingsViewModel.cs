@@ -23,14 +23,12 @@ public class PuTTYSettingsViewModel : ViewModelBase
 
     private readonly bool _isLoading;
 
-    private string _applicationFilePath;
-
     public string ApplicationFilePath
     {
-        get => _applicationFilePath;
+        get;
         set
         {
-            if (value == _applicationFilePath)
+            if (value == field)
                 return;
 
             if (!_isLoading)
@@ -38,349 +36,311 @@ public class PuTTYSettingsViewModel : ViewModelBase
 
             IsConfigured = !string.IsNullOrEmpty(value);
 
-            _applicationFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isConfigured;
 
     public bool IsConfigured
     {
-        get => _isConfigured;
+        get;
         set
         {
-            if (value == _isConfigured)
+            if (value == field)
                 return;
 
-            _isConfigured = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _useSSH;
-
     public bool UseSSH
     {
-        get => _useSSH;
+        get;
         set
         {
-            if (value == _useSSH)
+            if (value == field)
                 return;
 
             if (value)
                 SettingsManager.Current.PuTTY_DefaultConnectionMode = ConnectionMode.SSH;
 
-            _useSSH = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _useTelnet;
-
     public bool UseTelnet
     {
-        get => _useTelnet;
+        get;
         set
         {
-            if (value == _useTelnet)
+            if (value == field)
                 return;
 
             if (value)
                 SettingsManager.Current.PuTTY_DefaultConnectionMode = ConnectionMode.Telnet;
 
-            _useTelnet = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _useSerial;
-
     public bool UseSerial
     {
-        get => _useSerial;
+        get;
         set
         {
-            if (value == _useSerial)
+            if (value == field)
                 return;
 
             if (value)
                 SettingsManager.Current.PuTTY_DefaultConnectionMode = ConnectionMode.Serial;
 
-            _useSerial = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _useRlogin;
-
     public bool UseRlogin
     {
-        get => _useRlogin;
+        get;
         set
         {
-            if (value == _useRlogin)
+            if (value == field)
                 return;
 
             if (value)
                 SettingsManager.Current.PuTTY_DefaultConnectionMode = ConnectionMode.Rlogin;
 
-            _useRlogin = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _useRAW;
-
     public bool UseRAW
     {
-        get => _useRAW;
+        get;
         set
         {
-            if (value == _useRAW)
+            if (value == field)
                 return;
 
             if (value)
                 SettingsManager.Current.PuTTY_DefaultConnectionMode = ConnectionMode.RAW;
 
-            _useRAW = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _username;
-
     public string Username
     {
-        get => _username;
+        get;
         set
         {
-            if (value == _username)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PuTTY_Username = value;
 
-            _username = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _privateKeyFile;
-
     public string PrivateKeyFile
     {
-        get => _privateKeyFile;
+        get;
         set
         {
-            if (value == _privateKeyFile)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PuTTY_PrivateKeyFile = value;
 
-            _privateKeyFile = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _profile;
-
     public string Profile
     {
-        get => _profile;
+        get;
         set
         {
-            if (value == _profile)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PuTTY_Profile = value;
 
-            _profile = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _enableLog;
-
     public bool EnableLog
     {
-        get => _enableLog;
+        get;
         set
         {
-            if (value == _enableLog)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PuTTY_EnableSessionLog = value;
 
-            _enableLog = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public IEnumerable<LogMode> LogModes => Enum.GetValues(typeof(LogMode)).Cast<LogMode>();
 
-    private LogMode _logMode;
-
     public LogMode LogMode
     {
-        get => _logMode;
+        get;
         set
         {
-            if (Equals(value, _logMode))
+            if (Equals(value, field))
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PuTTY_LogMode = value;
 
-            _logMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _logPath;
-
     public string LogPath
     {
-        get => _logPath;
+        get;
         set
         {
-            if (value == _logPath)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PuTTY_LogPath = value;
 
-            _logPath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _logFileName;
-
     public string LogFileName
     {
-        get => _logFileName;
+        get;
         set
         {
-            if (value == _logFileName)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PuTTY_LogFileName = value;
 
-            _logFileName = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _additionalCommandLine;
-
     public string AdditionalCommandLine
     {
-        get => _additionalCommandLine;
+        get;
         set
         {
-            if (value == _additionalCommandLine)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PuTTY_AdditionalCommandLine = value;
 
-            _additionalCommandLine = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
 
-    private string _serialLine;
-
     public string SerialLine
     {
-        get => _serialLine;
+        get;
         set
         {
-            if (value == _serialLine)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PuTTY_SerialLine = value;
 
-            _serialLine = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private int _sshPort;
-
     public int SSHPort
     {
-        get => _sshPort;
+        get;
         set
         {
-            if (value == _sshPort)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PuTTY_SSHPort = value;
 
-            _sshPort = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private int _telnetPort;
-
     public int TelnetPort
     {
-        get => _telnetPort;
+        get;
         set
         {
-            if (value == _telnetPort)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PuTTY_TelnetPort = value;
 
-            _telnetPort = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private int _baudRate;
-
     public int BaudRate
     {
-        get => _baudRate;
+        get;
         set
         {
-            if (value == _baudRate)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PuTTY_BaudRate = value;
 
-            _baudRate = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private int _rloginPort;
-
     public int RloginPort
     {
-        get => _rloginPort;
+        get;
         set
         {
-            if (value == _rloginPort)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.PuTTY_RloginPort = value;
 
-            _rloginPort = value;
+            field = value;
             OnPropertyChanged();
         }
     }

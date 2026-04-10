@@ -12,18 +12,6 @@ namespace NETworkManager.ViewModels;
 
 public class PowerShellConnectViewModel : ViewModelBase
 {
-    private string _additionalCommandLine;
-
-    private string _command;
-
-    private bool _enableRemoteConsole;
-
-    private List<ExecutionPolicy> _executionPolicies = [];
-
-    private ExecutionPolicy _executionPolicy;
-
-    private string _host;
-
     public PowerShellConnectViewModel(Action<PowerShellConnectViewModel> connectCommand,
         Action<PowerShellConnectViewModel> cancelHandler, string host = null)
     {
@@ -46,26 +34,26 @@ public class PowerShellConnectViewModel : ViewModelBase
 
     public bool EnableRemoteConsole
     {
-        get => _enableRemoteConsole;
+        get;
         set
         {
-            if (value == _enableRemoteConsole)
+            if (value == field)
                 return;
 
-            _enableRemoteConsole = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public string Host
     {
-        get => _host;
+        get;
         set
         {
-            if (value == _host)
+            if (value == field)
                 return;
 
-            _host = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -74,52 +62,52 @@ public class PowerShellConnectViewModel : ViewModelBase
 
     public string Command
     {
-        get => _command;
+        get;
         set
         {
-            if (value == _command)
+            if (value == field)
                 return;
 
-            _command = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public string AdditionalCommandLine
     {
-        get => _additionalCommandLine;
+        get;
         set
         {
-            if (value == _additionalCommandLine)
+            if (value == field)
                 return;
 
-            _additionalCommandLine = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public List<ExecutionPolicy> ExecutionPolicies
     {
-        get => _executionPolicies;
+        get;
         private set
         {
-            if (value == _executionPolicies)
+            if (value == field)
                 return;
 
-            _executionPolicies = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = [];
 
     public ExecutionPolicy ExecutionPolicy
     {
-        get => _executionPolicy;
+        get;
         set
         {
-            if (value == _executionPolicy)
+            if (value == field)
                 return;
 
-            _executionPolicy = value;
+            field = value;
             OnPropertyChanged();
         }
     }

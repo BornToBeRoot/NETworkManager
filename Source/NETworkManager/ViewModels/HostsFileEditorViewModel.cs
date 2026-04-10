@@ -34,22 +34,17 @@ public class HostsFileEditorViewModel : ViewModelBase
     private readonly bool _isLoading;
 
     /// <summary>
-    /// Backing field for <see cref="Search"/>.
-    /// </summary>
-    private string _search;
-
-    /// <summary>
     /// Gets or sets the search text.
     /// </summary>
     public string Search
     {
-        get => _search;
+        get;
         set
         {
-            if (value == _search)
+            if (value == field)
                 return;
 
-            _search = value;
+            field = value;
 
             ResultsView.Refresh();
 
@@ -58,25 +53,20 @@ public class HostsFileEditorViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Backing field for <see cref="Results"/>.
-    /// </summary>
-    private ObservableCollection<HostsFileEntry> _results = [];
-
-    /// <summary>
     /// Gets or sets the collection of hosts file entries.
     /// </summary>
     public ObservableCollection<HostsFileEntry> Results
     {
-        get => _results;
+        get;
         set
         {
-            if (value == _results)
+            if (value == field)
                 return;
 
-            _results = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = [];
 
     /// <summary>
     /// Gets the collection view for the hosts file entries.
@@ -84,127 +74,97 @@ public class HostsFileEditorViewModel : ViewModelBase
     public ICollectionView ResultsView { get; }
 
     /// <summary>
-    /// Backing field for <see cref="SelectedResult"/>.
-    /// </summary>
-    private HostsFileEntry _selectedResult;
-
-    /// <summary>
     /// Gets or sets the selected hosts file entry.
     /// </summary>
     public HostsFileEntry SelectedResult
     {
-        get => _selectedResult;
+        get;
         set
         {
-            if (value == _selectedResult)
+            if (value == field)
                 return;
 
-            _selectedResult = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="SelectedResults"/>.
-    /// </summary>
-    private IList _selectedResults = new ArrayList();
 
     /// <summary>
     /// Gets or sets the list of selected hosts file entries.
     /// </summary>
     public IList SelectedResults
     {
-        get => _selectedResults;
+        get;
         set
         {
-            if (Equals(value, _selectedResults))
+            if (Equals(value, field))
                 return;
 
-            _selectedResults = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="IsModifying"/>.
-    /// </summary>
-    private bool _isModifying;
+    } = new ArrayList();
 
     /// <summary>
     /// Gets or sets a value indicating whether the view model is modifying an entry.
     /// </summary>
     public bool IsModifying
     {
-        get => _isModifying;
+        get;
         set
         {
-            if (value == _isModifying)
+            if (value == field)
                 return;
 
-            _isModifying = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="IsRefreshing"/>.
-    /// </summary>
-    private bool _isRefreshing;
 
     /// <summary>
     /// Gets or sets a value indicating whether the view model is currently refreshing.
     /// </summary>
     public bool IsRefreshing
     {
-        get => _isRefreshing;
+        get;
         set
         {
-            if (value == _isRefreshing)
+            if (value == field)
                 return;
 
-            _isRefreshing = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="IsStatusMessageDisplayed"/>.
-    /// </summary>
-    private bool _isStatusMessageDisplayed;
 
     /// <summary>
     /// Gets or sets a value indicating whether the status message is displayed.
     /// </summary>
     public bool IsStatusMessageDisplayed
     {
-        get => _isStatusMessageDisplayed;
+        get;
         set
         {
-            if (value == _isStatusMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isStatusMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="StatusMessage"/>.
-    /// </summary>
-    private string _statusMessage;
 
     /// <summary>
     /// Gets the status message.
     /// </summary>
     public string StatusMessage
     {
-        get => _statusMessage;
+        get;
         private set
         {
-            if (value == _statusMessage)
+            if (value == field)
                 return;
 
-            _statusMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }

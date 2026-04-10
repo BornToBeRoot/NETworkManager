@@ -15,67 +15,6 @@ namespace NETworkManager.ViewModels;
 public class ExportViewModel : ViewModelBase
 {
     /// <summary>
-    /// Backing field for <see cref="ExportAll"/>.
-    /// </summary>
-    private bool _exportAll = true;
-
-    /// <summary>
-    /// Backing field for <see cref="ExportSelected"/>.
-    /// </summary>
-    private bool _exportSelected;
-
-    /// <summary>
-    /// Backing field for <see cref="FilePath"/>.
-    /// </summary>
-    private string _filePath;
-
-    /// <summary>
-    /// Backing field for <see cref="ShowCsv"/>.
-    /// </summary>
-    private bool _showCsv;
-
-    /// <summary>
-    /// Backing field for <see cref="ShowExportSelected"/>.
-    /// </summary>
-    private bool _showExportSelected;
-
-
-    /// <summary>
-    /// Backing field for <see cref="ShowJson"/>.
-    /// </summary>
-    private bool _showJson;
-
-    /// <summary>
-    /// Backing field for <see cref="ShowTxt"/>.
-    /// </summary>
-    private bool _showTxt;
-
-    /// <summary>
-    /// Backing field for <see cref="ShowXml"/>.
-    /// </summary>
-    private bool _showXml;
-
-    /// <summary>
-    /// Backing field for <see cref="UseCsv"/>.
-    /// </summary>
-    private bool _useCsv;
-
-    /// <summary>
-    /// Backing field for <see cref="UseJson"/>.
-    /// </summary>
-    private bool _useJson;
-
-    /// <summary>
-    /// Backing field for <see cref="UseTxt"/>.
-    /// </summary>
-    private bool _useTxt;
-
-    /// <summary>
-    /// Backing field for <see cref="UseXml"/>.
-    /// </summary>
-    private bool _useXml;
-
-    /// <summary>
     /// Initializes a new instance of the <see cref="ExportViewModel"/> class.
     /// </summary>
     /// <param name="deleteCommand">The action to execute when export is confirmed.</param>
@@ -145,29 +84,29 @@ public class ExportViewModel : ViewModelBase
     /// </summary>
     public bool ExportAll
     {
-        get => _exportAll;
+        get;
         set
         {
-            if (value == _exportAll)
+            if (value == field)
                 return;
 
-            _exportAll = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = true;
 
     /// <summary>
     /// Gets or sets a value indicating whether to show the "Export selected" option.
     /// </summary>
     public bool ShowExportSelected
     {
-        get => _showExportSelected;
+        get;
         set
         {
-            if (value == _showExportSelected)
+            if (value == field)
                 return;
 
-            _showExportSelected = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -177,13 +116,13 @@ public class ExportViewModel : ViewModelBase
     /// </summary>
     public bool ExportSelected
     {
-        get => _exportSelected;
+        get;
         set
         {
-            if (value == _exportSelected)
+            if (value == field)
                 return;
 
-            _exportSelected = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -198,13 +137,13 @@ public class ExportViewModel : ViewModelBase
     /// </summary>
     public bool ShowCsv
     {
-        get => _showCsv;
+        get;
         set
         {
-            if (value == _showCsv)
+            if (value == field)
                 return;
 
-            _showCsv = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -214,10 +153,10 @@ public class ExportViewModel : ViewModelBase
     /// </summary>
     public bool UseCsv
     {
-        get => _useCsv;
+        get;
         set
         {
-            if (value == _useCsv)
+            if (value == field)
                 return;
 
             if (value)
@@ -226,7 +165,7 @@ public class ExportViewModel : ViewModelBase
                 ChangeFilePathExtension(FileType);
             }
 
-            _useCsv = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -236,13 +175,13 @@ public class ExportViewModel : ViewModelBase
     /// </summary>
     public bool ShowXml
     {
-        get => _showXml;
+        get;
         set
         {
-            if (value == _showXml)
+            if (value == field)
                 return;
 
-            _showXml = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -252,10 +191,10 @@ public class ExportViewModel : ViewModelBase
     /// </summary>
     public bool UseXml
     {
-        get => _useXml;
+        get;
         set
         {
-            if (value == _useXml)
+            if (value == field)
                 return;
 
             if (value)
@@ -264,7 +203,7 @@ public class ExportViewModel : ViewModelBase
                 ChangeFilePathExtension(FileType);
             }
 
-            _useXml = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -274,13 +213,13 @@ public class ExportViewModel : ViewModelBase
     /// </summary>
     public bool ShowJson
     {
-        get => _showJson;
+        get;
         set
         {
-            if (value == _showJson)
+            if (value == field)
                 return;
 
-            _showJson = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -290,10 +229,10 @@ public class ExportViewModel : ViewModelBase
     /// </summary>
     public bool UseJson
     {
-        get => _useJson;
+        get;
         set
         {
-            if (value == _useJson)
+            if (value == field)
                 return;
 
             if (value)
@@ -302,7 +241,7 @@ public class ExportViewModel : ViewModelBase
                 ChangeFilePathExtension(FileType);
             }
 
-            _useJson = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -312,13 +251,13 @@ public class ExportViewModel : ViewModelBase
     /// </summary>
     public bool ShowTxt
     {
-        get => _showTxt;
+        get;
         set
         {
-            if (value == _showTxt)
+            if (value == field)
                 return;
 
-            _showTxt = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -328,10 +267,10 @@ public class ExportViewModel : ViewModelBase
     /// </summary>
     public bool UseTxt
     {
-        get => _useTxt;
+        get;
         set
         {
-            if (value == _useTxt)
+            if (value == field)
                 return;
 
             if (value)
@@ -340,7 +279,7 @@ public class ExportViewModel : ViewModelBase
                 ChangeFilePathExtension(FileType);
             }
 
-            _useTxt = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -350,13 +289,13 @@ public class ExportViewModel : ViewModelBase
     /// </summary>
     public string FilePath
     {
-        get => _filePath;
+        get;
         set
         {
-            if (value == _filePath)
+            if (value == field)
                 return;
 
-            _filePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }

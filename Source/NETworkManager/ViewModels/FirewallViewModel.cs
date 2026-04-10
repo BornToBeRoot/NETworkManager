@@ -1,87 +1,40 @@
-using Dragablz;
-using MahApps.Metro.SimpleChildWindow;
-using Microsoft.Web.WebView2.Core;
-using NETworkManager.Controls;
+﻿using System.Threading.Tasks;
 using NETworkManager.Localization.Resources;
-using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
-using NETworkManager.Models.WebConsole;
-using NETworkManager.Profiles;
-using NETworkManager.Profiles.Application;
-using NETworkManager.Settings;
-using NETworkManager.Utilities;
-using NETworkManager.Views;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
-public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Threading;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System;
+using System.Linq;
+using System.Windows.Input;
+using Controls;
+using Profiles;
+using Models;
+using Settings;
+using Utilities;
+
+/// <summary>
+/// ViewModel for the Firewall application.
+/// </summary>
+public class FirewallViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
-
+    
     private readonly DispatcherTimer _searchDispatcherTimer = new();
     private bool _searchDisabled;
-
-    public IInterTabClient InterTabClient { get; }
-
-    public string InterTabPartition
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public ObservableCollection<DragablzTabItem> TabItems { get; }
-
     private readonly bool _isLoading;
     private bool _isViewActive = true;
 
-    /// <summary>
-    ///     Variable indicates if the Edge WebView2 runtime is available.
-    /// </summary>
-    public bool IsRuntimeAvailable
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public int SelectedTabIndex
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
     #region Profiles
 
+    /// <summary>
+    /// Gets the collection view of profiles.
+    /// </summary>
     public ICollectionView Profiles
     {
         get;
@@ -95,6 +48,9 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    /// <summary>
+    /// Gets or sets the selected profile.
+    /// </summary>
     public ProfileInfo SelectedProfile
     {
         get;
@@ -108,6 +64,9 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         }
     } = new();
 
+    /// <summary>
+    /// Gets or sets the search text.
+    /// </summary>
     public string Search
     {
         get;
@@ -129,6 +88,9 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether a search is in progress.
+    /// </summary>
     public bool IsSearching
     {
         get;
@@ -142,6 +104,9 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the profile filter is open.
+    /// </summary>
     public bool ProfileFilterIsOpen
     {
         get;
@@ -155,10 +120,19 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
+   /// <summary>
+    /// Gets the collection view for profile filter tags.
+    /// </summary>
     public ICollectionView ProfileFilterTagsView { get; }
 
+    /// <summary>
+    /// Gets the collection of profile filter tags.
+    /// </summary>
     private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
 
+    /// <summary>
+    /// Gets or sets a value indicating whether any tag match is sufficient for filtering.
+    /// </summary>
     public bool ProfileFilterTagsMatchAny
     {
         get;
@@ -172,6 +146,9 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         }
     } = GlobalStaticConfiguration.Profile_TagsMatchAny;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether all tags must match for filtering.
+    /// </summary>
     public bool ProfileFilterTagsMatchAll
     {
         get;
@@ -185,6 +162,9 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether a profile filter is set.
+    /// </summary>
     public bool IsProfileFilterSet
     {
         get;
@@ -203,6 +183,9 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the profile view is expanded.
+    /// </summary>
     public bool ExpandProfileView
     {
         get;
@@ -212,7 +195,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.WebConsole_ExpandProfileView = value;
+                SettingsManager.Current.Firewall_ExpandProfileView = value;
 
             field = value;
 
@@ -223,6 +206,9 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    /// <summary>
+    /// Gets or sets the width of the profile view.
+    /// </summary>
     public GridLength ProfileWidth
     {
         get;
@@ -233,7 +219,7 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
             if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
                 GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
-                SettingsManager.Current.WebConsole_ProfileWidth = value.Value;
+                SettingsManager.Current.Firewall_ProfileWidth = value.Value;
 
             field = value;
 
@@ -250,24 +236,12 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
     #region Constructor, load settings
 
-    public WebConsoleHostViewModel()
+    /// <summary>
+    /// Initializes a new instance of the <see cref="FirewallViewModel"/> class.
+    /// </summary>
+    public FirewallViewModel()
     {
         _isLoading = true;
-
-        try
-        {
-            CoreWebView2Environment.GetAvailableBrowserVersionString();
-            IsRuntimeAvailable = true;
-        }
-        catch (WebView2RuntimeNotFoundException)
-        {
-            IsRuntimeAvailable = false;
-        }
-
-        InterTabClient = new DragablzInterTabClient(ApplicationName.WebConsole);
-        InterTabPartition = nameof(ApplicationName.WebConsole);
-
-        TabItems = [];
 
         // Profiles
         CreateTags();
@@ -284,101 +258,128 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
 
         LoadSettings();
-
+        
         _isLoading = false;
     }
-
+    
+    /// <summary>
+    /// Loads the settings.
+    /// </summary>
     private void LoadSettings()
     {
-        ExpandProfileView = SettingsManager.Current.WebConsole_ExpandProfileView;
+        ExpandProfileView = SettingsManager.Current.Firewall_ExpandProfileView;
 
         ProfileWidth = ExpandProfileView
-            ? new GridLength(SettingsManager.Current.WebConsole_ProfileWidth)
+            ? new GridLength(SettingsManager.Current.Firewall_ProfileWidth)
             : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
 
-        _tempProfileWidth = SettingsManager.Current.WebConsole_ProfileWidth;
+        _tempProfileWidth = SettingsManager.Current.Firewall_ProfileWidth;
     }
 
     #endregion
 
     #region ICommand & Actions
 
-    public ItemActionCallback CloseItemCommand => CloseItemAction;
+    /// <summary>
+    /// Gets the command to add a new firewall entry.
+    /// </summary>
+    public ICommand AddEntryCommand => new RelayCommand(_ => AddEntryAction());
 
-    private void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
+    /// <summary>
+    /// Action to add a new firewall entry.
+    /// </summary>
+    private void AddEntryAction()
     {
-        ((args.DragablzItem.Content as DragablzTabItem)?.View as IDragablzTabItem)?.CloseTab();
+        MessageBox.Show("Not implemented");
     }
 
-    public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction());
+    /// <summary>
+    /// Gets the command to apply the selected profile configuration.
+    /// </summary>
+    public ICommand ApplyProfileCommand => new RelayCommand(_ => ApplyProfileAction());
 
-    private void ConnectAction()
+    /// <summary>
+    /// Action to apply the selected profile configuration.
+    /// </summary>
+    private void ApplyProfileAction()
     {
-        Connect().ConfigureAwait(false);
+        MessageBox.Show("Not implemented");
     }
 
-    public ICommand ReloadCommand => new RelayCommand(ReloadAction);
-
-    private void ReloadAction(object view)
-    {
-        if (view is WebConsoleControl control)
-            if (control.ReloadCommand.CanExecute(null))
-                control.ReloadCommand.Execute(null);
-    }
-
-    public ICommand ConnectProfileCommand => new RelayCommand(_ => ConnectProfileAction(), ConnectProfile_CanExecute);
-
-    private bool ConnectProfile_CanExecute(object obj)
-    {
-        return !IsSearching && SelectedProfile != null;
-    }
-
-    private void ConnectProfileAction()
-    {
-        ConnectProfile();
-    }
-
+    /// <summary>
+    /// Gets the command to add a new profile.
+    /// </summary>
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
+    /// <summary>
+    /// Action to add a new profile.
+    /// </summary>
     private void AddProfileAction()
     {
         ProfileDialogManager
-            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.WebConsole)
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.Firewall)
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Checks if the profile modification commands can be executed.
+    /// </summary>
     private bool ModifyProfile_CanExecute(object obj)
     {
         return SelectedProfile is { IsDynamic: false };
     }
 
+    /// <summary>
+    /// Gets the command to edit the selected profile.
+    /// </summary>
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
 
+    /// <summary>
+    /// Action to edit the selected profile.
+    /// </summary>
     private void EditProfileAction()
     {
         ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Action to copy the selected profile as a new profile.
+    /// </summary>
     public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
+    /// <summary>
+    /// Action to copy the selected profile as a new profile.
+    /// </summary>
     private void CopyAsProfileAction()
     {
         ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to delete the selected profile.
+    /// </summary>
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
+    /// <summary>
+    /// Action to delete the selected profile.
+    /// </summary>
     private void DeleteProfileAction()
     {
         ProfileDialogManager
             .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile })
             .ConfigureAwait(false);
     }
-
+    
+    /// <summary>
+    /// Gets the command to edit a profile group.
+    /// </summary>
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
+    /// <summary>
+    /// Action to edit a profile group.
+    /// </summary>
     private void EditGroupAction(object group)
     {
         ProfileDialogManager
@@ -386,15 +387,27 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Gets the command to open the profile filter.
+    /// </summary>
     public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
 
+    /// <summary>
+    /// Action to open the profile filter.
+    /// </summary>
     private void OpenProfileFilterAction()
     {
         ProfileFilterIsOpen = true;
     }
 
+    /// <summary>
+    /// Gets the command to apply the profile filter.
+    /// </summary>
     public ICommand ApplyProfileFilterCommand => new RelayCommand(_ => ApplyProfileFilterAction());
 
+    /// <summary>
+    /// Action to apply the profile filter.
+    /// </summary>
     private void ApplyProfileFilterAction()
     {
         RefreshProfiles();
@@ -402,8 +415,14 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         ProfileFilterIsOpen = false;
     }
 
+    /// <summary>
+    /// Gets the command to clear the profile filter.
+    /// </summary>
     public ICommand ClearProfileFilterCommand => new RelayCommand(_ => ClearProfileFilterAction());
 
+    /// <summary>
+    /// Action to clear the profile filter.
+    /// </summary>
     private void ClearProfileFilterAction()
     {
         _searchDisabled = true;
@@ -419,112 +438,75 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         ProfileFilterIsOpen = false;
     }
 
+    /// <summary>
+    /// Gets the command to expand all profile groups.
+    /// </summary>
     public ICommand ExpandAllProfileGroupsCommand => new RelayCommand(_ => ExpandAllProfileGroupsAction());
 
+    /// <summary>
+    /// Action to expand all profile groups.
+    /// </summary>
     private void ExpandAllProfileGroupsAction()
     {
         SetIsExpandedForAllProfileGroups(true);
     }
 
+    /// <summary>
+    /// Gets the command to collapse all profile groups.
+    /// </summary>
     public ICommand CollapseAllProfileGroupsCommand => new RelayCommand(_ => CollapseAllProfileGroupsAction());
 
+    /// <summary>
+    /// Action to collapse all profile groups.
+    /// </summary>
     private void CollapseAllProfileGroupsAction()
     {
         SetIsExpandedForAllProfileGroups(false);
     }
+    
+    #region Additional commands
+    
+    /// <summary>
+    /// Gets the command to open the Windows Firewall management console (WF.msc).
+    /// </summary>
+    public ICommand OpenWindowsFirewallCommand => new RelayCommand(_ => OpenWindowsFirewallAction().ConfigureAwait(false));
 
-    public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
-
-    private static void OpenSettingsAction()
+    /// <summary>
+    /// Action to open the Windows Firewall management console (WF.msc).
+    /// Shows an error dialog if the process cannot be started.
+    /// </summary>
+    private async Task OpenWindowsFirewallAction()
     {
-        EventSystem.RedirectToSettings();
-    }
-
-    public ICommand OpenWebsiteCommand => new RelayCommand(OpenWebsiteAction);
-
-    private static void OpenWebsiteAction(object url)
-    {
-        ExternalProcessStarter.OpenUrl((string)url);
+        try
+        {
+            ExternalProcessStarter.RunProcess("WF.msc");
+        }
+        catch (Exception ex)
+        {
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, ex.Message,
+                ChildWindowIcon.Error);
+        }
     }
 
     #endregion
+    
+    #endregion
 
     #region Methods
-
-    private Task Connect()
-    {
-        var childWindow = new WebConsoleConnectChildWindow();
-
-        var childWindowViewModel = new WebConsoleConnectViewModel(instance =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            ConfigurationManager.OnDialogClose();
-
-            // Create profile info
-            var info = new WebConsoleSessionInfo
-            {
-                Url = instance.Url
-            };
-
-            // Add to history
-            // Note: The history can only be updated after the values have been read.
-            //       Otherwise, in some cases, incorrect values are taken over.
-            AddUrlToHistory(instance.Url);
-
-            Connect(info);
-        }, _ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            ConfigurationManager.OnDialogClose();
-        });
-
-        childWindow.Title = Strings.Connect;
-
-        childWindow.DataContext = childWindowViewModel;
-
-        ConfigurationManager.Current.IsChildWindowOpen = true;
-
-        ConfigurationManager.OnDialogOpen();
-
-        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
-    }
-
-    private void ConnectProfile()
-    {
-        Connect(WebConsole.CreateSessionInfo(SelectedProfile),
-            SelectedProfile.Name);
-    }
-
-    private void Connect(WebConsoleSessionInfo sessionInfo, string header = null)
-    {
-        var tabId = Guid.NewGuid();
-
-        TabItems.Add(new DragablzTabItem(header ?? sessionInfo.Url, new WebConsoleControl(tabId, sessionInfo), tabId));
-
-        SelectedTabIndex = TabItems.Count - 1;
-    }
-
-    // Modify history list
-    private static void AddUrlToHistory(string url)
-    {
-        if (string.IsNullOrEmpty(url))
-            return;
-
-        SettingsManager.Current.WebConsole_UrlHistory = new ObservableCollection<string>(
-            ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory.ToList(), url,
-                SettingsManager.Current.General_HistoryListEntries));
-    }
-
+    /// <summary>
+    /// Sets the IsExpanded property for all profile groups.
+    /// </summary>
+    /// <param name="isExpanded">The value to set.</param>
     private void SetIsExpandedForAllProfileGroups(bool isExpanded)
     {
         foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
             GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
     }
-
+    
+    /// <summary>
+    /// Resizes the profile view.
+    /// </summary>
+    /// <param name="dueToChangedSize">Indicates whether the resize is due to a size change.</param>
     private void ResizeProfile(bool dueToChangedSize)
     {
         _canProfileWidthChange = false;
@@ -553,7 +535,10 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
         _canProfileWidthChange = true;
     }
-
+    
+    /// <summary>
+    /// Called when the view becomes visible.
+    /// </summary>
     public void OnViewVisible()
     {
         _isViewActive = true;
@@ -561,14 +546,20 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
     }
 
+    /// <summary>
+    /// Called when the view is hidden.
+    /// </summary>
     public void OnViewHide()
     {
         _isViewActive = false;
     }
-
+    
+    /// <summary>
+    /// Creates the profile filter tags.
+    /// </summary>
     private void CreateTags()
     {
-        var tags = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.WebConsole_Enabled)
+        var tags = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.Firewall_Enabled)
             .SelectMany(x => x.TagsCollection).Distinct().ToList();
 
         var tagSet = new HashSet<string>(tags);
@@ -587,14 +578,18 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
+    /// <summary>
+    /// Sets the profiles view with the specified filter.
+    /// </summary>
+    /// <param name="filter">The profile filter.</param>
+    /// <param name="profile">The profile to select.</param>
     private void SetProfilesView(ProfileFilterInfo filter, ProfileInfo profile = null)
     {
         Profiles = new CollectionViewSource
         {
-            Source = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.WebConsole_Enabled && (
+            Source = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.Firewall_Enabled && (
                     string.IsNullOrEmpty(filter.Search) ||
-                    x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                    x.WebConsole_Url.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (
+                    x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (
                     // If no tags are selected, show all profiles
                     (!filter.Tags.Any()) ||
                     // Any tag can match
@@ -618,6 +613,9 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
             SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
     }
 
+    /// <summary>
+    /// Refreshes the profiles.
+    /// </summary>
     private void RefreshProfiles()
     {
         if (!_isViewActive)
@@ -634,28 +632,23 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
         IsProfileFilterSet = !string.IsNullOrEmpty(filter.Search) || filter.Tags.Any();
     }
-
-    public void OnProfileManagerDialogOpen()
-    {
-        ConfigurationManager.OnDialogOpen();
-    }
-
-    public void OnProfileManagerDialogClose()
-    {
-        ConfigurationManager.OnDialogClose();
-    }
-
     #endregion
-
-    #region Event
-
+    
+    #region Events
+    
+    /// <summary>
+    /// Handles the OnProfilesUpdated event of the ProfileManager.
+    /// </summary>
     private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
     {
         CreateTags();
 
         RefreshProfiles();
     }
-
+    
+    /// <summary>
+    /// Handles the Tick event of the search dispatcher timer.
+    /// </summary>
     private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
     {
         _searchDispatcherTimer.Stop();
@@ -664,6 +657,6 @@ public class WebConsoleHostViewModel : ViewModelBase, IProfileManager
 
         IsSearching = false;
     }
-
+    
     #endregion
 }

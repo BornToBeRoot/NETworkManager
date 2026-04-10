@@ -1,5 +1,5 @@
 ---
-sidebar_position: 24
+sidebar_position: 25
 description: "View all active TCP and UDP connections with source and destination endpoints and associated processes. NETworkManager Connections works like an enhanced netstat."
 keywords: [NETworkManager, connections, active connections, netstat, TCP connections, UDP connections, network connections]
 ---
