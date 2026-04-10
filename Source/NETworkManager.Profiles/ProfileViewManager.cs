@@ -50,7 +50,7 @@ public static class ProfileViewManager
             ProfileGroup.Application),
         new ProfileViewInfo(ProfileName.SNMP, ApplicationManager.GetIcon(ApplicationName.SNMP),
             ProfileGroup.Application),
-          new ProfileViewInfo(ProfileName.Firewall, ApplicationManager.GetIcon(ApplicationName.Firewall),
+        new ProfileViewInfo(ProfileName.Firewall, ApplicationManager.GetIcon(ApplicationName.Firewall),
             ProfileGroup.Application),
         new ProfileViewInfo(ProfileName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN),
             ProfileGroup.Application),
