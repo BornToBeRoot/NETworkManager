@@ -4009,4 +4009,13 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   <data name="ToolTip_Reload" xml:space="preserve">
     <value>Reload</value>
   </data>
+  <data name="Firewall" xml:space="preserve">
+    <value>Firewall</value>
+  </data>
+  <data name="FirewallRules" xml:space="preserve">
+    <value>Firewall rules</value>
+  </data>
+  <data name="WindowsFirewallSettings" xml:space="preserve">
+    <value>Windows Firewall settings</value>
+  </data>
 </root>
