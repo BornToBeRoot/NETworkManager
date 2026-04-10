@@ -1,5 +1,5 @@
 ---
-sidebar_position: 26
+sidebar_position: 27
 description: "View and manage IP-to-MAC address mappings in the ARP cache with NETworkManager. Add or delete ARP entries and understand ARP protocol behavior."
 keywords: [NETworkManager, ARP table, ARP cache, IP to MAC, MAC address, ARP protocol, address resolution]
 ---
