@@ -67,398 +67,332 @@ public class ConfigurationInfo : PropertyChangedBase
     /// </summary>
     public ApplicationName CurrentApplication { get; set; } = Models.ApplicationName.None;
 
-    private int _ipScannerTabCount;
-
     public int IPScannerTabCount
     {
-        get => _ipScannerTabCount;
+        get;
         set
         {
-            if (value == _ipScannerTabCount)
+            if (value == field)
                 return;
 
-            _ipScannerTabCount = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _portScannerTabCount;
 
     public int PortScannerTabCount
     {
-        get => _portScannerTabCount;
+        get;
         set
         {
-            if (value == _portScannerTabCount)
+            if (value == field)
                 return;
 
-            _portScannerTabCount = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _tracerouteTabCount;
 
     public int TracerouteTabCount
     {
-        get => _tracerouteTabCount;
+        get;
         set
         {
-            if (value == _tracerouteTabCount)
+            if (value == field)
                 return;
 
-            _tracerouteTabCount = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _dnsLookupTabCount;
 
     public int DNSLookupTabCount
     {
-        get => _dnsLookupTabCount;
+        get;
         set
         {
-            if (value == _dnsLookupTabCount)
+            if (value == field)
                 return;
 
-            _dnsLookupTabCount = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _remoteDesktopTabCount;
 
     public int RemoteDesktopTabCount
     {
-        get => _remoteDesktopTabCount;
+        get;
         set
         {
-            if (value == _remoteDesktopTabCount)
+            if (value == field)
                 return;
 
-            _remoteDesktopTabCount = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isRemoteDesktopWindowDragging;
 
     public bool IsRemoteDesktopWindowDragging
     {
-        get => _isRemoteDesktopWindowDragging;
+        get;
         set
         {
-            if (value == _isRemoteDesktopWindowDragging)
+            if (value == field)
                 return;
 
-            _isRemoteDesktopWindowDragging = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _powerShellTabCount;
 
     public int PowerShellTabCount
     {
-        get => _powerShellTabCount;
+        get;
         set
         {
-            if (value == _powerShellTabCount)
+            if (value == field)
                 return;
 
-            _powerShellTabCount = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isPowerShellWindowDragging;
 
     public bool IsPowerShellWindowDragging
     {
-        get => _isPowerShellWindowDragging;
+        get;
         set
         {
-            if (value == _isPowerShellWindowDragging)
+            if (value == field)
                 return;
 
-            _isPowerShellWindowDragging = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _puTTYTabCount;
 
     public int PuTTYTabCount
     {
-        get => _puTTYTabCount;
+        get;
         set
         {
-            if (value == _puTTYTabCount)
+            if (value == field)
                 return;
 
-            _puTTYTabCount = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isPuTTYWindowDragging;
 
     public bool IsPuTTYWindowDragging
     {
-        get => _isPuTTYWindowDragging;
+        get;
         set
         {
-            if (value == _isPuTTYWindowDragging)
+            if (value == field)
                 return;
 
-            _isPuTTYWindowDragging = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _tigerVNCTabCount;
 
     public int TigerVNCTabCount
     {
-        get => _tigerVNCTabCount;
+        get;
         set
         {
-            if (value == _tigerVNCTabCount)
+            if (value == field)
                 return;
 
-            _tigerVNCTabCount = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isTigerVNCWindowDragging;
 
     public bool IsTigerVNCWindowDragging
     {
-        get => _isTigerVNCWindowDragging;
+        get;
         set
         {
-            if (value == _isTigerVNCWindowDragging)
+            if (value == field)
                 return;
 
-            _isTigerVNCWindowDragging = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _webConsoleTabCount;
 
     public int WebConsoleTabCount
     {
-        get => _webConsoleTabCount;
+        get;
         set
         {
-            if (value == _webConsoleTabCount)
+            if (value == field)
                 return;
 
-            _webConsoleTabCount = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isWebConsoleWindowDragging;
 
     public bool IsWebConsoleWindowDragging
     {
-        get => _isWebConsoleWindowDragging;
+        get;
         set
         {
-            if (value == _isWebConsoleWindowDragging)
+            if (value == field)
                 return;
 
-            _isWebConsoleWindowDragging = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _snmpTabCount;
 
     public int SNMPTabCount
     {
-        get => _snmpTabCount;
+        get;
         set
         {
-            if (value == _snmpTabCount)
+            if (value == field)
                 return;
 
-            _snmpTabCount = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _sntpLookupTabCount;
 
     public int SNTPLookupTabCount
     {
-        get => _sntpLookupTabCount;
+        get;
         set
         {
-            if (value == _sntpLookupTabCount)
+            if (value == field)
                 return;
 
-            _sntpLookupTabCount = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _whoisTabCount;
 
     public int WhoisTabCount
     {
-        get => _whoisTabCount;
+        get;
         set
         {
-            if (value == _whoisTabCount)
+            if (value == field)
                 return;
 
-            _whoisTabCount = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _ipGeolocationTabCount;
 
     public int IPGeolocationTabCount
     {
-        get => _ipGeolocationTabCount;
+        get;
         set
         {
-            if (value == _ipGeolocationTabCount)
+            if (value == field)
                 return;
 
-            _ipGeolocationTabCount = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    ///     Private variable for <see cref="ProfileManagerIsEnabled" />.
-    /// </summary>
-    private bool _profileManagerIsEnabled;
 
     /// <summary>
     ///     Indicates if the profile manager is enabled.
     /// </summary>
     public bool ProfileManagerIsEnabled
     {
-        get => _profileManagerIsEnabled;
+        get;
         set
         {
-            if (value == _profileManagerIsEnabled)
+            if (value == field)
                 return;
 
-            _profileManagerIsEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    ///     Private variable for <see cref="ProfileManagerShowUnlock" />.
-    /// </summary>
-    private bool _profileManagerShowUnlock;
 
     /// <summary>
     ///     Indicates if the profile manager should show an unlock option.
     /// </summary>
     public bool ProfileManagerShowUnlock
     {
-        get => _profileManagerShowUnlock;
+        get;
         set
         {
-            if (value == _profileManagerShowUnlock)
+            if (value == field)
                 return;
 
-            _profileManagerShowUnlock = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    ///     Private variable for <see cref="ProfileManagerErrorMessage" />.
-    /// </summary>
-    private string _profileManagerErrorMessage = string.Empty;
 
     /// <summary>
     ///     Error message if the profile manager is not enabled.
     /// </summary>
     public string ProfileManagerErrorMessage
     {
-        get => _profileManagerErrorMessage;
+        get;
         set
         {
-            if (value == _profileManagerErrorMessage)
+            if (value == field)
                 return;
 
-            _profileManagerErrorMessage = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Private variable for <see cref="IsChildWindowOpen" />.
-    /// </summary>
-    private bool _isChildWindowOpen;
+    } = string.Empty;
 
     /// <summary>
     /// Indicates if a child window is open.
     /// </summary>
     public bool IsChildWindowOpen
     {
-        get => _isChildWindowOpen;
+        get;
         set
         {
-            if (value == _isChildWindowOpen)
+            if (value == field)
                 return;
 
-            _isChildWindowOpen = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Private variable for <see cref="IsProfileFilterPopupOpen" />.
-    /// </summary>
-    private bool _isProfileFilterPopupOpen;
 
     /// <summary>
     /// Indicates if a profile filter popup is open.
     /// </summary>
     public bool IsProfileFilterPopupOpen
     {
-        get => _isProfileFilterPopupOpen;
+        get;
         set
         {
-            if (value == _isProfileFilterPopupOpen)
+            if (value == field)
                 return;
 
-            _isProfileFilterPopupOpen = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    ///     Private variable for <see cref="FixAirspace" />.
-    /// </summary>
-    private bool _fixAirspace;
 
     /// <summary>
     ///     Indicates if there may be an airspace issue that needs to be fixed.
     /// </summary>
     public bool FixAirspace
     {
-        get => _fixAirspace;
+        get;
         set
         {
-            if (value == _fixAirspace)
+            if (value == field)
                 return;
 
-            _fixAirspace = value;
+            field = value;
             OnPropertyChanged();
         }
     }

@@ -97,47 +97,41 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         ApplicationName.PuTTY
     ];
 
-    private ApplicationName _applicationName;
-
     public ApplicationName ApplicationName
     {
-        get => _applicationName;
+        get;
         set
         {
-            if (value == _applicationName)
+            if (value == field)
                 return;
 
-            _applicationName = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _interTabPartition;
 
     public string InterTabPartition
     {
-        get => _interTabPartition;
+        get;
         set
         {
-            if (value == _interTabPartition)
+            if (value == field)
                 return;
 
-            _interTabPartition = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _headerContextMenuIsOpen;
-
     public bool HeaderContextMenuIsOpen
     {
-        get => _headerContextMenuIsOpen;
+        get;
         set
         {
-            if (value == _headerContextMenuIsOpen)
+            if (value == field)
                 return;
 
-            _headerContextMenuIsOpen = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -226,8 +220,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
             //ConfigurationManager.OnDialogOpen();
 
             // Use built-in message box because we have visual issues in the dragablz window
-            System.Windows.MessageBox.Show(string.Format("{0}\n\nMessage:\n{1}",
-                    Strings.CouldNotSendKeystroke, ex.Message), Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+            System.Windows.MessageBox.Show($"{Strings.CouldNotSendKeystroke}\n\nMessage:\n{ex.Message}", Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
 
             //ConfigurationManager.OnDialogClose();
         }

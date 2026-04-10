@@ -11,26 +11,6 @@ namespace NETworkManager.ViewModels;
 public class CredentialsPasswordProfileFileViewModel : ViewModelBase
 {
     /// <summary>
-    ///     Private variable for <see cref="IsPasswordEmpty" />.
-    /// </summary>
-    private bool _isPasswordEmpty = true;
-
-    /// <summary>
-    ///     Private variable for <see cref="Password" />.
-    /// </summary>
-    private SecureString _password = new();
-
-    /// <summary>
-    ///     Private variable for <see cref="ProfileName" />.
-    /// </summary>
-    private string _profileName;
-
-    /// <summary>
-    ///     Private variable for <see cref="ShowWrongPassword" />.
-    /// </summary>
-    private bool _showWrongPassword;
-
-    /// <summary>
     ///     Initialize a new class <see cref="CredentialsPasswordProfileFileViewModel" /> with <see cref="OKCommand" /> and
     ///     <see cref="CancelCommand" />.
     /// </summary>
@@ -64,13 +44,13 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
     /// </summary>
     public string ProfileName
     {
-        get => _profileName;
+        get;
         set
         {
-            if (value == _profileName)
+            if (value == field)
                 return;
 
-            _profileName = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -80,13 +60,13 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
     /// </summary>
     public bool ShowWrongPassword
     {
-        get => _showWrongPassword;
+        get;
         set
         {
-            if (value == _showWrongPassword)
+            if (value == field)
                 return;
 
-            _showWrongPassword = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -96,35 +76,35 @@ public class CredentialsPasswordProfileFileViewModel : ViewModelBase
     /// </summary>
     public SecureString Password
     {
-        get => _password;
+        get;
         set
         {
-            if (value == _password)
+            if (value == field)
                 return;
 
-            _password = value;
+            field = value;
 
             ValidatePassword();
 
             OnPropertyChanged();
         }
-    }
+    } = new();
 
     /// <summary>
     ///     Indicate if one of the password fields are empty.
     /// </summary>
     public bool IsPasswordEmpty
     {
-        get => _isPasswordEmpty;
+        get;
         set
         {
-            if (value == _isPasswordEmpty)
+            if (value == field)
                 return;
 
-            _isPasswordEmpty = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = true;
 
     /// <summary>
     ///     Check if the passwords are valid.

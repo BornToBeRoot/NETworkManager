@@ -8,17 +8,6 @@ namespace NETworkManager.Models;
 public class ApplicationInfo : PropertyChangedBase
 {
     /// <summary>
-    ///     Private field for the <see cref="IsDefault" /> property.
-    /// </summary>
-    private bool _isDefault;
-
-
-    /// <summary>
-    ///     Private field for the <see cref="IsVisible" /> property.
-    /// </summary>
-    private bool _isVisible;
-
-    /// <summary>
     ///     Initializes a new instance of the <see cref="ApplicationInfo" /> class.
     /// </summary>
     public ApplicationInfo()
@@ -48,13 +37,13 @@ public class ApplicationInfo : PropertyChangedBase
     /// </summary>
     public bool IsVisible
     {
-        get => _isVisible;
+        get;
         set
         {
-            if (value == _isVisible)
+            if (value == field)
                 return;
 
-            _isVisible = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -64,13 +53,13 @@ public class ApplicationInfo : PropertyChangedBase
     /// </summary>
     public bool IsDefault
     {
-        get => _isDefault;
+        get;
         set
         {
-            if (value == _isDefault)
+            if (value == field)
                 return;
 
-            _isDefault = value;
+            field = value;
             OnPropertyChanged();
         }
     }

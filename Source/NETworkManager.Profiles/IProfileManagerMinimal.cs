@@ -1,13 +1,13 @@
 ﻿namespace NETworkManager.Profiles;
 
 /// <summary>
-///     Interface for the profile manager.
-///     Minimal implementation to get the view model.
+///     Minimal interface for the profile manager, providing lifecycle callbacks
+///     for when a <see cref="ProfileManager" /> dialog is opened or closed.
 /// </summary>
 public interface IProfileManagerMinimal
 {
     /// <summary>
-    ///     Event is fired when a dialog in the <see cref="ProfileManager" /> is opened.
+    ///     Called when a dialog in the <see cref="ProfileManager" /> is opened.
     /// </summary>
     public void OnProfileManagerDialogOpen()
     {
@@ -15,7 +15,7 @@ public interface IProfileManagerMinimal
     }
 
     /// <summary>
-    ///     Event is fired when a dialog in the <see cref="ProfileManager" /> is closed.
+    ///     Called when a dialog in the <see cref="ProfileManager" /> is closed.
     /// </summary>
     public void OnProfileManagerDialogClose()
     {

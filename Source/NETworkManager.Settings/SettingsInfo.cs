@@ -55,30 +55,20 @@ public class SettingsInfo : INotifyPropertyChanged
     [JsonIgnore] public bool SettingsChanged { get; set; }
 
     /// <summary>
-    /// Private field for the <see cref="WelcomeDialog_Show" /> property.
-    /// </summary>
-    private bool _welcomeDialog_Show = true;
-
-    /// <summary>
     /// Determines if the welcome dialog should be shown on application start.
     /// </summary>
     public bool WelcomeDialog_Show
     {
-        get => _welcomeDialog_Show;
+        get;
         set
         {
-            if (value == _welcomeDialog_Show)
+            if (value == field)
                 return;
 
-            _welcomeDialog_Show = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Private field for the <see cref="UpgradeDialog_Show" /> property.
-    /// </summary>
-    private bool _upgradeDialog_Show;
+    } = true;
 
     /// <summary>
     /// Indicates if the update dialog should be shown on application start.
@@ -86,21 +76,16 @@ public class SettingsInfo : INotifyPropertyChanged
     /// </summary>
     public bool UpgradeDialog_Show
     {
-        get => _upgradeDialog_Show;
+        get;
         set
         {
-            if (value == _upgradeDialog_Show)
+            if (value == field)
                 return;
 
-            _upgradeDialog_Show = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Private field for the <see cref="Version" /> property.    
-    /// </summary>
-    private string _version;
 
     /// <summary>
     /// Version of the settings file. Should be identical to the version of the application.
@@ -108,582 +93,519 @@ public class SettingsInfo : INotifyPropertyChanged
     /// </summary>
     public string Version
     {
-        get => _version;
+        get;
         set
         {
-            if (value == _version)
+            if (value == field)
                 return;
 
-            _version = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Private field for the <see cref="LastBackup" /> property.
-    /// </summary>
-    private DateTime _lastBackup = DateTime.MinValue;
 
     /// <summary>
     /// Stores the date of the last backup of the settings file.
     /// </summary>
     public DateTime LastBackup
     {
-        get => _lastBackup;
+        get;
         set
         {
-            if (value == _lastBackup)
+            if (value == field)
                 return;
 
-            _lastBackup = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = DateTime.MinValue;
 
     #region General
 
     // General   
-    private ObservableSetCollection<ApplicationInfo> _general_ApplicationList = [];
 
     public ObservableSetCollection<ApplicationInfo> General_ApplicationList
     {
-        get => _general_ApplicationList;
+        get;
         set
         {
-            if (value == _general_ApplicationList)
+            if (value == field)
                 return;
 
-            _general_ApplicationList = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _general_BackgroundJobInterval = GlobalStaticConfiguration.General_BackgroundJobInterval;
+    } = [];
 
     public int General_BackgroundJobInterval
     {
-        get => _general_BackgroundJobInterval;
+        get;
         set
         {
-            if (value == _general_BackgroundJobInterval)
+            if (value == field)
                 return;
 
-            _general_BackgroundJobInterval = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.General_BackgroundJobInterval;
 
-
-    private int _general_ThreadPoolAdditionalMinThreads =
-        GlobalStaticConfiguration.General_ThreadPoolAdditionalMinThreads;
 
     public int General_ThreadPoolAdditionalMinThreads
     {
-        get => _general_ThreadPoolAdditionalMinThreads;
+        get;
         set
         {
-            if (value == _general_ThreadPoolAdditionalMinThreads)
+            if (value == field)
                 return;
 
-            _general_ThreadPoolAdditionalMinThreads = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _general_HistoryListEntries = GlobalStaticConfiguration.General_HistoryListEntries;
+    } = GlobalStaticConfiguration.General_ThreadPoolAdditionalMinThreads;
 
     public int General_HistoryListEntries
     {
-        get => _general_HistoryListEntries;
+        get;
         set
         {
-            if (value == _general_HistoryListEntries)
+            if (value == field)
                 return;
 
-            _general_HistoryListEntries = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.General_HistoryListEntries;
 
     // Window
-    private bool _window_ConfirmClose;
 
     public bool Window_ConfirmClose
     {
-        get => _window_ConfirmClose;
+        get;
         set
         {
-            if (value == _window_ConfirmClose)
+            if (value == field)
                 return;
 
-            _window_ConfirmClose = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _window_MinimizeInsteadOfTerminating;
 
     public bool Window_MinimizeInsteadOfTerminating
     {
-        get => _window_MinimizeInsteadOfTerminating;
+        get;
         set
         {
-            if (value == _window_MinimizeInsteadOfTerminating)
+            if (value == field)
                 return;
 
-            _window_MinimizeInsteadOfTerminating = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _window_MultipleInstances;
 
     public bool Window_MultipleInstances
     {
-        get => _window_MultipleInstances;
+        get;
         set
         {
-            if (value == _window_MultipleInstances)
+            if (value == field)
                 return;
 
-            _window_MultipleInstances = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _window_MinimizeToTrayInsteadOfTaskbar;
-
     public bool Window_MinimizeToTrayInsteadOfTaskbar
     {
-        get => _window_MinimizeToTrayInsteadOfTaskbar;
+        get;
         set
         {
-            if (value == _window_MinimizeToTrayInsteadOfTaskbar)
+            if (value == field)
                 return;
 
-            _window_MinimizeToTrayInsteadOfTaskbar = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     // TrayIcon
-    private bool _trayIcon_AlwaysShowIcon;
 
     public bool TrayIcon_AlwaysShowIcon
     {
-        get => _trayIcon_AlwaysShowIcon;
+        get;
         set
         {
-            if (value == _trayIcon_AlwaysShowIcon)
+            if (value == field)
                 return;
 
-            _trayIcon_AlwaysShowIcon = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     // SplashScreen
-    private bool _splashScreen_Enabled = GlobalStaticConfiguration.SplashScreen_Enabled;
 
     public bool SplashScreen_Enabled
     {
-        get => _splashScreen_Enabled;
+        get;
         set
         {
-            if (value == _splashScreen_Enabled)
+            if (value == field)
                 return;
 
-            _splashScreen_Enabled = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.SplashScreen_Enabled;
 
     // Appearance
-    private string _appearance_Theme = GlobalStaticConfiguration.Appearance_Theme;
 
     public string Appearance_Theme
     {
-        get => _appearance_Theme;
+        get;
         set
         {
-            if (value == _appearance_Theme)
+            if (value == field)
                 return;
 
-            _appearance_Theme = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _appearance_Accent = GlobalStaticConfiguration.Appearance_Accent;
+    } = GlobalStaticConfiguration.Appearance_Theme;
 
     public string Appearance_Accent
     {
-        get => _appearance_Accent;
+        get;
         set
         {
-            if (value == _appearance_Accent)
+            if (value == field)
                 return;
 
-            _appearance_Accent = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _appearance_UseCustomTheme = GlobalStaticConfiguration.Appearance_UseCustomTheme;
+    } = GlobalStaticConfiguration.Appearance_Accent;
 
     public bool Appearance_UseCustomTheme
     {
-        get => _appearance_UseCustomTheme;
+        get;
         set
         {
-            if (value == _appearance_UseCustomTheme)
+            if (value == field)
                 return;
 
-            _appearance_UseCustomTheme = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _appearance_CustomThemeName;
+    } = GlobalStaticConfiguration.Appearance_UseCustomTheme;
 
     public string Appearance_CustomThemeName
     {
-        get => _appearance_CustomThemeName;
+        get;
         set
         {
-            if (value == _appearance_CustomThemeName)
+            if (value == field)
                 return;
 
-            _appearance_CustomThemeName = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _appearance_PowerShellModifyGlobalProfile;
-
     public bool Appearance_PowerShellModifyGlobalProfile
     {
-        get => _appearance_PowerShellModifyGlobalProfile;
+        get;
         set
         {
-            if (value == _appearance_PowerShellModifyGlobalProfile)
+            if (value == field)
                 return;
 
-            _appearance_PowerShellModifyGlobalProfile = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     // Localization
-    private string _localization_CultureCode;
 
     public string Localization_CultureCode
     {
-        get => _localization_CultureCode;
+        get;
         set
         {
-            if (value == _localization_CultureCode)
+            if (value == field)
                 return;
 
-            _localization_CultureCode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     // Network
-    private bool _network_UseCustomDNSServer;
 
     public bool Network_UseCustomDNSServer
     {
-        get => _network_UseCustomDNSServer;
+        get;
         set
         {
-            if (value == _network_UseCustomDNSServer)
+            if (value == field)
                 return;
 
-            _network_UseCustomDNSServer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _network_CustomDNSServer;
 
     public string Network_CustomDNSServer
     {
-        get => _network_CustomDNSServer;
+        get;
         set
         {
-            if (value == _network_CustomDNSServer)
+            if (value == field)
                 return;
 
-            _network_CustomDNSServer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _network_ResolveHostnamePreferIPv4 = GlobalStaticConfiguration.Network_ResolveHostnamePreferIPv4;
 
     public bool Network_ResolveHostnamePreferIPv4
     {
-        get => _network_ResolveHostnamePreferIPv4;
+        get;
         set
         {
-            if (value == _network_ResolveHostnamePreferIPv4)
+            if (value == field)
                 return;
 
-            _network_ResolveHostnamePreferIPv4 = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Network_ResolveHostnamePreferIPv4;
 
     // Status
-    private bool _status_ShowWindowOnNetworkChange = GlobalStaticConfiguration.Status_ShowWindowOnNetworkChange;
 
     public bool Status_ShowWindowOnNetworkChange
     {
-        get => _status_ShowWindowOnNetworkChange;
+        get;
         set
         {
-            if (value == _status_ShowWindowOnNetworkChange)
+            if (value == field)
                 return;
 
-            _status_ShowWindowOnNetworkChange = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _status_WindowCloseTime = GlobalStaticConfiguration.Status_WindowCloseTime;
+    } = GlobalStaticConfiguration.Status_ShowWindowOnNetworkChange;
 
     public int Status_WindowCloseTime
     {
-        get => _status_WindowCloseTime;
+        get;
         set
         {
-            if (value == _status_WindowCloseTime)
+            if (value == field)
                 return;
 
-            _status_WindowCloseTime = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Status_WindowCloseTime;
 
     // Autostart
-    private bool _autostart_StartMinimizedInTray;
 
     public bool Autostart_StartMinimizedInTray
     {
-        get => _autostart_StartMinimizedInTray;
+        get;
         set
         {
-            if (value == _autostart_StartMinimizedInTray)
+            if (value == field)
                 return;
 
-            _autostart_StartMinimizedInTray = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     // HotKey
-    private bool _hotKey_ShowWindowEnabled;
 
     public bool HotKey_ShowWindowEnabled
     {
-        get => _hotKey_ShowWindowEnabled;
+        get;
         set
         {
-            if (value == _hotKey_ShowWindowEnabled)
+            if (value == field)
                 return;
 
-            _hotKey_ShowWindowEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _hotKey_ShowWindowKey = GlobalStaticConfiguration.HotKey_ShowWindowKey;
 
     public int HotKey_ShowWindowKey
     {
-        get => _hotKey_ShowWindowKey;
+        get;
         set
         {
-            if (value == _hotKey_ShowWindowKey)
+            if (value == field)
                 return;
 
-            _hotKey_ShowWindowKey = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _hotKey_ShowWindowModifier = GlobalStaticConfiguration.HotKey_ShowWindowModifier;
+    } = GlobalStaticConfiguration.HotKey_ShowWindowKey;
 
     public int HotKey_ShowWindowModifier
     {
-        get => _hotKey_ShowWindowModifier;
+        get;
         set
         {
-            if (value == _hotKey_ShowWindowModifier)
+            if (value == field)
                 return;
 
-            _hotKey_ShowWindowModifier = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.HotKey_ShowWindowModifier;
 
     // Update
-    private bool _update_CheckForUpdatesAtStartup = GlobalStaticConfiguration.Update_CheckForUpdatesAtStartup;
 
     public bool Update_CheckForUpdatesAtStartup
     {
-        get => _update_CheckForUpdatesAtStartup;
+        get;
         set
         {
-            if (value == _update_CheckForUpdatesAtStartup)
+            if (value == field)
                 return;
 
-            _update_CheckForUpdatesAtStartup = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _update_CheckForPreReleases = GlobalStaticConfiguration.Update_CheckForPreReleases;
+    } = GlobalStaticConfiguration.Update_CheckForUpdatesAtStartup;
 
     public bool Update_CheckForPreReleases
     {
-        get => _update_CheckForPreReleases;
+        get;
         set
         {
-            if (value == _update_CheckForPreReleases)
+            if (value == field)
                 return;
 
-            _update_CheckForPreReleases = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _experimental_EnableExperimentalFeatures =
-        GlobalStaticConfiguration.Experimental_EnableExperimentalFeatures;
+    } = GlobalStaticConfiguration.Update_CheckForPreReleases;
 
     public bool Experimental_EnableExperimentalFeatures
     {
-        get => _experimental_EnableExperimentalFeatures;
+        get;
         set
         {
-            if (value == _experimental_EnableExperimentalFeatures)
+            if (value == field)
                 return;
 
-            _experimental_EnableExperimentalFeatures = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Experimental_EnableExperimentalFeatures;
 
     // Profiles
-    private string _profiles_FolderLocation;
 
     public string Profiles_FolderLocation
     {
-        get => _profiles_FolderLocation;
+        get;
         set
         {
-            if (value == _profiles_FolderLocation)
+            if (value == field)
                 return;
 
-            _profiles_FolderLocation = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _profiles_LastSelected;
 
     public string Profiles_LastSelected
     {
-        get => _profiles_LastSelected;
+        get;
         set
         {
-            if (value == _profiles_LastSelected)
+            if (value == field)
                 return;
 
-            _profiles_LastSelected = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _profiles_IsDailyBackupEnabled = GlobalStaticConfiguration.Profiles_IsDailyBackupEnabled;
 
     public bool Profiles_IsDailyBackupEnabled
     {
-        get => _profiles_IsDailyBackupEnabled;
+        get;
         set
         {
-            if (value == _profiles_IsDailyBackupEnabled)
+            if (value == field)
                 return;
 
-            _profiles_IsDailyBackupEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _profiles_MaximumNumberOfBackups = GlobalStaticConfiguration.Profiles_MaximumNumberOfBackups;
+    } = GlobalStaticConfiguration.Profiles_IsDailyBackupEnabled;
 
     public int Profiles_MaximumNumberOfBackups
     {
-        get => _profiles_MaximumNumberOfBackups;
+        get;
         set
         {
-            if (value == _profiles_MaximumNumberOfBackups)
+            if (value == field)
                 return;
 
-            _profiles_MaximumNumberOfBackups = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Profiles_MaximumNumberOfBackups;
 
     // Settings
-    private bool _settings_IsDailyBackupEnabled = GlobalStaticConfiguration.Settings_IsDailyBackupEnabled;
 
     public bool Settings_IsDailyBackupEnabled
     {
-        get => _settings_IsDailyBackupEnabled;
+        get;
         set
         {
-            if (value == _settings_IsDailyBackupEnabled)
+            if (value == field)
                 return;
 
-            _settings_IsDailyBackupEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _settings_MaximumNumberOfBackups = GlobalStaticConfiguration.Settings_MaximumNumberOfBackups;
+    } = GlobalStaticConfiguration.Settings_IsDailyBackupEnabled;
 
     public int Settings_MaximumNumberOfBackups
     {
-        get => _settings_MaximumNumberOfBackups;
+        get;
         set
         {
-            if (value == _settings_MaximumNumberOfBackups)
+            if (value == field)
                 return;
 
-            _settings_MaximumNumberOfBackups = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Settings_MaximumNumberOfBackups;
 
     #endregion
 
     #region Others
 
     // Application view       
-    private bool _expandApplicationView;
 
     public bool ExpandApplicationView
     {
-        get => _expandApplicationView;
+        get;
         set
         {
-            if (value == _expandApplicationView)
+            if (value == field)
                 return;
 
-            _expandApplicationView = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -692,3319 +614,2909 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region Dashboard
 
-    private string _dashboard_PublicIPv4Address = GlobalStaticConfiguration.Dashboard_PublicIPv4Address;
-
     public string Dashboard_PublicIPv4Address
     {
-        get => _dashboard_PublicIPv4Address;
+        get;
         set
         {
-            if (value == _dashboard_PublicIPv4Address)
+            if (value == field)
                 return;
 
-            _dashboard_PublicIPv4Address = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _dashboard_PublicIPv6Address = GlobalStaticConfiguration.Dashboard_PublicIPv6Address;
+    } = GlobalStaticConfiguration.Dashboard_PublicIPv4Address;
 
     public string Dashboard_PublicIPv6Address
     {
-        get => _dashboard_PublicIPv6Address;
+        get;
         set
         {
-            if (value == _dashboard_PublicIPv6Address)
+            if (value == field)
                 return;
 
-            _dashboard_PublicIPv6Address = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _dashboard_CheckPublicIPAddress = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddress;
+    } = GlobalStaticConfiguration.Dashboard_PublicIPv6Address;
 
     public bool Dashboard_CheckPublicIPAddress
     {
-        get => _dashboard_CheckPublicIPAddress;
+        get;
         set
         {
-            if (value == _dashboard_CheckPublicIPAddress)
+            if (value == field)
                 return;
 
-            _dashboard_CheckPublicIPAddress = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _dashboard_UseCustomPublicIPv4AddressAPI;
+    } = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddress;
 
     public bool Dashboard_UseCustomPublicIPv4AddressAPI
     {
-        get => _dashboard_UseCustomPublicIPv4AddressAPI;
+        get;
         set
         {
-            if (value == _dashboard_UseCustomPublicIPv4AddressAPI)
+            if (value == field)
                 return;
 
-            _dashboard_UseCustomPublicIPv4AddressAPI = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _dashboard_CustomPublicIPv4AddressAPI;
 
     public string Dashboard_CustomPublicIPv4AddressAPI
     {
-        get => _dashboard_CustomPublicIPv4AddressAPI;
+        get;
         set
         {
-            if (value == _dashboard_CustomPublicIPv4AddressAPI)
+            if (value == field)
                 return;
 
-            _dashboard_CustomPublicIPv4AddressAPI = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _dashboard_UseCustomPublicIPv6AddressAPI;
 
     public bool Dashboard_UseCustomPublicIPv6AddressAPI
     {
-        get => _dashboard_UseCustomPublicIPv6AddressAPI;
+        get;
         set
         {
-            if (value == _dashboard_UseCustomPublicIPv6AddressAPI)
+            if (value == field)
                 return;
 
-            _dashboard_UseCustomPublicIPv6AddressAPI = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _dashboard_CustomPublicIPv6AddressAPI;
 
     public string Dashboard_CustomPublicIPv6AddressAPI
     {
-        get => _dashboard_CustomPublicIPv6AddressAPI;
+        get;
         set
         {
-            if (value == _dashboard_CustomPublicIPv6AddressAPI)
+            if (value == field)
                 return;
 
-            _dashboard_CustomPublicIPv6AddressAPI = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _dashboard_CheckIPApiIPGeolocation = GlobalStaticConfiguration.Dashboard_CheckIPApiIPGeolocation;
 
     public bool Dashboard_CheckIPApiIPGeolocation
     {
-        get => _dashboard_CheckIPApiIPGeolocation;
+        get;
         set
         {
-            if (value == _dashboard_CheckIPApiIPGeolocation)
+            if (value == field)
                 return;
 
-            _dashboard_CheckIPApiIPGeolocation = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _dashboard_CheckIPApiDNSResolver = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolver;
+    } = GlobalStaticConfiguration.Dashboard_CheckIPApiIPGeolocation;
 
     public bool Dashboard_CheckIPApiDNSResolver
     {
-        get => _dashboard_CheckIPApiDNSResolver;
+        get;
         set
         {
-            if (value == _dashboard_CheckIPApiDNSResolver)
+            if (value == field)
                 return;
 
-            _dashboard_CheckIPApiDNSResolver = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolver;
 
     #endregion
 
     #region Network Interface
 
-    private string _networkInterface_InterfaceId;
-
     public string NetworkInterface_InterfaceId
     {
-        get => _networkInterface_InterfaceId;
+        get;
         set
         {
-            if (value == _networkInterface_InterfaceId)
+            if (value == field)
                 return;
 
-            _networkInterface_InterfaceId = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _networkInterface_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public bool NetworkInterface_ExpandProfileView
     {
-        get => _networkInterface_ExpandProfileView;
+        get;
         set
         {
-            if (value == _networkInterface_ExpandProfileView)
+            if (value == field)
                 return;
 
-            _networkInterface_ExpandProfileView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private double _networkInterface_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public double NetworkInterface_ProfileWidth
     {
-        get => _networkInterface_ProfileWidth;
+        get;
         set
         {
-            if (Math.Abs(value - _networkInterface_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
-            _networkInterface_ProfileWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _networkInterface_ExportFilePath;
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public string NetworkInterface_ExportFilePath
     {
-        get => _networkInterface_ExportFilePath;
+        get;
         set
         {
-            if (value == _networkInterface_ExportFilePath)
+            if (value == field)
                 return;
 
-            _networkInterface_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _networkInterface_ExportFileType = GlobalStaticConfiguration.NetworkInterface_ExportFileType;
 
     public ExportFileType NetworkInterface_ExportFileType
     {
-        get => _networkInterface_ExportFileType;
+        get;
         set
         {
-            if (value == _networkInterface_ExportFileType)
+            if (value == field)
                 return;
 
-            _networkInterface_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.NetworkInterface_ExportFileType;
 
     #endregion
 
     #region WiFi
 
-    private string _wiFi_InterfaceId;
-
     public string WiFi_InterfaceId
     {
-        get => _wiFi_InterfaceId;
+        get;
         set
         {
-            if (value == _wiFi_InterfaceId)
+            if (value == field)
                 return;
 
-            _wiFi_InterfaceId = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _wiFi_Show2dot4GHzNetworks = GlobalStaticConfiguration.WiFi_Show2dot4GHzNetworks;
 
     public bool WiFi_Show2dot4GHzNetworks
     {
-        get => _wiFi_Show2dot4GHzNetworks;
+        get;
         set
         {
-            if (value == _wiFi_Show2dot4GHzNetworks)
+            if (value == field)
                 return;
 
-            _wiFi_Show2dot4GHzNetworks = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _wiFi_Show5GHzNetworks = GlobalStaticConfiguration.WiFi_Show5GHzNetworks;
+    } = GlobalStaticConfiguration.WiFi_Show2dot4GHzNetworks;
 
     public bool WiFi_Show5GHzNetworks
     {
-        get => _wiFi_Show5GHzNetworks;
+        get;
         set
         {
-            if (value == _wiFi_Show5GHzNetworks)
+            if (value == field)
                 return;
 
-            _wiFi_Show5GHzNetworks = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _wiFi_Show6GHzNetworks = GlobalStaticConfiguration.WiFi_Show6GHzNetworks;
+    } = GlobalStaticConfiguration.WiFi_Show5GHzNetworks;
 
     public bool WiFi_Show6GHzNetworks
     {
-        get => _wiFi_Show6GHzNetworks;
+        get;
         set
         {
-            if (value == _wiFi_Show6GHzNetworks)
+            if (value == field)
                 return;
 
-            _wiFi_Show6GHzNetworks = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _wiFi_AutoRefreshEnabled;
+    } = GlobalStaticConfiguration.WiFi_Show6GHzNetworks;
 
     public bool WiFi_AutoRefreshEnabled
     {
-        get => _wiFi_AutoRefreshEnabled;
+        get;
         set
         {
-            if (value == _wiFi_AutoRefreshEnabled)
+            if (value == field)
                 return;
 
-            _wiFi_AutoRefreshEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private AutoRefreshTimeInfo _wiFi_AutoRefreshTime = GlobalStaticConfiguration.WiFi_AutoRefreshTime;
 
     public AutoRefreshTimeInfo WiFi_AutoRefreshTime
     {
-        get => _wiFi_AutoRefreshTime;
+        get;
         set
         {
-            if (value == _wiFi_AutoRefreshTime)
+            if (value == field)
                 return;
 
-            _wiFi_AutoRefreshTime = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _wiFi_ExportFilePath;
+    } = GlobalStaticConfiguration.WiFi_AutoRefreshTime;
 
     public string WiFi_ExportFilePath
     {
-        get => _wiFi_ExportFilePath;
+        get;
         set
         {
-            if (value == _wiFi_ExportFilePath)
+            if (value == field)
                 return;
 
-            _wiFi_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _wiFi_ExportFileType = GlobalStaticConfiguration.WiFi_ExportFileType;
 
     public ExportFileType WiFi_ExportFileType
     {
-        get => _wiFi_ExportFileType;
+        get;
         set
         {
-            if (value == _wiFi_ExportFileType)
+            if (value == field)
                 return;
 
-            _wiFi_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.WiFi_ExportFileType;
 
     #endregion
 
     #region IPScanner
 
-    private bool _ipScanner_ShowAllResults;
-
     public bool IPScanner_ShowAllResults
     {
-        get => _ipScanner_ShowAllResults;
+        get;
         set
         {
-            if (value == _ipScanner_ShowAllResults)
+            if (value == field)
                 return;
 
-            _ipScanner_ShowAllResults = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _ipScanner_ICMPTimeout = GlobalStaticConfiguration.IPScanner_ICMPTimeout;
 
     public int IPScanner_ICMPTimeout
     {
-        get => _ipScanner_ICMPTimeout;
+        get;
         set
         {
-            if (value == _ipScanner_ICMPTimeout)
+            if (value == field)
                 return;
 
-            _ipScanner_ICMPTimeout = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _ipScanner_ICMPAttempts = GlobalStaticConfiguration.IPScanner_ICMPAttempts;
+    } = GlobalStaticConfiguration.IPScanner_ICMPTimeout;
 
     public int IPScanner_ICMPAttempts
     {
-        get => _ipScanner_ICMPAttempts;
+        get;
         set
         {
-            if (value == _ipScanner_ICMPAttempts)
+            if (value == field)
                 return;
 
-            _ipScanner_ICMPAttempts = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _ipScanner_ICMPBuffer = GlobalStaticConfiguration.IPScanner_ICMPBuffer;
+    } = GlobalStaticConfiguration.IPScanner_ICMPAttempts;
 
     public int IPScanner_ICMPBuffer
     {
-        get => _ipScanner_ICMPBuffer;
+        get;
         set
         {
-            if (value == _ipScanner_ICMPBuffer)
+            if (value == field)
                 return;
 
-            _ipScanner_ICMPBuffer = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<string> _ipScanner_HostHistory = [];
+    } = GlobalStaticConfiguration.IPScanner_ICMPBuffer;
 
     public ObservableCollection<string> IPScanner_HostHistory
     {
-        get => _ipScanner_HostHistory;
+        get;
         set
         {
-            if (value == _ipScanner_HostHistory)
+            if (value == field)
                 return;
 
-            _ipScanner_HostHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _ipScanner_ResolveHostname = GlobalStaticConfiguration.IPScanner_ResolveHostname;
+    } = [];
 
     public bool IPScanner_ResolveHostname
     {
-        get => _ipScanner_ResolveHostname;
+        get;
         set
         {
-            if (value == _ipScanner_ResolveHostname)
+            if (value == field)
                 return;
 
-            _ipScanner_ResolveHostname = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _ipScanner_PortScanEnabled = GlobalStaticConfiguration.IPScanner_PortScanEnabled;
+    } = GlobalStaticConfiguration.IPScanner_ResolveHostname;
 
     public bool IPScanner_PortScanEnabled
     {
-        get => _ipScanner_PortScanEnabled;
+        get;
         set
         {
             if (value == IPScanner_PortScanEnabled)
                 return;
 
-            _ipScanner_PortScanEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _ipScanner_PortScanPorts = GlobalStaticConfiguration.IPScanner_PortScanPorts;
+    } = GlobalStaticConfiguration.IPScanner_PortScanEnabled;
 
     public string IPScanner_PortScanPorts
     {
-        get => _ipScanner_PortScanPorts;
+        get;
         set
         {
-            if (value == _ipScanner_PortScanPorts)
+            if (value == field)
                 return;
 
-            _ipScanner_PortScanPorts = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _ipScanner_PortScanTimeout = GlobalStaticConfiguration.IPScanner_PortScanTimeout;
+    } = GlobalStaticConfiguration.IPScanner_PortScanPorts;
 
     public int IPScanner_PortScanTimeout
     {
-        get => _ipScanner_PortScanTimeout;
+        get;
         set
         {
-            if (value == _ipScanner_PortScanTimeout)
+            if (value == field)
                 return;
 
-            _ipScanner_PortScanTimeout = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _ipScanner_NetBIOSEnabled = GlobalStaticConfiguration.IPScanner_NetBIOSEnabled;
+    } = GlobalStaticConfiguration.IPScanner_PortScanTimeout;
 
     public bool IPScanner_NetBIOSEnabled
     {
-        get => _ipScanner_NetBIOSEnabled;
+        get;
         set
         {
-            if (value == _ipScanner_NetBIOSEnabled)
+            if (value == field)
                 return;
 
-            _ipScanner_NetBIOSEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _ipScanner_NetBIOSTimeout = GlobalStaticConfiguration.IPScanner_NetBIOSTimeout;
+    } = GlobalStaticConfiguration.IPScanner_NetBIOSEnabled;
 
     public int IPScanner_NetBIOSTimeout
     {
-        get => _ipScanner_NetBIOSTimeout;
+        get;
         set
         {
-            if (value == _ipScanner_NetBIOSTimeout)
+            if (value == field)
                 return;
 
-            _ipScanner_NetBIOSTimeout = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _ipScanner_ResolveMACAddress;
+    } = GlobalStaticConfiguration.IPScanner_NetBIOSTimeout;
 
     public bool IPScanner_ResolveMACAddress
     {
-        get => _ipScanner_ResolveMACAddress;
+        get;
         set
         {
-            if (value == _ipScanner_ResolveMACAddress)
+            if (value == field)
                 return;
 
-            _ipScanner_ResolveMACAddress = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ObservableCollection<CustomCommandInfo> _ipScanner_CustomCommands = [];
 
     public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
     {
-        get => _ipScanner_CustomCommands;
+        get;
         set
         {
-            if (value == _ipScanner_CustomCommands)
+            if (value == field)
                 return;
 
-            _ipScanner_CustomCommands = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _ipScanner_MaxHostThreads = GlobalStaticConfiguration.IPScanner_MaxHostThreads;
+    } = [];
 
     public int IPScanner_MaxHostThreads
     {
-        get => _ipScanner_MaxHostThreads;
+        get;
         set
         {
-            if (value == _ipScanner_MaxHostThreads)
+            if (value == field)
                 return;
 
-            _ipScanner_MaxHostThreads = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _ipScanner_MaxPortThreads = GlobalStaticConfiguration.IPScanner_MaxPortThreads;
+    } = GlobalStaticConfiguration.IPScanner_MaxHostThreads;
 
     public int IPScanner_MaxPortThreads
     {
-        get => _ipScanner_MaxPortThreads;
+        get;
         set
         {
-            if (value == _ipScanner_MaxPortThreads)
+            if (value == field)
                 return;
 
-            _ipScanner_MaxPortThreads = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _ipScanner_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
+    } = GlobalStaticConfiguration.IPScanner_MaxPortThreads;
 
     public bool IPScanner_ExpandProfileView
     {
-        get => _ipScanner_ExpandProfileView;
+        get;
         set
         {
-            if (value == _ipScanner_ExpandProfileView)
+            if (value == field)
                 return;
 
-            _ipScanner_ExpandProfileView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private double _ipScanner_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public double IPScanner_ProfileWidth
     {
-        get => _ipScanner_ProfileWidth;
+        get;
         set
         {
-            if (Math.Abs(value - _ipScanner_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
-            _ipScanner_ProfileWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _ipScanner_ExportFilePath;
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public string IPScanner_ExportFilePath
     {
-        get => _ipScanner_ExportFilePath;
+        get;
         set
         {
-            if (value == _ipScanner_ExportFilePath)
+            if (value == field)
                 return;
 
-            _ipScanner_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _ipScanner_ExportFileType = GlobalStaticConfiguration.IPScanner_ExportFileType;
 
     public ExportFileType IPScanner_ExportFileType
     {
-        get => _ipScanner_ExportFileType;
+        get;
         set
         {
-            if (value == _ipScanner_ExportFileType)
+            if (value == field)
                 return;
 
-            _ipScanner_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.IPScanner_ExportFileType;
 
     #endregion
 
     #region Port Scanner
 
-    private ObservableCollection<string> _portScanner_HostHistory = [];
-
     public ObservableCollection<string> PortScanner_HostHistory
     {
-        get => _portScanner_HostHistory;
+        get;
         set
         {
-            if (value == _portScanner_HostHistory)
+            if (value == field)
                 return;
 
-            _portScanner_HostHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<string> _portScanner_PortHistory = [];
+    } = [];
 
     public ObservableCollection<string> PortScanner_PortHistory
     {
-        get => _portScanner_PortHistory;
+        get;
         set
         {
-            if (value == _portScanner_PortHistory)
+            if (value == field)
                 return;
 
-            _portScanner_PortHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<PortProfileInfo> _portScanner_PortProfiles = [];
+    } = [];
 
     public ObservableCollection<PortProfileInfo> PortScanner_PortProfiles
     {
-        get => _portScanner_PortProfiles;
+        get;
         set
         {
-            if (value == _portScanner_PortProfiles)
+            if (value == field)
                 return;
 
-            _portScanner_PortProfiles = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _portScanner_ResolveHostname = true;
+    } = [];
 
     public bool PortScanner_ResolveHostname
     {
-        get => _portScanner_ResolveHostname;
+        get;
         set
         {
-            if (value == _portScanner_ResolveHostname)
+            if (value == field)
                 return;
 
-            _portScanner_ResolveHostname = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _portScanner_ShowAllResults;
+    } = true;
 
     public bool PortScanner_ShowAllResults
     {
-        get => _portScanner_ShowAllResults;
+        get;
         set
         {
-            if (value == _portScanner_ShowAllResults)
+            if (value == field)
                 return;
 
-            _portScanner_ShowAllResults = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _portScanner_Timeout = GlobalStaticConfiguration.PortScanner_Timeout;
 
     public int PortScanner_Timeout
     {
-        get => _portScanner_Timeout;
+        get;
         set
         {
-            if (value == _portScanner_Timeout)
+            if (value == field)
                 return;
 
-            _portScanner_Timeout = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _portScanner_MaxHostThreads = GlobalStaticConfiguration.PortScanner_MaxHostThreads;
+    } = GlobalStaticConfiguration.PortScanner_Timeout;
 
     public int PortScanner_MaxHostThreads
     {
-        get => _portScanner_MaxHostThreads;
+        get;
         set
         {
-            if (value == _portScanner_MaxHostThreads)
+            if (value == field)
                 return;
 
-            _portScanner_MaxHostThreads = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _portScanner_MaxPortThreads = GlobalStaticConfiguration.PortScanner_MaxPortThreads;
+    } = GlobalStaticConfiguration.PortScanner_MaxHostThreads;
 
     public int PortScanner_MaxPortThreads
     {
-        get => _portScanner_MaxPortThreads;
+        get;
         set
         {
-            if (value == _portScanner_MaxPortThreads)
+            if (value == field)
                 return;
 
-            _portScanner_MaxPortThreads = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _portScanner_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
+    } = GlobalStaticConfiguration.PortScanner_MaxPortThreads;
 
     public bool PortScanner_ExpandProfileView
     {
-        get => _portScanner_ExpandProfileView;
+        get;
         set
         {
-            if (value == _portScanner_ExpandProfileView)
+            if (value == field)
                 return;
 
-            _portScanner_ExpandProfileView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private double _portScanner_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public double PortScanner_ProfileWidth
     {
-        get => _portScanner_ProfileWidth;
+        get;
         set
         {
-            if (Math.Abs(value - _portScanner_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
-            _portScanner_ProfileWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _portScanner_ExportFilePath;
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public string PortScanner_ExportFilePath
     {
-        get => _portScanner_ExportFilePath;
+        get;
         set
         {
-            if (value == _portScanner_ExportFilePath)
+            if (value == field)
                 return;
 
-            _portScanner_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _portScanner_ExportFileType = GlobalStaticConfiguration.PortScanner_ExportFileType;
 
     public ExportFileType PortScanner_ExportFileType
     {
-        get => _portScanner_ExportFileType;
+        get;
         set
         {
-            if (value == _portScanner_ExportFileType)
+            if (value == field)
                 return;
 
-            _portScanner_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.PortScanner_ExportFileType;
 
     #endregion
 
     #region Ping Monitor
 
-    private ObservableCollection<string> _pingMonitor_HostHistory = [];
-
     public ObservableCollection<string> PingMonitor_HostHistory
     {
-        get => _pingMonitor_HostHistory;
+        get;
         set
         {
-            if (value == _pingMonitor_HostHistory)
+            if (value == field)
                 return;
 
-            _pingMonitor_HostHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _pingMonitor_Buffer = GlobalStaticConfiguration.PingMonitor_Buffer;
+    } = [];
 
     public int PingMonitor_Buffer
     {
-        get => _pingMonitor_Buffer;
+        get;
         set
         {
-            if (value == _pingMonitor_Buffer)
+            if (value == field)
                 return;
 
-            _pingMonitor_Buffer = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _pingMonitor_DontFragment = GlobalStaticConfiguration.PingMonitor_DontFragment;
+    } = GlobalStaticConfiguration.PingMonitor_Buffer;
 
     public bool PingMonitor_DontFragment
     {
-        get => _pingMonitor_DontFragment;
+        get;
         set
         {
-            if (value == _pingMonitor_DontFragment)
+            if (value == field)
                 return;
 
-            _pingMonitor_DontFragment = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _pingMonitor_Timeout = GlobalStaticConfiguration.PingMonitor_Timeout;
+    } = GlobalStaticConfiguration.PingMonitor_DontFragment;
 
     public int PingMonitor_Timeout
     {
-        get => _pingMonitor_Timeout;
+        get;
         set
         {
-            if (value == _pingMonitor_Timeout)
+            if (value == field)
                 return;
 
-            _pingMonitor_Timeout = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _pingMonitor_TTL = GlobalStaticConfiguration.PingMonitor_TTL;
+    } = GlobalStaticConfiguration.PingMonitor_Timeout;
 
     public int PingMonitor_TTL
     {
-        get => _pingMonitor_TTL;
+        get;
         set
         {
-            if (value == _pingMonitor_TTL)
+            if (value == field)
                 return;
 
-            _pingMonitor_TTL = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _pingMonitor_WaitTime = GlobalStaticConfiguration.PingMonitor_WaitTime;
+    } = GlobalStaticConfiguration.PingMonitor_TTL;
 
     public int PingMonitor_WaitTime
     {
-        get => _pingMonitor_WaitTime;
+        get;
         set
         {
-            if (value == _pingMonitor_WaitTime)
+            if (value == field)
                 return;
 
-            _pingMonitor_WaitTime = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _pingMonitor_ExpandHostView = GlobalStaticConfiguration.PingMonitor_ExpandHostView;
+    } = GlobalStaticConfiguration.PingMonitor_WaitTime;
 
     public bool PingMonitor_ExpandHostView
     {
-        get => _pingMonitor_ExpandHostView;
+        get;
         set
         {
-            if (value == _pingMonitor_ExpandHostView)
+            if (value == field)
                 return;
 
-            _pingMonitor_ExpandHostView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _pingMonitor_ExportFilePath;
+    } = GlobalStaticConfiguration.PingMonitor_ExpandHostView;
 
     public string PingMonitor_ExportFilePath
     {
-        get => _pingMonitor_ExportFilePath;
+        get;
         set
         {
-            if (value == _pingMonitor_ExportFilePath)
+            if (value == field)
                 return;
 
-            _pingMonitor_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _pingMonitor_ExportFileType = GlobalStaticConfiguration.PingMonitor_ExportFileType;
 
     public ExportFileType PingMonitor_ExportFileType
     {
-        get => _pingMonitor_ExportFileType;
+        get;
         set
         {
-            if (value == _pingMonitor_ExportFileType)
+            if (value == field)
                 return;
 
-            _pingMonitor_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _pingMonitor_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
+    } = GlobalStaticConfiguration.PingMonitor_ExportFileType;
 
     public bool PingMonitor_ExpandProfileView
     {
-        get => _pingMonitor_ExpandProfileView;
+        get;
         set
         {
-            if (value == _pingMonitor_ExpandProfileView)
+            if (value == field)
                 return;
 
-            _pingMonitor_ExpandProfileView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private double _pingMonitor_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public double PingMonitor_ProfileWidth
     {
-        get => _pingMonitor_ProfileWidth;
+        get;
         set
         {
-            if (Math.Abs(value - _pingMonitor_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
-            _pingMonitor_ProfileWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     #endregion
 
     #region Traceroute
 
-    private ObservableCollection<string> _traceroute_HostHistory = [];
-
     public ObservableCollection<string> Traceroute_HostHistory
     {
-        get => _traceroute_HostHistory;
+        get;
         set
         {
-            if (value == _traceroute_HostHistory)
+            if (value == field)
                 return;
 
-            _traceroute_HostHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _traceroute_MaximumHops = GlobalStaticConfiguration.Traceroute_MaximumHops;
+    } = [];
 
     public int Traceroute_MaximumHops
     {
-        get => _traceroute_MaximumHops;
+        get;
         set
         {
-            if (value == _traceroute_MaximumHops)
+            if (value == field)
                 return;
 
-            _traceroute_MaximumHops = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _traceroute_Timeout = GlobalStaticConfiguration.Traceroute_Timeout;
+    } = GlobalStaticConfiguration.Traceroute_MaximumHops;
 
     public int Traceroute_Timeout
     {
-        get => _traceroute_Timeout;
+        get;
         set
         {
-            if (value == _traceroute_Timeout)
+            if (value == field)
                 return;
 
-            _traceroute_Timeout = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _traceroute_Buffer = GlobalStaticConfiguration.Traceroute_Buffer;
+    } = GlobalStaticConfiguration.Traceroute_Timeout;
 
     public int Traceroute_Buffer
     {
-        get => _traceroute_Buffer;
+        get;
         set
         {
-            if (value == _traceroute_Buffer)
+            if (value == field)
                 return;
 
-            _traceroute_Buffer = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _traceroute_ResolveHostname = GlobalStaticConfiguration.Traceroute_ResolveHostname;
+    } = GlobalStaticConfiguration.Traceroute_Buffer;
 
     public bool Traceroute_ResolveHostname
     {
-        get => _traceroute_ResolveHostname;
+        get;
         set
         {
-            if (value == _traceroute_ResolveHostname)
+            if (value == field)
                 return;
 
-            _traceroute_ResolveHostname = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _traceroute_CheckIPApiIPGeolocation = GlobalStaticConfiguration.Traceroute_CheckIPApiIPGeolocation;
+    } = GlobalStaticConfiguration.Traceroute_ResolveHostname;
 
     public bool Traceroute_CheckIPApiIPGeolocation
     {
-        get => _traceroute_CheckIPApiIPGeolocation;
+        get;
         set
         {
-            if (value == _traceroute_CheckIPApiIPGeolocation)
+            if (value == field)
                 return;
 
-            _traceroute_CheckIPApiIPGeolocation = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _traceroute_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
+    } = GlobalStaticConfiguration.Traceroute_CheckIPApiIPGeolocation;
 
     public bool Traceroute_ExpandProfileView
     {
-        get => _traceroute_ExpandProfileView;
+        get;
         set
         {
-            if (value == _traceroute_ExpandProfileView)
+            if (value == field)
                 return;
 
-            _traceroute_ExpandProfileView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private double _traceroute_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public double Traceroute_ProfileWidth
     {
-        get => _traceroute_ProfileWidth;
+        get;
         set
         {
-            if (Math.Abs(value - _traceroute_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
-            _traceroute_ProfileWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _traceroute_ExportFilePath;
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public string Traceroute_ExportFilePath
     {
-        get => _traceroute_ExportFilePath;
+        get;
         set
         {
-            if (value == _traceroute_ExportFilePath)
+            if (value == field)
                 return;
 
-            _traceroute_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _traceroute_ExportFileType = GlobalStaticConfiguration.Traceroute_ExportFileType;
 
     public ExportFileType Traceroute_ExportFileType
     {
-        get => _traceroute_ExportFileType;
+        get;
         set
         {
-            if (value == _traceroute_ExportFileType)
+            if (value == field)
                 return;
 
-            _traceroute_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Traceroute_ExportFileType;
 
     #endregion
 
     #region DNS Lookup
 
-    private ObservableCollection<string> _dnsLookup_HostHistory = [];
-
     public ObservableCollection<string> DNSLookup_HostHistory
     {
-        get => _dnsLookup_HostHistory;
+        get;
         set
         {
-            if (value == _dnsLookup_HostHistory)
+            if (value == field)
                 return;
 
-            _dnsLookup_HostHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<DNSServerConnectionInfoProfile> _dnsLookup_DNSServers = [];
+    } = [];
 
     public ObservableCollection<DNSServerConnectionInfoProfile> DNSLookup_DNSServers
     {
-        get => _dnsLookup_DNSServers;
+        get;
         set
         {
-            if (value == _dnsLookup_DNSServers)
+            if (value == field)
                 return;
 
-            _dnsLookup_DNSServers = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = [];
 
     [Obsolete("Use DNSLookup_SelectedDNSServer_v2 instead.")]
-    private DNSServerConnectionInfoProfile _dnsLookup_SelectedDNSServer = null;
-
-    [Obsolete("Use DNSLookup_SelectedDNSServer_v2 instead.")]
+    [field: Obsolete("Use DNSLookup_SelectedDNSServer_v2 instead.")]
     public DNSServerConnectionInfoProfile DNSLookup_SelectedDNSServer
     {
-        get => _dnsLookup_SelectedDNSServer;
+        get;
         set
         {
-            if (value == _dnsLookup_SelectedDNSServer)
+            if (value == field)
                 return;
 
-            _dnsLookup_SelectedDNSServer = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _dnsLookup_SelectedDNSServer_v2;
+    } = null;
 
     public string DNSLookup_SelectedDNSServer_v2
     {
-        get => _dnsLookup_SelectedDNSServer_v2;
+        get;
         set
         {
-            if (value == _dnsLookup_SelectedDNSServer_v2)
+            if (value == field)
                 return;
 
-            _dnsLookup_SelectedDNSServer_v2 = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private QueryClass _dnsLookup_QueryClass = GlobalStaticConfiguration.DNSLookup_QueryClass;
 
     public QueryClass DNSLookup_QueryClass
     {
-        get => _dnsLookup_QueryClass;
+        get;
         set
         {
-            if (value == _dnsLookup_QueryClass)
+            if (value == field)
                 return;
 
-            _dnsLookup_QueryClass = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private QueryType _dnsLookup_QueryType = GlobalStaticConfiguration.DNSLookup_QueryType;
+    } = GlobalStaticConfiguration.DNSLookup_QueryClass;
 
     public QueryType DNSLookup_QueryType
     {
-        get => _dnsLookup_QueryType;
+        get;
         set
         {
-            if (value == _dnsLookup_QueryType)
+            if (value == field)
                 return;
 
-            _dnsLookup_QueryType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _dnsLookup_AddDNSSuffix = true;
+    } = GlobalStaticConfiguration.DNSLookup_QueryType;
 
     public bool DNSLookup_AddDNSSuffix
     {
-        get => _dnsLookup_AddDNSSuffix;
+        get;
         set
         {
-            if (value == _dnsLookup_AddDNSSuffix)
+            if (value == field)
                 return;
 
-            _dnsLookup_AddDNSSuffix = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _dnsLookup_UseCustomDNSSuffix;
+    } = true;
 
     public bool DNSLookup_UseCustomDNSSuffix
     {
-        get => _dnsLookup_UseCustomDNSSuffix;
+        get;
         set
         {
-            if (value == _dnsLookup_UseCustomDNSSuffix)
+            if (value == field)
                 return;
 
-            _dnsLookup_UseCustomDNSSuffix = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _dnsLookup_CustomDNSSuffix;
 
     public string DNSLookup_CustomDNSSuffix
     {
-        get => _dnsLookup_CustomDNSSuffix;
+        get;
         set
         {
-            if (value == _dnsLookup_CustomDNSSuffix)
+            if (value == field)
                 return;
 
-            _dnsLookup_CustomDNSSuffix = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _dnsLookup_Recursion = true;
 
     public bool DNSLookup_Recursion
     {
-        get => _dnsLookup_Recursion;
+        get;
         set
         {
-            if (value == _dnsLookup_Recursion)
+            if (value == field)
                 return;
 
-            _dnsLookup_Recursion = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _dnsLookup_UseCache;
+    } = true;
 
     public bool DNSLookup_UseCache
     {
-        get => _dnsLookup_UseCache;
+        get;
         set
         {
-            if (value == _dnsLookup_UseCache)
+            if (value == field)
                 return;
 
-            _dnsLookup_UseCache = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _dnsLookup_UseTCPOnly = GlobalStaticConfiguration.DNSLookup_UseTCPOnly;
 
     public bool DNSLookup_UseTCPOnly
     {
-        get => _dnsLookup_UseTCPOnly;
+        get;
         set
         {
-            if (value == _dnsLookup_UseTCPOnly)
+            if (value == field)
                 return;
 
-            _dnsLookup_UseTCPOnly = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _dnsLookup_Retries = GlobalStaticConfiguration.DNSLookup_Retries;
+    } = GlobalStaticConfiguration.DNSLookup_UseTCPOnly;
 
     public int DNSLookup_Retries
     {
-        get => _dnsLookup_Retries;
+        get;
         set
         {
-            if (value == _dnsLookup_Retries)
+            if (value == field)
                 return;
 
-            _dnsLookup_Retries = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _dnsLookup_Timeout = GlobalStaticConfiguration.DNSLookup_Timeout;
+    } = GlobalStaticConfiguration.DNSLookup_Retries;
 
     public int DNSLookup_Timeout
     {
-        get => _dnsLookup_Timeout;
+        get;
         set
         {
-            if (value == _dnsLookup_Timeout)
+            if (value == field)
                 return;
 
-            _dnsLookup_Timeout = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _dnsLookup_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
+    } = GlobalStaticConfiguration.DNSLookup_Timeout;
 
     public bool DNSLookup_ExpandProfileView
     {
-        get => _dnsLookup_ExpandProfileView;
+        get;
         set
         {
-            if (value == _dnsLookup_ExpandProfileView)
+            if (value == field)
                 return;
 
-            _dnsLookup_ExpandProfileView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private double _dnsLookup_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public double DNSLookup_ProfileWidth
     {
-        get => _dnsLookup_ProfileWidth;
+        get;
         set
         {
-            if (Math.Abs(value - _dnsLookup_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
-            _dnsLookup_ProfileWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _dnsLookup_ExportFilePath;
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public string DNSLookup_ExportFilePath
     {
-        get => _dnsLookup_ExportFilePath;
+        get;
         set
         {
-            if (value == _dnsLookup_ExportFilePath)
+            if (value == field)
                 return;
 
-            _dnsLookup_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _dnsLookup_ExportFileType = GlobalStaticConfiguration.DNSLookup_ExportFileType;
 
     public ExportFileType DNSLookup_ExportFileType
     {
-        get => _dnsLookup_ExportFileType;
+        get;
         set
         {
-            if (value == _dnsLookup_ExportFileType)
+            if (value == field)
                 return;
 
-            _dnsLookup_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.DNSLookup_ExportFileType;
 
     #endregion
 
     #region Remote Desktop
 
-    private ObservableCollection<string> _remoteDesktop_HostHistory = [];
-
     public ObservableCollection<string> RemoteDesktop_HostHistory
     {
-        get => _remoteDesktop_HostHistory;
+        get;
         set
         {
-            if (value == _remoteDesktop_HostHistory)
+            if (value == field)
                 return;
 
-            _remoteDesktop_HostHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _remoteDesktop_AdjustScreenAutomatically;
+    } = [];
 
     public bool RemoteDesktop_AdjustScreenAutomatically
     {
-        get => _remoteDesktop_AdjustScreenAutomatically;
+        get;
         set
         {
-            if (value == _remoteDesktop_AdjustScreenAutomatically)
+            if (value == field)
                 return;
 
-            _remoteDesktop_AdjustScreenAutomatically = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_UseCurrentViewSize = GlobalStaticConfiguration.RemoteDesktop_UseCurrentViewSize;
 
     public bool RemoteDesktop_UseCurrentViewSize
     {
-        get => _remoteDesktop_UseCurrentViewSize;
+        get;
         set
         {
-            if (value == _remoteDesktop_UseCurrentViewSize)
+            if (value == field)
                 return;
 
-            _remoteDesktop_UseCurrentViewSize = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _remoteDesktop_UseFixedScreenSize;
+    } = GlobalStaticConfiguration.RemoteDesktop_UseCurrentViewSize;
 
     public bool RemoteDesktop_UseFixedScreenSize
     {
-        get => _remoteDesktop_UseFixedScreenSize;
+        get;
         set
         {
-            if (value == _remoteDesktop_UseFixedScreenSize)
+            if (value == field)
                 return;
 
-            _remoteDesktop_UseFixedScreenSize = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _remoteDesktop_ScreenWidth = GlobalStaticConfiguration.RemoteDesktop_ScreenWidth;
 
     public int RemoteDesktop_ScreenWidth
     {
-        get => _remoteDesktop_ScreenWidth;
+        get;
         set
         {
-            if (value == _remoteDesktop_ScreenWidth)
+            if (value == field)
                 return;
 
-            _remoteDesktop_ScreenWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _remoteDesktop_ScreenHeight = GlobalStaticConfiguration.RemoteDesktop_ScreenHeight;
+    } = GlobalStaticConfiguration.RemoteDesktop_ScreenWidth;
 
     public int RemoteDesktop_ScreenHeight
     {
-        get => _remoteDesktop_ScreenHeight;
+        get;
         set
         {
-            if (value == _remoteDesktop_ScreenHeight)
+            if (value == field)
                 return;
 
-            _remoteDesktop_ScreenHeight = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _remoteDesktop_UseCustomScreenSize;
+    } = GlobalStaticConfiguration.RemoteDesktop_ScreenHeight;
 
     public bool RemoteDesktop_UseCustomScreenSize
     {
-        get => _remoteDesktop_UseCustomScreenSize;
+        get;
         set
         {
-            if (value == _remoteDesktop_UseCustomScreenSize)
+            if (value == field)
                 return;
 
-            _remoteDesktop_UseCustomScreenSize = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _remoteDesktop_CustomScreenWidth;
 
     public int RemoteDesktop_CustomScreenWidth
     {
-        get => _remoteDesktop_CustomScreenWidth;
+        get;
         set
         {
-            if (value == _remoteDesktop_CustomScreenWidth)
+            if (value == field)
                 return;
 
-            _remoteDesktop_CustomScreenWidth = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _remoteDesktop_CustomScreenHeight;
 
     public int RemoteDesktop_CustomScreenHeight
     {
-        get => _remoteDesktop_CustomScreenHeight;
+        get;
         set
         {
-            if (value == _remoteDesktop_CustomScreenHeight)
+            if (value == field)
                 return;
 
-            _remoteDesktop_CustomScreenHeight = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _remoteDesktop_ColorDepth = GlobalStaticConfiguration.RemoteDesktop_ColorDepth;
 
     public int RemoteDesktop_ColorDepth
     {
-        get => _remoteDesktop_ColorDepth;
+        get;
         set
         {
-            if (value == _remoteDesktop_ColorDepth)
+            if (value == field)
                 return;
 
-            _remoteDesktop_ColorDepth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _remoteDesktop_Port = GlobalStaticConfiguration.RemoteDesktop_Port;
+    } = GlobalStaticConfiguration.RemoteDesktop_ColorDepth;
 
     public int RemoteDesktop_Port
     {
-        get => _remoteDesktop_Port;
+        get;
         set
         {
-            if (value == _remoteDesktop_Port)
+            if (value == field)
                 return;
 
-            _remoteDesktop_Port = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _remoteDesktop_EnableCredSspSupport = GlobalStaticConfiguration.RemoteDesktop_EnableCredSspSupport;
+    } = GlobalStaticConfiguration.RemoteDesktop_Port;
 
     public bool RemoteDesktop_EnableCredSspSupport
     {
-        get => _remoteDesktop_EnableCredSspSupport;
+        get;
         set
         {
-            if (value == _remoteDesktop_EnableCredSspSupport)
+            if (value == field)
                 return;
 
-            _remoteDesktop_EnableCredSspSupport = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private uint _remoteDesktop_AuthenticationLevel = GlobalStaticConfiguration.RemoteDesktop_AuthenticationLevel;
+    } = GlobalStaticConfiguration.RemoteDesktop_EnableCredSspSupport;
 
     public uint RemoteDesktop_AuthenticationLevel
     {
-        get => _remoteDesktop_AuthenticationLevel;
+        get;
         set
         {
-            if (value == _remoteDesktop_AuthenticationLevel)
+            if (value == field)
                 return;
 
-            _remoteDesktop_AuthenticationLevel = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _remoteDesktop_EnableGatewayServer;
+    } = GlobalStaticConfiguration.RemoteDesktop_AuthenticationLevel;
 
     public bool RemoteDesktop_EnableGatewayServer
     {
-        get => _remoteDesktop_EnableGatewayServer;
+        get;
         set
         {
-            if (value == _remoteDesktop_EnableGatewayServer)
+            if (value == field)
                 return;
 
-            _remoteDesktop_EnableGatewayServer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _remoteDesktop_GatewayServerHostname;
 
     public string RemoteDesktop_GatewayServerHostname
     {
-        get => _remoteDesktop_GatewayServerHostname;
+        get;
         set
         {
-            if (value == _remoteDesktop_GatewayServerHostname)
+            if (value == field)
                 return;
 
-            _remoteDesktop_GatewayServerHostname = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_GatewayServerBypassLocalAddresses =
-        GlobalStaticConfiguration.RemoteDesktop_GatewayServerBypassLocalAddresses;
 
     public bool RemoteDesktop_GatewayServerBypassLocalAddresses
     {
-        get => _remoteDesktop_GatewayServerBypassLocalAddresses;
+        get;
         set
         {
-            if (value == _remoteDesktop_GatewayServerBypassLocalAddresses)
+            if (value == field)
                 return;
 
-            _remoteDesktop_GatewayServerBypassLocalAddresses = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private GatewayUserSelectedCredsSource _remoteDesktop_GatewayServerLogonMethod =
-        GlobalStaticConfiguration.RemoteDesktop_GatewayServerLogonMethod;
+    } = GlobalStaticConfiguration.RemoteDesktop_GatewayServerBypassLocalAddresses;
 
     public GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod
     {
-        get => _remoteDesktop_GatewayServerLogonMethod;
+        get;
         set
         {
-            if (value == _remoteDesktop_GatewayServerLogonMethod)
+            if (value == field)
                 return;
 
-            _remoteDesktop_GatewayServerLogonMethod = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer =
-        GlobalStaticConfiguration.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+    } = GlobalStaticConfiguration.RemoteDesktop_GatewayServerLogonMethod;
 
     public bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer
     {
-        get => _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+        get;
         set
         {
-            if (value == _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer)
+            if (value == field)
                 return;
 
-            _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private AudioRedirectionMode _remoteDesktop_AudioRedirectionMode =
-        GlobalStaticConfiguration.RemoteDesktop_AudioRedirectionMode;
+    } = GlobalStaticConfiguration.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
 
     public AudioRedirectionMode RemoteDesktop_AudioRedirectionMode
     {
-        get => _remoteDesktop_AudioRedirectionMode;
+        get;
         set
         {
-            if (value == _remoteDesktop_AudioRedirectionMode)
+            if (value == field)
                 return;
 
-            _remoteDesktop_AudioRedirectionMode = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private AudioCaptureRedirectionMode _remoteDesktop_AudioCaptureRedirectionMode =
-        GlobalStaticConfiguration.RemoteDesktop_AudioCaptureRedirectionMode;
+    } = GlobalStaticConfiguration.RemoteDesktop_AudioRedirectionMode;
 
     public AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode
     {
-        get => _remoteDesktop_AudioCaptureRedirectionMode;
+        get;
         set
         {
-            if (value == _remoteDesktop_AudioCaptureRedirectionMode)
+            if (value == field)
                 return;
 
-            _remoteDesktop_AudioCaptureRedirectionMode = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private KeyboardHookMode _remoteDesktop_KeyboardHookMode = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
+    } = GlobalStaticConfiguration.RemoteDesktop_AudioCaptureRedirectionMode;
 
     public KeyboardHookMode RemoteDesktop_KeyboardHookMode
     {
-        get => _remoteDesktop_KeyboardHookMode;
+        get;
         set
         {
-            if (value == _remoteDesktop_KeyboardHookMode)
+            if (value == field)
                 return;
 
-            _remoteDesktop_KeyboardHookMode = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _remoteDesktop_RedirectClipboard = GlobalStaticConfiguration.RemoteDesktop_RedirectClipboard;
+    } = GlobalStaticConfiguration.RemoteDesktop_KeyboardHookMode;
 
     public bool RemoteDesktop_RedirectClipboard
     {
-        get => _remoteDesktop_RedirectClipboard;
+        get;
         set
         {
-            if (value == _remoteDesktop_RedirectClipboard)
+            if (value == field)
                 return;
 
-            _remoteDesktop_RedirectClipboard = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _remoteDesktop_RedirectDevices;
+    } = GlobalStaticConfiguration.RemoteDesktop_RedirectClipboard;
 
     public bool RemoteDesktop_RedirectDevices
     {
-        get => _remoteDesktop_RedirectDevices;
+        get;
         set
         {
-            if (value == _remoteDesktop_RedirectDevices)
+            if (value == field)
                 return;
 
-            _remoteDesktop_RedirectDevices = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_RedirectDrives;
 
     public bool RemoteDesktop_RedirectDrives
     {
-        get => _remoteDesktop_RedirectDrives;
+        get;
         set
         {
-            if (value == _remoteDesktop_RedirectDrives)
+            if (value == field)
                 return;
 
-            _remoteDesktop_RedirectDrives = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_RedirectPorts;
 
     public bool RemoteDesktop_RedirectPorts
     {
-        get => _remoteDesktop_RedirectPorts;
+        get;
         set
         {
-            if (value == _remoteDesktop_RedirectPorts)
+            if (value == field)
                 return;
 
-            _remoteDesktop_RedirectPorts = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_RedirectSmartCards;
 
     public bool RemoteDesktop_RedirectSmartCards
     {
-        get => _remoteDesktop_RedirectSmartCards;
+        get;
         set
         {
-            if (value == _remoteDesktop_RedirectSmartCards)
+            if (value == field)
                 return;
 
-            _remoteDesktop_RedirectSmartCards = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_RedirectPrinters;
 
     public bool RemoteDesktop_RedirectPrinters
     {
-        get => _remoteDesktop_RedirectPrinters;
+        get;
         set
         {
-            if (value == _remoteDesktop_RedirectPrinters)
+            if (value == field)
                 return;
 
-            _remoteDesktop_RedirectPrinters = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_PersistentBitmapCaching;
 
     public bool RemoteDesktop_PersistentBitmapCaching
     {
-        get => _remoteDesktop_PersistentBitmapCaching;
+        get;
         set
         {
-            if (value == _remoteDesktop_PersistentBitmapCaching)
+            if (value == field)
                 return;
 
-            _remoteDesktop_PersistentBitmapCaching = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_ReconnectIfTheConnectionIsDropped;
 
     public bool RemoteDesktop_ReconnectIfTheConnectionIsDropped
     {
-        get => _remoteDesktop_ReconnectIfTheConnectionIsDropped;
+        get;
         set
         {
-            if (value == _remoteDesktop_ReconnectIfTheConnectionIsDropped)
+            if (value == field)
                 return;
 
-            _remoteDesktop_ReconnectIfTheConnectionIsDropped = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private NetworkConnectionType _remoteDesktop_NetworkConnectionType =
-        GlobalStaticConfiguration.RemoteDesktop_NetworkConnectionType;
 
     public NetworkConnectionType RemoteDesktop_NetworkConnectionType
     {
-        get => _remoteDesktop_NetworkConnectionType;
+        get;
         set
         {
-            if (value == _remoteDesktop_NetworkConnectionType)
+            if (value == field)
                 return;
 
-            _remoteDesktop_NetworkConnectionType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _remoteDesktop_DesktopBackground;
+    } = GlobalStaticConfiguration.RemoteDesktop_NetworkConnectionType;
 
     public bool RemoteDesktop_DesktopBackground
     {
-        get => _remoteDesktop_DesktopBackground;
+        get;
         set
         {
-            if (value == _remoteDesktop_DesktopBackground)
+            if (value == field)
                 return;
 
-            _remoteDesktop_DesktopBackground = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_FontSmoothing;
 
     public bool RemoteDesktop_FontSmoothing
     {
-        get => _remoteDesktop_FontSmoothing;
+        get;
         set
         {
-            if (value == _remoteDesktop_FontSmoothing)
+            if (value == field)
                 return;
 
-            _remoteDesktop_FontSmoothing = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_DesktopComposition;
 
     public bool RemoteDesktop_DesktopComposition
     {
-        get => _remoteDesktop_DesktopComposition;
+        get;
         set
         {
-            if (value == _remoteDesktop_DesktopComposition)
+            if (value == field)
                 return;
 
-            _remoteDesktop_DesktopComposition = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_ShowWindowContentsWhileDragging;
 
     public bool RemoteDesktop_ShowWindowContentsWhileDragging
     {
-        get => _remoteDesktop_ShowWindowContentsWhileDragging;
+        get;
         set
         {
-            if (value == _remoteDesktop_ShowWindowContentsWhileDragging)
+            if (value == field)
                 return;
 
-            _remoteDesktop_ShowWindowContentsWhileDragging = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_MenuAndWindowAnimation;
 
     public bool RemoteDesktop_MenuAndWindowAnimation
     {
-        get => _remoteDesktop_MenuAndWindowAnimation;
+        get;
         set
         {
-            if (value == _remoteDesktop_MenuAndWindowAnimation)
+            if (value == field)
                 return;
 
-            _remoteDesktop_MenuAndWindowAnimation = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_VisualStyles;
 
     public bool RemoteDesktop_VisualStyles
     {
-        get => _remoteDesktop_VisualStyles;
+        get;
         set
         {
-            if (value == _remoteDesktop_VisualStyles)
+            if (value == field)
                 return;
 
-            _remoteDesktop_VisualStyles = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public bool RemoteDesktop_ExpandProfileView
     {
-        get => _remoteDesktop_ExpandProfileView;
+        get;
         set
         {
-            if (value == _remoteDesktop_ExpandProfileView)
+            if (value == field)
                 return;
 
-            _remoteDesktop_ExpandProfileView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private double _remoteDesktop_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public double RemoteDesktop_ProfileWidth
     {
-        get => _remoteDesktop_ProfileWidth;
+        get;
         set
         {
-            if (Math.Abs(value - _remoteDesktop_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
-            _remoteDesktop_ProfileWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     #endregion
 
     #region PowerShell
 
-    private ObservableCollection<string> _powerShell_HostHistory = [];
-
     public ObservableCollection<string> PowerShell_HostHistory
     {
-        get => _powerShell_HostHistory;
+        get;
         set
         {
-            if (value == _powerShell_HostHistory)
+            if (value == field)
                 return;
 
-            _powerShell_HostHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _powerShell_ApplicationFilePath;
+    } = [];
 
     public string PowerShell_ApplicationFilePath
     {
-        get => _powerShell_ApplicationFilePath;
+        get;
         set
         {
-            if (value == _powerShell_ApplicationFilePath)
+            if (value == field)
                 return;
 
-            _powerShell_ApplicationFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _powerShell_Command = GlobalStaticConfiguration.PowerShell_Command;
 
     public string PowerShell_Command
     {
-        get => _powerShell_Command;
+        get;
         set
         {
-            if (value == _powerShell_Command)
+            if (value == field)
                 return;
 
-            _powerShell_Command = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _powerShell_AdditionalCommandLine;
+    } = GlobalStaticConfiguration.PowerShell_Command;
 
     public string PowerShell_AdditionalCommandLine
     {
-        get => _powerShell_AdditionalCommandLine;
+        get;
         set
         {
-            if (value == _powerShell_AdditionalCommandLine)
+            if (value == field)
                 return;
 
-            _powerShell_AdditionalCommandLine = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExecutionPolicy _powerShell_ExecutionPolicy =
-        GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
 
     public ExecutionPolicy PowerShell_ExecutionPolicy
     {
-        get => _powerShell_ExecutionPolicy;
+        get;
         set
         {
-            if (value == _powerShell_ExecutionPolicy)
+            if (value == field)
                 return;
 
-            _powerShell_ExecutionPolicy = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _powerShell_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
+    } = GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
 
     public bool PowerShell_ExpandProfileView
     {
-        get => _powerShell_ExpandProfileView;
+        get;
         set
         {
-            if (value == _powerShell_ExpandProfileView)
+            if (value == field)
                 return;
 
-            _powerShell_ExpandProfileView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private double _powerShell_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public double PowerShell_ProfileWidth
     {
-        get => _powerShell_ProfileWidth;
+        get;
         set
         {
-            if (Math.Abs(value - _powerShell_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
-            _powerShell_ProfileWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     #endregion
 
     #region PuTTY
 
-    private ObservableCollection<string> _puTTY_HostHistory = [];
-
     public ObservableCollection<string> PuTTY_HostHistory
     {
-        get => _puTTY_HostHistory;
+        get;
         set
         {
-            if (value == _puTTY_HostHistory)
+            if (value == field)
                 return;
 
-            _puTTY_HostHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ConnectionMode _puTTY_DefaultConnectionMode = GlobalStaticConfiguration.PuTTY_DefaultConnectionMode;
+    } = [];
 
     public ConnectionMode PuTTY_DefaultConnectionMode
     {
-        get => _puTTY_DefaultConnectionMode;
+        get;
         set
         {
-            if (value == _puTTY_DefaultConnectionMode)
+            if (value == field)
                 return;
 
-            _puTTY_DefaultConnectionMode = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _puTTY_Username;
+    } = GlobalStaticConfiguration.PuTTY_DefaultConnectionMode;
 
     public string PuTTY_Username
     {
-        get => _puTTY_Username;
+        get;
         set
         {
-            if (value == _puTTY_Username)
+            if (value == field)
                 return;
 
-            _puTTY_Username = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _puTTY_PrivateKeyFile;
 
     public string PuTTY_PrivateKeyFile
     {
-        get => _puTTY_PrivateKeyFile;
+        get;
         set
         {
-            if (value == _puTTY_PrivateKeyFile)
+            if (value == field)
                 return;
 
-            _puTTY_PrivateKeyFile = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _puTTY_Profile = GlobalStaticConfiguration.PuTTY_DefaultProfile;
 
     public string PuTTY_Profile
     {
-        get => _puTTY_Profile;
+        get;
         set
         {
-            if (value == _puTTY_Profile)
+            if (value == field)
                 return;
 
-            _puTTY_Profile = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _puTTY_EnableSessionLog;
+    } = GlobalStaticConfiguration.PuTTY_DefaultProfile;
 
     public bool PuTTY_EnableSessionLog
     {
-        get => _puTTY_EnableSessionLog;
+        get;
         set
         {
-            if (value == _puTTY_EnableSessionLog)
+            if (value == field)
                 return;
 
-            _puTTY_EnableSessionLog = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private LogMode _puTTY_LogMode = GlobalStaticConfiguration.PuTTY_LogMode;
 
     public LogMode PuTTY_LogMode
     {
-        get => _puTTY_LogMode;
+        get;
         set
         {
-            if (value == _puTTY_LogMode)
+            if (value == field)
                 return;
 
-            _puTTY_LogMode = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _puTTY_LogPath = GlobalStaticConfiguration.PuTTY_LogPath;
+    } = GlobalStaticConfiguration.PuTTY_LogMode;
 
     public string PuTTY_LogPath
     {
-        get => _puTTY_LogPath;
+        get;
         set
         {
-            if (value == _puTTY_LogPath)
+            if (value == field)
                 return;
 
-            _puTTY_LogPath = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _puTTY_LogFileName = GlobalStaticConfiguration.PuTTY_LogFileName;
+    } = GlobalStaticConfiguration.PuTTY_LogPath;
 
     public string PuTTY_LogFileName
     {
-        get => _puTTY_LogFileName;
+        get;
         set
         {
-            if (value == _puTTY_LogFileName)
+            if (value == field)
                 return;
 
-            _puTTY_LogFileName = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _puTTY_AdditionalCommandLine;
+    } = GlobalStaticConfiguration.PuTTY_LogFileName;
 
     public string PuTTY_AdditionalCommandLine
     {
-        get => _puTTY_AdditionalCommandLine;
+        get;
         set
         {
-            if (value == _puTTY_AdditionalCommandLine)
+            if (value == field)
                 return;
 
-            _puTTY_AdditionalCommandLine = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ObservableCollection<string> _puTTY_SerialLineHistory = [];
 
     public ObservableCollection<string> PuTTY_SerialLineHistory
     {
-        get => _puTTY_SerialLineHistory;
+        get;
         set
         {
-            if (value == _puTTY_SerialLineHistory)
+            if (value == field)
                 return;
 
-            _puTTY_SerialLineHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<string> _puTTY_PortHistory = [];
+    } = [];
 
     public ObservableCollection<string> PuTTY_PortHistory
     {
-        get => _puTTY_PortHistory;
+        get;
         set
         {
-            if (value == _puTTY_PortHistory)
+            if (value == field)
                 return;
 
-            _puTTY_PortHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<string> _puTTY_BaudHistory = [];
+    } = [];
 
     public ObservableCollection<string> PuTTY_BaudHistory
     {
-        get => _puTTY_BaudHistory;
+        get;
         set
         {
-            if (value == _puTTY_BaudHistory)
+            if (value == field)
                 return;
 
-            _puTTY_BaudHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<string> _puTTY_UsernameHistory = [];
+    } = [];
 
     public ObservableCollection<string> PuTTY_UsernameHistory
     {
-        get => _puTTY_UsernameHistory;
+        get;
         set
         {
-            if (value == _puTTY_UsernameHistory)
+            if (value == field)
                 return;
 
-            _puTTY_UsernameHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<string> _puTTY_PrivateKeyFileHistory = [];
+    } = [];
 
     public ObservableCollection<string> PuTTY_PrivateKeyFileHistory
     {
-        get => _puTTY_PrivateKeyFileHistory;
+        get;
         set
         {
-            if (value == _puTTY_PrivateKeyFileHistory)
+            if (value == field)
                 return;
 
-            _puTTY_PrivateKeyFileHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<string> _puTTY_ProfileHistory = [];
+    } = [];
 
     public ObservableCollection<string> PuTTY_ProfileHistory
     {
-        get => _puTTY_ProfileHistory;
+        get;
         set
         {
-            if (value == _puTTY_ProfileHistory)
+            if (value == field)
                 return;
 
-            _puTTY_ProfileHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _puTTY_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
+    } = [];
 
     public bool PuTTY_ExpandProfileView
     {
-        get => _puTTY_ExpandProfileView;
+        get;
         set
         {
-            if (value == _puTTY_ExpandProfileView)
+            if (value == field)
                 return;
 
-            _puTTY_ExpandProfileView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private double _puTTY_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public double PuTTY_ProfileWidth
     {
-        get => _puTTY_ProfileWidth;
+        get;
         set
         {
-            if (Math.Abs(value - _puTTY_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
-            _puTTY_ProfileWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _puTTY_ApplicationFilePath;
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public string PuTTY_ApplicationFilePath
     {
-        get => _puTTY_ApplicationFilePath;
+        get;
         set
         {
-            if (value == _puTTY_ApplicationFilePath)
+            if (value == field)
                 return;
 
-            _puTTY_ApplicationFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _puTTY_SerialLine = GlobalStaticConfiguration.PuTTY_SerialLine;
 
     public string PuTTY_SerialLine
     {
-        get => _puTTY_SerialLine;
+        get;
         set
         {
-            if (value == _puTTY_SerialLine)
+            if (value == field)
                 return;
 
-            _puTTY_SerialLine = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _puTTY_SSHPort = GlobalStaticConfiguration.PuTTY_SSHPort;
+    } = GlobalStaticConfiguration.PuTTY_SerialLine;
 
     public int PuTTY_SSHPort
     {
-        get => _puTTY_SSHPort;
+        get;
         set
         {
-            if (value == _puTTY_SSHPort)
+            if (value == field)
                 return;
 
-            _puTTY_SSHPort = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _puTTY_TelnetPort = GlobalStaticConfiguration.PuTTY_TelnetPort;
+    } = GlobalStaticConfiguration.PuTTY_SSHPort;
 
     public int PuTTY_TelnetPort
     {
-        get => _puTTY_TelnetPort;
+        get;
         set
         {
-            if (value == _puTTY_TelnetPort)
+            if (value == field)
                 return;
 
-            _puTTY_TelnetPort = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.PuTTY_TelnetPort;
 
-
-    private int _puTTY_BaudRate = GlobalStaticConfiguration.PuTTY_BaudRate;
 
     public int PuTTY_BaudRate
     {
-        get => _puTTY_BaudRate;
+        get;
         set
         {
-            if (value == _puTTY_BaudRate)
+            if (value == field)
                 return;
 
-            _puTTY_BaudRate = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _puTTY_RloginPort = GlobalStaticConfiguration.PuTTY_RloginPort;
+    } = GlobalStaticConfiguration.PuTTY_BaudRate;
 
     public int PuTTY_RloginPort
     {
-        get => _puTTY_RloginPort;
+        get;
         set
         {
-            if (value == _puTTY_RloginPort)
+            if (value == field)
                 return;
 
-            _puTTY_RloginPort = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _puTTY_RawPort = GlobalStaticConfiguration.PuTTY_RawPort;
+    } = GlobalStaticConfiguration.PuTTY_RloginPort;
 
     public int PuTTY_RawPort
     {
-        get => _puTTY_RawPort;
+        get;
         set
         {
-            if (value == _puTTY_RawPort)
+            if (value == field)
                 return;
 
-            _puTTY_RawPort = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.PuTTY_RawPort;
 
     #endregion
 
     #region TigerVNC
 
-    private ObservableCollection<string> _tigerVNC_HostHistory = [];
-
     public ObservableCollection<string> TigerVNC_HostHistory
     {
-        get => _tigerVNC_HostHistory;
+        get;
         set
         {
-            if (value == _tigerVNC_HostHistory)
+            if (value == field)
                 return;
 
-            _tigerVNC_HostHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<int> _tigerVNC_PortHistory = [];
+    } = [];
 
     public ObservableCollection<int> TigerVNC_PortHistory
     {
-        get => _tigerVNC_PortHistory;
+        get;
         set
         {
-            if (value == _tigerVNC_PortHistory)
+            if (value == field)
                 return;
 
-            _tigerVNC_PortHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _tigerVNC_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
+    } = [];
 
     public bool TigerVNC_ExpandProfileView
     {
-        get => _tigerVNC_ExpandProfileView;
+        get;
         set
         {
-            if (value == _tigerVNC_ExpandProfileView)
+            if (value == field)
                 return;
 
-            _tigerVNC_ExpandProfileView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private double _tigerVNC_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public double TigerVNC_ProfileWidth
     {
-        get => _tigerVNC_ProfileWidth;
+        get;
         set
         {
-            if (Math.Abs(value - _tigerVNC_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
-            _tigerVNC_ProfileWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _tigerVNC_ApplicationFilePath;
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public string TigerVNC_ApplicationFilePath
     {
-        get => _tigerVNC_ApplicationFilePath;
+        get;
         set
         {
-            if (value == _tigerVNC_ApplicationFilePath)
+            if (value == field)
                 return;
 
-            _tigerVNC_ApplicationFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _tigerVNC_Port = GlobalStaticConfiguration.TigerVNC_DefaultVNCPort;
 
     public int TigerVNC_Port
     {
-        get => _tigerVNC_Port;
+        get;
         set
         {
-            if (value == _tigerVNC_Port)
+            if (value == field)
                 return;
 
-            _tigerVNC_Port = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.TigerVNC_DefaultVNCPort;
 
     #endregion
 
     #region Web Console
 
-    private ObservableCollection<string> _webConsole_UrlHistory = [];
-
     public ObservableCollection<string> WebConsole_UrlHistory
     {
-        get => _webConsole_UrlHistory;
+        get;
         set
         {
-            if (value == _webConsole_UrlHistory)
+            if (value == field)
                 return;
 
-            _webConsole_UrlHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _webConsole_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
+    } = [];
 
     public bool WebConsole_ExpandProfileView
     {
-        get => _webConsole_ExpandProfileView;
+        get;
         set
         {
-            if (value == _webConsole_ExpandProfileView)
+            if (value == field)
                 return;
 
-            _webConsole_ExpandProfileView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private double _webConsole_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public double WebConsole_ProfileWidth
     {
-        get => _webConsole_ProfileWidth;
+        get;
         set
         {
-            if (Math.Abs(value - _webConsole_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
-            _webConsole_ProfileWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _webConsole_ShowAddressBar = GlobalStaticConfiguration.WebConsole_ShowAddressBar;
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public bool WebConsole_ShowAddressBar
     {
-        get => _webConsole_ShowAddressBar;
+        get;
         set
         {
-            if (value == _webConsole_ShowAddressBar)
+            if (value == field)
                 return;
 
-            _webConsole_ShowAddressBar = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _webConsole_IsStatusBarEnabled = GlobalStaticConfiguration.WebConsole_IsStatusBarEnabled;
+    } = GlobalStaticConfiguration.WebConsole_ShowAddressBar;
 
     public bool WebConsole_IsStatusBarEnabled
     {
-        get => _webConsole_IsStatusBarEnabled;
+        get;
         set
         {
-            if (value == _webConsole_IsStatusBarEnabled)
+            if (value == field)
                 return;
 
-            _webConsole_IsStatusBarEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _webConsole_IsPasswordSaveEnabled = GlobalStaticConfiguration.WebConsole_IsPasswordSaveEnabled;
+    } = GlobalStaticConfiguration.WebConsole_IsStatusBarEnabled;
 
     public bool WebConsole_IsPasswordSaveEnabled
     {
-        get => _webConsole_IsPasswordSaveEnabled;
+        get;
         set
         {
-            if (value == _webConsole_IsPasswordSaveEnabled)
+            if (value == field)
                 return;
 
-            _webConsole_IsPasswordSaveEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.WebConsole_IsPasswordSaveEnabled;
 
     #endregion
 
     #region SNMP
 
-    private ObservableCollection<string> _snmp_HostHistory = [];
-
     public ObservableCollection<string> SNMP_HostHistory
     {
-        get => _snmp_HostHistory;
+        get;
         set
         {
-            if (value == _snmp_HostHistory)
+            if (value == field)
                 return;
 
-            _snmp_HostHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<string> _snmp_OidHistory = [];
+    } = [];
 
     public ObservableCollection<string> SNMP_OidHistory
     {
-        get => _snmp_OidHistory;
+        get;
         set
         {
-            if (value == _snmp_OidHistory)
+            if (value == field)
                 return;
 
-            _snmp_OidHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<SNMPOIDProfileInfo> _snmp_OidProfiles = [];
+    } = [];
 
     public ObservableCollection<SNMPOIDProfileInfo> SNMP_OidProfiles
     {
-        get => _snmp_OidProfiles;
+        get;
         set
         {
-            if (value == _snmp_OidProfiles)
+            if (value == field)
                 return;
 
-            _snmp_OidProfiles = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _snmp_Timeout = GlobalStaticConfiguration.SNMP_Timeout;
+    } = [];
 
     public int SNMP_Timeout
     {
-        get => _snmp_Timeout;
+        get;
         set
         {
-            if (value == _snmp_Timeout)
+            if (value == field)
                 return;
 
-            _snmp_Timeout = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private WalkMode _snmp_WalkMode = GlobalStaticConfiguration.SNMP_WalkMode;
+    } = GlobalStaticConfiguration.SNMP_Timeout;
 
     public WalkMode SNMP_WalkMode
     {
-        get => _snmp_WalkMode;
+        get;
         set
         {
-            if (value == _snmp_WalkMode)
+            if (value == field)
                 return;
 
-            _snmp_WalkMode = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _snmp_port = 161;
+    } = GlobalStaticConfiguration.SNMP_WalkMode;
 
     public int SNMP_Port
     {
-        get => _snmp_port;
+        get;
         set
         {
-            if (value == _snmp_port)
+            if (value == field)
                 return;
 
-            _snmp_port = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private SNMPMode _snmp_Mode = GlobalStaticConfiguration.SNMP_Mode;
+    } = 161;
 
     public SNMPMode SNMP_Mode
     {
-        get => _snmp_Mode;
+        get;
         set
         {
-            if (value == _snmp_Mode)
+            if (value == field)
                 return;
 
-            _snmp_Mode = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private SNMPVersion _snmp_Version = GlobalStaticConfiguration.SNMP_Version;
+    } = GlobalStaticConfiguration.SNMP_Mode;
 
     public SNMPVersion SNMP_Version
     {
-        get => _snmp_Version;
+        get;
         set
         {
-            if (value == _snmp_Version)
+            if (value == field)
                 return;
 
-            _snmp_Version = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private SNMPV3Security _snmp_Security = GlobalStaticConfiguration.SNMP_Security;
+    } = GlobalStaticConfiguration.SNMP_Version;
 
     public SNMPV3Security SNMP_Security
     {
-        get => _snmp_Security;
+        get;
         set
         {
-            if (value == _snmp_Security)
+            if (value == field)
                 return;
 
-            _snmp_Security = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private SNMPV3AuthenticationProvider _snmp_AuthenticationProvider =
-        GlobalStaticConfiguration.SNMP_AuthenticationProvider;
+    } = GlobalStaticConfiguration.SNMP_Security;
 
     public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider
     {
-        get => _snmp_AuthenticationProvider;
+        get;
         set
         {
-            if (value == _snmp_AuthenticationProvider)
+            if (value == field)
                 return;
 
-            _snmp_AuthenticationProvider = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private SNMPV3PrivacyProvider _snmp_PrivacyProvider = GlobalStaticConfiguration.SNMP_PrivacyProvider;
+    } = GlobalStaticConfiguration.SNMP_AuthenticationProvider;
 
     public SNMPV3PrivacyProvider SNMP_PrivacyProvider
     {
-        get => _snmp_PrivacyProvider;
+        get;
         set
         {
-            if (value == _snmp_PrivacyProvider)
+            if (value == field)
                 return;
 
-            _snmp_PrivacyProvider = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _snmp_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
+    } = GlobalStaticConfiguration.SNMP_PrivacyProvider;
 
     public bool SNMP_ExpandProfileView
     {
-        get => _snmp_ExpandProfileView;
+        get;
         set
         {
-            if (value == _snmp_ExpandProfileView)
+            if (value == field)
                 return;
 
-            _snmp_ExpandProfileView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private double _snmp_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public double SNMP_ProfileWidth
     {
-        get => _snmp_ProfileWidth;
+        get;
         set
         {
-            if (Math.Abs(value - _snmp_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
-            _snmp_ProfileWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
-
-    private string _snmp_ExportFilePath;
 
     public string SNMP_ExportFilePath
     {
-        get => _snmp_ExportFilePath;
+        get;
         set
         {
-            if (value == _snmp_ExportFilePath)
+            if (value == field)
                 return;
 
-            _snmp_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _snmp_ExportFileType = GlobalStaticConfiguration.SNMP_ExportFileType;
 
     public ExportFileType SNMP_ExportFileType
     {
-        get => _snmp_ExportFileType;
+        get;
         set
         {
-            if (value == _snmp_ExportFileType)
+            if (value == field)
                 return;
 
-            _snmp_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.SNMP_ExportFileType;
 
     #endregion
 
     #region SNTP Lookup
 
-    private ObservableCollection<ServerConnectionInfoProfile> _sntpLookup_SNTPServers = [];
-
     public ObservableCollection<ServerConnectionInfoProfile> SNTPLookup_SNTPServers
     {
-        get => _sntpLookup_SNTPServers;
+        get;
         set
         {
-            if (value == _sntpLookup_SNTPServers)
+            if (value == field)
                 return;
 
-            _sntpLookup_SNTPServers = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ServerConnectionInfoProfile _sntpLookup_SelectedSNTPServer = new();
+    } = [];
 
     public ServerConnectionInfoProfile SNTPLookup_SelectedSNTPServer
     {
-        get => _sntpLookup_SelectedSNTPServer;
+        get;
         set
         {
-            if (value == _sntpLookup_SelectedSNTPServer)
+            if (value == field)
                 return;
 
-            _sntpLookup_SelectedSNTPServer = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _sntpLookup_Timeout = GlobalStaticConfiguration.SNTPLookup_Timeout;
+    } = new();
 
     public int SNTPLookup_Timeout
     {
-        get => _sntpLookup_Timeout;
+        get;
         set
         {
-            if (value == _sntpLookup_Timeout)
+            if (value == field)
                 return;
 
-            _sntpLookup_Timeout = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _sntpLookup_ExportFilePath;
+    } = GlobalStaticConfiguration.SNTPLookup_Timeout;
 
     public string SNTPLookup_ExportFilePath
     {
-        get => _sntpLookup_ExportFilePath;
+        get;
         set
         {
-            if (value == _sntpLookup_ExportFilePath)
+            if (value == field)
                 return;
 
-            _sntpLookup_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _sntpLookup_ExportFileType = GlobalStaticConfiguration.SNTPLookup_ExportFileType;
 
     public ExportFileType SNTPLookup_ExportFileType
     {
-        get => _sntpLookup_ExportFileType;
+        get;
         set
         {
-            if (value == _sntpLookup_ExportFileType)
+            if (value == field)
                 return;
 
-            _sntpLookup_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.SNTPLookup_ExportFileType;
 
     #endregion
 
     #region Hosts File Editor
 
-    private string _hostsFileEditor_ExportFilePath;
-
     public string HostsFileEditor_ExportFilePath
     {
-        get => _hostsFileEditor_ExportFilePath;
+        get;
         set
         {
-            if (value == _hostsFileEditor_ExportFilePath)
+            if (value == field)
                 return;
 
-            _hostsFileEditor_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _hostsFileEditor_ExportFileType = GlobalStaticConfiguration.HostsFileEditor_ExportFileType;
 
     public ExportFileType HostsFileEditor_ExportFileType
     {
-        get => _hostsFileEditor_ExportFileType;
+        get;
         set
         {
-            if (value == _hostsFileEditor_ExportFileType)
+            if (value == field)
                 return;
 
-            _hostsFileEditor_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.HostsFileEditor_ExportFileType;
 
     #endregion
 
-    #region Discovery Protocol
+    #region Firewall
+    public bool Firewall_ExpandProfileView
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
 
-    private DiscoveryProtocol _discoveryProtocol_Protocol = GlobalStaticConfiguration.DiscoveryProtocol_Protocol;
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
+
+    public double Firewall_ProfileWidth
+    {
+        get;
+        set
+        {
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+
+    #endregion
+    
+    #region Discovery Protocol
 
     public DiscoveryProtocol DiscoveryProtocol_Protocol
     {
-        get => _discoveryProtocol_Protocol;
+        get;
         set
         {
-            if (value == _discoveryProtocol_Protocol)
+            if (value == field)
                 return;
 
-            _discoveryProtocol_Protocol = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _discoveryProtocol_Duration = GlobalStaticConfiguration.DiscoveryProtocol_Duration;
+    } = GlobalStaticConfiguration.DiscoveryProtocol_Protocol;
 
     public int DiscoveryProtocol_Duration
     {
-        get => _discoveryProtocol_Duration;
+        get;
         set
         {
-            if (value == _discoveryProtocol_Duration)
+            if (value == field)
                 return;
 
-            _discoveryProtocol_Duration = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _discoveryProtocol_ExportFilePath;
+    } = GlobalStaticConfiguration.DiscoveryProtocol_Duration;
 
     public string DiscoveryProtocol_ExportFilePath
     {
-        get => _discoveryProtocol_ExportFilePath;
+        get;
         set
         {
-            if (value == _discoveryProtocol_ExportFilePath)
+            if (value == field)
                 return;
 
-            _discoveryProtocol_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _discoveryProtocol_ExportFileType =
-        GlobalStaticConfiguration.DiscoveryProtocol_ExportFileType;
 
     public ExportFileType DiscoveryProtocol_ExportFileType
     {
-        get => _discoveryProtocol_ExportFileType;
+        get;
         set
         {
-            if (value == _discoveryProtocol_ExportFileType)
+            if (value == field)
                 return;
 
-            _discoveryProtocol_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.DiscoveryProtocol_ExportFileType;
 
     #endregion
 
     #region WakeOnLAN
 
-    private int _wakeOnLAN_Port = GlobalStaticConfiguration.WakeOnLAN_Port;
-
     public int WakeOnLAN_Port
     {
-        get => _wakeOnLAN_Port;
+        get;
         set
         {
-            if (value == _wakeOnLAN_Port)
+            if (value == field)
                 return;
 
-            _wakeOnLAN_Port = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<string> _wakeOnLan_MACAddressHistory = [];
+    } = GlobalStaticConfiguration.WakeOnLAN_Port;
 
     public ObservableCollection<string> WakeOnLan_MACAddressHistory
     {
-        get => _wakeOnLan_MACAddressHistory;
+        get;
         set
         {
-            if (value == _wakeOnLan_MACAddressHistory)
+            if (value == field)
                 return;
 
-            _wakeOnLan_MACAddressHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<string> _wakeOnLan_BroadcastHistory = [];
+    } = [];
 
     public ObservableCollection<string> WakeOnLan_BroadcastHistory
     {
-        get => _wakeOnLan_BroadcastHistory;
+        get;
         set
         {
-            if (value == _wakeOnLan_BroadcastHistory)
+            if (value == field)
                 return;
 
-            _wakeOnLan_BroadcastHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _wakeOnLAN_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
+    } = [];
 
     public bool WakeOnLAN_ExpandProfileView
     {
-        get => _wakeOnLAN_ExpandProfileView;
+        get;
         set
         {
-            if (value == _wakeOnLAN_ExpandProfileView)
+            if (value == field)
                 return;
 
-            _wakeOnLAN_ExpandProfileView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private double _wakeOnLAN_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public double WakeOnLAN_ProfileWidth
     {
-        get => _wakeOnLAN_ProfileWidth;
+        get;
         set
         {
-            if (Math.Abs(value - _wakeOnLAN_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
-            _wakeOnLAN_ProfileWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     #endregion
 
     #region Whois
 
-    private ObservableCollection<string> _whois_DomainHistory = [];
-
     public ObservableCollection<string> Whois_DomainHistory
     {
-        get => _whois_DomainHistory;
+        get;
         set
         {
-            if (value == _whois_DomainHistory)
+            if (value == field)
                 return;
 
-            _whois_DomainHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _whois_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
+    } = [];
 
     public bool Whois_ExpandProfileView
     {
-        get => _whois_ExpandProfileView;
+        get;
         set
         {
-            if (value == _whois_ExpandProfileView)
+            if (value == field)
                 return;
 
-            _whois_ExpandProfileView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private double _whois_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public double Whois_ProfileWidth
     {
-        get => _whois_ProfileWidth;
+        get;
         set
         {
-            if (Math.Abs(value - _whois_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
-            _whois_ProfileWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _whois_ExportFilePath;
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public string Whois_ExportFilePath
     {
-        get => _whois_ExportFilePath;
+        get;
         set
         {
-            if (value == _whois_ExportFilePath)
+            if (value == field)
                 return;
 
-            _whois_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _whois_ExportFileType = GlobalStaticConfiguration.Whois_ExportFileType;
 
     public ExportFileType Whois_ExportFileType
     {
-        get => _whois_ExportFileType;
+        get;
         set
         {
-            if (value == _whois_ExportFileType)
+            if (value == field)
                 return;
 
-            _whois_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Whois_ExportFileType;
 
     #endregion
 
     #region IP Geolocation
 
-    private ObservableCollection<string> _ipGeolocation_HostHistory = [];
-
     public ObservableCollection<string> IPGeolocation_HostHistory
     {
-        get => _ipGeolocation_HostHistory;
+        get;
         set
         {
-            if (value == _ipGeolocation_HostHistory)
+            if (value == field)
                 return;
 
-            _ipGeolocation_HostHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _ipGeolocation_ExpandProfileView = GlobalStaticConfiguration.Profile_ExpandProfileView;
+    } = [];
 
     public bool IPGeolocation_ExpandProfileView
     {
-        get => _ipGeolocation_ExpandProfileView;
+        get;
         set
         {
-            if (value == _ipGeolocation_ExpandProfileView)
+            if (value == field)
                 return;
 
-            _ipGeolocation_ExpandProfileView = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private double _ipGeolocation_ProfileWidth = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
 
     public double IPGeolocation_ProfileWidth
     {
-        get => _ipGeolocation_ProfileWidth;
+        get;
         set
         {
-            if (Math.Abs(value - _ipGeolocation_ProfileWidth) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
                 return;
 
-            _ipGeolocation_ProfileWidth = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _ipGeolocation_ExportFilePath;
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public string IPGeolocation_ExportFilePath
     {
-        get => _ipGeolocation_ExportFilePath;
+        get;
         set
         {
-            if (value == _ipGeolocation_ExportFilePath)
+            if (value == field)
                 return;
 
-            _ipGeolocation_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _ipGeolocation_ExportFileType = GlobalStaticConfiguration.IPGeolocation_ExportFileType;
 
     public ExportFileType IPGeolocation_ExportFileType
     {
-        get => _ipGeolocation_ExportFileType;
+        get;
         set
         {
-            if (value == _ipGeolocation_ExportFileType)
+            if (value == field)
                 return;
 
-            _ipGeolocation_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.IPGeolocation_ExportFileType;
 
     #endregion
 
@@ -4012,119 +3524,104 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region Calculator
 
-    private ObservableCollection<string> _subnetCalculator_Calculator_SubnetHistory = [];
-
     public ObservableCollection<string> SubnetCalculator_Calculator_SubnetHistory
     {
-        get => _subnetCalculator_Calculator_SubnetHistory;
+        get;
         set
         {
-            if (value == _subnetCalculator_Calculator_SubnetHistory)
+            if (value == field)
                 return;
 
-            _subnetCalculator_Calculator_SubnetHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = [];
 
     #endregion
 
     #region Subnetting
 
-    private ObservableCollection<string> _subnetCalculator_Subnetting_SubnetHistory = [];
-
     public ObservableCollection<string> SubnetCalculator_Subnetting_SubnetHistory
     {
-        get => _subnetCalculator_Subnetting_SubnetHistory;
+        get;
         set
         {
-            if (value == _subnetCalculator_Subnetting_SubnetHistory)
+            if (value == field)
                 return;
 
-            _subnetCalculator_Subnetting_SubnetHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<string> _subnetCalculator_Subnetting_NewSubnetmaskHistory = [];
+    } = [];
 
     public ObservableCollection<string> SubnetCalculator_Subnetting_NewSubnetmaskHistory
     {
-        get => _subnetCalculator_Subnetting_NewSubnetmaskHistory;
+        get;
         set
         {
-            if (value == _subnetCalculator_Subnetting_NewSubnetmaskHistory)
+            if (value == field)
                 return;
 
-            _subnetCalculator_Subnetting_NewSubnetmaskHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _subnetCalculator_Subnetting_ExportFilePath;
+    } = [];
 
     public string SubnetCalculator_Subnetting_ExportFilePath
     {
-        get => _subnetCalculator_Subnetting_ExportFilePath;
+        get;
         set
         {
-            if (value == _subnetCalculator_Subnetting_ExportFilePath)
+            if (value == field)
                 return;
 
-            _subnetCalculator_Subnetting_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _subnetCalculator_Subnetting_ExportFileType =
-        GlobalStaticConfiguration.SubnetCalculator_Subnetting_ExportFileType;
 
     public ExportFileType SubnetCalculator_Subnetting_ExportFileType
     {
-        get => _subnetCalculator_Subnetting_ExportFileType;
+        get;
         set
         {
-            if (value == _subnetCalculator_Subnetting_ExportFileType)
+            if (value == field)
                 return;
 
-            _subnetCalculator_Subnetting_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.SubnetCalculator_Subnetting_ExportFileType;
 
     #endregion
 
     #region WideSubnet
 
-    private ObservableCollection<string> _subnetCalculator_WideSubnet_Subnet1 = [];
-
     public ObservableCollection<string> SubnetCalculator_WideSubnet_Subnet1
     {
-        get => _subnetCalculator_WideSubnet_Subnet1;
+        get;
         set
         {
-            if (value == _subnetCalculator_WideSubnet_Subnet1)
+            if (value == field)
                 return;
 
-            _subnetCalculator_WideSubnet_Subnet1 = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<string> _subnetCalculator_WideSubnet_Subnet2 = [];
+    } = [];
 
     public ObservableCollection<string> SubnetCalculator_WideSubnet_Subnet2
     {
-        get => _subnetCalculator_WideSubnet_Subnet2;
+        get;
         set
         {
-            if (value == _subnetCalculator_WideSubnet_Subnet2)
+            if (value == field)
                 return;
 
-            _subnetCalculator_WideSubnet_Subnet2 = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = [];
 
     #endregion
 
@@ -4132,367 +3629,321 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #region Bit Calculator
 
-    private ObservableCollection<string> _bitCalculator_InputHistory = [];
-
     public ObservableCollection<string> BitCalculator_InputHistory
     {
-        get => _bitCalculator_InputHistory;
+        get;
         set
         {
-            if (value == _bitCalculator_InputHistory)
+            if (value == field)
                 return;
 
-            _bitCalculator_InputHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private BitCaluclatorUnit _bitCalculator_Unit = GlobalStaticConfiguration.BitCalculator_Unit;
+    } = [];
 
     public BitCaluclatorUnit BitCalculator_Unit
     {
-        get => _bitCalculator_Unit;
+        get;
         set
         {
-            if (value == _bitCalculator_Unit)
+            if (value == field)
                 return;
 
-            _bitCalculator_Unit = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.BitCalculator_Unit;
 
-
-    private BitCaluclatorNotation _bitCalculator_Notation = GlobalStaticConfiguration.BitCalculator_Notation;
 
     public BitCaluclatorNotation BitCalculator_Notation
     {
-        get => _bitCalculator_Notation;
+        get;
         set
         {
-            if (value == _bitCalculator_Notation)
+            if (value == field)
                 return;
 
-            _bitCalculator_Notation = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _bitCalculator_ExportFilePath;
+    } = GlobalStaticConfiguration.BitCalculator_Notation;
 
     public string BitCalculator_ExportFilePath
     {
-        get => _bitCalculator_ExportFilePath;
+        get;
         set
         {
-            if (value == _bitCalculator_ExportFilePath)
+            if (value == field)
                 return;
 
-            _bitCalculator_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _bitCalculator_ExportFileType = GlobalStaticConfiguration.BitCalculator_ExportFileType;
 
     public ExportFileType BitCalculator_ExportFileType
     {
-        get => _bitCalculator_ExportFileType;
+        get;
         set
         {
-            if (value == _bitCalculator_ExportFileType)
+            if (value == field)
                 return;
 
-            _bitCalculator_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.BitCalculator_ExportFileType;
 
     #endregion
 
     #region Lookup
 
-    private ObservableCollection<string> _lookup_OUI_SearchHistory = [];
-
     public ObservableCollection<string> Lookup_OUI_SearchHistory
     {
-        get => _lookup_OUI_SearchHistory;
+        get;
         set
         {
-            if (value == _lookup_OUI_SearchHistory)
+            if (value == field)
                 return;
 
-            _lookup_OUI_SearchHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _lookup_OUI_ExportFilePath;
+    } = [];
 
     public string Lookup_OUI_ExportFilePath
     {
-        get => _lookup_OUI_ExportFilePath;
+        get;
         set
         {
-            if (value == _lookup_OUI_ExportFilePath)
+            if (value == field)
                 return;
 
-            _lookup_OUI_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _lookup_OUI_ExportFileType = GlobalStaticConfiguration.Lookup_OUI_ExportFileType;
 
     public ExportFileType Lookup_OUI_ExportFileType
     {
-        get => _lookup_OUI_ExportFileType;
+        get;
         set
         {
-            if (value == _lookup_OUI_ExportFileType)
+            if (value == field)
                 return;
 
-            _lookup_OUI_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private ObservableCollection<string> _lookup_Port_SearchHistory = [];
+    } = GlobalStaticConfiguration.Lookup_OUI_ExportFileType;
 
     public ObservableCollection<string> Lookup_Port_SearchHistory
     {
-        get => _lookup_Port_SearchHistory;
+        get;
         set
         {
-            if (value == _lookup_Port_SearchHistory)
+            if (value == field)
                 return;
 
-            _lookup_Port_SearchHistory = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _lookup_Port_ExportFilePath;
+    } = [];
 
     public string Lookup_Port_ExportFilePath
     {
-        get => _lookup_Port_ExportFilePath;
+        get;
         set
         {
-            if (value == _lookup_Port_ExportFilePath)
+            if (value == field)
                 return;
 
-            _lookup_Port_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _lookup_Port_ExportFileType = GlobalStaticConfiguration.Lookup_Port_ExportFileType;
 
     public ExportFileType Lookup_Port_ExportFileType
     {
-        get => _lookup_Port_ExportFileType;
+        get;
         set
         {
-            if (value == _lookup_Port_ExportFileType)
+            if (value == field)
                 return;
 
-            _lookup_Port_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Lookup_Port_ExportFileType;
 
     #endregion
 
     #region Connections
 
-    private bool _connections_AutoRefreshEnabled;
-
     public bool Connections_AutoRefreshEnabled
     {
-        get => _connections_AutoRefreshEnabled;
+        get;
         set
         {
-            if (value == _connections_AutoRefreshEnabled)
+            if (value == field)
                 return;
 
-            _connections_AutoRefreshEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private AutoRefreshTimeInfo _connections_AutoRefreshTime = GlobalStaticConfiguration.Connections_AutoRefreshTime;
 
     public AutoRefreshTimeInfo Connections_AutoRefreshTime
     {
-        get => _connections_AutoRefreshTime;
+        get;
         set
         {
-            if (value == _connections_AutoRefreshTime)
+            if (value == field)
                 return;
 
-            _connections_AutoRefreshTime = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _connections_ExportFilePath;
+    } = GlobalStaticConfiguration.Connections_AutoRefreshTime;
 
     public string Connections_ExportFilePath
     {
-        get => _connections_ExportFilePath;
+        get;
         set
         {
-            if (value == _connections_ExportFilePath)
+            if (value == field)
                 return;
 
-            _connections_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _connections_ExportFileType = GlobalStaticConfiguration.Connections_ExportFileType;
 
     public ExportFileType Connections_ExportFileType
     {
-        get => _connections_ExportFileType;
+        get;
         set
         {
-            if (value == _connections_ExportFileType)
+            if (value == field)
                 return;
 
-            _connections_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Connections_ExportFileType;
 
     #endregion
 
     #region Listeners
 
-    private bool _listeners_AutoRefreshEnabled;
-
     public bool Listeners_AutoRefreshEnabled
     {
-        get => _listeners_AutoRefreshEnabled;
+        get;
         set
         {
-            if (value == _listeners_AutoRefreshEnabled)
+            if (value == field)
                 return;
 
-            _listeners_AutoRefreshEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private AutoRefreshTimeInfo _listeners_AutoRefreshTime = GlobalStaticConfiguration.Listeners_AutoRefreshTime;
 
     public AutoRefreshTimeInfo Listeners_AutoRefreshTime
     {
-        get => _listeners_AutoRefreshTime;
+        get;
         set
         {
-            if (value == _listeners_AutoRefreshTime)
+            if (value == field)
                 return;
 
-            _listeners_AutoRefreshTime = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _listeners_ExportFilePath;
+    } = GlobalStaticConfiguration.Listeners_AutoRefreshTime;
 
     public string Listeners_ExportFilePath
     {
-        get => _listeners_ExportFilePath;
+        get;
         set
         {
-            if (value == _listeners_ExportFilePath)
+            if (value == field)
                 return;
 
-            _listeners_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _listeners_ExportFileType = GlobalStaticConfiguration.Listeners_ExportFileType;
 
     public ExportFileType Listeners_ExportFileType
     {
-        get => _listeners_ExportFileType;
+        get;
         set
         {
-            if (value == _listeners_ExportFileType)
+            if (value == field)
                 return;
 
-            _listeners_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Listeners_ExportFileType;
 
     #endregion
 
     #region ARPTable
 
-    private bool _arpTable_AutoRefreshEnabled;
-
     public bool ARPTable_AutoRefreshEnabled
     {
-        get => _arpTable_AutoRefreshEnabled;
+        get;
         set
         {
-            if (value == _arpTable_AutoRefreshEnabled)
+            if (value == field)
                 return;
 
-            _arpTable_AutoRefreshEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private AutoRefreshTimeInfo _arpTable_AutoRefreshTime = GlobalStaticConfiguration.ARPTable_AutoRefreshTime;
 
     public AutoRefreshTimeInfo ARPTable_AutoRefreshTime
     {
-        get => _arpTable_AutoRefreshTime;
+        get;
         set
         {
-            if (value == _arpTable_AutoRefreshTime)
+            if (value == field)
                 return;
 
-            _arpTable_AutoRefreshTime = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _arpTable_ExportFilePath;
+    } = GlobalStaticConfiguration.ARPTable_AutoRefreshTime;
 
     public string ARPTable_ExportFilePath
     {
-        get => _arpTable_ExportFilePath;
+        get;
         set
         {
-            if (value == _arpTable_ExportFilePath)
+            if (value == field)
                 return;
 
-            _arpTable_ExportFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ExportFileType _arpTable_ExportFileType = GlobalStaticConfiguration.ARPTable_ExportFileType;
 
     public ExportFileType ARPTable_ExportFileType
     {
-        get => _arpTable_ExportFileType;
+        get;
         set
         {
-            if (value == _arpTable_ExportFileType)
+            if (value == field)
                 return;
 
-            _arpTable_ExportFileType = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.ARPTable_ExportFileType;
 
     #endregion
 

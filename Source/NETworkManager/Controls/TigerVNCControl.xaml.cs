@@ -34,32 +34,28 @@ public partial class TigerVNCControl : UserControlBase, IDragablzTabItem
     private Process _process;
     private IntPtr _appWin;
 
-    private bool _isConnected;
-
     public bool IsConnected
     {
-        get => _isConnected;
+        get;
         set
         {
-            if (value == _isConnected)
+            if (value == field)
                 return;
 
-            _isConnected = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _isConnecting;
-
     public bool IsConnecting
     {
-        get => _isConnecting;
+        get;
         set
         {
-            if (value == _isConnecting)
+            if (value == field)
                 return;
 
-            _isConnecting = value;
+            field = value;
             OnPropertyChanged();
         }
     }
