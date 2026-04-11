@@ -4046,4 +4046,61 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   <data name="FailedToLoadFirewallRulesMessage" xml:space="preserve">
     <value>Failed to load firewall rules. {0}</value>
   </data>
+  <data name="FirewallProtocol_Any" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="FirewallProtocol_TCP" xml:space="preserve">
+    <value>TCP</value>
+  </data>
+  <data name="FirewallProtocol_UDP" xml:space="preserve">
+    <value>UDP</value>
+  </data>
+  <data name="FirewallProtocol_ICMPv4" xml:space="preserve">
+    <value>ICMPv4</value>
+  </data>
+  <data name="FirewallProtocol_ICMPv6" xml:space="preserve">
+    <value>ICMPv6</value>
+  </data>
+  <data name="FirewallProtocol_HOPOPT" xml:space="preserve">
+    <value>HOPOPT</value>
+  </data>
+  <data name="FirewallProtocol_GRE" xml:space="preserve">
+    <value>GRE</value>
+  </data>
+  <data name="FirewallProtocol_IPv6" xml:space="preserve">
+    <value>IPv6</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_Route" xml:space="preserve">
+    <value>IPv6-Route</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_Frag" xml:space="preserve">
+    <value>IPv6-Frag</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_NoNxt" xml:space="preserve">
+    <value>IPv6-NoNxt</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_Opts" xml:space="preserve">
+    <value>IPv6-Opts</value>
+  </data>
+  <data name="FirewallProtocol_VRRP" xml:space="preserve">
+    <value>VRRP</value>
+  </data>
+  <data name="FirewallProtocol_PGM" xml:space="preserve">
+    <value>PGM</value>
+  </data>
+  <data name="FirewallProtocol_L2TP" xml:space="preserve">
+    <value>L2TP</value>
+  </data>
+  <data name="FirewallInterfaceType_Any" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="FirewallInterfaceType_Wired" xml:space="preserve">
+    <value>Wired</value>
+  </data>
+  <data name="FirewallInterfaceType_Wireless" xml:space="preserve">
+    <value>Wireless</value>
+  </data>
+  <data name="FirewallInterfaceType_RemoteAccess" xml:space="preserve">
+    <value>Remote access</value>
+  </data>
 </root>

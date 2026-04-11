@@ -43,9 +43,11 @@ public class Firewall
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
 Import-Module NetSecurity -ErrorAction Stop
 Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
-    $rule = $_
-    $portFilter = $rule | Get-NetFirewallPortFilter
-    $appFilter  = $rule | Get-NetFirewallApplicationFilter
+    $rule              = $_
+    $portFilter        = $rule | Get-NetFirewallPortFilter
+    $addressFilter     = $rule | Get-NetFirewallAddressFilter
+    $appFilter         = $rule | Get-NetFirewallApplicationFilter
+    $ifTypeFilter      = $rule | Get-NetFirewallInterfaceTypeFilter
     [PSCustomObject]@{{
         Id            = $rule.ID
         DisplayName   = $rule.DisplayName
@@ -54,10 +56,12 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         Direction     = [string]$rule.Direction
         Action        = [string]$rule.Action
         Protocol      = $portFilter.Protocol
-        LocalPort     = ($portFilter.LocalPort  -join ',')
-        RemotePort    = ($portFilter.RemotePort -join ',')
+        LocalPort     = ($portFilter.LocalPort   -join ',')
+        RemotePort    = ($portFilter.RemotePort  -join ',')
+        LocalAddress  = ($addressFilter.LocalAddress  -join ',')
+        RemoteAddress = ($addressFilter.RemoteAddress -join ',')
         Profile       = [string]$rule.Profile
-        InterfaceType = [string]$rule.InterfaceType
+        InterfaceType = [string]$ifTypeFilter.InterfaceType
         Program       = $appFilter.Program
     }}
 }}");
@@ -74,19 +78,25 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
             {
                 try
                 {
+                    var displayName = result.Properties["DisplayName"]?.Value?.ToString() ?? string.Empty;
+
                     var rule = new FirewallRule
                     {
-                        Id            = result.Properties["Id"]?.Value?.ToString() ?? string.Empty,
-                        IsEnabled     = result.Properties["Enabled"]?.Value as bool? == true,
-                        Name          = result.Properties["DisplayName"]?.Value?.ToString() ?? string.Empty,
-                        Description   = result.Properties["Description"]?.Value?.ToString() ?? string.Empty,
-                        Direction     = ParseDirection(result.Properties["Direction"]?.Value?.ToString()),
-                        Action        = ParseAction(result.Properties["Action"]?.Value?.ToString()),
-                        Protocol      = ParseProtocol(result.Properties["Protocol"]?.Value?.ToString()),
-                        LocalPorts    = ParsePorts(result.Properties["LocalPort"]?.Value?.ToString()),
-                        RemotePorts   = ParsePorts(result.Properties["RemotePort"]?.Value?.ToString()),
+                        Id              = result.Properties["Id"]?.Value?.ToString() ?? string.Empty,
+                        IsEnabled       = result.Properties["Enabled"]?.Value as bool? == true,
+                        Name            = displayName.StartsWith(RuleIdentifier, StringComparison.Ordinal)
+                                              ? displayName[RuleIdentifier.Length..]
+                                              : displayName,
+                        Description     = result.Properties["Description"]?.Value?.ToString() ?? string.Empty,
+                        Direction       = ParseDirection(result.Properties["Direction"]?.Value?.ToString()),
+                        Action          = ParseAction(result.Properties["Action"]?.Value?.ToString()),
+                        Protocol        = ParseProtocol(result.Properties["Protocol"]?.Value?.ToString()),
+                        LocalPorts      = ParsePorts(result.Properties["LocalPort"]?.Value?.ToString()),
+                        RemotePorts     = ParsePorts(result.Properties["RemotePort"]?.Value?.ToString()),
+                        LocalAddresses  = ParseAddresses(result.Properties["LocalAddress"]?.Value?.ToString()),
+                        RemoteAddresses = ParseAddresses(result.Properties["RemoteAddress"]?.Value?.ToString()),
                         NetworkProfiles = ParseProfile(result.Properties["Profile"]?.Value?.ToString()),
-                        InterfaceType = ParseInterfaceType(result.Properties["InterfaceType"]?.Value?.ToString()),
+                        InterfaceType   = ParseInterfaceType(result.Properties["InterfaceType"]?.Value?.ToString()),
                     };
                     
                     var program = result.Properties["Program"]?.Value as string;
@@ -203,6 +213,18 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         }
 
         return profiles;
+    }
+
+    /// <summary>
+    /// Parses a comma-separated address string (e.g. <c>"192.168.1.0/24,LocalSubnet"</c>) to a list of
+    /// address strings. Returns an empty list for <c>Any</c> or blank input.
+    /// </summary>
+    private static List<string> ParseAddresses(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value) || value.Equals("Any", StringComparison.OrdinalIgnoreCase))
+            return [];
+
+        return [.. value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)];
     }
 
     /// <summary>Parses a PowerShell interface-type string to <see cref="FirewallInterfaceType"/>.</summary>

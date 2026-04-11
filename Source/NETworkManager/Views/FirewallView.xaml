@@ -12,6 +12,7 @@
     xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
     xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
     xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
+    xmlns:firewall="clr-namespace:NETworkManager.Models.Firewall;assembly=NETworkManager.Models"
     xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
     xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
     xmlns:networkManager="clr-namespace:NETworkManager"
@@ -22,6 +23,8 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
+        <converters:FirewallProtocolToStringConverter x:Key="FirewallProtocolToStringConverter" />
+        <converters:FirewallInterfaceTypeToStringConverter x:Key="FirewallInterfaceTypeToStringConverter" />
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <Grid>
@@ -204,15 +207,21 @@
 
                             <!-- Enabled -->
                             <DataGridCheckBoxColumn Header="{x:Static localization:Strings.Enabled}"
-                                                    Binding="{Binding IsEnabled}"
+                                                    Binding="{Binding (firewall:FirewallRule.IsEnabled)}"
                                                     SortMemberPath="IsEnabled"
                                                     MinWidth="70" />
 
+                            <!-- Name -->
+                            <DataGridTextColumn Header="{x:Static localization:Strings.Name}"
+                                                Binding="{Binding (firewall:FirewallRule.Name)}"
+                                                SortMemberPath="Name"
+                                                MinWidth="200" />
+                            
                             <!-- Direction -->
                             <DataGridTemplateColumn Header="{x:Static localization:Strings.Direction}"
                                                     SortMemberPath="Direction" MinWidth="90">
                                 <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate DataType="{x:Type firewall:FirewallRule}">
                                         <StackPanel Orientation="Horizontal">
                                             <Rectangle x:Name="DirectionIcon" Width="16" Height="16"
                                                        Margin="0,0,6,0"
@@ -243,7 +252,7 @@
                             <DataGridTemplateColumn Header="" SortMemberPath="Action"
                                                     Width="24" CanUserResize="False" CanUserSort="False">
                                 <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate DataType="{x:Type firewall:FirewallRule}">
                                         <Rectangle x:Name="ActionIcon" Width="16" Height="16"
                                                    Fill="#b95353">
                                             <Rectangle.OpacityMask>
@@ -251,7 +260,7 @@
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                         <DataTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding Action}" Value="Allow">
+                                            <DataTrigger Binding="{Binding (firewall:FirewallRule.Action)}" Value="Allow">
                                                 <Setter TargetName="ActionIcon" Property="Fill" Value="#badc58" />
                                                 <Setter TargetName="ActionIcon" Property="OpacityMask">
                                                     <Setter.Value>
@@ -268,13 +277,13 @@
                             <DataGridTemplateColumn Header="{x:Static localization:Strings.Action}"
                                                     SortMemberPath="Action" MinWidth="70">
                                 <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate DataType="{x:Type firewall:FirewallRule}">
                                         <TextBlock x:Name="ActionText"
                                                    Text="{x:Static localization:Strings.Block}"
                                                    Foreground="#b95353"
                                                    VerticalAlignment="Center" />
                                         <DataTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding Action}" Value="Allow">
+                                            <DataTrigger Binding="{Binding (firewall:FirewallRule.Action)}" Value="Allow">
                                                 <Setter TargetName="ActionText" Property="Text" Value="{x:Static localization:Strings.Allow}" />
                                                 <Setter TargetName="ActionText" Property="Foreground" Value="#badc58" />
                                             </DataTrigger>
@@ -283,35 +292,43 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
 
-                            <!-- Name -->
-                            <DataGridTextColumn Header="{x:Static localization:Strings.Name}"
-                                                Binding="{Binding Name}"
-                                                SortMemberPath="Name"
-                                                MinWidth="200" />
-
                             <!-- Protocol -->
                             <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}"
-                                                Binding="{Binding Protocol}"
+                                                Binding="{Binding (firewall:FirewallRule.Protocol), Converter={StaticResource FirewallProtocolToStringConverter}}"
                                                 SortMemberPath="Protocol"
                                                 MinWidth="80" />
 
                             <!-- Local ports -->
                             <DataGridTextColumn Header="{x:Static localization:Strings.LocalPort}"
-                                                Binding="{Binding LocalPortsDisplay}"
                                                 SortMemberPath="LocalPortsDisplay"
-                                                MinWidth="100" />
+                                                MinWidth="100">
+                                <DataGridTextColumn.Binding>
+                                    <Binding Path="(firewall:FirewallRule.LocalPortsDisplay)">
+                                        <Binding.TargetNullValue>
+                                            <x:Static Member="localization:Strings.Any" />
+                                        </Binding.TargetNullValue>
+                                    </Binding>
+                                </DataGridTextColumn.Binding>
+                            </DataGridTextColumn>
 
                             <!-- Remote ports -->
                             <DataGridTextColumn Header="{x:Static localization:Strings.RemotePort}"
-                                                Binding="{Binding RemotePortsDisplay}"
                                                 SortMemberPath="RemotePortsDisplay"
-                                                MinWidth="100" />
+                                                MinWidth="100">
+                                <DataGridTextColumn.Binding>
+                                    <Binding Path="(firewall:FirewallRule.RemotePortsDisplay)">
+                                        <Binding.TargetNullValue>
+                                            <x:Static Member="localization:Strings.Any" />
+                                        </Binding.TargetNullValue>
+                                    </Binding>
+                                </DataGridTextColumn.Binding>
+                            </DataGridTextColumn>
 
                         </controls:MultiSelectDataGrid.Columns>
 
                         <!-- Expanded row details -->
                         <controls:MultiSelectDataGrid.RowDetailsTemplate>
-                            <DataTemplate>
+                            <DataTemplate DataType="{x:Type firewall:FirewallRule}">
                                 <Border BorderThickness="1,0,1,1" Background="{DynamicResource MahApps.Brushes.Window.Background}">
                                     <Border.Style>
                                         <Style TargetType="{x:Type Border}">
@@ -342,33 +359,109 @@
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="5" />
                                             <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="5" />
+                                            <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
 
                                         <!-- Row 0: Program | Interface type -->
                                         <TextBlock Grid.Row="0" Grid.Column="0"
                                                    Text="{x:Static localization:Strings.Program}"
                                                    Style="{StaticResource InfoTextBlock}" />
-                                        <TextBox Grid.Row="0" Grid.Column="2"
-                                                 Text="{Binding Program, Mode=OneWay}" />
+                                        <TextBox Grid.Row="0" Grid.Column="2">
+                                            <TextBox.Text>
+                                                <Binding Path="(firewall:FirewallRule.ProgramDisplay)" Mode="OneWay">
+                                                    <Binding.TargetNullValue>
+                                                        <x:Static Member="localization:Strings.Any" />
+                                                    </Binding.TargetNullValue>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
 
                                         <TextBlock Grid.Row="0" Grid.Column="4"
                                                    Text="{x:Static localization:Strings.InterfaceType}"
                                                    Style="{StaticResource InfoTextBlock}" />
                                         <TextBox Grid.Row="0" Grid.Column="6"
-                                                 Text="{Binding InterfaceType, Mode=OneWay}" />
+                                                 Text="{Binding (firewall:FirewallRule.InterfaceType), Mode=OneWay, Converter={StaticResource FirewallInterfaceTypeToStringConverter}}" />
 
-                                        <!-- Row 2: Network profiles | Description -->
+                                        <!-- Row 2: Local address | Remote address -->
                                         <TextBlock Grid.Row="2" Grid.Column="0"
-                                                   Text="{x:Static localization:Strings.NetworkProfiles}"
+                                                   Text="{x:Static localization:Strings.LocalIPAddress}"
                                                    Style="{StaticResource InfoTextBlock}" />
-                                        <TextBox Grid.Row="2" Grid.Column="2"
-                                                 Text="{Binding NetworkProfilesDisplay, Mode=OneWay}" />
+                                        <StackPanel Grid.Row="2" Grid.Column="2">
+                                            <TextBox Text="{x:Static localization:Strings.Any}"
+                                                     Visibility="{Binding (firewall:FirewallRule.LocalAddresses).Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}" />
+                                            <ListView Background="Transparent"
+                                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                      ItemsSource="{Binding (firewall:FirewallRule.LocalAddresses)}"
+                                                      Visibility="{Binding (firewall:FirewallRule.LocalAddresses).Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
+                                                <ListView.ItemContainerStyle>
+                                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                                        <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                                        <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                                        <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                                        <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                    </Style>
+                                                </ListView.ItemContainerStyle>
+                                                <ListView.Template>
+                                                    <ControlTemplate>
+                                                        <ItemsPresenter />
+                                                    </ControlTemplate>
+                                                </ListView.Template>
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Text="{Binding Mode=OneWay}"
+                                                                 ContextMenu="{StaticResource CopyContextMenu}" />
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+                                        </StackPanel>
 
                                         <TextBlock Grid.Row="2" Grid.Column="4"
+                                                   Text="{x:Static localization:Strings.RemoteIPAddress}"
+                                                   Style="{StaticResource InfoTextBlock}" />
+                                        <StackPanel Grid.Row="2" Grid.Column="6">
+                                            <TextBox Text="{x:Static localization:Strings.Any}"
+                                                     Visibility="{Binding (firewall:FirewallRule.RemoteAddresses).Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}" />
+                                            <ListView Background="Transparent"
+                                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                                      ItemsSource="{Binding (firewall:FirewallRule.RemoteAddresses)}"
+                                                      Visibility="{Binding (firewall:FirewallRule.RemoteAddresses).Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
+                                                <ListView.ItemContainerStyle>
+                                                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                                        <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                                        <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                                        <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                                        <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                                        <Setter Property="Background" Value="Transparent" />
+                                                    </Style>
+                                                </ListView.ItemContainerStyle>
+                                                <ListView.Template>
+                                                    <ControlTemplate>
+                                                        <ItemsPresenter />
+                                                    </ControlTemplate>
+                                                </ListView.Template>
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBox Text="{Binding Mode=OneWay}"
+                                                                 ContextMenu="{StaticResource CopyContextMenu}" />
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+                                        </StackPanel>
+
+                                        <!-- Row 4: Network profiles | Description -->
+                                        <TextBlock Grid.Row="4" Grid.Column="0"
+                                                   Text="{x:Static localization:Strings.NetworkProfiles}"
+                                                   Style="{StaticResource InfoTextBlock}" />
+                                        <TextBox Grid.Row="4" Grid.Column="2"
+                                                 Text="{Binding (firewall:FirewallRule.NetworkProfilesDisplay), Mode=OneWay}" />
+
+                                        <TextBlock Grid.Row="4" Grid.Column="4"
                                                    Text="{x:Static localization:Strings.Description}"
                                                    Style="{StaticResource InfoTextBlock}" />
-                                        <TextBox Grid.Row="2" Grid.Column="6"
-                                                 Text="{Binding Description, Mode=OneWay}" />
+                                        <TextBox Grid.Row="4" Grid.Column="6"
+                                                 Text="{Binding (firewall:FirewallRule.Description), Mode=OneWay}" />
                                     </Grid>
                                 </Border>
                             </DataTemplate>
@@ -444,7 +537,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-         <GridSplitter Grid.Column="1" Grid.Row="0"
+        <GridSplitter Grid.Column="1" Grid.Row="0"
                       Focusable="False"
                       Style="{StaticResource ProfileGridSplitter}" />
         <Expander Grid.Column="2" Grid.Row="0"

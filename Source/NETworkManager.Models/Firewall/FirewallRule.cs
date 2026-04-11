@@ -50,6 +50,42 @@ public class FirewallRule
     public FirewallRuleProgram Program { get; set; }
 
     /// <summary>
+    /// Local IP addresses or address specifiers (e.g. "192.168.1.0/24", "LocalSubnet").
+    /// An empty list means "Any".
+    /// </summary>
+    public List<string> LocalAddresses
+    {
+        get;
+        set
+        {
+            if (value is null)
+            {
+                field = [];
+                return;
+            }
+            field = value;
+        }
+    } = [];
+
+    /// <summary>
+    /// Remote IP addresses or address specifiers (e.g. "10.0.0.0/8", "Internet").
+    /// An empty list means "Any".
+    /// </summary>
+    public List<string> RemoteAddresses
+    {
+        get;
+        set
+        {
+            if (value is null)
+            {
+                field = [];
+                return;
+            }
+            field = value;
+        }
+    } = [];
+
+    /// <summary>
     /// Defines the local ports associated with the firewall rule.
     /// </summary>
     public List<FirewallPortSpecification> LocalPorts
@@ -121,11 +157,20 @@ public class FirewallRule
 
     #region Display properties
 
-    /// <summary>Local ports as a human-readable string (e.g. "80; 443; 8080-8090").</summary>
-    public string LocalPortsDisplay => PortsToString(LocalPorts);
+    /// <summary>Program path, or <c>null</c> when no program restriction is set.</summary>
+    public string ProgramDisplay => Program?.ToString();
 
-    /// <summary>Remote ports as a human-readable string (e.g. "80; 443").</summary>
-    public string RemotePortsDisplay => PortsToString(RemotePorts);
+    /// <summary>Local addresses as a human-readable string (e.g. "192.168.1.0/24; LocalSubnet"). Returns <c>null</c> when unrestricted.</summary>
+    public string LocalAddressesDisplay => LocalAddresses.Count == 0 ? null : string.Join("; ", LocalAddresses);
+
+    /// <summary>Remote addresses as a human-readable string (e.g. "10.0.0.0/8"). Returns <c>null</c> when unrestricted.</summary>
+    public string RemoteAddressesDisplay => RemoteAddresses.Count == 0 ? null : string.Join("; ", RemoteAddresses);
+
+    /// <summary>Local ports as a human-readable string (e.g. "80; 443; 8080-8090"). Returns <c>null</c> when unrestricted.</summary>
+    public string LocalPortsDisplay => LocalPorts.Count == 0 ? null : PortsToString(LocalPorts);
+
+    /// <summary>Remote ports as a human-readable string (e.g. "80; 443"). Returns <c>null</c> when unrestricted.</summary>
+    public string RemotePortsDisplay => RemotePorts.Count == 0 ? null : PortsToString(RemotePorts);
 
     /// <summary>
     /// Network profiles (Domain / Private / Public) as a comma-separated string.
