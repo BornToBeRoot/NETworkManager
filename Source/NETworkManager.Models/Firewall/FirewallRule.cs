@@ -166,17 +166,10 @@ public class FirewallRule
     {
         if (ports.Count is 0)
             return string.Empty;
-        
-        var whitespace = spacing ? "  " : string.Empty;
-        
-        var builder = new StringBuilder();
-        
-        foreach (var port in ports)
-            builder.Append($"{port}{separator}{whitespace}");
-        
-        var offset = spacing ? 2 : 1;
-        
-        return builder.ToString()[..^offset];
+
+        var delimiter = spacing ? $"{separator} " : separator.ToString();
+
+        return string.Join(delimiter, ports.Select(port => port.ToString()));
     }
     #endregion
 }
