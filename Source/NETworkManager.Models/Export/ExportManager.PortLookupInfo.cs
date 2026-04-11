@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using NETworkManager.Models.Lookup;
+using NETworkManager.Utilities;
 using Newtonsoft.Json;
 
 namespace NETworkManager.Models.Export;
@@ -49,7 +50,7 @@ public static partial class ExportManager
             $"{nameof(PortLookupInfo.Number)},{nameof(PortLookupInfo.Protocol)},{nameof(PortLookupInfo.Service)},{nameof(PortLookupInfo.Description)}");
 
         foreach (var info in collection)
-            stringBuilder.AppendLine($"{info.Number},{info.Protocol},{info.Service},\"{info.Description}\"");
+            stringBuilder.AppendLine($"{info.Number},{info.Protocol},{CsvHelper.QuoteString(info.Service)},{CsvHelper.QuoteString(info.Description)}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using NETworkManager.Models.Lookup;
+using NETworkManager.Utilities;
 using Newtonsoft.Json;
 
 namespace NETworkManager.Models.Export;
@@ -48,7 +49,7 @@ public static partial class ExportManager
         stringBuilder.AppendLine($"{nameof(OUIInfo.MACAddress)},{nameof(OUIInfo.Vendor)}");
 
         foreach (var info in collection)
-            stringBuilder.AppendLine($"{info.MACAddress},\"{info.Vendor}\"");
+            stringBuilder.AppendLine($"{info.MACAddress},{CsvHelper.QuoteString(info.Vendor)}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }
