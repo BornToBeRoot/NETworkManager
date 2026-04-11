@@ -11498,6 +11498,87 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("WindowsFirewallSettings", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Direction.
+        /// </summary>
+        public static string Direction {
+            get {
+                return ResourceManager.GetString("Direction", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Inbound.
+        /// </summary>
+        public static string Inbound {
+            get {
+                return ResourceManager.GetString("Inbound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Outbound.
+        /// </summary>
+        public static string Outbound {
+            get {
+                return ResourceManager.GetString("Outbound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string Action {
+            get {
+                return ResourceManager.GetString("Action", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Allow.
+        /// </summary>
+        public static string Allow {
+            get {
+                return ResourceManager.GetString("Allow", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Block.
+        /// </summary>
+        public static string Block {
+            get {
+                return ResourceManager.GetString("Block", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Network profiles.
+        /// </summary>
+        public static string NetworkProfiles {
+            get {
+                return ResourceManager.GetString("NetworkProfiles", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Interface type.
+        /// </summary>
+        public static string InterfaceType {
+            get {
+                return ResourceManager.GetString("InterfaceType", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load firewall rules. {0}.
+        /// </summary>
+        public static string FailedToLoadFirewallRulesMessage {
+            get {
+                return ResourceManager.GetString("FailedToLoadFirewallRulesMessage", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to WPS.
