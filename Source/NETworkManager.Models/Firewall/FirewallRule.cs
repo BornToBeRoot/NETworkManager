@@ -13,19 +13,15 @@ public class FirewallRule
     #region Variables
 
     /// <summary>
-    /// Represents the name associated with the object.
-    /// </summary>
-    /// <remarks>
-    /// This property is used to identify the object with a descriptive, human-readable name.
-    /// The value of this property is typically a string and can be used for display purposes
-    /// or as an identifier in various contexts.
-    /// </remarks>
-    /// <summary>
     /// Internal unique identifier of the rule (i.e. the value of <c>$rule.Id</c> in PowerShell).
     /// Used to target the rule in Set-NetFirewallRule / Remove-NetFirewallRule calls.
     /// </summary>
     public string Id { get; set; }
 
+    /// <summary>
+    /// Human-readable display name of the firewall rule. Used for display purposes
+    /// or as an identifier in various contexts.
+    /// </summary>
     public string Name { get; set; }
 
     /// <summary>
