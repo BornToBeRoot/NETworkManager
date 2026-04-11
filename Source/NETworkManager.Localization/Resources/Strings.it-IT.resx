@@ -4111,4 +4111,13 @@ er migrare le impostazioni precedenti, se necessario, è possibile copiare il fi
   <data name="ToolTip_Reload" xml:space="preserve">
     <value>Ricarica</value>
   </data>
+  <data name="Firewall" xml:space="preserve">
+    <value>Firewall</value>
+  </data>
+  <data name="FirewallRules" xml:space="preserve">
+    <value>Firewall rules</value>
+  </data>
+  <data name="WindowsFirewallSettings" xml:space="preserve">
+    <value>Windows Firewall settings</value>
+  </data>
 </root>

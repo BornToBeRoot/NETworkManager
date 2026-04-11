@@ -4010,4 +4010,13 @@ Bei Bedarf können Sie die Profildateien von „{0}“ nach „{1}“ kopieren, 
   <data name="ToolTip_Reload" xml:space="preserve">
     <value>Aktualisieren</value>
   </data>
+  <data name="Firewall" xml:space="preserve">
+    <value>Firewall</value>
+  </data>
+  <data name="FirewallRules" xml:space="preserve">
+    <value>Firewall rules</value>
+  </data>
+  <data name="WindowsFirewallSettings" xml:space="preserve">
+    <value>Windows Firewall settings</value>
+  </data>
 </root>
