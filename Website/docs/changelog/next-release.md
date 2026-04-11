@@ -39,7 +39,13 @@ Release date: **xx.xx.2025**
 
 ## Improvements
 
+**Dashboard**
+
 - Redesign Status Window to make it more compact. [#3359](https://github.com/BornToBeRoot/NETworkManager/pull/3359)
+
+**Network Interface**
+
+- Added Network Profile (domain, private, public) information to the Network Interface details view, if available. [#3383](https://github.com/BornToBeRoot/NETworkManager/pull/3383)
 
 ## Bug Fixes
 
