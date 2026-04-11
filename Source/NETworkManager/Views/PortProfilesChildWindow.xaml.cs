@@ -35,7 +35,7 @@ public partial class PortProfilesChildWindow
 
     private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-        var x = (SNMPOIDProfilesViewModel)DataContext;
+        var x = (PortProfilesViewModel)DataContext;
 
         if (x.OKCommand.CanExecute(null))
             x.OKCommand.Execute(null);
