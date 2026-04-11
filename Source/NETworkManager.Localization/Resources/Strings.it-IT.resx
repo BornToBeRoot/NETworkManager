@@ -4120,4 +4120,31 @@ er migrare le impostazioni precedenti, se necessario, è possibile copiare il fi
   <data name="WindowsFirewallSettings" xml:space="preserve">
     <value>Windows Firewall settings</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="Inbound" xml:space="preserve">
+    <value>Inbound</value>
+  </data>
+  <data name="Outbound" xml:space="preserve">
+    <value>Outbound</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Allow" xml:space="preserve">
+    <value>Allow</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="NetworkProfiles" xml:space="preserve">
+    <value>Network profiles</value>
+  </data>
+  <data name="InterfaceType" xml:space="preserve">
+    <value>Interface type</value>
+  </data>
+  <data name="FailedToLoadFirewallRulesMessage" xml:space="preserve">
+    <value>Failed to load firewall rules. {0}</value>
+  </data>
 </root>
