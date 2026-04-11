@@ -4020,30 +4020,30 @@ Você pode copiar seus arquivos de perfil de "{0}" para "{1}" para migrar seus p
     <value>Configurações do firewall do Windows</value>
   </data>
   <data name="Direction" xml:space="preserve">
-    <value>Direction</value>
+    <value>Direção</value>
   </data>
   <data name="Inbound" xml:space="preserve">
-    <value>Inbound</value>
+    <value>Entrada</value>
   </data>
   <data name="Outbound" xml:space="preserve">
-    <value>Outbound</value>
+    <value>Saída</value>
   </data>
   <data name="Action" xml:space="preserve">
-    <value>Action</value>
+    <value>Ação</value>
   </data>
   <data name="Allow" xml:space="preserve">
-    <value>Allow</value>
+    <value>Permitir</value>
   </data>
   <data name="Block" xml:space="preserve">
-    <value>Block</value>
+    <value>Bloquear</value>
   </data>
   <data name="NetworkProfiles" xml:space="preserve">
-    <value>Network profiles</value>
+    <value>Perfis de rede</value>
   </data>
   <data name="InterfaceType" xml:space="preserve">
-    <value>Interface type</value>
+    <value>Tipo de interface</value>
   </data>
   <data name="FailedToLoadFirewallRulesMessage" xml:space="preserve">
-    <value>Failed to load firewall rules. {0}</value>
+    <value>Falha ao carregar regras do firewall. {0}</value>
   </data>
 </root>
