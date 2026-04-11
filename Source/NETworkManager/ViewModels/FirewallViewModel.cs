@@ -1,25 +1,29 @@
-﻿using System.Collections;
-using System.Threading.Tasks;
-using log4net;
+﻿using log4net;
+using MahApps.Metro.Controls;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Export;
 using NETworkManager.Models.Firewall;
-
-namespace NETworkManager.ViewModels;
-
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Threading;
+using NETworkManager.Settings;
+using NETworkManager.Utilities;
+using NETworkManager.Views;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
+
+namespace NETworkManager.ViewModels;
+
 using Controls;
 using Profiles;
 using Models;
-using Settings;
-using Utilities;
 
 /// <summary>
 /// ViewModel for the Firewall application.
@@ -463,11 +467,50 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     }
 
     /// <summary>Gets the command to export the firewall rules.</summary>
-    public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
-    private void ExportAction()
+    private Task ExportAction()
     {
-        // TODO: implement export
+        var childWindow = new ExportChildWindow();
+
+        var childWindowViewModel = new ExportViewModel(async instance =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            try
+            {
+                ExportManager.Export(instance.FilePath, instance.FileType,
+                    instance.ExportAll
+                        ? Results
+                        : new ObservableCollection<FirewallRule>(SelectedResults.Cast<FirewallRule>().ToArray()));
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error while exporting data as " + instance.FileType, ex);
+
+                await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                    Strings.AnErrorOccurredWhileExportingTheData + Environment.NewLine +
+                    Environment.NewLine + ex.Message, ChildWindowIcon.Error);
+            }
+
+            SettingsManager.Current.Firewall_ExportFileType = instance.FileType;
+            SettingsManager.Current.Firewall_ExportFilePath = instance.FilePath;
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, [
+            ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
+        ], true, SettingsManager.Current.Firewall_ExportFileType,
+        SettingsManager.Current.Firewall_ExportFilePath);
+
+        childWindow.Title = Strings.Export;
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>

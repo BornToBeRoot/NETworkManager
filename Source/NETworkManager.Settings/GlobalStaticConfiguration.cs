@@ -234,6 +234,9 @@ public static class GlobalStaticConfiguration
     // Application: Hosts File Editor
     public static ExportFileType HostsFileEditor_ExportFileType => ExportFileType.Csv;
 
+    // Application: Firewall
+    public static ExportFileType Firewall_ExportFileType => ExportFileType.Csv;
+    
     // Application: Discovery Protocol
     public static DiscoveryProtocol DiscoveryProtocol_Protocol => DiscoveryProtocol.LldpCdp;
     public static int DiscoveryProtocol_Duration => 60;

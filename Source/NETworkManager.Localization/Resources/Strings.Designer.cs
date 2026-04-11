@@ -7343,7 +7343,25 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("Program", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Private.
+        /// </summary>
+        public static string Private {
+            get {
+                return ResourceManager.GetString("Private", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Public.
+        /// </summary>
+        public static string Public {
+            get {
+                return ResourceManager.GetString("Public", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Protocol.
         /// </summary>

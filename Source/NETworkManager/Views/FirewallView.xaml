@@ -25,6 +25,7 @@
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:FirewallProtocolToStringConverter x:Key="FirewallProtocolToStringConverter" />
         <converters:FirewallInterfaceTypeToStringConverter x:Key="FirewallInterfaceTypeToStringConverter" />
+        <converters:FirewallNetworkProfilesToStringConverter x:Key="FirewallNetworkProfilesToStringConverter" />
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <Grid>
@@ -235,7 +236,7 @@
                                                        VerticalAlignment="Center" />
                                         </StackPanel>
                                         <DataTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding Direction}" Value="Outbound">
+                                            <DataTrigger Binding="{Binding Direction}" Value="{x:Static firewall:FirewallRuleDirection.Outbound}">
                                                 <Setter TargetName="DirectionIcon" Property="OpacityMask">
                                                     <Setter.Value>
                                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ArrowUp}" />
@@ -455,7 +456,7 @@
                                                    Text="{x:Static localization:Strings.NetworkProfiles}"
                                                    Style="{StaticResource InfoTextBlock}" />
                                         <TextBox Grid.Row="4" Grid.Column="2"
-                                                 Text="{Binding (firewall:FirewallRule.NetworkProfilesDisplay), Mode=OneWay}" />
+                                                 Text="{Binding (firewall:FirewallRule.NetworkProfiles), Mode=OneWay, Converter={StaticResource FirewallNetworkProfilesToStringConverter}}" />
 
                                         <TextBlock Grid.Row="4" Grid.Column="4"
                                                    Text="{x:Static localization:Strings.Description}"
