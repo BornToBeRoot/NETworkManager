@@ -37,32 +37,371 @@
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Column="0" Grid.Row="0"
-                               Style="{StaticResource ResourceKey=HeaderTextBlock}"
-                               Text="{x:Static Member=localization:Strings.FirewallRules}" />
-                    <!--
-                    <Border Grid.Row="1" Grid.Column="0"
-                            Background="Transparent"
-                            BorderBrush="Transparent">
-                        <controls:FirewallRuleGrid x:Name="FirewallRuleGrid" />
-                    </Border>
-                    -->
-                    <Grid Grid.Column="0" Grid.Row="3">
+
+                    <!-- Row 0: Header + Refresh + Search -->
+                    <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0"
+                                   Style="{StaticResource HeaderTextBlock}"
+                                   Text="{x:Static localization:Strings.FirewallRules}"
+                                   VerticalAlignment="Center" />
+                        <StackPanel Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right">
+                            <Button Command="{Binding Path=RefreshCommand}"
+                                    Style="{StaticResource CleanButton}"
+                                    Margin="0,0,10,0">
+                                <Rectangle Width="16" Height="16"
+                                           wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                    </Rectangle.OpacityMask>
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                            </Button>
+                            <TextBox Width="250"
+                                     Text="{Binding RulesSearch, UpdateSourceTrigger=PropertyChanged}"
+                                     Style="{StaticResource SearchTextBox}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Row 2: DataGrid -->
+                    <controls:MultiSelectDataGrid
+                        x:Name="DataGridFirewallRules"
+                        Grid.Row="2"
+                        ItemsSource="{Binding ResultsView}"
+                        SelectedItem="{Binding SelectedResult}"
+                        SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        RowDetailsVisibilityMode="Collapsed">
+                        <controls:MultiSelectDataGrid.Resources>
+                            <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                                <MenuItem Header="{x:Static localization:Strings.EnableEntry}"
+                                          Command="{Binding Path=EnableEntryCommand}"
+                                          Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ToggleSwitchOutline}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static localization:Strings.DisableEntry}"
+                                          Command="{Binding Path=DisableEntryCommand}"
+                                          Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ToggleSwitchOffOutline}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static localization:Strings.EditEntryDots}"
+                                          Command="{Binding Path=EditEntryCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Edit}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Header="{x:Static localization:Strings.DeleteEntry}"
+                                          Command="{Binding Path=DeleteEntryCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator />
+                                <MenuItem Header="{x:Static localization:Strings.ExportDots}"
+                                          Command="{Binding Path=ExportCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                            <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                                <MenuItem Header="{x:Static localization:Strings.ExportDots}"
+                                          Command="{Binding ExportCommand}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </controls:MultiSelectDataGrid.Resources>
+                        <controls:MultiSelectDataGrid.RowStyle>
+                            <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
+                                <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1">
+                                        <Setter Property="ContextMenu" Value="{StaticResource RowContextMenu}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </controls:MultiSelectDataGrid.RowStyle>
+                        <controls:MultiSelectDataGrid.Columns>
+
+                            <!-- Expand / collapse row details -->
+                            <DataGridTemplateColumn Header="" Width="24" CanUserResize="False" CanUserSort="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Click="ExpandRowDetails_OnClick" Style="{StaticResource CleanButton}">
+                                            <Rectangle x:Name="ExpandRowDetails" Height="16" Width="16"
+                                                       Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronUp}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </Button>
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding Path=DetailsVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}" Value="Visible">
+                                                <Setter TargetName="ExpandRowDetails" Property="OpacityMask">
+                                                    <Setter.Value>
+                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronDown}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="ExpandRowDetails" Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                            </Trigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- Enabled -->
+                            <DataGridCheckBoxColumn Header="{x:Static localization:Strings.Enabled}"
+                                                    Binding="{Binding IsEnabled}"
+                                                    SortMemberPath="IsEnabled"
+                                                    MinWidth="70" />
+
+                            <!-- Direction -->
+                            <DataGridTemplateColumn Header="{x:Static localization:Strings.Direction}"
+                                                    SortMemberPath="Direction" MinWidth="90">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Rectangle x:Name="DirectionIcon" Width="16" Height="16"
+                                                       Margin="0,0,6,0"
+                                                       Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ArrowDown}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                            <TextBlock x:Name="DirectionText"
+                                                       Text="{x:Static localization:Strings.Inbound}"
+                                                       VerticalAlignment="Center" />
+                                        </StackPanel>
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding Direction}" Value="Outbound">
+                                                <Setter TargetName="DirectionIcon" Property="OpacityMask">
+                                                    <Setter.Value>
+                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ArrowUp}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter TargetName="DirectionText" Property="Text" Value="{x:Static localization:Strings.Outbound}" />
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- Action icon -->
+                            <DataGridTemplateColumn Header="" SortMemberPath="Action"
+                                                    Width="24" CanUserResize="False" CanUserSort="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Rectangle x:Name="ActionIcon" Width="16" Height="16"
+                                                   Fill="#b95353">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding Action}" Value="Allow">
+                                                <Setter TargetName="ActionIcon" Property="Fill" Value="#badc58" />
+                                                <Setter TargetName="ActionIcon" Property="OpacityMask">
+                                                    <Setter.Value>
+                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Check}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- Action text -->
+                            <DataGridTemplateColumn Header="{x:Static localization:Strings.Action}"
+                                                    SortMemberPath="Action" MinWidth="70">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock x:Name="ActionText"
+                                                   Text="{x:Static localization:Strings.Block}"
+                                                   Foreground="#b95353"
+                                                   VerticalAlignment="Center" />
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding Action}" Value="Allow">
+                                                <Setter TargetName="ActionText" Property="Text" Value="{x:Static localization:Strings.Allow}" />
+                                                <Setter TargetName="ActionText" Property="Foreground" Value="#badc58" />
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <!-- Name -->
+                            <DataGridTextColumn Header="{x:Static localization:Strings.Name}"
+                                                Binding="{Binding Name}"
+                                                SortMemberPath="Name"
+                                                MinWidth="200" />
+
+                            <!-- Protocol -->
+                            <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}"
+                                                Binding="{Binding Protocol}"
+                                                SortMemberPath="Protocol"
+                                                MinWidth="80" />
+
+                            <!-- Local ports -->
+                            <DataGridTextColumn Header="{x:Static localization:Strings.LocalPort}"
+                                                Binding="{Binding LocalPortsDisplay}"
+                                                SortMemberPath="LocalPortsDisplay"
+                                                MinWidth="100" />
+
+                            <!-- Remote ports -->
+                            <DataGridTextColumn Header="{x:Static localization:Strings.RemotePort}"
+                                                Binding="{Binding RemotePortsDisplay}"
+                                                SortMemberPath="RemotePortsDisplay"
+                                                MinWidth="100" />
+
+                        </controls:MultiSelectDataGrid.Columns>
+
+                        <!-- Expanded row details -->
+                        <controls:MultiSelectDataGrid.RowDetailsTemplate>
+                            <DataTemplate>
+                                <Border BorderThickness="1,0,1,1" Background="{DynamicResource MahApps.Brushes.Window.Background}">
+                                    <Border.Style>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGridRow}}" Value="False">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <Grid Margin="36,10,10,10">
+                                        <Grid.Resources>
+                                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
+                                                <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
+                                            </Style>
+                                        </Grid.Resources>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" MinWidth="150" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="Auto" MinWidth="200" />
+                                            <ColumnDefinition Width="30" />
+                                            <ColumnDefinition Width="Auto" MinWidth="150" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="Auto" MinWidth="200" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="5" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <!-- Row 0: Program | Interface type -->
+                                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                                   Text="{x:Static localization:Strings.Program}"
+                                                   Style="{StaticResource InfoTextBlock}" />
+                                        <TextBox Grid.Row="0" Grid.Column="2"
+                                                 Text="{Binding Program, Mode=OneWay}" />
+
+                                        <TextBlock Grid.Row="0" Grid.Column="4"
+                                                   Text="{x:Static localization:Strings.InterfaceType}"
+                                                   Style="{StaticResource InfoTextBlock}" />
+                                        <TextBox Grid.Row="0" Grid.Column="6"
+                                                 Text="{Binding InterfaceType, Mode=OneWay}" />
+
+                                        <!-- Row 2: Network profiles | Description -->
+                                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                                   Text="{x:Static localization:Strings.NetworkProfiles}"
+                                                   Style="{StaticResource InfoTextBlock}" />
+                                        <TextBox Grid.Row="2" Grid.Column="2"
+                                                 Text="{Binding NetworkProfilesDisplay, Mode=OneWay}" />
+
+                                        <TextBlock Grid.Row="2" Grid.Column="4"
+                                                   Text="{x:Static localization:Strings.Description}"
+                                                   Style="{StaticResource InfoTextBlock}" />
+                                        <TextBox Grid.Row="2" Grid.Column="6"
+                                                 Text="{Binding Description, Mode=OneWay}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </controls:MultiSelectDataGrid.RowDetailsTemplate>
+                    </controls:MultiSelectDataGrid>
+
+                    <!-- Row 4: Status message -->
+                    <WrapPanel Grid.Row="4" Orientation="Horizontal"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left">
+                        <networkManager:LoadingIndicator IsActive="True"
+                                                         Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
+                                                         Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                                         Width="24" Height="24"
+                                                         SpeedRatio="1" Margin="0,0,10,0" />
+                        <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"
+                                   Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                   Text="{Binding Path=StatusMessage}"
+                                   VerticalAlignment="Center" />
+                    </WrapPanel>
+
+                    <!-- Row 6: Bottom buttons -->
+                    <Grid Grid.Row="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <WrapPanel Grid.Column="0" Grid.Row="0" 
-                                   Orientation="Horizontal" 
+                        <WrapPanel Grid.Column="0"
+                                   Orientation="Horizontal"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Left">
                             <Button Command="{Binding Path=OpenWindowsFirewallCommand}"
-                                    ToolTip="{Binding ToolTipOpenWindowsFirewall}"
                                     Style="{StaticResource ImageWithTextButton}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -74,13 +413,15 @@
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=WindowsBrands}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
-                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.WindowsFirewallSettings}"                                         
+                                    <TextBlock Grid.Column="1"
+                                               Text="{x:Static localization:Strings.WindowsFirewallSettings}"
                                                Style="{StaticResource ButtonWithImageTextBlock}" />
                                 </Grid>
                             </Button>
                         </WrapPanel>
-                        <WrapPanel Grid.Column="2" Grid.Row="0" 
-                                   Orientation="Horizontal" VerticalAlignment="Center"
+                        <WrapPanel Grid.Column="2"
+                                   Orientation="Horizontal"
+                                   VerticalAlignment="Center"
                                    HorizontalAlignment="Right">
                             <Button Command="{Binding Path=AddEntryCommand}" Style="{StaticResource ImageWithTextButton}">
                                 <Grid>
@@ -93,7 +434,8 @@
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
-                                    <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddEntryDots}"                                         
+                                    <TextBlock Grid.Column="1"
+                                               Text="{x:Static localization:Strings.AddEntryDots}"
                                                Style="{StaticResource ButtonWithImageTextBlock}" />
                                 </Grid>
                             </Button>

@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections;
+using System.Threading.Tasks;
+using log4net;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Firewall;
 
 namespace NETworkManager.ViewModels;
 
@@ -24,11 +27,124 @@ using Utilities;
 public class FirewallViewModel : ViewModelBase, IProfileManager
 {
     #region Variables
-    
+
+    private static readonly ILog Log = LogManager.GetLogger(typeof(FirewallViewModel));
+
     private readonly DispatcherTimer _searchDispatcherTimer = new();
     private bool _searchDisabled;
     private readonly bool _isLoading;
     private bool _isViewActive = true;
+
+    #region Rules
+
+    /// <summary>
+    /// Gets the loaded firewall rules.
+    /// </summary>
+    public ObservableCollection<FirewallRule> Results { get; } = [];
+
+    /// <summary>
+    /// Gets the filtered/sorted view over <see cref="Results"/>.
+    /// </summary>
+    public ICollectionView ResultsView { get; }
+
+    /// <summary>
+    /// Gets or sets the currently selected firewall rule.
+    /// </summary>
+    public FirewallRule SelectedResult
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the list of selected firewall rules (multi-select).
+    /// </summary>
+    public IList SelectedResults
+    {
+        get;
+        set
+        {
+            if (Equals(value, field))
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = new ArrayList();
+
+    /// <summary>
+    /// Gets or sets the search text for filtering rules.
+    /// </summary>
+    public string RulesSearch
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            ResultsView.Refresh();
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets whether a refresh is currently running.
+    /// </summary>
+    public bool IsRefreshing
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets whether the status message bar is shown.
+    /// </summary>
+    public bool IsStatusMessageDisplayed
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the status message text.
+    /// </summary>
+    public string StatusMessage
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    #endregion
 
     #region Profiles
 
@@ -243,6 +359,25 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     {
         _isLoading = true;
 
+        // Rules
+        ResultsView = CollectionViewSource.GetDefaultView(Results);
+        ResultsView.Filter = o =>
+        {
+            if (string.IsNullOrEmpty(RulesSearch))
+                return true;
+
+            if (o is not FirewallRule rule)
+                return false;
+
+            return rule.Name.IndexOf(RulesSearch, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   rule.Protocol.ToString().IndexOf(RulesSearch, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   rule.Action.ToString().IndexOf(RulesSearch, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   rule.Direction.ToString().IndexOf(RulesSearch, StringComparison.OrdinalIgnoreCase) > -1;
+        };
+
+        // Load firewall rules
+        Refresh(true).ConfigureAwait(false);
+
         // Profiles
         CreateTags();
 
@@ -280,17 +415,59 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
 
     #region ICommand & Actions
 
-    /// <summary>
-    /// Gets the command to add a new firewall entry.
-    /// </summary>
+    /// <summary>Gets the command to refresh the firewall rules.</summary>
+    public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
+
+    private bool Refresh_CanExecute(object _) => !IsRefreshing;
+
+    private async Task RefreshAction() => await Refresh();
+
+    /// <summary>Gets the command to add a new firewall entry.</summary>
     public ICommand AddEntryCommand => new RelayCommand(_ => AddEntryAction());
 
-    /// <summary>
-    /// Action to add a new firewall entry.
-    /// </summary>
     private void AddEntryAction()
     {
-        MessageBox.Show("Not implemented");
+        // TODO: open AddFirewallRuleDialog
+    }
+
+    /// <summary>Gets the command to enable the selected firewall entry.</summary>
+    public ICommand EnableEntryCommand => new RelayCommand(_ => EnableEntryAction(), _ => SelectedResult is { IsEnabled: false });
+
+    private void EnableEntryAction()
+    {
+        // TODO: call Firewall.SetRuleEnabledAsync(SelectedResult, true)
+    }
+
+    /// <summary>Gets the command to disable the selected firewall entry.</summary>
+    public ICommand DisableEntryCommand => new RelayCommand(_ => DisableEntryAction(), _ => SelectedResult is { IsEnabled: true });
+
+    private void DisableEntryAction()
+    {
+        // TODO: call Firewall.SetRuleEnabledAsync(SelectedResult, false)
+    }
+
+    /// <summary>Gets the command to edit the selected firewall entry.</summary>
+    public ICommand EditEntryCommand => new RelayCommand(_ => EditEntryAction(), _ => SelectedResult != null);
+
+    private void EditEntryAction()
+    {
+        // TODO: open EditFirewallRuleDialog
+    }
+
+    /// <summary>Gets the command to delete the selected firewall entry.</summary>
+    public ICommand DeleteEntryCommand => new RelayCommand(_ => DeleteEntryAction(), _ => SelectedResult != null);
+
+    private void DeleteEntryAction()
+    {
+        // TODO: confirm and call Firewall.DeleteRuleAsync
+    }
+
+    /// <summary>Gets the command to export the firewall rules.</summary>
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
+
+    private void ExportAction()
+    {
+        // TODO: implement export
     }
 
     /// <summary>
@@ -493,6 +670,48 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Methods
+
+    /// <summary>
+    /// Loads firewall rules from Windows via PowerShell and populates <see cref="Results"/>.
+    /// </summary>
+    private async Task Refresh(bool init = false)
+    {
+        if (IsRefreshing)
+            return;
+
+        IsRefreshing = true;
+        StatusMessage = Strings.RefreshingDots;
+        IsStatusMessageDisplayed = true;
+
+        if (!init)
+            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+
+        try
+        {
+            var rules = await Firewall.GetRulesAsync();
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Results.Clear();
+
+                foreach (var rule in rules)
+                    Results.Add(rule);
+            });
+
+            StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
+            IsStatusMessageDisplayed = true;
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while loading firewall rules", ex);
+
+            StatusMessage = string.Format(Strings.FailedToLoadFirewallRulesMessage, ex.Message);
+            IsStatusMessageDisplayed = true;
+        }
+
+        IsRefreshing = false;
+    }
+
     /// <summary>
     /// Sets the IsExpanded property for all profile groups.
     /// </summary>
