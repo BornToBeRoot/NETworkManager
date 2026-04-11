@@ -99,82 +99,81 @@ public class DiscoveryProtocolCapture
     {
         Task.Run(() =>
         {
-            using (var powerShell = System.Management.Automation.PowerShell.Create())
+            using var ps = System.Management.Automation.PowerShell.Create();
+            
+            var typeParam = protocol != DiscoveryProtocol.LldpCdp ? $" -Type {protocol.ToString().ToUpper()}" : "";
+
+            ps.AddScript($@"
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+Import-Module NetAdapter -ErrorAction Stop
+{_psDiscoveryProtocolModule}
+Invoke-DiscoveryProtocolCapture -Duration {duration}{typeParam} -Force | Get-DiscoveryProtocolData");
+
+            var results = ps.Invoke();
+
+            if (ps.Streams.Error.Count > 0)
             {
-                powerShell.AddScript("Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process");
-                powerShell.AddScript("Import-Module NetAdapter");
-                powerShell.AddScript(_psDiscoveryProtocolModule);
-                powerShell.AddScript($"Invoke-DiscoveryProtocolCapture -Duration {duration}" +
-                                     (protocol != DiscoveryProtocol.LldpCdp
-                                         ? $" -Type {protocol.ToString().ToUpper()}"
-                                         : "") + " -Force | Get-DiscoveryProtocolData");
+                StringBuilder stringBuilder = new();
 
-                var psOutputs = powerShell.Invoke();
-
-                if (powerShell.Streams.Error.Count > 0)
+                foreach (var error in ps.Streams.Error)
                 {
-                    StringBuilder stringBuilder = new();
+                    if (string.IsNullOrEmpty(stringBuilder.ToString()))
+                        stringBuilder.Append(Environment.NewLine);
 
-                    foreach (var error in powerShell.Streams.Error)
-                    {
-                        if (string.IsNullOrEmpty(stringBuilder.ToString()))
-                            stringBuilder.Append(Environment.NewLine);
-
-                        stringBuilder.Append(error.Exception.Message);
-                    }
-
-                    OnErrorReceived(new DiscoveryProtocolErrorArgs(stringBuilder.ToString()));
+                    stringBuilder.Append(error.Exception.Message);
                 }
 
-                if (powerShell.Streams.Warning.Count > 0)
+                OnErrorReceived(new DiscoveryProtocolErrorArgs(stringBuilder.ToString()));
+            }
+
+            if (ps.Streams.Warning.Count > 0)
+            {
+                StringBuilder stringBuilder = new();
+
+                foreach (var warning in ps.Streams.Warning)
                 {
-                    StringBuilder stringBuilder = new();
+                    if (string.IsNullOrEmpty(stringBuilder.ToString()))
+                        stringBuilder.Append(Environment.NewLine);
 
-                    foreach (var warning in powerShell.Streams.Warning)
-                    {
-                        if (string.IsNullOrEmpty(stringBuilder.ToString()))
-                            stringBuilder.Append(Environment.NewLine);
-
-                        stringBuilder.Append(warning.Message);
-                    }
-
-                    OnWarningReceived(new DiscoveryProtocolWarningArgs(stringBuilder.ToString()));
+                    stringBuilder.Append(warning.Message);
                 }
 
-                foreach (var outputItem in psOutputs)
+                OnWarningReceived(new DiscoveryProtocolWarningArgs(stringBuilder.ToString()));
+            }
+
+            foreach (var result in results)
+            {
+                if (result == null)
+                    continue;
+
+                List<string> ipAddresses = [];
+
+                if (result.Properties["IPAddress"] != null)
+                    ipAddresses.AddRange(result.Properties["IPAddress"].Value as List<string>);
+
+                List<string> managements = [];
+
+                if (result.Properties["Management"] != null)
+                    managements.AddRange(result.Properties["Management"].Value as List<string>);
+
+                var packageInfo = new DiscoveryProtocolPackageInfo
                 {
-                    if (outputItem == null)
-                        continue;
+                    Device = result.Properties["Device"]?.Value.ToString(),
+                    DeviceDescription = result.Properties["SystemDescription"]?.Value.ToString(),
+                    Port = result.Properties["Port"]?.Value.ToString(),
+                    PortDescription = result.Properties["PortDescription"]?.Value.ToString(),
+                    Model = result.Properties["Model"]?.Value.ToString(),
+                    IPAddress = string.Join("; ", ipAddresses),
+                    VLAN = result.Properties["VLAN"]?.Value.ToString(),
+                    Protocol = result.Properties["Type"]?.Value.ToString(),
+                    TimeToLive = result.Properties["TimeToLive"]?.Value.ToString(),
+                    Management = string.Join("; ", managements),
+                    ChassisId = result.Properties["ChassisId"]?.Value.ToString(),
+                    LocalConnection = result.Properties["Connection"]?.Value.ToString(),
+                    LocalInterface = result.Properties["Interface"]?.Value.ToString()
+                };
 
-                    List<string> ipAddresses = new();
-
-                    if (outputItem.Properties["IPAddress"] != null)
-                        ipAddresses.AddRange(outputItem.Properties["IPAddress"].Value as List<string>);
-
-                    List<string> managements = new();
-
-                    if (outputItem.Properties["Management"] != null)
-                        managements.AddRange(outputItem.Properties["Management"].Value as List<string>);
-
-                    var packageInfo = new DiscoveryProtocolPackageInfo
-                    {
-                        Device = outputItem.Properties["Device"]?.Value.ToString(),
-                        DeviceDescription = outputItem.Properties["SystemDescription"]?.Value.ToString(),
-                        Port = outputItem.Properties["Port"]?.Value.ToString(),
-                        PortDescription = outputItem.Properties["PortDescription"]?.Value.ToString(),
-                        Model = outputItem.Properties["Model"]?.Value.ToString(),
-                        IPAddress = string.Join("; ", ipAddresses),
-                        VLAN = outputItem.Properties["VLAN"]?.Value.ToString(),
-                        Protocol = outputItem.Properties["Type"]?.Value.ToString(),
-                        TimeToLive = outputItem.Properties["TimeToLive"]?.Value.ToString(),
-                        Management = string.Join("; ", managements),
-                        ChassisId = outputItem.Properties["ChassisId"]?.Value.ToString(),
-                        LocalConnection = outputItem.Properties["Connection"]?.Value.ToString(),
-                        LocalInterface = outputItem.Properties["Interface"]?.Value.ToString()
-                    };
-
-                    OnPackageReceived(new DiscoveryProtocolPackageArgs(packageInfo));
-                }
+                OnPackageReceived(new DiscoveryProtocolPackageArgs(packageInfo));
             }
 
             OnComplete();
