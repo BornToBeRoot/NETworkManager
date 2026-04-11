@@ -1,7 +1,15 @@
 ---
 sidebar_position: 0
 description: "Changelog for the next NETworkManager release — upcoming features, improvements, and bug fixes."
-keywords: [NETworkManager, changelog, release notes, next release, upcoming features, bug fixes]
+keywords:
+  [
+    NETworkManager,
+    changelog,
+    release notes,
+    next release,
+    upcoming features,
+    bug fixes,
+  ]
 ---
 
 # Next Release
@@ -31,9 +39,13 @@ Release date: **xx.xx.2025**
 
 ## Improvements
 
-- Redesign Status Window to make it more compact [#3359](https://github.com/BornToBeRoot/NETworkManager/pull/3359)
+- Redesign Status Window to make it more compact. [#3359](https://github.com/BornToBeRoot/NETworkManager/pull/3359)
 
 ## Bug Fixes
+
+**Port Scanner**
+
+- Fixed an app crash when double-clicking a port profile. [#3382](https://github.com/BornToBeRoot/NETworkManager/pull/3382)
 
 **PowerShell**
 
