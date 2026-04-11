@@ -11572,6 +11572,15 @@ namespace NETworkManager.Localization.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Network profile.
+        /// </summary>
+        public static string NetworkProfile {
+            get {
+                return ResourceManager.GetString("NetworkProfile", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Network profiles.
         /// </summary>
         public static string NetworkProfiles {

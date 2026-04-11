@@ -120,8 +120,8 @@ public class NetworkInterfaceInfo
     public IPAddress[] DNSServer { get; set; }
 
     /// <summary>
-    ///     Firewall network category (Private, Public, Domain)
+    ///     Network category assigned by Windows (Domain, Private, Public).
+    ///     <see cref="NetworkProfile.NotConfigured"/> when the interface has no active connection profile.
     /// </summary>
-    // NOT IMPLEMENTED YET
-    //public NetworkProfiles Profiles { get; set; }    
+    public NetworkProfile Profile { get; set; } = NetworkProfile.NotConfigured;
 }

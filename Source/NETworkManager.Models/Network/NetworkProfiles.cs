@@ -3,7 +3,7 @@
 /// <summary>
 /// Defines the network profile detected by Windows.
 /// </summary>
-public enum NetworkProfiles
+public enum NetworkProfile
 {
     /// <summary>
     /// Network profile is not configured.

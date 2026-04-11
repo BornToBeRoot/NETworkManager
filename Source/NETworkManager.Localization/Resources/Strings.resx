@@ -4043,6 +4043,9 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   <data name="Block" xml:space="preserve">
     <value>Block</value>
   </data>
+  <data name="NetworkProfile" xml:space="preserve">
+    <value>Network profile</value>
+  </data>
   <data name="NetworkProfiles" xml:space="preserve">
     <value>Network profiles</value>
   </data>

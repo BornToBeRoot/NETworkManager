@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 using NETworkManager.Utilities;
+using SMA = System.Management.Automation;
 
 namespace NETworkManager.Models.Network;
 
@@ -71,6 +72,37 @@ public sealed class NetworkInterface
     public static List<NetworkInterfaceInfo> GetNetworkInterfaces()
     {
         List<NetworkInterfaceInfo> listNetworkInterfaceInfo = [];
+
+        // Query network profiles (Domain/Private/Public) for all connected interfaces via PowerShell.
+        // Keyed by InterfaceAlias which matches networkInterface.Name in the .NET API.
+        var profileByAlias = new Dictionary<string, NetworkProfile>(StringComparer.OrdinalIgnoreCase);
+
+        try
+        {
+            using var ps = SMA.PowerShell.Create();
+            ps.AddScript("Get-NetConnectionProfile | Select-Object InterfaceAlias, NetworkCategory");
+
+            foreach (var result in ps.Invoke())
+            {
+                var alias = result.Properties["InterfaceAlias"]?.Value?.ToString();
+                var category = result.Properties["NetworkCategory"]?.Value?.ToString();
+
+                if (string.IsNullOrEmpty(alias))
+                    continue;
+
+                profileByAlias[alias] = category switch
+                {
+                    "DomainAuthenticated" => NetworkProfile.Domain,
+                    "Private"             => NetworkProfile.Private,
+                    "Public"              => NetworkProfile.Public,
+                    _                     => NetworkProfile.NotConfigured
+                };
+            }
+        }
+        catch
+        {
+            // Profile lookup is best-effort; proceed without profile information on error.
+        }
 
         foreach (var networkInterface in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
         {
@@ -194,7 +226,10 @@ public sealed class NetworkInterface
                 IPv6Gateway = [.. listIPv6Gateway],
                 DNSAutoconfigurationEnabled = dnsAutoconfigurationEnabled,
                 DNSSuffix = ipProperties.DnsSuffix,
-                DNSServer = [.. ipProperties.DnsAddresses]
+                DNSServer = [.. ipProperties.DnsAddresses],
+                Profile = profileByAlias.TryGetValue(networkInterface.Name, out var profile)
+                    ? profile
+                    : NetworkProfile.NotConfigured
             });
         }
 
