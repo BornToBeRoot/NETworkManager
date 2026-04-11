@@ -4014,9 +4014,9 @@ Você pode copiar seus arquivos de perfil de "{0}" para "{1}" para migrar seus p
     <value>Firewall</value>
   </data>
   <data name="FirewallRules" xml:space="preserve">
-    <value>Firewall rules</value>
+    <value>Regras do firewall</value>
   </data>
   <data name="WindowsFirewallSettings" xml:space="preserve">
-    <value>Windows Firewall settings</value>
+    <value>Configurações do firewall do Windows</value>
   </data>
 </root>
