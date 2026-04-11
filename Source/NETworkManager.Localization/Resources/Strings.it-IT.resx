@@ -4115,36 +4115,36 @@ er migrare le impostazioni precedenti, se necessario, è possibile copiare il fi
     <value>Firewall</value>
   </data>
   <data name="FirewallRules" xml:space="preserve">
-    <value>Firewall rules</value>
+    <value>Regole firewall</value>
   </data>
   <data name="WindowsFirewallSettings" xml:space="preserve">
-    <value>Windows Firewall settings</value>
+    <value>Impostazioni firewall di Windows</value>
   </data>
   <data name="Direction" xml:space="preserve">
-    <value>Direction</value>
+    <value>Direzione</value>
   </data>
   <data name="Inbound" xml:space="preserve">
-    <value>Inbound</value>
+    <value>In ingresso</value>
   </data>
   <data name="Outbound" xml:space="preserve">
-    <value>Outbound</value>
+    <value>In uscita</value>
   </data>
   <data name="Action" xml:space="preserve">
-    <value>Action</value>
+    <value>Azione</value>
   </data>
   <data name="Allow" xml:space="preserve">
-    <value>Allow</value>
+    <value>Consenti</value>
   </data>
   <data name="Block" xml:space="preserve">
-    <value>Block</value>
+    <value>Blocca</value>
   </data>
   <data name="NetworkProfiles" xml:space="preserve">
-    <value>Network profiles</value>
+    <value>Profili di rete</value>
   </data>
   <data name="InterfaceType" xml:space="preserve">
-    <value>Interface type</value>
+    <value>Tipo scheda</value>
   </data>
   <data name="FailedToLoadFirewallRulesMessage" xml:space="preserve">
-    <value>Failed to load firewall rules. {0}</value>
+    <value>Impossibile caricare le regole del firewall. {0}</value>
   </data>
 </root>
