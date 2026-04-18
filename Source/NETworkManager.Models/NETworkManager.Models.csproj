@@ -27,19 +27,19 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="DnsClient" Version="1.8.0" />
-        <PackageReference Include="IPNetwork2" Version="3.4.853" />
+        <PackageReference Include="IPNetwork2" Version="4.2.0" />
         <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.7" />
-        <PackageReference Include="log4net" Version="3.2.0" />
+        <PackageReference Include="log4net" Version="3.3.0" />
         <PackageReference Include="MahApps.Metro" Version="2.4.11" />
         <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="6.2.1" />
         <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="6.2.1" />
         <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="6.2.1" />
         <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="6.2.1" />
         <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="6.2.1" />
-        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3800.47" />
+        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3912.50" />
         <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.2.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-        <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.5.4" />
+        <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.6.0" />
 		
     </ItemGroup>
 
