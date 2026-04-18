@@ -571,7 +571,7 @@
     <value>Zeige die folgende Anwendung beim starten:</value>
   </data>
   <data name="Slogan" xml:space="preserve">
-    <value>A powerful open-source tool for managing networks and troubleshooting network problems!</value>
+    <value>Ein leistungsstarkes Open-Source-Tool zur Netzwerkverwaltung und zur Behebung von Netzwerkproblemen!</value>
   </data>
   <data name="Speed" xml:space="preserve">
     <value>Geschwindigkeit</value>
@@ -4014,9 +4014,36 @@ Bei Bedarf können Sie die Profildateien von „{0}“ nach „{1}“ kopieren, 
     <value>Firewall</value>
   </data>
   <data name="FirewallRules" xml:space="preserve">
-    <value>Firewall rules</value>
+    <value>Firewall-Regeln</value>
   </data>
   <data name="WindowsFirewallSettings" xml:space="preserve">
-    <value>Windows Firewall settings</value>
+    <value>Windows Firewall Einstellungen</value>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Richtung</value>
+  </data>
+  <data name="Inbound" xml:space="preserve">
+    <value>Eingehend</value>
+  </data>
+  <data name="Outbound" xml:space="preserve">
+    <value>Ausgehend</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Aktion</value>
+  </data>
+  <data name="Allow" xml:space="preserve">
+    <value>Zulassen</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Blockieren</value>
+  </data>
+  <data name="NetworkProfiles" xml:space="preserve">
+    <value>Netzwerkprofile</value>
+  </data>
+  <data name="InterfaceType" xml:space="preserve">
+    <value>Schnittstellentyp</value>
+  </data>
+  <data name="FailedToLoadFirewallRulesMessage" xml:space="preserve">
+    <value>Firewall-Regeln konnten nicht geladen werden. {0}</value>
   </data>
 </root>

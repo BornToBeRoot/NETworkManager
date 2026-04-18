@@ -4019,4 +4019,31 @@ Você pode copiar seus arquivos de perfil de "{0}" para "{1}" para migrar seus p
   <data name="WindowsFirewallSettings" xml:space="preserve">
     <value>Configurações do firewall do Windows</value>
   </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Direção</value>
+  </data>
+  <data name="Inbound" xml:space="preserve">
+    <value>Entrada</value>
+  </data>
+  <data name="Outbound" xml:space="preserve">
+    <value>Saída</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Ação</value>
+  </data>
+  <data name="Allow" xml:space="preserve">
+    <value>Permitir</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Bloquear</value>
+  </data>
+  <data name="NetworkProfiles" xml:space="preserve">
+    <value>Perfis de rede</value>
+  </data>
+  <data name="InterfaceType" xml:space="preserve">
+    <value>Tipo de interface</value>
+  </data>
+  <data name="FailedToLoadFirewallRulesMessage" xml:space="preserve">
+    <value>Falha ao carregar regras do firewall. {0}</value>
+  </data>
 </root>
