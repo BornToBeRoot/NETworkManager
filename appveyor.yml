@@ -1,7 +1,6 @@
 image: Visual Studio 2022
 configuration: Release
 platform: x64
-auto_cancellation: true
 install:
   - git submodule update --init
   - ps: |
