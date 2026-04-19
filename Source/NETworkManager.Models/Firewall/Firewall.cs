@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation.Runspaces;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using SMA = System.Management.Automation;
@@ -229,6 +231,142 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         {
             Lock.Release();
         }
+    }
+
+    /// <summary>
+    /// Creates a new Windows Firewall rule with the properties specified in <paramref name="rule"/>.
+    /// The rule's <see cref="FirewallRule.Name"/> is prefixed with <see cref="RuleIdentifier"/> so
+    /// it is picked up by <see cref="GetRulesAsync"/> on the next refresh.
+    /// </summary>
+    /// <param name="rule">
+    /// The firewall rule to create.
+    /// </param>
+    /// <exception cref="Exception">
+    /// Thrown when the PowerShell pipeline reports one or more errors.
+    /// </exception>
+    public static async Task AddRuleAsync(FirewallRule rule)
+    {
+        await Lock.WaitAsync();
+        try
+        {
+            await Task.Run(() =>
+            {
+                using var ps = SMA.PowerShell.Create();
+                ps.Runspace = SharedRunspace;
+
+                ps.AddScript(BuildAddScript(rule));
+                ps.Invoke();
+
+                if (ps.Streams.Error.Count > 0)
+                    throw new Exception(string.Join("; ", ps.Streams.Error));
+            });
+        }
+        finally
+        {
+            Lock.Release();
+        }
+    }
+
+    /// <summary>
+    /// Builds the PowerShell script that calls <c>New-NetFirewallRule</c> with all
+    /// properties from <paramref name="rule"/>.
+    /// </summary>
+    /// <param name="rule">
+    /// The firewall rule whose properties are used to build the script.
+    /// </param>
+    private static string BuildAddScript(FirewallRule rule)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine("$params = @{");
+        sb.AppendLine($"    DisplayName   = '{RuleIdentifier}{EscapePs(rule.Name)}'");
+        sb.AppendLine($"    Enabled       = '{(rule.IsEnabled ? "True" : "False")}'");
+        sb.AppendLine($"    Direction     = '{rule.Direction}'");
+        sb.AppendLine($"    Action        = '{rule.Action}'");
+        sb.AppendLine($"    Protocol      = '{GetProtocolString(rule.Protocol)}'");
+        sb.AppendLine($"    InterfaceType = '{GetInterfaceTypeString(rule.InterfaceType)}'");
+        sb.AppendLine($"    Profile       = '{GetProfileString(rule.NetworkProfiles)}'");
+        sb.AppendLine("}");
+
+        if (!string.IsNullOrWhiteSpace(rule.Description))
+            sb.AppendLine($"$params['Description'] = '{EscapePs(rule.Description)}'");
+
+        if (rule.Protocol is FirewallProtocol.TCP or FirewallProtocol.UDP)
+        {
+            if (rule.LocalPorts.Count > 0)
+                sb.AppendLine($"$params['LocalPort']  = '{FirewallRule.PortsToString(rule.LocalPorts, ',', false)}'");
+
+            if (rule.RemotePorts.Count > 0)
+                sb.AppendLine($"$params['RemotePort'] = '{FirewallRule.PortsToString(rule.RemotePorts, ',', false)}'");
+        }
+
+        if (rule.LocalAddresses.Count > 0)
+            sb.AppendLine($"$params['LocalAddress']  = '{string.Join(',', rule.LocalAddresses.Select(EscapePs))}'");
+
+        if (rule.RemoteAddresses.Count > 0)
+            sb.AppendLine($"$params['RemoteAddress'] = '{string.Join(',', rule.RemoteAddresses.Select(EscapePs))}'");
+
+        if (rule.Program != null && !string.IsNullOrWhiteSpace(rule.Program.Name))
+            sb.AppendLine($"$params['Program'] = '{EscapePs(rule.Program.Name)}'");
+
+        sb.AppendLine("New-NetFirewallRule @params");
+
+        return sb.ToString();
+    }
+
+    /// <summary>
+    /// Escapes a string for embedding inside a PowerShell single-quoted string by
+    /// doubling any single-quote characters.
+    /// </summary>
+    /// <param name="value">The raw string value to escape.</param>
+    private static string EscapePs(string value) => value.Replace("'", "''");
+
+    /// <summary>
+    /// Maps a <see cref="FirewallProtocol"/> value to the string accepted by
+    /// <c>New-NetFirewallRule -Protocol</c>.
+    /// </summary>
+    /// <param name="protocol">The protocol to convert.</param>
+    private static string GetProtocolString(FirewallProtocol protocol) => protocol switch
+    {
+        FirewallProtocol.Any    => "Any",
+        FirewallProtocol.TCP    => "TCP",
+        FirewallProtocol.UDP    => "UDP",
+        FirewallProtocol.ICMPv4 => "ICMPv4",
+        FirewallProtocol.ICMPv6 => "ICMPv6",
+        FirewallProtocol.GRE    => "GRE",
+        FirewallProtocol.L2TP   => "L2TP",
+        _                       => ((int)protocol).ToString()
+    };
+
+    /// <summary>
+    /// Maps a <see cref="FirewallInterfaceType"/> value to the string accepted by
+    /// <c>New-NetFirewallRule -InterfaceType</c>.
+    /// </summary>
+    /// <param name="interfaceType">The interface type to convert.</param>
+    private static string GetInterfaceTypeString(FirewallInterfaceType interfaceType) => interfaceType switch
+    {
+        FirewallInterfaceType.Wired        => "Wired",
+        FirewallInterfaceType.Wireless     => "Wireless",
+        FirewallInterfaceType.RemoteAccess => "RemoteAccess",
+        _                                  => "Any"
+    };
+
+    /// <summary>
+    /// Converts the three-element network-profile boolean array (Domain, Private, Public)
+    /// to the comma-separated profile string accepted by <c>New-NetFirewallRule -Profile</c>.
+    /// All-false or all-true both map to <c>"Any"</c>.
+    /// </summary>
+    /// <param name="profiles">Three-element boolean array (Domain=0, Private=1, Public=2).</param>
+    private static string GetProfileString(bool[] profiles)
+    {
+        if (profiles == null || profiles.Length < 3 || profiles.All(p => p) || profiles.All(p => !p))
+            return "Any";
+
+        var parts = new List<string>(3);
+        if (profiles[0]) parts.Add("Domain");
+        if (profiles[1]) parts.Add("Private");
+        if (profiles[2]) parts.Add("Public");
+
+        return parts.Count == 0 ? "Any" : string.Join(",", parts);
     }
 
     /// <summary>

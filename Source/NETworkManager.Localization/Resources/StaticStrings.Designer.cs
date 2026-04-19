@@ -734,5 +734,23 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("XML", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die MyApp - HTTP ähnelt.
+        /// </summary>
+        public static string ExampleFirewallRuleName {
+            get {
+                return ResourceManager.GetString("ExampleFirewallRuleName", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 192.168.1.0/24; LocalSubnet ähnelt.
+        /// </summary>
+        public static string ExampleFirewallAddresses {
+            get {
+                return ResourceManager.GetString("ExampleFirewallAddresses", resourceCulture);
+            }
+        }
     }
 }

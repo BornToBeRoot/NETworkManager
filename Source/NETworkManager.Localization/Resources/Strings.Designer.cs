@@ -11768,5 +11768,50 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("ZipCode", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Local ports.
+        /// </summary>
+        public static string LocalPorts {
+            get {
+                return ResourceManager.GetString("LocalPorts", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Remote ports.
+        /// </summary>
+        public static string RemotePorts {
+            get {
+                return ResourceManager.GetString("RemotePorts", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Local addresses.
+        /// </summary>
+        public static string LocalAddresses {
+            get {
+                return ResourceManager.GetString("LocalAddresses", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Remote addresses.
+        /// </summary>
+        public static string RemoteAddresses {
+            get {
+                return ResourceManager.GetString("RemoteAddresses", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid IP address, subnet (e.g. 10.0.0.0/8) or keyword (e.g. LocalSubnet, Internet).
+        /// </summary>
+        public static string EnterValidFirewallAddress {
+            get {
+                return ResourceManager.GetString("EnterValidFirewallAddress", resourceCulture);
+            }
+        }
     }
 }

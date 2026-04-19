@@ -4135,4 +4135,19 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   <data name="FirewallRuleAction_Allow" xml:space="preserve">
     <value>Allow</value>
   </data>
+  <data name="LocalPorts" xml:space="preserve">
+    <value>Local ports</value>
+  </data>
+  <data name="RemotePorts" xml:space="preserve">
+    <value>Remote ports</value>
+  </data>
+  <data name="LocalAddresses" xml:space="preserve">
+    <value>Local addresses</value>
+  </data>
+  <data name="RemoteAddresses" xml:space="preserve">
+    <value>Remote addresses</value>
+  </data>
+  <data name="EnterValidFirewallAddress" xml:space="preserve">
+    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8) or keyword (e.g. LocalSubnet, Internet)</value>
+  </data>
 </root>

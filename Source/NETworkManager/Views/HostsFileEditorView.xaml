@@ -216,21 +216,24 @@
                     </controls:MultiSelectDataGrid.InputBindings>
                 </controls:MultiSelectDataGrid>
                 <!-- Row 4: Status message -->
-                <WrapPanel Grid.Row="4"
-                           Orientation="Horizontal"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Left">
-                    <networkManager:LoadingIndicator IsActive="True"
+                <Grid Grid.Row="4" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <networkManager:LoadingIndicator Grid.Column="0" IsActive="True"
                                  Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
                                  Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                  Width="24" Height="24"
                                  SpeedRatio="1"
                                  Margin="0,0,10,0" />
-                    <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"
+                    <TextBlock Grid.Column="1"
+                               Style="{StaticResource ResourceKey=AccentTextBlock}"
                                Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                Text="{Binding Path=StatusMessage}"
+                               TextWrapping="Wrap"
                                VerticalAlignment="Center" />
-                </WrapPanel>
+                </Grid>
                 <!-- Row 6: Open hosts file button (left) + Add entry button (right) -->
                 <Grid Grid.Row="6">
                     <Grid.ColumnDefinitions>

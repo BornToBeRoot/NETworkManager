@@ -437,15 +437,47 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
 
     /// <summary>
     /// Gets the command to open the dialog for adding a new firewall rule.
+    /// Only enabled when the application is running as administrator.
     /// </summary>
-    public ICommand AddEntryCommand => new RelayCommand(_ => AddEntryAction());
+    public ICommand AddEntryCommand => new RelayCommand(_ => AddEntry().ConfigureAwait(false), _ => ModifyEntry_CanExecute());
 
     /// <summary>
-    /// Opens the add-firewall-rule dialog.
+    /// Opens the add-firewall-rule dialog. On confirmation, creates the rule via PowerShell
+    /// and refreshes the rule list.
     /// </summary>
-    private void AddEntryAction()
+    private async Task AddEntry()
     {
-        // TODO: open AddFirewallRuleDialog
+        var childWindow = new FirewallRuleChildWindow();
+
+        var childWindowViewModel = new FirewallRuleViewModel(async instance =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            try
+            {
+                await Firewall.AddRuleAsync(BuildRule(instance));
+                await Refresh();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error while adding firewall rule", ex);
+
+                StatusMessage = ex.Message;
+                IsStatusMessageDisplayed = true;
+            }
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        });
+
+        childWindow.Title = Strings.AddEntry;
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>
@@ -491,14 +523,47 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// Gets the command to open the dialog for editing the selected firewall rule.
     /// Only executable when a rule is selected and modification is allowed.
     /// </summary>
-    public ICommand EditEntryCommand => new RelayCommand(_ => EditEntryAction(), _ => ModifyEntry_CanExecute() && SelectedResult != null);
+    public ICommand EditEntryCommand => new RelayCommand(_ => EditEntry().ConfigureAwait(false), _ => ModifyEntry_CanExecute() && SelectedResult != null);
 
     /// <summary>
-    /// Opens the edit-firewall-rule dialog for the selected rule.
+    /// Opens the edit-firewall-rule dialog pre-filled with the selected rule's properties.
+    /// On confirmation, deletes the old rule, creates the updated rule via PowerShell,
+    /// and refreshes the rule list.
     /// </summary>
-    private void EditEntryAction()
+    private async Task EditEntry()
     {
-        // TODO: open EditFirewallRuleDialog
+        var childWindow = new FirewallRuleChildWindow();
+
+        var childWindowViewModel = new FirewallRuleViewModel(async instance =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            try
+            {
+                await Firewall.DeleteRuleAsync(instance.Entry);
+                await Firewall.AddRuleAsync(BuildRule(instance));
+                await Refresh();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error while editing firewall rule", ex);
+
+                StatusMessage = ex.Message;
+                IsStatusMessageDisplayed = true;
+            }
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, SelectedResult);
+
+        childWindow.Title = Strings.EditEntry;
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     /// <summary>
@@ -870,6 +935,71 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
         }
 
         IsRefreshing = false;
+    }
+
+    /// <summary>
+    /// Builds a <see cref="FirewallRule"/> from the values the user entered in the dialog.
+    /// </summary>
+    /// <param name="vm">The dialog ViewModel containing the user's input.</param>
+    private static FirewallRule BuildRule(FirewallRuleViewModel vm) => new()
+    {
+        Name            = vm.Name,
+        IsEnabled       = vm.IsEnabled,
+        Description     = vm.Description ?? string.Empty,
+        Direction       = vm.Direction,
+        Action          = vm.Action,
+        Protocol        = vm.Protocol,
+        LocalPorts      = ParsePortsString(vm.LocalPorts),
+        RemotePorts     = ParsePortsString(vm.RemotePorts),
+        LocalAddresses  = ParseAddressesString(vm.LocalAddresses),
+        RemoteAddresses = ParseAddressesString(vm.RemoteAddresses),
+        Program         = string.IsNullOrWhiteSpace(vm.Program) ? null : new FirewallRuleProgram(vm.Program),
+        InterfaceType   = vm.InterfaceType,
+        NetworkProfiles = [vm.NetworkProfileDomain, vm.NetworkProfilePrivate, vm.NetworkProfilePublic]
+    };
+
+    /// <summary>
+    /// Parses a semicolon-separated port string (e.g. <c>"80; 443; 8080-8090"</c>) into a
+    /// list of <see cref="FirewallPortSpecification"/> objects.
+    /// </summary>
+    /// <param name="value">The semicolon-separated port string from the dialog.</param>
+    private static List<FirewallPortSpecification> ParsePortsString(string value)
+    {
+        var list = new List<FirewallPortSpecification>();
+
+        if (string.IsNullOrWhiteSpace(value))
+            return list;
+
+        foreach (var token in value.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        {
+            var dash = token.IndexOf('-');
+
+            if (dash > 0 &&
+                int.TryParse(token[..dash], out var start) &&
+                int.TryParse(token[(dash + 1)..], out var end))
+            {
+                list.Add(new FirewallPortSpecification(start, end));
+            }
+            else if (int.TryParse(token, out var port))
+            {
+                list.Add(new FirewallPortSpecification(port));
+            }
+        }
+
+        return list;
+    }
+
+    /// <summary>
+    /// Parses a semicolon-separated address string (e.g. <c>"192.168.1.0/24; LocalSubnet"</c>)
+    /// into a list of address strings.
+    /// </summary>
+    /// <param name="value">The semicolon-separated address string from the dialog.</param>
+    private static List<string> ParseAddressesString(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return [];
+
+        return [.. value.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)];
     }
 
     /// <summary>
