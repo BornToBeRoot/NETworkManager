@@ -30,6 +30,8 @@ In addition, further actions can be performed using the buttons at the bottom ri
 
 :::note
 
+With `F5` or `Enter` you can start capturing network packets.
+
 Right-click on the result to copy the information.
 
 :::

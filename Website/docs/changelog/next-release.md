@@ -47,6 +47,11 @@ Release date: **xx.xx.2025**
 
 - Added Network Profile (domain, private, public) information to the Network Interface details view, if available. [#3383](https://github.com/BornToBeRoot/NETworkManager/pull/3383)
 
+**Discovery Protocol**
+
+- Added support for `F5` and `Enter` keys to start capturing network packets. [#3383](https://github.com/BornToBeRoot/NETworkManager/pull/3383)
+- Redesigned the "restart as admin" note to be more compact and visually consistent. [#3383](https://github.com/BornToBeRoot/NETworkManager/pull/3383)
+
 ## Bug Fixes
 
 **Port Scanner**
