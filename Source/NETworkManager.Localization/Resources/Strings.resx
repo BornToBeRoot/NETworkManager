@@ -3802,6 +3802,9 @@ Right-click for more options.</value>
   <data name="HostsFileEditorAdminMessage" xml:space="preserve">
     <value>Read-only mode. Modifying the hosts file requires elevated rights!</value>
   </data>
+  <data name="OpenHostsFile" xml:space="preserve">
+    <value>Open hosts file</value>
+  </data>
   <data name="Comment" xml:space="preserve">
     <value>Comment</value>
   </data>

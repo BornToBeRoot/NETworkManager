@@ -4822,6 +4822,15 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("HostsFileEditorAdminMessage", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Open hosts file.
+        /// </summary>
+        public static string OpenHostsFile {
+            get {
+                return ResourceManager.GetString("OpenHostsFile", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to The entry was not found in the &quot;hosts&quot; file! Maybe the file has been modified..

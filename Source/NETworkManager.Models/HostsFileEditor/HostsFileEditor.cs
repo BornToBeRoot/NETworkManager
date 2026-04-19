@@ -37,7 +37,7 @@ public static class HostsFileEditor
     /// <summary>
     /// Path to the hosts file.
     /// </summary>
-    private static string HostsFilePath => Path.Combine(HostsFolderPath, "hosts");
+    public static string HostsFilePath => Path.Combine(HostsFolderPath, "hosts");
 
     /// <summary>
     /// Identifier for the hosts file backup.

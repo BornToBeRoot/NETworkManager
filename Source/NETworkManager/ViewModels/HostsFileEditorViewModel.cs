@@ -530,6 +530,28 @@ public class HostsFileEditorViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the command to open the hosts file with the system default editor.
+    /// </summary>
+    public ICommand OpenHostsFileCommand => new RelayCommand(_ => OpenHostsFileAction().ConfigureAwait(false));
+
+    /// <summary>
+    /// Opens the hosts file with the system default editor.
+    /// Shows an error dialog if the process cannot be started.
+    /// </summary>
+    private async Task OpenHostsFileAction()
+    {
+        try
+        {
+            ExternalProcessStarter.RunProcess(HostsFileEditor.HostsFilePath);
+        }
+        catch (Exception ex)
+        {
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, ex.Message,
+                ChildWindowIcon.Error);
+        }
+    }
+
     #endregion
 
     #region Methods
