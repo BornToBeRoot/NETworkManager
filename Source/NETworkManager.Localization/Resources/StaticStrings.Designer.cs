@@ -745,7 +745,7 @@ namespace NETworkManager.Localization.Resources {
         }
 
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 192.168.1.0/24; LocalSubnet ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 10.0.0.0/8; LocalSubnet ähnelt.
         /// </summary>
         public static string ExampleFirewallAddresses {
             get {

@@ -346,6 +346,6 @@
     <value>MyApp - HTTP</value>
   </data>
   <data name="ExampleFirewallAddresses" xml:space="preserve">
-    <value>192.168.1.0/24; LocalSubnet</value>
+    <value>10.0.0.0/8; LocalSubnet</value>
   </data>
 </root>
