@@ -8,8 +8,6 @@ keywords: [NETworkManager, hosts file editor, Windows hosts file, DNS override, 
 
 The **Hosts File Editor** allows you to view, add, edit, enable, disable, or remove entries in the local computer's `hosts` file.
 
-Editing the `hosts` file requires administrator privileges. The application automatically creates a daily backup of the `hosts` file, retaining up to 5 backups in the same directory (Syntax: `hosts_backup_NETworkManager_YYYYMMDD`).
-
 :::info
 
 The hosts file is a plain text file that maps hostnames to IP addresses and is checked by the operating system before querying DNS servers. It's commonly used to override DNS settings for testing websites, redirecting domains, or blocking access to certain sites. On Windows, the file is located at `C:\Windows\System32\drivers\etc\hosts` and requires administrator privileges to edit.
@@ -21,6 +19,14 @@ Example of a hosts file entry:
 ```plain
 10.8.0.10 example.borntoberoot.net # Test server not reachable via DNS
 ```
+
+:::
+
+:::note
+
+Editing the `hosts` file requires administrator privileges. If the application is not running as administrator, the view is in read-only mode. Use the **Restart as administrator** button to relaunch the application with elevated rights.
+
+The application automatically creates a daily backup of the `hosts` file, retaining up to 5 backups in the same directory (Syntax: `hosts_backup_NETworkManager_YYYYMMDD`).
 
 :::
 

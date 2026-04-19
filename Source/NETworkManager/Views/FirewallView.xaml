@@ -101,6 +101,10 @@
                         SelectedItem="{Binding SelectedResult}"
                         SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         RowDetailsVisibilityMode="Collapsed">
+                        <controls:MultiSelectDataGrid.InputBindings>
+                            <KeyBinding Command="{Binding EditEntryCommand}" Key="F2" />
+                            <KeyBinding Command="{Binding DeleteEntryCommand}" Key="Delete" />
+                        </controls:MultiSelectDataGrid.InputBindings>
                         <controls:MultiSelectDataGrid.Resources>
                             <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                 <MenuItem Header="{x:Static localization:Strings.EnableEntry}"
