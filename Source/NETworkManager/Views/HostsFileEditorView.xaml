@@ -33,6 +33,7 @@
                     <RowDefinition Height="Auto" />                    
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
+                <!-- Row 0: Header + Refresh + Search -->
                 <Grid Grid.Column="0" Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -75,6 +76,7 @@
                                  Style="{StaticResource ResourceKey=SearchTextBox}" />
                     </StackPanel>
                 </Grid>
+                <!-- Row 2: DataGrid -->
                 <controls:MultiSelectDataGrid x:Name="DataGridHostsFileTable"
                                               Grid.Column="0" Grid.Row="2"
                                               ItemsSource="{Binding ResultsView}"
@@ -211,6 +213,7 @@
                         <KeyBinding Command="{Binding DeleteEntryCommand}" Key="Delete" />
                     </controls:MultiSelectDataGrid.InputBindings>
                 </controls:MultiSelectDataGrid>
+                <!-- Row 4: Status message + Add button -->
                 <Grid Grid.Column="0" Grid.Row="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -253,6 +256,7 @@
                         </Button>
                     </WrapPanel>
                 </Grid>                
+                <!-- Row 5: Admin note -->
                 <Grid Grid.Column="0" Grid.Row="5"
                       Background="{DynamicResource MahApps.Brushes.Gray10}"
                       Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"

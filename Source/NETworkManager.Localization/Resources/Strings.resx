@@ -4112,6 +4112,9 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   <data name="FirewallInterfaceType_RemoteAccess" xml:space="preserve">
     <value>Remote access</value>
   </data>
+  <data name="FirewallAdminMessage" xml:space="preserve">
+    <value>Read-only mode. Modifying firewall rules requires elevated rights!</value>
+  </data>
   <data name="FirewallRuleDirection_Inbound" xml:space="preserve">
     <value>Inbound</value>
   </data>

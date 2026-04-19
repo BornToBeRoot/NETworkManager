@@ -4128,7 +4128,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("Firewall", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Read-only mode. Modifying firewall rules requires elevated rights!
+        /// </summary>
+        public static string FirewallAdminMessage {
+            get {
+                return ResourceManager.GetString("FirewallAdminMessage", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Firewall rules.
         /// </summary>

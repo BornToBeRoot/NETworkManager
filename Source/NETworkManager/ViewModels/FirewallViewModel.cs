@@ -435,7 +435,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     }
 
     /// <summary>Gets the command to enable the selected firewall entry.</summary>
-    public ICommand EnableEntryCommand => new RelayCommand(_ => EnableEntryAction(), _ => SelectedResult is { IsEnabled: false });
+    public ICommand EnableEntryCommand => new RelayCommand(_ => EnableEntryAction(), _ => ModifyEntry_CanExecute() && SelectedResult is { IsEnabled: false });
 
     private void EnableEntryAction()
     {
@@ -443,7 +443,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     }
 
     /// <summary>Gets the command to disable the selected firewall entry.</summary>
-    public ICommand DisableEntryCommand => new RelayCommand(_ => DisableEntryAction(), _ => SelectedResult is { IsEnabled: true });
+    public ICommand DisableEntryCommand => new RelayCommand(_ => DisableEntryAction(), _ => ModifyEntry_CanExecute() && SelectedResult is { IsEnabled: true });
 
     private void DisableEntryAction()
     {
@@ -451,7 +451,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     }
 
     /// <summary>Gets the command to edit the selected firewall entry.</summary>
-    public ICommand EditEntryCommand => new RelayCommand(_ => EditEntryAction(), _ => SelectedResult != null);
+    public ICommand EditEntryCommand => new RelayCommand(_ => EditEntryAction(), _ => ModifyEntry_CanExecute() && SelectedResult != null);
 
     private void EditEntryAction()
     {
@@ -459,11 +459,36 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     }
 
     /// <summary>Gets the command to delete the selected firewall entry.</summary>
-    public ICommand DeleteEntryCommand => new RelayCommand(_ => DeleteEntryAction(), _ => SelectedResult != null);
+    public ICommand DeleteEntryCommand => new RelayCommand(_ => DeleteEntryAction(), _ => ModifyEntry_CanExecute() && SelectedResult != null);
 
     private void DeleteEntryAction()
     {
         // TODO: confirm and call Firewall.DeleteRuleAsync
+    }
+
+    /// <summary>Checks if entry modification commands can be executed.</summary>
+    private static bool ModifyEntry_CanExecute()
+    {
+        return ConfigurationManager.Current.IsAdmin &&
+               Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen;
+    }
+
+    /// <summary>Gets the command to restart the application as administrator.</summary>
+    public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
+
+    private async Task RestartAsAdminAction()
+    {
+        try
+        {
+            (Application.Current.MainWindow as MainWindow)?.RestartApplication(true);
+        }
+        catch (Exception ex)
+        {
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, ex.Message,
+                ChildWindowIcon.Error);
+        }
     }
 
     /// <summary>Gets the command to export the firewall rules.</summary>
