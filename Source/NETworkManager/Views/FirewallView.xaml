@@ -21,9 +21,12 @@
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:FirewallProtocolToStringConverter x:Key="FirewallProtocolToStringConverter" />
+        <converters:FirewallRuleDirectionToStringConverter x:Key="FirewallRuleDirectionToStringConverter" />
+        <converters:FirewallRuleActionToStringConverter x:Key="FirewallRuleActionToStringConverter" />
         <converters:FirewallInterfaceTypeToStringConverter x:Key="FirewallInterfaceTypeToStringConverter" />
         <converters:FirewallNetworkProfilesToStringConverter x:Key="FirewallNetworkProfilesToStringConverter" />
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
@@ -142,6 +145,61 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <Separator />
+                                <MenuItem Header="{x:Static localization:Strings.CopyDots}"
+                                          Style="{StaticResource CopyMenuItem}">
+                                    <MenuItem Header="{x:Static localization:Strings.Enabled}"
+                                              Command="{Binding Path=CopyDataToClipboardCommand}"
+                                              CommandParameter="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource BooleanToStringConverter}}"
+                                              Style="{StaticResource CopyMenuItem}" />
+                                    <MenuItem Header="{x:Static localization:Strings.Name}"
+                                              Command="{Binding Path=CopyDataToClipboardCommand}"
+                                              CommandParameter="{Binding Path=SelectedResult.Name}"
+                                              Style="{StaticResource CopyMenuItem}" />
+                                    <MenuItem Header="{x:Static localization:Strings.Direction}"
+                                              Command="{Binding Path=CopyDataToClipboardCommand}"
+                                              CommandParameter="{Binding Path=SelectedResult.Direction, Converter={StaticResource FirewallRuleDirectionToStringConverter}}"
+                                              Style="{StaticResource CopyMenuItem}" />
+                                    <MenuItem Header="{x:Static localization:Strings.Action}"
+                                              Command="{Binding Path=CopyDataToClipboardCommand}"
+                                              CommandParameter="{Binding Path=SelectedResult.Action, Converter={StaticResource FirewallRuleActionToStringConverter}}"
+                                              Style="{StaticResource CopyMenuItem}" />
+                                    <MenuItem Header="{x:Static localization:Strings.Protocol}"
+                                              Command="{Binding Path=CopyDataToClipboardCommand}"
+                                              CommandParameter="{Binding Path=SelectedResult.Protocol, Converter={StaticResource FirewallProtocolToStringConverter}}"
+                                              Style="{StaticResource CopyMenuItem}" />
+                                    <MenuItem Header="{x:Static localization:Strings.LocalIPAddress}"
+                                              Command="{Binding Path=CopyDataToClipboardCommand}"
+                                              CommandParameter="{Binding Path=SelectedResult.LocalAddressesDisplay}"
+                                              Style="{StaticResource CopyMenuItem}" />
+                                    <MenuItem Header="{x:Static localization:Strings.LocalPort}"
+                                              Command="{Binding Path=CopyDataToClipboardCommand}"
+                                              CommandParameter="{Binding Path=SelectedResult.LocalPortsDisplay}"
+                                              Style="{StaticResource CopyMenuItem}" />
+                                    <MenuItem Header="{x:Static localization:Strings.RemoteIPAddress}"
+                                              Command="{Binding Path=CopyDataToClipboardCommand}"
+                                              CommandParameter="{Binding Path=SelectedResult.RemoteAddressesDisplay}"
+                                              Style="{StaticResource CopyMenuItem}" />
+                                    <MenuItem Header="{x:Static localization:Strings.RemotePort}"
+                                              Command="{Binding Path=CopyDataToClipboardCommand}"
+                                              CommandParameter="{Binding Path=SelectedResult.RemotePortsDisplay}"
+                                              Style="{StaticResource CopyMenuItem}" />
+                                    <MenuItem Header="{x:Static localization:Strings.Program}"
+                                              Command="{Binding Path=CopyDataToClipboardCommand}"
+                                              CommandParameter="{Binding Path=SelectedResult.ProgramDisplay}"
+                                              Style="{StaticResource CopyMenuItem}" />
+                                    <MenuItem Header="{x:Static localization:Strings.InterfaceType}"
+                                              Command="{Binding Path=CopyDataToClipboardCommand}"
+                                              CommandParameter="{Binding Path=SelectedResult.InterfaceType, Converter={StaticResource FirewallInterfaceTypeToStringConverter}}"
+                                              Style="{StaticResource CopyMenuItem}" />
+                                    <MenuItem Header="{x:Static localization:Strings.NetworkProfiles}"
+                                              Command="{Binding Path=CopyDataToClipboardCommand}"
+                                              CommandParameter="{Binding Path=SelectedResult.NetworkProfiles, Converter={StaticResource FirewallNetworkProfilesToStringConverter}}"
+                                              Style="{StaticResource CopyMenuItem}" />
+                                    <MenuItem Header="{x:Static localization:Strings.Description}"
+                                              Command="{Binding Path=CopyDataToClipboardCommand}"
+                                              CommandParameter="{Binding Path=SelectedResult.Description}"
+                                              Style="{StaticResource CopyMenuItem}" />
+                                </MenuItem>
                                 <MenuItem Header="{x:Static localization:Strings.ExportDots}"
                                           Command="{Binding Path=ExportCommand}">
                                     <MenuItem.Icon>
@@ -231,8 +289,7 @@
                                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ArrowDown}" />
                                                 </Rectangle.OpacityMask>
                                             </Rectangle>
-                                            <TextBlock x:Name="DirectionText"
-                                                       Text="{x:Static localization:Strings.Inbound}"
+                                            <TextBlock Text="{Binding Direction, Converter={StaticResource FirewallRuleDirectionToStringConverter}}"
                                                        VerticalAlignment="Center" />
                                         </StackPanel>
                                         <DataTemplate.Triggers>
@@ -242,7 +299,6 @@
                                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ArrowUp}" />
                                                     </Setter.Value>
                                                 </Setter>
-                                                <Setter TargetName="DirectionText" Property="Text" Value="{x:Static localization:Strings.Outbound}" />
                                             </DataTrigger>
                                         </DataTemplate.Triggers>
                                     </DataTemplate>
@@ -280,12 +336,11 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate DataType="{x:Type firewall:FirewallRule}">
                                         <TextBlock x:Name="ActionText"
-                                                   Text="{x:Static localization:Strings.Block}"
+                                                   Text="{Binding (firewall:FirewallRule.Action), Converter={StaticResource FirewallRuleActionToStringConverter}}"
                                                    Foreground="#b95353"
                                                    VerticalAlignment="Center" />
                                         <DataTemplate.Triggers>
                                             <DataTrigger Binding="{Binding (firewall:FirewallRule.Action)}" Value="Allow">
-                                                <Setter TargetName="ActionText" Property="Text" Value="{x:Static localization:Strings.Allow}" />
                                                 <Setter TargetName="ActionText" Property="Foreground" Value="#badc58" />
                                             </DataTrigger>
                                         </DataTemplate.Triggers>

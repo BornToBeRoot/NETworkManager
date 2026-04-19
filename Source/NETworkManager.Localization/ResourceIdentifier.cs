@@ -24,5 +24,7 @@ public enum ResourceIdentifier
     TimeUnit,
     WiFiConnectionStatus,
     FirewallProtocol,
-    FirewallInterfaceType
+    FirewallInterfaceType,
+    FirewallRuleDirection,
+    FirewallRuleAction
 }

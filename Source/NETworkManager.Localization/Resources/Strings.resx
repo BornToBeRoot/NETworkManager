@@ -4112,4 +4112,16 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   <data name="FirewallInterfaceType_RemoteAccess" xml:space="preserve">
     <value>Remote access</value>
   </data>
+  <data name="FirewallRuleDirection_Inbound" xml:space="preserve">
+    <value>Inbound</value>
+  </data>
+  <data name="FirewallRuleDirection_Outbound" xml:space="preserve">
+    <value>Outbound</value>
+  </data>
+  <data name="FirewallRuleAction_Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="FirewallRuleAction_Allow" xml:space="preserve">
+    <value>Allow</value>
+  </data>
 </root>
