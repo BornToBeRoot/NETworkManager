@@ -1,47 +1,87 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using SMA = System.Management.Automation;
+using System.Management.Automation.Runspaces;
+using System.Threading;
 using System.Threading.Tasks;
+using SMA = System.Management.Automation;
 using log4net;
 
 namespace NETworkManager.Models.Firewall;
 
 /// <summary>
-/// Represents a firewall configuration and management class that provides functionalities
-/// for applying and managing firewall rules based on a specified profile.
+/// Provides static methods to read and modify Windows Firewall rules via PowerShell.
+/// All operations share a single <see cref="Runspace"/> that is initialized once with
+/// the required execution policy and the NetSecurity module, reducing per-call overhead.
+/// A <see cref="SemaphoreSlim"/> serializes access so the runspace is never used concurrently.
 /// </summary>
 public class Firewall
 {
     #region Variables
 
     /// <summary>
-    /// The Logger.
+    /// The logger for this class.
     /// </summary>
     private static readonly ILog Log = LogManager.GetLogger(typeof(Firewall));
 
+    /// <summary>
+    /// Prefix applied to the <c>DisplayName</c> of every rule managed by NETworkManager.
+    /// Used to scope <c>Get-NetFirewallRule</c> queries to only our own rules.
+    /// </summary>
     private const string RuleIdentifier = "NETworkManager_";
-    
+
+    /// <summary>
+    /// Ensures that only one PowerShell pipeline runs on <see cref="SharedRunspace"/> at a time.
+    /// </summary>
+    private static readonly SemaphoreSlim Lock = new(1, 1);
+
+    /// <summary>
+    /// Shared PowerShell runspace, initialized once in the static constructor with
+    /// <c>Set-ExecutionPolicy Bypass</c> and <c>Import-Module NetSecurity</c>.
+    /// </summary>
+    private static readonly Runspace SharedRunspace;
+
+    /// <summary>
+    /// Opens <see cref="SharedRunspace"/> and runs the one-time initialization script
+    /// so that subsequent operations do not need to repeat the module import.
+    /// </summary>
+    static Firewall()
+    {
+        SharedRunspace = RunspaceFactory.CreateRunspace();
+        SharedRunspace.Open();
+
+        using var ps = SMA.PowerShell.Create();
+        ps.Runspace = SharedRunspace;
+        ps.AddScript(@"
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+Import-Module NetSecurity -ErrorAction Stop").Invoke();
+    }
+
     #endregion
 
     #region Methods
 
     /// <summary>
-    /// Reads all Windows Firewall rules whose display name starts with <see cref="RuleIdentifier"/>
-    /// and maps them to <see cref="FirewallRule"/> objects.
+    /// Retrieves all Windows Firewall rules whose display name starts with <see cref="RuleIdentifier"/>
+    /// and maps each one to a <see cref="FirewallRule"/> object.
+    /// PowerShell errors during the query are logged as warnings; errors for individual
+    /// rules are caught so a single malformed rule does not abort the entire load.
     /// </summary>
-    /// <returns>A task that resolves to the list of matching firewall rules.</returns>
+    /// <returns>
+    /// A list of <see cref="FirewallRule"/> objects representing the matching rules.
+    /// </returns>
     public static async Task<List<FirewallRule>> GetRulesAsync()
     {
-        return await Task.Run(() =>
+        await Lock.WaitAsync();
+        try
         {
-            var rules = new List<FirewallRule>();
+            return await Task.Run(() =>
+            {
+                var rules = new List<FirewallRule>();
 
-            using var ps = SMA.PowerShell.Create();
+                using var ps = SMA.PowerShell.Create();
+                ps.Runspace = SharedRunspace;
 
-            ps.AddScript($@"
-Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
-Import-Module NetSecurity -ErrorAction Stop
+                ps.AddScript($@"
 Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     $rule              = $_
     $portFilter        = $rule | Get-NetFirewallPortFilter
@@ -66,57 +106,138 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     }}
 }}");
 
-            var results = ps.Invoke();
+                var results = ps.Invoke();
 
-            if (ps.Streams.Error.Count > 0)
-            {
-                foreach (var error in ps.Streams.Error)                    
-                    Log.Warn($"PowerShell error: {error}");
-            }
-
-            foreach (var result in results)
-            {
-                try
+                if (ps.Streams.Error.Count > 0)
                 {
-                    var displayName = result.Properties["DisplayName"]?.Value?.ToString() ?? string.Empty;
+                    foreach (var error in ps.Streams.Error)
+                        Log.Warn($"PowerShell error: {error}");
+                }
 
-                    var rule = new FirewallRule
+                foreach (var result in results)
+                {
+                    try
                     {
-                        Id              = result.Properties["Id"]?.Value?.ToString() ?? string.Empty,
-                        IsEnabled       = result.Properties["Enabled"]?.Value as bool? == true,
-                        Name            = displayName.StartsWith(RuleIdentifier, StringComparison.Ordinal)
-                                              ? displayName[RuleIdentifier.Length..]
-                                              : displayName,
-                        Description     = result.Properties["Description"]?.Value?.ToString() ?? string.Empty,
-                        Direction       = ParseDirection(result.Properties["Direction"]?.Value?.ToString()),
-                        Action          = ParseAction(result.Properties["Action"]?.Value?.ToString()),
-                        Protocol        = ParseProtocol(result.Properties["Protocol"]?.Value?.ToString()),
-                        LocalPorts      = ParsePorts(result.Properties["LocalPort"]?.Value?.ToString()),
-                        RemotePorts     = ParsePorts(result.Properties["RemotePort"]?.Value?.ToString()),
-                        LocalAddresses  = ParseAddresses(result.Properties["LocalAddress"]?.Value?.ToString()),
-                        RemoteAddresses = ParseAddresses(result.Properties["RemoteAddress"]?.Value?.ToString()),
-                        NetworkProfiles = ParseProfile(result.Properties["Profile"]?.Value?.ToString()),
-                        InterfaceType   = ParseInterfaceType(result.Properties["InterfaceType"]?.Value?.ToString()),
-                    };
-                    
-                    var program = result.Properties["Program"]?.Value as string;
+                        var displayName = result.Properties["DisplayName"]?.Value?.ToString() ?? string.Empty;
 
-                    if (!string.IsNullOrWhiteSpace(program) && !program.Equals("Any", StringComparison.OrdinalIgnoreCase))
-                        rule.Program = new FirewallRuleProgram(program);
+                        var rule = new FirewallRule
+                        {
+                            Id              = result.Properties["Id"]?.Value?.ToString() ?? string.Empty,
+                            IsEnabled       = result.Properties["Enabled"]?.Value as bool? == true,
+                            Name            = displayName.StartsWith(RuleIdentifier, StringComparison.Ordinal)
+                                                  ? displayName[RuleIdentifier.Length..]
+                                                  : displayName,
+                            Description     = result.Properties["Description"]?.Value?.ToString() ?? string.Empty,
+                            Direction       = ParseDirection(result.Properties["Direction"]?.Value?.ToString()),
+                            Action          = ParseAction(result.Properties["Action"]?.Value?.ToString()),
+                            Protocol        = ParseProtocol(result.Properties["Protocol"]?.Value?.ToString()),
+                            LocalPorts      = ParsePorts(result.Properties["LocalPort"]?.Value?.ToString()),
+                            RemotePorts     = ParsePorts(result.Properties["RemotePort"]?.Value?.ToString()),
+                            LocalAddresses  = ParseAddresses(result.Properties["LocalAddress"]?.Value?.ToString()),
+                            RemoteAddresses = ParseAddresses(result.Properties["RemoteAddress"]?.Value?.ToString()),
+                            NetworkProfiles = ParseProfile(result.Properties["Profile"]?.Value?.ToString()),
+                            InterfaceType   = ParseInterfaceType(result.Properties["InterfaceType"]?.Value?.ToString()),
+                        };
 
-                    rules.Add(rule);
+                        var program = result.Properties["Program"]?.Value as string;
+
+                        if (!string.IsNullOrWhiteSpace(program) && !program.Equals("Any", StringComparison.OrdinalIgnoreCase))
+                            rule.Program = new FirewallRuleProgram(program);
+
+                        rules.Add(rule);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Warn($"Failed to parse firewall rule: {ex.Message}");
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Log.Warn($"Failed to parse firewall rule: {ex.Message}");
-                }
-            }
 
-            return rules;
-        });
+                return rules;
+            });
+        }
+        finally
+        {
+            Lock.Release();
+        }
     }
 
-    /// <summary>Parses a PowerShell direction string to <see cref="FirewallRuleDirection"/>.</summary>
+    /// <summary>
+    /// Enables or disables the given <paramref name="rule"/> by running
+    /// <c>Enable-NetFirewallRule</c> or <c>Disable-NetFirewallRule</c> against
+    /// the rule's internal <see cref="FirewallRule.Id"/>.
+    /// </summary>
+    /// <param name="rule">
+    /// The firewall rule to modify.
+    /// </param>
+    /// <param name="enabled">
+    /// <see langword="true"/> to enable the rule; <see langword="false"/> to disable it.
+    /// </param>
+    /// <exception cref="Exception">
+    /// Thrown when the PowerShell pipeline reports one or more errors.
+    /// </exception>
+    public static async Task SetRuleEnabledAsync(FirewallRule rule, bool enabled)
+    {
+        await Lock.WaitAsync();
+        try
+        {
+            await Task.Run(() =>
+            {
+                using var ps = SMA.PowerShell.Create();
+                ps.Runspace = SharedRunspace;
+
+                ps.AddScript($@"{(enabled ? "Enable" : "Disable")}-NetFirewallRule -Name '{rule.Id}'");
+                ps.Invoke();
+
+                if (ps.Streams.Error.Count > 0)
+                    throw new Exception(string.Join("; ", ps.Streams.Error));
+            });
+        }
+        finally
+        {
+            Lock.Release();
+        }
+    }
+
+    /// <summary>
+    /// Permanently removes the given <paramref name="rule"/> by running
+    /// <c>Remove-NetFirewallRule</c> against the rule's internal <see cref="FirewallRule.Id"/>.
+    /// </summary>
+    /// <param name="rule">
+    /// The firewall rule to delete.
+    /// </param>
+    /// <exception cref="Exception">
+    /// Thrown when the PowerShell pipeline reports one or more errors.
+    /// </exception>
+    public static async Task DeleteRuleAsync(FirewallRule rule)
+    {
+        await Lock.WaitAsync();
+        try
+        {
+            await Task.Run(() =>
+            {
+                using var ps = SMA.PowerShell.Create();
+                ps.Runspace = SharedRunspace;
+
+                ps.AddScript($@"Remove-NetFirewallRule -Name '{rule.Id}'");
+                ps.Invoke();
+
+                if (ps.Streams.Error.Count > 0)
+                    throw new Exception(string.Join("; ", ps.Streams.Error));
+            });
+        }
+        finally
+        {
+            Lock.Release();
+        }
+    }
+
+    /// <summary>
+    /// Parses a PowerShell direction string (e.g. <c>"Outbound"</c>) to a
+    /// <see cref="FirewallRuleDirection"/> value. Defaults to <see cref="FirewallRuleDirection.Inbound"/>.
+    /// </summary>
+    /// <param name="value">
+    /// The raw string value returned by PowerShell.
+    /// </param>
     private static FirewallRuleDirection ParseDirection(string value)
     {
         return value switch
@@ -126,7 +247,13 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         };
     }
 
-    /// <summary>Parses a PowerShell action string to <see cref="FirewallRuleAction"/>.</summary>
+    /// <summary>
+    /// Parses a PowerShell action string (e.g. <c>"Allow"</c>) to a
+    /// <see cref="FirewallRuleAction"/> value. Defaults to <see cref="FirewallRuleAction.Block"/>.
+    /// </summary>
+    /// <param name="value">
+    /// The raw string value returned by PowerShell.
+    /// </param>
     private static FirewallRuleAction ParseAction(string value)
     {
         return value switch
@@ -136,7 +263,14 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         };
     }
 
-    /// <summary>Parses a PowerShell protocol string to <see cref="FirewallProtocol"/>.</summary>
+    /// <summary>
+    /// Parses a PowerShell protocol string (e.g. <c>"TCP"</c>, <c>"Any"</c>) to a
+    /// <see cref="FirewallProtocol"/> value. Numeric protocol numbers are also accepted.
+    /// Defaults to <see cref="FirewallProtocol.Any"/> for unrecognized values.
+    /// </summary>
+    /// <param name="value">
+    /// The raw string value returned by PowerShell.
+    /// </param>
     private static FirewallProtocol ParseProtocol(string value)
     {
         if (string.IsNullOrWhiteSpace(value) || value.Equals("Any", StringComparison.OrdinalIgnoreCase))
@@ -156,8 +290,12 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
 
     /// <summary>
     /// Parses a comma-separated port string (e.g. <c>"80,443,8080-8090"</c>) to a list of
-    /// <see cref="FirewallPortSpecification"/> objects. Returns an empty list for <c>Any</c> or blank input.
+    /// <see cref="FirewallPortSpecification"/> objects.
+    /// Returns an empty list when the value is blank or <c>"Any"</c>.
     /// </summary>
+    /// <param name="value">
+    /// The raw comma-separated port string returned by PowerShell.
+    /// </param>
     private static List<FirewallPortSpecification> ParsePorts(string value)
     {
         var list = new List<FirewallPortSpecification>();
@@ -185,9 +323,13 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     }
 
     /// <summary>
-    /// Parses a PowerShell profile string (e.g. <c>"Domain, Private"</c>) to a three-element boolean array
-    /// in the order Domain, Private, Public.
+    /// Parses a PowerShell profile string (e.g. <c>"Domain, Private"</c>) to a
+    /// three-element boolean array in the order Domain, Private, Public.
+    /// <c>"Any"</c> and <c>"All"</c> set all three entries to <see langword="true"/>.
     /// </summary>
+    /// <param name="value">
+    /// The raw profile string returned by PowerShell.
+    /// </param>
     private static bool[] ParseProfile(string value)
     {
         var profiles = new bool[3];
@@ -216,9 +358,13 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     }
 
     /// <summary>
-    /// Parses a comma-separated address string (e.g. <c>"192.168.1.0/24,LocalSubnet"</c>) to a list of
-    /// address strings. Returns an empty list for <c>Any</c> or blank input.
+    /// Parses a comma-separated address string (e.g. <c>"192.168.1.0/24,LocalSubnet"</c>) to a
+    /// list of address strings.
+    /// Returns an empty list when the value is blank or <c>"Any"</c>.
     /// </summary>
+    /// <param name="value">
+    /// The raw comma-separated address string returned by PowerShell.
+    /// </param>
     private static List<string> ParseAddresses(string value)
     {
         if (string.IsNullOrWhiteSpace(value) || value.Equals("Any", StringComparison.OrdinalIgnoreCase))
@@ -227,7 +373,13 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         return [.. value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)];
     }
 
-    /// <summary>Parses a PowerShell interface-type string to <see cref="FirewallInterfaceType"/>.</summary>
+    /// <summary>
+    /// Parses a PowerShell interface-type string (e.g. <c>"Wired"</c>) to a
+    /// <see cref="FirewallInterfaceType"/> value. Defaults to <see cref="FirewallInterfaceType.Any"/>.
+    /// </summary>
+    /// <param name="value">
+    /// The raw string value returned by PowerShell.
+    /// </param>
     private static FirewallInterfaceType ParseInterfaceType(string value)
     {
         return value switch
@@ -238,5 +390,6 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
             _              => FirewallInterfaceType.Any,
         };
     }
+
     #endregion
 }

@@ -454,14 +454,13 @@ public class HostsFileEditorViewModel : ViewModelBase
     {
         IsModifying = true;
 
-        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(
+            Application.Current.MainWindow,
             Strings.DeleteEntry,
             string.Format(Strings.DeleteHostsFileEntryMessage, SelectedResult.IPAddress, SelectedResult.Hostname,
                 string.IsNullOrEmpty(SelectedResult.Comment) ? "" : $"# {SelectedResult.Comment}"),
             ChildWindowIcon.Info,
-            Strings.Delete
-            );
-
+            Strings.Delete);
 
         if (!result)
         {

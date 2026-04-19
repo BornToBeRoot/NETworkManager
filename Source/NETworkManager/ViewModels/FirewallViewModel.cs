@@ -419,54 +419,129 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
 
     #region ICommand & Actions
 
-    /// <summary>Gets the command to refresh the firewall rules.</summary>
+    /// <summary>
+    /// Gets the command to refresh the list of firewall rules from the system.
+    /// Disabled while a refresh is already in progress.
+    /// </summary>
     public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
 
+    /// <summary>
+    /// Returns <see langword="true"/> when no refresh is currently running.
+    /// </summary>
     private bool Refresh_CanExecute(object _) => !IsRefreshing;
 
+    /// <summary>
+    /// Delegates to <see cref="Refresh"/> to reload the firewall rules.
+    /// </summary>
     private async Task RefreshAction() => await Refresh();
 
-    /// <summary>Gets the command to add a new firewall entry.</summary>
+    /// <summary>
+    /// Gets the command to open the dialog for adding a new firewall rule.
+    /// </summary>
     public ICommand AddEntryCommand => new RelayCommand(_ => AddEntryAction());
 
+    /// <summary>
+    /// Opens the add-firewall-rule dialog.
+    /// </summary>
     private void AddEntryAction()
     {
         // TODO: open AddFirewallRuleDialog
     }
 
-    /// <summary>Gets the command to enable the selected firewall entry.</summary>
-    public ICommand EnableEntryCommand => new RelayCommand(_ => EnableEntryAction(), _ => ModifyEntry_CanExecute() && SelectedResult is { IsEnabled: false });
+    /// <summary>
+    /// Gets the command to enable the selected firewall rule.
+    /// Only executable when the rule is currently disabled and modification is allowed.
+    /// </summary>
+    public ICommand EnableEntryCommand => new RelayCommand(_ => SetRuleEnabled(SelectedResult, true).ConfigureAwait(false), _ => ModifyEntry_CanExecute() && SelectedResult is { IsEnabled: false });
 
-    private void EnableEntryAction()
+    /// <summary>
+    /// Gets the command to disable the selected firewall rule.
+    /// Only executable when the rule is currently enabled and modification is allowed.
+    /// </summary>
+    public ICommand DisableEntryCommand => new RelayCommand(_ => SetRuleEnabled(SelectedResult, false).ConfigureAwait(false), _ => ModifyEntry_CanExecute() && SelectedResult is { IsEnabled: true });
+
+    /// <summary>
+    /// Enables or disables the given <paramref name="rule"/> via PowerShell,
+    /// then reloads the rule list to reflect the updated state.
+    /// Any PowerShell error is written to the log and shown in the status bar.
+    /// </summary>
+    /// <param name="rule">
+    /// The firewall rule to modify.
+    /// </param>
+    /// <param name="enabled">
+    /// <see langword="true"/> to enable the rule; <see langword="false"/> to disable it.
+    /// </param>
+    private async Task SetRuleEnabled(FirewallRule rule, bool enabled)
     {
-        // TODO: call Firewall.SetRuleEnabledAsync(SelectedResult, true)
+        try
+        {
+            await Firewall.SetRuleEnabledAsync(rule, enabled);
+            await Refresh();
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"Error while {(enabled ? "enabling" : "disabling")} firewall rule", ex);
+
+            StatusMessage = ex.Message;
+            IsStatusMessageDisplayed = true;
+        }
     }
 
-    /// <summary>Gets the command to disable the selected firewall entry.</summary>
-    public ICommand DisableEntryCommand => new RelayCommand(_ => DisableEntryAction(), _ => ModifyEntry_CanExecute() && SelectedResult is { IsEnabled: true });
-
-    private void DisableEntryAction()
-    {
-        // TODO: call Firewall.SetRuleEnabledAsync(SelectedResult, false)
-    }
-
-    /// <summary>Gets the command to edit the selected firewall entry.</summary>
+    /// <summary>
+    /// Gets the command to open the dialog for editing the selected firewall rule.
+    /// Only executable when a rule is selected and modification is allowed.
+    /// </summary>
     public ICommand EditEntryCommand => new RelayCommand(_ => EditEntryAction(), _ => ModifyEntry_CanExecute() && SelectedResult != null);
 
+    /// <summary>
+    /// Opens the edit-firewall-rule dialog for the selected rule.
+    /// </summary>
     private void EditEntryAction()
     {
         // TODO: open EditFirewallRuleDialog
     }
 
-    /// <summary>Gets the command to delete the selected firewall entry.</summary>
-    public ICommand DeleteEntryCommand => new RelayCommand(_ => DeleteEntryAction(), _ => ModifyEntry_CanExecute() && SelectedResult != null);
+    /// <summary>
+    /// Gets the command to permanently delete the selected firewall rule.
+    /// Only executable when a rule is selected and modification is allowed.
+    /// </summary>
+    public ICommand DeleteEntryCommand => new RelayCommand(_ => DeleteEntry().ConfigureAwait(false), _ => ModifyEntry_CanExecute() && SelectedResult != null);
 
-    private void DeleteEntryAction()
+    /// <summary>
+    /// Shows a confirmation dialog and, if confirmed, deletes the selected firewall rule
+    /// via PowerShell and reloads the rule list.
+    /// Any PowerShell error is written to the log and shown in the status bar.
+    /// </summary>
+    private async Task DeleteEntry()
     {
-        // TODO: confirm and call Firewall.DeleteRuleAsync
+        var result = await DialogHelper.ShowConfirmationMessageAsync(
+            Application.Current.MainWindow,
+            Strings.DeleteEntry,
+            string.Format(Strings.DeleteFirewallRuleMessage, SelectedResult.Name),
+            ChildWindowIcon.Info,
+            Strings.Delete);
+
+        if (!result)
+            return;
+
+        try
+        {
+            await Firewall.DeleteRuleAsync(SelectedResult);
+            await Refresh();
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while deleting firewall rule", ex);
+
+            StatusMessage = ex.Message;
+            IsStatusMessageDisplayed = true;
+        }
     }
 
-    /// <summary>Checks if entry modification commands can be executed.</summary>
+    /// <summary>
+    /// Returns <see langword="true"/> when the application is running as administrator,
+    /// no dialog is open, and no child window is open — i.e. it is safe to modify a rule.
+    /// </summary>
     private static bool ModifyEntry_CanExecute()
     {
         return ConfigurationManager.Current.IsAdmin &&
@@ -475,9 +550,14 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
                !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
-    /// <summary>Gets the command to restart the application as administrator.</summary>
+    /// <summary>
+    /// Gets the command to restart the application with administrator privileges.
+    /// </summary>
     public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
 
+    /// <summary>
+    /// Restarts the application elevated. Shows an error dialog if the restart fails.
+    /// </summary>
     private async Task RestartAsAdminAction()
     {
         try
@@ -491,9 +571,15 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    /// <summary>Gets the command to export the firewall rules.</summary>
+    /// <summary>
+    /// Gets the command to export the current firewall rule list to a file.
+    /// </summary>
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
+    /// <summary>
+    /// Opens the export child window and writes the selected or all firewall rules to the
+    /// chosen file format (CSV, XML, or JSON). Shows an error dialog if the export fails.
+    /// </summary>
     private Task ExportAction()
     {
         var childWindow = new ExportChildWindow();
@@ -740,8 +826,14 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     #region Methods
 
     /// <summary>
-    /// Loads firewall rules from Windows via PowerShell and populates <see cref="Results"/>.
+    /// Loads all NETworkManager firewall rules from the system via PowerShell and
+    /// replaces the contents of <see cref="Results"/> with the new list.
+    /// Updates <see cref="StatusMessage"/> throughout to reflect loading progress.
     /// </summary>
+    /// <param name="init">
+    /// When <see langword="true"/> the initial UI delay is skipped so the first load
+    /// on startup feels immediate.
+    /// </param>
     private async Task Refresh(bool init = false)
     {
         if (IsRefreshing)

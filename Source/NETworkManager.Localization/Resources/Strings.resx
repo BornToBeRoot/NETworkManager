@@ -4055,6 +4055,11 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   <data name="FailedToLoadFirewallRulesMessage" xml:space="preserve">
     <value>Failed to load firewall rules. {0}</value>
   </data>
+  <data name="DeleteFirewallRuleMessage" xml:space="preserve">
+    <value>The selected firewall rule is permanently deleted:
+
+{0}</value>
+  </data>
   <data name="FirewallProtocol_Any" xml:space="preserve">
     <value>Any</value>
   </data>

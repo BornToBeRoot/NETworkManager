@@ -11615,7 +11615,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("FailedToLoadFirewallRulesMessage", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to The selected firewall rule is permanently deleted: {0}.
+        /// </summary>
+        public static string DeleteFirewallRuleMessage {
+            get {
+                return ResourceManager.GetString("DeleteFirewallRuleMessage", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to WPS.
         /// </summary>
