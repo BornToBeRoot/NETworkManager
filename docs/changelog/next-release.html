@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.36e43ced.css">
-<script src="/NETworkManager/assets/js/runtime~main.a0a1b40e.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.7392edd4.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.55b1356d.js" defer="defer"></script>
 </head>
 <body>
@@ -29,6 +29,10 @@ Release date: <strong>xx.xx.2025</strong></p>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="breaking-changes">Breaking Changes<a href="#breaking-changes" class="hash-link" aria-label="Direct link to Breaking Changes" title="Direct link to Breaking Changes" translate="no">​</a></h2>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-new">What&#x27;s new?<a href="#whats-new" class="hash-link" aria-label="Direct link to What&#x27;s new?" title="Direct link to What&#x27;s new?" translate="no">​</a></h2>
+<p><strong>Firewall</strong></p>
+<ul>
+<li class="">New feature to quickly add, edit, enable, disable and delete NETworkManager-owned firewall rules. Managed rules are prefixed with <code>NETworkManager_</code> in the Windows Firewall. (See the <a href="https://borntoberoot.net/NETworkManager/docs/application/firewall" target="_blank" rel="noopener noreferrer" class="">documentation</a> for more details) <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3383" target="_blank" rel="noopener noreferrer" class="">#3383</a></li>
+</ul>
 <p><strong>PowerShell</strong></p>
 <ul>
 <li class="">DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PowerShell (conhost) window now rescales its font automatically using the Windows Console API (<code>AttachConsole</code> + <code>SetCurrentConsoleFontEx</code>), bypassing the OS limitation that prevents <code>WM_DPICHANGED</code> from being forwarded to cross-process child windows. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3352" target="_blank" rel="noopener noreferrer" class="">#3352</a></li>
@@ -38,8 +42,22 @@ Release date: <strong>xx.xx.2025</strong></p>
 <li class="">DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PuTTY window now receives an explicit <code>WM_DPICHANGED</code> message with the new DPI value packed into <code>wParam</code>, since the OS does not forward this message across process boundaries after <code>SetParent</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3352" target="_blank" rel="noopener noreferrer" class="">#3352</a></li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="improvements">Improvements<a href="#improvements" class="hash-link" aria-label="Direct link to Improvements" title="Direct link to Improvements" translate="no">​</a></h2>
+<p><strong>Dashboard</strong></p>
 <ul>
 <li class="">Redesign Status Window to make it more compact. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3359" target="_blank" rel="noopener noreferrer" class="">#3359</a></li>
+</ul>
+<p><strong>Network Interface</strong></p>
+<ul>
+<li class="">Added Network Profile (domain, private, public) information to the Network Interface details view, if available. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3383" target="_blank" rel="noopener noreferrer" class="">#3383</a></li>
+</ul>
+<p><strong>Discovery Protocol</strong></p>
+<ul>
+<li class="">Added support for <code>F5</code> and <code>Enter</code> keys to start capturing network packets. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3383" target="_blank" rel="noopener noreferrer" class="">#3383</a></li>
+<li class="">Redesigned the &quot;restart as admin&quot; note to be more compact and visually consistent. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3383" target="_blank" rel="noopener noreferrer" class="">#3383</a></li>
+</ul>
+<p><strong>Hosts File Editor</strong></p>
+<ul>
+<li class="">Button to open the hosts file in the default text editor added. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3383" target="_blank" rel="noopener noreferrer" class="">#3383</a></li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="bug-fixes">Bug Fixes<a href="#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes" translate="no">​</a></h2>
 <p><strong>Port Scanner</strong></p>
