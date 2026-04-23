@@ -134,7 +134,6 @@ public class SettingsViewModel : ViewModelBase
     private SNTPLookupSettingsView _sntpLookupSettingsView;
     private WakeOnLANSettingsView _wakeOnLANSettingsView;
     private BitCalculatorSettingsView _bitCalculatorSettingsView;
-    private FirewallSettingsView _firewallSettingsView;
 
     #endregion
 
@@ -335,11 +334,6 @@ public class SettingsViewModel : ViewModelBase
                 _bitCalculatorSettingsView ??= new BitCalculatorSettingsView();
 
                 SettingsContent = _bitCalculatorSettingsView;
-                break;
-            case SettingsName.Firewall:
-                _firewallSettingsView ??= new FirewallSettingsView();
-
-                SettingsContent = _firewallSettingsView;
                 break;
         }
     }

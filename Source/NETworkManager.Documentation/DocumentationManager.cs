@@ -267,7 +267,6 @@ public static class DocumentationManager
             SettingsName.WebConsole => GetIdentifierByApplicationName(ApplicationName.WebConsole),
             SettingsName.SNMP => GetIdentifierByApplicationName(ApplicationName.SNMP),
             SettingsName.SNTPLookup => GetIdentifierByApplicationName(ApplicationName.SNTPLookup),
-            SettingsName.Firewall => GetIdentifierByApplicationName(ApplicationName.Firewall),
             SettingsName.WakeOnLAN => GetIdentifierByApplicationName(ApplicationName.WakeOnLAN),
             SettingsName.BitCalculator => GetIdentifierByApplicationName(ApplicationName.BitCalculator),
             _ => DocumentationIdentifier.Default

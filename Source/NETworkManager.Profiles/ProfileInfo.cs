@@ -221,7 +221,7 @@ public class ProfileInfo
         // Firewall
         Firewall_Enabled = profile.Firewall_Enabled;
         //Firewall_Rules = profile.Firewall_Rules;
-        
+
         // Wake on LAN
         WakeOnLAN_Enabled = profile.WakeOnLAN_Enabled;
         WakeOnLAN_MACAddress = profile.WakeOnLAN_MACAddress;
@@ -470,7 +470,7 @@ public class ProfileInfo
 
     public bool Firewall_Enabled { get; set; }
     //public List<FirewallRule> Firewall_Rules { get; set; }
-    
+
     public bool WakeOnLAN_Enabled { get; set; }
     public string WakeOnLAN_MACAddress { get; set; }
     public string WakeOnLAN_Broadcast { get; set; }

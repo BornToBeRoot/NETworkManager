@@ -38,9 +38,9 @@ public static class PowerShellHelper
         if (Powershell.Length + BaseOpts.Length + commandOpts.Length > 32767)
         {
             scriptPath = Path.Combine(Path.GetTempPath(), $"NETworkManager_{Guid.NewGuid()}.ps1");
-            
+
             File.WriteAllText(scriptPath, command);
-            
+
             commandOpts = $" -ExecutionPolicy Bypass -File \"{scriptPath}\"";
         }
 
@@ -66,7 +66,7 @@ public static class PowerShellHelper
         {
             if (e.NativeErrorCode != 1223)
                 throw;
-            
+
             // Nothing to handle on UAC cancellation
         }
         finally

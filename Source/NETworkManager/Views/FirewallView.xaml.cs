@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
@@ -35,11 +36,22 @@ public partial class FirewallView
         if (sender is ContextMenu menu)
             menu.DataContext = _viewModel;
     }
-    
-    private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+
+    /// <summary>
+    /// Toggles the row details visibility when the expand/collapse chevron is clicked.
+    /// </summary>
+    private void ExpandRowDetails_OnClick(object sender, RoutedEventArgs e)
     {
-        if (e.ChangedButton == MouseButton.Left)
-            _viewModel.ApplyProfileCommand.Execute(null);
+        for (var visual = sender as Visual; visual != null; visual = VisualTreeHelper.GetParent(visual) as Visual)
+        {
+            if (visual is not DataGridRow row)
+                continue;
+
+            row.DetailsVisibility =
+                row.DetailsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+
+            break;
+        }
     }
 
     /// <summary>

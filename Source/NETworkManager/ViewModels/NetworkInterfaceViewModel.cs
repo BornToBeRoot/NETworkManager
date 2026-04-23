@@ -900,7 +900,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// Gets the command to apply the profile configuration.
     /// </summary>
     public ICommand ApplyProfileCommand => new RelayCommand(_ => ApplyProfileAction());
-    
+
     private void ApplyProfileAction()
     {
         ApplyConfigurationFromProfile().ConfigureAwait(false);

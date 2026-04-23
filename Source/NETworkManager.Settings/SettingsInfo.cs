@@ -3255,8 +3255,34 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
+    public string Firewall_ExportFilePath
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ExportFileType Firewall_ExportFileType
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Firewall_ExportFileType;
+
     #endregion
-    
+
     #region Discovery Protocol
 
     public DiscoveryProtocol DiscoveryProtocol_Protocol

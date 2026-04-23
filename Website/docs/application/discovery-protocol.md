@@ -22,6 +22,12 @@ If you are using a hypervisor like Hyper-V with a virtual switch configured as "
 
 :::
 
+:::note
+
+Capturing network packets requires administrator privileges. If the application is not running as administrator, capturing is not available. Use the **Restart as administrator** button to relaunch the application with elevated rights.
+
+:::
+
 ![Discovery Protocol](../img/discovery-protocol.png)
 
 In addition, further actions can be performed using the buttons at the bottom right:
@@ -29,6 +35,8 @@ In addition, further actions can be performed using the buttons at the bottom ri
 - **Export...** - Export the information to a CSV, XML or JSON file.
 
 :::note
+
+With `F5` or `Enter` you can start capturing network packets.
 
 Right-click on the result to copy the information.
 

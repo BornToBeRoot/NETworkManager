@@ -18,5 +18,5 @@ public enum ProfileName
     Firewall,
     WakeOnLAN,
     Whois,
-    IPGeolocation, 
+    IPGeolocation,
 }

@@ -342,4 +342,10 @@
   <data name="ExampleFqdnOrIPAddressPublic" xml:space="preserve">
     <value>borntoberoot.net or 1.1.1.1</value>
   </data>
+  <data name="ExampleFirewallRuleName" xml:space="preserve">
+    <value>MyApp - HTTP</value>
+  </data>
+  <data name="ExampleFirewallAddresses" xml:space="preserve">
+    <value>10.0.0.0/8; LocalSubnet</value>
+  </data>
 </root>

@@ -22,5 +22,9 @@ public enum ResourceIdentifier
     TcpState,
     Theme,
     TimeUnit,
-    WiFiConnectionStatus
+    WiFiConnectionStatus,
+    FirewallProtocol,
+    FirewallInterfaceType,
+    FirewallRuleDirection,
+    FirewallRuleAction
 }

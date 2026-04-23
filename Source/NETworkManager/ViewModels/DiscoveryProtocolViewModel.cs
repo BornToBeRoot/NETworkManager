@@ -295,7 +295,9 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to start the capture.
     /// </summary>
-    public ICommand CaptureCommand => new RelayCommand(_ => CaptureAction().ConfigureAwait(false));
+    public ICommand CaptureCommand => new RelayCommand(_ => CaptureAction().ConfigureAwait(false), Capture_CanExecute);
+
+    private bool Capture_CanExecute(object _) => ConfigurationManager.Current.IsAdmin && !IsCapturing;
 
     /// <summary>
     /// Action to start the capture.

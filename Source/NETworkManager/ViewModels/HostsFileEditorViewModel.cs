@@ -454,14 +454,13 @@ public class HostsFileEditorViewModel : ViewModelBase
     {
         IsModifying = true;
 
-        var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
+        var result = await DialogHelper.ShowConfirmationMessageAsync(
+            Application.Current.MainWindow,
             Strings.DeleteEntry,
             string.Format(Strings.DeleteHostsFileEntryMessage, SelectedResult.IPAddress, SelectedResult.Hostname,
                 string.IsNullOrEmpty(SelectedResult.Comment) ? "" : $"# {SelectedResult.Comment}"),
             ChildWindowIcon.Info,
-            Strings.Delete
-            );
-
+            Strings.Delete);
 
         if (!result)
         {
@@ -523,6 +522,28 @@ public class HostsFileEditorViewModel : ViewModelBase
         try
         {
             (Application.Current.MainWindow as MainWindow)?.RestartApplication(true);
+        }
+        catch (Exception ex)
+        {
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, ex.Message,
+                ChildWindowIcon.Error);
+        }
+    }
+
+    /// <summary>
+    /// Gets the command to open the hosts file with the system default editor.
+    /// </summary>
+    public ICommand OpenHostsFileCommand => new RelayCommand(_ => OpenHostsFileAction().ConfigureAwait(false));
+
+    /// <summary>
+    /// Opens the hosts file with the system default editor.
+    /// Shows an error dialog if the process cannot be started.
+    /// </summary>
+    private async Task OpenHostsFileAction()
+    {
+        try
+        {
+            ExternalProcessStarter.RunProcess(HostsFileEditor.HostsFilePath);
         }
         catch (Exception ex)
         {

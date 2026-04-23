@@ -310,7 +310,7 @@ public class ProfileViewModel : ViewModelBase
         Firewall_Enabled = editMode == ProfileEditMode.Add
             ? applicationName == ApplicationName.Firewall
             : profileInfo.Firewall_Enabled;
-        
+
         // Wake on LAN
         WakeOnLAN_Enabled = editMode == ProfileEditMode.Add
             ? applicationName == ApplicationName.WakeOnLAN
@@ -397,7 +397,7 @@ public class ProfileViewModel : ViewModelBase
         {
             if (value == field)
                 return;
-           
+
             field = value;
             OnPropertyChanged();
         }
@@ -2742,9 +2742,9 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged(nameof(Name));
         }
     }
-  
+
     #endregion Firewall
-    
+
     #region Wake on LAN
 
     public bool WakeOnLAN_Enabled
