@@ -16,7 +16,8 @@ public class FirewallRuleProgram : ICloneable
     /// </summary>
     [JsonIgnore]
     [XmlIgnore]
-    public FileInfo Executable {
+    public FileInfo Executable
+    {
         private set;
         get
         {
@@ -93,7 +94,7 @@ public class FirewallRuleProgram : ICloneable
         {
             return new FirewallRuleProgram();
         }
-        
+
     }
 
     #endregion

@@ -124,21 +124,21 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
 
                         var rule = new FirewallRule
                         {
-                            Id              = result.Properties["Id"]?.Value?.ToString() ?? string.Empty,
-                            IsEnabled       = result.Properties["Enabled"]?.Value as bool? == true,
-                            Name            = displayName.StartsWith(RuleIdentifier, StringComparison.Ordinal)
+                            Id = result.Properties["Id"]?.Value?.ToString() ?? string.Empty,
+                            IsEnabled = result.Properties["Enabled"]?.Value as bool? == true,
+                            Name = displayName.StartsWith(RuleIdentifier, StringComparison.Ordinal)
                                                   ? displayName[RuleIdentifier.Length..]
                                                   : displayName,
-                            Description     = result.Properties["Description"]?.Value?.ToString() ?? string.Empty,
-                            Direction       = ParseDirection(result.Properties["Direction"]?.Value?.ToString()),
-                            Action          = ParseAction(result.Properties["Action"]?.Value?.ToString()),
-                            Protocol        = ParseProtocol(result.Properties["Protocol"]?.Value?.ToString()),
-                            LocalPorts      = ParsePorts(result.Properties["LocalPort"]?.Value?.ToString()),
-                            RemotePorts     = ParsePorts(result.Properties["RemotePort"]?.Value?.ToString()),
-                            LocalAddresses  = ParseAddresses(result.Properties["LocalAddress"]?.Value?.ToString()),
+                            Description = result.Properties["Description"]?.Value?.ToString() ?? string.Empty,
+                            Direction = ParseDirection(result.Properties["Direction"]?.Value?.ToString()),
+                            Action = ParseAction(result.Properties["Action"]?.Value?.ToString()),
+                            Protocol = ParseProtocol(result.Properties["Protocol"]?.Value?.ToString()),
+                            LocalPorts = ParsePorts(result.Properties["LocalPort"]?.Value?.ToString()),
+                            RemotePorts = ParsePorts(result.Properties["RemotePort"]?.Value?.ToString()),
+                            LocalAddresses = ParseAddresses(result.Properties["LocalAddress"]?.Value?.ToString()),
                             RemoteAddresses = ParseAddresses(result.Properties["RemoteAddress"]?.Value?.ToString()),
                             NetworkProfiles = ParseProfile(result.Properties["Profile"]?.Value?.ToString()),
-                            InterfaceType   = ParseInterfaceType(result.Properties["InterfaceType"]?.Value?.ToString()),
+                            InterfaceType = ParseInterfaceType(result.Properties["InterfaceType"]?.Value?.ToString()),
                         };
 
                         var program = result.Properties["Program"]?.Value as string;
@@ -327,14 +327,14 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     /// <param name="protocol">The protocol to convert.</param>
     private static string GetProtocolString(FirewallProtocol protocol) => protocol switch
     {
-        FirewallProtocol.Any    => "Any",
-        FirewallProtocol.TCP    => "TCP",
-        FirewallProtocol.UDP    => "UDP",
+        FirewallProtocol.Any => "Any",
+        FirewallProtocol.TCP => "TCP",
+        FirewallProtocol.UDP => "UDP",
         FirewallProtocol.ICMPv4 => "ICMPv4",
         FirewallProtocol.ICMPv6 => "ICMPv6",
-        FirewallProtocol.GRE    => "GRE",
-        FirewallProtocol.L2TP   => "L2TP",
-        _                       => ((int)protocol).ToString()
+        FirewallProtocol.GRE => "GRE",
+        FirewallProtocol.L2TP => "L2TP",
+        _ => ((int)protocol).ToString()
     };
 
     /// <summary>
@@ -344,10 +344,10 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     /// <param name="interfaceType">The interface type to convert.</param>
     private static string GetInterfaceTypeString(FirewallInterfaceType interfaceType) => interfaceType switch
     {
-        FirewallInterfaceType.Wired        => "Wired",
-        FirewallInterfaceType.Wireless     => "Wireless",
+        FirewallInterfaceType.Wired => "Wired",
+        FirewallInterfaceType.Wireless => "Wireless",
         FirewallInterfaceType.RemoteAccess => "RemoteAccess",
-        _                                  => "Any"
+        _ => "Any"
     };
 
     /// <summary>
@@ -381,7 +381,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         return value switch
         {
             "Outbound" => FirewallRuleDirection.Outbound,
-            _          => FirewallRuleDirection.Inbound,
+            _ => FirewallRuleDirection.Inbound,
         };
     }
 
@@ -397,7 +397,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         return value switch
         {
             "Allow" => FirewallRuleAction.Allow,
-            _       => FirewallRuleAction.Block,
+            _ => FirewallRuleAction.Block,
         };
     }
 
@@ -416,12 +416,12 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
 
         return value.ToUpperInvariant() switch
         {
-            "TCP"     => FirewallProtocol.TCP,
-            "UDP"     => FirewallProtocol.UDP,
-            "ICMPV4"  => FirewallProtocol.ICMPv4,
-            "ICMPV6"  => FirewallProtocol.ICMPv6,
-            "GRE"     => FirewallProtocol.GRE,
-            "L2TP"    => FirewallProtocol.L2TP,
+            "TCP" => FirewallProtocol.TCP,
+            "UDP" => FirewallProtocol.UDP,
+            "ICMPV4" => FirewallProtocol.ICMPv4,
+            "ICMPV6" => FirewallProtocol.ICMPv6,
+            "GRE" => FirewallProtocol.GRE,
+            "L2TP" => FirewallProtocol.L2TP,
             _ => int.TryParse(value, out var proto) ? (FirewallProtocol)proto : FirewallProtocol.Any,
         };
     }
@@ -486,9 +486,9 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         {
             switch (token)
             {
-                case "Domain":  profiles[0] = true; break;
+                case "Domain": profiles[0] = true; break;
                 case "Private": profiles[1] = true; break;
-                case "Public":  profiles[2] = true; break;
+                case "Public": profiles[2] = true; break;
             }
         }
 
@@ -522,10 +522,10 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     {
         return value switch
         {
-            "Wired"        => FirewallInterfaceType.Wired,
-            "Wireless"     => FirewallInterfaceType.Wireless,
+            "Wired" => FirewallInterfaceType.Wired,
+            "Wireless" => FirewallInterfaceType.Wireless,
             "RemoteAccess" => FirewallInterfaceType.RemoteAccess,
-            _              => FirewallInterfaceType.Any,
+            _ => FirewallInterfaceType.Any,
         };
     }
 

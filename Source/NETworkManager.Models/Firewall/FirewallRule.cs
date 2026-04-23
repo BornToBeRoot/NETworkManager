@@ -151,7 +151,7 @@ public class FirewallRule
     /// </summary>
     public FirewallRule()
     {
-        
+
     }
     #endregion
 
@@ -165,7 +165,7 @@ public class FirewallRule
 
     /// <summary>Local ports as a human-readable string (e.g. "80; 443; 8080-8090"). Returns <c>null</c> when unrestricted.</summary>
     public string LocalPortsDisplay => LocalPorts.Count == 0 ? null : PortsToString(LocalPorts);
-    
+
     /// <summary>Remote addresses as a human-readable string (e.g. "10.0.0.0/8"). Returns <c>null</c> when unrestricted.</summary>
     public string RemoteAddressesDisplay => RemoteAddresses.Count == 0 ? null : string.Join("; ", RemoteAddresses);
 

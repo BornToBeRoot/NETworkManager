@@ -3282,7 +3282,7 @@ public class SettingsInfo : INotifyPropertyChanged
     } = GlobalStaticConfiguration.Firewall_ExportFileType;
 
     #endregion
-    
+
     #region Discovery Protocol
 
     public DiscoveryProtocol DiscoveryProtocol_Protocol

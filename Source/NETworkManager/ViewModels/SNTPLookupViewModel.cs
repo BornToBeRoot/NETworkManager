@@ -158,7 +158,7 @@ public class SNTPLookupViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        
+
     }
 
     #endregion

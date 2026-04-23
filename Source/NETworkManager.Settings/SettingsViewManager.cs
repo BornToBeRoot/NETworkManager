@@ -75,6 +75,6 @@ public static class SettingsViewManager
         new(SettingsName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN),
             SettingsGroup.Application),
         new(SettingsName.BitCalculator, ApplicationManager.GetIcon(ApplicationName.BitCalculator),
-            SettingsGroup.Application),        
+            SettingsGroup.Application),
     ];
 }

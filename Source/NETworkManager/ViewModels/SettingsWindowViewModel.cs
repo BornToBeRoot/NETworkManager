@@ -52,7 +52,7 @@ public class SettingsWindowViewModel : ViewModelBase
                 SettingsManager.Current.Window_ConfirmClose = value;
 
             field = value;
-            OnPropertyChanged();            
+            OnPropertyChanged();
         }
     }
 
@@ -68,7 +68,7 @@ public class SettingsWindowViewModel : ViewModelBase
                 SettingsManager.Current.Window_MultipleInstances = value;
 
             field = value;
-            OnPropertyChanged();         
+            OnPropertyChanged();
         }
     }
 
@@ -99,7 +99,7 @@ public class SettingsWindowViewModel : ViewModelBase
             if (!_isLoading)
                 SettingsManager.Current.SplashScreen_Enabled = value;
 
-            
+
             field = value;
             OnPropertyChanged();
         }

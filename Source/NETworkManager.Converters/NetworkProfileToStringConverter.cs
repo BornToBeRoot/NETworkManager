@@ -25,10 +25,10 @@ public sealed class NetworkProfileToStringConverter : IValueConverter
             ? "-/-"
             : profile switch
             {
-                NetworkProfile.Domain  => Strings.Domain,
+                NetworkProfile.Domain => Strings.Domain,
                 NetworkProfile.Private => Strings.Private,
-                NetworkProfile.Public  => Strings.Public,
-                _                      => "-/-"
+                NetworkProfile.Public => Strings.Public,
+                _ => "-/-"
             };
     }
 

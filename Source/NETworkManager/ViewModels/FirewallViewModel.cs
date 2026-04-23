@@ -240,7 +240,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
         }
     }
 
-   /// <summary>
+    /// <summary>
     /// Gets the collection view for profile filter tags.
     /// </summary>
     public ICollectionView ProfileFilterTagsView { get; }
@@ -397,10 +397,10 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
         _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
 
         LoadSettings();
-        
+
         _isLoading = false;
     }
-    
+
     /// <summary>
     /// Loads the settings.
     /// </summary>
@@ -754,7 +754,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
             .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile })
             .ConfigureAwait(false);
     }
-    
+
     /// <summary>
     /// Gets the command to edit a profile group.
     /// </summary>
@@ -846,9 +846,9 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     {
         SetIsExpandedForAllProfileGroups(false);
     }
-    
+
     #region Additional commands
-    
+
     /// <summary>
     /// Gets the command to open the Windows Firewall management console (WF.msc).
     /// </summary>
@@ -872,7 +872,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     }
 
     #endregion
-    
+
     #endregion
 
     #region Methods
@@ -930,18 +930,18 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// <param name="vm">The dialog ViewModel containing the user's input.</param>
     private static FirewallRule BuildRule(FirewallRuleViewModel vm) => new()
     {
-        Name            = vm.Name,
-        IsEnabled       = vm.IsEnabled,
-        Description     = vm.Description ?? string.Empty,
-        Direction       = vm.Direction,
-        Action          = vm.Action,
-        Protocol        = vm.Protocol,
-        LocalPorts      = ParsePortsString(vm.LocalPorts),
-        RemotePorts     = ParsePortsString(vm.RemotePorts),
-        LocalAddresses  = ParseAddressesString(vm.LocalAddresses),
+        Name = vm.Name,
+        IsEnabled = vm.IsEnabled,
+        Description = vm.Description ?? string.Empty,
+        Direction = vm.Direction,
+        Action = vm.Action,
+        Protocol = vm.Protocol,
+        LocalPorts = ParsePortsString(vm.LocalPorts),
+        RemotePorts = ParsePortsString(vm.RemotePorts),
+        LocalAddresses = ParseAddressesString(vm.LocalAddresses),
         RemoteAddresses = ParseAddressesString(vm.RemoteAddresses),
-        Program         = string.IsNullOrWhiteSpace(vm.Program) ? null : new FirewallRuleProgram(vm.Program),
-        InterfaceType   = vm.InterfaceType,
+        Program = string.IsNullOrWhiteSpace(vm.Program) ? null : new FirewallRuleProgram(vm.Program),
+        InterfaceType = vm.InterfaceType,
         NetworkProfiles = [vm.NetworkProfileDomain, vm.NetworkProfilePrivate, vm.NetworkProfilePublic]
     };
 
@@ -998,7 +998,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
         foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
             GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
     }
-    
+
     /// <summary>
     /// Resizes the profile view.
     /// </summary>
@@ -1031,7 +1031,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
 
         _canProfileWidthChange = true;
     }
-    
+
     /// <summary>
     /// Called when the view becomes visible.
     /// </summary>
@@ -1049,7 +1049,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     {
         _isViewActive = false;
     }
-    
+
     /// <summary>
     /// Creates the profile filter tags.
     /// </summary>
@@ -1129,9 +1129,9 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
         IsProfileFilterSet = !string.IsNullOrEmpty(filter.Search) || filter.Tags.Any();
     }
     #endregion
-    
+
     #region Events
-    
+
     /// <summary>
     /// Handles the OnProfilesUpdated event of the ProfileManager.
     /// </summary>
@@ -1141,7 +1141,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
 
         RefreshProfiles();
     }
-    
+
     /// <summary>
     /// Handles the Tick event of the search dispatcher timer.
     /// </summary>
@@ -1153,6 +1153,6 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
 
         IsSearching = false;
     }
-    
+
     #endregion
 }

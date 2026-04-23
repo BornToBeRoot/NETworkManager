@@ -59,6 +59,6 @@ public static class ProfileViewManager
         new(ProfileName.Whois, ApplicationManager.GetIcon(ApplicationName.Whois),
             ProfileGroup.Application),
         new(ProfileName.IPGeolocation, ApplicationManager.GetIcon(ApplicationName.IPGeolocation),
-            ProfileGroup.Application),      
+            ProfileGroup.Application),
     ];
 }

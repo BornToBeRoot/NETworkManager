@@ -28,5 +28,5 @@ public enum SettingsName
     SNTPLookup,
     Firewall,
     WakeOnLAN,
-    BitCalculator, 
+    BitCalculator,
 }

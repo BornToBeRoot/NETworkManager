@@ -53,7 +53,7 @@ public partial class FirewallView
             break;
         }
     }
-  
+
     /// <summary>
     /// Offload event for toggling view to the view model.
     /// </summary>

@@ -96,9 +96,9 @@ public sealed class NetworkInterface
                 profileByAlias[alias] = category switch
                 {
                     "DomainAuthenticated" => NetworkProfile.Domain,
-                    "Private"             => NetworkProfile.Private,
-                    "Public"              => NetworkProfile.Public,
-                    _                     => NetworkProfile.NotConfigured
+                    "Private" => NetworkProfile.Private,
+                    "Public" => NetworkProfile.Public,
+                    _ => NetworkProfile.NotConfigured
                 };
             }
         }

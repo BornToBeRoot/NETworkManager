@@ -100,7 +100,7 @@ public class DiscoveryProtocolCapture
         Task.Run(() =>
         {
             using var ps = System.Management.Automation.PowerShell.Create();
-            
+
             var typeParam = protocol != DiscoveryProtocol.LldpCdp ? $" -Type {protocol.ToString().ToUpper()}" : "";
 
             ps.AddScript($@"
