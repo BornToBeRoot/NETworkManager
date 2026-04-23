@@ -2148,6 +2148,12 @@ jest wyłączone!</value>
   <data name="Program" xml:space="preserve">
     <value>Program</value>
   </data>
+  <data name="Private" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="Public" xml:space="preserve">
+    <value>Public</value>
+  </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>Wybrana komenda niestandardowa zostanie trwale usunięta.</value>
   </data>
@@ -3793,6 +3799,9 @@ Right-click for more options.</value>
   <data name="HostsFileEditorAdminMessage" xml:space="preserve">
     <value>Read-only mode. Modifying the hosts file requires elevated rights!</value>
   </data>
+  <data name="OpenHostsFile" xml:space="preserve">
+    <value>Open hosts file</value>
+  </data>
   <data name="Comment" xml:space="preserve">
     <value>Comment</value>
   </data>
@@ -4034,6 +4043,9 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   <data name="Block" xml:space="preserve">
     <value>Block</value>
   </data>
+  <data name="NetworkProfile" xml:space="preserve">
+    <value>Network profile</value>
+  </data>
   <data name="NetworkProfiles" xml:space="preserve">
     <value>Network profiles</value>
   </data>
@@ -4042,5 +4054,97 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   </data>
   <data name="FailedToLoadFirewallRulesMessage" xml:space="preserve">
     <value>Failed to load firewall rules. {0}</value>
+  </data>
+  <data name="DeleteFirewallRuleMessage" xml:space="preserve">
+    <value>The selected firewall rule is permanently deleted:
+
+{0}</value>
+  </data>
+  <data name="FirewallProtocol_Any" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="FirewallProtocol_TCP" xml:space="preserve">
+    <value>TCP</value>
+  </data>
+  <data name="FirewallProtocol_UDP" xml:space="preserve">
+    <value>UDP</value>
+  </data>
+  <data name="FirewallProtocol_ICMPv4" xml:space="preserve">
+    <value>ICMPv4</value>
+  </data>
+  <data name="FirewallProtocol_ICMPv6" xml:space="preserve">
+    <value>ICMPv6</value>
+  </data>
+  <data name="FirewallProtocol_HOPOPT" xml:space="preserve">
+    <value>HOPOPT</value>
+  </data>
+  <data name="FirewallProtocol_GRE" xml:space="preserve">
+    <value>GRE</value>
+  </data>
+  <data name="FirewallProtocol_IPv6" xml:space="preserve">
+    <value>IPv6</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_Route" xml:space="preserve">
+    <value>IPv6-Route</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_Frag" xml:space="preserve">
+    <value>IPv6-Frag</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_NoNxt" xml:space="preserve">
+    <value>IPv6-NoNxt</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_Opts" xml:space="preserve">
+    <value>IPv6-Opts</value>
+  </data>
+  <data name="FirewallProtocol_VRRP" xml:space="preserve">
+    <value>VRRP</value>
+  </data>
+  <data name="FirewallProtocol_PGM" xml:space="preserve">
+    <value>PGM</value>
+  </data>
+  <data name="FirewallProtocol_L2TP" xml:space="preserve">
+    <value>L2TP</value>
+  </data>
+  <data name="FirewallInterfaceType_Any" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="FirewallInterfaceType_Wired" xml:space="preserve">
+    <value>Wired</value>
+  </data>
+  <data name="FirewallInterfaceType_Wireless" xml:space="preserve">
+    <value>Wireless</value>
+  </data>
+  <data name="FirewallInterfaceType_RemoteAccess" xml:space="preserve">
+    <value>Remote access</value>
+  </data>
+  <data name="FirewallAdminMessage" xml:space="preserve">
+    <value>Read-only mode. Modifying firewall rules requires elevated rights!</value>
+  </data>
+  <data name="FirewallRuleDirection_Inbound" xml:space="preserve">
+    <value>Inbound</value>
+  </data>
+  <data name="FirewallRuleDirection_Outbound" xml:space="preserve">
+    <value>Outbound</value>
+  </data>
+  <data name="FirewallRuleAction_Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="FirewallRuleAction_Allow" xml:space="preserve">
+    <value>Allow</value>
+  </data>
+  <data name="LocalPorts" xml:space="preserve">
+    <value>Local ports</value>
+  </data>
+  <data name="RemotePorts" xml:space="preserve">
+    <value>Remote ports</value>
+  </data>
+  <data name="LocalAddresses" xml:space="preserve">
+    <value>Local addresses</value>
+  </data>
+  <data name="RemoteAddresses" xml:space="preserve">
+    <value>Remote addresses</value>
+  </data>
+  <data name="EnterValidFirewallAddress" xml:space="preserve">
+    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8) or keyword (e.g. LocalSubnet, Internet)</value>
   </data>
 </root>
