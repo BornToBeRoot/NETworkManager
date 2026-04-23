@@ -53,13 +53,7 @@ public partial class FirewallView
             break;
         }
     }
-    
-    private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-    {
-        if (e.ChangedButton == MouseButton.Left)
-            _viewModel.ApplyProfileCommand.Execute(null);
-    }
-
+  
     /// <summary>
     /// Offload event for toggling view to the view model.
     /// </summary>

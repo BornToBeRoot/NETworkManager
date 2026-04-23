@@ -188,7 +188,7 @@ public class FirewallRule
             if (NetworkProfiles.Length > 1 && NetworkProfiles[1]) names.Add("Private");
             if (NetworkProfiles.Length > 2 && NetworkProfiles[2]) names.Add("Public");
 
-            return names.Count == 0 ? "-" : string.Join(", ", names);
+            return names.Count == 0 ? "Any" : string.Join(", ", names);
         }
     }
 

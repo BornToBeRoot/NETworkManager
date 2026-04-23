@@ -323,6 +323,9 @@ public class FirewallRuleViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(IsNetworkProfileDomainEnabled));
+            OnPropertyChanged(nameof(IsNetworkProfilePrivateEnabled));
+            OnPropertyChanged(nameof(IsNetworkProfilePublicEnabled));
         }
     }
 
@@ -339,6 +342,9 @@ public class FirewallRuleViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(IsNetworkProfileDomainEnabled));
+            OnPropertyChanged(nameof(IsNetworkProfilePrivateEnabled));
+            OnPropertyChanged(nameof(IsNetworkProfilePublicEnabled));
         }
     }
 
@@ -355,6 +361,13 @@ public class FirewallRuleViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(IsNetworkProfileDomainEnabled));
+            OnPropertyChanged(nameof(IsNetworkProfilePrivateEnabled));
+            OnPropertyChanged(nameof(IsNetworkProfilePublicEnabled));
         }
     }
+
+    public bool IsNetworkProfileDomainEnabled => NetworkProfilePrivate || NetworkProfilePublic;
+    public bool IsNetworkProfilePrivateEnabled => NetworkProfileDomain || NetworkProfilePublic;
+    public bool IsNetworkProfilePublicEnabled => NetworkProfileDomain || NetworkProfilePrivate;
 }

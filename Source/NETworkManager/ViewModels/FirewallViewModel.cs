@@ -690,19 +690,6 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     }
 
     /// <summary>
-    /// Gets the command to apply the selected profile configuration.
-    /// </summary>
-    public ICommand ApplyProfileCommand => new RelayCommand(_ => ApplyProfileAction());
-
-    /// <summary>
-    /// Action to apply the selected profile configuration.
-    /// </summary>
-    private void ApplyProfileAction()
-    {
-        MessageBox.Show("Not implemented");
-    }
-
-    /// <summary>
     /// Gets the command to add a new profile.
     /// </summary>
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());

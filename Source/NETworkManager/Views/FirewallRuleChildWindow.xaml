@@ -232,12 +232,15 @@
                 <WrapPanel Grid.Column="2" Grid.Row="24" Orientation="Horizontal">
                     <CheckBox Content="{x:Static localization:Strings.Domain}"
                               IsChecked="{Binding NetworkProfileDomain}"
+                              IsEnabled="{Binding IsNetworkProfileDomainEnabled}"
                               Margin="0,0,10,0" />
                     <CheckBox Content="{x:Static localization:Strings.Private}"
                               IsChecked="{Binding NetworkProfilePrivate}"
+                              IsEnabled="{Binding IsNetworkProfilePrivateEnabled}"
                               Margin="0,0,10,0" />
                     <CheckBox Content="{x:Static localization:Strings.Public}"
-                              IsChecked="{Binding NetworkProfilePublic}" />
+                              IsChecked="{Binding NetworkProfilePublic}"
+                              IsEnabled="{Binding IsNetworkProfilePublicEnabled}" />
                 </WrapPanel>
             </Grid>
         </ScrollViewer>
