@@ -2151,6 +2151,12 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
   <data name="Program" xml:space="preserve">
     <value>プログラム</value>
   </data>
+  <data name="Private" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="Public" xml:space="preserve">
+    <value>Public</value>
+  </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>選択したカスタム コマンドは完全に削除されます。</value>
   </data>
@@ -3796,6 +3802,9 @@ Windows の「設定」&gt;「プライバシーとセキュリティ」&gt;「�
   <data name="HostsFileEditorAdminMessage" xml:space="preserve">
     <value>読み取り専用モードです。hosts ファイルを変更するには、昇格された権限が必要です!</value>
   </data>
+  <data name="OpenHostsFile" xml:space="preserve">
+    <value>Open hosts file</value>
+  </data>
   <data name="Comment" xml:space="preserve">
     <value>コメント</value>
   </data>
@@ -4037,6 +4046,9 @@ Windows の「設定」&gt;「プライバシーとセキュリティ」&gt;「�
   <data name="Block" xml:space="preserve">
     <value>ブロック</value>
   </data>
+  <data name="NetworkProfile" xml:space="preserve">
+    <value>Network profile</value>
+  </data>
   <data name="NetworkProfiles" xml:space="preserve">
     <value>ネットワーク プロファイル</value>
   </data>
@@ -4045,5 +4057,97 @@ Windows の「設定」&gt;「プライバシーとセキュリティ」&gt;「�
   </data>
   <data name="FailedToLoadFirewallRulesMessage" xml:space="preserve">
     <value>ファイアウォール規則の読み込みに失敗しました。 {0}</value>
+  </data>
+  <data name="DeleteFirewallRuleMessage" xml:space="preserve">
+    <value>The selected firewall rule is permanently deleted:
+
+{0}</value>
+  </data>
+  <data name="FirewallProtocol_Any" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="FirewallProtocol_TCP" xml:space="preserve">
+    <value>TCP</value>
+  </data>
+  <data name="FirewallProtocol_UDP" xml:space="preserve">
+    <value>UDP</value>
+  </data>
+  <data name="FirewallProtocol_ICMPv4" xml:space="preserve">
+    <value>ICMPv4</value>
+  </data>
+  <data name="FirewallProtocol_ICMPv6" xml:space="preserve">
+    <value>ICMPv6</value>
+  </data>
+  <data name="FirewallProtocol_HOPOPT" xml:space="preserve">
+    <value>HOPOPT</value>
+  </data>
+  <data name="FirewallProtocol_GRE" xml:space="preserve">
+    <value>GRE</value>
+  </data>
+  <data name="FirewallProtocol_IPv6" xml:space="preserve">
+    <value>IPv6</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_Route" xml:space="preserve">
+    <value>IPv6-Route</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_Frag" xml:space="preserve">
+    <value>IPv6-Frag</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_NoNxt" xml:space="preserve">
+    <value>IPv6-NoNxt</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_Opts" xml:space="preserve">
+    <value>IPv6-Opts</value>
+  </data>
+  <data name="FirewallProtocol_VRRP" xml:space="preserve">
+    <value>VRRP</value>
+  </data>
+  <data name="FirewallProtocol_PGM" xml:space="preserve">
+    <value>PGM</value>
+  </data>
+  <data name="FirewallProtocol_L2TP" xml:space="preserve">
+    <value>L2TP</value>
+  </data>
+  <data name="FirewallInterfaceType_Any" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="FirewallInterfaceType_Wired" xml:space="preserve">
+    <value>Wired</value>
+  </data>
+  <data name="FirewallInterfaceType_Wireless" xml:space="preserve">
+    <value>Wireless</value>
+  </data>
+  <data name="FirewallInterfaceType_RemoteAccess" xml:space="preserve">
+    <value>Remote access</value>
+  </data>
+  <data name="FirewallAdminMessage" xml:space="preserve">
+    <value>Read-only mode. Modifying firewall rules requires elevated rights!</value>
+  </data>
+  <data name="FirewallRuleDirection_Inbound" xml:space="preserve">
+    <value>Inbound</value>
+  </data>
+  <data name="FirewallRuleDirection_Outbound" xml:space="preserve">
+    <value>Outbound</value>
+  </data>
+  <data name="FirewallRuleAction_Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="FirewallRuleAction_Allow" xml:space="preserve">
+    <value>Allow</value>
+  </data>
+  <data name="LocalPorts" xml:space="preserve">
+    <value>Local ports</value>
+  </data>
+  <data name="RemotePorts" xml:space="preserve">
+    <value>Remote ports</value>
+  </data>
+  <data name="LocalAddresses" xml:space="preserve">
+    <value>Local addresses</value>
+  </data>
+  <data name="RemoteAddresses" xml:space="preserve">
+    <value>Remote addresses</value>
+  </data>
+  <data name="EnterValidFirewallAddress" xml:space="preserve">
+    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8) or keyword (e.g. LocalSubnet, Internet)</value>
   </data>
 </root>
