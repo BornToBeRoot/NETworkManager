@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using log4net;
 using Microsoft.Win32;
 using NETworkManager.Utilities;
 using SMA = System.Management.Automation;
@@ -32,6 +33,8 @@ public sealed class NetworkInterface
     /// drivers, filters, or extensions attached to real network interfaces.
     /// See: https://github.com/dotnet/runtime/issues/122751
     /// </summary>
+    private static readonly ILog Log = LogManager.GetLogger(typeof(NetworkInterface));
+
     private static readonly List<string> NetworkInterfaceFilteredPatterns =
     [
         "Hyper-V Virtual Switch Extension Filter",
@@ -99,9 +102,9 @@ public sealed class NetworkInterface
                 };
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // Profile lookup is best-effort; proceed without profile information on error.
+            Log.Warn("Failed to query network connection profiles via Get-NetConnectionProfile.", ex);
         }
 
         foreach (var networkInterface in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())

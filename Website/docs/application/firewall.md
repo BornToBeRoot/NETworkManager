@@ -22,7 +22,7 @@ Adding, editing, enabling, disabling, or deleting firewall rules requires admini
 
 :::
 
-![Firewall](../img/firewall.png)
+<!-- ![Firewall](../img/firewall.png) -->
 
 :::note
 

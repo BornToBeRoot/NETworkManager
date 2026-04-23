@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Net;
+using System.Net.Sockets;
 using System.Windows.Controls;
 using NETworkManager.Localization.Resources;
 
@@ -37,8 +38,17 @@ public class EmptyOrFirewallAddressValidator : ValidationRule
             var slashIndex = token.IndexOf('/');
             var addressPart = slashIndex > 0 ? token[..slashIndex] : token;
 
-            if (!IPAddress.TryParse(addressPart, out _))
+            if (!IPAddress.TryParse(addressPart, out var ip))
                 return new ValidationResult(false, Strings.EnterValidFirewallAddress);
+
+            if (slashIndex > 0)
+            {
+                var prefixStr = token[(slashIndex + 1)..];
+                var maxPrefix = ip.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32;
+
+                if (!int.TryParse(prefixStr, out var prefix) || prefix < 0 || prefix > maxPrefix)
+                    return new ValidationResult(false, Strings.EnterValidFirewallAddress);
+            }
         }
 
         return ValidationResult.ValidResult;

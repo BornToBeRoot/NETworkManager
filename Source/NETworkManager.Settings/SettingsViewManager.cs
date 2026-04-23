@@ -72,10 +72,6 @@ public static class SettingsViewManager
             SettingsGroup.Application),
         new(SettingsName.SNTPLookup, ApplicationManager.GetIcon(ApplicationName.SNTPLookup),
             SettingsGroup.Application),
-        /*
-        new(SettingsName.Firewall, ApplicationManager.GetIcon(ApplicationName.Firewall),
-            SettingsGroup.Application),
-        */
         new(SettingsName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN),
             SettingsGroup.Application),
         new(SettingsName.BitCalculator, ApplicationManager.GetIcon(ApplicationName.BitCalculator),

@@ -322,7 +322,7 @@
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                         <DataTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding (firewall:FirewallRule.Action)}" Value="Allow">
+                                            <DataTrigger Binding="{Binding (firewall:FirewallRule.Action)}" Value="{x:Static firewall:FirewallRuleAction.Allow}">
                                                 <Setter TargetName="ActionIcon" Property="Fill" Value="#badc58" />
                                                 <Setter TargetName="ActionIcon" Property="OpacityMask">
                                                     <Setter.Value>
@@ -345,7 +345,7 @@
                                                    Foreground="#b95353"
                                                    VerticalAlignment="Center" />
                                         <DataTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding (firewall:FirewallRule.Action)}" Value="Allow">
+                                            <DataTrigger Binding="{Binding (firewall:FirewallRule.Action)}" Value="{x:Static firewall:FirewallRuleAction.Allow}">
                                                 <Setter TargetName="ActionText" Property="Foreground" Value="#badc58" />
                                             </DataTrigger>
                                         </DataTemplate.Triggers>
