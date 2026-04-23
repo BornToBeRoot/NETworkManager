@@ -12,13 +12,13 @@ The **Firewall** allows you to view, add, edit, enable, disable, or delete Windo
 
 Windows Firewall (Windows Defender Firewall) is a built-in host-based firewall included with all versions of Windows. It filters inbound and outbound network traffic based on rules that define the protocol, port, address, program, and action (allow or block).
 
-Rules created by NETworkManager use the prefix `NETworkManager_` in their display name to distinguish them from system-managed or third-party rules. Only rules with this prefix are shown in the Firewall view.
-
 :::
 
 :::note
 
 Adding, editing, enabling, disabling, or deleting firewall rules requires administrator privileges. If the application is not running as administrator, the view is in read-only mode. Use the **Restart as administrator** button to relaunch the application with elevated rights.
+
+Rules created by NETworkManager use the prefix `NETworkManager_` in their display name to distinguish them from system-managed or third-party rules. Only rules with this prefix are shown in the Firewall view.
 
 :::
 
