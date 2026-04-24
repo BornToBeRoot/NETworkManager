@@ -2152,10 +2152,10 @@ ist deaktiviert!</value>
     <value>Programm</value>
   </data>
   <data name="Private" xml:space="preserve">
-    <value>Private</value>
+    <value>Privat</value>
   </data>
   <data name="Public" xml:space="preserve">
-    <value>Public</value>
+    <value>Öffentlich</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>Der ausgewählte benutzerdefinierte Befehl wird unwiederbringlich gelöscht.</value>
@@ -3803,7 +3803,7 @@ Rechtsklick für weitere Optionen.</value>
     <value>Schreibgeschützter Modus. Das Ändern der hosts Datei erfordert erhöhte Rechte!</value>
   </data>
   <data name="OpenHostsFile" xml:space="preserve">
-    <value>Open hosts file</value>
+    <value>Hosts-Datei öffnen</value>
   </data>
   <data name="Comment" xml:space="preserve">
     <value>Kommentar</value>
@@ -4047,7 +4047,7 @@ Bei Bedarf können Sie die Profildateien von „{0}“ nach „{1}“ kopieren, 
     <value>Blockieren</value>
   </data>
   <data name="NetworkProfile" xml:space="preserve">
-    <value>Network profile</value>
+    <value>Netzwerkprofil</value>
   </data>
   <data name="NetworkProfiles" xml:space="preserve">
     <value>Netzwerkprofile</value>
@@ -4059,12 +4059,12 @@ Bei Bedarf können Sie die Profildateien von „{0}“ nach „{1}“ kopieren, 
     <value>Firewall-Regeln konnten nicht geladen werden. {0}</value>
   </data>
   <data name="DeleteFirewallRuleMessage" xml:space="preserve">
-    <value>The selected firewall rule is permanently deleted:
+    <value>Die ausgewählte Firewall-Regel wird endgültig gelöscht:
 
 {0}</value>
   </data>
   <data name="FirewallProtocol_Any" xml:space="preserve">
-    <value>Any</value>
+    <value>Beliebig</value>
   </data>
   <data name="FirewallProtocol_TCP" xml:space="preserve">
     <value>TCP</value>
@@ -4109,45 +4109,45 @@ Bei Bedarf können Sie die Profildateien von „{0}“ nach „{1}“ kopieren, 
     <value>L2TP</value>
   </data>
   <data name="FirewallInterfaceType_Any" xml:space="preserve">
-    <value>Any</value>
+    <value>Beliebig</value>
   </data>
   <data name="FirewallInterfaceType_Wired" xml:space="preserve">
-    <value>Wired</value>
+    <value>LAN</value>
   </data>
   <data name="FirewallInterfaceType_Wireless" xml:space="preserve">
-    <value>Wireless</value>
+    <value>Drahtlos</value>
   </data>
   <data name="FirewallInterfaceType_RemoteAccess" xml:space="preserve">
-    <value>Remote access</value>
+    <value>Remotezugriff</value>
   </data>
   <data name="FirewallAdminMessage" xml:space="preserve">
-    <value>Read-only mode. Modifying firewall rules requires elevated rights!</value>
+    <value>Schreibgeschützter Modus. Zum Ändern von Firewall-Regeln sind erweiterte Rechte erforderlich!</value>
   </data>
   <data name="FirewallRuleDirection_Inbound" xml:space="preserve">
-    <value>Inbound</value>
+    <value>Eingehend</value>
   </data>
   <data name="FirewallRuleDirection_Outbound" xml:space="preserve">
-    <value>Outbound</value>
+    <value>Ausgehend</value>
   </data>
   <data name="FirewallRuleAction_Block" xml:space="preserve">
-    <value>Block</value>
+    <value>Blockieren</value>
   </data>
   <data name="FirewallRuleAction_Allow" xml:space="preserve">
-    <value>Allow</value>
+    <value>Zulassen</value>
   </data>
   <data name="LocalPorts" xml:space="preserve">
-    <value>Local ports</value>
+    <value>Lokale Ports</value>
   </data>
   <data name="RemotePorts" xml:space="preserve">
-    <value>Remote ports</value>
+    <value>Remote Ports</value>
   </data>
   <data name="LocalAddresses" xml:space="preserve">
-    <value>Local addresses</value>
+    <value>Lokale Adressen</value>
   </data>
   <data name="RemoteAddresses" xml:space="preserve">
-    <value>Remote addresses</value>
+    <value>Remote Adressen</value>
   </data>
   <data name="EnterValidFirewallAddress" xml:space="preserve">
-    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8) or keyword (e.g. LocalSubnet, Internet)</value>
+    <value>Geben Sie eine gültige IP-Adresse, ein Subnetz (z. B. 10.0.0.0/8) oder ein Keyword (z. B. LocalSubnet, Internet) ein.</value>
   </data>
 </root>
