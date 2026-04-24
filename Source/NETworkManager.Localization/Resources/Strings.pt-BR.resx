@@ -2152,10 +2152,10 @@ público está desabilitada!</value>
     <value>Programa</value>
   </data>
   <data name="Private" xml:space="preserve">
-    <value>Private</value>
+    <value>Privado</value>
   </data>
   <data name="Public" xml:space="preserve">
-    <value>Public</value>
+    <value>Público</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>O comando personalizado selecionado será excluído permanentemente.</value>
@@ -3803,7 +3803,7 @@ Clique direito para mais opções.</value>
     <value>Modo somente leitura. Modificar o arquivo hosts requer direitos elevados!</value>
   </data>
   <data name="OpenHostsFile" xml:space="preserve">
-    <value>Open hosts file</value>
+    <value>Abrir arquivo hosts</value>
   </data>
   <data name="Comment" xml:space="preserve">
     <value>Comentário</value>
@@ -4047,7 +4047,7 @@ Você pode copiar seus arquivos de perfil de "{0}" para "{1}" para migrar seus p
     <value>Bloquear</value>
   </data>
   <data name="NetworkProfile" xml:space="preserve">
-    <value>Network profile</value>
+    <value>Perfil de rede</value>
   </data>
   <data name="NetworkProfiles" xml:space="preserve">
     <value>Perfis de rede</value>
@@ -4059,12 +4059,12 @@ Você pode copiar seus arquivos de perfil de "{0}" para "{1}" para migrar seus p
     <value>Falha ao carregar regras do firewall. {0}</value>
   </data>
   <data name="DeleteFirewallRuleMessage" xml:space="preserve">
-    <value>The selected firewall rule is permanently deleted:
+    <value>A regra do firewall selecionada foi excluída permanentemente:
 
 {0}</value>
   </data>
   <data name="FirewallProtocol_Any" xml:space="preserve">
-    <value>Any</value>
+    <value>Qualquer</value>
   </data>
   <data name="FirewallProtocol_TCP" xml:space="preserve">
     <value>TCP</value>
@@ -4109,45 +4109,45 @@ Você pode copiar seus arquivos de perfil de "{0}" para "{1}" para migrar seus p
     <value>L2TP</value>
   </data>
   <data name="FirewallInterfaceType_Any" xml:space="preserve">
-    <value>Any</value>
+    <value>Qualquer</value>
   </data>
   <data name="FirewallInterfaceType_Wired" xml:space="preserve">
-    <value>Wired</value>
+    <value>Com fio</value>
   </data>
   <data name="FirewallInterfaceType_Wireless" xml:space="preserve">
-    <value>Wireless</value>
+    <value>Sem fio</value>
   </data>
   <data name="FirewallInterfaceType_RemoteAccess" xml:space="preserve">
-    <value>Remote access</value>
+    <value>Acesso remoto</value>
   </data>
   <data name="FirewallAdminMessage" xml:space="preserve">
-    <value>Read-only mode. Modifying firewall rules requires elevated rights!</value>
+    <value>Modo somente leitura. Modificar as regras do forewall requer direitos elevados!</value>
   </data>
   <data name="FirewallRuleDirection_Inbound" xml:space="preserve">
-    <value>Inbound</value>
+    <value>Entrada</value>
   </data>
   <data name="FirewallRuleDirection_Outbound" xml:space="preserve">
-    <value>Outbound</value>
+    <value>Saída</value>
   </data>
   <data name="FirewallRuleAction_Block" xml:space="preserve">
-    <value>Block</value>
+    <value>Bloquear</value>
   </data>
   <data name="FirewallRuleAction_Allow" xml:space="preserve">
-    <value>Allow</value>
+    <value>Permitir</value>
   </data>
   <data name="LocalPorts" xml:space="preserve">
-    <value>Local ports</value>
+    <value>Portas locais</value>
   </data>
   <data name="RemotePorts" xml:space="preserve">
-    <value>Remote ports</value>
+    <value>Portas remotas</value>
   </data>
   <data name="LocalAddresses" xml:space="preserve">
-    <value>Local addresses</value>
+    <value>Endereços locais</value>
   </data>
   <data name="RemoteAddresses" xml:space="preserve">
-    <value>Remote addresses</value>
+    <value>Endereços remotos</value>
   </data>
   <data name="EnterValidFirewallAddress" xml:space="preserve">
-    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8) or keyword (e.g. LocalSubnet, Internet)</value>
+    <value>Insira um endereço IP válido, sub-rede (por exemplo, 10.0.0.0/8) ou palavra-chave (por exemplo, LocalSubnet, Internet)</value>
   </data>
 </root>
