@@ -4054,6 +4054,7 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   </data>
   <data name="TargetProfileGroupWatermark" xml:space="preserve">
     <value>Existing or new group name</value>
+  </data>
   <data name="Firewall" xml:space="preserve">
     <value>Firewall</value>
   </data>
