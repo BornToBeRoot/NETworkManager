@@ -8,72 +8,64 @@ public class SettingsNetworkViewModel : ViewModelBase
 
     private readonly bool _isLoading;
 
-    private bool _useCustomDNSServer;
-
     public bool UseCustomDNSServer
     {
-        get => _useCustomDNSServer;
+        get;
         set
         {
-            if (value == _useCustomDNSServer)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Network_UseCustomDNSServer = value;
 
-            _useCustomDNSServer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
 
-    private string _customDNSServer;
-
     public string CustomDNSServer
     {
-        get => _customDNSServer;
+        get;
         set
         {
-            if (value == _customDNSServer)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Network_CustomDNSServer = value.Replace(" ", "");
 
-            _customDNSServer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _resolveHostnamePreferIPv4;
-
     public bool ResolveHostnamePreferIPv4
     {
-        get => _resolveHostnamePreferIPv4;
+        get;
         set
         {
-            if (value == _resolveHostnamePreferIPv4)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Network_ResolveHostnamePreferIPv4 = value;
 
-            _resolveHostnamePreferIPv4 = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _resolveHostnamePreferIPv6;
-
     public bool ResolveHostnamePreferIPv6
     {
-        get => _resolveHostnamePreferIPv6;
+        get;
         set
         {
-            if (value == _resolveHostnamePreferIPv6)
+            if (value == field)
                 return;
 
-            _resolveHostnamePreferIPv6 = value;
+            field = value;
             OnPropertyChanged();
         }
     }

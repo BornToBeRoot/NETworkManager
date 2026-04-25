@@ -23,53 +23,47 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
     private readonly ServerConnectionInfo _profileDialogDefaultValues =
         new("time.example.com", 123, TransportProtocol.Tcp);
 
-    private readonly ICollectionView _sntpServers;
-
     public ICollectionView SNTPServers
     {
-        get => _sntpServers;
+        get;
         private init
         {
-            if (value == _sntpServers)
+            if (value == field)
                 return;
 
-            _sntpServers = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ServerConnectionInfoProfile _selectedSNTPServer = new();
 
     public ServerConnectionInfoProfile SelectedSNTPServer
     {
-        get => _selectedSNTPServer;
+        get;
         set
         {
-            if (value == _selectedSNTPServer)
+            if (value == field)
                 return;
 
-            _selectedSNTPServer = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = new();
 
     private List<string> ServerInfoProfileNames =>
         SettingsManager.Current.SNTPLookup_SNTPServers.Select(x => x.Name).ToList();
 
-    private int _timeout;
-
     public int Timeout
     {
-        get => _timeout;
+        get;
         set
         {
-            if (value == _timeout)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.SNTPLookup_Timeout = value;
 
-            _timeout = value;
+            field = value;
             OnPropertyChanged();
         }
     }

@@ -10,16 +10,6 @@ namespace NETworkManager.ViewModels;
 public class ARPTableAddEntryViewModel : ViewModelBase
 {
     /// <summary>
-    /// Backing field for <see cref="IPAddress"/>.
-    /// </summary>
-    private string _ipAddress;
-
-    /// <summary>
-    /// Backing field for <see cref="MACAddress"/>.
-    /// </summary>
-    private string _macAddress;
-
-    /// <summary>
     /// Initializes a new instance of the <see cref="ARPTableAddEntryViewModel"/> class.
     /// </summary>
     /// <param name="addCommand">The action to execute when the add command is invoked.</param>
@@ -46,13 +36,13 @@ public class ARPTableAddEntryViewModel : ViewModelBase
     /// </summary>
     public string IPAddress
     {
-        get => _ipAddress;
+        get;
         set
         {
-            if (value == _ipAddress)
+            if (value == field)
                 return;
 
-            _ipAddress = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -62,13 +52,13 @@ public class ARPTableAddEntryViewModel : ViewModelBase
     /// </summary>
     public string MACAddress
     {
-        get => _macAddress;
+        get;
         set
         {
-            if (value == _macAddress)
+            if (value == field)
                 return;
 
-            _macAddress = value;
+            field = value;
             OnPropertyChanged();
         }
     }

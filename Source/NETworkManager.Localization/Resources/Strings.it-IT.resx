@@ -2171,6 +2171,12 @@ Prova un altro servizio o usa quello predefinito...</value>
   <data name="Program" xml:space="preserve">
     <value>Programma</value>
   </data>
+  <data name="Private" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="Public" xml:space="preserve">
+    <value>Public</value>
+  </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>Il comando personalizzato selezionato verrà eliminato definitivamente.</value>
   </data>
@@ -3891,6 +3897,9 @@ Clic con il tasto destro per ulteriori opzioni.</value>
     <value>Modalità di sola lettura. 
 La modifica del file hosta richiede diritti elevati!</value>
   </data>
+  <data name="OpenHostsFile" xml:space="preserve">
+    <value>Open hosts file</value>
+  </data>
   <data name="Comment" xml:space="preserve">
     <value>Commento</value>
   </data>
@@ -4110,5 +4119,136 @@ er migrare le impostazioni precedenti, se necessario, è possibile copiare il fi
   </data>
   <data name="ToolTip_Reload" xml:space="preserve">
     <value>Ricarica</value>
+  </data>
+  <data name="Firewall" xml:space="preserve">
+    <value>Firewall</value>
+  </data>
+  <data name="FirewallRules" xml:space="preserve">
+    <value>Regole firewall</value>
+  </data>
+  <data name="WindowsFirewallSettings" xml:space="preserve">
+    <value>Impostazioni firewall di Windows</value>
+  </data>
+  <data name="Direction" xml:space="preserve">
+    <value>Direzione</value>
+  </data>
+  <data name="Inbound" xml:space="preserve">
+    <value>In ingresso</value>
+  </data>
+  <data name="Outbound" xml:space="preserve">
+    <value>In uscita</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Azione</value>
+  </data>
+  <data name="Allow" xml:space="preserve">
+    <value>Consenti</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>Blocca</value>
+  </data>
+  <data name="NetworkProfile" xml:space="preserve">
+    <value>Network profile</value>
+  </data>
+  <data name="NetworkProfiles" xml:space="preserve">
+    <value>Profili di rete</value>
+  </data>
+  <data name="InterfaceType" xml:space="preserve">
+    <value>Tipo scheda</value>
+  </data>
+  <data name="FailedToLoadFirewallRulesMessage" xml:space="preserve">
+    <value>Impossibile caricare le regole del firewall. {0}</value>
+  </data>
+  <data name="DeleteFirewallRuleMessage" xml:space="preserve">
+    <value>The selected firewall rule is permanently deleted:
+
+{0}</value>
+  </data>
+  <data name="FirewallProtocol_Any" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="FirewallProtocol_TCP" xml:space="preserve">
+    <value>TCP</value>
+  </data>
+  <data name="FirewallProtocol_UDP" xml:space="preserve">
+    <value>UDP</value>
+  </data>
+  <data name="FirewallProtocol_ICMPv4" xml:space="preserve">
+    <value>ICMPv4</value>
+  </data>
+  <data name="FirewallProtocol_ICMPv6" xml:space="preserve">
+    <value>ICMPv6</value>
+  </data>
+  <data name="FirewallProtocol_HOPOPT" xml:space="preserve">
+    <value>HOPOPT</value>
+  </data>
+  <data name="FirewallProtocol_GRE" xml:space="preserve">
+    <value>GRE</value>
+  </data>
+  <data name="FirewallProtocol_IPv6" xml:space="preserve">
+    <value>IPv6</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_Route" xml:space="preserve">
+    <value>IPv6-Route</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_Frag" xml:space="preserve">
+    <value>IPv6-Frag</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_NoNxt" xml:space="preserve">
+    <value>IPv6-NoNxt</value>
+  </data>
+  <data name="FirewallProtocol_IPv6_Opts" xml:space="preserve">
+    <value>IPv6-Opts</value>
+  </data>
+  <data name="FirewallProtocol_VRRP" xml:space="preserve">
+    <value>VRRP</value>
+  </data>
+  <data name="FirewallProtocol_PGM" xml:space="preserve">
+    <value>PGM</value>
+  </data>
+  <data name="FirewallProtocol_L2TP" xml:space="preserve">
+    <value>L2TP</value>
+  </data>
+  <data name="FirewallInterfaceType_Any" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="FirewallInterfaceType_Wired" xml:space="preserve">
+    <value>Wired</value>
+  </data>
+  <data name="FirewallInterfaceType_Wireless" xml:space="preserve">
+    <value>Wireless</value>
+  </data>
+  <data name="FirewallInterfaceType_RemoteAccess" xml:space="preserve">
+    <value>Remote access</value>
+  </data>
+  <data name="FirewallAdminMessage" xml:space="preserve">
+    <value>Read-only mode. Modifying firewall rules requires elevated rights!</value>
+  </data>
+  <data name="FirewallRuleDirection_Inbound" xml:space="preserve">
+    <value>Inbound</value>
+  </data>
+  <data name="FirewallRuleDirection_Outbound" xml:space="preserve">
+    <value>Outbound</value>
+  </data>
+  <data name="FirewallRuleAction_Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
+  <data name="FirewallRuleAction_Allow" xml:space="preserve">
+    <value>Allow</value>
+  </data>
+  <data name="LocalPorts" xml:space="preserve">
+    <value>Local ports</value>
+  </data>
+  <data name="RemotePorts" xml:space="preserve">
+    <value>Remote ports</value>
+  </data>
+  <data name="LocalAddresses" xml:space="preserve">
+    <value>Local addresses</value>
+  </data>
+  <data name="RemoteAddresses" xml:space="preserve">
+    <value>Remote addresses</value>
+  </data>
+  <data name="EnterValidFirewallAddress" xml:space="preserve">
+    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8) or keyword (e.g. LocalSubnet, Internet)</value>
   </data>
 </root>

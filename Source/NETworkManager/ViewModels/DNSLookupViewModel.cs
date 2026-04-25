@@ -42,22 +42,17 @@ public class DNSLookupViewModel : ViewModelBase
     private readonly bool _isLoading;
 
     /// <summary>
-    /// Backing field for <see cref="Host"/>.
-    /// </summary>
-    private string _host;
-
-    /// <summary>
     /// Gets or sets the host to lookup.
     /// </summary>
     public string Host
     {
-        get => _host;
+        get;
         set
         {
-            if (value == _host)
+            if (value == field)
                 return;
 
-            _host = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -73,20 +68,15 @@ public class DNSLookupViewModel : ViewModelBase
     public ICollectionView DNSServers { get; }
 
     /// <summary>
-    /// Backing field for <see cref="DNSServer"/>.
-    /// </summary>
-    private string _dnsServer;
-
-    /// <summary>
     /// Gets or sets the selected DNS server.
     /// This can either be an ip/host:port or a profile name.
     /// </summary>
     public string DNSServer
     {
-        get => _dnsServer;
+        get;
         set
         {
-            if (_dnsServer == value)
+            if (field == value)
                 return;
 
             // Try finding matching dns server profile by name, otherwise set to null (de-select)
@@ -96,110 +86,89 @@ public class DNSLookupViewModel : ViewModelBase
             if (!_isLoading)
                 SettingsManager.Current.DNSLookup_SelectedDNSServer_v2 = value;
 
-            _dnsServer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private DNSServerConnectionInfoProfile _selectedDNSServer;
     public DNSServerConnectionInfoProfile SelectedDNSServer
     {
-        get => _selectedDNSServer;
+        get;
         set
         {
-            if (_selectedDNSServer == value)
+            if (field == value)
                 return;
 
-            _selectedDNSServer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="QueryTypes"/>.
-    /// </summary>
-    private List<QueryType> _queryTypes = [];
 
     /// <summary>
     /// Gets the list of available query types.
     /// </summary>
     public List<QueryType> QueryTypes
     {
-        get => _queryTypes;
+        get;
         private set
         {
-            if (value == _queryTypes)
+            if (value == field)
                 return;
 
-            _queryTypes = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="QueryType"/>.
-    /// </summary>
-    private QueryType _queryType;
+    } = [];
 
     /// <summary>
     /// Gets or sets the selected query type.
     /// </summary>
     public QueryType QueryType
     {
-        get => _queryType;
+        get;
         set
         {
-            if (value == _queryType)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.DNSLookup_QueryType = value;
 
-            _queryType = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="IsRunning"/>.
-    /// </summary>
-    private bool _isRunning;
 
     /// <summary>
     /// Gets or sets a value indicating whether the lookup is running.
     /// </summary>
     public bool IsRunning
     {
-        get => _isRunning;
+        get;
         set
         {
-            if (value == _isRunning)
+            if (value == field)
                 return;
 
-            _isRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="Results"/>.
-    /// </summary>
-    private ObservableCollection<DNSLookupRecordInfo> _results = [];
 
     /// <summary>
     /// Gets or sets the collection of lookup results.
     /// </summary>
     public ObservableCollection<DNSLookupRecordInfo> Results
     {
-        get => _results;
+        get;
         set
         {
-            if (Equals(value, _results))
+            if (Equals(value, field))
                 return;
 
-            _results = value;
+            field = value;
         }
-    }
+    } = [];
 
     /// <summary>
     /// Gets the collection view for lookup results.
@@ -207,85 +176,65 @@ public class DNSLookupViewModel : ViewModelBase
     public ICollectionView ResultsView { get; }
 
     /// <summary>
-    /// Backing field for <see cref="SelectedResult"/>.
-    /// </summary>
-    private DNSLookupRecordInfo _selectedResult;
-
-    /// <summary>
     /// Gets or sets the selected lookup result.
     /// </summary>
     public DNSLookupRecordInfo SelectedResult
     {
-        get => _selectedResult;
+        get;
         set
         {
-            if (value == _selectedResult)
+            if (value == field)
                 return;
 
-            _selectedResult = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="SelectedResults"/>.
-    /// </summary>
-    private IList _selectedResults = new ArrayList();
 
     /// <summary>
     /// Gets or sets the list of selected lookup results.
     /// </summary>
     public IList SelectedResults
     {
-        get => _selectedResults;
+        get;
         set
         {
-            if (Equals(value, _selectedResults))
+            if (Equals(value, field))
                 return;
 
-            _selectedResults = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="IsStatusMessageDisplayed"/>.
-    /// </summary>
-    private bool _isStatusMessageDisplayed;
+    } = new ArrayList();
 
     /// <summary>
     /// Gets or sets a value indicating whether the status message is displayed.
     /// </summary>
     public bool IsStatusMessageDisplayed
     {
-        get => _isStatusMessageDisplayed;
+        get;
         set
         {
-            if (value == _isStatusMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isStatusMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="StatusMessage"/>.
-    /// </summary>
-    private string _statusMessage;
 
     /// <summary>
     /// Gets the status message.
     /// </summary>
     public string StatusMessage
     {
-        get => _statusMessage;
+        get;
         private set
         {
-            if (value == _statusMessage)
+            if (value == field)
                 return;
 
-            _statusMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -327,9 +276,6 @@ public class DNSLookupViewModel : ViewModelBase
 
         LoadSettings();
 
-        // Detect if settings have changed...
-        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-
         _isLoading = false;
     }
 
@@ -361,11 +307,6 @@ public class DNSLookupViewModel : ViewModelBase
     private void LoadTypes()
     {
         var queryTypes = (QueryType[])Enum.GetValues(typeof(QueryType));
-
-        //if (SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes)
-        //    QueryTypes = [.. queryTypes.Where(GlobalStaticConfiguration.DNSLookup_CustomQueryTypes.Contains).OrderBy(x => x.ToString())];
-        //else
-        //    QueryTypes = [.. queryTypes.OrderBy(x => x.ToString())];
 
         QueryTypes = [.. queryTypes.Where(DNSLookup.QueryTypes.Contains).OrderBy(x => x.ToString())];
         QueryType = QueryTypes.FirstOrDefault(x => x == SettingsManager.Current.DNSLookup_QueryType);
@@ -681,19 +622,6 @@ public class DNSLookupViewModel : ViewModelBase
     private void DNSLookup_LookupComplete(object sender, EventArgs e)
     {
         IsRunning = false;
-    }
-
-    /// <summary>
-    /// Handles the PropertyChanged event of the SettingsManager.
-    /// </summary>
-    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        switch (e.PropertyName)
-        {
-            //case nameof(SettingsInfo.DNSLookup_ShowOnlyMostCommonQueryTypes):
-            //    LoadTypes();
-            //    break;
-        }
     }
 
     #endregion

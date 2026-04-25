@@ -41,17 +41,15 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private bool _isViewActive = true;
 
-    private ICollectionView _groups;
-
     public ICollectionView Groups
     {
-        get => _groups;
+        get;
         private set
         {
-            if (value == _groups)
+            if (value == field)
                 return;
 
-            _groups = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -60,17 +58,15 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private ProfileInfo _lastSelectedProfileOnRefresh;
 
-    private GroupInfo _selectedGroup = new();
-
     public GroupInfo SelectedGroup
     {
-        get => _selectedGroup;
+        get;
         set
         {
-            if (value == _selectedGroup)
+            if (value == field)
                 return;
 
-            _selectedGroup = value;
+            field = value;
 
             // Check for null, because a NullReferenceException can occur when a profile file is changed
             // Temporarily disable profile refresh to avoid multiple refreshes and prevent the filter from being reset.
@@ -83,7 +79,9 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
                 {
                     Search = Search,
                     Tags = [.. ProfileFilterTags.Where(x => x.IsSelected).Select(x => x.Name)],
-                    TagsFilterMatch = ProfileFilterTagsMatchAny ? ProfileFilterTagsMatch.Any : ProfileFilterTagsMatch.All
+                    TagsFilterMatch = ProfileFilterTagsMatchAny
+                        ? ProfileFilterTagsMatch.Any
+                        : ProfileFilterTagsMatch.All
                 };
 
                 SetProfilesView(filter, value, _lastSelectedProfileOnRefresh);
@@ -97,64 +95,56 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
             OnPropertyChanged();
         }
-    }
-
-    private ICollectionView _profiles;
+    } = new();
 
     public ICollectionView Profiles
     {
-        get => _profiles;
+        get;
         private set
         {
-            if (value == _profiles)
+            if (value == field)
                 return;
 
-            _profiles = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ProfileInfo _selectedProfile = new();
 
     public ProfileInfo SelectedProfile
     {
-        get => _selectedProfile;
+        get;
         set
         {
-            if (value == _selectedProfile)
+            if (value == field)
                 return;
 
-            _selectedProfile = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private IList _selectedProfiles = new ArrayList();
+    } = new();
 
     public IList SelectedProfiles
     {
-        get => _selectedProfiles;
+        get;
         set
         {
-            if (Equals(value, _selectedProfiles))
+            if (Equals(value, field))
                 return;
 
-            _selectedProfiles = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _search;
+    } = new ArrayList();
 
     public string Search
     {
-        get => _search;
+        get;
         set
         {
-            if (value == _search)
+            if (value == field)
                 return;
 
-            _search = value;
+            field = value;
 
             // Start searching...
             if (!_searchDisabled)
@@ -167,32 +157,28 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private bool _isSearching;
-
     public bool IsSearching
     {
-        get => _isSearching;
+        get;
         set
         {
-            if (value == _isSearching)
+            if (value == field)
                 return;
 
-            _isSearching = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _profileFilterIsOpen;
-
     public bool ProfileFilterIsOpen
     {
-        get => _profileFilterIsOpen;
+        get;
         set
         {
-            if (value == _profileFilterIsOpen)
+            if (value == field)
                 return;
 
-            _profileFilterIsOpen = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -201,50 +187,45 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
 
-    private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
-
     public bool ProfileFilterTagsMatchAny
     {
-        get => _profileFilterTagsMatchAny;
+        get;
         set
         {
-            if (value == _profileFilterTagsMatchAny)
+            if (value == field)
                 return;
 
-            _profileFilterTagsMatchAny = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _profileFilterTagsMatchAll;
+    } = GlobalStaticConfiguration.Profile_TagsMatchAny;
 
     public bool ProfileFilterTagsMatchAll
     {
-        get => _profileFilterTagsMatchAll;
+        get;
         set
         {
-            if (value == _profileFilterTagsMatchAll)
+            if (value == field)
                 return;
 
-            _profileFilterTagsMatchAll = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isProfileFilterSet;
 
     public bool IsProfileFilterSet
     {
-        get => _isProfileFilterSet;
+        get;
         set
         {
-            if (value == _isProfileFilterSet)
+            if (value == field)
                 return;
 
-            _isProfileFilterSet = value;
+            field = value;
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Commands & Actions

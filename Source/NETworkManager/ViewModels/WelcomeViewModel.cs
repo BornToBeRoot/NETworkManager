@@ -7,16 +7,6 @@ namespace NETworkManager.ViewModels;
 
 public class WelcomeViewModel : ViewModelBase
 {
-    private bool _checkForUpdatesAtStartup = GlobalStaticConfiguration.Update_CheckForUpdatesAtStartup;
-
-    private bool _checkIPApiDNSResolver = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolver;
-
-    private bool _checkIPApiIPGeolocation = GlobalStaticConfiguration.Dashboard_CheckIPApiIPGeolocation;
-
-    private bool _checkPublicIPAddress = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddress;
-
-    private bool _powerShellModifyGlobalProfile;
-
     public WelcomeViewModel(Action<WelcomeViewModel> continueCommand)
     {
         ContinueCommand = new RelayCommand(_ => continueCommand(this));
@@ -33,65 +23,65 @@ public class WelcomeViewModel : ViewModelBase
 
     public bool CheckForUpdatesAtStartup
     {
-        get => _checkForUpdatesAtStartup;
+        get;
         set
         {
-            if (value == _checkForUpdatesAtStartup)
+            if (value == field)
                 return;
 
-            _checkForUpdatesAtStartup = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Update_CheckForUpdatesAtStartup;
 
     public bool CheckPublicIPAddress
     {
-        get => _checkPublicIPAddress;
+        get;
         set
         {
-            if (value == _checkPublicIPAddress)
+            if (value == field)
                 return;
 
-            _checkPublicIPAddress = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Dashboard_CheckPublicIPAddress;
 
     public bool CheckIPApiIPGeolocation
     {
-        get => _checkIPApiIPGeolocation;
+        get;
         set
         {
-            if (value == _checkIPApiIPGeolocation)
+            if (value == field)
                 return;
 
-            _checkIPApiIPGeolocation = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Dashboard_CheckIPApiIPGeolocation;
 
     public bool CheckIPApiDNSResolver
     {
-        get => _checkIPApiDNSResolver;
+        get;
         set
         {
-            if (value == _checkIPApiDNSResolver)
+            if (value == field)
                 return;
 
-            _checkIPApiDNSResolver = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.Dashboard_CheckIPApiDNSResolver;
 
     public bool PowerShellModifyGlobalProfile
     {
-        get => _powerShellModifyGlobalProfile;
+        get;
         set
         {
-            if (value == _powerShellModifyGlobalProfile)
+            if (value == field)
                 return;
 
-            _powerShellModifyGlobalProfile = value;
+            field = value;
             OnPropertyChanged();
         }
     }

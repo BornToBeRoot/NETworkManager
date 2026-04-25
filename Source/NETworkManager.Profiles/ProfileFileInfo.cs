@@ -7,26 +7,6 @@ namespace NETworkManager.Profiles;
 public class ProfileFileInfo : PropertyChangedBase
 {
     /// <summary>
-    ///     Private field for the <see cref="IsEncrypted" /> property.
-    /// </summary>
-    private bool _isEncrypted;
-
-    /// <summary>
-    ///     Private field for the <see cref="IsPasswordValid" /> property.
-    /// </summary>
-    private bool _isPasswordValid;
-
-    /// <summary>
-    ///     Private field for the <see cref="Name" /> property.
-    /// </summary>
-    private string _name;
-
-    /// <summary>
-    ///     Private field for the <see cref="Path" /> property.
-    /// </summary>
-    private string _path;
-
-    /// <summary>
     ///     Profile file info contains all necessary information's about the profile file and location.
     /// </summary>
     /// <param name="name"><see cref="Name" /> of the profile file.</param>
@@ -50,13 +30,13 @@ public class ProfileFileInfo : PropertyChangedBase
     /// </summary>
     public string Name
     {
-        get => _name;
+        get;
         set
         {
-            if (value == _name)
+            if (value == field)
                 return;
 
-            _name = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -66,13 +46,13 @@ public class ProfileFileInfo : PropertyChangedBase
     /// </summary>
     public string Path
     {
-        get => _path;
+        get;
         set
         {
-            if (value == _path)
+            if (value == field)
                 return;
 
-            _path = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -82,13 +62,13 @@ public class ProfileFileInfo : PropertyChangedBase
     /// </summary>
     public bool IsEncrypted
     {
-        get => _isEncrypted;
+        get;
         set
         {
-            if (value == _isEncrypted)
+            if (value == field)
                 return;
 
-            _isEncrypted = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -103,13 +83,13 @@ public class ProfileFileInfo : PropertyChangedBase
     /// </summary>
     public bool IsPasswordValid
     {
-        get => _isPasswordValid;
+        get;
         set
         {
-            if (value == _isPasswordValid)
+            if (value == field)
                 return;
 
-            _isPasswordValid = value;
+            field = value;
             OnPropertyChanged();
         }
     }

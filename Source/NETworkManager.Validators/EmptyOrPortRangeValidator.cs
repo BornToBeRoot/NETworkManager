@@ -13,9 +13,6 @@ public class EmptyOrPortRangeValidator : ValidationRule
 
         var isValid = true;
 
-        if (value == null)
-            return new ValidationResult(false, Strings.EnterValidPortOrPortRange);
-
         foreach (var portOrRange in ((string)value).Replace(" ", "").Split(';'))
             if (portOrRange.Contains('-'))
             {

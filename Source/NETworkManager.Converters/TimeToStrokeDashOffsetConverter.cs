@@ -17,7 +17,7 @@ public sealed class TimeToStrokeDashOffsetConverter : IMultiValueConverter
             !double.TryParse(circumferenceStr, NumberStyles.Float, CultureInfo.InvariantCulture,
                 out var circumference))
             return 0.0;
-        
+
         if (values.Length < 2 ||
             values[0] is not double time ||
             values[1] is not double timeMax ||

@@ -57,70 +57,62 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
 
     private readonly bool _isLoading;
 
-    private bool _adjustScreenAutomatically;
-
     public bool AdjustScreenAutomatically
     {
-        get => _adjustScreenAutomatically;
+        get;
         set
         {
-            if (value == _adjustScreenAutomatically)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_AdjustScreenAutomatically = value;
 
-            _adjustScreenAutomatically = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _useCurrentViewSize;
-
     public bool UseCurrentViewSize
     {
-        get => _useCurrentViewSize;
+        get;
         set
         {
-            if (value == _useCurrentViewSize)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_UseCurrentViewSize = value;
 
-            _useCurrentViewSize = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _useFixedScreenSize;
-
     public bool UseFixedScreenSize
     {
-        get => _useFixedScreenSize;
+        get;
         set
         {
-            if (value == _useFixedScreenSize)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_UseFixedScreenSize = value;
 
-            _useFixedScreenSize = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public List<string> ScreenResolutions => RemoteDesktop.ScreenResolutions;
 
-    private string _selectedScreenResolution;
-
     public string SelectedScreenResolution
     {
-        get => _selectedScreenResolution;
+        get;
         set
         {
-            if (value == _selectedScreenResolution)
+            if (value == field)
                 return;
 
             if (!_isLoading)
@@ -131,189 +123,169 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
                 SettingsManager.Current.RemoteDesktop_ScreenHeight = int.Parse(resolution[1]);
             }
 
-            _selectedScreenResolution = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _useCustomScreenSize;
-
     public bool UseCustomScreenSize
     {
-        get => _useCustomScreenSize;
+        get;
         set
         {
-            if (value == _useCustomScreenSize)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_UseCustomScreenSize = value;
 
-            _useCustomScreenSize = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _customScreenWidth;
-
     public string CustomScreenWidth
     {
-        get => _customScreenWidth;
+        get;
         set
         {
-            if (value == _customScreenWidth)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_CustomScreenWidth = int.Parse(value);
 
-            _customScreenWidth = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _customScreenHeight;
-
     public string CustomScreenHeight
     {
-        get => _customScreenHeight;
+        get;
         set
         {
-            if (value == _customScreenHeight)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_CustomScreenHeight = int.Parse(value);
 
-            _customScreenHeight = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public List<int> ColorDepths => RemoteDesktop.ColorDepths;
 
-    private int _selectedColorDepth;
-
     public int SelectedColorDepth
     {
-        get => _selectedColorDepth;
+        get;
         set
         {
-            if (value == _selectedColorDepth)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_ColorDepth = value;
 
-            _selectedColorDepth = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private int _port;
-
     public int Port
     {
-        get => _port;
+        get;
         set
         {
-            if (value == _port)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_Port = value;
 
-            _port = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _enableCredSspSupport;
-
     public bool EnableCredSspSupport
     {
-        get => _enableCredSspSupport;
+        get;
         set
         {
-            if (value == _enableCredSspSupport)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_EnableCredSspSupport = value;
 
-            _enableCredSspSupport = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private uint _authenticationLevel;
-
     public uint AuthenticationLevel
     {
-        get => _authenticationLevel;
+        get;
         set
         {
-            if (value == _authenticationLevel)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_AuthenticationLevel = value;
 
-            _authenticationLevel = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _enableGatewayServer;
-
     public bool EnableGatewayServer
     {
-        get => _enableGatewayServer;
+        get;
         set
         {
-            if (value == _enableGatewayServer)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_EnableGatewayServer = value;
 
-            _enableGatewayServer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _gatewayServerHostname;
-
     public string GatewayServerHostname
     {
-        get => _gatewayServerHostname;
+        get;
         set
         {
-            if (value == _gatewayServerHostname)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_GatewayServerHostname = value;
 
-            _gatewayServerHostname = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _gatewayServerBypassLocalAddresses;
-
     public bool GatewayServerBypassLocalAddresses
     {
-        get => _gatewayServerBypassLocalAddresses;
+        get;
         set
         {
-            if (value == _gatewayServerBypassLocalAddresses)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_GatewayServerBypassLocalAddresses = value;
 
-            _gatewayServerBypassLocalAddresses = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -321,38 +293,34 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     public IEnumerable<GatewayUserSelectedCredsSource> GatewayServerLogonMethods => Enum
         .GetValues(typeof(GatewayUserSelectedCredsSource)).Cast<GatewayUserSelectedCredsSource>();
 
-    private GatewayUserSelectedCredsSource _gatewayServerLogonMethod;
-
     public GatewayUserSelectedCredsSource GatewayServerLogonMethod
     {
-        get => _gatewayServerLogonMethod;
+        get;
         set
         {
-            if (Equals(value, _gatewayServerLogonMethod))
+            if (Equals(value, field))
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_GatewayServerLogonMethod = value;
 
-            _gatewayServerLogonMethod = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _gatewayServerShareCredentialsWithRemoteComputer;
-
     public bool GatewayServerShareCredentialsWithRemoteComputer
     {
-        get => _gatewayServerShareCredentialsWithRemoteComputer;
+        get;
         set
         {
-            if (value == _gatewayServerShareCredentialsWithRemoteComputer)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = value;
 
-            _gatewayServerShareCredentialsWithRemoteComputer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -360,20 +328,18 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     public IEnumerable<AudioRedirectionMode> AudioRedirectionModes =>
         Enum.GetValues(typeof(AudioRedirectionMode)).Cast<AudioRedirectionMode>();
 
-    private AudioRedirectionMode _audioRedirectionMode;
-
     public AudioRedirectionMode AudioRedirectionMode
     {
-        get => _audioRedirectionMode;
+        get;
         set
         {
-            if (Equals(value, _audioRedirectionMode))
+            if (Equals(value, field))
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_AudioRedirectionMode = value;
 
-            _audioRedirectionMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -381,20 +347,18 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     public IEnumerable<AudioCaptureRedirectionMode> AudioCaptureRedirectionModes => Enum
         .GetValues(typeof(AudioCaptureRedirectionMode)).Cast<AudioCaptureRedirectionMode>();
 
-    private AudioCaptureRedirectionMode _audioCaptureRedirectionMode;
-
     public AudioCaptureRedirectionMode AudioCaptureRedirectionMode
     {
-        get => _audioCaptureRedirectionMode;
+        get;
         set
         {
-            if (Equals(value, _audioCaptureRedirectionMode))
+            if (Equals(value, field))
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_AudioCaptureRedirectionMode = value;
 
-            _audioCaptureRedirectionMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -402,164 +366,146 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     public IEnumerable<KeyboardHookMode> KeyboardHookModes =>
         Enum.GetValues(typeof(KeyboardHookMode)).Cast<KeyboardHookMode>();
 
-    private KeyboardHookMode _keyboardHookMode;
-
     public KeyboardHookMode KeyboardHookMode
     {
-        get => _keyboardHookMode;
+        get;
         set
         {
-            if (Equals(value, _keyboardHookMode))
+            if (Equals(value, field))
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_KeyboardHookMode = value;
 
-            _keyboardHookMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _redirectClipboard;
-
     public bool RedirectClipboard
     {
-        get => _redirectClipboard;
+        get;
         set
         {
-            if (value == _redirectClipboard)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_RedirectClipboard = value;
 
-            _redirectClipboard = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _redirectDevices;
-
     public bool RedirectDevices
     {
-        get => _redirectDevices;
+        get;
         set
         {
-            if (value == _redirectDevices)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_RedirectDevices = value;
 
-            _redirectDevices = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _redirectDrives;
-
     public bool RedirectDrives
     {
-        get => _redirectDrives;
+        get;
         set
         {
-            if (value == _redirectDrives)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_RedirectDrives = value;
 
-            _redirectDrives = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _redirectPorts;
-
     public bool RedirectPorts
     {
-        get => _redirectPorts;
+        get;
         set
         {
-            if (value == _redirectPorts)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_RedirectPorts = value;
 
-            _redirectPorts = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _redirectSmartCards;
-
     public bool RedirectSmartCards
     {
-        get => _redirectSmartCards;
+        get;
         set
         {
-            if (value == _redirectSmartCards)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_RedirectSmartCards = value;
 
-            _redirectSmartCards = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _redirectPrinters;
-
     public bool RedirectPrinters
     {
-        get => _redirectPrinters;
+        get;
         set
         {
-            if (value == _redirectPrinters)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_RedirectPrinters = value;
 
-            _redirectPrinters = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _persistentBitmapCaching;
-
     public bool PersistentBitmapCaching
     {
-        get => _persistentBitmapCaching;
+        get;
         set
         {
-            if (value == _persistentBitmapCaching)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_PersistentBitmapCaching = value;
 
-            _persistentBitmapCaching = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _reconnectIfTheConnectionIsDropped;
-
     public bool ReconnectIfTheConnectionIsDropped
     {
-        get => _reconnectIfTheConnectionIsDropped;
+        get;
         set
         {
-            if (value == _reconnectIfTheConnectionIsDropped)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_ReconnectIfTheConnectionIsDropped = value;
 
-            _reconnectIfTheConnectionIsDropped = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -567,14 +513,12 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
     public IEnumerable<NetworkConnectionType> NetworkConnectionTypes =>
         Enum.GetValues(typeof(NetworkConnectionType)).Cast<NetworkConnectionType>();
 
-    private NetworkConnectionType _networkConnectionType;
-
     public NetworkConnectionType NetworkConnectionType
     {
-        get => _networkConnectionType;
+        get;
         set
         {
-            if (Equals(value, _networkConnectionType))
+            if (Equals(value, field))
                 return;
 
             if (!_isLoading)
@@ -583,115 +527,103 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
                 SettingsManager.Current.RemoteDesktop_NetworkConnectionType = value;
             }
 
-            _networkConnectionType = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _desktopBackground;
-
     public bool DesktopBackground
     {
-        get => _desktopBackground;
+        get;
         set
         {
-            if (value == _desktopBackground)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_DesktopBackground = value;
 
-            _desktopBackground = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _fontSmoothing;
-
     public bool FontSmoothing
     {
-        get => _fontSmoothing;
+        get;
         set
         {
-            if (value == _fontSmoothing)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_FontSmoothing = value;
 
-            _fontSmoothing = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _desktopComposition;
-
     public bool DesktopComposition
     {
-        get => _desktopComposition;
+        get;
         set
         {
-            if (value == _desktopComposition)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_DesktopComposition = value;
 
-            _desktopComposition = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _showWindowContentsWhileDragging;
-
     public bool ShowWindowContentsWhileDragging
     {
-        get => _showWindowContentsWhileDragging;
+        get;
         set
         {
-            if (value == _showWindowContentsWhileDragging)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_ShowWindowContentsWhileDragging = value;
 
-            _showWindowContentsWhileDragging = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _menuAndWindowAnimation;
-
     public bool MenuAndWindowAnimation
     {
-        get => _menuAndWindowAnimation;
+        get;
         set
         {
-            if (value == _menuAndWindowAnimation)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_MenuAndWindowAnimation = value;
 
-            _menuAndWindowAnimation = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _visualStyles;
-
     public bool VisualStyles
     {
-        get => _visualStyles;
+        get;
         set
         {
-            if (value == _visualStyles)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.RemoteDesktop_VisualStyles = value;
 
-            _visualStyles = value;
+            field = value;
             OnPropertyChanged();
         }
     }

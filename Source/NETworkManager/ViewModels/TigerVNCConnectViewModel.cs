@@ -9,10 +9,6 @@ namespace NETworkManager.ViewModels;
 
 public class TigerVNCConnectViewModel : ViewModelBase
 {
-    private string _host;
-
-    private int _port;
-
     public TigerVNCConnectViewModel(Action<TigerVNCConnectViewModel> connectCommand,
         Action<TigerVNCConnectViewModel> cancelHandler, string host = null)
     {
@@ -33,13 +29,13 @@ public class TigerVNCConnectViewModel : ViewModelBase
 
     public string Host
     {
-        get => _host;
+        get;
         set
         {
-            if (value == _host)
+            if (value == field)
                 return;
 
-            _host = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -48,13 +44,13 @@ public class TigerVNCConnectViewModel : ViewModelBase
 
     public int Port
     {
-        get => _port;
+        get;
         set
         {
-            if (value == _port)
+            if (value == field)
                 return;
 
-            _port = value;
+            field = value;
             OnPropertyChanged();
         }
     }

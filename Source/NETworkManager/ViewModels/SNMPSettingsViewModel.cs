@@ -24,73 +24,65 @@ public class SNMPSettingsViewModel : ViewModelBase
 
     public ICollectionView OIDProfiles { get; }
 
-    private SNMPOIDProfileInfo _selectedOIDProfile = new();
-
     public SNMPOIDProfileInfo SelectedOIDProfile
     {
-        get => _selectedOIDProfile;
+        get;
         set
         {
-            if (value == _selectedOIDProfile)
+            if (value == field)
                 return;
 
-            _selectedOIDProfile = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = new();
 
     public List<WalkMode> WalkModes { get; private set; }
 
-    private WalkMode _walkMode;
-
     public WalkMode WalkMode
     {
-        get => _walkMode;
+        get;
         set
         {
-            if (value == _walkMode)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.SNMP_WalkMode = value;
 
-            _walkMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private int _timeout;
-
     public int Timeout
     {
-        get => _timeout;
+        get;
         set
         {
-            if (value == _timeout)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.SNMP_Timeout = value;
 
-            _timeout = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private int _port;
-
     public int Port
     {
-        get => _port;
+        get;
         set
         {
-            if (value == _port)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.SNMP_Port = value;
 
-            _port = value;
+            field = value;
             OnPropertyChanged();
         }
     }

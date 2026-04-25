@@ -79,127 +79,97 @@ public class AboutViewModel : ViewModelBase
         string.Format(Strings.DevelopedAndMaintainedByX + " ", Resources.NETworkManager_GitHub_User);
 
     /// <summary>
-    /// Backing field for <see cref="IsUpdateCheckRunning"/>.
-    /// </summary>
-    private bool _isUpdateCheckRunning;
-
-    /// <summary>
     /// Gets or sets a value indicating whether the update check is currently running.
     /// </summary>
     public bool IsUpdateCheckRunning
     {
-        get => _isUpdateCheckRunning;
+        get;
         set
         {
-            if (value == _isUpdateCheckRunning)
+            if (value == field)
                 return;
 
-            _isUpdateCheckRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="IsUpdateAvailable"/>.
-    /// </summary>
-    private bool _isUpdateAvailable;
 
     /// <summary>
     /// Gets or sets a value indicating whether an update is available.
     /// </summary>
     public bool IsUpdateAvailable
     {
-        get => _isUpdateAvailable;
+        get;
         set
         {
-            if (value == _isUpdateAvailable)
+            if (value == field)
                 return;
 
-            _isUpdateAvailable = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="UpdateText"/>.
-    /// </summary>
-    private string _updateText;
 
     /// <summary>
     /// Gets the text describing the available update.
     /// </summary>
     public string UpdateText
     {
-        get => _updateText;
+        get;
         private set
         {
-            if (value == _updateText)
+            if (value == field)
                 return;
 
-            _updateText = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="UpdateReleaseUrl"/>.
-    /// </summary>
-    private string _updateReleaseUrl;
 
     /// <summary>
     /// Gets the URL for the release notes or download page.
     /// </summary>
     public string UpdateReleaseUrl
     {
-        get => _updateReleaseUrl;
+        get;
         private set
         {
-            if (value == _updateReleaseUrl)
+            if (value == field)
                 return;
 
-            _updateReleaseUrl = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ShowUpdaterMessage"/>.
-    /// </summary>
-    private bool _showUpdaterMessage;
 
     /// <summary>
     /// Gets or sets a value indicating whether to show a message from the updater.
     /// </summary>
     public bool ShowUpdaterMessage
     {
-        get => _showUpdaterMessage;
+        get;
         set
         {
-            if (value == _showUpdaterMessage)
+            if (value == field)
                 return;
 
-            _showUpdaterMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="UpdaterMessage"/>.
-    /// </summary>
-    private string _updaterMessage;
 
     /// <summary>
     /// Gets the message from the updater (e.g., no update available, error).
     /// </summary>
     public string UpdaterMessage
     {
-        get => _updaterMessage;
+        get;
         private set
         {
-            if (value == _updaterMessage)
+            if (value == field)
                 return;
 
-            _updaterMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -210,22 +180,17 @@ public class AboutViewModel : ViewModelBase
     public ICollectionView LibrariesView { get; }
 
     /// <summary>
-    /// Backing field for <see cref="SelectedLibraryInfo"/>.
-    /// </summary>
-    private LibraryInfo _selectedLibraryInfo;
-
-    /// <summary>
     /// Gets or sets the currently selected library information.
     /// </summary>
     public LibraryInfo SelectedLibraryInfo
     {
-        get => _selectedLibraryInfo;
+        get;
         set
         {
-            if (value == _selectedLibraryInfo)
+            if (value == field)
                 return;
 
-            _selectedLibraryInfo = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -236,22 +201,17 @@ public class AboutViewModel : ViewModelBase
     public ICollectionView ExternalServicesView { get; }
 
     /// <summary>
-    /// Backing field for <see cref="SelectedExternalServicesInfo"/>.
-    /// </summary>
-    private ExternalServicesInfo _selectedExternalServicesInfo;
-
-    /// <summary>
     /// Gets or sets the currently selected external service information.
     /// </summary>
     public ExternalServicesInfo SelectedExternalServicesInfo
     {
-        get => _selectedExternalServicesInfo;
+        get;
         set
         {
-            if (value == _selectedExternalServicesInfo)
+            if (value == field)
                 return;
 
-            _selectedExternalServicesInfo = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -262,22 +222,17 @@ public class AboutViewModel : ViewModelBase
     public ICollectionView ResourcesView { get; }
 
     /// <summary>
-    /// Backing field for <see cref="SelectedResourceInfo"/>.
-    /// </summary>
-    private ResourceInfo _selectedResourceInfo;
-
-    /// <summary>
     /// Gets or sets the currently selected resource information.
     /// </summary>
     public ResourceInfo SelectedResourceInfo
     {
-        get => _selectedResourceInfo;
+        get;
         set
         {
-            if (value == _selectedResourceInfo)
+            if (value == field)
                 return;
 
-            _selectedResourceInfo = value;
+            field = value;
             OnPropertyChanged();
         }
     }

@@ -10,11 +10,6 @@ namespace NETworkManager.ViewModels;
 public class CustomCommandViewModel : ViewModelBase
 {
     /// <summary>
-    /// Backing field for <see cref="ID"/>.
-    /// </summary>
-    private readonly Guid _id;
-
-    /// <summary>
     /// The original custom command info.
     /// </summary>
     private readonly CustomCommandInfo _info;
@@ -25,29 +20,9 @@ public class CustomCommandViewModel : ViewModelBase
     private readonly bool _isLoading;
 
     /// <summary>
-    /// Backing field for <see cref="Arguments"/>.
-    /// </summary>
-    private string _arguments;
-
-    /// <summary>
-    /// Backing field for <see cref="FilePath"/>.
-    /// </summary>
-    private string _filePath;
-
-    /// <summary>
-    /// Backing field for <see cref="InfoChanged"/>.
-    /// </summary>
-    private bool _infoChanged;
-
-    /// <summary>
     /// Backing field for <see cref="IsEdited"/>.
     /// </summary>
     private bool _isEdited;
-
-    /// <summary>
-    /// Backing field for <see cref="Name"/>.
-    /// </summary>
-    private string _name;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CustomCommandViewModel"/> class.
@@ -92,13 +67,13 @@ public class CustomCommandViewModel : ViewModelBase
     /// </summary>
     public Guid ID
     {
-        get => _id;
+        get;
         private init
         {
-            if (_id == value)
+            if (field == value)
                 return;
 
-            _id = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -108,13 +83,13 @@ public class CustomCommandViewModel : ViewModelBase
     /// </summary>
     public string Name
     {
-        get => _name;
+        get;
         set
         {
-            if (_name == value)
+            if (field == value)
                 return;
 
-            _name = value;
+            field = value;
 
             if (!_isLoading)
                 CheckInfoChanged();
@@ -128,13 +103,13 @@ public class CustomCommandViewModel : ViewModelBase
     /// </summary>
     public string FilePath
     {
-        get => _filePath;
+        get;
         set
         {
-            if (_filePath == value)
+            if (field == value)
                 return;
 
-            _filePath = value;
+            field = value;
 
             if (!_isLoading)
                 CheckInfoChanged();
@@ -148,13 +123,13 @@ public class CustomCommandViewModel : ViewModelBase
     /// </summary>
     public string Arguments
     {
-        get => _arguments;
+        get;
         set
         {
-            if (_arguments == value)
+            if (field == value)
                 return;
 
-            _arguments = value;
+            field = value;
 
             if (!_isLoading)
                 CheckInfoChanged();
@@ -168,13 +143,13 @@ public class CustomCommandViewModel : ViewModelBase
     /// </summary>
     public bool InfoChanged
     {
-        get => _infoChanged;
+        get;
         set
         {
-            if (value == _infoChanged)
+            if (value == field)
                 return;
 
-            _infoChanged = value;
+            field = value;
             OnPropertyChanged();
         }
     }

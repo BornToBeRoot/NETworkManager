@@ -51,40 +51,30 @@ public class GroupViewModel : ViewModelBase
     #region General
 
     /// <summary>
-    /// Backing field for <see cref="NameIsValid"/>.
-    /// </summary>
-    private bool _nameIsValid = true;
-
-    /// <summary>
     /// Gets or sets a value indicating whether the name is valid.
     /// </summary>
     public bool NameIsValid
     {
-        get => _nameIsValid;
+        get;
         set
         {
-            if (value == _nameIsValid)
+            if (value == field)
                 return;
 
-            _nameIsValid = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="Name"/>.
-    /// </summary>
-    private string _name;
+    } = true;
 
     /// <summary>
     /// Gets or sets the name of the group.
     /// </summary>
     public string Name
     {
-        get => _name;
+        get;
         set
         {
-            if (value == _name)
+            if (value == field)
                 return;
 
             // Check name for duplicate...
@@ -94,28 +84,23 @@ public class GroupViewModel : ViewModelBase
             else
                 NameIsValid = true;
 
-            _name = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="Description"/>.
-    /// </summary>
-    private string _description;
 
     /// <summary>
     /// Gets or sets the description of the group.
     /// </summary>
     public string Description
     {
-        get => _description;
+        get;
         set
         {
-            if (value == _description)
+            if (value == field)
                 return;
 
-            _description = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -125,173 +110,144 @@ public class GroupViewModel : ViewModelBase
     #region Remote Desktop
 
     /// <summary>
-    /// Backing field for <see cref="RemoteDesktop_UseCredentials"/>.
-    /// </summary>
-    private bool _remoteDesktop_UseCredentials;
-
-    /// <summary>
     /// Gets or sets a value indicating whether to use credentials for Remote Desktop.
     /// </summary>
     public bool RemoteDesktop_UseCredentials
     {
-        get => _remoteDesktop_UseCredentials;
+        get;
         set
         {
-            if (value == _remoteDesktop_UseCredentials)
+            if (value == field)
                 return;
 
-            _remoteDesktop_UseCredentials = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="RemoteDesktop_Username"/>.
-    /// </summary>
-    private string _remoteDesktop_Username;
 
     /// <summary>
     /// Gets or sets the username for Remote Desktop.
     /// </summary>
     public string RemoteDesktop_Username
     {
-        get => _remoteDesktop_Username;
+        get;
         set
         {
-            if (value == _remoteDesktop_Username)
+            if (value == field)
                 return;
 
-            _remoteDesktop_Username = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="RemoteDesktop_Domain"/>.
-    /// </summary>
-    private string _remoteDesktop_Domain;
 
     /// <summary>
     /// Gets or sets the domain for Remote Desktop.
     /// </summary>
     public string RemoteDesktop_Domain
     {
-        get => _remoteDesktop_Domain;
+        get;
         set
         {
-            if (value == _remoteDesktop_Domain)
+            if (value == field)
                 return;
 
-            _remoteDesktop_Domain = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_IsPasswordEmpty = true; // Initial it's empty
 
     public bool RemoteDesktop_IsPasswordEmpty
     {
-        get => _remoteDesktop_IsPasswordEmpty;
+        get;
         set
         {
-            if (value == _remoteDesktop_IsPasswordEmpty)
+            if (value == field)
                 return;
 
-            _remoteDesktop_IsPasswordEmpty = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private SecureString _remoteDesktop_Password;
+    } = true;
 
     public SecureString RemoteDesktop_Password
     {
-        get => _remoteDesktop_Password;
+        get;
         set
         {
-            if (value == _remoteDesktop_Password)
+            if (value == field)
                 return;
 
             // Validate the password string
             RemoteDesktop_IsPasswordEmpty =
                 value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
-            _remoteDesktop_Password = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_AdminSession;
 
     public bool RemoteDesktop_AdminSession
     {
-        get => _remoteDesktop_AdminSession;
+        get;
         set
         {
-            if (value == _remoteDesktop_AdminSession)
+            if (value == field)
                 return;
 
-            _remoteDesktop_AdminSession = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_OverrideDisplay;
 
     public bool RemoteDesktop_OverrideDisplay
     {
-        get => _remoteDesktop_OverrideDisplay;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideDisplay)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideDisplay = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_AdjustScreenAutomatically;
 
     public bool RemoteDesktop_AdjustScreenAutomatically
     {
-        get => _remoteDesktop_AdjustScreenAutomatically;
+        get;
         set
         {
-            if (value == _remoteDesktop_AdjustScreenAutomatically)
+            if (value == field)
                 return;
 
-            _remoteDesktop_AdjustScreenAutomatically = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_UseCurrentViewSize;
 
     public bool RemoteDesktop_UseCurrentViewSize
     {
-        get => _remoteDesktop_UseCurrentViewSize;
+        get;
         set
         {
-            if (value == _remoteDesktop_UseCurrentViewSize)
+            if (value == field)
                 return;
 
-            _remoteDesktop_UseCurrentViewSize = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _remoteDesktop_UseFixedScreenSize;
-
     public bool RemoteDesktop_UseFixedScreenSize
     {
-        get => _remoteDesktop_UseFixedScreenSize;
+        get;
         set
         {
-            if (value == _remoteDesktop_UseFixedScreenSize)
+            if (value == field)
                 return;
 
-            _remoteDesktop_UseFixedScreenSize = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -301,14 +257,12 @@ public class GroupViewModel : ViewModelBase
     public int RemoteDesktop_ScreenWidth;
     public int RemoteDesktop_ScreenHeight;
 
-    private string _remoteDesktop_SelectedScreenResolution;
-
     public string RemoteDesktop_SelectedScreenResolution
     {
-        get => _remoteDesktop_SelectedScreenResolution;
+        get;
         set
         {
-            if (value == _remoteDesktop_SelectedScreenResolution)
+            if (value == field)
                 return;
 
             var resolution = value.Split('x');
@@ -316,234 +270,204 @@ public class GroupViewModel : ViewModelBase
             RemoteDesktop_ScreenWidth = int.Parse(resolution[0]);
             RemoteDesktop_ScreenHeight = int.Parse(resolution[1]);
 
-            _remoteDesktop_SelectedScreenResolution = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_UseCustomScreenSize;
 
     public bool RemoteDesktop_UseCustomScreenSize
     {
-        get => _remoteDesktop_UseCustomScreenSize;
+        get;
         set
         {
-            if (value == _remoteDesktop_UseCustomScreenSize)
+            if (value == field)
                 return;
 
-            _remoteDesktop_UseCustomScreenSize = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _remoteDesktop_CustomScreenWidth;
 
     public string RemoteDesktop_CustomScreenWidth
     {
-        get => _remoteDesktop_CustomScreenWidth;
+        get;
         set
         {
-            if (value == _remoteDesktop_CustomScreenWidth)
+            if (value == field)
                 return;
 
-            _remoteDesktop_CustomScreenWidth = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _remoteDesktop_CustomScreenHeight;
 
     public string RemoteDesktop_CustomScreenHeight
     {
-        get => _remoteDesktop_CustomScreenHeight;
+        get;
         set
         {
-            if (value == _remoteDesktop_CustomScreenHeight)
+            if (value == field)
                 return;
 
-            _remoteDesktop_CustomScreenHeight = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _remoteDesktop_OverrideColorDepth;
-
     public bool RemoteDesktop_OverrideColorDepth
     {
-        get => _remoteDesktop_OverrideColorDepth;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideColorDepth)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideColorDepth = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public List<int> RemoteDesktop_ColorDepths => RemoteDesktop.ColorDepths;
 
-    private int _remoteDesktop_SelectedColorDepth;
-
     public int RemoteDesktop_SelectedColorDepth
     {
-        get => _remoteDesktop_SelectedColorDepth;
+        get;
         set
         {
-            if (value == _remoteDesktop_SelectedColorDepth)
+            if (value == field)
                 return;
 
-            _remoteDesktop_SelectedColorDepth = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_OverridePort;
 
     public bool RemoteDesktop_OverridePort
     {
-        get => _remoteDesktop_OverridePort;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverridePort)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverridePort = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _remoteDesktop_Port;
 
     public int RemoteDesktop_Port
     {
-        get => _remoteDesktop_Port;
+        get;
         set
         {
-            if (value == _remoteDesktop_Port)
+            if (value == field)
                 return;
 
-            _remoteDesktop_Port = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_OverrideCredSspSupport;
 
     public bool RemoteDesktop_OverrideCredSspSupport
     {
-        get => _remoteDesktop_OverrideCredSspSupport;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideCredSspSupport)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideCredSspSupport = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_EnableCredSspSupport;
 
     public bool RemoteDesktop_EnableCredSspSupport
     {
-        get => _remoteDesktop_EnableCredSspSupport;
+        get;
         set
         {
-            if (value == _remoteDesktop_EnableCredSspSupport)
+            if (value == field)
                 return;
 
-            _remoteDesktop_EnableCredSspSupport = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_OverrideAuthenticationLevel;
 
     public bool RemoteDesktop_OverrideAuthenticationLevel
     {
-        get => _remoteDesktop_OverrideAuthenticationLevel;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideAuthenticationLevel)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideAuthenticationLevel = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private uint _remoteDesktop_AuthenticationLevel;
 
     public uint RemoteDesktop_AuthenticationLevel
     {
-        get => _remoteDesktop_AuthenticationLevel;
+        get;
         set
         {
-            if (value == _remoteDesktop_AuthenticationLevel)
+            if (value == field)
                 return;
 
-            _remoteDesktop_AuthenticationLevel = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_OverrideGatewayServer;
 
     public bool RemoteDesktop_OverrideGatewayServer
     {
-        get => _remoteDesktop_OverrideGatewayServer;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideGatewayServer)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideGatewayServer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_EnableGatewayServer;
 
     public bool RemoteDesktop_EnableGatewayServer
     {
-        get => _remoteDesktop_EnableGatewayServer;
+        get;
         set
         {
-            if (value == _remoteDesktop_EnableGatewayServer)
+            if (value == field)
                 return;
 
-            _remoteDesktop_EnableGatewayServer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _remoteDesktop_GatewayServerHostname;
 
     public string RemoteDesktop_GatewayServerHostname
     {
-        get => _remoteDesktop_GatewayServerHostname;
+        get;
         set
         {
-            if (value == _remoteDesktop_GatewayServerHostname)
+            if (value == field)
                 return;
 
-            _remoteDesktop_GatewayServerHostname = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _remoteDesktop_GatewayServerBypassLocalAddresses;
-
     public bool RemoteDesktop_GatewayServerBypassLocalAddresses
     {
-        get => _remoteDesktop_GatewayServerBypassLocalAddresses;
+        get;
         set
         {
-            if (value == _remoteDesktop_GatewayServerBypassLocalAddresses)
+            if (value == field)
                 return;
 
-            _remoteDesktop_GatewayServerBypassLocalAddresses = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -551,126 +475,110 @@ public class GroupViewModel : ViewModelBase
     public IEnumerable<GatewayUserSelectedCredsSource> RemoteDesktop_GatewayServerLogonMethods =>
         Enum.GetValues(typeof(GatewayUserSelectedCredsSource)).Cast<GatewayUserSelectedCredsSource>();
 
-    private GatewayUserSelectedCredsSource _remoteDesktop_GatewayServerLogonMethod;
-
     public GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod
     {
-        get => _remoteDesktop_GatewayServerLogonMethod;
+        get;
         set
         {
-            if (Equals(value, _remoteDesktop_GatewayServerLogonMethod))
+            if (Equals(value, field))
                 return;
 
-            _remoteDesktop_GatewayServerLogonMethod = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
 
     public bool RemoteDesktop_GatewayServerShareCredentialsWithRemoteComputer
     {
-        get => _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer;
+        get;
         set
         {
-            if (value == _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer)
+            if (value == field)
                 return;
 
-            _remoteDesktop_GatewayServerShareCredentialsWithRemoteComputer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_UseGatewayServerCredentials;
 
     public bool RemoteDesktop_UseGatewayServerCredentials
     {
-        get => _remoteDesktop_UseGatewayServerCredentials;
+        get;
         set
         {
-            if (value == _remoteDesktop_UseGatewayServerCredentials)
+            if (value == field)
                 return;
 
-            _remoteDesktop_UseGatewayServerCredentials = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _remoteDesktop_GatewayServerUsername;
 
     public string RemoteDesktop_GatewayServerUsername
     {
-        get => _remoteDesktop_GatewayServerUsername;
+        get;
         set
         {
-            if (value == _remoteDesktop_GatewayServerUsername)
+            if (value == field)
                 return;
 
-            _remoteDesktop_GatewayServerUsername = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _remoteDesktop_GatewayServerDomain;
 
     public string RemoteDesktop_GatewayServerDomain
     {
-        get => _remoteDesktop_GatewayServerDomain;
+        get;
         set
         {
-            if (value == _remoteDesktop_GatewayServerDomain)
+            if (value == field)
                 return;
 
-            _remoteDesktop_GatewayServerDomain = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_IsGatewayServerPasswordEmpty = true; // Initial it's empty
 
     public bool RemoteDesktop_IsGatewayServerPasswordEmpty
     {
-        get => _remoteDesktop_IsGatewayServerPasswordEmpty;
+        get;
         set
         {
-            if (value == _remoteDesktop_IsGatewayServerPasswordEmpty)
+            if (value == field)
                 return;
 
-            _remoteDesktop_IsGatewayServerPasswordEmpty = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private SecureString _remoteDesktop_GatewayServerPassword;
+    } = true;
 
     public SecureString RemoteDesktop_GatewayServerPassword
     {
-        get => _remoteDesktop_GatewayServerPassword;
+        get;
         set
         {
-            if (value == _remoteDesktop_GatewayServerPassword)
+            if (value == field)
                 return;
 
             // Validate the password string
             RemoteDesktop_IsGatewayServerPasswordEmpty =
                 value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
-            _remoteDesktop_GatewayServerPassword = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _remoteDesktop_OverrideAudioRedirectionMode;
-
     public bool RemoteDesktop_OverrideAudioRedirectionMode
     {
-        get => _remoteDesktop_OverrideAudioRedirectionMode;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideAudioRedirectionMode)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideAudioRedirectionMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -678,33 +586,29 @@ public class GroupViewModel : ViewModelBase
     public IEnumerable<AudioRedirectionMode> RemoteDesktop_AudioRedirectionModes =>
         Enum.GetValues(typeof(AudioRedirectionMode)).Cast<AudioRedirectionMode>();
 
-    private AudioRedirectionMode _remoteDesktop_AudioRedirectionMode;
-
     public AudioRedirectionMode RemoteDesktop_AudioRedirectionMode
     {
-        get => _remoteDesktop_AudioRedirectionMode;
+        get;
         set
         {
-            if (Equals(value, _remoteDesktop_AudioRedirectionMode))
+            if (Equals(value, field))
                 return;
 
-            _remoteDesktop_AudioRedirectionMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
 
-    private bool _remoteDesktop_OverrideAudioCaptureRedirectionMode;
-
     public bool RemoteDesktop_OverrideAudioCaptureRedirectionMode
     {
-        get => _remoteDesktop_OverrideAudioCaptureRedirectionMode;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideAudioCaptureRedirectionMode)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideAudioCaptureRedirectionMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -712,33 +616,29 @@ public class GroupViewModel : ViewModelBase
     public IEnumerable<AudioCaptureRedirectionMode> RemoteDesktop_AudioCaptureRedirectionModes =>
         Enum.GetValues(typeof(AudioCaptureRedirectionMode)).Cast<AudioCaptureRedirectionMode>();
 
-    private AudioCaptureRedirectionMode _remoteDesktop_AudioCaptureRedirectionMode;
-
     public AudioCaptureRedirectionMode RemoteDesktop_AudioCaptureRedirectionMode
     {
-        get => _remoteDesktop_AudioCaptureRedirectionMode;
+        get;
         set
         {
-            if (Equals(value, _remoteDesktop_AudioCaptureRedirectionMode))
+            if (Equals(value, field))
                 return;
 
-            _remoteDesktop_AudioCaptureRedirectionMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
 
-    private bool _remoteDesktop_OverrideApplyWindowsKeyCombinations;
-
     public bool RemoteDesktop_OverrideApplyWindowsKeyCombinations
     {
-        get => _remoteDesktop_OverrideApplyWindowsKeyCombinations;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideApplyWindowsKeyCombinations)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideApplyWindowsKeyCombinations = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -746,272 +646,236 @@ public class GroupViewModel : ViewModelBase
     public IEnumerable<KeyboardHookMode> RemoteDesktop_KeyboardHookModes =>
         Enum.GetValues(typeof(KeyboardHookMode)).Cast<KeyboardHookMode>();
 
-    private KeyboardHookMode _remoteDesktop_KeyboardHookMode;
-
     public KeyboardHookMode RemoteDesktop_KeyboardHookMode
     {
-        get => _remoteDesktop_KeyboardHookMode;
+        get;
         set
         {
-            if (Equals(value, _remoteDesktop_KeyboardHookMode))
+            if (Equals(value, field))
                 return;
 
-            _remoteDesktop_KeyboardHookMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_OverrideRedirectClipboard;
 
     public bool RemoteDesktop_OverrideRedirectClipboard
     {
-        get => _remoteDesktop_OverrideRedirectClipboard;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideRedirectClipboard)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideRedirectClipboard = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_RedirectClipboard;
 
     public bool RemoteDesktop_RedirectClipboard
     {
-        get => _remoteDesktop_RedirectClipboard;
+        get;
         set
         {
-            if (value == _remoteDesktop_RedirectClipboard)
+            if (value == field)
                 return;
 
-            _remoteDesktop_RedirectClipboard = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_OverrideRedirectDevices;
 
     public bool RemoteDesktop_OverrideRedirectDevices
     {
-        get => _remoteDesktop_OverrideRedirectDevices;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideRedirectDevices)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideRedirectDevices = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_RedirectDevices;
 
     public bool RemoteDesktop_RedirectDevices
     {
-        get => _remoteDesktop_RedirectDevices;
+        get;
         set
         {
-            if (value == _remoteDesktop_RedirectDevices)
+            if (value == field)
                 return;
 
-            _remoteDesktop_RedirectDevices = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_OverrideRedirectDrives;
 
     public bool RemoteDesktop_OverrideRedirectDrives
     {
-        get => _remoteDesktop_OverrideRedirectDrives;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideRedirectDrives)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideRedirectDrives = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_RedirectDrives;
 
     public bool RemoteDesktop_RedirectDrives
     {
-        get => _remoteDesktop_RedirectDrives;
+        get;
         set
         {
-            if (value == _remoteDesktop_RedirectDrives)
+            if (value == field)
                 return;
 
-            _remoteDesktop_RedirectDrives = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_OverrideRedirectPorts;
 
     public bool RemoteDesktop_OverrideRedirectPorts
     {
-        get => _remoteDesktop_OverrideRedirectPorts;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideRedirectPorts)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideRedirectPorts = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_RedirectPorts;
 
     public bool RemoteDesktop_RedirectPorts
     {
-        get => _remoteDesktop_RedirectPorts;
+        get;
         set
         {
-            if (value == _remoteDesktop_RedirectPorts)
+            if (value == field)
                 return;
 
-            _remoteDesktop_RedirectPorts = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_OverrideRedirectSmartcards;
 
     public bool RemoteDesktop_OverrideRedirectSmartcards
     {
-        get => _remoteDesktop_OverrideRedirectSmartcards;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideRedirectSmartcards)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideRedirectSmartcards = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_RedirectSmartCards;
 
     public bool RemoteDesktop_RedirectSmartCards
     {
-        get => _remoteDesktop_RedirectSmartCards;
+        get;
         set
         {
-            if (value == _remoteDesktop_RedirectSmartCards)
+            if (value == field)
                 return;
 
-            _remoteDesktop_RedirectSmartCards = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_OverrideRedirectPrinters;
 
     public bool RemoteDesktop_OverrideRedirectPrinters
     {
-        get => _remoteDesktop_OverrideRedirectPrinters;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideRedirectPrinters)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideRedirectPrinters = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_RedirectPrinters;
 
     public bool RemoteDesktop_RedirectPrinters
     {
-        get => _remoteDesktop_RedirectPrinters;
+        get;
         set
         {
-            if (value == _remoteDesktop_RedirectPrinters)
+            if (value == field)
                 return;
 
-            _remoteDesktop_RedirectPrinters = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_OverridePersistentBitmapCaching;
 
     public bool RemoteDesktop_OverridePersistentBitmapCaching
     {
-        get => _remoteDesktop_OverridePersistentBitmapCaching;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverridePersistentBitmapCaching)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverridePersistentBitmapCaching = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_PersistentBitmapCaching;
 
     public bool RemoteDesktop_PersistentBitmapCaching
     {
-        get => _remoteDesktop_PersistentBitmapCaching;
+        get;
         set
         {
-            if (value == _remoteDesktop_PersistentBitmapCaching)
+            if (value == field)
                 return;
 
-            _remoteDesktop_PersistentBitmapCaching = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
 
     public bool RemoteDesktop_OverrideReconnectIfTheConnectionIsDropped
     {
-        get => _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideReconnectIfTheConnectionIsDropped = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_ReconnectIfTheConnectionIsDropped;
 
     public bool RemoteDesktop_ReconnectIfTheConnectionIsDropped
     {
-        get => _remoteDesktop_ReconnectIfTheConnectionIsDropped;
+        get;
         set
         {
-            if (value == _remoteDesktop_ReconnectIfTheConnectionIsDropped)
+            if (value == field)
                 return;
 
-            _remoteDesktop_ReconnectIfTheConnectionIsDropped = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _remoteDesktop_OverrideNetworkConnectionType;
-
     public bool RemoteDesktop_OverrideNetworkConnectionType
     {
-        get => _remoteDesktop_OverrideNetworkConnectionType;
+        get;
         set
         {
-            if (value == _remoteDesktop_OverrideNetworkConnectionType)
+            if (value == field)
                 return;
 
-            _remoteDesktop_OverrideNetworkConnectionType = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -1019,110 +883,96 @@ public class GroupViewModel : ViewModelBase
     public IEnumerable<NetworkConnectionType> RemoteDesktop_NetworkConnectionTypes =>
         Enum.GetValues(typeof(NetworkConnectionType)).Cast<NetworkConnectionType>();
 
-    private NetworkConnectionType _remoteDesktop_NetworkConnectionType;
-
     public NetworkConnectionType RemoteDesktop_NetworkConnectionType
     {
-        get => _remoteDesktop_NetworkConnectionType;
+        get;
         set
         {
-            if (Equals(value, _remoteDesktop_NetworkConnectionType))
+            if (Equals(value, field))
                 return;
 
             if (!_isLoading)
                 ChangeNetworkConnectionTypeSettings(value);
 
-            _remoteDesktop_NetworkConnectionType = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_DesktopBackground;
 
     public bool RemoteDesktop_DesktopBackground
     {
-        get => _remoteDesktop_DesktopBackground;
+        get;
         set
         {
-            if (value == _remoteDesktop_DesktopBackground)
+            if (value == field)
                 return;
 
-            _remoteDesktop_DesktopBackground = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_FontSmoothing;
 
     public bool RemoteDesktop_FontSmoothing
     {
-        get => _remoteDesktop_FontSmoothing;
+        get;
         set
         {
-            if (value == _remoteDesktop_FontSmoothing)
+            if (value == field)
                 return;
 
-            _remoteDesktop_FontSmoothing = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_DesktopComposition;
 
     public bool RemoteDesktop_DesktopComposition
     {
-        get => _remoteDesktop_DesktopComposition;
+        get;
         set
         {
-            if (value == _remoteDesktop_DesktopComposition)
+            if (value == field)
                 return;
 
-            _remoteDesktop_DesktopComposition = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_ShowWindowContentsWhileDragging;
 
     public bool RemoteDesktop_ShowWindowContentsWhileDragging
     {
-        get => _remoteDesktop_ShowWindowContentsWhileDragging;
+        get;
         set
         {
-            if (value == _remoteDesktop_ShowWindowContentsWhileDragging)
+            if (value == field)
                 return;
 
-            _remoteDesktop_ShowWindowContentsWhileDragging = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _remoteDesktop_MenuAndWindowAnimation;
 
     public bool RemoteDesktop_MenuAndWindowAnimation
     {
-        get => _remoteDesktop_MenuAndWindowAnimation;
+        get;
         set
         {
-            if (value == _remoteDesktop_MenuAndWindowAnimation)
+            if (value == field)
                 return;
 
-            _remoteDesktop_MenuAndWindowAnimation = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _remoteDesktop_VisualStyles;
-
     public bool RemoteDesktop_VisualStyles
     {
-        get => _remoteDesktop_VisualStyles;
+        get;
         set
         {
-            if (value == _remoteDesktop_VisualStyles)
+            if (value == field)
                 return;
 
-            _remoteDesktop_VisualStyles = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -1131,94 +981,82 @@ public class GroupViewModel : ViewModelBase
 
     #region PowerShell
 
-    private bool _powerShell_OverrideCommand;
-
     public bool PowerShell_OverrideCommand
     {
-        get => _powerShell_OverrideCommand;
+        get;
         set
         {
-            if (value == _powerShell_OverrideCommand)
+            if (value == field)
                 return;
 
-            _powerShell_OverrideCommand = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _powerShell_Command;
 
     public string PowerShell_Command
     {
-        get => _powerShell_Command;
+        get;
         set
         {
-            if (value == _powerShell_Command)
+            if (value == field)
                 return;
 
-            _powerShell_Command = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _powerShell_OverrideAdditionalCommandLine;
 
     public bool PowerShell_OverrideAdditionalCommandLine
     {
-        get => _powerShell_OverrideAdditionalCommandLine;
+        get;
         set
         {
-            if (value == _powerShell_OverrideAdditionalCommandLine)
+            if (value == field)
                 return;
 
-            _powerShell_OverrideAdditionalCommandLine = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _powerShell_AdditionalCommandLine;
 
     public string PowerShell_AdditionalCommandLine
     {
-        get => _powerShell_AdditionalCommandLine;
+        get;
         set
         {
-            if (value == _powerShell_AdditionalCommandLine)
+            if (value == field)
                 return;
 
-            _powerShell_AdditionalCommandLine = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _powerShell_OverrideExecutionPolicy;
-
     public bool PowerShell_OverrideExecutionPolicy
     {
-        get => _powerShell_OverrideExecutionPolicy;
+        get;
         set
         {
-            if (value == _powerShell_OverrideExecutionPolicy)
+            if (value == field)
                 return;
 
-            _powerShell_OverrideExecutionPolicy = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public IEnumerable<ExecutionPolicy> PowerShell_ExecutionPolicies { get; set; }
 
-    private ExecutionPolicy _powerShell_ExecutionPolicy;
-
     public ExecutionPolicy PowerShell_ExecutionPolicy
     {
-        get => _powerShell_ExecutionPolicy;
+        get;
         set
         {
-            if (value == _powerShell_ExecutionPolicy)
+            if (value == field)
                 return;
 
-            _powerShell_ExecutionPolicy = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -1227,259 +1065,225 @@ public class GroupViewModel : ViewModelBase
 
     #region PuTTY
 
-    private bool _puTTY_OverrideUsername;
-
     public bool PuTTY_OverrideUsername
     {
-        get => _puTTY_OverrideUsername;
+        get;
         set
         {
-            if (value == _puTTY_OverrideUsername)
+            if (value == field)
                 return;
 
-            _puTTY_OverrideUsername = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _puTTY__Username;
 
     public string PuTTY_Username
     {
-        get => _puTTY__Username;
+        get;
         set
         {
-            if (value == _puTTY__Username)
+            if (value == field)
                 return;
 
-            _puTTY__Username = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _puTTY_OverridePrivateKeyFile;
 
     public bool PuTTY_OverridePrivateKeyFile
     {
-        get => _puTTY_OverridePrivateKeyFile;
+        get;
         set
         {
-            if (value == _puTTY_OverridePrivateKeyFile)
+            if (value == field)
                 return;
 
-            _puTTY_OverridePrivateKeyFile = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _puTTY__PrivateKeyFile;
 
     public string PuTTY_PrivateKeyFile
     {
-        get => _puTTY__PrivateKeyFile;
+        get;
         set
         {
-            if (value == _puTTY__PrivateKeyFile)
+            if (value == field)
                 return;
 
-            _puTTY__PrivateKeyFile = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _puTTY_OverrideProfile;
 
     public bool PuTTY_OverrideProfile
     {
-        get => _puTTY_OverrideProfile;
+        get;
         set
         {
-            if (value == _puTTY_OverrideProfile)
+            if (value == field)
                 return;
 
-            _puTTY_OverrideProfile = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _puTTY_Profile;
 
     public string PuTTY_Profile
     {
-        get => _puTTY_Profile;
+        get;
         set
         {
-            if (value == _puTTY_Profile)
+            if (value == field)
                 return;
 
-            _puTTY_Profile = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _puTTY_OverrideEnableLog;
 
     public bool PuTTY_OverrideEnableLog
     {
-        get => _puTTY_OverrideEnableLog;
+        get;
         set
         {
-            if (value == _puTTY_OverrideEnableLog)
+            if (value == field)
                 return;
 
-            _puTTY_OverrideEnableLog = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _puTTY_EnableLog;
 
     public bool PuTTY_EnableLog
     {
-        get => _puTTY_EnableLog;
+        get;
         set
         {
-            if (value == _puTTY_EnableLog)
+            if (value == field)
                 return;
 
-            _puTTY_EnableLog = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _puTTY_OverrideLogMode;
-
     public bool PuTTY_OverrideLogMode
     {
-        get => _puTTY_OverrideLogMode;
+        get;
         set
         {
-            if (value == _puTTY_OverrideLogMode)
+            if (value == field)
                 return;
 
-            _puTTY_OverrideLogMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public IEnumerable<LogMode> PuTTY_LogModes => Enum.GetValues(typeof(LogMode)).Cast<LogMode>();
 
-    private LogMode _puTTY_LogMode;
-
     public LogMode PuTTY_LogMode
     {
-        get => _puTTY_LogMode;
+        get;
         set
         {
-            if (Equals(value, _puTTY_LogMode))
+            if (Equals(value, field))
                 return;
 
-            _puTTY_LogMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _puTTY_OverrideLogPath;
 
     public bool PuTTY_OverrideLogPath
     {
-        get => _puTTY_OverrideLogPath;
+        get;
         set
         {
-            if (value == _puTTY_OverrideLogPath)
+            if (value == field)
                 return;
 
-            _puTTY_OverrideLogPath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _puTTY_LogPath;
 
     public string PuTTY_LogPath
     {
-        get => _puTTY_LogPath;
+        get;
         set
         {
-            if (value == _puTTY_LogPath)
+            if (value == field)
                 return;
 
-            _puTTY_LogPath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _puTTY_OverrideLogFileName;
 
     public bool PuTTY_OverrideLogFileName
     {
-        get => _puTTY_OverrideLogFileName;
+        get;
         set
         {
-            if (value == _puTTY_OverrideLogFileName)
+            if (value == field)
                 return;
 
-            _puTTY_OverrideLogFileName = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _puTTY_LogFileName;
 
     public string PuTTY_LogFileName
     {
-        get => _puTTY_LogFileName;
+        get;
         set
         {
-            if (value == _puTTY_LogFileName)
+            if (value == field)
                 return;
 
-            _puTTY_LogFileName = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _puTTY_OverrideAdditionalCommandLine;
 
     public bool PuTTY_OverrideAdditionalCommandLine
     {
-        get => _puTTY_OverrideAdditionalCommandLine;
+        get;
         set
         {
-            if (value == _puTTY_OverrideAdditionalCommandLine)
+            if (value == field)
                 return;
 
-            _puTTY_OverrideAdditionalCommandLine = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _puTTY_AdditionalCommandLine;
 
     public string PuTTY_AdditionalCommandLine
     {
-        get => _puTTY_AdditionalCommandLine;
+        get;
         set
         {
-            if (value == _puTTY_AdditionalCommandLine)
+            if (value == field)
                 return;
 
-            _puTTY_AdditionalCommandLine = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private ConnectionMode _puTTY_ConnectionMode;
-
     public ConnectionMode PuTTY_ConnectionMode
     {
-        get => _puTTY_ConnectionMode;
+        get;
         set
         {
-            if (value == _puTTY_ConnectionMode)
+            if (value == field)
                 return;
 
-            _puTTY_ConnectionMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -1488,32 +1292,28 @@ public class GroupViewModel : ViewModelBase
 
     #region TigerVNC
 
-    private bool _tigerVNC_OverridePort;
-
     public bool TigerVNC_OverridePort
     {
-        get => _tigerVNC_OverridePort;
+        get;
         set
         {
-            if (value == _tigerVNC_OverridePort)
+            if (value == field)
                 return;
 
-            _tigerVNC_OverridePort = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private int _tigerVNC_Port;
-
     public int TigerVNC_Port
     {
-        get => _tigerVNC_Port;
+        get;
         set
         {
-            if (value == _tigerVNC_Port)
+            if (value == field)
                 return;
 
-            _tigerVNC_Port = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -1522,49 +1322,43 @@ public class GroupViewModel : ViewModelBase
 
     #region SNMP
 
-    private bool _snmp_OverrideOIDAndMode;
-
     public bool SNMP_OverrideOIDAndMode
     {
-        get => _snmp_OverrideOIDAndMode;
+        get;
         set
         {
-            if (value == _snmp_OverrideOIDAndMode)
+            if (value == field)
                 return;
 
-            _snmp_OverrideOIDAndMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _snmp_OID;
-
     public string SNMP_OID
     {
-        get => _snmp_OID;
+        get;
         set
         {
-            if (value == _snmp_OID)
+            if (value == field)
                 return;
 
-            _snmp_OID = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public IEnumerable<SNMPMode> SNMP_Modes { get; set; }
 
-    private SNMPMode _snmp_Mode;
-
     public SNMPMode SNMP_Mode
     {
-        get => _snmp_Mode;
+        get;
         set
         {
-            if (value == _snmp_Mode)
+            if (value == field)
                 return;
 
-            _snmp_Mode = value;
+            field = value;
             OnPropertyChanged();
 
             // Re-validate OID if mode changed
@@ -1572,199 +1366,175 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
-    private bool _snmp_OverrideVersionAndAuth;
-
     public bool SNMP_OverrideVersionAndAuth
     {
-        get => _snmp_OverrideVersionAndAuth;
+        get;
         set
         {
-            if (value == _snmp_OverrideVersionAndAuth)
+            if (value == field)
                 return;
 
-            _snmp_OverrideVersionAndAuth = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public IEnumerable<SNMPVersion> SNMP_Versions { get; }
 
-    private SNMPVersion _snmp_Version;
-
     public SNMPVersion SNMP_Version
     {
-        get => _snmp_Version;
+        get;
         set
         {
-            if (value == _snmp_Version)
+            if (value == field)
                 return;
 
-            _snmp_Version = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _snmp_IsCommunityEmpty = true; // Initial it's empty
 
     public bool SNMP_IsCommunityEmpty
     {
-        get => _snmp_IsCommunityEmpty;
+        get;
         set
         {
-            if (value == _snmp_IsCommunityEmpty)
+            if (value == field)
                 return;
 
-            _snmp_IsCommunityEmpty = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private SecureString _snmp_Community;
+    } = true;
 
     public SecureString SNMP_Community
     {
-        get => _snmp_Community;
+        get;
         set
         {
-            if (value == _snmp_Community)
+            if (value == field)
                 return;
 
             // Validate the password string
             SNMP_IsCommunityEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
-            _snmp_Community = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public IEnumerable<SNMPV3Security> SNMP_Securities { get; }
 
-    private SNMPV3Security _snmp_Security;
-
     public SNMPV3Security SNMP_Security
     {
-        get => _snmp_Security;
+        get;
         set
         {
-            if (value == _snmp_Security)
+            if (value == field)
                 return;
 
-            _snmp_Security = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _snmp_Username;
-
     public string SNMP_Username
     {
-        get => _snmp_Username;
+        get;
         set
         {
-            if (value == _snmp_Username)
+            if (value == field)
                 return;
 
-            _snmp_Username = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public IEnumerable<SNMPV3AuthenticationProvider> SNMP_AuthenticationProviders { get; }
 
-    private SNMPV3AuthenticationProvider _snmp_AuthenticationProvider;
-
     public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider
     {
-        get => _snmp_AuthenticationProvider;
+        get;
         set
         {
-            if (value == _snmp_AuthenticationProvider)
+            if (value == field)
                 return;
 
-            _snmp_AuthenticationProvider = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _snmp_IsAuthEmpty = true; // Initial it's empty
 
     public bool SNMP_IsAuthEmpty
     {
-        get => _snmp_IsAuthEmpty;
+        get;
         set
         {
-            if (value == _snmp_IsAuthEmpty)
+            if (value == field)
                 return;
 
-            _snmp_IsAuthEmpty = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private SecureString _snmp_Auth;
+    } = true;
 
     public SecureString SNMP_Auth
     {
-        get => _snmp_Auth;
+        get;
         set
         {
-            if (value == _snmp_Auth)
+            if (value == field)
                 return;
 
             // Validate the password string
             SNMP_IsAuthEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
-            _snmp_Auth = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public IEnumerable<SNMPV3PrivacyProvider> SNMP_PrivacyProviders { get; }
 
-    private SNMPV3PrivacyProvider _snmp_PrivacyProvider;
-
     public SNMPV3PrivacyProvider SNMP_PrivacyProvider
     {
-        get => _snmp_PrivacyProvider;
+        get;
         set
         {
-            if (value == _snmp_PrivacyProvider)
+            if (value == field)
                 return;
 
-            _snmp_PrivacyProvider = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _snmp_IsPrivEmpty = true; // Initial it's empty
 
     public bool SNMP_IsPrivEmpty
     {
-        get => _snmp_IsPrivEmpty;
+        get;
         set
         {
-            if (value == _snmp_IsPrivEmpty)
+            if (value == field)
                 return;
 
-            _snmp_IsPrivEmpty = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private SecureString _snmp_Priv;
+    } = true;
 
     public SecureString SNMP_Priv
     {
-        get => _snmp_Priv;
+        get;
         set
         {
-            if (value == _snmp_Priv)
+            if (value == field)
                 return;
 
             // Validate the password string
             SNMP_IsPrivEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
 
-            _snmp_Priv = value;
+            field = value;
             OnPropertyChanged();
         }
     }

@@ -25,65 +25,57 @@ public class SubnetCalculatorCalculatorViewModel : ViewModelBase
 
     #region Variables
 
-    private string _subnet;
-
     public string Subnet
     {
-        get => _subnet;
+        get;
         set
         {
-            if (value == _subnet)
+            if (value == field)
                 return;
 
-            _subnet = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public ICollectionView SubnetHistoryView { get; }
 
-    private bool _isRunning;
-
     public bool IsRunning
     {
-        get => _isRunning;
+        get;
         set
         {
-            if (value == _isRunning)
+            if (value == field)
                 return;
 
-            _isRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isResultVisible;
 
     public bool IsResultVisible
     {
-        get => _isResultVisible;
+        get;
         set
         {
-            if (value == _isResultVisible)
+            if (value == field)
                 return;
 
 
-            _isResultVisible = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private IPNetworkInfo _result;
-
     public IPNetworkInfo Result
     {
-        get => _result;
+        get;
         private set
         {
-            if (value == _result)
+            if (value == field)
                 return;
 
-            _result = value;
+            field = value;
             OnPropertyChanged();
         }
     }

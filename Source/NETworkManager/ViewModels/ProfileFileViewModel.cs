@@ -7,10 +7,6 @@ namespace NETworkManager.ViewModels;
 
 public class ProfileFileViewModel : ViewModelBase
 {
-    private bool _isEdit;
-
-    private string _name;
-
     public ProfileFileViewModel(Action<ProfileFileViewModel> okCommand, Action<ProfileFileViewModel> cancelHandler,
         ProfileFileInfo info = null)
     {
@@ -31,26 +27,26 @@ public class ProfileFileViewModel : ViewModelBase
 
     public string Name
     {
-        get => _name;
+        get;
         set
         {
-            if (value == _name)
+            if (value == field)
                 return;
 
-            _name = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public bool IsEdit
     {
-        get => _isEdit;
+        get;
         set
         {
-            if (value == _isEdit)
+            if (value == field)
                 return;
 
-            _isEdit = value;
+            field = value;
             OnPropertyChanged();
         }
     }

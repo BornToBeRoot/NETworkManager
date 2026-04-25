@@ -1,5 +1,5 @@
 ---
-sidebar_position: 21
+sidebar_position: 22
 description: "Calculate IPv4 and IPv6 subnets, perform subnetting and supernetting with NETworkManager Subnet Calculator. Supports CIDR and dotted-decimal notation."
 keywords: [NETworkManager, subnet calculator, subnetting, supernetting, CIDR calculator, IPv4 subnet, IPv6 subnet, network calculator]
 ---

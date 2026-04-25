@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 using Newtonsoft.Json;
 
 namespace NETworkManager.Models.Export;
@@ -51,7 +52,11 @@ public static partial class ExportManager
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.Hop},{info.Status1},{Ping.TimeToString(info.Status1, info.Time1, true)},{info.Status2},{Ping.TimeToString(info.Status2, info.Time2, true)},{info.Status3},{Ping.TimeToString(info.Status3, info.Time3, true)},{info.IPAddress},{info.Hostname},{info.IPGeolocationResult?.Info?.Continent},{info.IPGeolocationResult?.Info?.Country},{info.IPGeolocationResult?.Info?.Region},{info.IPGeolocationResult?.Info?.City},{info.IPGeolocationResult?.Info?.District},{info.IPGeolocationResult?.Info?.Isp?.Replace(",", "")},{info.IPGeolocationResult?.Info?.Org?.Replace(",", "")},{info.IPGeolocationResult?.Info?.As?.Replace(",", "")},{info.IPGeolocationResult?.Info?.Asname?.Replace(",", "")},{info.IPGeolocationResult?.Info?.Hosting},{info.IPGeolocationResult?.Info?.Proxy},{info.IPGeolocationResult?.Info?.Mobile}");
+                $"{info.Hop},{info.Status1},{Ping.TimeToString(info.Status1, info.Time1, true)},{info.Status2},{Ping.TimeToString(info.Status2, info.Time2, true)},{info.Status3},{Ping.TimeToString(info.Status3, info.Time3, true)},{info.IPAddress}," +
+                $"{CsvHelper.QuoteString(info.Hostname)},{CsvHelper.QuoteString(info.IPGeolocationResult?.Info?.Continent)},{CsvHelper.QuoteString(info.IPGeolocationResult?.Info?.Country)}," +
+                $"{CsvHelper.QuoteString(info.IPGeolocationResult?.Info?.Region)},{CsvHelper.QuoteString(info.IPGeolocationResult?.Info?.City)},{CsvHelper.QuoteString(info.IPGeolocationResult?.Info?.District)}," +
+                $"{CsvHelper.QuoteString(info.IPGeolocationResult?.Info?.Isp)},{CsvHelper.QuoteString(info.IPGeolocationResult?.Info?.Org)},{CsvHelper.QuoteString(info.IPGeolocationResult?.Info?.As)},{CsvHelper.QuoteString(info.IPGeolocationResult?.Info?.Asname)}," +
+                $"{info.IPGeolocationResult?.Info?.Hosting},{info.IPGeolocationResult?.Info?.Proxy},{info.IPGeolocationResult?.Info?.Mobile}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }

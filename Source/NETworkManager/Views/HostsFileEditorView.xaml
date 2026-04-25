@@ -30,41 +30,55 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="10" />
-                    <RowDefinition Height="Auto" />                    
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Column="0" Grid.Row="0"
-                            Orientation="Horizontal"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Right">
-                    <Button Command="{Binding Path=RefreshCommand}"
-                            Style="{StaticResource CleanButton}" 
-                            Margin="0,0,10,0">
-                        <Rectangle Width="24" Height="24"
-                                   wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform"
-                                             Visual="{iconPacks:Material Kind=Refresh}" />
-                            </Rectangle.OpacityMask>
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type TypeName=Rectangle}">
-                                    <Setter Property="Fill"
-                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                                     Value="True">
-                                            <Setter Property="Fill"
-                                                    Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                    </Button>
-                    <TextBox Width="250"
-                             Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
-                             Style="{StaticResource ResourceKey=SearchTextBox}" />
-                </StackPanel>
+                <!-- Row 0: Header + Refresh + Search -->
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                               Style="{StaticResource HeaderTextBlock}"
+                               Text="{x:Static localization:Strings.HostsFileEditor}"
+                               VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                        <Button Command="{Binding Path=RefreshCommand}"
+                                Style="{StaticResource CleanButton}"
+                                Margin="0,0,10,0">
+                            <Rectangle Width="16" Height="16"
+                                       wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform"
+                                                 Visual="{iconPacks:Material Kind=Refresh}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type TypeName=Rectangle}">
+                                        <Setter Property="Fill"
+                                                Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                         Value="True">
+                                                <Setter Property="Fill"
+                                                        Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                        <TextBox Width="250"
+                                 Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource ResourceKey=SearchTextBox}" />
+                    </StackPanel>
+                </Grid>
+                <!-- Row 2: DataGrid -->
                 <controls:MultiSelectDataGrid x:Name="DataGridHostsFileTable"
                                               Grid.Column="0" Grid.Row="2"
                                               ItemsSource="{Binding ResultsView}"
@@ -201,29 +215,56 @@
                         <KeyBinding Command="{Binding DeleteEntryCommand}" Key="Delete" />
                     </controls:MultiSelectDataGrid.InputBindings>
                 </controls:MultiSelectDataGrid>
-                <Grid Grid.Column="0" Grid.Row="4">
+                <!-- Row 4: Status message -->
+                <Grid Grid.Row="4" VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <WrapPanel Grid.Column="0" Grid.Row="0"
+                    <networkManager:LoadingIndicator Grid.Column="0" IsActive="True"
+                                 Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
+                                 Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                 Width="24" Height="24"
+                                 SpeedRatio="1"
+                                 Margin="0,0,10,0" />
+                    <TextBlock Grid.Column="1"
+                               Style="{StaticResource ResourceKey=AccentTextBlock}"
+                               Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                               Text="{Binding Path=StatusMessage}"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Center" />
+                </Grid>
+                <!-- Row 6: Open hosts file button (left) + Add entry button (right) -->
+                <Grid Grid.Row="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <WrapPanel Grid.Column="0"
                                Orientation="Horizontal"
-                               VerticalAlignment="Bottom"
+                               VerticalAlignment="Center"
                                HorizontalAlignment="Left">
-                        <networkManager:LoadingIndicator IsActive="True"
-                                     Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
-                                     Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                     Width="24" Height="24"
-                                     SpeedRatio="1"
-                                     Margin="0,0,10,0" />
-                        <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"
-                                   Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                   Text="{Binding Path=StatusMessage}"
-                                   VerticalAlignment="Center" />
+                        <Button Command="{Binding OpenHostsFileCommand}" Style="{StaticResource ImageWithTextButton}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileEditOutline}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Grid.Column="1"
+                                           Text="{x:Static localization:Strings.OpenHostsFile}"
+                                           Style="{StaticResource ButtonWithImageTextBlock}" />
+                            </Grid>
+                        </Button>
                     </WrapPanel>
-                    <WrapPanel Grid.Column="2" Grid.Row="0" 
-                               Orientation="Horizontal" VerticalAlignment="Center"
+                    <WrapPanel Grid.Column="2"
+                               Orientation="Horizontal"
+                               VerticalAlignment="Center"
                                HorizontalAlignment="Right">
                         <Button Command="{Binding AddEntryCommand}" Style="{StaticResource ImageWithTextButton}">
                             <Grid>
@@ -236,13 +277,14 @@
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddEntryDots}"                                         
+                                <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddEntryDots}"
                                            Style="{StaticResource ButtonWithImageTextBlock}" />
                             </Grid>
                         </Button>
                     </WrapPanel>
-                </Grid>                
-                <Grid Grid.Column="0" Grid.Row="5"
+                </Grid>
+                <!-- Row 7: Admin note -->
+                <Grid Grid.Column="0" Grid.Row="7"
                       Background="{DynamicResource MahApps.Brushes.Gray10}"
                       Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
                       Margin="0,10,0,0">

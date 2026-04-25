@@ -67,26 +67,22 @@ public class PortProfilesViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     /// <summary>
-    /// Backing field for the Search property.
-    /// </summary>
-    private string _search;
-
-    /// <summary>
     /// Gets or sets the search text to filter the port profiles.
     /// </summary>
     public string Search
     {
-        get => _search;
+        get;
         set
         {
-            if (value == _search)
+            if (value == field)
                 return;
 
-            _search = value;
+            field = value;
 
             PortProfiles.Refresh();
 
-            SelectedPortProfiles = new ArrayList {
+            SelectedPortProfiles = new ArrayList
+            {
                 PortProfiles.Cast<PortProfileInfo>().FirstOrDefault()
             };
 
@@ -100,25 +96,21 @@ public class PortProfilesViewModel : ViewModelBase
     public ICollectionView PortProfiles { get; }
 
     /// <summary>
-    /// Backing field for the SelectedPortProfiles property.
-    /// </summary>
-    private IList _selectedPortProfiles = new ArrayList();
-
-    /// <summary>
     /// Gets or sets the list of selected port profiles.
     /// </summary>
     public IList SelectedPortProfiles
     {
-        get => _selectedPortProfiles;
+        get;
         set
         {
-            if (Equals(value, _selectedPortProfiles))
+            if (Equals(value, field))
                 return;
 
-            _selectedPortProfiles = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = new ArrayList();
+
     #endregion
 
     #region Methods

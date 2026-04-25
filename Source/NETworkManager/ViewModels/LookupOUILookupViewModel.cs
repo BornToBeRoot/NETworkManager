@@ -74,43 +74,33 @@ public class LookupOUILookupViewModel : ViewModelBase
     private static readonly ILog Log = LogManager.GetLogger(typeof(LookupOUILookupViewModel));
 
     /// <summary>
-    /// Backing field for <see cref="Search"/>.
-    /// </summary>
-    private string _search;
-
-    /// <summary>
     /// Gets or sets the search query.
     /// </summary>
     public string Search
     {
-        get => _search;
+        get;
         set
         {
-            if (value == _search)
+            if (value == field)
                 return;
 
-            _search = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="HasError"/>.
-    /// </summary>
-    private bool _hasError;
 
     /// <summary>
     /// Gets or sets a value indicating whether there is a validation error.
     /// </summary>
     public bool HasError
     {
-        get => _hasError;
+        get;
         set
         {
-            if (value == _hasError)
+            if (value == field)
                 return;
 
-            _hasError = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -121,45 +111,35 @@ public class LookupOUILookupViewModel : ViewModelBase
     public ICollectionView SearchHistoryView { get; }
 
     /// <summary>
-    /// Backing field for <see cref="IsRunning"/>.
-    /// </summary>
-    private bool _isRunning;
-
-    /// <summary>
     /// Gets or sets a value indicating whether the lookup is running.
     /// </summary>
     public bool IsRunning
     {
-        get => _isRunning;
+        get;
         set
         {
-            if (value == _isRunning)
+            if (value == field)
                 return;
 
-            _isRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="Results"/>.
-    /// </summary>
-    private ObservableCollection<OUIInfo> _results = new();
 
     /// <summary>
     /// Gets or sets the search results.
     /// </summary>
     public ObservableCollection<OUIInfo> Results
     {
-        get => _results;
+        get;
         set
         {
-            if (value != null && value == _results)
+            if (value != null && value == field)
                 return;
 
-            _results = value;
+            field = value;
         }
-    }
+    } = new();
 
     /// <summary>
     /// Gets the results view.
@@ -167,64 +147,49 @@ public class LookupOUILookupViewModel : ViewModelBase
     public ICollectionView ResultsView { get; }
 
     /// <summary>
-    /// Backing field for <see cref="SelectedResult"/>.
-    /// </summary>
-    private OUIInfo _selectedResult;
-
-    /// <summary>
     /// Gets or sets the selected result.
     /// </summary>
     public OUIInfo SelectedResult
     {
-        get => _selectedResult;
+        get;
         set
         {
-            if (value == _selectedResult)
+            if (value == field)
                 return;
 
-            _selectedResult = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="SelectedResults"/>.
-    /// </summary>
-    private IList _selectedResults = new ArrayList();
 
     /// <summary>
     /// Gets or sets the list of selected results.
     /// </summary>
     public IList SelectedResults
     {
-        get => _selectedResults;
+        get;
         set
         {
-            if (Equals(value, _selectedResults))
+            if (Equals(value, field))
                 return;
 
-            _selectedResults = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="NothingFound"/>.
-    /// </summary>
-    private bool _nothingFound;
+    } = new ArrayList();
 
     /// <summary>
     /// Gets or sets a value indicating whether no results were found.
     /// </summary>
     public bool NothingFound
     {
-        get => _nothingFound;
+        get;
         set
         {
-            if (value == _nothingFound)
+            if (value == field)
                 return;
 
-            _nothingFound = value;
+            field = value;
             OnPropertyChanged();
         }
     }

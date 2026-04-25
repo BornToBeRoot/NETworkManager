@@ -39,20 +39,18 @@ public class TracerouteViewModel : ViewModelBase
     private bool _firstLoad = true;
     private bool _closed;
 
-    private string _host;
-
     /// <summary>
     /// Gets or sets the host address or hostname to trace.
     /// </summary>
     public string Host
     {
-        get => _host;
+        get;
         set
         {
-            if (value == _host)
+            if (value == field)
                 return;
 
-            _host = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -62,134 +60,120 @@ public class TracerouteViewModel : ViewModelBase
     /// </summary>
     public ICollectionView HostHistoryView { get; }
 
-    private bool _isRunning;
-
     /// <summary>
     /// Gets or sets a value indicating whether a traceroute is currently running.
     /// </summary>
     public bool IsRunning
     {
-        get => _isRunning;
+        get;
         set
         {
-            if (value == _isRunning)
+            if (value == field)
                 return;
 
-            _isRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _cancelTrace;
 
     /// <summary>
     /// Gets or sets a value indicating whether the trace should be cancelled.
     /// </summary>
     public bool CancelTrace
     {
-        get => _cancelTrace;
+        get;
         set
         {
-            if (value == _cancelTrace)
+            if (value == field)
                 return;
 
-            _cancelTrace = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ObservableCollection<TracerouteHopInfo> _results = new();
 
     /// <summary>
     /// Gets or sets the collection of traceroute hop results.
     /// </summary>
     public ObservableCollection<TracerouteHopInfo> Results
     {
-        get => _results;
+        get;
         set
         {
-            if (Equals(value, _results))
+            if (Equals(value, field))
                 return;
 
-            _results = value;
+            field = value;
         }
-    }
+    } = new();
 
     /// <summary>
     /// Gets the collection view for the traceroute results.
     /// </summary>
     public ICollectionView ResultsView { get; }
 
-    private TracerouteHopInfo _selectedResult;
-
     /// <summary>
     /// Gets or sets the currently selected traceroute result hop.
     /// </summary>
     public TracerouteHopInfo SelectedResult
     {
-        get => _selectedResult;
+        get;
         set
         {
-            if (value == _selectedResult)
+            if (value == field)
                 return;
 
-            _selectedResult = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private IList _selectedResults = new ArrayList();
 
     /// <summary>
     /// Gets or sets the list of currently selected traceroute result hops (for multi-selection).
     /// </summary>
     public IList SelectedResults
     {
-        get => _selectedResults;
+        get;
         set
         {
-            if (Equals(value, _selectedResults))
+            if (Equals(value, field))
                 return;
 
-            _selectedResults = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = new ArrayList();
 
     private bool _ipGeolocationRateLimitIsReached;
-
-    private bool _isStatusMessageDisplayed;
 
     /// <summary>
     /// Gets or sets a value indicating whether the status message is displayed.
     /// </summary>
     public bool IsStatusMessageDisplayed
     {
-        get => _isStatusMessageDisplayed;
+        get;
         set
         {
-            if (value == _isStatusMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isStatusMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _statusMessage;
 
     /// <summary>
     /// Gets the status message to display.
     /// </summary>
     public string StatusMessage
     {
-        get => _statusMessage;
+        get;
         private set
         {
-            if (value == _statusMessage)
+            if (value == field)
                 return;
 
-            _statusMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }

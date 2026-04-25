@@ -66,218 +66,194 @@ public class PingMonitorViewModel : ViewModelBase
 
     private List<PingInfo> _pingInfoList;
 
-    private string _title;
-
     /// <summary>
     /// Gets the title of the monitor, typically "Hostname # IP".
     /// </summary>
     public string Title
     {
-        get => _title;
+        get;
         private set
         {
-            if (value == _title)
+            if (value == field)
                 return;
 
-            _title = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _hostname;
 
     /// <summary>
     /// Gets the hostname of the monitored host.
     /// </summary>
     public string Hostname
     {
-        get => _hostname;
+        get;
         private set
         {
-            if (value == _hostname)
+            if (value == field)
                 return;
 
-            _hostname = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private readonly IPAddress _ipAddress;
 
     /// <summary>
     /// Gets the IP address of the monitored host.
     /// </summary>
     public IPAddress IPAddress
     {
-        get => _ipAddress;
+        get;
         private init
         {
-            if (Equals(value, _ipAddress))
+            if (Equals(value, field))
                 return;
 
-            _ipAddress = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _group;
 
     /// <summary>
     /// Gets or sets the group the monitored host belongs to.
     /// </summary>
     public string Group
     {
-        get => _group;
+        get;
         set
         {
-            if (value == _group)
+            if (value == field)
                 return;
 
-            _group = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isRunning;
 
     /// <summary>
     /// Gets or sets a value indicating whether the ping monitoring is currently running.
     /// </summary>
     public bool IsRunning
     {
-        get => _isRunning;
+        get;
         set
         {
-            if (value == _isRunning)
+            if (value == field)
                 return;
 
-            _isRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isReachable;
 
     /// <summary>
     /// Gets or sets a value indicating whether the host is reachable (responds to ping).
     /// </summary>
     public bool IsReachable
     {
-        get => _isReachable;
+        get;
         set
         {
-            if (value == _isReachable)
+            if (value == field)
                 return;
 
-            _isReachable = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private DateTime _statusTime;
 
     /// <summary>
     /// Gets the time of the last status update.
     /// </summary>
     public DateTime StatusTime
     {
-        get => _statusTime;
+        get;
         private set
         {
-            if (value == _statusTime)
+            if (value == field)
                 return;
 
-            _statusTime = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _transmitted;
 
     /// <summary>
     /// Gets or sets the total number of ping packets transmitted.
     /// </summary>
     public int Transmitted
     {
-        get => _transmitted;
+        get;
         set
         {
-            if (value == _transmitted)
+            if (value == field)
                 return;
 
-            _transmitted = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _received;
 
     /// <summary>
     /// Gets the total number of ping packets received.
     /// </summary>
     public int Received
     {
-        get => _received;
+        get;
         private set
         {
-            if (value == _received)
+            if (value == field)
                 return;
 
-            _received = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _lost;
 
     /// <summary>
     /// Gets or sets the total number of ping packets lost.
     /// </summary>
     public int Lost
     {
-        get => _lost;
+        get;
         set
         {
-            if (value == _lost)
+            if (value == field)
                 return;
 
-            _lost = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private double _packetLoss;
 
     /// <summary>
     /// Gets or sets the percentage of packet loss.
     /// </summary>
     public double PacketLoss
     {
-        get => _packetLoss;
+        get;
         set
         {
-            if (Math.Abs(value - _packetLoss) < 0.01)
+            if (Math.Abs(value - field) < 0.01)
                 return;
 
-            _packetLoss = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private long _timeMs;
 
     /// <summary>
     /// Gets or sets the round-trip time in milliseconds of the last ping.
     /// </summary>
     public long TimeMs
     {
-        get => _timeMs;
+        get;
         set
         {
-            if (value == _timeMs)
+            if (value == field)
                 return;
 
-            _timeMs = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -321,56 +297,50 @@ public class PingMonitorViewModel : ViewModelBase
     /// </summary>
     public SeriesCollection Series { get; set; }
 
-    private string _errorMessage;
-
     /// <summary>
     /// Gets the error message if an error occurs.
     /// </summary>
     public string ErrorMessage
     {
-        get => _errorMessage;
+        get;
         private set
         {
-            if (value == _errorMessage)
+            if (value == field)
                 return;
 
-            _errorMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isErrorMessageDisplayed;
 
     /// <summary>
     /// Gets or sets a value indicating whether the error message is displayed.
     /// </summary>
     public bool IsErrorMessageDisplayed
     {
-        get => _isErrorMessageDisplayed;
+        get;
         set
         {
-            if (value == _isErrorMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isErrorMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _expandHostView;
 
     /// <summary>
     /// Gets or sets a value indicating whether the host view is expanded.
     /// </summary>
     public bool ExpandHostView
     {
-        get => _expandHostView;
+        get;
         set
         {
-            if (value == _expandHostView)
+            if (value == field)
                 return;
 
-            _expandHostView = value;
+            field = value;
             OnPropertyChanged();
         }
     }

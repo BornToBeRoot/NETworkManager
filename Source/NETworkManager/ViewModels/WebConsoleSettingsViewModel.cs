@@ -17,56 +17,50 @@ public class WebConsoleSettingsViewModel : ViewModelBase
 
     private readonly bool _isLoading;
 
-    private bool _showAddressBar;
-
     public bool ShowAddressBar
     {
-        get => _showAddressBar;
+        get;
         set
         {
-            if (value == _showAddressBar)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.WebConsole_ShowAddressBar = value;
 
-            _showAddressBar = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _isStatusBarEnabled;
-
     public bool IsStatusBarEnabled
     {
-        get => _isStatusBarEnabled;
+        get;
         set
         {
-            if (value == _isStatusBarEnabled)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.WebConsole_IsStatusBarEnabled = value;
 
-            _isStatusBarEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _isPasswordSaveEnabled;
-
     public bool IsPasswordSaveEnabled
     {
-        get => _isPasswordSaveEnabled;
+        get;
         set
         {
-            if (value == _isPasswordSaveEnabled)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.WebConsole_IsPasswordSaveEnabled = value;
 
-            _isPasswordSaveEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }

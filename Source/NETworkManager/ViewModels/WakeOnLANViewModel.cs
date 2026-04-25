@@ -33,20 +33,18 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     private readonly bool _isLoading;
     private bool _isViewActive = true;
 
-    private bool _isRunning;
-
     /// <summary>
     /// Gets or sets a value indicating whether the Wake on LAN operation is running.
     /// </summary>
     public bool IsRunning
     {
-        get => _isRunning;
+        get;
         set
         {
-            if (value == _isRunning)
+            if (value == field)
                 return;
 
-            _isRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -56,20 +54,18 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     /// </summary>
     public ICollectionView MACAddressHistoryView { get; }
 
-    private string _macAddress;
-
     /// <summary>
     /// Gets or sets the MAC address to wake up.
     /// </summary>
     public string MACAddress
     {
-        get => _macAddress;
+        get;
         set
         {
-            if (value == _macAddress)
+            if (value == field)
                 return;
 
-            _macAddress = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -79,91 +75,81 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
     /// </summary>
     public ICollectionView BroadcastHistoryView { get; }
 
-    private string _broadcast;
-
     /// <summary>
     /// Gets or sets the broadcast address.
     /// </summary>
     public string Broadcast
     {
-        get => _broadcast;
+        get;
         set
         {
-            if (value == _broadcast)
+            if (value == field)
                 return;
 
-            _broadcast = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isStatusMessageDisplayed;
 
     /// <summary>
     /// Gets or sets a value indicating whether the status message is displayed.
     /// </summary>
     public bool IsStatusMessageDisplayed
     {
-        get => _isStatusMessageDisplayed;
+        get;
         set
         {
-            if (value == _isStatusMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isStatusMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _statusMessage;
 
     /// <summary>
     /// Gets the status message to display.
     /// </summary>
     public string StatusMessage
     {
-        get => _statusMessage;
+        get;
         private set
         {
-            if (value == _statusMessage)
+            if (value == field)
                 return;
 
-            _statusMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     #region Profiles
 
-    private ICollectionView _profiles;
-
     /// <summary>
     /// Gets the collection view for the profiles.
     /// </summary>
     public ICollectionView Profiles
     {
-        get => _profiles;
+        get;
         private set
         {
-            if (value == _profiles)
+            if (value == field)
                 return;
 
-            _profiles = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ProfileInfo _selectedProfile = new();
 
     /// <summary>
     /// Gets or sets the currently selected profile.
     /// </summary>
     public ProfileInfo SelectedProfile
     {
-        get => _selectedProfile;
+        get;
         set
         {
-            if (value == _selectedProfile)
+            if (value == field)
                 return;
 
             if (value != null && !IsRunning)
@@ -172,25 +158,23 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
                 Broadcast = value.WakeOnLAN_Broadcast;
             }
 
-            _selectedProfile = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private string _search;
+    } = new();
 
     /// <summary>
     /// Gets or sets the search text for filtering profiles.
     /// </summary>
     public string Search
     {
-        get => _search;
+        get;
         set
         {
-            if (value == _search)
+            if (value == field)
                 return;
 
-            _search = value;
+            field = value;
 
             // Start searching...
             if (!_searchDisabled)
@@ -203,38 +187,34 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private bool _isSearching;
-
     /// <summary>
     /// Gets or sets a value indicating whether a search operation is in progress.
     /// </summary>
     public bool IsSearching
     {
-        get => _isSearching;
+        get;
         set
         {
-            if (value == _isSearching)
+            if (value == field)
                 return;
 
-            _isSearching = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _profileFilterIsOpen;
 
     /// <summary>
     /// Gets or sets a value indicating whether the profile filter flyout is open.
     /// </summary>
     public bool ProfileFilterIsOpen
     {
-        get => _profileFilterIsOpen;
+        get;
         set
         {
-            if (value == _profileFilterIsOpen)
+            if (value == field)
                 return;
 
-            _profileFilterIsOpen = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -246,71 +226,62 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
 
-    private bool _profileFilterTagsMatchAny = GlobalStaticConfiguration.Profile_TagsMatchAny;
-
     public bool ProfileFilterTagsMatchAny
     {
-        get => _profileFilterTagsMatchAny;
+        get;
         set
         {
-            if (value == _profileFilterTagsMatchAny)
+            if (value == field)
                 return;
 
-            _profileFilterTagsMatchAny = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private bool _profileFilterTagsMatchAll;
+    } = GlobalStaticConfiguration.Profile_TagsMatchAny;
 
     public bool ProfileFilterTagsMatchAll
     {
-        get => _profileFilterTagsMatchAll;
+        get;
         set
         {
-            if (value == _profileFilterTagsMatchAll)
+            if (value == field)
                 return;
 
-            _profileFilterTagsMatchAll = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isProfileFilterSet;
 
     public bool IsProfileFilterSet
     {
-        get => _isProfileFilterSet;
+        get;
         set
         {
-            if (value == _isProfileFilterSet)
+            if (value == field)
                 return;
 
-            _isProfileFilterSet = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private readonly GroupExpanderStateStore _groupExpanderStateStore = new();
-    public GroupExpanderStateStore GroupExpanderStateStore => _groupExpanderStateStore;
+    public GroupExpanderStateStore GroupExpanderStateStore { get; } = new();
 
     private bool _canProfileWidthChange = true;
     private double _tempProfileWidth;
 
-    private bool _expandProfileView;
-
     public bool ExpandProfileView
     {
-        get => _expandProfileView;
+        get;
         set
         {
-            if (value == _expandProfileView)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.WakeOnLAN_ExpandProfileView = value;
 
-            _expandProfileView = value;
+            field = value;
 
             if (_canProfileWidthChange)
                 ResizeProfile(false);
@@ -319,21 +290,19 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    private GridLength _profileWidth;
-
     public GridLength ProfileWidth
     {
-        get => _profileWidth;
+        get;
         set
         {
-            if (value == _profileWidth)
+            if (value == field)
                 return;
 
             if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
                 GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.WakeOnLAN_ProfileWidth = value.Value;
 
-            _profileWidth = value;
+            field = value;
 
             if (_canProfileWidthChange)
                 ResizeProfile(true);

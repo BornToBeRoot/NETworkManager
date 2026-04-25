@@ -45,118 +45,104 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(SubnetCalculatorSubnettingViewModel));
 
-    private string _subnet;
-
     public string Subnet
     {
-        get => _subnet;
+        get;
         set
         {
-            if (value == _subnet)
+            if (value == field)
                 return;
 
-            _subnet = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public ICollectionView SubnetHistoryView { get; }
 
-    private string _newSubnetmask;
-
     public string NewSubnetmask
     {
-        get => _newSubnetmask;
+        get;
         set
         {
-            if (value == _newSubnetmask)
+            if (value == field)
                 return;
 
-            _newSubnetmask = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public ICollectionView NewSubnetmaskHistoryView { get; }
 
-    private bool _isRunning;
-
     public bool IsRunning
     {
-        get => _isRunning;
+        get;
         set
         {
-            if (value == _isRunning)
+            if (value == field)
                 return;
 
-            _isRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isResultVisible;
 
     public bool IsResultVisible
     {
-        get => _isResultVisible;
+        get;
         set
         {
-            if (value == _isResultVisible)
+            if (value == field)
                 return;
 
 
-            _isResultVisible = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ObservableCollection<IPNetworkInfo> _results = new();
 
     public ObservableCollection<IPNetworkInfo> Results
     {
-        get => _results;
+        get;
         set
         {
-            if (value == _results)
+            if (value == field)
                 return;
 
-            _results = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = new();
 
     public ICollectionView ResultsView { get; }
 
-    private IPNetworkInfo _selectedResult;
-
     public IPNetworkInfo SelectedResult
     {
-        get => _selectedResult;
+        get;
         set
         {
-            if (value == _selectedResult)
+            if (value == field)
                 return;
 
-            _selectedResult = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-
-    private IList _selectedResults = new ArrayList();
 
     public IList SelectedResults
     {
-        get => _selectedResults;
+        get;
         set
         {
-            if (Equals(value, _selectedResults))
+            if (Equals(value, field))
                 return;
 
-            _selectedResults = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = new ArrayList();
 
     #endregion
 

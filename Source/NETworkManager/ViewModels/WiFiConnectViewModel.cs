@@ -16,71 +16,6 @@ public class WiFiConnectViewModel : ViewModelBase
     public readonly (WiFiAdapterInfo AdapterInfo, WiFiNetworkInfo NetworkInfo) Options;
 
     /// <summary>
-    ///     Private variable for <see cref="ConnectAutomatically" />.
-    /// </summary>
-    private bool _connectAutomatically;
-
-    /// <summary>
-    ///     Private variable for <see cref="ConnectMode" />.
-    /// </summary>
-    private WiFiConnectMode _connectMode;
-
-    /// <summary>
-    ///     Private variable for <see cref="Domain" />.
-    /// </summary>
-    private string _domain;
-
-    /// <summary>
-    ///     Private variable for <see cref="IsPasswordEmpty" />.
-    /// </summary>
-    private bool _isPasswordEmpty = true;
-
-    /// <summary>
-    ///     Private variable for <see cref="IsPreSharedKeyEmpty" />.
-    /// </summary>
-    private bool _isPreSharedKeyEmpty = true;
-
-    /// <summary>
-    ///     Private variable for <see cref="IsSsidRequired" />.
-    /// </summary>
-    private bool _isSsidRequired;
-
-    /// <summary>
-    ///     Private variable for <see cref="IsWpsAvailable" />.
-    /// </summary>
-    private bool _isWpsAvailable;
-
-    /// <summary>
-    ///     Private variable for <see cref="IsWpsAvailable" />.
-    /// </summary>
-    private bool _isWpsChecking;
-
-    /// <summary>
-    ///     Private variable for <see cref="Password" />.
-    /// </summary>
-    private SecureString _password = new();
-
-    /// <summary>
-    ///     Private variable for <see cref="PreSharedKey" />.
-    /// </summary>
-    private SecureString _preSharedKey = new();
-
-    /// <summary>
-    ///     Private variable for <see cref="Ssid" />.
-    /// </summary>
-    private string _ssid;
-
-    /// <summary>
-    ///     Private variable for <see cref="UseCredentials" />.
-    /// </summary>
-    private bool _useCredentials = true;
-
-    /// <summary>
-    ///     Private variable for <see cref="Username" />.
-    /// </summary>
-    private string _username;
-
-    /// <summary>
     ///     Initialize a new class <see cref="CredentialsPasswordViewModel" /> with <see cref="ConnectCommand" /> and
     ///     <see cref="CancelCommand" />.
     /// </summary>
@@ -128,13 +63,13 @@ public class WiFiConnectViewModel : ViewModelBase
     /// </summary>
     public WiFiConnectMode ConnectMode
     {
-        get => _connectMode;
+        get;
         set
         {
-            if (value == _connectMode)
+            if (value == field)
                 return;
 
-            _connectMode = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -145,13 +80,13 @@ public class WiFiConnectViewModel : ViewModelBase
     /// </summary>
     public bool IsSsidRequired
     {
-        get => _isSsidRequired;
+        get;
         set
         {
-            if (value == _isSsidRequired)
+            if (value == field)
                 return;
 
-            _isSsidRequired = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -161,13 +96,13 @@ public class WiFiConnectViewModel : ViewModelBase
     /// </summary>
     public string Ssid
     {
-        get => _ssid;
+        get;
         set
         {
-            if (value == _ssid)
+            if (value == field)
                 return;
 
-            _ssid = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -177,13 +112,13 @@ public class WiFiConnectViewModel : ViewModelBase
     /// </summary>
     public bool ConnectAutomatically
     {
-        get => _connectAutomatically;
+        get;
         set
         {
-            if (value == _connectAutomatically)
+            if (value == field)
                 return;
 
-            _connectAutomatically = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -193,64 +128,64 @@ public class WiFiConnectViewModel : ViewModelBase
     /// </summary>
     public SecureString PreSharedKey
     {
-        get => _preSharedKey;
+        get;
         set
         {
-            if (value == _preSharedKey)
+            if (value == field)
                 return;
 
-            _preSharedKey = value;
+            field = value;
 
             ValidatePreSharedKey();
 
             OnPropertyChanged();
         }
-    }
+    } = new();
 
     /// <summary>
     ///     Indicate if the Pre-shared-key field is empty.
     /// </summary>
     public bool IsPreSharedKeyEmpty
     {
-        get => _isPreSharedKeyEmpty;
+        get;
         set
         {
-            if (value == _isPreSharedKeyEmpty)
+            if (value == field)
                 return;
 
-            _isPreSharedKeyEmpty = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = true;
 
     /// <summary>
     ///     Use credentials for EAP authentication.
     /// </summary>
     public bool UseCredentials
     {
-        get => _useCredentials;
+        get;
         set
         {
-            if (value == _useCredentials)
+            if (value == field)
                 return;
 
-            _useCredentials = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = true;
 
     /// <summary>
     ///     Username for EAP authentication.
     /// </summary>
     public string Username
     {
-        get => _username;
+        get;
         set
         {
-            if (value == _username)
+            if (value == field)
                 return;
 
-            _username = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -260,13 +195,13 @@ public class WiFiConnectViewModel : ViewModelBase
     /// </summary>
     public string Domain
     {
-        get => _domain;
+        get;
         set
         {
-            if (value == _domain)
+            if (value == field)
                 return;
 
-            _domain = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -276,48 +211,48 @@ public class WiFiConnectViewModel : ViewModelBase
     /// </summary>
     public SecureString Password
     {
-        get => _password;
+        get;
         set
         {
-            if (value == _password)
+            if (value == field)
                 return;
 
-            _password = value;
+            field = value;
 
             ValidatePassword();
 
             OnPropertyChanged();
         }
-    }
+    } = new();
 
     /// <summary>
     ///     Indicate if the password field is empty.
     /// </summary>
     public bool IsPasswordEmpty
     {
-        get => _isPasswordEmpty;
+        get;
         set
         {
-            if (value == _isPasswordEmpty)
+            if (value == field)
                 return;
 
-            _isPasswordEmpty = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = true;
 
     /// <summary>
     ///     Checking if WPS is available for the network.
     /// </summary>
     public bool IsWpsChecking
     {
-        get => _isWpsChecking;
+        get;
         set
         {
-            if (value == _isWpsChecking)
+            if (value == field)
                 return;
 
-            _isWpsChecking = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -327,13 +262,13 @@ public class WiFiConnectViewModel : ViewModelBase
     /// </summary>
     public bool IsWpsAvailable
     {
-        get => _isWpsAvailable;
+        get;
         set
         {
-            if (value == _isWpsAvailable)
+            if (value == field)
                 return;
 
-            _isWpsAvailable = value;
+            field = value;
             OnPropertyChanged();
         }
     }

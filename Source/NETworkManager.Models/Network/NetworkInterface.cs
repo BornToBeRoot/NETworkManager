@@ -6,8 +6,10 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using log4net;
 using Microsoft.Win32;
 using NETworkManager.Utilities;
+using SMA = System.Management.Automation;
 
 namespace NETworkManager.Models.Network;
 
@@ -31,6 +33,8 @@ public sealed class NetworkInterface
     /// drivers, filters, or extensions attached to real network interfaces.
     /// See: https://github.com/dotnet/runtime/issues/122751
     /// </summary>
+    private static readonly ILog Log = LogManager.GetLogger(typeof(NetworkInterface));
+
     private static readonly List<string> NetworkInterfaceFilteredPatterns =
     [
         "Hyper-V Virtual Switch Extension Filter",
@@ -71,6 +75,37 @@ public sealed class NetworkInterface
     public static List<NetworkInterfaceInfo> GetNetworkInterfaces()
     {
         List<NetworkInterfaceInfo> listNetworkInterfaceInfo = [];
+
+        // Query network profiles (Domain/Private/Public) for all connected interfaces via PowerShell.
+        // Keyed by InterfaceAlias which matches networkInterface.Name in the .NET API.
+        var profileByAlias = new Dictionary<string, NetworkProfile>(StringComparer.OrdinalIgnoreCase);
+
+        try
+        {
+            using var ps = SMA.PowerShell.Create();
+            ps.AddScript("Get-NetConnectionProfile | Select-Object InterfaceAlias, NetworkCategory");
+
+            foreach (var result in ps.Invoke())
+            {
+                var alias = result.Properties["InterfaceAlias"]?.Value?.ToString();
+                var category = result.Properties["NetworkCategory"]?.Value?.ToString();
+
+                if (string.IsNullOrEmpty(alias))
+                    continue;
+
+                profileByAlias[alias] = category switch
+                {
+                    "DomainAuthenticated" => NetworkProfile.Domain,
+                    "Private" => NetworkProfile.Private,
+                    "Public" => NetworkProfile.Public,
+                    _ => NetworkProfile.NotConfigured
+                };
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.Warn("Failed to query network connection profiles via Get-NetConnectionProfile.", ex);
+        }
 
         foreach (var networkInterface in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
         {
@@ -194,7 +229,10 @@ public sealed class NetworkInterface
                 IPv6Gateway = [.. listIPv6Gateway],
                 DNSAutoconfigurationEnabled = dnsAutoconfigurationEnabled,
                 DNSSuffix = ipProperties.DnsSuffix,
-                DNSServer = [.. ipProperties.DnsAddresses]
+                DNSServer = [.. ipProperties.DnsAddresses],
+                Profile = profileByAlias.TryGetValue(networkInterface.Name, out var profile)
+                    ? profile
+                    : NetworkProfile.NotConfigured
             });
         }
 

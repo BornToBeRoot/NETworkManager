@@ -7,8 +7,6 @@ namespace NETworkManager.Controls;
 
 public partial class LvlChartsPingTimeTooltip : IChartTooltip
 {
-    private TooltipData _data;
-
     public LvlChartsPingTimeTooltip()
     {
         InitializeComponent();
@@ -20,10 +18,10 @@ public partial class LvlChartsPingTimeTooltip : IChartTooltip
 
     public TooltipData Data
     {
-        get => _data;
+        get;
         set
         {
-            _data = value;
+            field = value;
             OnPropertyChanged();
         }
     }

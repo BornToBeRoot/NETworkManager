@@ -16,21 +16,24 @@
         <converters:DiscoveryProtocolToStringConverter x:Key="DiscoveryProtocolToStringConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="F5" Command="{Binding CaptureCommand}" />
+        <KeyBinding Key="Return" Command="{Binding CaptureCommand}" />
+    </UserControl.InputBindings>
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.DiscoveryProtocol}">
             <Grid Margin="10">
-                <Grid
-                    Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
                         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}"
                                    Text="{x:Static localization:Strings.Capture}" />
                         <Grid Grid.Row="3">
@@ -61,16 +64,8 @@
                                        Text="{x:Static localization:Strings.DurationS}" />
                             <ComboBox Grid.Column="6" ItemsSource="{Binding Durations}"
                                       SelectedItem="{Binding SelectedDuration}" />
-                            <Button Grid.Column="8" Command="{Binding CaptureCommand}">
-                                <Button.Style>
-                                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsCapturing}" Value="True">
-                                                <Setter Property="IsEnabled" Value="False" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Style>
+                            <Button Grid.Column="8" Command="{Binding CaptureCommand}"
+                                    Style="{StaticResource ImageWithTextButton}">
                                 <Button.Content>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -267,41 +262,44 @@
                                        Foreground="{DynamicResource MahApps.Brushes.Gray3}"
                                        HorizontalAlignment="Center" />
                         </StackPanel>
+
+                        <!-- Row 7: Admin note -->
+                        <Grid Grid.Row="7"
+                              Background="{DynamicResource MahApps.Brushes.Gray10}"
+                              Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                              Margin="0,10,0,0">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                                        Margin="10">
+                                <TextBlock Text="{x:Static localization:Strings.NetworkPacketsCaptureAdminMessage}"
+                                           Style="{StaticResource MessageTextBlock}"
+                                           Margin="0,0,0,10" />
+                                <Button Command="{Binding RestartAsAdminCommand}"
+                                        HorizontalAlignment="Center"
+                                        Style="{StaticResource ImageWithTextButton}">
+                                    <Button.Content>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Width="20" Height="20"
+                                                       Margin="10,5,0,5"
+                                                       Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Shield}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{x:Static localization:Strings.RestartAsAdmin}"
+                                                       FontSize="14"
+                                                       Margin="10,5"
+                                                       TextAlignment="Center" />
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Grid Background="{DynamicResource MahApps.Brushes.Gray10}"
-                      Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
-                            Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-                    <TextBlock Text="{x:Static localization:Strings.NetworkPacketsCaptureAdminMessage}"
-                               Style="{StaticResource MessageTextBlock}"
-                               Margin="0,0,0,10" />
-                    <Button Command="{Binding RestartAsAdminCommand}"
-                            HorizontalAlignment="Center"
-                            Style="{StaticResource ImageWithTextButton}">
-                        <Button.Content>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle Width="20" Height="20"
-                                           Margin="10,5,0,5"
-                                           Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                                    <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Shield}" />
-                                    </Rectangle.OpacityMask>
-                                </Rectangle>
-                                <TextBlock Grid.Column="1" Grid.Row="0"
-                                           Text="{x:Static localization:Strings.RestartAsAdmin}"
-                                           FontSize="14"
-                                           Margin="10,5"
-                                           TextAlignment="Center" />
-                            </Grid>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
-                </Grid>
             </Grid>
         </TabItem>
     </TabControl>

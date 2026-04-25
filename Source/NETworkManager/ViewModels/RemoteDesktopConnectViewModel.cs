@@ -11,145 +11,129 @@ namespace NETworkManager.ViewModels;
 public class RemoteDesktopConnectViewModel : ViewModelBase
 {
     #region Variables
-    private bool _connectAs;
 
     public bool ConnectAs
     {
-        get => _connectAs;
+        get;
         set
         {
-            if (value == _connectAs)
+            if (value == field)
                 return;
 
-            _connectAs = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _name;
 
     public string Name
     {
-        get => _name;
+        get;
         set
         {
-            if (value == _name)
+            if (value == field)
                 return;
 
-            _name = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _host;
-
     public string Host
     {
-        get => _host;
+        get;
         set
         {
-            if (value == _host)
+            if (value == field)
                 return;
 
-            _host = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public ICollectionView HostHistoryView { get; }
 
-    private bool _useCredentials;
-
     public bool UseCredentials
     {
-        get => _useCredentials;
+        get;
         set
         {
-            if (value == _useCredentials)
+            if (value == field)
                 return;
 
-            _useCredentials = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _domain;
 
     public string Domain
     {
-        get => _domain;
+        get;
         set
         {
-            if (value == _domain)
+            if (value == field)
                 return;
 
-            _domain = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _username;
 
     public string Username
     {
-        get => _username;
+        get;
         set
         {
-            if (value == _username)
+            if (value == field)
                 return;
 
-            _username = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isPasswordEmpty = true;
 
     public bool IsPasswordEmpty
     {
-        get => _isPasswordEmpty;
+        get;
         set
         {
-            if (value == _isPasswordEmpty)
+            if (value == field)
                 return;
 
-            _isPasswordEmpty = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private SecureString _password = new();
+    } = true;
 
     public SecureString Password
     {
-        get => _password;
+        get;
         set
         {
-            if (value == _password)
+            if (value == field)
                 return;
 
-            _password = value;
+            field = value;
 
             ValidatePassword();
 
             OnPropertyChanged();
         }
-    }
-
-    private bool _adminSession;
+    } = new();
 
     public bool AdminSession
     {
-        get => _adminSession;
+        get;
         set
         {
-            if (value == _adminSession)
+            if (value == field)
                 return;
 
-            _adminSession = value;
+            field = value;
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor

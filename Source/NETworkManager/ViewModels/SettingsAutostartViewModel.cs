@@ -62,53 +62,47 @@ public class SettingsAutostartViewModel : ViewModelBase
     #region Variables
     private readonly bool _isLoading;
 
-    private bool _startWithWindows;
-
     public bool StartWithWindows
     {
-        get => _startWithWindows;
+        get;
         set
         {
-            if (value == _startWithWindows)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 EnableDisableAutostart(value).ConfigureAwait(true);
 
-            _startWithWindows = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _configuringAutostart;
 
     public bool ConfiguringAutostart
     {
-        get => _configuringAutostart;
+        get;
         set
         {
-            if (value == _configuringAutostart)
+            if (value == field)
                 return;
 
-            _configuringAutostart = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _startMinimizedInTray;
-
     public bool StartMinimizedInTray
     {
-        get => _startMinimizedInTray;
+        get;
         set
         {
-            if (value == _startMinimizedInTray)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Autostart_StartMinimizedInTray = value;
 
-            _startMinimizedInTray = value;
+            field = value;
             OnPropertyChanged();
         }
     }

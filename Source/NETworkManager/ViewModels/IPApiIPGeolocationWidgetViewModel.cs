@@ -17,43 +17,33 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
     private static readonly ILog Log = LogManager.GetLogger(typeof(IPApiIPGeolocationWidgetViewModel));
 
     /// <summary>
-    /// Backing field for <see cref="IsRunning"/>.
-    /// </summary>
-    private bool _isRunning;
-
-    /// <summary>
     /// Gets or sets a value indicating whether the check is running.
     /// </summary>
     public bool IsRunning
     {
-        get => _isRunning;
+        get;
         set
         {
-            if (value == _isRunning)
+            if (value == field)
                 return;
 
-            _isRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="Result"/>.
-    /// </summary>
-    private IPGeolocationResult _result;
 
     /// <summary>
     /// Gets the result of the IP geolocation check.
     /// </summary>
     public IPGeolocationResult Result
     {
-        get => _result;
+        get;
         private set
         {
-            if (value == _result)
+            if (value == field)
                 return;
 
-            _result = value;
+            field = value;
             OnPropertyChanged();
         }
     }

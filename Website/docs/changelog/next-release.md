@@ -1,7 +1,15 @@
 ---
 sidebar_position: 0
 description: "Changelog for the next NETworkManager release — upcoming features, improvements, and bug fixes."
-keywords: [NETworkManager, changelog, release notes, next release, upcoming features, bug fixes]
+keywords:
+  [
+    NETworkManager,
+    changelog,
+    release notes,
+    next release,
+    upcoming features,
+    bug fixes,
+  ]
 ---
 
 # Next Release
@@ -21,6 +29,10 @@ Release date: **xx.xx.2025**
 
 ## What's new?
 
+**Firewall**
+
+- New feature to quickly add, edit, enable, disable and delete NETworkManager-owned firewall rules. Managed rules are prefixed with `NETworkManager_` in the Windows Firewall. (See the [documentation](https://borntoberoot.net/NETworkManager/docs/application/firewall) for more details) [#3383](https://github.com/BornToBeRoot/NETworkManager/pull/3383)
+
 **PowerShell**
 
 - DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PowerShell (conhost) window now rescales its font automatically using the Windows Console API (`AttachConsole` + `SetCurrentConsoleFontEx`), bypassing the OS limitation that prevents `WM_DPICHANGED` from being forwarded to cross-process child windows. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
@@ -31,9 +43,28 @@ Release date: **xx.xx.2025**
 
 ## Improvements
 
-- Redesign Status Window to make it more compact [#3359](https://github.com/BornToBeRoot/NETworkManager/pull/3359)
+**Dashboard**
+
+- Redesign Status Window to make it more compact. [#3359](https://github.com/BornToBeRoot/NETworkManager/pull/3359)
+
+**Network Interface**
+
+- Added Network Profile (domain, private, public) information to the Network Interface details view, if available. [#3383](https://github.com/BornToBeRoot/NETworkManager/pull/3383)
+
+**Discovery Protocol**
+
+- Added support for `F5` and `Enter` keys to start capturing network packets. [#3383](https://github.com/BornToBeRoot/NETworkManager/pull/3383)
+- Redesigned the "restart as admin" note to be more compact and visually consistent. [#3383](https://github.com/BornToBeRoot/NETworkManager/pull/3383)
+
+**Hosts File Editor**
+
+- Button to open the hosts file in the default text editor added. [#3383](https://github.com/BornToBeRoot/NETworkManager/pull/3383)
 
 ## Bug Fixes
+
+**Port Scanner**
+
+- Fixed an app crash when double-clicking a port profile. [#3382](https://github.com/BornToBeRoot/NETworkManager/pull/3382)
 
 **PowerShell**
 

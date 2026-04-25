@@ -7,8 +7,6 @@ namespace NETworkManager.Controls;
 
 public partial class LvlChartsWiFiChannelTooltip : IChartTooltip
 {
-    private TooltipData _data;
-
     public LvlChartsWiFiChannelTooltip()
     {
         InitializeComponent();
@@ -20,10 +18,10 @@ public partial class LvlChartsWiFiChannelTooltip : IChartTooltip
 
     public TooltipData Data
     {
-        get => _data;
+        get;
         set
         {
-            _data = value;
+            field = value;
             OnPropertyChanged();
         }
     }

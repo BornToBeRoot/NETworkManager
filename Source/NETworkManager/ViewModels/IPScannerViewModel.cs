@@ -44,20 +44,18 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private bool _firstLoad = true;
     private bool _closed;
 
-    private string _host;
-
     /// <summary>
     /// Gets or sets the host or IP range to scan.
     /// </summary>
     public string Host
     {
-        get => _host;
+        get;
         set
         {
-            if (value == _host)
+            if (value == field)
                 return;
 
-            _host = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -67,205 +65,183 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// </summary>
     public ICollectionView HostHistoryView { get; }
 
-    private bool _isSubnetDetectionRunning;
-
     /// <summary>
     /// Gets or sets a value indicating whether subnet detection is running.
     /// </summary>
     public bool IsSubnetDetectionRunning
     {
-        get => _isSubnetDetectionRunning;
+        get;
         set
         {
-            if (value == _isSubnetDetectionRunning)
+            if (value == field)
                 return;
 
-            _isSubnetDetectionRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-
-    private bool _isRunning;
 
     /// <summary>
     /// Gets or sets a value indicating whether the scan is currently running.
     /// </summary>
     public bool IsRunning
     {
-        get => _isRunning;
+        get;
         set
         {
-            if (value == _isRunning)
+            if (value == field)
                 return;
 
-            _isRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isCanceling;
 
     /// <summary>
     /// Gets or sets a value indicating whether the scan is being canceled.
     /// </summary>
     public bool IsCanceling
     {
-        get => _isCanceling;
+        get;
         set
         {
-            if (value == _isCanceling)
+            if (value == field)
                 return;
 
-            _isCanceling = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private ObservableCollection<IPScannerHostInfo> _results = [];
 
     /// <summary>
     /// Gets or sets the collection of scan results.
     /// </summary>
     public ObservableCollection<IPScannerHostInfo> Results
     {
-        get => _results;
+        get;
         set
         {
-            if (Equals(value, _results))
+            if (Equals(value, field))
                 return;
 
-            _results = value;
+            field = value;
         }
-    }
+    } = [];
 
     /// <summary>
     /// Gets the collection view for the scan results.
     /// </summary>
     public ICollectionView ResultsView { get; }
 
-    private IPScannerHostInfo _selectedResult;
-
     /// <summary>
     /// Gets or sets the currently selected scan result.
     /// </summary>
     public IPScannerHostInfo SelectedResult
     {
-        get => _selectedResult;
+        get;
         set
         {
-            if (value == _selectedResult)
+            if (value == field)
                 return;
 
-            _selectedResult = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private IList _selectedResults = new ArrayList();
 
     /// <summary>
     /// Gets or sets the list of currently selected scan results (for multi-selection).
     /// </summary>
     public IList SelectedResults
     {
-        get => _selectedResults;
+        get;
         set
         {
-            if (Equals(value, _selectedResults))
+            if (Equals(value, field))
                 return;
 
-            _selectedResults = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    private int _hostsToScan;
+    } = new ArrayList();
 
     /// <summary>
     /// Gets or sets the total number of hosts to scan.
     /// </summary>
     public int HostsToScan
     {
-        get => _hostsToScan;
+        get;
         set
         {
-            if (value == _hostsToScan)
+            if (value == field)
                 return;
 
-            _hostsToScan = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private int _hostsScanned;
 
     /// <summary>
     /// Gets or sets the number of hosts already scanned.
     /// </summary>
     public int HostsScanned
     {
-        get => _hostsScanned;
+        get;
         set
         {
-            if (value == _hostsScanned)
+            if (value == field)
                 return;
 
-            _hostsScanned = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _preparingScan;
 
     /// <summary>
     /// Gets or sets a value indicating whether the scan is being prepared.
     /// </summary>
     public bool PreparingScan
     {
-        get => _preparingScan;
+        get;
         set
         {
-            if (value == _preparingScan)
+            if (value == field)
                 return;
 
-            _preparingScan = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isStatusMessageDisplayed;
 
     /// <summary>
     /// Gets or sets a value indicating whether the status message is displayed.
     /// </summary>
     public bool IsStatusMessageDisplayed
     {
-        get => _isStatusMessageDisplayed;
+        get;
         set
         {
-            if (value == _isStatusMessageDisplayed)
+            if (value == field)
                 return;
 
-            _isStatusMessageDisplayed = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _statusMessage;
 
     /// <summary>
     /// Gets the status message to display.
     /// </summary>
     public string StatusMessage
     {
-        get => _statusMessage;
+        get;
         private set
         {
-            if (value == _statusMessage)
+            if (value == field)
                 return;
 
-            _statusMessage = value;
+            field = value;
             OnPropertyChanged();
         }
     }

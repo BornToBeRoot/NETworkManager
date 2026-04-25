@@ -1,5 +1,5 @@
 ---
-sidebar_position: 25
+sidebar_position: 26
 description: "View all active network listeners with IP addresses and ports on your local machine using NETworkManager. Identify which processes are listening for connections."
 keywords: [NETworkManager, listeners, listening ports, open ports, network listeners, port monitoring]
 ---

@@ -51,14 +51,12 @@ public class SettingsLanguageViewModel : ViewModelBase
 
     public ICollectionView Languages { get; }
 
-    private LocalizationInfo _selectedLanguage;
-
     public LocalizationInfo SelectedLanguage
     {
-        get => _selectedLanguage;
+        get;
         set
         {
-            if (value == _selectedLanguage)
+            if (value == field)
                 return;
 
             if (!_isLoading &&
@@ -69,22 +67,20 @@ public class SettingsLanguageViewModel : ViewModelBase
                 SettingsManager.Current.Localization_CultureCode = value.Code;
             }
 
-            _selectedLanguage = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private string _search;
-
     public string Search
     {
-        get => _search;
+        get;
         set
         {
-            if (value == _search)
+            if (value == field)
                 return;
 
-            _search = value;
+            field = value;
 
             Languages.Refresh();
 

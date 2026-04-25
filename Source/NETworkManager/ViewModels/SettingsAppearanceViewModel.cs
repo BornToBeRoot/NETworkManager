@@ -14,14 +14,12 @@ public class SettingsAppearanceViewModel : ViewModelBase
 
     public ICollectionView Themes { get; }
 
-    private ThemeColorInfo _selectedTheme;
-
     public ThemeColorInfo SelectedTheme
     {
-        get => _selectedTheme;
+        get;
         set
         {
-            if (value == _selectedTheme)
+            if (value == field)
                 return;
 
             if (!_isLoading && !UseCustomTheme)
@@ -30,21 +28,19 @@ public class SettingsAppearanceViewModel : ViewModelBase
                 SettingsManager.Current.Appearance_Theme = value.Name;
             }
 
-            _selectedTheme = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
     public ICollectionView Accents { get; }
 
-    private AccentColorInfo _selectedAccent;
-
     public AccentColorInfo SelectedAccent
     {
-        get => _selectedAccent;
+        get;
         set
         {
-            if (value == _selectedAccent)
+            if (value == field)
                 return;
 
             if (!_isLoading && !UseCustomTheme)
@@ -53,19 +49,17 @@ public class SettingsAppearanceViewModel : ViewModelBase
                 SettingsManager.Current.Appearance_Accent = value.Name;
             }
 
-            _selectedAccent = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _useCustomTheme;
-
     public bool UseCustomTheme
     {
-        get => _useCustomTheme;
+        get;
         set
         {
-            if (value == _useCustomTheme)
+            if (value == field)
                 return;
 
             if (!_isLoading)
@@ -74,7 +68,7 @@ public class SettingsAppearanceViewModel : ViewModelBase
                 AppearanceManager.Load();
             }
 
-            _useCustomTheme = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -82,14 +76,12 @@ public class SettingsAppearanceViewModel : ViewModelBase
     public ICollectionView CustomThemes { get; }
 
 
-    private ThemeInfo _selectedCustomTheme;
-
     public ThemeInfo SelectedCustomTheme
     {
-        get => _selectedCustomTheme;
+        get;
         set
         {
-            if (value == _selectedCustomTheme)
+            if (value == field)
                 return;
 
             if (!_isLoading && UseCustomTheme)
@@ -98,25 +90,23 @@ public class SettingsAppearanceViewModel : ViewModelBase
                 SettingsManager.Current.Appearance_CustomThemeName = value.Name;
             }
 
-            _selectedCustomTheme = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private bool _powerShellModifyGlobalProfile;
-
     public bool PowerShellModifyGlobalProfile
     {
-        get => _powerShellModifyGlobalProfile;
+        get;
         set
         {
-            if (value == _powerShellModifyGlobalProfile)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Appearance_PowerShellModifyGlobalProfile = value;
 
-            _powerShellModifyGlobalProfile = value;
+            field = value;
             OnPropertyChanged();
         }
     }

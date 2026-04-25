@@ -24,265 +24,210 @@ public class IPScannerSettingsViewModel : ViewModelBase
     private readonly bool _isLoading;
 
     /// <summary>
-    /// Backing field for <see cref="ShowAllResults"/>.
-    /// </summary>
-    private bool _showAllResults;
-
-    /// <summary>
     /// Gets or sets a value indicating whether to show all results.
     /// </summary>
     public bool ShowAllResults
     {
-        get => _showAllResults;
+        get;
         set
         {
-            if (value == _showAllResults)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_ShowAllResults = value;
 
-            _showAllResults = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ICMPAttempts"/>.
-    /// </summary>
-    private int _icmpAttempts;
 
     /// <summary>
     /// Gets or sets the number of ICMP attempts.
     /// </summary>
     public int ICMPAttempts
     {
-        get => _icmpAttempts;
+        get;
         set
         {
-            if (value == _icmpAttempts)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_ICMPAttempts = value;
 
-            _icmpAttempts = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ICMPTimeout"/>.
-    /// </summary>
-    private int _icmpTimeout;
 
     /// <summary>
     /// Gets or sets the ICMP timeout in milliseconds.
     /// </summary>
     public int ICMPTimeout
     {
-        get => _icmpTimeout;
+        get;
         set
         {
-            if (value == _icmpTimeout)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_ICMPTimeout = value;
 
-            _icmpTimeout = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ICMPBuffer"/>.
-    /// </summary>
-    private int _icmpBuffer;
 
     /// <summary>
     /// Gets or sets the ICMP buffer size.
     /// </summary>
     public int ICMPBuffer
     {
-        get => _icmpBuffer;
+        get;
         set
         {
-            if (value == _icmpBuffer)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_ICMPBuffer = value;
 
-            _icmpBuffer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ResolveHostname"/>.
-    /// </summary>
-    private bool _resolveHostname;
 
     /// <summary>
     /// Gets or sets a value indicating whether to resolve the hostname.
     /// </summary>
     public bool ResolveHostname
     {
-        get => _resolveHostname;
+        get;
         set
         {
-            if (value == _resolveHostname)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_ResolveHostname = value;
 
-            _resolveHostname = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="PortScanEnabled"/>.
-    /// </summary>
-    private bool _portScanEnabled;
 
     /// <summary>
     /// Gets or sets a value indicating whether port scanning is enabled.
     /// </summary>
     public bool PortScanEnabled
     {
-        get => _portScanEnabled;
+        get;
         set
         {
-            if (value == _portScanEnabled)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_PortScanEnabled = value;
 
-            _portScanEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="PortScanPorts"/>.
-    /// </summary>
-    private string _portScanPorts;
 
     /// <summary>
     /// Gets or sets the ports to scan.
     /// </summary>
     public string PortScanPorts
     {
-        get => _portScanPorts;
+        get;
         set
         {
-            if (value == _portScanPorts)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_PortScanPorts = value;
 
-            _portScanPorts = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="PortScanTimeout"/>.
-    /// </summary>
-    private int _portScanTimeout;
 
     /// <summary>
     /// Gets or sets the port scan timeout in milliseconds.
     /// </summary>
     public int PortScanTimeout
     {
-        get => _portScanTimeout;
+        get;
         set
         {
-            if (value == _portScanTimeout)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_PortScanTimeout = value;
 
-            _portScanTimeout = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="NetBIOSEnabled"/>.
-    /// </summary>
-    private bool _netBIOSEnabled;
 
     /// <summary>
     /// Gets or sets a value indicating whether NetBIOS is enabled.
     /// </summary>
     public bool NetBIOSEnabled
     {
-        get => _netBIOSEnabled;
+        get;
         set
         {
-            if (value == _netBIOSEnabled)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_NetBIOSEnabled = value;
 
-            _netBIOSEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="NetBIOSTimeout"/>.
-    /// </summary>
-    private int _netBIOSTimeout;
 
     /// <summary>
     /// Gets or sets the NetBIOS timeout in milliseconds.
     /// </summary>
     public int NetBIOSTimeout
     {
-        get => _netBIOSTimeout;
+        get;
         set
         {
-            if (value == _netBIOSTimeout)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_NetBIOSTimeout = value;
 
-            _netBIOSTimeout = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ResolveMACAddress"/>.
-    /// </summary>
-    private bool _resolveMACAddress;
 
     /// <summary>
     /// Gets or sets a value indicating whether to resolve the MAC address.
     /// </summary>
     public bool ResolveMACAddress
     {
-        get => _resolveMACAddress;
+        get;
         set
         {
-            if (value == _resolveMACAddress)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_ResolveMACAddress = value;
 
-            _resolveMACAddress = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -293,70 +238,55 @@ public class IPScannerSettingsViewModel : ViewModelBase
     public ICollectionView CustomCommands { get; }
 
     /// <summary>
-    /// Backing field for <see cref="SelectedCustomCommand"/>.
-    /// </summary>
-    private CustomCommandInfo _selectedCustomCommand = new();
-
-    /// <summary>
     /// Gets or sets the selected custom command.
     /// </summary>
     public CustomCommandInfo SelectedCustomCommand
     {
-        get => _selectedCustomCommand;
+        get;
         set
         {
-            if (value == _selectedCustomCommand)
+            if (value == field)
                 return;
 
-            _selectedCustomCommand = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="MaxHostThreads"/>.
-    /// </summary>
-    private int _maxHostThreads;
+    } = new();
 
     /// <summary>
     /// Gets or sets the maximum number of host threads.
     /// </summary>
     public int MaxHostThreads
     {
-        get => _maxHostThreads;
+        get;
         set
         {
-            if (value == _maxHostThreads)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_MaxHostThreads = value;
 
-            _maxHostThreads = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="MaxPortThreads"/>.
-    /// </summary>
-    private int _maxPortThreads;
 
     /// <summary>
     /// Gets or sets the maximum number of port threads.
     /// </summary>
     public int MaxPortThreads
     {
-        get => _maxPortThreads;
+        get;
         set
         {
-            if (value == _maxPortThreads)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_MaxPortThreads = value;
 
-            _maxPortThreads = value;
+            field = value;
             OnPropertyChanged();
         }
     }

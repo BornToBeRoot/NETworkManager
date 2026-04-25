@@ -36,8 +36,8 @@
         <converters:IPAddressSubnetmaskTupleArrayToStringConverter
             x:Key="IPAddressSubnetmaskTupleArrayToStringConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
-        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
-        <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" />
+        <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />        
+        <converters:NetworkProfileToStringConverter x:Key="NetworkProfileToStringConverter" />
         <converters:OperationalStatusToStringConverter x:Key="OperationalStatusToStringConverter" />
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <converters:ValidateNetworkInterfaceConfigConverter x:Key="ValidateNetworkInterfaceConfigConverter" />
@@ -223,8 +223,9 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <GridSplitter Grid.Column="1" Grid.RowSpan="20"
+                                <GridSplitter Grid.Column="1" Grid.RowSpan="21"
                                               Background="Transparent"
                                               HorizontalAlignment="Stretch" />
 
@@ -253,6 +254,22 @@
                                 <TextBox Grid.Column="2" Grid.Row="5"
                                          Text="{Binding SelectedNetworkInterface.Speed, Converter={StaticResource Bytes1000ToSpeedConverter}}" />
                                 <TextBlock Grid.Column="0" Grid.Row="6"
+                                           Text="{x:Static localization:Strings.NetworkProfile}">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
+                                <TextBox Grid.Column="2" Grid.Row="6"
+                                         Text="{Binding SelectedNetworkInterface.Profile, Converter={StaticResource NetworkProfileToStringConverter}}">
+                                    <TextBox.Visibility>
+                                        <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Path="SelectedNetworkInterface.IsOperational" />
+                                        </MultiBinding>
+                                    </TextBox.Visibility>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="7"
                                            Text="{x:Static localization:Strings.IPv4ProtocolAvailable}">
                                     <TextBlock.Visibility>
                                         <MultiBinding
@@ -261,7 +278,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="6"
+                                <TextBox Grid.Column="2" Grid.Row="7"
                                          Text="{Binding SelectedNetworkInterface.IPv4ProtocolAvailable, Converter={StaticResource BooleanToStringConverter}}">
                                     <TextBox.Visibility>
                                         <MultiBinding
@@ -270,7 +287,7 @@
                                         </MultiBinding>
                                     </TextBox.Visibility>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="7"
+                                <TextBlock Grid.Column="0" Grid.Row="8"
                                            Text="{x:Static localization:Strings.IPv4Address}">
                                     <TextBlock.Visibility>
                                         <MultiBinding
@@ -280,7 +297,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="7"
+                                <TextBox Grid.Column="2" Grid.Row="8"
                                          Text="{Binding SelectedNetworkInterface.IPv4Address, Converter={StaticResource IPAddressSubnetmaskTupleArrayToStringConverter}}">
                                     <TextBox.Visibility>
                                         <MultiBinding
@@ -290,7 +307,7 @@
                                         </MultiBinding>
                                     </TextBox.Visibility>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="8"
+                                <TextBlock Grid.Column="0" Grid.Row="9"
                                            Text="{x:Static localization:Strings.IPv4DefaultGateway}">
                                     <TextBlock.Visibility>
                                         <MultiBinding
@@ -300,7 +317,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="8"
+                                <TextBox Grid.Column="2" Grid.Row="9"
                                          Text="{Binding SelectedNetworkInterface.IPv4Gateway, Converter={StaticResource IPAddressArrayToStringConverter}}">
                                     <TextBox.Visibility>
                                         <MultiBinding
@@ -310,7 +327,7 @@
                                         </MultiBinding>
                                     </TextBox.Visibility>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="9"
+                                <TextBlock Grid.Column="0" Grid.Row="10"
                                            Text="{x:Static localization:Strings.DHCPEnabled}">
                                     <TextBlock.Visibility>
                                         <MultiBinding
@@ -319,7 +336,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="9"
+                                <TextBox Grid.Column="2" Grid.Row="10"
                                          Text="{Binding SelectedNetworkInterface.DhcpEnabled, Converter={StaticResource BooleanToStringConverter}}">
                                     <TextBox.Visibility>
                                         <MultiBinding
@@ -328,7 +345,7 @@
                                         </MultiBinding>
                                     </TextBox.Visibility>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="10"
+                                <TextBlock Grid.Column="0" Grid.Row="11"
                                            Text="{x:Static localization:Strings.DHCPServer}">
                                     <TextBlock.Visibility>
                                         <MultiBinding
@@ -338,7 +355,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="10"
+                                <TextBox Grid.Column="2" Grid.Row="11"
                                          Text="{Binding SelectedNetworkInterface.DhcpServer, Converter={StaticResource IPAddressArrayToStringConverter}}">
                                     <TextBox.Visibility>
                                         <MultiBinding
@@ -348,7 +365,7 @@
                                         </MultiBinding>
                                     </TextBox.Visibility>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="11"
+                                <TextBlock Grid.Column="0" Grid.Row="12"
                                            Text="{x:Static localization:Strings.DHCPLeaseObtained}">
                                     <TextBlock.Visibility>
                                         <MultiBinding
@@ -358,7 +375,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="11"
+                                <TextBox Grid.Column="2" Grid.Row="12"
                                          Text="{Binding SelectedNetworkInterface.DhcpLeaseObtained}">
                                     <TextBox.Visibility>
                                         <MultiBinding
@@ -368,7 +385,7 @@
                                         </MultiBinding>
                                     </TextBox.Visibility>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="12"
+                                <TextBlock Grid.Column="0" Grid.Row="13"
                                            Text="{x:Static localization:Strings.DHCPLeaseExpires}">
                                     <TextBlock.Visibility>
                                         <MultiBinding
@@ -378,7 +395,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="12"
+                                <TextBox Grid.Column="2" Grid.Row="13"
                                          Text="{Binding SelectedNetworkInterface.DhcpLeaseExpires}">
                                     <TextBox.Visibility>
                                         <MultiBinding
@@ -388,7 +405,7 @@
                                         </MultiBinding>
                                     </TextBox.Visibility>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="13"
+                                <TextBlock Grid.Column="0" Grid.Row="14"
                                            Text="{x:Static localization:Strings.IPv6ProtocolAvailable}">
                                     <TextBlock.Visibility>
                                         <MultiBinding
@@ -397,7 +414,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="13"
+                                <TextBox Grid.Column="2" Grid.Row="14"
                                          Text="{Binding SelectedNetworkInterface.IPv6ProtocolAvailable, Converter={StaticResource BooleanToStringConverter}}">
                                     <TextBox.Visibility>
                                         <MultiBinding
@@ -406,7 +423,7 @@
                                         </MultiBinding>
                                     </TextBox.Visibility>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="14"
+                                <TextBlock Grid.Column="0" Grid.Row="15"
                                            Text="{x:Static localization:Strings.IPv6AddressLinkLocal}">
                                     <TextBlock.Visibility>
                                         <MultiBinding
@@ -416,7 +433,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="14"
+                                <TextBox Grid.Column="2" Grid.Row="15"
                                          Text="{Binding SelectedNetworkInterface.IPv6AddressLinkLocal, Converter={StaticResource IPAddressArrayToStringConverter}}">
                                     <TextBox.Visibility>
                                         <MultiBinding
@@ -426,7 +443,7 @@
                                         </MultiBinding>
                                     </TextBox.Visibility>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="15"
+                                <TextBlock Grid.Column="0" Grid.Row="16"
                                            Text="{x:Static localization:Strings.IPv6Address}">
                                     <TextBlock.Visibility>
                                         <MultiBinding
@@ -436,7 +453,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="15"
+                                <TextBox Grid.Column="2" Grid.Row="16"
                                          Text="{Binding SelectedNetworkInterface.IPv6Address, Converter={StaticResource IPAddressArrayToStringConverter}}">
                                     <TextBox.Visibility>
                                         <MultiBinding
@@ -446,7 +463,7 @@
                                         </MultiBinding>
                                     </TextBox.Visibility>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="16"
+                                <TextBlock Grid.Column="0" Grid.Row="17"
                                            Text="{x:Static localization:Strings.IPv6DefaultGateway}">
                                     <TextBlock.Visibility>
                                         <MultiBinding
@@ -456,7 +473,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="16"
+                                <TextBox Grid.Column="2" Grid.Row="17"
                                          Text="{Binding SelectedNetworkInterface.IPv6Gateway , Converter={StaticResource IPAddressArrayToStringConverter}}">
                                     <TextBox.Visibility>
                                         <MultiBinding
@@ -466,7 +483,7 @@
                                         </MultiBinding>
                                     </TextBox.Visibility>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="17"
+                                <TextBlock Grid.Column="0" Grid.Row="18"
                                            Text="{x:Static localization:Strings.DNSAutoconfiguration}">
                                     <TextBlock.Visibility>
                                         <MultiBinding
@@ -475,7 +492,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="17"
+                                <TextBox Grid.Column="2" Grid.Row="18"
                                          Text="{Binding SelectedNetworkInterface.DNSAutoconfigurationEnabled, Converter={StaticResource BooleanToStringConverter}}">
                                     <TextBox.Visibility>
                                         <MultiBinding
@@ -484,7 +501,7 @@
                                         </MultiBinding>
                                     </TextBox.Visibility>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="18"
+                                <TextBlock Grid.Column="0" Grid.Row="19"
                                            Text="{x:Static localization:Strings.DNSSuffix}">
                                     <TextBlock.Visibility>
                                         <MultiBinding
@@ -493,7 +510,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="18"
+                                <TextBox Grid.Column="2" Grid.Row="19"
                                          Text="{Binding SelectedNetworkInterface.DNSSuffix}">
                                     <TextBox.Visibility>
                                         <MultiBinding
@@ -502,7 +519,7 @@
                                         </MultiBinding>
                                     </TextBox.Visibility>
                                 </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="19"
+                                <TextBlock Grid.Column="0" Grid.Row="20"
                                            Text="{x:Static localization:Strings.DNSServers}">
                                     <TextBlock.Visibility>
                                         <MultiBinding
@@ -511,7 +528,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="19"
+                                <TextBox Grid.Column="2" Grid.Row="20"
                                          Text="{Binding SelectedNetworkInterface.DNSServer, Converter={StaticResource IPAddressArrayToStringConverter}}">
                                     <TextBox.Visibility>
                                         <MultiBinding
@@ -1148,7 +1165,7 @@
                                                             <TextBlock Grid.Column="1" VerticalAlignment="Center"
                                                                        Style="{StaticResource DefaultTextBlock}"
                                                                        Text="{Binding Path=CIDR,StringFormat=/{0}}"
-                                                                       Foreground="{DynamicResource GrayBrush2}" />
+                                                                       Foreground="{DynamicResource MahApps.Brushes.Gray2}" />
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ComboBox.ItemTemplate>
@@ -1470,7 +1487,8 @@
                                     </Rectangle.Style>
                                 </Rectangle>
                             </Button>
-                            <Popup PlacementTarget="{Binding ElementName=ButtonProfileFilter}"
+                            <Popup Grid.Column="0" Grid.Row="0"
+                                   PlacementTarget="{Binding ElementName=ButtonProfileFilter}"
                                    Placement="Bottom" StaysOpen="False"
                                    IsOpen="{Binding ProfileFilterIsOpen}"
                                    Width="220">
@@ -1519,7 +1537,7 @@
                                         <TextBlock Grid.Column="0" Grid.Row="4"
                                                    Text="{x:Static localization:Strings.Match}"
                                                    Style="{StaticResource InfoTextBlock}" />
-                                        <StackPanel Grid.Column="0" Grid.Row="6"
+                                        <StackPanel Grid.Column="0" Grid.Row="7"
                                                     Orientation="Horizontal">
                                             <RadioButton Content="{x:Static localization:Strings.Any}"
                                                          IsChecked="{Binding Path=ProfileFilterTagsMatchAny}" />
@@ -1527,7 +1545,7 @@
                                                          IsChecked="{Binding Path=ProfileFilterTagsMatchAll}"
                                                          Margin="10,0,0,0" />
                                         </StackPanel>
-                                        <StackPanel Grid.Column="0" Grid.Row="8"
+                                        <StackPanel Grid.Column="0" Grid.Row="9"
                                                     Orientation="Horizontal" HorizontalAlignment="Right">
                                             <Button Command="{Binding ApplyProfileFilterCommand}"
                                                     Style="{StaticResource ImageButton}"
@@ -1599,7 +1617,7 @@
                             <ListBox.Resources>
                                 <ContextMenu x:Key="ListBoxItemContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                     <MenuItem Header="{x:Static localization:Strings.Apply}"
-                                              Command="{Binding ApplyProfileConfigCommand}">
+                                              Command="{Binding ApplyProfileCommand}">
                                         <MenuItem.Icon>
                                             <Rectangle Width="16" Height="16"
                                                        Fill="{DynamicResource MahApps.Brushes.Gray3}">

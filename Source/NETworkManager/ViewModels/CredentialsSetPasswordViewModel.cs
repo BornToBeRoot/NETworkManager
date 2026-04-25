@@ -11,26 +11,6 @@ namespace NETworkManager.ViewModels;
 public class CredentialsSetPasswordViewModel : ViewModelBase
 {
     /// <summary>
-    ///     Private variable for <see cref="IsPasswordEmpty" />.
-    /// </summary>
-    private bool _isPasswordEmpty = true;
-
-    /// <summary>
-    ///     Private variable for <see cref="IsRepeatedPasswordEqual" />.
-    /// </summary>
-    private bool _isRepeatedPasswordEqual;
-
-    /// <summary>
-    ///     Private variable for <see cref="Password" />.
-    /// </summary>
-    private SecureString _password = new();
-
-    /// <summary>
-    ///     Private variable for <see cref="PasswordRepeat" />.
-    /// </summary>
-    private SecureString _passwordRepeat = new();
-
-    /// <summary>
     ///     Initialize a new class <see cref="CredentialsSetPasswordViewModel" /> with <see cref="OKCommand" /> and
     ///     <see cref="CancelCommand" />.
     /// </summary>
@@ -58,67 +38,67 @@ public class CredentialsSetPasswordViewModel : ViewModelBase
     /// </summary>
     public SecureString Password
     {
-        get => _password;
+        get;
         set
         {
-            if (value == _password)
+            if (value == field)
                 return;
 
-            _password = value;
+            field = value;
 
             ValidatePassword();
 
             OnPropertyChanged();
         }
-    }
+    } = new();
 
     /// <summary>
     ///     Repeated password as <see cref="SecureString" />.
     /// </summary>
     public SecureString PasswordRepeat
     {
-        get => _passwordRepeat;
+        get;
         set
         {
-            if (value == _passwordRepeat)
+            if (value == field)
                 return;
 
-            _passwordRepeat = value;
+            field = value;
 
             ValidatePassword();
 
             OnPropertyChanged();
         }
-    }
+    } = new();
 
     /// <summary>
     ///     Indicate if one of the password fields are empty.
     /// </summary>
     public bool IsPasswordEmpty
     {
-        get => _isPasswordEmpty;
+        get;
         set
         {
-            if (value == _isPasswordEmpty)
+            if (value == field)
                 return;
 
-            _isPasswordEmpty = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = true;
 
     /// <summary>
     ///     Indicate if the <see cref="PasswordRepeat" /> is equal to the <see cref="Password" />.
     /// </summary>
     public bool IsRepeatedPasswordEqual
     {
-        get => _isRepeatedPasswordEqual;
+        get;
         set
         {
-            if (value == _isRepeatedPasswordEqual)
+            if (value == field)
                 return;
 
-            _isRepeatedPasswordEqual = value;
+            field = value;
             OnPropertyChanged();
         }
     }

@@ -25,80 +25,71 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
     private readonly Guid _tabId;
     private readonly RemoteDesktopSessionInfo _sessionInfo;
 
-    private double _windowsFormsHostMaxWidth;
-
     public double WindowsFormsHostMaxWidth
     {
-        get => _windowsFormsHostMaxWidth;
+        get;
         private set
         {
-            if (Math.Abs(value - _windowsFormsHostMaxWidth) < double.Epsilon)
+            if (Math.Abs(value - field) < double.Epsilon)
                 return;
 
-            _windowsFormsHostMaxWidth = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private double _windowsFormsHostMaxHeight;
 
     public double WindowsFormsHostMaxHeight
     {
-        get => _windowsFormsHostMaxHeight;
+        get;
         private set
         {
-            if (Math.Abs(value - _windowsFormsHostMaxHeight) < double.Epsilon)
+            if (Math.Abs(value - field) < double.Epsilon)
                 return;
 
-            _windowsFormsHostMaxHeight = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isConnected;
 
     public bool IsConnected
     {
-        get => _isConnected;
+        get;
         set
         {
-            if (value == _isConnected)
+            if (value == field)
                 return;
 
-            _isConnected = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isConnecting;
 
     public bool IsConnecting
     {
-        get => _isConnecting;
+        get;
         set
         {
-            if (value == _isConnecting)
+            if (value == field)
                 return;
 
-            _isConnecting = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private string _disconnectReason;
 
     public string DisconnectReason
     {
-        get => _disconnectReason;
+        get;
         private set
         {
-            if (value == _disconnectReason)
+            if (value == field)
                 return;
 
-            _disconnectReason = value;
+            field = value;
             OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Constructor, load

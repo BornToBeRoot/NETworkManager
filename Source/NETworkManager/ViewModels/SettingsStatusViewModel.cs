@@ -8,38 +8,34 @@ public class SettingsStatusViewModel : ViewModelBase
 
     private readonly bool _isLoading;
 
-    private bool _showWindowOnNetworkChange;
-
     public bool ShowWindowOnNetworkChange
     {
-        get => _showWindowOnNetworkChange;
+        get;
         set
         {
-            if (value == _showWindowOnNetworkChange)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Status_ShowWindowOnNetworkChange = value;
 
-            _showWindowOnNetworkChange = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private int _windowCloseTime;
-
     public int WindowCloseTime
     {
-        get => _windowCloseTime;
+        get;
         set
         {
-            if (value == _windowCloseTime)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.Status_WindowCloseTime = value;
 
-            _windowCloseTime = value;
+            field = value;
             OnPropertyChanged();
         }
     }

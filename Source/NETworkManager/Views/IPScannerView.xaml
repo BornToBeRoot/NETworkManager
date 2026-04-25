@@ -606,7 +606,8 @@
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0"
                                            Text="{x:Static localization:Strings.PingDetails}"
-                                           Style="{StaticResource BoldTextBlock}" />
+                                           Style="{StaticResource BoldTextBlock}"
+                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
                                 <ListView Grid.Column="0" Grid.Row="2"
                                           Background="Transparent">
                                     <ListView.ItemContainerStyle>
@@ -696,7 +697,8 @@
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0"
                                            Text="{x:Static localization:Strings.Ports}"
-                                           Style="{StaticResource BoldTextBlock}" />
+                                           Style="{StaticResource BoldTextBlock}"
+                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
                                 <StackPanel Grid.Column="0" Grid.Row="2"
                                             VerticalAlignment="Top"
                                             Orientation="Horizontal"
@@ -780,7 +782,8 @@
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0"
                                            Text="{x:Static localization:Strings.NetBIOS}"
-                                           Style="{StaticResource BoldTextBlock}" />
+                                           Style="{StaticResource BoldTextBlock}"
+                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
                                 <StackPanel Grid.Column="0" Grid.Row="2"
                                             VerticalAlignment="Top"
                                             Orientation="Horizontal"
@@ -892,7 +895,8 @@
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Column="0" Grid.Row="0"
                                            Text="{x:Static localization:Strings.DNS}"
-                                           Style="{StaticResource BoldTextBlock}" />
+                                           Style="{StaticResource BoldTextBlock}"
+                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
                                 <StackPanel Grid.Column="0" Grid.Row="2"
                                             VerticalAlignment="Top"
                                             Orientation="Horizontal"
@@ -940,7 +944,8 @@
                                 </ListView>
                                 <TextBlock Grid.Column="0" Grid.Row="4"
                                            Text="{x:Static localization:Strings.ARP}"
-                                           Style="{StaticResource BoldTextBlock}" />
+                                           Style="{StaticResource BoldTextBlock}"
+                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
                                 <StackPanel Grid.Column="0" Grid.Row="6"
                                             VerticalAlignment="Top"
                                             Orientation="Horizontal"

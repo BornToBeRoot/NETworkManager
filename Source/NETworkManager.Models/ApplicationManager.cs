@@ -121,6 +121,9 @@ public static class ApplicationManager
             case ApplicationName.ARPTable:
                 canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.TableOfContents });
                 break;
+            case ApplicationName.Firewall:
+                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.WallFire });
+                break;
             case ApplicationName.None:
             default:
                 canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.SmileyFrown });

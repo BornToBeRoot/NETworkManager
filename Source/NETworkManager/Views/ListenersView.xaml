@@ -30,60 +30,70 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Column="0" Grid.Row="0"
-                            Orientation="Horizontal"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Right">
-                    <CheckBox IsChecked="{Binding AutoRefreshEnabled}"
-                              Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}"
-                              Margin="0,0,10,0" />
-                    <ComboBox ItemsSource="{Binding AutoRefreshTimes}"
-                              SelectedItem="{Binding SelectedAutoRefreshTime}"
-                              MinWidth="150"
-                              Margin="0,0,10,0">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
-                                <TextBlock>
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} {1}">
-                                            <Binding Path="Value" />
-                                            <Binding Path="TimeUnit"
-                                                     Converter="{StaticResource TimeUnitToStringConverter}" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <Button Command="{Binding Path=RefreshCommand}"
-                            Style="{StaticResource CleanButton}"
-                            Margin="0,0,10,0">
-                        <Rectangle Width="24" Height="24"
-                                   wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform"
-                                             Visual="{iconPacks:Material Kind=Refresh}" />
-                            </Rectangle.OpacityMask>
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type TypeName=Rectangle}">
-                                    <Setter Property="Fill"
-                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
-                                    <Style.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
-                                            Value="True">
-                                            <Setter Property="Fill"
-                                                    Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                    </Button>
-                    <TextBox Width="250"
-                             Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
-                             Style="{StaticResource ResourceKey=SearchTextBox}" />
-                </StackPanel>
+                <Grid Grid.Column="0" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                               Style="{StaticResource HeaderTextBlock}"
+                               Text="{x:Static localization:Strings.Listeners}"
+                               VerticalAlignment="Center" />
+                    <StackPanel Grid.Column="1"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+                        <CheckBox IsChecked="{Binding AutoRefreshEnabled}"
+                                  Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}"
+                                  Margin="0,0,10,0" />
+                        <ComboBox ItemsSource="{Binding AutoRefreshTimes}"
+                                  SelectedItem="{Binding SelectedAutoRefreshTime}"
+                                  MinWidth="150"
+                                  Margin="0,0,10,0">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Value" />
+                                                <Binding Path="TimeUnit"
+                                                         Converter="{StaticResource TimeUnitToStringConverter}" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Command="{Binding Path=RefreshCommand}"
+                                Style="{StaticResource CleanButton}"
+                                Margin="0,0,10,0">
+                            <Rectangle Width="16" Height="16"
+                                       wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform"
+                                                 Visual="{iconPacks:Material Kind=Refresh}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type TypeName=Rectangle}">
+                                        <Setter Property="Fill"
+                                                Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                Value="True">
+                                                <Setter Property="Fill"
+                                                        Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                        <TextBox Width="250"
+                                 Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource ResourceKey=SearchTextBox}" />
+                    </StackPanel>
+                </Grid>
                 <controls:MultiSelectDataGrid Grid.Column="0" Grid.Row="2"
                                               ItemsSource="{Binding ResultsView}"
                                               SelectedItem="{Binding SelectedResult}"
@@ -154,20 +164,23 @@
                                             SortMemberPath="Port" MinWidth="100" />
                     </controls:MultiSelectDataGrid.Columns>
                 </controls:MultiSelectDataGrid>
-                <WrapPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Left">
-                    <networkManager:LoadingIndicator IsActive="True"
+                <Grid Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <networkManager:LoadingIndicator Grid.Column="0" IsActive="True"
                                                      Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
                                                      Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                                      Width="24" Height="24"
                                                      SpeedRatio="1" Margin="0,0,10,0" />
-                    <TextBlock Foreground="{DynamicResource MahApps.Brushes.Accent}"
-                               Text="{Binding StatusMessage}"
-                               VerticalAlignment="Center"
-                               Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                               Style="{DynamicResource StatusMessageTextBlock}" />
-                </WrapPanel>
+                    <TextBlock Grid.Column="1"
+                               Style="{StaticResource ResourceKey=AccentTextBlock}"
+                               Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                               Text="{Binding Path=StatusMessage}"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Center" />
+                </Grid>
             </Grid>
         </TabItem>
     </TabControl>

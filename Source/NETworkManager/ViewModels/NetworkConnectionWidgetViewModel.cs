@@ -30,579 +30,444 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     #region Computer
 
     /// <summary>
-    /// Backing field for <see cref="IsComputerIPv4Checking"/>.
-    /// </summary>
-    private bool _isComputerIPv4Checking;
-
-    /// <summary>
     /// Gets or sets a value indicating whether the computer IPv4 address is being checked.
     /// </summary>
     public bool IsComputerIPv4Checking
     {
-        get => _isComputerIPv4Checking;
+        get;
         set
         {
-            if (value == _isComputerIPv4Checking)
+            if (value == field)
                 return;
 
-            _isComputerIPv4Checking = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ComputerIPv4"/>.
-    /// </summary>
-    private string _computerIPv4;
 
     /// <summary>
     /// Gets or sets the computer IPv4 address.
     /// </summary>
     public string ComputerIPv4
     {
-        get => _computerIPv4;
+        get;
         set
         {
-            if (value == _computerIPv4)
+            if (value == field)
                 return;
 
-            _computerIPv4 = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ComputerIPv4State"/>.
-    /// </summary>
-    private ConnectionState _computerIPv4State = ConnectionState.None;
 
     /// <summary>
     /// Gets private or sets the computer IPv4 connection state.
     /// </summary>
     public ConnectionState ComputerIPv4State
     {
-        get => _computerIPv4State;
+        get;
         private set
         {
-            if (value == _computerIPv4State)
+            if (value == field)
                 return;
 
-            _computerIPv4State = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="IsComputerIPv6Checking"/>.
-    /// </summary>
-    private bool _isComputerIPv6Checking;
+    } = ConnectionState.None;
 
     /// <summary>
     /// Gets or sets a value indicating whether the computer IPv6 address is being checked.
     /// </summary>
     public bool IsComputerIPv6Checking
     {
-        get => _isComputerIPv6Checking;
+        get;
         set
         {
-            if (value == _isComputerIPv6Checking)
+            if (value == field)
                 return;
 
-            _isComputerIPv6Checking = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ComputerIPv6"/>.
-    /// </summary>
-    private string _computerIPv6;
 
     /// <summary>
     /// Gets or sets the computer IPv6 address.
     /// </summary>
     public string ComputerIPv6
     {
-        get => _computerIPv6;
+        get;
         set
         {
-            if (value == _computerIPv6)
+            if (value == field)
                 return;
 
-            _computerIPv6 = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ComputerIPv6State"/>.
-    /// </summary>
-    private ConnectionState _computerIPv6State = ConnectionState.None;
 
     /// <summary>
     /// Gets private or sets the computer IPv6 connection state.
     /// </summary>
     public ConnectionState ComputerIPv6State
     {
-        get => _computerIPv6State;
+        get;
         private set
         {
-            if (value == _computerIPv6State)
+            if (value == field)
                 return;
 
-            _computerIPv6State = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="IsComputerDNSChecking"/>.
-    /// </summary>
-    private bool _isComputerDNSChecking;
+    } = ConnectionState.None;
 
     /// <summary>
     /// Gets or sets a value indicating whether the computer DNS address is being checked.
     /// </summary>
     public bool IsComputerDNSChecking
     {
-        get => _isComputerDNSChecking;
+        get;
         set
         {
-            if (value == _isComputerDNSChecking)
+            if (value == field)
                 return;
 
-            _isComputerDNSChecking = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ComputerDNS"/>.
-    /// </summary>
-    private string _computerDNS;
 
     /// <summary>
     /// Gets or sets the computer DNS address.
     /// </summary>
     public string ComputerDNS
     {
-        get => _computerDNS;
+        get;
         set
         {
-            if (value == _computerDNS)
+            if (value == field)
                 return;
 
-            _computerDNS = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ComputerDNSState"/>.
-    /// </summary>
-    private ConnectionState _computerDNSState = ConnectionState.None;
 
     /// <summary>
     /// Gets private or sets the computer DNS connection state.
     /// </summary>
     public ConnectionState ComputerDNSState
     {
-        get => _computerDNSState;
+        get;
         private set
         {
-            if (value == _computerDNSState)
+            if (value == field)
                 return;
 
-            _computerDNSState = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = ConnectionState.None;
 
     #endregion
 
     #region Router
 
     /// <summary>
-    /// Backing field for <see cref="IsRouterIPv4Checking"/>.
-    /// </summary>
-    private bool _isRouterIPv4Checking;
-
-    /// <summary>
     /// Gets or sets a value indicating whether the router IPv4 address is being checked.
     /// </summary>
     public bool IsRouterIPv4Checking
     {
-        get => _isRouterIPv4Checking;
+        get;
         set
         {
-            if (value == _isRouterIPv4Checking)
+            if (value == field)
                 return;
 
-            _isRouterIPv4Checking = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="RouterIPv4"/>.
-    /// </summary>
-    private string _routerIPv4;
 
     /// <summary>
     /// Gets or sets the router IPv4 address.
     /// </summary>
     public string RouterIPv4
     {
-        get => _routerIPv4;
+        get;
         set
         {
-            if (value == _routerIPv4)
+            if (value == field)
                 return;
 
-            _routerIPv4 = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="RouterIPv4State"/>.
-    /// </summary>
-    private ConnectionState _routerIPv4State = ConnectionState.None;
 
     /// <summary>
     /// Gets private or sets the router IPv4 connection state.
     /// </summary>
     public ConnectionState RouterIPv4State
     {
-        get => _routerIPv4State;
+        get;
         private set
         {
-            if (value == _routerIPv4State)
+            if (value == field)
                 return;
 
-            _routerIPv4State = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="IsRouterIPv6Checking"/>.
-    /// </summary>
-    private bool _isRouterIPv6Checking;
+    } = ConnectionState.None;
 
     /// <summary>
     /// Gets or sets a value indicating whether the router IPv6 address is being checked.
     /// </summary>
     public bool IsRouterIPv6Checking
     {
-        get => _isRouterIPv6Checking;
+        get;
         set
         {
-            if (value == _isRouterIPv6Checking)
+            if (value == field)
                 return;
 
-            _isRouterIPv6Checking = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="RouterIPv6"/>.
-    /// </summary>
-    private string _routerIPv6;
 
     /// <summary>
     /// Gets or sets the router IPv6 address.
     /// </summary>
     public string RouterIPv6
     {
-        get => _routerIPv6;
+        get;
         set
         {
-            if (value == _routerIPv6)
+            if (value == field)
                 return;
 
-            _routerIPv6 = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="RouterIPv6State"/>.
-    /// </summary>
-    private ConnectionState _routerIPv6State = ConnectionState.None;
 
     /// <summary>
     /// Gets private or sets the router IPv6 connection state.
     /// </summary>
     public ConnectionState RouterIPv6State
     {
-        get => _routerIPv6State;
+        get;
         private set
         {
-            if (value == _routerIPv6State)
+            if (value == field)
                 return;
 
-            _routerIPv6State = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="IsRouterDNSChecking"/>.
-    /// </summary>
-    private bool _isRouterDNSChecking;
+    } = ConnectionState.None;
 
     /// <summary>
     /// Gets or sets a value indicating whether the router DNS address is being checked.
     /// </summary>
     public bool IsRouterDNSChecking
     {
-        get => _isRouterDNSChecking;
+        get;
         set
         {
-            if (value == _isRouterDNSChecking)
+            if (value == field)
                 return;
 
-            _isRouterDNSChecking = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="RouterDNS"/>.
-    /// </summary>
-    private string _routerDNS;
 
     /// <summary>
     /// Gets or sets the router DNS address.
     /// </summary>
     public string RouterDNS
     {
-        get => _routerDNS;
+        get;
         set
         {
-            if (value == _routerDNS)
+            if (value == field)
                 return;
 
-            _routerDNS = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="RouterDNSState"/>.
-    /// </summary>
-    private ConnectionState _routerDNSState = ConnectionState.None;
 
     /// <summary>
     /// Gets private or sets the router DNS connection state.
     /// </summary>
     public ConnectionState RouterDNSState
     {
-        get => _routerDNSState;
+        get;
         private set
         {
-            if (value == _routerDNSState)
+            if (value == field)
                 return;
 
-            _routerDNSState = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = ConnectionState.None;
 
     #endregion
 
     #region Internet
 
     /// <summary>
-    /// Backing field for <see cref="IsInternetIPv4Checking"/>.
-    /// </summary>
-    private bool _isInternetIPv4Checking;
-
-    /// <summary>
     /// Gets or sets a value indicating whether the internet IPv4 address is being checked.
     /// </summary>
     public bool IsInternetIPv4Checking
     {
-        get => _isInternetIPv4Checking;
+        get;
         set
         {
-            if (value == _isInternetIPv4Checking)
+            if (value == field)
                 return;
 
-            _isInternetIPv4Checking = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="InternetIPv4"/>.
-    /// </summary>
-    private string _internetIPv4;
 
     /// <summary>
     /// Gets or sets the internet IPv4 address.
     /// </summary>
     public string InternetIPv4
     {
-        get => _internetIPv4;
+        get;
         set
         {
-            if (value == _internetIPv4)
+            if (value == field)
                 return;
 
-            _internetIPv4 = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="InternetIPv4State"/>.
-    /// </summary>
-    private ConnectionState _internetIPv4State = ConnectionState.None;
 
     /// <summary>
     /// Gets private or sets the internet IPv4 connection state.
     /// </summary>
     public ConnectionState InternetIPv4State
     {
-        get => _internetIPv4State;
+        get;
         private set
         {
-            if (value == _internetIPv4State)
+            if (value == field)
                 return;
 
-            _internetIPv4State = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="IsInternetIPv6Checking"/>.
-    /// </summary>
-    private bool _isInternetIPv6Checking;
+    } = ConnectionState.None;
 
     /// <summary>
     /// Gets or sets a value indicating whether the internet IPv6 address is being checked.
     /// </summary>
     public bool IsInternetIPv6Checking
     {
-        get => _isInternetIPv6Checking;
+        get;
         set
         {
-            if (value == _isInternetIPv6Checking)
+            if (value == field)
                 return;
 
-            _isInternetIPv6Checking = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="InternetIPv6"/>.
-    /// </summary>
-    private string _internetIPv6;
 
     /// <summary>
     /// Gets or sets the internet IPv6 address.
     /// </summary>
     public string InternetIPv6
     {
-        get => _internetIPv6;
+        get;
         set
         {
-            if (value == _internetIPv6)
+            if (value == field)
                 return;
 
-            _internetIPv6 = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="InternetIPv6State"/>.
-    /// </summary>
-    private ConnectionState _internetIPv6State = ConnectionState.None;
 
     /// <summary>
     /// Gets private or sets the internet IPv6 connection state.
     /// </summary>
     public ConnectionState InternetIPv6State
     {
-        get => _internetIPv6State;
+        get;
         private set
         {
-            if (value == _internetIPv6State)
+            if (value == field)
                 return;
 
-            _internetIPv6State = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="IsInternetDNSChecking"/>.
-    /// </summary>
-    private bool _isInternetDNSChecking;
+    } = ConnectionState.None;
 
     /// <summary>
     /// Gets or sets a value indicating whether the internet DNS address is being checked.
     /// </summary>
     public bool IsInternetDNSChecking
     {
-        get => _isInternetDNSChecking;
+        get;
         set
         {
-            if (value == _isInternetDNSChecking)
+            if (value == field)
                 return;
 
-            _isInternetDNSChecking = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="InternetDNS"/>.
-    /// </summary>
-    private string _internetDNS;
 
     /// <summary>
     /// Gets or sets the internet DNS address.
     /// </summary>
     public string InternetDNS
     {
-        get => _internetDNS;
+        get;
         set
         {
-            if (value == _internetDNS)
+            if (value == field)
                 return;
 
-            _internetDNS = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="InternetDNSState"/>.
-    /// </summary>
-    private ConnectionState _internetDNSState = ConnectionState.None;
 
     /// <summary>
     /// Gets private or sets the internet DNS connection state.
     /// </summary>
     public ConnectionState InternetDNSState
     {
-        get => _internetDNSState;
+        get;
         private set
         {
-            if (value == _internetDNSState)
+            if (value == field)
                 return;
 
-            _internetDNSState = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = ConnectionState.None;
 
     #endregion
 

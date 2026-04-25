@@ -23,20 +23,26 @@ public static class ReloadAnimationHelper
 
     private static void OnIsReloadingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is Rectangle rect && e.NewValue is bool isReloading)
-        {
-            if (isReloading)
-            {
-                var rotate = new RotateTransform { CenterX = 12, CenterY = 12 };
-                rect.RenderTransform = rotate;
+        if (d is not Rectangle rect || e.NewValue is not bool isReloading)
+            return;
 
-                var animation = new DoubleAnimation(0, 720, new Duration(TimeSpan.FromSeconds(2)));
-                rotate.BeginAnimation(RotateTransform.AngleProperty, animation);
-            }
-            else
+        if (isReloading)
+        {
+            var rotate = new RotateTransform
             {
-                rect.RenderTransform = null;
-            }
+                CenterX = rect.Width / 2,
+                CenterY = rect.Height / 2
+            };
+
+            rect.RenderTransform = rotate;
+
+            var animation = new DoubleAnimation(0, 720, new Duration(TimeSpan.FromSeconds(2)));
+
+            rotate.BeginAnimation(RotateTransform.AngleProperty, animation);
+        }
+        else
+        {
+            rect.RenderTransform = null;
         }
     }
 }

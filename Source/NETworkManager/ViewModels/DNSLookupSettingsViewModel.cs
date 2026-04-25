@@ -39,22 +39,17 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     public ICollectionView DNSServers { get; }
 
     /// <summary>
-    /// Backing field for <see cref="SelectedDNSServer"/>.
-    /// </summary>
-    private DNSServerConnectionInfoProfile _selectedDNSServer = new();
-
-    /// <summary>
     /// Gets or sets the selected DNS server.
     /// </summary>
     public DNSServerConnectionInfoProfile SelectedDNSServer
     {
-        get => _selectedDNSServer;
+        get;
         set
         {
-            if (value == _selectedDNSServer)
+            if (value == field)
                 return;
 
-            _selectedDNSServer = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -69,121 +64,96 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     ];
 
     /// <summary>
-    /// Backing field for <see cref="AddDNSSuffix"/>.
-    /// </summary>
-    private bool _addDNSSuffix;
-
-    /// <summary>
     /// Gets or sets a value indicating whether to add DNS suffix.
     /// </summary>
     public bool AddDNSSuffix
     {
-        get => _addDNSSuffix;
+        get;
         set
         {
-            if (value == _addDNSSuffix)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.DNSLookup_AddDNSSuffix = value;
 
-            _addDNSSuffix = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="UseCustomDNSSuffix"/>.
-    /// </summary>
-    private bool _useCustomDNSSuffix;
 
     /// <summary>
     /// Gets or sets a value indicating whether to use a custom DNS suffix.
     /// </summary>
     public bool UseCustomDNSSuffix
     {
-        get => _useCustomDNSSuffix;
+        get;
         set
         {
-            if (value == _useCustomDNSSuffix)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.DNSLookup_UseCustomDNSSuffix = value;
 
-            _useCustomDNSSuffix = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="CustomDNSSuffix"/>.
-    /// </summary>
-    private string _customDNSSuffix;
 
     /// <summary>
     /// Gets or sets the custom DNS suffix.
     /// </summary>
     public string CustomDNSSuffix
     {
-        get => _customDNSSuffix;
+        get;
         set
         {
-            if (value == _customDNSSuffix)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.DNSLookup_CustomDNSSuffix = value;
 
-            _customDNSSuffix = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="Recursion"/>.
-    /// </summary>
-    private bool _recursion;
 
     /// <summary>
     /// Gets or sets a value indicating whether recursion is enabled.
     /// </summary>
     public bool Recursion
     {
-        get => _recursion;
+        get;
         set
         {
-            if (value == _recursion)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.DNSLookup_Recursion = value;
 
-            _recursion = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="UseCache"/>.
-    /// </summary>
-    private bool _useCache;
 
     /// <summary>
     /// Gets or sets a value indicating whether to use cache.
     /// </summary>
     public bool UseCache
     {
-        get => _useCache;
+        get;
         set
         {
-            if (value == _useCache)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.DNSLookup_UseCache = value;
 
-            _useCache = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -194,120 +164,77 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     public List<QueryClass> QueryClasses { get; private set; }
 
     /// <summary>
-    /// Backing field for <see cref="QueryClass"/>.
-    /// </summary>
-    private QueryClass _queryClass;
-
-    /// <summary>
     /// Gets or sets the selected query class.
     /// </summary>
     public QueryClass QueryClass
     {
-        get => _queryClass;
+        get;
         set
         {
-            if (value == _queryClass)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.DNSLookup_QueryClass = value;
 
-            _queryClass = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /*
-     * Disabled until more query types are implemented.
-
-
-    private bool _showOnlyMostCommonQueryTypes;
-
-    public bool ShowOnlyMostCommonQueryTypes
-    {
-        get => _showOnlyMostCommonQueryTypes;
-        set
-        {
-            if (value == _showOnlyMostCommonQueryTypes)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes = value;
-
-            _showOnlyMostCommonQueryTypes = value;
-            OnPropertyChanged();
-        }
-    }
-    */
-
-    /// <summary>
-    /// Backing field for <see cref="UseTCPOnly"/>.
-    /// </summary>
-    private bool _useTCPOnly;
 
     /// <summary>
     /// Gets or sets a value indicating whether to use TCP only.
     /// </summary>
     public bool UseTCPOnly
     {
-        get => _useTCPOnly;
+        get;
         set
         {
-            if (value == _useTCPOnly)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.DNSLookup_UseTCPOnly = value;
 
-            _useTCPOnly = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="Retries"/>.
-    /// </summary>
-    private int _retries;
 
     /// <summary>
     /// Gets or sets the number of retries.
     /// </summary>
     public int Retries
     {
-        get => _retries;
+        get;
         set
         {
-            if (value == _retries)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.DNSLookup_Retries = value;
 
-            _retries = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="Timeout"/>.
-    /// </summary>
-    private int _timeout;
 
     /// <summary>
     /// Gets or sets the timeout in milliseconds.
     /// </summary>
     public int Timeout
     {
-        get => _timeout;
+        get;
         set
         {
-            if (value == _timeout)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.DNSLookup_Timeout = value;
 
-            _timeout = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -351,9 +278,8 @@ public class DNSLookupSettingsViewModel : ViewModelBase
         CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix;
         Recursion = SettingsManager.Current.DNSLookup_Recursion;
         UseCache = SettingsManager.Current.DNSLookup_UseCache;
-        QueryClasses = [.. Enum.GetValues<QueryClass>().Cast<QueryClass>().OrderBy(x => x.ToString())];
+        QueryClasses = [.. Enum.GetValues<QueryClass>().OrderBy(x => x.ToString())];
         QueryClass = QueryClasses.First(x => x == SettingsManager.Current.DNSLookup_QueryClass);
-        //ShowOnlyMostCommonQueryTypes = SettingsManager.Current.DNSLookup_ShowOnlyMostCommonQueryTypes;
         UseTCPOnly = SettingsManager.Current.DNSLookup_UseTCPOnly;
         Retries = SettingsManager.Current.DNSLookup_Retries;
         Timeout = SettingsManager.Current.DNSLookup_Timeout;

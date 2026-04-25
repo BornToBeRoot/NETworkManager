@@ -33,22 +33,17 @@ public class BitCalculatorViewModel : ViewModelBase
     private readonly bool _isLoading;
 
     /// <summary>
-    /// Backing field for <see cref="Input"/>.
-    /// </summary>
-    private string _input;
-
-    /// <summary>
     /// Gets or sets the input value.
     /// </summary>
     public string Input
     {
-        get => _input;
+        get;
         set
         {
-            if (value == _input)
+            if (value == field)
                 return;
 
-            _input = value;
+            field = value;
             OnPropertyChanged();
         }
     }
@@ -59,113 +54,88 @@ public class BitCalculatorViewModel : ViewModelBase
     public ICollectionView InputHistoryView { get; }
 
     /// <summary>
-    /// Backing field for <see cref="Units"/>.
-    /// </summary>
-    private readonly List<BitCaluclatorUnit> _units = new();
-
-    /// <summary>
     /// Gets the list of available units.
     /// </summary>
     public List<BitCaluclatorUnit> Units
     {
-        get => _units;
+        get;
         private init
         {
-            if (value == _units)
+            if (value == field)
                 return;
 
-            _units = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Backing field for <see cref="Unit"/>.
-    /// </summary>
-    private BitCaluclatorUnit _unit;
+    } = new();
 
     /// <summary>
     /// Gets or sets the selected unit.
     /// </summary>
     public BitCaluclatorUnit Unit
     {
-        get => _unit;
+        get;
         set
         {
-            if (value == _unit)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.BitCalculator_Unit = value;
 
-            _unit = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="IsRunning"/>.
-    /// </summary>
-    private bool _isRunning;
 
     /// <summary>
     /// Gets or sets a value indicating whether the calculation is running.
     /// </summary>
     public bool IsRunning
     {
-        get => _isRunning;
+        get;
         set
         {
-            if (value == _isRunning)
+            if (value == field)
                 return;
 
-            _isRunning = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="IsResultVisible"/>.
-    /// </summary>
-    private bool _isResultVisible;
 
     /// <summary>
     /// Gets or sets a value indicating whether the result is visible.
     /// </summary>
     public bool IsResultVisible
     {
-        get => _isResultVisible;
+        get;
         set
         {
-            if (value == _isResultVisible)
+            if (value == field)
                 return;
 
 
-            _isResultVisible = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="Result"/>.
-    /// </summary>
-    private BitCaluclatorInfo _result = new();
 
     /// <summary>
     /// Gets the calculation result.
     /// </summary>
     public BitCaluclatorInfo Result
     {
-        get => _result;
+        get;
         private set
         {
-            if (value == _result)
+            if (value == field)
                 return;
 
-            _result = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = new();
 
     #endregion
 

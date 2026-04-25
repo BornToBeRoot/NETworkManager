@@ -15,5 +15,5 @@ public class PolicyInfo
     public string? Profiles_FolderLocation { get; set; }
 
     [JsonPropertyName("Settings_FolderLocation")]
-    public string? Settings_FolderLocation { get; set; }    
+    public string? Settings_FolderLocation { get; set; }
 }

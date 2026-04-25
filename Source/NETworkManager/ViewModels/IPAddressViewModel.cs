@@ -10,11 +10,6 @@ namespace NETworkManager.ViewModels;
 public abstract class IPAddressViewModel : ViewModelBase
 {
     /// <summary>
-    /// Backing field for <see cref="IPAddress"/>.
-    /// </summary>
-    private string _ipAddress;
-
-    /// <summary>
     /// Initializes a new instance of the <see cref="IPAddressViewModel"/> class.
     /// </summary>
     /// <param name="okCommand">The action to execute when OK is clicked.</param>
@@ -40,13 +35,13 @@ public abstract class IPAddressViewModel : ViewModelBase
     /// </summary>
     public string IPAddress
     {
-        get => _ipAddress;
+        get;
         set
         {
-            if (value == _ipAddress)
+            if (value == field)
                 return;
 
-            _ipAddress = value;
+            field = value;
             OnPropertyChanged();
         }
     }

@@ -16,14 +16,12 @@ public class TigerVNCSettingsViewModel : ViewModelBase
 
     private readonly bool _isLoading;
 
-    private string _applicationFilePath;
-
     public string ApplicationFilePath
     {
-        get => _applicationFilePath;
+        get;
         set
         {
-            if (value == _applicationFilePath)
+            if (value == field)
                 return;
 
             if (!_isLoading)
@@ -31,40 +29,36 @@ public class TigerVNCSettingsViewModel : ViewModelBase
 
             IsConfigured = !string.IsNullOrEmpty(value);
 
-            _applicationFilePath = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    private bool _isConfigured;
 
     public bool IsConfigured
     {
-        get => _isConfigured;
+        get;
         set
         {
-            if (value == _isConfigured)
+            if (value == field)
                 return;
 
-            _isConfigured = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private int _port;
-
     public int Port
     {
-        get => _port;
+        get;
         set
         {
-            if (value == _port)
+            if (value == field)
                 return;
 
             if (!_isLoading)
                 SettingsManager.Current.TigerVNC_Port = value;
 
-            _port = value;
+            field = value;
             OnPropertyChanged();
         }
     }

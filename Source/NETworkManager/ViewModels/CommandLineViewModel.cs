@@ -39,127 +39,97 @@ public class CommandLineViewModel : ViewModelBase
     #region Variables
 
     /// <summary>
-    /// Backing field for <see cref="DisplayWrongParameter"/>.
-    /// </summary>
-    private bool _displayWrongParameter;
-
-    /// <summary>
     /// Gets or sets a value indicating whether to display the wrong parameter message.
     /// </summary>
     public bool DisplayWrongParameter
     {
-        get => _displayWrongParameter;
+        get;
         set
         {
-            if (value == _displayWrongParameter)
+            if (value == field)
                 return;
 
-            _displayWrongParameter = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="WrongParameter"/>.
-    /// </summary>
-    private string _wrongParameter;
 
     /// <summary>
     /// Gets or sets the wrong parameter.
     /// </summary>
     public string WrongParameter
     {
-        get => _wrongParameter;
+        get;
         set
         {
-            if (value == _wrongParameter)
+            if (value == field)
                 return;
 
-            _wrongParameter = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ParameterHelp"/>.
-    /// </summary>
-    private string _parameterHelp;
 
     /// <summary>
     /// Gets or sets the help parameter.
     /// </summary>
     public string ParameterHelp
     {
-        get => _parameterHelp;
+        get;
         set
         {
-            if (value == _parameterHelp)
+            if (value == field)
                 return;
 
-            _parameterHelp = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ParameterResetSettings"/>.
-    /// </summary>
-    private string _parameterResetSettings;
 
     /// <summary>
     /// Gets or sets the reset settings parameter.
     /// </summary>
     public string ParameterResetSettings
     {
-        get => _parameterResetSettings;
+        get;
         set
         {
-            if (value == _parameterResetSettings)
+            if (value == field)
                 return;
 
-            _parameterResetSettings = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ParameterApplication"/>.
-    /// </summary>
-    private string _parameterApplication;
 
     /// <summary>
     /// Gets or sets the application parameter.
     /// </summary>
     public string ParameterApplication
     {
-        get => _parameterApplication;
+        get;
         set
         {
-            if (value == _parameterApplication)
+            if (value == field)
                 return;
 
-            _parameterApplication = value;
+            field = value;
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Backing field for <see cref="ParameterApplicationValues"/>.
-    /// </summary>
-    private string _parameterApplicationValues;
 
     /// <summary>
     /// Gets or sets the available application parameter values.
     /// </summary>
     public string ParameterApplicationValues
     {
-        get => _parameterApplicationValues;
+        get;
         set
         {
-            if (value == _parameterApplicationValues)
+            if (value == field)
                 return;
 
-            _parameterApplicationValues = value;
+            field = value;
             OnPropertyChanged();
         }
     }

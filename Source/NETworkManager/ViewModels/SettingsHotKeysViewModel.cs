@@ -10,14 +10,12 @@ public class SettingsHotKeysViewModel : ViewModelBase
 
     private readonly bool _isLoading;
 
-    private bool _hotKeyShowWindowEnabled;
-
     public bool HotKeyShowWindowEnabled
     {
-        get => _hotKeyShowWindowEnabled;
+        get;
         set
         {
-            if (value == _hotKeyShowWindowEnabled)
+            if (value == field)
                 return;
 
             if (!_isLoading)
@@ -27,19 +25,17 @@ public class SettingsHotKeysViewModel : ViewModelBase
                 SettingsManager.HotKeysChanged = true;
             }
 
-            _hotKeyShowWindowEnabled = value;
+            field = value;
             OnPropertyChanged();
         }
     }
 
-    private HotKey _hotKeyShowWindow;
-
     public HotKey HotKeyShowWindow
     {
-        get => _hotKeyShowWindow;
+        get;
         set
         {
-            if (Equals(value, _hotKeyShowWindow))
+            if (Equals(value, field))
                 return;
 
             if (!_isLoading && value != null)
@@ -50,7 +46,7 @@ public class SettingsHotKeysViewModel : ViewModelBase
                 SettingsManager.HotKeysChanged = true;
             }
 
-            _hotKeyShowWindow = value;
+            field = value;
             OnPropertyChanged();
         }
     }

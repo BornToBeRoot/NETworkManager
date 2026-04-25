@@ -7,8 +7,6 @@ namespace NETworkManager.Controls;
 
 public partial class LvlChartsBandwidthTooltip : IChartTooltip
 {
-    private TooltipData _data;
-
     public LvlChartsBandwidthTooltip()
     {
         InitializeComponent();
@@ -20,10 +18,10 @@ public partial class LvlChartsBandwidthTooltip : IChartTooltip
 
     public TooltipData Data
     {
-        get => _data;
+        get;
         set
         {
-            _data = value;
+            field = value;
             OnPropertyChanged();
         }
     }
