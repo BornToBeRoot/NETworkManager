@@ -102,13 +102,13 @@
                         SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         RowDetailsVisibilityMode="Collapsed">
                         <controls:MultiSelectDataGrid.InputBindings>
-                            <KeyBinding Command="{Binding EditEntryCommand}" Key="F2" />
-                            <KeyBinding Command="{Binding DeleteEntryCommand}" Key="Delete" />
+                            <KeyBinding Command="{Binding EditRuleCommand}" Key="F2" />
+                            <KeyBinding Command="{Binding DeleteRuleCommand}" Key="Delete" />
                         </controls:MultiSelectDataGrid.InputBindings>
                         <controls:MultiSelectDataGrid.Resources>
                             <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
-                                <MenuItem Header="{x:Static localization:Strings.EnableEntry}"
-                                          Command="{Binding Path=EnableEntryCommand}"
+                                <MenuItem Header="{x:Static localization:Strings.EnableRule}"
+                                          Command="{Binding Path=EnableRuleCommand}"
                                           Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
@@ -118,8 +118,8 @@
                                         </Rectangle>
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="{x:Static localization:Strings.DisableEntry}"
-                                          Command="{Binding Path=DisableEntryCommand}"
+                                <MenuItem Header="{x:Static localization:Strings.DisableRule}"
+                                          Command="{Binding Path=DisableRuleCommand}"
                                           Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
@@ -129,8 +129,8 @@
                                         </Rectangle>
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="{x:Static localization:Strings.EditEntryDots}"
-                                          Command="{Binding Path=EditEntryCommand}">
+                                <MenuItem Header="{x:Static localization:Strings.EditRuleDots}"
+                                          Command="{Binding Path=EditRuleCommand}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
@@ -139,8 +139,8 @@
                                         </Rectangle>
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="{x:Static localization:Strings.DeleteEntry}"
-                                          Command="{Binding Path=DeleteEntryCommand}">
+                                <MenuItem Header="{x:Static localization:Strings.DeleteRule}"
+                                          Command="{Binding Path=DeleteRuleCommand}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
@@ -538,7 +538,7 @@
                                    Orientation="Horizontal"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Right">
-                            <Button Command="{Binding Path=AddEntryCommand}" Style="{StaticResource ImageWithTextButton}">
+                            <Button Command="{Binding Path=AddRuleCommand}" Style="{StaticResource ImageWithTextButton}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -550,7 +550,7 @@
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
                                     <TextBlock Grid.Column="1"
-                                               Text="{x:Static localization:Strings.AddEntryDots}"
+                                               Text="{x:Static localization:Strings.AddRuleDots}"
                                                Style="{StaticResource ButtonWithImageTextBlock}" />
                                 </Grid>
                             </Button>

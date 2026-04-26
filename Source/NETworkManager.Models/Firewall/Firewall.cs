@@ -296,17 +296,17 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         if (rule.Protocol is FirewallProtocol.TCP or FirewallProtocol.UDP)
         {
             if (rule.LocalPorts.Count > 0)
-                sb.AppendLine($"$params['LocalPort']  = '{FirewallRule.PortsToString(rule.LocalPorts, ',', false)}'");
+                sb.AppendLine($"$params['LocalPort']  = {ToPsArray(rule.LocalPorts.Select(p => p.ToString()))}");
 
             if (rule.RemotePorts.Count > 0)
-                sb.AppendLine($"$params['RemotePort'] = '{FirewallRule.PortsToString(rule.RemotePorts, ',', false)}'");
+                sb.AppendLine($"$params['RemotePort'] = {ToPsArray(rule.RemotePorts.Select(p => p.ToString()))}");
         }
 
         if (rule.LocalAddresses.Count > 0)
-            sb.AppendLine($"$params['LocalAddress']  = '{string.Join(',', rule.LocalAddresses.Select(EscapePs))}'");
+            sb.AppendLine($"$params['LocalAddress']  = {ToPsArray(rule.LocalAddresses)}");
 
         if (rule.RemoteAddresses.Count > 0)
-            sb.AppendLine($"$params['RemoteAddress'] = '{string.Join(',', rule.RemoteAddresses.Select(EscapePs))}'");
+            sb.AppendLine($"$params['RemoteAddress'] = {ToPsArray(rule.RemoteAddresses)}");
 
         if (rule.Program != null && !string.IsNullOrWhiteSpace(rule.Program.Name))
             sb.AppendLine($"$params['Program'] = '{EscapePs(rule.Program.Name)}'");
@@ -322,6 +322,16 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     /// </summary>
     /// <param name="value">The raw string value to escape.</param>
     private static string EscapePs(string value) => value.Replace("'", "''");
+
+    /// <summary>
+    /// Builds a PowerShell array literal (e.g. <c>@('80','443','8080-8090')</c>) from the given values.
+    /// New-NetFirewallRule parameters such as -LocalPort and -LocalAddress are typed as
+    /// <c>String[]</c>; passing a single comma-joined string would be interpreted as one
+    /// element and rejected, so we emit a real array.
+    /// </summary>
+    /// <param name="values">The values to embed into the array literal.</param>
+    private static string ToPsArray(IEnumerable<string> values) =>
+        $"@({string.Join(",", values.Select(v => $"'{EscapePs(v)}'"))})";
 
     /// <summary>
     /// Maps a <see cref="FirewallProtocol"/> value to the string accepted by

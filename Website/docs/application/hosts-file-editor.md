@@ -49,3 +49,65 @@ Right-click on the result to `enable`, `disable`, `edit` or `delete` an entry, o
 You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected entry.
 
 :::
+
+## Add entry
+
+The **Add entry** dialog is opened by clicking the **Add entry...** button below the entry list. The same dialog (with the values pre-filled) is used to **edit** an existing entry.
+
+![Add entry](../img/hosts-file-editor-entry.png)
+
+### Enabled
+
+Whether the entry is active right after creation. A disabled entry is written to the `hosts` file as a comment (prefixed with `#`) and is ignored by the operating system.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+### IP address
+
+IP address the hostname(s) should resolve to.
+
+**Type:** `String`
+
+**Default:** `Empty`
+
+**Example:**
+
+- `10.8.0.10`
+- `fe80::1`
+
+:::note
+
+Both IPv4 and IPv6 addresses are accepted. The field is required and validated for a correct address format.
+
+:::
+
+### Hostname
+
+One or more hostnames that should resolve to the [IP address](#ip-address). Multiple hostnames are separated by a space — matching the native `hosts` file format.
+
+**Type:** `String`
+
+**Default:** `Empty`
+
+**Example:**
+
+- `example.borntoberoot.net`
+- `example.borntoberoot.net www.example.borntoberoot.net`
+
+:::note
+
+Each hostname must conform to the standard hostname / domain syntax. The field is required.
+
+:::
+
+### Comment
+
+Optional comment associated with the entry. The comment is written after the hostname(s) on the same line, separated by a `#`.
+
+**Type:** `String`
+
+**Default:** `Empty`
+
+**Example:** `Test server not reachable via DNS`

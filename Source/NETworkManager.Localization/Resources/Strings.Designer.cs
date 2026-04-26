@@ -295,6 +295,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Action.
+        /// </summary>
+        public static string Action {
+            get {
+                return ResourceManager.GetString("Action", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Add {
@@ -572,7 +581,25 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("AddProfileFile", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Add rule.
+        /// </summary>
+        public static string AddRule {
+            get {
+                return ResourceManager.GetString("AddRule", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Add rule....
+        /// </summary>
+        public static string AddRuleDots {
+            get {
+                return ResourceManager.GetString("AddRuleDots", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Add server.
         /// </summary>
@@ -660,6 +687,15 @@ namespace NETworkManager.Localization.Resources {
         public static string All {
             get {
                 return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow.
+        /// </summary>
+        public static string Allow {
+            get {
+                return ResourceManager.GetString("Allow", resourceCulture);
             }
         }
         
@@ -1263,6 +1299,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Black {
             get {
                 return ResourceManager.GetString("Black", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Block.
+        /// </summary>
+        public static string Block {
+            get {
+                return ResourceManager.GetString("Block", resourceCulture);
             }
         }
         
@@ -2637,6 +2682,26 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("DeleteEntry", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Delete rule.
+        /// </summary>
+        public static string DeleteRule {
+            get {
+                return ResourceManager.GetString("DeleteRule", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The selected firewall rule is permanently deleted:
+        ///
+        ///{0}.
+        /// </summary>
+        public static string DeleteFirewallRuleMessage {
+            get {
+                return ResourceManager.GetString("DeleteFirewallRuleMessage", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Delete group.
@@ -2920,6 +2985,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Direction.
+        /// </summary>
+        public static string Direction {
+            get {
+                return ResourceManager.GetString("Direction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disable.
         /// </summary>
         public static string Disable {
@@ -2945,7 +3019,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("DisableEntry", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Disable rule.
+        /// </summary>
+        public static string DisableRule {
+            get {
+                return ResourceManager.GetString("DisableRule", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Disclaimer.
         /// </summary>
@@ -3261,7 +3344,25 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("EditEntryDots", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Edit rule.
+        /// </summary>
+        public static string EditRule {
+            get {
+                return ResourceManager.GetString("EditRule", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Edit rule....
+        /// </summary>
+        public static string EditRuleDots {
+            get {
+                return ResourceManager.GetString("EditRuleDots", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Edit group.
         /// </summary>
@@ -3408,7 +3509,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("EnableEntry", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Enable rule.
+        /// </summary>
+        public static string EnableRule {
+            get {
+                return ResourceManager.GetString("EnableRule", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Enable gateway server.
         /// </summary>
@@ -3595,6 +3705,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EnterValidFilePath {
             get {
                 return ResourceManager.GetString("EnterValidFilePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid IP address, subnet (e.g. 10.0.0.0/8), range (e.g. 10.0.0.1-10.0.0.10), or keyword (Any, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal).
+        /// </summary>
+        public static string EnterValidFirewallAddress {
+            get {
+                return ResourceManager.GetString("EnterValidFirewallAddress", resourceCulture);
             }
         }
         
@@ -4031,6 +4150,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to load firewall rules. {0}.
+        /// </summary>
+        public static string FailedToLoadFirewallRulesMessage {
+            get {
+                return ResourceManager.GetString("FailedToLoadFirewallRulesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to load hosts file: {0}.
         /// </summary>
         public static string FailedToLoadHostsFileMessage {
@@ -4128,16 +4256,223 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("Firewall", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Read-only mode. Modifying firewall rules requires elevated rights!
+        ///   Looks up a localized string similar to Read-only mode. Modifying firewall rules requires elevated rights!.
         /// </summary>
         public static string FirewallAdminMessage {
             get {
                 return ResourceManager.GetString("FirewallAdminMessage", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any.
+        /// </summary>
+        public static string FirewallInterfaceType_Any {
+            get {
+                return ResourceManager.GetString("FirewallInterfaceType_Any", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote access.
+        /// </summary>
+        public static string FirewallInterfaceType_RemoteAccess {
+            get {
+                return ResourceManager.GetString("FirewallInterfaceType_RemoteAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wired.
+        /// </summary>
+        public static string FirewallInterfaceType_Wired {
+            get {
+                return ResourceManager.GetString("FirewallInterfaceType_Wired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wireless.
+        /// </summary>
+        public static string FirewallInterfaceType_Wireless {
+            get {
+                return ResourceManager.GetString("FirewallInterfaceType_Wireless", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any.
+        /// </summary>
+        public static string FirewallProtocol_Any {
+            get {
+                return ResourceManager.GetString("FirewallProtocol_Any", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GRE.
+        /// </summary>
+        public static string FirewallProtocol_GRE {
+            get {
+                return ResourceManager.GetString("FirewallProtocol_GRE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HOPOPT.
+        /// </summary>
+        public static string FirewallProtocol_HOPOPT {
+            get {
+                return ResourceManager.GetString("FirewallProtocol_HOPOPT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ICMPv4.
+        /// </summary>
+        public static string FirewallProtocol_ICMPv4 {
+            get {
+                return ResourceManager.GetString("FirewallProtocol_ICMPv4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ICMPv6.
+        /// </summary>
+        public static string FirewallProtocol_ICMPv6 {
+            get {
+                return ResourceManager.GetString("FirewallProtocol_ICMPv6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IPv6.
+        /// </summary>
+        public static string FirewallProtocol_IPv6 {
+            get {
+                return ResourceManager.GetString("FirewallProtocol_IPv6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IPv6-Frag.
+        /// </summary>
+        public static string FirewallProtocol_IPv6_Frag {
+            get {
+                return ResourceManager.GetString("FirewallProtocol_IPv6_Frag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IPv6-NoNxt.
+        /// </summary>
+        public static string FirewallProtocol_IPv6_NoNxt {
+            get {
+                return ResourceManager.GetString("FirewallProtocol_IPv6_NoNxt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IPv6-Opts.
+        /// </summary>
+        public static string FirewallProtocol_IPv6_Opts {
+            get {
+                return ResourceManager.GetString("FirewallProtocol_IPv6_Opts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IPv6-Route.
+        /// </summary>
+        public static string FirewallProtocol_IPv6_Route {
+            get {
+                return ResourceManager.GetString("FirewallProtocol_IPv6_Route", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to L2TP.
+        /// </summary>
+        public static string FirewallProtocol_L2TP {
+            get {
+                return ResourceManager.GetString("FirewallProtocol_L2TP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PGM.
+        /// </summary>
+        public static string FirewallProtocol_PGM {
+            get {
+                return ResourceManager.GetString("FirewallProtocol_PGM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TCP.
+        /// </summary>
+        public static string FirewallProtocol_TCP {
+            get {
+                return ResourceManager.GetString("FirewallProtocol_TCP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UDP.
+        /// </summary>
+        public static string FirewallProtocol_UDP {
+            get {
+                return ResourceManager.GetString("FirewallProtocol_UDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VRRP.
+        /// </summary>
+        public static string FirewallProtocol_VRRP {
+            get {
+                return ResourceManager.GetString("FirewallProtocol_VRRP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow.
+        /// </summary>
+        public static string FirewallRuleAction_Allow {
+            get {
+                return ResourceManager.GetString("FirewallRuleAction_Allow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Block.
+        /// </summary>
+        public static string FirewallRuleAction_Block {
+            get {
+                return ResourceManager.GetString("FirewallRuleAction_Block", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inbound.
+        /// </summary>
+        public static string FirewallRuleDirection_Inbound {
+            get {
+                return ResourceManager.GetString("FirewallRuleDirection_Inbound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outbound.
+        /// </summary>
+        public static string FirewallRuleDirection_Outbound {
+            get {
+                return ResourceManager.GetString("FirewallRuleDirection_Outbound", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Firewall rules.
         /// </summary>
@@ -4822,15 +5157,6 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("HostsFileEditorAdminMessage", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Open hosts file.
-        /// </summary>
-        public static string OpenHostsFile {
-            get {
-                return ResourceManager.GetString("OpenHostsFile", resourceCulture);
-            }
-        }
         
         /// <summary>
         ///   Looks up a localized string similar to The entry was not found in the &quot;hosts&quot; file! Maybe the file has been modified..
@@ -4932,6 +5258,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inbound.
+        /// </summary>
+        public static string Inbound {
+            get {
+                return ResourceManager.GetString("Inbound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Indigo.
         /// </summary>
         public static string Indigo {
@@ -5009,6 +5344,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Interface {
             get {
                 return ResourceManager.GetString("Interface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interface type.
+        /// </summary>
+        public static string InterfaceType {
+            get {
+                return ResourceManager.GetString("InterfaceType", resourceCulture);
             }
         }
         
@@ -5608,6 +5952,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Local addresses.
+        /// </summary>
+        public static string LocalAddresses {
+            get {
+                return ResourceManager.GetString("LocalAddresses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Local connection.
         /// </summary>
         public static string LocalConnection {
@@ -5658,6 +6011,15 @@ namespace NETworkManager.Localization.Resources {
         public static string LocalPort {
             get {
                 return ResourceManager.GetString("LocalPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local ports.
+        /// </summary>
+        public static string LocalPorts {
+            get {
+                return ResourceManager.GetString("LocalPorts", resourceCulture);
             }
         }
         
@@ -6220,6 +6582,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network profile.
+        /// </summary>
+        public static string NetworkProfile {
+            get {
+                return ResourceManager.GetString("NetworkProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Network profiles.
+        /// </summary>
+        public static string NetworkProfiles {
+            get {
+                return ResourceManager.GetString("NetworkProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Networks.
         /// </summary>
         public static string Networks {
@@ -6680,6 +7060,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open hosts file.
+        /// </summary>
+        public static string OpenHostsFile {
+            get {
+                return ResourceManager.GetString("OpenHostsFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open license.
         /// </summary>
         public static string OpenLicense {
@@ -6775,6 +7164,15 @@ namespace NETworkManager.Localization.Resources {
         public static string OUI {
             get {
                 return ResourceManager.GetString("OUI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outbound.
+        /// </summary>
+        public static string Outbound {
+            get {
+                return ResourceManager.GetString("Outbound", resourceCulture);
             }
         }
         
@@ -7184,6 +7582,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Private.
+        /// </summary>
+        public static string Private {
+            get {
+                return ResourceManager.GetString("Private", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Private key file.
         /// </summary>
         public static string PrivateKeyFile {
@@ -7361,25 +7768,7 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("Program", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Private.
-        /// </summary>
-        public static string Private {
-            get {
-                return ResourceManager.GetString("Private", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Public.
-        /// </summary>
-        public static string Public {
-            get {
-                return ResourceManager.GetString("Public", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Protocol.
         /// </summary>
@@ -7413,6 +7802,15 @@ namespace NETworkManager.Localization.Resources {
         public static string PTRRecord {
             get {
                 return ResourceManager.GetString("PTRRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public.
+        /// </summary>
+        public static string Public {
+            get {
+                return ResourceManager.GetString("Public", resourceCulture);
             }
         }
         
@@ -7720,6 +8118,15 @@ namespace NETworkManager.Localization.Resources {
         public static string RemainingTime {
             get {
                 return ResourceManager.GetString("RemainingTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote addresses.
+        /// </summary>
+        public static string RemoteAddresses {
+            get {
+                return ResourceManager.GetString("RemoteAddresses", resourceCulture);
             }
         }
         
@@ -8665,6 +9072,15 @@ namespace NETworkManager.Localization.Resources {
         public static string RemotePort {
             get {
                 return ResourceManager.GetString("RemotePort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote ports.
+        /// </summary>
+        public static string RemotePorts {
+            get {
+                return ResourceManager.GetString("RemotePorts", resourceCulture);
             }
         }
         
@@ -11534,106 +11950,7 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("WindowsFirewallSettings", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Direction.
-        /// </summary>
-        public static string Direction {
-            get {
-                return ResourceManager.GetString("Direction", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Inbound.
-        /// </summary>
-        public static string Inbound {
-            get {
-                return ResourceManager.GetString("Inbound", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Outbound.
-        /// </summary>
-        public static string Outbound {
-            get {
-                return ResourceManager.GetString("Outbound", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Action.
-        /// </summary>
-        public static string Action {
-            get {
-                return ResourceManager.GetString("Action", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Allow.
-        /// </summary>
-        public static string Allow {
-            get {
-                return ResourceManager.GetString("Allow", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Block.
-        /// </summary>
-        public static string Block {
-            get {
-                return ResourceManager.GetString("Block", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Network profile.
-        /// </summary>
-        public static string NetworkProfile {
-            get {
-                return ResourceManager.GetString("NetworkProfile", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Network profiles.
-        /// </summary>
-        public static string NetworkProfiles {
-            get {
-                return ResourceManager.GetString("NetworkProfiles", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Interface type.
-        /// </summary>
-        public static string InterfaceType {
-            get {
-                return ResourceManager.GetString("InterfaceType", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Failed to load firewall rules. {0}.
-        /// </summary>
-        public static string FailedToLoadFirewallRulesMessage {
-            get {
-                return ResourceManager.GetString("FailedToLoadFirewallRulesMessage", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to The selected firewall rule is permanently deleted: {0}.
-        /// </summary>
-        public static string DeleteFirewallRuleMessage {
-            get {
-                return ResourceManager.GetString("DeleteFirewallRuleMessage", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to WPS.
         /// </summary>
@@ -11766,51 +12083,6 @@ namespace NETworkManager.Localization.Resources {
         public static string ZipCode {
             get {
                 return ResourceManager.GetString("ZipCode", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Local ports.
-        /// </summary>
-        public static string LocalPorts {
-            get {
-                return ResourceManager.GetString("LocalPorts", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Remote ports.
-        /// </summary>
-        public static string RemotePorts {
-            get {
-                return ResourceManager.GetString("RemotePorts", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Local addresses.
-        /// </summary>
-        public static string LocalAddresses {
-            get {
-                return ResourceManager.GetString("LocalAddresses", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Remote addresses.
-        /// </summary>
-        public static string RemoteAddresses {
-            get {
-                return ResourceManager.GetString("RemoteAddresses", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Enter a valid IP address, subnet (e.g. 10.0.0.0/8) or keyword (e.g. LocalSubnet, Internet).
-        /// </summary>
-        public static string EnterValidFirewallAddress {
-            get {
-                return ResourceManager.GetString("EnterValidFirewallAddress", resourceCulture);
             }
         }
     }

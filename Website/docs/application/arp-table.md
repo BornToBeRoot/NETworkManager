@@ -32,3 +32,50 @@ With `F5` you can refresh the ARP table.
 Right-click on the result to delete an entry, or to copy or export the information.
 
 :::
+
+## Add entry
+
+The **Add entry** dialog is opened by clicking the **Add entry...** button below the table. It creates a new static ARP entry that maps an IP address to a MAC address.
+
+![Add entry](../img/arp-table-entry.png)
+
+### IP address
+
+IPv4 address of the device.
+
+**Type:** `String`
+
+**Default:** `Empty`
+
+**Example:** `10.0.0.10`
+
+:::note
+
+Only IPv4 addresses are accepted. The field is required and validated for a correct address format.
+
+:::
+
+### MAC address
+
+MAC address of the device the [IP address](#ip-address) should be mapped to.
+
+**Type:** `String`
+
+**Default:** `Empty`
+
+**Example:**
+
+- `00:1A:2B:3C:4D:5E`
+- `00-1A-2B-3C-4D-5E`
+
+:::note
+
+The field is required and validated for a correct MAC address format.
+
+:::
+
+:::note
+
+Adding a static ARP entry requires administrator privileges and runs `arp -s` under the hood.
+
+:::
