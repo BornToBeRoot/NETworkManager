@@ -4148,6 +4148,27 @@ Você pode copiar seus arquivos de perfil de "{0}" para "{1}" para migrar seus p
     <value>Endereços remotos</value>
   </data>
   <data name="EnterValidFirewallAddress" xml:space="preserve">
-    <value>Insira um endereço IP válido, sub-rede (por exemplo, 10.0.0.0/8) ou palavra-chave (por exemplo, LocalSubnet, Internet)</value>
+    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8), range (e.g. 10.0.0.1-10.0.0.10), or keyword (Any, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal)</value>
+  </data>
+  <data name="AddRule" xml:space="preserve">
+    <value>Add rule</value>
+  </data>
+  <data name="AddRuleDots" xml:space="preserve">
+    <value>Add rule...</value>
+  </data>
+  <data name="EditRule" xml:space="preserve">
+    <value>Edit rule</value>
+  </data>
+  <data name="EditRuleDots" xml:space="preserve">
+    <value>Edit rule...</value>
+  </data>
+  <data name="DeleteRule" xml:space="preserve">
+    <value>Delete rule</value>
+  </data>
+  <data name="EnableRule" xml:space="preserve">
+    <value>Enable rule</value>
+  </data>
+  <data name="DisableRule" xml:space="preserve">
+    <value>Disable rule</value>
   </data>
 </root>
