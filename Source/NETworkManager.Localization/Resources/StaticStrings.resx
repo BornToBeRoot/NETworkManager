@@ -348,4 +348,7 @@
   <data name="ExampleFirewallAddresses" xml:space="preserve">
     <value>10.0.0.0/8; LocalSubnet</value>
   </data>
+  <data name="ActiveDirectorySearchBase" xml:space="preserve">
+    <value>OU=Computers,DC=borntoberoot,DC=net</value>
+  </data>
 </root>

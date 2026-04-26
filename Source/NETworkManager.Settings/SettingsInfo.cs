@@ -1,4 +1,4 @@
-﻿using DnsClient;
+using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Controls;
 using NETworkManager.Models;
@@ -563,6 +563,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Profiles_MaximumNumberOfBackups;
 
+    public string Profiles_ImportLdapSearchBase
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    
     // Settings
 
     public bool Settings_IsDailyBackupEnabled
@@ -590,7 +603,7 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.Settings_MaximumNumberOfBackups;
-
+    
     #endregion
 
     #region Others
