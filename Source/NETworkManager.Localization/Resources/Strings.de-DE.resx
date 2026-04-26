@@ -4148,6 +4148,27 @@ Bei Bedarf können Sie die Profildateien von „{0}“ nach „{1}“ kopieren, 
     <value>Remote Adressen</value>
   </data>
   <data name="EnterValidFirewallAddress" xml:space="preserve">
-    <value>Geben Sie eine gültige IP-Adresse, ein Subnetz (z. B. 10.0.0.0/8) oder ein Keyword (z. B. LocalSubnet, Internet) ein.</value>
+    <value>Geben Sie eine gültige IP-Adresse, ein Subnetz (z. B. 10.0.0.0/8), einen Bereich (z. B. 10.0.0.1–10.0.0.10) oder ein Schlüsselwort ein (Any, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal)</value>
+  </data>
+  <data name="AddRule" xml:space="preserve">
+    <value>Regel hinzufügen</value>
+  </data>
+  <data name="AddRuleDots" xml:space="preserve">
+    <value>Regel hinzufügen...</value>
+  </data>
+  <data name="EditRule" xml:space="preserve">
+    <value>Regel bearbeiten</value>
+  </data>
+  <data name="EditRuleDots" xml:space="preserve">
+    <value>Regel bearbeiten...</value>
+  </data>
+  <data name="DeleteRule" xml:space="preserve">
+    <value>Regel löschen</value>
+  </data>
+  <data name="EnableRule" xml:space="preserve">
+    <value>Regel aktivieren</value>
+  </data>
+  <data name="DisableRule" xml:space="preserve">
+    <value>Regel deaktivieren</value>
   </data>
 </root>
