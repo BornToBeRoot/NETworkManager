@@ -563,6 +563,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Profiles_MaximumNumberOfBackups;
 
+    public string Profiles_ImportLdapSearchBase
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+    
     // Settings
 
     public bool Settings_IsDailyBackupEnabled
@@ -590,7 +603,7 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.Settings_MaximumNumberOfBackups;
-
+    
     #endregion
 
     #region Others
@@ -2337,24 +2350,6 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
-
-    private string _remoteDesktop_ActiveDirectoryImportLdapSearchBase;
-
-    /// <summary>
-    ///     Last LDAP search base (OU DN) used for Remote Desktop Active Directory computer import.
-    /// </summary>
-    public string RemoteDesktop_ActiveDirectoryImportLdapSearchBase
-    {
-        get => _remoteDesktop_ActiveDirectoryImportLdapSearchBase;
-        set
-        {
-            if (value == _remoteDesktop_ActiveDirectoryImportLdapSearchBase)
-                return;
-
-            _remoteDesktop_ActiveDirectoryImportLdapSearchBase = value;
-            OnPropertyChanged();
-        }
-    }
 
     #endregion
 

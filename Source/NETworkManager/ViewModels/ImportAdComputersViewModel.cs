@@ -38,7 +38,7 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
             ? GroupNames.FirstOrDefault() ?? string.Empty
             : suggestedTargetGroup;
 
-        LdapSearchBase = SettingsManager.Current.RemoteDesktop_ActiveDirectoryImportLdapSearchBase ?? string.Empty;
+        LdapSearchBase = SettingsManager.Current.Profiles_ImportLdapSearchBase ?? string.Empty;
 
         ImportCommand = new RelayCommand(_ => ImportAction(), Import_CanExecute);
         CancelCommand = new RelayCommand(_ => CancelAction());
@@ -168,7 +168,7 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
                 return;
             }
 
-            SettingsManager.Current.RemoteDesktop_ActiveDirectoryImportLdapSearchBase = searchBase;
+            SettingsManager.Current.Profiles_ImportLdapSearchBase = searchBase;
             SettingsManager.Save();
 
             var targetGroupInfo = ProfileManager.LoadedProfileFileData.Groups
