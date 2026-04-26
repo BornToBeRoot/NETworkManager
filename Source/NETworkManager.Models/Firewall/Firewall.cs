@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation.Runspaces;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 using SMA = System.Management.Automation;
 using log4net;
 
@@ -497,7 +500,9 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
 
     /// <summary>
     /// Parses a comma-separated address string (e.g. <c>"192.168.1.0/24,LocalSubnet"</c>) to a
-    /// list of address strings.
+    /// list of address strings. PowerShell returns IPv4 subnets in subnet-mask notation
+    /// (e.g. <c>10.8.0.0/255.255.0.0</c>); these are normalized back to CIDR. IPv6 subnets
+    /// are already returned in CIDR notation by PowerShell and are passed through unchanged.
     /// Returns an empty list when the value is blank or <c>"Any"</c>.
     /// </summary>
     /// <param name="value">
@@ -508,7 +513,27 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         if (string.IsNullOrWhiteSpace(value) || value.Equals("Any", StringComparison.OrdinalIgnoreCase))
             return [];
 
-        return [.. value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)];
+        var addresses = new List<string>();
+
+        foreach (var token in value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        {
+            var slashIndex = token.IndexOf('/');
+
+            if (slashIndex > 0)
+            {
+                var maskPart = token[(slashIndex + 1)..];
+
+                if (RegexHelper.SubnetmaskRegex().IsMatch(maskPart) && IPAddress.TryParse(maskPart, out var mask))
+                {
+                    addresses.Add($"{token[..slashIndex]}/{Subnetmask.ConvertSubnetmaskToCidr(mask)}");
+                    continue;
+                }
+            }
+
+            addresses.Add(token);
+        }
+
+        return addresses;
     }
 
     /// <summary>
