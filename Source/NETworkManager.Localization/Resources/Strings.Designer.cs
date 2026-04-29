@@ -1112,6 +1112,15 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("ARPTable", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Read-only mode. Modifying the ARP table requires elevated rights!.
+        /// </summary>
+        public static string ARPTableAdminMessage {
+            get {
+                return ResourceManager.GetString("ARPTableAdminMessage", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to ASN.

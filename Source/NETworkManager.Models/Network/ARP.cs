@@ -1,21 +1,39 @@
-﻿// Contains code from: https://stackoverflow.com/a/1148861/4986782
+// Contains code from: https://stackoverflow.com/a/1148861/4986782
 // Modified by BornToBeRoot
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Management.Automation.Runspaces;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using NETworkManager.Utilities;
+using SMA = System.Management.Automation;
+using log4net;
 
 namespace NETworkManager.Models.Network;
 
+/// <summary>
+/// Provides static methods to read and modify the Windows ARP table.
+/// Read access uses the <c>IpHlpApi</c> Win32 API. Modifying operations
+/// (add/delete entries, clear table) run via PowerShell in a shared
+/// <see cref="Runspace"/> that is initialized once with the required
+/// execution policy. A <see cref="SemaphoreSlim"/> serializes access so
+/// the runspace is never used concurrently. Modifying operations require
+/// the application to run with elevated rights.
+/// </summary>
 public class ARP
 {
     #region Variables
+
+    /// <summary>
+    /// The logger for this class.
+    /// </summary>
+    private static readonly ILog Log = LogManager.GetLogger(typeof(ARP));
 
     // The max number of physical addresses.
     private const int MAXLEN_PHYSADDR = 8;
@@ -50,15 +68,29 @@ public class ARP
     // The insufficient buffer error.
     private const int ERROR_INSUFFICIENT_BUFFER = 122;
 
-    #endregion
+    /// <summary>
+    /// Ensures that only one PowerShell pipeline runs on <see cref="SharedRunspace"/> at a time.
+    /// </summary>
+    private static readonly SemaphoreSlim Lock = new(1, 1);
 
-    #region Events
+    /// <summary>
+    /// Shared PowerShell runspace, initialized once in the static constructor with
+    /// <c>Set-ExecutionPolicy Bypass</c> so subsequent operations can run without
+    /// repeating the policy change.
+    /// </summary>
+    private static readonly Runspace SharedRunspace;
 
-    public event EventHandler UserHasCanceled;
-
-    protected virtual void OnUserHasCanceled()
+    /// <summary>
+    /// Opens <see cref="SharedRunspace"/> and runs the one-time initialization script.
+    /// </summary>
+    static ARP()
     {
-        UserHasCanceled?.Invoke(this, EventArgs.Empty);
+        SharedRunspace = RunspaceFactory.CreateRunspace();
+        SharedRunspace.Open();
+
+        using var ps = SMA.PowerShell.Create();
+        ps.Runspace = SharedRunspace;
+        ps.AddScript("Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process").Invoke();
     }
 
     #endregion
@@ -154,61 +186,92 @@ public class ARP
         return arpInfo?.MACAddress.ToString();
     }
 
-    private void RunPowerShellCommand(string command)
+    /// <summary>
+    /// Adds a static ARP entry by running <c>arp -s</c> through the shared PowerShell
+    /// runspace. Requires the application to run with elevated rights.
+    /// </summary>
+    /// <param name="ipAddress">The IP address of the entry.</param>
+    /// <param name="macAddress">The MAC address of the entry, separated with <c>-</c>.</param>
+    /// <exception cref="Exception">
+    /// Thrown when the PowerShell pipeline reports one or more errors.
+    /// </exception>
+    public static async Task AddEntryAsync(string ipAddress, string macAddress)
     {
+        await InvokeAsync($"arp -s '{EscapePs(ipAddress)}' '{EscapePs(macAddress)}' 2>&1 | Out-String");
+    }
+
+    /// <summary>
+    /// Removes a single ARP entry by running <c>arp -d</c> through the shared PowerShell
+    /// runspace. Requires the application to run with elevated rights.
+    /// </summary>
+    /// <param name="ipAddress">The IP address of the entry to remove.</param>
+    /// <exception cref="Exception">
+    /// Thrown when the PowerShell pipeline reports one or more errors.
+    /// </exception>
+    public static async Task DeleteEntryAsync(string ipAddress)
+    {
+        await InvokeAsync($"arp -d '{EscapePs(ipAddress)}' 2>&1 | Out-String");
+    }
+
+    /// <summary>
+    /// Clears the entire ARP cache by running <c>netsh interface ip delete arpcache</c>
+    /// through the shared PowerShell runspace. Requires the application to run with
+    /// elevated rights.
+    /// </summary>
+    /// <exception cref="Exception">
+    /// Thrown when the PowerShell pipeline reports one or more errors.
+    /// </exception>
+    public static async Task DeleteTableAsync()
+    {
+        await InvokeAsync("netsh interface ip delete arpcache 2>&1 | Out-String");
+    }
+
+    /// <summary>
+    /// Runs <paramref name="script"/> on the shared runspace and throws when the
+    /// command exits with a non-zero exit code or writes to the PowerShell error stream.
+    /// </summary>
+    /// <param name="script">The PowerShell script to execute.</param>
+    private static async Task InvokeAsync(string script)
+    {
+        await Lock.WaitAsync();
         try
         {
-            PowerShellHelper.ExecuteCommand(command, true);
-        }
-        catch (Win32Exception win32Ex)
-        {
-            switch (win32Ex.NativeErrorCode)
+            await Task.Run(() =>
             {
-                case 1223:
-                    OnUserHasCanceled();
-                    break;
-                default:
-                    throw;
-            }
+                using var ps = SMA.PowerShell.Create();
+                ps.Runspace = SharedRunspace;
+
+                ps.AddScript(script + @"
+if ($LASTEXITCODE -ne 0) { Write-Error ""Exit code: $LASTEXITCODE"" }");
+                var results = ps.Invoke();
+
+                if (ps.Streams.Error.Count > 0)
+                {
+                    var output = string.Join(Environment.NewLine,
+                        results.Select(r => r?.ToString()).Where(s => !string.IsNullOrWhiteSpace(s)));
+                    var errors = string.Join(Environment.NewLine, ps.Streams.Error);
+
+                    var message = string.IsNullOrWhiteSpace(output)
+                        ? errors
+                        : $"{output.Trim()}{Environment.NewLine}{errors}";
+
+                    Log.Warn($"PowerShell error: {message}");
+                    throw new Exception(message);
+                }
+            });
+        }
+        finally
+        {
+            Lock.Release();
         }
     }
 
-    // MAC separated with "-"
-    public Task AddEntryAsync(string ipAddress, string macAddress)
-    {
-        return Task.Run(() => AddEntry(ipAddress, macAddress));
-    }
-
-    private void AddEntry(string ipAddress, string macAddress)
-    {
-        var command = $"arp -s {ipAddress} {macAddress}";
-
-        RunPowerShellCommand(command);
-    }
-
-    public Task DeleteEntryAsync(string ipAddress)
-    {
-        return Task.Run(() => DeleteEntry(ipAddress));
-    }
-
-    private void DeleteEntry(string ipAddress)
-    {
-        var command = $"arp -d {ipAddress}";
-
-        RunPowerShellCommand(command);
-    }
-
-    public Task DeleteTableAsync()
-    {
-        return Task.Run(() => DeleteTable());
-    }
-
-    private void DeleteTable()
-    {
-        const string command = "netsh interface ip delete arpcache";
-
-        RunPowerShellCommand(command);
-    }
+    /// <summary>
+    /// Escapes a string for embedding inside a PowerShell single-quoted string by
+    /// doubling any single-quote characters.
+    /// </summary>
+    /// <param name="value">The raw string value to escape.</param>
+    private static string EscapePs(string value) => value.Replace("'", "''");
 
     #endregion
 }
