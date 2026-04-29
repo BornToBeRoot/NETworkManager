@@ -60,6 +60,6 @@ If NETworkManager is not running as administrator, the Firewall view is **read-o
 
 ## Try it now
 
-Upgrade now to the [latest version of NETworkManager](https://borntoberoot.net/NETworkManager/download) to use the new Firewall feature.
+You can test this feature in the [latest pre-release of NETworkManager](https://borntoberoot.net/NETworkManager/download#pre-release).
 
 If you find any issues or have suggestions for improvement, please open an [issue on GitHub](https://github.com/BornToBeRoot/NETworkManager/issues).
