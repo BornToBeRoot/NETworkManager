@@ -39,6 +39,8 @@ When creating or editing a rule, NETworkManager exposes the most common and impo
 ![Add rule](./firewall-rule.png)
 
 - **Name**: Display name of the rule (the `NETworkManager_` prefix is added automatically and hidden in the UI)
+- **Enabled**: Whether the rule is active right after creation
+- **Description**: Optional description of the rule
 - **Direction**: Inbound / Outbound
 - **Action**: Allow / Block
 - **Protocol**: Any, TCP, UDP, ICMPv4, ICMPv6, GRE, L2TP
