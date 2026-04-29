@@ -141,6 +141,9 @@
   <data name="ARPTable" xml:space="preserve">
     <value>ARP Table</value>
   </data>
+  <data name="ARPTableAdminMessage" xml:space="preserve">
+    <value>Read-only mode. Modifying the ARP table requires elevated rights!</value>
+  </data>
   <data name="Authentication" xml:space="preserve">
     <value>Authentication</value>
   </data>

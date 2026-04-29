@@ -240,6 +240,23 @@ public class ARPTableViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the view model is modifying an entry
+    /// (add entry, delete entry, delete table).
+    /// </summary>
+    public bool IsModifying
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets a value indicating whether the status message is displayed.
     /// </summary>
     public bool IsStatusMessageDisplayed
@@ -291,6 +308,7 @@ public class ARPTableViewModel : ViewModelBase
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
                !ConfigurationManager.Current.IsChildWindowOpen &&
                !IsRefreshing &&
+               !IsModifying &&
                !AutoRefreshEnabled;
     }
 
@@ -308,34 +326,19 @@ public class ARPTableViewModel : ViewModelBase
     /// Gets the command to delete the ARP table.
     /// </summary>
     public ICommand DeleteTableCommand =>
-        new RelayCommand(_ => DeleteTableAction().ConfigureAwait(false), DeleteTable_CanExecute);
-
-    /// <summary>
-    /// Checks if the delete table command can be executed.
-    /// </summary>
-    /// <param name="parameter">The command parameter.</param>
-    /// <returns><c>true</c> if the command can be executed; otherwise, <c>false</c>.</returns>
-    private bool DeleteTable_CanExecute(object parameter)
-    {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
-    }
+        new RelayCommand(_ => DeleteTableAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     /// <summary>
     /// Action to delete the ARP table.
     /// </summary>
     private async Task DeleteTableAction()
     {
+        IsModifying = true;
         IsStatusMessageDisplayed = false;
 
         try
         {
-            var arpTable = new ARP();
-
-            arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
-
-            await arpTable.DeleteTableAsync();
+            await ARP.DeleteTableAsync();
 
             await Refresh();
         }
@@ -343,6 +346,10 @@ public class ARPTableViewModel : ViewModelBase
         {
             StatusMessage = ex.Message;
             IsStatusMessageDisplayed = true;
+        }
+        finally
+        {
+            IsModifying = false;
         }
     }
 
@@ -350,34 +357,19 @@ public class ARPTableViewModel : ViewModelBase
     /// Gets the command to delete an ARP entry.
     /// </summary>
     public ICommand DeleteEntryCommand =>
-        new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), DeleteEntry_CanExecute);
-
-    /// <summary>
-    /// Checks if the delete entry command can be executed.
-    /// </summary>
-    /// <param name="parameter">The command parameter.</param>
-    /// <returns><c>true</c> if the command can be executed; otherwise, <c>false</c>.</returns>
-    private bool DeleteEntry_CanExecute(object parameter)
-    {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
-    }
+        new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     /// <summary>
     /// Action to delete an ARP entry.
     /// </summary>
     private async Task DeleteEntryAction()
     {
+        IsModifying = true;
         IsStatusMessageDisplayed = false;
 
         try
         {
-            var arpTable = new ARP();
-
-            arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
-
-            await arpTable.DeleteEntryAsync(SelectedResult.IPAddress.ToString());
+            await ARP.DeleteEntryAsync(SelectedResult.IPAddress.ToString());
 
             await Refresh();
         }
@@ -386,35 +378,27 @@ public class ARPTableViewModel : ViewModelBase
             StatusMessage = ex.Message;
             IsStatusMessageDisplayed = true;
         }
+        finally
+        {
+            IsModifying = false;
+        }
     }
 
     /// <summary>
     /// Gets the command to add an ARP entry.
     /// </summary>
     public ICommand AddEntryCommand =>
-        new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), AddEntry_CanExecute);
-
-    /// <summary>
-    /// Checks if the add entry command can be executed.
-    /// </summary>
-    /// <param name="parameter">The command parameter.</param>
-    /// <returns><c>true</c> if the command can be executed; otherwise, <c>false</c>.</returns>
-    private bool AddEntry_CanExecute(object parameter)
-    {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
-    }
+        new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
     /// <summary>
     /// Action to add an ARP entry.
     /// </summary>
     private async Task AddEntryAction()
     {
+        IsModifying = true;
         IsStatusMessageDisplayed = false;
 
         var childWindow = new ARPTableAddEntryChildWindow();
-
 
         var childWindowViewModel = new ARPTableAddEntryViewModel(async instance =>
         {
@@ -423,11 +407,7 @@ public class ARPTableViewModel : ViewModelBase
 
             try
             {
-                var arpTable = new ARP();
-
-                arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
-
-                await arpTable.AddEntryAsync(instance.IPAddress, MACAddressHelper.Format(instance.MACAddress, "-"));
+                await ARP.AddEntryAsync(instance.IPAddress, MACAddressHelper.Format(instance.MACAddress, "-"));
 
                 await Refresh();
             }
@@ -436,10 +416,16 @@ public class ARPTableViewModel : ViewModelBase
                 StatusMessage = ex.Message;
                 IsStatusMessageDisplayed = true;
             }
+            finally
+            {
+                IsModifying = false;
+            }
         }, _ =>
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            IsModifying = false;
         });
 
         childWindow.Title = Strings.AddEntry;
@@ -449,6 +435,40 @@ public class ARPTableViewModel : ViewModelBase
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
         await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
+    }
+
+    /// <summary>
+    /// Checks if the entry modification commands can be executed.
+    /// </summary>
+    private bool ModifyEntry_CanExecute(object parameter)
+    {
+        return ConfigurationManager.Current.IsAdmin &&
+               Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen &&
+               !IsRefreshing &&
+               !IsModifying;
+    }
+
+    /// <summary>
+    /// Gets the command to restart the application as administrator.
+    /// </summary>
+    public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
+
+    /// <summary>
+    /// Action to restart the application as administrator.
+    /// </summary>
+    private async Task RestartAsAdminAction()
+    {
+        try
+        {
+            (Application.Current.MainWindow as MainWindow)?.RestartApplication(true);
+        }
+        catch (Exception ex)
+        {
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, ex.Message,
+                ChildWindowIcon.Error);
+        }
     }
 
     /// <summary>
@@ -519,7 +539,7 @@ public class ARPTableViewModel : ViewModelBase
         StatusMessage = Strings.RefreshingDots;
         IsStatusMessageDisplayed = true;
 
-        if (init == false)
+        if (!init)
             await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         Results.Clear();
@@ -555,15 +575,6 @@ public class ARPTableViewModel : ViewModelBase
     #endregion
 
     #region Events
-
-    /// <summary>
-    /// Handles the UserHasCanceled event from the ARP table.
-    /// </summary>
-    private void ArpTable_UserHasCanceled(object sender, EventArgs e)
-    {
-        StatusMessage = Strings.CanceledByUserMessage;
-        IsStatusMessageDisplayed = true;
-    }
 
     /// <summary>
     /// Handles the Tick event of the auto-refresh timer.
