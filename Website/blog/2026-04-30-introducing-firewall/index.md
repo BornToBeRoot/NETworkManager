@@ -7,7 +7,7 @@ tags: [firewall, windows firewall, security, new feature]
 keywords: [NETworkManager, Windows Firewall, Windows Defender Firewall, firewall rules, inbound, outbound, network security]
 ---
 
-NETworkManager introduces a new feature: the `Firewall`. You can now manage Windows Firewall rules created by NETworkManager directly from within the app — no more jumping between MMC snap-ins for day-to-day tasks.
+NETworkManager introduces a new feature, the `Firewall`. You can now manage Windows Firewall rules created by NETworkManager directly from within the app — no more jumping between MMC snap-ins for day-to-day tasks.
 
 This is especially useful if you frequently spin up local services (lab environments, dev boxes, game servers, small internal tools) and need a quick and repeatable way to open or block ports, restrict traffic to specific IP ranges, or scope rules to profiles like **Domain**, **Private**, or **Public**.
 
@@ -25,7 +25,7 @@ Every rule created via NETworkManager is stored with a `NETworkManager_` prefix 
 
 - View firewall rules created by NETworkManager
 - Add new inbound or outbound rules
-- Edit existing rules (the same dialog is used for both Add and Edit)
+- Edit existing rules
 - Enable or disable rules quickly
 - Delete rules you no longer need
 - Copy or export rule information
@@ -54,9 +54,7 @@ You can find all details (including examples for port and address formats) in th
 
 ## Administrator privileges
 
-Like editing the hosts file, managing firewall rules requires elevated rights.
-
-If NETworkManager is not running as administrator, the Firewall view is **read-only**. Use the **Restart as administrator** button to relaunch NETworkManager with the required privileges.
+Managing firewall rules requires elevated rights. If NETworkManager is not running as administrator, the Firewall view is **read-only**. Use the **Restart as administrator** button to relaunch NETworkManager with the required privileges.
 
 ## Try it now
 
