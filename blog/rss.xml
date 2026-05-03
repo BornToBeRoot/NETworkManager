@@ -14,7 +14,7 @@
             <guid>https://borntoberoot.net/NETworkManager/blog/neighbor-table-supersedes-arp-table</guid>
             <pubDate>Sun, 03 May 2026 00:00:00 GMT</pubDate>
             <description><![CDATA[NETworkManager replaces the ARP Table with the new Neighbor Table, which covers both IPv4 (ARP) and IPv6 (NDP) address-to-MAC mappings in a single unified view.]]></description>
-            <content:encoded><![CDATA[<p>The <code>ARP Table</code> feature has been replaced by the new <strong>Neighbor Table</strong>, a unified view that covers IP-to-MAC address mappings for both IPv4 (ARP) and IPv6 (NDP) in a single place.</p>
+            <content:encoded><![CDATA[<p>The <strong>ARP Table</strong> feature has been replaced by the new <strong>Neighbor Table</strong>, a unified view that covers IP-to-MAC address mappings for both IPv4 (ARP) and IPv6 (NDP) in a single place.</p>
 <p><img decoding="async" loading="lazy" alt="Neighbor Table" src="https://borntoberoot.net/NETworkManager/assets/images/neighbor-table-8f3a754c99c81f037e476ff76d114fbf.png" width="1200" height="800" class="img_ev3q"></p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-the-change">Why the change?<a href="https://borntoberoot.net/NETworkManager/blog/neighbor-table-supersedes-arp-table#why-the-change" class="hash-link" aria-label="Direct link to Why the change?" title="Direct link to Why the change?" translate="no">​</a></h2>
 <p>The old ARP Table only surfaced IPv4 entries. Modern networks increasingly rely on IPv6, and the equivalent mechanism on IPv6 – the <strong>Neighbor Discovery Protocol (NDP)</strong> – was left out entirely.</p>
