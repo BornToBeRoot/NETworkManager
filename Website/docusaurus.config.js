@@ -232,6 +232,13 @@ const config = {
             ],
             to: "/docs/changelog/2025-8-10-0",
           },
+          // Redirect legacy ARP Table to Neighbor Table
+          {
+            from: [              
+              "/docs/application/arp-table",
+            ],
+            to: "/docs/application/neighbor-table",
+          },
         ],
       },
     ],

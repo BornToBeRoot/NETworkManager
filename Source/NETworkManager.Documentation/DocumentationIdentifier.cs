@@ -141,9 +141,9 @@ public enum DocumentationIdentifier
     ApplicationListeners,
 
     /// <summary>
-    ///     ARP Table documentation page.
+    ///     Neighbor Table documentation page.
     /// </summary>
-    ApplicationArpTable,
+    ApplicationNeighborTable,
 
     /// <summary>
     ///     Settings\General documentation page.

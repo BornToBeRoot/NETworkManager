@@ -667,7 +667,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private IPGeolocationHostView _ipGeolocationHostView;
     private ConnectionsView _connectionsView;
     private ListenersView _listenersView;
-    private ARPTableView _arpTableView;
+    private NeighborTableView _neighborTableView;
 
     /// <summary>
     ///     Method when the application view becomes visible (again). Either when switching the applications
@@ -886,13 +886,13 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
                 ContentControlApplication.Content = _listenersView;
                 break;
-            case ApplicationName.ARPTable:
-                if (_arpTableView == null)
-                    _arpTableView = new ARPTableView();
+            case ApplicationName.NeighborTable:
+                if (_neighborTableView == null)
+                    _neighborTableView = new NeighborTableView();
                 else
-                    _arpTableView.OnViewVisible();
+                    _neighborTableView.OnViewVisible();
 
-                ContentControlApplication.Content = _arpTableView;
+                ContentControlApplication.Content = _neighborTableView;
                 break;
             default:
                 Log.Error("Cannot show unknown application view: " + name);
@@ -982,8 +982,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             case ApplicationName.Listeners:
                 _listenersView?.OnViewHide();
                 break;
-            case ApplicationName.ARPTable:
-                _arpTableView?.OnViewHide();
+            case ApplicationName.NeighborTable:
+                _neighborTableView?.OnViewHide();
                 break;
             default:
                 Log.Error("Cannot hide unknown application view: " + name);
@@ -1083,7 +1083,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             case ApplicationName.Lookup:
             case ApplicationName.Connections:
             case ApplicationName.Listeners:
-            case ApplicationName.ARPTable:
+            case ApplicationName.NeighborTable:
                 break;
             default:
                 Log.Error($"Cannot redirect data to unknown application: {data.Application}");

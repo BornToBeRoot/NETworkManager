@@ -581,13 +581,11 @@
                         </Border.Style>
                         <Grid Margin="20">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*" />
-                                <ColumnDefinition Width="10" />
-                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="10" />
                                 <ColumnDefinition Width="2*" />
                                 <ColumnDefinition Width="10" />
-                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
                             <Grid.Resources>
                                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
@@ -597,29 +595,26 @@
                                     <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
                                 </Style>
                             </Grid.Resources>
-                            <!-- Ping info -->
-                            <Grid Grid.Column="0" Grid.Row="0">
+                            <!-- Ping -->
+                            <Grid Grid.Column="0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0"
+                                <TextBlock Grid.Row="0"
                                            Text="{x:Static localization:Strings.PingDetails}"
                                            Style="{StaticResource BoldTextBlock}"
                                            Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
-                                <ListView Grid.Column="0" Grid.Row="2"
+                                <ListView Grid.Row="2"
                                           Background="Transparent">
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="{x:Type ListViewItem}"
                                                BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
                                             <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush"
-                                                    Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush"
-                                                    Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush"
-                                                    Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
                                             <Setter Property="Background" Value="Transparent" />
                                         </Style>
                                     </ListView.ItemContainerStyle>
@@ -631,7 +626,7 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="100" Width="Auto" />
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
@@ -644,15 +639,15 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="100" Width="Auto" />
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" Text="{x:Static localization:Strings.Time}" />
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Time}" />
                                             <TextBox Grid.Column="2">
                                                 <TextBox.Text>
-                                                    <MultiBinding
-                                                        Converter="{StaticResource PingTimeToStringConverter}">
+                                                    <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
                                                         <Binding Path="(network:IPScannerHostInfo.PingInfo).Status" />
                                                         <Binding Path="(network:IPScannerHostInfo.PingInfo).Time" />
                                                     </MultiBinding>
@@ -663,43 +658,43 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="100" Width="Auto" />
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" Grid.Row="0"
+                                            <TextBlock Grid.Column="0"
                                                        Text="{x:Static localization:Strings.TTL}" />
-                                            <TextBox Grid.Column="2" Grid.Row="0"
+                                            <TextBox Grid.Column="2"
                                                      Text="{Binding (network:IPScannerHostInfo.PingInfo).TTL, Converter={StaticResource IntToStringConverter}}" />
                                         </Grid>
                                     </ListViewItem>
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="100" Width="Auto" />
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" Grid.Row="0"
+                                            <TextBlock Grid.Column="0"
                                                        Text="{x:Static localization:Strings.Bytes}" />
-                                            <TextBox Grid.Column="2" Grid.Row="0"
+                                            <TextBox Grid.Column="2"
                                                      Text="{Binding (network:IPScannerHostInfo.PingInfo).Bytes, Converter={StaticResource IntToStringConverter}}" />
                                         </Grid>
                                     </ListViewItem>
                                 </ListView>
                             </Grid>
-                            <!-- Port info -->
-                            <Grid Grid.Column="2" Grid.Row="0">
+                            <!-- Ports -->
+                            <Grid Grid.Column="2">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0"
+                                <TextBlock Grid.Row="0"
                                            Text="{x:Static localization:Strings.Ports}"
                                            Style="{StaticResource BoldTextBlock}"
                                            Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
-                                <StackPanel Grid.Column="0" Grid.Row="2"
+                                <StackPanel Grid.Row="2"
                                             VerticalAlignment="Top"
                                             Orientation="Horizontal"
                                             Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_PortScanEnabled, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
@@ -709,7 +704,7 @@
                                                Style="{StaticResource InfoTextBlock}"
                                                Margin="10,0,0,0" />
                                 </StackPanel>
-                                <Grid Grid.Column="0" Grid.Row="2"
+                                <Grid Grid.Row="2"
                                       Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_PortScanEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                     <ListView Background="Transparent"
                                               ScrollViewer.VerticalScrollBarVisibility="Disabled"
@@ -718,14 +713,10 @@
                                         <ListView.ItemContainerStyle>
                                             <Style TargetType="{x:Type ListViewItem}"
                                                    BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
-                                                <Setter Property="mah:ItemHelper.HoverBackgroundBrush"
-                                                        Value="Transparent" />
-                                                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush"
-                                                        Value="Transparent" />
-                                                <Setter Property="mah:ItemHelper.SelectedBackgroundBrush"
-                                                        Value="Transparent" />
-                                                <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush"
-                                                        Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
                                                 <Setter Property="Background" Value="Transparent" />
                                             </Style>
                                         </ListView.ItemContainerStyle>
@@ -773,18 +764,18 @@
                                     </StackPanel>
                                 </Grid>
                             </Grid>
-                            <!-- NetBIOS info -->
-                            <Grid Grid.Column="4" Grid.Row="0">
+                            <!-- NetBIOS -->
+                            <Grid Grid.Column="4">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0"
+                                <TextBlock Grid.Row="0"
                                            Text="{x:Static localization:Strings.NetBIOS}"
                                            Style="{StaticResource BoldTextBlock}"
                                            Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
-                                <StackPanel Grid.Column="0" Grid.Row="2"
+                                <StackPanel Grid.Row="2"
                                             VerticalAlignment="Top"
                                             Orientation="Horizontal"
                                             Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_NetBIOSEnabled, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
@@ -794,19 +785,16 @@
                                                Style="{StaticResource InfoTextBlock}"
                                                Margin="10,0,0,0" />
                                 </StackPanel>
-                                <ListView Grid.Column="0" Grid.Row="2"
+                                <ListView Grid.Row="2"
                                           Background="Transparent"
                                           Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_NetBIOSEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="{x:Type ListViewItem}"
                                                BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
                                             <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush"
-                                                    Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush"
-                                                    Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush"
-                                                    Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
                                             <Setter Property="Background" Value="Transparent" />
                                         </Style>
                                     </ListView.ItemContainerStyle>
@@ -818,7 +806,7 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="150" Width="Auto" />
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
@@ -831,12 +819,12 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="150" Width="Auto" />
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Grid.Column="0"
-                                                       Text="{x:Static Member=localization:Strings.GroupDomainName}" />
+                                                       Text="{x:Static Member=localization:Strings.GroupDomain}" />
                                             <TextBox Grid.Column="2"
                                                      Text="{Binding Path=(network:IPScannerHostInfo.NetBIOSInfo).GroupName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
                                         </Grid>
@@ -844,7 +832,7 @@
                                     <ListViewItem>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="150" Width="Auto" />
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
                                                 <ColumnDefinition Width="10" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
@@ -852,155 +840,6 @@
                                                        Text="{x:Static Member=localization:Strings.Username}" />
                                             <TextBox Grid.Column="2"
                                                      Text="{Binding Path=(network:IPScannerHostInfo.NetBIOSInfo).UserName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
-                                        </Grid>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="150" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static Member=localization:Strings.MACAddress}" />
-                                            <TextBox Grid.Column="2"
-                                                     Text="{Binding Path=(network:IPScannerHostInfo.NetBIOSInfo).MACAddress, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
-                                        </Grid>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="150" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static Member=localization:Strings.Vendor}" />
-                                            <TextBox Grid.Column="2"
-                                                     Text="{Binding Path=(network:IPScannerHostInfo.NetBIOSInfo).Vendor, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
-                                        </Grid>
-                                    </ListViewItem>
-                                </ListView>
-                            </Grid>
-                            <!-- DNS & ARP info -->
-                            <Grid Grid.Column="6" Grid.Row="0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="28.5" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="0" Grid.Row="0"
-                                           Text="{x:Static localization:Strings.DNS}"
-                                           Style="{StaticResource BoldTextBlock}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
-                                <StackPanel Grid.Column="0" Grid.Row="2"
-                                            VerticalAlignment="Top"
-                                            Orientation="Horizontal"
-                                            Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveHostname, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
-                                    <Rectangle Width="16" Height="16"
-                                               Style="{StaticResource InfoImageRectangle}" />
-                                    <TextBlock Text="{x:Static localization:Strings.ResolveHostnameIsDisabled}"
-                                               Style="{StaticResource InfoTextBlock}"
-                                               Margin="10,0,0,0" />
-                                </StackPanel>
-                                <ListView Grid.Column="0" Grid.Row="2"
-                                          Background="Transparent"
-                                          Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="{x:Type ListViewItem}"
-                                               BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
-                                            <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush"
-                                                    Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush"
-                                                    Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush"
-                                                    Value="Transparent" />
-                                            <Setter Property="Background" Value="Transparent" />
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
-                                    <ListView.Template>
-                                        <ControlTemplate>
-                                            <ItemsPresenter />
-                                        </ControlTemplate>
-                                    </ListView.Template>
-                                    <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="150" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static Member=localization:Strings.Hostname}" />
-                                            <TextBox Grid.Column="2"
-                                                     Text="{Binding Path=(network:IPScannerHostInfo.DNSHostname), Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
-                                        </Grid>
-                                    </ListViewItem>
-                                </ListView>
-                                <TextBlock Grid.Column="0" Grid.Row="4"
-                                           Text="{x:Static localization:Strings.ARP}"
-                                           Style="{StaticResource BoldTextBlock}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
-                                <StackPanel Grid.Column="0" Grid.Row="6"
-                                            VerticalAlignment="Top"
-                                            Orientation="Horizontal"
-                                            Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveMACAddress, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
-                                    <Rectangle Width="16" Height="16"
-                                               Style="{StaticResource InfoImageRectangle}" />
-                                    <TextBlock Text="{x:Static localization:Strings.ResolveMACAddressIsDisabled}"
-                                               Style="{StaticResource InfoTextBlock}"
-                                               Margin="10,0,0,0" />
-                                </StackPanel>
-                                <ListView Grid.Column="0" Grid.Row="6"
-                                          Background="Transparent"
-                                          Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveMACAddress, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="{x:Type ListViewItem}"
-                                               BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
-                                            <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush"
-                                                    Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush"
-                                                    Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush"
-                                                    Value="Transparent" />
-                                            <Setter Property="Background" Value="Transparent" />
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
-                                    <ListView.Template>
-                                        <ControlTemplate>
-                                            <ItemsPresenter />
-                                        </ControlTemplate>
-                                    </ListView.Template>
-                                    <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="150" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static Member=localization:Strings.MACAddress}" />
-                                            <TextBox Grid.Column="2"
-                                                     Text="{Binding Path=(network:IPScannerHostInfo.ARPMACAddress), Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
-                                        </Grid>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="150" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static Member=localization:Strings.Vendor}" />
-                                            <TextBox Grid.Column="2"
-                                                     Text="{Binding Path=(network:IPScannerHostInfo.ARPVendor), Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                         </Grid>
                                     </ListViewItem>
                                 </ListView>
