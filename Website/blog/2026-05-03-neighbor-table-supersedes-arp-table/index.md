@@ -57,7 +57,7 @@ Adding and deleting neighbor entries requires administrator privileges. If NETwo
 
 ## Try it now
 
-Upgrade to the [latest version of NETworkManager](https://borntoberoot.net/NETworkManager/download) to use the new Neighbor Table.
+You can test this feature in the [latest pre-release of NETworkManager](https://borntoberoot.net/NETworkManager/download#pre-release).
 
 More details are available in the [official documentation](https://borntoberoot.net/NETworkManager/docs/application/neighbor-table).
 
