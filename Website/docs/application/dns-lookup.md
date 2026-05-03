@@ -26,7 +26,7 @@ DNS (Domain Name System) is a hierarchical naming system for computers, services
 
 ![DNS Lookup](../img/dns-lookup.png)
 
-Example inputs:
+### Example inputs
 
 | Host                         | Type    | Description                                                          |
 | ---------------------------- | ------- | -------------------------------------------------------------------- |
