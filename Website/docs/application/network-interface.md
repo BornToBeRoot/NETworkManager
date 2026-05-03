@@ -1,12 +1,21 @@
 ---
 sidebar_position: 1
 description: "View detailed information about all network adapters, monitor bandwidth usage, and configure IP addresses and DNS servers with NETworkManager."
-keywords: [NETworkManager, network interface, network adapter, bandwidth monitor, IP configuration, DNS configuration, network settings]
+keywords:
+  [
+    NETworkManager,
+    network interface,
+    network adapter,
+    bandwidth monitor,
+    IP configuration,
+    DNS configuration,
+    network settings,
+  ]
 ---
 
 # Network Interface
 
-In **Network Interface** you can see all network adapters of the computer with the most important information (like IP addresses, DNS servers etc.). The bandwidth of the connected network adapter can be monitored and the configuration such as IP address or DNS server can be changed via profiles.
+The **Network Interface** shows all network adapters on the computer with their most important information, such as IP addresses and DNS servers. It also lets you monitor bandwidth usage for connected adapters and configure settings such as IP addresses and DNS servers using profiles.
 
 ## Information
 
@@ -14,89 +23,58 @@ On the **Information** tab, you can see all the important details of the selecte
 
 ![Network Interface - Information](../img/network-interface--information.png)
 
-:::note
+### Toolbar
 
-In addition, further actions can be performed using the buttons at the bottom left:
+The following buttons are available at the bottom left:
 
-- **Network connections...** - Opens the `Control Panel > Network and Internet > Network Connections` window.
-- **IP Scanner** - Opens the [IP Scanner](./ip-scanner) tool and forwards the IPv4 address and subnetmask of the _selected_ network adapter.
-- **Flush DNS cache** - Flush the DNS cache (`ipconfig /flushdns`).
-- **Release & Renew**
-  - **IPv4**
-    - **Release & Renew** - Releases the current IPv4 addresses obtained via DHCP and renews them via DHCP for the _selected_ network adapter that is configured to automatically obtain an IPv4 address (`ipconfig /release && ipconfig /renew <ADAPTER>`).
-    - **Release** - Releases the current IPv4 addresses obtained via DHCP for the _selected_ network adapter that is configured to automatically obtain an IPv4 address (`ipconfig /release <ADAPTER>`).
-    - **Renew** - Renews the current IPv4 address via DHCP for the _selected_ network adapter that is configured to automatically obtain an IPv4 address (`ipconfig /renew <ADAPTER>`).
-  - **IPv6**
-    - **Release & Renew** - Releases the current IPv6 addresses obtained via DHCPv6 and renews them via DHCPv6 for the _selected_ adapter that ist configured to automatically obtain an IPv6 address (`ipconfig /release6 && ipconfig /renew6 <ADAPTER>`).
-    - **Release** - Releases the current IPv6 addresses obtained via DHCPv6 for the _selected_ network adapter that is configured to automatically obtain an IPv6 address (`ipconfig /release6 <ADAPTER>`).
-    - **Renew** - Renews the current IPv6 address via DHCPv6 for the _selected_ network adapter that is configured to automatically obtain an IPv6 address (`ipconfig /renew6 <ADAPTER>`).
-- **Export...** - Export the information to a CSV, XML or JSON file.
+| Button                                       | Description                                                                                                                              |
+| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| **Network connections...**                   | Opens the `Control Panel > Network and Internet > Network Connections` window                                                            |
+| **IP Scanner**                               | Opens the [IP Scanner](./ip-scanner) with the IPv4 address and subnet mask of the selected adapter                                       |
+| **Flush DNS cache**                          | Flushes the DNS cache (`ipconfig /flushdns`)                                                                                             |
+| **Release & Renew > IPv4 > Release & Renew** | Releases and renews the IPv4 addresses obtained via DHCP for the selected adapter (`ipconfig /release && ipconfig /renew <ADAPTER>`)     |
+| **Release & Renew > IPv4 > Release**         | Releases the IPv4 addresses obtained via DHCP for the selected adapter (`ipconfig /release <ADAPTER>`)                                   |
+| **Release & Renew > IPv4 > Renew**           | Renews the IPv4 address via DHCP for the selected adapter (`ipconfig /renew <ADAPTER>`)                                                  |
+| **Release & Renew > IPv6 > Release & Renew** | Releases and renews the IPv6 addresses obtained via DHCPv6 for the selected adapter (`ipconfig /release6 && ipconfig /renew6 <ADAPTER>`) |
+| **Release & Renew > IPv6 > Release**         | Releases the IPv6 addresses obtained via DHCPv6 for the selected adapter (`ipconfig /release6 <ADAPTER>`)                                |
+| **Release & Renew > IPv6 > Renew**           | Renews the IPv6 address via DHCPv6 for the selected adapter (`ipconfig /renew6 <ADAPTER>`)                                               |
+| **Export...**                                | Exports the information to a CSV, XML, or JSON file                                                                                      |
 
-:::
+### Context menu
 
-:::note
-
-Right-click on the result to copy the information.
-
-:::
+| Action   | Description                                      |
+| -------- | ------------------------------------------------ |
+| **Copy** | Copies the selected information to the clipboard |
 
 ## Bandwidth
 
 On the **Bandwidth** tab, you can monitor the currently used bandwidth of the selected network adapter.
 
-You can see the current download and upload speed in bit/s (B/s). Depending on the bandwidth used, it is automatically changed to KBit/s (KB/s), MBit/s (MB/s) or GBit/s (GB/s). It also shows since when the bandwidth has been measured and how much has been downloaded and uploaded since then.
+The current download and upload speed is displayed in bit/s (B/s) and automatically scales to KBit/s (KB/s), MBit/s (MB/s), or GBit/s (GB/s) depending on the bandwidth in use. The view also shows when the measurement started and the total amount downloaded and uploaded since then.
+
+![Network Interface - Bandwidth](../img/network-interface--bandwidth.png)
 
 :::note
 
-If you switch to another tool, monitoring will stop and when you switch back, the statistics will be reset and monitoring will continue.
+If you switch to another tool, monitoring stops and the statistics are reset when you switch back.
 
 :::
-
-![Network Interface - Bandwidth](../img/network-interface--bandwidth.png)
 
 ## Configure
 
 On the **Configure** tab, you can change the configuration of the selected network adapter. In order to change the settings, the network adapter must be connected.
 
-The options you can set correspond to the network adapter properties `Internetprotokoll, Version 4 (TCP/IPv4) Properties` in the `Control Panel > Network and Internet > Network Connections`. These are explained in the [profiles section](#profile). Clicking the **Apply** button will launch an elevated PowerShell to configure the network adapter.
+The options you can set correspond to the network adapter properties `Internetprotokoll, Version 4 (TCP/IPv4) Properties` in the `Control Panel > Network and Internet > Network Connections`. These are explained in the [profiles section](#profile).
 
-In addition, further actions can be performed using the buttons at the bottom left:
+![Network Interface - Configure](../img/network-interface--configure.png)
 
-- **Additional config...**
+### Toolbar
 
-  - **Add IPv4 address...** - Opens a dialog to add an IPv4 address with a subnet mask or CIDR to the selected network adapter.
-
-    :::note
-
-    If a static IP address is added to a network adapter that is configured for DHCP, the `netsh` option `dhcpstaticipcoexistence` is also activated.
-
-    The following command is executed in an elevated PowerShell to enable the `dhcpstaticipcoexistence` option:
-
-    ```powershell
-    netsh interface ipv4 set interface interface="Ethernet" dhcpstaticipcoexistence=enabled
-    ```
-
-    :::
-
-    :::info
-
-    The `netsh` option `dhcpstaticipcoexistence` allows the network adapter to use a static IP address and still receive DHCP options (e.g. DNS server) from the DHCP server. This is useful if you want to use a static IP address but still want to receive DNS server addresses from the DHCP server. This feature is available since Windows 10 version 1703 (Creators Update).
-
-    :::
-
-  - **Remove IPv4 address...** - Opens a dialog where you can select an IPv4 address to remove from the selected network adapter.
-
-    :::note
-
-    Only IPv4 addresses that are not assigned via DHCP can be removed.
-
-    If you have previously added an additional IPv4 address to a network adapter that is configured for DHCP, the `netsh` option `dhcpstaticipcoexistence` remains active. To disable it, run the following command in an elevated PowerShell:
-
-    ```powershell
-    netsh interface ipv4 set interface interface="Ethernet" dhcpstaticipcoexistence=disabled
-    ```
-
-    :::
+| Button                                            | Description                                                                              |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **Apply**                                         | Applies the configuration by launching an elevated PowerShell                            |
+| **Additional config... > Add IPv4 address...**    | Opens a dialog to add an IPv4 address with a subnet mask or CIDR to the selected adapter |
+| **Additional config... > Remove IPv4 address...** | Opens a dialog to remove an IPv4 address from the selected adapter                       |
 
 :::note
 
@@ -104,7 +82,35 @@ You may need to confirm a Windows UAC dialog to make changes to the network inte
 
 :::
 
-![Network Interface - Configure](../img/network-interface--configure.png)
+:::note
+
+**Add IPv4 address:** If a static IP address is added to a network adapter that is configured for DHCP, the `netsh` option `dhcpstaticipcoexistence` is also activated.
+
+The following command is executed in an elevated PowerShell to enable the `dhcpstaticipcoexistence` option:
+
+```powershell
+netsh interface ipv4 set interface interface="Ethernet" dhcpstaticipcoexistence=enabled
+```
+
+:::
+
+:::info
+
+The `netsh` option `dhcpstaticipcoexistence` allows the network adapter to use a static IP address and still receive DHCP options (e.g. DNS server) from the DHCP server. This is useful if you want to use a static IP address but still want to receive DNS server addresses from the DHCP server. This feature is available since Windows 10 version 1703 (Creators Update).
+
+:::
+
+:::note
+
+**Remove IPv4 address:** Only IPv4 addresses that are not assigned via DHCP can be removed.
+
+If you have previously added an additional IPv4 address to a network adapter that is configured for DHCP, the `netsh` option `dhcpstaticipcoexistence` remains active. To disable it, run the following command in an elevated PowerShell:
+
+```powershell
+netsh interface ipv4 set interface interface="Ethernet" dhcpstaticipcoexistence=disabled
+```
+
+:::
 
 ## Profile
 

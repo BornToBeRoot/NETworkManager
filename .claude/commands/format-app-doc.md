@@ -36,8 +36,14 @@ Keep the existing `![Feature Name](../img/...)` line unchanged.
 ### 8. `:::note` for non-obvious app behavior (optional)
 Only for standalone application behavior facts that don't fit elsewhere (e.g. automatic backup behavior, Windows API limitations). One note max. Do not use for actions or admin rights.
 
-### 9. `## Actions`
-Replace all scattered `:::note` blocks that describe UI interactions with a single `## Actions` section. Include only the subsections that apply to this page. Omit subsections with no content.
+### 9. Actions
+
+Place action subsections directly after the screenshot — never inside a wrapping `## Actions` section. This applies to both single-view pages and multi-tab pages:
+
+- **Single-view pages:** `### Toolbar`, `### Context menu`, and `### Keyboard shortcuts` appear directly after the screenshot (and the optional `:::note` from step 8, if present).
+- **Multi-tab pages** (page organized as `## Tab Name` sections, each with its own screenshot): place the same subsections inline within each tab section, directly after its screenshot. Simple single-action notes (e.g. "Right-click on the result to copy the information.") can remain as `:::note` blocks after the screenshot instead of a full subsection.
+
+Include only the subsections that apply. Omit subsections with no content.
 
 **Important:** Context menus or keyboard shortcuts that appear **inside a `## Settings` or `## Profile` field** (e.g. right-clicking a settings list entry) must stay where they are — they are field-level constraints, not top-level actions. Do not move them here.
 
@@ -61,11 +67,6 @@ Use when right-clicking on a **row or result** in the main view opens a context 
 | Action | Description |
 |--------|-------------|
 | **Action label** | What it does |
-
-If the feature has **multiple tabs** with different context menus or toolbars per tab, use named subsections instead:
-
-##### `#### Tab: WiFi` / `#### Tab: Channels`
-One subsection per tab, each containing its own Toolbar / Context menu / Keyboard shortcuts tables as needed.
 
 If a column or tab header has its own separate context menu distinct from the row context menu, add a second table with a short lead-in sentence.
 

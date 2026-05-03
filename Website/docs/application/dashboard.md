@@ -6,15 +6,19 @@ keywords: [NETworkManager, dashboard, network status, network connection, networ
 
 # Dashboard
 
-The **Dashboard** shows the status of your computer's current network connection to get a quick overview of the most important information.
-
-As soon as the status of the local network adapter changes (e.g. Ethernet cable is plugged in, WLAN or VPN is connected, etc.), the connection to the router and Internet is checked.
+The **Dashboard** shows the status of your computer's current network connection to provide a quick overview of the most important information. Whenever the local network adapter changes state (e.g. an Ethernet cable is plugged in, Wi-Fi or VPN connects), the dashboard checks connectivity to the router and the internet.
 
 ![Dashboard](../img/dashboard.png)
 
+### Keyboard shortcuts
+
+| Key | Action |
+|-----|--------|
+| `F5` | Refresh the dashboard |
+
 :::note
 
-With `F5` you can refresh the dashboard at any time. You may need to click into a widget first.
+You may need to click into a widget first before keyboard shortcuts are recognized.
 
 :::
 
@@ -86,7 +90,7 @@ The free API endpoint is limited to 45 requests per minute, supports only the `h
 
 ### Check DNS resolver
 
-Enables or disables the resolution of the used DNS resolver via [`ip-api.com`](https://ip-api.com/).
+Enables or disables the detection of the DNS resolver in use via [`ip-api.com`](https://ip-api.com/).
 
 **Type:** `Boolean`
 
