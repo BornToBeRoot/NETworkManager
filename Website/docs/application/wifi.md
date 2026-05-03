@@ -1,7 +1,17 @@
 ---
 sidebar_position: 2
 description: "Analyze available WiFi networks with details on channels, signal strength, and encryption. NETworkManager WiFi Analyzer supports 2.4, 5, and 6 GHz bands."
-keywords: [NETworkManager, WiFi analyzer, wireless networks, WiFi channels, signal strength, WiFi scanner, 5GHz, 6GHz]
+keywords:
+  [
+    NETworkManager,
+    WiFi analyzer,
+    wireless networks,
+    WiFi channels,
+    signal strength,
+    WiFi scanner,
+    5GHz,
+    6GHz,
+  ]
 ---
 
 # WiFi
@@ -34,17 +44,17 @@ Due to limitations of the `Windows.Devices.WiFi` API, the channel bandwidth cann
 
 ### Context menu
 
-| Action | Description |
-|--------|-------------|
-| **Connect...** | Opens a dialog to connect to the selected wireless network |
-| **Disconnect** | Disconnects from the selected wireless network |
-| **Export...** | Opens a dialog to export the selected or all wireless networks to a file |
-| **Copy** | Copies the selected information to the clipboard |
+| Action         | Description                                                                        |
+| -------------- | ---------------------------------------------------------------------------------- |
+| **Connect...** | Opens a dialog to connect to the selected wireless network (only if not connected) |
+| **Disconnect** | Disconnects from the selected wireless network (only if connected)                 |
+| **Export...**  | Opens a dialog to export the selected or all wireless networks to a file           |
+| **Copy**       | Copies the selected information to the clipboard                                   |
 
 ### Keyboard shortcuts
 
-| Key | Action |
-|-----|--------|
+| Key  | Action            |
+| ---- | ----------------- |
 | `F5` | Scan for networks |
 
 ## Channels

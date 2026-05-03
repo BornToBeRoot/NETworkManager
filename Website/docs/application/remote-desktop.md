@@ -1,7 +1,16 @@
 ---
 sidebar_position: 8
 description: "Connect to remote computers via RDP with NETworkManager Remote Desktop. Features tabbed sessions, profile management, and fullscreen support."
-keywords: [NETworkManager, remote desktop, RDP client, remote connection, remote access, Windows Remote Desktop, RDP manager]
+keywords:
+  [
+    NETworkManager,
+    remote desktop,
+    RDP client,
+    remote connection,
+    remote access,
+    Windows Remote Desktop,
+    RDP manager,
+  ]
 ---
 
 # Remote Desktop
@@ -16,18 +25,17 @@ Remote Desktop Protocol (RDP) is a proprietary protocol developed by Microsoft t
 
 ![Remote Desktop](../img/remote-desktop.png)
 
-:::note
+### Tab context menu
 
-Right-click on the tab will open the context menu with the following options:
+Right-clicking a session tab opens a context menu:
 
-- **Reconnect** - Reconnect to the remote computer (if disconnected).
-- **Disconnect** - Disconnect from the remote computer (if connected).
-- **Fullscreen** - Toggle fullscreen mode (if connected).
-- **Adjust screen** - Adjust the screen size to the current view size (only if [Display](#display) is set to `Adjust screen automatically` or `Use the current view size as screen size`) (if connected).
-- **Keyboard shortcuts**
-  - **Ctrl+Alt+Del** - Send Ctrl+Alt+Del to the remote computer (if connected).
-
-:::
+| Action                                | Description                                                                                                                                                                                       |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Reconnect**                         | Reconnects to the remote computer (only if disconnected)                                                                                                                                          |
+| **Disconnect**                        | Disconnects from the remote computer (only if connected)                                                                                                                                          |
+| **Fullscreen**                        | Toggles fullscreen mode (only if connected)                                                                                                                                                       |
+| **Adjust screen**                     | Adjusts the screen size to the current view size; only available if [Display](#display) is set to `Adjust screen automatically` or `Use the current view size as screen size` (only if connected) |
+| **Keyboard shortcuts > Ctrl+Alt+Del** | Sends Ctrl+Alt+Del to the remote computer (only if connected)                                                                                                                                     |
 
 ## Connect
 
@@ -517,7 +525,7 @@ Configure the printer redirection for the remote desktop connection.
 
 **Default:** `Disabled`
 
-### Persitent bitmap caching
+### Persistent bitmap caching
 
 Configure the persistent bitmap caching for the remote desktop connection.
 
@@ -925,7 +933,7 @@ Configure the printer redirection for the remote desktop connection.
 
 **Default:** `Disabled`
 
-### Persitent bitmap caching
+### Persistent bitmap caching
 
 Configure the persistent bitmap caching for the remote desktop connection.
 
@@ -1195,7 +1203,7 @@ Configure the printer redirection for the remote desktop connection.
 
 **Default:** `Disabled`
 
-### Persitent bitmap caching
+### Persistent bitmap caching
 
 Configure the persistent bitmap caching for the remote desktop connection.
 

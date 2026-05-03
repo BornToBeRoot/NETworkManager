@@ -1,18 +1,27 @@
 ---
 sidebar_position: 10
 description: "Connect via SSH, Telnet, or serial port using the embedded PuTTY client in NETworkManager. Supports tabbed sessions and profile-based connections."
-keywords: [NETworkManager, PuTTY, SSH client, Telnet, serial port, remote connection, SSH manager]
+keywords:
+  [
+    NETworkManager,
+    PuTTY,
+    SSH client,
+    Telnet,
+    serial port,
+    remote connection,
+    SSH manager,
+  ]
 ---
 
 # PuTTY
 
 With **PuTTY** you can connect to a remote computer via Secure Shell (SSH) or Telnet. In addition you can connect to a local serial port.
 
-The integration of PuTTY with NETworkManger supports tabs and profiles for hosts. You can establish a connection via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
+The integration of PuTTY with NETworkManager supports tabs and profiles for hosts. You can establish a connection via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
 
 :::info
 
-PuTTY is a free and open-source application that acts as a terminal emulator, serial console and network file transfer tool. It offers support for various network protocols such as SSH, Telnet, SCP, rlogin and raw socket connections. In addition to its networking capabilities, PuTTY allows connection to serial ports and provides convenient session management options for saving connection settings and quickly accessing frequently used systems. Its lightweight design and customizable interface make it a popular tool for system administrators and network engineers for tasks such as remote system administration, configuration and troubleshooting.
+PuTTY is a free and open-source terminal emulator, serial console, and network file transfer tool. It supports various network protocols including SSH, Telnet, SCP, rlogin, and raw socket connections, as well as direct serial port connections. PuTTY provides session management for saving connection settings and quickly reconnecting to frequently used systems. Its lightweight and customizable design makes it a popular choice for system administrators and network engineers.
 
 :::
 
@@ -24,15 +33,15 @@ PuTTY must be installed on the local computer in order to use this feature. You 
 
 ![PuTTY](../img/putty.png)
 
-:::note
+### Tab context menu
 
-Right-click on the tab will open the context menu with the following options:
+Right-clicking a session tab opens a context menu:
 
-- **Reconnect** - Restart PuTTY and reconnect to the remote computer.
-- **Resize** - Resize the PuTTY window to the current view size (if connected).
-- **Restart session** - Restart the PuTTY session (if connected).
-
-:::
+| Action              | Description                                                      |
+| ------------------- | ---------------------------------------------------------------- |
+| **Reconnect**       | Restart PuTTY and reconnect to the remote computer.              |
+| **Resize**          | Resize the PuTTY window to the current view size (if connected). |
+| **Restart session** | Restart the PuTTY session (if connected).                        |
 
 ## Connect
 

@@ -1,12 +1,20 @@
 ---
 sidebar_position: 13
-description: "Access web interfaces of network devices directly within NETworkManager. The embedded Web Console uses WebView2 for browsing servers, switches, and routers."
-keywords: [NETworkManager, web console, embedded browser, WebView2, network device management, web interface]
+description: "Browse web interfaces of network devices and servers using an embedded WebView2 browser."
+keywords:
+  [
+    NETworkManager,
+    web console,
+    embedded browser,
+    WebView2,
+    network device management,
+    web interface,
+  ]
 ---
 
 # Web Console
 
-The **Web Console** is designed to browse the website of a host (e.g. server, switch, router, dashboard, etc.) to display informations or to configure it. The connection can be established via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
+The **Web Console** allows you to browse the web interface of a host (e.g. server, switch, router, or dashboard) to view information or configure it. The connection can be established via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
 
 :::note
 
@@ -16,13 +24,13 @@ WebView2 must be installed on the local computer in order to use this feature. Y
 
 ![WebConsole](../img/web-console.png)
 
-:::note
+### Tab context menu
 
-Right-click on the tab will open the context menu with the following options:
+Right-clicking a session tab opens a context menu:
 
-- **Reload** - Reload the website.
-
-:::
+| Action     | Description         |
+| ---------- | ------------------- |
+| **Reload** | Reload the website. |
 
 ## Connect
 
@@ -64,8 +72,8 @@ Show or hide the status bar in the bottom-left corner (e.g. to show the URL on h
 
 ### Save credentials
 
-Enable or disable the option to save credentials in the WebView2 browser. This will display 
-a dialog similar to the one in Microsoft Edge when a website requests to save the login informations.
+Enable or disable the option to save credentials in the WebView2 browser. This will display
+a dialog similar to the one in Microsoft Edge when a website requests to save the login information.
 
 **Type:** `Boolean`
 
