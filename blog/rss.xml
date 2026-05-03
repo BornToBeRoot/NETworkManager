@@ -4,10 +4,44 @@
         <title>NETworkManager Blog</title>
         <link>https://borntoberoot.net/NETworkManager/blog</link>
         <description>NETworkManager Blog</description>
-        <lastBuildDate>Thu, 30 Apr 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 03 May 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Neighbor Table supersedes ARP Table – supporting IPv6]]></title>
+            <link>https://borntoberoot.net/NETworkManager/blog/neighbor-table-supersedes-arp-table</link>
+            <guid>https://borntoberoot.net/NETworkManager/blog/neighbor-table-supersedes-arp-table</guid>
+            <pubDate>Sun, 03 May 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[NETworkManager replaces the ARP Table with the new Neighbor Table, which covers both IPv4 (ARP) and IPv6 (NDP) address-to-MAC mappings in a single unified view.]]></description>
+            <content:encoded><![CDATA[<p>The <code>ARP Table</code> feature has been replaced by the new <strong>Neighbor Table</strong>, a unified view that covers IP-to-MAC address mappings for both IPv4 (ARP) and IPv6 (NDP) in a single place.</p>
+<p><img decoding="async" loading="lazy" alt="Neighbor Table" src="https://borntoberoot.net/NETworkManager/assets/images/neighbor-table-8f3a754c99c81f037e476ff76d114fbf.png" width="1200" height="800" class="img_ev3q"></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-the-change">Why the change?<a href="https://borntoberoot.net/NETworkManager/blog/neighbor-table-supersedes-arp-table#why-the-change" class="hash-link" aria-label="Direct link to Why the change?" title="Direct link to Why the change?" translate="no">​</a></h2>
+<p>The old ARP Table only surfaced IPv4 entries. Modern networks increasingly rely on IPv6, and the equivalent mechanism on IPv6 – the <strong>Neighbor Discovery Protocol (NDP)</strong> – was left out entirely.</p>
+<p>Rather than adding a separate IPv6 view, NETworkManager now provides a single <strong>Neighbor Table</strong> that shows both IPv4 and IPv6 neighbors side by side, reflecting what the Windows networking stack actually maintains.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="arp-vs-ndp--whats-the-difference">ARP vs. NDP — what's the difference?<a href="https://borntoberoot.net/NETworkManager/blog/neighbor-table-supersedes-arp-table#arp-vs-ndp--whats-the-difference" class="hash-link" aria-label="Direct link to ARP vs. NDP — what's the difference?" title="Direct link to ARP vs. NDP — what's the difference?" translate="no">​</a></h2>
+<p><strong>IPv4 – ARP (Address Resolution Protocol)</strong> is a layer-2 protocol that maps IPv4 addresses to MAC addresses. When a device needs to send data to an IPv4 address, it first checks the ARP cache. If no entry is found, it broadcasts an ARP request; the target replies with its MAC address and the entry is cached.</p>
+<p><strong>IPv6 – NDP (Neighbor Discovery Protocol)</strong> fulfills the same purpose for IPv6. Instead of broadcasts, NDP uses ICMPv6 Neighbor Solicitation and Advertisement messages sent to a solicited-node multicast address — making it more efficient and multicast-friendly.</p>
+<p>Both protocols are susceptible to spoofing/poisoning attacks that can manipulate cached mappings and lead to man-in-the-middle scenarios.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-the-neighbor-table-shows">What the Neighbor Table shows<a href="https://borntoberoot.net/NETworkManager/blog/neighbor-table-supersedes-arp-table#what-the-neighbor-table-shows" class="hash-link" aria-label="Direct link to What the Neighbor Table shows" title="Direct link to What the Neighbor Table shows" translate="no">​</a></h2>
+<p>Each row in the table represents one cached neighbor entry and includes:</p>
+<table><thead><tr><th>Column</th><th>Description</th></tr></thead><tbody><tr><td><strong>IP Address</strong></td><td>IPv4 or IPv6 address of the cached neighbor.</td></tr><tr><td><strong>Interface</strong></td><td>Human-readable name of the network interface (e.g. <code>Ethernet</code>, <code>Wi-Fi</code>).</td></tr><tr><td><strong>MAC Address</strong></td><td>Link-layer (MAC) address associated with the IP address.</td></tr><tr><td><strong>State</strong></td><td>Current reachability state (Reachable, Stale, Permanent, …).</td></tr><tr><td><strong>Multicast</strong></td><td>Indicates whether the IP address is a multicast address.</td></tr></tbody></table>
+<p>You can refresh the table at any time with <code>F5</code>, and right-click any row to copy or export individual values, or to delete the selected entry.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="adding-static-entries">Adding static entries<a href="https://borntoberoot.net/NETworkManager/blog/neighbor-table-supersedes-arp-table#adding-static-entries" class="hash-link" aria-label="Direct link to Adding static entries" title="Direct link to Adding static entries" translate="no">​</a></h2>
+<p>You can also add permanent static neighbor entries — useful for pinning a critical device's MAC address so that ARP/NDP spoofing cannot redirect its traffic.</p>
+<p><img decoding="async" loading="lazy" alt="Add entry" src="https://borntoberoot.net/NETworkManager/assets/images/neighbor-table-entry-190ad866baa8d9d25691bfcaaeee499f.png" width="1200" height="800" class="img_ev3q"></p>
+<p>Click <strong>Add entry...</strong> below the table, supply an IPv4 or IPv6 address, the target MAC address, and the interface — NETworkManager takes care of the rest using <code>New-NetNeighbor</code> under the hood.</p>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>Adding and deleting neighbor entries requires administrator privileges. If NETworkManager is not running as administrator, the view is in read-only mode. Use the <strong>Restart as administrator</strong> button to relaunch with elevated rights.</p></div></div>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="try-it-now">Try it now<a href="https://borntoberoot.net/NETworkManager/blog/neighbor-table-supersedes-arp-table#try-it-now" class="hash-link" aria-label="Direct link to Try it now" title="Direct link to Try it now" translate="no">​</a></h2>
+<p>You can test this feature in the <a href="https://borntoberoot.net/NETworkManager/download#pre-release" target="_blank" rel="noopener noreferrer" class="">latest pre-release of NETworkManager</a>.</p>
+<p>More details are available in the <a href="https://borntoberoot.net/NETworkManager/docs/application/neighbor-table" target="_blank" rel="noopener noreferrer" class="">official documentation</a>.</p>
+<p>If you find any issues or have suggestions, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>.</p>]]></content:encoded>
+            <category>neighbor table</category>
+            <category>arp</category>
+            <category>ndp</category>
+            <category>ipv6</category>
+            <category>refactoring</category>
+        </item>
         <item>
             <title><![CDATA[Introducing Firewall]]></title>
             <link>https://borntoberoot.net/NETworkManager/blog/introducing-firewall</link>
