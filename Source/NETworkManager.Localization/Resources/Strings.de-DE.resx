@@ -138,8 +138,32 @@
   <data name="ARP" xml:space="preserve">
     <value>ARP</value>
   </data>
-  <data name="ARPTable" xml:space="preserve">
-    <value>ARP-Tabelle</value>
+  <data name="NeighborTable" xml:space="preserve">
+    <value>Neighbor Table</value>
+  </data>
+  <data name="NeighborTableAdminMessage" xml:space="preserve">
+    <value>Schreibgeschützter Modus. Das Ändern der Tabelle erfordert erhöhte Rechte!</value>
+  </data>
+  <data name="NeighborState_Unreachable" xml:space="preserve">
+    <value>Nicht erreichbar</value>
+  </data>
+  <data name="NeighborState_Incomplete" xml:space="preserve">
+    <value>Unvollständig</value>
+  </data>
+  <data name="NeighborState_Probe" xml:space="preserve">
+    <value>Prüfung</value>
+  </data>
+  <data name="NeighborState_Delay" xml:space="preserve">
+    <value>Verzögerung</value>
+  </data>
+  <data name="NeighborState_Stale" xml:space="preserve">
+    <value>Veraltet</value>
+  </data>
+  <data name="NeighborState_Reachable" xml:space="preserve">
+    <value>Erreichbar</value>
+  </data>
+  <data name="NeighborState_Permanent" xml:space="preserve">
+    <value>Dauerhaft</value>
   </data>
   <data name="Authentication" xml:space="preserve">
     <value>Authentifizierung</value>
@@ -2463,8 +2487,8 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="MicrosoftWindowsSDKContractsIsNotAvailable" xml:space="preserve">
     <value>Microsoft.Windows.SDK.Contracts ist für diese Funktion erforderlich, auf diesem System jedoch nicht verfügbar (z. B. unter Windows Server).</value>
   </data>
-  <data name="ApplicationName_ARPTable" xml:space="preserve">
-    <value>ARP-Tabelle</value>
+  <data name="ApplicationName_NeighborTable" xml:space="preserve">
+    <value>Neighbor Table</value>
   </data>
   <data name="ApplicationName_Connections" xml:space="preserve">
     <value>Verbindungen</value>
@@ -3718,8 +3742,8 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
   <data name="ConnectionState_Warning" xml:space="preserve">
     <value>Warnung</value>
   </data>
-  <data name="GroupDomainName" xml:space="preserve">
-    <value>Gruppen / Domänenname</value>
+  <data name="GroupDomain" xml:space="preserve">
+    <value>Gruppe / Domäne</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
     <value>NetBIOS erreichbar</value>
