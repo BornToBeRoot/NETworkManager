@@ -48,14 +48,8 @@
                 </TextBox.Text>
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.MACAddress}" />
-            <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Interface}" />
-            <ComboBox x:Name="ComboBoxInterface" Grid.Column="2" Grid.Row="4"
-                      ItemsSource="{Binding Interfaces}"
-                      SelectedItem="{Binding SelectedInterface}"
-                      DisplayMemberPath="Value"
-                      Style="{StaticResource DefaultComboBox}" />
             <TextBox x:Name="TextBoxMACAddress" Grid.Column="2" Grid.Row="2"
-             mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddress}">
+                     mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddress}">
                 <TextBox.Text>
                     <Binding Path="MACAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -65,6 +59,12 @@
                     </Binding>
                 </TextBox.Text>
             </TextBox>
+            <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Interface}" />
+            <ComboBox x:Name="ComboBoxInterface" Grid.Column="2" Grid.Row="4"
+                      ItemsSource="{Binding Interfaces}"
+                      SelectedItem="{Binding SelectedInterface}"
+                      DisplayMemberPath="Value"
+                      Style="{StaticResource DefaultComboBox}" />
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Add}" Command="{Binding AddCommand}" IsDefault="True"

@@ -106,6 +106,14 @@ The field is required and validated for a correct MAC address format.
 
 :::
 
+### Interface
+
+The network interface on which the entry is created.
+
+**Type:** `Dropdown`
+
+**Default:** Last used interface, or the first available interface.
+
 :::note
 
 Adding a static entry requires administrator privileges. Internally, NETworkManager uses `New-NetNeighbor` (PowerShell `NetTCPIP` module) to create the entry with state `Permanent`.
