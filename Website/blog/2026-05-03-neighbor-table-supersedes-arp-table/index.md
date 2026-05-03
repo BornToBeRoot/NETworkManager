@@ -23,7 +23,7 @@ Rather than adding a separate IPv6 view, NETworkManager now provides a single **
 
 **IPv4 – ARP (Address Resolution Protocol)** is a layer-2 protocol that maps IPv4 addresses to MAC addresses. When a device needs to send data to an IPv4 address, it first checks the ARP cache. If no entry is found, it broadcasts an ARP request; the target replies with its MAC address and the entry is cached.
 
-**IPv6 – NDP (Neighbor Discovery Protocol)** fulfils the same purpose for IPv6. Instead of broadcasts, NDP uses ICMPv6 Neighbor Solicitation and Advertisement messages sent to a solicited-node multicast address — making it more efficient and multicast-friendly.
+**IPv6 – NDP (Neighbor Discovery Protocol)** fulfills the same purpose for IPv6. Instead of broadcasts, NDP uses ICMPv6 Neighbor Solicitation and Advertisement messages sent to a solicited-node multicast address — making it more efficient and multicast-friendly.
 
 Both protocols are susceptible to spoofing/poisoning attacks that can manipulate cached mappings and lead to man-in-the-middle scenarios.
 
