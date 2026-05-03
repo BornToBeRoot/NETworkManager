@@ -19,7 +19,7 @@ With the **IP Scanner** you can scan for active devices based on the hostname or
 
 ![IP Scanner](../img/ip-scanner.png)
 
-Example inputs:
+### Example inputs
 
 | Host                             | Description                                                                                  |
 | -------------------------------- | -------------------------------------------------------------------------------------------- |
