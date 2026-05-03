@@ -66,9 +66,7 @@ public static partial class ExportManager
             $"NetBIOSMACAddress," +
             $"NetBIOSVendor," +
             $"{nameof(IPScannerHostInfo.MACAddress)}," +
-            $"{nameof(IPScannerHostInfo.Vendor)}," +
-            $"{nameof(IPScannerHostInfo.ARPMACAddress)}," +
-            $"{nameof(IPScannerHostInfo.ARPVendor)}"
+            $"{nameof(IPScannerHostInfo.Vendor)}"
         );
 
         foreach (var info in collection)
@@ -105,9 +103,7 @@ public static partial class ExportManager
                 $"{info.NetBIOSInfo?.MACAddress}," +
                 $"{CsvHelper.QuoteString(info.NetBIOSInfo?.Vendor)}," +
                 $"{info.MACAddress}," +
-                $"{CsvHelper.QuoteString(info.Vendor)}," +
-                $"{info.ARPMACAddress}," +
-                $"{CsvHelper.QuoteString(info.ARPVendor)}"
+                $"{CsvHelper.QuoteString(info.Vendor)}"
             );
         }
 
@@ -156,9 +152,7 @@ public static partial class ExportManager
                             new XElement("NetBIOSMACAddress", info.NetBIOSInfo?.MACAddress),
                             new XElement("NetBIOSVendor", info.NetBIOSInfo?.Vendor),
                             new XElement(nameof(IPScannerHostInfo.MACAddress), info.MACAddress),
-                            new XElement(nameof(IPScannerHostInfo.Vendor), info.Vendor),
-                            new XElement(nameof(IPScannerHostInfo.ARPMACAddress), info.ARPMACAddress),
-                            new XElement(nameof(IPScannerHostInfo.ARPVendor), info.ARPVendor)
+                            new XElement(nameof(IPScannerHostInfo.Vendor), info.Vendor)
                         )
                 )
             )
@@ -221,9 +215,7 @@ public static partial class ExportManager
                 NetBIOSMACAddress = info.NetBIOSInfo?.MACAddress,
                 NetBIOSVendor = info.NetBIOSInfo?.Vendor,
                 info.MACAddress,
-                info.Vendor,
-                info.ARPMACAddress,
-                info.ARPVendor
+                info.Vendor
             };
         }
 

@@ -199,15 +199,13 @@ public sealed class IPScanner(IPScannerOptions options)
                                     isAnyPortOpen,
                                     portScanResults.OrderBy(x => x.Port).ToList(),
                                     netBIOSInfo,
-                                    // ARP is default, fallback to netbios
+                                    // ARP/NDP is preferred, fallback to NetBIOS
                                     !string.IsNullOrEmpty(arpMACAddress)
                                         ? arpMACAddress
                                         : netBIOSInfo?.MACAddress ?? string.Empty,
                                     !string.IsNullOrEmpty(arpMACAddress)
                                         ? arpVendor
-                                        : netBIOSInfo?.Vendor ?? string.Empty,
-                                    arpMACAddress,
-                                    arpVendor
+                                        : netBIOSInfo?.Vendor ?? string.Empty
                                 )
                             )
                         );

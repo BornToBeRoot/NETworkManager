@@ -27,16 +27,17 @@ Release date: **xx.xx.2025**
 
 ## Breaking Changes
 
-- **ARP Table** has been renamed to **[Neighbor Table](../application/neighbor-table.md)**. Existing settings are automatically migrated on first launch after the update.
+- **ARP Table** has been renamed to **[Neighbor Table](../application/neighbor-table.md)**. Existing settings are automatically migrated on first launch after the update. [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
+- **IP Scanner** export: The `ARPMACAddress` and `ARPVendor` columns have been removed from CSV, XML and JSON exports. Use `MACAddress` and `Vendor` instead, which contain the same value (ARP/NDP preferred, NetBIOS as fallback). [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
 
 ## What's new?
 
 **[Neighbor Table](../application/neighbor-table.md)** (formerly ARP Table)
 
-- IPv6 (NDP) neighbor entries are now shown in addition to IPv4 (ARP).
-- New **Interface** and **State** columns (sortable, searchable).
-- Add entry dialog now accepts IPv4 and IPv6 addresses.
-- View is read-only when not running elevated; modifying the table requires elevated rights.
+- IPv6 (NDP) neighbor entries are now shown in addition to IPv4 (ARP). [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
+- New **Interface** and **State** columns (sortable, searchable). [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
+- Add entry dialog now accepts IPv4 and IPv6 addresses. [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
+- View is read-only when not running elevated; modifying the table requires elevated rights. [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
 
 **Firewall**
 
@@ -51,6 +52,10 @@ Release date: **xx.xx.2025**
 - DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PuTTY window now receives an explicit `WM_DPICHANGED` message with the new DPI value packed into `wParam`, since the OS does not forward this message across process boundaries after `SetParent`. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
 
 ## Improvements
+
+**IP Scanner**
+
+- MAC address resolution now uses ARP (IPv4) or NDP (IPv6) from the neighbor cache, with NetBIOS as fallback. The detail panel shows a single **MAC Address** section instead of separate ARP and NetBIOS entries. [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
 
 **Dashboard**
 

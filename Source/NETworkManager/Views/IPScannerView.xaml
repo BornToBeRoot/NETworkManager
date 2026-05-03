@@ -836,7 +836,7 @@
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Grid.Column="0"
-                                                       Text="{x:Static Member=localization:Strings.GroupDomainName}" />
+                                                       Text="{x:Static Member=localization:Strings.GroupDomain}" />
                                             <TextBox Grid.Column="2"
                                                      Text="{Binding Path=(network:IPScannerHostInfo.NetBIOSInfo).GroupName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
                                         </Grid>
@@ -854,35 +854,9 @@
                                                      Text="{Binding Path=(network:IPScannerHostInfo.NetBIOSInfo).UserName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
                                         </Grid>
                                     </ListViewItem>
-                                    <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="150" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static Member=localization:Strings.MACAddress}" />
-                                            <TextBox Grid.Column="2"
-                                                     Text="{Binding Path=(network:IPScannerHostInfo.NetBIOSInfo).MACAddress, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
-                                        </Grid>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="150" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static Member=localization:Strings.Vendor}" />
-                                            <TextBox Grid.Column="2"
-                                                     Text="{Binding Path=(network:IPScannerHostInfo.NetBIOSInfo).Vendor, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
-                                        </Grid>
-                                    </ListViewItem>
                                 </ListView>
                             </Grid>
-                            <!-- DNS & ARP info -->
+                            <!-- DNS & MAC Address info -->
                             <Grid Grid.Column="6" Grid.Row="0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -943,7 +917,7 @@
                                     </ListViewItem>
                                 </ListView>
                                 <TextBlock Grid.Column="0" Grid.Row="4"
-                                           Text="{x:Static localization:Strings.ARP}"
+                                           Text="{x:Static localization:Strings.MACAddress}"
                                            Style="{StaticResource BoldTextBlock}"
                                            Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
                                 <StackPanel Grid.Column="0" Grid.Row="6"
@@ -987,7 +961,7 @@
                                             <TextBlock Grid.Column="0"
                                                        Text="{x:Static Member=localization:Strings.MACAddress}" />
                                             <TextBox Grid.Column="2"
-                                                     Text="{Binding Path=(network:IPScannerHostInfo.ARPMACAddress), Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
+                                                     Text="{Binding Path=(network:IPScannerHostInfo.MACAddress), Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                         </Grid>
                                     </ListViewItem>
                                     <ListViewItem>
@@ -1000,7 +974,7 @@
                                             <TextBlock Grid.Column="0"
                                                        Text="{x:Static Member=localization:Strings.Vendor}" />
                                             <TextBox Grid.Column="2"
-                                                     Text="{Binding Path=(network:IPScannerHostInfo.ARPVendor), Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
+                                                     Text="{Binding Path=(network:IPScannerHostInfo.Vendor), Converter={StaticResource StringNullOrEmptyToStringConverter}}" />
                                         </Grid>
                                     </ListViewItem>
                                 </ListView>

@@ -183,7 +183,7 @@ Resolve the MAC address and vendor for each IP address.
 
 :::note
 
-Due to the fact that the MAC address is resolved via ARP, the device must be in the same subnet as the IP address.
+The MAC address is resolved via ARP (IPv4) or NDP (IPv6) from the neighbor cache. If no entry is found there, NetBIOS is used as a fallback. Because ARP and NDP are link-layer protocols, the device must be in the same subnet as the local machine.
 
 :::
 

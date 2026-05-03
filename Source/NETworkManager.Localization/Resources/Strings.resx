@@ -3742,8 +3742,8 @@ Try again in a few seconds.</value>
   <data name="ConnectionState_Warning" xml:space="preserve">
     <value>Warning</value>
   </data>
-  <data name="GroupDomainName" xml:space="preserve">
-    <value>Group / domain name</value>
+  <data name="GroupDomain" xml:space="preserve">
+    <value>Group / domain</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
     <value>NetBIOS reachable</value>
