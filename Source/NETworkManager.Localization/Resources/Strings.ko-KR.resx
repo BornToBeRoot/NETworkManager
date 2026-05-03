@@ -138,8 +138,32 @@
   <data name="ARP" xml:space="preserve">
     <value>ARP</value>
   </data>
-  <data name="ARPTable" xml:space="preserve">
-    <value>ARP 테이블</value>
+  <data name="NeighborTable" xml:space="preserve">
+    <value>Neighbor Table</value>
+  </data>
+  <data name="NeighborTableAdminMessage" xml:space="preserve">
+    <value>Read-only mode. Modifying the neighbor table requires elevated rights!</value>
+  </data>
+  <data name="NeighborState_Unreachable" xml:space="preserve">
+    <value>Unreachable</value>
+  </data>
+  <data name="NeighborState_Incomplete" xml:space="preserve">
+    <value>Incomplete</value>
+  </data>
+  <data name="NeighborState_Probe" xml:space="preserve">
+    <value>Probe</value>
+  </data>
+  <data name="NeighborState_Delay" xml:space="preserve">
+    <value>Delay</value>
+  </data>
+  <data name="NeighborState_Stale" xml:space="preserve">
+    <value>Stale</value>
+  </data>
+  <data name="NeighborState_Reachable" xml:space="preserve">
+    <value>Reachable</value>
+  </data>
+  <data name="NeighborState_Permanent" xml:space="preserve">
+    <value>Permanent</value>
   </data>
   <data name="Authentication" xml:space="preserve">
     <value>인증</value>
@@ -2460,8 +2484,8 @@ $$hostname$$	--&gt;	호스트이름</value>
   <data name="MicrosoftWindowsSDKContractsIsNotAvailable" xml:space="preserve">
     <value>이 기능에 대해서는 Microsoft.Windows.SDK.Contracts가 필요하지만 이 시스템에서는 사용할 수 없습니다 (예: Windows 서버에서).</value>
   </data>
-  <data name="ApplicationName_ARPTable" xml:space="preserve">
-    <value>ARP 테이블</value>
+  <data name="ApplicationName_NeighborTable" xml:space="preserve">
+    <value>Neighbor Table</value>
   </data>
   <data name="ApplicationName_Connections" xml:space="preserve">
     <value>연결</value>
@@ -3715,8 +3739,8 @@ URL: http://ip-api.com/</value>
   <data name="ConnectionState_Warning" xml:space="preserve">
     <value>경고</value>
   </data>
-  <data name="GroupDomainName" xml:space="preserve">
-    <value>그룹 / 도메인 이름</value>
+  <data name="GroupDomain" xml:space="preserve">
+    <value>Group / domain</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
     <value>NetBIOS에 도달 가능</value>

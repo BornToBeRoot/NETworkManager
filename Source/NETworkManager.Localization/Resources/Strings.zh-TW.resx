@@ -138,8 +138,32 @@
   <data name="ARP" xml:space="preserve">
     <value>ARP</value>
   </data>
-  <data name="ARPTable" xml:space="preserve">
-    <value>ARP 表格</value>
+  <data name="NeighborTable" xml:space="preserve">
+    <value>Neighbor Table</value>
+  </data>
+  <data name="NeighborTableAdminMessage" xml:space="preserve">
+    <value>Read-only mode. Modifying the neighbor table requires elevated rights!</value>
+  </data>
+  <data name="NeighborState_Unreachable" xml:space="preserve">
+    <value>Unreachable</value>
+  </data>
+  <data name="NeighborState_Incomplete" xml:space="preserve">
+    <value>Incomplete</value>
+  </data>
+  <data name="NeighborState_Probe" xml:space="preserve">
+    <value>Probe</value>
+  </data>
+  <data name="NeighborState_Delay" xml:space="preserve">
+    <value>Delay</value>
+  </data>
+  <data name="NeighborState_Stale" xml:space="preserve">
+    <value>Stale</value>
+  </data>
+  <data name="NeighborState_Reachable" xml:space="preserve">
+    <value>Reachable</value>
+  </data>
+  <data name="NeighborState_Permanent" xml:space="preserve">
+    <value>Permanent</value>
   </data>
   <data name="Authentication" xml:space="preserve">
     <value>身份驗證</value>
@@ -2463,8 +2487,8 @@ $$hostname$$	--&gt;	主機名稱</value>
   <data name="MicrosoftWindowsSDKContractsIsNotAvailable" xml:space="preserve">
     <value>此功能需使用 Microsoft.Windows.SDK.Contracts，但該套件在此系統（如 Windows Server）中無法取得。</value>
   </data>
-  <data name="ApplicationName_ARPTable" xml:space="preserve">
-    <value>ARP 表格</value>
+  <data name="ApplicationName_NeighborTable" xml:space="preserve">
+    <value>Neighbor Table</value>
   </data>
   <data name="ApplicationName_Connections" xml:space="preserve">
     <value>連線</value>
@@ -3717,8 +3741,8 @@ $$hostname$$	--&gt;	主機名稱</value>
   <data name="ConnectionState_Warning" xml:space="preserve">
     <value>警告</value>
   </data>
-  <data name="GroupDomainName" xml:space="preserve">
-    <value>群組／網域名稱</value>
+  <data name="GroupDomain" xml:space="preserve">
+    <value>Group / domain</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
     <value>可達的 NetBIOS</value>
