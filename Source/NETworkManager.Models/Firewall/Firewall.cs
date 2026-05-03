@@ -38,7 +38,7 @@ public class Firewall
     /// <summary>
     /// Ensures that only one PowerShell pipeline runs on <see cref="SharedRunspace"/> at a time.
     /// </summary>
-    private static readonly SemaphoreSlim Lock = new(1, 1);
+    private static readonly SemaphoreSlim RunspaceLock = new(1, 1);
 
     /// <summary>
     /// Lazily initialized PowerShell runspace. Created and configured on first access so that
@@ -77,7 +77,7 @@ Import-Module NetSecurity -ErrorAction Stop").Invoke();
     /// </returns>
     public static async Task<List<FirewallRule>> GetRulesAsync()
     {
-        await Lock.WaitAsync();
+        await RunspaceLock.WaitAsync();
         try
         {
             return await Task.Run(() =>
@@ -163,7 +163,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         }
         finally
         {
-            Lock.Release();
+            RunspaceLock.Release();
         }
     }
 
@@ -183,7 +183,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     /// </exception>
     public static async Task SetRuleEnabledAsync(FirewallRule rule, bool enabled)
     {
-        await Lock.WaitAsync();
+        await RunspaceLock.WaitAsync();
         try
         {
             await Task.Run(() =>
@@ -200,7 +200,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         }
         finally
         {
-            Lock.Release();
+            RunspaceLock.Release();
         }
     }
 
@@ -216,7 +216,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     /// </exception>
     public static async Task DeleteRuleAsync(FirewallRule rule)
     {
-        await Lock.WaitAsync();
+        await RunspaceLock.WaitAsync();
         try
         {
             await Task.Run(() =>
@@ -233,7 +233,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         }
         finally
         {
-            Lock.Release();
+            RunspaceLock.Release();
         }
     }
 
@@ -250,7 +250,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     /// </exception>
     public static async Task AddRuleAsync(FirewallRule rule)
     {
-        await Lock.WaitAsync();
+        await RunspaceLock.WaitAsync();
         try
         {
             await Task.Run(() =>
@@ -267,7 +267,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         }
         finally
         {
-            Lock.Release();
+            RunspaceLock.Release();
         }
     }
 

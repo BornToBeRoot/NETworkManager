@@ -75,10 +75,10 @@ public class NeighborTable
     [DllImport("Iphlpapi.dll")]
     private static extern void FreeMibTable(IntPtr memory);
 
-/// <summary>
+    /// <summary>
     /// Ensures that only one PowerShell pipeline runs on <see cref="SharedRunspace"/> at a time.
     /// </summary>
-    private static readonly SemaphoreSlim Lock = new(1, 1);
+    private static readonly SemaphoreSlim RunspaceLock = new(1, 1);
 
     /// <summary>Protects reads and writes to <see cref="_interfaceAliasCache"/> and <see cref="_interfaceAliasCacheExpiry"/>.</summary>
     private static readonly Lock InterfaceAliasCacheLock = new();
@@ -309,7 +309,7 @@ Import-Module NetTCPIP -ErrorAction Stop").Invoke();
     /// </exception>
     public static async Task AddEntryAsync(string ipAddress, string macAddress, int interfaceIndex)
     {
-        await Lock.WaitAsync();
+        await RunspaceLock.WaitAsync();
         try
         {
             await Task.Run(() =>
@@ -325,7 +325,7 @@ Import-Module NetTCPIP -ErrorAction Stop").Invoke();
         }
         finally
         {
-            Lock.Release();
+            RunspaceLock.Release();
         }
     }
 
@@ -341,7 +341,7 @@ Import-Module NetTCPIP -ErrorAction Stop").Invoke();
     /// </exception>
     public static async Task DeleteEntryAsync(string ipAddress, int interfaceIndex)
     {
-        await Lock.WaitAsync();
+        await RunspaceLock.WaitAsync();
         try
         {
             await Task.Run(() =>
@@ -357,7 +357,7 @@ Import-Module NetTCPIP -ErrorAction Stop").Invoke();
         }
         finally
         {
-            Lock.Release();
+            RunspaceLock.Release();
         }
     }
     
@@ -371,7 +371,7 @@ Import-Module NetTCPIP -ErrorAction Stop").Invoke();
     /// </exception>
     public static async Task DeleteTableAsync()
     {
-        await Lock.WaitAsync();
+        await RunspaceLock.WaitAsync();
         try
         {
             await Task.Run(() =>
@@ -387,7 +387,7 @@ Import-Module NetTCPIP -ErrorAction Stop").Invoke();
         }
         finally
         {
-            Lock.Release();
+            RunspaceLock.Release();
         }
     }
     
