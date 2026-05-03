@@ -18,7 +18,7 @@ Both protocols are susceptible to spoofing/poisoning attacks that can manipulate
 
 :::
 
-::::::note
+:::note
 
 Adding and deleting neighbor entries requires administrator privileges. If the application is not running as administrator, the view is in read-only mode. Use the **Restart as administrator** button to relaunch the application with elevated rights.
 

@@ -27,7 +27,7 @@ Release date: **xx.xx.2025**
 
 ## Breaking Changes
 
-- **ARP Table** has been renamed to **[Neighbor Table](../application/neighbor-table.md)**. Existing settings are automatically migrated on first launch after the update. [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
+- **ARP Table** has been renamed to **[Neighbor Table](../application/neighbor-table.md)**. The application list entry is automatically migrated on first launch. Other view settings (auto-refresh interval, export file type/path) reset to their defaults. [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
 - **IP Scanner** export: The `ARPMACAddress` and `ARPVendor` columns have been removed from CSV, XML and JSON exports. Use `MACAddress` and `Vendor` instead, which contain the same value (ARP/NDP preferred, NetBIOS as fallback). [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
 
 ## What's new?

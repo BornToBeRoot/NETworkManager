@@ -15,9 +15,10 @@ namespace NETworkManager.Models.Firewall;
 
 /// <summary>
 /// Provides static methods to read and modify Windows Firewall rules via PowerShell.
-/// All operations share a single <see cref="Runspace"/> that is initialized once with
-/// the required execution policy and the NetSecurity module, reducing per-call overhead.
-/// A <see cref="SemaphoreSlim"/> serializes access so the runspace is never used concurrently.
+/// All operations share a single <see cref="Runspace"/> that is lazily initialized on
+/// first use with the required execution policy and the <c>NetSecurity</c> module imported,
+/// reducing per-call overhead. A <see cref="SemaphoreSlim"/> serializes access so the
+/// runspace is never used concurrently.
 /// </summary>
 public class Firewall
 {
@@ -40,26 +41,26 @@ public class Firewall
     private static readonly SemaphoreSlim Lock = new(1, 1);
 
     /// <summary>
-    /// Shared PowerShell runspace, initialized once in the static constructor with
-    /// <c>Set-ExecutionPolicy Bypass</c> and <c>Import-Module NetSecurity</c>.
+    /// Lazily initialized PowerShell runspace. Created and configured on first access so that
+    /// simply navigating to the Firewall view does not start a PowerShell process unless a
+    /// modifying operation is actually performed.
     /// </summary>
-    private static readonly Runspace SharedRunspace;
-
-    /// <summary>
-    /// Opens <see cref="SharedRunspace"/> and runs the one-time initialization script
-    /// so that subsequent operations do not need to repeat the module import.
-    /// </summary>
-    static Firewall()
+    private static readonly Lazy<Runspace> _sharedRunspace = new(() =>
     {
-        SharedRunspace = RunspaceFactory.CreateRunspace();
-        SharedRunspace.Open();
+        var runspace = RunspaceFactory.CreateRunspace();
+        runspace.Open();
 
         using var ps = SMA.PowerShell.Create();
-        ps.Runspace = SharedRunspace;
+        ps.Runspace = runspace;
         ps.AddScript(@"
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
 Import-Module NetSecurity -ErrorAction Stop").Invoke();
-    }
+
+        return runspace;
+    });
+
+    /// <summary>Returns the shared runspace, initializing it on first access.</summary>
+    private static Runspace SharedRunspace => _sharedRunspace.Value;
 
     #endregion
 

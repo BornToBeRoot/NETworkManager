@@ -489,7 +489,10 @@ public class NeighborTableViewModel : ViewModelBase
     {
         _autoRefreshTimer.Stop();
 
-        await Refresh();
+        // Skip refresh while a modify operation (add/delete) is in progress to avoid
+        // clearing the table while the user is interacting with it.
+        if (!IsModifying)
+            await Refresh();
 
         _autoRefreshTimer.Start();
     }

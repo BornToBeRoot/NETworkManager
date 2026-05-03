@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 using Newtonsoft.Json;
 
 namespace NETworkManager.Models.Export;
@@ -48,7 +49,7 @@ public static partial class ExportManager
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.IPAddress},{info.MACAddress},{info.InterfaceAlias},{info.InterfaceIndex},{info.State},{info.AddressFamily},{info.IsMulticast}");
+                $"{info.IPAddress},{info.MACAddress},{CsvHelper.QuoteString(info.InterfaceAlias)},{info.InterfaceIndex},{info.State},{info.AddressFamily},{info.IsMulticast}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }

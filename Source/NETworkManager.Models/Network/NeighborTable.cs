@@ -19,10 +19,10 @@ namespace NETworkManager.Models.Network;
 /// Provides static methods to read and modify the Windows IP neighbor table
 /// (IPv4 ARP and IPv6 NDP). Read access uses the <c>GetIpNetTable2</c> Win32 API.
 /// Modifying operations (add/delete entries, clear table) run via PowerShell in a
-/// shared <see cref="Runspace"/> that is initialized once with the required execution
-/// policy and the <c>NetTCPIP</c> module imported. A <see cref="SemaphoreSlim"/>
-/// serializes access so the runspace is never used concurrently. Modifying operations
-/// require the application to run with elevated rights.
+/// shared <see cref="Runspace"/> that is lazily initialized on first use with the
+/// required execution policy and the <c>NetTCPIP</c> module imported. A
+/// <see cref="SemaphoreSlim"/> serializes access so the runspace is never used
+/// concurrently. Modifying operations require the application to run with elevated rights.
 /// </summary>
 public class NeighborTable
 {
@@ -75,11 +75,7 @@ public class NeighborTable
     [DllImport("Iphlpapi.dll")]
     private static extern void FreeMibTable(IntPtr memory);
 
-    /// <summary>Looks up a single neighbor cache entry by address. Returns 0 on success.</summary>
-    [DllImport("Iphlpapi.dll")]
-    private static extern uint GetIpNetEntry2(ref MIB_IPNET_ROW2 row);
-
-    /// <summary>
+/// <summary>
     /// Ensures that only one PowerShell pipeline runs on <see cref="SharedRunspace"/> at a time.
     /// </summary>
     private static readonly SemaphoreSlim Lock = new(1, 1);
@@ -97,26 +93,26 @@ public class NeighborTable
     private static readonly TimeSpan InterfaceAliasCacheDuration = TimeSpan.FromMinutes(5);
 
     /// <summary>
-    /// Shared PowerShell runspace, initialized once in the static constructor with
-    /// <c>Set-ExecutionPolicy Bypass</c> and <c>Import-Module NetTCPIP</c> so that
-    /// subsequent operations do not need to repeat the module import.
+    /// Lazily initialized PowerShell runspace. Created and configured on first access so that
+    /// read-only paths (e.g. MAC address lookup in IP Scanner) do not start a PowerShell
+    /// process unless a modifying operation is actually performed.
     /// </summary>
-    private static readonly Runspace SharedRunspace;
-
-    /// <summary>
-    /// Opens <see cref="SharedRunspace"/> and runs the one-time initialization script.
-    /// </summary>
-    static NeighborTable()
+    private static readonly Lazy<Runspace> _sharedRunspace = new(() =>
     {
-        SharedRunspace = RunspaceFactory.CreateRunspace();
-        SharedRunspace.Open();
+        var runspace = RunspaceFactory.CreateRunspace();
+        runspace.Open();
 
         using var ps = SMA.PowerShell.Create();
-        ps.Runspace = SharedRunspace;
+        ps.Runspace = runspace;
         ps.AddScript(@"
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
 Import-Module NetTCPIP -ErrorAction Stop").Invoke();
-    }
+
+        return runspace;
+    });
+
+    /// <summary>Returns the shared runspace, initializing it on first access.</summary>
+    private static Runspace SharedRunspace => _sharedRunspace.Value;
 
     #endregion
 
@@ -226,7 +222,9 @@ Import-Module NetTCPIP -ErrorAction Stop").Invoke();
                 list.Add(new NeighborInfo(
                     ipAddress,
                     macAddress,
-                    ipAddress.IsIPv6Multicast || IPv4Address.IsMulticast(ipAddress),
+                    addressFamily == AddressFamily.InterNetworkV6
+                        ? ipAddress.IsIPv6Multicast
+                        : IPv4Address.IsMulticast(ipAddress),
                     (int)row.InterfaceIndex,
                     alias ?? string.Empty,
                     (NeighborState)row.State,
@@ -289,47 +287,13 @@ Import-Module NetTCPIP -ErrorAction Stop").Invoke();
     }
 
     /// <summary>
-    /// Returns the MAC address for <paramref name="ipAddress"/> via <c>GetIpNetEntry2</c>,
-    /// or <see langword="null"/> when no cache entry exists. Supports both IPv4 and IPv6.
+    /// Returns the MAC address for <paramref name="ipAddress"/> by scanning the neighbor
+    /// cache, or <see langword="null"/> when no entry exists. Supports both IPv4 and IPv6.
     /// </summary>
     public static string GetMACAddress(IPAddress ipAddress)
     {
-        var addressFamily = ipAddress.AddressFamily;
-
-        if (addressFamily != AddressFamily.InterNetwork && addressFamily != AddressFamily.InterNetworkV6)
-            return null;
-
-        var row = new MIB_IPNET_ROW2
-        {
-            Address = new byte[SOCKADDR_INET_SIZE],
-            PhysicalAddress = new byte[IF_MAX_PHYS_ADDRESS_LENGTH]
-        };
-
-        if (addressFamily == AddressFamily.InterNetwork)
-        {
-            // SOCKADDR_IN: family(2) at offset 0, addr(4) at offset 4
-            BitConverter.GetBytes(AF_INET).CopyTo(row.Address, 0);
-            ipAddress.GetAddressBytes().CopyTo(row.Address, 4);
-        }
-        else
-        {
-            // SOCKADDR_IN6: family(2) at offset 0, addr(16) at offset 8, scope_id(4) at offset 24
-            BitConverter.GetBytes(AF_INET6).CopyTo(row.Address, 0);
-            ipAddress.GetAddressBytes().CopyTo(row.Address, 8);
-            BitConverter.GetBytes((uint)ipAddress.ScopeId).CopyTo(row.Address, 24);
-        }
-
-        if (GetIpNetEntry2(ref row) != 0)
-            return null;
-
-        var macLen = (int)row.PhysicalAddressLength;
-        if (macLen is <= 0 or > IF_MAX_PHYS_ADDRESS_LENGTH)
-            return null;
-
-        var macBytes = new byte[macLen];
-        Buffer.BlockCopy(row.PhysicalAddress, 0, macBytes, 0, macLen);
-        
-        return new PhysicalAddress(macBytes).ToString();
+        var entry = GetTable().FirstOrDefault(x => x.IPAddress.Equals(ipAddress));
+        return entry?.MACAddress.ToString();
     }
 
     /// <summary>
