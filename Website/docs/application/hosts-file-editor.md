@@ -1,6 +1,6 @@
 ---
 sidebar_position: 16
-description: "View, add, edit, enable, or disable entries in the Windows hosts file with NETworkManager. Features automatic daily backups and a user-friendly interface."
+description: "View, add, edit, enable, disable, or remove entries in the Windows hosts file. Features automatic daily backups."
 keywords: [NETworkManager, hosts file editor, Windows hosts file, DNS override, hosts file management, edit hosts file]
 ---
 
@@ -22,11 +22,9 @@ Example of a hosts file entry:
 
 :::
 
-:::note
+:::warning[Administrator privileges required]
 
-Editing the `hosts` file requires administrator privileges. If the application is not running as administrator, the view is in read-only mode. Use the **Restart as administrator** button to relaunch the application with elevated rights.
-
-The application automatically creates a daily backup of the `hosts` file, retaining up to 5 backups in the same directory (Syntax: `hosts_backup_NETworkManager_YYYYMMDD`).
+Without administrator privileges, the view is read-only. Use the **Restart as administrator** button to relaunch the application with elevated rights.
 
 :::
 
@@ -34,21 +32,36 @@ The application automatically creates a daily backup of the `hosts` file, retain
 
 :::note
 
-In addition, further actions can be performed using the buttons below:
-
-- **Add entry...** - Opens a dialog to add an entry to the hosts file.
+The application automatically creates a daily backup of the `hosts` file, retaining up to 5 backups in the same directory (Syntax: `hosts_backup_NETworkManager_YYYYMMDD`).
 
 :::
 
-:::note
+## Actions
 
-With `F5` you can refresh the hosts file.
+### Toolbar
 
-Right-click on the result to `enable`, `disable`, `edit` or `delete` an entry, or to `copy` or `export` the information.
+| Button | Description |
+|--------|-------------|
+| **Add entry...** | Opens a dialog to add an entry to the hosts file |
 
-You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected entry.
+### Context menu
 
-:::
+| Action | Description |
+|--------|-------------|
+| **Enable** | Enables the selected entry |
+| **Disable** | Disables the selected entry |
+| **Edit** | Opens the edit dialog for the selected entry |
+| **Delete** | Removes the selected entry |
+| **Copy** | Copies the entry information to the clipboard |
+| **Export** | Exports the entry to a file |
+
+### Keyboard shortcuts
+
+| Key | Action |
+|-----|--------|
+| `F5` | Refresh |
+| `F2` | Edit selected entry |
+| `Del` | Delete selected entry |
 
 ## Add entry
 
@@ -74,7 +87,7 @@ IP address the hostname(s) should resolve to.
 
 **Example:**
 
-- `10.8.0.10`
+- `10.0.0.10`
 - `fe80::1`
 
 :::note
