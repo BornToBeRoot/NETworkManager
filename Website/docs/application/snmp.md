@@ -26,7 +26,7 @@ Simple Network Management Protocol (SNMP) is a standard protocol for monitoring 
 
 ![SNMP](../img/snmp.png)
 
-Example inputs:
+### Example inputs
 
 | Host        | Mode   | Version | OID                  | Community | Security       | Username | Auth  | Auth     | Priv  |          |
 | ----------- | ------ | ------- | -------------------- | --------- | -------------- | -------- | ----- | -------- | ----- | -------- |
