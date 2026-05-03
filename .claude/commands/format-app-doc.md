@@ -17,7 +17,7 @@ Keep `sidebar_position` and `keywords` unchanged. The `description` field must s
 One concise paragraph describing what the feature does. Start with `The **Feature Name** ...` or `With **Feature Name** ...`. Fix grammar, passive voice, or vague phrasing, but do not add or remove facts.
 
 ### 3. Supporting content (optional)
-Tables, bullet lists, or paragraphs that belong to the intro (e.g. supported input formats, example inputs). Keep these before any admonitions. Fix typos and prose quality within this content.
+Tables, bullet lists, or paragraphs that belong to the intro (e.g. supported input formats). Keep these before any admonitions. Fix typos and prose quality within this content.
 
 ### 4. `:::info` block
 **If present:** Improve readability if the prose is dense or run-on, but do not change facts or remove content. This block must contain only background information about the underlying technology (e.g. what ARP is, what the hosts file is) — never application-specific behavior.
@@ -33,14 +33,37 @@ Use this exact admonition title. One or two sentences: state that the view is re
 ### 7. Screenshot
 Keep the existing `![Feature Name](../img/...)` line unchanged.
 
-### 8. `:::note` for non-obvious app behavior (optional)
+### 8. `### Example inputs` (optional)
+If the feature accepts notable user inputs (hostnames, IP addresses, ranges, etc.), add a `### Example inputs` subsection directly after the screenshot — formatted like an action subsection. Use one or more tables with columns that describe what each example input does. Omit this subsection if there are no meaningful examples to show.
+
+Any `:::note` blocks that describe input format or input combination rules (e.g. "Multiple inputs can be combined with a semicolon") belong inside this subsection, placed after the table(s).
+
+**Example:**
+
+```
+### Example inputs
+
+| Host | Type | Description |
+|------|------|-------------|
+| `server-01.example.net` | `A` | Returns the IPv4 address of the hostname. |
+
+:::note
+
+Multiple inputs can be combined with a semicolon (`;`).
+
+Example: `server-01.example.net; 10.0.0.1`
+
+:::
+```
+
+### 9. `:::note` for non-obvious app behavior (optional)
 Only for standalone application behavior facts that don't fit elsewhere (e.g. automatic backup behavior, Windows API limitations). One note max. Do not use for actions or admin rights.
 
-### 9. Actions
+### 10. Actions
 
 Place action subsections directly after the screenshot — never inside a wrapping `## Actions` section. This applies to both single-view pages and multi-tab pages:
 
-- **Single-view pages:** `### Toolbar`, `### Context menu`, and `### Keyboard shortcuts` appear directly after the screenshot (and the optional `:::note` from step 8, if present).
+- **Single-view pages:** `### Toolbar`, `### Context menu`, and `### Keyboard shortcuts` appear directly after the screenshot (and the optional `:::note` from step 9, if present).
 - **Multi-tab pages** (page organized as `## Tab Name` sections, each with its own screenshot): place the same subsections inline within each tab section, directly after its screenshot. Simple single-action notes (e.g. "Right-click on the result to copy the information.") can remain as `:::note` blocks after the screenshot instead of a full subsection.
 
 Include only the subsections that apply. Omit subsections with no content.
@@ -78,7 +101,7 @@ If a column or tab header has its own separate context menu distinct from the ro
 | `F2` | Edit selected entry |
 | `Del` | Delete selected entry |
 
-### 10. Remaining sections
+### 11. Remaining sections
 Keep all `## Connect`, `## Add entry`, `## Profile`, `## Group`, `## Settings`, and similar sections. Preserve their structure, field definitions, and any `:::note` / `:::warning` blocks that describe field-level constraints or conditions (e.g. "Only available if ..."). Lightly improve field description prose for clarity.
 
 ## Consistency fixes to apply throughout

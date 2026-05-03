@@ -18,6 +18,14 @@ keywords:
 
 With the **DNS Lookup** you can query DNS servers for various resource records.
 
+:::info
+
+DNS (Domain Name System) is a hierarchical naming system for computers, services, and other resources connected to the internet or a private network. It translates human-readable hostnames into IP addresses and supports various record types such as A (IPv4), AAAA (IPv6), MX (mail), CNAME (alias), NS (name server), and PTR (reverse lookup).
+
+:::
+
+![DNS Lookup](../img/dns-lookup.png)
+
 Example inputs:
 
 | Host                         | Type    | Description                                                          |
@@ -45,14 +53,6 @@ Example: `server-01.borntoberoot.net; 10.0.0.1`
 :::
 
 The DNS server can be selected from a list of configured servers or you can enter a custom DNS server in the format `<hostname>|<ipaddress>:<port>` (`<port>` is optional, to use a custom port with IPv6 enclose the address in square brackets: `[<ipv6address>]:53`).
-
-:::info
-
-DNS (Domain Name System) is a hierarchical naming system for computers, services, and other resources connected to the internet or a private network. It translates human-readable hostnames into IP addresses and supports various record types such as A (IPv4), AAAA (IPv6), MX (mail), CNAME (alias), NS (name server), and PTR (reverse lookup).
-
-:::
-
-![DNS Lookup](../img/dns-lookup.png)
 
 ### Context menu
 

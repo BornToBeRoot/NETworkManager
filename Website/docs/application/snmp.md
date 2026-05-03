@@ -18,6 +18,14 @@ keywords:
 
 With **SNMP** you can manage and monitor network devices using the Simple Network Management Protocol (SNMP). Version `1`, `2c` and `3` with `get`, `walk` and `set` are supported.
 
+:::info
+
+Simple Network Management Protocol (SNMP) is a standard protocol for monitoring and managing network devices. It uses UDP (port 161 for queries, port 162 for traps) and operates on a manager–agent model, where managed devices expose a Management Information Base (MIB) — a hierarchical collection of objects identified by Object Identifiers (OIDs). SNMP has three versions: SNMPv1 and SNMPv2c use community strings for authentication, while SNMPv3 adds user-based authentication and encryption.
+
+:::
+
+![SNMP](../img/snmp.png)
+
 Example inputs:
 
 | Host        | Mode   | Version | OID                  | Community | Security       | Username | Auth  | Auth     | Priv  |          |
@@ -27,19 +35,11 @@ Example inputs:
 | `10.0.0.10` | `Walk` | `V3`    | `.1.3.6.1.2.1.1`     | `-/-`     | `AuthNoPriv`   | `Admin`  | `SHA1 | S3cr3t!` | `-/-` | `-/-`    |
 | `10.0.0.10` | `Walk` | `V3`    | `.1.3.6.1.2.1.1`     | `-/-`     | `AuthPriv`     | `Admin`  | `SHA1 | S3cr3t!` | `AES  | S3cr3t%` |
 
-:::info
-
-Simple Network Management Protocol (SNMP) is a standard protocol for monitoring and managing network devices. It uses UDP (port 161 for queries, port 162 for traps) and operates on a manager–agent model, where managed devices expose a Management Information Base (MIB) — a hierarchical collection of objects identified by Object Identifiers (OIDs). SNMP has three versions: SNMPv1 and SNMPv2c use community strings for authentication, while SNMPv3 adds user-based authentication and encryption.
-
-:::
-
 :::note
 
 Multiple OIDs (`.1.3.6.1.2.1.1; .1.3.6.1.2.1.2`) can be specified when using the mode `get`.
 
 :::
-
-![SNMP](../img/snmp.png)
 
 ### Context menu
 

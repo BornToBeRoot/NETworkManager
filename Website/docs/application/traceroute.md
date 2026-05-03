@@ -8,11 +8,6 @@ keywords: [NETworkManager, traceroute, network hops, route tracing, network path
 
 With the **Traceroute** you can trace the route to a host using ICMP echo requests to determine the network path and each intermediate hop.
 
-Example inputs:
-
-- `server-01.borntoberoot.net`
-- `10.0.0.1`
-
 :::info
 
 Traceroute works by sending ICMP packets with incrementally increasing TTL (Time to Live) values. Each router along the path decrements the TTL by one; when it reaches zero, the router discards the packet and sends back an ICMP "time exceeded" message, revealing its address. This process repeats until the destination is reached.
@@ -20,6 +15,11 @@ Traceroute works by sending ICMP packets with incrementally increasing TTL (Time
 :::
 
 ![Traceroute](../img/traceroute.png)
+
+Example inputs:
+
+- `server-01.borntoberoot.net`
+- `10.0.0.1`
 
 ### Context menu
 

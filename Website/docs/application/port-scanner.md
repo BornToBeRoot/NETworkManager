@@ -17,6 +17,14 @@ keywords:
 
 With the **Port Scanner** you can scan for open TCP ports on one or multiple hosts to determine which services are running.
 
+:::info
+
+TCP (Transmission Control Protocol) is a connection-oriented transport-layer protocol. Establishing a connection requires a three-way handshake between client and server. Port scanning tests whether this handshake can be initiated on a given port, which indicates a listening service.
+
+:::
+
+![Port Scanner](../img/port-scanner.png)
+
 Example inputs:
 
 | Host                             | Description                                                                                  |
@@ -42,14 +50,6 @@ Multiple inputs can be combined with a semicolon (`;`).
 Example: `10.0.0.0/24; 10.0.[10-20]1` or `1-1024; 8080; 8443`
 
 :::
-
-:::info
-
-TCP (Transmission Control Protocol) is a connection-oriented transport-layer protocol. Establishing a connection requires a three-way handshake between client and server. Port scanning tests whether this handshake can be initiated on a given port, which indicates a listening service.
-
-:::
-
-![Port Scanner](../img/port-scanner.png)
 
 ### Toolbar
 

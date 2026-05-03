@@ -8,6 +8,14 @@ keywords: [NETworkManager, ping monitor, ICMP ping, host monitoring, network upt
 
 With the **Ping Monitor** you can monitor one or multiple hosts with ICMP echo requests to determine whether each host is reachable.
 
+:::info
+
+ICMP (Internet Control Message Protocol) is a network-layer protocol used to send diagnostic and control messages. An ICMP echo request (commonly known as a ping) asks a remote host to send back an echo reply, confirming it is reachable on the network.
+
+:::
+
+![Ping Monitor](../img/ping-monitor.png)
+
 Example inputs:
 
 | Host                             | Description                                                                                |
@@ -28,14 +36,6 @@ Multiple inputs can be combined with a semicolon (`;`).
 Example: `10.0.0.0/24; 10.0.[10-20]1`
 
 :::
-
-:::info
-
-ICMP (Internet Control Message Protocol) is a network-layer protocol used to send diagnostic and control messages. An ICMP echo request (commonly known as a ping) asks a remote host to send back an echo reply, confirming it is reachable on the network.
-
-:::
-
-![Ping Monitor](../img/ping-monitor.png)
 
 ### Context menu
 

@@ -17,6 +17,8 @@ keywords:
 
 With the **IP Scanner** you can scan for active devices based on the hostname or in IP ranges that are reachable via ICMP or have a common TCP port open.
 
+![IP Scanner](../img/ip-scanner.png)
+
 Example inputs:
 
 | Host                             | Description                                                                                  |
@@ -37,8 +39,6 @@ Multiple inputs can be combined with a semicolon (`;`).
 Example: `10.0.0.0/24; 10.0.[10-20]1`
 
 :::
-
-![IP Scanner](../img/ip-scanner.png)
 
 ### Toolbar
 
