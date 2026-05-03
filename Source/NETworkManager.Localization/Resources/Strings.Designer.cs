@@ -763,11 +763,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ARP Table.
+        ///   Looks up a localized string similar to Neighbor Table.
         /// </summary>
-        public static string ApplicationName_ARPTable {
+        public static string ApplicationName_NeighborTable {
             get {
-                return ResourceManager.GetString("ApplicationName_ARPTable", resourceCulture);
+                return ResourceManager.GetString("ApplicationName_NeighborTable", resourceCulture);
             }
         }
         
@@ -1105,20 +1105,83 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ARP Table.
+        ///   Looks up a localized string similar to Neighbor Table.
         /// </summary>
-        public static string ARPTable {
+        public static string NeighborTable {
             get {
-                return ResourceManager.GetString("ARPTable", resourceCulture);
+                return ResourceManager.GetString("NeighborTable", resourceCulture);
             }
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Read-only mode. Modifying the ARP table requires elevated rights!.
+        ///   Looks up a localized string similar to Read-only mode. Modifying the neighbor table requires elevated rights!.
         /// </summary>
-        public static string ARPTableAdminMessage {
+        public static string NeighborTableAdminMessage {
             get {
-                return ResourceManager.GetString("ARPTableAdminMessage", resourceCulture);
+                return ResourceManager.GetString("NeighborTableAdminMessage", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Unreachable.
+        /// </summary>
+        public static string NeighborState_Unreachable {
+            get {
+                return ResourceManager.GetString("NeighborState_Unreachable", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Incomplete.
+        /// </summary>
+        public static string NeighborState_Incomplete {
+            get {
+                return ResourceManager.GetString("NeighborState_Incomplete", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Probe.
+        /// </summary>
+        public static string NeighborState_Probe {
+            get {
+                return ResourceManager.GetString("NeighborState_Probe", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Delay.
+        /// </summary>
+        public static string NeighborState_Delay {
+            get {
+                return ResourceManager.GetString("NeighborState_Delay", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Stale.
+        /// </summary>
+        public static string NeighborState_Stale {
+            get {
+                return ResourceManager.GetString("NeighborState_Stale", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Reachable.
+        /// </summary>
+        public static string NeighborState_Reachable {
+            get {
+                return ResourceManager.GetString("NeighborState_Reachable", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Permanent.
+        /// </summary>
+        public static string NeighborState_Permanent {
+            get {
+                return ResourceManager.GetString("NeighborState_Permanent", resourceCulture);
             }
         }
         

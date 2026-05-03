@@ -89,7 +89,7 @@ public static class IPv4Address
     {
         var ip = ToInt32(ipAddress);
 
-        return ip >= IPv4MulticastStart && ip <= IPv4MulticastEnd;
+        return ip is >= IPv4MulticastStart and <= IPv4MulticastEnd;
     }
 
     /// <summary>

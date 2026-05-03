@@ -281,7 +281,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     {
         var sb = new StringBuilder();
         sb.AppendLine("$params = @{");
-        sb.AppendLine($"    DisplayName   = '{RuleIdentifier}{EscapePs(rule.Name)}'");
+        sb.AppendLine($"    DisplayName   = '{RuleIdentifier}{PowerShellHelper.EscapeSingleQuotes(rule.Name)}'");
         sb.AppendLine($"    Enabled       = '{(rule.IsEnabled ? "True" : "False")}'");
         sb.AppendLine($"    Direction     = '{rule.Direction}'");
         sb.AppendLine($"    Action        = '{rule.Action}'");
@@ -291,7 +291,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         sb.AppendLine("}");
 
         if (!string.IsNullOrWhiteSpace(rule.Description))
-            sb.AppendLine($"$params['Description'] = '{EscapePs(rule.Description)}'");
+            sb.AppendLine($"$params['Description'] = '{PowerShellHelper.EscapeSingleQuotes(rule.Description)}'");
 
         if (rule.Protocol is FirewallProtocol.TCP or FirewallProtocol.UDP)
         {
@@ -309,19 +309,12 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
             sb.AppendLine($"$params['RemoteAddress'] = {ToPsArray(rule.RemoteAddresses)}");
 
         if (rule.Program != null && !string.IsNullOrWhiteSpace(rule.Program.Name))
-            sb.AppendLine($"$params['Program'] = '{EscapePs(rule.Program.Name)}'");
+            sb.AppendLine($"$params['Program'] = '{PowerShellHelper.EscapeSingleQuotes(rule.Program.Name)}'");
 
         sb.AppendLine("New-NetFirewallRule @params");
 
         return sb.ToString();
     }
-
-    /// <summary>
-    /// Escapes a string for embedding inside a PowerShell single-quoted string by
-    /// doubling any single-quote characters.
-    /// </summary>
-    /// <param name="value">The raw string value to escape.</param>
-    private static string EscapePs(string value) => value.Replace("'", "''");
 
     /// <summary>
     /// Builds a PowerShell array literal (e.g. <c>@('80','443','8080-8090')</c>) from the given values.
@@ -331,7 +324,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     /// </summary>
     /// <param name="values">The values to embed into the array literal.</param>
     private static string ToPsArray(IEnumerable<string> values) =>
-        $"@({string.Join(",", values.Select(v => $"'{EscapePs(v)}'"))})";
+        $"@({string.Join(",", values.Select(v => $"'{PowerShellHelper.EscapeSingleQuotes(v)}'"))})";
 
     /// <summary>
     /// Maps a <see cref="FirewallProtocol"/> value to the string accepted by

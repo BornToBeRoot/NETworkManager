@@ -161,8 +161,8 @@ public sealed class IPScanner(IPScannerOptions options)
 
                         if (options.ResolveMACAddress)
                         {
-                            // Get info from arp table
-                            arpMACAddress = ARP.GetMACAddress(host.ipAddress);
+                            // Get info from neighbor table
+                            arpMACAddress = NeighborTable.GetMACAddress(host.ipAddress);
 
                             // Check if it is the local mac
                             if (string.IsNullOrEmpty(arpMACAddress))

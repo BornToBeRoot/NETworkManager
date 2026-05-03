@@ -27,7 +27,16 @@ Release date: **xx.xx.2025**
 
 ## Breaking Changes
 
+- **ARP Table** has been renamed to **[Neighbor Table](../application/neighbor-table.md)**. Existing settings are automatically migrated on first launch after the update.
+
 ## What's new?
+
+**[Neighbor Table](../application/neighbor-table.md)** (formerly ARP Table)
+
+- IPv6 (NDP) neighbor entries are now shown in addition to IPv4 (ARP).
+- New **Interface** and **State** columns (sortable, searchable).
+- Add entry dialog now accepts IPv4 and IPv6 addresses.
+- View is read-only when not running elevated; modifying the table requires elevated rights.
 
 **Firewall**
 

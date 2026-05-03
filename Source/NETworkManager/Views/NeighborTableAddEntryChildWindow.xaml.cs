@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Threading;
 
 namespace NETworkManager.Views;
 
-public partial class ARPTableAddEntryChildWindow
+public partial class NeighborTableAddEntryChildWindow
 {
-    public ARPTableAddEntryChildWindow()
+    public NeighborTableAddEntryChildWindow()
     {
         InitializeComponent();
     }
