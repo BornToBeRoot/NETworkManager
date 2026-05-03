@@ -25,7 +25,7 @@ TCP (Transmission Control Protocol) is a connection-oriented transport-layer pro
 
 ![Port Scanner](../img/port-scanner.png)
 
-Example inputs:
+### Example inputs
 
 | Host                             | Description                                                                                  |
 | -------------------------------- | -------------------------------------------------------------------------------------------- |

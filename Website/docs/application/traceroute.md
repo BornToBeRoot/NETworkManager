@@ -16,7 +16,7 @@ Traceroute works by sending ICMP packets with incrementally increasing TTL (Time
 
 ![Traceroute](../img/traceroute.png)
 
-Example inputs:
+### Example inputs
 
 - `server-01.borntoberoot.net`
 - `10.0.0.1`

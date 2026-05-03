@@ -16,7 +16,7 @@ ICMP (Internet Control Message Protocol) is a network-layer protocol used to sen
 
 ![Ping Monitor](../img/ping-monitor.png)
 
-Example inputs:
+### Example inputs
 
 | Host                             | Description                                                                                |
 | -------------------------------- | ------------------------------------------------------------------------------------------ |
