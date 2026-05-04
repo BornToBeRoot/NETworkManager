@@ -139,31 +139,31 @@
     <value>ARP</value>
   </data>
   <data name="NeighborTable" xml:space="preserve">
-    <value>Neighbor Table</value>
+    <value>Tabela de vizinhança</value>
   </data>
   <data name="NeighborTableAdminMessage" xml:space="preserve">
-    <value>Read-only mode. Modifying the neighbor table requires elevated rights!</value>
+    <value>Modo somente leitura. Modificar a tabela de vizinhança requer direitos elevados!</value>
   </data>
   <data name="NeighborState_Unreachable" xml:space="preserve">
-    <value>Unreachable</value>
+    <value>Inacessível</value>
   </data>
   <data name="NeighborState_Incomplete" xml:space="preserve">
-    <value>Incomplete</value>
+    <value>Incompleto</value>
   </data>
   <data name="NeighborState_Probe" xml:space="preserve">
-    <value>Probe</value>
+    <value>Sondar</value>
   </data>
   <data name="NeighborState_Delay" xml:space="preserve">
-    <value>Delay</value>
+    <value>Atraso</value>
   </data>
   <data name="NeighborState_Stale" xml:space="preserve">
-    <value>Stale</value>
+    <value>Obsoleto</value>
   </data>
   <data name="NeighborState_Reachable" xml:space="preserve">
-    <value>Reachable</value>
+    <value>Acessível</value>
   </data>
   <data name="NeighborState_Permanent" xml:space="preserve">
-    <value>Permanent</value>
+    <value>Permanente</value>
   </data>
   <data name="Authentication" xml:space="preserve">
     <value>Autenticação</value>
@@ -2488,7 +2488,7 @@ $$hostname$$--&gt;Nome do host</value>
     <value>O Microsoft.Windows.SDK.Contracts é necessário para esse recurso, mas não está disponível neste sistema (por exemplo, no Windows Server).</value>
   </data>
   <data name="ApplicationName_NeighborTable" xml:space="preserve">
-    <value>Neighbor Table</value>
+    <value>Tabela de vizinhança</value>
   </data>
   <data name="ApplicationName_Connections" xml:space="preserve">
     <value>Conexões</value>
@@ -3743,7 +3743,7 @@ Tente novamente em alguns segundos.</value>
     <value>Aviso</value>
   </data>
   <data name="GroupDomain" xml:space="preserve">
-    <value>Group / domain</value>
+    <value>Grupo / domínio</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
     <value>NetBIOS acessível</value>
