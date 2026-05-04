@@ -10,33 +10,36 @@ With **Whois** you can retrieve Whois information for a domain directly from the
 
 :::info
 
-Whois data from a domain is publicly available. The data is provided by the domain registrar and can be queried via the whois protocol. The whois protocol is based on TCP and uses port 43. The whois protocol is not encrypted and the data is transmitted in plain text. Because the whois protocol is not standardized, the data may have a different format depending on the registrar.
+Whois data for a domain is publicly available and provided by the domain registrar. The Whois protocol is based on TCP and uses port 43. Data is transmitted as unencrypted plain text. Because the Whois protocol is not standardized, the format of the response may vary by registrar.
 
 :::
 
 :::note
 
-In order to use the whois protocol, the firewall must allow outgoing connections on port 43 to the whois server associated with the top-level domain. For example, if you want to query the whois information for `borntoberoot.net`, you must allow outgoing connections to `whois.verisign-grs.com` on port 43.
+The firewall must allow outgoing TCP connections on port 43 to the Whois server associated with the top-level domain. For example, querying `borntoberoot.net` requires access to `whois.verisign-grs.com:43`.
 
 :::
 
 :::warning
 
-For .de domains, DENIC no longer provides information via the whois protocol.
+For .de domains, DENIC no longer provides information via the Whois protocol.
 
 :::
-
-Example inputs:
-
-- `borntoberoot.net`
 
 ![Whois](../img/whois.png)
 
-:::note
+### Example inputs
 
-Right-click on the result to copy or export the information.
+| Domain | Description |
+|--------|-------------|
+| `borntoberoot.net` | Query Whois information for a .net domain |
 
-:::
+### Context menu
+
+| Action | Description |
+|--------|-------------|
+| **Copy** | Copies the selected information to the clipboard |
+| **Export...** | Exports the selected or all results to a file |
 
 ## Profile
 
@@ -56,7 +59,7 @@ If this option is enabled, the [domain](#domain) is overwritten by the host from
 
 ### Domain
 
-Domain to query for whois information.
+Domain to query for Whois information.
 
 **Type:** `String`
 

@@ -6,7 +6,7 @@ keywords: [NETworkManager, connections, active connections, netstat, TCP connect
 
 # Connections
 
-In **Connections** you can see all connections with source and destination IP endpoint (IP address and port) and with the associated process that are currently running on your computer.
+The **Connections** view shows all active connections with their source and destination IP endpoints (IP address and port) and the associated process running on your computer.
 
 :::info
 
@@ -16,10 +16,15 @@ The data shown is similar to the output of the `netstat` command.
 
 ![Connections](../img/connections.png)
 
-:::note
+### Context menu
 
-With `F5` you can refresh the connections.
+| Action | Description |
+|--------|-------------|
+| **Copy** | Copies the selected information to the clipboard |
+| **Export...** | Exports the selected or all results to a file |
 
-Right-click on the result to copy or export the information.
+### Keyboard shortcuts
 
-:::
+| Key | Action |
+|-----|--------|
+| `F5` | Refresh |

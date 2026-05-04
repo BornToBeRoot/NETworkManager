@@ -18,30 +18,34 @@ Both protocols are susceptible to spoofing/poisoning attacks that can manipulate
 
 :::
 
-:::note
+:::warning[Administrator privileges required]
 
-Adding and deleting neighbor entries requires administrator privileges. If the application is not running as administrator, the view is in read-only mode. Use the **Restart as administrator** button to relaunch the application with elevated rights.
+Without administrator privileges, the view is read-only. Use the **Restart as administrator** button to relaunch the application with elevated rights.
 
 :::
 
 ![Neighbor Table](../img/neighbor-table.png)
 
-:::note
+### Toolbar
 
-Additional actions are available via the buttons below the table:
+| Button | Description |
+|--------|-------------|
+| **Add entry...** | Opens a dialog to add a permanent static neighbor entry |
+| **Delete table** | Removes all dynamic entries (permanent entries are preserved) |
 
-- **Add entry...** – Opens a dialog to add a permanent static neighbor entry.
-- **Delete table** – Removes all dynamic entries (permanent entries are preserved).
+### Context menu
 
-:::
+| Action | Description |
+|--------|-------------|
+| **Copy** | Copies the selected information to the clipboard |
+| **Export...** | Exports the selected or all results to a file |
+| **Delete** | Removes the selected entry |
 
-:::note
+### Keyboard shortcuts
 
-Press `F5` to refresh the neighbor table.
-
-Right-click on a row to copy or export individual values, or to delete the selected entry.
-
-:::
+| Key | Action |
+|-----|--------|
+| `F5` | Refresh |
 
 ## Columns
 

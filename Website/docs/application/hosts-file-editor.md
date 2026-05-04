@@ -36,8 +36,6 @@ The application automatically creates a daily backup of the `hosts` file, retain
 
 :::
 
-## Actions
-
 ### Toolbar
 
 | Button | Description |

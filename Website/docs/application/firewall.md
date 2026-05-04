@@ -14,34 +14,39 @@ Windows Firewall (Windows Defender Firewall) is a built-in host-based firewall i
 
 :::
 
-:::note
+:::warning[Administrator privileges required]
 
-Adding, editing, enabling, disabling, or deleting firewall rules requires administrator privileges. If the application is not running as administrator, the view is in read-only mode. Use the **Restart as administrator** button to relaunch the application with elevated rights.
-
-Rules created by NETworkManager use the prefix `NETworkManager_` in their display name to distinguish them from system-managed or third-party rules. Only rules with this prefix are shown in the Firewall view.
+Without administrator privileges, the view is read-only. Use the **Restart as administrator** button to relaunch the application with elevated rights.
 
 :::
 
 ![Firewall](../img/firewall.png)
 
-:::note
+### Toolbar
 
-In addition, further actions can be performed using the buttons below:
+| Button | Description |
+|--------|-------------|
+| **Add rule...** | Opens a dialog to create a new firewall rule |
+| **Windows Firewall Settings** | Opens the Windows Firewall management console (`WF.msc`) |
 
-- **Add rule...** - Opens a dialog to create a new firewall rule.
-- **Windows Firewall Settings** - Opens the Windows Firewall management console (`WF.msc`).
+### Context menu
 
-:::
+| Action | Description |
+|--------|-------------|
+| **Enable** | Enables the selected rule |
+| **Disable** | Disables the selected rule |
+| **Edit** | Opens the edit dialog for the selected rule |
+| **Delete** | Removes the selected rule |
+| **Copy** | Copies the rule information to the clipboard |
+| **Export** | Exports the rule to a file |
 
-:::note
+### Keyboard shortcuts
 
-With `F5` you can refresh the firewall rules.
-
-Right-click on a rule to `enable`, `disable`, `edit`, or `delete` it, or to `copy` or `export` the information.
-
-You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected rule.
-
-:::
+| Key | Action |
+|-----|--------|
+| `F5` | Refresh |
+| `F2` | Edit selected rule |
+| `Del` | Delete selected rule |
 
 ## Add rule
 

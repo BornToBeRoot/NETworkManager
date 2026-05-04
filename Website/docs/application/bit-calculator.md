@@ -6,25 +6,27 @@ keywords: [NETworkManager, bit calculator, data unit converter, bits to bytes, b
 
 # Bit Calculator
 
-With the **Bit Calculator** different data units can be converted. Based on the input number and the selected unit the different units like bits, bytes, kilobits, kilobytes, megabits, megabytes, etc. are calculated.
+With the **Bit Calculator** you can convert between different data units — enter a number and select the input unit to see the equivalent values in bits, bytes, kilobits, kilobytes, megabits, megabytes, and more.
 
 ![Bit Calculator](../img/bit-calculator.png)
 
-In addition, further actions can be performed using the buttons at the bottom right:
+### Toolbar
 
-- **Export...** - Export the information to a CSV, XML or JSON file.
+| Button | Description |
+|--------|-------------|
+| **Export...** | Exports the information to a CSV, XML, or JSON file |
 
-:::note
+### Context menu
 
-Right-click on the result to copy the information.
-
-:::
+| Action | Description |
+|--------|-------------|
+| **Copy** | Copies the selected information to the clipboard |
 
 ## Settings
 
 ### Notation
 
-Notation which should be used for the calculation.
+Notation used for the calculation.
 
 **Type:** `NETworkManager.Models.Network.BitCaluclatorNotation`
 
