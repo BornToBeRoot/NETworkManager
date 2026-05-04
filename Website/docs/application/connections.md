@@ -1,12 +1,12 @@
 ---
 sidebar_position: 25
-description: "View all active TCP and UDP connections with source and destination endpoints and associated processes. NETworkManager Connections works like an enhanced netstat."
-keywords: [NETworkManager, connections, active connections, netstat, TCP connections, UDP connections, network connections]
+description: "View all active TCP connections with source and destination endpoints and associated processes. NETworkManager Connections works like an enhanced netstat."
+keywords: [NETworkManager, connections, active connections, netstat, TCP connections, network connections]
 ---
 
 # Connections
 
-The **Connections** view shows all active connections with their source and destination IP endpoints (IP address and port) and the associated process running on your computer.
+The **Connections** view shows all active **TCP** connections with their source and destination IP endpoints (IP address and port) and the associated process running on your computer.
 
 :::info
 
