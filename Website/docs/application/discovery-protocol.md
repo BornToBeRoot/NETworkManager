@@ -6,7 +6,7 @@ keywords: [NETworkManager, LLDP, CDP, discovery protocol, network discovery, swi
 
 # Discovery Protocol
 
-With **Discovery Protocol** you can capture LLDP (Link Layer Discovery Protocol) and CDP (Cisco Discovery Protocol) frames to see which switch or router your device is connected to. Device name, port, VLAN, and other information are displayed in a table.
+With **Discovery Protocol** you can capture LLDP (Link Layer Discovery Protocol) and CDP (Cisco Discovery Protocol) frames to see which switch or router your device is connected to. Device name, port, VLAN, and other information are shown in labeled fields.
 
 :::info
 
