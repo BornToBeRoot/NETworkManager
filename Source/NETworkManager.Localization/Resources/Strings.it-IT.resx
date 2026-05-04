@@ -139,31 +139,32 @@
     <value>ARP</value>
   </data>
   <data name="NeighborTable" xml:space="preserve">
-    <value>Neighbor Table</value>
+    <value>Elenco router</value>
   </data>
   <data name="NeighborTableAdminMessage" xml:space="preserve">
-    <value>Read-only mode. Modifying the neighbor table requires elevated rights!</value>
+    <value>Modalità di sola lettura. 
+La modifica dell'elenco router richiede diritti elevati!</value>
   </data>
   <data name="NeighborState_Unreachable" xml:space="preserve">
-    <value>Unreachable</value>
+    <value>Non raggiungibile</value>
   </data>
   <data name="NeighborState_Incomplete" xml:space="preserve">
-    <value>Incomplete</value>
+    <value>Incompleto</value>
   </data>
   <data name="NeighborState_Probe" xml:space="preserve">
-    <value>Probe</value>
+    <value>Sonda</value>
   </data>
   <data name="NeighborState_Delay" xml:space="preserve">
-    <value>Delay</value>
+    <value>Ritardo</value>
   </data>
   <data name="NeighborState_Stale" xml:space="preserve">
-    <value>Stale</value>
+    <value>Stalo</value>
   </data>
   <data name="NeighborState_Reachable" xml:space="preserve">
-    <value>Reachable</value>
+    <value>Raggiungibile</value>
   </data>
   <data name="NeighborState_Permanent" xml:space="preserve">
-    <value>Permanent</value>
+    <value>Permanente</value>
   </data>
   <data name="Authentication" xml:space="preserve">
     <value>Autenticazione</value>
@@ -2510,7 +2511,7 @@ Vedi messaggio errore: "{0}"</value>
     <value>Per questa funzione è richiesto Microsoft.Windows.SDK.Contracts che non è disponibile nel sistema (es. Windows Server)</value>
   </data>
   <data name="ApplicationName_NeighborTable" xml:space="preserve">
-    <value>Neighbor Table</value>
+    <value>Elenco router</value>
   </data>
   <data name="ApplicationName_Connections" xml:space="preserve">
     <value>Connessioni</value>
@@ -3837,7 +3838,7 @@ Attendi il completamento del processo e riprova.</value>
     <value>Avviso</value>
   </data>
   <data name="GroupDomain" xml:space="preserve">
-    <value>Group / domain</value>
+    <value>Groppo/dominio</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
     <value>NetBIOS raggiungibile</value>
