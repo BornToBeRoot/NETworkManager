@@ -4040,9 +4040,6 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   <data name="ActiveDirectoryImportOptions" xml:space="preserve">
     <value>Options</value>
   </data>
-  <data name="ActiveDirectoryImportRequiresProfileFile" xml:space="preserve">
-    <value>Load or unlock a profile file before importing computers.</value>
-  </data>
   <data name="ActiveDirectoryImportSummary" xml:space="preserve">
     <value>Imported {0} computer profile(s). Skipped {1} duplicate name(s) in the target group. Skipped {2} without a DNS host name.</value>
   </data>
@@ -4060,6 +4057,15 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   </data>
   <data name="ImportComputersFromActiveDirectoryDots" xml:space="preserve">
     <value>Import computers from Active Directory...</value>
+  </data>
+  <data name="ImportProfiles" xml:space="preserve">
+    <value>Import profiles</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="ImportProfiles_Method_ActiveDirectory" xml:space="preserve">
+    <value>Active Directory</value>
   </data>
   <data name="TargetProfileGroup" xml:space="preserve">
     <value>Target profile group</value>

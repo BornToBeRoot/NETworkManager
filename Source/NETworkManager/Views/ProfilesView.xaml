@@ -136,22 +136,22 @@
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Grid.Row="0"
                             Focusable="False"
-                            Style="{StaticResource CleanButton}"
-                            Command="{Binding ImportProfilesCommand}"
-                            ToolTip="{x:Static localization:Strings.ImportProfilesDots}">
+                            Style="{StaticResource ResourceKey=CleanButton}"
+                            Command="{Binding Path=ImportProfilesCommand}"
+                            ToolTip="{x:Static Member=localization:Strings.ImportProfilesDots}">
                         <StackPanel Orientation="Horizontal">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=MonitorArrowDownVariant}" />
                                 </Rectangle.OpacityMask>
                                 <Rectangle.Style>
-                                    <Style TargetType="{x:Type Rectangle}">
-                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                    <Style TargetType="{x:Type TypeName=Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
                                         <Style.Triggers>
                                             <DataTrigger
-                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}"
                                                 Value="True">
-                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                <Setter Property="Fill" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>

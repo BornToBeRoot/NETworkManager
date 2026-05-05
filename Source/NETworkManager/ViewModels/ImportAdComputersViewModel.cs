@@ -23,20 +23,15 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
     private readonly Window _parentWindow;
     private readonly Action _closeDialog;
 
-    private string _ldapSearchBase = string.Empty;
-    private string _targetGroupName = string.Empty;
-    private bool _excludeDisabledComputerAccounts = true;
-    private bool _isBusy;
-
-    public ImportAdComputersViewModel(Window parentWindow, string suggestedTargetGroup, Action closeDialog)
+    public ImportAdComputersViewModel(Window parentWindow, string groupName, Action closeDialog)
     {
         _parentWindow = parentWindow;
         _closeDialog = closeDialog;
 
         GroupNames = new ObservableCollection<string>(ProfileManager.GetGroupNames());
-        TargetGroupName = string.IsNullOrWhiteSpace(suggestedTargetGroup)
+        GroupName = string.IsNullOrWhiteSpace(groupName)
             ? GroupNames.FirstOrDefault() ?? string.Empty
-            : suggestedTargetGroup;
+            : groupName;
 
         LdapSearchBase = SettingsManager.Current.Profiles_ImportLdapSearchBase ?? string.Empty;
 
@@ -48,27 +43,27 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
 
     public string LdapSearchBase
     {
-        get => _ldapSearchBase;
+        get;
         set
         {
-            if (value == _ldapSearchBase)
+            if (value == field)
                 return;
 
-            _ldapSearchBase = value;
+            field = value;
             OnPropertyChanged();
             CommandManager.InvalidateRequerySuggested();
         }
     }
 
-    public string TargetGroupName
+    public string GroupName
     {
-        get => _targetGroupName;
+        get;
         set
         {
-            if (value == _targetGroupName)
+            if (value == field)
                 return;
 
-            _targetGroupName = value;
+            field = value;
             OnPropertyChanged();
             CommandManager.InvalidateRequerySuggested();
         }
@@ -76,26 +71,26 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
 
     public bool ExcludeDisabledComputerAccounts
     {
-        get => _excludeDisabledComputerAccounts;
+        get;
         set
         {
-            if (value == _excludeDisabledComputerAccounts)
+            if (value == field)
                 return;
 
-            _excludeDisabledComputerAccounts = value;
+            field = value;
             OnPropertyChanged();
         }
-    }
+    } = true;
 
     public bool IsBusy
     {
-        get => _isBusy;
+        get;
         private set
         {
-            if (value == _isBusy)
+            if (value == field)
                 return;
 
-            _isBusy = value;
+            field = value;
             OnPropertyChanged();
             CommandManager.InvalidateRequerySuggested();
         }
@@ -110,10 +105,10 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
         if (IsBusy)
             return false;
 
-        if (string.IsNullOrWhiteSpace(LdapSearchBase) || string.IsNullOrWhiteSpace(TargetGroupName))
+        if (string.IsNullOrWhiteSpace(LdapSearchBase) || string.IsNullOrWhiteSpace(GroupName))
             return false;
 
-        var trimmedGroup = TargetGroupName.Trim();
+        var trimmedGroup = GroupName.Trim();
         if (trimmedGroup.StartsWith('~'))
             return false;
 
@@ -127,23 +122,12 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
 
     private async void ImportAction()
     {
-        if (ProfileManager.LoadedProfileFile == null)
-        {
-            ConfigurationManager.OnDialogOpen();
-
-            await DialogHelper.ShowMessageAsync(_parentWindow, Strings.Error,
-                Strings.ActiveDirectoryImportRequiresProfileFile, ChildWindowIcon.Error);
-
-            ConfigurationManager.OnDialogClose();
-            return;
-        }
-
         IsBusy = true;
 
         try
         {
             var searchBase = LdapSearchBase.Trim();
-            var targetGroup = TargetGroupName.Trim();
+            var targetGroup = GroupName.Trim();
 
             IReadOnlyList<ActiveDirectoryComputerRecord> computers;
 

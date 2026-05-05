@@ -321,15 +321,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Load or unlock a profile file before importing computers..
-        /// </summary>
-        public static string ActiveDirectoryImportRequiresProfileFile {
-            get {
-                return ResourceManager.GetString("ActiveDirectoryImportRequiresProfileFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Imported {0} computer profile(s). Skipped {1} duplicate name(s) in the target group. Skipped {2} without a DNS host name..
         /// </summary>
         public static string ActiveDirectoryImportSummary {
@@ -5345,7 +5336,34 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("ImportComputersFromActiveDirectoryDots", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Import profiles.
+        /// </summary>
+        public static string ImportProfiles {
+            get {
+                return ResourceManager.GetString("ImportProfiles", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Source.
+        /// </summary>
+        public static string Source {
+            get {
+                return ResourceManager.GetString("Source", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Active Directory.
+        /// </summary>
+        public static string ImportProfiles_Method_ActiveDirectory {
+            get {
+                return ResourceManager.GetString("ImportProfiles_Method_ActiveDirectory", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Import / Export.
         /// </summary>

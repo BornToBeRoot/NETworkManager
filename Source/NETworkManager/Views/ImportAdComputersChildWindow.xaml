@@ -60,7 +60,7 @@
                       ItemsSource="{Binding GroupNames}"
                       mah:TextBoxHelper.Watermark="{x:Static localization:Strings.ExistingOrNewGroupDots}">
                 <ComboBox.Text>
-                    <Binding Path="TargetGroupName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    <Binding Path="GroupName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                             <validators:GroupNameValidator ValidatesOnTargetUpdated="True" />

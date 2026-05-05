@@ -10,12 +10,17 @@ public partial class ImportAdComputersChildWindow
     {
         InitializeComponent();
 
-        ChildWindowMaxWidth = 720;
-        ChildWindowWidth = Math.Min(640, Math.Max(480, parentWindow.ActualWidth * 0.55));
+        // Set the width and height of the child window based on the parent window size
+        ChildWindowMaxWidth = 850;
+        ChildWindowMaxHeight = 650;
+        ChildWindowWidth = parentWindow.ActualWidth * 0.85;
+        //ChildWindowHeight = parentWindow.ActualHeight * 0.85;
 
+        // Update the size of the child window when the parent window is resized
         parentWindow.SizeChanged += (_, _) =>
         {
-            ChildWindowWidth = Math.Min(640, Math.Max(480, parentWindow.ActualWidth * 0.55));
+            ChildWindowWidth = parentWindow.ActualWidth * 0.85;
+            //ChildWindowHeight = parentWindow.ActualHeight * 0.85;
         };
     }
 
