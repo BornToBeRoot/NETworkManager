@@ -6,6 +6,7 @@ keywords: [NETworkManager download, network manager download, free network tool,
 
 import Link from "@docusaurus/Link";
 import styles from "./styles.module.css";
+import LatestPrerelease from "@site/src/components/LatestPrerelease";
 
 # Download
 
@@ -37,6 +38,16 @@ import styles from "./styles.module.css";
   </Link>
 </div>
 
+<div className={`${styles.centerButtonContainer}`}>
+  <Link
+    className={`button button--secondary button--outline ${styles.additionalButton}`}
+    to="/docs/changelog/2026-2-22-0"
+    target="_blank"
+  >
+    📃 What's new?
+  </Link>
+</div>
+
 <div className={`${styles.shieldsContainer}`}>
   <a
     className={`${styles.shields}`}
@@ -58,16 +69,6 @@ import styles from "./styles.module.css";
       src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/latest/total.svg?style=for-the-badge&logo=github"
     />
   </a>
-</div>
-
-<div className={`${styles.centerButtonContainer}`}>
-  <Link
-    className={`button button--secondary button--outline ${styles.additionalButton}`}
-    to="/docs/changelog/2026-2-22-0"
-    target="_blank"
-  >
-    📃 What's new?
-  </Link>
 </div>
 
 <div
@@ -176,9 +177,9 @@ Evergreen PowerShell module: [github.com/aaronparker/evergreen](https://github.c
 
 ## Pre-release
 
-Pre-release versions with the latest features and bug fixes are (sometimes) available for testing on [GitHub Releases](https://github.com/BornToBeRoot/NETworkManager/releases).
+Help improve NETworkManager by testing pre-release versions with the latest features and bug fixes, and reporting any issues via [GitHub Issues](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose).
 
-You can help to improve the software by testing pre-release versions and reporting bugs via [GitHub Issues](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose).
+<LatestPrerelease />
 
 :::warning
 

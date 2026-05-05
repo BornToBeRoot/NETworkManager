@@ -99,8 +99,8 @@ public static class DocumentationManager
         new DocumentationInfo(DocumentationIdentifier.ApplicationListeners,
             @"docs/application/listeners"),
 
-        new DocumentationInfo(DocumentationIdentifier.ApplicationArpTable,
-            @"docs/application/arp-table"),
+        new DocumentationInfo(DocumentationIdentifier.ApplicationNeighborTable,
+            @"docs/application/neighbor-table"),
 
         new DocumentationInfo(DocumentationIdentifier.SettingsGeneral,
             @"docs/settings/general"),
@@ -228,7 +228,7 @@ public static class DocumentationManager
             ApplicationName.Lookup => DocumentationIdentifier.ApplicationLookup,
             ApplicationName.Connections => DocumentationIdentifier.ApplicationConnections,
             ApplicationName.Listeners => DocumentationIdentifier.ApplicationListeners,
-            ApplicationName.ARPTable => DocumentationIdentifier.ApplicationArpTable,
+            ApplicationName.NeighborTable => DocumentationIdentifier.ApplicationNeighborTable,
             ApplicationName.None => DocumentationIdentifier.Default,
             _ => DocumentationIdentifier.Default
         };

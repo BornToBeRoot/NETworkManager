@@ -148,7 +148,14 @@ public enum ApplicationName
     Listeners,
 
     /// <summary>
-    ///     ARP table application.
+    ///     Neighbor table application (IPv4 ARP + IPv6 NDP).
     /// </summary>
+    NeighborTable,
+
+    /// <summary>
+    ///     Obsolete: renamed to <see cref="NeighborTable"/>. Kept so that old settings files
+    ///     with <c>"ARPTable"</c> can still be deserialized; migrated in <c>SettingsManager.Upgrade()</c>.
+    /// </summary>
+    [System.Obsolete("Use NeighborTable instead.")]
     ARPTable
 }

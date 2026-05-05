@@ -439,13 +439,13 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// Gets the command to open the dialog for adding a new firewall rule.
     /// Only enabled when the application is running as administrator.
     /// </summary>
-    public ICommand AddEntryCommand => new RelayCommand(_ => AddEntry().ConfigureAwait(false), _ => ModifyEntry_CanExecute());
+    public ICommand AddRuleCommand => new RelayCommand(_ => AddRule().ConfigureAwait(false), _ => ModifyRule_CanExecute());
 
     /// <summary>
     /// Opens the add-firewall-rule dialog. On confirmation, creates the rule via PowerShell
     /// and refreshes the rule list.
     /// </summary>
-    private async Task AddEntry()
+    private async Task AddRule()
     {
         var childWindow = new FirewallRuleChildWindow();
 
@@ -472,7 +472,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
             ConfigurationManager.Current.IsChildWindowOpen = false;
         });
 
-        childWindow.Title = Strings.AddEntry;
+        childWindow.Title = Strings.AddRule;
         childWindow.DataContext = childWindowViewModel;
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
@@ -484,13 +484,13 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// Gets the command to enable the selected firewall rule.
     /// Only executable when the rule is currently disabled and modification is allowed.
     /// </summary>
-    public ICommand EnableEntryCommand => new RelayCommand(_ => SetRuleEnabled(SelectedResult, true).ConfigureAwait(false), _ => ModifyEntry_CanExecute() && SelectedResult is { IsEnabled: false });
+    public ICommand EnableRuleCommand => new RelayCommand(_ => SetRuleEnabled(SelectedResult, true).ConfigureAwait(false), _ => ModifyRule_CanExecute() && SelectedResult is { IsEnabled: false });
 
     /// <summary>
     /// Gets the command to disable the selected firewall rule.
     /// Only executable when the rule is currently enabled and modification is allowed.
     /// </summary>
-    public ICommand DisableEntryCommand => new RelayCommand(_ => SetRuleEnabled(SelectedResult, false).ConfigureAwait(false), _ => ModifyEntry_CanExecute() && SelectedResult is { IsEnabled: true });
+    public ICommand DisableRuleCommand => new RelayCommand(_ => SetRuleEnabled(SelectedResult, false).ConfigureAwait(false), _ => ModifyRule_CanExecute() && SelectedResult is { IsEnabled: true });
 
     /// <summary>
     /// Enables or disables the given <paramref name="rule"/> via PowerShell,
@@ -523,14 +523,14 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// Gets the command to open the dialog for editing the selected firewall rule.
     /// Only executable when a rule is selected and modification is allowed.
     /// </summary>
-    public ICommand EditEntryCommand => new RelayCommand(_ => EditEntry().ConfigureAwait(false), _ => ModifyEntry_CanExecute() && SelectedResult != null);
+    public ICommand EditRuleCommand => new RelayCommand(_ => EditRule().ConfigureAwait(false), _ => ModifyRule_CanExecute() && SelectedResult != null);
 
     /// <summary>
     /// Opens the edit-firewall-rule dialog pre-filled with the selected rule's properties.
     /// On confirmation, deletes the old rule, creates the updated rule via PowerShell,
     /// and refreshes the rule list.
     /// </summary>
-    private async Task EditEntry()
+    private async Task EditRule()
     {
         var childWindow = new FirewallRuleChildWindow();
 
@@ -558,7 +558,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
             ConfigurationManager.Current.IsChildWindowOpen = false;
         }, SelectedResult);
 
-        childWindow.Title = Strings.EditEntry;
+        childWindow.Title = Strings.EditRule;
         childWindow.DataContext = childWindowViewModel;
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
@@ -570,18 +570,18 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// Gets the command to permanently delete the selected firewall rule.
     /// Only executable when a rule is selected and modification is allowed.
     /// </summary>
-    public ICommand DeleteEntryCommand => new RelayCommand(_ => DeleteEntry().ConfigureAwait(false), _ => ModifyEntry_CanExecute() && SelectedResult != null);
+    public ICommand DeleteRuleCommand => new RelayCommand(_ => DeleteRule().ConfigureAwait(false), _ => ModifyRule_CanExecute() && SelectedResult != null);
 
     /// <summary>
     /// Shows a confirmation dialog and, if confirmed, deletes the selected firewall rule
     /// via PowerShell and reloads the rule list.
     /// Any PowerShell error is written to the log and shown in the status bar.
     /// </summary>
-    private async Task DeleteEntry()
+    private async Task DeleteRule()
     {
         var result = await DialogHelper.ShowConfirmationMessageAsync(
             Application.Current.MainWindow,
-            Strings.DeleteEntry,
+            Strings.DeleteRule,
             string.Format(Strings.DeleteFirewallRuleMessage, SelectedResult.Name),
             ChildWindowIcon.Info,
             Strings.Delete);
@@ -607,7 +607,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// Returns <see langword="true"/> when the application is running as administrator,
     /// no dialog is open, and no child window is open — i.e. it is safe to modify a rule.
     /// </summary>
-    private static bool ModifyEntry_CanExecute()
+    private static bool ModifyRule_CanExecute()
     {
         return ConfigurationManager.Current.IsAdmin &&
                Application.Current.MainWindow != null &&

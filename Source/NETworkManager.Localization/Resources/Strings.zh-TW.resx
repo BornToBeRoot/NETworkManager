@@ -138,8 +138,32 @@
   <data name="ARP" xml:space="preserve">
     <value>ARP</value>
   </data>
-  <data name="ARPTable" xml:space="preserve">
-    <value>ARP 表格</value>
+  <data name="NeighborTable" xml:space="preserve">
+    <value>Neighbor Table</value>
+  </data>
+  <data name="NeighborTableAdminMessage" xml:space="preserve">
+    <value>Read-only mode. Modifying the neighbor table requires elevated rights!</value>
+  </data>
+  <data name="NeighborState_Unreachable" xml:space="preserve">
+    <value>Unreachable</value>
+  </data>
+  <data name="NeighborState_Incomplete" xml:space="preserve">
+    <value>Incomplete</value>
+  </data>
+  <data name="NeighborState_Probe" xml:space="preserve">
+    <value>Probe</value>
+  </data>
+  <data name="NeighborState_Delay" xml:space="preserve">
+    <value>Delay</value>
+  </data>
+  <data name="NeighborState_Stale" xml:space="preserve">
+    <value>Stale</value>
+  </data>
+  <data name="NeighborState_Reachable" xml:space="preserve">
+    <value>Reachable</value>
+  </data>
+  <data name="NeighborState_Permanent" xml:space="preserve">
+    <value>Permanent</value>
   </data>
   <data name="Authentication" xml:space="preserve">
     <value>身份驗證</value>
@@ -2463,8 +2487,8 @@ $$hostname$$	--&gt;	主機名稱</value>
   <data name="MicrosoftWindowsSDKContractsIsNotAvailable" xml:space="preserve">
     <value>此功能需使用 Microsoft.Windows.SDK.Contracts，但該套件在此系統（如 Windows Server）中無法取得。</value>
   </data>
-  <data name="ApplicationName_ARPTable" xml:space="preserve">
-    <value>ARP 表格</value>
+  <data name="ApplicationName_NeighborTable" xml:space="preserve">
+    <value>Neighbor Table</value>
   </data>
   <data name="ApplicationName_Connections" xml:space="preserve">
     <value>連線</value>
@@ -3717,8 +3741,8 @@ $$hostname$$	--&gt;	主機名稱</value>
   <data name="ConnectionState_Warning" xml:space="preserve">
     <value>警告</value>
   </data>
-  <data name="GroupDomainName" xml:space="preserve">
-    <value>群組／網域名稱</value>
+  <data name="GroupDomain" xml:space="preserve">
+    <value>Group / domain</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
     <value>可達的 NetBIOS</value>
@@ -4147,6 +4171,27 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
     <value>Remote addresses</value>
   </data>
   <data name="EnterValidFirewallAddress" xml:space="preserve">
-    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8) or keyword (e.g. LocalSubnet, Internet)</value>
+    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8), range (e.g. 10.0.0.1-10.0.0.10), or keyword (Any, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal)</value>
+  </data>
+  <data name="AddRule" xml:space="preserve">
+    <value>Add rule</value>
+  </data>
+  <data name="AddRuleDots" xml:space="preserve">
+    <value>Add rule...</value>
+  </data>
+  <data name="EditRule" xml:space="preserve">
+    <value>Edit rule</value>
+  </data>
+  <data name="EditRuleDots" xml:space="preserve">
+    <value>Edit rule...</value>
+  </data>
+  <data name="DeleteRule" xml:space="preserve">
+    <value>Delete rule</value>
+  </data>
+  <data name="EnableRule" xml:space="preserve">
+    <value>Enable rule</value>
+  </data>
+  <data name="DisableRule" xml:space="preserve">
+    <value>Disable rule</value>
   </data>
 </root>

@@ -680,6 +680,24 @@ public static class SettingsManager
         Current.General_ApplicationList.Insert(
             ApplicationManager.GetDefaultList().ToList().FindIndex(x => x.Name == ApplicationName.Firewall),
             ApplicationManager.GetDefaultList().First(x => x.Name == ApplicationName.Firewall));
+
+        // Replace ARPTable with NeighborTable
+#pragma warning disable CS0618
+        var arpTableEntry = Current.General_ApplicationList.FirstOrDefault(x => x.Name == ApplicationName.ARPTable);
+#pragma warning restore CS0618
+
+        if (arpTableEntry != null)
+        {
+            Log.Info("Replacing obsolete \"ARPTable\" app entry with \"NeighborTable\"...");
+
+            var index = Current.General_ApplicationList.IndexOf(arpTableEntry);
+            var neighborTableEntry = ApplicationManager.GetDefaultList().First(x => x.Name == ApplicationName.NeighborTable);
+
+            neighborTableEntry.IsVisible = arpTableEntry.IsVisible;
+            neighborTableEntry.IsDefault = arpTableEntry.IsDefault;
+
+            Current.General_ApplicationList[index] = neighborTableEntry;
+        }
     }
     #endregion
 }

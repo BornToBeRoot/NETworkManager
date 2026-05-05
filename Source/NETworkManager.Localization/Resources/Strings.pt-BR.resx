@@ -138,8 +138,32 @@
   <data name="ARP" xml:space="preserve">
     <value>ARP</value>
   </data>
-  <data name="ARPTable" xml:space="preserve">
-    <value>Tabela ARP</value>
+  <data name="NeighborTable" xml:space="preserve">
+    <value>Tabela de vizinhança</value>
+  </data>
+  <data name="NeighborTableAdminMessage" xml:space="preserve">
+    <value>Modo somente leitura. Modificar a tabela de vizinhança requer direitos elevados!</value>
+  </data>
+  <data name="NeighborState_Unreachable" xml:space="preserve">
+    <value>Inacessível</value>
+  </data>
+  <data name="NeighborState_Incomplete" xml:space="preserve">
+    <value>Incompleto</value>
+  </data>
+  <data name="NeighborState_Probe" xml:space="preserve">
+    <value>Sondar</value>
+  </data>
+  <data name="NeighborState_Delay" xml:space="preserve">
+    <value>Atraso</value>
+  </data>
+  <data name="NeighborState_Stale" xml:space="preserve">
+    <value>Obsoleto</value>
+  </data>
+  <data name="NeighborState_Reachable" xml:space="preserve">
+    <value>Acessível</value>
+  </data>
+  <data name="NeighborState_Permanent" xml:space="preserve">
+    <value>Permanente</value>
   </data>
   <data name="Authentication" xml:space="preserve">
     <value>Autenticação</value>
@@ -2463,8 +2487,8 @@ $$hostname$$--&gt;Nome do host</value>
   <data name="MicrosoftWindowsSDKContractsIsNotAvailable" xml:space="preserve">
     <value>O Microsoft.Windows.SDK.Contracts é necessário para esse recurso, mas não está disponível neste sistema (por exemplo, no Windows Server).</value>
   </data>
-  <data name="ApplicationName_ARPTable" xml:space="preserve">
-    <value>Tabela ARP</value>
+  <data name="ApplicationName_NeighborTable" xml:space="preserve">
+    <value>Tabela de vizinhança</value>
   </data>
   <data name="ApplicationName_Connections" xml:space="preserve">
     <value>Conexões</value>
@@ -3718,8 +3742,8 @@ Tente novamente em alguns segundos.</value>
   <data name="ConnectionState_Warning" xml:space="preserve">
     <value>Aviso</value>
   </data>
-  <data name="GroupDomainName" xml:space="preserve">
-    <value>Nome do grupo / domínio</value>
+  <data name="GroupDomain" xml:space="preserve">
+    <value>Grupo / domínio</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
     <value>NetBIOS acessível</value>
@@ -4148,6 +4172,27 @@ Você pode copiar seus arquivos de perfil de "{0}" para "{1}" para migrar seus p
     <value>Endereços remotos</value>
   </data>
   <data name="EnterValidFirewallAddress" xml:space="preserve">
-    <value>Insira um endereço IP válido, sub-rede (por exemplo, 10.0.0.0/8) ou palavra-chave (por exemplo, LocalSubnet, Internet)</value>
+    <value>Insira um endereço IP válido, sub-rede (por exemplo, 10.0.0.0/8), intervalo (por exemplo, 10.0.0.1-10.0.0.10) ou palavra-chave (Any, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal)</value>
+  </data>
+  <data name="AddRule" xml:space="preserve">
+    <value>Adicionar regra</value>
+  </data>
+  <data name="AddRuleDots" xml:space="preserve">
+    <value>Adicionar regra...</value>
+  </data>
+  <data name="EditRule" xml:space="preserve">
+    <value>Editar regra</value>
+  </data>
+  <data name="EditRuleDots" xml:space="preserve">
+    <value>Editar regra...</value>
+  </data>
+  <data name="DeleteRule" xml:space="preserve">
+    <value>Excluir regra</value>
+  </data>
+  <data name="EnableRule" xml:space="preserve">
+    <value>Habilitar regra</value>
+  </data>
+  <data name="DisableRule" xml:space="preserve">
+    <value>Desabilitar regra</value>
   </data>
 </root>

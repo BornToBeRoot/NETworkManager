@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation.Runspaces;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 using SMA = System.Management.Automation;
 using log4net;
 
@@ -12,9 +15,10 @@ namespace NETworkManager.Models.Firewall;
 
 /// <summary>
 /// Provides static methods to read and modify Windows Firewall rules via PowerShell.
-/// All operations share a single <see cref="Runspace"/> that is initialized once with
-/// the required execution policy and the NetSecurity module, reducing per-call overhead.
-/// A <see cref="SemaphoreSlim"/> serializes access so the runspace is never used concurrently.
+/// All operations share a single <see cref="Runspace"/> that is lazily initialized on
+/// first use with the required execution policy and the <c>NetSecurity</c> module imported,
+/// reducing per-call overhead. A <see cref="SemaphoreSlim"/> serializes access so the
+/// runspace is never used concurrently.
 /// </summary>
 public class Firewall
 {
@@ -34,29 +38,29 @@ public class Firewall
     /// <summary>
     /// Ensures that only one PowerShell pipeline runs on <see cref="SharedRunspace"/> at a time.
     /// </summary>
-    private static readonly SemaphoreSlim Lock = new(1, 1);
+    private static readonly SemaphoreSlim RunspaceLock = new(1, 1);
 
     /// <summary>
-    /// Shared PowerShell runspace, initialized once in the static constructor with
-    /// <c>Set-ExecutionPolicy Bypass</c> and <c>Import-Module NetSecurity</c>.
+    /// Lazily initialized PowerShell runspace. Created and configured on first access so that
+    /// simply navigating to the Firewall view does not start a PowerShell process unless a
+    /// modifying operation is actually performed.
     /// </summary>
-    private static readonly Runspace SharedRunspace;
-
-    /// <summary>
-    /// Opens <see cref="SharedRunspace"/> and runs the one-time initialization script
-    /// so that subsequent operations do not need to repeat the module import.
-    /// </summary>
-    static Firewall()
+    private static readonly Lazy<Runspace> _sharedRunspace = new(() =>
     {
-        SharedRunspace = RunspaceFactory.CreateRunspace();
-        SharedRunspace.Open();
+        var runspace = RunspaceFactory.CreateRunspace();
+        runspace.Open();
 
         using var ps = SMA.PowerShell.Create();
-        ps.Runspace = SharedRunspace;
+        ps.Runspace = runspace;
         ps.AddScript(@"
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
 Import-Module NetSecurity -ErrorAction Stop").Invoke();
-    }
+
+        return runspace;
+    });
+
+    /// <summary>Returns the shared runspace, initializing it on first access.</summary>
+    private static Runspace SharedRunspace => _sharedRunspace.Value;
 
     #endregion
 
@@ -73,7 +77,7 @@ Import-Module NetSecurity -ErrorAction Stop").Invoke();
     /// </returns>
     public static async Task<List<FirewallRule>> GetRulesAsync()
     {
-        await Lock.WaitAsync();
+        await RunspaceLock.WaitAsync();
         try
         {
             return await Task.Run(() =>
@@ -159,7 +163,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         }
         finally
         {
-            Lock.Release();
+            RunspaceLock.Release();
         }
     }
 
@@ -179,7 +183,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     /// </exception>
     public static async Task SetRuleEnabledAsync(FirewallRule rule, bool enabled)
     {
-        await Lock.WaitAsync();
+        await RunspaceLock.WaitAsync();
         try
         {
             await Task.Run(() =>
@@ -196,7 +200,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         }
         finally
         {
-            Lock.Release();
+            RunspaceLock.Release();
         }
     }
 
@@ -212,7 +216,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     /// </exception>
     public static async Task DeleteRuleAsync(FirewallRule rule)
     {
-        await Lock.WaitAsync();
+        await RunspaceLock.WaitAsync();
         try
         {
             await Task.Run(() =>
@@ -229,7 +233,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         }
         finally
         {
-            Lock.Release();
+            RunspaceLock.Release();
         }
     }
 
@@ -246,7 +250,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     /// </exception>
     public static async Task AddRuleAsync(FirewallRule rule)
     {
-        await Lock.WaitAsync();
+        await RunspaceLock.WaitAsync();
         try
         {
             await Task.Run(() =>
@@ -263,7 +267,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         }
         finally
         {
-            Lock.Release();
+            RunspaceLock.Release();
         }
     }
 
@@ -278,7 +282,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     {
         var sb = new StringBuilder();
         sb.AppendLine("$params = @{");
-        sb.AppendLine($"    DisplayName   = '{RuleIdentifier}{EscapePs(rule.Name)}'");
+        sb.AppendLine($"    DisplayName   = '{RuleIdentifier}{PowerShellHelper.EscapeSingleQuotes(rule.Name)}'");
         sb.AppendLine($"    Enabled       = '{(rule.IsEnabled ? "True" : "False")}'");
         sb.AppendLine($"    Direction     = '{rule.Direction}'");
         sb.AppendLine($"    Action        = '{rule.Action}'");
@@ -288,25 +292,25 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         sb.AppendLine("}");
 
         if (!string.IsNullOrWhiteSpace(rule.Description))
-            sb.AppendLine($"$params['Description'] = '{EscapePs(rule.Description)}'");
+            sb.AppendLine($"$params['Description'] = '{PowerShellHelper.EscapeSingleQuotes(rule.Description)}'");
 
         if (rule.Protocol is FirewallProtocol.TCP or FirewallProtocol.UDP)
         {
             if (rule.LocalPorts.Count > 0)
-                sb.AppendLine($"$params['LocalPort']  = '{FirewallRule.PortsToString(rule.LocalPorts, ',', false)}'");
+                sb.AppendLine($"$params['LocalPort']  = {ToPsArray(rule.LocalPorts.Select(p => p.ToString()))}");
 
             if (rule.RemotePorts.Count > 0)
-                sb.AppendLine($"$params['RemotePort'] = '{FirewallRule.PortsToString(rule.RemotePorts, ',', false)}'");
+                sb.AppendLine($"$params['RemotePort'] = {ToPsArray(rule.RemotePorts.Select(p => p.ToString()))}");
         }
 
         if (rule.LocalAddresses.Count > 0)
-            sb.AppendLine($"$params['LocalAddress']  = '{string.Join(',', rule.LocalAddresses.Select(EscapePs))}'");
+            sb.AppendLine($"$params['LocalAddress']  = {ToPsArray(rule.LocalAddresses)}");
 
         if (rule.RemoteAddresses.Count > 0)
-            sb.AppendLine($"$params['RemoteAddress'] = '{string.Join(',', rule.RemoteAddresses.Select(EscapePs))}'");
+            sb.AppendLine($"$params['RemoteAddress'] = {ToPsArray(rule.RemoteAddresses)}");
 
         if (rule.Program != null && !string.IsNullOrWhiteSpace(rule.Program.Name))
-            sb.AppendLine($"$params['Program'] = '{EscapePs(rule.Program.Name)}'");
+            sb.AppendLine($"$params['Program'] = '{PowerShellHelper.EscapeSingleQuotes(rule.Program.Name)}'");
 
         sb.AppendLine("New-NetFirewallRule @params");
 
@@ -314,11 +318,14 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     }
 
     /// <summary>
-    /// Escapes a string for embedding inside a PowerShell single-quoted string by
-    /// doubling any single-quote characters.
+    /// Builds a PowerShell array literal (e.g. <c>@('80','443','8080-8090')</c>) from the given values.
+    /// New-NetFirewallRule parameters such as -LocalPort and -LocalAddress are typed as
+    /// <c>String[]</c>; passing a single comma-joined string would be interpreted as one
+    /// element and rejected, so we emit a real array.
     /// </summary>
-    /// <param name="value">The raw string value to escape.</param>
-    private static string EscapePs(string value) => value.Replace("'", "''");
+    /// <param name="values">The values to embed into the array literal.</param>
+    private static string ToPsArray(IEnumerable<string> values) =>
+        $"@({string.Join(",", values.Select(v => $"'{PowerShellHelper.EscapeSingleQuotes(v)}'"))})";
 
     /// <summary>
     /// Maps a <see cref="FirewallProtocol"/> value to the string accepted by
@@ -497,7 +504,9 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
 
     /// <summary>
     /// Parses a comma-separated address string (e.g. <c>"192.168.1.0/24,LocalSubnet"</c>) to a
-    /// list of address strings.
+    /// list of address strings. PowerShell returns IPv4 subnets in subnet-mask notation
+    /// (e.g. <c>10.8.0.0/255.255.0.0</c>); these are normalized back to CIDR. IPv6 subnets
+    /// are already returned in CIDR notation by PowerShell and are passed through unchanged.
     /// Returns an empty list when the value is blank or <c>"Any"</c>.
     /// </summary>
     /// <param name="value">
@@ -508,7 +517,27 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         if (string.IsNullOrWhiteSpace(value) || value.Equals("Any", StringComparison.OrdinalIgnoreCase))
             return [];
 
-        return [.. value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)];
+        var addresses = new List<string>();
+
+        foreach (var token in value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+        {
+            var slashIndex = token.IndexOf('/');
+
+            if (slashIndex > 0)
+            {
+                var maskPart = token[(slashIndex + 1)..];
+
+                if (RegexHelper.SubnetmaskRegex().IsMatch(maskPart) && IPAddress.TryParse(maskPart, out var mask))
+                {
+                    addresses.Add($"{token[..slashIndex]}/{Subnetmask.ConvertSubnetmaskToCidr(mask)}");
+                    continue;
+                }
+            }
+
+            addresses.Add(token);
+        }
+
+        return addresses;
     }
 
     /// <summary>

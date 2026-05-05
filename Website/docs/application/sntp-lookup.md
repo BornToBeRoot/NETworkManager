@@ -6,22 +6,22 @@ keywords: [NETworkManager, SNTP lookup, NTP, time server, time synchronization, 
 
 # SNTP Lookup
 
-With **SNTP Lookup** you can query one or more SNTP servers to get the current network time.
-SNTP server and get the network current time. It will also show the offset to the local time.
+With **SNTP Lookup** you can query one or more SNTP servers to get the current network time and view the offset to the local clock.
 
 :::info
 
-SNTP (Simple Network Time Protocol) is a protocol used for synchronizing time between computer systems on a network. It is a simplified version of the Network Time Protocol (NTP) that is widely used for time synchronization. SNTP is designed to provide a basic level of accuracy and is used when precise timing is not critical. SNTP servers typically obtain their time from other NTP or SNTP servers and distribute the time to client devices on the network. SNTP operates over the User Datagram Protocol (UDP) and typically uses port 123. It is widely supported by many operating systems and network devices and is an important component of network infrastructure.
+SNTP (Simple Network Time Protocol) is a simplified version of NTP (Network Time Protocol) used for synchronizing clocks between devices on a network. It is designed for scenarios where precise timing is not critical. SNTP servers obtain their time from upstream NTP or SNTP servers and distribute it to clients. SNTP operates over UDP and uses port 123 by default. It is widely supported by operating systems and network devices.
 
 :::
 
 ![SNTP Lookup](../img/sntp-lookup.png)
 
-:::note
+### Context menu
 
-Right-click on the result to copy or export the information.
-
-:::
+| Action | Description |
+|--------|-------------|
+| **Copy** | Copies the selected information to the clipboard |
+| **Export...** | Exports the selected or all results to a file |
 
 ## Settings
 
@@ -42,9 +42,9 @@ List of SNTP server profiles. A profile can contain one or more SNTP servers wit
 
 :::note
 
-Right-click on a selected OID profile to `edit` or `delete` it.
+Right-click on a selected SNTP server profile to `edit` or `delete` it.
 
-You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected OID profile.
+You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected SNTP server profile.
 
 At least one SNTP server profile must exist.
 

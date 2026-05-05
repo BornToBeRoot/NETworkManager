@@ -210,6 +210,8 @@ const config = {
           {
             from: [              
               "/docs/changelog/2026-3-4-0",
+              "/docs/changelog/2026-4-30-0",
+              "/docs/changelog/2026-5-3-0",
             ],
             to: "/docs/changelog/next-release",
           },
@@ -230,6 +232,13 @@ const config = {
               "/docs/changelog/2025-7-9-0",
             ],
             to: "/docs/changelog/2025-8-10-0",
+          },
+          // Redirect legacy ARP Table to Neighbor Table
+          {
+            from: [              
+              "/docs/application/arp-table",
+            ],
+            to: "/docs/application/neighbor-table",
           },
         ],
       },

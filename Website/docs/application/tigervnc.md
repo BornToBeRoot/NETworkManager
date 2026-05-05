@@ -1,12 +1,21 @@
 ---
 sidebar_position: 12
-description: "Connect to remote computers via VNC using the embedded TigerVNC client in NETworkManager. Features tabbed sessions and hardware-accelerated Tight encoding."
-keywords: [NETworkManager, TigerVNC, VNC client, remote desktop, VNC connection, remote access, VNC viewer]
+description: "Connect to remote computers via VNC with tabbed sessions and hardware-accelerated Tight encoding."
+keywords:
+  [
+    NETworkManager,
+    TigerVNC,
+    VNC client,
+    remote desktop,
+    VNC connection,
+    remote access,
+    VNC viewer,
+  ]
 ---
 
 # TigerVNC
 
-With **TigerVNC** you can connect to a remote computer via VNC. The integration of TigerVNC with NETworkManger supports tabs and profiles for hosts. The connection can be established via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
+With **TigerVNC** you can connect to a remote computer via VNC. The integration of TigerVNC with NETworkManager supports tabs and profiles for hosts. The connection can be established via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
 
 :::info
 
@@ -28,13 +37,13 @@ TigerVNC must be installed on the local computer in order to use this feature. Y
 
 ![TigerVNC](../img/tigervnc.png)
 
-:::note
+### Tab context menu
 
-Right-click on the tab will open the context menu with the following options:
+Right-clicking a session tab opens a context menu:
 
-- **Reconnect** - Restart TigerVNC and reconnect to the remote computer.
-
-:::
+| Action        | Description                                            |
+| ------------- | ------------------------------------------------------ |
+| **Reconnect** | Restart TigerVNC and reconnect to the remote computer. |
 
 ## Connect
 

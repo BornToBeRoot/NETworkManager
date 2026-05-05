@@ -161,8 +161,8 @@ public sealed class IPScanner(IPScannerOptions options)
 
                         if (options.ResolveMACAddress)
                         {
-                            // Get info from arp table
-                            arpMACAddress = ARP.GetMACAddress(host.ipAddress);
+                            // Get info from neighbor table
+                            arpMACAddress = NeighborTable.GetMACAddress(host.ipAddress);
 
                             // Check if it is the local mac
                             if (string.IsNullOrEmpty(arpMACAddress))
@@ -199,15 +199,13 @@ public sealed class IPScanner(IPScannerOptions options)
                                     isAnyPortOpen,
                                     portScanResults.OrderBy(x => x.Port).ToList(),
                                     netBIOSInfo,
-                                    // ARP is default, fallback to netbios
+                                    // ARP/NDP is preferred, fallback to NetBIOS
                                     !string.IsNullOrEmpty(arpMACAddress)
                                         ? arpMACAddress
                                         : netBIOSInfo?.MACAddress ?? string.Empty,
                                     !string.IsNullOrEmpty(arpMACAddress)
                                         ? arpVendor
-                                        : netBIOSInfo?.Vendor ?? string.Empty,
-                                    arpMACAddress,
-                                    arpVendor
+                                        : netBIOSInfo?.Vendor ?? string.Empty
                                 )
                             )
                         );

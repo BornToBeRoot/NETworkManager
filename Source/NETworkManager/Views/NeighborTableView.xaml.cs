@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,11 +9,11 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class ARPTableView
+public partial class NeighborTableView
 {
-    private readonly ARPTableViewModel _viewModel = new();
+    private readonly NeighborTableViewModel _viewModel = new();
 
-    public ARPTableView()
+    public NeighborTableView()
     {
         InitializeComponent();
         DataContext = _viewModel;
@@ -43,11 +43,17 @@ public partial class ARPTableView
 
         switch (column.SortMemberPath)
         {
-            case nameof(ARPInfo.IPAddress):
+            case nameof(NeighborInfo.IPAddress):
                 selectedComparer = 0;
                 break;
-            case nameof(ARPInfo.MACAddress):
+            case nameof(NeighborInfo.MACAddress):
                 selectedComparer = 1;
+                break;
+            case nameof(NeighborInfo.InterfaceAlias):
+                selectedComparer = 2;
+                break;
+            case nameof(NeighborInfo.State):
+                selectedComparer = 3;
                 break;
             default:
                 return;
@@ -80,10 +86,9 @@ public partial class ARPTableView
                 return 0;
 
             // Get data from objects
-            if (x is not ARPInfo first || y is not ARPInfo second)
+            if (x is not NeighborInfo first || y is not NeighborInfo second)
                 return 0;
 
-            // Compare the data
             return comparer switch
             {
                 // IP address
@@ -94,6 +99,14 @@ public partial class ARPTableView
                 1 => direction == ListSortDirection.Ascending
                     ? MACAddressHelper.CompareMACAddresses(first.MACAddress, second.MACAddress)
                     : MACAddressHelper.CompareMACAddresses(second.MACAddress, first.MACAddress),
+                // Interface alias
+                2 => direction == ListSortDirection.Ascending
+                    ? string.Compare(first.InterfaceAlias, second.InterfaceAlias, System.StringComparison.OrdinalIgnoreCase)
+                    : string.Compare(second.InterfaceAlias, first.InterfaceAlias, System.StringComparison.OrdinalIgnoreCase),
+                // State
+                3 => direction == ListSortDirection.Ascending
+                    ? ((int)first.State).CompareTo((int)second.State)
+                    : ((int)second.State).CompareTo((int)first.State),
                 _ => 0
             };
         }

@@ -138,8 +138,33 @@
   <data name="ARP" xml:space="preserve">
     <value>ARP</value>
   </data>
-  <data name="ARPTable" xml:space="preserve">
-    <value>Tabella ARP</value>
+  <data name="NeighborTable" xml:space="preserve">
+    <value>Elenco router</value>
+  </data>
+  <data name="NeighborTableAdminMessage" xml:space="preserve">
+    <value>Modalità di sola lettura. 
+La modifica dell'elenco router richiede diritti elevati!</value>
+  </data>
+  <data name="NeighborState_Unreachable" xml:space="preserve">
+    <value>Non raggiungibile</value>
+  </data>
+  <data name="NeighborState_Incomplete" xml:space="preserve">
+    <value>Incompleto</value>
+  </data>
+  <data name="NeighborState_Probe" xml:space="preserve">
+    <value>Sonda</value>
+  </data>
+  <data name="NeighborState_Delay" xml:space="preserve">
+    <value>Ritardo</value>
+  </data>
+  <data name="NeighborState_Stale" xml:space="preserve">
+    <value>Stalo</value>
+  </data>
+  <data name="NeighborState_Reachable" xml:space="preserve">
+    <value>Raggiungibile</value>
+  </data>
+  <data name="NeighborState_Permanent" xml:space="preserve">
+    <value>Permanente</value>
   </data>
   <data name="Authentication" xml:space="preserve">
     <value>Autenticazione</value>
@@ -2172,10 +2197,10 @@ Prova un altro servizio o usa quello predefinito...</value>
     <value>Programma</value>
   </data>
   <data name="Private" xml:space="preserve">
-    <value>Private</value>
+    <value>Privata</value>
   </data>
   <data name="Public" xml:space="preserve">
-    <value>Public</value>
+    <value>Pubblica</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>Il comando personalizzato selezionato verrà eliminato definitivamente.</value>
@@ -2485,8 +2510,8 @@ Vedi messaggio errore: "{0}"</value>
   <data name="MicrosoftWindowsSDKContractsIsNotAvailable" xml:space="preserve">
     <value>Per questa funzione è richiesto Microsoft.Windows.SDK.Contracts che non è disponibile nel sistema (es. Windows Server)</value>
   </data>
-  <data name="ApplicationName_ARPTable" xml:space="preserve">
-    <value>Tabella ARP</value>
+  <data name="ApplicationName_NeighborTable" xml:space="preserve">
+    <value>Elenco router</value>
   </data>
   <data name="ApplicationName_Connections" xml:space="preserve">
     <value>Connessioni</value>
@@ -3812,8 +3837,8 @@ Attendi il completamento del processo e riprova.</value>
   <data name="ConnectionState_Warning" xml:space="preserve">
     <value>Avviso</value>
   </data>
-  <data name="GroupDomainName" xml:space="preserve">
-    <value>Nome gruppo/dominio</value>
+  <data name="GroupDomain" xml:space="preserve">
+    <value>Groppo/dominio</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
     <value>NetBIOS raggiungibile</value>
@@ -3898,7 +3923,7 @@ Clic con il tasto destro per ulteriori opzioni.</value>
 La modifica del file hosta richiede diritti elevati!</value>
   </data>
   <data name="OpenHostsFile" xml:space="preserve">
-    <value>Open hosts file</value>
+    <value>Apri file host</value>
   </data>
   <data name="Comment" xml:space="preserve">
     <value>Commento</value>
@@ -4148,7 +4173,7 @@ er migrare le impostazioni precedenti, se necessario, è possibile copiare il fi
     <value>Blocca</value>
   </data>
   <data name="NetworkProfile" xml:space="preserve">
-    <value>Network profile</value>
+    <value>Profilo rete</value>
   </data>
   <data name="NetworkProfiles" xml:space="preserve">
     <value>Profili di rete</value>
@@ -4160,12 +4185,12 @@ er migrare le impostazioni precedenti, se necessario, è possibile copiare il fi
     <value>Impossibile caricare le regole del firewall. {0}</value>
   </data>
   <data name="DeleteFirewallRuleMessage" xml:space="preserve">
-    <value>The selected firewall rule is permanently deleted:
+    <value>È stata permanentemente eliminata la regola firewall selezionata:
 
 {0}</value>
   </data>
   <data name="FirewallProtocol_Any" xml:space="preserve">
-    <value>Any</value>
+    <value>Qualsiasi</value>
   </data>
   <data name="FirewallProtocol_TCP" xml:space="preserve">
     <value>TCP</value>
@@ -4210,45 +4235,67 @@ er migrare le impostazioni precedenti, se necessario, è possibile copiare il fi
     <value>L2TP</value>
   </data>
   <data name="FirewallInterfaceType_Any" xml:space="preserve">
-    <value>Any</value>
+    <value>Qualsiasi</value>
   </data>
   <data name="FirewallInterfaceType_Wired" xml:space="preserve">
-    <value>Wired</value>
+    <value>Cablata</value>
   </data>
   <data name="FirewallInterfaceType_Wireless" xml:space="preserve">
-    <value>Wireless</value>
+    <value>Senza fili</value>
   </data>
   <data name="FirewallInterfaceType_RemoteAccess" xml:space="preserve">
-    <value>Remote access</value>
+    <value>Accesso remoto</value>
   </data>
   <data name="FirewallAdminMessage" xml:space="preserve">
-    <value>Read-only mode. Modifying firewall rules requires elevated rights!</value>
+    <value>Modalità di sola lettura. 
+La modifica delle regole del firewall richiede diritti elevati!</value>
   </data>
   <data name="FirewallRuleDirection_Inbound" xml:space="preserve">
-    <value>Inbound</value>
+    <value>In entrata</value>
   </data>
   <data name="FirewallRuleDirection_Outbound" xml:space="preserve">
-    <value>Outbound</value>
+    <value>In uscita</value>
   </data>
   <data name="FirewallRuleAction_Block" xml:space="preserve">
-    <value>Block</value>
+    <value>Blocca</value>
   </data>
   <data name="FirewallRuleAction_Allow" xml:space="preserve">
-    <value>Allow</value>
+    <value>Consenti</value>
   </data>
   <data name="LocalPorts" xml:space="preserve">
-    <value>Local ports</value>
+    <value>Porte locali</value>
   </data>
   <data name="RemotePorts" xml:space="preserve">
-    <value>Remote ports</value>
+    <value>Porte remote</value>
   </data>
   <data name="LocalAddresses" xml:space="preserve">
-    <value>Local addresses</value>
+    <value>Indirizzi locali</value>
   </data>
   <data name="RemoteAddresses" xml:space="preserve">
-    <value>Remote addresses</value>
+    <value>Indirizzi remoti</value>
   </data>
   <data name="EnterValidFirewallAddress" xml:space="preserve">
-    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8) or keyword (e.g. LocalSubnet, Internet)</value>
+    <value>Inserisci un indirizzo IP, una sottorete (ad esempio 10.0.0.0/8), un intervallo (ad esempio 10.0.0.1-10.0.0.10) o una parola chiave valida (Qualsiasi, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal)</value>
+  </data>
+  <data name="AddRule" xml:space="preserve">
+    <value>Aggiungi regola</value>
+  </data>
+  <data name="AddRuleDots" xml:space="preserve">
+    <value>Aggiungi regola...</value>
+  </data>
+  <data name="EditRule" xml:space="preserve">
+    <value>Modifica regola</value>
+  </data>
+  <data name="EditRuleDots" xml:space="preserve">
+    <value>Modifica regola...</value>
+  </data>
+  <data name="DeleteRule" xml:space="preserve">
+    <value>Elimina regola</value>
+  </data>
+  <data name="EnableRule" xml:space="preserve">
+    <value>Elimina regola...</value>
+  </data>
+  <data name="DisableRule" xml:space="preserve">
+    <value>Disabilita regola</value>
   </data>
 </root>

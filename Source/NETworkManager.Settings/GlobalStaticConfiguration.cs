@@ -275,10 +275,10 @@ public static class GlobalStaticConfiguration
     public static AutoRefreshTimeInfo Listeners_AutoRefreshTime =>
         AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
 
-    // Application: ARP Table
-    public static ExportFileType ARPTable_ExportFileType => ExportFileType.Csv;
+    // Application: Neighbor Table
+    public static ExportFileType NeighborTable_ExportFileType => ExportFileType.Csv;
 
-    public static AutoRefreshTimeInfo ARPTable_AutoRefreshTime =>
+    public static AutoRefreshTimeInfo NeighborTable_AutoRefreshTime =>
         AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
 
     #endregion

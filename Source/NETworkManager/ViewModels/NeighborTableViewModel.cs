@@ -22,24 +22,23 @@ using System.Windows.Threading;
 namespace NETworkManager.ViewModels;
 
 /// <summary>
-/// View model for the ARP table view.
+/// View model for the neighbor table view (IPv4 ARP + IPv6 NDP).
 /// </summary>
-public class ARPTableViewModel : ViewModelBase
+public class NeighborTableViewModel : ViewModelBase
 {
     #region Contructor, load settings
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ARPTableViewModel"/> class.
+    /// Initializes a new instance of the <see cref="NeighborTableViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
-    public ARPTableViewModel()
+    public NeighborTableViewModel()
     {
         _isLoading = true;
 
         // Result view + search
         ResultsView = CollectionViewSource.GetDefaultView(Results);
 
-        ((ListCollectionView)ResultsView).CustomSort = Comparer<ARPInfo>.Create((x, y) =>
+        ((ListCollectionView)ResultsView).CustomSort = Comparer<NeighborInfo>.Create((x, y) =>
             IPAddressHelper.CompareIPAddresses(x.IPAddress, y.IPAddress));
 
         ResultsView.Filter = o =>
@@ -47,18 +46,22 @@ public class ARPTableViewModel : ViewModelBase
             if (string.IsNullOrEmpty(Search))
                 return true;
 
-            if (o is not ARPInfo info)
+            if (o is not NeighborInfo info)
                 return false;
 
-            // Search by IPAddress and MACAddress
+            var stateLocalized = ResourceTranslate(info.State);
+
             return info.IPAddress.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.MACAddress.ToString().IndexOf(Search.Replace("-", "").Replace(":", ""),
                        StringComparison.OrdinalIgnoreCase) > -1 ||
+                   (info.InterfaceAlias ?? string.Empty).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.State.ToString().IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   stateLocalized.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    (info.IsMulticast ? Strings.Yes : Strings.No).IndexOf(
                        Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
-        // Get ARP table
+        // Get neighbor table
         Refresh(true).ConfigureAwait(false);
 
         // Auto refresh
@@ -66,32 +69,27 @@ public class ARPTableViewModel : ViewModelBase
 
         AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
         SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
-            x.Value == SettingsManager.Current.ARPTable_AutoRefreshTime.Value &&
-            x.TimeUnit == SettingsManager.Current.ARPTable_AutoRefreshTime.TimeUnit);
-        AutoRefreshEnabled = SettingsManager.Current.ARPTable_AutoRefreshEnabled;
+            x.Value == SettingsManager.Current.NeighborTable_AutoRefreshTime.Value &&
+            x.TimeUnit == SettingsManager.Current.NeighborTable_AutoRefreshTime.TimeUnit);
+        AutoRefreshEnabled = SettingsManager.Current.NeighborTable_AutoRefreshEnabled;
 
         _isLoading = false;
     }
 
+    private static string ResourceTranslate(NeighborState state)
+    {
+        return Localization.ResourceTranslator.Translate(Localization.ResourceIdentifier.NeighborState, state);
+    }
     #endregion
 
     #region Variables
 
-    private static readonly ILog Log = LogManager.GetLogger(typeof(ARPTableViewModel));
+    private static readonly ILog Log = LogManager.GetLogger(typeof(NeighborTableViewModel));
 
-    /// <summary>
-    /// Indicates whether the view model is loading.
-    /// </summary>
     private readonly bool _isLoading;
 
-    /// <summary>
-    /// The timer for auto-refresh.
-    /// </summary>
     private readonly DispatcherTimer _autoRefreshTimer = new();
 
-    /// <summary>
-    /// Gets or sets the search text.
-    /// </summary>
     public string Search
     {
         get;
@@ -108,10 +106,7 @@ public class ARPTableViewModel : ViewModelBase
         }
     }
 
-    /// <summary>
-    /// Gets or sets the collection of ARP results.
-    /// </summary>
-    public ObservableCollection<ARPInfo> Results
+    public ObservableCollection<NeighborInfo> Results
     {
         get;
         set
@@ -124,15 +119,9 @@ public class ARPTableViewModel : ViewModelBase
         }
     } = [];
 
-    /// <summary>
-    /// Gets the collection view for the ARP results.
-    /// </summary>
     public ICollectionView ResultsView { get; }
 
-    /// <summary>
-    /// Gets or sets the currently selected ARP result.
-    /// </summary>
-    public ARPInfo SelectedResult
+    public NeighborInfo SelectedResult
     {
         get;
         set
@@ -145,9 +134,6 @@ public class ARPTableViewModel : ViewModelBase
         }
     }
 
-    /// <summary>
-    /// Gets or sets the list of selected ARP results.
-    /// </summary>
     public IList SelectedResults
     {
         get;
@@ -161,9 +147,6 @@ public class ARPTableViewModel : ViewModelBase
         }
     } = new ArrayList();
 
-    /// <summary>
-    /// Gets or sets a value indicating whether auto-refresh is enabled.
-    /// </summary>
     public bool AutoRefreshEnabled
     {
         get;
@@ -173,11 +156,10 @@ public class ARPTableViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.ARPTable_AutoRefreshEnabled = value;
+                SettingsManager.Current.NeighborTable_AutoRefreshEnabled = value;
 
             field = value;
 
-            // Start timer to refresh automatically
             if (value)
             {
                 _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime);
@@ -192,14 +174,8 @@ public class ARPTableViewModel : ViewModelBase
         }
     }
 
-    /// <summary>
-    /// Gets the collection view for the auto-refresh times.
-    /// </summary>
     public ICollectionView AutoRefreshTimes { get; }
 
-    /// <summary>
-    /// Gets or sets the selected auto-refresh time.
-    /// </summary>
     public AutoRefreshTimeInfo SelectedAutoRefreshTime
     {
         get;
@@ -209,7 +185,7 @@ public class ARPTableViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.ARPTable_AutoRefreshTime = value;
+                SettingsManager.Current.NeighborTable_AutoRefreshTime = value;
 
             field = value;
 
@@ -223,9 +199,6 @@ public class ARPTableViewModel : ViewModelBase
         }
     }
 
-    /// <summary>
-    /// Gets or sets a value indicating whether the view model is currently refreshing.
-    /// </summary>
     public bool IsRefreshing
     {
         get;
@@ -239,9 +212,19 @@ public class ARPTableViewModel : ViewModelBase
         }
     }
 
-    /// <summary>
-    /// Gets or sets a value indicating whether the status message is displayed.
-    /// </summary>
+    public bool IsModifying
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     public bool IsStatusMessageDisplayed
     {
         get;
@@ -255,9 +238,6 @@ public class ARPTableViewModel : ViewModelBase
         }
     }
 
-    /// <summary>
-    /// Gets the status message.
-    /// </summary>
     public string StatusMessage
     {
         get;
@@ -275,28 +255,18 @@ public class ARPTableViewModel : ViewModelBase
 
     #region ICommands & Actions
 
-    /// <summary>
-    /// Gets the command to refresh the ARP table.
-    /// </summary>
     public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
 
-    /// <summary>
-    /// Checks if the refresh command can be executed.
-    /// </summary>
-    /// <param name="parameter">The command parameter.</param>
-    /// <returns><c>true</c> if the command can be executed; otherwise, <c>false</c>.</returns>
     private bool Refresh_CanExecute(object parameter)
     {
         return Application.Current.MainWindow != null &&
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
                !ConfigurationManager.Current.IsChildWindowOpen &&
                !IsRefreshing &&
+               !IsModifying &&
                !AutoRefreshEnabled;
     }
 
-    /// <summary>
-    /// Action to refresh the ARP table.
-    /// </summary>
     private async Task RefreshAction()
     {
         IsStatusMessageDisplayed = false;
@@ -304,38 +274,17 @@ public class ARPTableViewModel : ViewModelBase
         await Refresh();
     }
 
-    /// <summary>
-    /// Gets the command to delete the ARP table.
-    /// </summary>
     public ICommand DeleteTableCommand =>
-        new RelayCommand(_ => DeleteTableAction().ConfigureAwait(false), DeleteTable_CanExecute);
+        new RelayCommand(_ => DeleteTableAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
-    /// <summary>
-    /// Checks if the delete table command can be executed.
-    /// </summary>
-    /// <param name="parameter">The command parameter.</param>
-    /// <returns><c>true</c> if the command can be executed; otherwise, <c>false</c>.</returns>
-    private bool DeleteTable_CanExecute(object parameter)
-    {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
-    }
-
-    /// <summary>
-    /// Action to delete the ARP table.
-    /// </summary>
     private async Task DeleteTableAction()
     {
+        IsModifying = true;
         IsStatusMessageDisplayed = false;
 
         try
         {
-            var arpTable = new ARP();
-
-            arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
-
-            await arpTable.DeleteTableAsync();
+            await NeighborTable.DeleteTableAsync();
 
             await Refresh();
         }
@@ -344,40 +293,23 @@ public class ARPTableViewModel : ViewModelBase
             StatusMessage = ex.Message;
             IsStatusMessageDisplayed = true;
         }
+        finally
+        {
+            IsModifying = false;
+        }
     }
 
-    /// <summary>
-    /// Gets the command to delete an ARP entry.
-    /// </summary>
     public ICommand DeleteEntryCommand =>
-        new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), DeleteEntry_CanExecute);
+        new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
-    /// <summary>
-    /// Checks if the delete entry command can be executed.
-    /// </summary>
-    /// <param name="parameter">The command parameter.</param>
-    /// <returns><c>true</c> if the command can be executed; otherwise, <c>false</c>.</returns>
-    private bool DeleteEntry_CanExecute(object parameter)
-    {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
-    }
-
-    /// <summary>
-    /// Action to delete an ARP entry.
-    /// </summary>
     private async Task DeleteEntryAction()
     {
+        IsModifying = true;
         IsStatusMessageDisplayed = false;
 
         try
         {
-            var arpTable = new ARP();
-
-            arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
-
-            await arpTable.DeleteEntryAsync(SelectedResult.IPAddress.ToString());
+            await NeighborTable.DeleteEntryAsync(SelectedResult.IPAddress.ToString(), SelectedResult.InterfaceIndex);
 
             await Refresh();
         }
@@ -386,48 +318,32 @@ public class ARPTableViewModel : ViewModelBase
             StatusMessage = ex.Message;
             IsStatusMessageDisplayed = true;
         }
+        finally
+        {
+            IsModifying = false;
+        }
     }
 
-    /// <summary>
-    /// Gets the command to add an ARP entry.
-    /// </summary>
     public ICommand AddEntryCommand =>
-        new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), AddEntry_CanExecute);
+        new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
 
-    /// <summary>
-    /// Checks if the add entry command can be executed.
-    /// </summary>
-    /// <param name="parameter">The command parameter.</param>
-    /// <returns><c>true</c> if the command can be executed; otherwise, <c>false</c>.</returns>
-    private bool AddEntry_CanExecute(object parameter)
-    {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
-    }
-
-    /// <summary>
-    /// Action to add an ARP entry.
-    /// </summary>
     private async Task AddEntryAction()
     {
+        IsModifying = true;
         IsStatusMessageDisplayed = false;
 
-        var childWindow = new ARPTableAddEntryChildWindow();
+        var interfaces = await NeighborTable.GetInterfacesAsync();
 
+        var childWindow = new NeighborTableAddEntryChildWindow();
 
-        var childWindowViewModel = new ARPTableAddEntryViewModel(async instance =>
+        var childWindowViewModel = new NeighborTableAddEntryViewModel(async instance =>
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
             try
             {
-                var arpTable = new ARP();
-
-                arpTable.UserHasCanceled += ArpTable_UserHasCanceled;
-
-                await arpTable.AddEntryAsync(instance.IPAddress, MACAddressHelper.Format(instance.MACAddress, "-"));
+                await NeighborTable.AddEntryAsync(instance.IPAddress, MACAddressHelper.Format(instance.MACAddress, "-"), instance.SelectedInterface.Key);
 
                 await Refresh();
             }
@@ -436,11 +352,17 @@ public class ARPTableViewModel : ViewModelBase
                 StatusMessage = ex.Message;
                 IsStatusMessageDisplayed = true;
             }
+            finally
+            {
+                IsModifying = false;
+            }
         }, _ =>
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
-        });
+
+            IsModifying = false;
+        }, interfaces);
 
         childWindow.Title = Strings.AddEntry;
 
@@ -451,14 +373,33 @@ public class ARPTableViewModel : ViewModelBase
         await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
-    /// <summary>
-    /// Gets the command to export the ARP table.
-    /// </summary>
+    private bool ModifyEntry_CanExecute(object parameter)
+    {
+        return ConfigurationManager.Current.IsAdmin &&
+               Application.Current.MainWindow != null &&
+               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+               !ConfigurationManager.Current.IsChildWindowOpen &&
+               !IsRefreshing &&
+               !IsModifying;
+    }
+
+    public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
+
+    private async Task RestartAsAdminAction()
+    {
+        try
+        {
+            (Application.Current.MainWindow as MainWindow)?.RestartApplication(true);
+        }
+        catch (Exception ex)
+        {
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, ex.Message,
+                ChildWindowIcon.Error);
+        }
+    }
+
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
 
-    /// <summary>
-    /// Action to export the ARP table.
-    /// </summary>
     private Task ExportAction()
     {
         var childWindow = new ExportChildWindow();
@@ -473,7 +414,7 @@ public class ARPTableViewModel : ViewModelBase
                 ExportManager.Export(instance.FilePath, instance.FileType,
                     instance.ExportAll
                         ? Results
-                        : new ObservableCollection<ARPInfo>(SelectedResults.Cast<ARPInfo>().ToArray()));
+                        : new ObservableCollection<NeighborInfo>(SelectedResults.Cast<NeighborInfo>().ToArray()));
             }
             catch (Exception ex)
             {
@@ -484,16 +425,16 @@ public class ARPTableViewModel : ViewModelBase
                     Environment.NewLine + ex.Message, ChildWindowIcon.Error);
             }
 
-            SettingsManager.Current.ARPTable_ExportFileType = instance.FileType;
-            SettingsManager.Current.ARPTable_ExportFilePath = instance.FilePath;
+            SettingsManager.Current.NeighborTable_ExportFileType = instance.FileType;
+            SettingsManager.Current.NeighborTable_ExportFilePath = instance.FilePath;
         }, _ =>
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
         }, [
             ExportFileType.Csv, ExportFileType.Xml, ExportFileType.Json
-        ], true, SettingsManager.Current.ARPTable_ExportFileType,
-        SettingsManager.Current.ARPTable_ExportFilePath);
+        ], true, SettingsManager.Current.NeighborTable_ExportFileType,
+        SettingsManager.Current.NeighborTable_ExportFilePath);
 
         childWindow.Title = Strings.Export;
 
@@ -508,10 +449,6 @@ public class ARPTableViewModel : ViewModelBase
 
     #region Methods
 
-    /// <summary>
-    /// Refreshes the ARP table.
-    /// </summary>
-    /// <param name="init">Indicates whether this is the initial refresh.</param>
     private async Task Refresh(bool init = false)
     {
         IsRefreshing = true;
@@ -519,12 +456,12 @@ public class ARPTableViewModel : ViewModelBase
         StatusMessage = Strings.RefreshingDots;
         IsStatusMessageDisplayed = true;
 
-        if (init == false)
+        if (!init)
             await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         Results.Clear();
 
-        (await ARP.GetTableAsync()).ForEach(Results.Add);
+        (await NeighborTable.GetTableAsync()).ForEach(Results.Add);
 
         StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
         IsStatusMessageDisplayed = true;
@@ -532,22 +469,14 @@ public class ARPTableViewModel : ViewModelBase
         IsRefreshing = false;
     }
 
-    /// <summary>
-    /// Called when the view becomes visible.
-    /// </summary>
     public void OnViewVisible()
     {
-        // Restart timer...
         if (AutoRefreshEnabled)
             _autoRefreshTimer.Start();
     }
 
-    /// <summary>
-    /// Called when the view is hidden.
-    /// </summary>
     public void OnViewHide()
     {
-        // Temporarily stop timer...
         if (AutoRefreshEnabled)
             _autoRefreshTimer.Stop();
     }
@@ -556,27 +485,15 @@ public class ARPTableViewModel : ViewModelBase
 
     #region Events
 
-    /// <summary>
-    /// Handles the UserHasCanceled event from the ARP table.
-    /// </summary>
-    private void ArpTable_UserHasCanceled(object sender, EventArgs e)
-    {
-        StatusMessage = Strings.CanceledByUserMessage;
-        IsStatusMessageDisplayed = true;
-    }
-
-    /// <summary>
-    /// Handles the Tick event of the auto-refresh timer.
-    /// </summary>
     private async void AutoRefreshTimer_Tick(object sender, EventArgs e)
     {
-        // Stop timer...
         _autoRefreshTimer.Stop();
 
-        // Refresh
-        await Refresh();
+        // Skip refresh while a modify operation (add/delete) is in progress to avoid
+        // clearing the table while the user is interacting with it.
+        if (!IsModifying)
+            await Refresh();
 
-        // Restart timer...
         _autoRefreshTimer.Start();
     }
 

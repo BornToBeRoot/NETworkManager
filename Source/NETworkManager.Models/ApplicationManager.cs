@@ -27,7 +27,9 @@ public static class ApplicationManager
     /// <returns>IEnumerable with <see cref="ApplicationInfo" />.</returns>
     public static IEnumerable<ApplicationInfo> GetDefaultList()
     {
-        return [.. GetNames().Where(x => x != ApplicationName.None && x != ApplicationName.AWSSessionManager).Select(name => new ApplicationInfo(name, true, name == ApplicationName.Dashboard))];
+#pragma warning disable CS0618
+        return [.. GetNames().Where(x => x != ApplicationName.None && x != ApplicationName.AWSSessionManager && x != ApplicationName.ARPTable).Select(name => new ApplicationInfo(name, true, name == ApplicationName.Dashboard))];
+#pragma warning restore CS0618
     }
 
     /// <summary>
@@ -118,13 +120,17 @@ public static class ApplicationManager
             case ApplicationName.Listeners:
                 canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Wan });
                 break;
+            case ApplicationName.NeighborTable:
+#pragma warning disable CS0618
             case ApplicationName.ARPTable:
+#pragma warning restore CS0618
                 canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.TableOfContents });
                 break;
             case ApplicationName.Firewall:
                 canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.WallFire });
                 break;
             case ApplicationName.None:
+            case ApplicationName.AWSSessionManager:
             default:
                 canvas.Children.Add(new PackIconModern { Kind = PackIconModernKind.SmileyFrown });
                 break;

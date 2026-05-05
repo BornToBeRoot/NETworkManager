@@ -6,20 +6,27 @@ keywords: [NETworkManager, traceroute, network hops, route tracing, network path
 
 # Traceroute
 
-With the **Traceroute** you can trace the route to a host with ICMP echo requests to determine the path to the specific host.
+With the **Traceroute** you can trace the route to a host using ICMP echo requests to determine the network path and each intermediate hop.
 
-Example inputs:
+:::info
+
+Traceroute works by sending ICMP packets with incrementally increasing TTL (Time to Live) values. Each router along the path decrements the TTL by one; when it reaches zero, the router discards the packet and sends back an ICMP "time exceeded" message, revealing its address. This process repeats until the destination is reached.
+
+:::
+
+![Traceroute](../img/traceroute.png)
+
+### Example inputs
 
 - `server-01.borntoberoot.net`
 - `10.0.0.1`
 
-![Traceroute](../img/traceroute.png)
+### Context menu
 
-:::note
-
-Right-click on the result to copy or export the information.
-
-:::
+| Action | Description |
+|--------|-------------|
+| **Copy** | Copies the selected information to the clipboard |
+| **Export...** | Exports the selected or all results to a file |
 
 ## Profile
 
@@ -39,7 +46,7 @@ If this option is enabled, the [Host](#host) is overwritten by the host from the
 
 ### Host
 
-Hostname or IP address to ping.
+Hostname or IP address to trace the route to.
 
 **Type:** `String`
 
@@ -54,7 +61,7 @@ Hostname or IP address to ping.
 
 ### Maximum hops
 
-Maximum hops to search for target.
+Maximum number of hops to search for the target.
 
 **Type:** `Integer` [Min `1`, Max `255`]
 
@@ -62,7 +69,7 @@ Maximum hops to search for target.
 
 ### Timeout (ms)
 
-Timeout in milliseconds for the icmp packet after which the packet is considered lost.
+Timeout in milliseconds for each ICMP packet, after which the packet is considered lost.
 
 **Type:** `Integer` [Min `100`, Max `15000`]
 
@@ -70,7 +77,7 @@ Timeout in milliseconds for the icmp packet after which the packet is considered
 
 ### Buffer
 
-Buffer size of the icmp packet.
+Buffer size of the ICMP packet.
 
 **Type:** `Integer` [Min `1`, Max `65535`]
 
@@ -82,7 +89,7 @@ Resolve the hostname of the IP address (PTR lookup) for each hop.
 
 **Type:** `Boolean`
 
-**Default:** `True`
+**Default:** `Enabled`
 
 ### Check IP geolocation
 

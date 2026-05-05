@@ -16,26 +16,30 @@ IP geolocation data is provided by [ip-api.com](https://ip-api.com/) and the API
 
 :::note
 
-The free API endpoint is limited to 45 requests per minute, supports only the `http` protocol and is available for non-commercial use only.
+The free API endpoint is limited to 45 requests per minute, supports only the `HTTP` protocol and is available for non-commercial use only.
 
 :::
-
-Example inputs:
-
-- `borntoberoot.net`
-- `1.1.1.1`
 
 ![IPGeolocation](../img/ip-geolocation.png)
 
-In addition, further actions can be performed using the buttons at the bottom right:
+### Example inputs
 
-- **Export...** - Export the information to a CSV, XML or JSON file.
+| Input | Description |
+|-------|-------------|
+| `borntoberoot.net` | Fully qualified domain name (FQDN) |
+| `1.1.1.1` | Public IP address |
 
-:::note
+### Toolbar
 
-Right-click on the result to copy the information.
+| Button | Description |
+|--------|-------------|
+| **Export...** | Exports the information to a CSV, XML, or JSON file |
 
-:::
+### Context menu
+
+| Action | Description |
+|--------|-------------|
+| **Copy** | Copies the selected information to the clipboard |
 
 ## Profile
 

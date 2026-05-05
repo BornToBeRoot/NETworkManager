@@ -1,14 +1,32 @@
 ---
 sidebar_position: 14
-description: "Monitor and manage network devices via SNMP v1, v2c, and v3 with NETworkManager. Supports get, walk, and set operations with configurable security levels."
-keywords: [NETworkManager, SNMP, SNMP v3, network monitoring, SNMP get, SNMP walk, SNMP set, network management]
+description: "Monitor and manage network devices via SNMP v1, v2c, and v3 using get, walk, and set operations with configurable security levels."
+keywords:
+  [
+    NETworkManager,
+    SNMP,
+    SNMP v3,
+    network monitoring,
+    SNMP get,
+    SNMP walk,
+    SNMP set,
+    network management,
+  ]
 ---
 
 # SNMP
 
 With **SNMP** you can manage and monitor network devices using the Simple Network Management Protocol (SNMP). Version `1`, `2c` and `3` with `get`, `walk` and `set` are supported.
 
-Example inputs:
+:::info
+
+Simple Network Management Protocol (SNMP) is a standard protocol for monitoring and managing network devices. It uses UDP (port 161 for queries, port 162 for traps) and operates on a manager–agent model, where managed devices expose a Management Information Base (MIB) — a hierarchical collection of objects identified by Object Identifiers (OIDs). SNMP has three versions: SNMPv1 and SNMPv2c use community strings for authentication, while SNMPv3 adds user-based authentication and encryption.
+
+:::
+
+![SNMP](../img/snmp.png)
+
+### Example inputs
 
 | Host        | Mode   | Version | OID                  | Community | Security       | Username | Auth  | Auth     | Priv  |          |
 | ----------- | ------ | ------- | -------------------- | --------- | -------------- | -------- | ----- | -------- | ----- | -------- |
@@ -23,13 +41,12 @@ Multiple OIDs (`.1.3.6.1.2.1.1; .1.3.6.1.2.1.2`) can be specified when using the
 
 :::
 
-![SNMP](../img/snmp.png)
+### Context menu
 
-:::note
-
-Right-click on the result to copy or export the information.
-
-:::
+| Action        | Description                                     |
+| ------------- | ----------------------------------------------- |
+| **Copy**      | Copy the selected information to the clipboard. |
+| **Export...** | Export the selected or all results to a file.   |
 
 ## Profile
 

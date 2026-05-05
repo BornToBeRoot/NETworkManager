@@ -1,25 +1,42 @@
 ---
 sidebar_position: 4
 description: "Scan for open TCP ports on network hosts. NETworkManager Port Scanner supports flexible host and port range inputs for comprehensive port scanning."
-keywords: [NETworkManager, port scanner, TCP port scan, open ports, network security, port checker, port scanning tool]
+keywords:
+  [
+    NETworkManager,
+    port scanner,
+    TCP port scan,
+    open ports,
+    network security,
+    port checker,
+    port scanning tool,
+  ]
 ---
 
 # Port Scanner
 
-With the **Port Scanner** you can scan for open `tcp` ports on one or multiple hosts to determine which services are running.
+With the **Port Scanner** you can scan for open TCP ports on one or multiple hosts to determine which services are running.
 
-Example inputs:
+:::info
 
-| Host                             | Description                                                                               |
-| -------------------------------- | ----------------------------------------------------------------------------------------- |
-| `10.0.0.1`                       | Single IP address (`10.0.0.1`)                                                            |
-| `10.0.0.100 - 10.0.0.199`        | All IP addresses in a given range (`10.0.0.100`, `10.0.0.101`, ..., `10.0.0.199`)         |
-| `10.0.0.0/23`                    | All IP addresses in a subnet (`10.0.0.0`, ..., `10.0.1.255`)                              |
-| `10.0.0.0/255.255.254.0`         | All IP addresses in a subnet (`10.0.0.0`, ..., `10.0.1.255`)                              |
-| `10.0.[0-9,20].[1-2]`            | Multipe IP address like (`10.0.0.1`, `10.0.0.2`, `10.0.1.1`, ...,`10.0.9.2`, `10.0.20.1`) |
-| `borntoberoot.net`               | Single IP address resolved from a host (`10.0.0.1`)                                       |
-| `borntoberoot.net/24`            | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)         |
-| `borntoberoot.net/255.255.255.0` | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)         |
+TCP (Transmission Control Protocol) is a connection-oriented transport-layer protocol. Establishing a connection requires a three-way handshake between client and server. Port scanning tests whether this handshake can be initiated on a given port, which indicates a listening service.
+
+:::
+
+![Port Scanner](../img/port-scanner.png)
+
+### Example inputs
+
+| Host                             | Description                                                                                  |
+| -------------------------------- | -------------------------------------------------------------------------------------------- |
+| `10.0.0.1`                       | Single IP address (`10.0.0.1`)                                                               |
+| `10.0.0.100 - 10.0.0.199`        | All IP addresses in a given range (`10.0.0.100`, `10.0.0.101`, ..., `10.0.0.199`)            |
+| `10.0.0.0/23`                    | All IP addresses in a subnet (`10.0.0.0`, ..., `10.0.1.255`)                                 |
+| `10.0.0.0/255.255.254.0`         | All IP addresses in a subnet (`10.0.0.0`, ..., `10.0.1.255`)                                 |
+| `10.0.[0-9,20].[1-2]`            | Multiple IP addresses like (`10.0.0.1`, `10.0.0.2`, `10.0.1.1`, ...,`10.0.9.2`, `10.0.20.1`) |
+| `borntoberoot.net`               | Single IP address resolved from a host (`10.0.0.1`)                                          |
+| `borntoberoot.net/24`            | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)            |
+| `borntoberoot.net/255.255.255.0` | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)            |
 
 | Port                  | Description                                        |
 | --------------------- | -------------------------------------------------- |
@@ -34,13 +51,18 @@ Example: `10.0.0.0/24; 10.0.[10-20]1` or `1-1024; 8080; 8443`
 
 :::
 
-![Port Scanner](../img/port-scanner.png)
+### Toolbar
 
-:::note
+| Button                  | Description                                                                     |
+| ----------------------- | ------------------------------------------------------------------------------- |
+| **Select port profile** | Opens a dialog to select a pre-defined port profile to populate the ports field |
 
-Right-click on the result to copy or export the information.
+### Context menu
 
-:::
+| Action        | Description                                      |
+| ------------- | ------------------------------------------------ |
+| **Copy**      | Copies the selected information to the clipboard |
+| **Export...** | Exports the selected or all results to a file    |
 
 ## Profile
 
@@ -101,7 +123,7 @@ See also the [Port Scanner](./port-scanner) example inputs for more information 
 
 ### Port profiles
 
-List of common `tcp` ports to scan for.
+List of common TCP ports to scan for.
 
 **Type:** `List<NETworkManager.Models.Network.PortProfileInfo>`
 
@@ -171,7 +193,7 @@ Too many threads can also cause performance problems on the device.
 
 :::note
 
-This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](../settings/general#threadpool-additional-min-threads) settings to configure the application wide thread pool.
+This setting only changes the maximum number of concurrently executed threads per host scan. See also the [General](../settings/general#threadpool-additional-min-threads) settings to configure the application-wide thread pool.
 
 :::
 
@@ -193,6 +215,6 @@ Too many threads can also cause performance problems on the device.
 
 :::note
 
-This setting only change the maximum number of concurrently executed threads per host scan. See also the [General](../settings/general#threadpool-additional-min-threads) settings to configure the application wide thread pool.
+This setting only changes the maximum number of concurrently executed threads per port scan. See also the [General](../settings/general#threadpool-additional-min-threads) settings to configure the application-wide thread pool.
 
 :::

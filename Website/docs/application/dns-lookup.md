@@ -1,14 +1,32 @@
 ---
 sidebar_position: 7
 description: "Query DNS servers for A, AAAA, CNAME, MX, NS, PTR, and other record types. NETworkManager DNS Lookup supports custom and predefined DNS server profiles."
-keywords: [NETworkManager, DNS lookup, DNS query, DNS records, name resolution, MX record, A record, DNS tool]
+keywords:
+  [
+    NETworkManager,
+    DNS lookup,
+    DNS query,
+    DNS records,
+    name resolution,
+    MX record,
+    A record,
+    DNS tool,
+  ]
 ---
 
 # DNS Lookup
 
 With the **DNS Lookup** you can query DNS servers for various resource records.
 
-Example inputs:
+:::info
+
+DNS (Domain Name System) is a hierarchical naming system for computers, services, and other resources connected to the internet or a private network. It translates human-readable hostnames into IP addresses and supports various record types such as A (IPv4), AAAA (IPv6), MX (mail), CNAME (alias), NS (name server), and PTR (reverse lookup).
+
+:::
+
+![DNS Lookup](../img/dns-lookup.png)
+
+### Example inputs
 
 | Host                         | Type    | Description                                                          |
 | ---------------------------- | ------- | -------------------------------------------------------------------- |
@@ -34,15 +52,14 @@ Example: `server-01.borntoberoot.net; 10.0.0.1`
 
 :::
 
-The dns server can be selected from a list of configured servers or you can enter a custom dns server in the format `<hostname>|<ipadress>:<port>` (`<port>` is optional, to use a custom port with IPv6 enclose the address in square brackets: `[<ipv6adress>]:53`).
+The DNS server can be selected from a list of configured servers or you can enter a custom DNS server in the format `<hostname>|<ipaddress>:<port>` (`<port>` is optional, to use a custom port with IPv6 enclose the address in square brackets: `[<ipv6address>]:53`).
 
-![DNS Lookup](../img/dns-lookup.png)
+### Context menu
 
-:::note
-
-Right-click on the result to copy or export the information.
-
-:::
+| Action        | Description                                      |
+| ------------- | ------------------------------------------------ |
+| **Copy**      | Copies the selected information to the clipboard |
+| **Export...** | Exports the selected or all results to a file    |
 
 ## Profile
 
@@ -120,7 +137,7 @@ Add a custom DNS suffix to the hostname.
 
 ### Recursion
 
-Use recursion for the dns query.
+Use recursion for the DNS query.
 
 **Type:** `Boolean`
 
@@ -128,7 +145,7 @@ Use recursion for the dns query.
 
 ### Use cache
 
-Use the cache for the dns query.
+Use the cache for the DNS query.
 
 **Type:** `Boolean`
 
@@ -159,7 +176,7 @@ Only show the most common query types (`A`, `AAAA`, `ANY`, `CNAME`, `DNSKEY`, `M
 
 ### Use only TCP
 
-Only use TCP for the dns query. DNS uses UDP by default.
+Only use TCP for the DNS query. DNS uses UDP by default.
 
 **Type:** `Boolean`
 
@@ -167,7 +184,7 @@ Only use TCP for the dns query. DNS uses UDP by default.
 
 ### Retries
 
-Retries for the dns query after which the query is considered lost.
+Number of retries for the DNS query after which the query is considered lost.
 
 **Type:** `Integer` [Min `1`, Max `10`]
 
@@ -175,7 +192,7 @@ Retries for the dns query after which the query is considered lost.
 
 ### Timeout (s)
 
-Timeout in seconds for the dns query after which the query is considered lost.
+Timeout in seconds for the DNS query, after which the query is considered lost.
 
 **Type:** `Integer` [Min `1`, Max `15`]
 

@@ -3930,9 +3930,9 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #endregion
 
-    #region ARPTable
+    #region NeighborTable
 
-    public bool ARPTable_AutoRefreshEnabled
+    public bool NeighborTable_AutoRefreshEnabled
     {
         get;
         set
@@ -3945,7 +3945,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    public AutoRefreshTimeInfo ARPTable_AutoRefreshTime
+    public AutoRefreshTimeInfo NeighborTable_AutoRefreshTime
     {
         get;
         set
@@ -3956,9 +3956,9 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.ARPTable_AutoRefreshTime;
+    } = GlobalStaticConfiguration.NeighborTable_AutoRefreshTime;
 
-    public string ARPTable_ExportFilePath
+    public string NeighborTable_ExportFilePath
     {
         get;
         set
@@ -3971,7 +3971,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    public ExportFileType ARPTable_ExportFileType
+    public ExportFileType NeighborTable_ExportFileType
     {
         get;
         set
@@ -3982,7 +3982,20 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.ARPTable_ExportFileType;
+    } = GlobalStaticConfiguration.NeighborTable_ExportFileType;
+
+    public string NeighborTable_InterfaceName
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 
     #endregion
 
