@@ -13,7 +13,7 @@
              xmlns:controls="clr-namespace:NETworkManager.Controls"
              xmlns:controls2="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
-             xmlns:wpfHelper="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:WiFiViewModel}">
     <UserControl.InputBindings>
@@ -171,7 +171,7 @@
                                                 Style="{StaticResource CleanButton}"
                                                 Margin="10,0,0,0">
                                             <Rectangle Width="24" Height="24"
-                                                       wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsAdaptersLoading}">
+                                                       wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsAdaptersLoading}">
                                                 <Rectangle.OpacityMask>
                                                     <VisualBrush Stretch="Uniform"
                                                                  Visual="{iconPacks:Material Kind=Refresh}" />
@@ -243,7 +243,7 @@
                                                     Style="{StaticResource CleanButton}"
                                                     Margin="0,0,10,0">
                                                 <Rectangle Width="24" Height="24"
-                                                           wpfHelper:ReloadAnimationHelper.IsReloading="{Binding Path=IsBackgroundSearchRunning}">
+                                                           wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding Path=IsBackgroundSearchRunning}">
                                                     <Rectangle.OpacityMask>
                                                         <VisualBrush Stretch="Uniform"
                                                                      Visual="{iconPacks:Material Kind=Refresh}" />
@@ -286,7 +286,7 @@
                                                                    ItemsSource="{Binding Path=NetworksView}"
                                                                    SelectedItem="{Binding Path=SelectedNetwork}"
                                                                    SelectedItemsList="{Binding Path=SelectedNetworks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                                   wpfHelper:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
+                                                                   wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
                                         <controls2:MultiSelectDataGrid.Resources>
                                             <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"
                                                          MinWidth="150">

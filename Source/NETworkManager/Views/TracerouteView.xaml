@@ -14,7 +14,7 @@
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
-             xmlns:wpfHelper="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:TracerouteViewModel}">
     <UserControl.Resources>
@@ -147,7 +147,7 @@
                                       Grid.Row="3" CanUserSortColumns="False" ItemsSource="{Binding Path=ResultsView}"
                                       SelectedItem="{Binding SelectedResult}"
                                       SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      wpfHelper:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
+                                      wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
             <controls:MultiSelectDataGrid.Resources>
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.IPScanner}"

@@ -36,10 +36,12 @@ public static class DataGridHelper
         if (d is not DataGrid dataGrid || e.NewValue is not bool enabled || !enabled)
             return;
 
-        EventHandler<DataGridRowEventArgs> handler = null;
-        handler = (_, _) =>
+        dataGrid.LoadingRow += Handler;
+        return;
+
+        void Handler(object sender, DataGridRowEventArgs args)
         {
-            dataGrid.LoadingRow -= handler;
+            dataGrid.LoadingRow -= Handler;
 
             dataGrid.Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -53,8 +55,6 @@ public static class DataGridHelper
                     column.Width = width;
                 }
             }), DispatcherPriority.ContextIdle);
-        };
-
-        dataGrid.LoadingRow += handler;
+        }
     }
 }
