@@ -357,8 +357,7 @@
                                     Binding="{Binding (network:PortScannerPortInfo.LookupInfo).Description}"
                                     SortMemberPath="LookupInfo.Description"
                                     MinWidth="200"
-                                    Width="*">
-                </DataGridTextColumn>
+                                    Width="*" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
     </Grid>
