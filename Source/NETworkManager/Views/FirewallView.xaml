@@ -88,7 +88,7 @@
                         ItemsSource="{Binding ResultsView}"
                         SelectedItem="{Binding SelectedResult}"
                         SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        LoadingRow="DataGridFirewallRules_LoadingRow"
+                        wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True"
                         RowDetailsVisibilityMode="Collapsed">
                         <controls:MultiSelectDataGrid.InputBindings>
                             <KeyBinding Command="{Binding EditRuleCommand}" Key="F2" />

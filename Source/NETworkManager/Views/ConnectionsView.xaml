@@ -101,7 +101,7 @@
                                               SelectedItem="{Binding SelectedResult}"
                                               SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Sorting="DataGrid_OnSorting"
-                                              LoadingRow="DataGridResults_LoadingRow">
+                                              wpfHelper:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
                     <DataGrid.Resources>
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.CopyDots}"

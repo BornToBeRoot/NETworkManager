@@ -286,7 +286,7 @@
                                                                    ItemsSource="{Binding Path=NetworksView}"
                                                                    SelectedItem="{Binding Path=SelectedNetwork}"
                                                                    SelectedItemsList="{Binding Path=SelectedNetworks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                                   LoadingRow="DataGridNetworks_LoadingRow">
+                                                                   wpfHelper:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
                                         <controls2:MultiSelectDataGrid.Resources>
                                             <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"
                                                          MinWidth="150">
