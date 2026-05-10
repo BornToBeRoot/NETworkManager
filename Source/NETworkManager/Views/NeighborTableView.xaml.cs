@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Threading;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
 using NETworkManager.ViewModels;
@@ -33,6 +35,27 @@ public partial class NeighborTableView
     public void OnViewVisible()
     {
         _viewModel.OnViewVisible();
+    }
+
+    // Force star-sized DataGrid columns to recompute on first row load. Without this, an
+    // initially empty DataGrid sizes star columns to MinWidth because the inner ScrollViewer
+    // measures with infinite width; only a window resize triggers a correct re-measure.
+    private void DataGridNeighborTable_LoadingRow(object sender, DataGridRowEventArgs e)
+    {
+        DataGridNeighborTable.LoadingRow -= DataGridNeighborTable_LoadingRow;
+
+        Dispatcher.BeginInvoke(new Action(() =>
+        {
+            foreach (var column in DataGridNeighborTable.Columns)
+            {
+                if (!column.Width.IsStar)
+                    continue;
+
+                var width = column.Width;
+                column.Width = 0;
+                column.Width = width;
+            }
+        }), DispatcherPriority.ContextIdle);
     }
 
     private void DataGrid_OnSorting(object sender, DataGridSortingEventArgs e)

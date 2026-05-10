@@ -94,11 +94,13 @@
                                  Style="{StaticResource ResourceKey=SearchTextBox}" />
                     </StackPanel>
                 </Grid>
-                <controls:MultiSelectDataGrid Grid.Column="0" Grid.Row="2"
+                <controls:MultiSelectDataGrid x:Name="DataGridResults"
+                                              Grid.Column="0" Grid.Row="2"
                                               ItemsSource="{Binding ResultsView}"
                                               SelectedItem="{Binding SelectedResult}"
                                               SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              Sorting="DataGrid_OnSorting">
+                                              Sorting="DataGrid_OnSorting"
+                                              LoadingRow="DataGridResults_LoadingRow">
                     <controls:MultiSelectDataGrid.Resources>
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.CopyDots}"
@@ -155,13 +157,17 @@
                     <controls:MultiSelectDataGrid.Columns>
                         <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}"
                                             Binding="{Binding (network:ListenerInfo.Protocol)}"
-                                            SortMemberPath="Protocol" MinWidth="100" />
+                                            SortMemberPath="Protocol"
+                                            MinWidth="100" />
                         <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}"
                                             Binding="{Binding (network:ListenerInfo.IPAddress)}"
-                                            SortMemberPath="IPAddress" MinWidth="150" />
+                                            SortMemberPath="IPAddress"
+                                            MinWidth="150" />
                         <DataGridTextColumn Header="{x:Static localization:Strings.Port}"
                                             Binding="{Binding (network:ListenerInfo.Port)}"
-                                            SortMemberPath="Port" MinWidth="100" />
+                                            SortMemberPath="Port"
+                                            MinWidth="100" 
+                                            Width="*" />
                     </controls:MultiSelectDataGrid.Columns>
                 </controls:MultiSelectDataGrid>
                 <Grid Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">

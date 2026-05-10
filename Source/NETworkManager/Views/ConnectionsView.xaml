@@ -95,11 +95,13 @@
                                  Style="{StaticResource ResourceKey=SearchTextBox}" />
                     </StackPanel>
                 </Grid>
-                <controls:MultiSelectDataGrid Grid.Column="0" Grid.Row="2"
+                <controls:MultiSelectDataGrid x:Name="DataGridResults"
+                                              Grid.Column="0" Grid.Row="2"
                                               ItemsSource="{Binding ResultsView}"
                                               SelectedItem="{Binding SelectedResult}"
                                               SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              Sorting="DataGrid_OnSorting">
+                                              Sorting="DataGrid_OnSorting"
+                                              LoadingRow="DataGridResults_LoadingRow">
                     <DataGrid.Resources>
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.CopyDots}"
@@ -211,7 +213,8 @@
                                             SortMemberPath="ProcessName" MinWidth="150" />
                         <DataGridTextColumn Header="{x:Static Member=localization:Strings.ProcessPath}"
                                             Binding="{Binding Path=(network:ConnectionInfo.ProcessPath)}"
-                                            SortMemberPath="ProcessPath" MinWidth="150" />
+                                            SortMemberPath="ProcessPath" MinWidth="150"
+                                            Width="*" />
                     </DataGrid.Columns>
                 </controls:MultiSelectDataGrid>
                 <WrapPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal"
