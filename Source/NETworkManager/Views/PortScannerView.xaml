@@ -40,11 +40,11 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
@@ -223,9 +223,11 @@
                        Style="{DynamicResource StatusMessageTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
-        <controls:MultiSelectDataGrid Grid.Row="3" ItemsSource="{Binding Path=ResultsView}"
+        <controls:MultiSelectDataGrid x:Name="DataGridResults"
+                                      Grid.Row="3" ItemsSource="{Binding Path=ResultsView}"
                                       SelectedItem="{Binding Path=SelectedResult}"
                                       SelectedItemsList="{Binding Path=SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      LoadingRow="DataGridResults_LoadingRow"
                                       EnableRowVirtualization="True"
                                       ScrollViewer.CanContentScroll="True"
                                       VirtualizingPanel.IsVirtualizing="True"
@@ -354,7 +356,9 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Description}"
                                     Binding="{Binding (network:PortScannerPortInfo.LookupInfo).Description}"
                                     SortMemberPath="LookupInfo.Description"
-                                    MinWidth="200" />
+                                    MinWidth="200"
+                                    Width="*">
+                </DataGridTextColumn>
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
     </Grid>
