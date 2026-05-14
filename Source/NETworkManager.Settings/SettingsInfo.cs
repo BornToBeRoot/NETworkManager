@@ -8,6 +8,7 @@ using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
+using NETworkManager.Utilities.ActiveDirectory;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -575,7 +576,87 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    
+
+    public string Profiles_ImportLdapServer
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public int Profiles_ImportLdapPort
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Profiles_ImportLdapUseSsl ? 
+        GlobalStaticConfiguration.Profiles_ImportLdapPort_Ldaps :
+        GlobalStaticConfiguration.Profiles_ImportLdapPort_Ldap;
+
+    public bool Profiles_ImportLdapUseSsl
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Profiles_ImportLdapUseSsl;
+
+    public bool Profiles_ImportLdapExcludeDisabledComputerAccounts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Profiles_ImportLdapExcludeDisabledComputerAccounts;
+
+    public ActiveDirectoryAuthenticationMode Profiles_ImportLdapAuthMode
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = ActiveDirectoryAuthenticationMode.CurrentUser;
+
+    public string Profiles_ImportLdapAdditionalFilter
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     // Settings
 
     public bool Settings_IsDailyBackupEnabled

@@ -84,6 +84,12 @@ public static class GlobalStaticConfiguration
     public static bool Profiles_IsDailyBackupEnabled => true;
     public static int Profiles_MaximumNumberOfBackups => 10;
 
+    // Profiles: AD computer import
+    public static int Profiles_ImportLdapPort_Ldap => 389;
+    public static int Profiles_ImportLdapPort_Ldaps => 636;
+    public static bool Profiles_ImportLdapUseSsl => true;
+    public static bool Profiles_ImportLdapExcludeDisabledComputerAccounts => true;
+    
     // Settings: Settings
     public static bool Settings_IsDailyBackupEnabled => true;
     public static int Settings_MaximumNumberOfBackups => 10;
