@@ -564,7 +564,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Profiles_MaximumNumberOfBackups;
 
-    public string Profiles_ImportLdapSearchBase
+    public string Profiles_ImportActiveDirectorySearchBase
     {
         get;
         set
@@ -577,7 +577,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    public string Profiles_ImportLdapServer
+    public string Profiles_ImportActiveDirectoryServer
     {
         get;
         set
@@ -590,7 +590,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    public int Profiles_ImportLdapPort
+    public int Profiles_ImportActiveDirectoryPort
     {
         get;
         set
@@ -601,11 +601,11 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Profiles_ImportLdapUseSsl ? 
-        GlobalStaticConfiguration.Profiles_ImportLdapPort_Ldaps :
-        GlobalStaticConfiguration.Profiles_ImportLdapPort_Ldap;
+    } = GlobalStaticConfiguration.Profiles_ImportActiveDirectoryUseSsl ? 
+        GlobalStaticConfiguration.Profiles_ImportActiveDirectoryPort_Ldaps :
+        GlobalStaticConfiguration.Profiles_ImportActiveDirectoryPort_Ldap;
 
-    public bool Profiles_ImportLdapUseSsl
+    public bool Profiles_ImportActiveDirectoryUseSsl
     {
         get;
         set
@@ -616,9 +616,9 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Profiles_ImportLdapUseSsl;
+    } = GlobalStaticConfiguration.Profiles_ImportActiveDirectoryUseSsl;
 
-    public bool Profiles_ImportLdapExcludeDisabledComputerAccounts
+    public bool Profiles_ImportActiveDirectoryExcludeDisabledComputerAccounts
     {
         get;
         set
@@ -629,9 +629,9 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Profiles_ImportLdapExcludeDisabledComputerAccounts;
+    } = GlobalStaticConfiguration.Profiles_ImportActiveDirectoryExcludeDisabledComputerAccounts;
 
-    public ActiveDirectoryAuthenticationMode Profiles_ImportLdapAuthMode
+    public ActiveDirectoryAuthenticationMode Profiles_ImportActiveDirectoryAuthMode
     {
         get;
         set
@@ -644,7 +644,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = ActiveDirectoryAuthenticationMode.CurrentUser;
 
-    public string Profiles_ImportLdapAdditionalFilter
+    public string Profiles_ImportActiveDirectoryAdditionalFilter
     {
         get;
         set
@@ -1061,7 +1061,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> IPScanner_HostHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -1260,7 +1260,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> PortScanner_HostHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -1273,7 +1273,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> PortScanner_PortHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -1420,7 +1420,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> PingMonitor_HostHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -1567,7 +1567,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> Traceroute_HostHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -1701,7 +1701,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> DNSLookup_HostHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -1729,7 +1729,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public DNSServerConnectionInfoProfile DNSLookup_SelectedDNSServer
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -2847,7 +2847,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public int PuTTY_RawPort
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -3028,7 +3028,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> SNMP_HostHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -3041,7 +3041,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> SNMP_OidHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -3451,7 +3451,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> WakeOnLan_MACAddressHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -3464,7 +3464,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> WakeOnLan_BroadcastHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -3507,7 +3507,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> Whois_DomainHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -3576,7 +3576,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> IPGeolocation_HostHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -3647,7 +3647,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> SubnetCalculator_Calculator_SubnetHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -3664,7 +3664,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> SubnetCalculator_Subnetting_SubnetHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -3677,7 +3677,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> SubnetCalculator_Subnetting_NewSubnetmaskHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -3720,7 +3720,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> SubnetCalculator_WideSubnet_Subnet1
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -3733,7 +3733,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> SubnetCalculator_WideSubnet_Subnet2
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -3752,7 +3752,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> BitCalculator_InputHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -3822,7 +3822,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> Lookup_OUI_SearchHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;
@@ -3861,7 +3861,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> Lookup_Port_SearchHistory
     {
         get;
-        set
+        init
         {
             if (value == field)
                 return;

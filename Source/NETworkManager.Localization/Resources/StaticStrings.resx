@@ -351,4 +351,10 @@
   <data name="ActiveDirectorySearchBase" xml:space="preserve">
     <value>OU=Computers,DC=borntoberoot,DC=net</value>
   </data>
+  <data name="ExampleActiveDirectoryPort" xml:space="preserve">
+    <value>636</value>
+  </data>
+  <data name="ExampleActiveDirectorySearchFilter" xml:space="preserve">
+    <value>(name=SRV-*)</value>
+  </data>
 </root>

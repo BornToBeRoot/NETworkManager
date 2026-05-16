@@ -78,6 +78,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 636.
+        /// </summary>
+        public static string ExampleActiveDirectoryPort {
+            get {
+                return ResourceManager.GetString("ExampleActiveDirectoryPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (name=SRV-*).
+        /// </summary>
+        public static string ExampleActiveDirectorySearchFilter {
+            get {
+                return ResourceManager.GetString("ExampleActiveDirectorySearchFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 9600.
         /// </summary>
         public static string ExampleBaud9600 {

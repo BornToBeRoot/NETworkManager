@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using log4net;
-using MahApps.Metro.SimpleChildWindow;
-using NETworkManager.Controls;
-using NETworkManager.Localization.Resources;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -20,26 +16,38 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
 {
     private static readonly ILog Log = LogManager.GetLogger(typeof(ImportAdComputersViewModel));
 
-    private readonly Window _parentWindow;
-    private readonly Action _closeDialog;
+    private readonly Action<IReadOnlyList<ProfileImportCandidate>, ImportAdComputersViewModel> _searchCompleted;
 
-    public ImportAdComputersViewModel(Window parentWindow, string groupName, Action closeDialog)
+    public ImportAdComputersViewModel(Action<IReadOnlyList<ProfileImportCandidate>, ImportAdComputersViewModel> searchCompleted, Action cancelDialog, ImportAdComputersViewModel previousState = null)
     {
-        _parentWindow = parentWindow;
-        _closeDialog = closeDialog;
+        _searchCompleted = searchCompleted;
 
-        GroupNames = new ObservableCollection<string>(ProfileManager.GetGroupNames());
-        GroupName = string.IsNullOrWhiteSpace(groupName)
-            ? GroupNames.FirstOrDefault() ?? string.Empty
-            : groupName;
+        if (previousState != null)
+        {
+            LdapSearchBase = previousState.LdapSearchBase;
+            LdapServer = previousState.LdapServer;
+            LdapPort = previousState.LdapPort;
+            UseSsl = previousState.UseSsl;
+            AuthMode = previousState.AuthMode;
+            Username = previousState.Username;
+            Password = previousState.Password;
+            ExcludeDisabledComputerAccounts = previousState.ExcludeDisabledComputerAccounts;
+            AdditionalLdapFilter = previousState.AdditionalLdapFilter;
+        }
+        else
+        {
+            LdapSearchBase = SettingsManager.Current.Profiles_ImportActiveDirectorySearchBase ?? string.Empty;
+            LdapServer = SettingsManager.Current.Profiles_ImportActiveDirectoryServer ?? string.Empty;
+            LdapPort = SettingsManager.Current.Profiles_ImportActiveDirectoryPort;
+            UseSsl = SettingsManager.Current.Profiles_ImportActiveDirectoryUseSsl;
+            AuthMode = SettingsManager.Current.Profiles_ImportActiveDirectoryAuthMode;
+            ExcludeDisabledComputerAccounts = SettingsManager.Current.Profiles_ImportActiveDirectoryExcludeDisabledComputerAccounts;
+            AdditionalLdapFilter = SettingsManager.Current.Profiles_ImportActiveDirectoryAdditionalFilter ?? string.Empty;
+        }
 
-        LdapSearchBase = SettingsManager.Current.Profiles_ImportLdapSearchBase ?? string.Empty;
-
-        ImportCommand = new RelayCommand(_ => ImportAction(), Import_CanExecute);
-        CancelCommand = new RelayCommand(_ => CancelAction());
+        SearchCommand = new RelayCommand(_ => SearchAction(), _ => Search_CanExecute());
+        CancelCommand = new RelayCommand(_ => cancelDialog());
     }
-
-    public ObservableCollection<string> GroupNames { get; }
 
     public string LdapSearchBase
     {
@@ -51,11 +59,10 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
-            CommandManager.InvalidateRequerySuggested();
         }
     }
 
-    public string GroupName
+    public string LdapServer
     {
         get;
         set
@@ -65,7 +72,42 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
-            CommandManager.InvalidateRequerySuggested();
+        }
+    }
+
+    public int LdapPort
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool UseSsl
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+
+            LdapPort = value switch
+            {
+                // Auto-switch the well-known port when the user hasn't picked a custom one
+                true when LdapPort == GlobalStaticConfiguration.Profiles_ImportActiveDirectoryPort_Ldap =>
+                    GlobalStaticConfiguration.Profiles_ImportActiveDirectoryPort_Ldaps,
+                false when LdapPort == GlobalStaticConfiguration.Profiles_ImportActiveDirectoryPort_Ldaps =>
+                    GlobalStaticConfiguration.Profiles_ImportActiveDirectoryPort_Ldap,
+                _ => LdapPort
+            };
         }
     }
 
@@ -80,9 +122,84 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
             field = value;
             OnPropertyChanged();
         }
-    } = true;
+    }
 
-    public bool IsBusy
+    public string AdditionalLdapFilter
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private ActiveDirectoryAuthenticationMode AuthMode
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(IsCurrentUserAuth));
+            OnPropertyChanged(nameof(IsCustomAuth));
+        }
+    }
+
+    public bool IsCurrentUserAuth
+    {
+        get => AuthMode == ActiveDirectoryAuthenticationMode.CurrentUser;
+        set
+        {
+            if (value)
+                AuthMode = ActiveDirectoryAuthenticationMode.CurrentUser;
+        }
+    }
+
+    public bool IsCustomAuth
+    {
+        get => AuthMode == ActiveDirectoryAuthenticationMode.Custom;
+        set
+        {
+            if (value)
+                AuthMode = ActiveDirectoryAuthenticationMode.Custom;
+        }
+    }
+
+    public string Username
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = string.Empty;
+
+    public SecureString Password
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            IsPasswordEmpty = value == null || value.Length == 0;
+        }
+    } = new();
+
+    public bool IsPasswordEmpty
     {
         get;
         private set
@@ -92,135 +209,114 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
-            CommandManager.InvalidateRequerySuggested();
+        }
+    } = true;
+
+    public bool IsSearching
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
         }
     }
 
-    public ICommand ImportCommand { get; }
+    public string StatusMessage
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(IsStatusMessageDisplayed));
+        }
+    }
+
+    public bool IsStatusMessageDisplayed => !string.IsNullOrEmpty(StatusMessage);
+
+    public ICommand SearchCommand { get; }
 
     public ICommand CancelCommand { get; }
 
-    private bool Import_CanExecute(object parameter)
+    private bool Search_CanExecute()
     {
-        if (IsBusy)
-            return false;
-
-        if (string.IsNullOrWhiteSpace(LdapSearchBase) || string.IsNullOrWhiteSpace(GroupName))
-            return false;
-
-        var trimmedGroup = GroupName.Trim();
-        if (trimmedGroup.StartsWith('~'))
-            return false;
-
-        return true;
+        return !IsSearching;
     }
 
-    private void CancelAction()
+    private async void SearchAction()
     {
-        _closeDialog();
-    }
-
-    private async void ImportAction()
-    {
-        IsBusy = true;
+        IsSearching = true;
+        StatusMessage = string.Empty;
 
         try
         {
-            var searchBase = LdapSearchBase.Trim();
-            var targetGroup = GroupName.Trim();
+            var options = new ActiveDirectorySearchOptions
+            {
+                SearchBase = LdapSearchBase.Trim(),
+                Server = LdapServer?.Trim() ?? string.Empty,
+                Port = LdapPort,
+                UseSsl = UseSsl,
+                ExcludeDisabledComputerAccounts = ExcludeDisabledComputerAccounts,
+                AdditionalFilter = AdditionalLdapFilter?.Trim() ?? string.Empty,
+                Username = AuthMode == ActiveDirectoryAuthenticationMode.Custom ? Username.Trim() : string.Empty,
+                Password = AuthMode == ActiveDirectoryAuthenticationMode.Custom ? Password : null
+            };
 
             IReadOnlyList<ActiveDirectoryComputerRecord> computers;
 
             try
             {
                 computers = await Task.Run(() =>
-                        ActiveDirectoryComputerSearcher.GetComputersInSubtree(searchBase,
-                            ExcludeDisabledComputerAccounts))
-                    .ConfigureAwait(true);
+                    ActiveDirectoryComputerSearcher.GetComputersInSubtree(options)).ConfigureAwait(true);
             }
             catch (Exception exception)
             {
-                Log.Error("Active Directory computer import query failed.", exception);
-
-                ConfigurationManager.OnDialogOpen();
-
-                await DialogHelper.ShowMessageAsync(_parentWindow, Strings.Error,
-                    $"{Strings.ActiveDirectoryImportFailed}{Environment.NewLine}{Environment.NewLine}{exception.Message}",
-                    ChildWindowIcon.Error);
-
-                ConfigurationManager.OnDialogClose();
+                Log.Error("Active Directory search failed.", exception);
+                StatusMessage = exception.Message;
                 return;
             }
 
-            SettingsManager.Current.Profiles_ImportLdapSearchBase = searchBase;
-            SettingsManager.Save();
-
-            var targetGroupInfo = ProfileManager.LoadedProfileFileData.Groups
-                .FirstOrDefault(group => group.Name.Equals(targetGroup, StringComparison.OrdinalIgnoreCase));
-
-            var existingProfileNames = new HashSet<string>(
-                targetGroupInfo?.Profiles.Select(profile => profile.Name) ?? [],
-                StringComparer.OrdinalIgnoreCase);
-
-            var importedCount = 0;
-            var skippedDuplicateCount = 0;
-            var skippedNoDnsCount = 0;
-
-            foreach (var computer in computers)
+            if (computers.Count == 0)
             {
-                var dnsHostName = computer.DnsHostName.Trim();
-
-                if (string.IsNullOrWhiteSpace(dnsHostName))
-                {
-                    skippedNoDnsCount++;
-                    continue;
-                }
-
-                if (existingProfileNames.Contains(computer.ProfileName))
-                {
-                    skippedDuplicateCount++;
-                    continue;
-                }
-
-                var profile = CreateRemoteDesktopProfileForImportedComputer(computer.ProfileName, dnsHostName,
-                    targetGroup);
-
-                ProfileManager.AddProfile(profile);
-                existingProfileNames.Add(computer.ProfileName);
-                importedCount++;
+                StatusMessage = Localization.Resources.Strings.ActiveDirectoryNoComputersFound;
+                return;
             }
 
-            ProfileManager.Save();
+            var importedAt = DateTime.Now.ToString("g", System.Globalization.CultureInfo.CurrentUICulture);
+            var candidates = computers
+                .Select(c => new ProfileImportCandidate(
+                    name: c.ProfileName,
+                    host: c.DnsHostName,
+                    description: string.Format(Localization.Resources.Strings.ActiveDirectory_ImportDescription, importedAt),
+                    importSource: ProfileImportMethod.ActiveDirectory,
+                    importSourceId: c.ObjectGuid))
+                .ToList();
 
-            ConfigurationManager.OnDialogOpen();
-
-            await DialogHelper.ShowMessageAsync(_parentWindow, Strings.ImportComputersFromActiveDirectory,
-                string.Format(Strings.ActiveDirectoryImportSummary, importedCount, skippedDuplicateCount,
-                    skippedNoDnsCount),
-                ChildWindowIcon.Info);
-
-            ConfigurationManager.OnDialogClose();
-
-            _closeDialog();
+            PersistSettings(options);
+            
+            _searchCompleted(candidates, this);
         }
         finally
         {
-            IsBusy = false;
+            IsSearching = false;
         }
     }
-
-    private static ProfileInfo CreateRemoteDesktopProfileForImportedComputer(string profileName, string dnsHostName,
-        string targetGroup)
+    
+    private void PersistSettings(ActiveDirectorySearchOptions options)
     {
-        return new ProfileInfo
-        {
-            Name = profileName,
-            Host = dnsHostName,
-            Group = targetGroup,
-            RemoteDesktop_Enabled = true,
-            RemoteDesktop_InheritHost = true,
-            RemoteDesktop_Host = dnsHostName,
-            TagsCollection = new ObservableSetCollection<string>()
-        };
+        SettingsManager.Current.Profiles_ImportActiveDirectorySearchBase = options.SearchBase;
+        SettingsManager.Current.Profiles_ImportActiveDirectoryServer = options.Server;
+        SettingsManager.Current.Profiles_ImportActiveDirectoryPort = options.Port;
+        SettingsManager.Current.Profiles_ImportActiveDirectoryUseSsl = options.UseSsl;
+        SettingsManager.Current.Profiles_ImportActiveDirectoryExcludeDisabledComputerAccounts = options.ExcludeDisabledComputerAccounts;
+        SettingsManager.Current.Profiles_ImportActiveDirectoryAdditionalFilter = options.AdditionalFilter;
+        SettingsManager.Current.Profiles_ImportActiveDirectoryAuthMode = AuthMode;
     }
 }
