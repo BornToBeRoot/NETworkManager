@@ -601,7 +601,7 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Profiles_ImportActiveDirectoryUseSsl ? 
+    } = GlobalStaticConfiguration.Profiles_ImportActiveDirectoryUseSsl ?
         GlobalStaticConfiguration.Profiles_ImportActiveDirectoryPort_Ldaps :
         GlobalStaticConfiguration.Profiles_ImportActiveDirectoryPort_Ldap;
 
@@ -684,7 +684,7 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.Settings_MaximumNumberOfBackups;
-    
+
     #endregion
 
     #region Others

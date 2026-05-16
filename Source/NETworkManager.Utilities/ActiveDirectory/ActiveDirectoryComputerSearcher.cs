@@ -86,10 +86,10 @@ public static class ActiveDirectoryComputerSearcher
     private static DirectoryEntry CreateDirectoryEntry(string ldapPath, ActiveDirectorySearchOptions options)
     {
         var authTypes = AuthenticationTypes.Secure;
-        
+
         if (string.IsNullOrEmpty(options.Username))
             return new DirectoryEntry(ldapPath, null, null, authTypes);
-        
+
         if (options.UseSsl)
             authTypes |= AuthenticationTypes.SecureSocketsLayer;
 

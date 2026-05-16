@@ -225,6 +225,19 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
         }
     }
 
+    public bool IsStatusMessageDisplayed
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     public string StatusMessage
     {
         get;
@@ -235,11 +248,8 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
-            OnPropertyChanged(nameof(IsStatusMessageDisplayed));
         }
     }
-
-    public bool IsStatusMessageDisplayed => !string.IsNullOrEmpty(StatusMessage);
 
     public ICommand SearchCommand { get; }
 
@@ -253,62 +263,67 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
     private async void SearchAction()
     {
         IsSearching = true;
-        StatusMessage = string.Empty;
+        StatusMessage = Localization.Resources.Strings.SearchingActiveDirectoryDots;
+        IsStatusMessageDisplayed = true;
+
+        await Task.Delay(GlobalStaticConfiguration.ApplicationUIDelayInterval);
+
+        var options = new ActiveDirectorySearchOptions
+        {
+            SearchBase = LdapSearchBase.Trim(),
+            Server = LdapServer?.Trim() ?? string.Empty,
+            Port = LdapPort,
+            UseSsl = UseSsl,
+            ExcludeDisabledComputerAccounts = ExcludeDisabledComputerAccounts,
+            AdditionalFilter = AdditionalLdapFilter?.Trim() ?? string.Empty,
+            Username = AuthMode == ActiveDirectoryAuthenticationMode.Custom ? Username.Trim() : string.Empty,
+            Password = AuthMode == ActiveDirectoryAuthenticationMode.Custom ? Password : null
+        };
+
+        IReadOnlyList<ActiveDirectoryComputerRecord> computers;
 
         try
         {
-            var options = new ActiveDirectorySearchOptions
-            {
-                SearchBase = LdapSearchBase.Trim(),
-                Server = LdapServer?.Trim() ?? string.Empty,
-                Port = LdapPort,
-                UseSsl = UseSsl,
-                ExcludeDisabledComputerAccounts = ExcludeDisabledComputerAccounts,
-                AdditionalFilter = AdditionalLdapFilter?.Trim() ?? string.Empty,
-                Username = AuthMode == ActiveDirectoryAuthenticationMode.Custom ? Username.Trim() : string.Empty,
-                Password = AuthMode == ActiveDirectoryAuthenticationMode.Custom ? Password : null
-            };
+            computers = await Task.Run(() =>
+                ActiveDirectoryComputerSearcher.GetComputersInSubtree(options)).ConfigureAwait(true);
 
-            IReadOnlyList<ActiveDirectoryComputerRecord> computers;
-
-            try
-            {
-                computers = await Task.Run(() =>
-                    ActiveDirectoryComputerSearcher.GetComputersInSubtree(options)).ConfigureAwait(true);
-            }
-            catch (Exception exception)
-            {
-                Log.Error("Active Directory search failed.", exception);
-                StatusMessage = exception.Message;
-                return;
-            }
-
-            if (computers.Count == 0)
-            {
-                StatusMessage = Localization.Resources.Strings.ActiveDirectoryNoComputersFound;
-                return;
-            }
-
-            var importedAt = DateTime.Now.ToString("g", System.Globalization.CultureInfo.CurrentUICulture);
-            var candidates = computers
-                .Select(c => new ProfileImportCandidate(
-                    name: c.ProfileName,
-                    host: c.DnsHostName,
-                    description: string.Format(Localization.Resources.Strings.ActiveDirectory_ImportDescription, importedAt),
-                    importSource: ProfileImportMethod.ActiveDirectory,
-                    importSourceId: c.ObjectGuid))
-                .ToList();
-
-            PersistSettings(options);
-            
-            _searchCompleted(candidates, this);
-        }
-        finally
-        {
             IsSearching = false;
+            IsStatusMessageDisplayed = false;
         }
+        catch (Exception exception)
+        {
+            Log.Error("Active Directory search failed.", exception);
+
+            IsSearching = false;
+            StatusMessage = exception.Message;
+
+            return;
+        }
+
+        if (computers.Count == 0)
+        {
+            StatusMessage = Localization.Resources.Strings.ActiveDirectoryNoComputersFound;
+            IsStatusMessageDisplayed = true;
+
+            return;
+        }
+
+        var importedAt = DateTime.Now.ToString("g", System.Globalization.CultureInfo.CurrentUICulture);
+        var candidates = computers
+            .Select(c => new ProfileImportCandidate(
+                name: c.ProfileName,
+                host: c.DnsHostName,
+                description: string.Format(Localization.Resources.Strings.ActiveDirectory_ImportDescription, importedAt),
+                importSource: ProfileImportMethod.ActiveDirectory,
+                importSourceId: c.ObjectGuid))
+            .ToList();
+
+        PersistSettings(options);
+
+        _searchCompleted(candidates, this);
+
     }
-    
+
     private void PersistSettings(ActiveDirectorySearchOptions options)
     {
         SettingsManager.Current.Profiles_ImportActiveDirectorySearchBase = options.SearchBase;

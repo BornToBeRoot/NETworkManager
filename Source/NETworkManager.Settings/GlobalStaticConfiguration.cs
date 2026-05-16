@@ -89,7 +89,7 @@ public static class GlobalStaticConfiguration
     public static int Profiles_ImportActiveDirectoryPort_Ldaps => 636;
     public static bool Profiles_ImportActiveDirectoryUseSsl => true;
     public static bool Profiles_ImportActiveDirectoryExcludeDisabledComputerAccounts => true;
-    
+
     // Settings: Settings
     public static bool Settings_IsDailyBackupEnabled => true;
     public static int Settings_MaximumNumberOfBackups => 10;

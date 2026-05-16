@@ -581,8 +581,7 @@ public static class ProfileDialogManager
             switch (instance.SelectedMethod.Method)
             {
                 case ProfileImportMethod.ActiveDirectory:
-                    ShowImportComputersFromActiveDirectoryDialog(parentWindow, viewModel, targetGroup)
-                        .ConfigureAwait(false);
+                    ShowSearchAdComputersDialog(parentWindow, viewModel, targetGroup, previousState: null).ConfigureAwait(false);
                     break;
             }
         }, _ => CloseChild());
@@ -597,7 +596,8 @@ public static class ProfileDialogManager
         return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
-    public static Task ShowImportComputersFromActiveDirectoryDialog(Window parentWindow, IProfileManagerMinimal viewModel, string suggestedTargetGroup)
+    private static Task ShowSearchAdComputersDialog(Window parentWindow, IProfileManagerMinimal viewModel,
+        string targetGroup, ImportAdComputersViewModel previousState)
     {
         var childWindow = new ImportAdComputersChildWindow(parentWindow);
 
@@ -609,10 +609,69 @@ public static class ProfileDialogManager
             viewModel.OnProfileManagerDialogClose();
         }
 
-        var childWindowViewModel =
-            new ImportAdComputersViewModel(parentWindow, suggestedTargetGroup ?? string.Empty, CloseChild);
+        var childWindowViewModel = new ImportAdComputersViewModel(
+            (candidates, searchViewModel) =>
+            {
+                CloseChild();
+
+                ShowImportProfilesResultDialog(parentWindow, viewModel, targetGroup, candidates, Strings.ImportProfiles_Source_ActiveDirectory,
+                    backToSourceCallback: () => ShowSearchAdComputersDialog(parentWindow, viewModel, targetGroup, searchViewModel).ConfigureAwait(false)
+                ).ConfigureAwait(false);
+            }, CloseChild, previousState);
 
         childWindow.Title = Strings.ImportComputersFromActiveDirectory;
+        childWindow.DataContext = childWindowViewModel;
+
+        viewModel.OnProfileManagerDialogOpen();
+
+        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return parentWindow.ShowChildWindowAsync(childWindow);
+    }
+
+    private static Task ShowImportProfilesResultDialog(Window parentWindow, IProfileManagerMinimal viewModel,
+        string targetGroup, IReadOnlyList<ProfileImportCandidate> candidates, string sourceLabel,
+        Action backToSourceCallback)
+    {
+        var childWindow = new ImportProfilesResultChildWindow(parentWindow);
+
+        void CloseChild()
+        {
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            viewModel.OnProfileManagerDialogClose();
+        }
+
+        async void ShowSummary(int imported, int skippedDuplicates, int skippedNoHost)
+        {
+            CloseChild();
+
+            Settings.ConfigurationManager.OnDialogOpen();
+
+            await DialogHelper.ShowMessageAsync(parentWindow, Strings.ImportResults,
+                string.Format(Strings.ProfileImportSummary, imported, skippedDuplicates, skippedNoHost));
+
+            Settings.ConfigurationManager.OnDialogClose();
+        }
+
+        async void ShowError(string message)
+        {
+            Settings.ConfigurationManager.OnDialogOpen();
+
+            await DialogHelper.ShowMessageAsync(parentWindow, Strings.Error, message, ChildWindowIcon.Error);
+
+            Settings.ConfigurationManager.OnDialogClose();
+        }
+
+        var childWindowViewModel = new ImportProfilesResultViewModel(candidates, sourceLabel, targetGroup,
+            backCallback: () =>
+            {
+                CloseChild();
+                backToSourceCallback();
+            }, cancelCallback: CloseChild, completedCallback: ShowSummary, errorHandler: ShowError);
+
+        childWindow.Title = Strings.ImportResults;
         childWindow.DataContext = childWindowViewModel;
 
         viewModel.OnProfileManagerDialogOpen();
