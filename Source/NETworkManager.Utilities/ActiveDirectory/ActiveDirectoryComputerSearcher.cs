@@ -87,11 +87,11 @@ public static class ActiveDirectoryComputerSearcher
     {
         var authTypes = AuthenticationTypes.Secure;
 
-        if (string.IsNullOrEmpty(options.Username))
-            return new DirectoryEntry(ldapPath, null, null, authTypes);
-
         if (options.UseSsl)
             authTypes |= AuthenticationTypes.SecureSocketsLayer;
+
+        if (string.IsNullOrEmpty(options.Username))
+            return new DirectoryEntry(ldapPath, null, null, authTypes);
 
         var plainPassword = SecureStringHelper.ConvertToString(options.Password);
         return new DirectoryEntry(ldapPath, options.Username, plainPassword, authTypes);

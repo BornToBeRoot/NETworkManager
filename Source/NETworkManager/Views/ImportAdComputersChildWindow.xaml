@@ -208,7 +208,7 @@
                            TextWrapping="Wrap"
                            VerticalAlignment="Center" />
             </Grid>
-            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                 <Button Content="{x:Static localization:Strings.Search}" Command="{Binding SearchCommand}"
                         IsDefault="True" Margin="0,0,10,0">
                     <Button.Style>
