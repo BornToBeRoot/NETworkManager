@@ -1,12 +1,12 @@
 ---
 sidebar_position: 6
-description: "Configure system-wide policies for NETworkManager in enterprise environments. Enforce settings for all users via Group Policy, Intune, or SCCM."
+description: "Configure system-wide policies to enforce NETworkManager settings for all users in enterprise environments."
 keywords: [NETworkManager, system-wide policies, enterprise deployment, Group Policy, Intune, SCCM, centralized configuration, IT administration]
 ---
 
 # System-Wide Policies
 
-System-wide policies allow administrators to enforce specific settings for all users on a machine. These policies override user-specific settings and provide centralized control over application behavior in enterprise environments.
+The **System-Wide Policies** feature lets administrators enforce specific application settings for all users on a machine. Policy values override any user-specific settings, providing centralized control over application behavior in enterprise environments.
 
 ## Overview
 
@@ -33,7 +33,6 @@ The `config.json` file uses a simple JSON structure to define policy values. An 
 }
 ```
 
-
 **Example:**
 
 ```json
@@ -44,14 +43,14 @@ The `config.json` file uses a simple JSON structure to define policy values. An 
 }
 ```
 
-Property names generally follow the pattern `Section_SettingName` (see each setting's documentation). Ensure values use the correct JSON type (boolean, string, number, etc.).
+Property names follow the pattern `Section_SettingName` (see each setting's documentation). Ensure values use the correct JSON type (boolean, string, number, etc.).
 
 :::note
 
 - The file must be named exactly `config.json`
 - The file must contain valid JSON syntax
 - Changes to the file require restarting the application to take effect
-- If the file doesn't exist or contains invalid JSON, it will be ignored and user settings will apply
+- If the file does not exist or contains invalid JSON, it is ignored and user settings apply
 
 :::
 
@@ -59,10 +58,10 @@ Property names generally follow the pattern `Section_SettingName` (see each sett
 
 For enterprise deployments:
 
-1. **Create the configuration file**: 
+1. **Create the configuration file**:
    - Use the `config.json.example` as a template
    - Rename it to `config.json`
-   - Set your desired policy values (you find them in the corresponding setting's documentation)
+   - Set your desired policy values (the property name for each setting is documented on each setting's page)
 
 2. **Deploy to installation directory**:
    - Place the `config.json` file in the same directory as `NETworkManager.exe`
@@ -77,7 +76,7 @@ For enterprise deployments:
 
 4. **Verification**:
    - Launch the application
-   - Navigate to Setting you've modified (e.g., Settings > Update > "Check for updates at startup")    
+   - Navigate to the setting you modified (e.g., `Settings` > `Update` > **Check for updates at startup**)
    - Verify the shield icon and the administrator message appear and that the control is disabled
    - Confirm the displayed value matches the policy
 

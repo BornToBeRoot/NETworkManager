@@ -61,11 +61,38 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OU=Computers,DC=borntoberoot,DC=net.
+        /// </summary>
+        public static string ActiveDirectorySearchBase {
+            get {
+                return ResourceManager.GetString("ActiveDirectorySearchBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CSV.
         /// </summary>
         public static string CSV {
             get {
                 return ResourceManager.GetString("CSV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 636.
+        /// </summary>
+        public static string ExampleActiveDirectoryPort {
+            get {
+                return ResourceManager.GetString("ExampleActiveDirectoryPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (name=SRV-*).
+        /// </summary>
+        public static string ExampleActiveDirectorySearchFilter {
+            get {
+                return ResourceManager.GetString("ExampleActiveDirectorySearchFilter", resourceCulture);
             }
         }
         

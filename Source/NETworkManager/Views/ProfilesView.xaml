@@ -126,17 +126,61 @@
                 <Grid Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
                       HorizontalAlignment="Right">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="20" />
                         <ColumnDefinition Width="250" />
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Grid.Row="0"
+                            Focusable="False"
+                            Style="{StaticResource ResourceKey=CleanButton}"
+                            Command="{Binding Path=ImportProfilesCommand}"
+                            ToolTip="{x:Static Member=localization:Strings.ImportProfilesDots}">
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Width="16" Height="16">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=MonitorArrowDownVariant}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type TypeName=Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}"
+                                                Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                            <TextBlock Text="{x:Static localization:Strings.Import}"
+                                       VerticalAlignment="Center"
+                                       FontSize="14"
+                                       Margin="5,0,0,0">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}"
+                                                Value="True">
+                                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </StackPanel>
+                    </Button>
                     <TextBox x:Name="TextBoxSearch"
-                             Grid.Row="0" Grid.Column="0"
+                             Grid.Column="2" Grid.Row="0" 
                              Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource SearchTextBox}" />
-                    <Button Grid.Column="2" Grid.Row="0"
+                    <Button Grid.Column="4" Grid.Row="0"
                             x:Name="ButtonProfileFilter"
                             Focusable="False"
                             Style="{StaticResource ResourceKey=CleanButton}"
@@ -257,7 +301,7 @@
                             </Grid>
                         </Border>
                     </Popup>
-                    <Button Grid.Column="4" Grid.Row="0"
+                    <Button Grid.Column="6" Grid.Row="0"
                             Focusable="False"
                             Style="{StaticResource ResourceKey=CleanButton}"
                             Command="{Binding Path=AddProfileCommand}"

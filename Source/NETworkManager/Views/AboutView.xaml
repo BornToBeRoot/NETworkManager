@@ -63,7 +63,7 @@
                         </TextBlock>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_SupportThisProjectWithADonation}"
+                        <Button ToolTip="{x:Static localization:Strings.SupportThisProjectWithADonation}"
                                 Command="{Binding OpenWebsiteCommand}"
                                 CommandParameter="{x:Static resources:Resources.NETworkManager_DonateUrl}"
                                 Style="{StaticResource ImageWithTextButton}"                        
@@ -133,7 +133,7 @@
                             </Style>
                         </StackPanel.Resources>
 
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_StarForkProjectOnGitHub}"
+                        <Button ToolTip="{x:Static localization:Strings.StarForkProjectOnGitHub}"
                                 Command="{Binding OpenWebsiteCommand}"
                                 CommandParameter="{x:Static resources:Resources.NETworkManager_GitHubRepoUrl}">
                             <Rectangle Width="24" Height="24">
@@ -153,7 +153,7 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_ReportIssueOrCreateFeatureRequest}"
+                        <Button ToolTip="{x:Static localization:Strings.ReportIssueOrCreateFeatureRequest}"
                                 Command="{Binding OpenWebsiteCommand}"
                                 CommandParameter="{x:Static resources:Resources.NETworkManager_GitHubNewIssueUrl}"
                                 Margin="10,0,0,0">
@@ -174,7 +174,7 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_OpenTheDocumentation}"
+                        <Button ToolTip="{x:Static localization:Strings.OpenTheDocumentation}"
                                 Command="{Binding OpenDocumentationCommand}"
                                 Margin="10,0,0,0">
                             <Rectangle Width="24" Height="24">
@@ -194,7 +194,7 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_HelpTranslateOnTransifex}"
+                        <Button ToolTip="{x:Static localization:Strings.HelpTranslateOnTransifex}"
                                 Command="{Binding OpenWebsiteCommand}"
                                 CommandParameter="{x:Static resources:Resources.NETworkManager_TranslationUrl}"
                                 Margin="10,0,0,0">
@@ -215,7 +215,7 @@
                                 </Rectangle.Style>
                             </Rectangle>
                         </Button>
-                        <Button ToolTip="{x:Static localization:Strings.ToolTip_ContactOrContactMeViaX}"
+                        <Button ToolTip="{x:Static localization:Strings.ContactOrContactMeViaX}"
                                 Command="{Binding OpenWebsiteCommand}"
                                 CommandParameter="{x:Static resources:Resources.NETworkManager_XContactUrl}"
                                 Margin="10,0,0,0">        

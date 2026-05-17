@@ -161,6 +161,22 @@ public static partial class RegexHelper
     // Match an SNMP OID (like 1.3.6.1 or .1.3.6.2)
     public const string SnmpOidRegex = @"^\.?[012]\.(?:[0-9]|[1-3][0-9])(\.\d+)*$";
 
+    /// <summary>
+    /// Provides a compiled regular expression that matches a Windows username in SAM format (DOMAIN\user or .\user),
+    /// UPN format (user@domain.com), or a simple username (user).
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> instance that matches Windows usernames.</returns>
+    [GeneratedRegex(@"^([\w.-]+\\)?[\w.-]+(@[\w.-]+)?$")]
+    public static partial Regex WindowsUsernameRegex();
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches a valid LDAP distinguished name like "DC=example,DC=com".
+    /// Each component must have the form attr=value; deep syntax is left to the directory server.
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> instance that matches LDAP distinguished names.</returns>
+    [GeneratedRegex(@"^[A-Za-z][A-Za-z0-9-]*=[^,]+(,\s*[A-Za-z][A-Za-z0-9-]*=[^,]+)*$")]
+    public static partial Regex LdapSearchBaseRegex();
+
     // Match a hosts file entry with optional comments, supporting IPv4, IPv6, and hostnames
     // ^*                                    : Matches the beginning of the line
     // (#)?                                  : Optionally matches a comment (#) at the start of the line

@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.SimpleChildWindow;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -453,27 +453,24 @@ public static class ProfileDialogManager
 
     #region Dialog to add, edit, copy as and delete profile
 
-    public static Task ShowAddProfileDialog(Window parentWindow, IProfileManagerMinimal viewModel,
-        ProfileInfo profile = null, string group = null,
-        ApplicationName applicationName = ApplicationName.None)
+    public static Task ShowAddProfileDialog(Window parentWindow, IProfileManagerMinimal viewModel, ProfileInfo profile = null, string group = null, ApplicationName applicationName = ApplicationName.None)
     {
         var childWindow = new ProfileChildWindow(parentWindow);
 
+        void CloseChild()
+        {
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            viewModel.OnProfileManagerDialogClose();
+        }
+
         ProfileViewModel childWindowViewModel = new(instance =>
         {
-            childWindow.IsOpen = false;
-            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            viewModel.OnProfileManagerDialogClose();
+            CloseChild();
 
             ProfileManager.AddProfile(ParseProfileInfo(instance));
-        }, _ =>
-        {
-            childWindow.IsOpen = false;
-            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            viewModel.OnProfileManagerDialogClose();
-        }, ProfileManager.GetGroupNames(), group, ProfileEditMode.Add, profile, applicationName);
+        }, _ => CloseChild(), ProfileManager.GetGroupNames(), group, ProfileEditMode.Add, profile, applicationName);
 
         childWindow.Title = Strings.AddProfile;
 
@@ -486,26 +483,24 @@ public static class ProfileDialogManager
         return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
-    public static Task ShowEditProfileDialog(Window parentWindow, IProfileManagerMinimal viewModel,
-        ProfileInfo profile)
+    public static Task ShowEditProfileDialog(Window parentWindow, IProfileManagerMinimal viewModel, ProfileInfo profile)
     {
         var childWindow = new ProfileChildWindow(parentWindow);
 
+        void CloseChild()
+        {
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            viewModel.OnProfileManagerDialogClose();
+        }
+
         ProfileViewModel childWindowViewModel = new(instance =>
         {
-            childWindow.IsOpen = false;
-            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            viewModel.OnProfileManagerDialogClose();
+            CloseChild();
 
             ProfileManager.ReplaceProfile(profile, ParseProfileInfo(instance));
-        }, _ =>
-        {
-            childWindow.IsOpen = false;
-            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            viewModel.OnProfileManagerDialogClose();
-        }, ProfileManager.GetGroupNames(), profile.Group, ProfileEditMode.Edit, profile);
+        }, _ => CloseChild(), ProfileManager.GetGroupNames(), profile.Group, ProfileEditMode.Edit, profile);
 
         childWindow.Title = Strings.EditProfile;
 
@@ -518,26 +513,24 @@ public static class ProfileDialogManager
         return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
-    public static Task ShowCopyAsProfileDialog(Window parentWindow, IProfileManagerMinimal viewModel,
-        ProfileInfo profile)
+    public static Task ShowCopyAsProfileDialog(Window parentWindow, IProfileManagerMinimal viewModel, ProfileInfo profile)
     {
         var childWindow = new ProfileChildWindow(parentWindow);
 
+        void CloseChild()
+        {
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            viewModel.OnProfileManagerDialogClose();
+        }
+
         ProfileViewModel childWindowViewModel = new(instance =>
         {
-            childWindow.IsOpen = false;
-            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            viewModel.OnProfileManagerDialogClose();
+            CloseChild();
 
             ProfileManager.AddProfile(ParseProfileInfo(instance));
-        }, _ =>
-        {
-            childWindow.IsOpen = false;
-            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            viewModel.OnProfileManagerDialogClose();
-        }, ProfileManager.GetGroupNames(), profile.Group, ProfileEditMode.Copy, profile);
+        }, _ => CloseChild(), ProfileManager.GetGroupNames(), profile.Group, ProfileEditMode.Copy, profile);
 
         childWindow.Title = Strings.CopyProfile;
 
@@ -550,10 +543,8 @@ public static class ProfileDialogManager
         return parentWindow.ShowChildWindowAsync(childWindow);
     }
 
-    public static async Task ShowDeleteProfileDialog(Window parentWindow, IProfileManagerMinimal viewModel,
-        IList<ProfileInfo> profiles)
+    public static async Task ShowDeleteProfileDialog(Window parentWindow, IProfileManagerMinimal viewModel, IList<ProfileInfo> profiles)
     {
-
         viewModel.OnProfileManagerDialogOpen();
 
         var result = await DialogHelper.ShowConfirmationMessageAsync(parentWindow,
@@ -570,6 +561,118 @@ public static class ProfileDialogManager
         ProfileManager.RemoveProfiles(profiles);
     }
 
+    public static Task ShowImportProfilesDialog(Window parentWindow, IProfileManagerMinimal viewModel,
+        string targetGroup)
+    {
+        var childWindow = new ImportProfilesChildWindow();
+
+        void CloseChild()
+        {
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            viewModel.OnProfileManagerDialogClose();
+        }
+
+        var childWindowViewModel = new ImportProfilesViewModel(instance =>
+        {
+            CloseChild();
+
+            switch (instance.SelectedMethod.Method)
+            {
+                case ProfileImportSource.ActiveDirectory:
+                    ShowSearchAdComputersDialog(parentWindow, viewModel, targetGroup, previousState: null).ConfigureAwait(false);
+                    break;
+            }
+        }, _ => CloseChild());
+
+        childWindow.Title = Strings.ImportProfiles;
+        childWindow.DataContext = childWindowViewModel;
+
+        viewModel.OnProfileManagerDialogOpen();
+
+        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return parentWindow.ShowChildWindowAsync(childWindow);
+    }
+
+    private static Task ShowSearchAdComputersDialog(Window parentWindow, IProfileManagerMinimal viewModel,
+        string targetGroup, ImportAdComputersViewModel previousState)
+    {
+        var childWindow = new ImportAdComputersChildWindow(parentWindow);
+
+        void CloseChild()
+        {
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            viewModel.OnProfileManagerDialogClose();
+        }
+
+        var childWindowViewModel = new ImportAdComputersViewModel(
+            (candidates, searchViewModel) =>
+            {
+                CloseChild();
+
+                ShowImportProfilesResultDialog(parentWindow, viewModel, targetGroup, candidates,
+                    ProfileImportSource.ActiveDirectory, Strings.ImportProfiles_Source_ActiveDirectory,
+                    backToSourceCallback: () => ShowSearchAdComputersDialog(parentWindow, viewModel, targetGroup, searchViewModel).ConfigureAwait(false)
+                ).ConfigureAwait(false);
+            }, CloseChild, previousState);
+
+        childWindow.Title = Strings.ImportComputersFromActiveDirectory;
+        childWindow.DataContext = childWindowViewModel;
+
+        viewModel.OnProfileManagerDialogOpen();
+
+        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return parentWindow.ShowChildWindowAsync(childWindow);
+    }
+
+    private static Task ShowImportProfilesResultDialog(Window parentWindow, IProfileManagerMinimal viewModel,
+        string targetGroup, IReadOnlyList<ProfileImportCandidate> candidates, ProfileImportSource importSource, string sourceLabel,
+        Action backToSourceCallback)
+    {
+        var childWindow = new ImportProfilesResultChildWindow(parentWindow);
+
+        void CloseChild()
+        {
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            viewModel.OnProfileManagerDialogClose();
+        }
+
+        async void ShowSummary(int imported, int skippedDuplicates, int skippedNoHost)
+        {
+            CloseChild();
+
+            Settings.ConfigurationManager.OnDialogOpen();
+
+            await DialogHelper.ShowMessageAsync(parentWindow, Strings.ImportResults,
+                string.Format(Strings.ProfileImportSummary, imported, skippedDuplicates, skippedNoHost));
+
+            Settings.ConfigurationManager.OnDialogClose();
+        }
+
+        var childWindowViewModel = new ImportProfilesResultViewModel(candidates, importSource, targetGroup,
+            backCallback: () =>
+            {
+                CloseChild();
+                backToSourceCallback();
+            }, cancelCallback: CloseChild, completedCallback: ShowSummary);
+
+        childWindow.Title = $"{Strings.ImportResults} - {string.Format(Strings.ImportResultsHeader, sourceLabel, candidates.Count)}";
+        childWindow.DataContext = childWindowViewModel;
+
+        viewModel.OnProfileManagerDialogOpen();
+
+        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return parentWindow.ShowChildWindowAsync(childWindow);
+    }
+
     #endregion
 
     #region Dialog to add, edit and delete group
@@ -578,21 +681,20 @@ public static class ProfileDialogManager
     {
         var childWindow = new GroupChildWindow(parentWindow);
 
+        void CloseChild()
+        {
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            viewModel.OnProfileManagerDialogClose();
+        }
+
         GroupViewModel childWindowViewModel = new(instance =>
         {
-            childWindow.IsOpen = false;
-            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            viewModel.OnProfileManagerDialogClose();
+            CloseChild();
 
             ProfileManager.AddGroup(ParseGroupInfo(instance));
-        }, _ =>
-        {
-            childWindow.IsOpen = false;
-            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            viewModel.OnProfileManagerDialogClose();
-        }, ProfileManager.GetGroupNames());
+        }, _ => CloseChild(), ProfileManager.GetGroupNames());
 
         childWindow.Title = Strings.AddGroup;
 
@@ -610,21 +712,20 @@ public static class ProfileDialogManager
     {
         var childWindow = new GroupChildWindow(parentWindow);
 
+        void CloseChild()
+        {
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            viewModel.OnProfileManagerDialogClose();
+        }
+
         GroupViewModel childWindowViewModel = new(instance =>
         {
-            childWindow.IsOpen = false;
-            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            viewModel.OnProfileManagerDialogClose();
+            CloseChild();
 
             ProfileManager.ReplaceGroup(group, ParseGroupInfo(instance));
-        }, _ =>
-        {
-            childWindow.IsOpen = false;
-            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            viewModel.OnProfileManagerDialogClose();
-        }, ProfileManager.GetGroupNames(), GroupEditMode.Edit, group);
+        }, _ => CloseChild(), ProfileManager.GetGroupNames(), GroupEditMode.Edit, group);
 
         childWindow.Title = Strings.EditGroup;
 

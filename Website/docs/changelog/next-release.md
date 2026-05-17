@@ -51,6 +51,10 @@ Release date: **xx.xx.2025**
 
 - DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PuTTY window now receives an explicit `WM_DPICHANGED` message with the new DPI value packed into `wParam`, since the OS does not forward this message across process boundaries after `SetParent`. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
 
+**Profiles**
+
+- Profiles can now be imported from **Active Directory**. Search for computers by name using an AD query, select the results, assign a group, and apply connection settings (RDP, SSH, etc.) before importing. [#3368](https://github.com/BornToBeRoot/NETworkManager/pull/3368)
+
 ## Improvements
 
 **IP Scanner**

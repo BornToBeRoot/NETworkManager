@@ -292,6 +292,15 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
             .ConfigureAwait(false);
     }
 
+    public ICommand ImportProfilesCommand => new RelayCommand(_ => ImportProfilesAction());
+
+    private void ImportProfilesAction()
+    {
+        ProfileDialogManager
+            .ShowImportProfilesDialog(Application.Current.MainWindow, this, SelectedGroup?.Name)
+            .ConfigureAwait(false);
+    }
+
     public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
 
     private void OpenProfileFilterAction()

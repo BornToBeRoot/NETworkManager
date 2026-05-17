@@ -27,7 +27,7 @@
                 <TextBlock Text="{Binding Path=Title}" Style="{StaticResource ResourceKey=HeaderTextBlock}" />                
                 <TextBlock Text="{x:Static Member=localization:Strings.WelcomeMessage}"
                            Style="{StaticResource ResourceKey=DefaultTextBlock}" Margin="0,0,0,10" TextWrapping="Wrap" />
-                <Button ToolTip="{x:Static Member=localization:Strings.ToolTip_SupportThisProjectWithADonation}"
+                <Button ToolTip="{x:Static Member=localization:Strings.SupportThisProjectWithADonation}"
               Command="{Binding Path=OpenWebsiteCommand}"
               CommandParameter="{x:Static Member=resources:Resources.NETworkManager_DonateUrl}"
               Style="{StaticResource ResourceKey=ImageWithTextButton}"                        
@@ -54,7 +54,7 @@
                            Style="{StaticResource ResourceKey=HeaderTextBlock}" />
                 <TextBlock Text="{x:Static Member=localization:Strings.WhatsNewMessage}"
                            Style="{StaticResource ResourceKey=DefaultTextBlock}" Margin="0,0,0,10" TextWrapping="Wrap" />
-                <Button ToolTip="{x:Static Member=localization:Strings.ToolTip_SupportThisProjectWithADonation}"
+                <Button ToolTip="{x:Static Member=localization:Strings.SupportThisProjectWithADonation}"
                         Command="{Binding Path=OpenChangelogCommand}"
                         Style="{StaticResource ResourceKey=ImageWithTextButton}"                        
                         HorizontalAlignment="Left">

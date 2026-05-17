@@ -1170,6 +1170,35 @@ public static class ProfileManager
     }
 
     /// <summary>
+    ///     Method to add multiple profiles, creating missing groups as needed.
+    ///     Fires <see cref="ProfilesUpdated" /> once after all profiles are added.
+    /// </summary>
+    /// <param name="profiles">Profiles to add.</param>
+    /// <exception cref="ArgumentNullException">Thrown when profiles is null.</exception>
+    public static void AddProfiles(IEnumerable<ProfileInfo> profiles)
+    {
+        ArgumentNullException.ThrowIfNull(profiles);
+
+        foreach (var profile in profiles)
+        {
+            if (profile is null)
+                continue;
+
+            if (!GroupExists(profile.Group))
+                AddGroup(new GroupInfo(profile.Group), profilesChanged: false);
+
+            var group = LoadedProfileFileData.Groups.FirstOrDefault(x => x.Name.Equals(profile.Group));
+
+            if (group == null)
+                throw new InvalidOperationException($"Group '{profile.Group}' not found after creation attempt.");
+
+            group.Profiles.Add(profile);
+        }
+
+        ProfilesUpdated();
+    }
+
+    /// <summary>
     ///     Method to replace a profile in a group.
     /// </summary>
     /// <param name="oldProfile">Old profile as <see cref="ProfileInfo" />.</param>

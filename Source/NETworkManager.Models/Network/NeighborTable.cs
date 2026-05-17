@@ -178,24 +178,24 @@ Import-Module NetTCPIP -ErrorAction Stop").Invoke();
                 switch (family)
                 {
                     case AF_INET:
-                    {
-                        // SOCKADDR_IN: family(2)+port(2)+addr(4)+zero(8) — addr at offset 4
-                        var addrBytes = new byte[4];
-                        Buffer.BlockCopy(row.Address, 4, addrBytes, 0, 4);
-                        ipAddress = new IPAddress(addrBytes);
-                        addressFamily = AddressFamily.InterNetwork;
-                        break;
-                    }
+                        {
+                            // SOCKADDR_IN: family(2)+port(2)+addr(4)+zero(8) — addr at offset 4
+                            var addrBytes = new byte[4];
+                            Buffer.BlockCopy(row.Address, 4, addrBytes, 0, 4);
+                            ipAddress = new IPAddress(addrBytes);
+                            addressFamily = AddressFamily.InterNetwork;
+                            break;
+                        }
                     case AF_INET6:
-                    {
-                        // SOCKADDR_IN6: family(2)+port(2)+flowinfo(4)+addr(16)+scope_id(4) — addr at offset 8
-                        var addrBytes = new byte[16];
-                        Buffer.BlockCopy(row.Address, 8, addrBytes, 0, 16);
-                        var scopeId = BitConverter.ToUInt32(row.Address, 24);
-                        ipAddress = new IPAddress(addrBytes, scopeId);
-                        addressFamily = AddressFamily.InterNetworkV6;
-                        break;
-                    }
+                        {
+                            // SOCKADDR_IN6: family(2)+port(2)+flowinfo(4)+addr(16)+scope_id(4) — addr at offset 8
+                            var addrBytes = new byte[16];
+                            Buffer.BlockCopy(row.Address, 8, addrBytes, 0, 16);
+                            var scopeId = BitConverter.ToUInt32(row.Address, 24);
+                            ipAddress = new IPAddress(addrBytes, scopeId);
+                            addressFamily = AddressFamily.InterNetworkV6;
+                            break;
+                        }
                     default:
                         continue;
                 }
@@ -360,7 +360,7 @@ Import-Module NetTCPIP -ErrorAction Stop").Invoke();
             RunspaceLock.Release();
         }
     }
-    
+
     /// <summary>
     /// Clears all dynamic neighbor entries (IPv4 + IPv6) by piping
     /// <c>Get-NetNeighbor</c> into <c>Remove-NetNeighbor</c>, excluding entries whose
@@ -390,7 +390,7 @@ Import-Module NetTCPIP -ErrorAction Stop").Invoke();
             RunspaceLock.Release();
         }
     }
-    
+
     /// <summary>
     /// Throws an <see cref="Exception"/> whose message is the joined PowerShell error
     /// stream when <paramref name="ps"/> reported one or more errors.

@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Windows.Controls;
 using NETworkManager.Localization.Resources;
 
@@ -10,7 +10,10 @@ public class GroupNameValidator : ValidationRule
     {
         var groupName = value as string;
 
-        if (groupName.StartsWith("~"))
+        if (string.IsNullOrEmpty(groupName))
+            return ValidationResult.ValidResult;
+
+        if (groupName.StartsWith($"~"))
             return new ValidationResult(false,
                 string.Format(Strings.GroupNameCannotStartWithX, "~"));
 

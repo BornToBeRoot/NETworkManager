@@ -91,7 +91,7 @@
         <mah:WindowCommands ShowSeparators="False" IsEnabled="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=IsChildWindowOpen, Converter={StaticResource ResourceKey=BooleanReverseConverter}}">
             <Button Command="{Binding Path=OpenRunCommand}"
                     Visibility="{Binding Path=FlyoutRunCommandIsOpen, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
-                    ToolTip="{x:Static Member=localization:Strings.ToolTip_RunCommandWithHotKey}"
+                    ToolTip="{x:Static Member=localization:Strings.RunCommandDotsWithHotKey}"
                     Cursor="Hand"
                     Focusable="False">
                 <StackPanel Orientation="Horizontal">
@@ -106,7 +106,7 @@
             <Button Command="{Binding Path=RestartApplicationCommand}"
                     Opacity="1"
                     Visibility="{Binding Path=IsRestartRequired, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                    ToolTip="{x:Static Member=localization:Strings.ToolTip_RestartRequired}"
+                    ToolTip="{x:Static Member=localization:Strings.RestartRequiredMessage}"
                     Cursor="Hand">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Rectangle Width="20" Height="20"
@@ -199,7 +199,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
             <Button Command="{Binding Path=OpenWebsiteCommand}"
-                    ToolTip="{x:Static Member=localization:Strings.ToolTip_StarForkProjectOnGitHub}"
+                    ToolTip="{x:Static Member=localization:Strings.StarForkProjectOnGitHub}"
                     CommandParameter="{x:Static Member=resources:Resources.NETworkManager_GitHubRepoUrl}"
                     Cursor="Hand"
                     Focusable="False">
@@ -214,7 +214,7 @@
             </Button>
 
             <Button Command="{Binding Path=OpenWebsiteCommand}"
-                    ToolTip="{x:Static Member=localization:Strings.ToolTip_ReportIssueOrCreateFeatureRequest}"
+                    ToolTip="{x:Static Member=localization:Strings.ReportIssueOrCreateFeatureRequest}"
                     CommandParameter="{x:Static Member=resources:Resources.NETworkManager_GitHubNewIssueUrl}"
                     Cursor="Hand"
                     Focusable="False">
@@ -228,7 +228,7 @@
                 </StackPanel>
             </Button>
             <Button Command="{Binding OpenDocumentationCommand}"
-                    ToolTip="{x:Static localization:Strings.ToolTip_OpenTheDocumentation}"
+                    ToolTip="{x:Static localization:Strings.OpenTheDocumentation}"
                     Cursor="Hand"
                     Focusable="False">
                 <StackPanel Orientation="Horizontal">
@@ -241,7 +241,7 @@
                 </StackPanel>
             </Button>
             <Button Command="{Binding OpenWebsiteCommand}"
-                    ToolTip="{x:Static localization:Strings.ToolTip_SupportThisProjectWithADonation}"
+                    ToolTip="{x:Static localization:Strings.SupportThisProjectWithADonation}"
                     CommandParameter="{x:Static resources:Resources.NETworkManager_DonateUrl}"
                     Cursor="Hand"
                     Focusable="False">
@@ -307,7 +307,7 @@
                                  FontSize="18"
                                  FontFamily="Consolas"
                                  Text="{Binding RunCommandSearch, UpdateSourceTrigger=PropertyChanged}"
-                                 mah:TextBoxHelper.Watermark="{x:Static localization:Strings.Watermark_RunCommand}">
+                                 mah:TextBoxHelper.Watermark="{x:Static localization:Strings.RunCommandDots}">
                             <TextBox.Style>
                                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                                     <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="True" />

@@ -1,4 +1,4 @@
-﻿using DnsClient;
+using DnsClient;
 using Lextm.SharpSnmpLib.Messaging;
 using NETworkManager.Controls;
 using NETworkManager.Models;
@@ -8,6 +8,7 @@ using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
+using NETworkManager.Utilities.ActiveDirectory;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -562,6 +563,99 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.Profiles_MaximumNumberOfBackups;
+
+    public string Profiles_ImportActiveDirectorySearchBase
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string Profiles_ImportActiveDirectoryServer
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public int Profiles_ImportActiveDirectoryPort
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Profiles_ImportActiveDirectoryUseSsl ?
+        GlobalStaticConfiguration.Profiles_ImportActiveDirectoryPort_Ldaps :
+        GlobalStaticConfiguration.Profiles_ImportActiveDirectoryPort_Ldap;
+
+    public bool Profiles_ImportActiveDirectoryUseSsl
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Profiles_ImportActiveDirectoryUseSsl;
+
+    public bool Profiles_ImportActiveDirectoryExcludeDisabledAccounts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Profiles_ImportActiveDirectoryExcludeDisabledAccounts;
+
+    public ActiveDirectoryAuthenticationMode Profiles_ImportActiveDirectoryAuthMode
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = ActiveDirectoryAuthenticationMode.CurrentUser;
+
+    public string Profiles_ImportActiveDirectoryAdditionalFilter
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 
     // Settings
 

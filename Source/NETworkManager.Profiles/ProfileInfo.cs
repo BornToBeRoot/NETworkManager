@@ -37,6 +37,8 @@ public class ProfileInfo
         Description = profile.Description;
         Group = profile.Group;
         TagsCollection = profile.TagsCollection;
+        ImportSource = profile.ImportSource;
+        ImportSourceId = profile.ImportSourceId;
 
         IsDynamic = profile.IsDynamic;
 
@@ -268,6 +270,18 @@ public class ProfileInfo
     /// Tags collection to classify the profiles and to filter by it.
     /// </summary>
     public ObservableSetCollection<string> TagsCollection { get; set; } = [];
+
+    /// <summary>
+    ///     Import method identifier (e.g. "ActiveDirectory"). Used together with <see cref="ImportSourceId"/>
+    ///     for duplicate detection on re-import. Null if the profile was not created by an import.
+    /// </summary>
+    public ProfileImportSource ImportSource { get; set; }
+
+    /// <summary>
+    ///     Stable ID within the import source (e.g. AD objectGUID).
+    ///     Null if not applicable or not from an import.
+    /// </summary>
+    public string ImportSourceId { get; set; }
 
     /// <summary>
     ///     Dynamic profiles (e.g. AWS) are not save to file.

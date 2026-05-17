@@ -51,7 +51,6 @@ public static class GlobalStaticConfiguration
     #region Default settings
 
     // Settings: General
-    public static ApplicationName General_DefaultApplicationViewName => ApplicationName.Dashboard;
     public static int General_BackgroundJobInterval => 5;
     public static int General_ThreadPoolAdditionalMinThreads => 512;
     public static int General_HistoryListEntries => 10;
@@ -83,6 +82,12 @@ public static class GlobalStaticConfiguration
     // Settings: Profiles
     public static bool Profiles_IsDailyBackupEnabled => true;
     public static int Profiles_MaximumNumberOfBackups => 10;
+
+    // Profiles: AD computer import
+    public static int Profiles_ImportActiveDirectoryPort_Ldap => 389;
+    public static int Profiles_ImportActiveDirectoryPort_Ldaps => 636;
+    public static bool Profiles_ImportActiveDirectoryUseSsl => true;
+    public static bool Profiles_ImportActiveDirectoryExcludeDisabledAccounts => true;
 
     // Settings: Settings
     public static bool Settings_IsDailyBackupEnabled => true;
@@ -209,9 +214,9 @@ public static class GlobalStaticConfiguration
     // Application: WebConsole
     public static bool WebConsole_ShowAddressBar => true;
 
-    public static bool WebConsole_IsStatusBarEnabled = true;
+    public static bool WebConsole_IsStatusBarEnabled => true;
 
-    public static bool WebConsole_IsPasswordSaveEnabled = true;
+    public static bool WebConsole_IsPasswordSaveEnabled => true;
 
     public static string WebConsole_Cache =>
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
