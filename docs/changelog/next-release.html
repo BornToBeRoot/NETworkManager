@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.36e43ced.css">
-<script src="/NETworkManager/assets/js/runtime~main.7e947a10.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.9cc0093f.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.0ccf2135.js" defer="defer"></script>
 </head>
 <body>
@@ -51,6 +51,10 @@ Release date: <strong>xx.xx.2025</strong></p>
 <p><strong>PuTTY</strong></p>
 <ul>
 <li class="">DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PuTTY window now receives an explicit <code>WM_DPICHANGED</code> message with the new DPI value packed into <code>wParam</code>, since the OS does not forward this message across process boundaries after <code>SetParent</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3352" target="_blank" rel="noopener noreferrer" class="">#3352</a></li>
+</ul>
+<p><strong>Profiles</strong></p>
+<ul>
+<li class="">Profiles can now be imported from <strong>Active Directory</strong>. Search for computers by name using an AD query, select the results, assign a group, and apply connection settings (RDP, SSH, etc.) before importing. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3368" target="_blank" rel="noopener noreferrer" class="">#3368</a></li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="improvements">Improvements<a href="#improvements" class="hash-link" aria-label="Direct link to Improvements" title="Direct link to Improvements" translate="no">​</a></h2>
 <p><strong>IP Scanner</strong></p>
