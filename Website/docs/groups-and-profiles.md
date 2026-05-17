@@ -1,66 +1,107 @@
 ---
 sidebar_position: 4
-description: "Organize hosts and networks in groups and profiles with individual settings. NETworkManager supports encrypted profile files and multi-environment management."
-keywords: [NETworkManager, groups, profiles, profile management, encrypted profiles, host organization, network profiles]
+description: "Organize hosts and networks in named groups and profiles with per-feature connection settings."
+keywords:
+  [
+    NETworkManager,
+    groups,
+    profiles,
+    profile management,
+    encrypted profiles,
+    host organization,
+    network profiles,
+  ]
 ---
 
 # Groups and Profiles
 
-Groups and profiles can be used to organize your hosts and networks.
-
-In groups you can define settings that are applied to all profiles in this group. Settings defined in a profile are applied to this profile only. See also [FAQ > Settings priority](/docs/faq/settings-priority) for more information about the settings priority.
+**Groups and Profiles** let you organize hosts and networks for quick access across all NETworkManager features. Settings defined in a group apply to every profile in that group; settings defined on a profile override the group defaults. See [FAQ > Settings priority](/docs/faq/settings-priority) for more information about the priority order.
 
 ## Overview
 
-You can manage your groups and profiles in the `Settings` on the `Profiles` tab for all features.
+Groups and profiles for all features are managed on the `Profiles` tab in `Settings`.
 
 ![Profiles - Overview](./img/profiles--overview.png)
 
-:::note
+### Context menu
 
-Right-click on a selected group to `edit` or `delete` it.
+Right-click a selected group to open the group context menu.
 
-Right-click on a selected profile to `edit`, `copy` or `delete` it.
+| Action     | Description                     |
+| ---------- | ------------------------------- |
+| **Edit**   | Open the group settings dialog. |
+| **Delete** | Delete the selected group.      |
 
-You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected group or profile.
+Right-click a selected profile to open the profile context menu.
 
-:::
+| Action     | Description                            |
+| ---------- | -------------------------------------- |
+| **Edit**   | Open the profile settings dialog.      |
+| **Copy**   | Create a copy of the selected profile. |
+| **Delete** | Delete the selected profile.           |
 
-Inside a feature you can manage the groups and profiles enabled for this feature directly in the profiles view.
+### Keyboard shortcuts
+
+| Key   | Action                                |
+| ----- | ------------------------------------- |
+| `F2`  | Edit the selected group or profile.   |
+| `Del` | Delete the selected group or profile. |
+
+Inside a feature, the profile view shows only the groups and profiles enabled for that feature.
 
 ![Profiles - Feature overview](./img/profiles--overview-feature.png)
 
 :::note
 
-Right-click on a selected profile to `edit`, `copy` or `delete` it.
-
-You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected profile.
-
-Right-click on a group header to `expand` or `collapse` all groups. The button to edit the group will be shown when hovering over the group header.
+The edit button for a group appears when hovering over the group header.
 
 :::
 
+### Context menu
+
+Right-click a selected profile to open the profile context menu.
+
+| Action     | Description                            |
+| ---------- | -------------------------------------- |
+| **Edit**   | Open the profile settings dialog.      |
+| **Copy**   | Create a copy of the selected profile. |
+| **Delete** | Delete the selected profile.           |
+
+Right-click a group header to expand or collapse all groups.
+
+| Action           | Description          |
+| ---------------- | -------------------- |
+| **Expand all**   | Expand all groups.   |
+| **Collapse all** | Collapse all groups. |
+
+### Keyboard shortcuts
+
+| Key   | Action                       |
+| ----- | ---------------------------- |
+| `F2`  | Edit the selected profile.   |
+| `Del` | Delete the selected profile. |
+
 ## Group
 
-In the group settings you can define general settings and feature specific settings.
+In the group settings you can define general settings and feature-specific settings.
 
 ![Profiles - Group settings](./img/profiles--group-settings.png)
 
 ## Profile
 
-In the profile settings you can define general settings and feature specific settings.
+In the profile settings you can define general settings and feature-specific settings.
 
 :::note
 
-Profiles are only displayed in the specific features if they have been enabled via the checkbox. The [`Profiles` tab in the `Settings`](#overview) will show all profiles.
+Profiles are only displayed in a specific feature if they have been enabled via the checkbox. The [`Profiles` tab in `Settings`](#overview) shows all profiles regardless.
 
-Use `tags` to organize profiles and filter by them. For example, tag profiles as `prod` or `dns` to group related ones. You can filter by `any` or `all` tags.
+Use **tags** to organize profiles and filter by them. For example, tag profiles as `prod` or `dns` to group related ones. You can filter by `any` or `all` tags.
 
 :::
 
 :::tip
 
-Some settings like the `host` can be inherited from the general settings in the feature specific settings.
+Some settings, such as the `host`, can be inherited from the general settings in the feature-specific settings.
 
 See also the profile section in the specific [feature documentation](./introduction) for more information.
 
