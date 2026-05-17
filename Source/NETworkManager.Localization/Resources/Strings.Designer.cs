@@ -7501,6 +7501,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string Options {
+            get {
+                return ResourceManager.GetString("Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Orange.
         /// </summary>
         public static string Orange {
@@ -7564,15 +7573,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Options.
-        /// </summary>
-        public static string Options {
-            get {
-                return ResourceManager.GetString("Options", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Overwrite?.
         /// </summary>
         public static string OverwriteQuestion {
@@ -7580,7 +7580,7 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("OverwriteQuestion", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Packet loss.
         /// </summary>
