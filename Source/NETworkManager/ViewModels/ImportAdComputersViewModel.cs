@@ -296,6 +296,7 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
 
             IsSearching = false;
             StatusMessage = exception.Message;
+            IsStatusMessageDisplayed = true;
 
             return;
         }

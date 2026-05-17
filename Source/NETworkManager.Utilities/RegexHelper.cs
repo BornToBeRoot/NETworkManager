@@ -174,7 +174,7 @@ public static partial class RegexHelper
     /// Each component must have the form attr=value; deep syntax is left to the directory server.
     /// </summary>
     /// <returns>A <see cref="Regex"/> instance that matches LDAP distinguished names.</returns>
-    [GeneratedRegex(@"^[A-Za-z][A-Za-z0-9-]*=.+(,[A-Za-z][A-Za-z0-9-]*=.+)*$")]
+    [GeneratedRegex(@"^[A-Za-z][A-Za-z0-9-]*=[^,]+(,\s*[A-Za-z][A-Za-z0-9-]*=[^,]+)*$")]
     public static partial Regex LdapSearchBaseRegex();
 
     // Match a hosts file entry with optional comments, supporting IPv4, IPv6, and hostnames

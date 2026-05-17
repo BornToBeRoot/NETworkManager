@@ -121,7 +121,7 @@ public static class ActiveDirectoryComputerSearcher
 
     /// <summary>
     ///     Builds the LDAP search filter.  The base filter targets <c>objectCategory=computer</c> and
-    ///     <c>objectClass=computer</c>; when <see cref="ActiveDirectorySearchOptions.ExcludeDisabledComputerAccounts"/>
+    ///     <c>objectClass=computer</c>; when <see cref="ActiveDirectorySearchOptions.ExcludeDisabledAccounts"/>
     ///     is set, an additional clause excludes accounts with the <c>ACCOUNTDISABLE</c> UAC bit.
     ///     If an <see cref="ActiveDirectorySearchOptions.AdditionalFilter"/> is supplied it is AND-combined
     ///     with the base filter.
