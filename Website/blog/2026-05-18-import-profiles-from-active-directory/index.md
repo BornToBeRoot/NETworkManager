@@ -24,7 +24,7 @@ Go to **Settings → Profiles** and click **Import**. Select **Active Directory*
 ![Profiles - Import Active Directory](./profiles--import-active-directory.png)
 
 | Field | Description |
-| ----- | ----------- |
+| --- | --- |
 | **Search base** | LDAP search base, e.g. `DC=domain,DC=com` |
 | **Server** | Hostname or IP of the LDAP server. Leave empty to use the default domain controller. |
 | **Port** | Defaults to `389` (LDAP) or `636` (LDAPS), switches automatically when **Use SSL** is toggled. |
