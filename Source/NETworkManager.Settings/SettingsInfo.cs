@@ -1061,7 +1061,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> IPScanner_HostHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -1260,7 +1260,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> PortScanner_HostHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -1273,7 +1273,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> PortScanner_PortHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -1420,7 +1420,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> PingMonitor_HostHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -1567,7 +1567,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> Traceroute_HostHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -1701,7 +1701,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> DNSLookup_HostHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -1729,7 +1729,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public DNSServerConnectionInfoProfile DNSLookup_SelectedDNSServer
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -2847,7 +2847,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public int PuTTY_RawPort
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -3028,7 +3028,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> SNMP_HostHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -3041,7 +3041,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> SNMP_OidHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -3451,7 +3451,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> WakeOnLan_MACAddressHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -3464,7 +3464,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> WakeOnLan_BroadcastHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -3507,7 +3507,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> Whois_DomainHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -3576,7 +3576,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> IPGeolocation_HostHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -3647,7 +3647,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> SubnetCalculator_Calculator_SubnetHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -3664,7 +3664,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> SubnetCalculator_Subnetting_SubnetHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -3677,7 +3677,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> SubnetCalculator_Subnetting_NewSubnetmaskHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -3720,7 +3720,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> SubnetCalculator_WideSubnet_Subnet1
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -3733,7 +3733,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> SubnetCalculator_WideSubnet_Subnet2
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -3752,7 +3752,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> BitCalculator_InputHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -3822,7 +3822,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> Lookup_OUI_SearchHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
@@ -3861,7 +3861,7 @@ public class SettingsInfo : INotifyPropertyChanged
     public ObservableCollection<string> Lookup_Port_SearchHistory
     {
         get;
-        init
+        set
         {
             if (value == field)
                 return;
