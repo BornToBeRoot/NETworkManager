@@ -67,3 +67,58 @@ See also the profile section in the specific [feature documentation](./introduct
 :::
 
 ![Profiles - Profile settings](./img/profiles--profile-settings.png)
+
+## Import
+
+Profiles can be imported from an external source. To start the import, click **Import** on the [`Profiles` tab in `Settings`](#overview) and select an import source.
+
+The following import sources are available:
+
+- [Active Directory](#active-directory)
+
+### Active Directory
+
+Profiles can be imported from Active Directory by querying computer accounts via LDAP. After selecting **Active Directory** as the import source, configure the connection settings and click **Search**.
+
+![Profiles - Import Active Directory](./img/profiles--import-active-directory.png)
+
+| Field                         | Description                                                                                                                                      |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Search base**               | LDAP search base to query, e.g. `DC=domain,DC=com`.                                                                                              |
+| **Server**                    | Hostname or IP address of the LDAP server. Leave empty to use the default domain controller.                                                     |
+| **Port**                      | LDAP port. Defaults to `389` (LDAP) or `636` (LDAPS). Switches automatically when **Use SSL** is toggled.                                        |
+| **Use SSL**                   | Connect using LDAPS (encrypted).                                                                                                                 |
+| **Authentication**            | `Use current Windows credentials` authenticates as the logged-in user. `Use these credentials` allows specifying a custom username and password. |
+| **Username**                  | Username for authentication. Only available when **Use these credentials** is selected.                                                          |
+| **Password**                  | Password for authentication. Only available when **Use these credentials** is selected.                                                          |
+| **Exclude disabled accounts** | Skip computer accounts that are disabled in Active Directory.                                                                                    |
+| **Additional LDAP filter**    | Optional LDAP filter to narrow down results, e.g. `(operatingSystem=Windows Server*)`.                                                           |
+
+Once the computers are found, proceed to [Review and import](#review-and-import) to select entries and configure import options.
+
+### Review and import
+
+Select the entries to import and configure the options before clicking **Import**.
+
+![Profiles - Import Review](./img/profiles--import-review.png)
+
+**Hosts** (left panel)
+
+| Column     | Description                                                                                                                                              |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Name**   | Computer name from the import source.                                                                                                                    |
+| **Host**   | Hostname used as the profile host address.                                                                                                               |
+| **Status** | `New` — not yet imported. `Already imported` — already exists as a profile from this source. `No host` — cannot be imported (no host address available). |
+
+**Applications** (right panel)
+
+Select which applications to enable for the imported profiles. [Ping Monitor](./application/ping-monitor), [Remote Desktop](./application/remote-desktop), and [PowerShell](./application/powershell) are enabled by default.
+
+**Options** (right panel)
+
+| Field                     | Description                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------ |
+| **Group**                 | Target group for the imported profiles. Select an existing group or type a new group name. |
+| **Skip already imported** | Skip profiles that have already been imported from this source. Default is `Enabled`.      |
+
+After clicking **Import**, a summary dialog shows how many profiles were imported, how many were skipped as duplicates, and how many were skipped because no host address was available.
