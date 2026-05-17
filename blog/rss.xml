@@ -9,11 +9,11 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Introducing Neighbor Table - with IPv6 support replacing ARP Table]]></title>
+            <title><![CDATA[Introducing Neighbor Table]]></title>
             <link>https://borntoberoot.net/NETworkManager/blog/introducing-neighbor-table</link>
             <guid>https://borntoberoot.net/NETworkManager/blog/introducing-neighbor-table</guid>
             <pubDate>Sun, 03 May 2026 00:00:00 GMT</pubDate>
-            <description><![CDATA[NETworkManager introduces the new Neighbor Table, replacing the ARP Table with a unified view that covers both IPv4 (ARP) and IPv6 (NDP) address-to-MAC mappings.]]></description>
+            <description><![CDATA[NETworkManager introduces the Neighbor Table, replacing the ARP Table with a unified view that covers both IPv4 (ARP) and IPv6 (NDP) address-to-MAC mappings.]]></description>
             <content:encoded><![CDATA[<p>NETworkManager introduces the new <strong>Neighbor Table</strong>, replacing the <strong>ARP Table</strong> with a unified view that covers IP-to-MAC address mappings for both IPv4 (ARP) and IPv6 (NDP) in a single place.</p>
 <p><img decoding="async" loading="lazy" alt="Neighbor Table" src="https://borntoberoot.net/NETworkManager/assets/images/neighbor-table-8f3a754c99c81f037e476ff76d114fbf.png" width="1200" height="800" class="img_ev3q"></p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-the-change">Why the change?<a href="https://borntoberoot.net/NETworkManager/blog/introducing-neighbor-table#why-the-change" class="hash-link" aria-label="Direct link to Why the change?" title="Direct link to Why the change?" translate="no">​</a></h2>
@@ -159,7 +159,7 @@
             <guid>https://borntoberoot.net/NETworkManager/blog/system-wide-policies-for-enterprise-deployments</guid>
             <pubDate>Sun, 22 Feb 2026 00:00:00 GMT</pubDate>
             <description><![CDATA[NETworkManager now supports system-wide policies for centralized control over settings across all users — ideal for enterprise deployments.]]></description>
-            <content:encoded><![CDATA[<p>NETworkManager now supports system-wide policies, giving administrators centralized control over application settings across all users on a machine. This feature is available since the <a href="https://github.com/BornToBeRoot/NETworkManager/releases" target="_blank" rel="noopener noreferrer" class="">pre-release version 2026.02.19.0</a> and can now be tested.</p>
+            <content:encoded><![CDATA[<p>NETworkManager now supports system-wide policies, giving administrators centralized control over application settings across all users on a machine.</p>
 <p><img decoding="async" loading="lazy" alt="System-wide policy indicator" src="https://borntoberoot.net/NETworkManager/assets/images/system-wide-policy-indicator-cf235b9935f6426da4c97e2ec5c77446.png" width="1200" height="600" class="img_ev3q"></p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-are-system-wide-policies">What Are System-Wide Policies?<a href="https://borntoberoot.net/NETworkManager/blog/system-wide-policies-for-enterprise-deployments#what-are-system-wide-policies" class="hash-link" aria-label="Direct link to What Are System-Wide Policies?" title="Direct link to What Are System-Wide Policies?" translate="no">​</a></h2>
 <p>System-wide policies allow administrators to enforce specific settings for all users on a machine. These policies override user-specific settings and provide centralized control over application behavior in enterprise environments.</p>
@@ -231,6 +231,7 @@
 <div class="theme-admonition theme-admonition-warning admonition_xJq3 alert alert--warning"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>warning</div><div class="admonitionContent_BuS1"><p>Ensure the <code>config.json</code> file has appropriate permissions so that regular users cannot modify it. On standard installations in <code>Program Files</code>, this is automatically enforced by Windows file permissions.</p></div></div>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="request-more-policies">Request More Policies<a href="https://borntoberoot.net/NETworkManager/blog/system-wide-policies-for-enterprise-deployments#request-more-policies" class="hash-link" aria-label="Direct link to Request More Policies" title="Direct link to Request More Policies" translate="no">​</a></h2>
 <p>Additional policy options will be added in future releases to provide more granular control over application behavior. If you have specific requirements for system-wide policies in your organization, please submit a feature request via the <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new/choose" target="_blank" rel="noopener noreferrer" class="">GitHub issue tracker</a> to help us prioritize.</p>
+<p>Upgrade now to the <a href="https://borntoberoot.net/NETworkManager/download" target="_blank" rel="noopener noreferrer" class="">latest version of NETworkManager</a> to use this feature.</p>
 <p>More information is available in the <a href="https://borntoberoot.net/NETworkManager/docs/system-wide-policies" target="_blank" rel="noopener noreferrer" class="">official documentation</a>.</p>
 <p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>.</p>]]></content:encoded>
             <category>policies</category>
