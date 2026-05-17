@@ -9,7 +9,7 @@ public sealed class ProfileImportCandidate(
     string name,
     string host,
     string description,
-    ProfileImportMethod importSource,
+    ProfileImportSource importSource,
     string importSourceId = null)
 {
     /// <summary>Profile name suggestion (e.g. sAMAccountName without trailing '$').</summary>
@@ -22,7 +22,7 @@ public sealed class ProfileImportCandidate(
     public string Description { get; } = description;
 
     /// <summary>Import method. Used together with <see cref="ImportSourceId"/> for duplicate detection on re-import.</summary>
-    public ProfileImportMethod ImportSource { get; } = importSource;
+    public ProfileImportSource ImportSource { get; } = importSource;
 
     /// <summary>Stable ID within the import source (e.g. AD objectGUID). Empty/null if not applicable.</summary>
     public string ImportSourceId { get; } = importSourceId;

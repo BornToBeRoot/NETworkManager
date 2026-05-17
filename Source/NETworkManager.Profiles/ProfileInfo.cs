@@ -275,7 +275,7 @@ public class ProfileInfo
     ///     Import method identifier (e.g. "ActiveDirectory"). Used together with <see cref="ImportSourceId"/>
     ///     for duplicate detection on re-import. Null if the profile was not created by an import.
     /// </summary>
-    public ProfileImportMethod ImportSource { get; set; }
+    public ProfileImportSource ImportSource { get; set; }
 
     /// <summary>
     ///     Stable ID within the import source (e.g. AD objectGUID).

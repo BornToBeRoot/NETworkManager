@@ -1,6 +1,6 @@
 namespace NETworkManager.Profiles;
 
-public enum ProfileImportMethod
+public enum ProfileImportSource
 {
     None,
     ActiveDirectory

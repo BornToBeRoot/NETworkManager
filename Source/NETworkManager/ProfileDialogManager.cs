@@ -580,7 +580,7 @@ public static class ProfileDialogManager
 
             switch (instance.SelectedMethod.Method)
             {
-                case ProfileImportMethod.ActiveDirectory:
+                case ProfileImportSource.ActiveDirectory:
                     ShowSearchAdComputersDialog(parentWindow, viewModel, targetGroup, previousState: null).ConfigureAwait(false);
                     break;
             }
@@ -614,7 +614,8 @@ public static class ProfileDialogManager
             {
                 CloseChild();
 
-                ShowImportProfilesResultDialog(parentWindow, viewModel, targetGroup, candidates, Strings.ImportProfiles_Source_ActiveDirectory,
+                ShowImportProfilesResultDialog(parentWindow, viewModel, targetGroup, candidates,
+                    ProfileImportSource.ActiveDirectory, Strings.ImportProfiles_Source_ActiveDirectory,
                     backToSourceCallback: () => ShowSearchAdComputersDialog(parentWindow, viewModel, targetGroup, searchViewModel).ConfigureAwait(false)
                 ).ConfigureAwait(false);
             }, CloseChild, previousState);
@@ -630,7 +631,7 @@ public static class ProfileDialogManager
     }
 
     private static Task ShowImportProfilesResultDialog(Window parentWindow, IProfileManagerMinimal viewModel,
-        string targetGroup, IReadOnlyList<ProfileImportCandidate> candidates, string sourceLabel,
+        string targetGroup, IReadOnlyList<ProfileImportCandidate> candidates, ProfileImportSource importSource, string sourceLabel,
         Action backToSourceCallback)
     {
         var childWindow = new ImportProfilesResultChildWindow(parentWindow);
@@ -655,7 +656,7 @@ public static class ProfileDialogManager
             Settings.ConfigurationManager.OnDialogClose();
         }
 
-        var childWindowViewModel = new ImportProfilesResultViewModel(candidates, targetGroup,
+        var childWindowViewModel = new ImportProfilesResultViewModel(candidates, importSource, targetGroup,
             backCallback: () =>
             {
                 CloseChild();

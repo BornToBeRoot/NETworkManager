@@ -314,7 +314,7 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
                 name: c.ProfileName,
                 host: c.DnsHostName,
                 description: string.Format(Localization.Resources.Strings.ActiveDirectory_ImportDescription, importedAt),
-                importSource: ProfileImportMethod.ActiveDirectory,
+                importSource: ProfileImportSource.ActiveDirectory,
                 importSourceId: c.ObjectGuid))
             .ToList();
 

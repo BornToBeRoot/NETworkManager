@@ -14,7 +14,7 @@ public sealed class ImportProfilesViewModel : ViewModelBase
     {
         Methods = new List<ImportMethodItem>
         {
-            new(ProfileImportMethod.ActiveDirectory, Strings.ImportProfiles_Method_ActiveDirectory)
+            new(ProfileImportSource.ActiveDirectory, Strings.ImportProfiles_Method_ActiveDirectory)
         };
 
         SelectedMethod = Methods[0];
@@ -42,5 +42,5 @@ public sealed class ImportProfilesViewModel : ViewModelBase
 
     public ICommand CancelCommand { get; }
 
-    public sealed record ImportMethodItem(ProfileImportMethod Method, string DisplayName);
+    public sealed record ImportMethodItem(ProfileImportSource Method, string DisplayName);
 }

@@ -13,7 +13,7 @@ public class GroupNameValidator : ValidationRule
         if (string.IsNullOrEmpty(groupName))
             return ValidationResult.ValidResult;
 
-        if (groupName.StartsWith("~"))
+        if (groupName.StartsWith($"~"))
             return new ValidationResult(false,
                 string.Format(Strings.GroupNameCannotStartWithX, "~"));
 
