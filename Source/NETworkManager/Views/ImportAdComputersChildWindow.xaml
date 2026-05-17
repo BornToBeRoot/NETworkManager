@@ -165,9 +165,9 @@
 
             <!-- Exclude disabled -->
             <TextBlock Grid.Column="0" Grid.Row="14"
-                       Text="{x:Static localization:Strings.ExcludeDisabledComputerAccounts}" />
+                       Text="{x:Static localization:Strings.ExcludeDisabledAccounts}" />
             <mah:ToggleSwitch Grid.Column="2" Grid.Row="14" OnContent="" OffContent=""
-                              IsOn="{Binding ExcludeDisabledComputerAccounts}" />
+                              IsOn="{Binding ExcludeDisabledAccounts}" />
 
             <!-- Additional LDAP filter -->
             <TextBlock Grid.Column="0" Grid.Row="16"

@@ -315,6 +315,9 @@
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
   </data>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
   <data name="OverwriteQuestion" xml:space="preserve">
     <value>Overwrite?</value>
   </data>
@@ -1767,6 +1770,9 @@ Profile files are not affected!</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
     <value>Enter a valid domain (e.g., "example.com")!</value>
+  </data>
+  <data name="EnterValidUsername" xml:space="preserve">
+    <value>Enter a valid Windows username (e.g., "user", "DOMAIN\user" or "user@domain.com")!</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>Whois server not found for the domain: "{0}"</value>
@@ -4040,17 +4046,89 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   <data name="ActiveDirectoryImportOptions" xml:space="preserve">
     <value>Options</value>
   </data>
-  <data name="ActiveDirectoryImportSummary" xml:space="preserve">
-    <value>Imported {0} computer profile(s). Skipped {1} duplicate name(s) in the target group. Skipped {2} without a DNS host name.</value>
-  </data>
+
   <data name="ActiveDirectoryImportUsesCurrentCredentials" xml:space="preserve">
     <value>Uses your current Windows credentials to read from Active Directory. The account must be allowed to enumerate computer objects under the search base (subtree).</value>
   </data>
   <data name="ActiveDirectorySearchBase" xml:space="preserve">
-    <value>Search base (OU DN)</value>
+    <value>Search base (DN)</value>
   </data>
-  <data name="ExcludeDisabledComputerAccounts" xml:space="preserve">
-    <value>Exclude disabled computer accounts</value>
+  <data name="ActiveDirectoryAdditionalLdapFilter" xml:space="preserve">
+    <value>Additional LDAP filter</value>
+  </data>
+  <data name="ActiveDirectoryAdditionalLdapFilterInvalid" xml:space="preserve">
+    <value>Filter must be a valid LDAP expression starting with '(' and ending with ')'.</value>
+  </data>
+  <data name="ActiveDirectorySearchBaseInvalid" xml:space="preserve">
+    <value>Search base must be a valid LDAP distinguished name (e.g. DC=example,DC=com).</value>
+  </data>
+  <data name="ActiveDirectory_ImportDescription" xml:space="preserve">
+    <value>Imported from Active Directory on {0}</value>
+  </data>
+  <data name="ActiveDirectoryNoComputersFound" xml:space="preserve">
+    <value>No computers found for the given search base and filter.</value>
+  </data>
+  <data name="SearchingActiveDirectoryDots" xml:space="preserve">
+    <value>Searching Active Directory...</value>
+  </data>
+  <data name="ActiveDirectoryNonDomainHint" xml:space="preserve">
+    <value>If your computer is not joined to the domain, specify the domain controller (hostname or IP) and use custom credentials.</value>
+  </data>
+  <data name="LdapServer" xml:space="preserve">
+    <value>Server (optional)</value>
+  </data>
+  <data name="LdapPort" xml:space="preserve">
+    <value>Port (optional)</value>
+  </data>
+  <data name="UseSsl" xml:space="preserve">
+    <value>Use SSL (LDAPS)</value>
+  </data>
+  <data name="UseCurrentWindowsCredentials" xml:space="preserve">
+    <value>Use current Windows credentials</value>
+  </data>
+  <data name="UseTheseCredentials" xml:space="preserve">
+    <value>Use these credentials</value>
+  </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="DeselectAll" xml:space="preserve">
+    <value>Deselect all</value>
+  </data>
+  <data name="EnableFor" xml:space="preserve">
+    <value>Enable for</value>
+  </data>
+  <data name="SkipAlreadyImported" xml:space="preserve">
+    <value>Skip already imported</value>
+  </data>
+  <data name="ImportResultsHeader" xml:space="preserve">
+    <value>{0} · {1} result(s)</value>
+  </data>
+  <data name="ProfileImportSummary" xml:space="preserve">
+    <value>{0} profile(s) imported.
+{1} duplicate entries skipped.
+{2} without a host skipped.</value>
+  </data>
+  <data name="ImportProfiles_Source_ActiveDirectory" xml:space="preserve">
+    <value>Active Directory</value>
+  </data>
+  <data name="ImportResults" xml:space="preserve">
+    <value>Import results</value>
+  </data>
+  <data name="ImportProfiles_StatusNew" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="ImportProfiles_StatusImported" xml:space="preserve">
+    <value>Imported</value>
+  </data>
+  <data name="ImportProfiles_StatusNoHost" xml:space="preserve">
+    <value>No host</value>
+  </data>
+  <data name="ExcludeDisabledAccounts" xml:space="preserve">
+    <value>Exclude disabled accounts</value>
   </data>
   <data name="ImportComputersFromActiveDirectory" xml:space="preserve">
     <value>Import computers from Active Directory</value>
@@ -4067,8 +4145,8 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   <data name="ImportProfiles_Method_ActiveDirectory" xml:space="preserve">
     <value>Active Directory</value>
   </data>
-  <data name="TargetProfileGroup" xml:space="preserve">
-    <value>Target profile group</value>
+  <data name="ProfileGroup" xml:space="preserve">
+    <value>Profile group</value>
   </data>
   <data name="ExistingOrNewGroupDots" xml:space="preserve">
     <value>Existing or new group name</value>

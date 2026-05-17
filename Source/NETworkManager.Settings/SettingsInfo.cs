@@ -618,7 +618,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Profiles_ImportActiveDirectoryUseSsl;
 
-    public bool Profiles_ImportActiveDirectoryExcludeDisabledComputerAccounts
+    public bool Profiles_ImportActiveDirectoryExcludeDisabledAccounts
     {
         get;
         set
@@ -629,7 +629,7 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.Profiles_ImportActiveDirectoryExcludeDisabledComputerAccounts;
+    } = GlobalStaticConfiguration.Profiles_ImportActiveDirectoryExcludeDisabledAccounts;
 
     public ActiveDirectoryAuthenticationMode Profiles_ImportActiveDirectoryAuthMode
     {

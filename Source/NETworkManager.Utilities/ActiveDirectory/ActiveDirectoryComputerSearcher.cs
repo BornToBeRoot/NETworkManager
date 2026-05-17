@@ -132,7 +132,7 @@ public static class ActiveDirectoryComputerSearcher
     /// </exception>
     private static string BuildLdapFilter(ActiveDirectorySearchOptions options)
     {
-        var baseFilter = options.ExcludeDisabledComputerAccounts
+        var baseFilter = options.ExcludeDisabledAccounts
             ? "(&(objectCategory=computer)(objectClass=computer)(!(userAccountControl:1.2.840.113556.1.4.803:=2)))"
             : "(&(objectCategory=computer)(objectClass=computer))";
 

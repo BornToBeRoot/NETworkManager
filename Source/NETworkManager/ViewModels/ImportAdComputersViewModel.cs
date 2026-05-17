@@ -31,7 +31,7 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
             AuthMode = previousState.AuthMode;
             Username = previousState.Username;
             Password = previousState.Password;
-            ExcludeDisabledComputerAccounts = previousState.ExcludeDisabledComputerAccounts;
+            ExcludeDisabledAccounts = previousState.ExcludeDisabledAccounts;
             AdditionalLdapFilter = previousState.AdditionalLdapFilter;
         }
         else
@@ -41,7 +41,7 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
             LdapPort = SettingsManager.Current.Profiles_ImportActiveDirectoryPort;
             UseSsl = SettingsManager.Current.Profiles_ImportActiveDirectoryUseSsl;
             AuthMode = SettingsManager.Current.Profiles_ImportActiveDirectoryAuthMode;
-            ExcludeDisabledComputerAccounts = SettingsManager.Current.Profiles_ImportActiveDirectoryExcludeDisabledComputerAccounts;
+            ExcludeDisabledAccounts = SettingsManager.Current.Profiles_ImportActiveDirectoryExcludeDisabledAccounts;
             AdditionalLdapFilter = SettingsManager.Current.Profiles_ImportActiveDirectoryAdditionalFilter ?? string.Empty;
         }
 
@@ -111,7 +111,7 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
         }
     }
 
-    public bool ExcludeDisabledComputerAccounts
+    public bool ExcludeDisabledAccounts
     {
         get;
         set
@@ -274,7 +274,7 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
             Server = LdapServer?.Trim() ?? string.Empty,
             Port = LdapPort,
             UseSsl = UseSsl,
-            ExcludeDisabledComputerAccounts = ExcludeDisabledComputerAccounts,
+            ExcludeDisabledAccounts = ExcludeDisabledAccounts,
             AdditionalFilter = AdditionalLdapFilter?.Trim() ?? string.Empty,
             Username = AuthMode == ActiveDirectoryAuthenticationMode.Custom ? Username.Trim() : string.Empty,
             Password = AuthMode == ActiveDirectoryAuthenticationMode.Custom ? Password : null
@@ -330,7 +330,7 @@ public sealed class ImportAdComputersViewModel : ViewModelBase
         SettingsManager.Current.Profiles_ImportActiveDirectoryServer = options.Server;
         SettingsManager.Current.Profiles_ImportActiveDirectoryPort = options.Port;
         SettingsManager.Current.Profiles_ImportActiveDirectoryUseSsl = options.UseSsl;
-        SettingsManager.Current.Profiles_ImportActiveDirectoryExcludeDisabledComputerAccounts = options.ExcludeDisabledComputerAccounts;
+        SettingsManager.Current.Profiles_ImportActiveDirectoryExcludeDisabledAccounts = options.ExcludeDisabledAccounts;
         SettingsManager.Current.Profiles_ImportActiveDirectoryAdditionalFilter = options.AdditionalFilter;
         SettingsManager.Current.Profiles_ImportActiveDirectoryAuthMode = AuthMode;
     }

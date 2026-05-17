@@ -655,23 +655,14 @@ public static class ProfileDialogManager
             Settings.ConfigurationManager.OnDialogClose();
         }
 
-        async void ShowError(string message)
-        {
-            Settings.ConfigurationManager.OnDialogOpen();
-
-            await DialogHelper.ShowMessageAsync(parentWindow, Strings.Error, message, ChildWindowIcon.Error);
-
-            Settings.ConfigurationManager.OnDialogClose();
-        }
-
-        var childWindowViewModel = new ImportProfilesResultViewModel(candidates, sourceLabel, targetGroup,
+        var childWindowViewModel = new ImportProfilesResultViewModel(candidates, targetGroup,
             backCallback: () =>
             {
                 CloseChild();
                 backToSourceCallback();
-            }, cancelCallback: CloseChild, completedCallback: ShowSummary, errorHandler: ShowError);
+            }, cancelCallback: CloseChild, completedCallback: ShowSummary);
 
-        childWindow.Title = Strings.ImportResults;
+        childWindow.Title = $"{Strings.ImportResults} - {string.Format(Strings.ImportResultsHeader, sourceLabel, candidates.Count)}";
         childWindow.DataContext = childWindowViewModel;
 
         viewModel.OnProfileManagerDialogOpen();

@@ -31,7 +31,7 @@ public sealed class ActiveDirectorySearchOptions
     /// <summary>
     /// When true, computer accounts with ACCOUNTDISABLE are skipped server-side.
     /// </summary>
-    public bool ExcludeDisabledComputerAccounts { get; init; } = true;
+    public bool ExcludeDisabledAccounts { get; init; } = true;
 
     /// <summary>
     /// Optional username. Empty = bind with current Windows credentials.
