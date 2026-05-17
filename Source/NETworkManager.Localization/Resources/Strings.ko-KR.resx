@@ -315,6 +315,9 @@
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
   </data>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
   <data name="OverwriteQuestion" xml:space="preserve">
     <value>덮어쓰시겠습니까?</value>
   </data>
@@ -1765,6 +1768,9 @@
   <data name="EnterValidDomain" xml:space="preserve">
     <value>유효한 도메인 (예: "example.com ")을 입력하세요!</value>
   </data>
+  <data name="EnterValidUsername" xml:space="preserve">
+    <value>Enter a valid Windows username (e.g., "user", "DOMAIN\user" or "user@domain.com")!</value>
+  </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>Whois 서버는 도메인에 대해 찾을 수 없습니다: "{0}"</value>
   </data>
@@ -1973,14 +1979,14 @@ URL: https://api.ipify.org/</value>
   <data name="ExternalServices" xml:space="preserve">
     <value>외부 서비스</value>
   </data>
-  <data name="ToolTip_StarForkProjectOnGitHub" xml:space="preserve">
-    <value>GitHub에서 프로젝트를 스타/포크합니다.</value>
+  <data name="StarForkProjectOnGitHub" xml:space="preserve">
+    <value>Star/Fork the Project on GitHub.</value>
   </data>
-  <data name="ToolTip_HelpTranslateOnTransifex" xml:space="preserve">
-    <value>Transifex에서 프로젝트 번역을 도와주세요.</value>
+  <data name="HelpTranslateOnTransifex" xml:space="preserve">
+    <value>Help translate the project on Transifex.</value>
   </data>
-  <data name="ToolTip_ContactOrContactMeViaX" xml:space="preserve">
-    <value>X를 통해 나를 팔로우하거나 연락해주세요.</value>
+  <data name="ContactOrContactMeViaX" xml:space="preserve">
+    <value>Follow or contact me via X.</value>
   </data>
   <data name="Connection" xml:space="preserve">
     <value>연결</value>
@@ -2304,8 +2310,8 @@ $$hostname$$	--&gt;	호스트이름</value>
   <data name="TimeoutS" xml:space="preserve">
     <value>시간 초과</value>
   </data>
-  <data name="ToolTip_ReportIssueOrCreateFeatureRequest" xml:space="preserve">
-    <value>문제를 보고하거나 기능 요청을 만드세요.</value>
+  <data name="ReportIssueOrCreateFeatureRequest" xml:space="preserve">
+    <value>Report an issue or create a feature request.</value>
   </data>
   <data name="BeaconInterval" xml:space="preserve">
     <value>신호 간격</value>
@@ -2364,8 +2370,8 @@ $$hostname$$	--&gt;	호스트이름</value>
   <data name="IsEncrypted" xml:space="preserve">
     <value>암호화됨</value>
   </data>
-  <data name="ToolTip_OpenTheDocumentation" xml:space="preserve">
-    <value>문서를 엽니다.</value>
+  <data name="OpenTheDocumentation" xml:space="preserve">
+    <value>Open the documentation.</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
     <value>고객 1</value>
@@ -3619,8 +3625,8 @@ URL: http://ip-api.com/</value>
   <data name="Experimental" xml:space="preserve">
     <value>실험적</value>
   </data>
-  <data name="Watermark_RunCommand" xml:space="preserve">
-    <value>명령 실행...</value>
+  <data name="RunCommandDots" xml:space="preserve">
+    <value>Run command...</value>
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
     <value>IP 지리적 위치</value>
@@ -3706,9 +3712,6 @@ URL: http://ip-api.com/</value>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>다른 호스트를 추가하는 동안에는 호스트를 설정할 수 없습니다. 프로세스가 완료될 때까지 기다렸다가 다시 시도해 주세요.</value>
   </data>
-  <data name="Watermark_RunCommandWithHotKey" xml:space="preserve">
-    <value>명령 실행... (Ctrl+Shift+P)</value>
-  </data>
   <data name="NoMatchingCommands" xml:space="preserve">
     <value>일치하는 명령이 없습니다!</value>
   </data>
@@ -3760,8 +3763,8 @@ URL: http://ip-api.com/</value>
   <data name="CloseGroup" xml:space="preserve">
     <value>그룹 닫기</value>
   </data>
-  <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
-    <value>명령 실행... (Ctrl+Shift+P)</value>
+  <data name="RunCommandDotsWithHotKey" xml:space="preserve">
+    <value>Run command... (Ctrl+Shift+P)</value>
   </data>
   <data name="ProfileFiles" xml:space="preserve">
     <value>프로필 파일</value>
@@ -3802,8 +3805,8 @@ Windows 설정 &gt; 개인정보 보호 및 보안 &gt; 위치를 열고 데스�
   <data name="GHz6" xml:space="preserve">
     <value>6 GHz</value>
   </data>
-  <data name="ToolTip_SupportThisProjectWithADonation" xml:space="preserve">
-    <value>기부로 이 프로젝트를 지원하세요.</value>
+  <data name="SupportThisProjectWithADonation" xml:space="preserve">
+    <value>Support this project with a donation.</value>
   </data>
   <data name="OpenDocumentation" xml:space="preserve">
     <value>문서 열기</value>
@@ -3972,8 +3975,8 @@ Windows 설정 &gt; 개인정보 보호 및 보안 &gt; 위치를 열고 데스�
 나중에 언제든지 프로필 파일을 마우스 오른쪽 버튼으로 클릭하여 암호화 설정을 관리하여 암호화를 활성화 또는 비활성화할 수 있습니다.
 "취소"를 클릭하면 프로필 파일은 암호화되지 않은 상태로 유지됩니다.</value>
   </data>
-  <data name="ToolTip_RestartRequired" xml:space="preserve">
-    <value>언어 설정과 같은 변경 사항을 적용하려면 재시작이 필요합니다.</value>
+  <data name="RestartRequiredMessage" xml:space="preserve">
+    <value>A restart is required to apply changes such as language settings.</value>
   </data>
   <data name="CouldNotParseOrResolveDNSServers" xml:space="preserve">
     <value>지정된 DNS 서버를 분석하거나 확인할 수 없습니다.</value>
@@ -4034,11 +4037,116 @@ Windows 설정 &gt; 개인정보 보호 및 보안 &gt; 위치를 열고 데스�
   <data name="NetworkStatus" xml:space="preserve">
     <value>네트워크 상태</value>
   </data>
-  <data name="ToolTip_Show" xml:space="preserve">
-    <value>표시</value>
+  <data name="ActiveDirectoryImportFailed" xml:space="preserve">
+    <value>Active Directory import failed.</value>
   </data>
-  <data name="ToolTip_Reload" xml:space="preserve">
-    <value>다시 불러오기</value>
+  <data name="ActiveDirectoryImportOptions" xml:space="preserve">
+    <value>Options</value>
+  </data>
+
+  <data name="ActiveDirectoryImportUsesCurrentCredentials" xml:space="preserve">
+    <value>Uses your current Windows credentials to read from Active Directory. The account must be allowed to enumerate computer objects under the search base (subtree).</value>
+  </data>
+  <data name="ActiveDirectorySearchBase" xml:space="preserve">
+    <value>Search base (DN)</value>
+  </data>
+  <data name="ActiveDirectoryAdditionalLdapFilter" xml:space="preserve">
+    <value>Additional LDAP filter</value>
+  </data>
+  <data name="ActiveDirectoryAdditionalLdapFilterInvalid" xml:space="preserve">
+    <value>Filter must be a valid LDAP expression starting with '(' and ending with ')'.</value>
+  </data>
+  <data name="ActiveDirectorySearchBaseInvalid" xml:space="preserve">
+    <value>Search base must be a valid LDAP distinguished name (e.g. DC=example,DC=com).</value>
+  </data>
+  <data name="ActiveDirectory_ImportDescription" xml:space="preserve">
+    <value>Imported from Active Directory on {0}</value>
+  </data>
+  <data name="ActiveDirectoryNoComputersFound" xml:space="preserve">
+    <value>No computers found for the given search base and filter.</value>
+  </data>
+  <data name="SearchingActiveDirectoryDots" xml:space="preserve">
+    <value>Searching Active Directory...</value>
+  </data>
+  <data name="ActiveDirectoryNonDomainHint" xml:space="preserve">
+    <value>If your computer is not joined to the domain, specify the domain controller (hostname or IP) and use custom credentials.</value>
+  </data>
+  <data name="LdapServer" xml:space="preserve">
+    <value>Server (optional)</value>
+  </data>
+  <data name="LdapPort" xml:space="preserve">
+    <value>Port (optional)</value>
+  </data>
+  <data name="UseSsl" xml:space="preserve">
+    <value>Use SSL (LDAPS)</value>
+  </data>
+  <data name="UseCurrentWindowsCredentials" xml:space="preserve">
+    <value>Use current Windows credentials</value>
+  </data>
+  <data name="UseTheseCredentials" xml:space="preserve">
+    <value>Use these credentials</value>
+  </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="DeselectAll" xml:space="preserve">
+    <value>Deselect all</value>
+  </data>
+  <data name="EnableFor" xml:space="preserve">
+    <value>Enable for</value>
+  </data>
+  <data name="SkipAlreadyImported" xml:space="preserve">
+    <value>Skip already imported</value>
+  </data>
+  <data name="ImportResultsHeader" xml:space="preserve">
+    <value>{0} · {1} result(s)</value>
+  </data>
+  <data name="ProfileImportSummary" xml:space="preserve">
+    <value>{0} profile(s) imported.
+{1} duplicate entries skipped.
+{2} without a host skipped.</value>
+  </data>
+  <data name="ImportProfiles_Source_ActiveDirectory" xml:space="preserve">
+    <value>Active Directory</value>
+  </data>
+  <data name="ImportResults" xml:space="preserve">
+    <value>Import results</value>
+  </data>
+  <data name="ImportProfiles_StatusNew" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="ImportProfiles_StatusImported" xml:space="preserve">
+    <value>Imported</value>
+  </data>
+  <data name="ImportProfiles_StatusNoHost" xml:space="preserve">
+    <value>No host</value>
+  </data>
+  <data name="ExcludeDisabledAccounts" xml:space="preserve">
+    <value>Exclude disabled accounts</value>
+  </data>
+  <data name="ImportComputersFromActiveDirectory" xml:space="preserve">
+    <value>Import computers from Active Directory</value>
+  </data>
+  <data name="ImportComputersFromActiveDirectoryDots" xml:space="preserve">
+    <value>Import computers from Active Directory...</value>
+  </data>
+  <data name="ImportProfiles" xml:space="preserve">
+    <value>Import profiles</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="ImportProfiles_Method_ActiveDirectory" xml:space="preserve">
+    <value>Active Directory</value>
+  </data>
+  <data name="ProfileGroup" xml:space="preserve">
+    <value>Profile group</value>
+  </data>
+  <data name="ExistingOrNewGroupDots" xml:space="preserve">
+    <value>Existing or new group name</value>
   </data>
   <data name="Firewall" xml:space="preserve">
     <value>방화벽</value>
@@ -4191,5 +4299,8 @@ Windows 설정 &gt; 개인정보 보호 및 보안 &gt; 위치를 열고 데스�
   </data>
   <data name="DisableRule" xml:space="preserve">
     <value>규칙 사용 안 함</value>
+  </data>
+  <data name="ImportProfilesDots" xml:space="preserve">
+    <value>Import profiles...</value>
   </data>
 </root>
