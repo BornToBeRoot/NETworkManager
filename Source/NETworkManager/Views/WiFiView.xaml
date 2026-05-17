@@ -13,7 +13,7 @@
              xmlns:controls="clr-namespace:NETworkManager.Controls"
              xmlns:controls2="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
-             xmlns:wpfHelper="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:WiFiViewModel}">
     <UserControl.InputBindings>
@@ -171,7 +171,7 @@
                                                 Style="{StaticResource CleanButton}"
                                                 Margin="10,0,0,0">
                                             <Rectangle Width="24" Height="24"
-                                                       wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsAdaptersLoading}">
+                                                       wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsAdaptersLoading}">
                                                 <Rectangle.OpacityMask>
                                                     <VisualBrush Stretch="Uniform"
                                                                  Visual="{iconPacks:Material Kind=Refresh}" />
@@ -243,7 +243,7 @@
                                                     Style="{StaticResource CleanButton}"
                                                     Margin="0,0,10,0">
                                                 <Rectangle Width="24" Height="24"
-                                                           wpfHelper:ReloadAnimationHelper.IsReloading="{Binding Path=IsBackgroundSearchRunning}">
+                                                           wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding Path=IsBackgroundSearchRunning}">
                                                     <Rectangle.OpacityMask>
                                                         <VisualBrush Stretch="Uniform"
                                                                      Visual="{iconPacks:Material Kind=Refresh}" />
@@ -280,11 +280,13 @@
 
 
                                     </Grid>
-                                    <controls2:MultiSelectDataGrid Grid.Row="2"
+                                    <controls2:MultiSelectDataGrid x:Name="DataGridNetworks"
+                                                                   Grid.Row="2"
                                                                    Visibility="{Binding Path=IsNetworksLoading, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
                                                                    ItemsSource="{Binding Path=NetworksView}"
                                                                    SelectedItem="{Binding Path=SelectedNetwork}"
-                                                                   SelectedItemsList="{Binding Path=SelectedNetworks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                                   SelectedItemsList="{Binding Path=SelectedNetworks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                   wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
                                         <controls2:MultiSelectDataGrid.Resources>
                                             <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"
                                                          MinWidth="150">
@@ -568,7 +570,8 @@
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.SSID}"
-                                                                SortMemberPath="AvailableNetwork.Ssid">
+                                                                SortMemberPath="AvailableNetwork.Ssid"
+                                                                MinWidth="150">
                                                 <DataGridTextColumn.ElementStyle>
                                                     <Style TargetType="{x:Type TypeName=TextBlock}">
                                                         <Setter Property="Text"
@@ -587,50 +590,64 @@
                                             <DataGridCheckBoxColumn
                                                 Header="{x:Static Member=localization:Strings.Connected}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.IsConnected)}"
-                                                SortMemberPath="IsConnected" />
+                                                SortMemberPath="IsConnected"
+                                                MinWidth="100" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.Security}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.NetworkAuthenticationType)}"
-                                                SortMemberPath="NetworkAuthenticationType" />
+                                                SortMemberPath="NetworkAuthenticationType"
+                                                MinWidth="100" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.Frequency}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.ChannelCenterFrequencyInGigahertz), Converter={StaticResource ResourceKey=WiFiChannelCenterFrequencyToFrequencyStringConverter}}"
-                                                SortMemberPath="ChannelCenterFrequencyInGigahertz" />
+                                                SortMemberPath="ChannelCenterFrequencyInGigahertz"
+                                                MinWidth="100" />
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.Channel}"
                                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.Channel)}"
-                                                                SortMemberPath="Channel" />
+                                                                SortMemberPath="Channel"
+                                                                MinWidth="80" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.SignalStrength}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).NetworkRssiInDecibelMilliwatts, Converter={StaticResource ResourceKey=WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter}}"
-                                                SortMemberPath="AvailableNetwork.NetworkRssiInDecibelMilliwatts" />
+                                                SortMemberPath="AvailableNetwork.NetworkRssiInDecibelMilliwatts"
+                                                MinWidth="120" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.Authentication}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkAuthenticationType}"
-                                                SortMemberPath="AvailableNetwork.SecuritySettings.NetworkAuthenticationType" />
+                                                SortMemberPath="AvailableNetwork.SecuritySettings.NetworkAuthenticationType"
+                                                MinWidth="120" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.Encryption}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkEncryptionType}"
-                                                SortMemberPath="AvailableNetwork.NetworkEncryptionType" />
+                                                SortMemberPath="AvailableNetwork.NetworkEncryptionType"
+                                                MinWidth="100" />
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.BSSID}"
                                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).Bssid}"
-                                                                SortMemberPath="AvailableNetwork.Bssid" />
+                                                                SortMemberPath="AvailableNetwork.Bssid"
+                                                                MinWidth="140" />
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.Vendor}"
                                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.Vendor)}"
-                                                                SortMemberPath="Vendor" />
+                                                                SortMemberPath="Vendor"
+                                                                MinWidth="150" />
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.PhyKind}"
                                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.PhyKind)}"
-                                                                SortMemberPath="PhyKind" />
+                                                                SortMemberPath="PhyKind"
+                                                                MinWidth="100" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.NetworkKind}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).NetworkKind}"
-                                                SortMemberPath="AvailableNetwork.NetworkKind" />
+                                                SortMemberPath="AvailableNetwork.NetworkKind"
+                                                MinWidth="100" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.BeaconInterval}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).BeaconInterval, Converter={StaticResource ResourceKey=TimeSpanToMillisecondConverter}}"
-                                                SortMemberPath="AvailableNetwork.BeaconInterval" />
+                                                SortMemberPath="AvailableNetwork.BeaconInterval"
+                                                MinWidth="120" />
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.Uptime}"
                                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).Uptime, Converter={StaticResource ResourceKey=TimeSpanToStringConverter}}"
-                                                                SortMemberPath="AvailableNetwork.Uptime" />
+                                                                SortMemberPath="AvailableNetwork.Uptime"
+                                                                MinWidth="100"
+                                                                Width="*" />
                                         </controls2:MultiSelectDataGrid.Columns>
                                     </controls2:MultiSelectDataGrid>
                                     <TextBlock Grid.Row="2"

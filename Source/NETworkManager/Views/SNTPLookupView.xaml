@@ -10,6 +10,7 @@
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SNTPLookupViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
@@ -113,11 +114,13 @@
         <TextBlock Grid.Column="0" Grid.Row="2"
                    Text="{x:Static Member=localization:Strings.Result}"
                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
-        <controls:MultiSelectDataGrid Grid.Column="0" Grid.Row="3"
+        <controls:MultiSelectDataGrid x:Name="DataGridResults"
+                                      Grid.Column="0" Grid.Row="3"
                                       CanUserSortColumns="True"
                                       ItemsSource="{Binding Path=ResultsView}"
                                       SelectedItem="{Binding Path=SelectedResult}"
-                                      SelectedItemsList="{Binding Path=SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                      SelectedItemsList="{Binding Path=SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
             <controls:MultiSelectDataGrid.Resources>
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
@@ -218,7 +221,8 @@
                 <DataGridTextColumn Header="{x:Static Member=localization:Strings.RoundTripDelay}"
                                     Binding="{Binding Path=(network:SNTPLookupInfo.DateTime).RoundTripDelay, Converter={StaticResource ResourceKey=IntToMillisecondsStringConverter}}"
                                     SortMemberPath="DateTime.RoundTripDelay"
-                                    MinWidth="80" />
+                                    MinWidth="80" 
+                                    Width="*" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
     </Grid>

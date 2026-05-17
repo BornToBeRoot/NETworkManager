@@ -11,7 +11,7 @@
              xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
-             xmlns:wpfHelper="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ConnectionsViewModel}">
     <UserControl.InputBindings>
         <KeyBinding Key="F5" Command="{Binding RefreshCommand}" />
@@ -69,7 +69,7 @@
                                 Style="{StaticResource CleanButton}"
                                 Margin="0,0,10,0">
                             <Rectangle Width="16" Height="16"
-                                       wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
+                                       wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform"
                                                  Visual="{iconPacks:Material Kind=Refresh}" />
@@ -95,11 +95,13 @@
                                  Style="{StaticResource ResourceKey=SearchTextBox}" />
                     </StackPanel>
                 </Grid>
-                <controls:MultiSelectDataGrid Grid.Column="0" Grid.Row="2"
+                <controls:MultiSelectDataGrid x:Name="DataGridResults"
+                                              Grid.Column="0" Grid.Row="2"
                                               ItemsSource="{Binding ResultsView}"
                                               SelectedItem="{Binding SelectedResult}"
                                               SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              Sorting="DataGrid_OnSorting">
+                                              Sorting="DataGrid_OnSorting"
+                                              wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
                     <DataGrid.Resources>
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.CopyDots}"
@@ -211,7 +213,8 @@
                                             SortMemberPath="ProcessName" MinWidth="150" />
                         <DataGridTextColumn Header="{x:Static Member=localization:Strings.ProcessPath}"
                                             Binding="{Binding Path=(network:ConnectionInfo.ProcessPath)}"
-                                            SortMemberPath="ProcessPath" MinWidth="150" />
+                                            SortMemberPath="ProcessPath" MinWidth="150"
+                                            Width="*" />
                     </DataGrid.Columns>
                 </controls:MultiSelectDataGrid>
                 <WrapPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal"

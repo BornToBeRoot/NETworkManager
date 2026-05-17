@@ -10,7 +10,7 @@
              xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
-             xmlns:wpfHelper="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:networkManager="clr-namespace:NETworkManager"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ListenersViewModel}">
     <UserControl.InputBindings>
@@ -68,7 +68,7 @@
                                 Style="{StaticResource CleanButton}"
                                 Margin="0,0,10,0">
                             <Rectangle Width="16" Height="16"
-                                       wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
+                                       wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform"
                                                  Visual="{iconPacks:Material Kind=Refresh}" />
@@ -94,11 +94,13 @@
                                  Style="{StaticResource ResourceKey=SearchTextBox}" />
                     </StackPanel>
                 </Grid>
-                <controls:MultiSelectDataGrid Grid.Column="0" Grid.Row="2"
+                <controls:MultiSelectDataGrid x:Name="DataGridResults"
+                                              Grid.Column="0" Grid.Row="2"
                                               ItemsSource="{Binding ResultsView}"
                                               SelectedItem="{Binding SelectedResult}"
                                               SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              Sorting="DataGrid_OnSorting">
+                                              Sorting="DataGrid_OnSorting"
+                                              wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
                     <controls:MultiSelectDataGrid.Resources>
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.CopyDots}"
@@ -155,13 +157,17 @@
                     <controls:MultiSelectDataGrid.Columns>
                         <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}"
                                             Binding="{Binding (network:ListenerInfo.Protocol)}"
-                                            SortMemberPath="Protocol" MinWidth="100" />
+                                            SortMemberPath="Protocol"
+                                            MinWidth="100" />
                         <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}"
                                             Binding="{Binding (network:ListenerInfo.IPAddress)}"
-                                            SortMemberPath="IPAddress" MinWidth="150" />
+                                            SortMemberPath="IPAddress"
+                                            MinWidth="150" />
                         <DataGridTextColumn Header="{x:Static localization:Strings.Port}"
                                             Binding="{Binding (network:ListenerInfo.Port)}"
-                                            SortMemberPath="Port" MinWidth="100" />
+                                            SortMemberPath="Port"
+                                            MinWidth="100" 
+                                            Width="*" />
                     </controls:MultiSelectDataGrid.Columns>
                 </controls:MultiSelectDataGrid>
                 <Grid Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">
