@@ -7,7 +7,7 @@ tags: [policies, enterprise, settings, new feature]
 keywords: [NETworkManager, system-wide policies, enterprise, deployment, Intune, SCCM, Group Policy, configuration management]
 ---
 
-NETworkManager now supports system-wide policies, giving administrators centralized control over application settings across all users on a machine. This feature is available since the [pre-release version 2026.02.19.0](https://github.com/BornToBeRoot/NETworkManager/releases) and can now be tested.
+NETworkManager now supports system-wide policies, giving administrators centralized control over application settings across all users on a machine.
 
 ![System-wide policy indicator](./system-wide-policy-indicator.png)
 
@@ -99,6 +99,8 @@ Ensure the `config.json` file has appropriate permissions so that regular users 
 ## Request More Policies
 
 Additional policy options will be added in future releases to provide more granular control over application behavior. If you have specific requirements for system-wide policies in your organization, please submit a feature request via the [GitHub issue tracker](https://github.com/BornToBeRoot/NETworkManager/issues/new/choose) to help us prioritize.
+
+Upgrade now to the [latest version of NETworkManager](https://borntoberoot.net/NETworkManager/download) to use this feature.
 
 More information is available in the [official documentation](https://borntoberoot.net/NETworkManager/docs/system-wide-policies).
 

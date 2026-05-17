@@ -1,7 +1,7 @@
 ---
 slug: introducing-neighbor-table
-title: "Introducing Neighbor Table - with IPv6 support replacing ARP Table"
-description: "NETworkManager introduces the new Neighbor Table, replacing the ARP Table with a unified view that covers both IPv4 (ARP) and IPv6 (NDP) address-to-MAC mappings."
+title: "Introducing Neighbor Table"
+description: "NETworkManager introduces the Neighbor Table, replacing the ARP Table with a unified view that covers both IPv4 (ARP) and IPv6 (NDP) address-to-MAC mappings."
 authors: [borntoberoot]
 tags: [neighbor table, arp, ndp, ipv6, refactoring]
 keywords: [NETworkManager, neighbor table, ARP table, ARP, NDP, IPv6, IPv4, MAC address, neighbor discovery, address resolution]
