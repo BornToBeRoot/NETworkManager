@@ -315,6 +315,9 @@
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
   </data>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
+  </data>
   <data name="OverwriteQuestion" xml:space="preserve">
     <value>上書きしますか?</value>
   </data>
@@ -1768,6 +1771,9 @@
   <data name="EnterValidDomain" xml:space="preserve">
     <value>有効なドメインを入力してください (例: "example.com")!</value>
   </data>
+  <data name="EnterValidUsername" xml:space="preserve">
+    <value>Enter a valid Windows username (e.g., "user", "DOMAIN\user" or "user@domain.com")!</value>
+  </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>ドメインのWhoisサーバーが見つかりません : "{0}"</value>
   </data>
@@ -1976,14 +1982,14 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
   <data name="ExternalServices" xml:space="preserve">
     <value>外部サービス</value>
   </data>
-  <data name="ToolTip_StarForkProjectOnGitHub" xml:space="preserve">
-    <value>GitHub でプロジェクトにスター/フォークを付ける。</value>
+  <data name="StarForkProjectOnGitHub" xml:space="preserve">
+    <value>Star/Fork the Project on GitHub.</value>
   </data>
-  <data name="ToolTip_HelpTranslateOnTransifex" xml:space="preserve">
-    <value>Transifex のプロジェクトの翻訳を手伝ってください。</value>
+  <data name="HelpTranslateOnTransifex" xml:space="preserve">
+    <value>Help translate the project on Transifex.</value>
   </data>
-  <data name="ToolTip_ContactOrContactMeViaX" xml:space="preserve">
-    <value>フォローするか、Xから連絡してください。</value>
+  <data name="ContactOrContactMeViaX" xml:space="preserve">
+    <value>Follow or contact me via X.</value>
   </data>
   <data name="Connection" xml:space="preserve">
     <value>接続</value>
@@ -2307,8 +2313,8 @@ $$hostname$$	--&gt;	ホスト名</value>
   <data name="TimeoutS" xml:space="preserve">
     <value>タイムアウト (秒)</value>
   </data>
-  <data name="ToolTip_ReportIssueOrCreateFeatureRequest" xml:space="preserve">
-    <value>問題を報告するか、機能リクエストを作成。</value>
+  <data name="ReportIssueOrCreateFeatureRequest" xml:space="preserve">
+    <value>Report an issue or create a feature request.</value>
   </data>
   <data name="BeaconInterval" xml:space="preserve">
     <value>ビーコン間隔</value>
@@ -2367,8 +2373,8 @@ $$hostname$$	--&gt;	ホスト名</value>
   <data name="IsEncrypted" xml:space="preserve">
     <value>暗号化されています</value>
   </data>
-  <data name="ToolTip_OpenTheDocumentation" xml:space="preserve">
-    <value>ドキュメントを開く。</value>
+  <data name="OpenTheDocumentation" xml:space="preserve">
+    <value>Open the documentation.</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
     <value>カスタマー 1</value>
@@ -3622,8 +3628,8 @@ URL: http://ip-api.com/</value>
   <data name="Experimental" xml:space="preserve">
     <value>実験的</value>
   </data>
-  <data name="Watermark_RunCommand" xml:space="preserve">
-    <value>コマンドを実行...</value>
+  <data name="RunCommandDots" xml:space="preserve">
+    <value>Run command...</value>
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
     <value>IP 位置情報</value>
@@ -3709,9 +3715,6 @@ URL: http://ip-api.com/</value>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>他のホストを追加している間は、ホストを設定できません。処理が完了するまでお待ちいただき、もう一度お試しください。</value>
   </data>
-  <data name="Watermark_RunCommandWithHotKey" xml:space="preserve">
-    <value>実行コマンド... (Ctrl+Shift+P)</value>
-  </data>
   <data name="NoMatchingCommands" xml:space="preserve">
     <value>一致するコマンドがありません!</value>
   </data>
@@ -3763,8 +3766,8 @@ URL: http://ip-api.com/</value>
   <data name="CloseGroup" xml:space="preserve">
     <value>グループを閉じる</value>
   </data>
-  <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
-    <value>実行コマンド... (Ctrl+Shift+P)</value>
+  <data name="RunCommandDotsWithHotKey" xml:space="preserve">
+    <value>Run command... (Ctrl+Shift+P)</value>
   </data>
   <data name="ProfileFiles" xml:space="preserve">
     <value>プロファイル ファイル</value>
@@ -3805,8 +3808,8 @@ Windows の「設定」&gt;「プライバシーとセキュリティ」&gt;「�
   <data name="GHz6" xml:space="preserve">
     <value>6 GHz</value>
   </data>
-  <data name="ToolTip_SupportThisProjectWithADonation" xml:space="preserve">
-    <value>寄付を通じてこのプロジェクトを支援してください。</value>
+  <data name="SupportThisProjectWithADonation" xml:space="preserve">
+    <value>Support this project with a donation.</value>
   </data>
   <data name="OpenDocumentation" xml:space="preserve">
     <value>ドキュメントを開く</value>
@@ -3975,8 +3978,8 @@ Windows の「設定」&gt;「プライバシーとセキュリティ」&gt;「�
 プロファイルファイルを右クリックして暗号化設定を管理することで、いつでも暗号化を有効または無効にすることができます。
 「キャンセル」をクリックすると、プロファイルファイルは暗号化されません。</value>
   </data>
-  <data name="ToolTip_RestartRequired" xml:space="preserve">
-    <value>言語設定などの変更を適用するには再起動が必要です。</value>
+  <data name="RestartRequiredMessage" xml:space="preserve">
+    <value>A restart is required to apply changes such as language settings.</value>
   </data>
   <data name="CouldNotParseOrResolveDNSServers" xml:space="preserve">
     <value>指定された DNS サーバーを解析または解決できませんでした。</value>
@@ -4037,11 +4040,116 @@ Windows の「設定」&gt;「プライバシーとセキュリティ」&gt;「�
   <data name="NetworkStatus" xml:space="preserve">
     <value>ネットワーク状態</value>
   </data>
-  <data name="ToolTip_Show" xml:space="preserve">
-    <value>表示</value>
+  <data name="ActiveDirectoryImportFailed" xml:space="preserve">
+    <value>Active Directory import failed.</value>
   </data>
-  <data name="ToolTip_Reload" xml:space="preserve">
-    <value>再読み込み</value>
+  <data name="ActiveDirectoryImportOptions" xml:space="preserve">
+    <value>Options</value>
+  </data>
+
+  <data name="ActiveDirectoryImportUsesCurrentCredentials" xml:space="preserve">
+    <value>Uses your current Windows credentials to read from Active Directory. The account must be allowed to enumerate computer objects under the search base (subtree).</value>
+  </data>
+  <data name="ActiveDirectorySearchBase" xml:space="preserve">
+    <value>Search base (DN)</value>
+  </data>
+  <data name="ActiveDirectoryAdditionalLdapFilter" xml:space="preserve">
+    <value>Additional LDAP filter</value>
+  </data>
+  <data name="ActiveDirectoryAdditionalLdapFilterInvalid" xml:space="preserve">
+    <value>Filter must be a valid LDAP expression starting with '(' and ending with ')'.</value>
+  </data>
+  <data name="ActiveDirectorySearchBaseInvalid" xml:space="preserve">
+    <value>Search base must be a valid LDAP distinguished name (e.g. DC=example,DC=com).</value>
+  </data>
+  <data name="ActiveDirectory_ImportDescription" xml:space="preserve">
+    <value>Imported from Active Directory on {0}</value>
+  </data>
+  <data name="ActiveDirectoryNoComputersFound" xml:space="preserve">
+    <value>No computers found for the given search base and filter.</value>
+  </data>
+  <data name="SearchingActiveDirectoryDots" xml:space="preserve">
+    <value>Searching Active Directory...</value>
+  </data>
+  <data name="ActiveDirectoryNonDomainHint" xml:space="preserve">
+    <value>If your computer is not joined to the domain, specify the domain controller (hostname or IP) and use custom credentials.</value>
+  </data>
+  <data name="LdapServer" xml:space="preserve">
+    <value>Server (optional)</value>
+  </data>
+  <data name="LdapPort" xml:space="preserve">
+    <value>Port (optional)</value>
+  </data>
+  <data name="UseSsl" xml:space="preserve">
+    <value>Use SSL (LDAPS)</value>
+  </data>
+  <data name="UseCurrentWindowsCredentials" xml:space="preserve">
+    <value>Use current Windows credentials</value>
+  </data>
+  <data name="UseTheseCredentials" xml:space="preserve">
+    <value>Use these credentials</value>
+  </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Select all</value>
+  </data>
+  <data name="DeselectAll" xml:space="preserve">
+    <value>Deselect all</value>
+  </data>
+  <data name="EnableFor" xml:space="preserve">
+    <value>Enable for</value>
+  </data>
+  <data name="SkipAlreadyImported" xml:space="preserve">
+    <value>Skip already imported</value>
+  </data>
+  <data name="ImportResultsHeader" xml:space="preserve">
+    <value>{0} · {1} result(s)</value>
+  </data>
+  <data name="ProfileImportSummary" xml:space="preserve">
+    <value>{0} profile(s) imported.
+{1} duplicate entries skipped.
+{2} without a host skipped.</value>
+  </data>
+  <data name="ImportProfiles_Source_ActiveDirectory" xml:space="preserve">
+    <value>Active Directory</value>
+  </data>
+  <data name="ImportResults" xml:space="preserve">
+    <value>Import results</value>
+  </data>
+  <data name="ImportProfiles_StatusNew" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="ImportProfiles_StatusImported" xml:space="preserve">
+    <value>Imported</value>
+  </data>
+  <data name="ImportProfiles_StatusNoHost" xml:space="preserve">
+    <value>No host</value>
+  </data>
+  <data name="ExcludeDisabledAccounts" xml:space="preserve">
+    <value>Exclude disabled accounts</value>
+  </data>
+  <data name="ImportComputersFromActiveDirectory" xml:space="preserve">
+    <value>Import computers from Active Directory</value>
+  </data>
+  <data name="ImportComputersFromActiveDirectoryDots" xml:space="preserve">
+    <value>Import computers from Active Directory...</value>
+  </data>
+  <data name="ImportProfiles" xml:space="preserve">
+    <value>Import profiles</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="ImportProfiles_Method_ActiveDirectory" xml:space="preserve">
+    <value>Active Directory</value>
+  </data>
+  <data name="ProfileGroup" xml:space="preserve">
+    <value>Profile group</value>
+  </data>
+  <data name="ExistingOrNewGroupDots" xml:space="preserve">
+    <value>Existing or new group name</value>
   </data>
   <data name="Firewall" xml:space="preserve">
     <value>ファイアウォール</value>
@@ -4194,5 +4302,8 @@ Windows の「設定」&gt;「プライバシーとセキュリティ」&gt;「�
   </data>
   <data name="DisableRule" xml:space="preserve">
     <value>ルールの無効化</value>
+  </data>
+  <data name="ImportProfilesDots" xml:space="preserve">
+    <value>Import profiles...</value>
   </data>
 </root>
