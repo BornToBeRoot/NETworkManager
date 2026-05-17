@@ -11,6 +11,7 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SubnetCalculatorSubnettingViewModel}">
     <UserControl.Resources>
         <converters:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter" />
@@ -139,10 +140,12 @@
         <TextBlock Grid.Row="2"
                    Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                    Text="{x:Static localization:Strings.Result}" Style="{StaticResource HeaderTextBlock}" />
-        <controls:MultiSelectDataGrid Grid.Row="3" ItemsSource="{Binding ResultsView}"
+        <controls:MultiSelectDataGrid x:Name="DataGridResults"
+                                      Grid.Row="3" ItemsSource="{Binding ResultsView}"
                                       Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                                       SelectedItem="{Binding SelectedResult}"
-                                      SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                      SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
             <controls:MultiSelectDataGrid.Resources>
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
@@ -244,7 +247,8 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Hosts}"
                                     Binding="{Binding (network:IPNetworkInfo.Usable), Converter={StaticResource BigIntegerToStringConverter}}"
                                     SortMemberPath="Usable"
-                                    MinWidth="80" />
+                                    MinWidth="80"
+                                    Width="*" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <TextBlock Grid.Column="0" Grid.Row="3"

@@ -76,6 +76,10 @@ Release date: **xx.xx.2025**
 
 ## Bug Fixes
 
+**General**
+
+- Fixed the last column of various DataGrids not resizing to fill the available view width. [#3417](https://github.com/BornToBeRoot/NETworkManager/pull/3417)
+
 **Port Scanner**
 
 - Fixed an app crash when double-clicking a port profile. [#3382](https://github.com/BornToBeRoot/NETworkManager/pull/3382)

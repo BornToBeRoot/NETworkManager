@@ -139,31 +139,31 @@
     <value>ARP</value>
   </data>
   <data name="NeighborTable" xml:space="preserve">
-    <value>Neighbor Table</value>
+    <value>인접 테이블</value>
   </data>
   <data name="NeighborTableAdminMessage" xml:space="preserve">
-    <value>Read-only mode. Modifying the neighbor table requires elevated rights!</value>
+    <value>읽기 전용 모드입니다. 인접 테이블을 수정하려면 권한 상승이 필요합니다!</value>
   </data>
   <data name="NeighborState_Unreachable" xml:space="preserve">
-    <value>Unreachable</value>
+    <value>접근 불가</value>
   </data>
   <data name="NeighborState_Incomplete" xml:space="preserve">
-    <value>Incomplete</value>
+    <value>미완성</value>
   </data>
   <data name="NeighborState_Probe" xml:space="preserve">
-    <value>Probe</value>
+    <value>조사</value>
   </data>
   <data name="NeighborState_Delay" xml:space="preserve">
-    <value>Delay</value>
+    <value>지연</value>
   </data>
   <data name="NeighborState_Stale" xml:space="preserve">
-    <value>Stale</value>
+    <value>오래된</value>
   </data>
   <data name="NeighborState_Reachable" xml:space="preserve">
-    <value>Reachable</value>
+    <value>접근 가능</value>
   </data>
   <data name="NeighborState_Permanent" xml:space="preserve">
-    <value>Permanent</value>
+    <value>상시</value>
   </data>
   <data name="Authentication" xml:space="preserve">
     <value>인증</value>
@@ -2173,10 +2173,10 @@ URL: https://api.ipify.org/</value>
     <value>프로그램</value>
   </data>
   <data name="Private" xml:space="preserve">
-    <value>Private</value>
+    <value>비공개</value>
   </data>
   <data name="Public" xml:space="preserve">
-    <value>Public</value>
+    <value>공개</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>선택한 사용자 지정 명령이 영구적으로 삭제됩니다.</value>
@@ -2485,7 +2485,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>이 기능에 대해서는 Microsoft.Windows.SDK.Contracts가 필요하지만 이 시스템에서는 사용할 수 없습니다 (예: Windows 서버에서).</value>
   </data>
   <data name="ApplicationName_NeighborTable" xml:space="preserve">
-    <value>Neighbor Table</value>
+    <value>인접 테이블</value>
   </data>
   <data name="ApplicationName_Connections" xml:space="preserve">
     <value>연결</value>
@@ -3740,7 +3740,7 @@ URL: http://ip-api.com/</value>
     <value>경고</value>
   </data>
   <data name="GroupDomain" xml:space="preserve">
-    <value>Group / domain</value>
+    <value>그룹 / 도메인</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
     <value>NetBIOS에 도달 가능</value>
@@ -3824,7 +3824,7 @@ Windows 설정 &gt; 개인정보 보호 및 보안 &gt; 위치를 열고 데스�
     <value>읽기 전용 모드입니다. 호스트 파일을 수정하려면 권한 상승이 필요합니다!</value>
   </data>
   <data name="OpenHostsFile" xml:space="preserve">
-    <value>Open hosts file</value>
+    <value>호스트 파일 열기</value>
   </data>
   <data name="Comment" xml:space="preserve">
     <value>주석</value>
@@ -4041,51 +4041,51 @@ Windows 설정 &gt; 개인정보 보호 및 보안 &gt; 위치를 열고 데스�
     <value>다시 불러오기</value>
   </data>
   <data name="Firewall" xml:space="preserve">
-    <value>Firewall</value>
+    <value>방화벽</value>
   </data>
   <data name="FirewallRules" xml:space="preserve">
-    <value>Firewall rules</value>
+    <value>방화벽 규칙</value>
   </data>
   <data name="WindowsFirewallSettings" xml:space="preserve">
-    <value>Windows Firewall settings</value>
+    <value>Windows 방화벽 설정</value>
   </data>
   <data name="Direction" xml:space="preserve">
-    <value>Direction</value>
+    <value>방향</value>
   </data>
   <data name="Inbound" xml:space="preserve">
-    <value>Inbound</value>
+    <value>인바운드</value>
   </data>
   <data name="Outbound" xml:space="preserve">
-    <value>Outbound</value>
+    <value>아웃바운드</value>
   </data>
   <data name="Action" xml:space="preserve">
-    <value>Action</value>
+    <value>동작</value>
   </data>
   <data name="Allow" xml:space="preserve">
-    <value>Allow</value>
+    <value>허용</value>
   </data>
   <data name="Block" xml:space="preserve">
-    <value>Block</value>
+    <value>차단</value>
   </data>
   <data name="NetworkProfile" xml:space="preserve">
-    <value>Network profile</value>
+    <value>네트워크 프로필</value>
   </data>
   <data name="NetworkProfiles" xml:space="preserve">
-    <value>Network profiles</value>
+    <value>네트워크 프로필</value>
   </data>
   <data name="InterfaceType" xml:space="preserve">
-    <value>Interface type</value>
+    <value>인터페이스 유형</value>
   </data>
   <data name="FailedToLoadFirewallRulesMessage" xml:space="preserve">
-    <value>Failed to load firewall rules. {0}</value>
+    <value>방화벽 규칙을 불러오지 못했습니다. {0}</value>
   </data>
   <data name="DeleteFirewallRuleMessage" xml:space="preserve">
-    <value>The selected firewall rule is permanently deleted:
+    <value>선택한 방화벽 규칙이 영구적으로 삭제되었습니다:
 
 {0}</value>
   </data>
   <data name="FirewallProtocol_Any" xml:space="preserve">
-    <value>Any</value>
+    <value>모두</value>
   </data>
   <data name="FirewallProtocol_TCP" xml:space="preserve">
     <value>TCP</value>
@@ -4109,16 +4109,16 @@ Windows 설정 &gt; 개인정보 보호 및 보안 &gt; 위치를 열고 데스�
     <value>IPv6</value>
   </data>
   <data name="FirewallProtocol_IPv6_Route" xml:space="preserve">
-    <value>IPv6-Route</value>
+    <value>IPv6 경로</value>
   </data>
   <data name="FirewallProtocol_IPv6_Frag" xml:space="preserve">
-    <value>IPv6-Frag</value>
+    <value>IPv6 분할</value>
   </data>
   <data name="FirewallProtocol_IPv6_NoNxt" xml:space="preserve">
     <value>IPv6-NoNxt</value>
   </data>
   <data name="FirewallProtocol_IPv6_Opts" xml:space="preserve">
-    <value>IPv6-Opts</value>
+    <value>IPv6 옵션</value>
   </data>
   <data name="FirewallProtocol_VRRP" xml:space="preserve">
     <value>VRRP</value>
@@ -4130,66 +4130,66 @@ Windows 설정 &gt; 개인정보 보호 및 보안 &gt; 위치를 열고 데스�
     <value>L2TP</value>
   </data>
   <data name="FirewallInterfaceType_Any" xml:space="preserve">
-    <value>Any</value>
+    <value>모두</value>
   </data>
   <data name="FirewallInterfaceType_Wired" xml:space="preserve">
-    <value>Wired</value>
+    <value>유선</value>
   </data>
   <data name="FirewallInterfaceType_Wireless" xml:space="preserve">
-    <value>Wireless</value>
+    <value>무선</value>
   </data>
   <data name="FirewallInterfaceType_RemoteAccess" xml:space="preserve">
-    <value>Remote access</value>
+    <value>원격 접속</value>
   </data>
   <data name="FirewallAdminMessage" xml:space="preserve">
-    <value>Read-only mode. Modifying firewall rules requires elevated rights!</value>
+    <value>읽기 전용 모드입니다. 방화벽 규칙을 수정하려면 관리자 권한이 필요합니다!</value>
   </data>
   <data name="FirewallRuleDirection_Inbound" xml:space="preserve">
-    <value>Inbound</value>
+    <value>인바운드</value>
   </data>
   <data name="FirewallRuleDirection_Outbound" xml:space="preserve">
-    <value>Outbound</value>
+    <value>아웃바운드</value>
   </data>
   <data name="FirewallRuleAction_Block" xml:space="preserve">
-    <value>Block</value>
+    <value>차단</value>
   </data>
   <data name="FirewallRuleAction_Allow" xml:space="preserve">
-    <value>Allow</value>
+    <value>허용</value>
   </data>
   <data name="LocalPorts" xml:space="preserve">
-    <value>Local ports</value>
+    <value>로컬 포트</value>
   </data>
   <data name="RemotePorts" xml:space="preserve">
-    <value>Remote ports</value>
+    <value>원격 포트</value>
   </data>
   <data name="LocalAddresses" xml:space="preserve">
-    <value>Local addresses</value>
+    <value>로컬 주소</value>
   </data>
   <data name="RemoteAddresses" xml:space="preserve">
-    <value>Remote addresses</value>
+    <value>원격 주소</value>
   </data>
   <data name="EnterValidFirewallAddress" xml:space="preserve">
-    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8), range (e.g. 10.0.0.1-10.0.0.10), or keyword (Any, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal)</value>
+    <value>유효한 IP 주소, 서브넷 (예: 10.0.0.0/8), 범위 (예: 10.0.0.1-10.0.0.10) 또는 키워드(Any, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal)를 입력하세요.</value>
   </data>
   <data name="AddRule" xml:space="preserve">
-    <value>Add rule</value>
+    <value>규칙 추가</value>
   </data>
   <data name="AddRuleDots" xml:space="preserve">
-    <value>Add rule...</value>
+    <value>규칙 추가...</value>
   </data>
   <data name="EditRule" xml:space="preserve">
-    <value>Edit rule</value>
+    <value>규칙 편집</value>
   </data>
   <data name="EditRuleDots" xml:space="preserve">
-    <value>Edit rule...</value>
+    <value>규칙 편집...</value>
   </data>
   <data name="DeleteRule" xml:space="preserve">
-    <value>Delete rule</value>
+    <value>규칙 삭제</value>
   </data>
   <data name="EnableRule" xml:space="preserve">
-    <value>Enable rule</value>
+    <value>규칙 사용함</value>
   </data>
   <data name="DisableRule" xml:space="preserve">
-    <value>Disable rule</value>
+    <value>규칙 사용 안 함</value>
   </data>
 </root>

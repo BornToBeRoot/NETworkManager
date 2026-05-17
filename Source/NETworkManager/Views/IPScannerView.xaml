@@ -218,11 +218,13 @@
         <TextBlock Grid.Column="0" Grid.Row="2"
                    Style="{StaticResource HeaderTextBlock}"
                    Text="{x:Static localization:Strings.Result}" />
-        <controls:MultiSelectDataGrid Grid.Column="0" Grid.Row="3"
+        <controls:MultiSelectDataGrid x:Name="DataGridResults"
+                                      Grid.Column="0" Grid.Row="3"
                                       ItemsSource="{Binding Path=ResultsView}"
                                       SelectedItem="{Binding Path=SelectedResult}"
                                       SelectedItemsList="{Binding Path=SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Sorting="DataGrid_OnSorting"
+                                      wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True"
                                       RowDetailsVisibilityMode="Collapsed"
                                       EnableRowVirtualization="True"
                                       ScrollViewer.CanContentScroll="True"
@@ -553,7 +555,8 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}"
                                     Binding="{Binding (network:IPScannerHostInfo.Vendor), Converter={StaticResource StringNullOrEmptyToStringConverter}}"
                                     SortMemberPath="Vendor"
-                                    MinWidth="200">
+                                    MinWidth="200"
+                                    Width="*">
                     <DataGridTextColumn.Visibility>
                         <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
                             <Binding Source="{x:Static Member=settings:SettingsManager.Current}"

@@ -11,7 +11,7 @@
     xmlns:networkManager="clr-namespace:NETworkManager"
     xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
     xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
-    xmlns:wpfHelper="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+    xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
     xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
     x:Class="NETworkManager.Views.NeighborTableView"
     d:DataContext="{d:DesignInstance {x:Type viewModels:NeighborTableViewModel}}"
@@ -78,7 +78,7 @@
                                 Style="{StaticResource CleanButton}"
                                 Margin="0,0,10,0">
                             <Rectangle Width="16" Height="16"
-                                       wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
+                                       wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform"
                                                  Visual="{iconPacks:Material Kind=Refresh}" />
@@ -109,7 +109,8 @@
                                               ItemsSource="{Binding ResultsView}"
                                               SelectedItem="{Binding SelectedResult}"
                                               SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              Sorting="DataGrid_OnSorting">
+                                              Sorting="DataGrid_OnSorting"
+                                              wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
                     <controls:MultiSelectDataGrid.Resources>
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.DeleteEntry}"
@@ -191,11 +192,11 @@
                         <DataGridTextColumn Header="{x:Static localization:Strings.Interface}"
                                             Binding="{Binding (network:NeighborInfo.InterfaceAlias)}"
                                             SortMemberPath="InterfaceAlias"
-                                            MinWidth="120" />
+                                            MinWidth="200" />
                         <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}"
                                             Binding="{Binding (network:NeighborInfo.MACAddress), Converter={StaticResource PhysicalAddressToStringConverter}}"
                                             SortMemberPath="MACAddress"
-                                            MinWidth="200" />
+                                            MinWidth="180" />
                         <DataGridTextColumn Header="{x:Static localization:Strings.State}"
                                             Binding="{Binding (network:NeighborInfo.State), Converter={StaticResource NeighborStateToStringConverter}}"
                                             SortMemberPath="State"
@@ -203,7 +204,8 @@
                         <DataGridTextColumn Header="{x:Static localization:Strings.Multicast}"
                                             Binding="{Binding (network:NeighborInfo.IsMulticast), Converter={StaticResource BooleanToStringConverter}}"
                                             SortMemberPath="IsMulticast"
-                                            MinWidth="100" />
+                                            MinWidth="100" 
+                                            Width="*" />
                     </controls:MultiSelectDataGrid.Columns>
                 </controls:MultiSelectDataGrid>
                 <Grid Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">

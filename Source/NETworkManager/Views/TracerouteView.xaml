@@ -14,6 +14,7 @@
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:TracerouteViewModel}">
     <UserControl.Resources>
@@ -142,9 +143,11 @@
         </Grid>
         <TextBlock Grid.Row="2" Text="{x:Static Member=localization:Strings.Route}"
                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
-        <controls:MultiSelectDataGrid Grid.Row="3" CanUserSortColumns="False" ItemsSource="{Binding Path=ResultsView}"
+        <controls:MultiSelectDataGrid x:Name="DataGridResults"
+                                      Grid.Row="3" CanUserSortColumns="False" ItemsSource="{Binding Path=ResultsView}"
                                       SelectedItem="{Binding SelectedResult}"
-                                      SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                      SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
             <controls:MultiSelectDataGrid.Resources>
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.IPScanner}"
@@ -438,7 +441,8 @@
                 <DataGridTextColumn Header="{x:Static Member=localization:Strings.Hostname}"
                                     Binding="{Binding (network:TracerouteHopInfo.Hostname), Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}"
                                     Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                    MinWidth="150" />
+                                    MinWidth="150"
+                                    Width="*" />
                 <DataGridTextColumn Header="{x:Static Member=localization:Strings.Continent}"
                                     Binding="{Binding (network:TracerouteHopInfo.IPGeolocationResult).Info.Continent, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}"
                                     Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"

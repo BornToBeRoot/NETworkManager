@@ -11,7 +11,7 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:mahAppsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             xmlns:wpfHelper="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:HostsFileEditorViewModel}">
     <UserControl.Resources>
@@ -53,7 +53,7 @@
                                 Style="{StaticResource CleanButton}"
                                 Margin="0,0,10,0">
                             <Rectangle Width="16" Height="16"
-                                       wpfHelper:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
+                                       wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
                                 <Rectangle.OpacityMask>
                                     <VisualBrush Stretch="Uniform"
                                                  Visual="{iconPacks:Material Kind=Refresh}" />

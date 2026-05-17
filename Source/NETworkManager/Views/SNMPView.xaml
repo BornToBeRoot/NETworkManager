@@ -617,11 +617,13 @@
                 </Style>
             </TextBlock.Style>
         </TextBlock>
-        <controls:MultiSelectDataGrid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"
+        <controls:MultiSelectDataGrid x:Name="DataGridResults"
+                                      Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3"
                                       ItemsSource="{Binding ResultsView}"
                                       SelectedItem="{Binding SelectedResult}"
                                       Sorting="DataGrid_OnSorting"
-                                      SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                      SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
             <controls:MultiSelectDataGrid.Resources>
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
@@ -689,7 +691,15 @@
                                     MinWidth="200" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Data}"
                                     Binding="{Binding (network:SNMPInfo.Data)}"
-                                    SortMemberPath="Data" MinWidth="300" />
+                                    SortMemberPath="Data"
+                                    MinWidth="300"
+                                    Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style>
+                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <TextBox Grid.Row="5" Grid.Column="0" 
