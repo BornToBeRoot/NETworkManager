@@ -316,6 +316,9 @@ La modifica dell'elenco router richiede diritti elevati!</value>
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
   </data>
+  <data name="Options" xml:space="preserve">
+    <value>Opzioni</value>
+  </data>
   <data name="OverwriteQuestion" xml:space="preserve">
     <value>Vuoi sovrascrivere?</value>
   </data>
@@ -1784,6 +1787,9 @@ Il nome di dominio della parte di autenticazione potrebbe essere errato, il domi
   <data name="EnterValidDomain" xml:space="preserve">
     <value>Inserisci un dominio valido (ad es. "esempio.com")!</value>
   </data>
+  <data name="EnterValidUsername" xml:space="preserve">
+    <value>Inserisci un nome utente Windows valido (ad esempio "utente", "DOMINIO\utente" o "utente@dominio.com")!</value>
+  </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>Server Whois non trovato per il dominio: "{0}"</value>
   </data>
@@ -1994,13 +2000,13 @@ URL: https://api.ipify.org e https://api6.ipify.org</value>
   <data name="ExternalServices" xml:space="preserve">
     <value>Servizi esterni</value>
   </data>
-  <data name="ToolTip_StarForkProjectOnGitHub" xml:space="preserve">
+  <data name="StarForkProjectOnGitHub" xml:space="preserve">
     <value>Star/fork del progetto su GitHub.</value>
   </data>
-  <data name="ToolTip_HelpTranslateOnTransifex" xml:space="preserve">
+  <data name="HelpTranslateOnTransifex" xml:space="preserve">
     <value>Aiutaci a tradurre il progetto su Transifex.</value>
   </data>
-  <data name="ToolTip_ContactOrContactMeViaX" xml:space="preserve">
+  <data name="ContactOrContactMeViaX" xml:space="preserve">
     <value>Seguimi o contattami tramite X.</value>
   </data>
   <data name="Connection" xml:space="preserve">
@@ -2328,7 +2334,7 @@ $$hostname$$	--&gt;	Nome host</value>
   <data name="TimeoutS" xml:space="preserve">
     <value>Timeout (s)</value>
   </data>
-  <data name="ToolTip_ReportIssueOrCreateFeatureRequest" xml:space="preserve">
+  <data name="ReportIssueOrCreateFeatureRequest" xml:space="preserve">
     <value>Segnala un problema o crea una richiesta di funzionalità.</value>
   </data>
   <data name="BeaconInterval" xml:space="preserve">
@@ -2390,7 +2396,7 @@ Vedi messaggio errore: "{0}"</value>
   <data name="IsEncrypted" xml:space="preserve">
     <value>È criptato</value>
   </data>
-  <data name="ToolTip_OpenTheDocumentation" xml:space="preserve">
+  <data name="OpenTheDocumentation" xml:space="preserve">
     <value>Apri la documentazione.</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
@@ -3716,7 +3722,7 @@ Questi non sono ancora completi, contengono bug, possono mandare in crash l'appl
   <data name="Experimental" xml:space="preserve">
     <value>Sperimentale</value>
   </data>
-  <data name="Watermark_RunCommand" xml:space="preserve">
+  <data name="RunCommandDots" xml:space="preserve">
     <value>Esegui comando...</value>
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
@@ -3804,9 +3810,6 @@ Questi non sono ancora completi, contengono bug, possono mandare in crash l'appl
     <value>Non è possibile impostare l'host mentre vengono aggiunti altri host. 
 Attendi il completamento del processo e riprova.</value>
   </data>
-  <data name="Watermark_RunCommandWithHotKey" xml:space="preserve">
-    <value>Esegui comando... (Ctrl+Maiusc+P)</value>
-  </data>
   <data name="NoMatchingCommands" xml:space="preserve">
     <value>Nessun comando corrispondente!</value>
   </data>
@@ -3858,7 +3861,7 @@ Attendi il completamento del processo e riprova.</value>
   <data name="CloseGroup" xml:space="preserve">
     <value>Chiudi gruppo</value>
   </data>
-  <data name="ToolTip_RunCommandWithHotKey" xml:space="preserve">
+  <data name="RunCommandDotsWithHotKey" xml:space="preserve">
     <value>Esegui comando... (Ctrl+Maiusc+P)</value>
   </data>
   <data name="ProfileFiles" xml:space="preserve">
@@ -3900,7 +3903,7 @@ Clic con il tasto destro per ulteriori opzioni.</value>
   <data name="GHz6" xml:space="preserve">
     <value>6 GHz</value>
   </data>
-  <data name="ToolTip_SupportThisProjectWithADonation" xml:space="preserve">
+  <data name="SupportThisProjectWithADonation" xml:space="preserve">
     <value>Sostieni questo progetto con una donazione.</value>
   </data>
   <data name="OpenDocumentation" xml:space="preserve">
@@ -4077,8 +4080,8 @@ Per maggiori dettagli consulta il file registro.</value>
 Puoi abilitare/disabilitare la crittografia in qualsiasi momento facendo clic con il pulsante destro del mouse sul file del profilo e gestire le impostazioni di crittografia.
 Se selezioni 'Annulla', il file del profilo non verrà crittografato.</value>
   </data>
-  <data name="ToolTip_RestartRequired" xml:space="preserve">
-    <value>Per applicare le modifiche come le impostazioni della lingua è necessario un riavvio.</value>
+  <data name="RestartRequiredMessage" xml:space="preserve">
+    <value>Per applicare modifiche come le impostazioni della lingua è necessario un riavvio dell'applicazione.</value>
   </data>
   <data name="CouldNotParseOrResolveDNSServers" xml:space="preserve">
     <value>Impossibile analizzare o risolvere nessuno dei server DNS specificati.</value>
@@ -4139,11 +4142,117 @@ er migrare le impostazioni precedenti, se necessario, è possibile copiare il fi
   <data name="NetworkStatus" xml:space="preserve">
     <value>Stato rete</value>
   </data>
-  <data name="ToolTip_Show" xml:space="preserve">
-    <value>Visualizza</value>
+  <data name="ActiveDirectoryImportFailed" xml:space="preserve">
+    <value>L'importazione da Active Directory è fallita.</value>
   </data>
-  <data name="ToolTip_Reload" xml:space="preserve">
-    <value>Ricarica</value>
+  <data name="ActiveDirectoryImportOptions" xml:space="preserve">
+    <value>Opzioni</value>
+  </data>
+
+  <data name="ActiveDirectoryImportUsesCurrentCredentials" xml:space="preserve">
+    <value>Per leggere l'Active Directory usa le credenziali Windows attuali. 
+All'account deve essere consentito enumerare gli oggetti del computer nella base di ricerca (sotto struttura).</value>
+  </data>
+  <data name="ActiveDirectorySearchBase" xml:space="preserve">
+    <value>Base ricerca (DN)</value>
+  </data>
+  <data name="ActiveDirectoryAdditionalLdapFilter" xml:space="preserve">
+    <value>Filtro LDAP aggiuntivo</value>
+  </data>
+  <data name="ActiveDirectoryAdditionalLdapFilterInvalid" xml:space="preserve">
+    <value>Il filtro deve essere un'espressione LDAP valida che inizia con "(" e termina con ")".</value>
+  </data>
+  <data name="ActiveDirectorySearchBaseInvalid" xml:space="preserve">
+    <value>La base ricerca deve essere un nome distinto LDAP valido (ad esempio DC=esempio,DC=com).</value>
+  </data>
+  <data name="ActiveDirectory_ImportDescription" xml:space="preserve">
+    <value>Importato da Active Directory su {0}</value>
+  </data>
+  <data name="ActiveDirectoryNoComputersFound" xml:space="preserve">
+    <value>Nessun computer trovato per la base ricerca e il filtro specificati.</value>
+  </data>
+  <data name="SearchingActiveDirectoryDots" xml:space="preserve">
+    <value>Ricerca in Active Directory...</value>
+  </data>
+  <data name="ActiveDirectoryNonDomainHint" xml:space="preserve">
+    <value>Se il computer non fa parte del dominio, specifica il controller del dominio (nome host o IP) e usa credenziali personalizzate.</value>
+  </data>
+  <data name="LdapServer" xml:space="preserve">
+    <value>Server (facoltativo)</value>
+  </data>
+  <data name="LdapPort" xml:space="preserve">
+    <value>Porta (facoltativa)</value>
+  </data>
+  <data name="UseSsl" xml:space="preserve">
+    <value>Usa SSL (LDAPS)</value>
+  </data>
+  <data name="UseCurrentWindowsCredentials" xml:space="preserve">
+    <value>Usa credenziali Windows attuali</value>
+  </data>
+  <data name="UseTheseCredentials" xml:space="preserve">
+    <value>Usa queste credenziali</value>
+  </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Avanzate</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Seleziona tutto</value>
+  </data>
+  <data name="DeselectAll" xml:space="preserve">
+    <value>Deseleziona tutto</value>
+  </data>
+  <data name="EnableFor" xml:space="preserve">
+    <value>Abilita per</value>
+  </data>
+  <data name="SkipAlreadyImported" xml:space="preserve">
+    <value>Salta già importati</value>
+  </data>
+  <data name="ImportResultsHeader" xml:space="preserve">
+    <value>{0} · {1} risultati</value>
+  </data>
+  <data name="ProfileImportSummary" xml:space="preserve">
+    <value>{0} profili importati.
+{1} voci duplicate ignorate.
+{2} senza che un host venga saltato.</value>
+  </data>
+  <data name="ImportProfiles_Source_ActiveDirectory" xml:space="preserve">
+    <value>Active Directory</value>
+  </data>
+  <data name="ImportResults" xml:space="preserve">
+    <value>Risultati importazione</value>
+  </data>
+  <data name="ImportProfiles_StatusNew" xml:space="preserve">
+    <value>Nuovo</value>
+  </data>
+  <data name="ImportProfiles_StatusImported" xml:space="preserve">
+    <value>Importati</value>
+  </data>
+  <data name="ImportProfiles_StatusNoHost" xml:space="preserve">
+    <value>Nessun host</value>
+  </data>
+  <data name="ExcludeDisabledAccounts" xml:space="preserve">
+    <value>Escludi account disabilitati</value>
+  </data>
+  <data name="ImportComputersFromActiveDirectory" xml:space="preserve">
+    <value>Importa computer da Active Directory</value>
+  </data>
+  <data name="ImportComputersFromActiveDirectoryDots" xml:space="preserve">
+    <value>Importa computer da Active Directory...</value>
+  </data>
+  <data name="ImportProfiles" xml:space="preserve">
+    <value>Importa profili</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Sorgente</value>
+  </data>
+  <data name="ImportProfiles_Method_ActiveDirectory" xml:space="preserve">
+    <value>Active Directory</value>
+  </data>
+  <data name="ProfileGroup" xml:space="preserve">
+    <value>Gruppo profilo</value>
+  </data>
+  <data name="ExistingOrNewGroupDots" xml:space="preserve">
+    <value>Nome gruppo esistente o nuovo</value>
   </data>
   <data name="Firewall" xml:space="preserve">
     <value>Firewall</value>
@@ -4297,5 +4406,8 @@ La modifica delle regole del firewall richiede diritti elevati!</value>
   </data>
   <data name="DisableRule" xml:space="preserve">
     <value>Disabilita regola</value>
+  </data>
+  <data name="ImportProfilesDots" xml:space="preserve">
+    <value>Importa profili...</value>
   </data>
 </root>
