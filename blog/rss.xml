@@ -4,10 +4,46 @@
         <title>NETworkManager Blog</title>
         <link>https://borntoberoot.net/NETworkManager/blog</link>
         <description>NETworkManager Blog</description>
-        <lastBuildDate>Sun, 03 May 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 18 May 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Import Profiles from Active Directory]]></title>
+            <link>https://borntoberoot.net/NETworkManager/blog/import-profiles-from-active-directory</link>
+            <guid>https://borntoberoot.net/NETworkManager/blog/import-profiles-from-active-directory</guid>
+            <pubDate>Mon, 18 May 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[NETworkManager now lets you import profiles directly from Active Directory. Query computer accounts via LDAP, review the results, and bulk-import them as profiles in seconds.]]></description>
+            <content:encoded><![CDATA[<p>NETworkManager now lets you import profiles directly from <strong>Active Directory</strong>. Instead of creating profiles for every machine by hand, you can query your AD for computer accounts via LDAP, review the results, and bulk-import them into any group with a single click.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="the-problem-with-large-environments">The problem with large environments<a href="https://borntoberoot.net/NETworkManager/blog/import-profiles-from-active-directory#the-problem-with-large-environments" class="hash-link" aria-label="Direct link to The problem with large environments" title="Direct link to The problem with large environments" translate="no">​</a></h2>
+<p>If you manage dozens or hundreds of machines, maintaining NETworkManager profiles manually is tedious. You have to add each host one by one, set the display name, pick the right group, and enable the applications you need. When machines are added or decommissioned in AD, keeping profiles in sync becomes its own maintenance burden.</p>
+<p>The new <strong>Active Directory import</strong> solves this by pulling computer accounts directly from your domain.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-it-works">How it works<a href="https://borntoberoot.net/NETworkManager/blog/import-profiles-from-active-directory#how-it-works" class="hash-link" aria-label="Direct link to How it works" title="Direct link to How it works" translate="no">​</a></h2>
+<p>Go to <strong>Settings → Profiles</strong> and click <strong>Import</strong>. Select <strong>Active Directory</strong> as the import source. A dialog opens where you configure the LDAP connection:</p>
+<p><img decoding="async" loading="lazy" alt="Profiles - Import Active Directory" src="https://borntoberoot.net/NETworkManager/assets/images/profiles--import-active-directory-18f830bb8df8df99a17d0857221f3f60.png" width="1200" height="800" class="img_ev3q"></p>
+<table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody><tr><td><strong>Search base</strong></td><td>LDAP search base, e.g. <code>DC=domain,DC=com</code></td></tr><tr><td><strong>Server</strong></td><td>Hostname or IP of the LDAP server. Leave empty to use the default domain controller.</td></tr><tr><td><strong>Port</strong></td><td>Defaults to <code>389</code> (LDAP) or <code>636</code> (LDAPS), switches automatically when <strong>Use SSL</strong> is toggled.</td></tr><tr><td><strong>Use SSL</strong></td><td>Connect via LDAPS (encrypted).</td></tr><tr><td><strong>Authentication</strong></td><td>Use current Windows credentials or supply a custom username and password.</td></tr><tr><td><strong>Exclude disabled accounts</strong></td><td>Skip computer accounts that are disabled in AD.</td></tr><tr><td><strong>Additional LDAP filter</strong></td><td>Narrow results further, e.g. <code>(operatingSystem=Windows Server*)</code>.</td></tr></tbody></table>
+<p>Click <strong>Search</strong> and NETworkManager queries the directory. All matching computer accounts appear in the next step.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="review-and-import">Review and import<a href="https://borntoberoot.net/NETworkManager/blog/import-profiles-from-active-directory#review-and-import" class="hash-link" aria-label="Direct link to Review and import" title="Direct link to Review and import" translate="no">​</a></h2>
+<p>Before anything is written, you get a full review of what will be imported:</p>
+<p><img decoding="async" loading="lazy" alt="Profiles - Import Review" src="https://borntoberoot.net/NETworkManager/assets/images/profiles--import-review-e4b2e1b75a0fe912fbb138c3cac389da.png" width="1200" height="800" class="img_ev3q"></p>
+<p>Each entry shows a <strong>Status</strong> so you know exactly what will happen:</p>
+<ul>
+<li class=""><strong>New</strong> — not yet in NETworkManager, will be imported.</li>
+<li class=""><strong>Already imported</strong> — already exists as a profile from this source. Skipped by default (configurable).</li>
+<li class=""><strong>No host</strong> — no host address available, cannot be imported.</li>
+</ul>
+<p>On the right side you choose which <strong>applications</strong> to enable for the imported profiles. <a href="https://borntoberoot.net/NETworkManager/docs/application/ping-monitor" target="_blank" rel="noopener noreferrer" class="">Ping Monitor</a>, <a href="https://borntoberoot.net/NETworkManager/docs/application/remote-desktop" target="_blank" rel="noopener noreferrer" class="">Remote Desktop</a>, and <a href="https://borntoberoot.net/NETworkManager/docs/application/powershell" target="_blank" rel="noopener noreferrer" class="">PowerShell</a> are pre-selected, but you can change this before importing.</p>
+<p>You also pick a <strong>target group</strong> — either an existing one or a new name you type in on the spot.</p>
+<p>Click <strong>Import</strong> and a summary shows how many profiles were created, skipped as duplicates, and skipped due to missing host addresses.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="try-it-now">Try it now<a href="https://borntoberoot.net/NETworkManager/blog/import-profiles-from-active-directory#try-it-now" class="hash-link" aria-label="Direct link to Try it now" title="Direct link to Try it now" translate="no">​</a></h2>
+<p>You can test this feature in the <a href="https://borntoberoot.net/NETworkManager/download#pre-release" target="_blank" rel="noopener noreferrer" class="">latest pre-release of NETworkManager</a>.</p>
+<p>More information is available in the <a href="https://borntoberoot.net/NETworkManager/docs/groups-and-profiles#import" target="_blank" rel="noopener noreferrer" class="">official documentation</a>.</p>
+<p>If you find any issues or have suggestions for improvement, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>.</p>]]></content:encoded>
+            <category>profiles</category>
+            <category>active directory</category>
+            <category>import</category>
+            <category>new feature</category>
+        </item>
         <item>
             <title><![CDATA[Introducing Neighbor Table]]></title>
             <link>https://borntoberoot.net/NETworkManager/blog/introducing-neighbor-table</link>
