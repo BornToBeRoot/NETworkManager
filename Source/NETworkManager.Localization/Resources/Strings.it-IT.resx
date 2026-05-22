@@ -437,7 +437,7 @@ La modifica dell'elenco router richiede diritti elevati!</value>
     <value>Amministratore</value>
   </data>
   <data name="AlwaysShowIconInTray" xml:space="preserve">
-    <value>Visualizza sempre l'icona nella'area di notifica</value>
+    <value>Visualizza sempre l'icona nell'area di notifica</value>
   </data>
   <data name="Attempts" xml:space="preserve">
     <value>Tentativi</value>
@@ -831,7 +831,7 @@ Per alcune funzioni, la password deve essere convertita in una stringa normale e
     <value>Il profilo selezionato verrà eliminato definitivamente.</value>
   </data>
   <data name="DNSAutoconfiguration" xml:space="preserve">
-    <value>Autoconfigurazione DNS</value>
+    <value>Configurazione automatica DNS</value>
   </data>
   <data name="DNSLookupDots" xml:space="preserve">
     <value>Ricerca DNS...</value>
@@ -1053,7 +1053,7 @@ Controlla i parametri!</value>
     <value>Ricorsione</value>
   </data>
   <data name="RedirectClipboard" xml:space="preserve">
-    <value>Reindirizza la clipboard</value>
+    <value>Reindirizza gli appunti</value>
   </data>
   <data name="RedirectDevices" xml:space="preserve">
     <value>Reindirizza dispositivi</value>
@@ -1372,7 +1372,7 @@ Cerca per tag con "tag = xxx".</value>
     <value>Aggiorna</value>
   </data>
   <data name="RestartNow" xml:space="preserve">
-    <value>Riavvia addesso</value>
+    <value>Riavvia</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Salva</value>
@@ -1713,7 +1713,7 @@ Il nome di dominio della parte di autenticazione potrebbe essere errato, il domi
     <value>Attesa chiusura</value>
   </data>
   <data name="TcpState_Closing" xml:space="preserve">
-    <value>Chisura</value>
+    <value>Chiusura</value>
   </data>
   <data name="TcpState_DeleteTcb" xml:space="preserve">
     <value>Elimina Tcb</value>
@@ -1722,7 +1722,7 @@ Il nome di dominio della parte di autenticazione potrebbe essere errato, il domi
     <value>Stabilita</value>
   </data>
   <data name="TcpState_FinWait1" xml:space="preserve">
-    <value>Atetsa finale 1</value>
+    <value>Attesa finale 1</value>
   </data>
   <data name="TcpState_FinWait2" xml:space="preserve">
     <value>Attesa finale 2</value>
@@ -1921,7 +1921,7 @@ Per ulteriori dettagli visualizza il messaggio di errore:</value>
     <value>Percorso file</value>
   </data>
   <data name="OverrideDefaultSettings" xml:space="preserve">
-    <value>Sovarscrivi le impostazioni predefinite</value>
+    <value>Sovrascrivi impostazioni predefinite</value>
   </data>
   <data name="ResolveIPv4AddressForThisHost" xml:space="preserve">
     <value>Risolvi l'indirizzo IPv4 per questo host</value>
@@ -2655,7 +2655,7 @@ Vedi messaggio errore: "{0}"</value>
     <value>Giallo</value>
   </data>
   <data name="Accent_Steel" xml:space="preserve">
-    <value>Acciao</value>
+    <value>Acciaio</value>
   </data>
   <data name="ProfileName_General" xml:space="preserve">
     <value>Generale</value>
@@ -2769,7 +2769,7 @@ Vedi messaggio errore: "{0}"</value>
     <value>Apri profilo porte...</value>
   </data>
   <data name="ShowSplashScreenOnStart" xml:space="preserve">
-    <value>Visualizza schermata benvevuto all'avvio</value>
+    <value>All'avvio visualizza schermata benvenuto</value>
   </data>
   <data name="SplashScreen" xml:space="preserve">
     <value>Schermata benvenuto</value>
@@ -3109,7 +3109,7 @@ Tuttavia, i valori originali NON vengono ripristinati.</value>
     <value>L'input non contiene testo!</value>
   </data>
   <data name="ApplicationName_BitCalculator" xml:space="preserve">
-    <value>Calcolatorebit</value>
+    <value>Calcolatore bit</value>
   </data>
   <data name="BitCalculator" xml:space="preserve">
     <value>Calcolatore bit</value>
