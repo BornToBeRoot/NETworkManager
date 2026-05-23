@@ -11022,15 +11022,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start.
-        /// </summary>
-        public static string Start {
-            get {
-                return ResourceManager.GetString("Start", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Start minimized in tray.
         /// </summary>
         public static string StartMinimizedInTray {
