@@ -15,6 +15,7 @@
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:NullableDoubleToStringConverter x:Key="NullableDoubleToStringConverter" />
     </UserControl.Resources>
     <Border BorderThickness="1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
         <Grid Margin="10">
@@ -226,11 +227,11 @@
                             <TextBlock Grid.Column="0" Grid.Row="4"
                                        Text="{x:Static localization:Strings.Latency}" />
                             <TextBox Grid.Column="2" Grid.Row="4"
-                                     Text="{Binding CurrentLatencyMs, StringFormat={}{0:F0} ms, TargetNullValue=-/-, FallbackValue=-/-, Mode=OneWay}" />
+                                     Text="{Binding CurrentLatencyMs, Converter={StaticResource NullableDoubleToStringConverter}, ConverterParameter='F0|ms', Mode=OneWay}" />
                             <TextBlock Grid.Column="0" Grid.Row="6"
                                        Text="{x:Static localization:Strings.Jitter}" />
                             <TextBox Grid.Column="2" Grid.Row="6"
-                                     Text="{Binding CurrentJitterMs, StringFormat={}{0:F1} ms, TargetNullValue=-/-, FallbackValue=-/-, Mode=OneWay}" />
+                                     Text="{Binding CurrentJitterMs, Converter={StaticResource NullableDoubleToStringConverter}, ConverterParameter='F1|ms', Mode=OneWay}" />
                         </Grid>
                         <!-- Col 2: Download (label left, value right, chart below) -->
                         <StackPanel Grid.Column="2">
@@ -240,7 +241,7 @@
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CloudDownloadOutline}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Text="{Binding CurrentDownloadMbps, StringFormat={}{0:F1} Mbps, TargetNullValue=-/-, FallbackValue=-/-}"
+                                <TextBlock Text="{Binding CurrentDownloadMbps, Converter={StaticResource NullableDoubleToStringConverter}, ConverterParameter='F1|Mbps'}"
                                            Style="{StaticResource MessageTextBlock}"
                                            Margin="10,0,0,0" />
                             </StackPanel>
@@ -259,7 +260,7 @@
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CloudUploadOutline}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Text="{Binding CurrentUploadMbps, StringFormat={}{0:F1} Mbps, TargetNullValue=-/-, FallbackValue=-/-}"
+                                <TextBlock Text="{Binding CurrentUploadMbps, Converter={StaticResource NullableDoubleToStringConverter}, ConverterParameter='F1|Mbps'}"
                                            Style="{StaticResource MessageTextBlock}"
                                            Margin="10,0,0,0" />
                             </StackPanel>
