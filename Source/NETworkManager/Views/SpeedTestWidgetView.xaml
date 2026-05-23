@@ -216,11 +216,10 @@
                                        Text="{x:Static localization:Strings.Server}" />
                             <TextBox Grid.Column="2" Grid.Row="2">
                                 <TextBox.Text>
-                                    <MultiBinding StringFormat="{}{0}, {1} ({2})"
-                                                  TargetNullValue="-/-" FallbackValue="-/-" Mode="OneWay">
-                                        <Binding Path="Result.ServerCity" />
-                                        <Binding Path="Result.ServerCountry" />
-                                        <Binding Path="Result.ServerIata" />
+                                    <MultiBinding StringFormat="{}{0}, {1} ({2})" Mode="OneWay">
+                                        <Binding Path="Result.ServerCity" TargetNullValue="-/-" />
+                                        <Binding Path="Result.ServerCountry" TargetNullValue="-/-" />
+                                        <Binding Path="Result.ServerIata" TargetNullValue="-/-" />
                                     </MultiBinding>
                                 </TextBox.Text>
                             </TextBox>
