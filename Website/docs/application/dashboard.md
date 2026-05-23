@@ -110,4 +110,4 @@ The result includes:
 - **Client city and country**
 - **Server location** — Cloudflare PoP (Point of Presence) handling the test
 
-The first time the widget is used, a privacy disclaimer informs the user that `speed.cloudflare.com` will receive requests with the client's IP address and network information. See the [Cloudflare privacy policy](https://www.cloudflare.com/privacypolicy/) for details. The widget never contacts Cloudflare's telemetry endpoint (`aim.cloudflare.com/__log`).
+Before running the test, a privacy disclaimer informs the user that `speed.cloudflare.com` will receive requests with the client's IP address and network information. The disclaimer is shown again after restarting the app because acceptance is not currently persisted. See the [Cloudflare privacy policy](https://www.cloudflare.com/privacypolicy/) for details. The widget never contacts Cloudflare's telemetry endpoint (`aim.cloudflare.com/__log`).
