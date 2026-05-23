@@ -25,6 +25,7 @@ public class SpeedTestWidgetViewModel : ViewModelBase
 {
     private static readonly ILog Log = LogManager.GetLogger(typeof(SpeedTestWidgetViewModel));
 
+    private readonly SpeedTestService _service = new();
     private CancellationTokenSource _cts;
 
     public bool IsRunning
@@ -244,7 +245,6 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         _cts?.Dispose();
         _cts = new CancellationTokenSource();
 
-        using var service = new SpeedTestService();
         var progress = new Progress<SpeedTestProgress>(p =>
         {
             StatusMessage = p.Phase switch
@@ -299,7 +299,7 @@ public class SpeedTestWidgetViewModel : ViewModelBase
 
         try
         {
-            var result = await service.RunAsync(progress, _cts.Token);
+            var result = await _service.RunAsync(progress, _cts.Token);
             Result = result;
             CurrentDownloadMbps = result.DownloadMbps;
             CurrentUploadMbps = result.UploadMbps;

@@ -1,9 +1,9 @@
 using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
@@ -19,7 +19,7 @@ namespace NETworkManager.Models.Cloudflare;
 /// JavaScript library. The full network logic is reimplemented in C#; no
 /// telemetry is sent to <c>aim.cloudflare.com</c>.
 /// </summary>
-public class SpeedTestService : IDisposable
+public class SpeedTestService
 {
     private const string BaseUrl = "https://speed.cloudflare.com";
     private const string Origin = "https://speed.cloudflare.com";
@@ -61,13 +61,14 @@ public class SpeedTestService : IDisposable
     private const int LatencyInitialProbes = 1;
     private const int LatencyMeasurementProbes = 20;
 
-    private readonly HttpClient _client;
+    private static readonly HttpClient _client = CreateClient();
 
-    public SpeedTestService()
+    private static HttpClient CreateClient()
     {
-        _client = new HttpClient { Timeout = Timeout.InfiniteTimeSpan };
-        _client.DefaultRequestHeaders.Add("Origin", Origin);
-        _client.DefaultRequestHeaders.UserAgent.ParseAdd("NETworkManager");
+        var client = new HttpClient { Timeout = Timeout.InfiniteTimeSpan };
+        client.DefaultRequestHeaders.Add("Origin", Origin);
+        client.DefaultRequestHeaders.UserAgent.ParseAdd("NETworkManager");
+        return client;
     }
 
     /// <summary>
@@ -329,35 +330,25 @@ public class SpeedTestService : IDisposable
     private async Task<(double Bps, double DurationMs)> MeasureUploadAsync(int bytes,
         CancellationToken cancellationToken)
     {
-        var payload = ArrayPool<byte>.Shared.Rent(bytes);
-        Array.Clear(payload, 0, bytes);
-        try
-        {
-            using var request = new HttpRequestMessage(HttpMethod.Post, $"{BaseUrl}/__up");
-            using var content = new ByteArrayContent(payload, 0, bytes);
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            request.Content = content;
+        using var request = new HttpRequestMessage(HttpMethod.Post, $"{BaseUrl}/__up");
+        using var content = new ZeroStreamContent(bytes);
+        request.Content = content;
 
-            var sw = Stopwatch.StartNew();
-            using var response = await _client
-                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-                .ConfigureAwait(false);
-            sw.Stop();
-            var ttfb = sw.Elapsed.TotalMilliseconds;
-            response.EnsureSuccessStatusCode();
-            await response.Content.CopyToAsync(Stream.Null, cancellationToken).ConfigureAwait(false);
+        var sw = Stopwatch.StartNew();
+        using var response = await _client
+            .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+            .ConfigureAwait(false);
+        sw.Stop();
+        var ttfb = sw.Elapsed.TotalMilliseconds;
+        response.EnsureSuccessStatusCode();
+        await response.Content.CopyToAsync(Stream.Null, cancellationToken).ConfigureAwait(false);
 
-            var uploadDurationMs = ttfb;
-            if (uploadDurationMs <= 0)
-                return (0.0, uploadDurationMs);
+        var uploadDurationMs = ttfb;
+        if (uploadDurationMs <= 0)
+            return (0.0, uploadDurationMs);
 
-            var bps = 8.0 * bytes * EstimatedHeaderFraction / (uploadDurationMs / 1000.0);
-            return (bps, uploadDurationMs);
-        }
-        finally
-        {
-            ArrayPool<byte>.Shared.Return(payload, clearArray: true);
-        }
+        var bps = 8.0 * bytes * EstimatedHeaderFraction / (uploadDurationMs / 1000.0);
+        return (bps, uploadDurationMs);
     }
 
     #endregion
@@ -407,9 +398,41 @@ public class SpeedTestService : IDisposable
 
     #endregion
 
-    public void Dispose()
+    /// <summary>
+    /// Streams <paramref name="length"/> zero bytes as HTTP content without allocating
+    /// a full-sized buffer. A single small shared chunk is reused across all writes.
+    /// </summary>
+    private sealed class ZeroStreamContent : HttpContent
     {
-        _client?.Dispose();
-        GC.SuppressFinalize(this);
+        private readonly int _length;
+        private static readonly byte[] _chunk = new byte[81920];
+
+        internal ZeroStreamContent(int length)
+        {
+            _length = length;
+            Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            Headers.ContentLength = length;
+        }
+
+        protected override Task SerializeToStreamAsync(Stream stream, TransportContext? context) =>
+            SerializeToStreamAsync(stream, context, CancellationToken.None);
+
+        protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context,
+            CancellationToken cancellationToken)
+        {
+            var remaining = _length;
+            while (remaining > 0)
+            {
+                var toWrite = Math.Min(_chunk.Length, remaining);
+                await stream.WriteAsync(_chunk.AsMemory(0, toWrite), cancellationToken).ConfigureAwait(false);
+                remaining -= toWrite;
+            }
+        }
+
+        protected override bool TryComputeLength(out long length)
+        {
+            length = _length;
+            return true;
+        }
     }
 }
