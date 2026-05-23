@@ -5384,15 +5384,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to IATA.
-        /// </summary>
-        public static string IATA {
-            get {
-                return ResourceManager.GetString("IATA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ICMPv4.
         /// </summary>
         public static string ICMPv4 {
