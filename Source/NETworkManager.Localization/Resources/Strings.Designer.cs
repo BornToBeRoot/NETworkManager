@@ -10252,15 +10252,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Server location.
-        /// </summary>
-        public static string ServerLocation {
-            get {
-                return ResourceManager.GetString("ServerLocation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Server name.
         /// </summary>
         public static string ServerName {
