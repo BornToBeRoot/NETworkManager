@@ -218,13 +218,13 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         if (ShowDisclaimer)
             return;
 
-        RunAsync().ConfigureAwait(false);
+        _ = RunAsync();
     }
 
     private void AcceptDisclaimerAction()
     {
         ShowDisclaimer = false;
-        RunAsync().ConfigureAwait(false);
+        _ = RunAsync();
     }
 
     private async Task RunAsync()
