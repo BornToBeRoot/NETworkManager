@@ -840,8 +840,7 @@
                 </Grid>
             </Grid>
             <!-- Reload Adapter -->
-            <StackPanel VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
                         Visibility="{Binding Path=Adapters.Count, Converter={StaticResource ResourceKey=IntZeroToVisibilityCollapsedConverter}}">
                 <TextBlock Text="{x:Static Member=localization:Strings.NoWiFiAdaptersFound}"
                            Visibility="{Binding Path=IsAdaptersLoading, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"

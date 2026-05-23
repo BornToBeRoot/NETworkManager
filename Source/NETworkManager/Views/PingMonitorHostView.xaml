@@ -216,16 +216,13 @@
                                                                                     Visual="{iconPacks:Material Kind=WindowClose}" />
                                                                             </Rectangle.OpacityMask>
                                                                             <Rectangle.Style>
-                                                                                <Style
-                                                                                    TargetType="{x:Type TypeName=Rectangle}">
-                                                                                    <Setter Property="Fill"
-                                                                                        Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+                                                                                <Style TargetType="{x:Type TypeName=Rectangle}">
+                                                                                    <Setter Property="Fill" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
                                                                                     <Style.Triggers>
                                                                                         <DataTrigger
                                                                                             Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}"
                                                                                             Value="True">
-                                                                                            <Setter Property="Fill"
-                                                                                                Value="Red" />
+                                                                                            <Setter Property="Fill" Value="Red" />
                                                                                         </DataTrigger>
                                                                                     </Style.Triggers>
                                                                                 </Style>

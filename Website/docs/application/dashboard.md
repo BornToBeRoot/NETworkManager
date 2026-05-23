@@ -95,3 +95,19 @@ Enables or disables the detection of the DNS resolver in use via [`ip-api.com`](
 **Type:** `Boolean`
 
 **Default:** `Enabled`
+
+## Speed Test
+
+The **Speed Test** widget measures the current connection's download and upload speed, latency, and jitter against [`speed.cloudflare.com`](https://speed.cloudflare.com/). The test is **user-initiated** — it does not run automatically on dashboard load. Click **Speed Test** to run a measurement.
+
+The result includes:
+
+- **Download** speed in Mbps
+- **Upload** speed in Mbps
+- **Latency** in ms (unloaded, 50th percentile of latency probes)
+- **Jitter** in ms (average consecutive delta between latency samples)
+- **ISP** — internet service provider as reported by Cloudflare
+- **Client city and country**
+- **Server location** — Cloudflare PoP (Point of Presence) handling the test
+
+The first time the widget is used, a privacy disclaimer informs the user that `speed.cloudflare.com` will receive requests with the client's IP address and network information. See the [Cloudflare privacy policy](https://www.cloudflare.com/privacypolicy/) for details. The widget never contacts Cloudflare's telemetry endpoint (`aim.cloudflare.com/__log`).
