@@ -267,12 +267,15 @@ public class SpeedTestWidgetViewModel : ViewModelBase
 
             if (p.NewDownloadSampleMbps.HasValue)
             {
+                // Seed the first point twice so LiveCharts2 renders the sparkline
+                // anchored at x=0 rather than starting mid-chart on the first sample.
                 if (DownloadSamples.Count == 0)
                     DownloadSamples.Add(p.NewDownloadSampleMbps.Value);
                 DownloadSamples.Add(p.NewDownloadSampleMbps.Value);
             }
             if (p.NewUploadSampleMbps.HasValue)
             {
+                // Same workaround as above for the upload sparkline.
                 if (UploadSamples.Count == 0)
                     UploadSamples.Add(p.NewUploadSampleMbps.Value);
                 UploadSamples.Add(p.NewUploadSampleMbps.Value);

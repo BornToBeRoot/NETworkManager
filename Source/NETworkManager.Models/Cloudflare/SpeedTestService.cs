@@ -65,7 +65,7 @@ public class SpeedTestService : IDisposable
 
     public SpeedTestService()
     {
-        _client = new HttpClient { Timeout = TimeSpan.FromSeconds(60) };
+        _client = new HttpClient { Timeout = Timeout.InfiniteTimeSpan };
         _client.DefaultRequestHeaders.Add("Origin", Origin);
         _client.DefaultRequestHeaders.UserAgent.ParseAdd("NETworkManager");
     }
@@ -330,6 +330,7 @@ public class SpeedTestService : IDisposable
         CancellationToken cancellationToken)
     {
         var payload = ArrayPool<byte>.Shared.Rent(bytes);
+        Array.Clear(payload, 0, bytes);
         try
         {
             using var request = new HttpRequestMessage(HttpMethod.Post, $"{BaseUrl}/__up");
@@ -355,7 +356,7 @@ public class SpeedTestService : IDisposable
         }
         finally
         {
-            ArrayPool<byte>.Shared.Return(payload);
+            ArrayPool<byte>.Shared.Return(payload, clearArray: true);
         }
     }
 
