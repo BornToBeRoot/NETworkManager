@@ -1,4 +1,4 @@
-using MahApps.Metro.SimpleChildWindow;
+﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -581,7 +581,7 @@ public static class ProfileDialogManager
             switch (instance.SelectedMethod.Method)
             {
                 case ProfileImportSource.ActiveDirectory:
-                    ShowSearchAdComputersDialog(parentWindow, viewModel, targetGroup, previousState: null).ConfigureAwait(false);
+                    _ = ShowSearchAdComputersDialog(parentWindow, viewModel, targetGroup, previousState: null);
                     break;
             }
         }, _ => CloseChild());
@@ -614,10 +614,9 @@ public static class ProfileDialogManager
             {
                 CloseChild();
 
-                ShowImportProfilesResultDialog(parentWindow, viewModel, targetGroup, candidates,
+                _ = ShowImportProfilesResultDialog(parentWindow, viewModel, targetGroup, candidates,
                     ProfileImportSource.ActiveDirectory, Strings.ImportProfiles_Source_ActiveDirectory,
-                    backToSourceCallback: () => ShowSearchAdComputersDialog(parentWindow, viewModel, targetGroup, searchViewModel).ConfigureAwait(false)
-                ).ConfigureAwait(false);
+                    backToSourceCallback: () => { _ = ShowSearchAdComputersDialog(parentWindow, viewModel, targetGroup, searchViewModel); });
             }, CloseChild, previousState);
 
         childWindow.Title = Strings.ImportComputersFromActiveDirectory;

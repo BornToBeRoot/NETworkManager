@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
@@ -184,7 +184,7 @@ public class SNTPLookupViewModel : ViewModelBase
 
     private void ExportAction()
     {
-        Export().ConfigureAwait(false);
+        _ = Export();
     }
 
     #endregion

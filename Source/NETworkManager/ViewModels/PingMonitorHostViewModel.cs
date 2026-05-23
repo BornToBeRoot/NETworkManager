@@ -1,4 +1,4 @@
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -432,7 +432,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         if (IsRunning)
             Stop();
         else
-            Start().ConfigureAwait(false);
+            _ = Start();
     }
 
     /// <summary>
@@ -448,7 +448,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     private void PingProfileAction()
     {
         if (SetHost(SelectedProfile.PingMonitor_Host, SelectedProfile.Group))
-            Start().ConfigureAwait(false);
+            _ = Start();
     }
 
     /// <summary>
@@ -478,9 +478,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager
-            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.PingMonitor)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.PingMonitor);
     }
 
     private bool ModifyProfile_CanExecute(object obj)
@@ -495,8 +494,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
     }
 
     /// <summary>
@@ -506,8 +504,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
     }
 
     /// <summary>
@@ -517,9 +514,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager
-            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile })
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile });
     }
 
     /// <summary>
@@ -529,9 +525,8 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager
-            .ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"));
     }
 
     /// <summary>

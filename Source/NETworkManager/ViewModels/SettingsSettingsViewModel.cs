@@ -1,4 +1,4 @@
-using NETworkManager.Localization.Resources;
+﻿using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
@@ -186,7 +186,7 @@ public class SettingsSettingsViewModel : ViewModelBase
     /// <summary>
     /// Gets the command that initiates the action to change the location.
     /// </summary>    
-    public ICommand ChangeLocationCommand => new RelayCommand(_ => ChangeLocationAction().ConfigureAwait(false));
+    public ICommand ChangeLocationCommand => new RelayCommand(parameter => { _ = ChangeLocationAction(); });
 
     /// <summary>
     /// Prompts the user to confirm and then changes the location of the settings folder.
@@ -218,7 +218,7 @@ public class SettingsSettingsViewModel : ViewModelBase
     /// <summary>
     /// Gets the command that restores the default location settings asynchronously.
     /// </summary>    
-    public ICommand RestoreDefaultLocationCommand => new RelayCommand(_ => RestoreDefaultLocationActionAsync().ConfigureAwait(false));
+    public ICommand RestoreDefaultLocationCommand => new RelayCommand(parameter => { _ = RestoreDefaultLocationActionAsync(); });
 
     /// <summary>
     /// Restores the application's settings folder location to the default path after obtaining user confirmation.
@@ -254,7 +254,7 @@ public class SettingsSettingsViewModel : ViewModelBase
     /// <summary>
     /// Gets the command that resets the application settings to their default values.
     /// </summary>    
-    public ICommand ResetSettingsCommand => new RelayCommand(_ => ResetSettingsAction().ConfigureAwait(false));
+    public ICommand ResetSettingsCommand => new RelayCommand(parameter => { _ = ResetSettingsAction(); });
 
     /// <summary>
     /// Resets the application settings to their default values.

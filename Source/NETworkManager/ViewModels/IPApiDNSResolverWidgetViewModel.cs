@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Settings;
@@ -91,7 +91,7 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     /// </summary>
     public void Check()
     {
-        CheckAsync().ConfigureAwait(false);
+        _ = CheckAsync();
     }
 
     /// <summary>

@@ -1,4 +1,4 @@
-using LiveCharts;
+﻿using LiveCharts;
 using LiveCharts.Wpf;
 using log4net;
 using MahApps.Metro.SimpleChildWindow;
@@ -101,7 +101,7 @@ public class WiFiViewModel : ViewModelBase
                 if (!_isLoading)
                     SettingsManager.Current.WiFi_InterfaceId = value.NetworkInterfaceInfo.Id;
 
-                ScanAsync(value).ConfigureAwait(false);
+                _ = ScanAsync(value);
             }
 
             field = value;
@@ -451,7 +451,7 @@ public class WiFiViewModel : ViewModelBase
         };
 
         // Load network adapters
-        LoadAdaptersAsync(SettingsManager.Current.WiFi_InterfaceId).ConfigureAwait(false);
+        _ = LoadAdaptersAsync(SettingsManager.Current.WiFi_InterfaceId);
 
         // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -492,11 +492,11 @@ public class WiFiViewModel : ViewModelBase
 
     private void ReloadAdapterAction()
     {
-        LoadAdaptersAsync(SelectedAdapter?.NetworkInterfaceInfo.Id).ConfigureAwait(false);
+        _ = LoadAdaptersAsync(SelectedAdapter?.NetworkInterfaceInfo.Id);
     }
 
     public ICommand ScanNetworksCommand =>
-        new RelayCommand(_ => ScanNetworksAction().ConfigureAwait(false), ScanNetworks_CanExecute);
+        new RelayCommand(parameter => { _ = ScanNetworksAction(); }, ScanNetworks_CanExecute);
 
     private bool ScanNetworks_CanExecute(object obj)
     {
@@ -526,7 +526,7 @@ public class WiFiViewModel : ViewModelBase
 
     private void ExportAction()
     {
-        Export().ConfigureAwait(false);
+        _ = Export();
     }
 
     public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());

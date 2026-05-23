@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
@@ -196,12 +196,12 @@ public class HostsFileEditorViewModel : ViewModelBase
         };
 
         // Get hosts file entries
-        Refresh(true).ConfigureAwait(false);
+        _ = Refresh(true);
 
         // Watch hosts file for changes
         HostsFileEditor.HostsFileChanged += (_, _) =>
         {
-            Application.Current.Dispatcher.Invoke(() => { Refresh().ConfigureAwait(false); });
+            Application.Current.Dispatcher.Invoke(() => { _ = Refresh(); });
         };
 
         _isLoading = false;
@@ -221,7 +221,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to refresh the entries.
     /// </summary>
-    public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
+    public ICommand RefreshCommand => new RelayCommand(parameter => { _ = RefreshAction(); }, Refresh_CanExecute);
 
     /// <summary>
     /// Checks if the refresh command can be executed.
@@ -248,7 +248,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to export the entries.
     /// </summary>
-    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
+    public ICommand ExportCommand => new RelayCommand(parameter => { _ = ExportAction(); });
 
     /// <summary>
     /// Action to export the entries.
@@ -303,7 +303,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     /// Gets the command to enable the selected entry.
     /// </summary>
     public ICommand EnableEntryCommand =>
-        new RelayCommand(_ => EnableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+        new RelayCommand(parameter => { _ = EnableEntryAction(); }, ModifyEntry_CanExecute);
 
     /// <summary>
     /// Action to enable the selected entry.
@@ -324,7 +324,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     /// Gets the command to disable the selected entry.
     /// </summary>
     public ICommand DisableEntryCommand =>
-        new RelayCommand(_ => DisableEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+        new RelayCommand(parameter => { _ = DisableEntryAction(); }, ModifyEntry_CanExecute);
 
     /// <summary>
     /// Action to disable the selected entry.
@@ -345,7 +345,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     /// Gets the command to add a new entry.
     /// </summary>
     public ICommand AddEntryCommand =>
-        new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+        new RelayCommand(parameter => { _ = AddEntryAction(); }, ModifyEntry_CanExecute);
 
     /// <summary>
     /// Action to add a new entry.
@@ -395,7 +395,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     /// Gets the command to edit the selected entry.
     /// </summary>
     public ICommand EditEntryCommand =>
-        new RelayCommand(_ => EditEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+        new RelayCommand(parameter => { _ = EditEntryAction(); }, ModifyEntry_CanExecute);
 
     /// <summary>
     /// Action to edit the selected entry.
@@ -445,7 +445,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     /// Gets the command to delete the selected entry.
     /// </summary>
     public ICommand DeleteEntryCommand =>
-        new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+        new RelayCommand(parameter => { _ = DeleteEntryAction(); }, ModifyEntry_CanExecute);
 
     /// <summary>
     /// Action to delete the selected entry.
@@ -512,7 +512,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to restart the application as administrator.
     /// </summary>
-    public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
+    public ICommand RestartAsAdminCommand => new RelayCommand(parameter => { _ = RestartAsAdminAction(); });
 
     /// <summary>
     /// Action to restart the application as administrator.
@@ -533,7 +533,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to open the hosts file with the system default editor.
     /// </summary>
-    public ICommand OpenHostsFileCommand => new RelayCommand(_ => OpenHostsFileAction().ConfigureAwait(false));
+    public ICommand OpenHostsFileCommand => new RelayCommand(parameter => { _ = OpenHostsFileAction(); });
 
     /// <summary>
     /// Opens the hosts file with the system default editor.

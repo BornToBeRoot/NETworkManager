@@ -1,4 +1,4 @@
-using MahApps.Metro.SimpleChildWindow;
+﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
@@ -222,7 +222,7 @@ public class SettingsProfilesViewModel : ViewModelBase
     /// <summary>
     /// Gets the command that initiates the action to change the location.
     /// </summary>    
-    public ICommand ChangeLocationCommand => new RelayCommand(_ => ChangeLocationAction().ConfigureAwait(false));
+    public ICommand ChangeLocationCommand => new RelayCommand(parameter => { _ = ChangeLocationAction(); });
 
     /// <summary>
     /// Prompts the user to confirm and then changes the location of the profiles folder.
@@ -253,7 +253,7 @@ public class SettingsProfilesViewModel : ViewModelBase
     /// <summary>
     /// Gets the command that restores the default location.
     /// </summary>    
-    public ICommand RestoreDefaultLocationCommand => new RelayCommand(_ => RestoreDefaultLocationActionAsync().ConfigureAwait(false));
+    public ICommand RestoreDefaultLocationCommand => new RelayCommand(parameter => { _ = RestoreDefaultLocationActionAsync(); });
 
     /// <summary>
     /// Restores the profiles folder location to the default path after obtaining user confirmation.

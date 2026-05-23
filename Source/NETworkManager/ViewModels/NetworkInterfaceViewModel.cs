@@ -1,4 +1,4 @@
-using LiveCharts;
+﻿using LiveCharts;
 using LiveCharts.Configurations;
 using LiveCharts.Wpf;
 using log4net;
@@ -694,7 +694,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         _isLoading = true;
 
-        LoadNetworkInterfaces().ConfigureAwait(false);
+        _ = LoadNetworkInterfaces();
 
         InitialBandwidthChart();
 
@@ -823,7 +823,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Gets the command to export the network interfaces.
     /// </summary>
-    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
+    public ICommand ExportCommand => new RelayCommand(parameter => { _ = ExportAction(); });
 
     /// <summary>
     /// Action to export the network interfaces.
@@ -893,7 +893,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// </summary>
     private void ApplyConfigurationAction()
     {
-        ApplyConfiguration().ConfigureAwait(false);
+        _ = ApplyConfiguration();
     }
 
     /// <summary>
@@ -903,7 +903,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void ApplyProfileAction()
     {
-        ApplyConfigurationFromProfile().ConfigureAwait(false);
+        _ = ApplyConfigurationFromProfile();
     }
 
     /// <summary>
@@ -913,9 +913,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager
-            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.NetworkInterface)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.NetworkInterface);
     }
 
     private bool ModifyProfile_CanExecute(object obj)
@@ -930,8 +929,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
     }
 
     /// <summary>
@@ -941,8 +939,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
     }
 
     /// <summary>
@@ -952,9 +949,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager
-            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile })
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile });
     }
 
     /// <summary>
@@ -964,9 +960,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager
-            .ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"));
     }
 
     /// <summary>
@@ -1048,7 +1043,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void OpenNetworkConnectionsAction()
     {
-        OpenNetworkConnectionsAsync().ConfigureAwait(false);
+        _ = OpenNetworkConnectionsAsync();
     }
 
     /// <summary>
@@ -1075,7 +1070,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void FlushDNSAction()
     {
-        FlushDNSAsync().ConfigureAwait(false);
+        _ = FlushDNSAsync();
     }
 
     /// <summary>
@@ -1085,7 +1080,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void ReleaseRenewAction()
     {
-        ReleaseRenewAsync(IPConfigReleaseRenewMode.ReleaseRenew).ConfigureAwait(false);
+        _ = ReleaseRenewAsync(IPConfigReleaseRenewMode.ReleaseRenew);
     }
 
     /// <summary>
@@ -1095,7 +1090,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void ReleaseAction()
     {
-        ReleaseRenewAsync(IPConfigReleaseRenewMode.Release).ConfigureAwait(false);
+        _ = ReleaseRenewAsync(IPConfigReleaseRenewMode.Release);
     }
 
     /// <summary>
@@ -1105,7 +1100,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void RenewAction()
     {
-        ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew).ConfigureAwait(false);
+        _ = ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew);
     }
 
     /// <summary>
@@ -1115,7 +1110,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void ReleaseRenew6Action()
     {
-        ReleaseRenewAsync(IPConfigReleaseRenewMode.ReleaseRenew6).ConfigureAwait(false);
+        _ = ReleaseRenewAsync(IPConfigReleaseRenewMode.ReleaseRenew6);
     }
 
     /// <summary>
@@ -1125,7 +1120,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void Release6Action()
     {
-        ReleaseRenewAsync(IPConfigReleaseRenewMode.Release6).ConfigureAwait(false);
+        _ = ReleaseRenewAsync(IPConfigReleaseRenewMode.Release6);
     }
 
     /// <summary>
@@ -1135,13 +1130,13 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void Renew6Action()
     {
-        ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew).ConfigureAwait(false);
+        _ = ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew);
     }
 
     /// <summary>
     /// Gets the command to add an IPv4 address.
     /// </summary>
-    public ICommand AddIPv4AddressCommand => new RelayCommand(_ => AddIPv4AddressAction().ConfigureAwait(false),
+    public ICommand AddIPv4AddressCommand => new RelayCommand(parameter => { _ = AddIPv4AddressAction(); },
         AdditionalCommands_CanExecute);
 
     private async Task AddIPv4AddressAction()
@@ -1172,7 +1167,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Gets the command to remove an IPv4 address.
     /// </summary>
-    public ICommand RemoveIPv4AddressCommand => new RelayCommand(_ => RemoveIPv4AddressAction().ConfigureAwait(false),
+    public ICommand RemoveIPv4AddressCommand => new RelayCommand(parameter => { _ = RemoveIPv4AddressAction(); },
         AdditionalCommands_CanExecute);
 
     private async Task RemoveIPv4AddressAction()

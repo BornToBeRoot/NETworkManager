@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -418,7 +418,7 @@ public class PuTTYSettingsViewModel : ViewModelBase
 
     private void ConfigureAction()
     {
-        Configure().ConfigureAwait(false);
+        _ = Configure();
     }
 
     public ICommand PrivateKeyFileBrowseFileCommand => new RelayCommand(_ => PrivateKeyFileBrowseFileAction());

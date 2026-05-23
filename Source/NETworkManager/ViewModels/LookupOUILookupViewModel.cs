@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
@@ -268,7 +268,7 @@ public class LookupOUILookupViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to export the results.
     /// </summary>
-    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
+    public ICommand ExportCommand => new RelayCommand(parameter => { _ = ExportAction(); });
 
     /// <summary>
     /// Exports the results.

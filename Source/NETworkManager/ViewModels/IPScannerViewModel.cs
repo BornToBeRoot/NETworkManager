@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
@@ -287,7 +287,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return;
 
         if (!string.IsNullOrEmpty(Host))
-            Start().ConfigureAwait(false);
+            _ = Start();
 
         _firstLoad = false;
     }
@@ -313,7 +313,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         if (IsRunning)
             Stop();
         else
-            Start().ConfigureAwait(false);
+            _ = Start();
     }
 
     /// <summary>
@@ -323,7 +323,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void DetectSubnetAction()
     {
-        DetectSubnet().ConfigureAwait(false);
+        _ = DetectSubnet();
     }
 
     /// <summary>
@@ -370,7 +370,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void CustomCommandAction(object guid)
     {
-        CustomCommand(guid).ConfigureAwait(false);
+        _ = CustomCommand(guid);
     }
 
     /// <summary>
@@ -420,7 +420,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void ExportAction()
     {
-        Export().ConfigureAwait(false);
+        _ = Export();
     }
 
     #endregion

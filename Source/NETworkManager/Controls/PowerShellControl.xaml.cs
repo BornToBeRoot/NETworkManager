@@ -103,7 +103,7 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
         WindowHost.Height = (int)((ActualHeight - 20) * dpi.DpiScaleY);
         WindowHost.Width = (int)((ActualWidth - 20) * dpi.DpiScaleX);
 
-        Connect().ConfigureAwait(false);
+        _ = Connect();
 
         _initialized = true;
     }
@@ -248,7 +248,7 @@ public partial class PowerShellControl : UserControlBase, IDragablzTabItem, IEmb
         if (IsConnected)
             Disconnect();
 
-        Connect().ConfigureAwait(false);
+        _ = Connect();
     }
 
     public void CloseTab()

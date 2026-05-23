@@ -1,4 +1,4 @@
-using NETworkManager.Profiles;
+﻿using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
@@ -234,29 +234,28 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private void AddGroupAction()
     {
-        ProfileDialogManager.ShowAddGroupDialog(Application.Current.MainWindow, this).ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowAddGroupDialog(Application.Current.MainWindow, this);
     }
 
     public ICommand EditGroupCommand => new RelayCommand(_ => EditGroupAction());
 
     private void EditGroupAction()
     {
-        ProfileDialogManager.ShowEditGroupDialog(Application.Current.MainWindow, this, SelectedGroup).ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowEditGroupDialog(Application.Current.MainWindow, this, SelectedGroup);
     }
 
     public ICommand DeleteGroupCommand => new RelayCommand(_ => DeleteGroupAction());
 
     private void DeleteGroupAction()
     {
-        ProfileDialogManager.ShowDeleteGroupDialog(Application.Current.MainWindow, this, SelectedGroup).ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowDeleteGroupDialog(Application.Current.MainWindow, this, SelectedGroup);
     }
 
     public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
 
     private void AddProfileAction()
     {
-        ProfileDialogManager.ShowAddProfileDialog(Application.Current.MainWindow, this, null, SelectedGroup?.Name)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowAddProfileDialog(Application.Current.MainWindow, this, null, SelectedGroup?.Name);
     }
 
     public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), EditProfile_CanExecute);
@@ -268,7 +267,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
     }
 
     private bool ModifyProfile_CanExecute(object obj)
@@ -280,25 +279,23 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile).ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
     }
 
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager
-            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, [.. SelectedProfiles.Cast<ProfileInfo>()])
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, [.. SelectedProfiles.Cast<ProfileInfo>()]);
     }
 
     public ICommand ImportProfilesCommand => new RelayCommand(_ => ImportProfilesAction());
 
     private void ImportProfilesAction()
     {
-        ProfileDialogManager
-            .ShowImportProfilesDialog(Application.Current.MainWindow, this, SelectedGroup?.Name)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowImportProfilesDialog(Application.Current.MainWindow, this, SelectedGroup?.Name);
     }
 
     public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());

@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
@@ -62,7 +62,7 @@ public class NeighborTableViewModel : ViewModelBase
         };
 
         // Get neighbor table
-        Refresh(true).ConfigureAwait(false);
+        _ = Refresh(true);
 
         // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -255,7 +255,7 @@ public class NeighborTableViewModel : ViewModelBase
 
     #region ICommands & Actions
 
-    public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
+    public ICommand RefreshCommand => new RelayCommand(parameter => { _ = RefreshAction(); }, Refresh_CanExecute);
 
     private bool Refresh_CanExecute(object parameter)
     {
@@ -275,7 +275,7 @@ public class NeighborTableViewModel : ViewModelBase
     }
 
     public ICommand DeleteTableCommand =>
-        new RelayCommand(_ => DeleteTableAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+        new RelayCommand(parameter => { _ = DeleteTableAction(); }, ModifyEntry_CanExecute);
 
     private async Task DeleteTableAction()
     {
@@ -300,7 +300,7 @@ public class NeighborTableViewModel : ViewModelBase
     }
 
     public ICommand DeleteEntryCommand =>
-        new RelayCommand(_ => DeleteEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+        new RelayCommand(parameter => { _ = DeleteEntryAction(); }, ModifyEntry_CanExecute);
 
     private async Task DeleteEntryAction()
     {
@@ -325,7 +325,7 @@ public class NeighborTableViewModel : ViewModelBase
     }
 
     public ICommand AddEntryCommand =>
-        new RelayCommand(_ => AddEntryAction().ConfigureAwait(false), ModifyEntry_CanExecute);
+        new RelayCommand(parameter => { _ = AddEntryAction(); }, ModifyEntry_CanExecute);
 
     private async Task AddEntryAction()
     {
@@ -383,7 +383,7 @@ public class NeighborTableViewModel : ViewModelBase
                !IsModifying;
     }
 
-    public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
+    public ICommand RestartAsAdminCommand => new RelayCommand(parameter => { _ = RestartAsAdminAction(); });
 
     private async Task RestartAsAdminAction()
     {
@@ -398,7 +398,7 @@ public class NeighborTableViewModel : ViewModelBase
         }
     }
 
-    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
+    public ICommand ExportCommand => new RelayCommand(parameter => { _ = ExportAction(); });
 
     private Task ExportAction()
     {

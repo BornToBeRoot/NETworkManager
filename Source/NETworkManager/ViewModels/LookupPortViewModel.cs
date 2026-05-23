@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
@@ -199,7 +199,7 @@ public class LookupPortLookupViewModel : ViewModelBase
     /// Gets the command to perform the port lookup.
     /// </summary>
     public ICommand PortLookupCommand =>
-        new RelayCommand(_ => PortLookupAction().ConfigureAwait(false), PortLookup_CanExecute);
+        new RelayCommand(parameter => { _ = PortLookupAction(); }, PortLookup_CanExecute);
 
     /// <summary>
     /// Checks if the port lookup command can be executed.
@@ -328,7 +328,7 @@ public class LookupPortLookupViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to export the results.
     /// </summary>
-    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
+    public ICommand ExportCommand => new RelayCommand(parameter => { _ = ExportAction(); });
 
     /// <summary>
     /// Exports the results.
