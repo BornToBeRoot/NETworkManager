@@ -1,4 +1,5 @@
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -260,6 +261,7 @@ public class SpeedTestService : IDisposable
             .ConfigureAwait(false);
         sw.Stop();
         var ttfb = sw.Elapsed.TotalMilliseconds;
+        response.EnsureSuccessStatusCode();
         await response.Content.CopyToAsync(Stream.Null, cancellationToken).ConfigureAwait(false);
 
         var serverTime = ParseServerTiming(response) ?? DefaultEstimatedServerTimeMs;
@@ -278,6 +280,7 @@ public class SpeedTestService : IDisposable
             .ConfigureAwait(false);
         sw1.Stop();
         var ttfb = sw1.Elapsed.TotalMilliseconds;
+        response.EnsureSuccessStatusCode();
         var serverTime = ParseServerTiming(response) ?? DefaultEstimatedServerTimeMs;
         var ping = ttfb - serverTime;
         if (ping < 0) ping = 0;
@@ -326,26 +329,34 @@ public class SpeedTestService : IDisposable
     private async Task<(double Bps, double DurationMs)> MeasureUploadAsync(int bytes,
         CancellationToken cancellationToken)
     {
-        var payload = new byte[bytes];
-        using var request = new HttpRequestMessage(HttpMethod.Post, $"{BaseUrl}/__up");
-        using var content = new ByteArrayContent(payload);
-        content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-        request.Content = content;
+        var payload = ArrayPool<byte>.Shared.Rent(bytes);
+        try
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Post, $"{BaseUrl}/__up");
+            using var content = new ByteArrayContent(payload, 0, bytes);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            request.Content = content;
 
-        var sw = Stopwatch.StartNew();
-        using var response = await _client
-            .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-            .ConfigureAwait(false);
-        sw.Stop();
-        var ttfb = sw.Elapsed.TotalMilliseconds;
-        await response.Content.CopyToAsync(Stream.Null, cancellationToken).ConfigureAwait(false);
+            var sw = Stopwatch.StartNew();
+            using var response = await _client
+                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+                .ConfigureAwait(false);
+            sw.Stop();
+            var ttfb = sw.Elapsed.TotalMilliseconds;
+            response.EnsureSuccessStatusCode();
+            await response.Content.CopyToAsync(Stream.Null, cancellationToken).ConfigureAwait(false);
 
-        var uploadDurationMs = ttfb;
-        if (uploadDurationMs <= 0)
-            return (0.0, uploadDurationMs);
+            var uploadDurationMs = ttfb;
+            if (uploadDurationMs <= 0)
+                return (0.0, uploadDurationMs);
 
-        var bps = 8.0 * bytes * EstimatedHeaderFraction / (uploadDurationMs / 1000.0);
-        return (bps, uploadDurationMs);
+            var bps = 8.0 * bytes * EstimatedHeaderFraction / (uploadDurationMs / 1000.0);
+            return (bps, uploadDurationMs);
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(payload);
+        }
     }
 
     #endregion

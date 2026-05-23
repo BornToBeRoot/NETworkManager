@@ -131,7 +131,7 @@
                                     <Rectangle Grid.Column="0" Grid.Row="0"
                                                Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
                                         <Rectangle.OpacityMask>
-                                            <VisualBrush Stretch="Uniform" 
+                                            <VisualBrush Stretch="Uniform"
                                                          Visual="{iconPacks:Material Kind=Play}" />
                                         </Rectangle.OpacityMask>
                                     </Rectangle>
@@ -142,8 +142,47 @@
                             </Button.Content>
                         </Button>
                     </StackPanel>
+                    <!-- Error panel (same level as disclaimer — replaces data view entirely) -->
+                    <StackPanel VerticalAlignment="Center">
+                        <StackPanel.Style>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsRunning}" Value="False" />
+                                            <Condition Binding="{Binding Result.HasError}" Value="True" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <TextBlock Text="{Binding Result.ErrorMessage}"
+                                   Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
+                        <TextBlock Text="{x:Static localization:Strings.CheckNetworkConnectionTryAgainMessage}"
+                                   Style="{StaticResource MessageTextBlock}" />
+                    </StackPanel>
                     <!-- Test view: three equal columns (metadata / download / upload) -->
-                    <Grid Visibility="{Binding ShowDisclaimer, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                    <!-- Hidden when disclaimer is shown or when there is an error -->
+                    <Grid>
+                        <Grid.Style>
+                            <Style TargetType="{x:Type Grid}">
+                                <Setter Property="Visibility" Value="Visible" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ShowDisclaimer}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsRunning}" Value="False" />
+                                            <Condition Binding="{Binding Result.HasError}" Value="True" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="20" />
@@ -201,7 +240,7 @@
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CloudDownloadOutline}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Text="{Binding CurrentDownloadMbps, StringFormat={}{0:F1} Mbps, TargetNullValue=-/-, FallbackValue=-/-}" 
+                                <TextBlock Text="{Binding CurrentDownloadMbps, StringFormat={}{0:F1} Mbps, TargetNullValue=-/-, FallbackValue=-/-}"
                                            Style="{StaticResource MessageTextBlock}"
                                            Margin="10,0,0,0" />
                             </StackPanel>
@@ -220,40 +259,16 @@
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CloudUploadOutline}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Text="{Binding CurrentUploadMbps, StringFormat={}{0:F1} Mbps, TargetNullValue=-/-, FallbackValue=-/-}" 
+                                <TextBlock Text="{Binding CurrentUploadMbps, StringFormat={}{0:F1} Mbps, TargetNullValue=-/-, FallbackValue=-/-}"
                                            Style="{StaticResource MessageTextBlock}"
                                            Margin="10,0,0,0" />
-                            </StackPanel>                          
+                            </StackPanel>
                             <lvc:CartesianChart Height="100"
                                                 Background="Transparent"
                                                 Series="{Binding UploadSeries}"
                                                 XAxes="{Binding UploadXAxes}"
                                                 YAxes="{Binding UploadYAxes}"
                                                 DrawMarginFrame="{x:Null}" />
-                        </StackPanel>
-                        <!-- Error overlay (spans all data columns when error) -->
-                        <StackPanel Grid.Column="0" Grid.ColumnSpan="5"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="640">
-                            <StackPanel.Style>
-                                <Style TargetType="{x:Type StackPanel}">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                    <Style.Triggers>
-                                        <MultiDataTrigger>
-                                            <MultiDataTrigger.Conditions>
-                                                <Condition Binding="{Binding IsRunning}" Value="False" />
-                                                <Condition Binding="{Binding Result.HasError}" Value="True" />
-                                            </MultiDataTrigger.Conditions>
-                                            <Setter Property="Visibility" Value="Visible" />
-                                        </MultiDataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </StackPanel.Style>
-                            <TextBlock Text="{Binding Result.ErrorMessage}" TextWrapping="Wrap"
-                                       TextAlignment="Center"
-                                       Foreground="{DynamicResource MahApps.Brushes.Gray3}" />
-                            <TextBlock Text="{x:Static localization:Strings.CheckNetworkConnectionTryAgainMessage}"
-                                       TextWrapping="Wrap" TextAlignment="Center" Margin="0,5,0,0"
-                                       Foreground="{DynamicResource MahApps.Brushes.Gray3}" />
                         </StackPanel>
                     </Grid>
                 </Grid>
