@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.36e43ced.css">
-<script src="/NETworkManager/assets/js/runtime~main.6b7fa955.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.3c6ad705.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.9e501d90.js" defer="defer"></script>
 </head>
 <body>
@@ -33,16 +33,9 @@ Release date: <strong>xx.xx.2025</strong></p>
 <li class=""><strong>IP Scanner</strong> export: The <code>ARPMACAddress</code> and <code>ARPVendor</code> columns have been removed from CSV, XML and JSON exports. Use <code>MACAddress</code> and <code>Vendor</code> instead, which contain the same value (ARP/NDP preferred, NetBIOS as fallback). <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3403" target="_blank" rel="noopener noreferrer" class="">#3403</a></li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="whats-new">What&#x27;s new?<a href="#whats-new" class="hash-link" aria-label="Direct link to What&#x27;s new?" title="Direct link to What&#x27;s new?" translate="no">​</a></h2>
-<p><strong><a class="" href="/NETworkManager/docs/application/neighbor-table">Neighbor Table</a></strong> (formerly ARP Table)</p>
+<p><strong>Dashboard</strong></p>
 <ul>
-<li class="">IPv6 (NDP) neighbor entries are now shown in addition to IPv4 (ARP). <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3403" target="_blank" rel="noopener noreferrer" class="">#3403</a></li>
-<li class="">New <strong>Interface</strong> and <strong>State</strong> columns (sortable, searchable). <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3403" target="_blank" rel="noopener noreferrer" class="">#3403</a></li>
-<li class="">Add entry dialog now accepts IPv4 and IPv6 addresses. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3403" target="_blank" rel="noopener noreferrer" class="">#3403</a></li>
-<li class="">View is read-only when not running elevated; modifying the table requires elevated rights. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3403" target="_blank" rel="noopener noreferrer" class="">#3403</a></li>
-</ul>
-<p><strong>Firewall</strong></p>
-<ul>
-<li class="">New feature to quickly add, edit, enable, disable and delete NETworkManager-owned firewall rules. Managed rules are prefixed with <code>NETworkManager_</code> in the Windows Firewall. (See the <a href="https://borntoberoot.net/NETworkManager/docs/application/firewall" target="_blank" rel="noopener noreferrer" class="">documentation</a> for more details) <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3383" target="_blank" rel="noopener noreferrer" class="">#3383</a></li>
+<li class="">New <strong>Speed Test</strong> widget to measure download/upload speed, latency, and jitter against <a href="https://speed.cloudflare.com/" target="_blank" rel="noopener noreferrer" class=""><code>speed.cloudflare.com</code></a>. The test is user-initiated and shows download (Mbps), upload (Mbps), latency (ms), jitter (ms), ISP, and server location. A privacy disclaimer is shown before use. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3440" target="_blank" rel="noopener noreferrer" class="">#3440</a></li>
 </ul>
 <p><strong>PowerShell</strong></p>
 <ul>
@@ -51,6 +44,17 @@ Release date: <strong>xx.xx.2025</strong></p>
 <p><strong>PuTTY</strong></p>
 <ul>
 <li class="">DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PuTTY window now receives an explicit <code>WM_DPICHANGED</code> message with the new DPI value packed into <code>wParam</code>, since the OS does not forward this message across process boundaries after <code>SetParent</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3352" target="_blank" rel="noopener noreferrer" class="">#3352</a></li>
+</ul>
+<p><strong>Firewall</strong></p>
+<ul>
+<li class="">New feature to quickly add, edit, enable, disable and delete NETworkManager-owned firewall rules. Managed rules are prefixed with <code>NETworkManager_</code> in the Windows Firewall. (See the <a href="https://borntoberoot.net/NETworkManager/docs/application/firewall" target="_blank" rel="noopener noreferrer" class="">documentation</a> for more details) <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3383" target="_blank" rel="noopener noreferrer" class="">#3383</a></li>
+</ul>
+<p><strong><a class="" href="/NETworkManager/docs/application/neighbor-table">Neighbor Table</a></strong> (formerly ARP Table)</p>
+<ul>
+<li class="">IPv6 (NDP) neighbor entries are now shown in addition to IPv4 (ARP). <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3403" target="_blank" rel="noopener noreferrer" class="">#3403</a></li>
+<li class="">New <strong>Interface</strong> and <strong>State</strong> columns (sortable, searchable). <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3403" target="_blank" rel="noopener noreferrer" class="">#3403</a></li>
+<li class="">Add entry dialog now accepts IPv4 and IPv6 addresses. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3403" target="_blank" rel="noopener noreferrer" class="">#3403</a></li>
+<li class="">View is read-only when not running elevated; modifying the table requires elevated rights. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3403" target="_blank" rel="noopener noreferrer" class="">#3403</a></li>
 </ul>
 <p><strong>Profiles</strong></p>
 <ul>
