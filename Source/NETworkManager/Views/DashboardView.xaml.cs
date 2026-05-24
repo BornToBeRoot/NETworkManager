@@ -9,6 +9,7 @@ public partial class DashboardView
     private readonly NetworkConnectionWidgetView _networkConnectionWidgetView = new();
     private readonly IPApiIPGeolocationWidgetView _ipApiIPGeolocationWidgetView = new();
     private readonly IPApiDNSResolverWidgetView _ipApiDNSResolverWidgetView = new();
+    private readonly SpeedTestWidgetView _speedTestWidgetView = new();
 
 
     public DashboardView()
@@ -20,6 +21,7 @@ public partial class DashboardView
         ContentControlNetworkConnection.Content = _networkConnectionWidgetView;
         ContentControlIPApiIPGeolocation.Content = _ipApiIPGeolocationWidgetView;
         ContentControlIPApiDNSResolver.Content = _ipApiDNSResolverWidgetView;
+        ContentControlSpeedTest.Content = _speedTestWidgetView;
 
         // Check all widgets
         Check();

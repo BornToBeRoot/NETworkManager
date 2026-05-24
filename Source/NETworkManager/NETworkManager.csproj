@@ -61,6 +61,7 @@
         <PackageReference Include="IPNetwork2" Version="4.2.0" />
         <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.7" />
         <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+        <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.4" />
         <PackageReference Include="log4net" Version="3.3.0" />
         <PackageReference Include="MahApps.Metro" Version="2.4.11" />
         <PackageReference Include="MahApps.Metro.IconPacks.FontAwesome" Version="6.2.1" />
