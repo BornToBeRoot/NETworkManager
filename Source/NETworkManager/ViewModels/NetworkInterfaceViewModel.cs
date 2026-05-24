@@ -1100,7 +1100,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void RenewAction()
     {
-        _ = ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew);
+        _ = ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew6);
     }
 
     /// <summary>
