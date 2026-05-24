@@ -107,7 +107,6 @@ The result includes:
 - **Latency** in ms (unloaded, 50th percentile of latency probes)
 - **Jitter** in ms (average consecutive delta between latency samples)
 - **ISP** — internet service provider as reported by Cloudflare
-- **Client city and country**
 - **Server location** — Cloudflare PoP (Point of Presence) handling the test
 
 Before running the test, a privacy disclaimer informs the user that `speed.cloudflare.com` will receive requests with the client's IP address and network information. The disclaimer is shown again after restarting the app because acceptance is not currently persisted. See the [Cloudflare privacy policy](https://www.cloudflare.com/privacypolicy/) for details. The widget never contacts Cloudflare's telemetry endpoint (`aim.cloudflare.com/__log`).

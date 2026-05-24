@@ -4334,7 +4334,7 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
   <data name="Jitter" xml:space="preserve">
     <value>Jitter</value>
   </data>
-  <data name="ExternalService_Cloudflare_SpeedTest_Description" xml:space="preserve">
+  <data name="ExternalService_speed_cloudflare_Description" xml:space="preserve">
     <value>Speed test service used to measure download speed, upload speed, latency, and jitter.</value>
   </data>
   <data name="Stop" xml:space="preserve">
