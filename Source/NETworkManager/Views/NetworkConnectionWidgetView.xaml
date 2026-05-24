@@ -20,16 +20,14 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="10" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="10" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="1*" />            
+            <ColumnDefinition Width="1*" />            
+            <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Border Grid.Column="0" BorderThickness="1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
+        <Border Grid.Column="0" BorderThickness="1,1,0,1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
             <Grid Margin="10">
                 <Grid.Resources>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
@@ -40,8 +38,7 @@
                 </Grid.Resources>
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />                        
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
@@ -53,7 +50,7 @@
                         <TextBlock Text="{x:Static localization:Strings.Computer}"
                                    Style="{StaticResource MessageTextBlock}" Margin="10,0,0,0" />
                     </StackPanel>
-                    <Grid Grid.Row="2" HorizontalAlignment="Left" Margin="10">
+                    <Grid Grid.Row="1" HorizontalAlignment="Left" Margin="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="10" />
@@ -93,7 +90,7 @@
                 </Grid>
             </Grid>
         </Border>
-        <Border Grid.Column="2" BorderThickness="1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
+        <Border Grid.Column="1" BorderThickness="0,1,0,1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
             <Grid Margin="10">
                 <Grid>
                     <Grid.Resources>
@@ -104,8 +101,7 @@
                         </Style>
                     </Grid.Resources>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />                        
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
@@ -117,7 +113,7 @@
                         <TextBlock Text="{x:Static localization:Strings.GatewayRouter}"
                                    Style="{StaticResource MessageTextBlock}" Margin="10,0,0,0" />
                     </StackPanel>
-                    <Grid Grid.Row="2" HorizontalAlignment="Left" Margin="10">
+                    <Grid Grid.Row="1" HorizontalAlignment="Left" Margin="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="10" />
@@ -157,7 +153,7 @@
                 </Grid>
             </Grid>
         </Border>
-        <Border Grid.Column="4" BorderThickness="1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
+        <Border Grid.Column="2" BorderThickness="0,1,1,1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
             <Grid Margin="10">
                 <Grid>
                     <Grid.Resources>
@@ -168,8 +164,7 @@
                         </Style>
                     </Grid.Resources>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />                        
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
@@ -181,7 +176,7 @@
                         <TextBlock Text="{x:Static localization:Strings.Internet}"
                                    Style="{StaticResource MessageTextBlock}" Margin="10,0,0,0" />
                     </StackPanel>
-                    <Grid Grid.Row="2" HorizontalAlignment="Left" Margin="10"
+                    <Grid Grid.Row="1" HorizontalAlignment="Left" Margin="10"
                           Visibility="{Binding CheckPublicIPAddressEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -219,7 +214,7 @@
                         <TextBlock Grid.Column="2" Grid.Row="4" Text="{x:Static localization:Strings.DNS}" />
                         <TextBox Grid.Column="4" Grid.Row="4" Text="{Binding InternetDNS}" />
                     </Grid>
-                    <TextBlock Grid.Row="2" Foreground="{DynamicResource MahApps.Brushes.Gray3}"
+                    <TextBlock Grid.Row="1" Foreground="{DynamicResource MahApps.Brushes.Gray3}"
                                Text="{x:Static localization:Strings.CheckIsDisabled}"
                                Visibility="{Binding CheckPublicIPAddressEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
                                Style="{StaticResource HeaderTextBlock}" VerticalAlignment="Center"

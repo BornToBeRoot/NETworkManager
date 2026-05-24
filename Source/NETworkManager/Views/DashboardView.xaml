@@ -23,13 +23,17 @@
                         <RowDefinition Height="10" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="10" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="10" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <ContentControl x:Name="ContentControlNetworkConnection" Grid.Column="0" Grid.Row="0"
                                     Grid.ColumnSpan="5" />
-                    <ContentControl x:Name="ContentControlIPApiIPGeolocation" Grid.Column="0" Grid.Row="2"
+                    <ContentControl x:Name="ContentControlSpeedTest" Grid.Column="0" Grid.Row="2"
+                                    Grid.ColumnSpan="5" />
+                    <ContentControl x:Name="ContentControlIPApiIPGeolocation" Grid.Column="0" Grid.Row="4"
                                     Grid.ColumnSpan="3" />
-                    <ContentControl x:Name="ContentControlIPApiDNSResolver" Grid.Column="4" Grid.Row="2" />
+                    <ContentControl x:Name="ContentControlIPApiDNSResolver" Grid.Column="4" Grid.Row="4" />
                 </Grid>
             </ScrollViewer>
         </TabItem>

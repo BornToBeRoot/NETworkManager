@@ -32,16 +32,9 @@ Release date: **xx.xx.2025**
 
 ## What's new?
 
-**[Neighbor Table](../application/neighbor-table.md)** (formerly ARP Table)
+**Dashboard**
 
-- IPv6 (NDP) neighbor entries are now shown in addition to IPv4 (ARP). [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
-- New **Interface** and **State** columns (sortable, searchable). [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
-- Add entry dialog now accepts IPv4 and IPv6 addresses. [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
-- View is read-only when not running elevated; modifying the table requires elevated rights. [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
-
-**Firewall**
-
-- New feature to quickly add, edit, enable, disable and delete NETworkManager-owned firewall rules. Managed rules are prefixed with `NETworkManager_` in the Windows Firewall. (See the [documentation](https://borntoberoot.net/NETworkManager/docs/application/firewall) for more details) [#3383](https://github.com/BornToBeRoot/NETworkManager/pull/3383)
+- New **Speed Test** widget to measure download/upload speed, latency, and jitter against [`speed.cloudflare.com`](https://speed.cloudflare.com/). The test is user-initiated and shows download (Mbps), upload (Mbps), latency (ms), jitter (ms), ISP, and server location. A privacy disclaimer is shown before use. [#3440](https://github.com/BornToBeRoot/NETworkManager/pull/3440)
 
 **PowerShell**
 
@@ -50,6 +43,17 @@ Release date: **xx.xx.2025**
 **PuTTY**
 
 - DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PuTTY window now receives an explicit `WM_DPICHANGED` message with the new DPI value packed into `wParam`, since the OS does not forward this message across process boundaries after `SetParent`. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
+
+**Firewall**
+
+- New feature to quickly add, edit, enable, disable and delete NETworkManager-owned firewall rules. Managed rules are prefixed with `NETworkManager_` in the Windows Firewall. (See the [documentation](https://borntoberoot.net/NETworkManager/docs/application/firewall) for more details) [#3383](https://github.com/BornToBeRoot/NETworkManager/pull/3383)
+
+**[Neighbor Table](../application/neighbor-table.md)** (formerly ARP Table)
+
+- IPv6 (NDP) neighbor entries are now shown in addition to IPv4 (ARP). [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
+- New **Interface** and **State** columns (sortable, searchable). [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
+- Add entry dialog now accepts IPv4 and IPv6 addresses. [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
+- View is read-only when not running elevated; modifying the table requires elevated rights. [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
 
 **Profiles**
 

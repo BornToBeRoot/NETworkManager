@@ -16,6 +16,8 @@ public static class ExternalServicesManager
         new ExternalServicesInfo("ip-api.com", "https://ip-api.com/",
             Strings.ExternalService_ip_api_Description),
         new ExternalServicesInfo("ipify.org", "https://www.ipify.org/",
-            Strings.ExternalService_ipify_Description)
+            Strings.ExternalService_ipify_Description),
+        new ExternalServicesInfo("speed.cloudflare.com", "https://speed.cloudflare.com/",
+            Strings.ExternalService_speed_cloudflare_Description)
     };
 }
