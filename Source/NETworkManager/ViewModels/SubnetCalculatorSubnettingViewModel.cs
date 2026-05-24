@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
@@ -159,10 +159,10 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
     private void CalculateAction()
     {
-        Calculate().ConfigureAwait(false);
+        _ = Calculate();
     }
 
-    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
+    public ICommand ExportCommand => new RelayCommand(parameter => { _ = ExportAction(); });
 
     private Task ExportAction()
     {

@@ -1,4 +1,4 @@
-using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
@@ -386,7 +386,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         AddMACAddressToHistory(MACAddress);
         AddBroadcastToHistory(Broadcast);
 
-        WakeUp(info).ConfigureAwait(false);
+        _ = WakeUp(info);
     }
 
     /// <summary>
@@ -396,7 +396,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void WakeUpProfileAction()
     {
-        WakeUp(NETworkManager.Profiles.Application.WakeOnLAN.CreateInfo(SelectedProfile)).ConfigureAwait(false);
+        _ = WakeUp(NETworkManager.Profiles.Application.WakeOnLAN.CreateInfo(SelectedProfile));
     }
 
     /// <summary>
@@ -406,9 +406,8 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager
-            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.WakeOnLAN)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.WakeOnLAN);
     }
 
     private bool ModifyProfile_CanExecute(object obj)
@@ -423,8 +422,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
     }
 
     /// <summary>
@@ -434,8 +432,7 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
     }
 
     /// <summary>
@@ -445,9 +442,8 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager
-            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile })
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile });
     }
 
     /// <summary>
@@ -457,9 +453,8 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager
-            .ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"));
     }
 
     /// <summary>

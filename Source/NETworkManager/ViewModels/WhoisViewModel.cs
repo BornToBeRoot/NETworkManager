@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
@@ -130,7 +130,7 @@ public class WhoisViewModel : ViewModelBase
             return;
 
         if (!string.IsNullOrEmpty(Domain))
-            Query().ConfigureAwait(false);
+            _ = Query();
 
         _firstLoad = false;
     }
@@ -154,14 +154,14 @@ public class WhoisViewModel : ViewModelBase
 
     private void QueryAction()
     {
-        Query().ConfigureAwait(false);
+        _ = Query();
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()
     {
-        Export().ConfigureAwait(false);
+        _ = Export();
     }
 
     #endregion

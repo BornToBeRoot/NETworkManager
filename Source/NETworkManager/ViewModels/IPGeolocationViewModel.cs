@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
@@ -163,7 +163,7 @@ public class IPGeolocationViewModel : ViewModelBase
             return;
 
         if (!string.IsNullOrEmpty(Host))
-            Query().ConfigureAwait(false);
+            _ = Query();
 
         _firstLoad = false;
     }
@@ -201,7 +201,7 @@ public class IPGeolocationViewModel : ViewModelBase
     /// </summary>
     private void QueryAction()
     {
-        Query().ConfigureAwait(false);
+        _ = Query();
     }
 
     /// <summary>
@@ -214,7 +214,7 @@ public class IPGeolocationViewModel : ViewModelBase
     /// </summary>
     private void ExportAction()
     {
-        Export().ConfigureAwait(false);
+        _ = Export();
     }
 
     #endregion

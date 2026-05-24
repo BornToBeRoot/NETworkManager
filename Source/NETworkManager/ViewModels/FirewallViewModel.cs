@@ -380,7 +380,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
         };
 
         // Load firewall rules
-        Refresh(true).ConfigureAwait(false);
+        _ = Refresh(true);
 
         // Profiles
         CreateTags();
@@ -423,7 +423,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// Gets the command to refresh the list of firewall rules from the system.
     /// Disabled while a refresh is already in progress.
     /// </summary>
-    public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
+    public ICommand RefreshCommand => new RelayCommand(parameter => { _ = RefreshAction(); }, Refresh_CanExecute);
 
     /// <summary>
     /// Returns <see langword="true"/> when no refresh is currently running.
@@ -439,7 +439,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// Gets the command to open the dialog for adding a new firewall rule.
     /// Only enabled when the application is running as administrator.
     /// </summary>
-    public ICommand AddRuleCommand => new RelayCommand(_ => AddRule().ConfigureAwait(false), _ => ModifyRule_CanExecute());
+    public ICommand AddRuleCommand => new RelayCommand(parameter => { _ = AddRule(); }, _ => ModifyRule_CanExecute());
 
     /// <summary>
     /// Opens the add-firewall-rule dialog. On confirmation, creates the rule via PowerShell
@@ -484,13 +484,13 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// Gets the command to enable the selected firewall rule.
     /// Only executable when the rule is currently disabled and modification is allowed.
     /// </summary>
-    public ICommand EnableRuleCommand => new RelayCommand(_ => SetRuleEnabled(SelectedResult, true).ConfigureAwait(false), _ => ModifyRule_CanExecute() && SelectedResult is { IsEnabled: false });
+    public ICommand EnableRuleCommand => new RelayCommand(parameter => { _ = SetRuleEnabled(SelectedResult, true); }, _ => ModifyRule_CanExecute() && SelectedResult is { IsEnabled: false });
 
     /// <summary>
     /// Gets the command to disable the selected firewall rule.
     /// Only executable when the rule is currently enabled and modification is allowed.
     /// </summary>
-    public ICommand DisableRuleCommand => new RelayCommand(_ => SetRuleEnabled(SelectedResult, false).ConfigureAwait(false), _ => ModifyRule_CanExecute() && SelectedResult is { IsEnabled: true });
+    public ICommand DisableRuleCommand => new RelayCommand(parameter => { _ = SetRuleEnabled(SelectedResult, false); }, _ => ModifyRule_CanExecute() && SelectedResult is { IsEnabled: true });
 
     /// <summary>
     /// Enables or disables the given <paramref name="rule"/> via PowerShell,
@@ -523,7 +523,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// Gets the command to open the dialog for editing the selected firewall rule.
     /// Only executable when a rule is selected and modification is allowed.
     /// </summary>
-    public ICommand EditRuleCommand => new RelayCommand(_ => EditRule().ConfigureAwait(false), _ => ModifyRule_CanExecute() && SelectedResult != null);
+    public ICommand EditRuleCommand => new RelayCommand(parameter => { _ = EditRule(); }, _ => ModifyRule_CanExecute() && SelectedResult != null);
 
     /// <summary>
     /// Opens the edit-firewall-rule dialog pre-filled with the selected rule's properties.
@@ -570,7 +570,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// Gets the command to permanently delete the selected firewall rule.
     /// Only executable when a rule is selected and modification is allowed.
     /// </summary>
-    public ICommand DeleteRuleCommand => new RelayCommand(_ => DeleteRule().ConfigureAwait(false), _ => ModifyRule_CanExecute() && SelectedResult != null);
+    public ICommand DeleteRuleCommand => new RelayCommand(parameter => { _ = DeleteRule(); }, _ => ModifyRule_CanExecute() && SelectedResult != null);
 
     /// <summary>
     /// Shows a confirmation dialog and, if confirmed, deletes the selected firewall rule
@@ -618,7 +618,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Gets the command to restart the application with administrator privileges.
     /// </summary>
-    public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
+    public ICommand RestartAsAdminCommand => new RelayCommand(parameter => { _ = RestartAsAdminAction(); });
 
     /// <summary>
     /// Restarts the application elevated. Shows an error dialog if the restart fails.
@@ -639,7 +639,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Gets the command to export the current firewall rule list to a file.
     /// </summary>
-    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
+    public ICommand ExportCommand => new RelayCommand(parameter => { _ = ExportAction(); });
 
     /// <summary>
     /// Opens the export child window and writes the selected or all firewall rules to the
@@ -699,9 +699,8 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// </summary>
     private void AddProfileAction()
     {
-        ProfileDialogManager
-            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.Firewall)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.Firewall);
     }
 
     /// <summary>
@@ -722,8 +721,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// </summary>
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
     }
 
     /// <summary>
@@ -736,8 +734,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// </summary>
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
     }
 
     /// <summary>
@@ -750,9 +747,8 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// </summary>
     private void DeleteProfileAction()
     {
-        ProfileDialogManager
-            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile })
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile });
     }
 
     /// <summary>
@@ -765,9 +761,8 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// </summary>
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager
-            .ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"));
     }
 
     /// <summary>
@@ -852,7 +847,7 @@ public class FirewallViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Gets the command to open the Windows Firewall management console (WF.msc).
     /// </summary>
-    public ICommand OpenWindowsFirewallCommand => new RelayCommand(_ => OpenWindowsFirewallAction().ConfigureAwait(false));
+    public ICommand OpenWindowsFirewallCommand => new RelayCommand(parameter => { _ = OpenWindowsFirewallAction(); });
 
     /// <summary>
     /// Action to open the Windows Firewall management console (WF.msc).

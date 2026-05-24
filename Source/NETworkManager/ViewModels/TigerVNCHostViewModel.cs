@@ -1,4 +1,4 @@
-using Dragablz;
+﻿using Dragablz;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -310,7 +310,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     private void ConnectAction()
     {
-        Connect().ConfigureAwait(false);
+        _ = Connect();
     }
 
     public ICommand ReconnectCommand => new RelayCommand(ReconnectAction);
@@ -347,9 +347,8 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     private void AddProfileAction()
     {
-        ProfileDialogManager
-            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.TigerVNC)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.TigerVNC);
     }
 
     private bool ModifyProfile_CanExecute(object obj)
@@ -361,34 +360,30 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     private void EditProfileAction()
     {
-        ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
     }
 
     public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
 
     private void CopyAsProfileAction()
     {
-        ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile)
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
     }
 
     public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
 
     private void DeleteProfileAction()
     {
-        ProfileDialogManager
-            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile })
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile });
     }
 
     public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
 
     private void EditGroupAction(object group)
     {
-        ProfileDialogManager
-            .ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"))
-            .ConfigureAwait(false);
+        _ = ProfileDialogManager
+            .ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"));
     }
 
     public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
@@ -530,7 +525,7 @@ public class TigerVNCHostViewModel : ViewModelBase, IProfileManager
 
     public void AddTab(string host)
     {
-        Connect(host).ConfigureAwait(false);
+        _ = Connect(host);
     }
 
     // Modify history list

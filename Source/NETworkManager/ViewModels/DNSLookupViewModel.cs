@@ -1,4 +1,4 @@
-using DnsClient;
+﻿using DnsClient;
 using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
@@ -288,7 +288,7 @@ public class DNSLookupViewModel : ViewModelBase
             return;
 
         if (!string.IsNullOrEmpty(Host))
-            QueryAsync().ConfigureAwait(false);
+            _ = QueryAsync();
 
         _firstLoad = false;
     }
@@ -343,7 +343,7 @@ public class DNSLookupViewModel : ViewModelBase
     private void QueryAction()
     {
         if (!IsRunning)
-            QueryAsync().ConfigureAwait(false);
+            _ = QueryAsync();
     }
 
     /// <summary>
@@ -356,7 +356,7 @@ public class DNSLookupViewModel : ViewModelBase
     /// </summary>
     private void ExportAction()
     {
-        Export().ConfigureAwait(false);
+        _ = Export();
     }
 
     #endregion

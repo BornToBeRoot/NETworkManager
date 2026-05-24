@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
@@ -453,14 +453,14 @@ public class SNMPViewModel : ViewModelBase
 
     private void OpenOIDProfilesAction()
     {
-        OpenOIDProfileSelection().ConfigureAwait(false);
+        _ = OpenOIDProfileSelection();
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()
     {
-        Export().ConfigureAwait(false);
+        _ = Export();
     }
 
     #endregion

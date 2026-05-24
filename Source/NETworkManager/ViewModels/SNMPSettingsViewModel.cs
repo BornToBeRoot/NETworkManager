@@ -1,4 +1,4 @@
-using Lextm.SharpSnmpLib.Messaging;
+﻿using Lextm.SharpSnmpLib.Messaging;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
@@ -122,21 +122,21 @@ public class SNMPSettingsViewModel : ViewModelBase
 
     private void AddOIDProfileAction()
     {
-        AddOIDProfile().ConfigureAwait(false);
+        _ = AddOIDProfile();
     }
 
     public ICommand EditOIDProfileCommand => new RelayCommand(_ => EditOIDProfileAction());
 
     private void EditOIDProfileAction()
     {
-        EditOIDProfile().ConfigureAwait(false);
+        _ = EditOIDProfile();
     }
 
     public ICommand DeleteOIDProfileCommand => new RelayCommand(_ => DeleteOIDProfileAction());
 
     private void DeleteOIDProfileAction()
     {
-        DeleteOIDProfile().ConfigureAwait(false);
+        _ = DeleteOIDProfile();
     }
 
     #endregion

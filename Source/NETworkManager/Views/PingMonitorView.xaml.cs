@@ -36,7 +36,7 @@ public partial class PingMonitorView
 
     public void Export()
     {
-        _viewModel.Export().ConfigureAwait(false);
+        _ = _viewModel.Export();
     }
 
     private void Dispatcher_ShutdownStarted(object sender, EventArgs e)

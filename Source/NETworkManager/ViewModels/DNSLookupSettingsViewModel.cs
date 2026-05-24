@@ -1,4 +1,4 @@
-using DnsClient;
+﻿using DnsClient;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
@@ -299,7 +299,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     /// </summary>
     private void AddDNSServerAction()
     {
-        AddDNSServer().ConfigureAwait(false);
+        _ = AddDNSServer();
     }
 
     /// <summary>
@@ -312,7 +312,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     /// </summary>
     private void EditDNSServerAction()
     {
-        EditDNSServer().ConfigureAwait(false);
+        _ = EditDNSServer();
     }
 
     /// <summary>
@@ -325,7 +325,7 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     /// </summary>
     private void DeleteDNSServerAction()
     {
-        DeleteDNSServer().ConfigureAwait(false);
+        _ = DeleteDNSServer();
     }
 
     #endregion

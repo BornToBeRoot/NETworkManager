@@ -104,7 +104,7 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
         WindowHost.Height = (int)((ActualHeight - 20) * dpi.DpiScaleY);
         WindowHost.Width = (int)((ActualWidth - 20) * dpi.DpiScaleX);
 
-        Connect().ConfigureAwait(false);
+        _ = Connect();
 
         _initialized = true;
     }
@@ -262,7 +262,7 @@ public partial class PuTTYControl : UserControlBase, IDragablzTabItem, IEmbedded
         if (IsConnected)
             Disconnect();
 
-        Connect().ConfigureAwait(false);
+        _ = Connect();
     }
 
     public void RestartSession()

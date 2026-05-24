@@ -1,4 +1,4 @@
-using NETworkManager.Models.Network;
+﻿using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
@@ -521,7 +521,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// </summary>
     public void Check()
     {
-        CheckAsync().ConfigureAwait(false);
+        _ = CheckAsync();
     }
 
     /// <summary>

@@ -30,7 +30,7 @@ public partial class PingMonitorHostView
     public void AddHost(string host)
     {
         if (_viewModel.SetHost(host))
-            _viewModel.Start().ConfigureAwait(false);
+            _ = _viewModel.Start();
     }
 
     public void OnViewHide()

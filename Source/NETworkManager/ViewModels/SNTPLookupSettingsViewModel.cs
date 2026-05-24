@@ -1,4 +1,4 @@
-using MahApps.Metro.SimpleChildWindow;
+﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
@@ -100,14 +100,14 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
     private void AddServerAction()
     {
-        AddServer().ConfigureAwait(false);
+        _ = AddServer();
     }
 
     public ICommand EditServerCommand => new RelayCommand(_ => EditServerAction());
 
     private void EditServerAction()
     {
-        EditServer().ConfigureAwait(false);
+        _ = EditServer();
     }
 
     public ICommand DeleteServerCommand => new RelayCommand(_ => DeleteServerAction(), DeleteServer_CanExecute);
@@ -119,7 +119,7 @@ public class SNTPLookupSettingsViewModel : ViewModelBase
 
     private void DeleteServerAction()
     {
-        DeleteServer().ConfigureAwait(false);
+        _ = DeleteServer();
     }
 
     #endregion

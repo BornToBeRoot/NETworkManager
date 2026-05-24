@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
@@ -214,7 +214,7 @@ public class TracerouteViewModel : ViewModelBase
             return;
 
         if (!string.IsNullOrEmpty(Host))
-            StartTrace().ConfigureAwait(false);
+            _ = StartTrace();
 
         _firstLoad = false;
     }
@@ -244,7 +244,7 @@ public class TracerouteViewModel : ViewModelBase
         if (IsRunning)
             StopTrace();
         else
-            StartTrace().ConfigureAwait(false);
+            _ = StartTrace();
     }
 
     /// <summary>
@@ -299,7 +299,7 @@ public class TracerouteViewModel : ViewModelBase
 
     private void ExportAction()
     {
-        Export().ConfigureAwait(false);
+        _ = Export();
     }
 
     #endregion

@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization;
@@ -65,7 +65,7 @@ public class ConnectionsViewModel : ViewModelBase
         };
 
         // Get connections
-        Refresh(true).ConfigureAwait(false);
+        _ = Refresh(true);
 
         // Auto refresh
         _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
@@ -303,7 +303,7 @@ public class ConnectionsViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to refresh the connections.
     /// </summary>
-    public ICommand RefreshCommand => new RelayCommand(_ => RefreshAction().ConfigureAwait(false), Refresh_CanExecute);
+    public ICommand RefreshCommand => new RelayCommand(parameter => { _ = RefreshAction(); }, Refresh_CanExecute);
 
     /// <summary>
     /// Checks if the refresh command can be executed.
@@ -332,7 +332,7 @@ public class ConnectionsViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to export the connections.
     /// </summary>
-    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
+    public ICommand ExportCommand => new RelayCommand(parameter => { _ = ExportAction(); });
 
     /// <summary>
     /// Action to export the connections.

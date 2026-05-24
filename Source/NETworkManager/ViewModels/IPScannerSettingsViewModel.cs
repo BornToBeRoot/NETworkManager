@@ -1,4 +1,4 @@
-using MahApps.Metro.SimpleChildWindow;
+﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -371,7 +371,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     /// </summary>
     private void DeleteCustomCommandAction()
     {
-        DeleteCustomCommand().ConfigureAwait(false);
+        _ = DeleteCustomCommand();
     }
 
     #endregion

@@ -89,7 +89,7 @@ public partial class TigerVNCControl : UserControlBase, IDragablzTabItem
         WindowHost.Height = (int)(ActualHeight * dpi.DpiScaleY);
         WindowHost.Width = (int)(ActualWidth * dpi.DpiScaleX);
 
-        Connect().ConfigureAwait(false);
+        _ = Connect();
 
         _initialized = true;
     }
@@ -233,7 +233,7 @@ public partial class TigerVNCControl : UserControlBase, IDragablzTabItem
         if (IsConnected)
             Disconnect();
 
-        Connect().ConfigureAwait(false);
+        _ = Connect();
     }
 
     public void CloseTab()

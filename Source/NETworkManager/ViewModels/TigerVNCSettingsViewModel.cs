@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -104,7 +104,7 @@ public class TigerVNCSettingsViewModel : ViewModelBase
 
     private void ConfigureAction()
     {
-        Configure().ConfigureAwait(false);
+        _ = Configure();
     }
 
     #endregion

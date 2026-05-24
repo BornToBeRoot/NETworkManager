@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
@@ -284,7 +284,7 @@ public class PortScannerViewModel : ViewModelBase
             return;
 
         if (!string.IsNullOrEmpty(Host) && !string.IsNullOrEmpty(Ports))
-            Start().ConfigureAwait(false);
+            _ = Start();
 
         _firstLoad = false;
     }
@@ -320,7 +320,7 @@ public class PortScannerViewModel : ViewModelBase
 
     private void OpenPortProfileSelectionAction()
     {
-        OpenPortProfileSelection().ConfigureAwait(false);
+        _ = OpenPortProfileSelection();
     }
 
     public ICommand ScanCommand => new RelayCommand(_ => ScanAction(), Scan_CanExecute);
@@ -337,14 +337,14 @@ public class PortScannerViewModel : ViewModelBase
         if (IsRunning)
             Stop();
         else
-            Start().ConfigureAwait(false);
+            _ = Start();
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()
     {
-        Export().ConfigureAwait(false);
+        _ = Export();
     }
 
     #endregion

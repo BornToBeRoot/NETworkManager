@@ -1,4 +1,4 @@
-using MahApps.Metro.SimpleChildWindow;
+﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
@@ -177,21 +177,21 @@ public class PortScannerSettingsViewModel : ViewModelBase
 
     private void AddPortProfileAction()
     {
-        AddPortProfile().ConfigureAwait(false);
+        _ = AddPortProfile();
     }
 
     public ICommand EditPortProfileCommand => new RelayCommand(_ => EditPortProfileAction());
 
     private void EditPortProfileAction()
     {
-        EditPortProfile().ConfigureAwait(false);
+        _ = EditPortProfile();
     }
 
     public ICommand DeletePortProfileCommand => new RelayCommand(_ => DeletePortProfileAction());
 
     private void DeletePortProfileAction()
     {
-        DeletePortProfile().ConfigureAwait(false);
+        _ = DeletePortProfile();
     }
 
     #endregion

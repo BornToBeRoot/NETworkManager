@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -275,7 +275,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to restart the application as administrator.
     /// </summary>
-    public ICommand RestartAsAdminCommand => new RelayCommand(_ => RestartAsAdminAction().ConfigureAwait(false));
+    public ICommand RestartAsAdminCommand => new RelayCommand(parameter => { _ = RestartAsAdminAction(); });
 
     /// <summary>
     /// Action to restart the application as administrator.
@@ -295,7 +295,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to start the capture.
     /// </summary>
-    public ICommand CaptureCommand => new RelayCommand(_ => CaptureAction().ConfigureAwait(false), Capture_CanExecute);
+    public ICommand CaptureCommand => new RelayCommand(parameter => { _ = CaptureAction(); }, Capture_CanExecute);
 
     private bool Capture_CanExecute(object _) => ConfigurationManager.Current.IsAdmin && !IsCapturing;
 
@@ -337,7 +337,7 @@ public class DiscoveryProtocolViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to export the result.
     /// </summary>
-    public ICommand ExportCommand => new RelayCommand(_ => ExportAction().ConfigureAwait(false));
+    public ICommand ExportCommand => new RelayCommand(parameter => { _ = ExportAction(); });
 
     /// <summary>
     /// Action to export the result.
