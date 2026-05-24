@@ -4306,4 +4306,38 @@ Bei Bedarf können Sie die Profildateien von „{0}“ nach „{1}“ kopieren, 
   <data name="ImportProfilesDots" xml:space="preserve">
     <value>Profile importieren…</value>
   </data>
+  <data name="SpeedTest" xml:space="preserve">
+    <value>Speedtest</value>
+  </data>
+  <data name="RunSpeedTest" xml:space="preserve">
+    <value>Run Speedtest</value>
+  </data>
+  <data name="FetchingMetadataDots" xml:space="preserve">
+    <value>Metadaten abrufen...</value>
+  </data>
+  <data name="MeasuringLatencyDots" xml:space="preserve">
+    <value>Latenz messen...</value>
+  </data>
+  <data name="MeasuringDownloadSpeedDots" xml:space="preserve">
+    <value>Download-Geschwindigkeit messen...</value>
+  </data>
+  <data name="MeasuringUploadSpeedDots" xml:space="preserve">
+    <value>Upload-Geschwindigkeit messen...</value>
+  </data>
+  <data name="SpeedTestDisclaimerMessage" xml:space="preserve">
+    <value>Messen Sie Download- und Upload-Geschwindigkeiten, Latenz und Jitter mit speed.cloudflare.com.
+Cloudflare speichert möglicherweise Ihre IP-Adresse und Netzwerkinformationen. Weitere Informationen finden Sie in der Datenschutzerklärung von Cloudflare.</value>
+  </data>
+  <data name="Latency" xml:space="preserve">
+    <value>Latenz</value>
+  </data>
+  <data name="Jitter" xml:space="preserve">
+    <value>Jitter</value>
+  </data>
+  <data name="ExternalService_speed_cloudflare_Description" xml:space="preserve">
+    <value>Ein Speedtest-Dienst, mit dem Download- und Upload-Geschwindigkeit, Latenz und Jitter gemessen werden können.</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stoppen</value>
+  </data>
 </root>
