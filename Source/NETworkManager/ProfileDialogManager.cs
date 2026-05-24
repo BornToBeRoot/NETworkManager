@@ -616,7 +616,7 @@ public static class ProfileDialogManager
 
                 _ = ShowImportProfilesResultDialog(parentWindow, viewModel, targetGroup, candidates,
                     ProfileImportSource.ActiveDirectory, Strings.ImportProfiles_Source_ActiveDirectory,
-                    backToSourceCallback: () => { _ = ShowSearchAdComputersDialog(parentWindow, viewModel, targetGroup, searchViewModel); });
+                    backToSourceCallback: () => _ = ShowSearchAdComputersDialog(parentWindow, viewModel, targetGroup, searchViewModel));
             }, CloseChild, previousState);
 
         childWindow.Title = Strings.ImportComputersFromActiveDirectory;
