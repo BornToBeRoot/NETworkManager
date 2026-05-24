@@ -4411,35 +4411,36 @@ La modifica delle regole del firewall richiede diritti elevati!</value>
     <value>Importa profili...</value>
   </data>
   <data name="SpeedTest" xml:space="preserve">
-    <value>Speed Test</value>
+    <value>Test velocità</value>
   </data>
   <data name="RunSpeedTest" xml:space="preserve">
-    <value>Run speed test</value>
+    <value>Esegui test velocità</value>
   </data>
   <data name="FetchingMetadataDots" xml:space="preserve">
-    <value>Fetching metadata...</value>
+    <value>Recupero metadati...</value>
   </data>
   <data name="MeasuringLatencyDots" xml:space="preserve">
-    <value>Measuring latency...</value>
+    <value>Misura latenza...</value>
   </data>
   <data name="MeasuringDownloadSpeedDots" xml:space="preserve">
-    <value>Measuring download speed...</value>
+    <value>Misura velocità download...</value>
   </data>
   <data name="MeasuringUploadSpeedDots" xml:space="preserve">
-    <value>Measuring upload speed...</value>
+    <value>Misura velocità upload...</value>
   </data>
   <data name="SpeedTestDisclaimerMessage" xml:space="preserve">
-    <value>Measure download and upload speeds, latency, and jitter with speed.cloudflare.com.
-Cloudflare may log your IP address and network information. See Cloudflare's privacy policy for details.</value>
+    <value>Misura velocità download e upload, latenza e jitter con speed.cloudflare.com.
+Cloudflare potrebbe registrare l'indirizzo IP e le informazioni di rete. 
+Per i dettagli consulta l'informativa sulla privacy di Cloudflare.</value>
   </data>
   <data name="Latency" xml:space="preserve">
-    <value>Latency</value>
+    <value>Latenza</value>
   </data>
   <data name="Jitter" xml:space="preserve">
     <value>Jitter</value>
   </data>
   <data name="ExternalService_speed_cloudflare_Description" xml:space="preserve">
-    <value>Speed test service used to measure download speed, upload speed, latency, and jitter.</value>
+    <value>Servizio test di velocità usato per misurare la velocità download/upload, latenza e jitter.</value>
   </data>
   <data name="Stop" xml:space="preserve">
     <value>Stop</value>
