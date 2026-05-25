@@ -72,17 +72,9 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
     #region ICommands & Actions
 
     /// <summary>
-    /// Gets the command to check via hotkey.
+    /// Gets the command to check the IP geolocation.
     /// </summary>
-    public ICommand CheckViaHotkeyCommand => new RelayCommand(_ => CheckViaHotkeyAction());
-
-    /// <summary>
-    /// Action to check via hotkey.
-    /// </summary>
-    private void CheckViaHotkeyAction()
-    {
-        Check();
-    }
+    public ICommand CheckCommand => new RelayCommand(_ => Check(), _ => !IsRunning);
 
     #endregion
 
@@ -103,10 +95,6 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
     {
         // Check is disabled via settings
         if (!SettingsManager.Current.Dashboard_CheckIPApiIPGeolocation)
-            return;
-
-        // Don't check multiple times if already running
-        if (IsRunning)
             return;
 
         IsRunning = true;

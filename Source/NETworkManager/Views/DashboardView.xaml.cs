@@ -24,29 +24,21 @@ public partial class DashboardView
         ContentControlSpeedTest.Content = _speedTestWidgetView;
 
         // Check all widgets
-        Check();
+        _networkConnectionWidgetView.Check();
+        _ipApiIPGeolocationWidgetView.Check();
+        _ipApiDNSResolverWidgetView.Check();
     }
 
     public void OnViewVisible()
     {
         _viewModel.OnViewVisible();
 
-        // Check all widgets
-        Check();
+        // Check network connection
+        _networkConnectionWidgetView.Check();
     }
 
     public void OnViewHide()
     {
         _viewModel.OnViewHide();
-    }
-
-    /// <summary>
-    /// Check all widgets
-    /// </summary>
-    private void Check()
-    {
-        _networkConnectionWidgetView.Check();
-        _ipApiIPGeolocationWidgetView.Check();
-        _ipApiDNSResolverWidgetView.Check();
     }
 }
