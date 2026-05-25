@@ -169,6 +169,7 @@
                                                 Height="{Binding ElementName=ComboBoxAdapters, Path=ActualHeight}"
                                                 Command="{Binding Path=ReloadAdaptersCommand}"
                                                 Style="{StaticResource CleanButton}"
+                                                ToolTip="{x:Static localization:Strings.Refresh}"
                                                 Margin="10,0,0,0">
                                             <Rectangle Width="24" Height="24"
                                                        wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsAdaptersLoading}">
@@ -241,8 +242,9 @@
                                             </ComboBox>
                                             <Button Command="{Binding Path=ScanNetworksCommand}"
                                                     Style="{StaticResource CleanButton}"
+                                                    ToolTip="{x:Static localization:Strings.Refresh}"
                                                     Margin="0,0,10,0">
-                                                <Rectangle Width="24" Height="24"
+                                                <Rectangle Width="16" Height="16"
                                                            wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding Path=IsBackgroundSearchRunning}">
                                                     <Rectangle.OpacityMask>
                                                         <VisualBrush Stretch="Uniform"
