@@ -502,6 +502,7 @@ public class SNMPViewModel : ViewModelBase
             ipAddress = dnsResult.Value;
         }
 
+        _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
 
         // SNMP...

@@ -390,6 +390,7 @@ public class PortScannerViewModel : ViewModelBase
 
         DragablzTabItem.SetTabHeader(_tabId, Host);
 
+        _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
 
         // Resolve hostnames

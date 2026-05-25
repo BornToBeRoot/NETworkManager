@@ -400,6 +400,7 @@ public class PingMonitorViewModel : ViewModelBase
         // Reset chart
         ResetTimeChart();
 
+        _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
 
         var ping = new Ping
