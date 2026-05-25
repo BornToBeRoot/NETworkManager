@@ -55,6 +55,7 @@
                     </StackPanel>
                     <Button Grid.Column="2" Command="{Binding CheckCommand}"
                             Style="{StaticResource CleanButton}"
+                            ToolTip="{x:Static localization:Strings.Refresh}"
                             VerticalAlignment="Center">
                         <Rectangle Width="20" Height="20"
                                    wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsRunning}">
