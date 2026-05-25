@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Settings;
@@ -55,6 +55,7 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     public IPApiDNSResolverWidgetViewModel()
     {
         LoadSettings();
+        Check();
     }
 
     /// <summary>
@@ -81,7 +82,7 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     /// <summary>
     /// Checks the DNS resolver.
     /// </summary>
-    public void Check()
+    private void Check()
     {
         _ = CheckAsync();
     }
@@ -98,7 +99,7 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
         IsRunning = true;
         Result = null;
 
-        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
+        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
         await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         Result = await DNSResolverService.GetInstance().GetDNSResolverAsync();

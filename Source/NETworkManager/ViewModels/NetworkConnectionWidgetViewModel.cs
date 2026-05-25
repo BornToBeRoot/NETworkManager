@@ -502,6 +502,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     public NetworkConnectionWidgetViewModel()
     {
         LoadSettings();
+        Check();
     }
 
     /// <summary>
@@ -587,6 +588,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         finally
         {
             IsChecking = false;
+            _cancellationTokenSource.Dispose();
 
             if (!wasCanceled)
                 Log.Info("Network connection check completed.");

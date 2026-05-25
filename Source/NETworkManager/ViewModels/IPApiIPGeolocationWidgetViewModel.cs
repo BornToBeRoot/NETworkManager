@@ -58,6 +58,7 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
     public IPApiIPGeolocationWidgetViewModel()
     {
         LoadSettings();
+        Check();
     }
 
     /// <summary>
@@ -83,7 +84,7 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
     /// <summary>
     /// Checks the IP geolocation.
     /// </summary>
-    public void Check()
+    private void Check()
     {
         _ = CheckAsync();
     }

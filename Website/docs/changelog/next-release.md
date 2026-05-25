@@ -67,6 +67,7 @@ Release date: **xx.xx.2025**
 
 **Dashboard**
 
+- Added a **Refresh** button (with animated feedback) to the **Network Connection**, **IP Geolocation**, and **DNS Resolver** widgets. The global reload button in the Status Window has been removed, as each widget now has its own. [#3447](https://github.com/BornToBeRoot/NETworkManager/pull/3447)
 - Redesign Status Window to make it more compact. [#3359](https://github.com/BornToBeRoot/NETworkManager/pull/3359)
 
 **Network Interface**

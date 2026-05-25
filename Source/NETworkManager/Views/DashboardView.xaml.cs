@@ -22,11 +22,6 @@ public partial class DashboardView
         ContentControlIPApiIPGeolocation.Content = _ipApiIPGeolocationWidgetView;
         ContentControlIPApiDNSResolver.Content = _ipApiDNSResolverWidgetView;
         ContentControlSpeedTest.Content = _speedTestWidgetView;
-
-        // Check all widgets
-        _networkConnectionWidgetView.Check();
-        _ipApiIPGeolocationWidgetView.Check();
-        _ipApiDNSResolverWidgetView.Check();
     }
 
     public void OnViewVisible()
