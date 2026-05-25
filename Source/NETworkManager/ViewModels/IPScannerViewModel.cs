@@ -440,6 +440,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         DragablzTabItem.SetTabHeader(_tabId, Host);
 
+        _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
 
         // Resolve hostnames

@@ -627,6 +627,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
         IsStatusMessageDisplayed = false;
         IsRunning = true;
 
+        _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
 
         // Resolve hostnames

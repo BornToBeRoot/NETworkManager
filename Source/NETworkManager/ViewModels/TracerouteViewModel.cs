@@ -323,6 +323,7 @@ public class TracerouteViewModel : ViewModelBase
 
         DragablzTabItem.SetTabHeader(_tabId, Host);
 
+        _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
 
         // Try to parse the string into an IP-Address
