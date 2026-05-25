@@ -476,6 +476,22 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     /// </summary>
     public bool CheckPublicIPAddressEnabled => SettingsManager.Current.Dashboard_CheckPublicIPAddress;
 
+    /// <summary>
+    /// Gets or sets a value indicating whether a check is currently running.
+    /// </summary>
+    public bool IsChecking
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Constructor, load settings
@@ -486,6 +502,7 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     public NetworkConnectionWidgetViewModel()
     {
         LoadSettings();
+        Check();
     }
 
     /// <summary>
@@ -500,17 +517,9 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
     #region ICommands & Actions
 
     /// <summary>
-    /// Gets the command to check connections via hotkey.
+    /// Gets the command to check connections.
     /// </summary>
-    public ICommand CheckViaHotkeyCommand => new RelayCommand(_ => CheckViaHotkeyAction());
-
-    /// <summary>
-    /// Executes the check via hotkey action.
-    /// </summary>
-    private void CheckViaHotkeyAction()
-    {
-        Check();
-    }
+    public ICommand CheckCommand => new RelayCommand(_ => Check());
 
     #endregion
 
@@ -564,6 +573,8 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         _cancellationTokenSource = new CancellationTokenSource();
         var wasCanceled = false;
 
+        IsChecking = true;
+
         try
         {
             _checkTask = RunTask(_cancellationTokenSource.Token);
@@ -576,6 +587,9 @@ public class NetworkConnectionWidgetViewModel : ViewModelBase
         }
         finally
         {
+            IsChecking = false;
+            _cancellationTokenSource.Dispose();
+
             if (!wasCanceled)
                 Log.Info("Network connection check completed.");
         }

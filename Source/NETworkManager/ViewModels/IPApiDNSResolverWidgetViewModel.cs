@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Settings;
@@ -55,6 +55,7 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     public IPApiDNSResolverWidgetViewModel()
     {
         LoadSettings();
+        Check();
     }
 
     /// <summary>
@@ -70,17 +71,9 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     #region ICommands & Actions
 
     /// <summary>
-    /// Gets the command to check via hotkey.
+    /// Gets the command to check the DNS resolver.
     /// </summary>
-    public ICommand CheckViaHotkeyCommand => new RelayCommand(_ => CheckViaHotkeyAction());
-
-    /// <summary>
-    /// Action to check via hotkey.
-    /// </summary>
-    private void CheckViaHotkeyAction()
-    {
-        Check();
-    }
+    public ICommand CheckCommand => new RelayCommand(_ => Check(), _ => !IsRunning);
 
     #endregion
 
@@ -89,7 +82,7 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
     /// <summary>
     /// Checks the DNS resolver.
     /// </summary>
-    public void Check()
+    private void Check()
     {
         _ = CheckAsync();
     }
@@ -103,14 +96,10 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
         if (!SettingsManager.Current.Dashboard_CheckIPApiDNSResolver)
             return;
 
-        // Don't check multiple times if already running
-        if (IsRunning)
-            return;
-
         IsRunning = true;
         Result = null;
 
-        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
+        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
         await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         Result = await DNSResolverService.GetInstance().GetDNSResolverAsync();

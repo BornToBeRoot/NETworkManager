@@ -96,13 +96,6 @@ public partial class StatusWindow : INotifyPropertyChanged
 
     #region ICommands & Actions
 
-    public ICommand ReloadCommand => new RelayCommand(_ => ReloadAction());
-
-    private void ReloadAction()
-    {
-        Check();
-    }
-
     public ICommand ShowMainWindowCommand => new RelayCommand(_ => ShowMainWindowAction());
 
     private void ShowMainWindowAction()

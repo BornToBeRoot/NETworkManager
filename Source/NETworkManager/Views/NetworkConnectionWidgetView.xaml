@@ -8,10 +8,11 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:NetworkConnectionWidgetViewModel}">
     <UserControl.InputBindings>
-        <KeyBinding Key="F5" Command="{Binding CheckViaHotkeyCommand}" />
+        <KeyBinding Key="F5" Command="{Binding CheckCommand}" />
     </UserControl.InputBindings>
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
@@ -20,8 +21,8 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />            
-            <ColumnDefinition Width="1*" />            
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -167,15 +168,43 @@
                         <RowDefinition Height="Auto" />                        
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
-                        <Rectangle Width="32" Height="32" Fill="{DynamicResource MahApps.Brushes.Gray3}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Globe}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Text="{x:Static localization:Strings.Internet}"
-                                   Style="{StaticResource MessageTextBlock}" Margin="10,0,0,0" />
-                    </StackPanel>
+                    <Grid Grid.Row="0" Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Rectangle Width="32" Height="32" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Globe}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Text="{x:Static localization:Strings.Internet}"
+                                       Style="{StaticResource MessageTextBlock}" Margin="10,0,0,0" />
+                        </StackPanel>
+                        <Button Grid.Column="2" Command="{Binding CheckCommand}"
+                                Style="{StaticResource CleanButton}"
+                                ToolTip="{x:Static localization:Strings.Refresh}"
+                                VerticalAlignment="Center">
+                            <Rectangle Width="20" Height="20"
+                                       wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsChecking}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
+                    </Grid>
                     <Grid Grid.Row="1" HorizontalAlignment="Left" Margin="10"
                           Visibility="{Binding CheckPublicIPAddressEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                         <Grid.ColumnDefinitions>

@@ -67,6 +67,7 @@
                         </ComboBox>
                         <Button Command="{Binding Path=RefreshCommand}"
                                 Style="{StaticResource CleanButton}"
+                                ToolTip="{x:Static localization:Strings.Refresh}"
                                 Margin="0,0,10,0">
                             <Rectangle Width="16" Height="16"
                                        wpfHelpers:ReloadAnimationHelper.IsReloading="{Binding IsRefreshing}">
