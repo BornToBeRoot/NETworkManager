@@ -6,6 +6,7 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+             xmlns:controls="clr-namespace:NETworkManager.Controls"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
@@ -233,8 +234,13 @@
                                      Text="{Binding CurrentJitterMs, Converter={StaticResource NullableDoubleToStringConverter}, ConverterParameter='F1|ms', Mode=OneWay}" />
                         </Grid>
                         <!-- Col 2: Download (label left, value right, chart below) -->
-                        <StackPanel Grid.Column="2">
-                            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+                        <Grid Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="10" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
                                 <Rectangle Width="24" Height="24" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CloudDownloadOutline}" />
@@ -244,16 +250,28 @@
                                            Style="{StaticResource MessageTextBlock}"
                                            Margin="10,0,0,0" />
                             </StackPanel>
-                            <lvc:CartesianChart Height="100"
+                            <lvc:CartesianChart Grid.Row="2" Grid.Column="0"
                                                 Background="Transparent"
                                                 Series="{Binding DownloadSeries}"
                                                 XAxes="{Binding DownloadXAxes}"
                                                 YAxes="{Binding DownloadYAxes}"
-                                                DrawMarginFrame="{x:Null}" />
-                        </StackPanel>
+                                                DrawMarginFrame="{x:Null}"
+                                                RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                <lvc:CartesianChart.Tooltip>
+                                    <controls:LiveChartsSpeedTestTooltip />
+                                </lvc:CartesianChart.Tooltip>
+                            </lvc:CartesianChart>
+                            </Grid>
+                        
                         <!-- Col 4: Upload (label left, value right, chart below) -->
-                        <StackPanel Grid.Column="4">
-                            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,10">
+                        <Grid Grid.Column="4">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="10" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                        
+                            <StackPanel  Grid.Row="0" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" >
                                 <Rectangle Width="24" Height="24" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CloudUploadOutline}" />
@@ -263,13 +281,17 @@
                                            Style="{StaticResource MessageTextBlock}"
                                            Margin="10,0,0,0" />
                             </StackPanel>
-                            <lvc:CartesianChart Height="100"
-                                                Background="Transparent"
-                                                Series="{Binding UploadSeries}"
-                                                XAxes="{Binding UploadXAxes}"
-                                                YAxes="{Binding UploadYAxes}"
-                                                DrawMarginFrame="{x:Null}" />
-                        </StackPanel>
+                            <lvc:CartesianChart  Grid.Row="2" Grid.Column="0"
+                                                 Background="Transparent"
+                                                 Series="{Binding UploadSeries}"
+                                                 XAxes="{Binding UploadXAxes}"
+                                                 YAxes="{Binding UploadYAxes}"
+                                                 DrawMarginFrame="{x:Null}">
+                                <lvc:CartesianChart.Tooltip>
+                                    <controls:LiveChartsSpeedTestTooltip />
+                                </lvc:CartesianChart.Tooltip>
+                            </lvc:CartesianChart>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Grid>
