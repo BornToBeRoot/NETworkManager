@@ -276,11 +276,11 @@ public class PingMonitorViewModel : ViewModelBase
 
         var chartColor = SKColor.Parse("#1ba1e2");
 
-        var labelColor = Application.Current.Resources["MahApps.Brushes.Gray5"] is System.Windows.Media.SolidColorBrush gray5
+        var labelColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray5") is System.Windows.Media.SolidColorBrush gray5
             ? new SKColor(gray5.Color.R, gray5.Color.G, gray5.Color.B, gray5.Color.A)
             : new SKColor(0x68, 0x68, 0x68);
 
-        var separatorColor = Application.Current.Resources["MahApps.Brushes.Gray8"] is System.Windows.Media.SolidColorBrush gray8
+        var separatorColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray8") is System.Windows.Media.SolidColorBrush gray8
             ? new SKColor(gray8.Color.R, gray8.Color.G, gray8.Color.B, gray8.Color.A)
             : new SKColor(0x80, 0x80, 0x80);
 
