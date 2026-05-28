@@ -2840,7 +2840,7 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Knjižnica C# skrbi za kompleksno omrežje, IP, IPv4, IPv6, omrežno masko, CIDR, podomrežje, podomrežje, superomrežje in izračun superomrežij za razvijalce .NET.</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>Preprosti, prilagodljivi, interaktivni in zmogljivi grafikoni, zemljevidi in merilniki za .Net</value>
+    <value>Beautiful, interactive charts, maps, and gauges.</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
     <value>Zbirka kazalnikov obremenitve za WPF</value>
