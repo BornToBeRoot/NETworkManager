@@ -177,15 +177,13 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         [
             new LineSeries<double>
             {
+                Name = Strings.Download,
                 Values = DownloadSamples,
-                GeometrySize = 3,
+                GeometrySize = 1.5f,
                 LineSmoothness = 0.3,
                 DataPadding = new LvcPoint(0, 0),
                 Stroke = new SolidColorPaint(downloadColor) { StrokeThickness = 1.5f },
-                Fill = new SolidColorPaint(downloadColor.WithAlpha(0x33)),
-                GeometryStroke = new SolidColorPaint(downloadColor) { StrokeThickness = 1.5f },
-                GeometryFill = new SolidColorPaint(downloadColor),
-                YToolTipLabelFormatter = point => $"{point.Model:F1} Mbps"
+                Fill = new SolidColorPaint(downloadColor.WithAlpha(0x33))
             }
         ];
 
@@ -194,15 +192,13 @@ public class SpeedTestWidgetViewModel : ViewModelBase
         [
             new LineSeries<double>
             {
+                Name = Strings.Upload,
                 Values = UploadSamples,
-                GeometrySize = 3,
+                GeometrySize = 1.5f,
                 LineSmoothness = 0.3,
                 DataPadding = new LvcPoint(0, 0),
                 Stroke = new SolidColorPaint(uploadColor) { StrokeThickness = 1.5f },
-                Fill = new SolidColorPaint(uploadColor.WithAlpha(0x33)),
-                GeometryStroke = new SolidColorPaint(uploadColor) { StrokeThickness = 1.5f },
-                GeometryFill = new SolidColorPaint(uploadColor),
-                YToolTipLabelFormatter = point => $"{point.Model:F1} Mbps"
+                Fill = new SolidColorPaint(uploadColor.WithAlpha(0x33))
             }
         ];
     }

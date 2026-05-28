@@ -20,7 +20,7 @@
         <None Remove="Licenses\Dragablz.txt" />
         <None Remove="Licenses\GongSolutions.Wpf.DragDrop.txt" />
         <None Remove="Licenses\IPNetwork.txt" />
-        <None Remove="Licenses\LiveCharts.txt" />
+        <None Remove="Licenses\LiveCharts2.txt" />
         <None Remove="Licenses\LoadingIndicators.WPF.txt" />
         <None Remove="Licenses\log4net.txt" />
         <None Remove="Licenses\MahApps.Metro.IconPack.txt" />
@@ -61,7 +61,7 @@
         <Content Include="Licenses\IPNetwork.txt">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include="Licenses\LiveCharts.txt">
+        <Content Include="Licenses\LiveCharts2.txt">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <Content Include="Licenses\LoadingIndicators.WPF.txt">

@@ -2,14 +2,8 @@
 
 namespace NETworkManager.Utilities;
 
-public class LvlChartsDefaultInfo
+public class LvlChartsDefaultInfo(DateTime dateTime, double value)
 {
-    public LvlChartsDefaultInfo(DateTime dateTime, double value)
-    {
-        DateTime = dateTime;
-        Value = value;
-    }
-
-    public DateTime DateTime { get; }
-    public double Value { get; set; }
+    public DateTime DateTime { get; } = dateTime;
+    public double Value { get; } = value;
 }
