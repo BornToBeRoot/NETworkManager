@@ -2845,7 +2845,7 @@ Si cela se produit de manière inattendue ou après une mise à jour, signalez l
     <value>La bibliothèque C# prend en charge les calculs complexes de réseau, IP, IPv4, IPv6, masque de réseau, CIDR, sous-réseau, sous-réseau, sur-réseau et sur-réseau pour les développeurs .NET.</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>Graphiques, cartes et jauges simples, flexibles, interactifs et puissants pour .Net</value>
+    <value>Beautiful, interactive charts, maps, and gauges.</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
     <value>Une collection d'indicateurs de chargement pour WPF</value>
