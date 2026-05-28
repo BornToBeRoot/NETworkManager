@@ -67,6 +67,7 @@ public class PingMonitorViewModel : ViewModelBase
 
     private CancellationTokenSource _cancellationTokenSource;
     private int _maxPingValues;
+    private int _sessionId;
 
     public readonly Guid HostId;
     private readonly Action<Guid> _removeHostByGuid;
@@ -339,12 +340,12 @@ public class PingMonitorViewModel : ViewModelBase
     /// <summary>
     /// Gets the X-axes configuration for the ping time chart.
     /// </summary>
-    public ICartesianAxis[] PingXAxes { get; private set; }
+    public Axis[] PingXAxes { get; private set; }
 
     /// <summary>
     /// Gets the Y-axes configuration for the ping time chart.
     /// </summary>
-    public ICartesianAxis[] PingYAxes { get; private set; }
+    public Axis[] PingYAxes { get; private set; }
 
     /// <summary>
     /// Gets the error message if an error occurs.
@@ -447,6 +448,7 @@ public class PingMonitorViewModel : ViewModelBase
         PacketLoss = 0;
 
         // Reset chart
+        _sessionId++;
         ResetTimeChart();
 
         _cancellationTokenSource?.Dispose();
@@ -597,8 +599,12 @@ public class PingMonitorViewModel : ViewModelBase
         TimeMs = e.Args.Time;
 
         // Null exception may occur when the application is closing
+        var session = _sessionId;
         Application.Current?.Dispatcher.BeginInvoke(DispatcherPriority.Normal, () =>
         {
+            if (_sessionId != session) 
+                return;
+
             _pingValues.Add(timeInfo);
             if (_pingValues.Count > _maxPingValues)
                 _pingValues.RemoveAt(0);

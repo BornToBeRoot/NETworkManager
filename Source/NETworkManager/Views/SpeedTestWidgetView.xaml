@@ -286,7 +286,8 @@
                                                  Series="{Binding UploadSeries}"
                                                  XAxes="{Binding UploadXAxes}"
                                                  YAxes="{Binding UploadYAxes}"
-                                                 DrawMarginFrame="{x:Null}">
+                                                 DrawMarginFrame="{x:Null}"
+                                                 RenderOptions.BitmapScalingMode="NearestNeighbor">
                                 <lvc:CartesianChart.Tooltip>
                                     <controls:LiveChartsSpeedTestTooltip />
                                 </lvc:CartesianChart.Tooltip>
