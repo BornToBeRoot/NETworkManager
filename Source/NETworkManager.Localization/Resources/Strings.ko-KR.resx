@@ -2842,7 +2842,7 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>C# 라이브러리는 복잡한 네트워크, IP, IPv4, IPv6, NetMask, CIDR, 서브넷, 서브넷, 슈퍼넷 및 .NET 개발자를 위한 슈퍼넷팅 계산을 처리합니다.</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>간편하고 유연하며 대화형 강력한 .Net용 차트, 지도 및 게이지</value>
+    <value>Beautiful, interactive charts, maps, and gauges.</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
     <value>WPF에 대한 부하 지시기 모음</value>
