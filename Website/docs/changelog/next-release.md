@@ -68,11 +68,16 @@ Release date: **xx.xx.2025**
 **Dashboard**
 
 - Added a **Refresh** button (with animated feedback) to the **Network Connection**, **IP Geolocation**, and **DNS Resolver** widgets. The global reload button in the Status Window has been removed, as each widget now has its own. [#3447](https://github.com/BornToBeRoot/NETworkManager/pull/3447)
+- Added a tooltip to the **Speed Test** widget chart showing download/upload speed values on hover. [#3449](https://github.com/BornToBeRoot/NETworkManager/pull/3449)
 - Redesign Status Window to make it more compact. [#3359](https://github.com/BornToBeRoot/NETworkManager/pull/3359)
 
 **Network Interface**
 
 - Added Network Profile (domain, private, public) information to the Network Interface details view, if available. [#3383](https://github.com/BornToBeRoot/NETworkManager/pull/3383)
+
+**Ping Monitor**
+
+- Migrated charts from LiveCharts to LiveCharts2. Added a tooltip showing the ping time on hover. [#3449](https://github.com/BornToBeRoot/NETworkManager/pull/3449)
 
 **Discovery Protocol**
 
@@ -111,6 +116,7 @@ Release date: **xx.xx.2025**
 
 ## Dependencies, Refactoring & Documentation
 
+- Migrated from `LiveCharts` to `LiveCharts2` (`LiveChartsCore.SkiaSharpView.WPF`) for chart rendering. [#3449](https://github.com/BornToBeRoot/NETworkManager/pull/3449)
 - Fixed `CancellationTokenSource` leak in `IPScanner`, `PortScanner`, `Traceroute`, `PingMonitor`, `PingMonitorHost` and `SNMP` ViewModels. The previous instance was never disposed before being overwritten on each run, leaking the underlying `WaitHandle`. [#3448](https://github.com/BornToBeRoot/NETworkManager/pull/3448)
 - Replace fire-and-forget `.ConfigureAwait(false)` calls with explicit discard assignments (`_ = SomeAsyncOperation()`) across command handlers, startup/load paths and profile callbacks. [#3441](https://github.com/BornToBeRoot/NETworkManager/pull/3441)
 - Code cleanup & refactoring
