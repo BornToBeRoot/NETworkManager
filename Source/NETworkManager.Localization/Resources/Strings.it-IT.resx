@@ -2871,7 +2871,7 @@ Segnala questo problema su Github.</value>
     <value>La libreria C # si occupa di reti complesse, IP, IPv4, IPv6, maschere di rete, CIDR, sottoreti, subnetting, supernet e supernetting per gli sviluppatori .NET.</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>Grafici, mappe e indicatori semplici, flessibili, interattivi e potenti per .Net</value>
+    <value>Beautiful, interactive charts, maps, and gauges.</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
     <value>Una raccolta di indicatori di carico per WPF</value>
