@@ -2844,7 +2844,7 @@ Error message:
     <value>C # knihovna se postará o výpočet složité sítě, IP, IPv4, IPv6, síťové masky, CIDR, podsítě, podsíťování, supernetu a supernetování pro vývojáře .NET. </value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>Jednoduché, flexibilní, interaktivní &amp; výkonné grafy, mapy a měřidla pro .Net</value>
+    <value>Beautiful, interactive charts, maps, and gauges.</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
     <value>Kolekce indikátorů načítání pro WPF </value>
