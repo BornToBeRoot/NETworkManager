@@ -2845,7 +2845,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>這是一個 C# 函式庫，為 .NET 開發者提供複雜網路、IP、IPv4 / IPv6、子網遮罩、CIDR、子網、分割子網、超網及其計算等功能。</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>簡潔、彈性、交互式且功能強大的圖表、地圖與儀表，供 .NET 使用</value>
+    <value>Beautiful, interactive charts, maps, and gauges.</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
     <value>WPF 載入指示器集合</value>

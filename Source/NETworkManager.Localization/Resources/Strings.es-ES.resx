@@ -2842,7 +2842,7 @@ Error message:
     <value>La biblioteca C# se encarga de la red compleja, IP, IPv4, IPv6, máscara de red, CIDR, subred y cálculo de superred para desarrolladores de .NET.</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>Gráficos, mapas y medidores sencillos, flexibles, interactivos y potentes para .Net</value>
+    <value>Beautiful, interactive charts, maps, and gauges.</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
     <value>Una colección de indicadores de carga para WPF</value>

@@ -2845,7 +2845,7 @@ Fehlermeldung:
     <value>Die C#-Bibliothek kümmert sich um komplexe Netzwerk-, IP-, IPv4-, IPv6-, Netzmasken-, CIDR-, Subnetz-, Subnetz-, Supernetz- und Supernetzberechnungen für .NET-Entwickler.</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>Einfache, flexible, interaktive und leistungsstarke Diagramme, Karten und Messgeräte für .NET</value>
+    <value>Schöne, interaktive Diagramme, Karten und Messgeräte.</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
     <value>Eine Sammlung von Ladeindikatoren für WPF</value>
