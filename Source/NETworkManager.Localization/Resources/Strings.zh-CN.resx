@@ -2846,7 +2846,7 @@ $$hostname$$	--&gt;	主机名</value>
     <value>C# 库为 .NET 开发人员处理复杂的网络、IP、IPv4、IPv6、子网掩码、CIDR、子网、子网划分、超网和超网划分计算。</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>适用于.Net的简单、灵活、互动和强大的图表、地图和仪表</value>
+    <value>Beautiful, interactive charts, maps, and gauges.</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
     <value>WPF的加载指示器集合</value>
