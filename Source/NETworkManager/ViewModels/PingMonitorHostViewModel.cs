@@ -672,6 +672,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
                 continue;
 
             Hosts[i].Stop();
+            Hosts[i].Cleanup();
             Hosts.RemoveAt(i);
         }
     }
@@ -688,6 +689,7 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
             return;
 
         Hosts[i].Stop();
+        Hosts[i].Cleanup();
         Hosts.RemoveAt(i);
     }
 

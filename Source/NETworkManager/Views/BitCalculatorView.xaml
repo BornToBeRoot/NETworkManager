@@ -204,7 +204,7 @@
                                 <Rectangle Grid.Column="0" Grid.Row="0"
                                            Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
                                     <Rectangle.OpacityMask>
-                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                                 <TextBlock Grid.Column="1" Grid.Row="0"

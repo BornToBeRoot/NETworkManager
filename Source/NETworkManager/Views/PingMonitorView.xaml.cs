@@ -35,6 +35,14 @@ public partial class PingMonitorView
         _viewModel.Stop();
     }
 
+    /// <summary>
+    /// Releases resources held by the view model. Must be called when the host is removed.
+    /// </summary>
+    public void Cleanup()
+    {
+        _viewModel.Cleanup();
+    }
+
     private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
     {
         Stop();
