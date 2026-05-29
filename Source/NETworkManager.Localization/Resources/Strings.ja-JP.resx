@@ -2845,7 +2845,7 @@ $$hostname$$	--&gt;	ホスト名</value>
     <value>C# ライブラリは、.NET 開発者向けに、複雑なネットワーク、IP、IPv4、IPv6、ネットマスク、CIDR、サブネット、サブネット化、スーパーネット、スーパーネット化の計算を処理します。</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>Beautiful, interactive charts, maps, and gauges.</value>
+    <value>美しく、インタラクティブなグラフ、地図、ゲージ。</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
     <value>WPF の読み込みインジケーターのコレクション</value>
