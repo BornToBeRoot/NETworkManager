@@ -4,6 +4,7 @@ using NETworkManager.Models.WebConsole;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 
@@ -17,6 +18,7 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
 
     private bool _initialized;
     private bool _closed;
+    private readonly CancellationTokenSource _loadCancellationTokenSource = new();
 
     private readonly Guid _tabId;
     private readonly WebConsoleSessionInfo _sessionInfo;
@@ -92,25 +94,44 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
     private async void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
         // Connect after the control is drawn and only on the first init
-        if (_initialized)
+        if (_initialized || _closed || _loadCancellationTokenSource.IsCancellationRequested)
             return;
 
-        // Set user data folder - Fix #382            
-        var webView2Environment =
-            await CoreWebView2Environment.CreateAsync(null, GlobalStaticConfiguration.WebConsole_Cache);
+        try
+        {
+            // Set user data folder - Fix #382
+            var webView2Environment =
+                await CoreWebView2Environment.CreateAsync(null, GlobalStaticConfiguration.WebConsole_Cache);
 
-        await Browser.EnsureCoreWebView2Async(webView2Environment);
+            if (_closed || _loadCancellationTokenSource.IsCancellationRequested)
+                return;
 
-        Log.Debug($"UserControl_Loaded - WebView2 profile path: {Browser.CoreWebView2.Profile.ProfilePath}");
+            await Browser.EnsureCoreWebView2Async(webView2Environment);
 
-        // Set the default settings
-        Browser.CoreWebView2.Settings.IsStatusBarEnabled = SettingsManager.Current.WebConsole_IsStatusBarEnabled;
-        Browser.CoreWebView2.Settings.IsPasswordAutosaveEnabled =
-            SettingsManager.Current.WebConsole_IsPasswordSaveEnabled;
+            if (_closed || _loadCancellationTokenSource.IsCancellationRequested || Browser.CoreWebView2 == null)
+                return;
 
-        Navigate(_sessionInfo.Url);
+            Log.Debug($"UserControl_Loaded - WebView2 profile path: {Browser.CoreWebView2.Profile.ProfilePath}");
 
-        _initialized = true;
+            // Set the default settings
+            Browser.CoreWebView2.Settings.IsStatusBarEnabled = SettingsManager.Current.WebConsole_IsStatusBarEnabled;
+            Browser.CoreWebView2.Settings.IsPasswordAutosaveEnabled =
+                SettingsManager.Current.WebConsole_IsPasswordSaveEnabled;
+
+            Navigate(_sessionInfo.Url);
+
+            _initialized = true;
+        }
+        catch (ObjectDisposedException)
+        {
+            if (!_closed && !_loadCancellationTokenSource.IsCancellationRequested)
+                throw;
+        }
+        catch (InvalidOperationException)
+        {
+            if (!_closed && !_loadCancellationTokenSource.IsCancellationRequested)
+                throw;
+        }
     }
 
     #endregion
@@ -198,6 +219,8 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
             return;
 
         _closed = true;
+        _loadCancellationTokenSource.Cancel();
+        _loadCancellationTokenSource.Dispose();
 
         // Release the subscriptions that would otherwise keep this transient per-tab
         // control (and its heavyweight WebView2 instance) alive for the lifetime of the
