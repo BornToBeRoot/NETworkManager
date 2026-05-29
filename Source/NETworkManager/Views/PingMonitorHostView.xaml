@@ -163,29 +163,10 @@
                     </Grid>
                     <ScrollViewer Grid.Column="0" Grid.Row="2"
                                   HorizontalScrollBarVisibility="Auto">
-                        <ListView ItemsSource="{Binding Path=HostsView}"
-                                  SelectedItem="{Binding Path=SelectedHost}"
+                        <ItemsControl ItemsSource="{Binding Path=HostsView}"
                                   Visibility="{Binding Path=Hosts.Count, Converter={StaticResource ResourceKey=IntNotZeroToVisibilityCollapsedConverter}}"
-                                  Background="Transparent"
-                                  BorderThickness="0"
-                                  SelectionMode="Single">
-                            <ListView.ContextMenu>
-                                <ContextMenu Opened="ContextMenu_Opened" MinWidth="150">
-                                    <MenuItem Header="{x:Static Member=localization:Strings.ExportDots}"
-                                              Command="{Binding Path=ExportCommand}">
-                                        <MenuItem.Icon>
-                                            <Rectangle Width="16" Height="16"
-                                                       Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
-                                                <Rectangle.OpacityMask>
-                                                    <VisualBrush Stretch="Uniform"
-                                                                 Visual="{iconPacks:Material Kind=Export}" />
-                                                </Rectangle.OpacityMask>
-                                            </Rectangle>
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                </ContextMenu>
-                            </ListView.ContextMenu>
-                            <ListBox.GroupStyle>
+                                  Background="Transparent">
+                            <ItemsControl.GroupStyle>
                                 <GroupStyle>
                                     <GroupStyle.ContainerStyle>
                                         <Style TargetType="{x:Type TypeName=GroupItem}">
@@ -206,7 +187,7 @@
                                                                                Style="{DynamicResource ResourceKey=HeaderTextBlock}" />
                                                                     <Button Grid.Column="2" Grid.Row="0"
                                                                             HorizontalAlignment="Right"
-                                                                            Command="{Binding Path=DataContext.CloseGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ListView}}}"
+                                                                            Command="{Binding Path=DataContext.CloseGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}}"
                                                                             CommandParameter="{Binding Path=(CollectionViewGroup.Name)}"
                                                                             Style="{StaticResource ResourceKey=CleanButton}"
                                                                             ToolTip="{x:Static Member=localization:Strings.CloseGroup}">
@@ -239,31 +220,13 @@
                                         </Style>
                                     </GroupStyle.ContainerStyle>
                                 </GroupStyle>
-                            </ListBox.GroupStyle>
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="{x:Type TypeName=ListViewItem}"
-                                       BasedOn="{StaticResource ResourceKey=MahApps.Styles.ListViewItem}">
-                                    <Setter Property="Margin" Value="0,0,0,10" />
-                                    <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                    <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
-                                    <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
-                                    <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush"
-                                            Value="Transparent" />
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <!-- BUGFIX This has to be set, to enable mouse wheel scrolling -->
-                            <ListView.Template>
-                                <ControlTemplate>
-                                    <ItemsPresenter />
-                                </ControlTemplate>
-                            </ListView.Template>
-                            <ListView.ItemsPanel>
+                            </ItemsControl.GroupStyle>
+                            <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel />
+                                    <StackPanel />
                                 </ItemsPanelTemplate>
-                            </ListView.ItemsPanel>
-                            <!-- /BUGFIX-->
-                        </ListView>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
                     </ScrollViewer>
                     <TextBlock Grid.Column="0" Grid.Row="2"
                                Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}"

@@ -144,22 +144,6 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     /// </summary>
     public ICollectionView HostsView { get; }
 
-    /// <summary>
-    ///     Gets or sets the selected host.
-    /// </summary>
-    public PingMonitorView SelectedHost
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
     #region Profiles
 
     /// <summary>
@@ -459,16 +443,6 @@ public class PingMonitorHostViewModel : ViewModelBase, IProfileManager
     private void CloseGroupAction(object group)
     {
         RemoveGroup(group.ToString());
-    }
-
-    /// <summary>
-    ///     Gets the command to export the selected host's data.
-    /// </summary>
-    public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
-
-    private void ExportAction()
-    {
-        SelectedHost?.Export();
     }
 
     /// <summary>

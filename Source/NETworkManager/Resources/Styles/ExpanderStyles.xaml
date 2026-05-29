@@ -75,6 +75,74 @@
                 Value="{DynamicResource ResourceKey=ExpanderDownHeader}" />
     </Style>
 
+    <!-- Header style for bordered expanders (e.g. the ping monitor host): adds a small
+         left margin so the chevron does not sit flush against the visible border. -->
+    <Style x:Key="PingMonitorExpanderDownHeader"
+           BasedOn="{StaticResource ResourceKey=MahApps.Styles.ToggleButton.ExpanderHeader.Down}"
+           TargetType="{x:Type TypeName=ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TypeName=ToggleButton}">
+                    <Border Padding="{TemplateBinding Property=Padding}"
+                            Background="{TemplateBinding Property=Background}"
+                            BorderBrush="{TemplateBinding Property=BorderBrush}"
+                            BorderThickness="{TemplateBinding Property=BorderThickness}">
+                        <Grid Background="Transparent" SnapsToDevicePixels="False">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Grid.Column="0" Grid.Row="0"
+                                       x:Name="Chevron"
+                                       Width="16" Height="16"
+                                       Margin="10,0,0,0"
+                                       Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}"
+                                       VerticalAlignment="Center">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronUp}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <mahAppsControls:ContentControlEx Grid.Column="1"
+                                                              Margin="10,0,0,0"
+                                                              HorizontalAlignment="Stretch"
+                                                              Padding="{TemplateBinding Property=Padding}"
+                                                              HorizontalContentAlignment="{TemplateBinding Property=HorizontalContentAlignment}"
+                                                              VerticalContentAlignment="{TemplateBinding Property=VerticalContentAlignment}"
+                                                              Content="{TemplateBinding Property=Content}"
+                                                              ContentCharacterCasing="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=(mahAppsControls:ControlsHelper.ContentCharacterCasing)}"
+                                                              ContentStringFormat="{TemplateBinding Property=ContentStringFormat}"
+                                                              ContentTemplate="{TemplateBinding Property=ContentTemplate}"
+                                                              ContentTemplateSelector="{TemplateBinding Property=ContentTemplateSelector}"
+                                                              RecognizesAccessKey="True"
+                                                              SnapsToDevicePixels="{TemplateBinding Property=SnapsToDevicePixels}" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Chevron" Property="OpacityMask">
+                                <Setter.Value>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronDown}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Chevron" Property="Fill"
+                                    Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Expander variant for the ping monitor host (bordered) using the indented header. -->
+    <Style x:Key="PingMonitorExpander"
+           TargetType="{x:Type TypeName=Expander}"
+           BasedOn="{StaticResource ResourceKey=DefaultExpander}">
+        <Setter Property="mahAppsControls:ExpanderHelper.HeaderDownStyle"
+                Value="{DynamicResource ResourceKey=PingMonitorExpanderDownHeader}" />
+    </Style>
+
     <Style x:Key="ProfileExpanderOpen"
            BasedOn="{StaticResource ResourceKey=MahApps.Styles.ToggleButton.ExpanderHeader.Down}"
            TargetType="{x:Type TypeName=ToggleButton}">

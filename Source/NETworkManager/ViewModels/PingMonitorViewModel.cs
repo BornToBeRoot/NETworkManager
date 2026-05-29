@@ -1,7 +1,6 @@
 using LiveChartsCore;
 using LiveChartsCore.Drawing;
 using LiveChartsCore.Kernel;
-using LiveChartsCore.Kernel.Sketches;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
@@ -58,6 +57,8 @@ public class PingMonitorViewModel : ViewModelBase
         InitialTimeChart();
 
         ExpandHostView = SettingsManager.Current.PingMonitor_ExpandHostView;
+
+        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
     }
 
     #endregion
@@ -68,6 +69,7 @@ public class PingMonitorViewModel : ViewModelBase
     private CancellationTokenSource _cancellationTokenSource;
     private int _maxPingValues;
     private int _sessionId;
+    private bool _updatingAxisFromCode;
 
     public readonly Guid HostId;
     private readonly Action<Guid> _removeHostByGuid;
@@ -277,11 +279,11 @@ public class PingMonitorViewModel : ViewModelBase
 
         var chartColor = SKColor.Parse("#1ba1e2");
 
-        var labelColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray5") is System.Windows.Media.SolidColorBrush gray5
+        var labelColor = Application.Current.TryFindResource("MahApps.Brushes.Gray5") is System.Windows.Media.SolidColorBrush gray5
             ? new SKColor(gray5.Color.R, gray5.Color.G, gray5.Color.B, gray5.Color.A)
             : new SKColor(0x68, 0x68, 0x68);
 
-        var separatorColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray8") is System.Windows.Media.SolidColorBrush gray8
+        var separatorColor = Application.Current.TryFindResource("MahApps.Brushes.Gray8") is System.Windows.Media.SolidColorBrush gray8
             ? new SKColor(gray8.Color.R, gray8.Color.G, gray8.Color.B, gray8.Color.A)
             : new SKColor(0x80, 0x80, 0x80);
 
@@ -293,7 +295,7 @@ public class PingMonitorViewModel : ViewModelBase
                 Values = _pingValues,
                 Mapping = (info, _) => double.IsNaN(info.Value)
                     ? Coordinate.Empty
-                    : new(info.DateTime.Ticks / (double)TimeSpan.FromHours(1).Ticks, info.Value),
+                    : new((info.DateTime - _sessionStartTime).TotalSeconds, info.Value),
                 GeometrySize = 0,
                 LineSmoothness = 0.3,
                 DataPadding = new LvcPoint(0, 0),
@@ -306,9 +308,18 @@ public class PingMonitorViewModel : ViewModelBase
         [
             new Axis
             {
-                LabelsPaint = null,
-                SeparatorsPaint = null,
-                Padding = new Padding(0)
+                Labeler = value => DateTimeHelper.DateTimeToTimeString(
+                    _sessionStartTime.AddSeconds(value)),
+                TextSize = 10,
+                Padding = new Padding(0, 4, 0, 0),
+                LabelsPaint = new SolidColorPaint(labelColor),
+                SeparatorsPaint = new SolidColorPaint(separatorColor)
+                {
+                    StrokeThickness = 1,
+                    PathEffect = new DashEffect([10f, 10f])
+                },
+                MinStep = SettingsManager.Current.PingMonitor_ChartTime / 4.0,
+                ForceStepToMin = true
             }
         ];
 
@@ -330,6 +341,25 @@ public class PingMonitorViewModel : ViewModelBase
                 }
             }
         ];
+
+        PingXAxes[0].PropertyChanged += (_, args) =>
+        {
+            if (_updatingAxisFromCode)
+                return;
+
+            if (args.PropertyName is not (nameof(Axis.MinLimit) or nameof(Axis.MaxLimit)))
+                return;
+
+            IsLiveMode = false;
+
+            var axis = PingXAxes[0];
+            if (axis.MinLimit.HasValue && axis.MaxLimit.HasValue)
+            {
+                _updatingAxisFromCode = true;
+                axis.MinStep = (axis.MaxLimit.Value - axis.MinLimit.Value) / 4.0;
+                _updatingAxisFromCode = false;
+            }
+        };
     }
 
     /// <summary>
@@ -346,6 +376,22 @@ public class PingMonitorViewModel : ViewModelBase
     /// Gets the Y-axes configuration for the ping time chart.
     /// </summary>
     public Axis[] PingYAxes { get; private set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the chart is in live (auto-scrolling) mode.
+    /// </summary>
+    public bool IsLiveMode
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 
     /// <summary>
     /// Gets the error message if an error occurs.
@@ -425,6 +471,33 @@ public class PingMonitorViewModel : ViewModelBase
         _removeHostByGuid(HostId);
     }
 
+    /// <summary>
+    /// Gets the command to export the ping monitoring results of this host.
+    /// </summary>
+    public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
+
+    private void ExportAction()
+    {
+        _ = Export();
+    }
+
+    /// <summary>
+    /// Gets the command to return the chart to live (auto-scrolling) mode.
+    /// </summary>
+    public ICommand GoLiveCommand => new RelayCommand(_ => GoLiveAction());
+
+    private void GoLiveAction()
+    {
+        IsLiveMode = true;
+
+        // Drop everything that was buffered while inspecting and no longer fits into the
+        // live rolling window, so the chart returns to its normal sliding behavior.
+        while (_pingValues.Count > _maxPingValues)
+            _pingValues.RemoveAt(0);
+
+        UpdateXAxisWindow(DateTime.Now);
+    }
+
     #endregion
 
     #region Methods
@@ -436,11 +509,14 @@ public class PingMonitorViewModel : ViewModelBase
     {
         IsErrorMessageDisplayed = false;
         IsRunning = true;
+        IsLiveMode = true;
+
+        _sessionId++;
 
         // Reset history
         _pingInfoList = [];
 
-        // Reset the latest results            
+        // Reset the latest results
         StatusTime = DateTime.Now;
         Transmitted = 0;
         Received = 0;
@@ -448,14 +524,13 @@ public class PingMonitorViewModel : ViewModelBase
         PacketLoss = 0;
 
         // Reset chart
-        _sessionId++;
+        _sessionStartTime = DateTime.Now;
         ResetTimeChart();
 
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
 
-        // How many data points fit into the 60-second window at the configured interval.
-        _maxPingValues = (int)Math.Ceiling(60_000.0 / SettingsManager.Current.PingMonitor_WaitTime);
+        UpdateMaxPingValues();
 
         var ping = new Ping
         {
@@ -485,10 +560,7 @@ public class PingMonitorViewModel : ViewModelBase
         _cancellationTokenSource?.Cancel();
     }
 
-    /// <summary>
-    /// Resets the time chart with empty values.
-    /// </summary>
-    private static readonly double _hourTicks = (double)TimeSpan.FromHours(1).Ticks;
+    private DateTime _sessionStartTime;
 
     private void ResetTimeChart()
     {
@@ -501,9 +573,14 @@ public class PingMonitorViewModel : ViewModelBase
 
     private void UpdateXAxisWindow(DateTime now)
     {
-        var axis = (Axis)PingXAxes[0];
-        axis.MinLimit = now.AddSeconds(-60).Ticks / _hourTicks;
-        axis.MaxLimit = now.Ticks / _hourTicks;
+        _updatingAxisFromCode = true;
+        var axis = PingXAxes[0];
+        var chartTime = SettingsManager.Current.PingMonitor_ChartTime;
+        var elapsed = (now - _sessionStartTime).TotalSeconds;
+        axis.MinStep = chartTime / 4.0;
+        axis.MinLimit = elapsed - chartTime;
+        axis.MaxLimit = elapsed;
+        _updatingAxisFromCode = false;
     }
 
     /// <summary>
@@ -599,13 +676,21 @@ public class PingMonitorViewModel : ViewModelBase
         TimeMs = e.Args.Time;
 
         // Null exception may occur when the application is closing
-        var session = _sessionId;
+        var capturedSession = _sessionId;
         Application.Current?.Dispatcher.BeginInvoke(DispatcherPriority.Normal, () =>
         {
-            if (_sessionId != session) 
+            if (_sessionId != capturedSession)
                 return;
 
             _pingValues.Add(timeInfo);
+
+            // While the user is inspecting the chart (zoomed/panned, i.e. not live), keep
+            // the view frozen: don't trim the rolling buffer, don't move the X window and
+            // don't rescale the Y axis. New samples keep getting buffered and become
+            // visible again once the user returns to live mode.
+            if (!IsLiveMode)
+                return;
+
             if (_pingValues.Count > _maxPingValues)
                 _pingValues.RemoveAt(0);
 
@@ -614,13 +699,13 @@ public class PingMonitorViewModel : ViewModelBase
             // Compute step from a 20% padded max, then set MaxLimit = step * 3 so the
             // 4th label lands exactly on MaxLimit and is never cut off by rounding.
             var maxVal = _pingValues.Where(p => !double.IsNaN(p.Value)).Select(p => p.Value).DefaultIfEmpty(0).Max();
-            if (maxVal > 0)
-            {
-                var yAxis = (Axis)PingYAxes[0];
-                var step = Math.Ceiling(maxVal * 1.2 / 3.0);
-                yAxis.MinStep = step;
-                yAxis.MaxLimit = step * 3;
-            }
+            if (!(maxVal > 0))
+                return;
+
+            var yAxis = PingYAxes[0];
+            var step = Math.Ceiling(maxVal * 1.2 / 3.0);
+            yAxis.MinStep = step;
+            yAxis.MaxLimit = step * 3;
         });
 
         // Add to history
@@ -662,6 +747,35 @@ public class PingMonitorViewModel : ViewModelBase
 
         ErrorMessage = e.Message;
         IsErrorMessageDisplayed = true;
+    }
+
+    private void SettingsManager_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SettingsInfo.PingMonitor_ChartTime):
+                UpdateMaxPingValues();
+                if (IsRunning && IsLiveMode)
+                    UpdateXAxisWindow(DateTime.Now);
+                break;
+            case nameof(SettingsInfo.PingMonitor_WaitTime):
+                UpdateMaxPingValues();
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Extra share of samples kept beyond the visible window so the chart has a little
+    /// off-screen history (smoother left edge while live + minor pan-back headroom).
+    /// </summary>
+    private const double PingValuesHeadroom = 1.1;
+
+    private void UpdateMaxPingValues()
+    {
+        var visibleValues = (double)SettingsManager.Current.PingMonitor_ChartTime * 1000 /
+                            SettingsManager.Current.PingMonitor_WaitTime;
+
+        _maxPingValues = (int)Math.Ceiling(visibleValues * PingValuesHeadroom);
     }
 
     #endregion

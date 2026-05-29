@@ -125,6 +125,25 @@ public class PingMonitorSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets the chart time window in seconds.
+    /// </summary>
+    public int ChartTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PingMonitor_ChartTime = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Contructor, load settings
@@ -149,6 +168,7 @@ public class PingMonitorSettingsViewModel : ViewModelBase
         DontFragment = SettingsManager.Current.PingMonitor_DontFragment;
         WaitTime = SettingsManager.Current.PingMonitor_WaitTime;
         ExpandHostView = SettingsManager.Current.PingMonitor_ExpandHostView;
+        ChartTime = SettingsManager.Current.PingMonitor_ChartTime;
     }
 
     #endregion
