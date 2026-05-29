@@ -78,6 +78,8 @@ Release date: **xx.xx.2025**
 **Ping Monitor**
 
 - Migrated charts from LiveCharts to LiveCharts2. Added a tooltip showing the ping time on hover. [#3449](https://github.com/BornToBeRoot/NETworkManager/pull/3449)
+- The latency chart is now interactive: zoom with the mouse wheel, pan by dragging with the left mouse button, and zoom into a section by dragging with the right mouse button. While inspecting, the chart pauses auto-scrolling and a **Live** button returns it to live mode. The visible time window is now configurable via the new **Chart time** setting (default 2 minutes). [#3453](https://github.com/BornToBeRoot/NETworkManager/pull/3453)
+- Export is now triggered by right-clicking a host directly (instead of the list context menu), so right-clicking the chart can be used to zoom into a section. [#3453](https://github.com/BornToBeRoot/NETworkManager/pull/3453)
 
 **Discovery Protocol**
 
