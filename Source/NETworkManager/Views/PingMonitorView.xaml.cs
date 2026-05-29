@@ -40,6 +40,10 @@ public partial class PingMonitorView
     /// </summary>
     public void Cleanup()
     {
+        // Release the app-lifetime subscription so this transient per-host view (and its
+        // view model) is not kept alive until the application shuts down.
+        Dispatcher.ShutdownStarted -= Dispatcher_ShutdownStarted;
+
         _viewModel.Cleanup();
     }
 
