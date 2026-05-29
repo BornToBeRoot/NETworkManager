@@ -199,6 +199,17 @@ public partial class WebConsoleControl : UserControlBase, IDragablzTabItem
 
         _closed = true;
 
+        // Release the subscriptions that would otherwise keep this transient per-tab
+        // control (and its heavyweight WebView2 instance) alive for the lifetime of the
+        // application, then dispose the browser to free the native resources.
+        SettingsManager.Current.PropertyChanged -= Current_PropertyChanged;
+        Dispatcher.ShutdownStarted -= Dispatcher_ShutdownStarted;
+
+        Browser.NavigationStarting -= Browser2_NavigationStarting;
+        Browser.NavigationCompleted -= Browser2_NavigationCompleted;
+        Browser.SourceChanged -= Browser2_SourceChanged;
+        Browser.Dispose();
+
         ConfigurationManager.Current.WebConsoleTabCount--;
     }
 
