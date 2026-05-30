@@ -735,6 +735,9 @@
   <data name="CapsLockIsEnabled" xml:space="preserve">
     <value>Caps lock is enabled!</value>
   </data>
+  <data name="ChartTimeInSeconds" xml:space="preserve">
+    <value>Chart time (seconds)</value>
+  </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Check for updates at startup</value>
   </data>
@@ -1509,6 +1512,9 @@ Create one...</value>
   </data>
   <data name="Lime" xml:space="preserve">
     <value>Lime</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Live</value>
   </data>
   <data name="Magenta" xml:space="preserve">
     <value>Magenta</value>
