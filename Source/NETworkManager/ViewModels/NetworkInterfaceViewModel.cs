@@ -1939,6 +1939,15 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         BandwidthBytesReceivedSpeed = e.ByteReceivedSpeed;
         BandwidthBytesSentSpeed = e.ByteSentSpeed;
 
+        // A counter reset (e.g. adapter disable/enable, driver reset, sleep/resume) can drop the
+        // cumulative totals below the session baseline. Re-baseline in that case so the session
+        // amounts below never go negative; they then resume counting from the reset point.
+        if (BandwidthTotalBytesReceived < _bandwidthTotalBytesReceivedTemp)
+            _bandwidthTotalBytesReceivedTemp = BandwidthTotalBytesReceived;
+
+        if (BandwidthTotalBytesSent < _bandwidthTotalBytesSentTemp)
+            _bandwidthTotalBytesSentTemp = BandwidthTotalBytesSent;
+
         // Amount transferred since the measurement started (this session)
         BandwidthDiffBytesReceived = BandwidthTotalBytesReceived - _bandwidthTotalBytesReceivedTemp;
         BandwidthDiffBytesSent = BandwidthTotalBytesSent - _bandwidthTotalBytesSentTemp;
