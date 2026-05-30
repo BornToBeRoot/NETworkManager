@@ -1580,7 +1580,7 @@
                                         <TextBlock Grid.Column="0" Grid.Row="4"
                                                    Text="{x:Static localization:Strings.Match}"
                                                    Style="{StaticResource InfoTextBlock}" />
-                                        <StackPanel Grid.Column="0" Grid.Row="7"
+                                        <StackPanel Grid.Column="0" Grid.Row="6"
                                                     Orientation="Horizontal">
                                             <RadioButton Content="{x:Static localization:Strings.Any}"
                                                          IsChecked="{Binding Path=ProfileFilterTagsMatchAny}" />
@@ -1588,7 +1588,7 @@
                                                          IsChecked="{Binding Path=ProfileFilterTagsMatchAll}"
                                                          Margin="10,0,0,0" />
                                         </StackPanel>
-                                        <StackPanel Grid.Column="0" Grid.Row="9"
+                                        <StackPanel Grid.Column="0" Grid.Row="8"
                                                     Orientation="Horizontal" HorizontalAlignment="Right">
                                             <Button Command="{Binding ApplyProfileFilterCommand}"
                                                     Style="{StaticResource ImageButton}"
