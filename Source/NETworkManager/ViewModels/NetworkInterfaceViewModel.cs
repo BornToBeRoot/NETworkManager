@@ -1,6 +1,9 @@
-﻿using LiveCharts;
-using LiveCharts.Configurations;
-using LiveCharts.Wpf;
+﻿using LiveChartsCore;
+using LiveChartsCore.Drawing;
+using LiveChartsCore.Kernel;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
@@ -14,6 +17,7 @@ using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -716,44 +720,187 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         NetworkChange.NetworkAvailabilityChanged += (_, _) => ReloadNetworkInterfaces();
         NetworkChange.NetworkAddressChanged += (_, _) => ReloadNetworkInterfaces();
 
+        // React to settings changes (e.g. the configurable bandwidth chart time window)
+        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+
         LoadSettings();
 
         _isLoading = false;
     }
 
     /// <summary>
-    /// Initializes the bandwidth chart configuration.
+    /// The visible chart time window in seconds, configurable via the settings.
     /// </summary>
+    private static double BandwidthChartWindowSeconds => SettingsManager.Current.NetworkInterface_BandwidthChartTime;
+
+    /// <summary>
+    /// Extra share of samples kept beyond the visible window so the chart has a little
+    /// off-screen history (smoother left edge while live + minor pan-back headroom).
+    /// </summary>
+    private const double BandwidthValuesHeadroom = 1.1;
+
+    private int _maxBandwidthValues;
+    private bool _updatingBandwidthAxisFromCode;
+    private DateTime _bandwidthSessionStartTime;
+
+    private ObservableCollection<LvlChartsDefaultInfo> _bandwidthReceivedValues;
+    private ObservableCollection<LvlChartsDefaultInfo> _bandwidthSentValues;
+
+    // Capped rolling history kept off-screen so the chart can be rebuilt when the user
+    // returns to live mode after panning/zooming (see BandwidthGoLiveAction).
+    private readonly List<LvlChartsDefaultInfo> _bandwidthReceivedHistory = [];
+    private readonly List<LvlChartsDefaultInfo> _bandwidthSentHistory = [];
+
     private void InitialBandwidthChart()
     {
-        var dayConfig = Mappers.Xy<LvlChartsDefaultInfo>()
-            .X(dayModel => (double)dayModel.DateTime.Ticks / TimeSpan.FromHours(1).Ticks)
-            .Y(dayModel => dayModel.Value);
+        _bandwidthReceivedValues = [];
+        _bandwidthSentValues = [];
+        _bandwidthSessionStartTime = DateTime.Now;
 
-        Series = new SeriesCollection(dayConfig)
-        {
-            new LineSeries
+        UpdateMaxBandwidthValues();
+
+        var downloadColor = SKColor.Parse("#1ba1e2");
+        var uploadColor = SKColor.Parse("#7fba00");
+
+        var labelColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray5") is System.Windows.Media.SolidColorBrush gray5
+            ? new SKColor(gray5.Color.R, gray5.Color.G, gray5.Color.B, gray5.Color.A)
+            : new SKColor(0x68, 0x68, 0x68);
+
+        var separatorColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray8") is System.Windows.Media.SolidColorBrush gray8
+            ? new SKColor(gray8.Color.R, gray8.Color.G, gray8.Color.B, gray8.Color.A)
+            : new SKColor(0x80, 0x80, 0x80);
+
+        Series =
+        [
+            new LineSeries<LvlChartsDefaultInfo>
             {
-                Title = "Download",
-                Values = new ChartValues<LvlChartsDefaultInfo>(),
-                PointGeometry = null
+                Name = Strings.Download,
+                Values = _bandwidthReceivedValues,
+                Mapping = (info, _) => double.IsNaN(info.Value)
+                    ? Coordinate.Empty
+                    : new((info.DateTime - _bandwidthSessionStartTime).TotalSeconds, info.Value),
+                GeometrySize = 0,
+                LineSmoothness = 0.3,
+                DataPadding = new LvcPoint(0, 0),
+                Stroke = new SolidColorPaint(downloadColor) { StrokeThickness = 1.5f },
+                Fill = new SolidColorPaint(downloadColor.WithAlpha(0x33))
             },
-            new LineSeries
+            new LineSeries<LvlChartsDefaultInfo>
             {
-                Title = "Upload",
-                Values = new ChartValues<LvlChartsDefaultInfo>(),
-                PointGeometry = null
+                Name = Strings.Upload,
+                Values = _bandwidthSentValues,
+                Mapping = (info, _) => double.IsNaN(info.Value)
+                    ? Coordinate.Empty
+                    : new((info.DateTime - _bandwidthSessionStartTime).TotalSeconds, info.Value),
+                GeometrySize = 0,
+                LineSmoothness = 0.3,
+                DataPadding = new LvcPoint(0, 0),
+                Stroke = new SolidColorPaint(uploadColor) { StrokeThickness = 1.5f },
+                Fill = new SolidColorPaint(uploadColor.WithAlpha(0x33))
+            }
+        ];
+
+        BandwidthXAxes =
+        [
+            new Axis
+            {
+                Labeler = value => DateTimeHelper.DateTimeToTimeString(
+                    _bandwidthSessionStartTime.AddSeconds(value)),
+                TextSize = 10,
+                Padding = new Padding(0, 4, 0, 0),
+                LabelsPaint = new SolidColorPaint(labelColor),
+                SeparatorsPaint = new SolidColorPaint(separatorColor)
+                {
+                    StrokeThickness = 1,
+                    PathEffect = new DashEffect([10f, 10f])
+                },
+                MinStep = BandwidthChartWindowSeconds / 4.0,
+                ForceStepToMin = true
+            }
+        ];
+
+        BandwidthYAxes =
+        [
+            new Axis
+            {
+                MinLimit = 0,
+                Labeler = value => $"{FileSizeConverter.GetBytesReadable((long)value * 8)}it/s",
+                TextSize = 11,
+                Padding = new Padding(4, 0),
+                LabelsPaint = new SolidColorPaint(labelColor),
+                SeparatorsPaint = new SolidColorPaint(separatorColor)
+                {
+                    StrokeThickness = 1,
+                    PathEffect = new DashEffect([10f, 10f])
+                }
+            }
+        ];
+
+        BandwidthLegendTextPaint = new SolidColorPaint(labelColor) { SKTypeface = SKTypeface.Default };
+
+        BandwidthXAxes[0].PropertyChanged += (_, args) =>
+        {
+            if (_updatingBandwidthAxisFromCode)
+                return;
+
+            if (args.PropertyName is not (nameof(Axis.MinLimit) or nameof(Axis.MaxLimit)))
+                return;
+
+            IsBandwidthLiveMode = false;
+
+            var axis = BandwidthXAxes[0];
+            if (axis.MinLimit.HasValue && axis.MaxLimit.HasValue)
+            {
+                _updatingBandwidthAxisFromCode = true;
+                axis.MinStep = (axis.MaxLimit.Value - axis.MinLimit.Value) / 4.0;
+                _updatingBandwidthAxisFromCode = false;
             }
         };
 
-        FormatterDate = value =>
-            DateTimeHelper.DateTimeToTimeString(new DateTime((long)(value * TimeSpan.FromHours(1).Ticks)));
-        FormatterSpeed = value => $"{FileSizeConverter.GetBytesReadable((long)value * 8)}it/s";
+        UpdateBandwidthXAxisWindow(DateTime.Now);
     }
 
-    public Func<double, string> FormatterDate { get; set; }
-    public Func<double, string> FormatterSpeed { get; set; }
-    public SeriesCollection Series { get; set; }
+    /// <summary>
+    /// Gets the series collection for the bandwidth chart (download/upload).
+    /// </summary>
+    public ISeries[] Series { get; private set; }
+
+    /// <summary>
+    /// Gets the X-axes configuration for the bandwidth chart.
+    /// </summary>
+    public Axis[] BandwidthXAxes { get; private set; }
+
+    /// <summary>
+    /// Gets the Y-axes configuration for the bandwidth chart.
+    /// </summary>
+    public Axis[] BandwidthYAxes { get; private set; }
+
+    /// <summary>
+    /// Gets the themed paint used for the chart legend text.
+    /// </summary>
+    public SolidColorPaint BandwidthLegendTextPaint { get; private set; }
+
+    /// <summary>
+    /// Gets a value indicating whether the bandwidth chart is in live (auto-scrolling) mode.
+    /// </summary>
+    public bool IsBandwidthLiveMode
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private void UpdateMaxBandwidthValues()
+    {
+        // The BandwidthMeter ticks once per second; keep a little off-screen headroom.
+        _maxBandwidthValues = (int)Math.Ceiling(BandwidthChartWindowSeconds * BandwidthValuesHeadroom);
+    }
 
     /// <summary>
     /// Loads the network interfaces.
@@ -1523,21 +1670,83 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void ResetBandwidthChart()
     {
-        if (Series == null)
+        if (_bandwidthReceivedValues == null)
             return;
 
-        Series[0].Values.Clear();
-        Series[1].Values.Clear();
+        _bandwidthReceivedValues.Clear();
+        _bandwidthSentValues.Clear();
+        _bandwidthReceivedHistory.Clear();
+        _bandwidthSentHistory.Clear();
 
-        var currentDateTime = DateTime.Now;
+        _bandwidthSessionStartTime = DateTime.Now;
+        IsBandwidthLiveMode = true;
 
-        for (var i = 60; i > 0; i--)
-        {
-            var bandwidthInfo = new LvlChartsDefaultInfo(currentDateTime.AddSeconds(-i), double.NaN);
+        UpdateBandwidthXAxisWindow(DateTime.Now);
+    }
 
-            Series[0].Values.Add(bandwidthInfo);
-            Series[1].Values.Add(bandwidthInfo);
-        }
+    private void UpdateBandwidthXAxisWindow(DateTime now)
+    {
+        _updatingBandwidthAxisFromCode = true;
+        var axis = BandwidthXAxes[0];
+        var elapsed = (now - _bandwidthSessionStartTime).TotalSeconds;
+        axis.MinStep = BandwidthChartWindowSeconds / 4.0;
+        axis.MinLimit = elapsed - BandwidthChartWindowSeconds;
+        axis.MaxLimit = elapsed;
+        _updatingBandwidthAxisFromCode = false;
+    }
+
+    /// <summary>
+    /// Rescales the Y axis to the current values. The step is derived from a 20% padded
+    /// max and MaxLimit is set to step * 3, so the top label lands exactly on MaxLimit.
+    /// </summary>
+    private void UpdateBandwidthYAxis()
+    {
+        var maxVal = _bandwidthReceivedValues.Concat(_bandwidthSentValues)
+            .Where(p => !double.IsNaN(p.Value))
+            .Select(p => p.Value)
+            .DefaultIfEmpty(0)
+            .Max();
+
+        if (!(maxVal > 0))
+            return;
+
+        var yAxis = BandwidthYAxes[0];
+        var step = Math.Ceiling(maxVal * 1.2 / 3.0);
+        yAxis.MinStep = step;
+        yAxis.MaxLimit = step * 3;
+    }
+
+    private void TrimBandwidthHistory(List<LvlChartsDefaultInfo> history)
+    {
+        var excess = history.Count - _maxBandwidthValues;
+        if (excess > 0)
+            history.RemoveRange(0, excess);
+    }
+
+    /// <summary>
+    /// Gets the command to return the bandwidth chart to live (auto-scrolling) mode.
+    /// </summary>
+    public ICommand BandwidthGoLiveCommand => new RelayCommand(_ => BandwidthGoLiveAction());
+
+    private void BandwidthGoLiveAction()
+    {
+        IsBandwidthLiveMode = true;
+
+        // Samples received while inspecting were not added to the chart, so rebuild the
+        // rolling buffers from the most recent history to resume at the current time.
+        var recentReceived = _bandwidthReceivedHistory
+            .Skip(Math.Max(0, _bandwidthReceivedHistory.Count - _maxBandwidthValues));
+        var recentSent = _bandwidthSentHistory
+            .Skip(Math.Max(0, _bandwidthSentHistory.Count - _maxBandwidthValues));
+
+        _bandwidthReceivedValues = new ObservableCollection<LvlChartsDefaultInfo>(recentReceived);
+        _bandwidthSentValues = new ObservableCollection<LvlChartsDefaultInfo>(recentSent);
+
+        ((LineSeries<LvlChartsDefaultInfo>)Series[0]).Values = _bandwidthReceivedValues;
+        ((LineSeries<LvlChartsDefaultInfo>)Series[1]).Values = _bandwidthSentValues;
+
+        UpdateBandwidthXAxisWindow(DateTime.Now);
+        UpdateBandwidthYAxis();
     }
 
     private bool _resetBandwidthStatisticOnNextUpdate;
@@ -1685,6 +1894,20 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         IsSearching = false;
     }
 
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SettingsInfo.NetworkInterface_BandwidthChartTime):
+                UpdateMaxBandwidthValues();
+
+                // Re-apply the visible window immediately so the change is reflected while running.
+                if (IsBandwidthLiveMode && _bandwidthMeter is { IsRunning: true })
+                    UpdateBandwidthXAxisWindow(DateTime.Now);
+                break;
+        }
+    }
+
     private void BandwidthMeter_UpdateSpeed(object sender, BandwidthMeterSpeedArgs e)
     {
         // Reset statistics
@@ -1711,15 +1934,32 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         BandwidthDiffBytesSent = BandwidthTotalBytesSent - _bandwidthTotalBytesSentTemp;
 
         // Add chart entry
-        Series[0].Values.Add(new LvlChartsDefaultInfo(e.DateTime, e.ByteReceivedSpeed));
-        Series[1].Values.Add(new LvlChartsDefaultInfo(e.DateTime, e.ByteSentSpeed));
+        var receivedInfo = new LvlChartsDefaultInfo(e.DateTime, e.ByteReceivedSpeed);
+        var sentInfo = new LvlChartsDefaultInfo(e.DateTime, e.ByteSentSpeed);
 
-        // Remove data older than 60 seconds
-        if (Series[0].Values.Count > 59)
-            Series[0].Values.RemoveAt(0);
+        // Always record history (capped) so the chart can be rebuilt when returning to live mode.
+        _bandwidthReceivedHistory.Add(receivedInfo);
+        _bandwidthSentHistory.Add(sentInfo);
+        TrimBandwidthHistory(_bandwidthReceivedHistory);
+        TrimBandwidthHistory(_bandwidthSentHistory);
 
-        if (Series[1].Values.Count > 59)
-            Series[1].Values.RemoveAt(0);
+        // While the user inspects the chart (panned/zoomed, i.e. not live), keep the view
+        // frozen: skip updating the visible buffer and axes. New samples are still recorded
+        // above and become visible again via BandwidthGoLiveCommand.
+        if (!IsBandwidthLiveMode)
+            return;
+
+        _bandwidthReceivedValues.Add(receivedInfo);
+        _bandwidthSentValues.Add(sentInfo);
+
+        if (_bandwidthReceivedValues.Count > _maxBandwidthValues)
+            _bandwidthReceivedValues.RemoveAt(0);
+
+        if (_bandwidthSentValues.Count > _maxBandwidthValues)
+            _bandwidthSentValues.RemoveAt(0);
+
+        UpdateBandwidthXAxisWindow(e.DateTime);
+        UpdateBandwidthYAxis();
     }
 
     private void NetworkInterface_UserHasCanceled(object sender, EventArgs e)
