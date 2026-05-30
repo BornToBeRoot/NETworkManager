@@ -84,15 +84,15 @@
                         </Button.ToolTip>
                         <Rectangle Width="20" Height="20">
                             <Rectangle.Resources>
-                                <VisualBrush x:Key="VisualPlay" Stretch="Uniform"
-                                             Visual="{iconPacks:Material Kind=Play}" />
+                                <VisualBrush x:Key="VisualRefresh" Stretch="Uniform"
+                                             Visual="{iconPacks:Material Kind=Refresh}" />
                                 <VisualBrush x:Key="VisualClose" Stretch="Uniform"
                                              Visual="{iconPacks:Material Kind=Close}" />
                             </Rectangle.Resources>
                             <Rectangle.Style>
                                 <Style TargetType="{x:Type Rectangle}">
                                     <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                    <Setter Property="OpacityMask" Value="{StaticResource VisualPlay}" />
+                                    <Setter Property="OpacityMask" Value="{StaticResource VisualRefresh}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsRunning}" Value="True">
                                             <Setter Property="OpacityMask" Value="{StaticResource VisualClose}" />
