@@ -32,7 +32,7 @@ public class NetworkInterfaceSettingsViewModel : ViewModelBase
 
     #endregion
 
-    #region Contructor, load settings
+    #region Constructor, load settings
 
     /// <summary>
     /// Initializes a new instance of the <see cref="NetworkInterfaceSettingsViewModel"/> class.
