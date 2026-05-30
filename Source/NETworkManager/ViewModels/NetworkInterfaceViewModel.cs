@@ -697,9 +697,12 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     {
         _isLoading = true;
 
-        _ = LoadNetworkInterfaces();
-
+        // Initialize the bandwidth chart before loading interfaces, so the chart collections
+        // exist by the time the (possibly synchronous) interface load selects an interface and
+        // starts the bandwidth meter.
         InitialBandwidthChart();
+
+        _ = LoadNetworkInterfaces();
 
         // Profiles
         CreateTags();
@@ -755,6 +758,10 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         _bandwidthReceivedValues = [];
         _bandwidthSentValues = [];
         _bandwidthSessionStartTime = DateTime.Now;
+
+        // Start in live mode so samples are plotted immediately, independent of when the meter
+        // starts relative to this initialization.
+        IsBandwidthLiveMode = true;
 
         UpdateMaxBandwidthValues();
 
