@@ -255,6 +255,7 @@ public static class DocumentationManager
             SettingsName.Profiles => DocumentationIdentifier.SettingsProfiles,
             SettingsName.Settings => DocumentationIdentifier.SettingsSettings,
             SettingsName.Dashboard => GetIdentifierByApplicationName(ApplicationName.Dashboard),
+            SettingsName.NetworkInterface => GetIdentifierByApplicationName(ApplicationName.NetworkInterface),
             SettingsName.IPScanner => GetIdentifierByApplicationName(ApplicationName.IPScanner),
             SettingsName.PortScanner => GetIdentifierByApplicationName(ApplicationName.PortScanner),
             SettingsName.PingMonitor => GetIdentifierByApplicationName(ApplicationName.PingMonitor),

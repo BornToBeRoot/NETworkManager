@@ -120,6 +120,7 @@ public class SettingsViewModel : ViewModelBase
     private SettingsSettingsView _settingsSettingsView;
     private SettingsProfilesView _settingsProfilesView;
     private DashboardSettingsView _dashboardSettingsView;
+    private NetworkInterfaceSettingsView _networkInterfaceSettingsView;
     private IPScannerSettingsView _ipScannerSettingsView;
     private PortScannerSettingsView _portScannerSettingsView;
     private PingMonitorSettingsView _pingMonitorSettingsView;
@@ -264,6 +265,11 @@ public class SettingsViewModel : ViewModelBase
                 _dashboardSettingsView ??= new DashboardSettingsView();
 
                 SettingsContent = _dashboardSettingsView;
+                break;
+            case SettingsName.NetworkInterface:
+                _networkInterfaceSettingsView ??= new NetworkInterfaceSettingsView();
+
+                SettingsContent = _networkInterfaceSettingsView;
                 break;
             case SettingsName.IPScanner:
                 _ipScannerSettingsView ??= new IPScannerSettingsView();

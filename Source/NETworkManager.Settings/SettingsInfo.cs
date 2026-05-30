@@ -894,6 +894,22 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.NetworkInterface_ExportFileType;
 
+    /// <summary>
+    /// Gets or sets the bandwidth chart time window in seconds.
+    /// </summary>
+    public int NetworkInterface_BandwidthChartTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.NetworkInterface_BandwidthChartTime;
+
     #endregion
 
     #region WiFi

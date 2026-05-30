@@ -104,6 +104,7 @@ public static class GlobalStaticConfiguration
 
     // Application: Network Interface
     public static ExportFileType NetworkInterface_ExportFileType => ExportFileType.Csv;
+    public static int NetworkInterface_BandwidthChartTime => 60;
 
     // Application: WiFi
     public static bool WiFi_Show2dot4GHzNetworks => true;

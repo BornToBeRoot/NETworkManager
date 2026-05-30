@@ -74,6 +74,9 @@ Release date: **xx.xx.2025**
 **Network Interface**
 
 - Added Network Profile (domain, private, public) information to the Network Interface details view, if available. [#3383](https://github.com/BornToBeRoot/NETworkManager/pull/3383)
+- Migrated the bandwidth chart from LiveCharts to LiveCharts2. Added a tooltip showing the download/upload speed on hover. [#3457](https://github.com/BornToBeRoot/NETworkManager/pull/3457)
+- The bandwidth chart is now interactive: zoom with the mouse wheel, pan by dragging with the left mouse button, and zoom into a section by dragging with the right mouse button. While inspecting, the chart pauses auto-scrolling and a **Live** button returns it to live mode. The visible time window is now configurable via the new **Chart time** setting (default 60 seconds). [#3457](https://github.com/BornToBeRoot/NETworkManager/pull/3457)
+- Reworked the network usage statistics: byte counts are now shown in a human-readable format (exact bytes on hover) and the speed is shown in bit/s (byte/s on hover). [#3457](https://github.com/BornToBeRoot/NETworkManager/pull/3457)
 
 **Ping Monitor**
 
@@ -95,6 +98,8 @@ Release date: **xx.xx.2025**
 **General**
 
 - Fixed the last column of various DataGrids not resizing to fill the available view width. [#3417](https://github.com/BornToBeRoot/NETworkManager/pull/3417)
+- Fixed `CancellationTokenSource` leak in `IPScanner`, `PortScanner`, `Traceroute`, `PingMonitor`, `PingMonitorHost` and `SNMP` ViewModels. The previous instance was never disposed before being overwritten on each run, leaking the underlying `WaitHandle`. [#3448](https://github.com/BornToBeRoot/NETworkManager/pull/3448)
+- Fixed a `Dispatcher.ShutdownStarted` handler leak in the Dragablz tab items (PowerShell, PuTTY, TigerVNC, Remote Desktop and Web Console controls, plus the IP Scanner, Port Scanner, Traceroute, DNS Lookup, IP Geolocation, SNMP, SNTP Lookup and Whois views). The handler was subscribed in the constructor but never removed, keeping each closed tab (view and view model) alive until the application exited. It is now unsubscribed in `CloseTab()`; the Web Console additionally disposes its WebView2 instance. [#3454](https://github.com/BornToBeRoot/NETworkManager/pull/3454)
 
 **Port Scanner**
 
@@ -111,6 +116,7 @@ Release date: **xx.xx.2025**
 **Network Interface**
 
 - Fixed `Renew6Action` incorrectly calling `ipconfig /renew` (IPv4) instead of `ipconfig /renew6` (IPv6) when renewing the IPv6 address. [#3441](https://github.com/BornToBeRoot/NETworkManager/pull/3441)
+- Bandwidth measurement now includes IPv6 traffic (previously IPv4 only), derives a time-accurate speed, and no longer crashes or shows spikes on adapter errors or interface counter resets. [#3457](https://github.com/BornToBeRoot/NETworkManager/pull/3457)
 
 **TigerVNC**
 
@@ -118,9 +124,7 @@ Release date: **xx.xx.2025**
 
 ## Dependencies, Refactoring & Documentation
 
-- Migrated from `LiveCharts` to `LiveCharts2` (`LiveChartsCore.SkiaSharpView.WPF`) for chart rendering. [#3449](https://github.com/BornToBeRoot/NETworkManager/pull/3449)
-- Fixed `CancellationTokenSource` leak in `IPScanner`, `PortScanner`, `Traceroute`, `PingMonitor`, `PingMonitorHost` and `SNMP` ViewModels. The previous instance was never disposed before being overwritten on each run, leaking the underlying `WaitHandle`. [#3448](https://github.com/BornToBeRoot/NETworkManager/pull/3448)
-- Fixed a `Dispatcher.ShutdownStarted` handler leak in the Dragablz tab items (PowerShell, PuTTY, TigerVNC, Remote Desktop and Web Console controls, plus the IP Scanner, Port Scanner, Traceroute, DNS Lookup, IP Geolocation, SNMP, SNTP Lookup and Whois views). The handler was subscribed in the constructor but never removed, keeping each closed tab (view and view model) alive until the application exited. It is now unsubscribed in `CloseTab()`; the Web Console additionally disposes its WebView2 instance. [#3454](https://github.com/BornToBeRoot/NETworkManager/pull/3454)
+- Migrated from `LiveCharts` to `LiveCharts2` (`LiveChartsCore.SkiaSharpView.WPF`) for chart rendering. [#3449](https://github.com/BornToBeRoot/NETworkManager/pull/3449) [#3457](https://github.com/BornToBeRoot/NETworkManager/pull/3457)
 - Replace fire-and-forget `.ConfigureAwait(false)` calls with explicit discard assignments (`_ = SomeAsyncOperation()`) across command handlers, startup/load paths and profile callbacks. [#3441](https://github.com/BornToBeRoot/NETworkManager/pull/3441)
 - Code cleanup & refactoring
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
