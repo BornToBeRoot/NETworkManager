@@ -735,6 +735,9 @@
   <data name="CapsLockIsEnabled" xml:space="preserve">
     <value>Caps lock 已啟用！</value>
   </data>
+  <data name="ChartTimeInSeconds" xml:space="preserve">
+    <value>Chart time (seconds)</value>
+  </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
     <value>在啟動時檢查更新</value>
   </data>
@@ -1512,6 +1515,9 @@
   </data>
   <data name="Lime" xml:space="preserve">
     <value>亮綠色</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Live</value>
   </data>
   <data name="Magenta" xml:space="preserve">
     <value>洋紅色</value>
