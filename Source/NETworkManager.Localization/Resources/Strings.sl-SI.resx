@@ -737,6 +737,9 @@
   <data name="CapsLockIsEnabled" xml:space="preserve">
     <value>'Caps lock' je omogočen!</value>
   </data>
+  <data name="ChartTimeInSeconds" xml:space="preserve">
+    <value>Chart time (seconds)</value>
+  </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Ob zagonu preveri obstoj posodobitev</value>
   </data>
@@ -1508,6 +1511,9 @@ Ustvarite enega...</value>
   </data>
   <data name="Lime" xml:space="preserve">
     <value>Limeta</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Live</value>
   </data>
   <data name="Magenta" xml:space="preserve">
     <value>Škrlatna</value>
