@@ -24,6 +24,9 @@
                    Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding WaitTime}" Minimum="100" Maximum="15000" Interval="100" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.Appearance}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.ChartTimeInSeconds}" Style="{StaticResource CenterTextBlock}"
+                   Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding ChartTime}" Minimum="30" Maximum="3600" Interval="30" Margin="0,0,0,10" />
         <mah:ToggleSwitch IsOn="{Binding ExpandHostView}" Header="{x:Static localization:Strings.ExpandHostView}" />
     </StackPanel>
 </UserControl>

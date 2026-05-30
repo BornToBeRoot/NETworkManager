@@ -88,7 +88,7 @@
                         </Style>
                     </Rectangle.Style>
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Export}" />
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </MenuItem.Icon>

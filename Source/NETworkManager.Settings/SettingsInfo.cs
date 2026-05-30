@@ -1508,6 +1508,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.PingMonitor_ExpandHostView;
 
+    public int PingMonitor_ChartTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PingMonitor_ChartTime;
+
     public string PingMonitor_ExportFilePath
     {
         get;

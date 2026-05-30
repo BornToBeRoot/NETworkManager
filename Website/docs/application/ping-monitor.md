@@ -37,12 +37,29 @@ Example: `10.0.0.0/24; 10.0.[10-20]1`
 
 :::
 
-### Context menu
+### Chart
+
+Each monitored host shows a latency chart over time. By default the chart displays the last 2 minutes (see [Chart time (seconds)](#chart-time-seconds)) and scrolls automatically as new results arrive (**live mode**).
+
+You can interact with the chart to inspect past results:
 
 | Action | Description |
 |--------|-------------|
-| **Copy** | Copies the selected information to the clipboard |
-| **Export...** | Exports the selected or all results to a file |
+| **Mouse wheel** | Zoom in and out on the time axis |
+| **Left mouse button + drag** | Pan the chart left and right |
+| **Right mouse button + drag** | Zoom into the selected section |
+
+When you zoom or pan, the chart leaves live mode and stops scrolling. A **Live** button then appears in the top-right corner of the chart — click it to return to live mode and resume auto-scrolling.
+
+### Context menu
+
+Right-click a monitored host (anywhere except the chart) to open the context menu:
+
+| Action | Description |
+|--------|-------------|
+| **Export...** | Exports the results of the host to a file |
+
+Right-clicking an individual field (hostname, IP address, ...) instead lets you **Copy** its value to the clipboard.
 
 ## Profile
 
@@ -114,6 +131,14 @@ Time in milliseconds to wait between each ping.
 **Type:** `Integer` [Min `100`, Max `15000`]
 
 **Default:** `1000`
+
+### Chart time (seconds)
+
+Time range in seconds displayed in the latency chart.
+
+**Type:** `Integer` [Min `30`, Max `3600`]
+
+**Default:** `120`
 
 ### Expand host view
 

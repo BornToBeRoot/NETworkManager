@@ -1552,7 +1552,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("CapsLockIsEnabled", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Chart time (seconds).
+        /// </summary>
+        public static string ChartTimeInSeconds {
+            get {
+                return ResourceManager.GetString("ChartTimeInSeconds", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Capture.
         /// </summary>
@@ -6237,7 +6246,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("Lime", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Live.
+        /// </summary>
+        public static string Live {
+            get {
+                return ResourceManager.GetString("Live", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Listeners.
         /// </summary>
