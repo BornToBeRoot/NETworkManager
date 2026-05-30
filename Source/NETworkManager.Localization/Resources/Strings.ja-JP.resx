@@ -736,7 +736,7 @@
     <value>Caps Lockが有効になりました!</value>
   </data>
   <data name="ChartTimeInSeconds" xml:space="preserve">
-    <value>Chart time (seconds)</value>
+    <value>グラフ時間 (秒)</value>
   </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
     <value>起動時に更新を確認</value>
@@ -1517,7 +1517,7 @@
     <value>ライム</value>
   </data>
   <data name="Live" xml:space="preserve">
-    <value>Live</value>
+    <value>ライブ</value>
   </data>
   <data name="Magenta" xml:space="preserve">
     <value>マゼンタ</value>
