@@ -735,6 +735,9 @@
   <data name="CapsLockIsEnabled" xml:space="preserve">
     <value>Feststelltaste ist aktiviert!</value>
   </data>
+  <data name="ChartTimeInSeconds" xml:space="preserve">
+    <value>Chart Zeit (Sekunden)</value>
+  </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Beim Start auf Updates prüfen</value>
   </data>
@@ -1512,6 +1515,9 @@ Profildateien sind nicht betroffen!</value>
   </data>
   <data name="Lime" xml:space="preserve">
     <value>Kalk</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Live</value>
   </data>
   <data name="Magenta" xml:space="preserve">
     <value>Magenta</value>
