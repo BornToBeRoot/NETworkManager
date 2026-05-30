@@ -517,6 +517,10 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 
         _closed = true;
 
+        // Detach the app-lifetime handler so this transient tab control can be collected
+        // after the tab is closed (the RDP session is released by Disconnect()).
+        Dispatcher.ShutdownStarted -= Dispatcher_ShutdownStarted;
+
         // Disconnect the session
         Disconnect();
 

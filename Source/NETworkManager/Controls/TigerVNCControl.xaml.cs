@@ -244,6 +244,10 @@ public partial class TigerVNCControl : UserControlBase, IDragablzTabItem
 
         _closed = true;
 
+        // Detach the app-lifetime handler so this transient tab control can be collected
+        // after the tab is closed (the process itself is released by Disconnect()).
+        Dispatcher.ShutdownStarted -= Dispatcher_ShutdownStarted;
+
         // Disconnect the session
         Disconnect();
 

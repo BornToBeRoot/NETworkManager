@@ -23,6 +23,10 @@ public partial class PortScannerView : IDragablzTabItem
 
     public void CloseTab()
     {
+        // Detach the app-lifetime handler so this transient tab view (and its view model)
+        // can be collected after the tab is closed.
+        Dispatcher.ShutdownStarted -= Dispatcher_ShutdownStarted;
+
         _viewModel.OnClose();
     }
 
