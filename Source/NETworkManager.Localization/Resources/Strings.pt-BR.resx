@@ -736,7 +736,7 @@
     <value>Capslock está ativado!</value>
   </data>
   <data name="ChartTimeInSeconds" xml:space="preserve">
-    <value>Chart time (seconds)</value>
+    <value>Tempo do gráfico (segundos)</value>
   </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Verificar atualizações na inicialização</value>
@@ -1517,7 +1517,7 @@ Os arquivos do perfil não foram afetados!</value>
     <value>Lima</value>
   </data>
   <data name="Live" xml:space="preserve">
-    <value>Live</value>
+    <value>Tempo real</value>
   </data>
   <data name="Magenta" xml:space="preserve">
     <value>Magenta</value>
