@@ -735,6 +735,9 @@
   <data name="CapsLockIsEnabled" xml:space="preserve">
     <value>Capslock está ativado!</value>
   </data>
+  <data name="ChartTimeInSeconds" xml:space="preserve">
+    <value>Chart time (seconds)</value>
+  </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Verificar atualizações na inicialização</value>
   </data>
@@ -1512,6 +1515,9 @@ Os arquivos do perfil não foram afetados!</value>
   </data>
   <data name="Lime" xml:space="preserve">
     <value>Lima</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Live</value>
   </data>
   <data name="Magenta" xml:space="preserve">
     <value>Magenta</value>
