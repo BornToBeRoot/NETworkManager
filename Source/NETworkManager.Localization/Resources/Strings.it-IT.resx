@@ -736,6 +736,9 @@ La modifica dell'elenco router richiede diritti elevati!</value>
   <data name="CapsLockIsEnabled" xml:space="preserve">
     <value>Il blocco maiuscole è abilitato!</value>
   </data>
+  <data name="ChartTimeInSeconds" xml:space="preserve">
+    <value>Chart time (seconds)</value>
+  </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Controllo aggiornamenti all'avvio</value>
   </data>
@@ -1526,6 +1529,9 @@ Cerca per tag con "tag = xxx".</value>
   </data>
   <data name="Lime" xml:space="preserve">
     <value>Lime</value>
+  </data>
+  <data name="Live" xml:space="preserve">
+    <value>Live</value>
   </data>
   <data name="Magenta" xml:space="preserve">
     <value>Magenta</value>
