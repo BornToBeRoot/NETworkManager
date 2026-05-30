@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.36e43ced.css">
-<script src="/NETworkManager/assets/js/runtime~main.e1f4bfbb.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.5758b05b.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.9e501d90.js" defer="defer"></script>
 </head>
 <body>
@@ -74,6 +74,9 @@ Release date: <strong>xx.xx.2025</strong></p>
 <p><strong>Network Interface</strong></p>
 <ul>
 <li class="">Added Network Profile (domain, private, public) information to the Network Interface details view, if available. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3383" target="_blank" rel="noopener noreferrer" class="">#3383</a></li>
+<li class="">Migrated the bandwidth chart from LiveCharts to LiveCharts2. Added a tooltip showing the download/upload speed on hover. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3457" target="_blank" rel="noopener noreferrer" class="">#3457</a></li>
+<li class="">The bandwidth chart is now interactive: zoom with the mouse wheel, pan by dragging with the left mouse button, and zoom into a section by dragging with the right mouse button. While inspecting, the chart pauses auto-scrolling and a <strong>Live</strong> button returns it to live mode. The visible time window is now configurable via the new <strong>Chart time</strong> setting (default 60 seconds). <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3457" target="_blank" rel="noopener noreferrer" class="">#3457</a></li>
+<li class="">Reworked the network usage statistics: byte counts are now shown in a human-readable format (exact bytes on hover) and the speed is shown in bit/s (byte/s on hover). <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3457" target="_blank" rel="noopener noreferrer" class="">#3457</a></li>
 </ul>
 <p><strong>Ping Monitor</strong></p>
 <ul>
@@ -94,6 +97,8 @@ Release date: <strong>xx.xx.2025</strong></p>
 <p><strong>General</strong></p>
 <ul>
 <li class="">Fixed the last column of various DataGrids not resizing to fill the available view width. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3417" target="_blank" rel="noopener noreferrer" class="">#3417</a></li>
+<li class="">Fixed <code>CancellationTokenSource</code> leak in <code>IPScanner</code>, <code>PortScanner</code>, <code>Traceroute</code>, <code>PingMonitor</code>, <code>PingMonitorHost</code> and <code>SNMP</code> ViewModels. The previous instance was never disposed before being overwritten on each run, leaking the underlying <code>WaitHandle</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3448" target="_blank" rel="noopener noreferrer" class="">#3448</a></li>
+<li class="">Fixed a <code>Dispatcher.ShutdownStarted</code> handler leak in the Dragablz tab items (PowerShell, PuTTY, TigerVNC, Remote Desktop and Web Console controls, plus the IP Scanner, Port Scanner, Traceroute, DNS Lookup, IP Geolocation, SNMP, SNTP Lookup and Whois views). The handler was subscribed in the constructor but never removed, keeping each closed tab (view and view model) alive until the application exited. It is now unsubscribed in <code>CloseTab()</code>; the Web Console additionally disposes its WebView2 instance. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3454" target="_blank" rel="noopener noreferrer" class="">#3454</a></li>
 </ul>
 <p><strong>Port Scanner</strong></p>
 <ul>
@@ -110,6 +115,7 @@ Release date: <strong>xx.xx.2025</strong></p>
 <p><strong>Network Interface</strong></p>
 <ul>
 <li class="">Fixed <code>Renew6Action</code> incorrectly calling <code>ipconfig /renew</code> (IPv4) instead of <code>ipconfig /renew6</code> (IPv6) when renewing the IPv6 address. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3441" target="_blank" rel="noopener noreferrer" class="">#3441</a></li>
+<li class="">Bandwidth measurement now includes IPv6 traffic (previously IPv4 only), derives a time-accurate speed, and no longer crashes or shows spikes on adapter errors or interface counter resets. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3457" target="_blank" rel="noopener noreferrer" class="">#3457</a></li>
 </ul>
 <p><strong>TigerVNC</strong></p>
 <ul>
@@ -117,9 +123,7 @@ Release date: <strong>xx.xx.2025</strong></p>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="dependencies-refactoring--documentation">Dependencies, Refactoring &amp; Documentation<a href="#dependencies-refactoring--documentation" class="hash-link" aria-label="Direct link to Dependencies, Refactoring &amp; Documentation" title="Direct link to Dependencies, Refactoring &amp; Documentation" translate="no">​</a></h2>
 <ul>
-<li class="">Migrated from <code>LiveCharts</code> to <code>LiveCharts2</code> (<code>LiveChartsCore.SkiaSharpView.WPF</code>) for chart rendering. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3449" target="_blank" rel="noopener noreferrer" class="">#3449</a></li>
-<li class="">Fixed <code>CancellationTokenSource</code> leak in <code>IPScanner</code>, <code>PortScanner</code>, <code>Traceroute</code>, <code>PingMonitor</code>, <code>PingMonitorHost</code> and <code>SNMP</code> ViewModels. The previous instance was never disposed before being overwritten on each run, leaking the underlying <code>WaitHandle</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3448" target="_blank" rel="noopener noreferrer" class="">#3448</a></li>
-<li class="">Fixed a <code>Dispatcher.ShutdownStarted</code> handler leak in the Dragablz tab items (PowerShell, PuTTY, TigerVNC, Remote Desktop and Web Console controls, plus the IP Scanner, Port Scanner, Traceroute, DNS Lookup, IP Geolocation, SNMP, SNTP Lookup and Whois views). The handler was subscribed in the constructor but never removed, keeping each closed tab (view and view model) alive until the application exited. It is now unsubscribed in <code>CloseTab()</code>; the Web Console additionally disposes its WebView2 instance. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3454" target="_blank" rel="noopener noreferrer" class="">#3454</a></li>
+<li class="">Migrated from <code>LiveCharts</code> to <code>LiveCharts2</code> (<code>LiveChartsCore.SkiaSharpView.WPF</code>) for chart rendering. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3449" target="_blank" rel="noopener noreferrer" class="">#3449</a> <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3457" target="_blank" rel="noopener noreferrer" class="">#3457</a></li>
 <li class="">Replace fire-and-forget <code>.ConfigureAwait(false)</code> calls with explicit discard assignments (<code>_ = SomeAsyncOperation()</code>) across command handlers, startup/load paths and profile callbacks. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3441" target="_blank" rel="noopener noreferrer" class="">#3441</a></li>
 <li class="">Code cleanup &amp; refactoring</li>
 <li class="">Language files updated via <a href="https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration" target="_blank" rel="noopener noreferrer" class="">#transifex</a></li>
