@@ -50,9 +50,25 @@ The following buttons are available at the bottom left:
 
 On the **Bandwidth** tab, you can monitor the currently used bandwidth of the selected network adapter.
 
-The current download and upload speed is displayed in bit/s (B/s) and automatically scales to KBit/s (KB/s), MBit/s (MB/s), or GBit/s (GB/s) depending on the bandwidth in use. The view also shows when the measurement started and the total amount downloaded and uploaded since then.
+The chart plots the download and upload speed over time. By default it displays the last 60 seconds (see [Chart time (seconds)](#chart-time-seconds)) and scrolls automatically as new data arrives (**live mode**).
+
+Speeds are shown in bit/s and automatically scale to KBit/s, MBit/s, or GBit/s depending on the bandwidth in use. Hover over a value to see the equivalent in byte/s.
+
+Below the chart, additional statistics are displayed: the current download and upload speed, the total amount received and sent by the adapter, when the measurement started and how long it has been running, and the amount downloaded and uploaded since the measurement started. Hover over a byte value to see the exact number of bytes.
 
 ![Network Interface - Bandwidth](../img/network-interface--bandwidth.png)
+
+### Chart
+
+You can interact with the chart to inspect past data:
+
+| Action | Description |
+|--------|-------------|
+| **Mouse wheel** | Zoom in and out on the time axis |
+| **Left mouse button + drag** | Pan the chart left and right |
+| **Right mouse button + drag** | Zoom into the selected section |
+
+When you zoom or pan, the chart leaves live mode and stops scrolling. A **Live** button then appears in the top-right corner of the chart — click it to return to live mode and resume auto-scrolling.
 
 :::note
 
@@ -222,3 +238,13 @@ Secondary DNS server for the selected network adapter.
 **Default:** `Empty`
 
 **Example:** `1.0.0.1`
+
+## Settings
+
+### Chart time (seconds)
+
+Time range in seconds displayed in the bandwidth chart.
+
+**Type:** `Integer` [Min `30`, Max `3600`]
+
+**Default:** `60`

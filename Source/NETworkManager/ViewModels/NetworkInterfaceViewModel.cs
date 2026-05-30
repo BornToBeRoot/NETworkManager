@@ -693,7 +693,6 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Initializes a new instance of the <see cref="NetworkInterfaceViewModel"/> class.
     /// </summary>
-    /// <param name="instance">The dialog coordinator instance.</param>
     public NetworkInterfaceViewModel()
     {
         _isLoading = true;
@@ -898,8 +897,10 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
     private void UpdateMaxBandwidthValues()
     {
-        // The BandwidthMeter ticks once per second; keep a little off-screen headroom.
-        _maxBandwidthValues = (int)Math.Ceiling(BandwidthChartWindowSeconds * BandwidthValuesHeadroom);
+        // Number of samples that fit in the visible window (derived from the meter's sample
+        // interval), plus a little off-screen headroom.
+        var samplesPerWindow = BandwidthChartWindowSeconds * 1000 / BandwidthMeter.DefaultUpdateInterval;
+        _maxBandwidthValues = (int)Math.Ceiling(samplesPerWindow * BandwidthValuesHeadroom);
     }
 
     /// <summary>
@@ -1769,6 +1770,8 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         if (_bandwidthMeter is not { IsRunning: false })
             return;
 
+        // The meter is only paused while this view is hidden (i.e. another application is shown).
+        // Returning to it starts a fresh measurement: reset the chart and statistics, then start.
         ResetBandwidthChart();
 
         _resetBandwidthStatisticOnNextUpdate = true;
@@ -1923,13 +1926,13 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         // Measured time
         BandwidthMeasuredTime = DateTime.Now - BandwidthStartTime;
 
-        // Current download/upload
+        // Interface totals (cumulative, since boot) + current speed
         BandwidthTotalBytesReceived = e.TotalBytesReceived;
         BandwidthTotalBytesSent = e.TotalBytesSent;
         BandwidthBytesReceivedSpeed = e.ByteReceivedSpeed;
         BandwidthBytesSentSpeed = e.ByteSentSpeed;
 
-        // Total download/upload
+        // Amount transferred since the measurement started (this session)
         BandwidthDiffBytesReceived = BandwidthTotalBytesReceived - _bandwidthTotalBytesReceivedTemp;
         BandwidthDiffBytesSent = BandwidthTotalBytesSent - _bandwidthTotalBytesSentTemp;
 

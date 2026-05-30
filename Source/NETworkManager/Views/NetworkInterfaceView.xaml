@@ -30,6 +30,7 @@
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:Bytes1000ToSpeedConverter x:Key="Bytes1000ToSpeedConverter" />
         <converters:Bytes1000ToSizeConverter x:Key="Bytes1000ToSizeConverter" />
+        <converters:BytesToExactStringConverter x:Key="BytesToExactStringConverter" />
         <converters:BandwidthBytesToSpeedConverter x:Key="BandwidthBytesToSpeedConverter" />
         <converters:IPAddressArrayToStringConverter x:Key="IPAddressArrayToStringConverter" />
         <converters:IPAddressSubnetmaskTupleArrayToStringConverter
@@ -941,12 +942,12 @@
                                        Text="{x:Static localization:Strings.TotalBytesReceived}" />
                             <TextBox Grid.Column="2" Grid.Row="2"
                                      Text="{Binding BandwidthTotalBytesReceived, Converter={StaticResource Bytes1000ToSizeConverter}}"
-                                     ToolTip="{Binding BandwidthTotalBytesReceived, StringFormat={}{0:N0} Bytes}" />
+                                     ToolTip="{Binding BandwidthTotalBytesReceived, Converter={StaticResource BytesToExactStringConverter}}" />
                             <TextBlock Grid.Column="0" Grid.Row="3"
                                        Text="{x:Static localization:Strings.TotalBytesSent}" />
                             <TextBox Grid.Column="2" Grid.Row="3"
                                      Text="{Binding BandwidthTotalBytesSent, Converter={StaticResource Bytes1000ToSizeConverter}}"
-                                     ToolTip="{Binding BandwidthTotalBytesSent, StringFormat={}{0:N0} Bytes}" />
+                                     ToolTip="{Binding BandwidthTotalBytesSent, Converter={StaticResource BytesToExactStringConverter}}" />
 
                             <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.StartTime}" />
                             <TextBox Grid.Column="6" Grid.Row="0" Text="{Binding BandwidthStartTime}" />
@@ -958,12 +959,12 @@
                                        Text="{x:Static localization:Strings.CurrentlyDownloaded}" />
                             <TextBox Grid.Column="6" Grid.Row="2"
                                      Text="{Binding BandwidthDiffBytesReceived, Converter={StaticResource Bytes1000ToSizeConverter}}"
-                                     ToolTip="{Binding BandwidthDiffBytesReceived, StringFormat={}{0:N0} Bytes}" />
+                                     ToolTip="{Binding BandwidthDiffBytesReceived, Converter={StaticResource BytesToExactStringConverter}}" />
                             <TextBlock Grid.Column="4" Grid.Row="3"
                                        Text="{x:Static localization:Strings.CurrentlyUploaded}" />
                             <TextBox Grid.Column="6" Grid.Row="3"
                                      Text="{Binding BandwidthDiffBytesSent, Converter={StaticResource Bytes1000ToSizeConverter}}"
-                                     ToolTip="{Binding BandwidthDiffBytesSent, StringFormat={}{0:N0} Bytes}" />
+                                     ToolTip="{Binding BandwidthDiffBytesSent, Converter={StaticResource BytesToExactStringConverter}}" />
                         </Grid>
                     </Grid>
                 </TabItem>
