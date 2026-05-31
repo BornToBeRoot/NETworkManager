@@ -55,7 +55,6 @@
     <Style x:Key="ConsoleTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
         <Setter Property="FontFamily" Value="Consolas" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-        <Setter Property="Margin" Value="0,5,0,5" />
     </Style>
     
     <!-- TextBlock style for buttons with images and text -->

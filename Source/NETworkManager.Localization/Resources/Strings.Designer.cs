@@ -1673,7 +1673,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("Channels", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Channel width.
+        /// </summary>
+        public static string ChannelWidth {
+            get {
+                return ResourceManager.GetString("ChannelWidth", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Chassis Id.
         /// </summary>
@@ -4804,7 +4813,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("GHz5", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to 2.4 &amp; 5 GHz.
+        /// </summary>
+        public static string GHz2dot4And5 {
+            get {
+                return ResourceManager.GetString("GHz2dot4And5", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to 6 GHz.
         /// </summary>

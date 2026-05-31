@@ -82,7 +82,7 @@ public partial class LiveChartsPingTimeTooltip : IChartTooltip, INotifyPropertyC
 
     private static SKColor GetSeriesColor(ChartPoint point)
     {
-        if (point.Context.Series is LineSeries<LvlChartsDefaultInfo> ls && ls.Stroke is SolidColorPaint paint)
+        if (point.Context.Series is LineSeries<LvlChartsDefaultInfo> { Stroke: SolidColorPaint paint })
             return paint.Color;
         return SKColors.Gray;
     }
