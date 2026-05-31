@@ -56,11 +56,12 @@ public partial class LiveChartsWiFiChannelTooltip : IChartTooltip, INotifyProper
                 continue;
 
             var ssid = network.IsHidden ? Strings.HiddenNetwork : network.AvailableNetwork.Ssid;
+            var bssid = network.AvailableNetwork.Bssid;
+            var dbm = $"{network.AvailableNetwork.NetworkRssiInDecibelMilliwatts} dBm";
             var widthText = network.ChannelBandwidth > 0 ? $"{network.ChannelBandwidth} MHz" : "-/-";
-            var detail =
-                $"{network.AvailableNetwork.NetworkRssiInDecibelMilliwatts} dBm · {Strings.Channel} {network.Channel} · {widthText}";
+            var channelDetail = $"{Strings.Channel} {network.Channel} · {widthText}";
 
-            TooltipEntries.Add(new TooltipEntry(SkColorToBrush(GetSeriesColor(point)), ssid, detail));
+            TooltipEntries.Add(new TooltipEntry(SkColorToBrush(GetSeriesColor(point)), ssid, bssid, dbm, channelDetail));
         }
 
         if (TooltipEntries.Count == 0)
@@ -88,5 +89,5 @@ public partial class LiveChartsWiFiChannelTooltip : IChartTooltip, INotifyProper
     private static Brush SkColorToBrush(SKColor color)
         => new SolidColorBrush(Color.FromArgb(color.Alpha, color.Red, color.Green, color.Blue));
 
-    public record TooltipEntry(Brush SeriesColor, string Ssid, string Detail);
+    public record TooltipEntry(Brush SeriesColor, string Ssid, string Bssid, string Dbm, string ChannelDetail);
 }

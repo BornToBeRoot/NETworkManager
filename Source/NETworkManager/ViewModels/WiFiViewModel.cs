@@ -24,6 +24,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Windows.Devices.WiFi;
@@ -352,7 +353,45 @@ public class WiFiViewModel : ViewModelBase
     public RectangularSection[] Radio6GHzLowerSections { get; private set; }
     public RectangularSection[] Radio6GHzUpperSections { get; private set; }
 
-    public SolidColorPaint LegendTextPaint { get; private set; }
+    public WiFiChannelLegendEntry[] Radio2Dot4GHzLegend
+    {
+        get;
+        private set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
+
+    public WiFiChannelLegendEntry[] Radio5GHzLegend
+    {
+        get;
+        private set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
+
+    public WiFiChannelLegendEntry[] Radio6GHzLowerLegend
+    {
+        get;
+        private set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
+
+    public WiFiChannelLegendEntry[] Radio6GHzUpperLegend
+    {
+        get;
+        private set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
 
     public bool IsStatusMessageDisplayed
     {
@@ -685,6 +724,10 @@ public class WiFiViewModel : ViewModelBase
             List<ISeries> series5GHz = [];
             List<ISeries> series6GHzLower = [];
             List<ISeries> series6GHzUpper = [];
+            List<WiFiChannelLegendEntry> legend2Dot4GHz = [];
+            List<WiFiChannelLegendEntry> legend5GHz = [];
+            List<WiFiChannelLegendEntry> legend6GHzLower = [];
+            List<WiFiChannelLegendEntry> legend6GHzUpper = [];
 
             foreach (var network in wiFiNetworkScanInfo.WiFiNetworkInfos)
             {
@@ -696,11 +739,15 @@ public class WiFiViewModel : ViewModelBase
                 switch (network.Radio)
                 {
                     case WiFiRadio.GHz2dot4:
-                        series2Dot4GHz.Add(BuildNetworkSeries(network, series2Dot4GHz.Count));
+                        var (s24, l24) = BuildNetworkSeries(network, series2Dot4GHz.Count);
+                        series2Dot4GHz.Add(s24);
+                        legend2Dot4GHz.Add(l24);
                         break;
 
-                    case WiFiRadio.GHz5:                        
-                            series5GHz.Add(BuildNetworkSeries(network, series5GHz.Count));
+                    case WiFiRadio.GHz5:
+                        var (s5, l5) = BuildNetworkSeries(network, series5GHz.Count);
+                        series5GHz.Add(s5);
+                        legend5GHz.Add(l5);
                         break;
 
                     case WiFiRadio.GHz6:
@@ -709,9 +756,17 @@ public class WiFiViewModel : ViewModelBase
                             network.ChannelCenterFrequencyInGigahertz * 1000, WiFiRadio.GHz6);
 
                         if (centerChannel < SixGHzSplitChannel)
-                            series6GHzLower.Add(BuildNetworkSeries(network, series6GHzLower.Count));
+                        {
+                            var (s6L, l6L) = BuildNetworkSeries(network, series6GHzLower.Count);
+                            series6GHzLower.Add(s6L);
+                            legend6GHzLower.Add(l6L);
+                        }
                         else
-                            series6GHzUpper.Add(BuildNetworkSeries(network, series6GHzUpper.Count));
+                        {
+                            var (s6U, l6U) = BuildNetworkSeries(network, series6GHzUpper.Count);
+                            series6GHzUpper.Add(s6U);
+                            legend6GHzUpper.Add(l6U);
+                        }
 
                         break;
                 }
@@ -721,6 +776,10 @@ public class WiFiViewModel : ViewModelBase
             Radio5GHzSeries = [.. series5GHz];
             Radio6GHzLowerSeries = [.. series6GHzLower];
             Radio6GHzUpperSeries = [.. series6GHzUpper];
+            Radio2Dot4GHzLegend = [.. legend2Dot4GHz];
+            Radio5GHzLegend = [.. legend5GHz];
+            Radio6GHzLowerLegend = [.. legend6GHzLower];
+            Radio6GHzUpperLegend = [.. legend6GHzUpper];
 
             statusMessage = string.Format(Strings.LastScanAtX,
                 wiFiNetworkScanInfo.Timestamp.ToLongTimeString());
@@ -738,6 +797,10 @@ public class WiFiViewModel : ViewModelBase
             Radio5GHzSeries = [];
             Radio6GHzLowerSeries = [];
             Radio6GHzUpperSeries = [];
+            Radio2Dot4GHzLegend = [];
+            Radio5GHzLegend = [];
+            Radio6GHzLowerLegend = [];
+            Radio6GHzUpperLegend = [];
         }
         finally
         {
@@ -810,15 +873,13 @@ public class WiFiViewModel : ViewModelBase
     /// </summary>
     private void InitializeCharts()
     {
-        var labelColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray5") is System.Windows.Media.SolidColorBrush gray5
+        var labelColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray5") is SolidColorBrush gray5
             ? new SKColor(gray5.Color.R, gray5.Color.G, gray5.Color.B, gray5.Color.A)
             : new SKColor(0x68, 0x68, 0x68);
 
-        var separatorColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray8") is System.Windows.Media.SolidColorBrush gray8
+        var separatorColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray8") is SolidColorBrush gray8
             ? new SKColor(gray8.Color.R, gray8.Color.G, gray8.Color.B, gray8.Color.A)
             : new SKColor(0x80, 0x80, 0x80);
-
-        LegendTextPaint = new SolidColorPaint(labelColor) { SKTypeface = SKTypeface.Default };
 
         // (min, max) in display space. The lower bound is extended below the first channel so the
         // left flank of its trapezoid reaches the baseline instead of being clipped. The 5 GHz
@@ -935,10 +996,10 @@ public class WiFiViewModel : ViewModelBase
     }
 
     /// <summary>
-    ///     Builds a line series rendering a single network as a trapezoid centered on its channel
-    ///     center frequency. The width of the trapezoid reflects the channel bandwidth.
+    ///     Builds a line series and a matching legend entry for a single network, rendered as a
+    ///     trapezoid centered on its channel center frequency.
     /// </summary>
-    private static LineSeries<WiFiChannelPoint> BuildNetworkSeries(WiFiNetworkInfo network, int colorIndex)
+    private static (LineSeries<WiFiChannelPoint> Series, WiFiChannelLegendEntry Legend) BuildNetworkSeries(WiFiNetworkInfo network, int colorIndex)
     {
         var color = ChartPalette[colorIndex % ChartPalette.Length];
 
@@ -981,7 +1042,7 @@ public class WiFiViewModel : ViewModelBase
             ? $"{Strings.HiddenNetwork} ({network.AvailableNetwork.Bssid})"
             : $"{network.AvailableNetwork.Ssid} ({network.AvailableNetwork.Bssid})";
 
-        return new LineSeries<WiFiChannelPoint>
+        var series = new LineSeries<WiFiChannelPoint>
         {
             Name = name,
             Values = points,
@@ -992,6 +1053,12 @@ public class WiFiViewModel : ViewModelBase
             Stroke = new SolidColorPaint(color) { StrokeThickness = 1.5f },
             Fill = new SolidColorPaint(color.WithAlpha(0x33))
         };
+
+        var wpfColor = Color.FromArgb(color.Alpha, color.Red, color.Green, color.Blue);
+        var legendSsid = network.IsHidden ? Strings.HiddenNetwork : network.AvailableNetwork.Ssid;
+        var legend = new WiFiChannelLegendEntry(new SolidColorBrush(wpfColor), legendSsid, network.AvailableNetwork.Bssid);
+
+        return (series, legend);
     }
 
     /// <summary>
@@ -1254,3 +1321,5 @@ public class WiFiViewModel : ViewModelBase
 
     #endregion
 }
+
+public record WiFiChannelLegendEntry(SolidColorBrush Color, string Ssid, string Bssid);

@@ -710,9 +710,11 @@
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
                                             <RowDefinition Height="20" />
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Row="0" Text="{x:Static Member=localization:Strings.GHz2dot4}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
@@ -722,9 +724,7 @@
                                                             XAxes="{Binding Path=Radio2Dot4GHzXAxes}"
                                                             YAxes="{Binding Path=Radio2Dot4GHzYAxes}"
                                                             Sections="{Binding Path=Radio2Dot4GHzSections}"
-                                                            LegendPosition="Bottom"
-                                                            LegendTextPaint="{Binding Path=LegendTextPaint}"
-                                                            LegendTextSize="12"
+                                                            LegendPosition="Hidden"
                                                             FindingStrategy="CompareOnlyX"
                                                             DrawMarginFrame="{x:Null}"
                                                             EasingFunction="{x:Null}"
@@ -733,17 +733,44 @@
                                                 <controls:LiveChartsWiFiChannelTooltip />
                                             </lvc:CartesianChart.Tooltip>
                                         </lvc:CartesianChart>
-                                        <TextBlock Grid.Row="3" Text="{x:Static Member=localization:Strings.GHz5}"
+                                        <ScrollViewer Grid.Row="2"
+                                                      HorizontalScrollBarVisibility="Auto"
+                                                      VerticalScrollBarVisibility="Disabled"
+                                                      Margin="0,4,0,0">
+                                            <ItemsControl ItemsSource="{Binding Radio2Dot4GHzLegend}"
+                                                          HorizontalAlignment="Center">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
+                                                            <Rectangle Width="16" Height="3"
+                                                                       Fill="{Binding Color}"
+                                                                       VerticalAlignment="Center"
+                                                                       Margin="0,0,4,0" />
+                                                            <StackPanel Orientation="Vertical">
+                                                                <TextBlock Text="{Binding Ssid}"
+                                                                           Style="{StaticResource AccentTextBlock}" />
+                                                                <TextBlock Text="{Binding Bssid}"
+                                                                           Style="{StaticResource ConsoleTextBlock}" />
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                        <TextBlock Grid.Row="4" Text="{x:Static Member=localization:Strings.GHz5}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
-                                        <lvc:CartesianChart Grid.Row="4"
+                                        <lvc:CartesianChart Grid.Row="5"
                                                             Background="Transparent"
                                                             Series="{Binding Path=Radio5GHzSeries}"
                                                             XAxes="{Binding Path=Radio5GHzXAxes}"
                                                             YAxes="{Binding Path=Radio5GHzYAxes}"
                                                             Sections="{Binding Path=Radio5GHzSections}"
-                                                            LegendPosition="Bottom"
-                                                            LegendTextPaint="{Binding Path=LegendTextPaint}"
-                                                            LegendTextSize="12"
+                                                            LegendPosition="Hidden"
                                                             FindingStrategy="CompareOnlyX"
                                                             DrawMarginFrame="{x:Null}"
                                                             EasingFunction="{x:Null}"
@@ -752,6 +779,35 @@
                                                 <controls:LiveChartsWiFiChannelTooltip />
                                             </lvc:CartesianChart.Tooltip>
                                         </lvc:CartesianChart>
+                                        <ScrollViewer Grid.Row="6"
+                                                      HorizontalScrollBarVisibility="Auto"
+                                                      VerticalScrollBarVisibility="Disabled"
+                                                      Margin="0,4,0,0">
+                                            <ItemsControl ItemsSource="{Binding Radio5GHzLegend}"
+                                                          HorizontalAlignment="Center">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
+                                                            <Rectangle Width="16" Height="3"
+                                                                       Fill="{Binding Color}"
+                                                                       VerticalAlignment="Center"
+                                                                       Margin="0,0,4,0" />
+                                                            <StackPanel Orientation="Vertical">
+                                                                <TextBlock Text="{Binding Ssid}"
+                                                                           Style="{StaticResource AccentTextBlock}" />
+                                                                <TextBlock Text="{Binding Bssid}"
+                                                                           Style="{StaticResource ConsoleTextBlock}" />
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
                                     </Grid>
                                 </TabItem>
                                 <TabItem Header="{x:Static Member=localization:Strings.GHz6}">
@@ -759,9 +815,11 @@
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
                                             <RowDefinition Height="20" />
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Row="0" Text="{Binding Source={x:Static localization:Strings.GHz6}, StringFormat={}{0} (1 - 125)}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
@@ -771,9 +829,7 @@
                                                             XAxes="{Binding Path=Radio6GHzLowerXAxes}"
                                                             YAxes="{Binding Path=Radio6GHzLowerYAxes}"
                                                             Sections="{Binding Path=Radio6GHzLowerSections}"
-                                                            LegendPosition="Bottom"
-                                                            LegendTextPaint="{Binding Path=LegendTextPaint}"
-                                                            LegendTextSize="12"
+                                                            LegendPosition="Hidden"
                                                             FindingStrategy="CompareOnlyX"
                                                             DrawMarginFrame="{x:Null}"
                                                             EasingFunction="{x:Null}"
@@ -782,17 +838,44 @@
                                                 <controls:LiveChartsWiFiChannelTooltip />
                                             </lvc:CartesianChart.Tooltip>
                                         </lvc:CartesianChart>
-                                        <TextBlock Grid.Row="3" Text="{Binding Source={x:Static localization:Strings.GHz6}, StringFormat={}{0} (129 - 233)}"
+                                        <ScrollViewer Grid.Row="2"
+                                                      HorizontalScrollBarVisibility="Auto"
+                                                      VerticalScrollBarVisibility="Disabled"
+                                                      Margin="0,4,0,0">
+                                            <ItemsControl ItemsSource="{Binding Radio6GHzLowerLegend}"
+                                                          HorizontalAlignment="Center">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
+                                                            <Rectangle Width="16" Height="3"
+                                                                       Fill="{Binding Color}"
+                                                                       VerticalAlignment="Center"
+                                                                       Margin="0,0,4,0" />
+                                                            <StackPanel Orientation="Vertical">
+                                                                <TextBlock Text="{Binding Ssid}"
+                                                                           Style="{StaticResource AccentTextBlock}" />
+                                                                <TextBlock Text="{Binding Bssid}"
+                                                                           Style="{StaticResource ConsoleTextBlock}" />
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                        <TextBlock Grid.Row="4" Text="{Binding Source={x:Static localization:Strings.GHz6}, StringFormat={}{0} (129 - 233)}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
-                                        <lvc:CartesianChart Grid.Row="4"
+                                        <lvc:CartesianChart Grid.Row="5"
                                                             Background="Transparent"
                                                             Series="{Binding Path=Radio6GHzUpperSeries}"
                                                             XAxes="{Binding Path=Radio6GHzUpperXAxes}"
                                                             YAxes="{Binding Path=Radio6GHzUpperYAxes}"
                                                             Sections="{Binding Path=Radio6GHzUpperSections}"
-                                                            LegendPosition="Bottom"
-                                                            LegendTextPaint="{Binding Path=LegendTextPaint}"
-                                                            LegendTextSize="12"
+                                                            LegendPosition="Hidden"
                                                             FindingStrategy="CompareOnlyX"
                                                             DrawMarginFrame="{x:Null}"
                                                             EasingFunction="{x:Null}"
@@ -801,6 +884,35 @@
                                                 <controls:LiveChartsWiFiChannelTooltip />
                                             </lvc:CartesianChart.Tooltip>
                                         </lvc:CartesianChart>
+                                        <ScrollViewer Grid.Row="6"
+                                                      HorizontalScrollBarVisibility="Auto"
+                                                      VerticalScrollBarVisibility="Disabled"
+                                                      Margin="0,4,0,0">
+                                            <ItemsControl ItemsSource="{Binding Radio6GHzUpperLegend}"
+                                                          HorizontalAlignment="Center">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
+                                                            <Rectangle Width="16" Height="3"
+                                                                       Fill="{Binding Color}"
+                                                                       VerticalAlignment="Center"
+                                                                       Margin="0,0,4,0" />
+                                                            <StackPanel Orientation="Vertical">
+                                                                <TextBlock Text="{Binding Ssid}"
+                                                                           Style="{StaticResource AccentTextBlock}" />
+                                                                <TextBlock Text="{Binding Bssid}"
+                                                                           Style="{StaticResource ConsoleTextBlock}" />
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
                                     </Grid>
                                 </TabItem>
                             </TabControl>
@@ -893,7 +1005,7 @@
             <TextBlock Text="{x:Static Member=localization:Strings.MicrosoftWindowsSDKContractsIsNotAvailable}"
                        Style="{StaticResource ResourceKey=MessageTextBlock}" />
         </Grid>
-        <!-- WiFi adapter access disabled -->
+        <!-- Wi-Fi adapter access disabled -->
         <StackPanel VerticalAlignment="Center" Margin="10">
             <StackPanel.Style>
                 <Style TargetType="{x:Type StackPanel}">
