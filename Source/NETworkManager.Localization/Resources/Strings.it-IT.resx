@@ -737,7 +737,7 @@ La modifica dell'elenco router richiede diritti elevati!</value>
     <value>Il blocco maiuscole è abilitato!</value>
   </data>
   <data name="ChartTimeInSeconds" xml:space="preserve">
-    <value>Chart time (seconds)</value>
+    <value>Tempo grafico (secondi)</value>
   </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
     <value>Controllo aggiornamenti all'avvio</value>
@@ -2877,7 +2877,7 @@ Segnala questo problema su Github.</value>
     <value>La libreria C # si occupa di reti complesse, IP, IPv4, IPv6, maschere di rete, CIDR, sottoreti, subnetting, supernet e supernetting per gli sviluppatori .NET.</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>Beautiful, interactive charts, maps, and gauges.</value>
+    <value>Grafici, mappe e indicatori belli e interattivi.</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
     <value>Una raccolta di indicatori di carico per WPF</value>
