@@ -1,6 +1,6 @@
 ---
 sidebar_position: 2
-description: "Analyze available WiFi networks with details on channels, signal strength, and encryption. NETworkManager WiFi Analyzer supports 2.4, 5, and 6 GHz bands."
+description: "Analyze available WiFi networks, including channels, signal strength, and encryption details across the 2.4, 5, and 6 GHz bands."
 keywords:
   [
     NETworkManager,
@@ -16,19 +16,25 @@ keywords:
 
 # WiFi
 
-The **WiFi** tool shows all available wireless networks with details such as channel, signal strength, and encryption type.
+The **WiFi** tool shows available wireless networks, including channel, signal strength, and encryption details.
 
 Hidden wireless networks are shown as `Hidden Network`.
 
+:::info
+
+Wi-Fi is a wireless networking technology based on IEEE 802.11 standards. Access points periodically advertise network information (such as SSID and security capabilities), which clients can scan and display.
+
+:::
+
 ## WiFi
 
-On the **WiFi** tab, you can select which wireless network adapter is used to scan for wireless networks. Wireless networks can be filtered by 2.4 GHz, 5 GHz, and 6 GHz.
+On the **WiFi** tab, you can select which wireless adapter is used for scanning. Results can be filtered by the 2.4 GHz, 5 GHz, and 6 GHz bands.
 
-In the search field, you can filter the wireless networks by `SSID`, `Security`, `Frequency`, `Channel`, `BSSID (MAC Address)`, `Vendor`, and `Phy kind`. The search is case-insensitive.
+In the search field, you can filter wireless networks by `SSID`, `Security`, `Frequency`, `Channel`, `BSSID (MAC Address)`, `Vendor`, and `PHY kind`. Search is case-insensitive.
 
 :::note
 
-Starting with Windows 11 24H2, you need to allow access to the Wi-Fi adapter.
+Starting with Windows 11 24H2, you must allow access to the Wi-Fi adapter.
 
 Open `Windows Settings > Privacy & security > Location`, enable access for Desktop Apps / NETworkManager, then restart the application.
 
@@ -53,7 +59,7 @@ Open `Windows Settings > Privacy & security > Location`, enable access for Deskt
 
 ## Channels
 
-On the **Channels** tab, all wireless networks of the selected wireless network adapter are displayed in a graphical view with channel, channel width, and signal strength. This can be useful to identify overlapping wireless networks that do not originate from the same access point.
+On the **Channels** tab, all wireless networks of the selected wireless adapter are displayed in a graphical view with channel, channel width, and signal strength. This helps identify overlapping wireless networks that do not originate from the same access point.
 
 The tab is split into two sub-tabs:
 
