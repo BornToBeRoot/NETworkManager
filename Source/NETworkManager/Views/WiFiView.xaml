@@ -614,9 +614,19 @@
                                                                 MinWidth="80" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.ChannelWidth}"
-                                                Binding="{Binding Path=(network:WiFiNetworkInfo.ChannelBandwidth), StringFormat={}{0} MHz}"
                                                 SortMemberPath="ChannelBandwidth"
-                                                MinWidth="100" />
+                                                MinWidth="100">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Text" Value="{Binding Path=(network:WiFiNetworkInfo.ChannelBandwidth), StringFormat={}{0} MHz}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.ChannelBandwidth)}" Value="0">
+                                                                <Setter Property="Text" Value="-/-" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.SignalStrength}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).NetworkRssiInDecibelMilliwatts, Converter={StaticResource ResourceKey=WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter}}"
