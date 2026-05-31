@@ -57,8 +57,9 @@ public partial class LiveChartsWiFiChannelTooltip : IChartTooltip, INotifyProper
                 continue;
 
             var ssid = network.IsHidden ? Strings.HiddenNetwork : network.AvailableNetwork.Ssid;
+            var widthText = network.ChannelBandwidth > 0 ? $"{network.ChannelBandwidth} MHz" : "-/-";
             var detail =
-                $"{network.AvailableNetwork.NetworkRssiInDecibelMilliwatts} dBm · {Strings.Channel} {network.Channel} · {network.ChannelBandwidth} MHz";
+                $"{network.AvailableNetwork.NetworkRssiInDecibelMilliwatts} dBm · {Strings.Channel} {network.Channel} · {Strings.ChannelWidth} {widthText}";
 
             TooltipEntries.Add(new TooltipEntry(SkColorToBrush(GetSeriesColor(point)), ssid, detail));
         }

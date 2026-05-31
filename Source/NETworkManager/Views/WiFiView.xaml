@@ -614,9 +614,19 @@
                                                                 MinWidth="80" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.ChannelWidth}"
-                                                Binding="{Binding Path=(network:WiFiNetworkInfo.ChannelBandwidth), StringFormat={}{0} MHz}"
                                                 SortMemberPath="ChannelBandwidth"
-                                                MinWidth="100" />
+                                                MinWidth="100">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Setter Property="Text" Value="{Binding Path=(network:WiFiNetworkInfo.ChannelBandwidth), StringFormat={}{0} MHz}" />
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.ChannelBandwidth)}" Value="0">
+                                                                <Setter Property="Text" Value="-/-" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.SignalStrength}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).NetworkRssiInDecibelMilliwatts, Converter={StaticResource ResourceKey=WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter}}"
@@ -704,8 +714,13 @@
                             <TabControl Style="{StaticResource ResourceKey=DefaultTabControl}"
                                         Loaded="ChannelsTabControl_Loaded"
                                         SelectionChanged="ChannelsTabControl_SelectionChanged">
-                                <TabItem Header="2.4 &amp; 5 GHz">
-                                    <Grid Margin="0,10,0,0">
+                                <TabItem>
+                                    <TabItem.Header>
+                                        <MultiBinding StringFormat="{}{0} &amp; {1}">
+                                            <Binding Source="{x:Static localization:Strings.GHz2dot4}" />
+                                            <Binding Source="{x:Static localization:Strings.GHz5}" />
+                                        </MultiBinding>
+                                    </TabItem.Header>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="*" />
@@ -762,7 +777,7 @@
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
-                                        <TextBlock Grid.Row="0" Text="6 GHz (1 - 125)"
+                                        <TextBlock Grid.Row="0" Text="{Binding Source={x:Static localization:Strings.GHz6}, StringFormat={}{0} (1 - 125)}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
                                         <lvc:CartesianChart Grid.Row="1"
                                                             Background="Transparent"
@@ -781,7 +796,7 @@
                                                 <controls:LiveChartsWiFiChannelTooltip />
                                             </lvc:CartesianChart.Tooltip>
                                         </lvc:CartesianChart>
-                                        <TextBlock Grid.Row="3" Text="6 GHz (129 - 233)"
+                                        <TextBlock Grid.Row="3" Text="{Binding Source={x:Static localization:Strings.GHz6}, StringFormat={}{0} (129 - 233)}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
                                         <lvc:CartesianChart Grid.Row="4"
                                                             Background="Transparent"
