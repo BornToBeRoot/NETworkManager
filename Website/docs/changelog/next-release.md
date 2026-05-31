@@ -111,6 +111,10 @@ Release date: **xx.xx.2025**
 - Fixed `CancellationTokenSource` leak in `IPScanner`, `PortScanner`, `Traceroute`, `PingMonitor`, `PingMonitorHost` and `SNMP` ViewModels. The previous instance was never disposed before being overwritten on each run, leaking the underlying `WaitHandle`. [#3448](https://github.com/BornToBeRoot/NETworkManager/pull/3448)
 - Fixed a `Dispatcher.ShutdownStarted` handler leak in the Dragablz tab items (PowerShell, PuTTY, TigerVNC, Remote Desktop and Web Console controls, plus the IP Scanner, Port Scanner, Traceroute, DNS Lookup, IP Geolocation, SNMP, SNTP Lookup and Whois views). The handler was subscribed in the constructor but never removed, keeping each closed tab (view and view model) alive until the application exited. It is now unsubscribed in `CloseTab()`; the Web Console additionally disposes its WebView2 instance. [#3454](https://github.com/BornToBeRoot/NETworkManager/pull/3454)
 
+**WiFi**
+
+- Fixed the WiFi view silently failing to load (e.g. on Windows ARM64 running the emulated x64 build) when `WiFiAdapter.RequestAccessAsync()` threw an exception. The exception is now logged and the view shows the "access not available" message with a settings button instead of an empty tab. [#3462](https://github.com/BornToBeRoot/NETworkManager/pull/3462)
+
 **Port Scanner**
 
 - Fixed an app crash when double-clicking a port profile. [#3382](https://github.com/BornToBeRoot/NETworkManager/pull/3382)

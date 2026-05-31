@@ -631,9 +631,23 @@ public class WiFiViewModel : ViewModelBase
     /// <returns>Fails if the access is denied.</returns>
     private static bool RequestAccess()
     {
-        var accessStatus = WiFiAdapter.RequestAccessAsync().GetAwaiter().GetResult();
+        try
+        {
+            var accessStatus = WiFiAdapter.RequestAccessAsync().GetAwaiter().GetResult();
 
-        return accessStatus == WiFiAccessStatus.Allowed;
+            return accessStatus == WiFiAccessStatus.Allowed;
+        }
+        catch (Exception ex)
+        {
+            // RequestAccessAsync() can throw instead of returning a status (e.g. on Windows ARM64
+            // running the emulated x64 build, see GitHub issue #3110). Log it and treat it as denied
+            // so the view shows the "access not available" message with the settings button instead
+            // of silently failing (the exception would otherwise be swallowed by the WPF binding that
+            // constructs this view model).
+            Log.Error("Error while requesting access to the WiFi adapter.", ex);
+
+            return false;
+        }
     }
 
     private async Task LoadAdaptersAsync(string adapterId = null)

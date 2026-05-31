@@ -208,8 +208,10 @@ public static class WlanApi
                 if (ieStart + entry.ulIeSize > totalSize)
                     continue;
 
-                var ie = new byte[entry.ulIeSize];
-                Marshal.Copy(IntPtr.Add(bssListPtr, (int)ieStart), ie, 0, (int)entry.ulIeSize);
+                var ieSize = (int)entry.ulIeSize; // safe: guarded to <= 2324 above
+
+                var ie = new byte[ieSize];
+                Marshal.Copy(IntPtr.Add(bssListPtr, (int)ieStart), ie, 0, ieSize);
 
                 var width = GetBandwidthFromInformationElements(ie);
 
