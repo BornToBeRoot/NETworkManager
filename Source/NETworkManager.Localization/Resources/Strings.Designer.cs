@@ -1673,7 +1673,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("Channels", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Channel width.
+        /// </summary>
+        public static string ChannelWidth {
+            get {
+                return ResourceManager.GetString("ChannelWidth", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Chassis Id.
         /// </summary>

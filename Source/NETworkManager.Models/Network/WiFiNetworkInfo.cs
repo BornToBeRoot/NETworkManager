@@ -38,6 +38,11 @@ public class WiFiNetworkInfo
     public int Channel { get; set; }
 
     /// <summary>
+    ///     The channel bandwidth in MHz (e.g. 20, 40, 80, 160). A value of 0 means unknown.
+    /// </summary>
+    public int ChannelBandwidth { get; set; }
+
+    /// <summary>
     ///     Indicates if the Wi-Fi network Ssid is hidden.
     /// </summary>
     public bool IsHidden { get; set; }

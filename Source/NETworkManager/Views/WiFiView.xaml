@@ -8,7 +8,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-             xmlns:liveChart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:controls="clr-namespace:NETworkManager.Controls"
              xmlns:controls2="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
@@ -53,11 +53,11 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TabControl Grid.Column="0" Grid.Row="0"
+                <TabControl Grid.Column="0" Grid.Row="0"                            
                             Style="{StaticResource ResourceKey=DefaultTabControl}">
                     <TabItem Header="{x:Static Member=localization:Strings.WiFi}">
                         <Grid Margin="10">
-                            <!-- Adapter / WiFi networks -->
+                            <!-- Adapter / Wi-Fi networks -->
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -267,7 +267,7 @@
                                                 </Rectangle>
                                             </Button>
                                             <CheckBox Content="{x:Static Member=localization:Strings.GHz2dot4}"
-                                                      IsChecked="{Binding Path=Show2dot4GHzNetworks}"
+                                                      IsChecked="{Binding Path=Show2Dot4GHzNetworks}"
                                                       Margin="0,0,10,0" />
                                             <CheckBox Content="{x:Static Member=localization:Strings.GHz5}"
                                                       IsChecked="{Binding Path=Show5GHzNetworks}"
@@ -340,6 +340,10 @@
                                                     <MenuItem Header="{x:Static Member=localization:Strings.Channel}"
                                                               Command="{Binding Path=CopyDataToClipboardCommand}"
                                                               CommandParameter="{Binding Path=SelectedNetwork.Channel}"
+                                                              Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                                    <MenuItem Header="{x:Static Member=localization:Strings.ChannelWidth}"
+                                                              Command="{Binding Path=CopyDataToClipboardCommand}"
+                                                              CommandParameter="{Binding Path=SelectedNetwork.ChannelBandwidth}"
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem
                                                         Header="{x:Static Member=localization:Strings.SignalStrength}"
@@ -428,7 +432,7 @@
                                             </Style>
                                         </controls2:MultiSelectDataGrid.RowStyle>
                                         <controls2:MultiSelectDataGrid.Columns>
-                                            <DataGridTemplateColumn SortMemberPath="ChannelCenterFrequencyInKilohertz">
+                                            <DataGridTemplateColumn MinWidth="44" SortMemberPath="ChannelCenterFrequencyInKilohertz">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Rectangle Width="24" Height="24"
@@ -609,6 +613,11 @@
                                                                 SortMemberPath="Channel"
                                                                 MinWidth="80" />
                                             <DataGridTextColumn
+                                                Header="{x:Static Member=localization:Strings.ChannelWidth}"
+                                                Binding="{Binding Path=(network:WiFiNetworkInfo.ChannelBandwidth), StringFormat={}{0} MHz}"
+                                                SortMemberPath="ChannelBandwidth"
+                                                MinWidth="100" />
+                                            <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.SignalStrength}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).NetworkRssiInDecibelMilliwatts, Converter={StaticResource ResourceKey=WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter}}"
                                                 SortMemberPath="AvailableNetwork.NetworkRssiInDecibelMilliwatts"
@@ -691,116 +700,109 @@
                     </TabItem>
                     <TabItem Header="{x:Static Member=localization:Strings.Channels}">
                         <Grid Margin="10">
-                            <!-- Channels -->
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="20" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="{x:Static Member=localization:Strings.GHz2dot4}"
-                                           Style="{StaticResource ResourceKey=HeaderTextBlock}" />
-                                <liveChart:CartesianChart Grid.Row="1" Series="{Binding Path=Radio2dot4GHzSeries}"
-                                                          LegendLocation="Bottom" DisableAnimations="True">
-                                    <liveChart:CartesianChart.DataTooltip>
-                                        <controls:LvlChartsWiFiChannelTooltip Background="Transparent" />
-                                    </liveChart:CartesianChart.DataTooltip>
-                                    <liveChart:CartesianChart.AxisX>
-                                        <liveChart:Axis Title="{x:Static Member=localization:Strings.Channel}"
-                                                        MinValue="0"
-                                                        MaxValue="16" Labels="{Binding Path=Radio2dot4GHzLabels}">
-                                            <liveChart:Axis.Separator>
-                                                <liveChart:Separator Step="1" StrokeThickness="0" />
-                                            </liveChart:Axis.Separator>
-                                        </liveChart:Axis>
-                                    </liveChart:CartesianChart.AxisX>
-                                    <liveChart:CartesianChart.AxisY>
-                                        <liveChart:Axis Title="{x:Static Member=localization:Strings.SignalStrength}"
-                                                        MaxValue="100" MinValue="0"
-                                                        LabelFormatter="{Binding Path=FormattedDbm}">
-                                            <liveChart:Axis.Separator>
-                                                <liveChart:Separator StrokeThickness="1"
-                                                                     Stroke="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
-                                                                     StrokeDashArray="10" />
-                                            </liveChart:Axis.Separator>
-                                            <liveChart:Axis.Sections>
-                                                <liveChart:AxisSection Value="70" SectionWidth="30">
-                                                    <liveChart:AxisSection.Fill>
-                                                        <SolidColorBrush Opacity="0.25" Color="#5EA4BF" />
-                                                    </liveChart:AxisSection.Fill>
-                                                </liveChart:AxisSection>
-                                                <liveChart:AxisSection Value="33" SectionWidth="37">
-                                                    <liveChart:AxisSection.Fill>
-                                                        <SolidColorBrush Opacity="0.25" Color="#badc58" />
-                                                    </liveChart:AxisSection.Fill>
-                                                </liveChart:AxisSection>
-                                                <liveChart:AxisSection Value="20" SectionWidth="13">
-                                                    <liveChart:AxisSection.Fill>
-                                                        <SolidColorBrush Opacity="0.25" Color="#FF970D" />
-                                                    </liveChart:AxisSection.Fill>
-                                                </liveChart:AxisSection>
-                                                <liveChart:AxisSection Value="0" SectionWidth="20">
-                                                    <liveChart:AxisSection.Fill>
-                                                        <SolidColorBrush Opacity="0.25" Color="#A4442B" />
-                                                    </liveChart:AxisSection.Fill>
-                                                </liveChart:AxisSection>
-                                            </liveChart:Axis.Sections>
-                                        </liveChart:Axis>
-                                    </liveChart:CartesianChart.AxisY>
-                                </liveChart:CartesianChart>
-                                <TextBlock Grid.Row="3" Text="{x:Static Member=localization:Strings.GHz5}"
-                                           Style="{StaticResource ResourceKey=HeaderTextBlock}" />
-                                <liveChart:CartesianChart Grid.Row="4" Series="{Binding Path=Radio5GHzSeries}"
-                                                          LegendLocation="Bottom" DisableAnimations="True">
-                                    <liveChart:CartesianChart.DataTooltip>
-                                        <controls:LvlChartsWiFiChannelTooltip Background="Transparent" />
-                                    </liveChart:CartesianChart.DataTooltip>
-                                    <liveChart:CartesianChart.AxisX>
-                                        <liveChart:Axis Title="{x:Static Member=localization:Strings.Channel}"
-                                                        MinValue="0"
-                                                        MaxValue="32" Labels="{Binding Path=Radio5GHzLabels}">
-                                            <liveChart:Axis.Separator>
-                                                <liveChart:Separator Step="1" StrokeThickness="0" />
-                                            </liveChart:Axis.Separator>
-                                        </liveChart:Axis>
-                                    </liveChart:CartesianChart.AxisX>
-                                    <liveChart:CartesianChart.AxisY>
-                                        <liveChart:Axis Title="{x:Static Member=localization:Strings.SignalStrength}"
-                                                        MaxValue="100" MinValue="0"
-                                                        LabelFormatter="{Binding Path=FormattedDbm}">
-                                            <liveChart:Axis.Separator>
-                                                <liveChart:Separator StrokeThickness="1"
-                                                                     Stroke="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
-                                                                     StrokeDashArray="10" />
-                                            </liveChart:Axis.Separator>
-                                            <liveChart:Axis.Sections>
-                                                <liveChart:AxisSection Value="70" SectionWidth="30">
-                                                    <liveChart:AxisSection.Fill>
-                                                        <SolidColorBrush Opacity="0.25" Color="#5EA4BF" />
-                                                    </liveChart:AxisSection.Fill>
-                                                </liveChart:AxisSection>
-                                                <liveChart:AxisSection Value="33" SectionWidth="37">
-                                                    <liveChart:AxisSection.Fill>
-                                                        <SolidColorBrush Opacity="0.25" Color="#badc58" />
-                                                    </liveChart:AxisSection.Fill>
-                                                </liveChart:AxisSection>
-                                                <liveChart:AxisSection Value="20" SectionWidth="13">
-                                                    <liveChart:AxisSection.Fill>
-                                                        <SolidColorBrush Opacity="0.25" Color="#FF970D" />
-                                                    </liveChart:AxisSection.Fill>
-                                                </liveChart:AxisSection>
-                                                <liveChart:AxisSection Value="0" SectionWidth="20">
-                                                    <liveChart:AxisSection.Fill>
-                                                        <SolidColorBrush Opacity="0.25" Color="#A4442B" />
-                                                    </liveChart:AxisSection.Fill>
-                                                </liveChart:AxisSection>
-                                            </liveChart:Axis.Sections>
-                                        </liveChart:Axis>
-                                    </liveChart:CartesianChart.AxisY>
-                                </liveChart:CartesianChart>
-                            </Grid>
+                            <!-- Channels: 2.4 & 5 GHz on one tab, 6 GHz split into lower/upper on another -->
+                            <TabControl Style="{StaticResource ResourceKey=DefaultTabControl}"
+                                        Loaded="ChannelsTabControl_Loaded"
+                                        SelectionChanged="ChannelsTabControl_SelectionChanged">
+                                <TabItem Header="2.4 &amp; 5 GHz">
+                                    <Grid Margin="0,10,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="20" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{x:Static Member=localization:Strings.GHz2dot4}"
+                                                   Style="{StaticResource ResourceKey=HeaderTextBlock}" />
+                                        <lvc:CartesianChart Grid.Row="1"
+                                                            Background="Transparent"
+                                                            Series="{Binding Path=Radio2Dot4GHzSeries}"
+                                                            XAxes="{Binding Path=Radio2Dot4GHzXAxes}"
+                                                            YAxes="{Binding Path=Radio2Dot4GHzYAxes}"
+                                                            Sections="{Binding Path=Radio2Dot4GHzSections}"
+                                                            LegendPosition="Bottom"
+                                                            LegendTextPaint="{Binding Path=LegendTextPaint}"
+                                                            LegendTextSize="12"
+                                                            FindingStrategy="CompareOnlyX"
+                                                            DrawMarginFrame="{x:Null}"
+                                                            EasingFunction="{x:Null}"
+                                                            RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                            <lvc:CartesianChart.Tooltip>
+                                                <controls:LiveChartsWiFiChannelTooltip />
+                                            </lvc:CartesianChart.Tooltip>
+                                        </lvc:CartesianChart>
+                                        <TextBlock Grid.Row="3" Text="{x:Static Member=localization:Strings.GHz5}"
+                                                   Style="{StaticResource ResourceKey=HeaderTextBlock}" />
+                                        <lvc:CartesianChart Grid.Row="4"
+                                                            Background="Transparent"
+                                                            Series="{Binding Path=Radio5GHzSeries}"
+                                                            XAxes="{Binding Path=Radio5GHzXAxes}"
+                                                            YAxes="{Binding Path=Radio5GHzYAxes}"
+                                                            Sections="{Binding Path=Radio5GHzSections}"
+                                                            LegendPosition="Bottom"
+                                                            LegendTextPaint="{Binding Path=LegendTextPaint}"
+                                                            LegendTextSize="12"
+                                                            FindingStrategy="CompareOnlyX"
+                                                            DrawMarginFrame="{x:Null}"
+                                                            EasingFunction="{x:Null}"
+                                                            RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                            <lvc:CartesianChart.Tooltip>
+                                                <controls:LiveChartsWiFiChannelTooltip />
+                                            </lvc:CartesianChart.Tooltip>
+                                        </lvc:CartesianChart>
+                                    </Grid>
+                                </TabItem>
+                                <TabItem Header="{x:Static Member=localization:Strings.GHz6}">
+                                    <Grid Margin="0,10,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="20" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="6 GHz (1 - 125)"
+                                                   Style="{StaticResource ResourceKey=HeaderTextBlock}" />
+                                        <lvc:CartesianChart Grid.Row="1"
+                                                            Background="Transparent"
+                                                            Series="{Binding Path=Radio6GHzLowerSeries}"
+                                                            XAxes="{Binding Path=Radio6GHzLowerXAxes}"
+                                                            YAxes="{Binding Path=Radio6GHzLowerYAxes}"
+                                                            Sections="{Binding Path=Radio6GHzLowerSections}"
+                                                            LegendPosition="Bottom"
+                                                            LegendTextPaint="{Binding Path=LegendTextPaint}"
+                                                            LegendTextSize="12"
+                                                            FindingStrategy="CompareOnlyX"
+                                                            DrawMarginFrame="{x:Null}"
+                                                            EasingFunction="{x:Null}"
+                                                            RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                            <lvc:CartesianChart.Tooltip>
+                                                <controls:LiveChartsWiFiChannelTooltip />
+                                            </lvc:CartesianChart.Tooltip>
+                                        </lvc:CartesianChart>
+                                        <TextBlock Grid.Row="3" Text="6 GHz (129 - 233)"
+                                                   Style="{StaticResource ResourceKey=HeaderTextBlock}" />
+                                        <lvc:CartesianChart Grid.Row="4"
+                                                            Background="Transparent"
+                                                            Series="{Binding Path=Radio6GHzUpperSeries}"
+                                                            XAxes="{Binding Path=Radio6GHzUpperXAxes}"
+                                                            YAxes="{Binding Path=Radio6GHzUpperYAxes}"
+                                                            Sections="{Binding Path=Radio6GHzUpperSections}"
+                                                            LegendPosition="Bottom"
+                                                            LegendTextPaint="{Binding Path=LegendTextPaint}"
+                                                            LegendTextSize="12"
+                                                            FindingStrategy="CompareOnlyX"
+                                                            DrawMarginFrame="{x:Null}"
+                                                            EasingFunction="{x:Null}"
+                                                            RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                            <lvc:CartesianChart.Tooltip>
+                                                <controls:LiveChartsWiFiChannelTooltip />
+                                            </lvc:CartesianChart.Tooltip>
+                                        </lvc:CartesianChart>
+                                    </Grid>
+                                </TabItem>
+                            </TabControl>
                         </Grid>
                     </TabItem>
                 </TabControl>

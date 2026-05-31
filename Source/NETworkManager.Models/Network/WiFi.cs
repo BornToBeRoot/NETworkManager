@@ -1,11 +1,13 @@
 ﻿using log4net;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
 using Windows.Security.Credentials;
+using Microsoft.CodeAnalysis.Emit;
 using NETworkManager.Models.Lookup;
 
 namespace NETworkManager.Models.Network;
@@ -68,18 +70,25 @@ public static class WiFi
         // Try to get the current connected Wi-Fi network of this network adapter
         var (_, bssid) = TryGetConnectedNetworkFromWiFiAdapter(adapter.NetworkAdapter.NetworkAdapterId.ToString());
 
+        // The WinRT API does not expose the channel bandwidth, so it is read from the native
+        // BSS list (wlanapi.dll) and matched by BSSID below. Failures yield an empty map and we
+        // fall back to a heuristic per network.
+        var channelWidths = WlanApi.GetBssChannelWidths(adapter.NetworkAdapter.NetworkAdapterId);
+
         var wifiNetworkInfos = new List<WiFiNetworkInfo>();
 
         foreach (var availableNetwork in adapter.NetworkReport.AvailableNetworks)
         {
             var channelFrequencyInGigahertz = ConvertChannelFrequencyToGigahertz(availableNetwork.ChannelCenterFrequencyInKilohertz);
+            var radio = GetWiFiRadioFromChannelFrequency(channelFrequencyInGigahertz);
 
             var wifiNetworkInfo = new WiFiNetworkInfo
             {
                 AvailableNetwork = availableNetwork,
-                Radio = GetWiFiRadioFromChannelFrequency(channelFrequencyInGigahertz),
+                Radio = radio,
                 ChannelCenterFrequencyInGigahertz = channelFrequencyInGigahertz,
                 Channel = GetChannelFromChannelFrequency(channelFrequencyInGigahertz),
+                ChannelBandwidth = GetChannelBandwidth(channelWidths, availableNetwork.Bssid, radio, availableNetwork.PhyKind),
                 IsHidden = string.IsNullOrEmpty(availableNetwork.Ssid),
                 IsConnected = availableNetwork.Bssid.Equals(bssid, StringComparison.OrdinalIgnoreCase),
                 NetworkAuthenticationType = GetHumanReadableNetworkAuthenticationType(availableNetwork.SecuritySettings.NetworkAuthenticationType),
@@ -258,8 +267,8 @@ public static class WiFi
     ///     Get the Wi-Fi channel from channel frequency.
     /// </summary>
     /// <param name="gigahertz">Input like 2.422 or 5.240.</param>
-    /// <returns>WiFi channel like 3 or 48.</returns>
-    public static int GetChannelFromChannelFrequency(double gigahertz)
+    /// <returns>Wi-Fi channel like 3 or 48.</returns>
+    private static int GetChannelFromChannelFrequency(double gigahertz)
     {
         return gigahertz switch
         {
@@ -313,7 +322,7 @@ public static class WiFi
     /// </summary>
     /// <param name="kilohertz">Frequency in kilohertz like 2422000 or 5240000.</param>
     /// <returns>Frequency in gigahertz like 2.422 or 5.240.</returns>
-    public static double ConvertChannelFrequencyToGigahertz(int kilohertz)
+    private static double ConvertChannelFrequencyToGigahertz(int kilohertz)
     {
         return Convert.ToDouble(kilohertz) / 1000 / 1000;
     }
@@ -323,7 +332,7 @@ public static class WiFi
     /// </summary>
     /// <param name="gigahertz">Frequency in gigahertz like 2.412 or 5.180.</param>
     /// <returns>Radio like 2.4 GHz, 5 GHz, etc. as <see cref="WiFiRadio" />.</returns>
-    public static WiFiRadio GetWiFiRadioFromChannelFrequency(double gigahertz)
+    private static WiFiRadio GetWiFiRadioFromChannelFrequency(double gigahertz)
     {
         return gigahertz switch
         {
@@ -331,6 +340,40 @@ public static class WiFi
             >= 5.180 and <= 5.825 => WiFiRadio.GHz5,
             >= 5.925 and <= 7.125 => WiFiRadio.GHz6,
             _ => WiFiRadio.Unknown
+        };
+    }
+
+    /// <summary>
+    ///     Determines the channel bandwidth (MHz) for a network. Prefers the value parsed from the
+    ///     native BSS list (<see cref="WlanApi" />); if unavailable, falls back to a heuristic based
+    ///     on the radio band and PHY kind, and finally to 20 MHz.
+    /// </summary>
+    private static int GetChannelBandwidth(IReadOnlyDictionary<string, int> channelWidths, string networkBssid,
+        WiFiRadio radio, WiFiPhyKind phyKind)
+    {
+        if (!string.IsNullOrEmpty(networkBssid) && channelWidths.TryGetValue(networkBssid, out var width) && width > 0)
+            return width;
+     
+        return GetHeuristicChannelBandwidth(radio, phyKind);
+    }
+
+    /// <summary>
+    ///     Estimates the channel bandwidth (MHz) from the radio band and PHY kind when the exact
+    ///     value could not be read from the BSS list.
+    /// </summary>
+    private static int GetHeuristicChannelBandwidth(WiFiRadio radio, WiFiPhyKind phyKind)
+    {
+        return radio switch
+        {
+            WiFiRadio.GHz2dot4 => phyKind == WiFiPhyKind.HT ? 40 : 20,
+            WiFiRadio.GHz5 => phyKind switch
+            {
+                WiFiPhyKind.Vht or WiFiPhyKind.HE or WiFiPhyKind.Eht => 80,
+                WiFiPhyKind.HT => 40,
+                _ => 20
+            },
+            WiFiRadio.GHz6 => phyKind is WiFiPhyKind.HE or WiFiPhyKind.Eht ? 160 : 20,
+            _ => 20
         };
     }
 

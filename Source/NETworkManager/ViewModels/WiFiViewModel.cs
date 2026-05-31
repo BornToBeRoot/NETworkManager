@@ -1,7 +1,12 @@
-﻿using LiveCharts;
-using LiveCharts.Wpf;
+﻿using LiveChartsCore;
+using LiveChartsCore.Drawing;
+using LiveChartsCore.Kernel;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using log4net;
 using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Controls;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -9,6 +14,7 @@ using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using SkiaSharp;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -191,7 +197,7 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    public bool Show2dot4GHzNetworks
+    public bool Show2Dot4GHzNetworks
     {
         get;
         set
@@ -251,7 +257,7 @@ public class WiFiViewModel : ViewModelBase
     public ObservableCollection<WiFiNetworkInfo> Networks
     {
         get;
-        set
+        init
         {
             if (value != null && value == field)
                 return;
@@ -289,28 +295,64 @@ public class WiFiViewModel : ViewModelBase
         }
     } = new ArrayList();
 
-    public SeriesCollection Radio2dot4GHzSeries { get; set; } = [];
+    public ISeries[] Radio2Dot4GHzSeries
+    {
+        get;
+        private set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
 
-    public string[] Radio2dot4GHzLabels { get; set; } =
-        [" ", " ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", " ", " "];
+    public ISeries[] Radio5GHzSeries
+    {
+        get;
+        private set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
 
-    public SeriesCollection Radio5GHzSeries { get; set; } = [];
+    // 6 GHz spans a very wide range (channels 1-233). It is split into a lower (1-125) and an upper
+    // (129-233) chart for readability, similar to the UniFi channel view.
+    public ISeries[] Radio6GHzLowerSeries
+    {
+        get;
+        private set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
 
-    public string[] Radio5GHzLabels { get; set; } =
-    [
-        " ", " ", "36", "40", "44", "48", "52", "56", "60", "64", "", "", "", "", "100", "104", "108", "112", "116",
-        "120", "124", "128", "132", "136", "140", "144", "149", "153", "157", "161", "165", " ", " "
-    ];
+    public ISeries[] Radio6GHzUpperSeries
+    {
+        get;
+        private set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
 
-    public SeriesCollection Radio6GHzSeries { get; set; } = [];
+    public Axis[] Radio2Dot4GHzXAxes { get; private set; }
+    public Axis[] Radio5GHzXAxes { get; private set; }
+    public Axis[] Radio6GHzLowerXAxes { get; private set; }
+    public Axis[] Radio6GHzUpperXAxes { get; private set; }
 
-    public string[] Radio6GHzLabels { get; set; } =
-    [
+    public Axis[] Radio2Dot4GHzYAxes { get; private set; }
+    public Axis[] Radio5GHzYAxes { get; private set; }
+    public Axis[] Radio6GHzLowerYAxes { get; private set; }
+    public Axis[] Radio6GHzUpperYAxes { get; private set; }
 
-    ];
+    public RectangularSection[] Radio2Dot4GHzSections { get; private set; }
+    public RectangularSection[] Radio5GHzSections { get; private set; }
+    public RectangularSection[] Radio6GHzLowerSections { get; private set; }
+    public RectangularSection[] Radio6GHzUpperSections { get; private set; }
 
-    public Func<double, string> FormattedDbm { get; set; } =
-        value => $"- {100 - value} dBm"; // Reverse y-axis 0 to -100
+    public SolidColorPaint LegendTextPaint { get; private set; }
 
     public bool IsStatusMessageDisplayed
     {
@@ -398,7 +440,11 @@ public class WiFiViewModel : ViewModelBase
     {
         _isLoading = true;
 
-        // Check if Microsoft.Windows.SDK.Contracts is available 
+        // Set up the channel charts (axes, sections, paints) unconditionally so the chart bindings
+        // are never null, even on the code paths that return early below.
+        InitializeCharts();
+
+        // Check if Microsoft.Windows.SDK.Contracts is available
         SdkContractAvailable = ApiInformation.IsTypePresent("Windows.Devices.WiFi.WiFiAdapter");
 
         if (!SdkContractAvailable)
@@ -429,7 +475,7 @@ public class WiFiViewModel : ViewModelBase
                 return false;
 
             // Filter by frequency
-            if ((info.Radio == WiFiRadio.GHz2dot4 && !Show2dot4GHzNetworks) ||
+            if ((info.Radio == WiFiRadio.GHz2dot4 && !Show2Dot4GHzNetworks) ||
                 (info.Radio == WiFiRadio.GHz5 && !Show5GHzNetworks) ||
                 (info.Radio == WiFiRadio.GHz6 && !Show6GHzNetworks))
             {
@@ -474,7 +520,7 @@ public class WiFiViewModel : ViewModelBase
 
     private void LoadSettings()
     {
-        Show2dot4GHzNetworks = SettingsManager.Current.WiFi_Show2dot4GHzNetworks;
+        Show2Dot4GHzNetworks = SettingsManager.Current.WiFi_Show2dot4GHzNetworks;
         Show5GHzNetworks = SettingsManager.Current.WiFi_Show5GHzNetworks;
         Show6GHzNetworks = SettingsManager.Current.WiFi_Show6GHzNetworks;
     }
@@ -633,10 +679,13 @@ public class WiFiViewModel : ViewModelBase
             // Clear the values after the scan to make the UI smoother
             Log.Debug("ScanAsync - Clearing old values...");
             Networks.Clear();
-            Radio2dot4GHzSeries.Clear();
-            Radio5GHzSeries.Clear();
 
             Log.Debug("ScanAsync - Adding new values...");
+            List<ISeries> series2Dot4GHz = [];
+            List<ISeries> series5GHz = [];
+            List<ISeries> series6GHzLower = [];
+            List<ISeries> series6GHzUpper = [];
+
             foreach (var network in wiFiNetworkScanInfo.WiFiNetworkInfos)
             {
                 Log.Debug("ScanAsync - Add network: " + network.AvailableNetwork.Ssid + " with channel frequency: " +
@@ -647,20 +696,31 @@ public class WiFiViewModel : ViewModelBase
                 switch (network.Radio)
                 {
                     case WiFiRadio.GHz2dot4:
-                        Radio2dot4GHzSeries.Add(GetSeriesCollection(network));
+                        series2Dot4GHz.Add(BuildNetworkSeries(network, series2Dot4GHz.Count));
                         break;
 
-                    case WiFiRadio.GHz5:
-                        Radio5GHzSeries.Add(GetSeriesCollection(network));
+                    case WiFiRadio.GHz5:                        
+                            series5GHz.Add(BuildNetworkSeries(network, series5GHz.Count));
                         break;
 
-                        // ToDo: Implement 6 GHz
-                        /*
-                        case WiFiRadio.GHz6:
-                            break;
-                        */
+                    case WiFiRadio.GHz6:
+                        // Split by channel center into the lower (1-125) and upper (129-233) chart.
+                        var centerChannel = FrequencyToChannelAxis(
+                            network.ChannelCenterFrequencyInGigahertz * 1000, WiFiRadio.GHz6);
+
+                        if (centerChannel < SixGHzSplitChannel)
+                            series6GHzLower.Add(BuildNetworkSeries(network, series6GHzLower.Count));
+                        else
+                            series6GHzUpper.Add(BuildNetworkSeries(network, series6GHzUpper.Count));
+
+                        break;
                 }
             }
+
+            Radio2Dot4GHzSeries = [.. series2Dot4GHz];
+            Radio5GHzSeries = [.. series5GHz];
+            Radio6GHzLowerSeries = [.. series6GHzLower];
+            Radio6GHzUpperSeries = [.. series6GHzUpper];
 
             statusMessage = string.Format(Strings.LastScanAtX,
                 wiFiNetworkScanInfo.Timestamp.ToLongTimeString());
@@ -674,8 +734,10 @@ public class WiFiViewModel : ViewModelBase
 
             // Clear the existing old values if an error occurs
             Networks.Clear();
-            Radio2dot4GHzSeries.Clear();
-            Radio5GHzSeries.Clear();
+            Radio2Dot4GHzSeries = [];
+            Radio5GHzSeries = [];
+            Radio6GHzLowerSeries = [];
+            Radio6GHzUpperSeries = [];
         }
         finally
         {
@@ -689,62 +751,262 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    private ChartValues<double> GetDefaultChartValues(WiFiRadio radio)
-    {
-        ChartValues<double> values = [];
+    /// <summary>
+    ///     Color palette used to assign a distinct, deterministic color to each network series.
+    ///     Assigning the stroke explicitly (instead of relying on the LiveCharts2 theme) keeps the
+    ///     legend, the chart and the tooltip in sync.
+    /// </summary>
+    private static readonly SKColor[] ChartPalette =
+    [
+        SKColor.Parse("#1ba1e2"), SKColor.Parse("#a4c400"), SKColor.Parse("#f0a30a"),
+        SKColor.Parse("#e51400"), SKColor.Parse("#6a00ff"), SKColor.Parse("#00aba9"),
+        SKColor.Parse("#d80073"), SKColor.Parse("#60a917"), SKColor.Parse("#fa6800"),
+        SKColor.Parse("#0050ef"), SKColor.Parse("#aa00ff"), SKColor.Parse("#825a2c")
+    ];
 
-        var size = radio switch
+    // The Y axis is plotted in 0..100 space (signal strength + 100) so the area fill drops to the
+    // bottom baseline; the axis labeler converts back to real dBm for display.
+    private const double SignalOffset = 100;
+
+    // 2.4 GHz operating channels are 1, 2, 3, ... 14 (every channel number), labeled with the channel
+    private static readonly HashSet<int> ValidChannels2Dot4GHz = BuildChannelSet(1, 14, 1);
+
+    // 5 GHz operating channels are 36, 40, 44, ... 165 (every 4 in channel-number space), labeled with
+    private static readonly HashSet<int> ValidChannels5GHz =
+    [
+        .. BuildChannelSet(36, 64, 4),
+        .. BuildChannelSet(100, 165, 4)
+    ];
+
+    // 6 GHz operating channels are 1, 5, 9, ... 233 (every 4 in channel-number space), labeled with the
+    private static readonly HashSet<int> ValidChannels6GHz = BuildChannelSet(1, 233, 4);
+
+    // Channel that splits the 6 GHz band into the lower (1-125) and upper (129-233) chart. 127 sits
+    // cleanly between the operating channels 125 and 129.
+    private const int SixGHzSplitChannel = 127;
+
+    // The 5 GHz band has a large unused range between channel 64 (UNII-2) and channel 100
+    // (UNII-2 Extended). On a frequency-linear axis this would render as dead space, so it is
+    // compressed: channels above 64 are shifted left, leaving only a small visual gap that still
+    // provides room for the channel-width trapezoids.
+    private const int FiveGHzGapStartChannel = 64;
+    private const int FiveGHzGapEndChannel = 100;
+    private const int FiveGHzGapDisplayUnits = 16;
+    private const int FiveGHzGapShift = FiveGHzGapEndChannel - FiveGHzGapStartChannel - FiveGHzGapDisplayUnits;
+
+    private static HashSet<int> BuildChannelSet(int first, int last, int step)
+    {
+        var set = new HashSet<int>();
+
+        for (var channel = first; channel <= last; channel += step)
+            set.Add(channel);
+
+        return set;
+    }
+
+    /// <summary>
+    ///     Builds axes, signal-quality sections and paints for all channel charts. Called once from
+    ///     the constructor; the per-network series are (re)built on each scan.
+    /// </summary>
+    private void InitializeCharts()
+    {
+        var labelColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray5") is System.Windows.Media.SolidColorBrush gray5
+            ? new SKColor(gray5.Color.R, gray5.Color.G, gray5.Color.B, gray5.Color.A)
+            : new SKColor(0x68, 0x68, 0x68);
+
+        var separatorColor = Application.Current?.TryFindResource("MahApps.Brushes.Gray8") is System.Windows.Media.SolidColorBrush gray8
+            ? new SKColor(gray8.Color.R, gray8.Color.G, gray8.Color.B, gray8.Color.A)
+            : new SKColor(0x80, 0x80, 0x80);
+
+        LegendTextPaint = new SolidColorPaint(labelColor) { SKTypeface = SKTypeface.Default };
+
+        // (min, max) in display space. The lower bound is extended below the first channel so the
+        // left flank of its trapezoid reaches the baseline instead of being clipped. The 5 GHz
+        // upper bound is reduced because the 64..100 dead zone is compressed.
+        Radio2Dot4GHzXAxes = BuildXAxes(-2, 16, ValidChannels2Dot4GHz, false, labelColor);
+        Radio5GHzXAxes = BuildXAxes(30, 152, ValidChannels5GHz, true, labelColor);
+        Radio6GHzLowerXAxes = BuildXAxes(-2, 128, ValidChannels6GHz, false, labelColor);
+        Radio6GHzUpperXAxes = BuildXAxes(126, 236, ValidChannels6GHz, false, labelColor);
+
+        Radio2Dot4GHzYAxes = BuildYAxes(labelColor, separatorColor);
+        Radio5GHzYAxes = BuildYAxes(labelColor, separatorColor);
+        Radio6GHzLowerYAxes = BuildYAxes(labelColor, separatorColor);
+        Radio6GHzUpperYAxes = BuildYAxes(labelColor, separatorColor);
+
+        Radio2Dot4GHzSections = BuildSections();
+        Radio5GHzSections = BuildSections();
+        Radio6GHzLowerSections = BuildSections();
+        Radio6GHzUpperSections = BuildSections();
+    }
+
+    /// <summary>
+    ///     Builds an X-axis in channel-number space (which is linear with the channel frequency).
+    ///     Only channels contained in <paramref name="validChannels" /> are labeled; all other tick
+    ///     positions stay blank. When <paramref name="applyFiveGHzGap" /> is set, the 5 GHz gap shift
+    ///     is reversed before the label lookup.
+    /// </summary>
+    private static Axis[] BuildXAxes(double min, double max, HashSet<int> validChannels, bool applyFiveGHzGap,
+        SKColor labelColor)
+    {
+        return
+        [
+            new Axis
+            {
+                Name = Strings.Channel,
+                NamePaint = new SolidColorPaint(labelColor),
+                NameTextSize = 11,
+                MinLimit = min,
+                MaxLimit = max,
+                MinStep = 1,
+                ForceStepToMin = true,
+                Labeler = value =>
+                {
+                    var channel = (int)Math.Round(value);
+
+                    if (applyFiveGHzGap && channel > FiveGHzGapStartChannel)
+                        channel += FiveGHzGapShift;
+
+                    return validChannels.Contains(channel) ? channel.ToString() : string.Empty;
+                },
+                TextSize = 10,
+                Padding = new Padding(0, 4, 0, 0),
+                LabelsPaint = new SolidColorPaint(labelColor),
+                // No vertical grid lines (matches the legacy chart).
+                SeparatorsPaint = null
+            }
+        ];
+    }
+
+    /// <summary>
+    ///     Builds the Y-axis (signal strength in dBm, -100..0) shared by all three channel charts.
+    /// </summary>
+    private static Axis[] BuildYAxes(SKColor labelColor, SKColor separatorColor)
+    {
+        return
+        [
+            new Axis
+            {
+                Name = Strings.SignalStrength,
+                NamePaint = new SolidColorPaint(labelColor),
+                NameTextSize = 11,
+                MinLimit = 0,
+                MaxLimit = 100,
+                MinStep = 10,
+                ForceStepToMin = true,
+                // Plotted in 0..100 space; convert back to real dBm for the label.
+                Labeler = value => $"{(int)Math.Round(value) - (int)SignalOffset} dBm",
+                TextSize = 11,
+                Padding = new Padding(4, 0),
+                LabelsPaint = new SolidColorPaint(labelColor),
+                SeparatorsPaint = new SolidColorPaint(separatorColor)
+                {
+                    StrokeThickness = 1,
+                    PathEffect = new DashEffect([10f, 10f])
+                }
+            }
+        ];
+    }
+
+    /// <summary>
+    ///     Builds the colored signal-quality bands (Cisco/MetaGeek thresholds), identical for all
+    ///     bands. Returns fresh instances so they are not shared between charts.
+    /// </summary>
+    private static RectangularSection[] BuildSections()
+    {
+        // Thresholds in 0..100 space (dBm + 100): -30 -> 70, -67 -> 33, -70 -> 30, -80 -> 20.
+        return
+        [
+            NewSection(70, 100, "#5EA4BF"), // Excellent (>= -30 dBm)
+            NewSection(33, 70, "#badc58"), // Good (-67…-30 dBm)
+            NewSection(30, 33, "#f9ca24"), // Reliable (-70…-67 dBm)
+            NewSection(20, 30, "#FF970D"), // Weak (-80…-70 dBm)
+            NewSection(0, 20, "#A4442B") // Poor (< -80 dBm)
+        ];
+    }
+
+    private static RectangularSection NewSection(double yi, double yj, string color)
+    {
+        return new RectangularSection
         {
-            WiFiRadio.GHz2dot4 => Radio2dot4GHzLabels.Length,
-            WiFiRadio.GHz5 => Radio5GHzLabels.Length,
-            WiFiRadio.GHz6 => Radio6GHzLabels.Length,
+            Yi = yi,
+            Yj = yj,
+            Fill = new SolidColorPaint(SKColor.Parse(color).WithAlpha(0x40))
+        };
+    }
+
+    /// <summary>
+    ///     Builds a line series rendering a single network as a trapezoid centered on its channel
+    ///     center frequency. The width of the trapezoid reflects the channel bandwidth.
+    /// </summary>
+    private static LineSeries<WiFiChannelPoint> BuildNetworkSeries(WiFiNetworkInfo network, int colorIndex)
+    {
+        var color = ChartPalette[colorIndex % ChartPalette.Length];
+
+        double dbm = network.AvailableNetwork.NetworkRssiInDecibelMilliwatts;
+        var center = ChannelNumberToDisplay(
+            FrequencyToChannelAxis(network.ChannelCenterFrequencyInGigahertz * 1000, network.Radio), network.Radio);
+
+        // Channel-number space uses 5 MHz per unit, so a bandwidth in MHz spans bandwidth/5 units.
+        var bandwidth = network.ChannelBandwidth > 0 ? network.ChannelBandwidth : 20;
+        var half = bandwidth / 10.0;
+        var inner = half * 0.7;
+        const double floor = -100; // baseline in real dBm; mapped to 0 in the chart's 0..100 space
+
+        // Flat-topped trapezoid: rises from the noise floor at the channel edges to the RSSI plateau.
+        WiFiChannelPoint[] points =
+        [
+            new(center - half, floor, network),
+            new(center - inner, dbm, network),
+            new(center, dbm, network),
+            new(center + inner, dbm, network),
+            new(center + half, floor, network)
+        ];
+
+        var name = network.IsHidden
+            ? $"{Strings.HiddenNetwork} ({network.AvailableNetwork.Bssid})"
+            : $"{network.AvailableNetwork.Ssid} ({network.AvailableNetwork.Bssid})";
+
+        return new LineSeries<WiFiChannelPoint>
+        {
+            Name = name,
+            Values = points,
+            // Plot in 0..100 space (dBm + 100) so the area fill drops to the bottom baseline.
+            Mapping = (point, _) => new Coordinate(point.ChannelAxis, point.Dbm + SignalOffset),
+            GeometrySize = 0,
+            LineSmoothness = 0,
+            Stroke = new SolidColorPaint(color) { StrokeThickness = 1.5f },
+            Fill = new SolidColorPaint(color.WithAlpha(0x33))
+        };
+    }
+
+    /// <summary>
+    ///     Converts a channel center frequency (MHz) to channel-number space for the chart X axis.
+    ///     This mapping is linear with frequency (5 MHz per unit).
+    /// </summary>
+    private static double FrequencyToChannelAxis(double frequencyMHz, WiFiRadio radio)
+    {
+        return radio switch
+        {
+            WiFiRadio.GHz2dot4 => (frequencyMHz - 2407) / 5.0,
+            WiFiRadio.GHz5 => (frequencyMHz - 5000) / 5.0,
+            WiFiRadio.GHz6 => (frequencyMHz - 5950) / 5.0,
             _ => 0
         };
-
-        for (var i = 0; i < size; i++)
-            values.Add(-1);
-
-        return values;
     }
 
-    private ChartValues<double> GetChartValues(WiFiNetworkInfo network, int index)
+    /// <summary>
+    ///     Maps a channel number to its display position on the X axis. For 5 GHz the unused
+    ///     64..100 range is compressed so it does not render as dead space.
+    /// </summary>
+    private static double ChannelNumberToDisplay(double channelNumber, WiFiRadio radio)
     {
-        var values = GetDefaultChartValues(network.Radio);
+        if (radio == WiFiRadio.GHz5 && channelNumber > FiveGHzGapStartChannel)
+            return channelNumber - FiveGHzGapShift;
 
-        var reverseMilliwatts = 100 - network.AvailableNetwork.NetworkRssiInDecibelMilliwatts * -1;
-
-        // ToDo: Implement channel width (20, 40, 80, 160)
-        values[index - 2] = -1;
-        values[index - 1] = reverseMilliwatts;
-        values[index] = reverseMilliwatts;
-        values[index + 1] = reverseMilliwatts;
-        values[index + 2] = -1;
-
-        return values;
+        return channelNumber;
     }
 
-    private LineSeries GetSeriesCollection(WiFiNetworkInfo network)
-    {
-        var radioLabels = network.Radio switch
-        {
-            WiFiRadio.GHz2dot4 => Radio2dot4GHzLabels,
-            WiFiRadio.GHz5 => Radio5GHzLabels,
-            WiFiRadio.GHz6 => Radio6GHzLabels,
-            _ => []
-        };
-
-        var index = Array.IndexOf(radioLabels, $"{network.Channel}");
-
-        return new LineSeries
-        {
-            Title = $"{network.AvailableNetwork.Ssid} ({network.AvailableNetwork.Bssid})",
-            Values = GetChartValues(network, index),
-            PointGeometry = null,
-            LineSmoothness = 0
-        };
-    }
-
-    private Task Connect()
+    private void Connect()
     {
         var selectedAdapter = SelectedAdapter;
         var selectedNetwork = SelectedNetwork;
@@ -866,7 +1128,7 @@ public class WiFiViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
+        Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     private async void Disconnect()
