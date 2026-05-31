@@ -1008,7 +1008,7 @@ public class WiFiViewModel : ViewModelBase
             FrequencyToChannelAxis(network.ChannelCenterFrequencyInGigahertz * 1000, network.Radio), network.Radio);
 
         // Channel-number space uses 5 MHz per unit, so a bandwidth in MHz spans bandwidth/5 units.
-        var bandwidth = network.ChannelBandwidth > 0 ? network.ChannelBandwidth : 20;
+        var bandwidth = network.ChannelBandwidth;
         var half = bandwidth / 10.0;
         var inner = half * 0.7;
         const double floor = -100; // baseline in real dBm; mapped to 0 in the chart's 0..100 space
@@ -1069,7 +1069,8 @@ public class WiFiViewModel : ViewModelBase
     {
         return radio switch
         {
-            WiFiRadio.GHz2dot4 => (frequencyMHz - 2407) / 5.0,
+            // Channel 14 is at 2484 MHz and does not follow the standard ch×5 + 2407 spacing.
+            WiFiRadio.GHz2dot4 => (int)Math.Round(frequencyMHz) == 2484 ? 14.0 : (frequencyMHz - 2407) / 5.0,
             WiFiRadio.GHz5 => (frequencyMHz - 5000) / 5.0,
             WiFiRadio.GHz6 => (frequencyMHz - 5950) / 5.0,
             _ => 0

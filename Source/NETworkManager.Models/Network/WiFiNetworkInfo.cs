@@ -38,7 +38,8 @@ public class WiFiNetworkInfo
     public int Channel { get; set; }
 
     /// <summary>
-    ///     The channel bandwidth in MHz (e.g. 20, 40, 80, 160). A value of 0 means unknown.
+    ///     The channel bandwidth in MHz (e.g. 20, 40, 80, 160). Always &gt;= 20: native value from
+    ///     the BSS list when available, otherwise estimated from radio band and PHY kind.
     /// </summary>
     public int ChannelBandwidth { get; set; }
 
