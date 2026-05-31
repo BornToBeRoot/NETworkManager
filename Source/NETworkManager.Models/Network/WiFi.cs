@@ -1,13 +1,11 @@
 ﻿using log4net;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
 using Windows.Security.Credentials;
-using Microsoft.CodeAnalysis.Emit;
 using NETworkManager.Models.Lookup;
 
 namespace NETworkManager.Models.Network;

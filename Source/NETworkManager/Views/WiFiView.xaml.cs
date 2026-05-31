@@ -37,7 +37,7 @@ public partial class WiFiView
 
     /// <summary>
     ///     Restores the previously selected channel chart tab. The content is rebuilt when switching
-    ///     between the outer tabs, so the selection is restored from the view model on load.
+    ///     between the outer tabs, so the selection is restored from the view when the control loads.
     /// </summary>
     private void ChannelsTabControl_Loaded(object sender, RoutedEventArgs e)
     {
@@ -52,7 +52,7 @@ public partial class WiFiView
     /// </summary>
     private void ChannelsTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (sender is TabControl tabControl && tabControl.IsLoaded &&
+        if (sender is TabControl { IsLoaded: true } tabControl &&
             ReferenceEquals(e.OriginalSource, tabControl))
             _channelTabControlSelectedIndex = tabControl.SelectedIndex;
     }
