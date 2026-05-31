@@ -543,12 +543,25 @@ public class WiFiViewModel : ViewModelBase
     /// <summary>
     ///     Request access to the Wi-Fi adapter.
     /// </summary>
-    /// <returns>Fails if the access is denied.</returns>
+    /// <returns>True if access is allowed; false if access is denied or an error occurs.</returns>
     private static bool RequestAccess()
     {
-        var accessStatus = WiFiAdapter.RequestAccessAsync().GetAwaiter().GetResult();
+        try
+        {
+            // Use Task.Run to avoid deadlocking the UI thread when awaiting the WinRT async
+            // operation. Calling .GetAwaiter().GetResult() directly on the UI thread causes a
+            // deadlock because the WinRT completion tries to marshal back to the same (blocked)
+            // thread. Running the await inside Task.Run offloads the work to the thread pool so
+            // the continuation does not need the UI thread's synchronization context.
+            var accessStatus = Task.Run(async () => await WiFiAdapter.RequestAccessAsync()).GetAwaiter().GetResult();
 
-        return accessStatus == WiFiAccessStatus.Allowed;
+            return accessStatus == WiFiAccessStatus.Allowed;
+        }
+        catch (Exception ex)
+        {
+            Log.Error("WiFiAdapter.RequestAccess() failed", ex);
+            return false;
+        }
     }
 
     private async Task LoadAdaptersAsync(string adapterId = null)
