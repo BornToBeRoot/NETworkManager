@@ -36,6 +36,11 @@ Release date: **xx.xx.2025**
 
 - New **Speed Test** widget to measure download/upload speed, latency, and jitter against [`speed.cloudflare.com`](https://speed.cloudflare.com/). The test is user-initiated and shows download (Mbps), upload (Mbps), latency (ms), jitter (ms), ISP, and server location. A privacy disclaimer is shown before use. [#3440](https://github.com/BornToBeRoot/NETworkManager/pull/3440)
 
+**WiFi**
+
+- Added **Channel Width** column (in MHz) to the network list. Channel bandwidth is retrieved via the native `WlanApi`, bypassing the `Windows.Devices.WiFi` API limitation. Typical values: 20, 40, 80, 160 MHz. [#3462](https://github.com/BornToBeRoot/NETworkManager/pull/3462)
+- The **Channels** tab now supports 6 GHz networks and is split into two sub-tabs: **2.4 & 5 GHz** and **6 GHz**. The 6 GHz view uses separate lower (channels 1–125) and upper (channels 129–233) charts for readability. [#3462](https://github.com/BornToBeRoot/NETworkManager/pull/3462)
+
 **PowerShell**
 
 - DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PowerShell (conhost) window now rescales its font automatically using the Windows Console API (`AttachConsole` + `SetCurrentConsoleFontEx`), bypassing the OS limitation that prevents `WM_DPICHANGED` from being forwarded to cross-process child windows. [#3352](https://github.com/BornToBeRoot/NETworkManager/pull/3352)
@@ -60,6 +65,11 @@ Release date: **xx.xx.2025**
 - Profiles can now be imported from **Active Directory**. Search for computers by name using an AD query, select the results, assign a group, and apply connection settings (RDP, SSH, etc.) before importing. [#3368](https://github.com/BornToBeRoot/NETworkManager/pull/3368)
 
 ## Improvements
+
+**WiFi**
+
+- Channel width is now visualized in the channel charts as a proportional band, making overlapping networks easier to identify. [#3462](https://github.com/BornToBeRoot/NETworkManager/pull/3462)
+- Migrated the WiFi channel charts from LiveCharts to LiveCharts2. [#3462](https://github.com/BornToBeRoot/NETworkManager/pull/3462)
 
 **IP Scanner**
 
@@ -124,7 +134,7 @@ Release date: **xx.xx.2025**
 
 ## Dependencies, Refactoring & Documentation
 
-- Migrated from `LiveCharts` to `LiveCharts2` (`LiveChartsCore.SkiaSharpView.WPF`) for chart rendering. [#3449](https://github.com/BornToBeRoot/NETworkManager/pull/3449) [#3457](https://github.com/BornToBeRoot/NETworkManager/pull/3457)
+- Migrated from `LiveCharts` to `LiveCharts2` (`LiveChartsCore.SkiaSharpView.WPF`) for chart rendering. [#3449](https://github.com/BornToBeRoot/NETworkManager/pull/3449) [#3457](https://github.com/BornToBeRoot/NETworkManager/pull/3457) [#3462](https://github.com/BornToBeRoot/NETworkManager/pull/3462)
 - Replace fire-and-forget `.ConfigureAwait(false)` calls with explicit discard assignments (`_ = SomeAsyncOperation()`) across command handlers, startup/load paths and profile callbacks. [#3441](https://github.com/BornToBeRoot/NETworkManager/pull/3441)
 - Code cleanup & refactoring
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)

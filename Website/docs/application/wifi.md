@@ -34,12 +34,6 @@ Open `Windows Settings > Privacy & security > Location`, enable access for Deskt
 
 :::
 
-:::note
-
-Due to limitations of the `Windows.Devices.WiFi` API, the channel bandwidth cannot be detected.
-
-:::
-
 ![WiFi](../img/wifi.png)
 
 ### Context menu
@@ -59,12 +53,19 @@ Due to limitations of the `Windows.Devices.WiFi` API, the channel bandwidth cann
 
 ## Channels
 
-On the **Channels** tab, all wireless networks of the selected wireless network adapter are displayed in a graphical view with channel and signal strength. This can be useful to identify overlapping wireless networks that do not originate from the same access point.
+On the **Channels** tab, all wireless networks of the selected wireless network adapter are displayed in a graphical view with channel, channel width, and signal strength. This can be useful to identify overlapping wireless networks that do not originate from the same access point.
+
+The tab is split into two sub-tabs:
+
+- **2.4 & 5 GHz** — shows networks on the 2.4 GHz and 5 GHz bands in a single chart each.
+- **6 GHz** — shows 6 GHz networks in two separate charts: lower channels (1–125) and upper channels (129–233).
+
+Each network is drawn as a proportional band reflecting its channel width (20, 40, 80, or 160 MHz), so overlapping networks can be identified more accurately.
 
 ![WiFi - Channel](../img/wifi--channel.png)
 
 :::note
 
-Move the mouse over a channel to display all wireless networks occupying that channel in a tooltip.
+Move the mouse over a network band to display details such as SSID, channel, channel width, and signal strength in a tooltip.
 
 :::
