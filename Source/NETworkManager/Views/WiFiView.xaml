@@ -28,6 +28,7 @@
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
         <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
+        <converters:WiFiChannelBandwidthToStringConverter x:Key="WiFiChannelBandwidthToStringConverter" />
         <converters:WiFiChannelCenterFrequencyToFrequencyStringConverter
             x:Key="WiFiChannelCenterFrequencyToFrequencyStringConverter" />
         <converters:WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter
@@ -343,7 +344,7 @@
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem Header="{x:Static Member=localization:Strings.ChannelWidth}"
                                                               Command="{Binding Path=CopyDataToClipboardCommand}"
-                                                              CommandParameter="{Binding Path=SelectedNetwork.ChannelBandwidth}"
+                                                              CommandParameter="{Binding Path=SelectedNetwork.ChannelBandwidth, Converter={StaticResource ResourceKey=WiFiChannelBandwidthToStringConverter}}"
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem
                                                         Header="{x:Static Member=localization:Strings.SignalStrength}"
@@ -614,19 +615,9 @@
                                                                 MinWidth="80" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.ChannelWidth}"
+                                                Binding="{Binding Path=(network:WiFiNetworkInfo.ChannelBandwidth), Converter={StaticResource ResourceKey=WiFiChannelBandwidthToStringConverter}}"
                                                 SortMemberPath="ChannelBandwidth"
-                                                MinWidth="100">
-                                                <DataGridTextColumn.ElementStyle>
-                                                    <Style TargetType="{x:Type TextBlock}">
-                                                        <Setter Property="Text" Value="{Binding Path=(network:WiFiNetworkInfo.ChannelBandwidth), StringFormat={}{0} MHz}" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.ChannelBandwidth)}" Value="0">
-                                                                <Setter Property="Text" Value="-/-" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </DataGridTextColumn.ElementStyle>
-                                            </DataGridTextColumn>
+                                                MinWidth="100" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.SignalStrength}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).NetworkRssiInDecibelMilliwatts, Converter={StaticResource ResourceKey=WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter}}"

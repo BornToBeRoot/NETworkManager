@@ -1,0 +1,18 @@
+using System;
+using System.Globalization;
+using System.Windows.Data;
+
+namespace NETworkManager.Converters;
+
+public sealed class WiFiChannelBandwidthToStringConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value is not int bandwidth || bandwidth == 0 ? "-/-" : $"{bandwidth} MHz";
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
