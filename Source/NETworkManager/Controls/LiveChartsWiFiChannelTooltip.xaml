@@ -31,10 +31,10 @@
                         </StackPanel>
                         <StackPanel Grid.Column="4" Orientation="Vertical"
                                     VerticalAlignment="Center">
-                            <TextBlock Text="{Binding Dbm}"
+                            <TextBlock Text="{Binding ChannelDetail}"
                                        Style="{StaticResource DefaultTextBlock}"
                                        Foreground="{DynamicResource MahApps.Brushes.Gray3}" />
-                            <TextBlock Text="{Binding ChannelDetail}"
+                            <TextBlock Text="{Binding Dbm}"
                                        Style="{StaticResource DefaultTextBlock}"
                                        Foreground="{DynamicResource MahApps.Brushes.Gray3}" />
                         </StackPanel>
