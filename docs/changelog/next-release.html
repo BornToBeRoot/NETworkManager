@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.36e43ced.css">
-<script src="/NETworkManager/assets/js/runtime~main.5758b05b.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.9efc24b2.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.9e501d90.js" defer="defer"></script>
 </head>
 <body>
@@ -37,6 +37,11 @@ Release date: <strong>xx.xx.2025</strong></p>
 <ul>
 <li class="">New <strong>Speed Test</strong> widget to measure download/upload speed, latency, and jitter against <a href="https://speed.cloudflare.com/" target="_blank" rel="noopener noreferrer" class=""><code>speed.cloudflare.com</code></a>. The test is user-initiated and shows download (Mbps), upload (Mbps), latency (ms), jitter (ms), ISP, and server location. A privacy disclaimer is shown before use. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3440" target="_blank" rel="noopener noreferrer" class="">#3440</a></li>
 </ul>
+<p><strong>WiFi</strong></p>
+<ul>
+<li class="">Added <strong>Channel Width</strong> column (in MHz) to the network list. Channel bandwidth is retrieved via the native <code>WlanApi</code>, bypassing the <code>Windows.Devices.WiFi</code> API limitation. Typical values: 20, 40, 80, 160 MHz. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3462" target="_blank" rel="noopener noreferrer" class="">#3462</a></li>
+<li class="">The <strong>Channels</strong> tab now supports 6 GHz networks and is split into two sub-tabs: <strong>2.4 &amp; 5 GHz</strong> and <strong>6 GHz</strong>. The 6 GHz view uses separate lower (channels 1–125) and upper (channels 129–233) charts for readability. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3462" target="_blank" rel="noopener noreferrer" class="">#3462</a></li>
+</ul>
 <p><strong>PowerShell</strong></p>
 <ul>
 <li class="">DPI scaling is now applied correctly when NETworkManager is moved to a monitor with a different DPI scaling factor. The embedded PowerShell (conhost) window now rescales its font automatically using the Windows Console API (<code>AttachConsole</code> + <code>SetCurrentConsoleFontEx</code>), bypassing the OS limitation that prevents <code>WM_DPICHANGED</code> from being forwarded to cross-process child windows. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3352" target="_blank" rel="noopener noreferrer" class="">#3352</a></li>
@@ -61,6 +66,11 @@ Release date: <strong>xx.xx.2025</strong></p>
 <li class="">Profiles can now be imported from <strong>Active Directory</strong>. Search for computers by name using an AD query, select the results, assign a group, and apply connection settings (RDP, SSH, etc.) before importing. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3368" target="_blank" rel="noopener noreferrer" class="">#3368</a></li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="improvements">Improvements<a href="#improvements" class="hash-link" aria-label="Direct link to Improvements" title="Direct link to Improvements" translate="no">​</a></h2>
+<p><strong>WiFi</strong></p>
+<ul>
+<li class="">Channel width is now visualized in the channel charts as a proportional band, making overlapping networks easier to identify. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3462" target="_blank" rel="noopener noreferrer" class="">#3462</a></li>
+<li class="">Migrated the WiFi channel charts from LiveCharts to LiveCharts2. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3462" target="_blank" rel="noopener noreferrer" class="">#3462</a></li>
+</ul>
 <p><strong>IP Scanner</strong></p>
 <ul>
 <li class="">MAC address resolution now uses ARP (IPv4) or NDP (IPv6) from the neighbor cache, with NetBIOS as fallback. The detail panel shows a single <strong>MAC Address</strong> section instead of separate ARP and NetBIOS entries. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3403" target="_blank" rel="noopener noreferrer" class="">#3403</a></li>
@@ -100,6 +110,10 @@ Release date: <strong>xx.xx.2025</strong></p>
 <li class="">Fixed <code>CancellationTokenSource</code> leak in <code>IPScanner</code>, <code>PortScanner</code>, <code>Traceroute</code>, <code>PingMonitor</code>, <code>PingMonitorHost</code> and <code>SNMP</code> ViewModels. The previous instance was never disposed before being overwritten on each run, leaking the underlying <code>WaitHandle</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3448" target="_blank" rel="noopener noreferrer" class="">#3448</a></li>
 <li class="">Fixed a <code>Dispatcher.ShutdownStarted</code> handler leak in the Dragablz tab items (PowerShell, PuTTY, TigerVNC, Remote Desktop and Web Console controls, plus the IP Scanner, Port Scanner, Traceroute, DNS Lookup, IP Geolocation, SNMP, SNTP Lookup and Whois views). The handler was subscribed in the constructor but never removed, keeping each closed tab (view and view model) alive until the application exited. It is now unsubscribed in <code>CloseTab()</code>; the Web Console additionally disposes its WebView2 instance. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3454" target="_blank" rel="noopener noreferrer" class="">#3454</a></li>
 </ul>
+<p><strong>WiFi</strong></p>
+<ul>
+<li class="">Fixed the WiFi view silently failing to load (e.g. on Windows ARM64 running the emulated x64 build) when <code>WiFiAdapter.RequestAccessAsync()</code> threw an exception. The exception is now logged and the view shows the &quot;access not available&quot; message with a settings button instead of an empty tab. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3462" target="_blank" rel="noopener noreferrer" class="">#3462</a></li>
+</ul>
 <p><strong>Port Scanner</strong></p>
 <ul>
 <li class="">Fixed an app crash when double-clicking a port profile. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3382" target="_blank" rel="noopener noreferrer" class="">#3382</a></li>
@@ -123,7 +137,7 @@ Release date: <strong>xx.xx.2025</strong></p>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="dependencies-refactoring--documentation">Dependencies, Refactoring &amp; Documentation<a href="#dependencies-refactoring--documentation" class="hash-link" aria-label="Direct link to Dependencies, Refactoring &amp; Documentation" title="Direct link to Dependencies, Refactoring &amp; Documentation" translate="no">​</a></h2>
 <ul>
-<li class="">Migrated from <code>LiveCharts</code> to <code>LiveCharts2</code> (<code>LiveChartsCore.SkiaSharpView.WPF</code>) for chart rendering. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3449" target="_blank" rel="noopener noreferrer" class="">#3449</a> <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3457" target="_blank" rel="noopener noreferrer" class="">#3457</a></li>
+<li class="">Migrated from <code>LiveCharts</code> to <code>LiveCharts2</code> (<code>LiveChartsCore.SkiaSharpView.WPF</code>) for chart rendering. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3449" target="_blank" rel="noopener noreferrer" class="">#3449</a> <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3457" target="_blank" rel="noopener noreferrer" class="">#3457</a> <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3462" target="_blank" rel="noopener noreferrer" class="">#3462</a></li>
 <li class="">Replace fire-and-forget <code>.ConfigureAwait(false)</code> calls with explicit discard assignments (<code>_ = SomeAsyncOperation()</code>) across command handlers, startup/load paths and profile callbacks. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3441" target="_blank" rel="noopener noreferrer" class="">#3441</a></li>
 <li class="">Code cleanup &amp; refactoring</li>
 <li class="">Language files updated via <a href="https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration" target="_blank" rel="noopener noreferrer" class="">#transifex</a></li>
