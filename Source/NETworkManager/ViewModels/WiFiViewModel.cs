@@ -952,15 +952,30 @@ public class WiFiViewModel : ViewModelBase
         var inner = half * 0.7;
         const double floor = -100; // baseline in real dBm; mapped to 0 in the chart's 0..100 space
 
-        // Flat-topped trapezoid: rises from the noise floor at the channel edges to the RSSI plateau.
-        WiFiChannelPoint[] points =
-        [
-            new(center - half, floor, network),
-            new(center - inner, dbm, network),
-            new(center, dbm, network),
-            new(center + inner, dbm, network),
-            new(center + half, floor, network)
-        ];
+        // Dense points at 0.5-channel steps so that CompareOnlyX always finds this series when the
+        // mouse is anywhere inside the trapezoid, even when a narrower network shares the same area.
+        // With only 5 corner points the nearest point of a wide network can be far from the mouse
+        // while a narrower network's corner is closer, causing the wide network to be omitted from
+        // the tooltip despite the mouse being visually inside it.
+        const double step = 0.5;
+        var rampWidth = half - inner; // > 0 always (inner = half * 0.7)
+        var pointList = new List<WiFiChannelPoint>();
+
+        for (var x = center - half; x <= center + half + step * 0.01; x += step)
+        {
+            double y;
+
+            if (x <= center - inner)
+                y = floor + (dbm - floor) * (x - (center - half)) / rampWidth;
+            else if (x >= center + inner)
+                y = dbm - (dbm - floor) * (x - (center + inner)) / rampWidth;
+            else
+                y = dbm;
+
+            pointList.Add(new WiFiChannelPoint(x, y, network));
+        }
+
+        var points = pointList.ToArray();
 
         var name = network.IsHidden
             ? $"{Strings.HiddenNetwork} ({network.AvailableNetwork.Bssid})"

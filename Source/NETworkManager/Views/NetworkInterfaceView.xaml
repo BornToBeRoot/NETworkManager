@@ -846,7 +846,7 @@
                                                 Series="{Binding Series}"
                                                 XAxes="{Binding BandwidthXAxes}"
                                                 YAxes="{Binding BandwidthYAxes}"
-                                                LegendPosition="Right"
+                                                LegendPosition="Bottom"
                                                 LegendTextPaint="{Binding BandwidthLegendTextPaint}"
                                                 LegendTextSize="12"
                                                 DrawMarginFrame="{x:Null}"

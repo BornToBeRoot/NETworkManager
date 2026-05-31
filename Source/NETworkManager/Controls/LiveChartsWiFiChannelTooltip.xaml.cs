@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
@@ -59,7 +58,7 @@ public partial class LiveChartsWiFiChannelTooltip : IChartTooltip, INotifyProper
             var ssid = network.IsHidden ? Strings.HiddenNetwork : network.AvailableNetwork.Ssid;
             var widthText = network.ChannelBandwidth > 0 ? $"{network.ChannelBandwidth} MHz" : "-/-";
             var detail =
-                $"{network.AvailableNetwork.NetworkRssiInDecibelMilliwatts} dBm · {Strings.Channel} {network.Channel} · {Strings.ChannelWidth} {widthText}";
+                $"{network.AvailableNetwork.NetworkRssiInDecibelMilliwatts} dBm · {Strings.Channel} {network.Channel} · {widthText}";
 
             TooltipEntries.Add(new TooltipEntry(SkColorToBrush(GetSeriesColor(point)), ssid, detail));
         }
@@ -79,12 +78,9 @@ public partial class LiveChartsWiFiChannelTooltip : IChartTooltip, INotifyProper
         _popup.IsOpen = false;
     }
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
     private static SKColor GetSeriesColor(ChartPoint point)
     {
-        if (point.Context.Series is LineSeries<WiFiChannelPoint> ls && ls.Stroke is SolidColorPaint paint)
+        if (point.Context.Series is LineSeries<WiFiChannelPoint> { Stroke: SolidColorPaint paint })
             return paint.Color;
         return SKColors.Gray;
     }

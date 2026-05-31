@@ -617,7 +617,7 @@
                                                 Header="{x:Static Member=localization:Strings.ChannelWidth}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.ChannelBandwidth), Converter={StaticResource ResourceKey=WiFiChannelBandwidthToStringConverter}}"
                                                 SortMemberPath="ChannelBandwidth"
-                                                MinWidth="100" />
+                                                MinWidth="120" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.SignalStrength}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).NetworkRssiInDecibelMilliwatts, Converter={StaticResource ResourceKey=WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter}}"
@@ -705,13 +705,8 @@
                             <TabControl Style="{StaticResource ResourceKey=DefaultTabControl}"
                                         Loaded="ChannelsTabControl_Loaded"
                                         SelectionChanged="ChannelsTabControl_SelectionChanged">
-                                <TabItem>
-                                    <TabItem.Header>
-                                        <MultiBinding StringFormat="{}{0} &amp; {1}">
-                                            <Binding Source="{x:Static localization:Strings.GHz2dot4}" />
-                                            <Binding Source="{x:Static localization:Strings.GHz5}" />
-                                        </MultiBinding>
-                                    </TabItem.Header>
+                                <TabItem Header="{x:Static Member=localization:Strings.GHz2dot4And5}">
+                                    <Grid Margin="0,10,0,0">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="*" />
