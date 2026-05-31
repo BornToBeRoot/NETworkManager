@@ -796,7 +796,7 @@
                                                 <controls:LiveChartsWiFiChannelTooltip />
                                             </lvc:CartesianChart.Tooltip>
                                         </lvc:CartesianChart>
-                                        <TextBlock Grid.Row="3" Text="6 GHz (129 - 233)"
+                                        <TextBlock Grid.Row="3" Text="{Binding Source={x:Static localization:Strings.GHz6}, StringFormat={}{0} (129 - 233)}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
                                         <lvc:CartesianChart Grid.Row="4"
                                                             Background="Transparent"
