@@ -777,7 +777,7 @@
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
-                                        <TextBlock Grid.Row="0" Text="6 GHz (1 - 125)"
+                                        <TextBlock Grid.Row="0" Text="{Binding Source={x:Static localization:Strings.GHz6}, StringFormat={}{0} (1 - 125)}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
                                         <lvc:CartesianChart Grid.Row="1"
                                                             Background="Transparent"
