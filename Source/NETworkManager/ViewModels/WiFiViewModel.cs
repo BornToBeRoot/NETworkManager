@@ -1210,7 +1210,7 @@ public class WiFiViewModel : ViewModelBase
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
-        Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
+        _ = Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
     private async void Disconnect()

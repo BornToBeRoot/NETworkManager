@@ -268,51 +268,25 @@ public static class WiFi
     /// <returns>Wi-Fi channel like 3 or 48.</returns>
     private static int GetChannelFromChannelFrequency(double gigahertz)
     {
-        return gigahertz switch
-        {
-            // 2.4 GHz
-            2.412 => 1,
-            2.417 => 2,
-            2.422 => 3,
-            2.427 => 4,
-            2.432 => 5,
-            2.437 => 6,
-            2.442 => 7,
-            2.447 => 8,
-            2.452 => 9,
-            2.457 => 10,
-            2.462 => 11,
-            2.467 => 12,
-            2.472 => 13,
-            2.484 => 14, // Most countries do not allow this channel
-            // 5 GHz
-            5.180 => 36, // UNII-1
-            5.200 => 40, // UNII-1
-            5.220 => 44, // UNII-1
-            5.240 => 48, // UNII-1
-            5.260 => 52, // UNII-2, DFS
-            5.280 => 56, // UNII-2, DFS
-            5.300 => 60, // UNII-2, DFS
-            5.320 => 64, // UNII-2, DFS
-            5.500 => 100, // UNII-2 Extended, DFS
-            5.520 => 104, // UNII-2 Extended, DFS
-            5.540 => 108, // UNII-2 Extended, DFS
-            5.560 => 112, // UNII-2 Extended, DFS
-            5.580 => 116, // UNII-2 Extended, DFS
-            5.600 => 120, // UNII-2 Extended, DFS
-            5.620 => 124, // UNII-2 Extended, DFS
-            5.640 => 128, // UNII-2 Extended, DFS
-            5.660 => 132, // UNII-2 Extended, DFS
-            5.680 => 136, // UNII-2 Extended, DFS
-            5.700 => 140, // UNII-2 Extended, DFS
-            5.720 => 144, // UNII-2 Extended, DFS
-            5.745 => 149, // UNII-3
-            5.765 => 153, // UNII-3
-            5.785 => 157, // UNII-3
-            5.805 => 161, // UNII-3
-            5.825 => 165, // UNII-3
-            _ => -1
-        };
+        // Convert to integer MHz to avoid floating-point precision issues from the
+        // kilohertz / 1_000_000.0 conversion in ConvertChannelFrequencyToGigahertz.
+        var mhz = (int)Math.Round(gigahertz * 1000);
+
+        // 2.4 GHz: channels 1-13 follow f = 2407 + ch×5 MHz; channel 14 is at 2484 MHz
+        if (mhz is >= 2412 and <= 2472)
+            return (mhz - 2407) / 5;
+        if (mhz == 2484)
+            return 14;
+
+        // 5 GHz: channels follow f = 5000 + ch×5 MHz
+        if (mhz is >= 5180 and <= 5825)
+            return (mhz - 5000) / 5;
+
+        // 6 GHz: channels 1-233 follow f = 5950 + ch×5 MHz
+        if (mhz is >= 5955 and <= 7115)
+            return (mhz - 5950) / 5;
+
+        return -1;
     }
 
     /// <summary>
