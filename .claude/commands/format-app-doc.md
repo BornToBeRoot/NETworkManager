@@ -40,7 +40,7 @@ Any `:::note` blocks that describe input format or input combination rules (e.g.
 
 **Example:**
 
-```
+```markdown
 ### Example inputs
 
 | Host | Type | Description |
@@ -61,9 +61,9 @@ Only for standalone application behavior facts that don't fit elsewhere (e.g. au
 
 ### 10. Actions
 
-Place action subsections directly after the screenshot — never inside a wrapping `## Actions` section. This applies to both single-view pages and multi-tab pages:
+Place action subsections directly after `### Example inputs` (if present) and the optional `:::note` from step 9. If those sections are not present, place actions directly after the screenshot. Never wrap them in a `## Actions` section. This applies to both single-view pages and multi-tab pages:
 
-- **Single-view pages:** `### Toolbar`, `### Context menu`, and `### Keyboard shortcuts` appear directly after the screenshot (and the optional `:::note` from step 9, if present).
+- **Single-view pages:** `### Toolbar`, `### Context menu`, and `### Keyboard shortcuts` appear in that location directly after the screenshot flow.
 - **Multi-tab pages** (page organized as `## Tab Name` sections, each with its own screenshot): place the same subsections inline within each tab section, directly after its screenshot. Simple single-action notes (e.g. "Right-click on the result to copy the information.") can remain as `:::note` blocks after the screenshot instead of a full subsection.
 
 Include only the subsections that apply. Omit subsections with no content.
@@ -129,4 +129,4 @@ Fix obvious typos (e.g. `ipadress` → `IP address`, `Multipe` → `Multiple`) a
 - **Omit** any `## Actions` subsection that has no content for this page.
 - Preserve all existing links, anchors (`#section-name`), and image references exactly.
 - Do not change field types, examples, or possible values.
-- Do not add new top-level sections (`##`) that do not exist in the source, except `## Actions`.
+- Do not add new top-level sections (`##`) that do not exist in the source.
