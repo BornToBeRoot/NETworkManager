@@ -2275,7 +2275,7 @@ $$hostname$$	--&gt;	ホスト名</value>
     <value>チャンネル</value>
   </data>
   <data name="ChannelWidth" xml:space="preserve">
-    <value>Channel width</value>
+    <value>チャンネル幅</value>
   </data>
   <data name="GHz2dot4" xml:space="preserve">
     <value>2.4 GHz</value>
