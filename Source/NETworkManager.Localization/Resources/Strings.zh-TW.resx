@@ -2274,11 +2274,17 @@ $$hostname$$	--&gt;	主機名稱</value>
   <data name="Channel" xml:space="preserve">
     <value>頻道</value>
   </data>
+  <data name="ChannelWidth" xml:space="preserve">
+    <value>Channel width</value>
+  </data>
   <data name="GHz2dot4" xml:space="preserve">
     <value>2.4 GHz</value>
   </data>
   <data name="GHz5" xml:space="preserve">
     <value>5 GHz</value>
+  </data>
+  <data name="GHz2dot4And5" xml:space="preserve">
+    <value>2.4 &amp; 5 GHz</value>
   </data>
   <data name="SignalStrength" xml:space="preserve">
     <value>訊號強度</value>
