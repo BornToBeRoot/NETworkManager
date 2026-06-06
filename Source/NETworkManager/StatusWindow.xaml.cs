@@ -144,8 +144,6 @@ public partial class StatusWindow : INotifyPropertyChanged
         // Check the network connection
         Check();
 
-        enableCloseTimer = true;
-
         // Close the window after a certain time
         if (enableCloseTimer)
         {

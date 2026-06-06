@@ -223,7 +223,7 @@
                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.IPAddress}" />
                 <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding IPAddress, Mode=OneWay}" />
                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.StatusChange}" />
-                <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding StatusTime, Mode=OneWay, StringFormat={}{0:hh}h {0:mm}m {0:ss}s}" />
+                <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding StatusTime, Mode=OneWay, StringFormat={}{0:HH:mm:ss}}" />
                 <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.Received}" />
                 <TextBox Grid.Column="6" Grid.Row="0" Text="{Binding Received, Mode=OneWay}" />
                 <TextBlock Grid.Column="4" Grid.Row="2" Text="{x:Static localization:Strings.Lost}" />

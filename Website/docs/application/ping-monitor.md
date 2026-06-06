@@ -61,6 +61,23 @@ Right-click a monitored host (anywhere except the chart) to open the context men
 
 Right-clicking an individual field (hostname, IP address, ...) instead lets you **Copy** its value to the clipboard.
 
+### Notifications
+
+When a monitored host changes its reachability state (up → down or down → up), a small notification popup can appear in the bottom-right corner of the primary screen, optionally accompanied by a system sound.
+
+- The popup shows a status icon (green when the host is up, red when it is down), the hostname (or the IP address as a fallback) and the current status (**Host is up** / **Host is down**).
+- Multiple notifications **stack** upwards, so several hosts changing state at once are all visible.
+- **Click anywhere** on a notification to bring the main window to the front. Use the **×** button to dismiss a single notification without opening the main window.
+- Each notification closes automatically after a configurable [duration](#display-duration-seconds); a thin progress bar at the bottom shows the remaining time.
+- To avoid noise from flapping hosts, a state change is only reported after a configurable number of consecutive successes ([Success threshold](#success-threshold)) or failures ([Failure threshold](#failure-threshold)).
+- The **initial** state of a host (established when monitoring starts) never triggers a notification or sound — only later transitions do.
+
+:::note
+
+When many hosts change state at almost the same time (for example, when an uplink goes down and all hosts time out together), every host still shows its own popup, but the sound is played only once within a short interval to avoid an overlapping cacophony.
+
+:::
+
 ## Profile
 
 ### Inherit host from general
@@ -147,3 +164,43 @@ Expand the host view to show more information when the host is added.
 **Type:** `Boolean`
 
 **Default:** `Disabled`
+
+### Show notification popup on status change
+
+Show a notification popup in the bottom-right corner of the primary screen when a monitored host changes its reachability state. See [Notifications](#notifications) for details.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+### Play sound on status change
+
+Play a system sound when a monitored host changes its reachability state. This is independent of the [popup](#show-notification-popup-on-status-change) — you can enable the sound without the popup, or vice versa.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+### Success threshold
+
+Number of consecutive successful pings required before an **Host is up** notification is shown. Higher values reduce noise from flapping hosts.
+
+**Type:** `Integer` [Min `1`, Max `10`]
+
+**Default:** `1`
+
+### Failure threshold
+
+Number of consecutive failed pings (timeouts) required before an **Host is down** notification is shown. Higher values reduce noise from flapping hosts.
+
+**Type:** `Integer` [Min `1`, Max `10`]
+
+**Default:** `3`
+
+### Display duration (seconds)
+
+Time in seconds the notification popup is shown before it closes automatically.
+
+**Type:** `Integer` [Min `3`, Max `60`]
+
+**Default:** `10`
