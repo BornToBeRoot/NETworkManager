@@ -66,7 +66,7 @@ Release date: **xx.xx.2025**
 
 **Ping Monitor**
 
-- New **status change notifications**: when a monitored host goes up or down, a stackable popup appears in the bottom-right corner of the primary screen and/or an optional system sound is played. Configurable **success** and **failure thresholds** suppress noise from flapping hosts, the initial state is established silently, and clicking a popup brings the main window to the front. When many hosts change state at once, every host still shows its own popup but the sound is played only once. (See the [documentation](https://borntoberoot.net/NETworkManager/docs/application/ping-monitor#notifications) for more details) [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
+- New **status change notifications**: when a monitored host goes up or down, a stackable popup appears in the bottom-right corner of the primary screen and/or an optional system sound is played. Configurable **success** and **failure thresholds** suppress noise from flapping hosts, the initial state is established silently, and clicking a popup brings the main window to the front. When many hosts change state at once, every host still shows its own popup but the sound is played only once. (See the [documentation](https://borntoberoot.net/NETworkManager/docs/application/ping-monitor#notifications) for more details) [#3471](https://github.com/BornToBeRoot/NETworkManager/pull/3471)
 
 ## Improvements
 
@@ -133,11 +133,11 @@ Release date: **xx.xx.2025**
 
 **Dashboard**
 
-- Fixed the Status Window auto-close timer firing even when the window was opened manually. The `enableCloseTimer` parameter is now respected, so a manually opened Status Window stays open while the one shown automatically on a network change still closes after the configured time. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
+- Fixed the Status Window auto-close timer firing even when the window was opened manually. The `enableCloseTimer` parameter is now respected, so a manually opened Status Window stays open while the one shown automatically on a network change still closes after the configured time. [#3471](https://github.com/BornToBeRoot/NETworkManager/pull/3471)
 
 **Ping Monitor**
 
-- Fixed the **Status change** field showing the time of day formatted as if it were a duration (e.g. `02h 30m 25s` for 14:30:25). It now correctly shows the time of the last status change as `HH:mm:ss`. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
+- Fixed the **Status change** field showing the time of day formatted as if it were a duration (e.g. `02h 30m 25s` for 14:30:25). It now correctly shows the time of the last status change as `HH:mm:ss`. [#3471](https://github.com/BornToBeRoot/NETworkManager/pull/3471)
 
 **Network Interface**
 
