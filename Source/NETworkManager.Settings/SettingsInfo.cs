@@ -1537,6 +1537,71 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.PingMonitor_ChartTime;
 
+    public bool PingMonitor_ShowNotificationPopup
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PingMonitor_ShowNotificationPopup;
+
+    public bool PingMonitor_NotificationSound
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PingMonitor_NotificationSound;
+
+    public int PingMonitor_NotificationSuccessThreshold
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PingMonitor_NotificationSuccessThreshold;
+
+    public int PingMonitor_NotificationFailureThreshold
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PingMonitor_NotificationFailureThreshold;
+
+    public int PingMonitor_NotificationCloseTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PingMonitor_NotificationCloseTime;
+
     public string PingMonitor_ExportFilePath
     {
         get;

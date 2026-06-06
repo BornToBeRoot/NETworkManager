@@ -5,6 +5,7 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using log4net;
+using MahApps.Metro.IconPacks;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -76,6 +77,13 @@ public class PingMonitorViewModel : ViewModelBase
 
     private List<PingInfo> _pingInfoList = [];
 
+    // Notification threshold tracking. The status transition (and notification) only fires once
+    // the configured number of consecutive successes/failures is reached, to avoid noise from
+    // flapping hosts. The initial state is established silently (no notification).
+    private int _consecutiveSuccesses;
+    private int _consecutiveFailures;
+    private bool _initialStateEstablished;
+
     /// <summary>
     /// Gets the title of the monitor, typically "Hostname # IP".
     /// </summary>
@@ -91,6 +99,13 @@ public class PingMonitorViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    /// <summary>
+    /// Gets the host display name used as the notification header: the hostname if available,
+    /// otherwise the IP address as a fallback.
+    /// </summary>
+    private string NotificationHostDisplay =>
+        string.IsNullOrEmpty(Hostname) ? IPAddress.ToString() : Hostname.TrimEnd('.');
 
     /// <summary>
     /// Gets the hostname of the monitored host.
@@ -529,6 +544,14 @@ public class PingMonitorViewModel : ViewModelBase
         Lost = 0;
         PacketLoss = 0;
 
+        // Reset notification threshold tracking so the initial state is re-established silently.
+        // IsReachable is cleared too, so a prior run's state can't linger and show a stale (e.g.
+        // green "up") icon during the first few pings before the new initial state is established.
+        _consecutiveSuccesses = 0;
+        _consecutiveFailures = 0;
+        _initialStateEstablished = false;
+        IsReachable = false;
+
         // Reset chart
         _sessionStartTime = DateTime.Now;
         ResetTimeChart();
@@ -653,12 +676,37 @@ public class PingMonitorViewModel : ViewModelBase
 
         LvlChartsDefaultInfo timeInfo;
 
+        var successThreshold = SettingsManager.Current.PingMonitor_NotificationSuccessThreshold;
+        var failureThreshold = SettingsManager.Current.PingMonitor_NotificationFailureThreshold;
+
         if (e.Args.Status == IPStatus.Success)
         {
-            if (!IsReachable)
+            _consecutiveSuccesses++;
+            _consecutiveFailures = 0;
+
+            if (!_initialStateEstablished)
+            {
+                if (_consecutiveSuccesses >= successThreshold)
+                {
+                    _initialStateEstablished = true;
+                    StatusTime = DateTime.Now;
+                    IsReachable = true;
+                    // No notification — this is the initial state being established.
+                }
+            }
+            else if (!IsReachable && _consecutiveSuccesses >= successThreshold)
             {
                 StatusTime = DateTime.Now;
                 IsReachable = true;
+
+                if (SettingsManager.Current.PingMonitor_NotificationSound)
+                    NotificationManager.PlaySound(System.Media.SystemSounds.Asterisk); // gentle info sound for UP
+
+                if (SettingsManager.Current.PingMonitor_ShowNotificationPopup)
+                    NotificationManager.Show(
+                        PackIconMaterialKind.LanConnect, "#badc58",
+                        NotificationHostDisplay, Strings.HostIsUp,
+                        SettingsManager.Current.PingMonitor_NotificationCloseTime);
             }
 
             Received++;
@@ -667,10 +715,32 @@ public class PingMonitorViewModel : ViewModelBase
         }
         else
         {
-            if (IsReachable)
+            _consecutiveFailures++;
+            _consecutiveSuccesses = 0;
+
+            if (!_initialStateEstablished)
+            {
+                if (_consecutiveFailures >= failureThreshold)
+                {
+                    _initialStateEstablished = true;
+                    StatusTime = DateTime.Now;
+                    IsReachable = false;
+                    // No notification or sound — initial state.
+                }
+            }
+            else if (IsReachable && _consecutiveFailures >= failureThreshold)
             {
                 StatusTime = DateTime.Now;
                 IsReachable = false;
+
+                if (SettingsManager.Current.PingMonitor_NotificationSound)
+                    NotificationManager.PlaySound(System.Media.SystemSounds.Exclamation); // warning sound for DOWN
+
+                if (SettingsManager.Current.PingMonitor_ShowNotificationPopup)
+                    NotificationManager.Show(
+                        PackIconMaterialKind.LanDisconnect, "Red",
+                        NotificationHostDisplay, Strings.HostIsDown,
+                        SettingsManager.Current.PingMonitor_NotificationCloseTime);
             }
 
             Lost++;

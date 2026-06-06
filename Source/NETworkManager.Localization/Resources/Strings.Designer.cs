@@ -11118,7 +11118,97 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("StatusChange", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Notification.
+        /// </summary>
+        public static string PingMonitorNotification {
+            get {
+                return ResourceManager.GetString("PingMonitorNotification", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Show notification popup on status change.
+        /// </summary>
+        public static string ShowNotificationPopupOnStatusChange {
+            get {
+                return ResourceManager.GetString("ShowNotificationPopupOnStatusChange", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Play sound on status change.
+        /// </summary>
+        public static string PlaySoundOnStatusChange {
+            get {
+                return ResourceManager.GetString("PlaySoundOnStatusChange", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Success threshold.
+        /// </summary>
+        public static string NotificationSuccessThreshold {
+            get {
+                return ResourceManager.GetString("NotificationSuccessThreshold", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Number of consecutive successful pings required before an &quot;Host is up&quot; notification is shown. Higher values reduce noise from flapping hosts.
+        /// </summary>
+        public static string HelpMessage_NotificationSuccessThreshold {
+            get {
+                return ResourceManager.GetString("HelpMessage_NotificationSuccessThreshold", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Failure threshold.
+        /// </summary>
+        public static string NotificationFailureThreshold {
+            get {
+                return ResourceManager.GetString("NotificationFailureThreshold", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Number of consecutive failed pings (timeouts) required before an &quot;Host is down&quot; notification is shown. Higher values reduce noise from flapping hosts.
+        /// </summary>
+        public static string HelpMessage_NotificationFailureThreshold {
+            get {
+                return ResourceManager.GetString("HelpMessage_NotificationFailureThreshold", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Display duration (seconds).
+        /// </summary>
+        public static string NotificationDurationInSeconds {
+            get {
+                return ResourceManager.GetString("NotificationDurationInSeconds", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Host is up.
+        /// </summary>
+        public static string HostIsUp {
+            get {
+                return ResourceManager.GetString("HostIsUp", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Host is down.
+        /// </summary>
+        public static string HostIsDown {
+            get {
+                return ResourceManager.GetString("HostIsDown", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Status window.
         /// </summary>

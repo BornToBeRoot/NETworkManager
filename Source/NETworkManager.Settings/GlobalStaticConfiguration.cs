@@ -30,6 +30,11 @@ public static class GlobalStaticConfiguration
     // Network config
     public static int NetworkChangeDetectionDelay => 5000;
 
+    // Notification config
+    // Minimum interval (ms) between two notification sounds, so a burst of near-simultaneous
+    // status changes collapses into a single sound instead of an overlapping cacophony.
+    public static int NotificationSoundThrottle => 3000;
+
     // Profile config
     public static bool Profile_TagsMatchAny => true;
     public static bool Profile_ExpandProfileView => true;
@@ -146,6 +151,13 @@ public static class GlobalStaticConfiguration
     public static bool PingMonitor_ExpandHostView => false;
     public static int PingMonitor_ChartTime => 120;
     public static ExportFileType PingMonitor_ExportFileType => ExportFileType.Csv;
+
+    // Application: Ping Monitor (notifications)
+    public static bool PingMonitor_ShowNotificationPopup => true;
+    public static bool PingMonitor_NotificationSound => true;
+    public static int PingMonitor_NotificationSuccessThreshold => 1;
+    public static int PingMonitor_NotificationFailureThreshold => 3;
+    public static int PingMonitor_NotificationCloseTime => 10;
 
     // Application: Traceroute
     public static int Traceroute_MaximumHops => 30;

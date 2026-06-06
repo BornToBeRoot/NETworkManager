@@ -144,6 +144,101 @@ public class PingMonitorSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether a notification popup is shown on status change.
+    /// </summary>
+    public bool ShowNotificationPopup
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PingMonitor_ShowNotificationPopup = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether a sound is played on status change.
+    /// </summary>
+    public bool NotificationSound
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PingMonitor_NotificationSound = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the number of consecutive successful pings required before an UP notification fires.
+    /// </summary>
+    public int NotificationSuccessThreshold
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PingMonitor_NotificationSuccessThreshold = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the number of consecutive failed pings required before a DOWN notification fires.
+    /// </summary>
+    public int NotificationFailureThreshold
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PingMonitor_NotificationFailureThreshold = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the time in seconds the notification popup is shown before it closes automatically.
+    /// </summary>
+    public int NotificationCloseTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PingMonitor_NotificationCloseTime = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Contructor, load settings
@@ -169,6 +264,11 @@ public class PingMonitorSettingsViewModel : ViewModelBase
         WaitTime = SettingsManager.Current.PingMonitor_WaitTime;
         ExpandHostView = SettingsManager.Current.PingMonitor_ExpandHostView;
         ChartTime = SettingsManager.Current.PingMonitor_ChartTime;
+        ShowNotificationPopup = SettingsManager.Current.PingMonitor_ShowNotificationPopup;
+        NotificationSound = SettingsManager.Current.PingMonitor_NotificationSound;
+        NotificationSuccessThreshold = SettingsManager.Current.PingMonitor_NotificationSuccessThreshold;
+        NotificationFailureThreshold = SettingsManager.Current.PingMonitor_NotificationFailureThreshold;
+        NotificationCloseTime = SettingsManager.Current.PingMonitor_NotificationCloseTime;
     }
 
     #endregion
