@@ -191,7 +191,7 @@ Number of consecutive successful pings required before a **Host is up** notifica
 
 ### Failure threshold
 
-Number of consecutive failed pings (timeouts) required before an **Host is down** notification is shown. Higher values reduce noise from flapping hosts.
+Number of consecutive failed pings (timeouts) required before a **Host is down** notification is shown. Higher values reduce noise from flapping hosts.
 
 **Type:** `Integer` [Min `1`, Max `10`]
 
