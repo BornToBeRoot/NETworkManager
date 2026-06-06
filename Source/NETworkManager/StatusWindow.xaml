@@ -5,7 +5,6 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                  xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-                 xmlns:resources="clr-namespace:NETworkManager.Properties"
                  xmlns:networkManager="clr-namespace:NETworkManager"
                  xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
                  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -16,49 +15,16 @@
                  Topmost="True"
                  ShowInTaskbar="False"
                  Width="950"
-                 Height="241"                 
+                 SizeToContent="Height"
                  ResizeMode="NoResize"
                  IsWindowDraggable="False"
                  ShowMinButton="False"
                  ShowMaxRestoreButton="False"
                  ShowCloseButton="True"
-                 ShowTitleBar="True"
                  Closing="MetroWindow_Closing">
     <mah:MetroWindow.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
-        <converters:TimeToStrokeDashOffsetConverter x:Key="TimeToStrokeDashOffsetConverter" />
     </mah:MetroWindow.Resources>
-    <mah:MetroWindow.LeftWindowCommands>
-        <mah:WindowCommands ShowSeparators="False">
-            <!-- Countdown progress ring -->
-            <Grid Width="20" Height="20"
-                  Visibility="{Binding ShowTime, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                  VerticalAlignment="Center"
-                  Margin="10,0,0,0">
-                <!-- Track (background ring) -->
-                <Ellipse StrokeThickness="2.5"
-                         Stroke="{DynamicResource MahApps.Brushes.Accent}"
-                         Opacity="0.2" />
-                <!-- Foreground arc that shrinks as time counts down -->
-                <Ellipse StrokeThickness="2.5"
-                         Stroke="{DynamicResource MahApps.Brushes.Accent}"
-                         StrokeDashCap="Round"
-                         StrokeDashArray="22 100"
-                         RenderTransformOrigin="0.5,0.5">
-                    <Ellipse.RenderTransform>
-                        <RotateTransform Angle="-90" />
-                    </Ellipse.RenderTransform>
-                    <Ellipse.StrokeDashOffset>
-                        <MultiBinding Converter="{StaticResource TimeToStrokeDashOffsetConverter}"
-                                      ConverterParameter="22.0">
-                            <Binding Path="Time" />
-                            <Binding Path="TimeMax" />
-                        </MultiBinding>
-                    </Ellipse.StrokeDashOffset>
-                </Ellipse>
-            </Grid>
-        </mah:WindowCommands>
-    </mah:MetroWindow.LeftWindowCommands>
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands ShowSeparators="False">
             <Button Command="{Binding Path=ShowMainWindowCommand}"                    
@@ -77,5 +43,23 @@
             </Button>            
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
-    <ContentControl Margin="10,5,10,10" x:Name="ContentControlNetworkConnection" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ContentControl Grid.Column="0" Grid.Row="0" 
+                        x:Name="ContentControlNetworkConnection"
+                        Margin="10" />
+        <ProgressBar Grid.Column="0" Grid.Row="1"
+                     Height="3"
+                     MinHeight="3"
+                     Margin="0"
+                     Minimum="0"
+                     Maximum="{Binding TimeMax, Mode=OneWay}"
+                     Value="{Binding Time, Mode=OneWay}"
+                     Visibility="{Binding ShowTime, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                     BorderThickness="0"
+                     Padding="0" />
+    </Grid>
 </mah:MetroWindow>
