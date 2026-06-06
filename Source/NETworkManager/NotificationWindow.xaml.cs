@@ -88,7 +88,7 @@ public partial class NotificationWindow : INotifyPropertyChanged
         // message wraps to more lines the whole stack must re-anchor to the bottom edge.
         SizeChanged += (_, _) => NotificationManager.RepositionAll();
 
-        _timer.Interval = TimeSpan.FromMilliseconds(16);
+        _timer.Interval = TimeSpan.FromMilliseconds(33);
         _timer.Tick += Timer_Tick;
     }
 

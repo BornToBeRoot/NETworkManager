@@ -25,11 +25,15 @@ public partial class StatusWindow : INotifyPropertyChanged
 
         _mainWindow = mainWindow;
 
-        _dispatcherTimerClose.Interval = TimeSpan.FromMilliseconds(16);
+        _dispatcherTimerClose.Interval = TimeSpan.FromMilliseconds(33);
         _dispatcherTimerClose.Tick += DispatcherTimerTime_Tick;
 
         _networkConnectionView = new NetworkConnectionWidgetView();
         ContentControlNetworkConnection.Content = _networkConnectionView;
+
+        // With SizeToContent="Height" the height is only known after layout; re-anchor to the
+        // bottom-right whenever it changes so the window does not drift to the top of the screen.
+        SizeChanged += (_, _) => UpdatePosition();
     }
 
     #endregion
@@ -84,7 +88,9 @@ public partial class StatusWindow : INotifyPropertyChanged
         get;
         set
         {
-            if (value == field)
+            // Same guard as NotificationWindow.TimeRemaining: ignore sub-0.001 changes so the
+            // countdown updates at the same cadence in both windows.
+            if (Math.Abs(value - field) < 0.001)
                 return;
 
             field = value;
@@ -128,15 +134,9 @@ public partial class StatusWindow : INotifyPropertyChanged
     /// <param name="enableCloseTimer">Automatically close the window after a certain time.</param>
     public void ShowWindow(bool enableCloseTimer = false)
     {
-        // Set window position on primary screen
-        // ToDo: User setting...
-        if (Screen.PrimaryScreen != null)
-        {
-            var scaleFactor = System.Windows.Media.VisualTreeHelper.GetDpi(this).DpiScaleX;
-
-            Left = Screen.PrimaryScreen.WorkingArea.Right / scaleFactor - Width - 10;
-            Top = Screen.PrimaryScreen.WorkingArea.Bottom / scaleFactor - Height - 10;
-        }
+        // Position bottom-right on the primary screen. With SizeToContent="Height" the final
+        // height is only known after layout, so this is refined again in SizeChanged.
+        UpdatePosition();
 
         // Show the window
         Show();
@@ -153,6 +153,23 @@ public partial class StatusWindow : INotifyPropertyChanged
 
         // Focus the window
         Activate();
+    }
+
+    /// <summary>
+    ///     Anchors the window to the bottom-right corner of the primary screen. Uses
+    ///     <see cref="FrameworkElement.ActualHeight"/> (not Height, which is NaN while
+    ///     SizeToContent is active) so the window stays bottom-anchored as its height changes.
+    /// </summary>
+    private void UpdatePosition()
+    {
+        // ToDo: User setting...
+        if (Screen.PrimaryScreen == null)
+            return;
+
+        var scaleFactor = System.Windows.Media.VisualTreeHelper.GetDpi(this).DpiScaleX;
+
+        Left = Screen.PrimaryScreen.WorkingArea.Right / scaleFactor - Width - 10;
+        Top = Screen.PrimaryScreen.WorkingArea.Bottom / scaleFactor - ActualHeight - 10;
     }
 
     private void SetupCloseTimer()
@@ -183,9 +200,12 @@ public partial class StatusWindow : INotifyPropertyChanged
 
     private async void DispatcherTimerTime_Tick(object sender, EventArgs e)
     {
-        Time = Math.Max(0.0, TimeMax - _stopwatch.Elapsed.TotalSeconds);
+        // Use a local for the close decision — the Time setter now ignores sub-0.001 changes, so
+        // reading the property back could stay stuck at a tiny positive value and never hide.
+        var remaining = Math.Max(0.0, TimeMax - _stopwatch.Elapsed.TotalSeconds);
+        Time = remaining;
 
-        if (Time > 0)
+        if (remaining > 0)
             return;
 
         _dispatcherTimerClose.Stop();
