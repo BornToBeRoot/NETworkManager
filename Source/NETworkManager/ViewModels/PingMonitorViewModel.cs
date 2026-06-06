@@ -544,10 +544,13 @@ public class PingMonitorViewModel : ViewModelBase
         Lost = 0;
         PacketLoss = 0;
 
-        // Reset notification threshold tracking so the initial state is re-established silently
+        // Reset notification threshold tracking so the initial state is re-established silently.
+        // IsReachable is cleared too, so a prior run's state can't linger and show a stale (e.g.
+        // green "up") icon during the first few pings before the new initial state is established.
         _consecutiveSuccesses = 0;
         _consecutiveFailures = 0;
         _initialStateEstablished = false;
+        IsReachable = false;
 
         // Reset chart
         _sessionStartTime = DateTime.Now;

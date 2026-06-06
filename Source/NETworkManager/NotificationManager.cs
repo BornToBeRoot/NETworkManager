@@ -38,6 +38,10 @@ public static class NotificationManager
     /// <param name="closeTimeSeconds">Seconds before the popup closes automatically.</param>
     public static void Show(PackIconMaterialKind iconKind, string iconColor, string title, string message, int closeTimeSeconds)
     {
+        // A late ping callback during application shutdown may find no Application instance.
+        if (Application.Current is null)
+            return;
+
         Application.Current.Dispatcher.BeginInvoke(() =>
         {
             var window = new NotificationWindow(iconKind, iconColor, title, message, closeTimeSeconds);
@@ -83,7 +87,8 @@ public static class NotificationManager
     }
 
     /// <summary>
-    /// Repositions all active windows after a sibling closes and stack indices shift.
+    /// Repositions all active windows, e.g. after one closes or its height changes so the stack
+    /// stays bottom-anchored without gaps or overlap.
     /// </summary>
     internal static void RepositionAll()
     {
