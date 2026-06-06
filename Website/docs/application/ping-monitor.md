@@ -183,7 +183,7 @@ Play a system sound when a monitored host changes its reachability state. This i
 
 ### Success threshold
 
-Number of consecutive successful pings required before an **Host is up** notification is shown. Higher values reduce noise from flapping hosts.
+Number of consecutive successful pings required before a **Host is up** notification is shown. Higher values reduce noise from flapping hosts.
 
 **Type:** `Integer` [Min `1`, Max `10`]
 
