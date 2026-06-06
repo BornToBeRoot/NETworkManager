@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.36e43ced.css">
-<script src="/NETworkManager/assets/js/runtime~main.4844afe9.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.a340fcb3.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.6bc74c57.js" defer="defer"></script>
 </head>
 <body>
@@ -64,6 +64,10 @@ Release date: <strong>xx.xx.2025</strong></p>
 <p><strong>Profiles</strong></p>
 <ul>
 <li class="">Profiles can now be imported from <strong>Active Directory</strong>. Search for computers by name using an AD query, select the results, assign a group, and apply connection settings (RDP, SSH, etc.) before importing. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3368" target="_blank" rel="noopener noreferrer" class="">#3368</a></li>
+</ul>
+<p><strong>Ping Monitor</strong></p>
+<ul>
+<li class="">New <strong>status change notifications</strong>: when a monitored host goes up or down, a stackable popup appears in the bottom-right corner of the primary screen and/or an optional system sound is played. Configurable <strong>success</strong> and <strong>failure thresholds</strong> suppress noise from flapping hosts, the initial state is established silently, and clicking a popup brings the main window to the front. When many hosts change state at once, every host still shows its own popup but the sound is played only once. (See the <a href="https://borntoberoot.net/NETworkManager/docs/application/ping-monitor#notifications" target="_blank" rel="noopener noreferrer" class="">documentation</a> for more details) <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3471" target="_blank" rel="noopener noreferrer" class="">#3471</a></li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="improvements">Improvements<a href="#improvements" class="hash-link" aria-label="Direct link to Improvements" title="Direct link to Improvements" translate="no">​</a></h2>
 <p><strong>WiFi</strong></p>
@@ -125,6 +129,14 @@ Release date: <strong>xx.xx.2025</strong></p>
 <p><strong>PuTTY</strong></p>
 <ul>
 <li class="">Fixed incorrect initial embedded window size on high-DPI monitors. The <code>WindowsFormsHost</code> panel now sets its initial dimensions in physical pixels using the current DPI scale factor, ensuring the PuTTY window fills the panel correctly at startup. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3352" target="_blank" rel="noopener noreferrer" class="">#3352</a></li>
+</ul>
+<p><strong>Dashboard</strong></p>
+<ul>
+<li class="">Fixed the Status Window auto-close timer firing even when the window was opened manually. The <code>enableCloseTimer</code> parameter is now respected, so a manually opened Status Window stays open while the one shown automatically on a network change still closes after the configured time. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3471" target="_blank" rel="noopener noreferrer" class="">#3471</a></li>
+</ul>
+<p><strong>Ping Monitor</strong></p>
+<ul>
+<li class="">Fixed the <strong>Status change</strong> field showing the time of day formatted as if it were a duration (e.g. <code>02h 30m 25s</code> for 14:30:25). It now correctly shows the time of the last status change as <code>HH:mm:ss</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3471" target="_blank" rel="noopener noreferrer" class="">#3471</a></li>
 </ul>
 <p><strong>Network Interface</strong></p>
 <ul>
