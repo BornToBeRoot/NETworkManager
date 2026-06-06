@@ -2380,13 +2380,13 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Success threshold</value>
   </data>
   <data name="HelpMessage_NotificationSuccessThreshold" xml:space="preserve">
-    <value>Number of consecutive successful pings required before an "Host is up" notification is shown. Higher values reduce noise from flapping hosts.</value>
+    <value>Number of consecutive successful pings required before a "Host is up" notification is shown. Higher values reduce noise from flapping hosts.</value>
   </data>
   <data name="NotificationFailureThreshold" xml:space="preserve">
     <value>Failure threshold</value>
   </data>
   <data name="HelpMessage_NotificationFailureThreshold" xml:space="preserve">
-    <value>Number of consecutive failed pings (timeouts) required before an "Host is down" notification is shown. Higher values reduce noise from flapping hosts.</value>
+    <value>Number of consecutive failed pings (timeouts) required before a "Host is down" notification is shown. Higher values reduce noise from flapping hosts.</value>
   </data>
   <data name="NotificationDurationInSeconds" xml:space="preserve">
     <value>Display duration (seconds)</value>
