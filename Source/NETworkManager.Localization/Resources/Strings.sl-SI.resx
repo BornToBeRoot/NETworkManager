@@ -2363,6 +2363,36 @@ $$hostname$$--&gt;Ime gostitelja</value>
   <data name="CouldNotResolveIPAddressFor" xml:space="preserve">
     <value>Ni bilo mogoče razrešiti naslova IP za: "{0}"</value>
   </data>
+  <data name="PingMonitorNotification" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="ShowNotificationPopupOnStatusChange" xml:space="preserve">
+    <value>Show notification popup on status change</value>
+  </data>
+  <data name="PlaySoundOnStatusChange" xml:space="preserve">
+    <value>Play sound on status change</value>
+  </data>
+  <data name="NotificationSuccessThreshold" xml:space="preserve">
+    <value>Success threshold</value>
+  </data>
+  <data name="HelpMessage_NotificationSuccessThreshold" xml:space="preserve">
+    <value>Number of consecutive successful pings required before a "Host is up" notification is shown. Higher values reduce noise from flapping hosts.</value>
+  </data>
+  <data name="NotificationFailureThreshold" xml:space="preserve">
+    <value>Failure threshold</value>
+  </data>
+  <data name="HelpMessage_NotificationFailureThreshold" xml:space="preserve">
+    <value>Number of consecutive failed pings (timeouts) required before a "Host is down" notification is shown. Higher values reduce noise from flapping hosts.</value>
+  </data>
+  <data name="NotificationDurationInSeconds" xml:space="preserve">
+    <value>Display duration (seconds)</value>
+  </data>
+  <data name="HostIsUp" xml:space="preserve">
+    <value>Host is up</value>
+  </data>
+  <data name="HostIsDown" xml:space="preserve">
+    <value>Host is down</value>
+  </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>Program se bo znova zagnal...</value>
   </data>
