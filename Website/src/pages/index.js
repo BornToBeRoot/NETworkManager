@@ -132,34 +132,14 @@ export default function Home() {
         <HomepageFeatures />
         <div className="container text--center margin-top--xl margin-bottom--xl">
           <Heading as="h2">See It in Action</Heading>
-          <div className={styles.previewGrid}>
-            <div className={styles.previewItem}>
-              <img
-                src="./img/preview-profiles.gif"
-                alt="Profile management preview"
-              />
-              <p className={styles.previewCaption}>
-                Encrypted profile files, group &amp; profile management.
-              </p>
-            </div>
-            <div className={styles.previewItem}>
-              <img
-                src="./img/preview-tabs-drag-drop.gif"
-                alt="Tabs and drag & drop preview"
-              />
-              <p className={styles.previewCaption}>
-                Tabs and drag &amp; drop functionality.
-              </p>
-            </div>
-            <div className={styles.previewItem}>
-              <img
-                src="./img/preview-light-theme.png"
-                alt="Light theme preview"
-              />
-              <p className={styles.previewCaption}>
-                Customizable light/dark themes and accent colors.
-              </p>
-            </div>
+          <div className={styles.previewSingle}>
+            <img
+              src="./img/preview-tabs-drag-drop.gif"
+              alt="Tabs and drag & drop preview"
+            />
+            <p className={styles.previewCaption}>
+              Tabs and drag &amp; drop functionality.
+            </p>
           </div>
           <Link
             className="button button--outline button--primary"

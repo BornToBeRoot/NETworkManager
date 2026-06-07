@@ -141,17 +141,14 @@ table {
   text-decoration: none;
 }
 
-/* ─── Preview grid ("See It in Action") ────────────── */
+/* ─── Preview ("See It in Action") ─────────────────── */
 
-.previewGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin: 32px 0 40px;
-  text-align: left;
+.previewSingle {
+  margin: 32px auto 40px;
+  max-width: var(--content-max-width);
 }
 
-.previewItem img {
+.previewSingle img {
   display: block;
   width: 100%;
   height: auto;
@@ -163,12 +160,6 @@ table {
   margin-top: 10px;
   font-size: 14px;
   color: var(--ifm-color-emphasis-600);
-}
-
-@media only screen and (max-width: 768px) {
-  .previewGrid {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* ─── Responsive ────────────────────────────────────── */
