@@ -141,6 +141,33 @@ table {
   text-decoration: none;
 }
 
+.centerButtonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.downloadButton {
+  margin: 20px;
+  height: 56px;
+  width: 200px;
+  font-size: 24px;
+}
+
+.additionalButton {
+  margin: 20px;
+  height: 44px;
+  width: 200px;
+  font-size: 18px;
+}
+
+.shieldsContainer {
+  text-align: center;
+}
+
+.shields {
+  margin: 0rem 0.25rem;
+}
+
 /* ─── Preview ("See It in Action") ─────────────────── */
 
 .previewSingle {
@@ -200,5 +227,11 @@ table {
 
   .indexCtasGitHubButton {
     display: none;
+  }
+
+  .centerButtonContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
