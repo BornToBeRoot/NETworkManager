@@ -4,63 +4,53 @@ import styles from "./styles.module.css";
 
 const FeatureList = [
   {
-    title: "In-Depth Network Analysis",
+    title: "One Place for Everything",
     Svg: require("@site/static/img/undraw-connected-world-wuay.svg").default,
     description: (
       <>
-        Analyze your network and perform in-depth diagnostics using built-in
-        tools such as WiFi Analyzer, IP Scanner, Port Scanner, Traceroute,
-        DNS Lookup, Ping Monitor, LLDP Capture, and many more - all in a unified
-        interface.
+        Stop switching between a dozen utilities. Diagnose, connect, and manage
+        your entire network from a single unified interface.
       </>
     ),
   },
   {
-    title: "Remote Access & Server Management",
+    title: "Full Remote Access Built In",
     Svg: require("@site/static/img/undraw-server-cluster-jwwq.svg").default,
     description: (
       <>
-        Connect, monitor and troubleshoot your network and server
-        infrastructure with integrated clients such as Remote Desktop (RDP),
-        PuTTY (SSH, Serial, etc.), PowerShell (WSL, K9s, etc.)
-        and TigerVNC (VNC).
+        Connect to desktops, servers, and containers directly from the app.
+        No separate clients to install or maintain.
       </>
     ),
   },
   {
-    title: "Profile Management",
+    title: "Profiles That Work Everywhere",
     Svg: require("@site/static/img/undraw-personal-settings-re-i6w4.svg")
       .default,
     description: (
       <>
-        Organize hosts and networks in profiles with specific configurations,
-        and use them seamlessly across all features. Keep your sensitive
-        data secure with encrypted profile files, and manage customers
-        or environments by using different profile files.
+        Organize hosts by customer or environment. Every tool opens
+        pre-configured — nothing to re-enter, ever.
       </>
     ),
   },
   {
-    title: "Effortless Troubleshooting",
+    title: "Enterprise-Ready",
     Svg: require("@site/static/img/undraw-server-down-s-4-lk.svg").default,
     description: (
       <>
-        Diagnose and resolve issues effectively with a comprehensive suite of
-        tools in one place. It's enterprise-ready — includes an MSI installer for
-        centralized deployment, signed binaries, system-wide policies for
-        centralized configuration, translations in 16+ languages, and
-        distribution via package managers like winget and Chocolatey.
+        MSI installer, signed binaries, Group Policy, package manager support,
+        and Active Directory import. Deploy it to your whole team in minutes.
       </>
     ),
-  },  
+  },
   {
-    title: "Open Source",
+    title: "Free. Open Source.",
     Svg: require("@site/static/img/undraw-version-control-re-mg66.svg").default,
     description: (
       <>
-        NETworkManager is fully open source on GitHub — no ads, no subscriptions,
-        no selling your data. Review the code, build it yourself, or contribute
-        to make it even better.
+        No license, no subscription, no telemetry. The source is on
+        GitHub — read it, audit it, or contribute to it.
       </>
     ),
   },

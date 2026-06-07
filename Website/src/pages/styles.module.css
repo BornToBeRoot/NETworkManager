@@ -5,83 +5,99 @@ table {
 
 /* ─── Hero ─────────────────────────────────────────── */
 
+@keyframes jack-in-the-box {
+  0% {
+    opacity: 0;
+    transform: scale(0.1) rotate(30deg);
+    transform-origin: center bottom;
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  70% {
+    transform: rotate(3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .hero {
   background-color: var(--ifm-background-dark);
-  padding: 72px 48px 0;
-  text-align: center;
+  padding: 48px;
 }
 
 .heroInner {
   margin: 0 auto;
-  max-width: 960px;
+  max-width: 1100px;
   padding: 0 20px;
 }
 
 .heroProjectTitle {
   color: #fff;
-  font-size: 56px;
-  margin: 0 0 16px;
+  font-size: 60px;
+  margin: 0;
 }
 
 .heroProjectTagline {
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 22px;
-  margin: 0 0 36px;
+  color: #fff;
+  font-size: 32px;
+  margin: 0;
 }
 
-.heroProjectTagline b {
+.heroTextHtml b {
   color: var(--ifm-color-primary);
 }
 
+.heroLogo {
+  animation-duration: 2s;
+  animation-name: jack-in-the-box;
+  float: right;
+  margin-top: 20px;
+  padding: 0 20px 20px;
+  height: auto;
+}
+
 .indexCtas {
+  --ifm-button-size-multiplier: 1.6;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 52px;
+  margin-top: 24px;
+}
+
+.indexCtas a,
+.indexCtas a:hover {
+  color: black;
+}
+
+.indexCtas a:last-of-type {
+  margin: 20px 36px;
 }
 
 .indexCtasGitHubButtonWrapper {
   display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .indexCtasGitHubButton {
+  margin: 0.5rem;
   overflow: hidden;
 }
 
 /* ─── Hero screenshot ───────────────────────────────── */
 
 .heroScreenshotWrapper {
-  max-width: 1100px;
-  margin: 0 auto;
-  border-radius: 10px 10px 0 0;
-  overflow: hidden;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08),
-    0 24px 64px rgba(0, 0, 0, 0.6);
-}
-
-.windowChrome {
-  background: #2a2a2a;
-  padding: 10px 14px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
-.dot {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+  margin-top: 40px;
 }
 
 .heroScreenshot {
   display: block;
   width: 100%;
   height: auto;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
 }
 
 /* ─── Tool grid ─────────────────────────────────────── */
@@ -125,21 +141,42 @@ table {
   text-decoration: none;
 }
 
-/* ─── Gallery screenshots ───────────────────────────── */
+/* ─── Preview grid ("See It in Action") ────────────── */
 
-.imageScreenshot {
+.previewGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin: 32px 0 40px;
+  text-align: left;
+}
+
+.previewItem img {
   display: block;
-  margin: auto;
-  max-width: var(--content-max-width);
   width: 100%;
   height: auto;
+  border-radius: 4px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.previewCaption {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--ifm-color-emphasis-600);
+}
+
+@media only screen and (max-width: 768px) {
+  .previewGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ─── Responsive ────────────────────────────────────── */
 
 @media only screen and (max-width: 768px) {
   .hero {
-    padding: 40px 20px 0;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   .heroInner {
@@ -148,10 +185,26 @@ table {
 
   .heroProjectTitle {
     font-size: 36px;
+    text-align: center;
   }
 
   .heroProjectTagline {
-    font-size: 18px;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .heroLogo {
+    display: block;
+    float: none;
+    margin: 0 auto;
+  }
+
+  .indexCtas {
+    justify-content: center;
+  }
+
+  .indexCtas a {
+    margin: 20px 36px;
   }
 
   .indexCtasGitHubButton {
