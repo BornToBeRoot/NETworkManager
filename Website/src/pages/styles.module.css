@@ -1,98 +1,131 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
-
 table {
   width: 100%;
   display: table;
 }
 
-.heroBanner {
-  padding: 4rem 0;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-
-  background-color: var(--ifm-background-dark);
-}
-
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
-}
-
-.buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+/* ─── Hero ─────────────────────────────────────────── */
 
 .hero {
   background-color: var(--ifm-background-dark);
-  padding: 48px;
+  padding: 72px 48px 0;
+  text-align: center;
 }
 
 .heroInner {
   margin: 0 auto;
-  max-width: 1100px;
+  max-width: 960px;
   padding: 0 20px;
 }
 
 .heroProjectTitle {
   color: #fff;
-  font-size: 60px;
-  margin: 0;
+  font-size: 56px;
+  margin: 0 0 16px;
 }
 
 .heroProjectTagline {
-  color: #fff;
-  font-size: 32px;
-  margin: 0;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 22px;
+  margin: 0 0 36px;
 }
 
-.heroTextHtml b {
+.heroProjectTagline b {
   color: var(--ifm-color-primary);
 }
 
-.shieldsContainer {
-  text-align: center;
+.indexCtas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 52px;
 }
 
-.shields {
-  margin: 0rem 0.25rem;
+.indexCtasGitHubButtonWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-@keyframes jack-in-the-box {
-  0% {
-    opacity: 0;
-    transform: scale(0.1) rotate(30deg);
-    transform-origin: center bottom;
-  }
-
-  50% {
-    transform: rotate(-10deg);
-  }
-
-  70% {
-    transform: rotate(3deg);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+.indexCtasGitHubButton {
+  overflow: hidden;
 }
 
-.heroLogo {
-  animation-duration: 2s;
-  animation-name: jack-in-the-box;
-  float: right;
-  margin-top: 20px;
-  padding: 0 20px 20px;
+/* ─── Hero screenshot ───────────────────────────────── */
+
+.heroScreenshotWrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 24px 64px rgba(0, 0, 0, 0.6);
+}
+
+.windowChrome {
+  background: #2a2a2a;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.heroScreenshot {
+  display: block;
+  width: 100%;
   height: auto;
 }
+
+/* ─── Tool grid ─────────────────────────────────────── */
+
+.toolGrid {
+  padding: 64px 0;
+}
+
+.toolGridSubtitle {
+  color: var(--ifm-color-emphasis-600);
+  font-size: 18px;
+  margin-bottom: 32px;
+}
+
+.toolChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto 32px;
+}
+
+.toolChip {
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ifm-font-color-base);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.toolChip:hover {
+  background: var(--ifm-color-emphasis-200);
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+/* ─── Gallery screenshots ───────────────────────────── */
 
 .imageScreenshot {
   display: block;
@@ -102,55 +135,11 @@ table {
   height: auto;
 }
 
-.indexCtas {
-  --ifm-button-size-multiplier: 1.6;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin-top: 24px;
-}
-
-.indexCtas a,
-.indexCtas a:hover {
-  color: black;
-}
-
-.indexCtas a:last-of-type {
-  margin: 20px 36px;
-}
-
-.indexCtasGitHubButtonWrapper {
-  display: flex;
-}
-
-.indexCtasGitHubButton {
-  margin: 0.5rem;
-  overflow: hidden;
-}
-
-.centerButtonContainer {
-  display: flex;
-  justify-content: center;
-}
-
-.downloadButton {
-  margin: 20px;
-  height: 56px;
-  width: 200px;
-  font-size: 24px;
-}
-
-.additionalButton {
-  margin: 20px;
-  height: 44px;
-  width: 200px;
-  font-size: 18px;
-}
+/* ─── Responsive ────────────────────────────────────── */
 
 @media only screen and (max-width: 768px) {
   .hero {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 40px 20px 0;
   }
 
   .heroInner {
@@ -159,35 +148,13 @@ table {
 
   .heroProjectTitle {
     font-size: 36px;
-    text-align: center;
   }
 
   .heroProjectTagline {
-    font-size: 24px;
-    text-align: center;
-  }
-
-  .heroLogo {
-    display: block;
-    float: none;
-    margin: 0 auto;
-  }
-
-  .indexCtas {
-    justify-content: center;
-  }
-
-  .indexCtas a {
-    margin: 20px 36px;
+    font-size: 18px;
   }
 
   .indexCtasGitHubButton {
     display: none;
-  }
-
-  .centerButtonContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
   }
 }

@@ -1,7 +1,5 @@
 import React from "react";
-import clsx from "clsx";
 import Link from "@docusaurus/Link";
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import HomepageFeatures from "@site/src/components/HomepageFeatures";
 import ImageGallery from "react-image-gallery";
@@ -29,35 +27,55 @@ import ImageGallerySubnetCalculatorCalculator from "@site/docs/img/subnet-calcul
 import Heading from "@theme/Heading";
 import styles from "./styles.module.css";
 
+// Sorted by sidebar_position
+const tools = [
+  { name: "Dashboard", to: "/docs/application/dashboard" },
+  { name: "Network Interface", to: "/docs/application/network-interface" },
+  { name: "WiFi", to: "/docs/application/wifi" },
+  { name: "IP Scanner", to: "/docs/application/ip-scanner" },
+  { name: "Port Scanner", to: "/docs/application/port-scanner" },
+  { name: "Ping Monitor", to: "/docs/application/ping-monitor" },
+  { name: "Traceroute", to: "/docs/application/traceroute" },
+  { name: "DNS Lookup", to: "/docs/application/dns-lookup" },
+  { name: "Remote Desktop", to: "/docs/application/remote-desktop" },
+  { name: "PowerShell", to: "/docs/application/powershell" },
+  { name: "PuTTY", to: "/docs/application/putty" },
+  { name: "AWS Session Manager", to: "/docs/application/aws-session-manager" },
+  { name: "TigerVNC", to: "/docs/application/tigervnc" },
+  { name: "Web Console", to: "/docs/application/web-console" },
+  { name: "SNMP", to: "/docs/application/snmp" },
+  { name: "SNTP Lookup", to: "/docs/application/sntp-lookup" },
+  { name: "Hosts File Editor", to: "/docs/application/hosts-file-editor" },
+  { name: "Firewall", to: "/docs/application/firewall" },
+  { name: "Discovery Protocol", to: "/docs/application/discovery-protocol" },
+  { name: "Wake on LAN", to: "/docs/application/wake-on-lan" },
+  { name: "Whois", to: "/docs/application/whois" },
+  { name: "IP Geolocation", to: "/docs/application/ip-geolocation" },
+  { name: "Subnet Calculator", to: "/docs/application/subnet-calculator" },
+  { name: "Bit Calculator", to: "/docs/application/bit-calculator" },
+  { name: "Lookup", to: "/docs/application/lookup" },
+  { name: "Connections", to: "/docs/application/connections" },
+  { name: "Listeners", to: "/docs/application/listeners" },
+  { name: "Neighbor Table", to: "/docs/application/neighbor-table" },
+];
+
 function HomepageHeader() {
-  const { siteConfig } = useDocusaurusContext();
   return (
     <div className={styles.hero} data-theme="dark">
       <div className={styles.heroInner}>
-        <Heading as="h1">
-          <img
-            alt="NETworkManager Logo"
-            className={styles.heroLogo}
-            src="./img/logo.svg"
-            width="200"
-            height="200"
-          />
-          <span className={styles.heroTextHtml}>
-            <p className={styles.heroProjectTitle}>
-              <b>NETworkManager</b>
-            </p>
-            <p className={styles.heroProjectTagline}>
-              A powerful open-source tool for <b>managing</b> networks and{" "}
-              <b>troubleshooting</b> network problems!
-            </p>
-          </span>
+        <Heading as="h1" className={styles.heroProjectTitle}>
+          <b>NETworkManager</b>
         </Heading>
+        <p className={styles.heroProjectTagline}>
+          A powerful open-source tool for <b>managing</b> networks and{" "}
+          <b>troubleshooting</b> network problems!
+        </p>
         <div className={styles.indexCtas}>
-          <Link className="button button--primary" to="/download">
+          <Link className="button button--primary button--lg" to="/download">
             Download
           </Link>
           <Link
-            className="button button--info"
+            className="button button--secondary button--lg"
             to="https://github.com/BornToBeRoot/NETworkManager"
           >
             GitHub
@@ -66,7 +84,7 @@ function HomepageHeader() {
             <img
               alt="GitHub Downloads"
               className={styles.indexCtasGitHubButton}
-              src="https://img.shields.io/github/downloads/BornToBeroot/NETworkManager/total.svg?style=social"
+              src="https://img.shields.io/github/downloads/BornToBeRoot/NETworkManager/total.svg?style=social"
               height={24}
               title="GitHub Downloads"
             />
@@ -79,14 +97,44 @@ function HomepageHeader() {
             />
           </span>
         </div>
+        <div className={styles.heroScreenshotWrapper}>
+          <div className={styles.windowChrome}>
+            <span className={styles.dot} style={{ background: "#ff5f57" }} />
+            <span className={styles.dot} style={{ background: "#febc2e" }} />
+            <span className={styles.dot} style={{ background: "#28c840" }} />
+          </div>
+          <img
+            src={ImageGalleryDashboard}
+            alt="NETworkManager Dashboard"
+            className={styles.heroScreenshot}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ToolGrid() {
+  return (
+    <div className={styles.toolGrid}>
+      <div className="container text--center">
+        <Heading as="h2">{tools.length} Built-in Tools</Heading>
+        <p className={styles.toolGridSubtitle}>
+          Everything a network engineer needs, in one place.
+        </p>
+        <div className={styles.toolChips}>
+          {tools.map((tool) => (
+            <Link key={tool.name} to={tool.to} className={styles.toolChip}>
+              {tool.name}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
 export default function Home() {
-  const { siteConfig } = useDocusaurusContext();
-
   const images1 = [
     {
       original: ImageGalleryDashboard,
@@ -223,6 +271,7 @@ export default function Home() {
     >
       <HomepageHeader />
       <main>
+        <ToolGrid />
         <HomepageFeatures />
         <div className="container text--center margin-top--xl margin-bottom--xl">
           <Heading as="h2">📷 Screenshots</Heading>
