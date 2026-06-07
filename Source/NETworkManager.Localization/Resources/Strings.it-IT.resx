@@ -2389,34 +2389,34 @@ $$hostname$$	--&gt;	Nome host</value>
     <value>Impossibile risolvere indirizzo IP per: "{0}"</value>
   </data>
   <data name="PingMonitorNotification" xml:space="preserve">
-    <value>Notification</value>
+    <value>Notifiche</value>
   </data>
   <data name="ShowNotificationPopupOnStatusChange" xml:space="preserve">
-    <value>Show notification popup on status change</value>
+    <value>Al cambiamento di stato visualizza popup notifica </value>
   </data>
   <data name="PlaySoundOnStatusChange" xml:space="preserve">
-    <value>Play sound on status change</value>
+    <value>Al cambiamento di stato riproduci suono </value>
   </data>
   <data name="NotificationSuccessThreshold" xml:space="preserve">
-    <value>Success threshold</value>
+    <value>Soglia successo operazione</value>
   </data>
   <data name="HelpMessage_NotificationSuccessThreshold" xml:space="preserve">
-    <value>Number of consecutive successful pings required before a "Host is up" notification is shown. Higher values reduce noise from flapping hosts.</value>
+    <value>Numero ping consecutivi riusciti necessari prima che venga visualizzata la notifica 'Host attivo'. Valori più alti riducono il rumore prodotto dallo collisione degli host.</value>
   </data>
   <data name="NotificationFailureThreshold" xml:space="preserve">
-    <value>Failure threshold</value>
+    <value>Soglia fallimento operazione</value>
   </data>
   <data name="HelpMessage_NotificationFailureThreshold" xml:space="preserve">
-    <value>Number of consecutive failed pings (timeouts) required before a "Host is down" notification is shown. Higher values reduce noise from flapping hosts.</value>
+    <value>Numero ping consecutivi non riusciti (timeout) necessari prima che venga visualizzata la notifica 'Host non attivo'. Valori più alti riducono il rumore prodotto dalla collisione degli host.</value>
   </data>
   <data name="NotificationDurationInSeconds" xml:space="preserve">
-    <value>Display duration (seconds)</value>
+    <value>Durata visualizzazione (secondi)</value>
   </data>
   <data name="HostIsUp" xml:space="preserve">
-    <value>Host is up</value>
+    <value>Host attivo</value>
   </data>
   <data name="HostIsDown" xml:space="preserve">
-    <value>Host is down</value>
+    <value>Host non attivo</value>
   </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>L'applicazione verrà riavviata...</value>
