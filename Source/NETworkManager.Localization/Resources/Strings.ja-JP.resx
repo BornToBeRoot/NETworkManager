@@ -2368,34 +2368,34 @@ $$hostname$$	--&gt;	ホスト名</value>
     <value>IPアドレスを解決できませんでした : "{0}"</value>
   </data>
   <data name="PingMonitorNotification" xml:space="preserve">
-    <value>Notification</value>
+    <value>通知</value>
   </data>
   <data name="ShowNotificationPopupOnStatusChange" xml:space="preserve">
-    <value>Show notification popup on status change</value>
+    <value>ステータス変更時に通知ポップアップを表示する</value>
   </data>
   <data name="PlaySoundOnStatusChange" xml:space="preserve">
-    <value>Play sound on status change</value>
+    <value>ステータス変更時にサウンドを再生する</value>
   </data>
   <data name="NotificationSuccessThreshold" xml:space="preserve">
-    <value>Success threshold</value>
+    <value>成功しきい値</value>
   </data>
   <data name="HelpMessage_NotificationSuccessThreshold" xml:space="preserve">
-    <value>Number of consecutive successful pings required before a "Host is up" notification is shown. Higher values reduce noise from flapping hosts.</value>
+    <value>「ホストが起動しました」という通知が表示されるまでに必要な、連続した正常なpingの回数。値が大きいほど、ホストの不安定な動作によるノイズが軽減されます。</value>
   </data>
   <data name="NotificationFailureThreshold" xml:space="preserve">
-    <value>Failure threshold</value>
+    <value>失敗しきい値</value>
   </data>
   <data name="HelpMessage_NotificationFailureThreshold" xml:space="preserve">
-    <value>Number of consecutive failed pings (timeouts) required before a "Host is down" notification is shown. Higher values reduce noise from flapping hosts.</value>
+    <value>「ホストがダウンしています」という通知が表示されるまでに連続して発生するping失敗（タイムアウト）の回数。値が大きいほど、ホストの応答が不安定になることによるノイズが軽減されます。</value>
   </data>
   <data name="NotificationDurationInSeconds" xml:space="preserve">
-    <value>Display duration (seconds)</value>
+    <value>表示時間 (秒)</value>
   </data>
   <data name="HostIsUp" xml:space="preserve">
-    <value>Host is up</value>
+    <value>ホストが起動しました</value>
   </data>
   <data name="HostIsDown" xml:space="preserve">
-    <value>Host is down</value>
+    <value>ホストがダウンしています</value>
   </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>アプリケーションが再起動されます...</value>
