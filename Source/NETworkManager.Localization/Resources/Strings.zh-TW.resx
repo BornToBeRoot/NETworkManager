@@ -139,31 +139,31 @@
     <value>ARP</value>
   </data>
   <data name="NeighborTable" xml:space="preserve">
-    <value>Neighbor Table</value>
+    <value>鄰居表單</value>
   </data>
   <data name="NeighborTableAdminMessage" xml:space="preserve">
-    <value>Read-only mode. Modifying the neighbor table requires elevated rights!</value>
+    <value>唯讀模式。若要修改鄰居表單，需要提升權限！</value>
   </data>
   <data name="NeighborState_Unreachable" xml:space="preserve">
-    <value>Unreachable</value>
+    <value>無法抵達</value>
   </data>
   <data name="NeighborState_Incomplete" xml:space="preserve">
-    <value>Incomplete</value>
+    <value>不完整</value>
   </data>
   <data name="NeighborState_Probe" xml:space="preserve">
-    <value>Probe</value>
+    <value>探測器</value>
   </data>
   <data name="NeighborState_Delay" xml:space="preserve">
-    <value>Delay</value>
+    <value>延遲</value>
   </data>
   <data name="NeighborState_Stale" xml:space="preserve">
-    <value>Stale</value>
+    <value>過時</value>
   </data>
   <data name="NeighborState_Reachable" xml:space="preserve">
-    <value>Reachable</value>
+    <value>可抵達</value>
   </data>
   <data name="NeighborState_Permanent" xml:space="preserve">
-    <value>Permanent</value>
+    <value>永久性</value>
   </data>
   <data name="Authentication" xml:space="preserve">
     <value>身份驗證</value>
@@ -316,7 +316,7 @@
     <value>OUI</value>
   </data>
   <data name="Options" xml:space="preserve">
-    <value>Options</value>
+    <value>選項</value>
   </data>
   <data name="OverwriteQuestion" xml:space="preserve">
     <value>覆寫？</value>
@@ -481,7 +481,7 @@
     <value>DHCP 伺服器</value>
   </data>
   <data name="DNSServers" xml:space="preserve">
-    <value>DNS 伺服器(s)</value>
+    <value>DNS 伺服器</value>
   </data>
   <data name="DNSSuffix" xml:space="preserve">
     <value>DNS 尾碼</value>
@@ -598,7 +598,7 @@
     <value>啟動時顯示以下應用程式：</value>
   </data>
   <data name="Slogan" xml:space="preserve">
-    <value>A powerful open-source tool for managing networks and troubleshooting network problems!</value>
+    <value>一個用於管理網路並排除網路問題的強大開源工具！</value>
   </data>
   <data name="Speed" xml:space="preserve">
     <value>速度</value>
@@ -736,7 +736,7 @@
     <value>Caps lock 已啟用！</value>
   </data>
   <data name="ChartTimeInSeconds" xml:space="preserve">
-    <value>Chart time (seconds)</value>
+    <value>圖表時間（秒）</value>
   </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
     <value>在啟動時檢查更新</value>
@@ -1517,7 +1517,7 @@
     <value>亮綠色</value>
   </data>
   <data name="Live" xml:space="preserve">
-    <value>Live</value>
+    <value>即時</value>
   </data>
   <data name="Magenta" xml:space="preserve">
     <value>洋紅色</value>
@@ -1778,7 +1778,7 @@
     <value>輸入有效的網域名稱（例如 example.com）以進行檢查！</value>
   </data>
   <data name="EnterValidUsername" xml:space="preserve">
-    <value>Enter a valid Windows username (e.g., "user", "DOMAIN\user" or "user@domain.com")!</value>
+    <value>請輸入有效的 Windows 使用者名稱（例如：「user」、「DOMAIN\user」或「user@domain.com」）！</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>無法為域名「{0}」找到對應的 Whois 伺服器。</value>
@@ -1989,13 +1989,13 @@
     <value>外部服務</value>
   </data>
   <data name="StarForkProjectOnGitHub" xml:space="preserve">
-    <value>Star/Fork the Project on GitHub.</value>
+    <value>在 GitHub 上星標/分叉此專案。</value>
   </data>
   <data name="HelpTranslateOnTransifex" xml:space="preserve">
-    <value>Help translate the project on Transifex.</value>
+    <value>在 Transifex 上協助翻譯此專案。</value>
   </data>
   <data name="ContactOrContactMeViaX" xml:space="preserve">
-    <value>Follow or contact me via X.</value>
+    <value>透過 X 追蹤我或與我聯絡。</value>
   </data>
   <data name="Connection" xml:space="preserve">
     <value>連線</value>
@@ -2188,10 +2188,10 @@
     <value>程式</value>
   </data>
   <data name="Private" xml:space="preserve">
-    <value>Private</value>
+    <value>私密</value>
   </data>
   <data name="Public" xml:space="preserve">
-    <value>Public</value>
+    <value>公開</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>所選的自訂命令將被永久刪除。</value>
@@ -2275,7 +2275,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>頻道</value>
   </data>
   <data name="ChannelWidth" xml:space="preserve">
-    <value>Channel width</value>
+    <value>通道寬度</value>
   </data>
   <data name="GHz2dot4" xml:space="preserve">
     <value>2.4 GHz</value>
@@ -2326,7 +2326,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>逾時（秒）</value>
   </data>
   <data name="ReportIssueOrCreateFeatureRequest" xml:space="preserve">
-    <value>Report an issue or create a feature request.</value>
+    <value>回報問題或提出功能需求。</value>
   </data>
   <data name="BeaconInterval" xml:space="preserve">
     <value>信號發送間隔</value>
@@ -2368,34 +2368,34 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>無法解析 ip 位址："{0}"</value>
   </data>
   <data name="PingMonitorNotification" xml:space="preserve">
-    <value>Notification</value>
+    <value>通知</value>
   </data>
   <data name="ShowNotificationPopupOnStatusChange" xml:space="preserve">
-    <value>Show notification popup on status change</value>
+    <value>在狀態變更時顯示通知彈窗</value>
   </data>
   <data name="PlaySoundOnStatusChange" xml:space="preserve">
-    <value>Play sound on status change</value>
+    <value>在狀態變更時播放聲音</value>
   </data>
   <data name="NotificationSuccessThreshold" xml:space="preserve">
-    <value>Success threshold</value>
+    <value>成功門檻</value>
   </data>
   <data name="HelpMessage_NotificationSuccessThreshold" xml:space="preserve">
-    <value>Number of consecutive successful pings required before a "Host is up" notification is shown. Higher values reduce noise from flapping hosts.</value>
+    <value>顯示「主機已連線」通知前所需的連續成功 Ping 次數。較高的值可減少因主機狀態頻繁變動所產生的雜訊。</value>
   </data>
   <data name="NotificationFailureThreshold" xml:space="preserve">
-    <value>Failure threshold</value>
+    <value>失敗門檻</value>
   </data>
   <data name="HelpMessage_NotificationFailureThreshold" xml:space="preserve">
-    <value>Number of consecutive failed pings (timeouts) required before a "Host is down" notification is shown. Higher values reduce noise from flapping hosts.</value>
+    <value>顯示「主機已斷線」通知前所需的連續失敗 Ping 次數（逾時）。較高的值可減少因主機狀態頻繁變動所產生的雜訊。</value>
   </data>
   <data name="NotificationDurationInSeconds" xml:space="preserve">
-    <value>Display duration (seconds)</value>
+    <value>顯示時間（秒）</value>
   </data>
   <data name="HostIsUp" xml:space="preserve">
-    <value>Host is up</value>
+    <value>主機已連線</value>
   </data>
   <data name="HostIsDown" xml:space="preserve">
-    <value>Host is down</value>
+    <value>主機已斷線</value>
   </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>應用程式將重新啟動...</value>
@@ -2416,7 +2416,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>已加密</value>
   </data>
   <data name="OpenTheDocumentation" xml:space="preserve">
-    <value>Open the documentation.</value>
+    <value>開啟文件。</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
     <value>客戶 1</value>
@@ -2536,7 +2536,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>此功能需使用 Microsoft.Windows.SDK.Contracts，但該套件在此系統（如 Windows Server）中無法取得。</value>
   </data>
   <data name="ApplicationName_NeighborTable" xml:space="preserve">
-    <value>Neighbor Table</value>
+    <value>鄰居表單</value>
   </data>
   <data name="ApplicationName_Connections" xml:space="preserve">
     <value>連線</value>
@@ -2887,7 +2887,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>這是一個 C# 函式庫，為 .NET 開發者提供複雜網路、IP、IPv4 / IPv6、子網遮罩、CIDR、子網、分割子網、超網及其計算等功能。</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>Beautiful, interactive charts, maps, and gauges.</value>
+    <value>美觀且具互動性的圖表、地圖與儀表。</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
     <value>WPF 載入指示器集合</value>
@@ -3670,7 +3670,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>實驗性</value>
   </data>
   <data name="RunCommandDots" xml:space="preserve">
-    <value>Run command...</value>
+    <value>執行指令...</value>
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
     <value>IP 地理位置定位</value>
@@ -3787,7 +3787,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>警告</value>
   </data>
   <data name="GroupDomain" xml:space="preserve">
-    <value>Group / domain</value>
+    <value>群組 / 網域</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
     <value>可達的 NetBIOS</value>
@@ -3808,7 +3808,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>關閉群組</value>
   </data>
   <data name="RunCommandDotsWithHotKey" xml:space="preserve">
-    <value>Run command... (Ctrl+Shift+P)</value>
+    <value>執行指令... (Ctrl+Shift+P)</value>
   </data>
   <data name="ProfileFiles" xml:space="preserve">
     <value>設定檔案</value>
@@ -3850,7 +3850,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>6 GHz</value>
   </data>
   <data name="SupportThisProjectWithADonation" xml:space="preserve">
-    <value>Support this project with a donation.</value>
+    <value>透過捐贈來支援此專案。</value>
   </data>
   <data name="OpenDocumentation" xml:space="preserve">
     <value>打開文件</value>
@@ -3871,7 +3871,7 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>只讀模式。修改 hosts 檔案需要提升權限！</value>
   </data>
   <data name="OpenHostsFile" xml:space="preserve">
-    <value>Open hosts file</value>
+    <value>開啟 hosts 檔案</value>
   </data>
   <data name="Comment" xml:space="preserve">
     <value>註解</value>
@@ -4002,242 +4002,242 @@ $$hostname$$	--&gt;	主機名稱</value>
     <value>全部摺疊</value>
   </data>
   <data name="HelpMessage_UseCustomThemes" xml:space="preserve">
-    <value>Use custom themes to personalize the appearance of the application. You can edit or add theme in the "Program Folder &gt; Themes" directory. For more details, refer to the documentation.</value>
+    <value>使用自定義主題來個性化應用程式的外觀。您可以在「程式資料夾 &gt; 主題」目錄中編輯或新增主題。更多詳情請參閱文件。</value>
   </data>
   <data name="AdminConsoleSession" xml:space="preserve">
-    <value>Admin (console) session</value>
+    <value>管理員 (控制台) 工作階段</value>
   </data>
   <data name="DeleteProfileFileXMessage" xml:space="preserve">
-    <value>Profile file "{0}" will be deleted permanently.</value>
+    <value>「{0}」設定檔將被永久刪除。</value>
   </data>
   <data name="EnableEncryptionQuestion" xml:space="preserve">
     <value>啟用加密?</value>
   </data>
   <data name="EnableEncryptionForProfileFileMessage" xml:space="preserve">
-    <value>Do you want to enable profile file encryption to protect sensitive data such as hosts, IP addresses, URLs, and stored credentials?
+    <value>您是否想要啟用設定檔加密，以保護主機、IP 位址、URL 以及儲存的憑證等敏感資料？
 
-You can enable or disable encryption later at any time by right-clicking the profile file to manage encryption settings.
-If you click Cancel, the profile file will remain unencrypted.</value>
+您可以隨時透過右鍵點擊設定檔來管理加密設定，進而開啟或關閉加密。
+如果您點擊「取消」，該設定檔將維持未加密狀態。</value>
   </data>
   <data name="RestartRequiredMessage" xml:space="preserve">
-    <value>A restart is required to apply changes such as language settings.</value>
+    <value>必須重新啟動才能套用語言設定等變更。</value>
   </data>
   <data name="CouldNotParseOrResolveDNSServers" xml:space="preserve">
-    <value>Could not parse or resolve any of the specified DNS servers.</value>
+    <value>無法解析或連線至任何指定的 DNS 伺服器。</value>
   </data>
   <data name="CouldNotParseX" xml:space="preserve">
-    <value>Could not parse "{0}".</value>
+    <value>無法解析「{0}」。</value>
   </data>
   <data name="MaximumNumberOfBackups" xml:space="preserve">
-    <value>Maximum number of backups</value>
+    <value>最大備份數量</value>
   </data>
   <data name="CreateDailyBackup" xml:space="preserve">
-    <value>Create daily backup</value>
+    <value>建立每日備份</value>
   </data>
   <data name="HelpMessage_MaximumNumberOfBackups" xml:space="preserve">
-    <value>Number of backups that are retained before the oldest one is deleted.</value>
+    <value>在刪除最舊的備份前所保留的備份數量。</value>
   </data>
   <data name="SettingManagedByAdministrator" xml:space="preserve">
-    <value>This setting is managed by your administrator.</value>
+    <value>此設定由您的管理員管理。</value>
   </data>
   <data name="RestoreDefaultLocation" xml:space="preserve">
-    <value>Restore default location</value>
+    <value>還原預設位置</value>
   </data>
   <data name="Restore" xml:space="preserve">
-    <value>Restore</value>
+    <value>還原</value>
   </data>
   <data name="RestoreDefaultLocationQuestion" xml:space="preserve">
-    <value>Restore default location?</value>
+    <value>還原預設位置？</value>
   </data>
   <data name="RestoreDefaultSettingsLocationMessage" xml:space="preserve">
-    <value>The default settings location is restored and the application is restarted afterwards.
+    <value>預設設定位置已還原，且應用程式隨後會重新啟動。
 
-You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+如有需要，您可以將「settings.json」檔案從「{0}」複製到「{1}」以遷移先前的設定。在此過程中必須關閉應用程式，以防止設定被覆寫。</value>
   </data>
   <data name="ChangeLocationQuestion" xml:space="preserve">
-    <value>Change location?</value>
+    <value>更改位置？</value>
   </data>
   <data name="ChangeSettingsLocationMessage" xml:space="preserve">
-    <value>The settings location is changed and the application is restarted afterwards.
+    <value>設定位置已更改，且應用程式隨後會重新啟動。
 
-You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+如有需要，您可以將「settings.json」檔案從「{0}」複製到「{1}」以遷移先前的設定。在此過程中必須關閉應用程式，以防止設定被覆寫。</value>
   </data>
   <data name="EnterValidFolderPath" xml:space="preserve">
-    <value>Enter a valid folder path!</value>
+    <value>請輸入有效的資料夾路徑！</value>
   </data>
   <data name="ChangeProfilesLocationMessage" xml:space="preserve">
-    <value>The profiles location is changed and the application is restarted afterwards.
+    <value>設定檔位置已更改，且應用程式隨後會重新啟動。
 
-You can copy your profile files from “{0}” to “{1}” to migrate your existing profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten.</value>
+如有需要，您可以將現有的設定檔從「{0}」複製到「{1}」以遷移您的設定檔。在此過程中必須關閉應用程式，以防止設定檔被覆寫。</value>
   </data>
   <data name="RestoreDefaultProfilesLocationMessage" xml:space="preserve">
-    <value>The default profiles location is restored and the application is restarted afterwards.
+    <value>預設設定檔位置已還原，且應用程式隨後會重新啟動。
 
-You can copy your profile files from “{0}” to “{1}” to migrate your existing profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten.</value>
+如有需要，您可以將現有的設定檔從「{0}」複製到「{1}」以遷移您的設定檔。在此過程中必須關閉應用程式，以防止設定檔被覆寫。</value>
   </data>
   <data name="NetworkConnection" xml:space="preserve">
-    <value>Network connection</value>
+    <value>網路連線</value>
   </data>
   <data name="NetworkStatus" xml:space="preserve">
-    <value>Network Status</value>
+    <value>網路狀態</value>
   </data>
   <data name="ActiveDirectoryImportFailed" xml:space="preserve">
-    <value>Active Directory import failed.</value>
+    <value>Active Directory 匯入失敗。</value>
   </data>
   <data name="ActiveDirectoryImportOptions" xml:space="preserve">
-    <value>Options</value>
+    <value>選項</value>
   </data>
 
   <data name="ActiveDirectoryImportUsesCurrentCredentials" xml:space="preserve">
-    <value>Uses your current Windows credentials to read from Active Directory. The account must be allowed to enumerate computer objects under the search base (subtree).</value>
+    <value>使用您目前的 Windows 憑證從 Active Directory 讀取資料。該帳戶必須獲准列舉搜尋基底（子樹）下的電腦物件。</value>
   </data>
   <data name="ActiveDirectorySearchBase" xml:space="preserve">
-    <value>Search base (DN)</value>
+    <value>搜尋基底（DN）</value>
   </data>
   <data name="ActiveDirectoryAdditionalLdapFilter" xml:space="preserve">
-    <value>Additional LDAP filter</value>
+    <value>額外 LDAP 篩選器</value>
   </data>
   <data name="ActiveDirectoryAdditionalLdapFilterInvalid" xml:space="preserve">
-    <value>Filter must be a valid LDAP expression starting with '(' and ending with ')'.</value>
+    <value>篩選器必須是有效的 LDAP 表達式，且須以 '(' 開頭並以 ')' 結尾。</value>
   </data>
   <data name="ActiveDirectorySearchBaseInvalid" xml:space="preserve">
-    <value>Search base must be a valid LDAP distinguished name (e.g. DC=example,DC=com).</value>
+    <value>搜尋基底必須是有效的 LDAP 辨別名稱（例如：DC=example,DC=com）。</value>
   </data>
   <data name="ActiveDirectory_ImportDescription" xml:space="preserve">
-    <value>Imported from Active Directory on {0}</value>
+    <value>已於{0} 從 Active Directory 匯入</value>
   </data>
   <data name="ActiveDirectoryNoComputersFound" xml:space="preserve">
-    <value>No computers found for the given search base and filter.</value>
+    <value>在指定的搜尋基底與篩選條件下，找不到電腦。</value>
   </data>
   <data name="SearchingActiveDirectoryDots" xml:space="preserve">
-    <value>Searching Active Directory...</value>
+    <value>正在搜尋 Active Directory...</value>
   </data>
   <data name="ActiveDirectoryNonDomainHint" xml:space="preserve">
-    <value>If your computer is not joined to the domain, specify the domain controller (hostname or IP) and use custom credentials.</value>
+    <value>如果您的電腦未加入網域，請指定網域控制器（主機名稱或 IP），並使用自定義憑證。</value>
   </data>
   <data name="LdapServer" xml:space="preserve">
-    <value>Server (optional)</value>
+    <value>伺服器（選填）</value>
   </data>
   <data name="LdapPort" xml:space="preserve">
-    <value>Port (optional)</value>
+    <value>連接埠（選填）</value>
   </data>
   <data name="UseSsl" xml:space="preserve">
-    <value>Use SSL (LDAPS)</value>
+    <value>使用 SSL (LDAPS)</value>
   </data>
   <data name="UseCurrentWindowsCredentials" xml:space="preserve">
-    <value>Use current Windows credentials</value>
+    <value>使用目前的 Windows 憑證</value>
   </data>
   <data name="UseTheseCredentials" xml:space="preserve">
-    <value>Use these credentials</value>
+    <value>使用這些憑證</value>
   </data>
   <data name="Advanced" xml:space="preserve">
-    <value>Advanced</value>
+    <value>進階設定</value>
   </data>
   <data name="SelectAll" xml:space="preserve">
-    <value>Select all</value>
+    <value>全選</value>
   </data>
   <data name="DeselectAll" xml:space="preserve">
-    <value>Deselect all</value>
+    <value>取消全選</value>
   </data>
   <data name="EnableFor" xml:space="preserve">
-    <value>Enable for</value>
+    <value>啟用於</value>
   </data>
   <data name="SkipAlreadyImported" xml:space="preserve">
-    <value>Skip already imported</value>
+    <value>跳過已匯入的項目</value>
   </data>
   <data name="ImportResultsHeader" xml:space="preserve">
-    <value>{0} · {1} result(s)</value>
+    <value>{0}· {1}結果(s)</value>
   </data>
   <data name="ProfileImportSummary" xml:space="preserve">
-    <value>{0} profile(s) imported.
-{1} duplicate entries skipped.
-{2} without a host skipped.</value>
+    <value>{0}已匯入設定檔(s)。
+{1}跳過重複項目。
+{2}因缺少主機而跳過。</value>
   </data>
   <data name="ImportProfiles_Source_ActiveDirectory" xml:space="preserve">
     <value>Active Directory</value>
   </data>
   <data name="ImportResults" xml:space="preserve">
-    <value>Import results</value>
+    <value>匯入結果</value>
   </data>
   <data name="ImportProfiles_StatusNew" xml:space="preserve">
-    <value>New</value>
+    <value>新增</value>
   </data>
   <data name="ImportProfiles_StatusImported" xml:space="preserve">
-    <value>Imported</value>
+    <value>已匯入</value>
   </data>
   <data name="ImportProfiles_StatusNoHost" xml:space="preserve">
-    <value>No host</value>
+    <value>無主機</value>
   </data>
   <data name="ExcludeDisabledAccounts" xml:space="preserve">
-    <value>Exclude disabled accounts</value>
+    <value>排除已停用的帳戶</value>
   </data>
   <data name="ImportComputersFromActiveDirectory" xml:space="preserve">
-    <value>Import computers from Active Directory</value>
+    <value>從 Active Directory 匯入電腦</value>
   </data>
   <data name="ImportComputersFromActiveDirectoryDots" xml:space="preserve">
-    <value>Import computers from Active Directory...</value>
+    <value>從 Active Directory 匯入電腦...</value>
   </data>
   <data name="ImportProfiles" xml:space="preserve">
-    <value>Import profiles</value>
+    <value>匯入設定檔</value>
   </data>
   <data name="Source" xml:space="preserve">
-    <value>Source</value>
+    <value>來源</value>
   </data>
   <data name="ImportProfiles_Method_ActiveDirectory" xml:space="preserve">
     <value>Active Directory</value>
   </data>
   <data name="ProfileGroup" xml:space="preserve">
-    <value>Profile group</value>
+    <value>設定檔群組</value>
   </data>
   <data name="ExistingOrNewGroupDots" xml:space="preserve">
-    <value>Existing or new group name</value>
+    <value>現有或新的群組名稱</value>
   </data>
   <data name="Firewall" xml:space="preserve">
-    <value>Firewall</value>
+    <value>防火牆</value>
   </data>
   <data name="FirewallRules" xml:space="preserve">
-    <value>Firewall rules</value>
+    <value>防火牆規則</value>
   </data>
   <data name="WindowsFirewallSettings" xml:space="preserve">
-    <value>Windows Firewall settings</value>
+    <value>Windows 防火牆設定</value>
   </data>
   <data name="Direction" xml:space="preserve">
-    <value>Direction</value>
+    <value>方向</value>
   </data>
   <data name="Inbound" xml:space="preserve">
-    <value>Inbound</value>
+    <value>輸入</value>
   </data>
   <data name="Outbound" xml:space="preserve">
-    <value>Outbound</value>
+    <value>外流</value>
   </data>
   <data name="Action" xml:space="preserve">
-    <value>Action</value>
+    <value>動作</value>
   </data>
   <data name="Allow" xml:space="preserve">
-    <value>Allow</value>
+    <value>允許</value>
   </data>
   <data name="Block" xml:space="preserve">
-    <value>Block</value>
+    <value>封鎖</value>
   </data>
   <data name="NetworkProfile" xml:space="preserve">
-    <value>Network profile</value>
+    <value>網路設定檔</value>
   </data>
   <data name="NetworkProfiles" xml:space="preserve">
-    <value>Network profiles</value>
+    <value>網路設定檔</value>
   </data>
   <data name="InterfaceType" xml:space="preserve">
-    <value>Interface type</value>
+    <value>介面類型</value>
   </data>
   <data name="FailedToLoadFirewallRulesMessage" xml:space="preserve">
-    <value>Failed to load firewall rules. {0}</value>
+    <value>無法載入防火牆規則。{0}</value>
   </data>
   <data name="DeleteFirewallRuleMessage" xml:space="preserve">
-    <value>The selected firewall rule is permanently deleted:
+    <value>所選的防火牆規則已被永久刪除：
 
 {0}</value>
   </data>
   <data name="FirewallProtocol_Any" xml:space="preserve">
-    <value>Any</value>
+    <value>任何</value>
   </data>
   <data name="FirewallProtocol_TCP" xml:space="preserve">
     <value>TCP</value>
@@ -4261,16 +4261,16 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
     <value>IPv6</value>
   </data>
   <data name="FirewallProtocol_IPv6_Route" xml:space="preserve">
-    <value>IPv6-Route</value>
+    <value>IPv6 路由</value>
   </data>
   <data name="FirewallProtocol_IPv6_Frag" xml:space="preserve">
-    <value>IPv6-Frag</value>
+    <value>IPv6 分段</value>
   </data>
   <data name="FirewallProtocol_IPv6_NoNxt" xml:space="preserve">
-    <value>IPv6-NoNxt</value>
+    <value>IPv6 無下一跳</value>
   </data>
   <data name="FirewallProtocol_IPv6_Opts" xml:space="preserve">
-    <value>IPv6-Opts</value>
+    <value>IPv6 選項</value>
   </data>
   <data name="FirewallProtocol_VRRP" xml:space="preserve">
     <value>VRRP</value>
@@ -4282,103 +4282,103 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
     <value>L2TP</value>
   </data>
   <data name="FirewallInterfaceType_Any" xml:space="preserve">
-    <value>Any</value>
+    <value>任何</value>
   </data>
   <data name="FirewallInterfaceType_Wired" xml:space="preserve">
-    <value>Wired</value>
+    <value>有線網路</value>
   </data>
   <data name="FirewallInterfaceType_Wireless" xml:space="preserve">
-    <value>Wireless</value>
+    <value>無線網路</value>
   </data>
   <data name="FirewallInterfaceType_RemoteAccess" xml:space="preserve">
-    <value>Remote access</value>
+    <value>遠端存取</value>
   </data>
   <data name="FirewallAdminMessage" xml:space="preserve">
-    <value>Read-only mode. Modifying firewall rules requires elevated rights!</value>
+    <value>唯讀模式。若要修改防火牆規則，需要提升權限！</value>
   </data>
   <data name="FirewallRuleDirection_Inbound" xml:space="preserve">
-    <value>Inbound</value>
+    <value>輸入</value>
   </data>
   <data name="FirewallRuleDirection_Outbound" xml:space="preserve">
-    <value>Outbound</value>
+    <value>外流</value>
   </data>
   <data name="FirewallRuleAction_Block" xml:space="preserve">
-    <value>Block</value>
+    <value>封鎖</value>
   </data>
   <data name="FirewallRuleAction_Allow" xml:space="preserve">
-    <value>Allow</value>
+    <value>允許</value>
   </data>
   <data name="LocalPorts" xml:space="preserve">
-    <value>Local ports</value>
+    <value>本機連接埠</value>
   </data>
   <data name="RemotePorts" xml:space="preserve">
-    <value>Remote ports</value>
+    <value>遠端連接埠</value>
   </data>
   <data name="LocalAddresses" xml:space="preserve">
-    <value>Local addresses</value>
+    <value>本機 IP 位址</value>
   </data>
   <data name="RemoteAddresses" xml:space="preserve">
-    <value>Remote addresses</value>
+    <value>遠端 IP 位址</value>
   </data>
   <data name="EnterValidFirewallAddress" xml:space="preserve">
-    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8), range (e.g. 10.0.0.1-10.0.0.10), or keyword (Any, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal)</value>
+    <value>請輸入有效的 IP 位址、子網路（例如 10.0.0.0/8）、範圍（例如 10.0.0.1-10.0.0.10）或關鍵字（Any, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal）。</value>
   </data>
   <data name="AddRule" xml:space="preserve">
-    <value>Add rule</value>
+    <value>新增規則</value>
   </data>
   <data name="AddRuleDots" xml:space="preserve">
-    <value>Add rule...</value>
+    <value>新增規則...</value>
   </data>
   <data name="EditRule" xml:space="preserve">
-    <value>Edit rule</value>
+    <value>編輯規則</value>
   </data>
   <data name="EditRuleDots" xml:space="preserve">
-    <value>Edit rule...</value>
+    <value>編輯規則...</value>
   </data>
   <data name="DeleteRule" xml:space="preserve">
-    <value>Delete rule</value>
+    <value>刪除規則</value>
   </data>
   <data name="EnableRule" xml:space="preserve">
-    <value>Enable rule</value>
+    <value>啟用規則</value>
   </data>
   <data name="DisableRule" xml:space="preserve">
-    <value>Disable rule</value>
+    <value>停用規則</value>
   </data>
   <data name="ImportProfilesDots" xml:space="preserve">
-    <value>Import profiles...</value>
+    <value>匯入設定檔...</value>
   </data>
   <data name="SpeedTest" xml:space="preserve">
-    <value>Speed Test</value>
+    <value>速度測試</value>
   </data>
   <data name="RunSpeedTest" xml:space="preserve">
-    <value>Run speed test</value>
+    <value>執行速度測試</value>
   </data>
   <data name="FetchingMetadataDots" xml:space="preserve">
-    <value>Fetching metadata...</value>
+    <value>正在擷取中繼資料...</value>
   </data>
   <data name="MeasuringLatencyDots" xml:space="preserve">
-    <value>Measuring latency...</value>
+    <value>正在測量延遲...</value>
   </data>
   <data name="MeasuringDownloadSpeedDots" xml:space="preserve">
-    <value>Measuring download speed...</value>
+    <value>正在測量下載速度...</value>
   </data>
   <data name="MeasuringUploadSpeedDots" xml:space="preserve">
-    <value>Measuring upload speed...</value>
+    <value>正在測量上傳速度...</value>
   </data>
   <data name="SpeedTestDisclaimerMessage" xml:space="preserve">
-    <value>Measure download and upload speeds, latency, and jitter with speed.cloudflare.com.
-Cloudflare may log your IP address and network information. See Cloudflare's privacy policy for details.</value>
+    <value>使用 speed.cloudflare.com 測量下載、上傳速度、延遲與抖動。 
+Cloudflare 可能會記錄您的 IP 位址與網路資訊。詳情請參閱 Cloudflare 的隱私權政策。</value>
   </data>
   <data name="Latency" xml:space="preserve">
-    <value>Latency</value>
+    <value>延遲</value>
   </data>
   <data name="Jitter" xml:space="preserve">
-    <value>Jitter</value>
+    <value>抖動</value>
   </data>
   <data name="ExternalService_speed_cloudflare_Description" xml:space="preserve">
-    <value>Speed test service used to measure download speed, upload speed, latency, and jitter.</value>
+    <value>用於測量下載、上傳速度、延遲與抖動的速度測試服務。</value>
   </data>
   <data name="Stop" xml:space="preserve">
-    <value>Stop</value>
+    <value>停止</value>
   </data>
 </root>
