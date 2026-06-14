@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.e948d72b.css">
-<script src="/NETworkManager/assets/js/runtime~main.511d3600.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.740f8dac.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.169d141c.js" defer="defer"></script>
 </head>
 <body>
@@ -68,6 +68,10 @@ Release date: <strong>xx.xx.2025</strong></p>
 <p><strong>Ping Monitor</strong></p>
 <ul>
 <li class="">New <strong>status change notifications</strong>: when a monitored host goes up or down, a stackable popup appears in the bottom-right corner of the primary screen and/or an optional system sound is played. Configurable <strong>success</strong> and <strong>failure thresholds</strong> suppress noise from flapping hosts, the initial state is established silently, and clicking a popup brings the main window to the front. When many hosts change state at once, every host still shows its own popup but the sound is played only once. (See the <a href="https://borntoberoot.net/NETworkManager/docs/application/ping-monitor#notifications" target="_blank" rel="noopener noreferrer" class="">documentation</a> for more details) <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3471" target="_blank" rel="noopener noreferrer" class="">#3471</a></li>
+</ul>
+<p><strong>Remote Desktop</strong></p>
+<ul>
+<li class="">New <strong>View only</strong> mode to monitor a session without sending input: keyboard and mouse are blocked while the screen keeps updating. It can be enabled in the connect dialog, per profile/group, and globally (inherited Global → Group → Profile), or toggled on the fly via the tab&#x27;s right-click menu. An eye icon on the tab indicates when a session is view-only, and the <strong>Fullscreen</strong> and <strong>Ctrl+Alt+Del</strong> actions are disabled while it is active to prevent bypassing it. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3482" target="_blank" rel="noopener noreferrer" class="">#3482</a></li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="improvements">Improvements<a href="#improvements" class="hash-link" aria-label="Direct link to Improvements" title="Direct link to Improvements" translate="no">​</a></h2>
 <p><strong>WiFi</strong></p>
