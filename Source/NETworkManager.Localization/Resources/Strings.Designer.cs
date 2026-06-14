@@ -12279,7 +12279,25 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("VisualStyles", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to View only.
+        /// </summary>
+        public static string ViewOnly {
+            get {
+                return ResourceManager.GetString("ViewOnly", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Block keyboard and mouse input to the remote session.
+        /// </summary>
+        public static string ViewOnlyDescription {
+            get {
+                return ResourceManager.GetString("ViewOnlyDescription", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to VLAN.
         /// </summary>

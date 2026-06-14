@@ -368,6 +368,32 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
+    public bool RemoteDesktop_OverrideViewOnly
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool RemoteDesktop_ViewOnly
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     public bool RemoteDesktop_OverrideCredSspSupport
     {
         get;
@@ -1584,6 +1610,8 @@ public class GroupViewModel : ViewModelBase
             RemoteDesktop_ColorDepths.FirstOrDefault(x => x == groupInfo.RemoteDesktop_ColorDepth);
         RemoteDesktop_OverridePort = groupInfo.RemoteDesktop_OverridePort;
         RemoteDesktop_Port = groupInfo.RemoteDesktop_Port;
+        RemoteDesktop_OverrideViewOnly = groupInfo.RemoteDesktop_OverrideViewOnly;
+        RemoteDesktop_ViewOnly = groupInfo.RemoteDesktop_ViewOnly;
         RemoteDesktop_OverrideCredSspSupport = groupInfo.RemoteDesktop_OverrideCredSspSupport;
         RemoteDesktop_EnableCredSspSupport = groupInfo.RemoteDesktop_EnableCredSspSupport;
         RemoteDesktop_OverrideAuthenticationLevel = groupInfo.RemoteDesktop_OverrideAuthenticationLevel;

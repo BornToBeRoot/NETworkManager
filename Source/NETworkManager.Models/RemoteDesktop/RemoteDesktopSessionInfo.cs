@@ -16,6 +16,10 @@ public class RemoteDesktopSessionInfo
     public int DesktopWidth { get; set; }
     public int DesktopHeight { get; set; }
     public int ColorDepth { get; set; }
+
+    // View only (block keyboard and mouse input to the remote session)
+    public bool ViewOnly { get; set; }
+
     public bool EnableCredSspSupport { get; set; }
     public uint AuthenticationLevel { get; set; }
     public bool EnableGatewayServer { get; set; }

@@ -2175,6 +2175,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.RemoteDesktop_Port;
 
+    public bool RemoteDesktop_ViewOnly
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.RemoteDesktop_ViewOnly;
+
     public bool RemoteDesktop_EnableCredSspSupport
     {
         get;

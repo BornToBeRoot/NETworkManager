@@ -182,6 +182,7 @@ public static class GlobalStaticConfiguration
 
     public static int RemoteDesktop_ColorDepth => 32;
     public static int RemoteDesktop_Port => 3389;
+    public static bool RemoteDesktop_ViewOnly => false;
     public static bool RemoteDesktop_GatewayServerBypassLocalAddresses => true;
 
     public static GatewayUserSelectedCredsSource RemoteDesktop_GatewayServerLogonMethod =>

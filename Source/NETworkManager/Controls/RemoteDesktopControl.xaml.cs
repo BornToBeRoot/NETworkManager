@@ -90,6 +90,19 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
         }
     }
 
+    public bool IsViewOnly
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Constructor, load
@@ -102,6 +115,9 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 
         _tabId = tabId;
         _sessionInfo = sessionInfo;
+
+        // Seed the initial view-only state from the session settings (applied on connect).
+        IsViewOnly = sessionInfo.ViewOnly;
 
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
@@ -496,6 +512,54 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
     }
 
     /// <summary>
+    /// Toggle view-only mode on or off.
+    /// </summary>
+    public void ToggleViewOnly()
+    {
+        SetViewOnly(!IsViewOnly);
+    }
+
+    /// <summary>
+    /// Enable or disable view-only mode, which blocks keyboard and mouse input to the
+    /// remote session while the screen keeps updating.
+    /// </summary>
+    /// <param name="viewOnly">Whether view-only mode should be enabled.</param>
+    public void SetViewOnly(bool viewOnly)
+    {
+        IsViewOnly = viewOnly;
+
+        ApplyViewOnly();
+    }
+
+    /// <summary>
+    /// Apply the current <see cref="IsViewOnly" /> state to the RDP control. Called when the
+    /// mode is toggled and after each (re)connect so the state survives a reconnect.
+    /// </summary>
+    private void ApplyViewOnly()
+    {
+        // Disabling the control (EnableWindow) blocks the mouse, but the inner RDP input
+        // window keeps the keyboard focus it already had, so keystrokes still get through.
+        RdpClient.Enabled = !IsViewOnly;
+
+        if (IsViewOnly)
+        {
+            // Pull keyboard focus away from the RDP session. A disabled control is not a tab
+            // stop and can't be clicked, so the focus cannot return until view-only is off.
+            Focusable = true;
+            Keyboard.ClearFocus();
+            Focus();
+        }
+        else
+        {
+            // Hand input back to the session and restore the control's default focus
+            // behavior (UserControl is not focusable by default), so toggling view-only
+            // off leaves no lingering focus side effects.
+            RdpClient.Focus();
+            Focusable = false;
+        }
+    }
+
+    /// <summary>
     /// Disconnect the RDP session.
     /// </summary>
     private void Disconnect()
@@ -699,6 +763,10 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
     {
         IsConnected = true;
         IsConnecting = false;
+
+        // (Re)apply view-only mode if it is active for this session.
+        if (IsViewOnly)
+            ApplyViewOnly();
     }
 
     private void RdpClient_OnDisconnected(object sender, IMsTscAxEvents_OnDisconnectedEvent e)

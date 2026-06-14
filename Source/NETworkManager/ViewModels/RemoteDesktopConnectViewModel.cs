@@ -134,12 +134,26 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
         }
     }
 
+    public bool ViewOnly
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = SettingsManager.Current.RemoteDesktop_ViewOnly;
+
     #endregion
 
     #region Constructor
 
     public RemoteDesktopConnectViewModel(Action<RemoteDesktopConnectViewModel> connectCommand,
-        Action<RemoteDesktopConnectViewModel> cancelHandler, (string Name, string Host, bool AdminSession)? connectAsOptions = null)
+        Action<RemoteDesktopConnectViewModel> cancelHandler,
+        (string Name, string Host, bool AdminSession, bool ViewOnly)? connectAsOptions = null)
     {
         ConnectCommand = new RelayCommand(_ => connectCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
@@ -158,6 +172,7 @@ public class RemoteDesktopConnectViewModel : ViewModelBase
             Host = connectAsOptions.Value.Host;
 
             AdminSession = connectAsOptions.Value.AdminSession;
+            ViewOnly = connectAsOptions.Value.ViewOnly;
         }
     }
 

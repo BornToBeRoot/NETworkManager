@@ -26,6 +26,9 @@ public static class RemoteDesktop
                 : SettingsManager.Current.RemoteDesktop_ScreenHeight,
             ColorDepth = SettingsManager.Current.RemoteDesktop_ColorDepth,
 
+            // View only
+            ViewOnly = SettingsManager.Current.RemoteDesktop_ViewOnly,
+
             // Authentication
             EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport,
             AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel,
@@ -127,6 +130,12 @@ public static class RemoteDesktop
                 : group.RemoteDesktop_ScreenHeight;
             info.ColorDepth = group.RemoteDesktop_ColorDepth;
         }
+
+        // View only
+        if (profile.RemoteDesktop_OverrideViewOnly)
+            info.ViewOnly = profile.RemoteDesktop_ViewOnly;
+        else if (group.RemoteDesktop_OverrideViewOnly)
+            info.ViewOnly = group.RemoteDesktop_ViewOnly;
 
         // Authentication
         if (profile.RemoteDesktop_OverrideCredSspSupport)

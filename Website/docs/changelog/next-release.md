@@ -68,6 +68,10 @@ Release date: **xx.xx.2025**
 
 - New **status change notifications**: when a monitored host goes up or down, a stackable popup appears in the bottom-right corner of the primary screen and/or an optional system sound is played. Configurable **success** and **failure thresholds** suppress noise from flapping hosts, the initial state is established silently, and clicking a popup brings the main window to the front. When many hosts change state at once, every host still shows its own popup but the sound is played only once. (See the [documentation](https://borntoberoot.net/NETworkManager/docs/application/ping-monitor#notifications) for more details) [#3471](https://github.com/BornToBeRoot/NETworkManager/pull/3471)
 
+**Remote Desktop**
+
+- New **View only** mode to monitor a session without sending input: keyboard and mouse are blocked while the screen keeps updating. It can be enabled in the connect dialog, per profile/group, and globally (inherited Global → Group → Profile), or toggled on the fly via the tab's right-click menu. An eye icon on the tab indicates when a session is view-only, and the **Fullscreen** and **Ctrl+Alt+Del** actions are disabled while it is active to prevent bypassing it. [#3482](https://github.com/BornToBeRoot/NETworkManager/pull/3482)
+
 ## Improvements
 
 **WiFi**

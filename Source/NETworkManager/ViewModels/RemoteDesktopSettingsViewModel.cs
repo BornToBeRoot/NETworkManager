@@ -210,6 +210,22 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         }
     }
 
+    public bool ViewOnly
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.RemoteDesktop_ViewOnly = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     public bool EnableCredSspSupport
     {
         get;
@@ -654,6 +670,7 @@ public class RemoteDesktopSettingsViewModel : ViewModelBase
         CustomScreenHeight = SettingsManager.Current.RemoteDesktop_CustomScreenHeight.ToString();
         SelectedColorDepth = ColorDepths.FirstOrDefault(x => x == SettingsManager.Current.RemoteDesktop_ColorDepth);
         Port = SettingsManager.Current.RemoteDesktop_Port;
+        ViewOnly = SettingsManager.Current.RemoteDesktop_ViewOnly;
         EnableCredSspSupport = SettingsManager.Current.RemoteDesktop_EnableCredSspSupport;
         AuthenticationLevel = SettingsManager.Current.RemoteDesktop_AuthenticationLevel;
         EnableGatewayServer = SettingsManager.Current.RemoteDesktop_EnableGatewayServer;
