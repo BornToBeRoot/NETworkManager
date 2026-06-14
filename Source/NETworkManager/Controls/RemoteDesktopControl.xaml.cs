@@ -551,8 +551,11 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
         }
         else
         {
-            // Hand input back to the session.
+            // Hand input back to the session and restore the control's default focus
+            // behavior (UserControl is not focusable by default), so toggling view-only
+            // off leaves no lingering focus side effects.
             RdpClient.Focus();
+            Focusable = false;
         }
     }
 
