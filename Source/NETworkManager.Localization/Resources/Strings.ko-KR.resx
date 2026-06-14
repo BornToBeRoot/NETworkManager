@@ -2139,6 +2139,12 @@ URL: https://api.ipify.org/</value>
   <data name="VisualStyles" xml:space="preserve">
     <value>시각적 스타일</value>
   </data>
+  <data name="ViewOnly" xml:space="preserve">
+    <value>View only</value>
+  </data>
+  <data name="ViewOnlyDescription" xml:space="preserve">
+    <value>Block keyboard and mouse input to the remote session</value>
+  </data>
   <data name="RemoteAudio" xml:space="preserve">
     <value>원격 오디오</value>
   </data>
