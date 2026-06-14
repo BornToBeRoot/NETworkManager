@@ -33,9 +33,10 @@ Right-clicking a session tab opens a context menu:
 | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Reconnect**                         | Reconnects to the remote computer (only if disconnected)                                                                                                                                          |
 | **Disconnect**                        | Disconnects from the remote computer (only if connected)                                                                                                                                          |
-| **Fullscreen**                        | Toggles fullscreen mode (only if connected)                                                                                                                                                       |
+| **Fullscreen**                        | Toggles fullscreen mode (only if connected and not in view only mode)                                                                                                                                                       |
 | **Adjust screen**                     | Adjusts the screen size to the current view size; only available if [Display](#display) is set to `Adjust screen automatically` or `Use the current view size as screen size` (only if connected) |
-| **Keyboard shortcuts > Ctrl+Alt+Del** | Sends Ctrl+Alt+Del to the remote computer (only if connected)                                                                                                                                     |
+| **View only**                         | Toggles [view only](#view-only) mode, which blocks keyboard and mouse input to the remote session while the screen keeps updating (only if connected)                                             |
+| **Keyboard shortcuts > Ctrl+Alt+Del** | Sends Ctrl+Alt+Del to the remote computer (only if connected and not in view only mode)                                                                                                           |
 
 ## Connect
 
@@ -119,6 +120,14 @@ Only available if [Use credentials](#use-credentials) is enabled.
 ### Admin (console) session
 
 Connect to the admin (console) session of the remote computer.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+### View only
+
+Connect in view only mode. Keyboard and mouse input to the remote session is blocked while the screen keeps updating, so the session can be monitored without interacting with it. View only mode can also be toggled on the fly via the [tab context menu](#tab-context-menu). While it is active, an eye icon is shown on the tab and the **Fullscreen** and **Ctrl+Alt+Del** actions are disabled to prevent bypassing it.
 
 **Type:** `Boolean`
 
@@ -273,6 +282,14 @@ Port used for the remote desktop connection.
 **Type:** `Integer`
 
 **Default:** `3389`
+
+### View only
+
+Block keyboard and mouse input to the remote session. When enabled, the session can be monitored without interacting with it while the screen keeps updating. The value is inherited in the order Global → Group → Profile. View only mode can also be toggled on the fly via the [tab context menu](#tab-context-menu).
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
 
 ### Credential Security Support Provider
 
@@ -682,6 +699,14 @@ Port used for the remote desktop connection.
 
 **Default:** `3389`
 
+### View only
+
+Block keyboard and mouse input to the remote session. When enabled, the session can be monitored without interacting with it while the screen keeps updating. The value is inherited in the order Global → Group → Profile. View only mode can also be toggled on the fly via the [tab context menu](#tab-context-menu).
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
 ### Credential Security Support Provider
 
 Use the Credential Security Support Provider (CredSSP) protocol to authenticate with the remote computer.
@@ -1019,6 +1044,14 @@ Port used for the remote desktop connection.
 **Type:** `Integer`
 
 **Default:** `3389`
+
+### View only
+
+Block keyboard and mouse input to the remote session. When enabled, the session can be monitored without interacting with it while the screen keeps updating. The value is inherited in the order Global → Group → Profile. View only mode can also be toggled on the fly via the [tab context menu](#tab-context-menu).
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
 
 ### Credential Security Support Provider
 

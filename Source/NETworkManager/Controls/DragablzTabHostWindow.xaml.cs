@@ -165,6 +165,15 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
         return false;
     }
 
+    // Used to block actions that would bypass view-only mode (e.g. fullscreen, Ctrl+Alt+Del).
+    private bool RemoteDesktop_IsConnectedAndNotViewOnly_CanExecute(object view)
+    {
+        if (view is RemoteDesktopControl control)
+            return control.IsConnected && !control.IsViewOnly;
+
+        return false;
+    }
+
     public ICommand RemoteDesktop_DisconnectCommand =>
         new RelayCommand(RemoteDesktop_DisconnectAction, RemoteDesktop_IsConnected_CanExecute);
 
@@ -186,12 +195,21 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     }
 
     public ICommand RemoteDesktop_FullscreenCommand =>
-        new RelayCommand(RemoteDesktop_FullscreenAction, RemoteDesktop_IsConnected_CanExecute);
+        new RelayCommand(RemoteDesktop_FullscreenAction, RemoteDesktop_IsConnectedAndNotViewOnly_CanExecute);
 
     private void RemoteDesktop_FullscreenAction(object view)
     {
         if (view is RemoteDesktopControl control)
             control.FullScreen();
+    }
+
+    public ICommand RemoteDesktop_ViewOnlyCommand =>
+        new RelayCommand(RemoteDesktop_ViewOnlyAction, RemoteDesktop_IsConnected_CanExecute);
+
+    private void RemoteDesktop_ViewOnlyAction(object view)
+    {
+        if (view is RemoteDesktopControl control)
+            control.ToggleViewOnly();
     }
 
     public ICommand RemoteDesktop_AdjustScreenCommand =>
@@ -204,7 +222,7 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     }
 
     public ICommand RemoteDesktop_SendCtrlAltDelCommand =>
-        new RelayCommand(RemoteDesktop_SendCtrlAltDelAction, RemoteDesktop_IsConnected_CanExecute);
+        new RelayCommand(RemoteDesktop_SendCtrlAltDelAction, RemoteDesktop_IsConnectedAndNotViewOnly_CanExecute);
 
     private async void RemoteDesktop_SendCtrlAltDelAction(object view)
     {

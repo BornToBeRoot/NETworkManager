@@ -144,9 +144,13 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.AdminConsoleSession}" />
             <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OffContent="" OnContent="" IsOn="{Binding AdminSession}" />
+            <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.ViewOnly}" />
+            <mah:ToggleSwitch Grid.Column="2" Grid.Row="2" OffContent="" OnContent="" IsOn="{Binding ViewOnly}" />
         </Grid>
         <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{x:Static localization:Strings.Connect}" Command="{Binding ConnectCommand}"

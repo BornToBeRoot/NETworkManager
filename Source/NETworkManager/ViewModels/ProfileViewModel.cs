@@ -136,6 +136,8 @@ public class ProfileViewModel : ViewModelBase
             RemoteDesktop_ColorDepths.FirstOrDefault(x => x == profileInfo.RemoteDesktop_ColorDepth);
         RemoteDesktop_OverridePort = profileInfo.RemoteDesktop_OverridePort;
         RemoteDesktop_Port = profileInfo.RemoteDesktop_Port;
+        RemoteDesktop_OverrideViewOnly = profileInfo.RemoteDesktop_OverrideViewOnly;
+        RemoteDesktop_ViewOnly = profileInfo.RemoteDesktop_ViewOnly;
         RemoteDesktop_OverrideCredSspSupport = profileInfo.RemoteDesktop_OverrideCredSspSupport;
         RemoteDesktop_EnableCredSspSupport = profileInfo.RemoteDesktop_EnableCredSspSupport;
         RemoteDesktop_OverrideAuthenticationLevel = profileInfo.RemoteDesktop_OverrideAuthenticationLevel;
@@ -1155,6 +1157,32 @@ public class ProfileViewModel : ViewModelBase
     }
 
     public int RemoteDesktop_Port
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool RemoteDesktop_OverrideViewOnly
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool RemoteDesktop_ViewOnly
     {
         get;
         set

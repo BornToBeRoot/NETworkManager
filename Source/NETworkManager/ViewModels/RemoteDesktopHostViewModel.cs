@@ -299,6 +299,15 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         return false;
     }
 
+    // Used to block actions that would bypass view-only mode (e.g. fullscreen, Ctrl+Alt+Del).
+    private bool IsConnectedAndNotViewOnly_CanExecute(object view)
+    {
+        if (view is RemoteDesktopControl control)
+            return control.IsConnected && !control.IsViewOnly;
+
+        return false;
+    }
+
     public ICommand ReconnectCommand => new RelayCommand(ReconnectAction, IsDisconnected_CanExecute);
 
     private void ReconnectAction(object view)
@@ -317,12 +326,20 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
                 control.DisconnectCommand.Execute(null);
     }
 
-    public ICommand FullscreenCommand => new RelayCommand(FullscreenAction, IsConnected_CanExecute);
+    public ICommand FullscreenCommand => new RelayCommand(FullscreenAction, IsConnectedAndNotViewOnly_CanExecute);
 
     private void FullscreenAction(object view)
     {
         if (view is RemoteDesktopControl control)
             control.FullScreen();
+    }
+
+    public ICommand ViewOnlyCommand => new RelayCommand(ViewOnlyAction, IsConnected_CanExecute);
+
+    private void ViewOnlyAction(object view)
+    {
+        if (view is RemoteDesktopControl control)
+            control.ToggleViewOnly();
     }
 
     public ICommand AdjustScreenCommand => new RelayCommand(AdjustScreenAction, IsConnected_CanExecute);
@@ -333,7 +350,8 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             control.AdjustScreen(force: true);
     }
 
-    public ICommand SendCtrlAltDelCommand => new RelayCommand(SendCtrlAltDelAction, IsConnected_CanExecute);
+    public ICommand SendCtrlAltDelCommand =>
+        new RelayCommand(SendCtrlAltDelAction, IsConnectedAndNotViewOnly_CanExecute);
 
     private async void SendCtrlAltDelAction(object view)
     {
@@ -525,6 +543,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             }
 
             sessionInfo.AdminSession = instance.AdminSession;
+            sessionInfo.ViewOnly = instance.ViewOnly;
 
             // Add to history
             // Note: The history can only be updated after the values have been read.
@@ -590,6 +609,7 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
             }
 
             sessionInfo.AdminSession = instance.AdminSession;
+            sessionInfo.ViewOnly = instance.ViewOnly;
 
             Connect(sessionInfo, instance.Name);
         }, _ =>
@@ -602,7 +622,8 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
         (
             profileInfo.Name,
             profileInfo.RemoteDesktop_Host,
-            profileInfo.RemoteDesktop_AdminSession
+            profileInfo.RemoteDesktop_AdminSession,
+            sessionInfo.ViewOnly
         ));
 
         childWindow.Title = Strings.ConnectAs;

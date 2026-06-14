@@ -60,6 +60,8 @@ public class GroupInfo
         RemoteDesktop_ColorDepth = group.RemoteDesktop_ColorDepth;
         RemoteDesktop_OverridePort = group.RemoteDesktop_OverridePort;
         RemoteDesktop_Port = group.RemoteDesktop_Port;
+        RemoteDesktop_OverrideViewOnly = group.RemoteDesktop_OverrideViewOnly;
+        RemoteDesktop_ViewOnly = group.RemoteDesktop_ViewOnly;
         RemoteDesktop_OverrideCredSspSupport = group.RemoteDesktop_OverrideCredSspSupport;
         RemoteDesktop_EnableCredSspSupport = group.RemoteDesktop_EnableCredSspSupport;
         RemoteDesktop_OverrideAuthenticationLevel = group.RemoteDesktop_OverrideAuthenticationLevel;
@@ -196,6 +198,8 @@ public class GroupInfo
     public int RemoteDesktop_ColorDepth { get; set; } = GlobalStaticConfiguration.RemoteDesktop_ColorDepth;
     public bool RemoteDesktop_OverridePort { get; set; }
     public int RemoteDesktop_Port { get; set; } = GlobalStaticConfiguration.RemoteDesktop_Port;
+    public bool RemoteDesktop_OverrideViewOnly { get; set; }
+    public bool RemoteDesktop_ViewOnly { get; set; } = GlobalStaticConfiguration.RemoteDesktop_ViewOnly;
     public bool RemoteDesktop_OverrideCredSspSupport { get; set; }
     public bool RemoteDesktop_EnableCredSspSupport { get; set; }
     public bool RemoteDesktop_OverrideAuthenticationLevel { get; set; }

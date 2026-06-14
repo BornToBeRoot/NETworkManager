@@ -101,6 +101,9 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
+        <TextBlock Text="{x:Static localization:Strings.ViewOnly}" Style="{StaticResource HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.ViewOnlyDescription}" IsOn="{Binding ViewOnly}"
+                          Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.Authentication}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.EnableCredentialSecuritySupportProvider}"
                           IsOn="{Binding EnableCredSspSupport}" Margin="0,0,0,10" />
