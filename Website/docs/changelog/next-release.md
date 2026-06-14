@@ -70,7 +70,7 @@ Release date: **xx.xx.2025**
 
 **Remote Desktop**
 
-- New **View only** mode to monitor a session without sending input: keyboard and mouse are blocked while the screen keeps updating. It can be enabled in the connect dialog, per profile/group, and globally (inherited Global → Group → Profile), or toggled on the fly via the tab's right-click menu. An eye icon on the tab indicates when a session is view-only, and the **Fullscreen** and **Ctrl+Alt+Del** actions are disabled while it is active to prevent bypassing it. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
+- New **View only** mode to monitor a session without sending input: keyboard and mouse are blocked while the screen keeps updating. It can be enabled in the connect dialog, per profile/group, and globally (inherited Global → Group → Profile), or toggled on the fly via the tab's right-click menu. An eye icon on the tab indicates when a session is view-only, and the **Fullscreen** and **Ctrl+Alt+Del** actions are disabled while it is active to prevent bypassing it. [#3482](https://github.com/BornToBeRoot/NETworkManager/pull/3482)
 
 ## Improvements
 
