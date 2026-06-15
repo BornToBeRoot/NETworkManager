@@ -3112,13 +3112,13 @@ $$hostname$$	--&gt;	主机名</value>
     <value>PowerShell控制台的颜色可以更改为“设置”&gt;“常规”&gt;“外观”下的应用程序主题</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>如果启用此选项，注册表 HKCU:\Console 下的 PowerShell 控制台默认设置将被覆盖，以便 PowerShell 控制台窗口与应用程序主题相匹配。这是一个全局系统设置，可能会影响正常 PowerShell 窗口的外观。
+    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
 
-只有在 PowerShell 和 AWS 会话管理器设置中配置的 PowerShell 控制台才会被修改。支持 Windows PowerShell 和 PWSH（PowerShell 7 及更高版本）。
+Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
 
-单击右上角的帮助/文档按钮（最小化按钮左侧）或导航至 https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance 获取更多详细信息。这里记录了将被调整的值。
+Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
 
-如果再次禁用该选项，这些值将不再被修改。但不会恢复原始值。</value>
+If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
   </data>
   <data name="InputCannotEndWithSemicolon" xml:space="preserve">
     <value>输入不能以"; "结束！</value>
