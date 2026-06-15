@@ -3113,9 +3113,9 @@ Aktivieren Sie die Verschlüsselung der Profildatei in Einstellungen&gt;Profile,
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>Wenn Sie diese Option aktivieren, werden die Standardeinstellungen für die PowerShell-Konsole in der Registrierung unter HKCU:\Console überschrieben, sodass das PowerShell-Konsolenfenster dem Anwendungsthema entspricht. Dies ist eine globale Systemeinstellung, die sich auf das Aussehen des normalen PowerShell-Fensters auswirken kann.
 
-Es werden nur die PowerShell-Konsolen geändert, die in den PowerShell- und AWS Session Manager-Einstellungen konfiguriert sind. Sowohl Windows PowerShell als auch PWSH (PowerShell 7 und höher) werden unterstützt.
+Es werden nur die PowerShell-Konsolen geändert, die in den PowerShell-Einstellungen konfiguriert sind. Sowohl Windows PowerShell als auch PWSH (PowerShell 7 und höher) werden unterstützt.
 
-Klicken Sie in der oberen rechten Ecke auf die Hilfe-/Dokumentationsschaltfläche (links neben der Minimieren-Schaltfläche) oder navigieren Sie zu https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance, um weitere Details zu erhalten. Hier sind die Werte dokumentiert, die angepasst werden.
+Klicken Sie in der oberen rechten Ecke auf den Button Hilfe/Dokumentation (links neben dem Minimieren-Button) oder navigieren Sie zu https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance für weitere Details. Hier sind die Werte dokumentiert, die angepasst werden.
 
 Wenn die Option wieder deaktiviert wird, werden die Werte nicht mehr verändert. Die ursprünglichen Werte werden jedoch NICHT wiederhergestellt.</value>
   </data>
