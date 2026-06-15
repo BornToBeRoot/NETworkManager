@@ -36,7 +36,12 @@ export default function CopyButton({
       type="button"
       className={clsx(styles.copyButton, className)}
       onClick={handleCopy}
-      aria-label="Copy SHA-256 checksum to clipboard"
+      aria-label={
+        copied
+          ? "Copied SHA-256 checksum to clipboard"
+          : "Copy SHA-256 checksum to clipboard"
+      }
+      aria-live="polite"
     >
       {copied ? copiedLabel : idleLabel}
     </button>
