@@ -54,25 +54,27 @@ public class LocalizationManager
     public static List<LocalizationInfo> List =>
     [
         // Official
-        new LocalizationInfo("English", "English", GetImageUri("en-US"), "en-US", true),
-        new LocalizationInfo("German (Germany)", "Deutsch", GetImageUri("de-DE"), "de-DE", true),
+        new("English", "English", GetImageUri("en-US"), "en-US", true),
+        new("German (Germany)", "Deutsch", GetImageUri("de-DE"), "de-DE", true),
+        new("Luxembourgish (Luxembourg)", "Lëtzebuergesch", GetImageUri("lb-LU"), "lb-LU", true),
+
 
         // Community            
-        new LocalizationInfo("Chinese (China)", "大陆简体", GetImageUri("zh-CN"), "zh-CN"),
-        new LocalizationInfo("Chinese (Taiwan)", "台灣正體", GetImageUri("zh-TW"), "zh-TW"),
-        new LocalizationInfo("Czech (Czech Republic)", "Čeština", GetImageUri("cs-CZ"), "cs-CZ"),
-        new LocalizationInfo("Dutch (Netherlands)", "Nederlands", GetImageUri("nl-NL"), "nl-NL"),
-        new LocalizationInfo("French (France)", "Français", GetImageUri("fr-FR"), "fr-FR"),
-        new LocalizationInfo("Hungarian (Hungary)", "Magyar", GetImageUri("hu-HU"), "hu-HU"),
-        new LocalizationInfo("Italian (Italy)", "Italiano", GetImageUri("it-IT"), "it-IT"),
-        new LocalizationInfo("Japanese (Japan)", "日本語", GetImageUri("ja-JP"), "ja-JP"),
-        new LocalizationInfo("Korean (Korea)", "한국어", GetImageUri("ko-KR"), "ko-KR"),
-        new LocalizationInfo("Polish (Poland)", "Język polski", GetImageUri("pl-PL"), "pl-PL"),
-        new LocalizationInfo("Portuguese (Brazil)", "português brasileiro", GetImageUri("pt-BR"), "pt-BR"),
-        new LocalizationInfo("Russian (Russia)", "Русский", GetImageUri("ru-RU"), "ru-RU"),
-        new LocalizationInfo("Slovenian (Slovenia)", "slovenski jezik", GetImageUri("sl-SI"), "sl-SI"),
-        new LocalizationInfo("Spanish (Spain)", "Español", GetImageUri("es-ES"), "es-ES"),
-        new LocalizationInfo("Ukrainian (Ukraine)", "Українська", GetImageUri("uk-UA"), "uk-UA"),
+        new("Chinese (China)", "大陆简体", GetImageUri("zh-CN"), "zh-CN"),
+        new("Chinese (Taiwan)", "台灣正體", GetImageUri("zh-TW"), "zh-TW"),
+        new("Czech (Czech Republic)", "Čeština", GetImageUri("cs-CZ"), "cs-CZ"),
+        new("Dutch (Netherlands)", "Nederlands", GetImageUri("nl-NL"), "nl-NL"),
+        new("French (France)", "Français", GetImageUri("fr-FR"), "fr-FR"),
+        new("Hungarian (Hungary)", "Magyar", GetImageUri("hu-HU"), "hu-HU"),
+        new("Italian (Italy)", "Italiano", GetImageUri("it-IT"), "it-IT"),
+        new("Japanese (Japan)", "日本語", GetImageUri("ja-JP"), "ja-JP"),
+        new("Korean (Korea)", "한국어", GetImageUri("ko-KR"), "ko-KR"),
+        new("Polish (Poland)", "Język polski", GetImageUri("pl-PL"), "pl-PL"),
+        new("Portuguese (Brazil)", "português brasileiro", GetImageUri("pt-BR"), "pt-BR"),
+        new("Russian (Russia)", "Русский", GetImageUri("ru-RU"), "ru-RU"),
+        new("Slovenian (Slovenia)", "slovenski jezik", GetImageUri("sl-SI"), "sl-SI"),
+        new("Spanish (Spain)", "Español", GetImageUri("es-ES"), "es-ES"),
+        new("Ukrainian (Ukraine)", "Українська", GetImageUri("uk-UA"), "uk-UA"),
     ];
 
     /// <summary>
