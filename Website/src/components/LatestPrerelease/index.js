@@ -81,7 +81,6 @@ export default function LatestPrerelease() {
         const release = {
           tagName: pre.tag_name,
           publishedAt: pre.published_at,
-          htmlUrl: pre.html_url,
           setupUrl: findAssetUrl(pre.assets, "_Setup.msi"),
           portableUrl: findAssetUrl(pre.assets, "_Portable.zip"),
           archiveUrl: findAssetUrl(pre.assets, "_Archive.zip"),
@@ -148,10 +147,10 @@ export default function LatestPrerelease() {
       <div className={pageStyles.centerButtonContainer}>
         <Link
           className={`button button--secondary button--outline ${pageStyles.additionalButton}`}
-          to={release.htmlUrl}
+          to="/docs/changelog/next-release"
           target="_blank"
         >
-          📃 Release notes
+          🚀 What's coming?
         </Link>
       </div>
     </>
