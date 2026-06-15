@@ -2,6 +2,9 @@ name: GitHub Pages
 
 on:
   workflow_dispatch:
+  release:
+    # Rebuild so the download page picks up the newly published (pre-)release.
+    types: [published]
   push:
     branches:
       - main
@@ -46,6 +49,9 @@ jobs:
 
       - name: Build website
         run: yarn build
+        env:
+          # Used by scripts/fetch-release-data.mjs to raise the GitHub API rate limit.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

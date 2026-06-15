@@ -2,42 +2,14 @@ import React from "react";
 import Link from "@docusaurus/Link";
 import Layout from "@theme/Layout";
 import HomepageFeatures from "@site/src/components/HomepageFeatures";
+import ToolChips from "@site/src/components/ToolChips";
+import tools from "@site/src/data/tools";
+import release from "@site/src/data/release.json";
 
 import ImageGalleryDashboard from "@site/docs/img/dashboard.png";
 
 import Heading from "@theme/Heading";
 import styles from "./styles.module.css";
-
-// Sorted by sidebar_position
-const tools = [
-  { name: "Dashboard", to: "/docs/application/dashboard" },
-  { name: "Network Interface", to: "/docs/application/network-interface" },
-  { name: "WiFi", to: "/docs/application/wifi" },
-  { name: "IP Scanner", to: "/docs/application/ip-scanner" },
-  { name: "Port Scanner", to: "/docs/application/port-scanner" },
-  { name: "Ping Monitor", to: "/docs/application/ping-monitor" },
-  { name: "Traceroute", to: "/docs/application/traceroute" },
-  { name: "DNS Lookup", to: "/docs/application/dns-lookup" },
-  { name: "Remote Desktop", to: "/docs/application/remote-desktop" },
-  { name: "PowerShell", to: "/docs/application/powershell" },
-  { name: "PuTTY", to: "/docs/application/putty" },
-  { name: "TigerVNC", to: "/docs/application/tigervnc" },
-  { name: "Web Console", to: "/docs/application/web-console" },
-  { name: "SNMP", to: "/docs/application/snmp" },
-  { name: "SNTP Lookup", to: "/docs/application/sntp-lookup" },
-  { name: "Hosts File Editor", to: "/docs/application/hosts-file-editor" },
-  { name: "Firewall", to: "/docs/application/firewall" },
-  { name: "Discovery Protocol", to: "/docs/application/discovery-protocol" },
-  { name: "Wake on LAN", to: "/docs/application/wake-on-lan" },
-  { name: "Whois", to: "/docs/application/whois" },
-  { name: "IP Geolocation", to: "/docs/application/ip-geolocation" },
-  { name: "Subnet Calculator", to: "/docs/application/subnet-calculator" },
-  { name: "Bit Calculator", to: "/docs/application/bit-calculator" },
-  { name: "Lookup", to: "/docs/application/lookup" },
-  { name: "Connections", to: "/docs/application/connections" },
-  { name: "Listeners", to: "/docs/application/listeners" },
-  { name: "Neighbor Table", to: "/docs/application/neighbor-table" },
-];
 
 function HomepageHeader() {
   return (
@@ -72,21 +44,39 @@ function HomepageHeader() {
             GitHub
           </Link>
           <span className={styles.indexCtasGitHubButtonWrapper}>
-            <img
-              alt="GitHub Downloads"
-              className={styles.indexCtasGitHubButton}
-              src="https://img.shields.io/github/downloads/BornToBeRoot/NETworkManager/total.svg?style=social"
-              height={24}
-              title="GitHub Downloads"
-            />
-            <img
-              alt="GitHub Stars"
-              className={styles.indexCtasGitHubButton}
-              src="https://img.shields.io/github/stars/BornToBeRoot/NETworkManager?style=social"
-              height={24}
-              title="GitHub Stars"
-            />
+            <a
+              href="https://github.com/BornToBeRoot/NETworkManager/stargazers"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                alt="GitHub Stars"
+                className={styles.indexCtasGitHubButton}
+                src="https://img.shields.io/github/stars/BornToBeRoot/NETworkManager?style=for-the-badge&logo=github&logoColor=white&label=Stars&labelColor=2b3137&color=00d4aa"
+                height={28}
+                title="GitHub Stars"
+              />
+            </a>
+            <a
+              href="https://github.com/BornToBeRoot/NETworkManager/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                alt="GitHub Downloads"
+                className={styles.indexCtasGitHubButton}
+                src="https://img.shields.io/github/downloads/BornToBeRoot/NETworkManager/total?style=for-the-badge&logo=github&logoColor=white&label=Downloads&labelColor=2b3137&color=00d4aa"
+                height={28}
+                title="GitHub Downloads"
+              />
+            </a>
           </span>
+        </div>
+        <div className={styles.directDownloads}>
+          <span aria-hidden="true">⬇</span> Direct download:{" "}
+          <Link to={release.downloads.setup}>MSI-Setup</Link>
+          <span className={styles.directDownloadsSep}>|</span>
+          <Link to={release.downloads.portable}>Portable</Link>
         </div>
         <div className={styles.heroScreenshotWrapper}>
           <img
@@ -108,13 +98,7 @@ function ToolGrid() {
         <p className={styles.toolGridSubtitle}>
           Everything a network engineer needs, in one place.
         </p>
-        <div className={styles.toolChips}>
-          {tools.map((tool) => (
-            <Link key={tool.name} to={tool.to} className={styles.toolChip}>
-              {tool.name}
-            </Link>
-          ))}
-        </div>
+        <ToolChips />
       </div>
     </div>
   );
@@ -141,12 +125,17 @@ export default function Home() {
               Tabs and drag &amp; drop functionality.
             </p>
           </div>
-          <Link
-            className="button button--outline button--primary"
-            to="/docs/introduction"
-          >
-            More screenshots in the docs →
-          </Link>
+          <div className={styles.previewCtas}>
+            <Link className="button button--primary" to="/download">
+              ⬇ Download now
+            </Link>
+            <Link
+              className="button button--outline button--primary"
+              to="/docs/introduction"
+            >
+              More screenshots in the docs →
+            </Link>
+          </div>
         </div>
       </main>
     </Layout>

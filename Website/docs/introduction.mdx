@@ -4,55 +4,33 @@ description: "Explore NETworkManager, a free open-source Windows tool with 25+ b
 keywords: [NETworkManager, network management, network tools, open source, Windows, IP scanner, port scanner, remote desktop, SSH, PuTTY, PowerShell, network troubleshooting]
 ---
 
+import ToolChips from "@site/src/components/ToolChips";
+import tools from "@site/src/data/tools";
+
 # Introduction
 
 NETworkManager is a powerful open-source tool for managing networks and troubleshooting network problems!
 
 ![NETworkManager Preview](https://github.com/BornToBeRoot/NETworkManager/raw/main/Website/static/img/preview-features.gif?raw=true)
 
-## Features
+## 🧰 Features
 
-NETworkManager comes with various built-in tools. See the documentation for detailed information about each feature:
+NETworkManager comes with **{tools.length} built-in tools** — everything a network engineer needs, in one place. Select a tool to jump to its documentation:
 
-- [Dashboard](./application/dashboard)
-- [Network Interface](./application/network-interface) - Information, Bandwidth, Configure
-- [WiFi](./application/wifi) - Networks, Channels
-- [IP Scanner](./application/ip-scanner)
-- [Port Scanner](./application/port-scanner)
-- [Ping Monitor](./application/ping-monitor)
-- [Traceroute](./application/traceroute)
-- [DNS Lookup](./application/dns-lookup)
-- [Remote Desktop](./application/remote-desktop)
-- [PowerShell](./application/powershell)
-- [PuTTY](./application/putty) (requires [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html))
-- [TigerVNC](./application/tigervnc) (requires [TigerVNC](https://tigervnc.org/))
-- [Web Console](./application/web-console)
-- [SNMP](./application/snmp) - Get, Walk, Set
-- [Hosts File Editor](./application/hosts-file-editor)
-- [Firewall](./application/firewall)
-- [SNTP Lookup](./application/sntp-lookup)
-- [Discovery Protocol](./application/discovery-protocol) - LLDP, CDP
-- [Wake on LAN](./application/wake-on-lan)
-- [Whois](./application/whois)
-- [Subnet Calculator](./application/subnet-calculator) - Calculator, Subnetting, Supernetting
-- [Bit Calculator](./application/bit-calculator)
-- [Lookup](./application/lookup) - OUI, Port
-- [Connections](./application/connections)
-- [Listeners](./application/listeners)
-- [Neighbor Table](./application/neighbor-table)
+<ToolChips />
 
-## Groups and Profiles
+## 🗂️ Groups and Profiles
 
 Organize hosts and networks in profiles with individual settings and use them seamlessly across all features. Keep sensitive data secure with encrypted profile files, and manage different customers or environments using separate profile files. See the [Groups and Profiles](./groups-and-profiles.md) section for more information.
 
-## System-Wide Policies
+## 🏢 System-Wide Policies
 
 Administrators can enforce specific settings for all users on a machine using system-wide policies. Policies are defined in a `config.json` file placed in the application installation directory, and override user-specific settings to provide centralized control in enterprise environments. See the [System-Wide Policies](./system-wide-policies.md) section for more information.
 
-## Customization
+## 🎨 Customization
 
 NETworkManager comes with dark and light themes and multiple accent colors. You can also provide custom theme files. See the [Appearance settings](./settings/appearance.md) for more information.
 
-## Languages
+## 🌐 Languages
 
 Thanks to the community, NETworkManager is available in more than 16 [languages](https://app.transifex.com/BornToBeRoot/NETworkManager/dashboard/). If you want to help translate NETworkManager, you can find everything to get started in the [contributing guidelines](https://github.com/BornToBeRoot/NETworkManager/blob/main/CONTRIBUTING.md).

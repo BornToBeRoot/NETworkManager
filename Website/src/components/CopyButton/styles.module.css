@@ -1,0 +1,16 @@
+.copyButton {
+  margin-top: 12px;
+  padding: 4px 10px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--ifm-color-emphasis-600);
+  transition: color 0.15s, background 0.15s;
+}
+
+.copyButton:hover {
+  color: var(--ifm-color-primary);
+  background: var(--ifm-color-emphasis-200);
+}

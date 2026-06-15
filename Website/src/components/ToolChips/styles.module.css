@@ -1,0 +1,28 @@
+.toolChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto 32px;
+}
+
+.toolChip {
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ifm-font-color-base);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.toolChip:hover {
+  background: var(--ifm-color-emphasis-200);
+  border-color: var(--ifm-color-primary);
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
