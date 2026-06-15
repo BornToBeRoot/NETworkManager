@@ -3108,13 +3108,13 @@ $$hostname$$	--&gt;	호스트이름</value>
     <value>PowerShell 콘솔의 색상은 설정 &gt; 일반 &gt; 모양에서 응용 프로그램 테마로 변경할 수 있습니다.</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>이 옵션을 활성화하면 HKCU:\Console 레지스트리의 기본 PowerShell 콘솔 설정이 재정의되어 PowerShell 콘솔 창이 응용 프로그램 테마와 일치합니다. 이는 일반 PowerShell 창의 모양에 영향을 줄 수 있는 전역 시스템 설정입니다.
+    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
 
-PowerShell 및 AWS Session Manager 설정에 구성된 PowerShell 콘솔만 수정됩니다. Windows PowerShell 및 PWSH (PowerShell 7 이상)가 모두 지원됩니다.
+Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
 
-도움말/설명서 버튼 (최소화 버튼 왼쪽)의 오른쪽 상단 모서리를 클릭하거나 https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance로 이동하여 자세한 내용을 확인하세요. 다음은 조정될 문서화된 값입니다.
+Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
 
-이 옵션을 다시 비활성화하면 값이 더 이상 수정되지 않습니다. 하지만 원래 값은 복원되지 않습니다.</value>
+If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
   </data>
   <data name="InputCannotEndWithSemicolon" xml:space="preserve">
     <value>입력은 ";"로 끝날 수 없습니다!</value>
