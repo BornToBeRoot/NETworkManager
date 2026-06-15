@@ -1552,16 +1552,7 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("CapsLockIsEnabled", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Chart time (seconds).
-        /// </summary>
-        public static string ChartTimeInSeconds {
-            get {
-                return ResourceManager.GetString("ChartTimeInSeconds", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Capture.
         /// </summary>
@@ -1673,7 +1664,7 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("Channels", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Channel width.
         /// </summary>
@@ -1682,7 +1673,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("ChannelWidth", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chart time (seconds).
+        /// </summary>
+        public static string ChartTimeInSeconds {
+            get {
+                return ResourceManager.GetString("ChartTimeInSeconds", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Chassis Id.
         /// </summary>
@@ -4806,15 +4806,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 5 GHz.
-        /// </summary>
-        public static string GHz5 {
-            get {
-                return ResourceManager.GetString("GHz5", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to 2.4 &amp; 5 GHz.
         /// </summary>
         public static string GHz2dot4And5 {
@@ -4822,7 +4813,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("GHz2dot4And5", resourceCulture);
             }
         }
-
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5 GHz.
+        /// </summary>
+        public static string GHz5 {
+            get {
+                return ResourceManager.GetString("GHz5", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to 6 GHz.
         /// </summary>
@@ -4934,9 +4934,9 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
         ///
-        ///Only the PowerShell consoles configured in the PowerShell and AWS Session Manager settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
+        ///Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
         ///
-        ///Click in the upper right corner on the help  [rest of string was truncated]&quot;;.
+        ///Click in the upper right corner on the help / documentation button ( [rest of string was truncated]&quot;;.
         /// </summary>
         public static string HelpMessage_ApplyThemeToPowerShellConsole {
             get {
@@ -5055,6 +5055,24 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_MaximumNumberOfBackups {
             get {
                 return ResourceManager.GetString("HelpMessage_MaximumNumberOfBackups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of consecutive failed pings (timeouts) required before a &quot;Host is down&quot; notification is shown. Higher values reduce noise from flapping hosts..
+        /// </summary>
+        public static string HelpMessage_NotificationFailureThreshold {
+            get {
+                return ResourceManager.GetString("HelpMessage_NotificationFailureThreshold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of consecutive successful pings required before a &quot;Host is up&quot; notification is shown. Higher values reduce noise from flapping hosts..
+        /// </summary>
+        public static string HelpMessage_NotificationSuccessThreshold {
+            get {
+                return ResourceManager.GetString("HelpMessage_NotificationSuccessThreshold", resourceCulture);
             }
         }
         
@@ -5289,6 +5307,24 @@ namespace NETworkManager.Localization.Resources {
         public static string Hosting {
             get {
                 return ResourceManager.GetString("Hosting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Host is down.
+        /// </summary>
+        public static string HostIsDown {
+            get {
+                return ResourceManager.GetString("HostIsDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Host is up.
+        /// </summary>
+        public static string HostIsUp {
+            get {
+                return ResourceManager.GetString("HostIsUp", resourceCulture);
             }
         }
         
@@ -6077,7 +6113,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Simple, flexible, interactive &amp; powerful charts, maps and gauges for .Net.
+        ///   Looks up a localized string similar to Beautiful, interactive charts, maps, and gauges..
         /// </summary>
         public static string Library_LiveCharts_Description {
             get {
@@ -6264,22 +6300,22 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("Lime", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Live.
-        /// </summary>
-        public static string Live {
-            get {
-                return ResourceManager.GetString("Live", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Listeners.
         /// </summary>
         public static string Listeners {
             get {
                 return ResourceManager.GetString("Listeners", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Live.
+        /// </summary>
+        public static string Live {
+            get {
+                return ResourceManager.GetString("Live", resourceCulture);
             }
         }
         
@@ -7293,6 +7329,33 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Display duration (seconds).
+        /// </summary>
+        public static string NotificationDurationInSeconds {
+            get {
+                return ResourceManager.GetString("NotificationDurationInSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failure threshold.
+        /// </summary>
+        public static string NotificationFailureThreshold {
+            get {
+                return ResourceManager.GetString("NotificationFailureThreshold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success threshold.
+        /// </summary>
+        public static string NotificationSuccessThreshold {
+            get {
+                return ResourceManager.GetString("NotificationSuccessThreshold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No update available!.
         /// </summary>
         public static string NoUpdateAvailable {
@@ -7842,6 +7905,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notification.
+        /// </summary>
+        public static string PingMonitorNotification {
+            get {
+                return ResourceManager.GetString("PingMonitorNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ping status.
         /// </summary>
         public static string PingStatus {
@@ -7856,6 +7928,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Pink {
             get {
                 return ResourceManager.GetString("Pink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play sound on status change.
+        /// </summary>
+        public static string PlaySoundOnStatusChange {
+            get {
+                return ResourceManager.GetString("PlaySoundOnStatusChange", resourceCulture);
             }
         }
         
@@ -10579,6 +10660,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show notification popup on status change.
+        /// </summary>
+        public static string ShowNotificationPopupOnStatusChange {
+            get {
+                return ResourceManager.GetString("ShowNotificationPopupOnStatusChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show only most common query types.
         /// </summary>
         public static string ShowOnlyMostCommonQueryTypes {
@@ -11118,97 +11208,7 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("StatusChange", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Notification.
-        /// </summary>
-        public static string PingMonitorNotification {
-            get {
-                return ResourceManager.GetString("PingMonitorNotification", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Show notification popup on status change.
-        /// </summary>
-        public static string ShowNotificationPopupOnStatusChange {
-            get {
-                return ResourceManager.GetString("ShowNotificationPopupOnStatusChange", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Play sound on status change.
-        /// </summary>
-        public static string PlaySoundOnStatusChange {
-            get {
-                return ResourceManager.GetString("PlaySoundOnStatusChange", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Success threshold.
-        /// </summary>
-        public static string NotificationSuccessThreshold {
-            get {
-                return ResourceManager.GetString("NotificationSuccessThreshold", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Number of consecutive successful pings required before an &quot;Host is up&quot; notification is shown. Higher values reduce noise from flapping hosts.
-        /// </summary>
-        public static string HelpMessage_NotificationSuccessThreshold {
-            get {
-                return ResourceManager.GetString("HelpMessage_NotificationSuccessThreshold", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Failure threshold.
-        /// </summary>
-        public static string NotificationFailureThreshold {
-            get {
-                return ResourceManager.GetString("NotificationFailureThreshold", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Number of consecutive failed pings (timeouts) required before an &quot;Host is down&quot; notification is shown. Higher values reduce noise from flapping hosts.
-        /// </summary>
-        public static string HelpMessage_NotificationFailureThreshold {
-            get {
-                return ResourceManager.GetString("HelpMessage_NotificationFailureThreshold", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Display duration (seconds).
-        /// </summary>
-        public static string NotificationDurationInSeconds {
-            get {
-                return ResourceManager.GetString("NotificationDurationInSeconds", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Host is up.
-        /// </summary>
-        public static string HostIsUp {
-            get {
-                return ResourceManager.GetString("HostIsUp", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Host is down.
-        /// </summary>
-        public static string HostIsDown {
-            get {
-                return ResourceManager.GetString("HostIsDown", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Status window.
         /// </summary>
@@ -12245,6 +12245,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View only.
+        /// </summary>
+        public static string ViewOnly {
+            get {
+                return ResourceManager.GetString("ViewOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Block keyboard and mouse input to the remote session.
+        /// </summary>
+        public static string ViewOnlyDescription {
+            get {
+                return ResourceManager.GetString("ViewOnlyDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Violet.
         /// </summary>
         public static string Violet {
@@ -12279,25 +12297,7 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("VisualStyles", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to View only.
-        /// </summary>
-        public static string ViewOnly {
-            get {
-                return ResourceManager.GetString("ViewOnly", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Block keyboard and mouse input to the remote session.
-        /// </summary>
-        public static string ViewOnlyDescription {
-            get {
-                return ResourceManager.GetString("ViewOnlyDescription", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to VLAN.
         /// </summary>
