@@ -3104,13 +3104,13 @@ $$hostname$$--&gt;Ime gostitelja</value>
     <value>Barvo konzole PowerShell lahko spremenite v temo aplikacije pod Nastavitve &gt; Splošno &gt; Videz</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>Če omogočite to možnost, se privzete nastavitve konzole PowerShell v registru pod HKCU:\Console preglasijo, tako da se okno konzole PowerShell ujema s temo aplikacije. To je globalna sistemska nastavitev, ki lahko vpliva na videz običajnega okna PowerShell. 
+    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
 
-Spremenjene so samo konzole PowerShell, nastavljene v nastavitvah PowerShell in AWS Upravitelj sej. Podprti sta lupini Windows PowerShell in PWSH (PowerShell 7 in višje). 
+Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
 
-V zgornjem desnem kotu kliknite na gumb za Pomoč/Dokumentacijo (levo od gumba za pomanjšanje) ali pojdite na do https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance za več podrobnosti. Tukaj so dokumentirane vrednosti, ki bodo prilagojene. 
+Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
 
-Če je možnost znova onemogočena, vrednosti niso več spremenjene. Vendar se izvirne vrednosti NE obnovijo.</value>
+If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
   </data>
   <data name="InputCannotEndWithSemicolon" xml:space="preserve">
     <value>Vnos se ne sme končati z ";"!</value>
