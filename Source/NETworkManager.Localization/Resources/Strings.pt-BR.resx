@@ -2143,10 +2143,10 @@ público está desabilitada!</value>
     <value>Estilos visuais</value>
   </data>
   <data name="ViewOnly" xml:space="preserve">
-    <value>View only</value>
+    <value>Somente visualização</value>
   </data>
   <data name="ViewOnlyDescription" xml:space="preserve">
-    <value>Block keyboard and mouse input to the remote session</value>
+    <value>Bloquear teclado e mouse na sessão remota</value>
   </data>
   <data name="RemoteAudio" xml:space="preserve">
     <value>Áudio remoto</value>
