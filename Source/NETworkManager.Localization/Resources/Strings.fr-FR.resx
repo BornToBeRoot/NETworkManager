@@ -3111,13 +3111,13 @@ Activez le cryptage des fichiers de profil dans Paramètres&gt; Profil pour stoc
     <value>La couleur de la console PowerShell peut être changée en thème d'application sous Paramètres &gt; Général &gt; Apparence</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>Si vous activez cette option, les paramètres par défaut de la console PowerShell dans le registre sous HKCU:\Console sont remplacés afin que la fenêtre de la console PowerShell corresponde au thème de l'application. Il s'agit d'un paramètre système global qui peut affecter l'apparence de la fenêtre PowerShell normale.
+    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
 
-Seules les consoles PowerShell configurées dans les paramètres PowerShell et AWS Session Manager sont modifiées. Windows PowerShell et PWSH (PowerShell 7 et supérieur) sont pris en charge.
+Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
 
-Cliquez dans le coin supérieur droit sur le bouton d'aide/documentation (à gauche du bouton de réduction) ou accédez à https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance pour plus de détails. Voici les valeurs documentées qui seront ajustées.
+Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
 
-Si l'option est à nouveau désactivée, les valeurs ne sont plus modifiées. Cependant, les valeurs d'origine ne sont PAS restaurées.</value>
+If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
   </data>
   <data name="InputCannotEndWithSemicolon" xml:space="preserve">
     <value>La saisie ne peut pas se terminer par un ";"!</value>
