@@ -3111,13 +3111,13 @@ $$hostname$$	--&gt;	ホスト名</value>
     <value>PowerShellコンソールの色は、「設定」&gt;「全般」&gt;「外観」でアプリケーションテーマに変更できます。</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>このオプションを有効にすると、HKCU:\Console レジストリ内のデフォルトの PowerShell コンソール設定が上書きされ、PowerShell コンソールウィンドウがアプリケーションのテーマと一致するようになります。これはグローバルシステム設定であり、通常の PowerShell ウィンドウの外観に影響を与える可能性があります。
+    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
 
-PowerShell および AWS Session Manager 設定で設定された PowerShell コンソールのみが変更されます。Windows PowerShell と PWSH (PowerShell 7 以降) の両方がサポートされています。
+Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
 
-詳細については、右上隅のヘルプ/ドキュメントボタン（最小化ボタンの左）をクリックするか、https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance にアクセスしてください。調整対象となる値は以下に記載されています。
+Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
 
-オプションを再度無効にすると、値は変更されなくなります。ただし、元の値は復元されません。</value>
+If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
   </data>
   <data name="InputCannotEndWithSemicolon" xml:space="preserve">
     <value>入力は";"で終わることはできません!</value>
