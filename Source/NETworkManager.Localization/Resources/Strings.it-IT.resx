@@ -3138,17 +3138,13 @@ Questo limite è impostato dall'amministratore del server o dai criteri di rete.
     <value>Il colore della console di PowerShell può essere modificato nel tema dell'applicazione in Impostazioni &gt; Generale &gt; Aspetto</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>Se si abilita questa opzione, le impostazioni della console di PowerShell predefinite nel registro in HKCU:\Console vengono sovrascritte in modo che la finestra della console di PowerShell corrisponda al tema dell'applicazione. Si tratta di un'impostazione di sistema globale che potrebbe influire sull'aspetto della normale finestra di PowerShell.
+    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
 
-Vengono modificate solo le console PowerShell configurate nelle impostazioni di PowerShell e AWS Session Manager. 
-Sono supportati sia Windows PowerShell che PWSH (PowerShell 7 e versioni successive).
+Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
 
-Fai clic nell'angolo in alto a destra sul pulsante 'Guida/documentazione' (a sinistra del pulsante 'Riduci af icona') o per maggiori dettagli accedi a
-https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance. 
-Ecco i valori documentati che verranno adeguati.
+Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
 
-Se l'opzione viene nuovamente disabilitata, i valori non vengono più modificati. 
-Tuttavia, i valori originali NON vengono ripristinati.</value>
+If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
   </data>
   <data name="InputCannotEndWithSemicolon" xml:space="preserve">
     <value>L'input non può terminare con un ";"!</value>
