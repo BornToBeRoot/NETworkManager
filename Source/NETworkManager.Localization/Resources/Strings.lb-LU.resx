@@ -3113,7 +3113,7 @@ Aktivéiert d'Verschlësselung vun der Profildatei an Astellungen&gt;Profil fir 
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
     <value>Wann Dir dës Optioun aktivéiert, ginn d'Standardastellunge fir d'PowerShell-Konsole an der Registry ënner HKCU:\Console iwwerschriwwen, sou datt d'PowerShell-Konsolefenster dem Applikatiounsthema entsprécht. Dat ass eng global Systemastellung, déi sech op d'Aussinn vum normale PowerShell-Fenster auswierke kann.
 
-Et ginn nëmmen d'PowerShell-Konsole geännert, déi an den PowerShell- an AWS-Session-Manager-Astellunge konfiguréiert sinn. Souwuel Windows PowerShell wéi och PWSH (PowerShell 7 an héijer) ginn ënnerstëtzt.
+Et ginn nëmmen d'PowerShell-Konsole geännert, déi an den PowerShell-Astellunge konfiguréiert sinn. Souwuel Windows PowerShell wéi och PWSH (PowerShell 7 an héijer) ginn ënnerstëtzt.
 
 Klickt riets uewen op de Hëllef-/Dokumentatiounsknapp (lénks niewent dem Miniméiere-Knapp) oder navigéiert op https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance fir méi Detailer. Hei sinn d'Wäerter dokumentéiert, déi ugepasst ginn.
 
