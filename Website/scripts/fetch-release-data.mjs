@@ -169,9 +169,9 @@ async function main() {
     ["pre-release", updatePrerelease],
   ]) {
     try {
-      await fn(releases);
     } catch (err) {
-      console.warn(`[release-data] ${label} skipped: ${err.message}`);
+      const msg = err instanceof Error ? err.message : String(err);
+      console.warn(`[release-data] ${label} skipped: ${msg}`);
     }
   }
 }
