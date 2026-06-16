@@ -178,5 +178,6 @@ async function main() {
 
 main().catch((err) => {
   // Non-fatal: keep all committed fallbacks so offline / CI builds still succeed.
-  console.warn(`[release-data] Skipped update: ${err.message}`);
+  const msg = err instanceof Error ? err.message : String(err);
+  console.warn(`[release-data] Skipped update: ${msg}`);
 });
