@@ -9,6 +9,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 import styles from "./styles.module.css";
 import DownloadSection from "@site/src/components/DownloadSection";
+import VersionComparison from "@site/src/components/VersionComparison";
 import LatestPrerelease from "@site/src/components/LatestPrerelease";
 
 # Download
@@ -65,13 +66,9 @@ import LatestPrerelease from "@site/src/components/LatestPrerelease";
 
 ## Which version should I download?
 
-The download cards above summarize each variant. This table compares where settings and profiles are stored and what each version is best suited for:
+Each version is suited to a different scenario — here's a closer look to help you choose:
 
-| Version | Settings &amp; profiles stored in | Best for |
-|---|---|---|
-| **Setup** (MSI) | `~\Documents\NETworkManager` | Most users — system-wide install, central deployment (Intune, SCCM) |
-| **Portable** (ZIP) | Next to the executable | USB stick / network share. To upgrade, copy the `Profiles` and `Settings` directories to the new version |
-| **Archive** (ZIP) | `~\Documents\NETworkManager` | Custom scenarios (e.g. Terminal Server) — portable, but Documents-based |
+<VersionComparison />
 
 ## System requirements
 
