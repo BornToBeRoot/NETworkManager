@@ -114,7 +114,8 @@ async function buildData(release, changelog) {
   try {
     checksums = await fetchChecksumMap(version);
   } catch (err) {
-    console.warn(`[release-data] Checksums unavailable for ${version}: ${err.message}`);
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn(`[release-data] Checksums unavailable for ${version}: ${msg}`);
   }
 
   return {
