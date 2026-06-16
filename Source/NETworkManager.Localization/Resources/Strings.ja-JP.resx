@@ -2143,10 +2143,10 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
     <value>ビジュアルスタイル</value>
   </data>
   <data name="ViewOnly" xml:space="preserve">
-    <value>View only</value>
+    <value>表示のみ</value>
   </data>
   <data name="ViewOnlyDescription" xml:space="preserve">
-    <value>Block keyboard and mouse input to the remote session</value>
+    <value>リモートセッションへのキーボードとマウスの入力をブロックする</value>
   </data>
   <data name="RemoteAudio" xml:space="preserve">
     <value>リモート オーディオ</value>
@@ -3111,13 +3111,13 @@ $$hostname$$	--&gt;	ホスト名</value>
     <value>PowerShellコンソールの色は、「設定」&gt;「全般」&gt;「外観」でアプリケーションテーマに変更できます。</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
+    <value>このオプションを有効にすると、レジストリの HKCU:\Console にある PowerShell コンソールの既定の設定が上書きされ、PowerShell コンソール ウィンドウがアプリケーションのテーマに合わせて表示されるようになります。これはシステム全体の設定であり、通常の PowerShell ウィンドウの外観にも影響を与える可能性があります。
 
-Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
+変更されるのは、PowerShell の設定で構成された PowerShell コンソールのみです。Windows PowerShell および PWSH (PowerShell 7 以降) の両方がサポートされています。
 
-Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
+詳細については、右上隅のヘルプ/ドキュメントボタン（最小化ボタンの左側）をクリックするか、https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance にアクセスしてください。以下に、調整される値のドキュメントを記載します。
 
-If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
+このオプションを再度無効にすると、値は変更されなくなります。ただし、元の値は復元されません。</value>
   </data>
   <data name="InputCannotEndWithSemicolon" xml:space="preserve">
     <value>入力は";"で終わることはできません!</value>
