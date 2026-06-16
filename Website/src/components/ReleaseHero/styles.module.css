@@ -1,0 +1,84 @@
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 22px 28px;
+  border-radius: 16px;
+  background: var(--ifm-background-dark);
+  color: #fff;
+  margin-bottom: 28px;
+}
+
+/* Compact variant for the pre-release banner. */
+.heroCompact {
+  padding: 16px 22px;
+}
+
+.heroCompact .heroVersion {
+  font-size: 24px;
+}
+
+.heroInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.heroVersionRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.heroTag {
+  padding: 2px 10px;
+  border-radius: 10px;
+  background: var(--ifm-color-warning);
+  color: #000;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.heroVersion {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ifm-color-primary);
+}
+
+.heroDate {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.heroChangelog {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: 24px;
+  padding: 8px 20px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.heroChangelog:hover {
+  background: var(--ifm-color-primary);
+  color: #000;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .hero {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .heroInfo {
+    align-items: center;
+  }
+}

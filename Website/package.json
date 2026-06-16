@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
+    "fetch-release-data": "node scripts/fetch-release-data.mjs",
+    "prestart": "node scripts/fetch-release-data.mjs",
+    "prebuild": "node scripts/fetch-release-data.mjs",
     "start": "docusaurus start",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",

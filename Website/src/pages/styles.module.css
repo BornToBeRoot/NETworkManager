@@ -85,6 +85,27 @@ table {
   overflow: hidden;
 }
 
+.directDownloads {
+  margin-top: 4px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.directDownloads a {
+  color: var(--ifm-color-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.directDownloads a:hover {
+  text-decoration: underline;
+}
+
+.directDownloadsSep {
+  margin: 0 8px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
 /* ─── Hero screenshot ───────────────────────────────── */
 
 .heroScreenshotWrapper {
@@ -112,52 +133,24 @@ table {
   margin-bottom: 32px;
 }
 
-.toolChips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
-  max-width: 900px;
-  margin: 0 auto 32px;
-}
-
-.toolChip {
-  background: var(--ifm-color-emphasis-100);
-  border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: 20px;
-  padding: 6px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ifm-font-color-base);
-  white-space: nowrap;
-  text-decoration: none;
-  transition: background 0.15s, border-color 0.15s;
-}
-
-.toolChip:hover {
-  background: var(--ifm-color-emphasis-200);
-  border-color: var(--ifm-color-primary);
-  color: var(--ifm-color-primary);
-  text-decoration: none;
-}
-
-.centerButtonContainer {
-  display: flex;
-  justify-content: center;
-}
-
-.downloadButton {
-  margin: 20px;
-  height: 56px;
-  width: 200px;
-  font-size: 24px;
-}
-
 .additionalButton {
   margin: 20px;
   height: 44px;
   width: 200px;
   font-size: 18px;
+}
+
+.thankYouCard {
+  margin: 2.5rem 0;
+  padding: 24px 28px;
+  border-radius: 16px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-left: 4px solid var(--ifm-color-primary);
+  background: var(--ifm-color-emphasis-100);
+}
+
+.thankYouCard h3 {
+  margin-top: 0;
 }
 
 .shieldsContainer {
@@ -187,6 +180,13 @@ table {
   margin-top: 10px;
   font-size: 14px;
   color: var(--ifm-color-emphasis-600);
+}
+
+.previewCtas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
 }
 
 /* ─── Responsive ────────────────────────────────────── */
@@ -227,11 +227,5 @@ table {
 
   .indexCtasGitHubButton {
     display: none;
-  }
-
-  .centerButtonContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
   }
 }

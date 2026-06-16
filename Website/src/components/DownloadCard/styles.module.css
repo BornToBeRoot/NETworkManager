@@ -1,0 +1,74 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 28px 22px 24px;
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 16px;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--ifm-color-primary);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--ifm-color-primary);
+  color: #000;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.icon {
+  font-size: 46px;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.sub {
+  font-size: 13px;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 14px;
+}
+
+.description {
+  font-size: 14px;
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.5;
+  flex-grow: 1;
+  margin-bottom: 20px;
+}
+
+.button {
+  width: 100%;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+@media only screen and (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
