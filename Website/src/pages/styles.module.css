@@ -72,17 +72,19 @@ table {
   color: black;
 }
 
-.indexCtas a:last-of-type {
+.indexCtas > a:last-of-type {
   margin: 20px 36px;
 }
 
 .indexCtasGitHubButtonWrapper {
   display: flex;
+  align-items: center;
 }
 
 .indexCtasGitHubButton {
   margin: 0.5rem;
   overflow: hidden;
+  vertical-align: middle;
 }
 
 .directDownloads {
@@ -221,11 +223,7 @@ table {
     justify-content: center;
   }
 
-  .indexCtas a {
+  .indexCtas > a {
     margin: 20px 36px;
-  }
-
-  .indexCtasGitHubButton {
-    display: none;
   }
 }
