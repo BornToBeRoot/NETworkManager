@@ -27,18 +27,11 @@ On the **Information** tab, you can see all the important details of the selecte
 
 The following buttons are available at the bottom left:
 
-| Button                                       | Description                                                                                                                              |
-| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| **Network connections...**                   | Opens the `Control Panel > Network and Internet > Network Connections` window                                                            |
-| **IP Scanner**                               | Opens the [IP Scanner](./ip-scanner) with the IPv4 address and subnet mask of the selected adapter                                       |
-| **Flush DNS cache**                          | Flushes the DNS cache (`ipconfig /flushdns`)                                                                                             |
-| **Release & Renew > IPv4 > Release & Renew** | Releases and renews the IPv4 addresses obtained via DHCP for the selected adapter (`ipconfig /release && ipconfig /renew <ADAPTER>`)     |
-| **Release & Renew > IPv4 > Release**         | Releases the IPv4 addresses obtained via DHCP for the selected adapter (`ipconfig /release <ADAPTER>`)                                   |
-| **Release & Renew > IPv4 > Renew**           | Renews the IPv4 address via DHCP for the selected adapter (`ipconfig /renew <ADAPTER>`)                                                  |
-| **Release & Renew > IPv6 > Release & Renew** | Releases and renews the IPv6 addresses obtained via DHCPv6 for the selected adapter (`ipconfig /release6 && ipconfig /renew6 <ADAPTER>`) |
-| **Release & Renew > IPv6 > Release**         | Releases the IPv6 addresses obtained via DHCPv6 for the selected adapter (`ipconfig /release6 <ADAPTER>`)                                |
-| **Release & Renew > IPv6 > Renew**           | Renews the IPv6 address via DHCPv6 for the selected adapter (`ipconfig /renew6 <ADAPTER>`)                                               |
-| **Export...**                                | Exports the information to a CSV, XML, or JSON file                                                                                      |
+| Button                 | Description                                                                                                  |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------ |
+| **Network connections...** | Opens the `Control Panel > Network and Internet > Network Connections` window                            |
+| **IP Scanner**         | Opens the [IP Scanner](./ip-scanner) with the IPv4 address and subnet mask of the selected adapter           |
+| **Export...**          | Exports the information to a CSV, XML, or JSON file                                                          |
 
 ### Context menu
 
@@ -84,25 +77,30 @@ The options you can set correspond to the network adapter properties `Internetpr
 
 ![Network Interface - Configure](../img/network-interface--configure.png)
 
-### Toolbar
-
-| Button                                            | Description                                                                              |
-| ------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| **Apply**                                         | Applies the configuration by launching an elevated PowerShell                            |
-| **Additional config... > Add IPv4 address...**    | Opens a dialog to add an IPv4 address with a subnet mask or CIDR to the selected adapter |
-| **Additional config... > Remove IPv4 address...** | Opens a dialog to remove an IPv4 address from the selected adapter                       |
-
 :::note
 
-You may need to confirm a Windows UAC dialog to make changes to the network interface.
+All actions on this tab require the application to be running with **administrator privileges**. If the app is not elevated, a banner is shown at the bottom with a **Restart as Administrator** button.
 
 :::
 
+### Toolbar
+
+| Button                                            | Description                                                                                                                              |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| **Flush DNS cache**                               | Flushes the local DNS resolver cache (`ipconfig /flushdns`)                                                                              |
+| **Release & Renew > IPv4 > Release & Renew**      | Releases and renews the IPv4 addresses obtained via DHCP for the selected adapter (`ipconfig /release && ipconfig /renew <ADAPTER>`)     |
+| **Release & Renew > IPv4 > Release**              | Releases the IPv4 addresses obtained via DHCP for the selected adapter (`ipconfig /release <ADAPTER>`)                                   |
+| **Release & Renew > IPv4 > Renew**                | Renews the IPv4 address via DHCP for the selected adapter (`ipconfig /renew <ADAPTER>`)                                                  |
+| **Release & Renew > IPv6 > Release & Renew**      | Releases and renews the IPv6 addresses obtained via DHCPv6 for the selected adapter (`ipconfig /release6 && ipconfig /renew6 <ADAPTER>`) |
+| **Release & Renew > IPv6 > Release**              | Releases the IPv6 addresses obtained via DHCPv6 for the selected adapter (`ipconfig /release6 <ADAPTER>`)                                |
+| **Release & Renew > IPv6 > Renew**                | Renews the IPv6 address via DHCPv6 for the selected adapter (`ipconfig /renew6 <ADAPTER>`)                                               |
+| **Additional config... > Add IPv4 address...**    | Opens a dialog to add an IPv4 address with a subnet mask or CIDR to the selected adapter                                                 |
+| **Additional config... > Remove IPv4 address...** | Opens a dialog to remove an IPv4 address from the selected adapter                                                                       |
+| **Apply**                                         | Applies the IP and DNS configuration to the selected adapter                                                                             |
+
 :::note
 
-**Add IPv4 address:** If a static IP address is added to a network adapter that is configured for DHCP, the `netsh` option `dhcpstaticipcoexistence` is also activated.
-
-The following command is executed in an elevated PowerShell to enable the `dhcpstaticipcoexistence` option:
+**Add IPv4 address:** If a static IP address is added to a network adapter that is configured for DHCP, the `netsh` option `dhcpstaticipcoexistence` is also activated:
 
 ```powershell
 netsh interface ipv4 set interface interface="Ethernet" dhcpstaticipcoexistence=enabled

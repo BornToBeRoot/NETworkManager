@@ -4687,6 +4687,15 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("FlushDNSCache", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to DNS cache flushed.
+        /// </summary>
+        public static string FlushDNSCacheSuccessfully {
+            get {
+                return ResourceManager.GetString("FlushDNSCacheSuccessfully", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Folder does not exists!.
@@ -5839,6 +5848,78 @@ namespace NETworkManager.Localization.Resources {
         public static string IPv4Address {
             get {
                 return ResourceManager.GetString("IPv4Address", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to IPv4 address added.
+        /// </summary>
+        public static string IPv4AddressAddedSuccessfully {
+            get {
+                return ResourceManager.GetString("IPv4AddressAddedSuccessfully", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to IPv4 address released and renewed.
+        /// </summary>
+        public static string IPv4AddressReleasedAndRenewedSuccessfully {
+            get {
+                return ResourceManager.GetString("IPv4AddressReleasedAndRenewedSuccessfully", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to IPv4 address released.
+        /// </summary>
+        public static string IPv4AddressReleasedSuccessfully {
+            get {
+                return ResourceManager.GetString("IPv4AddressReleasedSuccessfully", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to IPv4 address renewed.
+        /// </summary>
+        public static string IPv4AddressRenewedSuccessfully {
+            get {
+                return ResourceManager.GetString("IPv4AddressRenewedSuccessfully", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to IPv6 address released and renewed.
+        /// </summary>
+        public static string IPv6AddressReleasedAndRenewedSuccessfully {
+            get {
+                return ResourceManager.GetString("IPv6AddressReleasedAndRenewedSuccessfully", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to IPv6 address released.
+        /// </summary>
+        public static string IPv6AddressReleasedSuccessfully {
+            get {
+                return ResourceManager.GetString("IPv6AddressReleasedSuccessfully", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to IPv6 address renewed.
+        /// </summary>
+        public static string IPv6AddressRenewedSuccessfully {
+            get {
+                return ResourceManager.GetString("IPv6AddressRenewedSuccessfully", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to IPv4 address removed.
+        /// </summary>
+        public static string IPv4AddressRemovedSuccessfully {
+            get {
+                return ResourceManager.GetString("IPv4AddressRemovedSuccessfully", resourceCulture);
             }
         }
         
@@ -7038,7 +7119,25 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("NetworkInterface", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Configuring the network interface requires elevated rights!.
+        /// </summary>
+        public static string NetworkInterfaceConfigurationAppliedSuccessfully {
+            get {
+                return ResourceManager.GetString("NetworkInterfaceConfigurationAppliedSuccessfully", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Configuring the network interface requires elevated rights!.
+        /// </summary>
+        public static string NetworkInterfaceConfigureAdminMessage {
+            get {
+                return ResourceManager.GetString("NetworkInterfaceConfigureAdminMessage", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Network kind.
         /// </summary>
