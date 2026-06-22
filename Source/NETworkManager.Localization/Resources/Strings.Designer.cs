@@ -7121,7 +7121,7 @@ namespace NETworkManager.Localization.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to Configuring the network interface requires elevated rights!.
+        ///   Looks up a localized string similar to Configuration applied.
         /// </summary>
         public static string NetworkInterfaceConfigurationAppliedSuccessfully {
             get {
