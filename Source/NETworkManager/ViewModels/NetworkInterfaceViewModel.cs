@@ -22,7 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -1031,17 +1030,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// Gets the command to apply the network configuration.
     /// </summary>
     public ICommand ApplyConfigurationCommand =>
-        new RelayCommand(_ => ApplyConfigurationAction(), ApplyConfiguration_CanExecute);
-
-    /// <summary>
-    /// Determines whether the ApplyConfiguration command can execute.
-    /// </summary>
-    private bool ApplyConfiguration_CanExecute(object parameter)
-    {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
-    }
+        new RelayCommand(_ => ApplyConfigurationAction(), ConfigureCommands_CanExecute);
 
     /// <summary>
     /// Action to apply the network configuration.
@@ -1054,7 +1043,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Gets the command to apply the profile configuration.
     /// </summary>
-    public ICommand ApplyProfileCommand => new RelayCommand(_ => ApplyProfileAction());
+    public ICommand ApplyProfileCommand => new RelayCommand(_ => ApplyProfileAction(), ConfigureCommands_CanExecute);
 
     private void ApplyProfileAction()
     {
@@ -1189,6 +1178,29 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
                !ConfigurationManager.Current.IsChildWindowOpen;
     }
+    
+    private bool ConfigureCommands_CanExecute(object parameter) => ConfigurationManager.Current.IsAdmin &&
+                                                                   Application.Current.MainWindow != null &&
+                                                                   !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+                                                                   !ConfigurationManager.Current.IsChildWindowOpen;
+
+    /// <summary>
+    /// Gets the command to restart the application with administrator privileges.
+    /// </summary>
+    public ICommand RestartAsAdminCommand => new RelayCommand(parameter => { _ = RestartAsAdminAction(); });
+
+    private async Task RestartAsAdminAction()
+    {
+        try
+        {
+            (Application.Current.MainWindow as MainWindow)?.RestartApplication(true);
+        }
+        catch (Exception ex)
+        {
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error, ex.Message,
+                ChildWindowIcon.Error);
+        }
+    }
 
     /// <summary>
     /// Gets the command to open network connections.
@@ -1221,7 +1233,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Gets the command to flush DNS.
     /// </summary>
-    public ICommand FlushDNSCommand => new RelayCommand(_ => FlushDNSAction(), AdditionalCommands_CanExecute);
+    public ICommand FlushDNSCommand => new RelayCommand(_ => FlushDNSAction(), ConfigureCommands_CanExecute);
 
     private void FlushDNSAction()
     {
@@ -1231,7 +1243,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Gets the command to release and renew IP address.
     /// </summary>
-    public ICommand ReleaseRenewCommand => new RelayCommand(_ => ReleaseRenewAction(), AdditionalCommands_CanExecute);
+    public ICommand ReleaseRenewCommand => new RelayCommand(_ => ReleaseRenewAction(), ConfigureCommands_CanExecute);
 
     private void ReleaseRenewAction()
     {
@@ -1241,7 +1253,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Gets the command to release IP address.
     /// </summary>
-    public ICommand ReleaseCommand => new RelayCommand(_ => ReleaseAction(), AdditionalCommands_CanExecute);
+    public ICommand ReleaseCommand => new RelayCommand(_ => ReleaseAction(), ConfigureCommands_CanExecute);
 
     private void ReleaseAction()
     {
@@ -1251,17 +1263,17 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Gets the command to renew IP address.
     /// </summary>
-    public ICommand RenewCommand => new RelayCommand(_ => RenewAction(), AdditionalCommands_CanExecute);
+    public ICommand RenewCommand => new RelayCommand(_ => RenewAction(), ConfigureCommands_CanExecute);
 
     private void RenewAction()
     {
-        _ = ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew6);
+        _ = ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew);
     }
 
     /// <summary>
     /// Gets the command to release and renew IPv6 address.
     /// </summary>
-    public ICommand ReleaseRenew6Command => new RelayCommand(_ => ReleaseRenew6Action(), AdditionalCommands_CanExecute);
+    public ICommand ReleaseRenew6Command => new RelayCommand(_ => ReleaseRenew6Action(), ConfigureCommands_CanExecute);
 
     private void ReleaseRenew6Action()
     {
@@ -1271,7 +1283,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Gets the command to release IPv6 address.
     /// </summary>
-    public ICommand Release6Command => new RelayCommand(_ => Release6Action(), AdditionalCommands_CanExecute);
+    public ICommand Release6Command => new RelayCommand(_ => Release6Action(), ConfigureCommands_CanExecute);
 
     private void Release6Action()
     {
@@ -1281,18 +1293,18 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Gets the command to renew IPv6 address.
     /// </summary>
-    public ICommand Renew6Command => new RelayCommand(_ => Renew6Action(), AdditionalCommands_CanExecute);
+    public ICommand Renew6Command => new RelayCommand(_ => Renew6Action(), ConfigureCommands_CanExecute);
 
     private void Renew6Action()
     {
-        _ = ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew);
+        _ = ReleaseRenewAsync(IPConfigReleaseRenewMode.Renew6);
     }
 
     /// <summary>
     /// Gets the command to add an IPv4 address.
     /// </summary>
     public ICommand AddIPv4AddressCommand => new RelayCommand(parameter => { _ = AddIPv4AddressAction(); },
-        AdditionalCommands_CanExecute);
+        ConfigureCommands_CanExecute);
 
     private async Task AddIPv4AddressAction()
     {
@@ -1323,7 +1335,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// Gets the command to remove an IPv4 address.
     /// </summary>
     public ICommand RemoveIPv4AddressCommand => new RelayCommand(parameter => { _ = RemoveIPv4AddressAction(); },
-        AdditionalCommands_CanExecute);
+        ConfigureCommands_CanExecute);
 
     private async Task RemoveIPv4AddressAction()
     {
@@ -1463,13 +1475,12 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         try
         {
-            var networkInterface = new NetworkInterface();
-
-            networkInterface.UserHasCanceled += NetworkInterface_UserHasCanceled;
-
-            await networkInterface.ConfigureNetworkInterfaceAsync(config);
+            await NetworkInterface.ConfigureNetworkInterfaceAsync(config);
 
             ReloadNetworkInterfaces();
+
+            StatusMessage = Strings.NetworkInterfaceConfigurationAppliedSuccessfully;
+            IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
@@ -1524,13 +1535,12 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         try
         {
-            var networkInterface = new NetworkInterface();
-
-            networkInterface.UserHasCanceled += NetworkInterface_UserHasCanceled;
-
-            await networkInterface.ConfigureNetworkInterfaceAsync(config);
+            await NetworkInterface.ConfigureNetworkInterfaceAsync(config);
 
             ReloadNetworkInterfaces();
+
+            StatusMessage = Strings.NetworkInterfaceConfigurationAppliedSuccessfully;
+            IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
@@ -1561,20 +1571,56 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
 
-        await NetworkInterface.FlushDnsAsync();
+        try
+        {
+            await NetworkInterface.FlushDnsAsync();
 
-        IsConfigurationRunning = false;
+            StatusMessage = Strings.FlushDNSCacheSuccessfully;
+            IsStatusMessageDisplayed = true;
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = ex.Message;
+            IsStatusMessageDisplayed = true;
+        }
+        finally
+        {
+            IsConfigurationRunning = false;
+        }
     }
 
     private async Task ReleaseRenewAsync(IPConfigReleaseRenewMode releaseRenewMode)
     {
         IsConfigurationRunning = true;
+        IsStatusMessageDisplayed = false;
 
-        await NetworkInterface.ReleaseRenewAsync(releaseRenewMode, SelectedNetworkInterface.Name);
+        try
+        {
+            await NetworkInterface.ReleaseRenewAsync(releaseRenewMode, SelectedNetworkInterface.Name);
 
-        ReloadNetworkInterfaces();
+            ReloadNetworkInterfaces();
 
-        IsConfigurationRunning = false;
+            StatusMessage = releaseRenewMode switch
+            {
+                IPConfigReleaseRenewMode.ReleaseRenew => Strings.IPv4AddressReleasedAndRenewedSuccessfully,
+                IPConfigReleaseRenewMode.Release => Strings.IPv4AddressReleasedSuccessfully,
+                IPConfigReleaseRenewMode.Renew => Strings.IPv4AddressRenewedSuccessfully,
+                IPConfigReleaseRenewMode.ReleaseRenew6 => Strings.IPv6AddressReleasedAndRenewedSuccessfully,
+                IPConfigReleaseRenewMode.Release6 => Strings.IPv6AddressReleasedSuccessfully,
+                IPConfigReleaseRenewMode.Renew6 => Strings.IPv6AddressRenewedSuccessfully,
+                _ => string.Empty
+            };
+            IsStatusMessageDisplayed = true;
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = ex.Message;
+            IsStatusMessageDisplayed = true;
+        }
+        finally
+        {
+            IsConfigurationRunning = false;
+        }
     }
 
     private async Task AddIPv4Address(string ipAddress, string subnetmaskOrCidr)
@@ -1601,6 +1647,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             await NetworkInterface.AddIPAddressToNetworkInterfaceAsync(config);
 
             ReloadNetworkInterfaces();
+
+            StatusMessage = Strings.IPv4AddressAddedSuccessfully;
+            IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
@@ -1629,6 +1678,9 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
             await NetworkInterface.RemoveIPAddressFromNetworkInterfaceAsync(config);
 
             ReloadNetworkInterfaces();
+
+            StatusMessage = Strings.IPv4AddressRemovedSuccessfully;
+            IsStatusMessageDisplayed = true;
         }
         catch (Exception ex)
         {
@@ -1979,12 +2031,6 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
 
         UpdateBandwidthXAxisWindow(e.DateTime);
         UpdateBandwidthYAxis();
-    }
-
-    private void NetworkInterface_UserHasCanceled(object sender, EventArgs e)
-    {
-        StatusMessage = Strings.CanceledByUserMessage;
-        IsStatusMessageDisplayed = true;
     }
 
     #endregion

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -230,9 +229,7 @@ public sealed class NetworkInterface
                 DNSAutoconfigurationEnabled = dnsAutoconfigurationEnabled,
                 DNSSuffix = ipProperties.DnsSuffix,
                 DNSServer = [.. ipProperties.DnsAddresses],
-                Profile = profileByAlias.TryGetValue(networkInterface.Name, out var profile)
-                    ? profile
-                    : NetworkProfile.NotConfigured
+                Profile = profileByAlias.GetValueOrDefault(networkInterface.Name, NetworkProfile.NotConfigured)
             });
         }
 
@@ -312,48 +309,52 @@ public sealed class NetworkInterface
     {
         // Filter operational network interfaces
         var networkInterfaces = GetNetworkInterfaces()
-            .Where(x => x.IsOperational);
+            .Where(x => x.IsOperational)
+            .ToList();
 
         var candidates = new List<IPAddress>();
 
-        // IPv4
-        if (addressFamily == AddressFamily.InterNetwork)
+        switch (addressFamily)
         {
-            foreach (var networkInterface in networkInterfaces)
+            // IPv4
+            case AddressFamily.InterNetwork:
             {
-                foreach (var ipAddress in networkInterface.IPv4Address)
-                    candidates.Add(ipAddress.Item1);
+                foreach (var networkInterface in networkInterfaces)
+                {
+                    foreach (var ipAddress in networkInterface.IPv4Address)
+                        candidates.Add(ipAddress.Item1);
+                }
+
+                // Prefer non-link-local addresses
+                var nonLinkLocal = candidates.FirstOrDefault(x =>
+                {
+                    var bytes = x.GetAddressBytes();
+
+                    return !(bytes[0] == 169 && bytes[1] == 254);
+                });
+
+                // Return first non-link-local or first candidate if none found (might be null - no addresses at all)
+                return nonLinkLocal ?? candidates.FirstOrDefault();
             }
-
-            // Prefer non-link-local addresses
-            var nonLinkLocal = candidates.Where(x =>
+            // IPv6
+            case AddressFamily.InterNetworkV6:
             {
-                var bytes = x.GetAddressBytes();
+                // First try to get global or unique local addresses
+                foreach (var networkInterface in networkInterfaces)
+                    candidates.AddRange(networkInterface.IPv6Address);
 
-                return !(bytes[0] == 169 && bytes[1] == 254);
-            });
+                // Return first candidate if any found
+                if (candidates.Count != 0)
+                    return candidates.First();
 
-            // Return first non-link-local or first candidate if none found (might be null - no addresses at all)
-            return nonLinkLocal.Any() ? nonLinkLocal.First() : candidates.FirstOrDefault();
-        }
+                // Fallback to link-local addresses
+                var firstWithLinkLocal = networkInterfaces
+                    .FirstOrDefault(ni => ni.IPv6AddressLinkLocal.Length != 0);
 
-        // IPv6
-        if (addressFamily == AddressFamily.InterNetworkV6)
-        {
-            // First try to get global or unique local addresses
-            foreach (var networkInterface in networkInterfaces)
-                candidates.AddRange(networkInterface.IPv6Address);
-
-            // Return first candidate if any found
-            if (candidates.Count != 0)
-                return candidates.First();
-
-            // Fallback to link-local addresses
-            var firstWithLinkLocal = networkInterfaces
-               .FirstOrDefault(ni => ni.IPv6AddressLinkLocal.Length != 0);
-
-            if (firstWithLinkLocal != null)
-                return firstWithLinkLocal.IPv6AddressLinkLocal.First();
+                if (firstWithLinkLocal != null)
+                    return firstWithLinkLocal.IPv6AddressLinkLocal.First();
+                break;
+            }
         }
 
         return null;
@@ -384,17 +385,13 @@ public sealed class NetworkInterface
     {
         foreach (var networkInterface in GetNetworkInterfaces())
         {
-            // IPv4
-            if (localIPAddress.AddressFamily == AddressFamily.InterNetwork)
+            switch (localIPAddress.AddressFamily)
             {
-                if (networkInterface.IPv4Address.Any(x => x.Item1.Equals(localIPAddress)))
+                // IPv4
+                case AddressFamily.InterNetwork when networkInterface.IPv4Address.Any(x => x.Item1.Equals(localIPAddress)):
                     return networkInterface.IPv4Gateway.FirstOrDefault();
-            }
-
-            // IPv6
-            if (localIPAddress.AddressFamily == AddressFamily.InterNetworkV6)
-            {
-                if (networkInterface.IPv6Address.Contains(localIPAddress))
+                // IPv6
+                case AddressFamily.InterNetworkV6 when networkInterface.IPv6Address.Contains(localIPAddress):
                     return networkInterface.IPv6Gateway.FirstOrDefault();
             }
         }
@@ -407,7 +404,7 @@ public sealed class NetworkInterface
     /// </summary>
     /// <param name="config">The configuration settings to apply to the network interface. Cannot be null.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    public Task ConfigureNetworkInterfaceAsync(NetworkInterfaceConfig config)
+    public static Task ConfigureNetworkInterfaceAsync(NetworkInterfaceConfig config)
     {
         return Task.Run(() => ConfigureNetworkInterface(config));
     }
@@ -415,43 +412,34 @@ public sealed class NetworkInterface
     /// <summary>
     /// Configures the network interface according to the specified settings.
     /// </summary>
-    /// <remarks>This method applies the provided network configuration by executing system commands. If
-    /// static IP or DNS settings are enabled in the configuration, the corresponding values are set; otherwise, DHCP is
-    /// used. The method may prompt for elevated permissions depending on system policy.</remarks>
+    /// <remarks>Requires the application to be running with administrator privileges.</remarks>
     /// <param name="config">An object containing the configuration parameters for the network interface, including IP address, subnet mask,
     /// gateway, and DNS server settings. Cannot be null.</param>
-    private void ConfigureNetworkInterface(NetworkInterfaceConfig config)
+    private static void ConfigureNetworkInterface(NetworkInterfaceConfig config)
     {
+        var name = PowerShellHelper.EscapeSingleQuotes(config.Name);
+        var commands = new List<string>();
+
         // IP
-        var command = $"netsh interface ipv4 set address name='{config.Name}'";
-        command += config.EnableStaticIPAddress
-            ? $" source=static address={config.IPAddress} mask={config.Subnetmask} gateway={config.Gateway};"
-            : " source=dhcp;";
+        if (config.EnableStaticIPAddress)
+            commands.Add($"& netsh interface ipv4 set address name='{name}' source=static address={config.IPAddress} mask={config.Subnetmask} gateway={config.Gateway}");
+        else
+            commands.Add($"& netsh interface ipv4 set address name='{name}' source=dhcp");
 
         // DNS
-        command += $"netsh interface ipv4 set DNSservers name='{config.Name}'";
-        command += config.EnableStaticDNS
-            ? $" source=static address={config.PrimaryDNSServer} register=primary validate=no;"
-            : " source=dhcp;";
-        command += config.EnableStaticDNS && !string.IsNullOrEmpty(config.SecondaryDNSServer)
-            ? $"netsh interface ipv4 add DNSservers name='{config.Name}' address={config.SecondaryDNSServer} index=2 validate=no;"
-            : "";
+        if (config.EnableStaticDNS)
+        {
+            commands.Add($"& netsh interface ipv4 set dnsservers name='{name}' source=static address={config.PrimaryDNSServer} register=primary validate=no");
+          
+            if (!string.IsNullOrEmpty(config.SecondaryDNSServer))
+                commands.Add($"& netsh interface ipv4 add dnsservers name='{name}' address={config.SecondaryDNSServer} index=2 validate=no");
+        }
+        else
+        {
+            commands.Add($"& netsh interface ipv4 set dnsservers name='{name}' source=dhcp");
+        }
 
-        try
-        {
-            PowerShellHelper.ExecuteCommand(command, true);
-        }
-        catch (Win32Exception win32Ex)
-        {
-            switch (win32Ex.NativeErrorCode)
-            {
-                case 1223:
-                    OnUserHasCanceled();
-                    break;
-                default:
-                    throw;
-            }
-        }
+        RunCommands(commands);
     }
 
     /// <summary>
@@ -466,15 +454,12 @@ public sealed class NetworkInterface
     }
 
     /// <summary>
-    /// Clears the local DNS resolver cache on the system by executing the appropriate system command.
+    /// Clears the local DNS resolver cache on the system.
     /// </summary>
-    /// <remarks>This method requires administrative privileges to successfully flush the DNS cache. If the
-    /// application does not have sufficient permissions, the operation may fail.</remarks>
+    /// <remarks>Requires the application to be running with administrator privileges.</remarks>
     private static void FlushDns()
     {
-        const string command = "ipconfig /flushdns;";
-
-        PowerShellHelper.ExecuteCommand(command);
+        RunCommands(["& ipconfig /flushdns"], checkExitCode: true);
     }
 
     /// <summary>
@@ -491,29 +476,27 @@ public sealed class NetworkInterface
     /// <summary>
     /// Releases and/or renews the IP configuration for the specified network adapter using the given mode.
     /// </summary>
-    /// <remarks>This method executes the appropriate 'ipconfig' commands based on the specified mode. The
-    /// operation affects only the adapter identified by the provided name. Ensure that the caller has sufficient
-    /// privileges to modify network settings.</remarks>
-    /// <param name="mode">A value that specifies which IP configuration operation to perform. Determines whether to release, renew, or
-    /// perform both actions for IPv4 and/or IPv6 addresses.</param>
-    /// <param name="adapterName">The name of the network adapter to target for the release or renew operation. Cannot be null or empty.</param>
+    /// <remarks>Requires the application to be running with administrator privileges.</remarks>
+    /// <param name="mode">A value that specifies which IP configuration operation to perform.</param>
+    /// <param name="adapterName">The name of the network adapter to target. Cannot be null or empty.</param>
     private static void ReleaseRenew(IPConfigReleaseRenewMode mode, string adapterName)
     {
-        var command = string.Empty;
+        var name = PowerShellHelper.EscapeSingleQuotes(adapterName);
+        var commands = new List<string>();
 
         if (mode is IPConfigReleaseRenewMode.ReleaseRenew or IPConfigReleaseRenewMode.Release)
-            command += $"ipconfig /release '{adapterName}';";
+            commands.Add($"& ipconfig /release '{name}'");
 
         if (mode is IPConfigReleaseRenewMode.ReleaseRenew or IPConfigReleaseRenewMode.Renew)
-            command += $"ipconfig /renew '{adapterName}';";
+            commands.Add($"& ipconfig /renew '{name}'");
 
         if (mode is IPConfigReleaseRenewMode.ReleaseRenew6 or IPConfigReleaseRenewMode.Release6)
-            command += $"ipconfig /release6 '{adapterName}';";
+            commands.Add($"& ipconfig /release6 '{name}'");
 
         if (mode is IPConfigReleaseRenewMode.ReleaseRenew6 or IPConfigReleaseRenewMode.Renew6)
-            command += $"ipconfig /renew6 '{adapterName}';";
+            commands.Add($"& ipconfig /renew6 '{name}'");
 
-        PowerShellHelper.ExecuteCommand(command);
+        RunCommands(commands, checkExitCode: true);
     }
 
     /// <summary>
@@ -529,21 +512,20 @@ public sealed class NetworkInterface
     /// <summary>
     /// Adds an IP address to the specified network interface using the provided configuration.
     /// </summary>
-    /// <remarks>If DHCP/static IP coexistence is enabled in the configuration, the method enables this
-    /// feature before adding the IP address. This method requires appropriate system permissions to modify network
-    /// interface settings.</remarks>
+    /// <remarks>Requires the application to be running with administrator privileges.</remarks>
     /// <param name="config">The network interface configuration containing the interface name, IP address, subnet mask, and DHCP/static
     /// coexistence settings. Cannot be null.</param>
     private static void AddIPAddressToNetworkInterface(NetworkInterfaceConfig config)
     {
-        var command = string.Empty;
+        var name = PowerShellHelper.EscapeSingleQuotes(config.Name);
+        var commands = new List<string>();
 
         if (config.EnableDhcpStaticIpCoexistence)
-            command += $"netsh interface ipv4 set interface interface='{config.Name}' dhcpstaticipcoexistence=enabled;";
+            commands.Add($"& netsh interface ipv4 set interface interface='{name}' dhcpstaticipcoexistence=enabled");
 
-        command += $"netsh interface ipv4 add address '{config.Name}' {config.IPAddress} {config.Subnetmask};";
+        commands.Add($"& netsh interface ipv4 add address '{name}' {config.IPAddress} {config.Subnetmask}");
 
-        PowerShellHelper.ExecuteCommand(command, true);
+        RunCommands(commands);
     }
 
     /// <summary>
@@ -559,30 +541,38 @@ public sealed class NetworkInterface
     /// <summary>
     /// Removes the specified IP address from the given network interface configuration.
     /// </summary>
-    /// <remarks>This method removes the IP address from the network interface using a system command. The
-    /// operation requires appropriate system permissions and may fail if the interface or IP address does not
-    /// exist.</remarks>
+    /// <remarks>Requires the application to be running with administrator privileges.</remarks>
     /// <param name="config">The network interface configuration containing the name of the interface and the IP address to remove. Cannot be
     /// null.</param>
     private static void RemoveIPAddressFromNetworkInterface(NetworkInterfaceConfig config)
     {
-        var command = $"netsh interface ipv4 delete address '{config.Name}' {config.IPAddress};";
-
-        PowerShellHelper.ExecuteCommand(command, true);
+        var name = PowerShellHelper.EscapeSingleQuotes(config.Name);
+        RunCommands([$"& netsh interface ipv4 delete address '{name}' {config.IPAddress}"]);
     }
 
-    #endregion
-
-    #region Events
-
     /// <summary>
-    /// Occurs when the user cancels the current operation (e.g. UAC prompt).
-    /// </summary>    
-    public event EventHandler UserHasCanceled;
-
-    private void OnUserHasCanceled()
+    /// Runs one or more native commands via a PowerShell runspace.
+    /// When <paramref name="checkExitCode"/> is <see langword="true"/>, a non-zero
+    /// <c>$LASTEXITCODE</c> is treated as an error via <c>Write-Error</c>.
+    /// Use <see langword="false"/> for <c>netsh</c>, whose exit codes are unreliable
+    /// for idempotent operations (e.g. returns 1 when already on DHCP).
+    /// </summary>
+    private static void RunCommands(IEnumerable<string> commands, bool checkExitCode = false)
     {
-        UserHasCanceled?.Invoke(this, EventArgs.Empty);
+        string script;
+
+        if (checkExitCode)
+            script = string.Join(Environment.NewLine, commands.Select(cmd =>
+                $"{cmd}{Environment.NewLine}if ($LASTEXITCODE -ne 0) {{ Write-Error \"Command failed with exit code $LASTEXITCODE\" }}"));
+        else
+            script = string.Join(Environment.NewLine, commands);
+
+        using var ps = SMA.PowerShell.Create();
+        ps.AddScript(script);
+        ps.Invoke();
+
+        if (checkExitCode && ps.HadErrors)
+            throw new Exception(string.Join("; ", ps.Streams.Error.Select(e => e.ToString())));
     }
 
     #endregion
