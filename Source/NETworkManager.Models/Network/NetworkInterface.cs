@@ -229,9 +229,7 @@ public sealed class NetworkInterface
                 DNSAutoconfigurationEnabled = dnsAutoconfigurationEnabled,
                 DNSSuffix = ipProperties.DnsSuffix,
                 DNSServer = [.. ipProperties.DnsAddresses],
-                Profile = profileByAlias.TryGetValue(networkInterface.Name, out var profile)
-                    ? profile
-                    : NetworkProfile.NotConfigured
+                Profile = profileByAlias.GetValueOrDefault(networkInterface.Name, NetworkProfile.NotConfigured)
             });
         }
 
@@ -311,48 +309,52 @@ public sealed class NetworkInterface
     {
         // Filter operational network interfaces
         var networkInterfaces = GetNetworkInterfaces()
-            .Where(x => x.IsOperational);
+            .Where(x => x.IsOperational)
+            .ToList();
 
         var candidates = new List<IPAddress>();
 
-        // IPv4
-        if (addressFamily == AddressFamily.InterNetwork)
+        switch (addressFamily)
         {
-            foreach (var networkInterface in networkInterfaces)
+            // IPv4
+            case AddressFamily.InterNetwork:
             {
-                foreach (var ipAddress in networkInterface.IPv4Address)
-                    candidates.Add(ipAddress.Item1);
+                foreach (var networkInterface in networkInterfaces)
+                {
+                    foreach (var ipAddress in networkInterface.IPv4Address)
+                        candidates.Add(ipAddress.Item1);
+                }
+
+                // Prefer non-link-local addresses
+                var nonLinkLocal = candidates.FirstOrDefault(x =>
+                {
+                    var bytes = x.GetAddressBytes();
+
+                    return !(bytes[0] == 169 && bytes[1] == 254);
+                });
+
+                // Return first non-link-local or first candidate if none found (might be null - no addresses at all)
+                return nonLinkLocal ?? candidates.FirstOrDefault();
             }
-
-            // Prefer non-link-local addresses
-            var nonLinkLocal = candidates.Where(x =>
+            // IPv6
+            case AddressFamily.InterNetworkV6:
             {
-                var bytes = x.GetAddressBytes();
+                // First try to get global or unique local addresses
+                foreach (var networkInterface in networkInterfaces)
+                    candidates.AddRange(networkInterface.IPv6Address);
 
-                return !(bytes[0] == 169 && bytes[1] == 254);
-            });
+                // Return first candidate if any found
+                if (candidates.Count != 0)
+                    return candidates.First();
 
-            // Return first non-link-local or first candidate if none found (might be null - no addresses at all)
-            return nonLinkLocal.Any() ? nonLinkLocal.First() : candidates.FirstOrDefault();
-        }
+                // Fallback to link-local addresses
+                var firstWithLinkLocal = networkInterfaces
+                    .FirstOrDefault(ni => ni.IPv6AddressLinkLocal.Length != 0);
 
-        // IPv6
-        if (addressFamily == AddressFamily.InterNetworkV6)
-        {
-            // First try to get global or unique local addresses
-            foreach (var networkInterface in networkInterfaces)
-                candidates.AddRange(networkInterface.IPv6Address);
-
-            // Return first candidate if any found
-            if (candidates.Count != 0)
-                return candidates.First();
-
-            // Fallback to link-local addresses
-            var firstWithLinkLocal = networkInterfaces
-               .FirstOrDefault(ni => ni.IPv6AddressLinkLocal.Length != 0);
-
-            if (firstWithLinkLocal != null)
-                return firstWithLinkLocal.IPv6AddressLinkLocal.First();
+                if (firstWithLinkLocal != null)
+                    return firstWithLinkLocal.IPv6AddressLinkLocal.First();
+                break;
+            }
         }
 
         return null;
@@ -383,17 +385,13 @@ public sealed class NetworkInterface
     {
         foreach (var networkInterface in GetNetworkInterfaces())
         {
-            // IPv4
-            if (localIPAddress.AddressFamily == AddressFamily.InterNetwork)
+            switch (localIPAddress.AddressFamily)
             {
-                if (networkInterface.IPv4Address.Any(x => x.Item1.Equals(localIPAddress)))
+                // IPv4
+                case AddressFamily.InterNetwork when networkInterface.IPv4Address.Any(x => x.Item1.Equals(localIPAddress)):
                     return networkInterface.IPv4Gateway.FirstOrDefault();
-            }
-
-            // IPv6
-            if (localIPAddress.AddressFamily == AddressFamily.InterNetworkV6)
-            {
-                if (networkInterface.IPv6Address.Contains(localIPAddress))
+                // IPv6
+                case AddressFamily.InterNetworkV6 when networkInterface.IPv6Address.Contains(localIPAddress):
                     return networkInterface.IPv6Gateway.FirstOrDefault();
             }
         }
@@ -423,14 +421,16 @@ public sealed class NetworkInterface
         var commands = new List<string>();
 
         // IP
-        commands.Add(config.EnableStaticIPAddress
-            ? $"& netsh interface ipv4 set address name='{name}' source=static address={config.IPAddress} mask={config.Subnetmask} gateway={config.Gateway}"
-            : $"& netsh interface ipv4 set address name='{name}' source=dhcp");
+        if (config.EnableStaticIPAddress)
+            commands.Add($"& netsh interface ipv4 set address name='{name}' source=static address={config.IPAddress} mask={config.Subnetmask} gateway={config.Gateway}");
+        else
+            commands.Add($"& netsh interface ipv4 set address name='{name}' source=dhcp");
 
         // DNS
         if (config.EnableStaticDNS)
         {
             commands.Add($"& netsh interface ipv4 set dnsservers name='{name}' source=static address={config.PrimaryDNSServer} register=primary validate=no");
+          
             if (!string.IsNullOrEmpty(config.SecondaryDNSServer))
                 commands.Add($"& netsh interface ipv4 add dnsservers name='{name}' address={config.SecondaryDNSServer} index=2 validate=no");
         }
@@ -482,21 +482,21 @@ public sealed class NetworkInterface
     private static void ReleaseRenew(IPConfigReleaseRenewMode mode, string adapterName)
     {
         var name = PowerShellHelper.EscapeSingleQuotes(adapterName);
-        var lines = new List<string>();
+        var commands = new List<string>();
 
         if (mode is IPConfigReleaseRenewMode.ReleaseRenew or IPConfigReleaseRenewMode.Release)
-            lines.Add($"& ipconfig /release '{name}'");
+            commands.Add($"& ipconfig /release '{name}'");
 
         if (mode is IPConfigReleaseRenewMode.ReleaseRenew or IPConfigReleaseRenewMode.Renew)
-            lines.Add($"& ipconfig /renew '{name}'");
+            commands.Add($"& ipconfig /renew '{name}'");
 
         if (mode is IPConfigReleaseRenewMode.ReleaseRenew6 or IPConfigReleaseRenewMode.Release6)
-            lines.Add($"& ipconfig /release6 '{name}'");
+            commands.Add($"& ipconfig /release6 '{name}'");
 
         if (mode is IPConfigReleaseRenewMode.ReleaseRenew6 or IPConfigReleaseRenewMode.Renew6)
-            lines.Add($"& ipconfig /renew6 '{name}'");
+            commands.Add($"& ipconfig /renew6 '{name}'");
 
-        RunCommands(lines, checkExitCode: true);
+        RunCommands(commands, checkExitCode: true);
     }
 
     /// <summary>

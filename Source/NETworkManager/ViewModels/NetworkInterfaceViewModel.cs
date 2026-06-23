@@ -22,7 +22,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -1031,12 +1030,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// Gets the command to apply the network configuration.
     /// </summary>
     public ICommand ApplyConfigurationCommand =>
-        new RelayCommand(_ => ApplyConfigurationAction(), ApplyConfiguration_CanExecute);
-
-    /// <summary>
-    /// Determines whether the ApplyConfiguration command can execute.
-    /// </summary>
-    private bool ApplyConfiguration_CanExecute(object parameter) => AdminCanExecute();
+        new RelayCommand(_ => ApplyConfigurationAction(), ConfigureCommands_CanExecute);
 
     /// <summary>
     /// Action to apply the network configuration.
@@ -1049,7 +1043,7 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Gets the command to apply the profile configuration.
     /// </summary>
-    public ICommand ApplyProfileCommand => new RelayCommand(_ => ApplyProfileAction(), ApplyConfiguration_CanExecute);
+    public ICommand ApplyProfileCommand => new RelayCommand(_ => ApplyProfileAction(), ConfigureCommands_CanExecute);
 
     private void ApplyProfileAction()
     {
@@ -1184,16 +1178,11 @@ public class NetworkInterfaceViewModel : ViewModelBase, IProfileManager
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
                !ConfigurationManager.Current.IsChildWindowOpen;
     }
-
-    private bool AdminCanExecute()
-    {
-        return ConfigurationManager.Current.IsAdmin &&
-               Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
-    }
-
-    private bool ConfigureCommands_CanExecute(object parameter) => AdminCanExecute();
+    
+    private bool ConfigureCommands_CanExecute(object parameter) => ConfigurationManager.Current.IsAdmin &&
+                                                                   Application.Current.MainWindow != null &&
+                                                                   !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
+                                                                   !ConfigurationManager.Current.IsChildWindowOpen;
 
     /// <summary>
     /// Gets the command to restart the application with administrator privileges.
