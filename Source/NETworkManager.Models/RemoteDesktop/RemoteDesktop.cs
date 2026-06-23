@@ -38,6 +38,26 @@ public static class RemoteDesktop
                 info.ArrayKeyUp = [false, false, false, true, true, true];
                 info.KeyData = [0x1d, 0x38, 0x53, 0x53, 0x38, 0x1d];
                 break;
+            case Keystroke.TaskManager: // Ctrl + Shift + Esc
+                info.ArrayKeyUp = [false, false, false, true, true, true];
+                info.KeyData = [0x1d, 0x2a, 0x01, 0x01, 0x2a, 0x1d];
+                break;
+            case Keystroke.Lock: // Win + L
+                info.ArrayKeyUp = [false, false, true, true];
+                info.KeyData = [0x15b, 0x26, 0x26, 0x15b];
+                break;
+            case Keystroke.ShowDesktop: // Win + D
+                info.ArrayKeyUp = [false, false, true, true];
+                info.KeyData = [0x15b, 0x20, 0x20, 0x15b];
+                break;
+            case Keystroke.Explorer: // Win + E
+                info.ArrayKeyUp = [false, false, true, true];
+                info.KeyData = [0x15b, 0x12, 0x12, 0x15b];
+                break;
+            case Keystroke.RunDialog: // Win + R
+                info.ArrayKeyUp = [false, false, true, true];
+                info.KeyData = [0x15b, 0x13, 0x13, 0x15b];
+                break;
         }
 
         return info;

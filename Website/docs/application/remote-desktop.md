@@ -37,6 +37,11 @@ Right-clicking a session tab opens a context menu:
 | **Adjust screen**                     | Adjusts the screen size to the current view size; only available if [Display](#display) is set to `Adjust screen automatically` or `Use the current view size as screen size` (only if connected) |
 | **View only**                         | Toggles [view only](#view-only) mode, which blocks keyboard and mouse input to the remote session while the screen keeps updating (only if connected)                                             |
 | **Keyboard shortcuts > Ctrl+Alt+Del** | Sends Ctrl+Alt+Del to the remote computer (only if connected and not in view only mode)                                                                                                           |
+| **Keyboard shortcuts > Task Manager** | Sends Ctrl+Shift+Esc to the remote computer, opening Task Manager directly (only if connected and not in view only mode)                                                                           |
+| **Keyboard shortcuts > Lock**         | Sends Win+L to the remote computer, locking the session (only if connected and not in view only mode)                                                                                             |
+| **Keyboard shortcuts > Show Desktop** | Sends Win+D to the remote computer, minimizing all windows (only if connected and not in view only mode)                                                                                          |
+| **Keyboard shortcuts > Explorer**     | Sends Win+E to the remote computer, opening File Explorer (only if connected and not in view only mode)                                                                                           |
+| **Keyboard shortcuts > Run dialog**   | Sends Win+R to the remote computer, opening the Run dialog (only if connected and not in view only mode)                                                                                          |
 
 ## Connect
 
@@ -127,7 +132,7 @@ Connect to the admin (console) session of the remote computer.
 
 ### View only
 
-Connect in view only mode. Keyboard and mouse input to the remote session is blocked while the screen keeps updating, so the session can be monitored without interacting with it. View only mode can also be toggled on the fly via the [tab context menu](#tab-context-menu). While it is active, an eye icon is shown on the tab and the **Fullscreen** and **Ctrl+Alt+Del** actions are disabled to prevent bypassing it.
+Connect in view only mode. Keyboard and mouse input to the remote session is blocked while the screen keeps updating, so the session can be monitored without interacting with it. View only mode can also be toggled on the fly via the [tab context menu](#tab-context-menu). While it is active, an eye icon is shown on the tab and the **Fullscreen** action and all **Keyboard shortcuts** are disabled to prevent bypassing it.
 
 **Type:** `Boolean`
 

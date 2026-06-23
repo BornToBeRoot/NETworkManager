@@ -222,16 +222,31 @@ public sealed partial class DragablzTabHostWindow : INotifyPropertyChanged
     }
 
     public ICommand RemoteDesktop_SendCtrlAltDelCommand =>
-        new RelayCommand(RemoteDesktop_SendCtrlAltDelAction, RemoteDesktop_IsConnectedAndNotViewOnly_CanExecute);
+        new RelayCommand(view => RemoteDesktop_SendKeyAction(view, Keystroke.CtrlAltDel), RemoteDesktop_IsConnectedAndNotViewOnly_CanExecute);
 
-    private async void RemoteDesktop_SendCtrlAltDelAction(object view)
+    public ICommand RemoteDesktop_SendTaskManagerCommand =>
+        new RelayCommand(view => RemoteDesktop_SendKeyAction(view, Keystroke.TaskManager), RemoteDesktop_IsConnectedAndNotViewOnly_CanExecute);
+
+    public ICommand RemoteDesktop_SendLockCommand =>
+        new RelayCommand(view => RemoteDesktop_SendKeyAction(view, Keystroke.Lock), RemoteDesktop_IsConnectedAndNotViewOnly_CanExecute);
+
+    public ICommand RemoteDesktop_SendShowDesktopCommand =>
+        new RelayCommand(view => RemoteDesktop_SendKeyAction(view, Keystroke.ShowDesktop), RemoteDesktop_IsConnectedAndNotViewOnly_CanExecute);
+
+    public ICommand RemoteDesktop_SendExplorerCommand =>
+        new RelayCommand(view => RemoteDesktop_SendKeyAction(view, Keystroke.Explorer), RemoteDesktop_IsConnectedAndNotViewOnly_CanExecute);
+
+    public ICommand RemoteDesktop_SendRunDialogCommand =>
+        new RelayCommand(view => RemoteDesktop_SendKeyAction(view, Keystroke.RunDialog), RemoteDesktop_IsConnectedAndNotViewOnly_CanExecute);
+
+    private void RemoteDesktop_SendKeyAction(object view, Keystroke keystroke)
     {
         if (view is not RemoteDesktopControl control)
             return;
 
         try
         {
-            control.SendKey(Keystroke.CtrlAltDel);
+            control.SendKey(keystroke);
         }
         catch (Exception ex)
         {

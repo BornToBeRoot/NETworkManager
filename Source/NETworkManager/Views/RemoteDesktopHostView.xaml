@@ -142,6 +142,21 @@
                                         <MenuItem Header="{x:Static localization:Strings.CtrlAltDel}"
                                                   Command="{Binding Data.SendCtrlAltDelCommand, Source={StaticResource BindingProxy}}"
                                                   CommandParameter="{Binding View}" />
+                                        <MenuItem Header="{x:Static localization:Strings.TaskManager}"
+                                                  Command="{Binding Data.SendTaskManagerCommand, Source={StaticResource BindingProxy}}"
+                                                  CommandParameter="{Binding View}" />
+                                        <MenuItem Header="{x:Static localization:Strings.Lock}"
+                                                  Command="{Binding Data.SendLockCommand, Source={StaticResource BindingProxy}}"
+                                                  CommandParameter="{Binding View}" />
+                                        <MenuItem Header="{x:Static localization:Strings.ShowDesktop}"
+                                                  Command="{Binding Data.SendShowDesktopCommand, Source={StaticResource BindingProxy}}"
+                                                  CommandParameter="{Binding View}" />
+                                        <MenuItem Header="{x:Static localization:Strings.Explorer}"
+                                                  Command="{Binding Data.SendExplorerCommand, Source={StaticResource BindingProxy}}"
+                                                  CommandParameter="{Binding View}" />
+                                        <MenuItem Header="{x:Static localization:Strings.RunDialog}"
+                                                  Command="{Binding Data.SendRunDialogCommand, Source={StaticResource BindingProxy}}"
+                                                  CommandParameter="{Binding View}" />
                                     </MenuItem>
                                 </ContextMenu>
                             </Grid.ContextMenu>

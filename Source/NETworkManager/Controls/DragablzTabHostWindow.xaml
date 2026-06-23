@@ -160,6 +160,26 @@
                                                                     Header="{x:Static localization:Strings.CtrlAltDel}"
                                                                     Command="{Binding Data.RemoteDesktop_SendCtrlAltDelCommand, Source={StaticResource BindingProxy}}"
                                                                     CommandParameter="{Binding View}" />
+                                                                <MenuItem
+                                                                    Header="{x:Static localization:Strings.TaskManager}"
+                                                                    Command="{Binding Data.RemoteDesktop_SendTaskManagerCommand, Source={StaticResource BindingProxy}}"
+                                                                    CommandParameter="{Binding View}" />
+                                                                <MenuItem
+                                                                    Header="{x:Static localization:Strings.Lock}"
+                                                                    Command="{Binding Data.RemoteDesktop_SendLockCommand, Source={StaticResource BindingProxy}}"
+                                                                    CommandParameter="{Binding View}" />
+                                                                <MenuItem
+                                                                    Header="{x:Static localization:Strings.ShowDesktop}"
+                                                                    Command="{Binding Data.RemoteDesktop_SendShowDesktopCommand, Source={StaticResource BindingProxy}}"
+                                                                    CommandParameter="{Binding View}" />
+                                                                <MenuItem
+                                                                    Header="{x:Static localization:Strings.Explorer}"
+                                                                    Command="{Binding Data.RemoteDesktop_SendExplorerCommand, Source={StaticResource BindingProxy}}"
+                                                                    CommandParameter="{Binding View}" />
+                                                                <MenuItem
+                                                                    Header="{x:Static localization:Strings.RunDialog}"
+                                                                    Command="{Binding Data.RemoteDesktop_SendRunDialogCommand, Source={StaticResource BindingProxy}}"
+                                                                    CommandParameter="{Binding View}" />
                                                             </MenuItem>
                                                         </ContextMenu>
                                                     </Grid.ContextMenu>

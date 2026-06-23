@@ -351,16 +351,31 @@ public class RemoteDesktopHostViewModel : ViewModelBase, IProfileManager
     }
 
     public ICommand SendCtrlAltDelCommand =>
-        new RelayCommand(SendCtrlAltDelAction, IsConnectedAndNotViewOnly_CanExecute);
+        new RelayCommand(view => SendKeyAction(view, Keystroke.CtrlAltDel), IsConnectedAndNotViewOnly_CanExecute);
 
-    private async void SendCtrlAltDelAction(object view)
+    public ICommand SendTaskManagerCommand =>
+        new RelayCommand(view => SendKeyAction(view, Keystroke.TaskManager), IsConnectedAndNotViewOnly_CanExecute);
+
+    public ICommand SendLockCommand =>
+        new RelayCommand(view => SendKeyAction(view, Keystroke.Lock), IsConnectedAndNotViewOnly_CanExecute);
+
+    public ICommand SendShowDesktopCommand =>
+        new RelayCommand(view => SendKeyAction(view, Keystroke.ShowDesktop), IsConnectedAndNotViewOnly_CanExecute);
+
+    public ICommand SendExplorerCommand =>
+        new RelayCommand(view => SendKeyAction(view, Keystroke.Explorer), IsConnectedAndNotViewOnly_CanExecute);
+
+    public ICommand SendRunDialogCommand =>
+        new RelayCommand(view => SendKeyAction(view, Keystroke.RunDialog), IsConnectedAndNotViewOnly_CanExecute);
+
+    private async void SendKeyAction(object view, Keystroke keystroke)
     {
         if (view is not RemoteDesktopControl control)
             return;
 
         try
         {
-            control.SendKey(Keystroke.CtrlAltDel);
+            control.SendKey(keystroke);
         }
         catch (Exception ex)
         {
