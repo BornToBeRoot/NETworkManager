@@ -2250,6 +2250,21 @@ $$hostname$$	--&gt;	Hostname</value>
   <data name="CtrlAltDel" xml:space="preserve">
     <value>Ctrl+Alt+Del</value>
   </data>
+  <data name="TaskManager" xml:space="preserve">
+    <value>Task Manager (Ctrl+Shift+Esc)</value>
+  </data>
+  <data name="Lock" xml:space="preserve">
+    <value>Lock (Win+L)</value>
+  </data>
+  <data name="ShowDesktop" xml:space="preserve">
+    <value>Show Desktop (Win+D)</value>
+  </data>
+  <data name="Explorer" xml:space="preserve">
+    <value>Explorer (Win+E)</value>
+  </data>
+  <data name="RunDialog" xml:space="preserve">
+    <value>Run dialog (Win+R)</value>
+  </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
     <value>Keyboard shortcuts</value>
   </data>

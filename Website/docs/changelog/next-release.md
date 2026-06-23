@@ -70,7 +70,8 @@ Release date: **xx.xx.2025**
 
 **Remote Desktop**
 
-- New **View only** mode to monitor a session without sending input: keyboard and mouse are blocked while the screen keeps updating. It can be enabled in the connect dialog, per profile/group, and globally (inherited Global → Group → Profile), or toggled on the fly via the tab's right-click menu. An eye icon on the tab indicates when a session is view-only, and the **Fullscreen** and **Ctrl+Alt+Del** actions are disabled while it is active to prevent bypassing it. [#3482](https://github.com/BornToBeRoot/NETworkManager/pull/3482)
+- New **View only** mode to monitor a session without sending input: keyboard and mouse are blocked while the screen keeps updating. It can be enabled in the connect dialog, per profile/group, and globally (inherited Global → Group → Profile), or toggled on the fly via the tab's right-click menu. An eye icon on the tab indicates when a session is view-only, and the **Fullscreen** action and all **Keyboard shortcuts** are disabled while it is active to prevent bypassing it. [#3482](https://github.com/BornToBeRoot/NETworkManager/pull/3482)
+- The tab context menu's **Keyboard shortcuts** submenu now also includes **Task Manager** (`Ctrl+Shift+Esc`), **Lock** (`Win+L`), **Show Desktop** (`Win+D`), **Explorer** (`Win+E`) and **Run dialog** (`Win+R`), in addition to the existing **Ctrl+Alt+Del**. Like Ctrl+Alt+Del, these are sent directly via scan codes into the remote session, bypassing local key interception. [#3500](https://github.com/BornToBeRoot/NETworkManager/pull/3500)
 
 **Language**
 

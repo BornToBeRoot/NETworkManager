@@ -2465,7 +2465,52 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("CtrlAltDel", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Task Manager (Ctrl+Shift+Esc).
+        /// </summary>
+        public static string TaskManager {
+            get {
+                return ResourceManager.GetString("TaskManager", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Lock (Win+L).
+        /// </summary>
+        public static string Lock {
+            get {
+                return ResourceManager.GetString("Lock", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Show Desktop (Win+D).
+        /// </summary>
+        public static string ShowDesktop {
+            get {
+                return ResourceManager.GetString("ShowDesktop", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Explorer (Win+E).
+        /// </summary>
+        public static string Explorer {
+            get {
+                return ResourceManager.GetString("Explorer", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Run dialog (Win+R).
+        /// </summary>
+        public static string RunDialog {
+            get {
+                return ResourceManager.GetString("RunDialog", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Currency.
         /// </summary>

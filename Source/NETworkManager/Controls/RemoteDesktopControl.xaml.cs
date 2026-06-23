@@ -508,7 +508,7 @@ public partial class RemoteDesktopControl : UserControlBase, IDragablzTabItem
 
         RdpClient.Focus();
 
-        ocx.SendKeys(info.KeyData.Length, info.ArrayKeyUp, info.KeyData);
+        ocx?.SendKeys(info.KeyData.Length, info.ArrayKeyUp, info.KeyData);
     }
 
     /// <summary>
