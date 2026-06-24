@@ -309,6 +309,12 @@
   <data name="NetworkInterface" xml:space="preserve">
     <value>Netzwierkinterface</value>
   </data>
+  <data name="NetworkInterfaceConfigurationAppliedSuccessfully" xml:space="preserve">
+    <value>Configuration applied</value>
+  </data>
+  <data name="NetworkInterfaceConfigureAdminMessage" xml:space="preserve">
+    <value>Configuring the network interface requires elevated rights!</value>
+  </data>
   <data name="NewTab" xml:space="preserve">
     <value>Neien Tab</value>
   </data>
@@ -512,6 +518,30 @@
   </data>
   <data name="IPv4Address" xml:space="preserve">
     <value>IPv4-Adress</value>
+  </data>
+  <data name="IPv4AddressAddedSuccessfully" xml:space="preserve">
+    <value>IPv4 address added</value>
+  </data>
+  <data name="IPv4AddressRemovedSuccessfully" xml:space="preserve">
+    <value>IPv4 address removed</value>
+  </data>
+  <data name="IPv4AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
+    <value>IPv4 address released and renewed</value>
+  </data>
+  <data name="IPv4AddressReleasedSuccessfully" xml:space="preserve">
+    <value>IPv4 address released</value>
+  </data>
+  <data name="IPv4AddressRenewedSuccessfully" xml:space="preserve">
+    <value>IPv4 address renewed</value>
+  </data>
+  <data name="IPv6AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
+    <value>IPv6 address released and renewed</value>
+  </data>
+  <data name="IPv6AddressReleasedSuccessfully" xml:space="preserve">
+    <value>IPv6 address released</value>
+  </data>
+  <data name="IPv6AddressRenewedSuccessfully" xml:space="preserve">
+    <value>IPv6 address renewed</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
     <value>IPv4-Default-Gateway</value>
@@ -1293,6 +1323,9 @@ Profildateie sinn net betraff!</value>
   </data>
   <data name="FlushDNSCache" xml:space="preserve">
     <value>DNS-Cache eidelmaachen</value>
+  </data>
+  <data name="FlushDNSCacheSuccessfully" xml:space="preserve">
+    <value>DNS cache flushed</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
     <value>Entschlësselt a luet är Umeldungsdaten fir se auszewielen.</value>
@@ -2216,6 +2249,21 @@ $$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
     <value>Ctrl+Alt+Del</value>
+  </data>
+  <data name="TaskManager" xml:space="preserve">
+    <value>Task Manager (Ctrl+Shift+Esc)</value>
+  </data>
+  <data name="Lock" xml:space="preserve">
+    <value>Lock (Win+L)</value>
+  </data>
+  <data name="ShowDesktop" xml:space="preserve">
+    <value>Show Desktop (Win+D)</value>
+  </data>
+  <data name="Explorer" xml:space="preserve">
+    <value>Explorer (Win+E)</value>
+  </data>
+  <data name="RunDialog" xml:space="preserve">
+    <value>Run dialog (Win+R)</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
     <value>Tastekombinatiounen</value>
