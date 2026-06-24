@@ -309,6 +309,12 @@
   <data name="NetworkInterface" xml:space="preserve">
     <value>网络接口</value>
   </data>
+  <data name="NetworkInterfaceConfigurationAppliedSuccessfully" xml:space="preserve">
+    <value>Configuration applied</value>
+  </data>
+  <data name="NetworkInterfaceConfigureAdminMessage" xml:space="preserve">
+    <value>Configuring the network interface requires elevated rights!</value>
+  </data>
   <data name="NewTab" xml:space="preserve">
     <value>新标签</value>
   </data>
@@ -512,6 +518,30 @@
   </data>
   <data name="IPv4Address" xml:space="preserve">
     <value>IPv4 地址</value>
+  </data>
+  <data name="IPv4AddressAddedSuccessfully" xml:space="preserve">
+    <value>IPv4 address added</value>
+  </data>
+  <data name="IPv4AddressRemovedSuccessfully" xml:space="preserve">
+    <value>IPv4 address removed</value>
+  </data>
+  <data name="IPv4AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
+    <value>IPv4 address released and renewed</value>
+  </data>
+  <data name="IPv4AddressReleasedSuccessfully" xml:space="preserve">
+    <value>IPv4 address released</value>
+  </data>
+  <data name="IPv4AddressRenewedSuccessfully" xml:space="preserve">
+    <value>IPv4 address renewed</value>
+  </data>
+  <data name="IPv6AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
+    <value>IPv6 address released and renewed</value>
+  </data>
+  <data name="IPv6AddressReleasedSuccessfully" xml:space="preserve">
+    <value>IPv6 address released</value>
+  </data>
+  <data name="IPv6AddressRenewedSuccessfully" xml:space="preserve">
+    <value>IPv6 address renewed</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
     <value>IPv4 默认路由</value>
@@ -1293,6 +1323,9 @@
   </data>
   <data name="FlushDNSCache" xml:space="preserve">
     <value>清理 DNS 缓存</value>
+  </data>
+  <data name="FlushDNSCacheSuccessfully" xml:space="preserve">
+    <value>DNS cache flushed</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
     <value>解密并载入你选择的的凭据。</value>
@@ -2217,6 +2250,21 @@ $$hostname$$	--&gt;	主机名</value>
   </data>
   <data name="CtrlAltDel" xml:space="preserve">
     <value>Ctrl+Alt+Del</value>
+  </data>
+  <data name="TaskManager" xml:space="preserve">
+    <value>Task Manager (Ctrl+Shift+Esc)</value>
+  </data>
+  <data name="Lock" xml:space="preserve">
+    <value>Lock (Win+L)</value>
+  </data>
+  <data name="ShowDesktop" xml:space="preserve">
+    <value>Show Desktop (Win+D)</value>
+  </data>
+  <data name="Explorer" xml:space="preserve">
+    <value>Explorer (Win+E)</value>
+  </data>
+  <data name="RunDialog" xml:space="preserve">
+    <value>Run dialog (Win+R)</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
     <value>键盘快捷键</value>
