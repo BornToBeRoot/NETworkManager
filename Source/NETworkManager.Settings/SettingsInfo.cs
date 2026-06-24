@@ -657,6 +657,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    public string Profiles_ImportCsvLastFilePath
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     // Settings
 
     public bool Settings_IsDailyBackupEnabled

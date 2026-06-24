@@ -4211,6 +4211,27 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   <data name="ImportProfiles_Source_ActiveDirectory" xml:space="preserve">
     <value>Active Directory</value>
   </data>
+  <data name="ImportProfiles_Source_Csv" xml:space="preserve">
+    <value>CSV file</value>
+  </data>
+  <data name="ImportProfiles_Method_Csv" xml:space="preserve">
+    <value>CSV file</value>
+  </data>
+  <data name="ImportProfilesFromCsvFile" xml:space="preserve">
+    <value>Import profiles from CSV file</value>
+  </data>
+  <data name="Csv_ImportDescription" xml:space="preserve">
+    <value>Imported from CSV file on {0}</value>
+  </data>
+  <data name="CsvNoEntriesFound" xml:space="preserve">
+    <value>No entries were found in the CSV file.</value>
+  </data>
+  <data name="CsvImportFormatHint" xml:space="preserve">
+    <value>Expected CSV format — one profile per line:</value>
+  </data>
+  <data name="CsvImportFormatNote" xml:space="preserve">
+    <value>A header row and the delimiter (semicolon, comma or tab) are detected automatically. The description column is optional. Entries without a host cannot be imported.</value>
+  </data>
   <data name="ImportResults" xml:space="preserve">
     <value>Import results</value>
   </data>

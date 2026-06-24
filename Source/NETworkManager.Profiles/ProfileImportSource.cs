@@ -3,5 +3,6 @@ namespace NETworkManager.Profiles;
 public enum ProfileImportSource
 {
     None,
-    ActiveDirectory
+    ActiveDirectory,
+    Csv
 }

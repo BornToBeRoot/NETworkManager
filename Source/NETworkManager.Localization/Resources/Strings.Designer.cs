@@ -5588,7 +5588,70 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("ImportProfiles_Source_ActiveDirectory", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to CSV file.
+        /// </summary>
+        public static string ImportProfiles_Source_Csv {
+            get {
+                return ResourceManager.GetString("ImportProfiles_Source_Csv", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to CSV file.
+        /// </summary>
+        public static string ImportProfiles_Method_Csv {
+            get {
+                return ResourceManager.GetString("ImportProfiles_Method_Csv", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Import profiles from CSV file.
+        /// </summary>
+        public static string ImportProfilesFromCsvFile {
+            get {
+                return ResourceManager.GetString("ImportProfilesFromCsvFile", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Imported from CSV file on {0}.
+        /// </summary>
+        public static string Csv_ImportDescription {
+            get {
+                return ResourceManager.GetString("Csv_ImportDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to No entries were found in the CSV file..
+        /// </summary>
+        public static string CsvNoEntriesFound {
+            get {
+                return ResourceManager.GetString("CsvNoEntriesFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Expected CSV format — one profile per line:.
+        /// </summary>
+        public static string CsvImportFormatHint {
+            get {
+                return ResourceManager.GetString("CsvImportFormatHint", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to A header row and the delimiter (semicolon, comma or tab) are detected automatically. The description column is optional. Entries without a host cannot be imported..
+        /// </summary>
+        public static string CsvImportFormatNote {
+            get {
+                return ResourceManager.GetString("CsvImportFormatNote", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Imported.
         /// </summary>

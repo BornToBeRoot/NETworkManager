@@ -285,6 +285,9 @@
   <data name="PrivateKeyFileLocationDots" xml:space="preserve">
     <value>C:\Data\Keys\private_ssh.ppk</value>
   </data>
+  <data name="CsvImportFileLocationDots" xml:space="preserve">
+    <value>C:\Data\profiles.csv</value>
+  </data>
   <data name="ExamplePorts" xml:space="preserve">
     <value>22; 80; 443</value>
   </data>

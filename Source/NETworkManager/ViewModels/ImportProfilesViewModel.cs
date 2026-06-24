@@ -14,7 +14,8 @@ public sealed class ImportProfilesViewModel : ViewModelBase
     {
         Methods = new List<ImportMethodItem>
         {
-            new(ProfileImportSource.ActiveDirectory, Strings.ImportProfiles_Method_ActiveDirectory)
+            new(ProfileImportSource.ActiveDirectory, Strings.ImportProfiles_Method_ActiveDirectory),
+            new(ProfileImportSource.Csv, Strings.ImportProfiles_Method_Csv)
         };
 
         SelectedMethod = Methods[0];
