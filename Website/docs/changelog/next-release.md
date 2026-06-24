@@ -63,6 +63,7 @@ Release date: **xx.xx.2025**
 **Profiles**
 
 - Profiles can now be imported from **Active Directory**. Search for computers by name using an AD query, select the results, assign a group, and apply connection settings (RDP, SSH, etc.) before importing. [#3368](https://github.com/BornToBeRoot/NETworkManager/pull/3368)
+- Profiles can now be imported from a **CSV file**. Select a `.csv` file (drag & drop or browse) with `Name;Host` entries and an optional description column, then select the results, assign a group, and apply connection settings (RDP, SSH, etc.) before importing. The delimiter (semicolon, comma or tab) and an optional header row are detected automatically, and re-importing the same file detects already imported entries. [#3502](https://github.com/BornToBeRoot/NETworkManager/pull/3502)
 
 **Ping Monitor**
 
