@@ -310,10 +310,10 @@
     <value>ネットワーク インタフェース</value>
   </data>
   <data name="NetworkInterfaceConfigurationAppliedSuccessfully" xml:space="preserve">
-    <value>Configuration applied</value>
+    <value>設定が適用されました</value>
   </data>
   <data name="NetworkInterfaceConfigureAdminMessage" xml:space="preserve">
-    <value>Configuring the network interface requires elevated rights!</value>
+    <value>ネットワークインターフェースの設定には、昇格された権限が必要です！</value>
   </data>
   <data name="NewTab" xml:space="preserve">
     <value>新しいタブ</value>
@@ -520,28 +520,28 @@
     <value>IPv4 アドレス</value>
   </data>
   <data name="IPv4AddressAddedSuccessfully" xml:space="preserve">
-    <value>IPv4 address added</value>
+    <value>IPv4 アドレスが追加されました</value>
   </data>
   <data name="IPv4AddressRemovedSuccessfully" xml:space="preserve">
-    <value>IPv4 address removed</value>
+    <value>IPv4 アドレスが削除されました</value>
   </data>
   <data name="IPv4AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
-    <value>IPv4 address released and renewed</value>
+    <value>IPv4 アドレスが解放され、更新されました。</value>
   </data>
   <data name="IPv4AddressReleasedSuccessfully" xml:space="preserve">
-    <value>IPv4 address released</value>
+    <value>IPv4 アドレスが解放されました</value>
   </data>
   <data name="IPv4AddressRenewedSuccessfully" xml:space="preserve">
-    <value>IPv4 address renewed</value>
+    <value>IPv4 アドレスが更新されました</value>
   </data>
   <data name="IPv6AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
-    <value>IPv6 address released and renewed</value>
+    <value>IPv6 アドレスが解放され、更新されました。</value>
   </data>
   <data name="IPv6AddressReleasedSuccessfully" xml:space="preserve">
-    <value>IPv6 address released</value>
+    <value>IPv6 アドレスが解放されました</value>
   </data>
   <data name="IPv6AddressRenewedSuccessfully" xml:space="preserve">
-    <value>IPv6 address renewed</value>
+    <value>IPv6 アドレスが更新されました</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
     <value>IPv4-デフォルト-ゲートウェイ</value>
@@ -1325,7 +1325,7 @@
     <value>DNS キャッシュの消去</value>
   </data>
   <data name="FlushDNSCacheSuccessfully" xml:space="preserve">
-    <value>DNS cache flushed</value>
+    <value>DNS キャッシュがフラッシュされました</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
     <value>資格情報を復号化して読み込み、選択します。</value>
@@ -2251,19 +2251,19 @@ $$hostname$$	--&gt;	ホスト名</value>
     <value>Ctrl+Alt+Del</value>
   </data>
   <data name="TaskManager" xml:space="preserve">
-    <value>Task Manager (Ctrl+Shift+Esc)</value>
+    <value>タスク マネージャー (Ctrl+Shift+Esc)</value>
   </data>
   <data name="Lock" xml:space="preserve">
-    <value>Lock (Win+L)</value>
+    <value>ロック (Win+L)</value>
   </data>
   <data name="ShowDesktop" xml:space="preserve">
-    <value>Show Desktop (Win+D)</value>
+    <value>デスクトップを表示 (Win+D)</value>
   </data>
   <data name="Explorer" xml:space="preserve">
-    <value>Explorer (Win+E)</value>
+    <value>エクスプローラー (Win+E)</value>
   </data>
   <data name="RunDialog" xml:space="preserve">
-    <value>Run dialog (Win+R)</value>
+    <value>ダイアログの実行 (Win+R)</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
     <value>キーボード ショートカット</value>
