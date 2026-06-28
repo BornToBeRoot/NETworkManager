@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.20191f9a.css">
-<script src="/NETworkManager/assets/js/runtime~main.9329f0ef.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.e374ee34.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.6a01d227.js" defer="defer"></script>
 </head>
 <body>
@@ -64,6 +64,7 @@ Release date: <strong>xx.xx.2025</strong></p>
 <p><strong>Profiles</strong></p>
 <ul>
 <li class="">Profiles can now be imported from <strong>Active Directory</strong>. Search for computers by name using an AD query, select the results, assign a group, and apply connection settings (RDP, SSH, etc.) before importing. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3368" target="_blank" rel="noopener noreferrer" class="">#3368</a></li>
+<li class="">Profiles can now be imported from a <strong>CSV file</strong>. Select a <code>.csv</code> file (drag &amp; drop or browse) with <code>Name;Host</code> entries and an optional description column, then select the results, assign a group, and apply connection settings (RDP, SSH, etc.) before importing. The delimiter (semicolon, comma or tab) and an optional header row are detected automatically, and re-importing the same file detects already imported entries. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3502" target="_blank" rel="noopener noreferrer" class="">#3502</a></li>
 </ul>
 <p><strong>Ping Monitor</strong></p>
 <ul>
