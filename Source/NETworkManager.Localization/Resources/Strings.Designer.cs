@@ -7380,7 +7380,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("NewTab", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string Next {
+            get {
+                return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
@@ -7752,6 +7761,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only CSV files are allowed!.
+        /// </summary>
+        public static string OnlyCsvFilesAllowed {
+            get {
+                return ResourceManager.GetString("OnlyCsvFilesAllowed", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Only when using the full screen.
         /// </summary>
         public static string OnlyWhenUsingTheFullScreen {
@@ -7994,6 +8012,15 @@ namespace NETworkManager.Localization.Resources {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Parse.
+        /// </summary>
+        public static string Parse {
+            get {
+                return ResourceManager.GetString("Parse", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Paste.
         /// </summary>

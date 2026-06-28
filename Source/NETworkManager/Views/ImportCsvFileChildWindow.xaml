@@ -88,7 +88,7 @@
                                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Name" FontWeight="Bold" />
                                     <TextBlock Grid.Row="0" Grid.Column="1" Text="Host" FontWeight="Bold" />
                                     <TextBlock Grid.Row="0" Grid.Column="2" Text="Description" FontWeight="Bold" />
-                                    <Rectangle Grid.Row="1" Grid.ColumnSpan="3" Height="1"
+                                    <Rectangle Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" Height="1"
                                                Fill="{DynamicResource MahApps.Brushes.Gray8}" />
 
                                     <!-- Example rows -->
@@ -120,7 +120,7 @@
                        TextWrapping="Wrap"
                        VerticalAlignment="Center" />
             <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                <Button Content="{x:Static localization:Strings.Import}" Command="{Binding ImportCommand}"
+                <Button Content="{x:Static localization:Strings.Parse}" Command="{Binding ParseCommand}"
                         IsDefault="True" Margin="0,0,10,0">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HighlightedButton}">

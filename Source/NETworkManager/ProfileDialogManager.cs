@@ -639,7 +639,7 @@ public static class ProfileDialogManager
     private static Task ShowImportCsvFileDialog(Window parentWindow, IProfileManagerMinimal viewModel,
         string targetGroup, ImportCsvFileViewModel previousState)
     {
-        var childWindow = new ImportCsvFileChildWindow(parentWindow);
+        var childWindow = new ImportCsvFileChildWindow();
 
         void CloseChild()
         {

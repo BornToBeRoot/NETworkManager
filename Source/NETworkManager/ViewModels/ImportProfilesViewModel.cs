@@ -20,7 +20,7 @@ public sealed class ImportProfilesViewModel : ViewModelBase
 
         SelectedMethod = Methods[0];
 
-        ImportCommand = new RelayCommand(_ => importCommand(this), _ => SelectedMethod != null);
+        OKCommand = new RelayCommand(_ => importCommand(this), _ => SelectedMethod != null);
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
     }
 
@@ -39,7 +39,7 @@ public sealed class ImportProfilesViewModel : ViewModelBase
         }
     }
 
-    public ICommand ImportCommand { get; }
+    public ICommand OKCommand { get; }
 
     public ICommand CancelCommand { get; }
 

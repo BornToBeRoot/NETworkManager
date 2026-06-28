@@ -27,7 +27,7 @@ public sealed class ImportCsvFileViewModel : ViewModelBase
             : SettingsManager.Current.Profiles_ImportCsvLastFilePath ?? string.Empty;
 
         BrowseFileCommand = new RelayCommand(_ => BrowseFileAction());
-        ImportCommand = new RelayCommand(_ => ImportAction());
+        ParseCommand = new RelayCommand(_ => ImportAction());
         CancelCommand = new RelayCommand(_ => cancelDialog());
     }
 
@@ -42,7 +42,7 @@ public sealed class ImportCsvFileViewModel : ViewModelBase
             field = value;
             OnPropertyChanged();
         }
-    } = string.Empty;
+    }
 
     public bool IsStatusMessageDisplayed
     {
@@ -72,7 +72,7 @@ public sealed class ImportCsvFileViewModel : ViewModelBase
 
     public ICommand BrowseFileCommand { get; }
 
-    public ICommand ImportCommand { get; }
+    public ICommand ParseCommand { get; }
 
     public ICommand CancelCommand { get; }
 
@@ -93,6 +93,14 @@ public sealed class ImportCsvFileViewModel : ViewModelBase
     /// <param name="filePath">Path to the file.</param>
     public void SetFilePathFromDragDrop(string filePath)
     {
+        if (!filePath.EndsWith(".csv", StringComparison.OrdinalIgnoreCase))
+        {
+            StatusMessage = Strings.OnlyCsvFilesAllowed;
+            IsStatusMessageDisplayed = true;
+            return;
+        }
+
+        IsStatusMessageDisplayed = false;
         FilePath = filePath;
 
         OnPropertyChanged(nameof(FilePath));

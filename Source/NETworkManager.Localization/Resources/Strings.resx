@@ -318,6 +318,9 @@
   <data name="NewTab" xml:space="preserve">
     <value>New tab</value>
   </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
   </data>
@@ -1011,6 +1014,9 @@ Create one...</value>
   <data name="OID" xml:space="preserve">
     <value>OID</value>
   </data>
+  <data name="OnlyCsvFilesAllowed" xml:space="preserve">
+    <value>Only CSV files are allowed!</value>
+  </data>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
     <value>Only when using the full screen</value>
   </data>
@@ -1383,6 +1389,9 @@ Profile files are not affected!</value>
   </data>
   <data name="Overwrite" xml:space="preserve">
     <value>Overwrite</value>
+  </data>
+  <data name="Parse" xml:space="preserve">
+    <value>Parse</value>
   </data>
   <data name="Paste" xml:space="preserve">
     <value>Paste</value>
