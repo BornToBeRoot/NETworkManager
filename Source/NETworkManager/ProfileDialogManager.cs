@@ -587,6 +587,9 @@ public static class ProfileDialogManager
                 case ProfileImportSource.ActiveDirectory:
                     _ = ShowSearchAdComputersDialog(parentWindow, viewModel, targetGroup, previousState: null);
                     break;
+                case ProfileImportSource.Csv:
+                    _ = ShowImportCsvFileDialog(parentWindow, viewModel, targetGroup, previousState: null);
+                    break;
             }
         }, _ => CloseChild());
 
@@ -624,6 +627,39 @@ public static class ProfileDialogManager
             }, CloseChild, previousState);
 
         childWindow.Title = Strings.ImportComputersFromActiveDirectory;
+        childWindow.DataContext = childWindowViewModel;
+
+        viewModel.OnProfileManagerDialogOpen();
+
+        Settings.ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        return parentWindow.ShowChildWindowAsync(childWindow);
+    }
+
+    private static Task ShowImportCsvFileDialog(Window parentWindow, IProfileManagerMinimal viewModel,
+        string targetGroup, ImportCsvFileViewModel previousState)
+    {
+        var childWindow = new ImportCsvFileChildWindow();
+
+        void CloseChild()
+        {
+            childWindow.IsOpen = false;
+            Settings.ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            viewModel.OnProfileManagerDialogClose();
+        }
+
+        var childWindowViewModel = new ImportCsvFileViewModel(
+            (candidates, csvViewModel) =>
+            {
+                CloseChild();
+
+                _ = ShowImportProfilesResultDialog(parentWindow, viewModel, targetGroup, candidates,
+                    ProfileImportSource.Csv, Strings.ImportProfiles_Source_Csv,
+                    backToSourceCallback: () => _ = ShowImportCsvFileDialog(parentWindow, viewModel, targetGroup, csvViewModel));
+            }, CloseChild, previousState);
+
+        childWindow.Title = Strings.ImportProfilesFromCsvFile;
         childWindow.DataContext = childWindowViewModel;
 
         viewModel.OnProfileManagerDialogOpen();

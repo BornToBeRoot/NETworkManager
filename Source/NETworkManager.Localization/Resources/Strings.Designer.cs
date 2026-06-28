@@ -5588,7 +5588,70 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("ImportProfiles_Source_ActiveDirectory", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to CSV file.
+        /// </summary>
+        public static string ImportProfiles_Source_Csv {
+            get {
+                return ResourceManager.GetString("ImportProfiles_Source_Csv", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to CSV file.
+        /// </summary>
+        public static string ImportProfiles_Method_Csv {
+            get {
+                return ResourceManager.GetString("ImportProfiles_Method_Csv", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Import profiles from CSV file.
+        /// </summary>
+        public static string ImportProfilesFromCsvFile {
+            get {
+                return ResourceManager.GetString("ImportProfilesFromCsvFile", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Imported from CSV file on {0}.
+        /// </summary>
+        public static string Csv_ImportDescription {
+            get {
+                return ResourceManager.GetString("Csv_ImportDescription", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to No entries were found in the CSV file..
+        /// </summary>
+        public static string CsvNoEntriesFound {
+            get {
+                return ResourceManager.GetString("CsvNoEntriesFound", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Expected CSV format — one profile per line:.
+        /// </summary>
+        public static string CsvImportFormatHint {
+            get {
+                return ResourceManager.GetString("CsvImportFormatHint", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to A header row and the delimiter (semicolon, comma or tab) are detected automatically. The description column is optional. Entries without a host cannot be imported..
+        /// </summary>
+        public static string CsvImportFormatNote {
+            get {
+                return ResourceManager.GetString("CsvImportFormatNote", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Imported.
         /// </summary>
@@ -7317,7 +7380,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("NewTab", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        public static string Next {
+            get {
+                return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
@@ -7689,6 +7761,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only CSV files are allowed!.
+        /// </summary>
+        public static string OnlyCsvFilesAllowed {
+            get {
+                return ResourceManager.GetString("OnlyCsvFilesAllowed", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Only when using the full screen.
         /// </summary>
         public static string OnlyWhenUsingTheFullScreen {
@@ -7931,6 +8012,15 @@ namespace NETworkManager.Localization.Resources {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Parse.
+        /// </summary>
+        public static string Parse {
+            get {
+                return ResourceManager.GetString("Parse", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Paste.
         /// </summary>

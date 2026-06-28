@@ -752,7 +752,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("PrivateKeyFileLocationDots", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to C:\Data\profiles.csv.
+        /// </summary>
+        public static string CsvImportFileLocationDots {
+            get {
+                return ResourceManager.GetString("CsvImportFileLocationDots", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to NETworkManager.
         /// </summary>

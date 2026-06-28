@@ -116,6 +116,7 @@ Profiles can be imported from an external source. To start the import, click **I
 The following import sources are available:
 
 - [Active Directory](#active-directory)
+- [CSV file](#csv-file)
 
 ### Active Directory
 
@@ -136,6 +137,31 @@ Profiles can be imported from Active Directory by querying computer accounts via
 | **Additional LDAP filter**    | Optional LDAP filter to narrow down results, e.g. `(operatingSystem=Windows Server*)`.                                                           |
 
 Once the computers are found, proceed to [Review and import](#review-and-import) to select entries and configure import options.
+
+### CSV file
+
+Profiles can be imported from a CSV file. After selecting **CSV file** as the import source, choose the file (drag & drop it onto the path field or click the browse button) and click **Import**.
+
+| Field         | Description                                                       |
+| ------------- | ---------------------------------------------------------------- |
+| **File path** | Path to the `.csv` file to import. Drag & drop or browse for it. |
+
+The expected format is one entry per line as `Name;Host`, with an optional third column for the description:
+
+```csv
+Name;Host;Description
+Webserver;192.168.1.10;Production web server
+DC01;dc01.corp.local
+Router;10.0.0.1;Core router
+```
+
+- A header row (e.g. `Name;Host`) is optional and detected automatically.
+- The delimiter (semicolon `;`, comma `,` or tab) is detected automatically.
+- The **Description** column is optional. If omitted, a default description with the import date is used.
+- Entries without a host are listed but cannot be imported.
+- Re-importing the same file detects already imported entries (see the **Status** column in [Review and import](#review-and-import)), based on a hash of the name and host.
+
+Once the file is parsed, proceed to [Review and import](#review-and-import) to select entries and configure import options.
 
 ### Review and import
 
