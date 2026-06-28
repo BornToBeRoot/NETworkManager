@@ -82,7 +82,7 @@ public static class CsvProfileImportParser
     }
 
     /// <summary>
-    ///     Picks the delimiter that occurs most often across the first non-empty lines.
+    ///     Picks the delimiter that occurs most often on the first non-empty line.
     /// </summary>
     private static char DetectDelimiter(IReadOnlyList<string> lines)
     {
