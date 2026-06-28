@@ -313,7 +313,7 @@
     <value>Konfiguration angewendet</value>
   </data>
   <data name="NetworkInterfaceConfigureAdminMessage" xml:space="preserve">
-    <value>Configuring the network interface requires elevated rights!</value>
+    <value>Konfiguration von Netzwerkschnittstellen erfordert erhöhte Rechte!</value>
   </data>
   <data name="NewTab" xml:space="preserve">
     <value>Neuer Tab</value>
@@ -520,28 +520,28 @@
     <value>IPv4-Adresse</value>
   </data>
   <data name="IPv4AddressAddedSuccessfully" xml:space="preserve">
-    <value>IPv4 address added</value>
+    <value>IPv4-Adresse hinzugefügt</value>
   </data>
   <data name="IPv4AddressRemovedSuccessfully" xml:space="preserve">
-    <value>IPv4 address removed</value>
+    <value>IPv4-Adresse entfernt</value>
   </data>
   <data name="IPv4AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
-    <value>IPv4 address released and renewed</value>
+    <value>IPv4-Adresse freigegeben und erneuert</value>
   </data>
   <data name="IPv4AddressReleasedSuccessfully" xml:space="preserve">
-    <value>IPv4 address released</value>
+    <value>IPv4-Adresse freigegeben</value>
   </data>
   <data name="IPv4AddressRenewedSuccessfully" xml:space="preserve">
-    <value>IPv4 address renewed</value>
+    <value>IPv4-Adresse erneuert</value>
   </data>
   <data name="IPv6AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
-    <value>IPv6 address released and renewed</value>
+    <value>IPv6-Adresse freigegeben und erneuert</value>
   </data>
   <data name="IPv6AddressReleasedSuccessfully" xml:space="preserve">
-    <value>IPv6 address released</value>
+    <value>IPv6-Adresse freigegeben</value>
   </data>
   <data name="IPv6AddressRenewedSuccessfully" xml:space="preserve">
-    <value>IPv6 address renewed</value>
+    <value>IPv6-Adresse erneuert</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
     <value>IPv4-Standardgateway</value>
@@ -1325,7 +1325,7 @@ Profildateien sind nicht betroffen!</value>
     <value>DNS-Cache leeren</value>
   </data>
   <data name="FlushDNSCacheSuccessfully" xml:space="preserve">
-    <value>DNS cache flushed</value>
+    <value>DNS-Cache geleert</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
     <value>Entschlüsseln und laden Sie Ihre Anmeldedaten, um sie auszuwählen.</value>
@@ -2251,19 +2251,19 @@ $$hostname$$	--&gt;	Hostname</value>
     <value>Strg+Alt+Entf</value>
   </data>
   <data name="TaskManager" xml:space="preserve">
-    <value>Task Manager (Ctrl+Shift+Esc)</value>
+    <value>Task-Manager (Strg+Umschalt+Esc)</value>
   </data>
   <data name="Lock" xml:space="preserve">
-    <value>Lock (Win+L)</value>
+    <value>Sperren (Win+L)</value>
   </data>
   <data name="ShowDesktop" xml:space="preserve">
-    <value>Show Desktop (Win+D)</value>
+    <value>Desktop anzeigen (Win+D)</value>
   </data>
   <data name="Explorer" xml:space="preserve">
     <value>Explorer (Win+E)</value>
   </data>
   <data name="RunDialog" xml:space="preserve">
-    <value>Run dialog (Win+R)</value>
+    <value>Ausführen-Dialog (Win+R)</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
     <value>Tastenkombinationen</value>
