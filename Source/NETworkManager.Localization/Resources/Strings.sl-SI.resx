@@ -318,6 +318,9 @@
   <data name="NewTab" xml:space="preserve">
     <value>Nov zavihek</value>
   </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
   </data>
@@ -1011,6 +1014,9 @@ Ustvarite enega...</value>
   <data name="OID" xml:space="preserve">
     <value>OID</value>
   </data>
+  <data name="OnlyCsvFilesAllowed" xml:space="preserve">
+    <value>Only CSV files are allowed!</value>
+  </data>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
     <value>Samo pri uporabi celotnega zaslona</value>
   </data>
@@ -1379,6 +1385,9 @@ Ustvarite enega...</value>
   </data>
   <data name="Overwrite" xml:space="preserve">
     <value>Prepiši</value>
+  </data>
+  <data name="Parse" xml:space="preserve">
+    <value>Parse</value>
   </data>
   <data name="Paste" xml:space="preserve">
     <value>Prilepi</value>
@@ -4194,6 +4203,27 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   </data>
   <data name="ImportProfiles_Source_ActiveDirectory" xml:space="preserve">
     <value>Active Directory</value>
+  </data>
+  <data name="ImportProfiles_Source_Csv" xml:space="preserve">
+    <value>CSV file</value>
+  </data>
+  <data name="ImportProfiles_Method_Csv" xml:space="preserve">
+    <value>CSV file</value>
+  </data>
+  <data name="ImportProfilesFromCsvFile" xml:space="preserve">
+    <value>Import profiles from CSV file</value>
+  </data>
+  <data name="Csv_ImportDescription" xml:space="preserve">
+    <value>Imported from CSV file on {0}</value>
+  </data>
+  <data name="CsvNoEntriesFound" xml:space="preserve">
+    <value>No entries were found in the CSV file.</value>
+  </data>
+  <data name="CsvImportFormatHint" xml:space="preserve">
+    <value>Expected CSV format — one profile per line:</value>
+  </data>
+  <data name="CsvImportFormatNote" xml:space="preserve">
+    <value>A header row and the delimiter (semicolon, comma or tab) are detected automatically. The description column is optional. Entries without a host cannot be imported.</value>
   </data>
   <data name="ImportResults" xml:space="preserve">
     <value>Import results</value>
