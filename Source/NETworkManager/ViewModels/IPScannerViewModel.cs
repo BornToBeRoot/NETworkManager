@@ -581,14 +581,14 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             var hostname = !string.IsNullOrEmpty(SelectedResult.Hostname) ? SelectedResult.Hostname.TrimEnd('.') : "";
             var ipAddress = SelectedResult.PingInfo.IPAddress.ToString();
 
-            info.FilePath = Regex.Replace(info.FilePath, "\\$\\$hostname\\$\\$", hostname, RegexOptions.IgnoreCase);
-            info.FilePath = Regex.Replace(info.FilePath, "\\$\\$ipaddress\\$\\$", ipAddress, RegexOptions.IgnoreCase);
+            info.FilePath = Regex.Replace(info.FilePath, "\\{\\{hostname\\}\\}", hostname, RegexOptions.IgnoreCase);
+            info.FilePath = Regex.Replace(info.FilePath, "\\{\\{ipaddress\\}\\}", ipAddress, RegexOptions.IgnoreCase);
 
             if (!string.IsNullOrEmpty(info.Arguments))
             {
-                info.Arguments = Regex.Replace(info.Arguments, "\\$\\$hostname\\$\\$", hostname,
+                info.Arguments = Regex.Replace(info.Arguments, "\\{\\{hostname\\}\\}", hostname,
                     RegexOptions.IgnoreCase);
-                info.Arguments = Regex.Replace(info.Arguments, "\\$\\$ipaddress\\$\\$", ipAddress,
+                info.Arguments = Regex.Replace(info.Arguments, "\\{\\{ipaddress\\}\\}", ipAddress,
                     RegexOptions.IgnoreCase);
             }
 

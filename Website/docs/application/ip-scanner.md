@@ -208,18 +208,18 @@ Custom commands that can be executed with a right click on the selected result.
 
 **Default:**
 
-| Name                  | File path      | Arguments                                        |
-| --------------------- | -------------- | ------------------------------------------------ |
-| Edge                  | `cmd.exe`      | `/c start microsoft-edge:http://$$ipaddress$$/`  |
-| Edge (https)          | `cmd.exe`      | `/c start microsoft-edge:https://$$ipaddress$$/` |
-| Windows Explorer (c$) | `explorer.exe` | `\\$$ipaddress$$\c$`                             |
+| Name                  | File path      | Arguments                                         |
+| --------------------- | -------------- | -------------------------------------------------- |
+| Edge                  | `cmd.exe`      | `/c start microsoft-edge:http://{{IPAddress}}/`  |
+| Edge (https)          | `cmd.exe`      | `/c start microsoft-edge:https://{{IPAddress}}/` |
+| Windows Explorer (c$) | `explorer.exe` | `\\{{IPAddress}}\c$`                             |
 
 In the arguments you can use the following placeholders:
 
-| Placeholder     | Description |
-| --------------- | ----------- |
-| `$$ipaddress$$` | IP address  |
-| `$$hostname$$`  | Hostname    |
+| Placeholder      | Description |
+| ---------------- | ----------- |
+| `{{IPAddress}}`  | IP address  |
+| `{{Hostname}}`   | Hostname    |
 
 :::note
 
