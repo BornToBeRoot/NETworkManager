@@ -477,6 +477,18 @@
   <data name="Description" xml:space="preserve">
     <value>説明</value>
   </data>
+  <data name="Placeholder" xml:space="preserve">
+    <value>Placeholder</value>
+  </data>
+  <data name="HelpMessage_CustomCommandFilePath" xml:space="preserve">
+    <value>Path to the file or executable to run. The following placeholders can be used:</value>
+  </data>
+  <data name="HelpMessage_CustomCommandArguments" xml:space="preserve">
+    <value>Arguments passed to the file or executable. The following placeholders can be used:</value>
+  </data>
+  <data name="HelpMessage_ProfileHostPlaceholder" xml:space="preserve">
+    <value>The following placeholder can be used:</value>
+  </data>
   <data name="DHCPEnabled" xml:space="preserve">
     <value>DHCP 有効</value>
   </data>
@@ -2243,12 +2255,6 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>選択したカスタム コマンドは完全に削除されます。</value>
-  </data>
-  <data name="HelpMessage_CustomCommandVariables" xml:space="preserve">
-    <value>以下の変数が利用可能です :
-
-$$ipaddress$$	--&gt;	IP アドレス
-$$hostname$$	--&gt;	ホスト名</value>
   </data>
   <data name="Restart" xml:space="preserve">
     <value>再起動</value>
