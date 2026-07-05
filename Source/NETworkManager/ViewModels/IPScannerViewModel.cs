@@ -20,7 +20,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -581,15 +580,15 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             var hostname = !string.IsNullOrEmpty(SelectedResult.Hostname) ? SelectedResult.Hostname.TrimEnd('.') : "";
             var ipAddress = SelectedResult.PingInfo.IPAddress.ToString();
 
-            info.FilePath = Regex.Replace(info.FilePath, "\\{\\{hostname\\}\\}", hostname, RegexOptions.IgnoreCase);
-            info.FilePath = Regex.Replace(info.FilePath, "\\{\\{ipaddress\\}\\}", ipAddress, RegexOptions.IgnoreCase);
+            info.FilePath = PlaceholderHelper.Resolve(info.FilePath,
+                (PlaceholderHelper.Hostname, hostname),
+                (PlaceholderHelper.IPAddress, ipAddress));
 
             if (!string.IsNullOrEmpty(info.Arguments))
             {
-                info.Arguments = Regex.Replace(info.Arguments, "\\{\\{hostname\\}\\}", hostname,
-                    RegexOptions.IgnoreCase);
-                info.Arguments = Regex.Replace(info.Arguments, "\\{\\{ipaddress\\}\\}", ipAddress,
-                    RegexOptions.IgnoreCase);
+                info.Arguments = PlaceholderHelper.Resolve(info.Arguments,
+                    (PlaceholderHelper.Hostname, hostname),
+                    (PlaceholderHelper.IPAddress, ipAddress));
             }
 
             try

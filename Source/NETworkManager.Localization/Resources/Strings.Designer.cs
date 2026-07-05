@@ -3047,6 +3047,15 @@ namespace NETworkManager.Localization.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to {{Host}} can be used to insert the profile's host..
+        /// </summary>
+        public static string HelpMessage_ProfileHostPlaceholder {
+            get {
+                return ResourceManager.GetString("HelpMessage_ProfileHostPlaceholder", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Deselect all.
         /// </summary>
         public static string DeselectAll {

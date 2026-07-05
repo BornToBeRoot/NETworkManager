@@ -638,7 +638,8 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
                 EnableRemoteConsole = instance.EnableRemoteConsole,
                 Host = instance.Host,
                 Command = instance.Command,
-                AdditionalCommandLine = instance.AdditionalCommandLine,
+                AdditionalCommandLine = PlaceholderHelper.Resolve(instance.AdditionalCommandLine,
+                    (PlaceholderHelper.Host, instance.Host)),
                 ExecutionPolicy = instance.ExecutionPolicy
             };
 

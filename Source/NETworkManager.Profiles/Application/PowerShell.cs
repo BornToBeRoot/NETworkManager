@@ -1,5 +1,6 @@
 ﻿using NETworkManager.Models.PowerShell;
 using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Profiles.Application;
 
@@ -20,11 +21,13 @@ public class PowerShell
                 : group.PowerShell_OverrideCommand
                     ? group.PowerShell_Command
                     : SettingsManager.Current.PowerShell_Command,
-            AdditionalCommandLine = profile.PowerShell_OverrideAdditionalCommandLine
-                ? profile.PowerShell_AdditionalCommandLine
-                : group.PowerShell_OverrideAdditionalCommandLine
-                    ? group.PowerShell_AdditionalCommandLine
-                    : SettingsManager.Current.PowerShell_AdditionalCommandLine,
+            AdditionalCommandLine = PlaceholderHelper.Resolve(
+                profile.PowerShell_OverrideAdditionalCommandLine
+                    ? profile.PowerShell_AdditionalCommandLine
+                    : group.PowerShell_OverrideAdditionalCommandLine
+                        ? group.PowerShell_AdditionalCommandLine
+                        : SettingsManager.Current.PowerShell_AdditionalCommandLine,
+                (PlaceholderHelper.Host, profile.Host)),
             ExecutionPolicy = profile.PowerShell_OverrideExecutionPolicy
                 ? profile.PowerShell_ExecutionPolicy
                 : group.PowerShell_OverrideExecutionPolicy

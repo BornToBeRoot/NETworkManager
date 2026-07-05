@@ -90,6 +90,10 @@ Release date: **xx.xx.2025**
 
 - MAC address resolution now uses ARP (IPv4) or NDP (IPv6) from the neighbor cache, with NetBIOS as fallback. The detail panel shows a single **MAC Address** section instead of separate ARP and NetBIOS entries. [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
 
+**Profiles**
+
+- **WebConsole** URL, **PowerShell** additional command line, and **PuTTY** additional command line now support a `{{Host}}` placeholder (e.g. `https://{{Host}}/`) that is resolved to the profile's host each time a connection is established, so it always reflects the current host even after later edits.
+
 **Dashboard**
 
 - Added a **Refresh** button (with animated feedback) to the **Network Connection**, **IP Geolocation**, and **DNS Resolver** widgets. The global reload button in the Status Window has been removed, as each widget now has its own. [#3447](https://github.com/BornToBeRoot/NETworkManager/pull/3447)

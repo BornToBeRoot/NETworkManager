@@ -2806,6 +2806,13 @@
                                          Text="{Binding PowerShell_AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          IsEnabled="{Binding PowerShell_OverrideAdditionalCommandLine}"
                                          Style="{StaticResource DefaultTextBox}" />
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="12"
+                                           ToolTip="{x:Static localization:Strings.HelpMessage_ProfileHostPlaceholder}"
+                                           Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                    <Rectangle.Resources>
+                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                    </Rectangle.Resources>
+                                </Rectangle>
                                 <CheckBox Grid.Column="0" Grid.Row="14"
                                           Content="{x:Static localization:Strings.ExecutionPolicy}"
                                           IsChecked="{Binding PowerShell_OverrideExecutionPolicy}"
@@ -3131,6 +3138,13 @@
                                 <TextBox Grid.Column="2" Grid.Row="28" Text="{Binding PuTTY_AdditionalCommandLine}"
                                          IsEnabled="{Binding PuTTY_OverrideAdditionalCommandLine}"
                                          Style="{StaticResource DefaultTextBox}" />
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="28"
+                                           ToolTip="{x:Static localization:Strings.HelpMessage_ProfileHostPlaceholder}"
+                                           Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                    <Rectangle.Resources>
+                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                    </Rectangle.Resources>
+                                </Rectangle>
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>
@@ -3248,11 +3262,18 @@
                                                  UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <validators:HttpAndHttpsUriValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:WebConsoleProfileUrlValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="0"
+                                           ToolTip="{x:Static localization:Strings.HelpMessage_ProfileHostPlaceholder}"
+                                           Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                    <Rectangle.Resources>
+                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                    </Rectangle.Resources>
+                                </Rectangle>
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>
