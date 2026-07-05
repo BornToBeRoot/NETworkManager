@@ -478,16 +478,16 @@
     <value>Descrição</value>
   </data>
   <data name="Placeholder" xml:space="preserve">
-    <value>Placeholder</value>
+    <value>Espaço reservado</value>
   </data>
   <data name="HelpMessage_CustomCommandFilePath" xml:space="preserve">
-    <value>Path to the file or executable to run. The following placeholders can be used:</value>
+    <value>Caminho do arquivo ou executável para executar. Os seguintes espaços reservados podem ser usados:</value>
   </data>
   <data name="HelpMessage_CustomCommandArguments" xml:space="preserve">
-    <value>Arguments passed to the file or executable. The following placeholders can be used:</value>
+    <value>Argumentos passados para o arquivo ou executável. Os seguintes espaços reservados podem ser usados:</value>
   </data>
   <data name="HelpMessage_ProfileHostPlaceholder" xml:space="preserve">
-    <value>The following placeholder can be used:</value>
+    <value>O seguinte espaço reservado pode ser usado:</value>
   </data>
   <data name="DHCPEnabled" xml:space="preserve">
     <value>DHCP ativado</value>
