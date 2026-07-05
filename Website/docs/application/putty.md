@@ -208,6 +208,8 @@ Additional command line parameters to use for the connection which are appended.
 
 Additional command line parameters to use for the connection. For more information about the available parameters, see the [PuTTY documentation](https://the.earth.li/~sgtatham/putty/latest/htmldoc/Chapter3.html).
 
+`{{Host}}` can be used to insert the [Host](#host) entered above (not resolved if [Mode](#mode) is set to `Serial`, since there is no host in that mode).
+
 :::
 
 ## Profile
@@ -477,6 +479,8 @@ Additional command line parameters to use for the connection which are appended.
 
 Additional command line parameters to use for the connection. For more information about the available parameters, see the [PuTTY documentation](https://the.earth.li/~sgtatham/putty/latest/htmldoc/Chapter3.html).
 
+`{{Host}}` can be used to insert the profile's host.
+
 :::
 
 ## Group
@@ -608,6 +612,8 @@ Additional command line parameters to use for the connection which are appended.
 :::note
 
 Additional command line parameters to use for the connection. For more information about the available parameters, see the [PuTTY documentation](https://the.earth.li/~sgtatham/putty/latest/htmldoc/Chapter3.html).
+
+`{{Host}}` can be used to insert the profile's host.
 
 :::
 
@@ -774,6 +780,8 @@ Additional command line parameters to use for the connection which are appended.
 :::note
 
 Additional command line parameters to use for the connection. For more information about the available parameters, see the [PuTTY documentation](https://the.earth.li/~sgtatham/putty/latest/htmldoc/Chapter3.html).
+
+`{{Host}}` can be used to insert the host.
 
 :::
 

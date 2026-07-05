@@ -1,4 +1,5 @@
 ﻿using NETworkManager.Models.WebConsole;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Profiles.Application;
 
@@ -8,7 +9,7 @@ public class WebConsole
     {
         var info = new WebConsoleSessionInfo
         {
-            Url = profileInfo.WebConsole_Url
+            Url = PlaceholderHelper.Resolve(profileInfo.WebConsole_Url, (PlaceholderHelper.Host, profileInfo.Host))
         };
 
         return info;

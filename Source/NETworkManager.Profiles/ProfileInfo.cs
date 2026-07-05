@@ -465,7 +465,7 @@ public class ProfileInfo
     public int TigerVNC_Port { get; set; } = GlobalStaticConfiguration.TigerVNC_DefaultVNCPort;
 
     public bool WebConsole_Enabled { get; set; }
-    public string WebConsole_Url { get; set; }
+    public string WebConsole_Url { get; set; } = "https://{{Host}}";
 
     public bool SNMP_Enabled { get; set; }
     public bool SNMP_InheritHost { get; set; } = true;

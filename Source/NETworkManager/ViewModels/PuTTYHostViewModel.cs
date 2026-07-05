@@ -574,7 +574,8 @@ public class PuTTYHostViewModel : ViewModelBase, IProfileManager
                 LogMode = SettingsManager.Current.PuTTY_LogMode,
                 LogFileName = SettingsManager.Current.PuTTY_LogFileName,
                 LogPath = PuTTYProfile.LogPath,
-                AdditionalCommandLine = instance.AdditionalCommandLine
+                AdditionalCommandLine = PlaceholderHelper.Resolve(instance.AdditionalCommandLine,
+                    (PlaceholderHelper.Host, instance.ConnectionMode == ConnectionMode.Serial ? null : instance.Host))
             };
 
             // Add to history

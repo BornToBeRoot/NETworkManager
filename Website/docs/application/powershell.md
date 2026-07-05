@@ -130,6 +130,12 @@ Additional command line arguments to pass to the PowerShell console when it is s
 
 **Default:** [`Settings > Additional command line`](#additional-command-line-3)
 
+:::note
+
+`{{Host}}` can be used to insert the [Host](#host) entered above.
+
+:::
+
 ### Execution policy
 
 Execution policy of the PowerShell console when it is started.
@@ -219,6 +225,12 @@ Additional command line arguments to pass to the PowerShell console when it is s
 
 **Default:** `Empty`
 
+:::note
+
+`{{Host}}` can be used to insert the profile's host.
+
+:::
+
 ### Execution policy
 
 Execution policy of the PowerShell console when it is started.
@@ -262,6 +274,12 @@ Additional command line arguments to pass to the PowerShell console when it is s
 **Type:** `String`
 
 **Default:** `Empty`
+
+:::note
+
+`{{Host}}` can be used to insert the profile's host.
+
+:::
 
 ### Execution policy
 
@@ -324,6 +342,12 @@ Default additional command line arguments to pass to the PowerShell console when
 **Type:** `String`
 
 **Default:** `Empty`
+
+:::note
+
+`{{Host}}` can be used to insert the host.
+
+:::
 
 ### Execution policy
 

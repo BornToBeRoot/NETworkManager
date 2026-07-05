@@ -29,6 +29,7 @@ Release date: **xx.xx.2025**
 
 - **ARP Table** has been renamed to **[Neighbor Table](../application/neighbor-table.md)**. The application list entry is automatically migrated on first launch. Other view settings (auto-refresh interval, export file type/path) reset to their defaults. [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
 - **IP Scanner** export: The `ARPMACAddress` and `ARPVendor` columns have been removed from CSV, XML and JSON exports. Use `MACAddress` and `Vendor` instead, which contain the same value (ARP/NDP preferred, NetBIOS as fallback). [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
+- **IP Scanner** custom commands: The placeholder syntax has changed from `$$ipaddress$$` / `$$hostname$$` to `{{IPAddress}}` / `{{Hostname}}`. Existing custom commands are automatically migrated on first launch.
 
 ## What's new?
 
@@ -88,6 +89,11 @@ Release date: **xx.xx.2025**
 **IP Scanner**
 
 - MAC address resolution now uses ARP (IPv4) or NDP (IPv6) from the neighbor cache, with NetBIOS as fallback. The detail panel shows a single **MAC Address** section instead of separate ARP and NetBIOS entries. [#3403](https://github.com/BornToBeRoot/NETworkManager/pull/3403)
+
+**Profiles**
+
+- **WebConsole** URL, **PowerShell** additional command line, and **PuTTY** additional command line now support a `{{Host}}` placeholder (e.g. `https://{{Host}}/`) that is resolved to the profile's host each time a connection is established, so it always reflects the current host even after later edits. For PowerShell and PuTTY, the placeholder also resolves in the ad-hoc **Connect** dialog, using the host entered there. A help icon next to each field shows the available placeholder. [#3511](https://github.com/BornToBeRoot/NETworkManager/pull/3511)
+- New profiles pre-fill the **WebConsole** URL with `https://{{Host}}`, and profile import (CSV, Active Directory) can now also enable **WebConsole** for imported profiles. [#3511](https://github.com/BornToBeRoot/NETworkManager/pull/3511)
 
 **Dashboard**
 

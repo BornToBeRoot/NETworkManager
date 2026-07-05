@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 
 namespace NETworkManager.Settings;
@@ -697,6 +698,36 @@ public static class SettingsManager
             neighborTableEntry.IsDefault = arpTableEntry.IsDefault;
 
             Current.General_ApplicationList[index] = neighborTableEntry;
+        }
+
+        // IP Scanner - Custom commands
+        Log.Info("Migrating IP Scanner custom command placeholder syntax from \"$$var$$\" to \"{{Var}}\"...");
+
+        foreach (var customCommand in Current.IPScanner_CustomCommands)
+        {
+            var filePath = customCommand.FilePath;
+
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                filePath = Regex.Replace(filePath, "\\$\\$ipaddress\\$\\$", "{{IPAddress}}", RegexOptions.IgnoreCase);
+                filePath = Regex.Replace(filePath, "\\$\\$hostname\\$\\$", "{{Hostname}}", RegexOptions.IgnoreCase);
+            }
+
+            var arguments = customCommand.Arguments;
+
+            if (!string.IsNullOrEmpty(arguments))
+            {
+                arguments = Regex.Replace(arguments, "\\$\\$ipaddress\\$\\$", "{{IPAddress}}", RegexOptions.IgnoreCase);
+                arguments = Regex.Replace(arguments, "\\$\\$hostname\\$\\$", "{{Hostname}}", RegexOptions.IgnoreCase);
+            }
+
+            if (filePath == customCommand.FilePath && arguments == customCommand.Arguments)
+                continue;
+
+            Log.Info($"Migrated custom command \"{customCommand.Name}\"...");
+
+            customCommand.FilePath = filePath;
+            customCommand.Arguments = arguments;
         }
     }
     #endregion

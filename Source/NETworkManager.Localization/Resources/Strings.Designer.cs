@@ -3018,7 +3018,43 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("Description", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Placeholder.
+        /// </summary>
+        public static string Placeholder {
+            get {
+                return ResourceManager.GetString("Placeholder", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Path to the file or executable to run. The following placeholders can be used:.
+        /// </summary>
+        public static string HelpMessage_CustomCommandFilePath {
+            get {
+                return ResourceManager.GetString("HelpMessage_CustomCommandFilePath", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Arguments passed to the file or executable. The following placeholders can be used:.
+        /// </summary>
+        public static string HelpMessage_CustomCommandArguments {
+            get {
+                return ResourceManager.GetString("HelpMessage_CustomCommandArguments", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The following placeholder can be used:.
+        /// </summary>
+        public static string HelpMessage_ProfileHostPlaceholder {
+            get {
+                return ResourceManager.GetString("HelpMessage_ProfileHostPlaceholder", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Deselect all.
         /// </summary>
@@ -5061,18 +5097,6 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_Credentials {
             get {
                 return ResourceManager.GetString("HelpMessage_Credentials", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The following variables are available:
-        ///
-        ///$$ipaddress$$	--&gt;	IP adresse
-        ///$$hostname$$	--&gt;	Hostname.
-        /// </summary>
-        public static string HelpMessage_CustomCommandVariables {
-            get {
-                return ResourceManager.GetString("HelpMessage_CustomCommandVariables", resourceCulture);
             }
         }
         

@@ -10,10 +10,10 @@ public static class IPScannerCustomCommand
     {
         return new List<CustomCommandInfo>
         {
-            new(Guid.NewGuid(), "Edge", "cmd.exe", @"/c start microsoft-edge:http://$$ipaddress$$/"),
+            new(Guid.NewGuid(), "Edge", "cmd.exe", @"/c start microsoft-edge:http://{{IPAddress}}/"),
             new(Guid.NewGuid(), "Edge (https)", "cmd.exe",
-                @"/c start microsoft-edge:https://$$ipaddress$$/"),
-            new(Guid.NewGuid(), "Windows Explorer (c$)", "explorer.exe", @"\\$$ipaddress$$\c$")
+                @"/c start microsoft-edge:https://{{IPAddress}}/"),
+            new(Guid.NewGuid(), "Windows Explorer (c$)", "explorer.exe", @"\\{{IPAddress}}\c$")
         };
     }
 }

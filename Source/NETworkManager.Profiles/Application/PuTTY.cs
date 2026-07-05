@@ -1,5 +1,6 @@
 ﻿using NETworkManager.Models.PuTTY;
 using NETworkManager.Settings;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Profiles.Application;
 
@@ -55,11 +56,13 @@ public static class PuTTY
                 : group.PuTTY_OverrideLogFileName
                     ? group.PuTTY_LogFileName
                     : SettingsManager.Current.PuTTY_LogFileName,
-            AdditionalCommandLine = profile.PuTTY_OverrideAdditionalCommandLine
-                ? profile.PuTTY_AdditionalCommandLine
-                : group.PuTTY_OverrideAdditionalCommandLine
-                    ? group.PuTTY_AdditionalCommandLine
-                    : SettingsManager.Current.PuTTY_AdditionalCommandLine
+            AdditionalCommandLine = PlaceholderHelper.Resolve(
+                profile.PuTTY_OverrideAdditionalCommandLine
+                    ? profile.PuTTY_AdditionalCommandLine
+                    : group.PuTTY_OverrideAdditionalCommandLine
+                        ? group.PuTTY_AdditionalCommandLine
+                        : SettingsManager.Current.PuTTY_AdditionalCommandLine,
+                (PlaceholderHelper.Host, profile.Host))
         };
     }
 }

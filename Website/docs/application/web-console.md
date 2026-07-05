@@ -52,6 +52,12 @@ URL of the website to display in the web console.
 
 **Example:** `https://pihole.borntoberoot.net/admin/`
 
+:::note
+
+`{{Host}}` can be used to insert the profile's host (e.g. `https://{{Host}}/`).
+
+:::
+
 ## Settings
 
 ### Show address bar

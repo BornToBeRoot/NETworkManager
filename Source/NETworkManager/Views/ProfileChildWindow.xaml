@@ -2806,6 +2806,51 @@
                                          Text="{Binding PowerShell_AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          IsEnabled="{Binding PowerShell_OverrideAdditionalCommandLine}"
                                          Style="{StaticResource DefaultTextBox}" />
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="12"
+                                           Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                    <Rectangle.ToolTip>
+                                        <ToolTip Style="{StaticResource DefaultToolTip}" MaxWidth="320">
+                                            <StackPanel>
+                                                <TextBlock Text="{x:Static localization:Strings.HelpMessage_ProfileHostPlaceholder}"
+                                                           Style="{StaticResource DefaultTextBlock}"
+                                                           TextWrapping="Wrap" Margin="0,0,0,8" />
+                                                <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                                                        BorderThickness="1" CornerRadius="2">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.Resources>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="Padding" Value="6,3" />
+                                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                            </Style>
+                                                        </Grid.Resources>
+
+                                                        <!-- Header row -->
+                                                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                                                   Text="{x:Static localization:Strings.Placeholder}" FontWeight="Bold" />
+                                                        <TextBlock Grid.Row="0" Grid.Column="1"
+                                                                   Text="{x:Static localization:Strings.Description}" FontWeight="Bold" />
+                                                        <Rectangle Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Height="1"
+                                                                   Fill="{DynamicResource MahApps.Brushes.Gray8}" />
+
+                                                        <!-- Placeholder -->
+                                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{}{{Host}}" />
+                                                        <TextBlock Grid.Row="2" Grid.Column="1"
+                                                                   Text="{x:Static localization:Strings.Host}" />
+                                                    </Grid>
+                                                </Border>
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </Rectangle.ToolTip>
+                                </Rectangle>
                                 <CheckBox Grid.Column="0" Grid.Row="14"
                                           Content="{x:Static localization:Strings.ExecutionPolicy}"
                                           IsChecked="{Binding PowerShell_OverrideExecutionPolicy}"
@@ -3131,6 +3176,51 @@
                                 <TextBox Grid.Column="2" Grid.Row="28" Text="{Binding PuTTY_AdditionalCommandLine}"
                                          IsEnabled="{Binding PuTTY_OverrideAdditionalCommandLine}"
                                          Style="{StaticResource DefaultTextBox}" />
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="28"
+                                           Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                    <Rectangle.ToolTip>
+                                        <ToolTip Style="{StaticResource DefaultToolTip}" MaxWidth="320">
+                                            <StackPanel>
+                                                <TextBlock Text="{x:Static localization:Strings.HelpMessage_ProfileHostPlaceholder}"
+                                                           Style="{StaticResource DefaultTextBlock}"
+                                                           TextWrapping="Wrap" Margin="0,0,0,8" />
+                                                <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                                                        BorderThickness="1" CornerRadius="2">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.Resources>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="Padding" Value="6,3" />
+                                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                            </Style>
+                                                        </Grid.Resources>
+
+                                                        <!-- Header row -->
+                                                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                                                   Text="{x:Static localization:Strings.Placeholder}" FontWeight="Bold" />
+                                                        <TextBlock Grid.Row="0" Grid.Column="1"
+                                                                   Text="{x:Static localization:Strings.Description}" FontWeight="Bold" />
+                                                        <Rectangle Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Height="1"
+                                                                   Fill="{DynamicResource MahApps.Brushes.Gray8}" />
+
+                                                        <!-- Placeholder -->
+                                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{}{{Host}}" />
+                                                        <TextBlock Grid.Row="2" Grid.Column="1"
+                                                                   Text="{x:Static localization:Strings.Host}" />
+                                                    </Grid>
+                                                </Border>
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </Rectangle.ToolTip>
+                                </Rectangle>
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>
@@ -3248,11 +3338,56 @@
                                                  UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                                <validators:HttpAndHttpsUriValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:WebConsoleProfileUrlValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="0"
+                                           Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                    <Rectangle.ToolTip>
+                                        <ToolTip Style="{StaticResource DefaultToolTip}" MaxWidth="320">
+                                            <StackPanel>
+                                                <TextBlock Text="{x:Static localization:Strings.HelpMessage_ProfileHostPlaceholder}"
+                                                           Style="{StaticResource DefaultTextBlock}"
+                                                           TextWrapping="Wrap" Margin="0,0,0,8" />
+                                                <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                                                        BorderThickness="1" CornerRadius="2">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.Resources>
+                                                            <Style TargetType="{x:Type TextBlock}">
+                                                                <Setter Property="Padding" Value="6,3" />
+                                                                <Setter Property="VerticalAlignment" Value="Center" />
+                                                            </Style>
+                                                        </Grid.Resources>
+
+                                                        <!-- Header row -->
+                                                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                                                   Text="{x:Static localization:Strings.Placeholder}" FontWeight="Bold" />
+                                                        <TextBlock Grid.Row="0" Grid.Column="1"
+                                                                   Text="{x:Static localization:Strings.Description}" FontWeight="Bold" />
+                                                        <Rectangle Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Height="1"
+                                                                   Fill="{DynamicResource MahApps.Brushes.Gray8}" />
+
+                                                        <!-- Placeholder -->
+                                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{}{{Host}}" />
+                                                        <TextBlock Grid.Row="2" Grid.Column="1"
+                                                                   Text="{x:Static localization:Strings.Host}" />
+                                                    </Grid>
+                                                </Border>
+                                            </StackPanel>
+                                        </ToolTip>
+                                    </Rectangle.ToolTip>
+                                </Rectangle>
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>

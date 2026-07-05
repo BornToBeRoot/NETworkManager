@@ -277,7 +277,7 @@
     <value>iexplore.exe</value>
   </data>
   <data name="ExampleCustomCommandVariableHostname" xml:space="preserve">
-    <value>https://$$HOSTNAME$$/</value>
+    <value>https://{{Hostname}}/</value>
   </data>
   <data name="InternetExplorer" xml:space="preserve">
     <value>Internet Explorer</value>
