@@ -478,16 +478,16 @@
     <value>説明</value>
   </data>
   <data name="Placeholder" xml:space="preserve">
-    <value>Placeholder</value>
+    <value>プレースホルダー</value>
   </data>
   <data name="HelpMessage_CustomCommandFilePath" xml:space="preserve">
-    <value>Path to the file or executable to run. The following placeholders can be used:</value>
+    <value>実行するファイルまたは実行可能ファイルへのパス。次のプレースホルダーを使用できます :</value>
   </data>
   <data name="HelpMessage_CustomCommandArguments" xml:space="preserve">
-    <value>Arguments passed to the file or executable. The following placeholders can be used:</value>
+    <value>ファイルまたは実行可能ファイルに渡される引数。次のプレースホルダーを使用できます :</value>
   </data>
   <data name="HelpMessage_ProfileHostPlaceholder" xml:space="preserve">
-    <value>The following placeholder can be used:</value>
+    <value>次のプレースホルダーを使用できます :</value>
   </data>
   <data name="DHCPEnabled" xml:space="preserve">
     <value>DHCP 有効</value>
