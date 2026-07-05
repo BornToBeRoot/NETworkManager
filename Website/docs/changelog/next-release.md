@@ -92,7 +92,8 @@ Release date: **xx.xx.2025**
 
 **Profiles**
 
-- **WebConsole** URL, **PowerShell** additional command line, and **PuTTY** additional command line now support a `{{Host}}` placeholder (e.g. `https://{{Host}}/`) that is resolved to the profile's host each time a connection is established, so it always reflects the current host even after later edits.
+- **WebConsole** URL, **PowerShell** additional command line, and **PuTTY** additional command line now support a `{{Host}}` placeholder (e.g. `https://{{Host}}/`) that is resolved to the profile's host each time a connection is established, so it always reflects the current host even after later edits. For PowerShell and PuTTY, the placeholder also resolves in the ad-hoc **Connect** dialog, using the host entered there. A help icon next to each field shows the available placeholder.
+- New profiles pre-fill the **WebConsole** URL with `https://{{Host}}`, and profile import (CSV, Active Directory) can now also enable **WebConsole** for imported profiles.
 
 **Dashboard**
 

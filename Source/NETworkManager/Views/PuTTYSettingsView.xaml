@@ -151,8 +151,54 @@
         </TextBox>
         <TextBlock Text="{x:Static localization:Strings.AdditionalCommandLine}"
                    Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
-        <TextBox Width="250" Text="{Binding AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" Margin="0,0,0,10" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBox Width="250" Text="{Binding AdditionalCommandLine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}" />
+            <Rectangle Width="24" Height="24" Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.ToolTip>
+                    <ToolTip Style="{StaticResource DefaultToolTip}" MaxWidth="320">
+                        <StackPanel>
+                            <TextBlock Text="{x:Static localization:Strings.HelpMessage_ProfileHostPlaceholder}"
+                                       Style="{StaticResource DefaultTextBlock}"
+                                       TextWrapping="Wrap" Margin="0,0,0,8" />
+                            <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                                    BorderThickness="1" CornerRadius="2">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.Resources>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Padding" Value="6,3" />
+                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                        </Style>
+                                    </Grid.Resources>
+
+                                    <!-- Header row -->
+                                    <TextBlock Grid.Row="0" Grid.Column="0"
+                                               Text="{x:Static localization:Strings.Placeholder}" FontWeight="Bold" />
+                                    <TextBlock Grid.Row="0" Grid.Column="1"
+                                               Text="{x:Static localization:Strings.Description}" FontWeight="Bold" />
+                                    <Rectangle Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Height="1"
+                                               Fill="{DynamicResource MahApps.Brushes.Gray8}" />
+
+                                    <!-- Placeholder -->
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{}{{Host}}" />
+                                    <TextBlock Grid.Row="2" Grid.Column="1"
+                                               Text="{x:Static localization:Strings.Host}" />
+                                </Grid>
+                            </Border>
+                        </StackPanel>
+                    </ToolTip>
+                </Rectangle.ToolTip>
+            </Rectangle>
+        </StackPanel>
         <TextBlock Text="{x:Static localization:Strings.SSHPort}" Style="{DynamicResource DefaultTextBlock}"
                    Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left"

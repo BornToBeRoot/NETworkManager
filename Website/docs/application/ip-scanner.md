@@ -208,8 +208,8 @@ Custom commands that can be executed with a right click on the selected result.
 
 **Default:**
 
-| Name                  | File path      | Arguments                                         |
-| --------------------- | -------------- | -------------------------------------------------- |
+| Name                  | File path      | Arguments                                        |
+| --------------------- | -------------- | ------------------------------------------------- |
 | Edge                  | `cmd.exe`      | `/c start microsoft-edge:http://{{IPAddress}}/`  |
 | Edge (https)          | `cmd.exe`      | `/c start microsoft-edge:https://{{IPAddress}}/` |
 | Windows Explorer (c$) | `explorer.exe` | `\\{{IPAddress}}\c$`                             |
@@ -217,7 +217,7 @@ Custom commands that can be executed with a right click on the selected result.
 In the arguments you can use the following placeholders:
 
 | Placeholder      | Description |
-| ---------------- | ----------- |
+| ---------------- | ------------ |
 | `{{IPAddress}}`  | IP address  |
 | `{{Hostname}}`   | Hostname    |
 

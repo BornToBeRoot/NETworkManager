@@ -3047,7 +3047,7 @@ namespace NETworkManager.Localization.Resources {
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to {{Host}} can be used to insert the profile's host..
+        ///   Looks up a localized string similar to The following placeholder can be used:.
         /// </summary>
         public static string HelpMessage_ProfileHostPlaceholder {
             get {

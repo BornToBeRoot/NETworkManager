@@ -205,6 +205,7 @@ public sealed class ImportProfilesResultViewModel : ViewModelBase
             new ImportApplicationToggleItem(ProfileName.PowerShell, true),
             new ImportApplicationToggleItem(ProfileName.PuTTY),
             new ImportApplicationToggleItem(ProfileName.TigerVNC),
+            new ImportApplicationToggleItem(ProfileName.WebConsole),
             new ImportApplicationToggleItem(ProfileName.SNMP),
             new ImportApplicationToggleItem(ProfileName.Whois),
             new ImportApplicationToggleItem(ProfileName.IPGeolocation)
@@ -250,6 +251,9 @@ public sealed class ImportProfilesResultViewModel : ViewModelBase
             case ProfileName.TigerVNC:
                 profile.TigerVNC_Enabled = true;
                 profile.TigerVNC_Host = profile.Host;
+                break;
+            case ProfileName.WebConsole:
+                profile.WebConsole_Enabled = true;
                 break;
             case ProfileName.SNMP:
                 profile.SNMP_Enabled = true;

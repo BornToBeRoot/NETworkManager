@@ -705,8 +705,13 @@ public static class SettingsManager
 
         foreach (var customCommand in Current.IPScanner_CustomCommands)
         {
-            var filePath = Regex.Replace(customCommand.FilePath, "\\$\\$ipaddress\\$\\$", "{{IPAddress}}", RegexOptions.IgnoreCase);
-            filePath = Regex.Replace(filePath, "\\$\\$hostname\\$\\$", "{{Hostname}}", RegexOptions.IgnoreCase);
+            var filePath = customCommand.FilePath;
+
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                filePath = Regex.Replace(filePath, "\\$\\$ipaddress\\$\\$", "{{IPAddress}}", RegexOptions.IgnoreCase);
+                filePath = Regex.Replace(filePath, "\\$\\$hostname\\$\\$", "{{Hostname}}", RegexOptions.IgnoreCase);
+            }
 
             var arguments = customCommand.Arguments;
 
