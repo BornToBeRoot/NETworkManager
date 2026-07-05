@@ -1,8 +1,8 @@
 using System;
 using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators;
 
@@ -15,8 +15,7 @@ public class WebConsoleProfileUrlValidator : ValidationRule
     {
         // Substitute the {{Host}} placeholder with a dummy host so the structural
         // URL validation (scheme, format) still applies, without rejecting the placeholder itself.
-        var input = Regex.Replace(value as string ?? "", "\\{\\{host\\}\\}", "placeholder-host",
-            RegexOptions.IgnoreCase);
+        var input = PlaceholderHelper.Replace(value as string ?? "", PlaceholderHelper.Host, "placeholder-host");
 
         return Uri.TryCreate(input, UriKind.Absolute, out var uriResult) &&
                (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
