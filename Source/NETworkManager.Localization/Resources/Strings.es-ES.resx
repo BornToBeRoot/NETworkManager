@@ -477,6 +477,18 @@
   <data name="Description" xml:space="preserve">
     <value>Descripción</value>
   </data>
+  <data name="Placeholder" xml:space="preserve">
+    <value>Placeholder</value>
+  </data>
+  <data name="HelpMessage_CustomCommandFilePath" xml:space="preserve">
+    <value>Path to the file or executable to run. The following placeholders can be used:</value>
+  </data>
+  <data name="HelpMessage_CustomCommandArguments" xml:space="preserve">
+    <value>Arguments passed to the file or executable. The following placeholders can be used:</value>
+  </data>
+  <data name="HelpMessage_ProfileHostPlaceholder" xml:space="preserve">
+    <value>The following placeholder can be used:</value>
+  </data>
   <data name="DHCPEnabled" xml:space="preserve">
     <value>DHCP habilitado</value>
   </data>
@@ -2240,12 +2252,6 @@ está deshabilitada!</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>El comando personalizado seleccionado será eliminado permanentemente.</value>
-  </data>
-  <data name="HelpMessage_CustomCommandVariables" xml:space="preserve">
-    <value>Las siguientes variables están disponibles:
-
-$$ipaddress$$	--&gt;	Dirección IP
-$$hostname$$	--&gt;	Nombre del host</value>
   </data>
   <data name="Restart" xml:space="preserve">
     <value>Reiniciar</value>
