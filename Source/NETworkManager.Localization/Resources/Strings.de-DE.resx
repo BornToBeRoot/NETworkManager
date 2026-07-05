@@ -319,7 +319,7 @@
     <value>Neuer Tab</value>
   </data>
   <data name="Next" xml:space="preserve">
-    <value>Next</value>
+    <value>Weiter</value>
   </data>
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
@@ -476,6 +476,18 @@
   </data>
   <data name="Description" xml:space="preserve">
     <value>Beschreibung</value>
+  </data>
+  <data name="Placeholder" xml:space="preserve">
+    <value>Platzhalter</value>
+  </data>
+  <data name="HelpMessage_CustomCommandFilePath" xml:space="preserve">
+    <value>Pfad zum auszuführenden Programm oder zur ausführbaren Datei. Die folgenden Platzhalter können verwendet werden:</value>
+  </data>
+  <data name="HelpMessage_CustomCommandArguments" xml:space="preserve">
+    <value>Argumente, die an die Datei oder ausführbare Datei übergeben werden. Die folgenden Platzhalter können verwendet werden:</value>
+  </data>
+  <data name="HelpMessage_ProfileHostPlaceholder" xml:space="preserve">
+    <value>Der folgende Platzhalter kann verwendet werden:</value>
   </data>
   <data name="DHCPEnabled" xml:space="preserve">
     <value>DHCP aktiviert</value>
@@ -1015,7 +1027,7 @@ Erstelle eins...</value>
     <value>OID</value>
   </data>
   <data name="OnlyCsvFilesAllowed" xml:space="preserve">
-    <value>Only CSV files are allowed!</value>
+    <value>Nur CSV-Dateien sind erlaubt!</value>
   </data>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
     <value>Nur bei Vollbild anwenden</value>
@@ -1391,7 +1403,7 @@ Profildateien sind nicht betroffen!</value>
     <value>Überschreiben</value>
   </data>
   <data name="Parse" xml:space="preserve">
-    <value>Parse</value>
+    <value>Parsen</value>
   </data>
   <data name="Paste" xml:space="preserve">
     <value>Einfügen</value>
@@ -2243,12 +2255,6 @@ ist deaktiviert!</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>Der ausgewählte benutzerdefinierte Befehl wird unwiederbringlich gelöscht.</value>
-  </data>
-  <data name="HelpMessage_CustomCommandVariables" xml:space="preserve">
-    <value>Die folgenden Variablen sind verfügbar:
-
-$$ipaddress$$	--&gt;	IP-Adresse
-$$hostname$$	--&gt;	Hostname</value>
   </data>
   <data name="Restart" xml:space="preserve">
     <value>Neustart</value>
@@ -4221,25 +4227,25 @@ Bei Bedarf können Sie die Profildateien von „{0}“ nach „{1}“ kopieren, 
     <value>Active Directory</value>
   </data>
   <data name="ImportProfiles_Source_Csv" xml:space="preserve">
-    <value>CSV file</value>
+    <value>CSV-Datei</value>
   </data>
   <data name="ImportProfiles_Method_Csv" xml:space="preserve">
-    <value>CSV file</value>
+    <value>CSV-Datei</value>
   </data>
   <data name="ImportProfilesFromCsvFile" xml:space="preserve">
-    <value>Import profiles from CSV file</value>
+    <value>Profile aus CSV-Datei importieren</value>
   </data>
   <data name="Csv_ImportDescription" xml:space="preserve">
-    <value>Imported from CSV file on {0}</value>
+    <value>Am {0} aus CSV-Datei importiert</value>
   </data>
   <data name="CsvNoEntriesFound" xml:space="preserve">
-    <value>No entries were found in the CSV file.</value>
+    <value>In der CSV-Datei wurden keine Einträge gefunden.</value>
   </data>
   <data name="CsvImportFormatHint" xml:space="preserve">
-    <value>Expected CSV format — one profile per line:</value>
+    <value>Erwartetes CSV-Format – ein Profil pro Zeile:</value>
   </data>
   <data name="CsvImportFormatNote" xml:space="preserve">
-    <value>A header row and the delimiter (semicolon, comma or tab) are detected automatically. The description column is optional. Entries without a host cannot be imported.</value>
+    <value>Eine Kopfzeile und das Trennzeichen (Semikolon, Komma oder Tabulator) werden automatisch erkannt. Die Beschreibungsspalte ist optional. Einträge ohne Host können nicht importiert werden.</value>
   </data>
   <data name="ImportResults" xml:space="preserve">
     <value>Importergebnisse</value>

@@ -311,16 +311,16 @@ La modifica dell'elenco router richiede diritti elevati!</value>
     <value>Interfaccia di rete</value>
   </data>
   <data name="NetworkInterfaceConfigurationAppliedSuccessfully" xml:space="preserve">
-    <value>Configuration applied</value>
+    <value>Configurazione applicata</value>
   </data>
   <data name="NetworkInterfaceConfigureAdminMessage" xml:space="preserve">
-    <value>Configuring the network interface requires elevated rights!</value>
+    <value>La configurazione dell'interfaccia di rete richiede diritti elevati!</value>
   </data>
   <data name="NewTab" xml:space="preserve">
     <value>Nuova scheda</value>
   </data>
   <data name="Next" xml:space="preserve">
-    <value>Next</value>
+    <value>Avanti</value>
   </data>
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
@@ -478,6 +478,18 @@ La modifica dell'elenco router richiede diritti elevati!</value>
   <data name="Description" xml:space="preserve">
     <value>Descrizione</value>
   </data>
+  <data name="Placeholder" xml:space="preserve">
+    <value>Placeholder</value>
+  </data>
+  <data name="HelpMessage_CustomCommandFilePath" xml:space="preserve">
+    <value>Path to the file or executable to run. The following placeholders can be used:</value>
+  </data>
+  <data name="HelpMessage_CustomCommandArguments" xml:space="preserve">
+    <value>Arguments passed to the file or executable. The following placeholders can be used:</value>
+  </data>
+  <data name="HelpMessage_ProfileHostPlaceholder" xml:space="preserve">
+    <value>The following placeholder can be used:</value>
+  </data>
   <data name="DHCPEnabled" xml:space="preserve">
     <value>DHCP abilitato</value>
   </data>
@@ -524,28 +536,28 @@ La modifica dell'elenco router richiede diritti elevati!</value>
     <value>Indirizzo IPv4</value>
   </data>
   <data name="IPv4AddressAddedSuccessfully" xml:space="preserve">
-    <value>IPv4 address added</value>
+    <value>Aggiunto indirizzo IPv4</value>
   </data>
   <data name="IPv4AddressRemovedSuccessfully" xml:space="preserve">
-    <value>IPv4 address removed</value>
+    <value>Rimosso indirizzo IPv4</value>
   </data>
   <data name="IPv4AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
-    <value>IPv4 address released and renewed</value>
+    <value>Indirizzo IPv4 rilasciato e rinnovato</value>
   </data>
   <data name="IPv4AddressReleasedSuccessfully" xml:space="preserve">
-    <value>IPv4 address released</value>
+    <value>Rilasciato indirizzo IPv4</value>
   </data>
   <data name="IPv4AddressRenewedSuccessfully" xml:space="preserve">
-    <value>IPv4 address renewed</value>
+    <value>Rinnovato indirizzo IPv4</value>
   </data>
   <data name="IPv6AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
-    <value>IPv6 address released and renewed</value>
+    <value>Indirizzo IPv6 rilasciato e rinnovato</value>
   </data>
   <data name="IPv6AddressReleasedSuccessfully" xml:space="preserve">
-    <value>IPv6 address released</value>
+    <value>Rilasciato indirizzo IPv6</value>
   </data>
   <data name="IPv6AddressRenewedSuccessfully" xml:space="preserve">
-    <value>IPv6 address renewed</value>
+    <value>Rinnovato indirizzo IPv6</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
     <value>Gateway IPv4 predefinito</value>
@@ -1026,7 +1038,7 @@ Controlla i parametri!</value>
     <value>OID</value>
   </data>
   <data name="OnlyCsvFilesAllowed" xml:space="preserve">
-    <value>Only CSV files are allowed!</value>
+    <value>Sono consentiti solo file CSV!</value>
   </data>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
     <value>Solo quando si usa lo schermo intero</value>
@@ -1343,7 +1355,7 @@ Forse l'host non è raggiungibile oppure la community/password è sbagliata.</va
     <value>Svuota la cache DNS</value>
   </data>
   <data name="FlushDNSCacheSuccessfully" xml:space="preserve">
-    <value>DNS cache flushed</value>
+    <value>Cache DNS svuotata</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
     <value>Decodifica e carica le credenziali per selezionarle.</value>
@@ -1405,7 +1417,7 @@ Cerca per tag con "tag = xxx".</value>
     <value>Sovrascrivi</value>
   </data>
   <data name="Parse" xml:space="preserve">
-    <value>Parse</value>
+    <value>Analizza</value>
   </data>
   <data name="Paste" xml:space="preserve">
     <value>Incolla</value>
@@ -2265,12 +2277,6 @@ Prova un altro servizio o usa quello predefinito...</value>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>Il comando personalizzato selezionato verrà eliminato definitivamente.</value>
   </data>
-  <data name="HelpMessage_CustomCommandVariables" xml:space="preserve">
-    <value>Sono disponibili le seguenti variabili:
-
-$$ipaddress$$	--&gt;	Indirizzo IP
-$$hostname$$	--&gt;	Nome host</value>
-  </data>
   <data name="Restart" xml:space="preserve">
     <value>Riavvia</value>
   </data>
@@ -2281,19 +2287,19 @@ $$hostname$$	--&gt;	Nome host</value>
     <value>Ctrl+Alt+Canc</value>
   </data>
   <data name="TaskManager" xml:space="preserve">
-    <value>Task Manager (Ctrl+Shift+Esc)</value>
+    <value>Gestione attività (Ctrl+Maiusc+Esc)</value>
   </data>
   <data name="Lock" xml:space="preserve">
-    <value>Lock (Win+L)</value>
+    <value>Blocca (Win+L)</value>
   </data>
   <data name="ShowDesktop" xml:space="preserve">
-    <value>Show Desktop (Win+D)</value>
+    <value>Visualizza desktop (Win+D)</value>
   </data>
   <data name="Explorer" xml:space="preserve">
     <value>Explorer (Win+E)</value>
   </data>
   <data name="RunDialog" xml:space="preserve">
-    <value>Run dialog (Win+R)</value>
+    <value>Finestra Esegui (Win+R)</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
     <value>Tasti rapidi</value>
@@ -3195,13 +3201,13 @@ Questo limite è impostato dall'amministratore del server o dai criteri di rete.
     <value>Il colore della console di PowerShell può essere modificato nel tema dell'applicazione in Impostazioni &gt; Generale &gt; Aspetto</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
+    <value>Se abiliti questa opzione, le impostazioni predefinite della console PowerShell nel registro in HKCU:\Console verranno sovrascritte in modo che la finestra della console PowerShell corrisponda al tema dell'applicazione. Si tratta di un'impostazione di sistema globale che potrebbe influire sull'aspetto della normale finestra di PowerShell.
 
-Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
+Verranno modificate solo le console PowerShell configurate nelle impostazioni di PowerShell. Sono supportati sia Windows PowerShell che PWSH (PowerShell 7 e versioni successive).
 
-Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
+Per maggiori dettagli fai clic nell'angolo in alto a destra sul pulsante 'Guida/Documentazione' (a sinistra del pulsante 'Riduci a icona') o accedi a https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance. Ecco i valori documentati che verranno adeguati.
 
-If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
+Se l'opzione viene nuovamente disabilitata, i valori non verranno più modificati. Tuttavia, NON verranno ripristinati i valori originali.</value>
   </data>
   <data name="InputCannotEndWithSemicolon" xml:space="preserve">
     <value>L'input non può terminare con un ";"!</value>
@@ -4320,25 +4326,25 @@ All'account deve essere consentito enumerare gli oggetti del computer nella base
     <value>Active Directory</value>
   </data>
   <data name="ImportProfiles_Source_Csv" xml:space="preserve">
-    <value>CSV file</value>
+    <value>File CSV</value>
   </data>
   <data name="ImportProfiles_Method_Csv" xml:space="preserve">
-    <value>CSV file</value>
+    <value>File CSV</value>
   </data>
   <data name="ImportProfilesFromCsvFile" xml:space="preserve">
-    <value>Import profiles from CSV file</value>
+    <value>Importa profili da file CSV</value>
   </data>
   <data name="Csv_ImportDescription" xml:space="preserve">
-    <value>Imported from CSV file on {0}</value>
+    <value>Importato dal file CSV in {0}</value>
   </data>
   <data name="CsvNoEntriesFound" xml:space="preserve">
-    <value>No entries were found in the CSV file.</value>
+    <value>Nessuna voce trovata nel file CSV.</value>
   </data>
   <data name="CsvImportFormatHint" xml:space="preserve">
-    <value>Expected CSV format — one profile per line:</value>
+    <value>Formato CSV - un profilo per riga:</value>
   </data>
   <data name="CsvImportFormatNote" xml:space="preserve">
-    <value>A header row and the delimiter (semicolon, comma or tab) are detected automatically. The description column is optional. Entries without a host cannot be imported.</value>
+    <value>Vengono rilevati automaticamente la riga di intestazione e il delimitatore (punto e virgola, virgola o tabulazione). La colonna della descrizione è facoltativa. Le voci senza host non possono essere importate.</value>
   </data>
   <data name="ImportResults" xml:space="preserve">
     <value>Risultati importazione</value>

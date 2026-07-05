@@ -477,6 +477,18 @@
   <data name="Description" xml:space="preserve">
     <value>说明</value>
   </data>
+  <data name="Placeholder" xml:space="preserve">
+    <value>Placeholder</value>
+  </data>
+  <data name="HelpMessage_CustomCommandFilePath" xml:space="preserve">
+    <value>Path to the file or executable to run. The following placeholders can be used:</value>
+  </data>
+  <data name="HelpMessage_CustomCommandArguments" xml:space="preserve">
+    <value>Arguments passed to the file or executable. The following placeholders can be used:</value>
+  </data>
+  <data name="HelpMessage_ProfileHostPlaceholder" xml:space="preserve">
+    <value>The following placeholder can be used:</value>
+  </data>
   <data name="DHCPEnabled" xml:space="preserve">
     <value>DHCP已启用</value>
   </data>
@@ -2244,12 +2256,6 @@ URL: https://api.github.com/</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>所选自定义命令将被永久删除。</value>
-  </data>
-  <data name="HelpMessage_CustomCommandVariables" xml:space="preserve">
-    <value>有以下变量可供选择:
-
-$$ipaddress$$	--&gt;	IP 地址
-$$hostname$$	--&gt;	主机名</value>
   </data>
   <data name="Restart" xml:space="preserve">
     <value>重启</value>
