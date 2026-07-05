@@ -477,6 +477,18 @@
   <data name="Description" xml:space="preserve">
     <value>Popis</value>
   </data>
+  <data name="Placeholder" xml:space="preserve">
+    <value>Placeholder</value>
+  </data>
+  <data name="HelpMessage_CustomCommandFilePath" xml:space="preserve">
+    <value>Path to the file or executable to run. The following placeholders can be used:</value>
+  </data>
+  <data name="HelpMessage_CustomCommandArguments" xml:space="preserve">
+    <value>Arguments passed to the file or executable. The following placeholders can be used:</value>
+  </data>
+  <data name="HelpMessage_ProfileHostPlaceholder" xml:space="preserve">
+    <value>The following placeholder can be used:</value>
+  </data>
   <data name="DHCPEnabled" xml:space="preserve">
     <value>DHCP zapnuto</value>
   </data>
@@ -2242,12 +2254,6 @@ URL: https://api.ipify.org/</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>Vybraný vlastní příkaz bude trvale odstraněn.</value>
-  </data>
-  <data name="HelpMessage_CustomCommandVariables" xml:space="preserve">
-    <value>K dispozici jsou následující proměnné:
-
-$$ipaddress$$	--&gt;	IP adresa
-$$hostname$$	--&gt;	Název hosta</value>
   </data>
   <data name="Restart" xml:space="preserve">
     <value>Restart</value>
