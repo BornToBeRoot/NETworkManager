@@ -479,16 +479,16 @@ La modifica dell'elenco router richiede diritti elevati!</value>
     <value>Descrizione</value>
   </data>
   <data name="Placeholder" xml:space="preserve">
-    <value>Placeholder</value>
+    <value>Segnaposto</value>
   </data>
   <data name="HelpMessage_CustomCommandFilePath" xml:space="preserve">
-    <value>Path to the file or executable to run. The following placeholders can be used:</value>
+    <value>Percorso del file o dell'eseguibile da eseguire. È possibile usare i seguenti segnaposto:</value>
   </data>
   <data name="HelpMessage_CustomCommandArguments" xml:space="preserve">
-    <value>Arguments passed to the file or executable. The following placeholders can be used:</value>
+    <value>Argomenti passati al file o all'eseguibile. È possibile usare i seguenti segnaposto:</value>
   </data>
   <data name="HelpMessage_ProfileHostPlaceholder" xml:space="preserve">
-    <value>The following placeholder can be used:</value>
+    <value>È possibile usare il seguente segnaposto:</value>
   </data>
   <data name="DHCPEnabled" xml:space="preserve">
     <value>DHCP abilitato</value>
