@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Whois servers by domain from IANA
-Generated 02/22/2026 04:04:11-->
+Generated 07/06/2026 22:48:19-->
 <WhoisServers>
   <WhoisServer>
     <TLD>AAA</TLD>
@@ -1076,7 +1076,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>CLICK</TLD>
-    <Server>whois.tucowsregistry.net</Server>
+    <Server>whois.registry.click</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>CLINIC</TLD>
@@ -1214,7 +1214,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>COUNTRY</TLD>
-    <Server>whois.tucowsregistry.net</Server>
+    <Server>whois.registry.click</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>COUPON</TLD>
@@ -1467,7 +1467,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>DIY</TLD>
-    <Server>whois.tucowsregistry.net</Server>
+    <Server>whois.registry.click</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>DJ</TLD>
@@ -1885,7 +1885,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>FOOD</TLD>
-    <Server>whois.tucowsregistry.net</Server>
+    <Server>whois.registry.click</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>FOOTBALL</TLD>
@@ -2082,7 +2082,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>GIFT</TLD>
-    <Server>whois.tucowsregistry.net</Server>
+    <Server>whois.registry.gift</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>GIFTS</TLD>
@@ -2359,7 +2359,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>HIV</TLD>
-    <Server>whois.tucowsregistry.net</Server>
+    <Server>whois.registry.click</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>HK</TLD>
@@ -3016,7 +3016,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>LIFESTYLE</TLD>
-    <Server>whois.tucowsregistry.net</Server>
+    <Server>whois.registry.click</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>LIGHTING</TLD>
@@ -3050,7 +3050,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>LINK</TLD>
-    <Server>whois.tucowsregistry.net</Server>
+    <Server>whois.uniregistry.net</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>LIVE</TLD>
@@ -3059,7 +3059,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>LIVING</TLD>
-    <Server>whois.tucowsregistry.net</Server>
+    <Server>whois.registry.click</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>LK</TLD>
@@ -3295,6 +3295,10 @@ Generated 02/22/2026 04:04:11-->
     <Server>whois.nic.menu</Server>
   </WhoisServer>
   <WhoisServer>
+    <TLD>MERCK</TLD>
+    <Server>whois.nic.merck</Server>
+  </WhoisServer>
+  <WhoisServer>
     <TLD>MERCKMSD</TLD>
     <Server>whois.nic.merckmsd</Server>
   </WhoisServer>
@@ -3487,7 +3491,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>MUSIC</TLD>
-    <Server>whois.nic.music</Server>
+    <Server>whois.registryservices.music</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>MV</TLD>
@@ -3760,7 +3764,8 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>ONL</TLD>
-    <Server>whois.nic.onl</Server>
+    <Server>
+    </Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>ONLINE</TLD>
@@ -4081,7 +4086,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>PROPERTY</TLD>
-    <Server>whois.tucowsregistry.net</Server>
+    <Server>whois.registry.click</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>PROTECTION</TLD>
@@ -4529,7 +4534,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>SEXY</TLD>
-    <Server>whois.tucowsregistry.net</Server>
+    <Server>whois.registry.click</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>SFR</TLD>
@@ -5155,7 +5160,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>TRUST</TLD>
-    <Server>whois.tucowsregistry.net</Server>
+    <Server>whois.registry.click</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>TRV</TLD>
@@ -5266,7 +5271,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>VANA</TLD>
-    <Server>whois.tucowsregistry.net</Server>
+    <Server>whois.registry.click</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>VANGUARD</TLD>
@@ -5421,7 +5426,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>WANG</TLD>
-    <Server>whois.gtld.knet.cn</Server>
+    <Server>whois.gtld.zdns.cn</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>WANGGOU</TLD>
@@ -5592,11 +5597,11 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--30RR7Y</TLD>
-    <Server>whois.gtld.knet.cn</Server>
+    <Server>whois.gtld.zdns.cn</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--3BST00M</TLD>
-    <Server>whois.gtld.knet.cn</Server>
+    <Server>whois.gtld.zdns.cn</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--3DS443G</TLD>
@@ -5628,7 +5633,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--45Q11C</TLD>
-    <Server>whois.gtld.knet.cn</Server>
+    <Server>whois.gtld.zdns.cn</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--4DBRK0CE</TLD>
@@ -5645,7 +5650,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--55QW42G</TLD>
-    <Server>whois.conac.cn</Server>
+    <Server>whois.nic.xn--55qw42g</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--55QX5D</TLD>
@@ -5666,7 +5671,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--6QQ986B3XL</TLD>
-    <Server>whois.gtld.knet.cn</Server>
+    <Server>whois.gtld.zdns.cn</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--80ADXHKS</TLD>
@@ -5710,7 +5715,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--9ET52U</TLD>
-    <Server>whois.gtld.knet.cn</Server>
+    <Server>whois.gtld.zdns.cn</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--9KRT00A</TLD>
@@ -5761,7 +5766,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--CZRU2D</TLD>
-    <Server>whois.gtld.knet.cn</Server>
+    <Server>whois.gtld.zdns.cn</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--D1ACJ3B</TLD>
@@ -5781,7 +5786,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--EFVY88H</TLD>
-    <Server>whois.nic.xn--efvy88h</Server>
+    <Server>whois.gtld.zdns.cn</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--FCT429K</TLD>
@@ -5797,7 +5802,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--FIQ64B</TLD>
-    <Server>whois.gtld.knet.cn</Server>
+    <Server>whois.gtld.zdns.cn</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--FIQS8S</TLD>
@@ -5860,7 +5865,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--HXT814E</TLD>
-    <Server>whois.gtld.knet.cn</Server>
+    <Server>whois.gtld.zdns.cn</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--I1B6B1A6A2E</TLD>
@@ -6205,7 +6210,7 @@ Generated 02/22/2026 04:04:11-->
   </WhoisServer>
   <WhoisServer>
     <TLD>XN--ZFR164B</TLD>
-    <Server>whois.conac.cn</Server>
+    <Server>whois.nic.xn--zfr164b</Server>
   </WhoisServer>
   <WhoisServer>
     <TLD>XXX</TLD>

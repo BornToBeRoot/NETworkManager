@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <!--Service Name and Transport Protocol Port Number Registry
-Generated 02/22/2026 04:03:38-->
+Generated 07/06/2026 22:48:00-->
 <Ports>
   <Port>
     <Number>0</Number>
@@ -49319,6 +49319,18 @@ Generated 02/22/2026 04:03:38-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>4480</Number>
+    <Protocol>tcp</Protocol>
+    <Name>agtp</Name>
+    <Description>Agent Transfer Protocol</Description>
+  </Port>
+  <Port>
+    <Number>4480</Number>
+    <Protocol>udp</Protocol>
+    <Name>agtp-quic</Name>
+    <Description>Agent Transfer Protocol over QUIC</Description>
+  </Port>
+  <Port>
     <Number>4484</Number>
     <Protocol>tcp</Protocol>
     <Name>hpssmgmt</Name>
@@ -50943,6 +50955,18 @@ Generated 02/22/2026 04:03:38-->
     <Protocol>udp</Protocol>
     <Name>uet</Name>
     <Description>Ultra Ethernet Transport</Description>
+  </Port>
+  <Port>
+    <Number>4794</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>4794</Number>
+    <Protocol>udp</Protocol>
+    <Name>veroce</Name>
+    <Description>veRoCE Transport Protocol</Description>
   </Port>
   <Port>
     <Number>4800</Number>
@@ -54159,6 +54183,18 @@ Generated 02/22/2026 04:03:38-->
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>5319</Number>
+    <Protocol>tcp</Protocol>
+    <Name>roughtime</Name>
+    <Description>Roughtime time synchronization</Description>
+  </Port>
+  <Port>
+    <Number>5319</Number>
+    <Protocol>udp</Protocol>
+    <Name>roughtime</Name>
+    <Description>Roughtime time synchronization</Description>
   </Port>
   <Port>
     <Number>5320</Number>
@@ -60023,6 +60059,18 @@ Generated 02/22/2026 04:03:38-->
     <Protocol>udp</Protocol>
     <Name>record</Name>
     <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>6610</Number>
+    <Protocol>tcp</Protocol>
+    <Name>bencher</Name>
+    <Description>Bencher API</Description>
+  </Port>
+  <Port>
+    <Number>6610</Number>
+    <Protocol>udp</Protocol>
+    <Name>bencher</Name>
+    <Description>Bencher API</Description>
   </Port>
   <Port>
     <Number>6619</Number>
@@ -67154,6 +67202,18 @@ Generated 02/22/2026 04:03:38-->
     <Description>apani5</Description>
   </Port>
   <Port>
+    <Number>9183</Number>
+    <Protocol>tcp</Protocol>
+    <Name>sirius-agent</Name>
+    <Description>Sirius Configuration Agent</Description>
+  </Port>
+  <Port>
+    <Number>9183</Number>
+    <Protocol>udp</Protocol>
+    <Name>sirius-agent</Name>
+    <Description>Sirius Configuration Agent</Description>
+  </Port>
+  <Port>
     <Number>9191</Number>
     <Protocol>tcp</Protocol>
     <Name>sun-as-jpda</Name>
@@ -73315,7 +73375,7 @@ Generated 02/22/2026 04:03:38-->
     <Number>24601</Number>
     <Protocol>udp</Protocol>
     <Name>udpstp</Name>
-    <Description>UDP-based IP-Layer Capacity and performance measurement protocol</Description>
+    <Description>UDP-based IP-Layer Capacity and Performance Measurement protocol</Description>
   </Port>
   <Port>
     <Number>24601</Number>
@@ -74194,6 +74254,18 @@ Generated 02/22/2026 04:03:38-->
     <Description>Reserved</Description>
   </Port>
   <Port>
+    <Number>30939</Number>
+    <Protocol>tcp</Protocol>
+    <Name>dilithium3</Name>
+    <Description>Persistent peer-to-peer connections for block propagation, transaction relay, and BFT consensus message exchange.</Description>
+  </Port>
+  <Port>
+    <Number>30939</Number>
+    <Protocol>udp</Protocol>
+    <Name>dilithium3</Name>
+    <Description>Kademlia DHT peer discovery and routing table maintenance.</Description>
+  </Port>
+  <Port>
     <Number>30999</Number>
     <Protocol>tcp</Protocol>
     <Name>ovobs</Name>
@@ -74822,6 +74894,30 @@ Generated 02/22/2026 04:03:38-->
     <Protocol>udp</Protocol>
     <Name>profinet-cm</Name>
     <Description>PROFInet Context Manager</Description>
+  </Port>
+  <Port>
+    <Number>34965</Number>
+    <Protocol>tcp</Protocol>
+    <Name>profinet-cm-sec</Name>
+    <Description>PROFINET secure connection management and key provisioning</Description>
+  </Port>
+  <Port>
+    <Number>34965</Number>
+    <Protocol>udp</Protocol>
+    <Name>profinet-cm-sec</Name>
+    <Description>PROFINET secure connection management and key provisioning</Description>
+  </Port>
+  <Port>
+    <Number>34966</Number>
+    <Protocol>tcp</Protocol>
+    <Name>record</Name>
+    <Description>Reserved</Description>
+  </Port>
+  <Port>
+    <Number>34966</Number>
+    <Protocol>udp</Protocol>
+    <Name>profinet-rt-sec</Name>
+    <Description>PROFINET secure real-time data transfer over UDP (unicast and multicast)</Description>
   </Port>
   <Port>
     <Number>34980</Number>
