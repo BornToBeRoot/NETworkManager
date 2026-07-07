@@ -56,8 +56,7 @@ const config = {
         description:
           "A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.",
         url: "https://borntoberoot.net/NETworkManager",
-        downloadUrl:
-          "https://borntoberoot.net/NETworkManager/download",
+        downloadUrl: "https://borntoberoot.net/NETworkManager/download",
         author: {
           "@type": "Person",
           name: "BornToBeRoot",
@@ -204,11 +203,17 @@ const config = {
           {
             // Redirect latest changelog to the newest version
             from: ["/docs/changelog/latest"],
-            to: "/docs/changelog/2026-2-22-0",
+            to: "/docs/changelog/2026-7-7-0",
           },
           // Redirect pre-versions to the corresponding new versions
+          // {
+          //   from: [
+          //     "/docs/changelog/2026-x-x-0",
+          //   ],
+          //   to: "/docs/changelog/next-release",
+          // },
           {
-            from: [              
+            from: [
               "/docs/changelog/2026-3-4-0",
               "/docs/changelog/2026-4-30-0",
               "/docs/changelog/2026-5-3-0",
@@ -216,7 +221,7 @@ const config = {
               "/docs/changelog/2026-6-1-0",
               "/docs/changelog/2026-6-15-0",
             ],
-            to: "/docs/changelog/next-release",
+            to: "/docs/changelog/2026-7-7-0",
           },
           {
             from: [
@@ -231,16 +236,14 @@ const config = {
           },
           {
             from: [
-              "/docs/changelog/2025-6-13-0",
-              "/docs/changelog/2025-7-9-0",
+              "/docs/changelog/2025-6-13-0", 
+              "/docs/changelog/2025-7-9-0"
             ],
             to: "/docs/changelog/2025-8-10-0",
           },
           // Redirect legacy ARP Table to Neighbor Table
           {
-            from: [              
-              "/docs/application/arp-table",
-            ],
+            from: ["/docs/application/arp-table"],
             to: "/docs/application/neighbor-table",
           },
         ],
