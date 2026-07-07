@@ -489,6 +489,10 @@ public static class SettingsManager
         if (fromVersion < new Version(2026, 2, 22, 0))
             UpgradeTo_2026_2_22_0();
 
+        // 2026.7.7.0
+        if (fromVersion < new Version(2026, 7, 7, 0))
+            UpgradeTo_2026_7_7_0();
+
         // Latest
         if (fromVersion < toVersion)
             UpgradeToLatest(toVersion);
@@ -668,12 +672,11 @@ public static class SettingsManager
     }
 
     /// <summary>
-    ///     Method to apply changes for the latest version.
+    ///     Method to apply changes for version 2026.7.7.0.
     /// </summary>
-    /// <param name="version">Latest version.</param>
-    private static void UpgradeToLatest(Version version)
+    private static void UpgradeTo_2026_7_7_0()
     {
-        Log.Info($"Apply upgrade to {version}...");
+        Log.Info("Apply upgrade to 2026.7.7.0...");
 
         // Add Firewall application
         Log.Info($"Add new app {nameof(ApplicationName.Firewall)}.");
@@ -729,6 +732,15 @@ public static class SettingsManager
             customCommand.FilePath = filePath;
             customCommand.Arguments = arguments;
         }
+    }
+
+    /// <summary>
+    ///     Method to apply changes for the latest version.
+    /// </summary>
+    /// <param name="version">Latest version.</param>
+    private static void UpgradeToLatest(Version version)
+    {
+        Log.Info($"Apply upgrade to {version}...");
     }
     #endregion
 }
