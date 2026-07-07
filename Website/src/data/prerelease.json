@@ -1,16 +1,3 @@
 {
-  "available": true,
-  "version": "2026.6.15.0",
-  "releaseDate": "15.06.2026",
-  "changelog": "/docs/changelog/next-release",
-  "downloads": {
-    "setup": "https://github.com/BornToBeRoot/NETworkManager/releases/download/2026.6.15.0/NETworkManager_2026.6.15.0_Setup.msi",
-    "portable": "https://github.com/BornToBeRoot/NETworkManager/releases/download/2026.6.15.0/NETworkManager_2026.6.15.0_Portable.zip",
-    "archive": "https://github.com/BornToBeRoot/NETworkManager/releases/download/2026.6.15.0/NETworkManager_2026.6.15.0_Archive.zip"
-  },
-  "checksums": {
-    "setup": "A00E9B3DD49B95A1D0607B98D14F2108906AB7EC8D6680F1AD172A91551FDDF2",
-    "portable": "31AB794ACC6FC74497FAB23F0CF8A02823E19370E1049FCF3A602754D2005FB8",
-    "archive": "F0D0137957464C938C7E3684E89F448BBBB84062858601C53118B31C91C533F9"
-  }
+  "available": false
 }

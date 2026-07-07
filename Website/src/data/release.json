@@ -1,16 +1,16 @@
 {
-  "available": true,
-  "version": "2026.2.22.0",
-  "releaseDate": "22.02.2026",
-  "changelog": "/docs/changelog/2026-2-22-0",
+  "available": false,
+  "version": "202x.x.x.0",
+  "releaseDate": "xx.xx.202x",
+  "changelog": "/docs/category/changelog",
   "downloads": {
-    "setup": "https://github.com/BornToBeRoot/NETworkManager/releases/download/2026.2.22.0/NETworkManager_2026.2.22.0_Setup.msi",
-    "portable": "https://github.com/BornToBeRoot/NETworkManager/releases/download/2026.2.22.0/NETworkManager_2026.2.22.0_Portable.zip",
-    "archive": "https://github.com/BornToBeRoot/NETworkManager/releases/download/2026.2.22.0/NETworkManager_2026.2.22.0_Archive.zip"
+    "setup": "https://github.com/BornToBeRoot/NETworkManager/releases/download/202x.x.x.0/NETworkManager_202x.x.x.0_Setup.msi",
+    "portable": "https://github.com/BornToBeRoot/NETworkManager/releases/download/202x.x.x.0/NETworkManager_202x.x.x.0_Portable.zip",
+    "archive": "https://github.com/BornToBeRoot/NETworkManager/releases/download/202x.x.x.0/NETworkManager_202x.x.x.0_Archive.zip"
   },
   "checksums": {
-    "setup": "AD3A107D76B9391C88C4427717F243C64309F4D66FEA9775AAB75C1CD51A2D4E",
-    "portable": "68F2B9F2908D3725633DF2CD91FE7B4D21390CE2E39457B9DBFA2AC80ABE05E8",
-    "archive": "E535D411472F45420BB3C42EDA45470BD05EECA989074ED68D9F5A4290C3711D"
+    "setup": "0000000000000000000000000000000000000000000000000000000000000000",
+    "portable": "0000000000000000000000000000000000000000000000000000000000000000",
+    "archive": "0000000000000000000000000000000000000000000000000000000000000000"
   }
 }

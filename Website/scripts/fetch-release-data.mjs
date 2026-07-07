@@ -3,8 +3,10 @@
 //   - prerelease.json : latest pre-release         (version, date, downloads, checksums)
 //
 // Both files use the exact same shape and are built the same way — there is
-// nothing to bump by hand. The committed JSON files only act as an offline
-// fallback (last known values); every real build overwrites them with fresh data.
+// nothing to bump by hand. Every real build overwrites them with fresh data;
+// the committed JSON files are just the last known-good values checked into
+// git so the repo is never without one. If the fetch fails, the build fails
+// (see main() below) rather than silently deploying stale data.
 //
 // Why build-time instead of client-side:
 //   - The GitHub API (api.github.com) supports CORS but is rate limited
@@ -162,22 +164,13 @@ async function main() {
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${apiUrl}`);
   const releases = await res.json();
 
-  // Each step is independent so a single failure keeps that file's committed
-  // fallback instead of failing the whole build.
-  for (const [label, fn] of [
-    ["stable", updateStable],
-    ["pre-release", updatePrerelease],
-  ]) {
-    try {
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : String(err);
-      console.warn(`[release-data] ${label} skipped: ${msg}`);
-    }
-  }
+  await updateStable(releases);
+  await updatePrerelease(releases);
 }
 
 main().catch((err) => {
-  // Non-fatal: keep all committed fallbacks so offline / CI builds still succeed.
+  // Fatal: fail the build rather than silently deploying stale/wrong data.
   const msg = err instanceof Error ? err.message : String(err);
-  console.warn(`[release-data] Skipped update: ${msg}`);
+  console.error(`[release-data] Failed to update release data: ${msg}`);
+  process.exitCode = 1;
 });
