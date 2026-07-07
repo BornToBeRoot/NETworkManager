@@ -310,16 +310,16 @@
     <value>Netzwierkinterface</value>
   </data>
   <data name="NetworkInterfaceConfigurationAppliedSuccessfully" xml:space="preserve">
-    <value>Configuration applied</value>
+    <value>Konfiguratioun ugewannt</value>
   </data>
   <data name="NetworkInterfaceConfigureAdminMessage" xml:space="preserve">
-    <value>Configuring the network interface requires elevated rights!</value>
+    <value>D'Konfiguréiere vun der Netzwierk-Schnëttstell erfuerdert erhéicht Rechter!</value>
   </data>
   <data name="NewTab" xml:space="preserve">
     <value>Neien Tab</value>
   </data>
   <data name="Next" xml:space="preserve">
-    <value>Next</value>
+    <value>Weider</value>
   </data>
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
@@ -481,13 +481,13 @@
     <value>Placeholder</value>
   </data>
   <data name="HelpMessage_CustomCommandFilePath" xml:space="preserve">
-    <value>Path to the file or executable to run. The following placeholders can be used:</value>
+    <value>De Pad zum Fichier oder zum ausféierbaren Programm dat soll lafen. Follgend Placeholder kënne benotzt ginn:</value>
   </data>
   <data name="HelpMessage_CustomCommandArguments" xml:space="preserve">
-    <value>Arguments passed to the file or executable. The following placeholders can be used:</value>
+    <value>Argumenter, déi un de Fichier oder un dat ausféierbaart Programm iwwerginn ginn. Follgend Placeholder kënne benotzt ginn:</value>
   </data>
   <data name="HelpMessage_ProfileHostPlaceholder" xml:space="preserve">
-    <value>The following placeholder can be used:</value>
+    <value>Follgend Placeholder kann benotzt ginn:</value>
   </data>
   <data name="DHCPEnabled" xml:space="preserve">
     <value>DHCP aktivéiert</value>
@@ -535,28 +535,28 @@
     <value>IPv4-Adress</value>
   </data>
   <data name="IPv4AddressAddedSuccessfully" xml:space="preserve">
-    <value>IPv4 address added</value>
+    <value>IPv4-Adress dobäigesat</value>
   </data>
   <data name="IPv4AddressRemovedSuccessfully" xml:space="preserve">
-    <value>IPv4 address removed</value>
+    <value>IPv4-Adress ewechgeholl</value>
   </data>
   <data name="IPv4AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
-    <value>IPv4 address released and renewed</value>
+    <value>IPv4-Adress fräigelooss a erneiert</value>
   </data>
   <data name="IPv4AddressReleasedSuccessfully" xml:space="preserve">
-    <value>IPv4 address released</value>
+    <value>IPv4-Adress fräigelooss</value>
   </data>
   <data name="IPv4AddressRenewedSuccessfully" xml:space="preserve">
-    <value>IPv4 address renewed</value>
+    <value>IPv4-Adress erneiert</value>
   </data>
   <data name="IPv6AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
-    <value>IPv6 address released and renewed</value>
+    <value>IPv6-Adress fräigelooss a erneiert</value>
   </data>
   <data name="IPv6AddressReleasedSuccessfully" xml:space="preserve">
-    <value>IPv6 address released</value>
+    <value>IPv6-Adress fräigelooss</value>
   </data>
   <data name="IPv6AddressRenewedSuccessfully" xml:space="preserve">
-    <value>IPv6 address renewed</value>
+    <value>IPv6-Adress erneiert</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
     <value>IPv4-Default-Gateway</value>
@@ -1027,7 +1027,7 @@ Erstellt een...</value>
     <value>OID</value>
   </data>
   <data name="OnlyCsvFilesAllowed" xml:space="preserve">
-    <value>Only CSV files are allowed!</value>
+    <value>Nëmmen CSV-Fichieren sinn erlaabt!</value>
   </data>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
     <value>Nëmme beim Vollbild uwenden</value>
@@ -1343,7 +1343,7 @@ Profildateie sinn net betraff!</value>
     <value>DNS-Cache eidelmaachen</value>
   </data>
   <data name="FlushDNSCacheSuccessfully" xml:space="preserve">
-    <value>DNS cache flushed</value>
+    <value>DNS-Cache geläscht</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
     <value>Entschlësselt a luet är Umeldungsdaten fir se auszewielen.</value>
@@ -1403,7 +1403,7 @@ Profildateie sinn net betraff!</value>
     <value>Iwwerschreiwen</value>
   </data>
   <data name="Parse" xml:space="preserve">
-    <value>Parse</value>
+    <value>Parséieren</value>
   </data>
   <data name="Paste" xml:space="preserve">
     <value>Afügen</value>
@@ -2269,16 +2269,16 @@ ass deaktivéiert!</value>
     <value>Task Manager (Ctrl+Shift+Esc)</value>
   </data>
   <data name="Lock" xml:space="preserve">
-    <value>Lock (Win+L)</value>
+    <value>Spären (Win+L)</value>
   </data>
   <data name="ShowDesktop" xml:space="preserve">
-    <value>Show Desktop (Win+D)</value>
+    <value>Desktop uweisen (Win+D)</value>
   </data>
   <data name="Explorer" xml:space="preserve">
     <value>Explorer (Win+E)</value>
   </data>
   <data name="RunDialog" xml:space="preserve">
-    <value>Run dialog (Win+R)</value>
+    <value>Ausféiere-Dialog (Win+R)</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
     <value>Tastekombinatiounen</value>
@@ -4227,25 +4227,25 @@ Bei Bedarf kënnt Dir är Profildateie vu "{0}" no "{1}" kopéieren fir är bish
     <value>Active Directory</value>
   </data>
   <data name="ImportProfiles_Source_Csv" xml:space="preserve">
-    <value>CSV file</value>
+    <value>CSV-Fichier</value>
   </data>
   <data name="ImportProfiles_Method_Csv" xml:space="preserve">
-    <value>CSV file</value>
+    <value>CSV-Fichier</value>
   </data>
   <data name="ImportProfilesFromCsvFile" xml:space="preserve">
-    <value>Import profiles from CSV file</value>
+    <value>Profiler aus enger CSV-Fichier importéieren</value>
   </data>
   <data name="Csv_ImportDescription" xml:space="preserve">
-    <value>Imported from CSV file on {0}</value>
+    <value>Importéiert aus enger CSV-Fichier den {0}</value>
   </data>
   <data name="CsvNoEntriesFound" xml:space="preserve">
-    <value>No entries were found in the CSV file.</value>
+    <value>Et goufen keng Aträg an der CSV-Fichier fonnt.</value>
   </data>
   <data name="CsvImportFormatHint" xml:space="preserve">
-    <value>Expected CSV format — one profile per line:</value>
+    <value>Erwaart CSV-Format — een Profil pro Zeil:</value>
   </data>
   <data name="CsvImportFormatNote" xml:space="preserve">
-    <value>A header row and the delimiter (semicolon, comma or tab) are detected automatically. The description column is optional. Entries without a host cannot be imported.</value>
+    <value>Eng Header-Zeil an den Trennzeechen (Semikolon, Komma oder Tab) ginn automatesch erkannt. D'Beschreiwungs-Kolonn ass optional. Aträg ouni Host kënnen net importéiert ginn.</value>
   </data>
   <data name="ImportResults" xml:space="preserve">
     <value>Importresultater</value>
