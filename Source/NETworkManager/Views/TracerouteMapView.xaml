@@ -1,0 +1,108 @@
+<UserControl x:Class="NETworkManager.Views.TracerouteMapView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="400">
+    <Grid>
+        <Border x:Name="BorderHost"
+                Background="#FF1B2430"
+                ClipToBounds="True"
+                MouseWheel="BorderHost_MouseWheel"
+                MouseLeftButtonDown="BorderHost_MouseLeftButtonDown"
+                MouseLeftButtonUp="BorderHost_MouseLeftButtonUp"
+                MouseMove="BorderHost_MouseMove"
+                SizeChanged="BorderHost_SizeChanged">
+            <Canvas x:Name="RootCanvas" Width="1000" Height="500"
+                    HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform x:Name="ZoomTransform" ScaleX="1" ScaleY="1" />
+                        <TranslateTransform x:Name="PanTransform" X="0" Y="0" />
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+
+                <Path x:Name="CountriesPath" Fill="#FF2A3542" Stroke="#FF48576A" StrokeThickness="0.5" />
+                <Canvas x:Name="CitiesCanvas" Width="1000" Height="500" />
+                <Canvas x:Name="LabelsCanvas" Width="1000" Height="500" />
+                <Canvas x:Name="HopsCanvas" Width="1000" Height="500" />
+            </Canvas>
+        </Border>
+
+        <TextBlock Text="Scroll = Zoom, Ziehen = Verschieben"
+                   Foreground="#FF8A97A8"
+                   FontSize="10"
+                   Margin="6,4"
+                   IsHitTestVisible="False"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom" />
+
+        <!--
+        Fixed-position replacement for a WPF ToolTip popup: shown/hidden from code-behind on
+        hover of a hop marker or arrow. A floating ToolTip popup could itself trigger a spurious
+        MouseLeave on the element underneath it, undoing the hover highlight while the tooltip -
+        the very thing telling you you're hovering it - was still open. This has no such problem,
+        since it's just a regular element, not a separate popup window.
+        -->
+        <Border x:Name="InfoPanel"
+                Background="#CC1B2430"
+                BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Padding="8,6"
+                Margin="4"
+                MaxWidth="260"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                IsHitTestVisible="False"
+                Visibility="Collapsed">
+            <TextBlock x:Name="InfoPanelText"
+                       Foreground="{DynamicResource MahApps.Brushes.Text}"
+                       FontSize="12"
+                       TextWrapping="Wrap" />
+        </Border>
+
+        <Button HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Margin="4"
+                Click="ButtonResetView_Click"
+                Style="{StaticResource CleanButton}">
+            <StackPanel Orientation="Horizontal">
+                <Rectangle Width="16" Height="16"
+                           VerticalAlignment="Center">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FitToScreenOutline}" />
+                    </Rectangle.OpacityMask>
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+                <TextBlock Margin="4,0,0,0"
+                           Text="{x:Static localization:Strings.Reset}"
+                           FontSize="11"
+                           VerticalAlignment="Center">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+        </Button>
+    </Grid>
+</UserControl>

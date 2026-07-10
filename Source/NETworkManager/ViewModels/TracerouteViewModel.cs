@@ -178,6 +178,22 @@ public class TracerouteViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the map view is expanded.
+    /// </summary>
+    public bool ExpandMapView
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Constructor, load settings
@@ -221,6 +237,7 @@ public class TracerouteViewModel : ViewModelBase
 
     private void LoadSettings()
     {
+        ExpandMapView = SettingsManager.Current.Traceroute_ExpandMapView;
     }
 
     #endregion

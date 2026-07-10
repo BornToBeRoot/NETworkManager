@@ -12,4 +12,18 @@
         <Setter Property="VerticalAlignment" Value="Stretch" />
     </Style>
 
+    <!-- Same look as ProfileGridSplitter, but for resizing rows instead of columns. -->
+    <Style x:Key="HorizontalGridSplitter" TargetType="{x:Type GridSplitter}">
+        <Setter Property="Height" Value="7" />
+        <Setter Property="Margin" Value="-3,-3" />
+        <Setter Property="BorderThickness" Value="3" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Panel.ZIndex" Value="1" />
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="ShowsPreview" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="ResizeDirection" Value="Rows" />
+    </Style>
+
 </ResourceDictionary>

@@ -1749,6 +1749,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Traceroute_CheckIPApiIPGeolocation;
 
+    public bool Traceroute_ExpandMapView
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Traceroute_ExpandMapView;
+
     public bool Traceroute_ExpandProfileView
     {
         get;

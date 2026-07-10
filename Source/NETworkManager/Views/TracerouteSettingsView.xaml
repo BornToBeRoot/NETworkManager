@@ -28,6 +28,10 @@
         <TextBlock Text="{x:Static Member=localization:Strings.IPGeolocation}"
                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{x:Static Member=localization:Strings.CheckIPGeolocation}"
-                          IsOn="{Binding CheckIPApiIPGeolocation}" />
+                          IsOn="{Binding CheckIPApiIPGeolocation}" Margin="0,0,0,20" />
+        <TextBlock Text="{x:Static Member=localization:Strings.Map}"
+                   Style="{StaticResource ResourceKey=HeaderTextBlock}" />
+        <mah:ToggleSwitch Header="{x:Static Member=localization:Strings.ExpandMapView}"
+                          IsOn="{Binding ExpandMapView}" />
     </StackPanel>
 </UserControl>

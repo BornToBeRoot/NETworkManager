@@ -103,6 +103,10 @@
         <Resource Include="SplashScreen.png" />
     </ItemGroup>
     <ItemGroup>
+        <EmbeddedResource Include="Resources\Maps\world-map.json" />
+        <EmbeddedResource Include="Resources\Maps\world-cities.json" />
+    </ItemGroup>
+    <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
