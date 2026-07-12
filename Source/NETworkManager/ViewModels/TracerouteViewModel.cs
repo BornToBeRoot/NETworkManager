@@ -106,7 +106,7 @@ public class TracerouteViewModel : ViewModelBase
 
             field = value;
         }
-    } = new();
+    } = [];
 
     /// <summary>
     /// Gets the collection view for the traceroute results.
@@ -195,6 +195,18 @@ public class TracerouteViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets whether the map row (see TracerouteView's MapRow) should be shown at all. Requires
+    /// both IP geolocation lookups and the map itself to be enabled in the settings - without
+    /// geolocation, no hop ever has a resolved Lat/Lon to plot (see TracerouteMapControl.RedrawHops),
+    /// so an always-empty map would just be confusing rather than useful. Computed rather than a
+    /// regular settings-backed property like ExpandMapView above, since it only ever changes in
+    /// response to a global settings change made elsewhere (the settings flyout) - see
+    /// SettingsManager_PropertyChanged.
+    /// </summary>
+    public bool ShowMap =>
+        SettingsManager.Current.Traceroute_CheckIPApiIPGeolocation && SettingsManager.Current.Traceroute_ShowMap;
+
     #endregion
 
     #region Constructor, load settings
@@ -224,6 +236,17 @@ public class TracerouteViewModel : ViewModelBase
         LoadSettings();
 
         _isLoading = false;
+
+        // ShowMap has no backing field of its own (see its getter) - it's recomputed from these
+        // two settings whenever either changes, e.g. via the settings flyout while this tab stays open.
+        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+    }
+
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName is nameof(SettingsInfo.Traceroute_CheckIPApiIPGeolocation)
+            or nameof(SettingsInfo.Traceroute_ShowMap))
+            OnPropertyChanged(nameof(ShowMap));
     }
 
     /// <summary>
@@ -465,6 +488,8 @@ public class TracerouteViewModel : ViewModelBase
             return;
 
         _closed = true;
+
+        SettingsManager.Current.PropertyChanged -= SettingsManager_PropertyChanged;
 
         // Stop trace
         if (IsRunning)

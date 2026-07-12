@@ -169,6 +169,7 @@ public static class GlobalStaticConfiguration
     public static int Traceroute_Buffer => 32;
     public static bool Traceroute_ResolveHostname => true;
     public static bool Traceroute_CheckIPApiIPGeolocation => false;
+    public static bool Traceroute_ShowMap => true;
     public static bool Traceroute_ExpandMapView => true;
     public static double Traceroute_MapHeight => 300;
     public static ExportFileType Traceroute_ExportFileType => ExportFileType.Csv;

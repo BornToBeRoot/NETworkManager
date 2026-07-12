@@ -32,6 +32,12 @@ Traceroute works by sending ICMP packets with incrementally increasing TTL (Time
 
 Below the hop list, a **Map** visualizes each resolved hop's geolocation on an offline world map. Consecutive hops are connected with curved, directional arrows showing the path the trace took.
 
+:::note
+
+The map is only shown if [Check IP geolocation](#check-ip-geolocation) and [Show map](#show-map) are both enabled — without a resolved geolocation, there is nothing to plot a hop's marker at.
+
+:::
+
 Hover a marker or arrow to show its details (location, ISP/ASN, hostname, IP address and average round-trip time) in the top-left info panel.
 
 You can interact with the map:
@@ -114,6 +120,20 @@ Enables or disables the resolution of the IP geolocation for each hop via [`ip-a
 :::note
 
 The free API endpoint is limited to 45 requests per minute, supports only the `http` protocol and is available for non-commercial use only.
+
+:::
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+### Show map
+
+Shows the [Map](#map) below the hop list.
+
+:::note
+
+Only takes effect if [Check IP geolocation](#check-ip-geolocation) is also enabled — without it, no hop has a resolved geolocation to plot.
 
 :::
 

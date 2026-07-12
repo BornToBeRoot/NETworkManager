@@ -10952,7 +10952,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("ShowLocalLicenses", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Show map.
+        /// </summary>
+        public static string ShowMap {
+            get {
+                return ResourceManager.GetString("ShowMap", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Show notification popup on status change.
         /// </summary>

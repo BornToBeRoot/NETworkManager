@@ -52,7 +52,7 @@ public partial class TracerouteView : IDragablzTabItem
         _viewModel.OnLoaded();
 
         // PropertyChanged only fires on an actual change, so sync the row height once here.
-        if (_viewModel.ExpandMapView)
+        if (_viewModel.ShowMap && _viewModel.ExpandMapView)
             ExpandMapRow();
         else
             CollapseMapRowWithoutCapturingHeight();
@@ -67,10 +67,10 @@ public partial class TracerouteView : IDragablzTabItem
 
     private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName != nameof(TracerouteViewModel.ExpandMapView))
+        if (e.PropertyName is not (nameof(TracerouteViewModel.ExpandMapView) or nameof(TracerouteViewModel.ShowMap)))
             return;
 
-        if (_viewModel.ExpandMapView)
+        if (_viewModel.ShowMap && _viewModel.ExpandMapView)
             ExpandMapRow();
         else
             CollapseMapRow();

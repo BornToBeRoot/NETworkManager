@@ -1,4 +1,5 @@
 using log4net;
+using NETworkManager.Localization.Resources;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Models.Network;
 using System;
@@ -18,15 +19,15 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Path = System.Windows.Shapes.Path;
 
-namespace NETworkManager.Views;
+namespace NETworkManager.Controls;
 
 /// <summary>
-/// Prototype control that visualizes traceroute hops with known geolocation on an abstract,
-/// offline world map (no tile/network requests) with mouse-wheel zoom and drag-to-pan.
+/// Control that visualizes traceroute hops with known geolocation on an abstract, offline world
+/// map (no tile/network requests) with mouse-wheel zoom and drag-to-pan.
 /// </summary>
-public partial class TracerouteMapView
+public partial class TracerouteMapControl
 {
-    private static readonly ILog Log = LogManager.GetLogger(typeof(TracerouteMapView));
+    private static readonly ILog Log = LogManager.GetLogger(typeof(TracerouteMapControl));
 
     private const double MapWidth = 1000;
     private const double MapHeight = 500;
@@ -60,10 +61,14 @@ public partial class TracerouteMapView
     private static readonly Lazy<List<CityData>> Cities = new(LoadCities);
 
     // Hops/arrows use the app's MahApps accent color (via SetResourceReference, applied per
-    // element) so the traceroute path matches whatever accent the user has chosen, clearly set
-    // apart from the cool-toned reference layer (country outlines, cities, labels) below.
-    private static readonly Brush LabelBrush = FreezeBrush(Color.FromRgb(0xB7, 0xC2, 0xCF));
-    private static readonly Brush CityBrush = FreezeBrush(Color.FromRgb(0x7E, 0xA8, 0xB8));
+    // element) so the traceroute path matches whatever accent the user has chosen. Country
+    // labels use the themed muted-text gray (also via SetResourceReference on each label - a
+    // frozen brush can't react to a theme switch) so they read as quiet background context.
+    // Cities are the one reference-layer element that deliberately does NOT follow the theme:
+    // they keep the same fixed brand blue as the speedtest download series
+    // (SpeedTestWidgetViewModel's "#1ba1e2"), so they stay a recognizable, consistent "reference
+    // point" color in both themes instead of competing with the accent-colored traceroute path.
+    private static readonly Brush CityBrush = FreezeBrush(Color.FromRgb(0x1B, 0xA1, 0xE2));
 
     // Shared by every label/dot so a single assignment (in ApplyTransform) keeps their on-screen
     // size constant while the map itself is scaled by the parent Canvas' zoom transform. Elements
@@ -75,7 +80,7 @@ public partial class TracerouteMapView
     // exactly on the hops they connect, so only their stroke thickness / arrowhead size may be
     // counter-scaled, each around its own fixed anchor (the arrow's tip) - tracked here so
     // ApplyTransform can update them every time the zoom level changes.
-    private readonly List<ArrowVisual> _arrows = new();
+    private readonly List<ArrowVisual> _arrows = [];
 
     // Every label's Tag holds (Point Anchor, Size TextSize): the anchor it's positioned relative
     // to, and its measured size cached at build time. The size can NOT be read back later via
@@ -85,15 +90,15 @@ public partial class TracerouteMapView
     //
     // Tracked in separate lists (rather than distinguished via Tag type) so ApplyTransform and
     // DeclutterReferenceLabels don't need to re-scan/re-classify LabelsCanvas.Children every time.
-    private readonly List<TextBlock> _countryLabels = new();
-    private readonly List<TextBlock> _cityLabels = new();
+    private readonly List<TextBlock> _countryLabels = [];
+    private readonly List<TextBlock> _cityLabels = [];
 
     // Hop number labels reposition their gap to the marker on every zoom step, same idea as the
     // city labels, but tracked separately since they must stay visible regardless of zoom level.
-    private readonly List<TextBlock> _hopNumberLabels = new();
+    private readonly List<TextBlock> _hopNumberLabels = [];
 
     // Last drawn hop points, cached so a resize or "Reset" click can re-fit to the same hops.
-    private List<Point> _hopPoints = new();
+    private List<Point> _hopPoints = [];
 
     // Scale value the label/arrow visuals were last recomputed for; panning alone never
     // invalidates them (see ApplyTransform), only an actual zoom change does.
@@ -110,11 +115,11 @@ public partial class TracerouteMapView
     private double _panStartX;
     private double _panStartY;
 
-    public TracerouteMapView()
+    public TracerouteMapControl()
     {
         InitializeComponent();
 
-        Loaded += TracerouteMapView_Loaded;
+        Loaded += TracerouteMapControl_Loaded;
     }
 
     #region Dependency properties
@@ -123,7 +128,7 @@ public partial class TracerouteMapView
     /// Gets or sets the traceroute hops (e.g. <see cref="TracerouteViewModel.Results" />) to plot on the map.
     /// </summary>
     public static readonly DependencyProperty HopsProperty = DependencyProperty.Register(
-        nameof(Hops), typeof(IEnumerable), typeof(TracerouteMapView),
+        nameof(Hops), typeof(IEnumerable), typeof(TracerouteMapControl),
         new PropertyMetadata(null, OnHopsChanged));
 
     public IEnumerable Hops
@@ -134,7 +139,7 @@ public partial class TracerouteMapView
 
     private static void OnHopsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        ((TracerouteMapView)d).OnHopsChanged(e.OldValue as INotifyCollectionChanged);
+        ((TracerouteMapControl)d).OnHopsChanged(e.OldValue as INotifyCollectionChanged);
     }
 
     private void OnHopsChanged(INotifyCollectionChanged oldCollection)
@@ -153,11 +158,53 @@ public partial class TracerouteMapView
         RedrawHops();
     }
 
+    /// <summary>
+    /// Gets or sets whether the host (e.g. <see cref="TracerouteView" />) currently shows this
+    /// control at full size, vs. collapsed down to just its top-left toggle button. Two-way
+    /// bindable so the host's collapse row-height logic and this control's own chevron icon
+    /// (see the DataTrigger on the toggle button in XAML) both stay in sync with a single value.
+    /// </summary>
+    public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register(
+        nameof(IsExpanded), typeof(bool), typeof(TracerouteMapControl),
+        new PropertyMetadata(true, OnIsExpandedChanged));
+
+    public bool IsExpanded
+    {
+        get => (bool)GetValue(IsExpandedProperty);
+        set => SetValue(IsExpandedProperty, value);
+    }
+
+    private void ButtonToggleExpand_Click(object sender, RoutedEventArgs e)
+    {
+        IsExpanded = !IsExpanded;
+    }
+
+    // Set whenever RedrawHops is skipped because the control is collapsed (see RedrawHops) -
+    // triggers a real redraw once expanded again, with the now-correct (no longer collapsed-strip)
+    // size available.
+    private bool _hopsRedrawPending;
+
+    private static void OnIsExpandedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var view = (TracerouteMapControl)d;
+
+        if (!(bool)e.NewValue || !view._hopsRedrawPending)
+            return;
+
+        // Deferred for the same reason as the initial RedrawHops call in TracerouteMapControl_Loaded:
+        // MapRow.Height was just changed (by TracerouteView's ExpandMapRow, in response to this
+        // same IsExpanded change reaching it through the ExpandMapView binding), but that resize
+        // - and with it BorderHost.ActualWidth/Height - has not actually been applied by WPF's
+        // layout system yet at this exact point. Redrawing right now would still see the old,
+        // collapsed size and reproduce the very bug this deferral exists to avoid.
+        view.Dispatcher.BeginInvoke(view.RedrawHops, DispatcherPriority.Loaded);
+    }
+
     #endregion
 
     #region Load, draw
 
-    private void TracerouteMapView_Loaded(object sender, RoutedEventArgs e)
+    private void TracerouteMapControl_Loaded(object sender, RoutedEventArgs e)
     {
         try
         {
@@ -189,11 +236,12 @@ public partial class TracerouteMapView
             {
                 Text = name,
                 FontSize = 12,
-                Foreground = LabelBrush,
                 IsHitTestVisible = false,
                 RenderTransform = _inverseScaleTransform,
                 RenderTransformOrigin = new Point(0.5, 0.5)
             };
+
+            label.SetResourceReference(TextBlock.ForegroundProperty, "MahApps.Brushes.Gray3");
 
             // Must run while still Visibility.Visible (the default) - see the comment on the
             // _countryLabels/_cityLabels fields for why this measurement has to be cached now.
@@ -282,6 +330,21 @@ public partial class TracerouteMapView
 
     private void RedrawHops()
     {
+        // While collapsed, BorderHost is just the thin strip behind the toggle button (see
+        // TracerouteView's CollapseMapRow) - fitting/spreading against that tiny size would
+        // compute a _scale wildly more zoomed-out than the real one, and SpreadOverlappingPoints'
+        // screen-pixel-based offset (see its own doc comment) would then be converted to a huge
+        // number of map units, badly mislocating markers that share a city (e.g. multiple
+        // Frankfurt hops). Deferring the redraw until the control is actually expanded again -
+        // see OnIsExpandedChanged - avoids ever computing against that bogus collapsed size.
+        if (!IsExpanded)
+        {
+            _hopsRedrawPending = true;
+            return;
+        }
+
+        _hopsRedrawPending = false;
+
         HopsCanvas.Children.Clear();
         _arrows.Clear();
         _hopNumberLabels.Clear();
@@ -510,7 +573,11 @@ public partial class TracerouteMapView
         // marker), and that shouldn't replace whatever info the arrow itself is showing.
         void SetHighlighted(bool highlighted)
         {
-            ellipse.Stroke = highlighted ? Brushes.White : null;
+            // Fetched live (rather than a frozen field) so the ring keeps matching the current
+            // theme even if the user switches theme while this view is still alive.
+            ellipse.Stroke = highlighted
+                ? (Brush)Application.Current.FindResource("MahApps.Brushes.ThemeForeground")
+                : null;
             ellipse.StrokeThickness = highlighted ? 2 : 0;
         }
 
@@ -540,7 +607,9 @@ public partial class TracerouteMapView
     {
         var firstHop = hops[0];
 
-        var hopLabel = hops.Count == 1 ? $"Hop {firstHop.Hop}" : $"Hops {firstHop.Hop}–{hops[^1].Hop}";
+        var hopLabel = hops.Count == 1
+            ? $"{Strings.Hop} {firstHop.Hop}"
+            : $"{Strings.Hops} {firstHop.Hop}–{hops[^1].Hop}";
 
         var lines = new List<string> { hopLabel, FormatLocation(info, includeRegion: true) };
 
@@ -634,7 +703,7 @@ public partial class TracerouteMapView
             return static _ => { };
 
         var tooltip =
-            $"{FormatLocation(from.Info, includeRegion: true)}\n↓ {FormatLocation(to.Info, includeRegion: true)}";
+            $"{FormatLocation(from.Info, includeRegion: true)}\n↓\n{FormatLocation(to.Info, includeRegion: true)}";
 
         // Bows the path to one side, consistently relative to its own direction of travel, so a
         // segment and its reverse (e.g. Frankfurt -> Cologne -> Frankfurt) curve to opposite
@@ -840,6 +909,16 @@ public partial class TracerouteMapView
         return new Point(x, y);
     }
 
+    // Roughly North America through the Middle East (west coast to the Urals, northern Africa/
+    // India to Scandinavia) - the empty (no-trace) view in FitToView starts framed on that
+    // instead of the whole world, so it already shows a useful spread of countries/borders.
+    private static readonly Rect DefaultViewRegion = new(Project(72, -130), Project(15, 60));
+
+    // FitToView zooms out this much further past DefaultViewRegion's own width, so the initial
+    // view isn't cropped in tight on just that region (Math.Clamp against _minScale below still
+    // stops it from ever zooming out past the whole world).
+    private const double DefaultViewZoomOutFactor = 2;
+
     #endregion
 
     #region Zoom & pan
@@ -861,11 +940,43 @@ public partial class TracerouteMapView
             return;
 
         UpdateScaleBounds();
-        _scale = _minScale;
-        _panX = (BorderHost.ActualWidth - MapWidth * _scale) / 2;
-        _panY = (BorderHost.ActualHeight - MapHeight * _scale) / 2;
+
+        // Fits DefaultViewRegion (not the whole map) to BorderHost's width - fully containing
+        // the whole world instead would leave large empty margins on either side, since the map
+        // row is usually much wider than tall. Any vertical overflow this causes is simply
+        // clipped by BorderHost's own ClipToBounds.
+        _scale = Math.Clamp(
+            BorderHost.ActualWidth / DefaultViewRegion.Width / DefaultViewZoomOutFactor,
+            _minScale, _maxScale);
+        var centerX = DefaultViewRegion.Left + DefaultViewRegion.Width / 2;
+        var centerY = DefaultViewRegion.Top + DefaultViewRegion.Height / 2;
+
+        // Clamped rather than used directly: DefaultViewRegion isn't centered on the whole map
+        // (it's shifted west, toward the Americas), so once DefaultViewZoomOutFactor zooms out
+        // far enough that the map no longer fills BorderHost on this axis, panning straight to
+        // the region's own center left blank canvas past the map's real edge on one side while
+        // content still reached the opposite viewport edge - reading as the whole view shifted
+        // off-center rather than simply "zoomed out".
+        _panX = ClampPan(BorderHost.ActualWidth / 2 - centerX * _scale, MapWidth * _scale,
+            BorderHost.ActualWidth);
+        _panY = ClampPan(BorderHost.ActualHeight / 2 - centerY * _scale, MapHeight * _scale,
+            BorderHost.ActualHeight);
 
         ApplyTransform();
+    }
+
+    /// <summary>
+    /// Keeps a pan offset from showing blank canvas past the map's real edge on one side while
+    /// content still reaches the opposite viewport edge. Centers instead whenever the scaled map
+    /// is already smaller than the viewport on this axis, since then no pan can make real content
+    /// reach both edges anyway.
+    /// </summary>
+    private static double ClampPan(double pan, double scaledContentSize, double viewportSize)
+    {
+        if (scaledContentSize <= viewportSize)
+            return (viewportSize - scaledContentSize) / 2;
+
+        return Math.Clamp(pan, viewportSize - scaledContentSize, 0);
     }
 
     /// <summary>
@@ -1039,6 +1150,11 @@ public partial class TracerouteMapView
 
     private void BorderHost_MouseWheel(object sender, MouseWheelEventArgs e)
     {
+        // Zooming a strip too thin to show anything meaningful doesn't make sense - see
+        // BorderHost_MouseLeftButtonDown for the matching "click to expand" behavior instead.
+        if (!IsExpanded)
+            return;
+
         var position = e.GetPosition(BorderHost);
         var oldScale = _scale;
         var factor = e.Delta > 0 ? 1.15 : 1 / 1.15;
@@ -1059,6 +1175,16 @@ public partial class TracerouteMapView
 
     private void BorderHost_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
+        // While collapsed, BorderHost is just the thin strip behind the toggle button - too
+        // small to usefully pan/zoom, so a click there expands the map instead (matching the
+        // toggle button) rather than starting a drag that can't show anything meaningful.
+        if (!IsExpanded)
+        {
+            IsExpanded = true;
+            e.Handled = true;
+            return;
+        }
+
         _isPanning = true;
         _panStartMouse = e.GetPosition(BorderHost);
         _panStartX = _panX;
@@ -1069,7 +1195,7 @@ public partial class TracerouteMapView
 
     private void BorderHost_MouseMove(object sender, MouseEventArgs e)
     {
-        if (!_isPanning)
+        if (!_isPanning || !IsExpanded)
             return;
 
         var current = e.GetPosition(BorderHost);

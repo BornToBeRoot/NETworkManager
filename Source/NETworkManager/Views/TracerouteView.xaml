@@ -15,13 +15,14 @@
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
-             xmlns:views="clr-namespace:NETworkManager.Views"
+             xmlns:internalControls="clr-namespace:NETworkManager.Controls"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:TracerouteViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleansAndToVisibilityCollapsedConverter x:Key="BooleansAndToVisibilityCollapsedConverter" />
         <converters:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
         <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
         <converters:StringIsNotNullOrEmptyToBooleanConverter x:Key="StringIsNotNullOrEmptyToBooleanConverter" />
@@ -515,16 +516,27 @@
         </controls:MultiSelectDataGrid>
             <!-- MouseLeftButtonUp is wired up in code-behind (constructor) via AddHandler with
                  handledEventsToo:true - a plain XAML handler would never run since GridSplitter's
-                 own class handler already marks the event Handled. -->
+                 own class handler already marks the event Handled. Hidden not just while
+                 collapsed to a strip (dragging a splitter for that makes no sense) but also
+                 whenever the map itself is hidden (see ShowMap) - both conditions must hold. -->
             <GridSplitter x:Name="MapGridSplitter" Grid.Row="1" Focusable="False"
-                          Style="{StaticResource ResourceKey=HorizontalGridSplitterTransparent}"
-                          Visibility="{Binding ExpandMapView, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" />
-            <!-- No Expander: TracerouteMapView has its own always-visible top-left toggle
+                          Style="{StaticResource ResourceKey=HorizontalGridSplitterTransparent}">
+                <GridSplitter.Visibility>
+                    <MultiBinding Converter="{StaticResource ResourceKey=BooleansAndToVisibilityCollapsedConverter}">
+                        <Binding Path="ShowMap" />
+                        <Binding Path="ExpandMapView" />
+                    </MultiBinding>
+                </GridSplitter.Visibility>
+            </GridSplitter>
+            <!-- No Expander: TracerouteMapControl has its own always-visible top-left toggle
                  button, so collapsing just shrinks MapRow to GridLength.Auto instead of hiding
-                 behind a separate header row. -->
-            <views:TracerouteMapView x:Name="MapView" Grid.Row="2"
-                                      Hops="{Binding Results}"
-                                      IsExpanded="{Binding ExpandMapView, Mode=TwoWay}" />
+                 behind a separate header row. Hidden entirely (rather than just collapsed to its
+                 strip) whenever ShowMap is false - see TracerouteViewModel.ShowMap for why an
+                 always-empty map (no IP geolocation to plot hops with) is hidden instead of shown. -->
+            <internalControls:TracerouteMapControl x:Name="MapView" Grid.Row="2"
+                                                    Hops="{Binding Results}"
+                                                    IsExpanded="{Binding ExpandMapView, Mode=TwoWay}"
+                                                    Visibility="{Binding ShowMap, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" />
         </Grid>
     </Grid>
 </UserControl>

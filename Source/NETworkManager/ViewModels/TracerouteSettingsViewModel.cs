@@ -88,6 +88,22 @@ public class TracerouteSettingsViewModel : ViewModelBase
         }
     }
 
+    public bool ShowMap
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Traceroute_ShowMap = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Constructor, load settings
@@ -108,6 +124,7 @@ public class TracerouteSettingsViewModel : ViewModelBase
         Buffer = SettingsManager.Current.Traceroute_Buffer;
         ResolveHostname = SettingsManager.Current.Traceroute_ResolveHostname;
         CheckIPApiIPGeolocation = SettingsManager.Current.Traceroute_CheckIPApiIPGeolocation;
+        ShowMap = SettingsManager.Current.Traceroute_ShowMap;
     }
 
     #endregion

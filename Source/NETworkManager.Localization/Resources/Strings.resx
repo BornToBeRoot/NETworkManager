@@ -3692,6 +3692,9 @@ Changes to this value will take effect after the application is restarted. Wheth
   <data name="CheckIPGeolocation" xml:space="preserve">
     <value>Check IP geolocation</value>
   </data>
+  <data name="ShowMap" xml:space="preserve">
+    <value>Show map</value>
+  </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>The DNS resolver is determined via ip-api.com.
 
