@@ -36,7 +36,7 @@ public static class GlobalStaticConfiguration
     public static int NotificationSoundThrottle => 3000;
 
     // Tolerance for comparing two doubles (e.g. a resized panel width/height against a
-    // known constant) that are expected to be "close enough" rather than bit-for-bit equal.s
+    // known constant) that are expected to be "close enough" rather than bit-for-bit equal.
     public static double FloatPointFix => 1.0;
 
     // Profile config

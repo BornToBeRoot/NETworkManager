@@ -8224,7 +8224,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("PlaySoundOnStatusChange", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to (+{0} more).
+        /// </summary>
+        public static string PlusXMore {
+            get {
+                return ResourceManager.GetString("PlusXMore", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Port.
         /// </summary>

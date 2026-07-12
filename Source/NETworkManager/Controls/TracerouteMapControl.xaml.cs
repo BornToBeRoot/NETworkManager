@@ -25,6 +25,14 @@ namespace NETworkManager.Controls;
 /// Control that visualizes traceroute hops with known geolocation on an abstract, offline world
 /// map (no tile/network requests) with mouse-wheel zoom and drag-to-pan.
 /// </summary>
+/// <remarks>
+/// Known limitations (flagged in PR #3520's review, deliberately left as-is for now):
+/// - Arrows are drawn using the raw longitude delta between two points, so a route crossing the
+///   antimeridian (e.g. Tokyo to the US west coast) is fitted/drawn the long way around the map
+///   instead of wrapping across the edge.
+/// - Markers/arrows are only reachable via mouse hover (no keyboard focus or automation names),
+///   so their info panel isn't accessible via keyboard or screen reader.
+/// </remarks>
 public partial class TracerouteMapControl
 {
     private static readonly ILog Log = LogManager.GetLogger(typeof(TracerouteMapControl));
@@ -372,8 +380,13 @@ public partial class TracerouteMapControl
 
                 // Merge into the previous group if it's the same city/country and directly
                 // follows it, so a run of hops within the same city gets a single marker
-                // instead of several overlapping dots.
-                if (groups.Count > 0 && IsSameLocation(groups[^1].Info, info))
+                // instead of several overlapping dots. "Directly follows" is checked against the
+                // group's last actual hop number (not just group adjacency) - otherwise an
+                // unresolved hop skipped by the check above (e.g. resolved hops 2 and 4 in the
+                // same city with unresolved hop 3 between them) would silently merge into the
+                // same marker and its "Hops 2-4" label would wrongly imply hop 3 belongs to it.
+                if (groups.Count > 0 && groups[^1].Hops[^1].Hop == hop.Hop - 1 &&
+                    IsSameLocation(groups[^1].Info, info))
                 {
                     groups[^1].Hops.Add(hop);
                     continue;
@@ -397,14 +410,19 @@ public partial class TracerouteMapControl
         // Repeated visits to the same city (not merged above, since something else was in
         // between - e.g. Frankfurt -> Cologne -> Frankfurt) would otherwise stack their markers
         // near enough to overlap, at every zoom level - fan them out around the true location
-        // instead. Grouped by city/country name (like IsSameLocation), not by exact coordinate:
-        // different IPs in the same city often resolve to slightly different lat/lon from the
-        // geolocation service (different data centers), so an exact-point comparison here never
-        // matched and the repeat visits were never detected as overlapping in the first place.
+        // instead. Grouped by city/country name (like IsSameLocation) rather than exact
+        // coordinate where possible - see BuildLocationKey for why a missing city needs its own
+        // fallback here too.
+        //
+        // The spread offset is converted to map units using _minScale (the most-zoomed-out
+        // scale ever reachable, not the route's current fit _scale) so the resulting map-unit
+        // offset renders to *at least* the intended screen-pixel separation at every zoom level
+        // the user can actually reach - using the current _scale here would bake in an offset
+        // that's only correct at this exact zoom, and zooming back out toward _minScale would
+        // shrink the on-screen gap between markers well below a pixel.
         var displayPoints = SpreadOverlappingPoints(
-            groups.Select(g => (g.Point, LocationKey: $"{g.Info.City}␟{g.Info.Country}".ToLowerInvariant()))
-                .ToList(),
-            1 / _scale);
+            groups.Select(g => (g.Point, LocationKey: BuildLocationKey(g.Info, g.Point))).ToList(),
+            1 / _minScale);
 
         _hopPoints = displayPoints;
 
@@ -599,8 +617,32 @@ public partial class TracerouteMapControl
 
     private static bool IsSameLocation(IPGeolocationInfo a, IPGeolocationInfo b)
     {
+        // A missing city (e.g. a rural hop the geolocation service could only place in a
+        // country, not a specific city) must not compare equal to another missing city - two
+        // such hops are otherwise treated as the "same" location purely because both are blank,
+        // even when their actual coordinates are far apart. Fall back to comparing the resolved
+        // coordinate directly instead.
+        if (string.IsNullOrEmpty(a.City) || string.IsNullOrEmpty(b.City))
+            return a.Lat.Equals(b.Lat) && a.Lon.Equals(b.Lon);
+
         return string.Equals(a.City, b.City, StringComparison.OrdinalIgnoreCase) &&
                string.Equals(a.Country, b.Country, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    /// Builds the key SpreadOverlappingPoints groups markers by. Same city/country logic as
+    /// IsSameLocation - a missing city falls back to the projected point itself (rounded, so
+    /// float noise doesn't split what's really the same point into different keys) rather than
+    /// comparing two blank cities as equal, which would otherwise treat unrelated rural hops in
+    /// the same country as repeat visits to one location and shift them away from their real
+    /// coordinates.
+    /// </summary>
+    private static string BuildLocationKey(IPGeolocationInfo info, Point point)
+    {
+        if (!string.IsNullOrEmpty(info.City))
+            return $"{info.City}␟{info.Country}".ToLowerInvariant();
+
+        return $"{info.Country}␟{Math.Round(point.X, 1)}␟{Math.Round(point.Y, 1)}".ToLowerInvariant();
     }
 
     private static string BuildHopTooltip(List<TracerouteHopInfo> hops, IPGeolocationInfo info)
@@ -625,7 +667,7 @@ public partial class TracerouteMapControl
         var ipLine = firstHop.IPAddress?.ToString() ?? "-";
 
         if (hops.Count > 1)
-            ipLine += $" (+{hops.Count - 1} more)";
+            ipLine += " " + string.Format(Strings.PlusXMore, hops.Count - 1);
 
         lines.Add(ipLine);
 
@@ -1210,6 +1252,14 @@ public partial class TracerouteMapControl
     {
         _isPanning = false;
         BorderHost.ReleaseMouseCapture();
+    }
+
+    // Mouse capture can be lost without a matching MouseLeftButtonUp (e.g. Alt+Tab while
+    // dragging) - without this, _isPanning would stay true and the next mouse move over
+    // BorderHost would keep panning the map even though the button is no longer held.
+    private void BorderHost_LostMouseCapture(object sender, MouseEventArgs e)
+    {
+        _isPanning = false;
     }
 
     private void ButtonResetView_Click(object sender, RoutedEventArgs e)

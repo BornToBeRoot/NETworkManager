@@ -38,7 +38,7 @@ The map is only shown if [Check IP geolocation](#check-ip-geolocation) and [Show
 
 :::
 
-Hover a marker or arrow to show its details (location, ISP/ASN, hostname, IP address and average round-trip time) in the top-left info panel.
+Hover a marker to show its details (location, ISP/ASN, hostname, IP address and average round-trip time) in the bottom-right info panel. Hovering an arrow shows just the source and destination location of that segment.
 
 You can interact with the map:
 

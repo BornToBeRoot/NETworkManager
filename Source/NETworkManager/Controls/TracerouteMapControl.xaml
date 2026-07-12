@@ -17,6 +17,7 @@
                 MouseLeftButtonDown="BorderHost_MouseLeftButtonDown"
                 MouseLeftButtonUp="BorderHost_MouseLeftButtonUp"
                 MouseMove="BorderHost_MouseMove"
+                LostMouseCapture="BorderHost_LostMouseCapture"
                 SizeChanged="BorderHost_SizeChanged">
             <Border.Style>
                 <Style TargetType="{x:Type Border}">
@@ -124,7 +125,7 @@
         since it's just a regular element, not a separate popup window.
 
         Bottom-right (rather than sharing the top-left corner with the toggle button) so it never
-        has to fight eitherew overlay button for space - the four corners now each have exactly one
+        has to fight either overlay button for space - the four corners now each have exactly one
         piece of chrome: toggle (top-left), reset (top-right), zoom/pan hint (bottom-left), this
         panel (bottom-right).
         -->
