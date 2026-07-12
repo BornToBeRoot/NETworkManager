@@ -28,6 +28,22 @@ Traceroute works by sending ICMP packets with incrementally increasing TTL (Time
 | **Copy** | Copies the selected information to the clipboard |
 | **Export...** | Exports the selected or all results to a file |
 
+### Map
+
+Below the hop list, a **Map** visualizes each resolved hop's geolocation on an offline world map. Consecutive hops are connected with curved, directional arrows showing the path the trace took.
+
+Hover a marker or arrow to show its details (location, ISP/ASN, hostname, IP address and average round-trip time) in the top-left info panel.
+
+You can interact with the map:
+
+| Action | Description |
+|--------|-------------|
+| **Mouse wheel** | Zoom in and out |
+| **Left mouse button + drag** | Pan the map |
+| **Reset** (top-right) | Resets pan/zoom to fit the current route |
+
+Click the **Map** toggle in the top-left corner to collapse or expand the map.
+
 ## Profile
 
 ### Inherit host from general

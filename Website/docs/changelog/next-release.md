@@ -21,6 +21,10 @@ Release date: **xx.xx.2026**
 
 ## What's new?
 
+**Traceroute**
+
+- New **Map** view below the hop list, visualizing each resolved hop's geolocation on an offline world map. Consecutive hops are connected with curved, directional arrows; hovering a marker or arrow shows its location, ISP/ASN, hostname, IP address and average round-trip time. The map supports mouse-wheel zoom and drag-to-pan, and can be collapsed via a toggle button on the map itself, similar to the Profiles panel. [#3520](https://github.com/BornToBeRoot/NETworkManager/pull/3520)
+
 ## Improvements
 
 ## Bug Fixes

@@ -576,6 +576,9 @@
   <data name="Map" xml:space="preserve">
     <value>Map</value>
   </data>
+  <data name="ScrollToZoomDragToPan" xml:space="preserve">
+    <value>Scroll = Zoom, Drag = Pan</value>
+  </data>
   <data name="Maximum" xml:space="preserve">
     <value>Maximum</value>
   </data>

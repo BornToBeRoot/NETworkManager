@@ -38,6 +38,7 @@ public class TracerouteViewModel : ViewModelBase
     private readonly Guid _tabId;
     private bool _firstLoad = true;
     private bool _closed;
+    private bool _isLoading;
 
     /// <summary>
     /// Gets or sets the host address or hostname to trace.
@@ -177,10 +178,7 @@ public class TracerouteViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether the map view is expanded.
-    /// </summary>
+ 
     public bool ExpandMapView
     {
         get;
@@ -188,6 +186,9 @@ public class TracerouteViewModel : ViewModelBase
         {
             if (value == field)
                 return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Traceroute_ExpandMapView = value;
 
             field = value;
             OnPropertyChanged();
@@ -218,7 +219,11 @@ public class TracerouteViewModel : ViewModelBase
         ResultsView.SortDescriptions.Add(new SortDescription(nameof(TracerouteHopInfo.Hop),
             ListSortDirection.Ascending));
 
+        _isLoading = true;
+
         LoadSettings();
+
+        _isLoading = false;
     }
 
     /// <summary>

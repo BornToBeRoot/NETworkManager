@@ -873,7 +873,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;
@@ -1248,7 +1248,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;
@@ -1408,7 +1408,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;
@@ -1659,7 +1659,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;
@@ -1762,6 +1762,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Traceroute_ExpandMapView;
 
+    public double Traceroute_MapHeight
+    {
+        get;
+        set
+        {
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Traceroute_MapHeight;
+
     public bool Traceroute_ExpandProfileView
     {
         get;
@@ -1780,7 +1793,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;
@@ -2020,7 +2033,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;
@@ -2557,7 +2570,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;
@@ -2652,7 +2665,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;
@@ -2890,7 +2903,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;
@@ -3038,7 +3051,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;
@@ -3107,7 +3120,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;
@@ -3319,7 +3332,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;
@@ -3474,7 +3487,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;
@@ -3625,7 +3638,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;
@@ -3668,7 +3681,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;
@@ -3737,7 +3750,7 @@ public class SettingsInfo : INotifyPropertyChanged
         get;
         set
         {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.Profile_FloatPointFix)
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
                 return;
 
             field = value;

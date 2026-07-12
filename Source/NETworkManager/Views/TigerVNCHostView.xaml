@@ -231,7 +231,7 @@
             </Grid>
             <GridSplitter Grid.Column="1" Grid.Row="0"
                           Focusable="False"
-                          Style="{StaticResource ProfileGridSplitter}" />
+                          Style="{StaticResource VerticalGridSplitter}" />
             <Expander Grid.Column="2" Grid.Row="0"
                       Header="{x:Static localization:Strings.Profiles}"
                       Style="{StaticResource ProfileExpander}"

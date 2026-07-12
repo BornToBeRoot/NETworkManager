@@ -6830,6 +6830,15 @@ namespace NETworkManager.Localization.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Scroll = Zoom, Drag = Pan.
+        /// </summary>
+        public static string ScrollToZoomDragToPan {
+            get {
+                return ResourceManager.GetString("ScrollToZoomDragToPan", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Maximum.
         /// </summary>
         public static string Maximum {

@@ -210,7 +210,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
                 return;
 
             if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
-                GlobalStaticConfiguration.Profile_FloatPointFix) // Do not save the size when collapsed
+                GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
                 SettingsManager.Current.Whois_ProfileWidth = value.Value;
 
             field = value;
@@ -408,7 +408,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
         if (dueToChangedSize)
         {
             ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
-                                GlobalStaticConfiguration.Profile_FloatPointFix;
+                                GlobalStaticConfiguration.FloatPointFix;
         }
         else
         {
@@ -416,7 +416,7 @@ public class WhoisHostViewModel : ViewModelBase, IProfileManager
             {
                 ProfileWidth =
                     Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) <
-                    GlobalStaticConfiguration.Profile_FloatPointFix
+                    GlobalStaticConfiguration.FloatPointFix
                         ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded)
                         : new GridLength(_tempProfileWidth);
             }

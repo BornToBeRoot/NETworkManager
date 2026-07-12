@@ -276,7 +276,7 @@
                         </Rectangle>
                         <TextBlock Margin="4,0,0,0"
                                    Text="{x:Static localization:Strings.Live}"
-                                   FontSize="11"
+                                   FontSize="14"
                                    VerticalAlignment="Center">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
