@@ -105,6 +105,7 @@ public class TracerouteViewModel : ViewModelBase
                 return;
 
             field = value;
+            OnPropertyChanged();
         }
     } = [];
 

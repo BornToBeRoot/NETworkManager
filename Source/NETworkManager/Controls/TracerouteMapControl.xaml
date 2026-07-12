@@ -5,13 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="400">
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+    </UserControl.Resources>
     <Grid>
         <!-- Cursor=Hand while collapsed hints that clicking this thin strip expands the map
              again (see BorderHost_MouseLeftButtonDown), instead of trying to pan/zoom it. -->
         <Border x:Name="BorderHost"
-                Background="{DynamicResource MahApps.Brushes.Window.Background}"
+                Background="{DynamicResource ResourceKey=MahApps.Brushes.Window.Background}"
                 ClipToBounds="True"
                 MouseWheel="BorderHost_MouseWheel"
                 MouseLeftButtonDown="BorderHost_MouseLeftButtonDown"
@@ -20,9 +24,9 @@
                 LostMouseCapture="BorderHost_LostMouseCapture"
                 SizeChanged="BorderHost_SizeChanged">
             <Border.Style>
-                <Style TargetType="{x:Type Border}">
+                <Style TargetType="{x:Type TypeName=Border}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}" Value="False">
+                        <DataTrigger Binding="{Binding Path=IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=UserControl}}}" Value="False">
                             <Setter Property="Cursor" Value="Hand" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -51,8 +55,8 @@
                 </Canvas.RenderTransform>
 
                 <Path x:Name="CountriesPath"
-                      Fill="{DynamicResource MahApps.Brushes.Gray10}"
-                      Stroke="{DynamicResource MahApps.Brushes.Gray8}"
+                      Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray10}"
+                      Stroke="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
                       StrokeThickness="0.5" />
 
                 <!--
@@ -61,61 +65,25 @@
                 as visual noise rather than useful detail - a bare country outline reads as a
                 clean, minimal "this is the map" backdrop instead.
                 -->
-                <Canvas x:Name="CitiesCanvas" Width="1000" Height="500">
-                    <Canvas.Style>
-                        <Style TargetType="{x:Type Canvas}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}" Value="False">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Canvas.Style>
-                </Canvas>
-                <Canvas x:Name="LabelsCanvas" Width="1000" Height="500">
-                    <Canvas.Style>
-                        <Style TargetType="{x:Type Canvas}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}" Value="False">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Canvas.Style>
-                </Canvas>
-                <Canvas x:Name="HopsCanvas" Width="1000" Height="500">
-                    <Canvas.Style>
-                        <Style TargetType="{x:Type Canvas}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}" Value="False">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Canvas.Style>
-                </Canvas>
+                <Canvas x:Name="CitiesCanvas" Width="1000" Height="500"
+                        Visibility="{Binding Path=IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=UserControl}}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" />
+                <Canvas x:Name="LabelsCanvas" Width="1000" Height="500"
+                        Visibility="{Binding Path=IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=UserControl}}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" />
+                <Canvas x:Name="HopsCanvas" Width="1000" Height="500"
+                        Visibility="{Binding Path=IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=UserControl}}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" />
             </Canvas>
         </Border>
 
         <!-- Hidden while collapsed: bottom-aligned, so on the thin collapsed strip it would
              otherwise overlap the top-left toggle button instead of sitting below it. -->
-        <TextBlock Text="{x:Static localization:Strings.ScrollToZoomDragToPan}"
+        <TextBlock Text="{x:Static Member=localization:Strings.ScrollToZoomDragToPan}"
+                   Style="{StaticResource ResourceKey=InfoTextBlock}"
                    FontSize="11"
                    Margin="10"
                    IsHitTestVisible="False"
                    HorizontalAlignment="Left"
-                   VerticalAlignment="Bottom">
-            <TextBlock.Style>
-                <Style TargetType="{x:Type TextBlock}">
-                    <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}" Value="False">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
+                   VerticalAlignment="Bottom"
+                   Visibility="{Binding Path=IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=UserControl}}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" />
 
         <!--
         Fixed-position replacement for a WPF ToolTip popup: shown/hidden from code-behind on
@@ -130,8 +98,8 @@
         panel (bottom-right).
         -->
         <Border x:Name="InfoPanel"
-                Background="{DynamicResource MahApps.Brushes.Window.Background}"
-                BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
+                Background="{DynamicResource ResourceKey=MahApps.Brushes.Window.Background}"
+                BorderBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
                 BorderThickness="1"
                 Padding="8,6"
                 Margin="10"
@@ -140,9 +108,7 @@
                 IsHitTestVisible="False"
                 Visibility="Collapsed">
             <TextBlock x:Name="InfoPanelText"
-                       Foreground="{DynamicResource MahApps.Brushes.Text}"
-                       FontSize="14"
-                       TextWrapping="Wrap" />
+                       Style="{StaticResource ResourceKey=WrapTextBlock}" />
         </Border>
 
         <!--
@@ -155,7 +121,7 @@
                 VerticalAlignment="Top"
                 Margin="10"
                 Click="ButtonToggleExpand_Click"
-                Style="{StaticResource CleanButton}">
+                Style="{StaticResource ResourceKey=CleanButton}">
             <StackPanel Orientation="Horizontal">
                 <Rectangle Width="16" Height="16"
                            VerticalAlignment="Center">
@@ -164,33 +130,33 @@
                         <VisualBrush x:Key="VisualChevronDown" Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronDown}" />
                     </Rectangle.Resources>
                     <Rectangle.Style>
-                        <Style TargetType="{x:Type Rectangle}">
+                        <Style TargetType="{x:Type TypeName=Rectangle}">
                             <!-- Matches the chevron-direction convention already used by the
                                  app's other Expanders (see ExpanderDownHeader in
                                  ExpanderStyles.xaml): up while collapsed, down while expanded. -->
-                            <Setter Property="OpacityMask" Value="{StaticResource VisualChevronUp}" />
-                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                            <Setter Property="OpacityMask" Value="{StaticResource ResourceKey=VisualChevronUp}" />
+                            <Setter Property="Fill" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
-                                    <Setter Property="OpacityMask" Value="{StaticResource VisualChevronDown}" />
+                                <DataTrigger Binding="{Binding Path=IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=UserControl}}}" Value="True">
+                                    <Setter Property="OpacityMask" Value="{StaticResource ResourceKey=VisualChevronDown}" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Fill" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Rectangle.Style>
                 </Rectangle>
                 <TextBlock Margin="4,0,0,0"
-                           Text="{x:Static localization:Strings.Map}"
+                           Text="{x:Static Member=localization:Strings.Map}"
                            FontSize="14"
                            VerticalAlignment="Center">
                     <TextBlock.Style>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                        <Style TargetType="{x:Type TypeName=TextBlock}">
+                            <Setter Property="Foreground" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
@@ -204,16 +170,9 @@
         <Button HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Margin="10"
-                Click="ButtonResetView_Click">
-            <Button.Style>
-                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}" Value="False">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
+                Click="ButtonResetView_Click"
+                Style="{StaticResource ResourceKey=CleanButton}"
+                Visibility="{Binding Path=IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=UserControl}}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
             <StackPanel Orientation="Horizontal">
                 <Rectangle Width="16" Height="16"
                            VerticalAlignment="Center">
@@ -221,26 +180,26 @@
                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FitToScreenOutline}" />
                     </Rectangle.OpacityMask>
                     <Rectangle.Style>
-                        <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                        <Style TargetType="{x:Type TypeName=Rectangle}">
+                            <Setter Property="Fill" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Fill" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
                     </Rectangle.Style>
                 </Rectangle>
                 <TextBlock Margin="4,0,0,0"
-                           Text="{x:Static localization:Strings.Reset}"
+                           Text="{x:Static Member=localization:Strings.Reset}"
                            FontSize="14"
                            VerticalAlignment="Center">
                     <TextBlock.Style>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                        <Style TargetType="{x:Type TypeName=TextBlock}">
+                            <Setter Property="Foreground" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>

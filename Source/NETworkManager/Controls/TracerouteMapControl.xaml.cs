@@ -11,12 +11,16 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using NETworkManager.ViewModels;
+using NETworkManager.Views;
 using Path = System.Windows.Shapes.Path;
 
 namespace NETworkManager.Controls;
@@ -68,14 +72,11 @@ public partial class TracerouteMapControl
     private static readonly Lazy<List<(string Name, Point Position)>> CountryLabels = new(BuildCountryLabels);
     private static readonly Lazy<List<CityData>> Cities = new(LoadCities);
 
-    // Hops/arrows use the app's MahApps accent color (via SetResourceReference, applied per
-    // element) so the traceroute path matches whatever accent the user has chosen. Country
-    // labels use the themed muted-text gray (also via SetResourceReference on each label - a
-    // frozen brush can't react to a theme switch) so they read as quiet background context.
-    // Cities are the one reference-layer element that deliberately does NOT follow the theme:
-    // they keep the same fixed brand blue as the speedtest download series
-    // (SpeedTestWidgetViewModel's "#1ba1e2"), so they stay a recognizable, consistent "reference
-    // point" color in both themes instead of competing with the accent-colored traceroute path.
+    // Hops/arrows and country labels follow the theme (accent / muted gray, via
+    // SetResourceReference per element so they track theme switches a frozen brush couldn't).
+    // Cities deliberately don't: they keep a fixed brand blue (the speedtest download series'
+    // "#1ba1e2") so they stay a consistent "reference point" color that doesn't compete with the
+    // accent-colored traceroute path in either theme.
     private static readonly Brush CityBrush = FreezeBrush(Color.FromRgb(0x1B, 0xA1, 0xE2));
 
     // Shared by every label/dot so a single assignment (in ApplyTransform) keeps their on-screen
@@ -214,23 +215,47 @@ public partial class TracerouteMapControl
 
     private void TracerouteMapControl_Loaded(object sender, RoutedEventArgs e)
     {
-        try
+        // The embedded world map is ~1.4 MB of JSON; parsing it and building the (frozen)
+        // country geometry synchronously here would briefly hitch the UI thread the first time a
+        // Traceroute tab is opened. Materialize the shared Lazy caches on a background thread
+        // instead - they hold pure data plus a frozen Freezable, both safe to build off the UI
+        // thread - then hop back to the UI thread to create the actual WPF label/city elements
+        // and draw. Hops themselves need none of this data (they project directly), so a trace
+        // arriving while this is still loading still renders fine on its own.
+        Task.Run(() =>
         {
-            CountriesPath.Data = CountriesGeometry.Value;
-            BuildLabels();
-            BuildCities();
-        }
-        catch (Exception ex)
+            try
+            {
+                // CountriesGeometry.Value also forces Countries.Value.
+                _ = CountriesGeometry.Value;
+                _ = CountryLabels.Value;
+                _ = Cities.Value;
+            }
+            catch
+            {
+                // Swallowed so the task never faults (which would surface as an unobserved task
+                // exception) - the continuation re-touches the same Lazy values and logs there.
+            }
+        }).ContinueWith(_ =>
         {
-            Log.Error("Error while loading the embedded world map data", ex);
-        }
+            try
+            {
+                CountriesPath.Data = CountriesGeometry.Value;
+                BuildLabels();
+                BuildCities();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error while loading the embedded world map data", ex);
+            }
 
-        // Deferred: right after Loaded, ancestors (Expander/Grid/tab) can still be mid-layout,
-        // so BorderHost.ActualWidth/Height may read as 0 even after an explicit UpdateLayout()
-        // call. Waiting for the current layout pass to fully settle guarantees FitToHops/
-        // FitToView can compute the real scale/pan on the very first run, instead of hop/city
-        // labels sitting at their approximate build-time position until the user zooms.
-        Dispatcher.BeginInvoke(RedrawHops, DispatcherPriority.Loaded);
+            // Deferred: right after Loaded, ancestors (Expander/Grid/tab) can still be mid-layout,
+            // so BorderHost.ActualWidth/Height may read as 0 even after an explicit UpdateLayout()
+            // call. Waiting for the current layout pass to fully settle guarantees FitToHops/
+            // FitToView can compute the real scale/pan on the very first run, instead of hop/city
+            // labels sitting at their approximate build-time position until the user zooms.
+            Dispatcher.BeginInvoke(RedrawHops, DispatcherPriority.Loaded);
+        }, CancellationToken.None, TaskContinuationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
     }
 
     private void BuildLabels()
@@ -300,9 +325,7 @@ public partial class TracerouteMapControl
             // Renders to the left of the dot (hop number labels render to the right - see
             // DrawHopMarker), so a hop located exactly in a labelled city doesn't collide with
             // its own number. Uses the same center-pivot scaling (RenderTransformOrigin 0.5,0.5)
-            // as every other label/dot, just centered on an offset point instead of the dot
-            // itself - offset centering is exact, whereas anchoring on an edge with a fractional
-            // origin turned out error-prone (it requires re-deriving the pivot math by hand).
+            // as every other label/dot, just centered on an offset point instead of the dot itself.
             var label = new TextBlock
             {
                 Text = city.N,
@@ -407,19 +430,13 @@ public partial class TracerouteMapControl
         // one made the markers overlap again for the other.
         FitToHops(rawPoints);
 
-        // Repeated visits to the same city (not merged above, since something else was in
-        // between - e.g. Frankfurt -> Cologne -> Frankfurt) would otherwise stack their markers
-        // near enough to overlap, at every zoom level - fan them out around the true location
-        // instead. Grouped by city/country name (like IsSameLocation) rather than exact
-        // coordinate where possible - see BuildLocationKey for why a missing city needs its own
-        // fallback here too.
-        //
-        // The spread offset is converted to map units using _minScale (the most-zoomed-out
-        // scale ever reachable, not the route's current fit _scale) so the resulting map-unit
-        // offset renders to *at least* the intended screen-pixel separation at every zoom level
-        // the user can actually reach - using the current _scale here would bake in an offset
-        // that's only correct at this exact zoom, and zooming back out toward _minScale would
-        // shrink the on-screen gap between markers well below a pixel.
+        // Fans out repeat visits to the same city that weren't merged above (something was in
+        // between - e.g. Frankfurt -> Cologne -> Frankfurt) so their markers don't overlap; see
+        // SpreadOverlappingPoints. Grouped by city/country name (see BuildLocationKey for the
+        // missing-city fallback). Converts the offset via _minScale (the most-zoomed-out scale
+        // reachable, not this route's fit _scale) so the gap stays >= the intended screen pixels
+        // at every zoom - baking in the current _scale would shrink it below a pixel once zoomed
+        // back out.
         var displayPoints = SpreadOverlappingPoints(
             groups.Select(g => (g.Point, LocationKey: BuildLocationKey(g.Info, g.Point))).ToList(),
             1 / _minScale);
@@ -484,8 +501,7 @@ public partial class TracerouteMapControl
     /// Grouped by a caller-supplied location key rather than the point itself, since different
     /// IPs in the same city commonly resolve to slightly different lat/lon.
     /// </summary>
-    private static List<Point> SpreadOverlappingPoints(List<(Point Point, string LocationKey)> points,
-        double inverseScale)
+    private static List<Point> SpreadOverlappingPoints(List<(Point Point, string LocationKey)> points, double inverseScale)
     {
         const double verticalSpacingScreenPixels = 26;
         var verticalSpacing = verticalSpacingScreenPixels * inverseScale;
@@ -498,7 +514,7 @@ public partial class TracerouteMapControl
             var occurrence = occurrenceCounts.GetValueOrDefault(locationKey);
             occurrenceCounts[locationKey] = occurrence + 1;
 
-            result.Add(occurrence == 0 ? point : new Point(point.X, point.Y + verticalSpacing * occurrence));
+            result.Add(occurrence == 0 ? point : point with { Y = point.Y + verticalSpacing * occurrence });
         }
 
         return result;
@@ -510,8 +526,7 @@ public partial class TracerouteMapControl
     /// element (so RedrawHops can wire the reverse: hovering this marker highlighting its
     /// adjacent arrows too).
     /// </summary>
-    private (Action<bool> SetHighlighted, UIElement HitTarget) DrawHopMarker(
-        List<TracerouteHopInfo> hops, IPGeolocationInfo info, Point point)
+    private (Action<bool> SetHighlighted, UIElement HitTarget) DrawHopMarker(List<TracerouteHopInfo> hops, IPGeolocationInfo info, Point point)
     {
         var tooltip = BuildHopTooltip(hops, info);
 
@@ -639,10 +654,9 @@ public partial class TracerouteMapControl
     /// </summary>
     private static string BuildLocationKey(IPGeolocationInfo info, Point point)
     {
-        if (!string.IsNullOrEmpty(info.City))
-            return $"{info.City}␟{info.Country}".ToLowerInvariant();
-
-        return $"{info.Country}␟{Math.Round(point.X, 1)}␟{Math.Round(point.Y, 1)}".ToLowerInvariant();
+        return !string.IsNullOrEmpty(info.City) ?
+            $"{info.City}␟{info.Country}".ToLowerInvariant() : 
+            $"{info.Country}␟{Math.Round(point.X, 1)}␟{Math.Round(point.Y, 1)}".ToLowerInvariant();
     }
 
     private static string BuildHopTooltip(List<TracerouteHopInfo> hops, IPGeolocationInfo info)
@@ -744,8 +758,7 @@ public partial class TracerouteMapControl
         if (length < 0.01)
             return static _ => { };
 
-        var tooltip =
-            $"{FormatLocation(from.Info, includeRegion: true)}\n↓\n{FormatLocation(to.Info, includeRegion: true)}";
+        var tooltip = $"{FormatLocation(from.Info, includeRegion: true)}\n↓\n{FormatLocation(to.Info, includeRegion: true)}";
 
         // Bows the path to one side, consistently relative to its own direction of travel, so a
         // segment and its reverse (e.g. Frankfurt -> Cologne -> Frankfurt) curve to opposite
@@ -837,14 +850,10 @@ public partial class TracerouteMapControl
             HeadTransform = headTransform
         };
 
-        // Positions everything for the view's current scale right away - RedrawHops always fits
-        // the view before drawing, so _scale is already correct here. UpdateArrowGeometry is
-        // called again from ApplyTransform whenever the user zooms in/out further, so the
-        // marker-edge trim (a fixed number of *map* units, computed from the still-current
-        // inverseScale) keeps tracking the marker's constant *screen* size instead of staying
-        // frozen at whatever scale the route happened to auto-fit to. A route spanning a whole
-        // continent auto-fits very zoomed out, so that frozen trim - fine at that zoom - became a
-        // huge, visibly detached gap once the user zoomed in further on just one part of it.
+        // Positions everything for the current scale right away - RedrawHops fits the view before
+        // drawing, so _scale is already correct. ApplyTransform calls UpdateArrowGeometry again on
+        // every zoom (see its doc) so the marker-edge trim keeps tracking the marker's constant
+        // screen size instead of freezing at this route's auto-fit scale.
         UpdateArrowGeometry(arrow, 1 / _scale);
 
         _arrows.Add(arrow);
@@ -951,15 +960,9 @@ public partial class TracerouteMapControl
         return new Point(x, y);
     }
 
-    // Roughly North America through the Middle East (west coast to the Urals, northern Africa/
-    // India to Scandinavia) - the empty (no-trace) view in FitToView starts framed on that
-    // instead of the whole world, so it already shows a useful spread of countries/borders.
-    private static readonly Rect DefaultViewRegion = new(Project(72, -130), Project(15, 60));
-
-    // FitToView zooms out this much further past DefaultViewRegion's own width, so the initial
-    // view isn't cropped in tight on just that region (Math.Clamp against _minScale below still
-    // stops it from ever zooming out past the whole world).
-    private const double DefaultViewZoomOutFactor = 2;
+    // Latitude the empty (no-trace) view centers on vertically. ~40°N keeps populated land
+    // (USA / Europe / Mediterranean) around the middle instead of the empty equator ocean.
+    private const double DefaultViewCenterLatitude = 40;
 
     #endregion
 
@@ -983,22 +986,18 @@ public partial class TracerouteMapControl
 
         UpdateScaleBounds();
 
-        // Fits DefaultViewRegion (not the whole map) to BorderHost's width - fully containing
-        // the whole world instead would leave large empty margins on either side, since the map
-        // row is usually much wider than tall. Any vertical overflow this causes is simply
-        // clipped by BorderHost's own ClipToBounds.
-        _scale = Math.Clamp(
-            BorderHost.ActualWidth / DefaultViewRegion.Width / DefaultViewZoomOutFactor,
-            _minScale, _maxScale);
-        var centerX = DefaultViewRegion.Left + DefaultViewRegion.Width / 2;
-        var centerY = DefaultViewRegion.Top + DefaultViewRegion.Height / 2;
+        // Fill the view with the map ("cover", not "contain"): the map row is usually much wider
+        // than tall, so scaling to fit the whole world would leave big empty side margins with a
+        // small map floating in the middle. Scaling to the larger axis instead makes the map fill
+        // BorderHost; any overflow on the other axis is clipped by BorderHost's own ClipToBounds.
+        _scale = Math.Clamp(Math.Max(BorderHost.ActualWidth / MapWidth, BorderHost.ActualHeight / MapHeight), _minScale, _maxScale);
 
-        // Clamped rather than used directly: DefaultViewRegion isn't centered on the whole map
-        // (it's shifted west, toward the Americas), so once DefaultViewZoomOutFactor zooms out
-        // far enough that the map no longer fills BorderHost on this axis, panning straight to
-        // the region's own center left blank canvas past the map's real edge on one side while
-        // content still reached the opposite viewport edge - reading as the whole view shifted
-        // off-center rather than simply "zoomed out".
+        // Center horizontally on the map's middle and vertically on a populated latitude (see
+        // DefaultViewCenterLatitude) instead of the empty equator. ClampPan keeps either axis from
+        // exposing blank canvas past the map's edge (and just centers an axis that already fits).
+        var centerX = MapWidth / 2;
+        var centerY = Project(DefaultViewCenterLatitude, 0).Y;
+
         _panX = ClampPan(BorderHost.ActualWidth / 2 - centerX * _scale, MapWidth * _scale,
             BorderHost.ActualWidth);
         _panY = ClampPan(BorderHost.ActualHeight / 2 - centerY * _scale, MapHeight * _scale,
@@ -1083,36 +1082,47 @@ public partial class TracerouteMapControl
         PanTransform.X = _panX;
         PanTransform.Y = _panY;
 
-        // Panning shifts every point by the same offset, so it never changes which labels
-        // overlap - only a change in scale can, so skip all of this (including the O(n^2)
-        // declutter pass) while the user is just dragging the map around.
-        if (Math.Abs(_scale - _lastScaleDependentUpdateScale) < 1e-9)
-            return;
+        // Counter-scaling, arrow geometry and label repositioning only depend on the zoom level
+        // (panning shifts every point by the same offset), so skip them while the user is just
+        // dragging the map around.
+        var scaleChanged = Math.Abs(_scale - _lastScaleDependentUpdateScale) >= 1e-9;
 
-        _lastScaleDependentUpdateScale = _scale;
+        if (scaleChanged)
+        {
+            _lastScaleDependentUpdateScale = _scale;
 
-        // Counter-scale the labels/dots so their on-screen size stays constant.
-        var inverseScale = 1 / _scale;
-        _inverseScaleTransform.ScaleX = inverseScale;
-        _inverseScaleTransform.ScaleY = inverseScale;
+            // Counter-scale the labels/dots so their on-screen size stays constant.
+            var inverseScale = 1 / _scale;
+            _inverseScaleTransform.ScaleX = inverseScale;
+            _inverseScaleTransform.ScaleY = inverseScale;
 
-        // Country border StrokeThickness is otherwise in map units like everything else in
-        // RootCanvas, so at high zoom (up to 30x) it would render many screen pixels thick.
-        CountriesPath.StrokeThickness = CountryBorderStrokeThickness * inverseScale;
+            // Country border StrokeThickness is otherwise in map units like everything else in
+            // RootCanvas, so at high zoom (up to 30x) it would render many screen pixels thick.
+            CountriesPath.StrokeThickness = CountryBorderStrokeThickness * inverseScale;
 
-        foreach (var arrow in _arrows)
-            UpdateArrowGeometry(arrow, inverseScale);
+            foreach (var arrow in _arrows)
+                UpdateArrowGeometry(arrow, inverseScale);
 
-        // Hop number labels always stay visible regardless of zoom/declutter - they're the
-        // actual traceroute data, not the reference layer.
-        foreach (var label in _hopNumberLabels)
-            RepositionOffsetLabel(label, HopLabelGapScreenPixels, inverseScale, growLeft: false);
+            // Hop number labels always stay visible regardless of zoom/declutter - they're the
+            // actual traceroute data, not the reference layer.
+            foreach (var label in _hopNumberLabels)
+                RepositionOffsetLabel(label, HopLabelGapScreenPixels, inverseScale, growLeft: false);
 
-        // City labels grow to the left instead (see BuildCities).
-        foreach (var label in _cityLabels)
-            RepositionOffsetLabel(label, CityLabelGapScreenPixels, inverseScale, growLeft: true);
+            // City labels grow to the left instead (see BuildCities).
+            foreach (var label in _cityLabels)
+                RepositionOffsetLabel(label, CityLabelGapScreenPixels, inverseScale, growLeft: true);
+        }
 
-        DeclutterReferenceLabels(_scale > _minScale * LabelVisibleScaleFactor);
+        // Unlike the block above, *which* reference labels are in view changes with panning too,
+        // and DeclutterReferenceLabels culls off-screen ones - so it must also re-run on pan,
+        // otherwise a label panned into view would stay hidden from when it was still off-screen
+        // (leaving just the city dots). Cheap on pan: off-screen labels are dropped by a single
+        // viewport check before the overlap pass. Below the visibility threshold nothing shows
+        // regardless of pan, so there only a scale change needs to act (to collapse them once).
+        var referenceLabelsVisible = _scale > _minScale * LabelVisibleScaleFactor;
+
+        if (scaleChanged || referenceLabelsVisible)
+            DeclutterReferenceLabels(referenceLabelsVisible);
     }
 
     /// <summary>
@@ -1120,8 +1130,7 @@ public partial class TracerouteMapControl
     /// DrawHopMarker) on a point offset a constant number of screen pixels to the left or right
     /// of its anchor (Tag), so the gap doesn't grow while zooming in.
     /// </summary>
-    private static void RepositionOffsetLabel(TextBlock label, double gapScreenPixels, double inverseScale,
-        bool growLeft)
+    private static void RepositionOffsetLabel(TextBlock label, double gapScreenPixels, double inverseScale, bool growLeft)
     {
         if (label.Tag is not (Point anchor, Size size))
             return;
@@ -1153,9 +1162,21 @@ public partial class TracerouteMapControl
 
         var placedRects = new List<Rect>();
 
+        // Only labels actually inside the viewport can matter: culling the (often large)
+        // off-screen majority up front keeps this pass roughly O(visible^2) instead of O(all^2)
+        // over all ~900 country + city labels on every zoom step - and an off-screen label is
+        // hidden anyway, so this changes nothing visible.
+        var viewport = new Rect(0, 0, BorderHost.ActualWidth, BorderHost.ActualHeight);
+
         foreach (var label in _cityLabels.Concat(_countryLabels))
         {
             var rect = GetLabelScreenRect(label);
+
+            if (!viewport.IntersectsWith(rect))
+            {
+                label.Visibility = Visibility.Collapsed;
+                continue;
+            }
 
             if (placedRects.Any(r => r.IntersectsWith(rect)))
             {
@@ -1187,7 +1208,11 @@ public partial class TracerouteMapControl
 
     private void BorderHost_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-        FitToHops(_hopPoints);
+        // Full redraw rather than just re-fitting the cached _hopPoints: the spread offsets baked
+        // into those points (see SpreadOverlappingPoints, converted via _minScale) depend on the
+        // now-changed viewport size, so re-deriving them keeps markers that share a city (hairpin
+        // routes) correctly spaced at the new size. Cheap given how few hops a route has.
+        RedrawHops();
     }
 
     private void BorderHost_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -1209,6 +1234,11 @@ public partial class TracerouteMapControl
         _panX = position.X - (position.X - _panX) * (newScale / oldScale);
         _panY = position.Y - (position.Y - _panY) * (newScale / oldScale);
         _scale = newScale;
+
+        // Clamp so the cursor-anchored pan above can't leave blank canvas past the map's edge
+        // inside the viewport (same reasoning as FitToView), e.g. when zooming near an edge.
+        _panX = ClampPan(_panX, MapWidth * _scale, BorderHost.ActualWidth);
+        _panY = ClampPan(_panY, MapHeight * _scale, BorderHost.ActualHeight);
 
         ApplyTransform();
 
@@ -1244,6 +1274,11 @@ public partial class TracerouteMapControl
 
         _panX = _panStartX + (current.X - _panStartMouse.X);
         _panY = _panStartY + (current.Y - _panStartMouse.Y);
+
+        // Clamp so the map can't be dragged off-screen into blank canvas (same reasoning as
+        // FitToView / the mouse-wheel zoom); Reset re-centers on the route if needed.
+        _panX = ClampPan(_panX, MapWidth * _scale, BorderHost.ActualWidth);
+        _panY = ClampPan(_panY, MapHeight * _scale, BorderHost.ActualHeight);
 
         ApplyTransform();
     }
@@ -1309,15 +1344,11 @@ public partial class TracerouteMapControl
     }
 
     /// <summary>
-    /// Picks a label anchor point per country: the bounding-box center of its largest ring (by
-    /// bounding-box area), so a country made up of a mainland plus small islands gets labelled on
-    /// the mainland. Uses the bounding box rather than a true polygon centroid/area (e.g. via the
-    /// shoelace formula) because the ring data is a heavily simplified, coordinate-rounded
-    /// approximation of real coastlines and can contain tiny self-intersections for
-    /// geometrically complex countries (many islands/fjords) - a shoelace centroid is only
-    /// guaranteed to lie inside a *simple* (non-self-intersecting) polygon, and for a
-    /// self-intersecting ring it can land well outside the actual landmass. A bounding-box
-    /// center can never do that.
+    /// Picks a label anchor per country: the bounding-box center of its largest ring (by bounding-
+    /// box area), so a mainland-plus-islands country gets labelled on the mainland. Bounding box
+    /// rather than a true polygon centroid (e.g. shoelace) because the simplified, coordinate-
+    /// rounded ring data can self-intersect, and a shoelace centroid is only guaranteed inside a
+    /// simple polygon - for a self-intersecting ring it can land outside the landmass entirely.
     /// </summary>
     private static List<(string Name, Point Position)> BuildCountryLabels()
     {
