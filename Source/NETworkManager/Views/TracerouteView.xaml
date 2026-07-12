@@ -150,13 +150,20 @@
         </Grid>
         <TextBlock Grid.Row="2" Margin="10,0,10,0" Text="{x:Static Member=localization:Strings.Route}"
                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
-        <Grid Grid.Row="3">
+        <!--
+        SizeChanged="RouteMapGrid_SizeChanged" keeps MapRow.MaxHeight (see code-behind) a fraction
+        of this Grid's own available height rather than a fixed pixel cap, so dragging MapRow
+        past the usable view (e.g. off the top of the window) is bounded relative to whatever
+        window size the user actually has, instead of a hardcoded value that could be too
+        generous on a small window or too restrictive on a large one.
+        -->
+        <Grid Grid.Row="3" x:Name="RouteMapGrid" SizeChanged="RouteMapGrid_SizeChanged">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" MinHeight="150" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition x:Name="MapRow" Height="300" MinHeight="120" />
             </Grid.RowDefinitions>
-        <controls:MultiSelectDataGrid x:Name="DataGridResults" Margin="10,0,10,0"
+        <controls:MultiSelectDataGrid x:Name="DataGridResults" Margin="10,0,10,10"
                                       Grid.Row="0" CanUserSortColumns="False" ItemsSource="{Binding Path=ResultsView}"
                                       SelectedItem="{Binding SelectedResult}"
                                       SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -506,32 +513,18 @@
                                     MinWidth="100" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
-            <GridSplitter Grid.Row="1" Margin="10,0,10,0" Focusable="False"
-                          Style="{StaticResource ResourceKey=HorizontalGridSplitter}"
+            <!-- MouseLeftButtonUp is wired up in code-behind (constructor) via AddHandler with
+                 handledEventsToo:true - a plain XAML handler would never run since GridSplitter's
+                 own class handler already marks the event Handled. -->
+            <GridSplitter x:Name="MapGridSplitter" Grid.Row="1" Focusable="False"
+                          Style="{StaticResource ResourceKey=HorizontalGridSplitterTransparent}"
                           Visibility="{Binding ExpandMapView, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" />
-
-            <!--
-            No left/right/bottom Margin here on purpose: this is meant to reach the control's
-            true edges, and since the outer Grid carries no Margin of its own anymore (see top of
-            file), this Row 3 Grid's own bounds already ARE those true edges - no negative-margin
-            trick needed to "escape" an inset ancestor (that trick previously overshot into the
-            neighboring profiles panel whenever the window was narrow enough that this tab wasn't
-            the only thing filling its width).
-            -->
-            <Expander x:Name="MapExpander" Grid.Row="2" Margin="0,5,0,0"
-                      Style="{StaticResource ResourceKey=PingMonitorExpander}"
-                      IsExpanded="{Binding ExpandMapView}"
-                      Expanded="MapExpander_Expanded"
-                      Collapsed="MapExpander_Collapsed">
-                <Expander.Header>
-                    <!-- No extra Margin needed: PingMonitorExpander's chevron style already
-                         indents the header content from the Expander's own (now edge-flush)
-                         left bound. -->
-                    <TextBlock Text="{x:Static Member=localization:Strings.Map}"
-                               Style="{DynamicResource ResourceKey=HeaderTextBlock}" />
-                </Expander.Header>
-                <views:TracerouteMapView Hops="{Binding Results}" />
-            </Expander>
+            <!-- No Expander: TracerouteMapView has its own always-visible top-left toggle
+                 button, so collapsing just shrinks MapRow to GridLength.Auto instead of hiding
+                 behind a separate header row. -->
+            <views:TracerouteMapView x:Name="MapView" Grid.Row="2"
+                                      Hops="{Binding Results}"
+                                      IsExpanded="{Binding ExpandMapView, Mode=TwoWay}" />
         </Grid>
     </Grid>
 </UserControl>
