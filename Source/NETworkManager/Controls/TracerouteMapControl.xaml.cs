@@ -432,14 +432,15 @@ public partial class TracerouteMapControl
 
         // Fans out repeat visits to the same city that weren't merged above (something was in
         // between - e.g. Frankfurt -> Cologne -> Frankfurt) into a small ring around the shared
-        // point, so their markers don't overlap; see AssignClusterOffsets. Grouped by city/country
-        // name (see BuildLocationKey for the missing-city fallback). Unlike the old vertical-stack
-        // approach, this offset is a constant *screen*-pixel vector, not converted to map units
-        // here - RepositionMarker/UpdateArrowGeometry resolve it against the *current* _scale every
-        // zoom step, so the ring stays a constant size on screen no matter how far the user zooms
-        // in past this route's initial fit (see the doc comment on AssignClusterOffsets).
+        // point, so their markers don't overlap; see AssignClusterOffsets. Grouped by
+        // AssignClusterIds (same name/country OR coinciding coordinates - see its own doc comment
+        // for why either alone isn't enough). Unlike the old vertical-stack approach, this offset
+        // is a constant *screen*-pixel vector, not converted to map units here - RepositionMarker/
+        // UpdateArrowGeometry resolve it against the *current* _scale every zoom step, so the ring
+        // stays a constant size on screen no matter how far the user zooms in past this route's
+        // initial fit (see the doc comment on AssignClusterOffsets).
         var clusterOffsets = AssignClusterOffsets(
-            groups.Select(g => BuildLocationKey(g.Info, g.Point)).ToList());
+            AssignClusterIds(groups.Select(g => (g.Point, g.Info)).ToList()));
 
         var positions = groups.Select((g, i) => new ClusteredPoint(g.Point, clusterOffsets[i])).ToList();
 
@@ -526,8 +527,8 @@ public partial class TracerouteMapControl
     /// pixels, arranged evenly around a small ring centered on the true geo point (angle =
     /// 2*pi*i/N), so a route that revisits a city (e.g. hairpins through Frankfurt twice) gets
     /// visually distinguishable markers instead of one hiding another. Grouped by a caller-supplied
-    /// location key rather than the point itself, since different IPs in the same city commonly
-    /// resolve to slightly different lat/lon (see BuildLocationKey).
+    /// cluster id (see AssignClusterIds) rather than the point itself, since different IPs at the
+    /// same real location commonly resolve to slightly different lat/lon.
     /// </summary>
     /// <remarks>
     /// Deliberately returns a *screen*-pixel vector rather than converting it to map units here -
@@ -539,14 +540,14 @@ public partial class TracerouteMapControl
     /// vector against the *current* _scale on every zoom step (same pattern already used for
     /// labels/arrow stroke thickness), so the ring stays a constant on-screen size at any zoom.
     /// </remarks>
-    private static List<Vector> AssignClusterOffsets(List<string> locationKeys)
+    private static List<Vector> AssignClusterOffsets(List<int> clusterIds)
     {
-        var result = new Vector[locationKeys.Count];
+        var result = new Vector[clusterIds.Count];
 
         // Grouped by original index (rather than the two-dictionary occurrence-counting this
         // replaced) so each group's size (n) and each member's position within it (i) both fall
         // out of a single pass, with results written back into their original slot in one go.
-        var groups = locationKeys.Select((key, index) => (key, index)).GroupBy(x => x.key);
+        var groups = clusterIds.Select((id, index) => (id, index)).GroupBy(x => x.id);
 
         foreach (var group in groups)
         {
@@ -731,19 +732,72 @@ public partial class TracerouteMapControl
                string.Equals(a.Country, b.Country, StringComparison.OrdinalIgnoreCase);
     }
 
+    // Tolerance for IsSameProjectedPoint, in map units - see its own doc comment. ~0.036 degrees
+    // on this projection, a few km: tight enough not to conflate distinct nearby cities/suburbs,
+    // loose enough to absorb float noise between two lookups that really are the same place.
+    private const double SameProjectedPointToleranceMapUnits = 0.1;
+
     /// <summary>
-    /// Builds the key AssignClusterOffsets groups markers by. Same city/country logic as
-    /// IsSameLocation - a missing city falls back to the projected point itself (rounded, so
-    /// float noise doesn't split what's really the same point into different keys) rather than
-    /// comparing two blank cities as equal, which would otherwise treat unrelated rural hops in
-    /// the same country as repeat visits to one location and shift them away from their real
-    /// coordinates.
+    /// Treats two projected points as the same location when they're within
+    /// SameProjectedPointToleranceMapUnits of each other. Used alongside IsSameLocation by
+    /// AssignClusterIds - see its doc comment for why coordinate proximity has to be checked in
+    /// addition to the city/country name, not instead of it.
     /// </summary>
-    private static string BuildLocationKey(IPGeolocationInfo info, Point point)
+    private static bool IsSameProjectedPoint(Point a, Point b)
     {
-        return !string.IsNullOrEmpty(info.City) ?
-            $"{info.City}␟{info.Country}".ToLowerInvariant() :
-            $"{info.Country}␟{Math.Round(point.X, 1)}␟{Math.Round(point.Y, 1)}".ToLowerInvariant();
+        return Math.Abs(a.X - b.X) < SameProjectedPointToleranceMapUnits &&
+               Math.Abs(a.Y - b.Y) < SameProjectedPointToleranceMapUnits;
+    }
+
+    /// <summary>
+    /// Assigns every group a cluster id for AssignClusterOffsets, unioning two groups together
+    /// when they're either the same named city/country (IsSameLocation) or their projected points
+    /// coincide (IsSameProjectedPoint).
+    /// </summary>
+    /// <remarks>
+    /// Checking both, rather than only IsSameLocation, matters in practice: some geolocation
+    /// lookups label the same real city differently between hops (e.g. "Frankfurt" vs "Frankfurt
+    /// am Main" for two hops a few IPs apart in the same network) - a name-only check treats those
+    /// as unrelated locations, so AssignClusterOffsets never rings them apart even though they
+    /// project to (nearly) the same point and visibly overlap on the map. Union-find (rather than a
+    /// single hashable key, e.g. the string key this replaced) is needed because "same name OR same
+    /// coordinates" isn't a single equivalence a per-item key can express on its own - group A might
+    /// only share a name with B, and B only share coordinates with C, but A/B/C still all belong in
+    /// the same cluster. Squarely O(n^2) over the group count, which is fine given it's at most a
+    /// few dozen hops.
+    /// </remarks>
+    private static List<int> AssignClusterIds(IReadOnlyList<(Point Point, IPGeolocationInfo Info)> entries)
+    {
+        var parent = Enumerable.Range(0, entries.Count).ToArray();
+
+        int Find(int x)
+        {
+            while (parent[x] != x)
+            {
+                parent[x] = parent[parent[x]];
+                x = parent[x];
+            }
+
+            return x;
+        }
+
+        for (var i = 0; i < entries.Count; i++)
+        {
+            for (var j = i + 1; j < entries.Count; j++)
+            {
+                if (!IsSameLocation(entries[i].Info, entries[j].Info) &&
+                    !IsSameProjectedPoint(entries[i].Point, entries[j].Point))
+                    continue;
+
+                var rootI = Find(i);
+                var rootJ = Find(j);
+
+                if (rootI != rootJ)
+                    parent[rootI] = rootJ;
+            }
+        }
+
+        return Enumerable.Range(0, entries.Count).Select(Find).ToList();
     }
 
     private static string BuildHopTooltip(List<TracerouteHopInfo> hops, IPGeolocationInfo info)
@@ -842,10 +896,10 @@ public partial class TracerouteMapControl
     {
         // Skip hops that resolve to (nearly) the same on-screen position. Judged on the resolved,
         // cluster-displaced positions (at the route's own just-computed fit scale) rather than the
-        // raw geo anchors - two cluster members of the very same location group share an anchor by
-        // definition (see AssignClusterOffsets/BuildLocationKey) but AssignClusterOffsets always
-        // gives them distinct ring offsets, so they resolve to different points and must still get
-        // a connecting arrow. Only anchors that are *both* identical and unclustered (offset zero
+        // raw geo anchors - two cluster members of the same location group (see AssignClusterIds)
+        // often share the same anchor, but AssignClusterOffsets always gives them distinct ring
+        // offsets, so they resolve to different points and must still get a connecting arrow. Only
+        // anchors that are *both* identical and unclustered (offset zero
         // on both ends) collapse to the same resolved point here.
         var fromResolved = from.Position.Resolve(1 / _scale);
         var toResolved = to.Position.Resolve(1 / _scale);
