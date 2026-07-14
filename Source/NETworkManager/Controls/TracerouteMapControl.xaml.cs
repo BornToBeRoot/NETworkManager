@@ -36,6 +36,9 @@ namespace NETworkManager.Controls;
 ///   instead of wrapping across the edge.
 /// - Markers/arrows are only reachable via mouse hover (no keyboard focus or automation names),
 ///   so their info panel isn't accessible via keyboard or screen reader.
+/// - Cluster-ring members (see AssignClusterOffsets) are placed at a naive fixed angle in
+///   encounter order; their arrows aren't reordered to minimize visual crossings between ring
+///   members. Not worth the complexity for the small cluster sizes seen in practice.
 /// </remarks>
 public partial class TracerouteMapControl
 {
@@ -58,11 +61,12 @@ public partial class TracerouteMapControl
     private const double ArrowHeadLength = 12;
     private const double CountryBorderStrokeThickness = 0.75;
 
-    // How far arrow paths bow to one side (see DrawArrow), as a fraction of their own length,
-    // floored/capped so both very short and very long segments still look reasonable. Kept
-    // subtle on purpose - enough to tell two overlapping directions apart, not a half-loop.
+    // How far every arrow path bows to one side (see UpdateArrowGeometry), as a fraction of its
+    // own length, capped so very long segments still look reasonable. No floor: short segments
+    // curve proportionally less, not up to a fixed minimum. Applied uniformly to every arrow (a
+    // "flight path" look) rather than only to overlapping reverse routes - kept subtle on purpose,
+    // not a half-loop.
     private const double ArrowCurveFraction = 0.08;
-    private const double ArrowCurveMinOffset = 3;
     private const double ArrowCurveMaxOffset = 18;
 
     private const double ArrowDefaultOpacity = 0.55;
@@ -85,10 +89,11 @@ public partial class TracerouteMapControl
     // that's the only anchor a single shared transform can honor for differently-positioned elements.
     private readonly ScaleTransform _inverseScaleTransform = new(1, 1);
 
-    // Arrow lines/heads can't use the shared transform above: a line's own endpoints must stay
-    // exactly on the hops they connect, so only their stroke thickness / arrowhead size may be
-    // counter-scaled, each around its own fixed anchor (the arrow's tip) - tracked here so
-    // ApplyTransform can update them every time the zoom level changes.
+    // Arrow lines/heads can't use the shared transform above: an endpoint attached to a clustered
+    // marker (see HopMarkerVisual) moves in map units every time the zoom level changes, since its
+    // on-screen offset from the marker's true geo anchor must stay a constant number of screen
+    // pixels. So the full curve geometry - not just stroke thickness/arrowhead size - is recomputed
+    // from scratch every zoom step; tracked here so ApplyTransform can drive that.
     private readonly List<ArrowVisual> _arrows = [];
 
     // Every label's Tag holds (Point Anchor, Size TextSize): the anchor it's positioned relative
@@ -102,12 +107,18 @@ public partial class TracerouteMapControl
     private readonly List<TextBlock> _countryLabels = [];
     private readonly List<TextBlock> _cityLabels = [];
 
-    // Hop number labels reposition their gap to the marker on every zoom step, same idea as the
-    // city labels, but tracked separately since they must stay visible regardless of zoom level.
-    private readonly List<TextBlock> _hopNumberLabels = [];
+    // One entry per drawn hop marker, tracked (rather than Tag-scanned, same reasoning as _arrows)
+    // so ApplyTransform can re-resolve each marker's on-screen position - true geo anchor plus a
+    // constant-screen-pixel cluster offset (see AssignClusterOffsets) - every time the zoom level
+    // changes, instead of baking a stale offset into a static map coordinate.
+    private readonly List<HopMarkerVisual> _markers = [];
 
-    // Last drawn hop points, cached so a resize or "Reset" click can re-fit to the same hops.
+    // Last drawn hop anchor points (never cluster-displaced), cached so a resize or "Reset" click
+    // can re-fit to the same hops. _hopClusterPaddingScreenPixels is the largest cluster ring
+    // radius among them plus its label allowance (see RedrawHops), so that re-fit still leaves
+    // room for the ring and its hop-number label instead of clipping them.
     private List<Point> _hopPoints = [];
+    private double _hopClusterPaddingScreenPixels;
 
     // Scale value the label/arrow visuals were last recomputed for; panning alone never
     // invalidates them (see ApplyTransform), only an actual zoom change does.
@@ -317,8 +328,7 @@ public partial class TracerouteMapControl
                 RenderTransformOrigin = new Point(0.5, 0.5)
             };
 
-            Canvas.SetLeft(dot, point.X - dot.Width / 2);
-            Canvas.SetTop(dot, point.Y - dot.Height / 2);
+            CenterOn(dot, point);
 
             CitiesCanvas.Children.Add(dot);
 
@@ -362,11 +372,10 @@ public partial class TracerouteMapControl
     private void RedrawHops()
     {
         // While collapsed, BorderHost is just the thin strip behind the toggle button (see
-        // TracerouteView's CollapseMapRow) - fitting/spreading against that tiny size would
-        // compute a _scale wildly more zoomed-out than the real one, and SpreadOverlappingPoints'
-        // screen-pixel-based offset (see its own doc comment) would then be converted to a huge
-        // number of map units, badly mislocating markers that share a city (e.g. multiple
-        // Frankfurt hops). Deferring the redraw until the control is actually expanded again -
+        // TracerouteView's CollapseMapRow) - fitting against that tiny size would compute a
+        // _scale wildly more zoomed-out than the real one, badly distorting FitToHops' padding
+        // and, transitively, the cluster ring radius resolved against it (see AssignClusterOffsets/
+        // RepositionMarker). Deferring the redraw until the control is actually expanded again -
         // see OnIsExpandedChanged - avoids ever computing against that bogus collapsed size.
         if (!IsExpanded)
         {
@@ -378,7 +387,7 @@ public partial class TracerouteMapControl
 
         HopsCanvas.Children.Clear();
         _arrows.Clear();
-        _hopNumberLabels.Clear();
+        _markers.Clear();
 
         // Forces the FitToHops -> ApplyTransform call at the end of this method to fully
         // recompute positions even if it lands on the same scale as before - otherwise the
@@ -421,27 +430,35 @@ public partial class TracerouteMapControl
 
         var rawPoints = groups.Select(g => g.Point).ToList();
 
-        // Fits first (against the still-empty canvas - harmless) so the spread below can be
-        // computed in actual *screen* pixels using the scale this route renders at. Doing it
-        // the other way around (spread first, using whatever _scale happened to be left over
-        // from the previous view) made the spacing wrong whenever this route's own fit scale
-        // differs a lot from that leftover value - e.g. a route spanning several cities zooms
-        // out much further than a tight single-city cluster, so a spread that looked fine for
-        // one made the markers overlap again for the other.
-        FitToHops(rawPoints);
-
         // Fans out repeat visits to the same city that weren't merged above (something was in
-        // between - e.g. Frankfurt -> Cologne -> Frankfurt) so their markers don't overlap; see
-        // SpreadOverlappingPoints. Grouped by city/country name (see BuildLocationKey for the
-        // missing-city fallback). Converts the offset via _minScale (the most-zoomed-out scale
-        // reachable, not this route's fit _scale) so the gap stays >= the intended screen pixels
-        // at every zoom - baking in the current _scale would shrink it below a pixel once zoomed
-        // back out.
-        var displayPoints = SpreadOverlappingPoints(
-            groups.Select(g => (g.Point, LocationKey: BuildLocationKey(g.Info, g.Point))).ToList(),
-            1 / _minScale);
+        // between - e.g. Frankfurt -> Cologne -> Frankfurt) into a small ring around the shared
+        // point, so their markers don't overlap; see AssignClusterOffsets. Grouped by city/country
+        // name (see BuildLocationKey for the missing-city fallback). Unlike the old vertical-stack
+        // approach, this offset is a constant *screen*-pixel vector, not converted to map units
+        // here - RepositionMarker/UpdateArrowGeometry resolve it against the *current* _scale every
+        // zoom step, so the ring stays a constant size on screen no matter how far the user zooms
+        // in past this route's initial fit (see the doc comment on AssignClusterOffsets).
+        var clusterOffsets = AssignClusterOffsets(
+            groups.Select(g => BuildLocationKey(g.Info, g.Point)).ToList());
 
-        _hopPoints = displayPoints;
+        var positions = groups.Select((g, i) => new ClusteredPoint(g.Point, clusterOffsets[i])).ToList();
+
+        _hopPoints = rawPoints;
+
+        // Only the ring itself is budgeted here (via the max cluster offset length) - the
+        // hop-number label RepositionMarker renders further out from a ring-displaced marker adds
+        // its own extent on top, hence the extra ClusterLabelPaddingAllowanceScreenPixels below,
+        // applied only when a cluster is actually present (an unclustered route stays as tightly
+        // fitted as before).
+        var maxClusterRingRadius = clusterOffsets.Count > 0 ? clusterOffsets.Max(v => v.Length) : 0;
+        _hopClusterPaddingScreenPixels = maxClusterRingRadius > 0
+            ? maxClusterRingRadius + ClusterLabelPaddingAllowanceScreenPixels
+            : 0;
+
+        // FitToHops reserves _hopClusterPaddingScreenPixels of extra screen-pixel margin so a
+        // cluster ring (plus its hop-number label) near the fitted view's edge doesn't render
+        // outside it.
+        FitToHops(rawPoints, _hopClusterPaddingScreenPixels);
 
         // Markers are drawn first (so their highlight callbacks exist for the arrows below to
         // wire up), but given a higher Panel.ZIndex so they still render on top of the arrows,
@@ -451,7 +468,7 @@ public partial class TracerouteMapControl
 
         for (var i = 0; i < groups.Count; i++)
         {
-            var (highlighter, hitTarget) = DrawHopMarker(groups[i].Hops, groups[i].Info, displayPoints[i]);
+            var (highlighter, hitTarget) = DrawHopMarker(groups[i].Hops, groups[i].Info, positions[i]);
             markerHighlighters.Add(highlighter);
             markerHitTargets.Add(hitTarget);
         }
@@ -460,8 +477,8 @@ public partial class TracerouteMapControl
 
         for (var i = 0; i < groups.Count - 1; i++)
             arrowHighlighters.Add(DrawArrow(
-                (groups[i].Hops, displayPoints[i], groups[i].Info),
-                (groups[i + 1].Hops, displayPoints[i + 1], groups[i + 1].Info),
+                (groups[i].Hops, positions[i], groups[i].Info),
+                (groups[i + 1].Hops, positions[i + 1], groups[i + 1].Info),
                 markerHighlighters[i], markerHighlighters[i + 1]));
 
         // Wires each marker to also highlight its adjacent arrow(s) when hovered, now that both
@@ -490,43 +507,79 @@ public partial class TracerouteMapControl
         }
     }
 
+    // Tuning for AssignClusterOffsets: N=2 gets a small, tight ring; each additional member grows
+    // the ring a bit so members stay roughly readable apart (they already tolerate some hit-target
+    // overlap today, same as the old 26px vertical spacing did against the 32px hit-test size).
+    private const double ClusterRingBaseRadiusScreenPixels = 13;
+    private const double ClusterRingRadiusGrowthPerMarker = 4;
+
+    // Extra fit-view margin (see RedrawHops/FitToHops) added on top of a cluster's own ring radius
+    // to also cover its hop-number label, which RepositionMarker renders HopLabelGapScreenPixels
+    // plus its own half-width further out from the ring-resolved marker position. A generous
+    // estimate (covers a two-digit hop range like "12-18" in bold 11pt with room to spare) rather
+    // than the label's actual measured width, since that's only known once DrawHopMarker measures
+    // it - after this padding has already been used to fit the view.
+    private const double ClusterLabelPaddingAllowanceScreenPixels = 34;
+
     /// <summary>
-    /// Nudges repeat occurrences of the same location straight down, stacked below one another,
-    /// so e.g. a route that hairpins through the same city twice gets two distinguishable
-    /// markers instead of one hiding the other. A predictable vertical stack reads more cleanly
-    /// than a spiral once combined with the curved arrows in DrawArrow. Spacing is given in
-    /// *screen* pixels (converted via inverseScale) rather than fixed map units, since a fixed
-    /// map-unit offset looked fine for a tight single-city cluster but was nowhere near enough
-    /// once a route spans several cities and the map zooms out much further to fit all of them.
-    /// Grouped by a caller-supplied location key rather than the point itself, since different
-    /// IPs in the same city commonly resolve to slightly different lat/lon.
+    /// Assigns each repeat occurrence of the same location an offset vector, in constant *screen*
+    /// pixels, arranged evenly around a small ring centered on the true geo point (angle =
+    /// 2*pi*i/N), so a route that revisits a city (e.g. hairpins through Frankfurt twice) gets
+    /// visually distinguishable markers instead of one hiding another. Grouped by a caller-supplied
+    /// location key rather than the point itself, since different IPs in the same city commonly
+    /// resolve to slightly different lat/lon (see BuildLocationKey).
     /// </summary>
-    private static List<Point> SpreadOverlappingPoints(List<(Point Point, string LocationKey)> points, double inverseScale)
+    /// <remarks>
+    /// Deliberately returns a *screen*-pixel vector rather than converting it to map units here -
+    /// that's the key difference from this method's predecessor (a vertical stack that baked a
+    /// map-unit offset, computed from whatever _scale the whole route's initial fit happened to
+    /// produce, directly into each marker's coordinate). That baked offset never shrank back down
+    /// as the user zoomed in further, so a stack of markers visually drifted apart the more they
+    /// zoomed past the original fit. RepositionMarker/UpdateArrowGeometry instead resolve this
+    /// vector against the *current* _scale on every zoom step (same pattern already used for
+    /// labels/arrow stroke thickness), so the ring stays a constant on-screen size at any zoom.
+    /// </remarks>
+    private static List<Vector> AssignClusterOffsets(List<string> locationKeys)
     {
-        const double verticalSpacingScreenPixels = 26;
-        var verticalSpacing = verticalSpacingScreenPixels * inverseScale;
+        var result = new Vector[locationKeys.Count];
 
-        var occurrenceCounts = new Dictionary<string, int>();
-        var result = new List<Point>(points.Count);
+        // Grouped by original index (rather than the two-dictionary occurrence-counting this
+        // replaced) so each group's size (n) and each member's position within it (i) both fall
+        // out of a single pass, with results written back into their original slot in one go.
+        var groups = locationKeys.Select((key, index) => (key, index)).GroupBy(x => x.key);
 
-        foreach (var (point, locationKey) in points)
+        foreach (var group in groups)
         {
-            var occurrence = occurrenceCounts.GetValueOrDefault(locationKey);
-            occurrenceCounts[locationKey] = occurrence + 1;
+            var members = group.ToList();
+            var n = members.Count;
 
-            result.Add(occurrence == 0 ? point : point with { Y = point.Y + verticalSpacing * occurrence });
+            if (n <= 1)
+            {
+                result[members[0].index] = new Vector(0, 0);
+                continue;
+            }
+
+            var radius = ClusterRingBaseRadiusScreenPixels + Math.Max(0, n - 2) * ClusterRingRadiusGrowthPerMarker;
+
+            for (var i = 0; i < n; i++)
+            {
+                var angle = -Math.PI / 2 + 2 * Math.PI * i / n; // start pointing "up" - cosmetic only
+                result[members[i].index] = new Vector(radius * Math.Cos(angle), radius * Math.Sin(angle));
+            }
         }
 
-        return result;
+        return result.ToList();
     }
 
     /// <summary>
     /// Draws a hop marker and returns a callback to toggle its highlight (invoked both on its
     /// own hover and, from RedrawHops, when an adjacent arrow is hovered) plus its hit-test
     /// element (so RedrawHops can wire the reverse: hovering this marker highlighting its
-    /// adjacent arrows too).
+    /// adjacent arrows too). <paramref name="position"/>'s ClusterOffset is Vector(0,0) if this
+    /// marker isn't part of a cluster (see AssignClusterOffsets); it's resolved against the
+    /// current _scale by RepositionMarker, both now and again every time the zoom level changes.
     /// </summary>
-    private (Action<bool> SetHighlighted, UIElement HitTarget) DrawHopMarker(List<TracerouteHopInfo> hops, IPGeolocationInfo info, Point point)
+    private (Action<bool> SetHighlighted, UIElement HitTarget) DrawHopMarker(List<TracerouteHopInfo> hops, IPGeolocationInfo info, ClusteredPoint position)
     {
         var tooltip = BuildHopTooltip(hops, info);
 
@@ -545,8 +598,6 @@ public partial class TracerouteMapControl
             RenderTransformOrigin = new Point(0.5, 0.5)
         };
 
-        Canvas.SetLeft(hitTarget, point.X - hitTarget.Width / 2);
-        Canvas.SetTop(hitTarget, point.Y - hitTarget.Height / 2);
         Panel.SetZIndex(hitTarget, markerZIndex);
 
         HopsCanvas.Children.Add(hitTarget);
@@ -567,8 +618,6 @@ public partial class TracerouteMapControl
 
         ellipse.SetResourceReference(Shape.FillProperty, "MahApps.Brushes.Accent");
 
-        Canvas.SetLeft(ellipse, point.X - ellipse.Width / 2);
-        Canvas.SetTop(ellipse, point.Y - ellipse.Height / 2);
         Panel.SetZIndex(ellipse, markerZIndex);
 
         HopsCanvas.Children.Add(ellipse);
@@ -589,17 +638,24 @@ public partial class TracerouteMapControl
 
         numberLabel.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
         var size = numberLabel.DesiredSize;
-        numberLabel.Tag = (point, size);
+        Panel.SetZIndex(numberLabel, markerZIndex);
+
+        HopsCanvas.Children.Add(numberLabel);
+
+        var marker = new HopMarkerVisual
+        {
+            Position = position,
+            HitTarget = hitTarget,
+            Dot = ellipse,
+            NumberLabel = numberLabel,
+            NumberLabelSize = size
+        };
 
         // RedrawHops fits the view to the route before calling this, so _scale is already
         // correct here - unlike BuildCities/BuildLabels (which run once at Loaded, before any
         // fit has happened), this can position exactly instead of approximating at scale=1.
-        RepositionOffsetLabel(numberLabel, HopLabelGapScreenPixels, 1 / _scale, growLeft: false);
-        Canvas.SetTop(numberLabel, point.Y - size.Height / 2);
-        Panel.SetZIndex(numberLabel, markerZIndex);
-
-        HopsCanvas.Children.Add(numberLabel);
-        _hopNumberLabels.Add(numberLabel);
+        RepositionMarker(marker, 1 / _scale);
+        _markers.Add(marker);
 
         // Purely visual - deliberately does NOT touch the info panel itself, since this is also
         // invoked from RedrawHops when an *adjacent arrow* is hovered (cross-highlighting this
@@ -630,6 +686,37 @@ public partial class TracerouteMapControl
         return (SetHighlighted, hitTarget);
     }
 
+    /// <summary>
+    /// Centers a fixed-size shape (Width/Height already set) on the given point via Canvas.Left/Top.
+    /// </summary>
+    private static void CenterOn(Shape shape, Point center)
+    {
+        Canvas.SetLeft(shape, center.X - shape.Width / 2);
+        Canvas.SetTop(shape, center.Y - shape.Height / 2);
+    }
+
+    /// <summary>
+    /// Resolves a marker's on-screen position (see ClusteredPoint.Resolve) and repositions its hit
+    /// target/dot/number label accordingly. Called once when the marker is first drawn and again
+    /// from ApplyTransform every time the zoom level changes, so the cluster offset - which must
+    /// represent a fixed number of *screen* pixels, not map units - doesn't drift the further the
+    /// user zooms in past the route's initial fit (see the doc comment on AssignClusterOffsets).
+    /// </summary>
+    private static void RepositionMarker(HopMarkerVisual marker, double inverseScale)
+    {
+        var resolved = marker.Position.Resolve(inverseScale);
+
+        CenterOn(marker.HitTarget, resolved);
+        CenterOn(marker.Dot, resolved);
+
+        // Positions directly from the already-resolved point rather than round-tripping through
+        // Tag (as city/country labels do) - Tag's documented meaning elsewhere in this file is a
+        // stable, build-time-fixed anchor (see the _countryLabels/_cityLabels field comment), which
+        // a hop number label's cluster-resolved position is not: it moves every zoom step.
+        PositionOffsetLabel(marker.NumberLabel, resolved, marker.NumberLabelSize, HopLabelGapScreenPixels, inverseScale, growLeft: false);
+        Canvas.SetTop(marker.NumberLabel, resolved.Y - marker.NumberLabelSize.Height / 2);
+    }
+
     private static bool IsSameLocation(IPGeolocationInfo a, IPGeolocationInfo b)
     {
         // A missing city (e.g. a rural hop the geolocation service could only place in a
@@ -645,7 +732,7 @@ public partial class TracerouteMapControl
     }
 
     /// <summary>
-    /// Builds the key SpreadOverlappingPoints groups markers by. Same city/country logic as
+    /// Builds the key AssignClusterOffsets groups markers by. Same city/country logic as
     /// IsSameLocation - a missing city falls back to the projected point itself (rounded, so
     /// float noise doesn't split what's really the same point into different keys) rather than
     /// comparing two blank cities as equal, which would otherwise treat unrelated rural hops in
@@ -655,7 +742,7 @@ public partial class TracerouteMapControl
     private static string BuildLocationKey(IPGeolocationInfo info, Point point)
     {
         return !string.IsNullOrEmpty(info.City) ?
-            $"{info.City}␟{info.Country}".ToLowerInvariant() : 
+            $"{info.City}␟{info.Country}".ToLowerInvariant() :
             $"{info.Country}␟{Math.Round(point.X, 1)}␟{Math.Round(point.Y, 1)}".ToLowerInvariant();
     }
 
@@ -744,47 +831,35 @@ public partial class TracerouteMapControl
     /// <summary>
     /// Draws an arrow and returns a callback to toggle its highlight (invoked both on its own
     /// hover and, via RedrawHops, when either endpoint marker is hovered). Also wires the
-    /// reverse: hovering this arrow highlights the two marker callbacks passed in.
+    /// reverse: hovering this arrow highlights the two marker callbacks passed in. Each endpoint
+    /// is a ClusteredPoint, same as DrawHopMarker - see the doc comment on ArrowVisual/
+    /// UpdateArrowGeometry for why the full curve geometry, not just the marker-edge trim, has to
+    /// be resolved fresh from these every zoom step.
     /// </summary>
-    private Action<bool> DrawArrow((List<TracerouteHopInfo> Hops, Point Point, IPGeolocationInfo Info) from,
-        (List<TracerouteHopInfo> Hops, Point Point, IPGeolocationInfo Info) to,
+    private Action<bool> DrawArrow((List<TracerouteHopInfo> Hops, ClusteredPoint Position, IPGeolocationInfo Info) from,
+        (List<TracerouteHopInfo> Hops, ClusteredPoint Position, IPGeolocationInfo Info) to,
         Action<bool> highlightFromMarker, Action<bool> highlightToMarker)
     {
-        var dx = to.Point.X - from.Point.X;
-        var dy = to.Point.Y - from.Point.Y;
-        var length = Math.Sqrt(dx * dx + dy * dy);
+        // Skip hops that resolve to (nearly) the same on-screen position. Judged on the resolved,
+        // cluster-displaced positions (at the route's own just-computed fit scale) rather than the
+        // raw geo anchors - two cluster members of the very same location group share an anchor by
+        // definition (see AssignClusterOffsets/BuildLocationKey) but AssignClusterOffsets always
+        // gives them distinct ring offsets, so they resolve to different points and must still get
+        // a connecting arrow. Only anchors that are *both* identical and unclustered (offset zero
+        // on both ends) collapse to the same resolved point here.
+        var fromResolved = from.Position.Resolve(1 / _scale);
+        var toResolved = to.Position.Resolve(1 / _scale);
+        var resolvedDx = toResolved.X - fromResolved.X;
+        var resolvedDy = toResolved.Y - fromResolved.Y;
 
-        // Skip hops that resolved to (nearly) the same location.
-        if (length < 0.01)
+        if (Math.Sqrt(resolvedDx * resolvedDx + resolvedDy * resolvedDy) < 0.01)
             return static _ => { };
 
         var tooltip = $"{FormatLocation(from.Info, includeRegion: true)}\n↓\n{FormatLocation(to.Info, includeRegion: true)}";
 
-        // Bows the path to one side, consistently relative to its own direction of travel, so a
-        // segment and its reverse (e.g. Frankfurt -> Cologne -> Frankfurt) curve to opposite
-        // sides instead of drawing exactly on top of each other. Also capped to a fraction of
-        // this segment's own length - ArrowCurveMinOffset is tuned for normal inter-city hops,
-        // but for two markers only a few map units apart (e.g. a hop resolving to a suburb right
-        // next to the previous one) that fixed floor dwarfed the segment itself and bowed it into
-        // a near-loop instead of a slight curve.
-        var perpX = -dy / length;
-        var perpY = dx / length;
-        var curveOffset = Math.Min(
-            Math.Clamp(length * ArrowCurveFraction, ArrowCurveMinOffset, ArrowCurveMaxOffset),
-            length * 0.5);
-        var controlPoint = new Point(
-            (from.Point.X + to.Point.X) / 2 + perpX * curveOffset,
-            (from.Point.Y + to.Point.Y) / 2 + perpY * curveOffset);
-
-        // The tangent direction at each end (used to trim back to the marker's outer edge below)
-        // depends only on the fixed endpoints/control point, never on scale, so it's computed
-        // once here rather than in UpdateArrowGeometry.
-        var startAngle = Math.Atan2(controlPoint.Y - from.Point.Y, controlPoint.X - from.Point.X);
-        var endAngle = Math.Atan2(to.Point.Y - controlPoint.Y, to.Point.X - controlPoint.X);
-
         var geometry = new PathGeometry();
         var figure = new PathFigure { IsClosed = false };
-        var segment = new QuadraticBezierSegment { Point1 = controlPoint };
+        var segment = new QuadraticBezierSegment();
         figure.Segments.Add(segment);
         geometry.Figures.Add(figure);
 
@@ -836,12 +911,8 @@ public partial class TracerouteMapControl
 
         var arrow = new ArrowVisual
         {
-            FromPoint = from.Point,
-            ToPoint = to.Point,
-            Length = length,
-            ControlPoint = controlPoint,
-            StartAngle = startAngle,
-            EndAngle = endAngle,
+            From = from.Position,
+            To = to.Position,
             Figure = figure,
             Segment = segment,
             Path = path,
@@ -852,8 +923,9 @@ public partial class TracerouteMapControl
 
         // Positions everything for the current scale right away - RedrawHops fits the view before
         // drawing, so _scale is already correct. ApplyTransform calls UpdateArrowGeometry again on
-        // every zoom (see its doc) so the marker-edge trim keeps tracking the marker's constant
-        // screen size instead of freezing at this route's auto-fit scale.
+        // every zoom (see its doc) so both endpoints - and the whole curve built from them - keep
+        // tracking their markers' constant screen offsets instead of freezing at this route's
+        // auto-fit scale.
         UpdateArrowGeometry(arrow, 1 / _scale);
 
         _arrows.Add(arrow);
@@ -887,39 +959,78 @@ public partial class TracerouteMapControl
     }
 
     /// <summary>
-    /// Re-trims an arrow's curve to the marker's outer edge and re-scales its stroke/arrowhead
-    /// for the given inverseScale. Called once when the arrow is first drawn and again from
-    /// ApplyTransform every time the user zooms, so the trim - a fixed number of *map* units at
-    /// any given moment - keeps representing a constant number of *screen* pixels instead of
-    /// staying frozen at whatever scale happened to be current when the arrow was created.
+    /// Resolves both endpoints (see ClusteredPoint.Resolve) against the given inverseScale, then
+    /// rebuilds the whole curve - control point, tangent angles, marker-edge trim, arrowhead,
+    /// stroke thickness - from scratch. Called once when the arrow is first drawn and again from
+    /// ApplyTransform every time the user zooms.
     /// </summary>
+    /// <remarks>
+    /// Unlike labels/city dots, an arrow endpoint attached to a clustered marker isn't a fixed map
+    /// point: its cluster offset must represent a constant number of *screen* pixels, so its
+    /// resolved map-unit position - and with it the segment's direction and length - changes every
+    /// time inverseScale does. That's why this recomputes the full curve every call rather than
+    /// just the marker-edge trim (as a prior version of this method did, back when both endpoints
+    /// were assumed fixed) - the control point/tangent angles are no longer scale-independent.
+    /// Given the small hop counts involved, recomputing unconditionally (even for unclustered
+    /// arrows, where the endpoints don't actually move) is not worth special-casing.
+    /// </remarks>
     private static void UpdateArrowGeometry(ArrowVisual arrow, double inverseScale)
     {
+        var fromPoint = arrow.From.Resolve(inverseScale);
+        var toPoint = arrow.To.Resolve(inverseScale);
+
+        var dx = toPoint.X - fromPoint.X;
+        var dy = toPoint.Y - fromPoint.Y;
+
+        // Floored so perpX/perpY and the atan2 tangent angles below stay well-defined even in the
+        // (rare) case two ring positions resolve to nearly the same point.
+        var length = Math.Max(Math.Sqrt(dx * dx + dy * dy), 0.0001);
+
+        // Every arrow bows slightly to one side, consistently relative to its own direction of
+        // travel (a "flight path" look, closer to how a great-circle route would actually bend on
+        // this projection) - a segment and its reverse (e.g. Frankfurt -> Cologne -> Frankfurt)
+        // automatically curve to opposite sides purely as a side effect of perpX/perpY flipping
+        // sign with the reversed dx/dy, so they never draw on top of each other without needing to
+        // special-case repeated location pairs. No lower floor on the offset (unlike the upper
+        // ArrowCurveMaxOffset cap) - a short segment (e.g. two hops in the same city) should curve
+        // proportionally less than a long one, not get forced up to a fixed minimum that would
+        // dwarf it into a near-loop instead of a slight curve.
+        var perpX = -dy / length;
+        var perpY = dx / length;
+        var curveOffset = Math.Min(length * ArrowCurveFraction, ArrowCurveMaxOffset);
+        var controlPoint = new Point(
+            (fromPoint.X + toPoint.X) / 2 + perpX * curveOffset,
+            (fromPoint.Y + toPoint.Y) / 2 + perpY * curveOffset);
+
+        var startAngle = Math.Atan2(controlPoint.Y - fromPoint.Y, controlPoint.X - fromPoint.X);
+        var endAngle = Math.Atan2(toPoint.Y - controlPoint.Y, toPoint.X - controlPoint.X);
+
         // Capped to a fraction of this segment's own length: a route might also contain a hop far
         // away (e.g. another continent), which forces a much more zoomed-out auto-fit _scale for
         // the whole view - inverseScale (and so the trim, in map units) grows accordingly, and
         // for a short segment (e.g. two hops in the same city) an uncapped trim could eat most or
         // all of it, badly distorting - or even inverting - the curve.
-        var markerRadius = Math.Min(HopMarkerSize / 2 * inverseScale, arrow.Length * 0.3);
+        var markerRadius = Math.Min(HopMarkerSize / 2 * inverseScale, length * 0.3);
 
         var startPoint = new Point(
-            arrow.FromPoint.X + Math.Cos(arrow.StartAngle) * markerRadius,
-            arrow.FromPoint.Y + Math.Sin(arrow.StartAngle) * markerRadius);
+            fromPoint.X + Math.Cos(startAngle) * markerRadius,
+            fromPoint.Y + Math.Sin(startAngle) * markerRadius);
         var endPoint = new Point(
-            arrow.ToPoint.X - Math.Cos(arrow.EndAngle) * markerRadius,
-            arrow.ToPoint.Y - Math.Sin(arrow.EndAngle) * markerRadius);
+            toPoint.X - Math.Cos(endAngle) * markerRadius,
+            toPoint.Y - Math.Sin(endAngle) * markerRadius);
 
         arrow.Figure.StartPoint = startPoint;
+        arrow.Segment.Point1 = controlPoint;
         arrow.Segment.Point2 = endPoint;
 
         const double arrowAngle = 25 * Math.PI / 180;
 
         var p1 = new Point(
-            endPoint.X - ArrowHeadLength * Math.Cos(arrow.EndAngle - arrowAngle),
-            endPoint.Y - ArrowHeadLength * Math.Sin(arrow.EndAngle - arrowAngle));
+            endPoint.X - ArrowHeadLength * Math.Cos(endAngle - arrowAngle),
+            endPoint.Y - ArrowHeadLength * Math.Sin(endAngle - arrowAngle));
         var p2 = new Point(
-            endPoint.X - ArrowHeadLength * Math.Cos(arrow.EndAngle + arrowAngle),
-            endPoint.Y - ArrowHeadLength * Math.Sin(arrow.EndAngle + arrowAngle));
+            endPoint.X - ArrowHeadLength * Math.Cos(endAngle + arrowAngle),
+            endPoint.Y - ArrowHeadLength * Math.Sin(endAngle + arrowAngle));
 
         arrow.ArrowHead.Points = [endPoint, p1, p2];
 
@@ -1021,10 +1132,15 @@ public partial class TracerouteMapControl
     }
 
     /// <summary>
-    /// Zooms/pans so all given (already projected) points are visible, falling back to the
-    /// whole world when there are none. Called after every hop redraw, on resize, and on Reset.
+    /// Zooms/pans so all given (already projected, anchor-only) points are visible, falling back
+    /// to the whole world when there are none. Called after every hop redraw, on resize, and on
+    /// Reset. <paramref name="extraPaddingScreenPixels"/> optionally reserves extra margin for
+    /// content that extends past the anchors themselves by a constant number of screen pixels -
+    /// namely a hop's cluster ring plus its label (see AssignClusterOffsets/RedrawHops) - which
+    /// can't be included in <paramref name="points"/> directly since it's expressed in *screen*
+    /// pixels, not map units. See ComputeHopsFit for how that's resolved in one exact pass.
     /// </summary>
-    private void FitToHops(IReadOnlyList<Point> points)
+    private void FitToHops(IReadOnlyList<Point> points, double extraPaddingScreenPixels = 0)
     {
         if (points.Count == 0)
         {
@@ -1041,6 +1157,27 @@ public partial class TracerouteMapControl
 
         UpdateScaleBounds();
 
+        (_scale, _panX, _panY) = ComputeHopsFit(points, extraPaddingScreenPixels);
+
+        ApplyTransform();
+    }
+
+    /// <summary>
+    /// Pure bounding-box fit for FitToHops: given the anchor points and a screen-pixel margin to
+    /// reserve around them, computes the scale/pan that fits them into BorderHost.
+    /// </summary>
+    /// <remarks>
+    /// The paddingFraction/minPaddingMapUnits margin below scales with the content itself, so it
+    /// can be added directly in map units before dividing. extraPaddingScreenPixels can't be
+    /// handled the same way - its map-unit size depends on the very scale being solved for - so
+    /// instead of converting it via an intermediate scale (which a prior version of this method did
+    /// in a second pass, and which only approximately delivered the requested margin since that
+    /// intermediate scale generally isn't the final one), it's reserved exactly by shrinking the
+    /// *available* viewport before dividing: content / (viewport - 2 * extra) is already the scale
+    /// that leaves exactly extraPaddingScreenPixels free on each side, with no second pass needed.
+    /// </remarks>
+    private (double Scale, double PanX, double PanY) ComputeHopsFit(IReadOnlyList<Point> points, double extraPaddingScreenPixels)
+    {
         // Padding scales with the hops' own spread (~12.5% border on each side), so a route
         // across continents and a cluster of hops in one city both end up a similarly tight fit.
         // Floored for degenerate spans (e.g. a single hop), so it doesn't zoom in indefinitely.
@@ -1055,24 +1192,21 @@ public partial class TracerouteMapControl
         var paddingX = Math.Max((rawMaxX - rawMinX) * paddingFraction, minPaddingMapUnits);
         var paddingY = Math.Max((rawMaxY - rawMinY) * paddingFraction, minPaddingMapUnits);
 
-        var minX = rawMinX - paddingX;
-        var maxX = rawMaxX + paddingX;
-        var minY = rawMinY - paddingY;
-        var maxY = rawMaxY + paddingY;
+        var width = Math.Max(rawMaxX - rawMinX + 2 * paddingX, 1);
+        var height = Math.Max(rawMaxY - rawMinY + 2 * paddingY, 1);
 
-        var width = Math.Max(maxX - minX, 1);
-        var height = Math.Max(maxY - minY, 1);
+        var availableWidth = Math.Max(BorderHost.ActualWidth - 2 * extraPaddingScreenPixels, 1);
+        var availableHeight = Math.Max(BorderHost.ActualHeight - 2 * extraPaddingScreenPixels, 1);
 
-        _scale = Math.Clamp(Math.Min(BorderHost.ActualWidth / width, BorderHost.ActualHeight / height),
+        var scale = Math.Clamp(Math.Min(availableWidth / width, availableHeight / height),
             _minScale, _maxScale);
 
-        var centerX = (minX + maxX) / 2;
-        var centerY = (minY + maxY) / 2;
+        var centerX = (rawMinX + rawMaxX) / 2;
+        var centerY = (rawMinY + rawMaxY) / 2;
 
-        _panX = BorderHost.ActualWidth / 2 - centerX * _scale;
-        _panY = BorderHost.ActualHeight / 2 - centerY * _scale;
-
-        ApplyTransform();
+        return (scale,
+            BorderHost.ActualWidth / 2 - centerX * scale,
+            BorderHost.ActualHeight / 2 - centerY * scale);
     }
 
     private void ApplyTransform()
@@ -1103,10 +1237,11 @@ public partial class TracerouteMapControl
             foreach (var arrow in _arrows)
                 UpdateArrowGeometry(arrow, inverseScale);
 
-            // Hop number labels always stay visible regardless of zoom/declutter - they're the
-            // actual traceroute data, not the reference layer.
-            foreach (var label in _hopNumberLabels)
-                RepositionOffsetLabel(label, HopLabelGapScreenPixels, inverseScale, growLeft: false);
+            // Hop markers always stay visible regardless of zoom/declutter - they're the actual
+            // traceroute data, not the reference layer. Re-resolves each marker's on-screen
+            // position (anchor + cluster offset) so a cluster ring stays a constant screen size.
+            foreach (var marker in _markers)
+                RepositionMarker(marker, inverseScale);
 
             // City labels grow to the left instead (see BuildCities).
             foreach (var label in _cityLabels)
@@ -1128,13 +1263,26 @@ public partial class TracerouteMapControl
     /// <summary>
     /// Repositions a label center-pivoted (RenderTransformOrigin 0.5,0.5 - set in BuildCities/
     /// DrawHopMarker) on a point offset a constant number of screen pixels to the left or right
-    /// of its anchor (Tag), so the gap doesn't grow while zooming in.
+    /// of its anchor (Tag), so the gap doesn't grow while zooming in. For city/country labels,
+    /// whose anchor is a stable, build-time-fixed point - see PositionOffsetLabel for the same
+    /// math against an anchor that isn't stashed in Tag (e.g. a cluster-resolved hop marker).
     /// </summary>
     private static void RepositionOffsetLabel(TextBlock label, double gapScreenPixels, double inverseScale, bool growLeft)
     {
         if (label.Tag is not (Point anchor, Size size))
             return;
 
+        PositionOffsetLabel(label, anchor, size, gapScreenPixels, inverseScale, growLeft);
+    }
+
+    /// <summary>
+    /// Core of RepositionOffsetLabel, taking the anchor/size directly instead of reading them from
+    /// Tag - lets RepositionMarker supply an already cluster-resolved anchor that changes every
+    /// zoom step, without needing to write a transient value into Tag (which elsewhere in this file
+    /// means a stable, build-time-fixed point) just to hand it back through.
+    /// </summary>
+    private static void PositionOffsetLabel(TextBlock label, Point anchor, Size size, double gapScreenPixels, double inverseScale, bool growLeft)
+    {
         var halfWidth = size.Width / 2;
         var centerOffset = growLeft ? -(gapScreenPixels + halfWidth) : gapScreenPixels + halfWidth;
         Canvas.SetLeft(label, anchor.X + centerOffset * inverseScale - halfWidth);
@@ -1208,11 +1356,22 @@ public partial class TracerouteMapControl
 
     private void BorderHost_SizeChanged(object sender, SizeChangedEventArgs e)
     {
-        // Full redraw rather than just re-fitting the cached _hopPoints: the spread offsets baked
-        // into those points (see SpreadOverlappingPoints, converted via _minScale) depend on the
-        // now-changed viewport size, so re-deriving them keeps markers that share a city (hairpin
-        // routes) correctly spaced at the new size. Cheap given how few hops a route has.
-        RedrawHops();
+        // While collapsed, BorderHost is just the thin strip behind the toggle button - its width
+        // can still change (e.g. an outer window resize) even though its height stays collapsed-
+        // thin, and fitting against that tiny size would compute a wildly zoomed-out _scale (same
+        // reasoning as the matching guard in RedrawHops). Deferred via the same _hopsRedrawPending
+        // flag OnIsExpandedChanged already watches, so re-expanding re-fits against whatever size
+        // BorderHost ended up at, instead of leaving a stale/corrupted transform from before.
+        if (!IsExpanded)
+        {
+            _hopsRedrawPending = true;
+            return;
+        }
+
+        // Re-fit to the last drawn points, exactly like the Reset button. Lightweight (just
+        // recomputes the transform, no marker rebuild), so dragging the GridSplitter stays smooth
+        // and the view ends up properly fitted instead of needing a manual Reset afterwards.
+        FitToHops(_hopPoints, _hopClusterPaddingScreenPixels);
     }
 
     private void BorderHost_MouseWheel(object sender, MouseWheelEventArgs e)
@@ -1299,7 +1458,7 @@ public partial class TracerouteMapControl
 
     private void ButtonResetView_Click(object sender, RoutedEventArgs e)
     {
-        FitToHops(_hopPoints);
+        FitToHops(_hopPoints, _hopClusterPaddingScreenPixels);
     }
 
     #endregion
@@ -1446,19 +1605,48 @@ public partial class TracerouteMapControl
     #endregion
 
     /// <summary>
-    /// The scale-independent geometry (endpoints, control point, tangent angles) plus the visual
-    /// elements for one hop-to-hop arrow. UpdateArrowGeometry uses this to re-trim the curve to
-    /// the marker's outer edge and re-scale its stroke/arrowhead every time the zoom level
-    /// changes, instead of freezing the trim at whatever scale was current when it was drawn.
+    /// A true geo anchor plus a constant-screen-pixel cluster offset (see AssignClusterOffsets).
+    /// Shared by every marker/arrow endpoint so there's a single place that knows how to resolve
+    /// one into an actual on-screen position - see Resolve.
+    /// </summary>
+    private readonly record struct ClusteredPoint(Point Anchor, Vector ClusterOffset)
+    {
+        /// <summary>
+        /// Resolves this point's on-screen position for the given inverseScale. The cluster offset
+        /// must represent a fixed number of *screen* pixels, not map units, so it's added here -
+        /// scaled by the *current* inverseScale - rather than ever being baked into Anchor once;
+        /// see the doc comment on AssignClusterOffsets for why that distinction is the whole point
+        /// of this type.
+        /// </summary>
+        public Point Resolve(double inverseScale) => Anchor + ClusterOffset * inverseScale;
+    }
+
+    /// <summary>
+    /// One drawn hop marker: its resolved-on-demand position (see ClusteredPoint) and the three
+    /// visual elements RepositionMarker keeps in sync with it every time the zoom level changes.
+    /// NumberLabelSize is measured once at build time - see the comment on the
+    /// _countryLabels/_cityLabels fields for why it can't be read back later via
+    /// TextBlock.DesiredSize.
+    /// </summary>
+    private sealed class HopMarkerVisual
+    {
+        public ClusteredPoint Position { get; init; }
+        public Ellipse HitTarget { get; init; }
+        public Ellipse Dot { get; init; }
+        public TextBlock NumberLabel { get; init; }
+        public Size NumberLabelSize { get; init; }
+    }
+
+    /// <summary>
+    /// The endpoints (as ClusteredPoint, same as HopMarkerVisual) plus the visual elements for one
+    /// hop-to-hop arrow. All derived geometry - resolved endpoints, control point, tangent angles,
+    /// marker-edge trim - is transient and rebuilt from these every call to UpdateArrowGeometry,
+    /// since a clustered endpoint's resolved position moves every time the zoom level changes.
     /// </summary>
     private sealed class ArrowVisual
     {
-        public Point FromPoint { get; init; }
-        public Point ToPoint { get; init; }
-        public double Length { get; init; }
-        public Point ControlPoint { get; init; }
-        public double StartAngle { get; init; }
-        public double EndAngle { get; init; }
+        public ClusteredPoint From { get; init; }
+        public ClusteredPoint To { get; init; }
         public PathFigure Figure { get; init; }
         public QuadraticBezierSegment Segment { get; init; }
         public Path Path { get; init; }
