@@ -35,13 +35,16 @@ public static class GlobalStaticConfiguration
     // status changes collapses into a single sound instead of an overlapping cacophony.
     public static int NotificationSoundThrottle => 3000;
 
+    // Tolerance for comparing two doubles (e.g. a resized panel width/height against a
+    // known constant) that are expected to be "close enough" rather than bit-for-bit equal.
+    public static double FloatPointFix => 1.0;
+
     // Profile config
     public static bool Profile_TagsMatchAny => true;
     public static bool Profile_ExpandProfileView => true;
     public static double Profile_WidthCollapsed => 40;
     public static double Profile_DefaultWidthExpanded => 250;
     public static double Profile_MaxWidthExpanded => 500;
-    public static double Profile_FloatPointFix => 1.0;
     public static int Profile_EncryptionKeySize => 256;
     public static int Profile_EncryptionIterations => 1000000;
 
@@ -166,6 +169,9 @@ public static class GlobalStaticConfiguration
     public static int Traceroute_Buffer => 32;
     public static bool Traceroute_ResolveHostname => true;
     public static bool Traceroute_CheckIPApiIPGeolocation => false;
+    public static bool Traceroute_ShowMap => true;
+    public static bool Traceroute_ExpandMapView => true;
+    public static double Traceroute_MapHeight => 300;
     public static ExportFileType Traceroute_ExportFileType => ExportFileType.Csv;
 
     // Application: DNS Lookup

@@ -227,8 +227,7 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <GridSplitter Grid.Column="1" Grid.RowSpan="21"
-                                              Background="Transparent"
-                                              HorizontalAlignment="Stretch" />
+                                              Style="{StaticResource VerticalGridSplitterTransparent}" />
 
                                 <TextBlock Grid.Column="0" Grid.Row="0"
                                            Text="{x:Static localization:Strings.Name}" />
@@ -818,7 +817,7 @@
                                     </Rectangle>
                                     <TextBlock Margin="4,0,0,0"
                                                Text="{x:Static localization:Strings.Live}"
-                                               FontSize="11"
+                                               FontSize="14"
                                                VerticalAlignment="Center">
                                         <TextBlock.Style>
                                             <Style TargetType="{x:Type TextBlock}">
@@ -859,12 +858,12 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" Background="Transparent"
-                                          HorizontalAlignment="Stretch" />
-                            <GridSplitter Grid.Column="3" Grid.Row="0" Grid.RowSpan="4" Background="Transparent"
-                                          HorizontalAlignment="Stretch" />
-                            <GridSplitter Grid.Column="5" Grid.Row="0" Grid.RowSpan="4" Background="Transparent"
-                                          HorizontalAlignment="Stretch" />
+                            <GridSplitter Grid.Column="1" Grid.Row="0" Grid.RowSpan="4"
+                                          Style="{StaticResource VerticalGridSplitterTransparent}" />
+                            <GridSplitter Grid.Column="3" Grid.Row="0" Grid.RowSpan="4"
+                                          Style="{StaticResource VerticalGridSplitterTransparent}" />
+                            <GridSplitter Grid.Column="5" Grid.Row="0" Grid.RowSpan="4"
+                                          Style="{StaticResource VerticalGridSplitterTransparent}" />
                             <TextBlock Grid.Column="0" Grid.Row="0"
                                        Text="{x:Static localization:Strings.CurrentDownloadSpeed}" />
                             <TextBox Grid.Column="2" Grid.Row="0"
@@ -1470,7 +1469,7 @@
             </TabControl>
             <GridSplitter Grid.Column="1" Grid.Row="0"
                           Focusable="False"
-                          Style="{StaticResource ProfileGridSplitter}" />
+                          Style="{StaticResource VerticalGridSplitter}" />
             <Expander Grid.Column="2" Grid.Row="0"
                       x:Name="ExpanderProfiles"
                       Header="{x:Static localization:Strings.Profiles}"

@@ -164,11 +164,9 @@ public class SpeedTestWidgetViewModel : ViewModelBase
     /// <summary>Hidden Y-axes for the upload sparkline.</summary>
     public ICartesianAxis[] UploadYAxes { get; } = [new Axis { IsVisible = false, MinLimit = 0 }];
 
-    private ICommand _runCommand;
-    public ICommand RunCommand => _runCommand ??= new RelayCommand(_ => RunAction());
+    public ICommand RunCommand => field ??= new RelayCommand(_ => RunAction());
 
-    private ICommand _acceptDisclaimerCommand;
-    public ICommand AcceptDisclaimerCommand => _acceptDisclaimerCommand ??= new RelayCommand(_ => AcceptDisclaimerAction());
+    public ICommand AcceptDisclaimerCommand => field ??= new RelayCommand(_ => AcceptDisclaimerAction());
 
     public SpeedTestWidgetViewModel()
     {

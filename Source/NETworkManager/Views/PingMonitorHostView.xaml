@@ -243,7 +243,7 @@
         </TabControl>
         <GridSplitter Grid.Column="1" Grid.Row="0"
                       Focusable="False"
-                      Style="{StaticResource ResourceKey=ProfileGridSplitter}" />
+                      Style="{StaticResource ResourceKey=VerticalGridSplitter}" />
         <Expander Grid.Column="2" Grid.Row="0"
                   x:Name="ExpanderProfiles"
                   Header="{x:Static Member=localization:Strings.Profiles}"

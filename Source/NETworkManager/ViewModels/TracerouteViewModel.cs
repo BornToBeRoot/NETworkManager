@@ -38,6 +38,7 @@ public class TracerouteViewModel : ViewModelBase
     private readonly Guid _tabId;
     private bool _firstLoad = true;
     private bool _closed;
+    private bool _isLoading;
 
     /// <summary>
     /// Gets or sets the host address or hostname to trace.
@@ -104,8 +105,9 @@ public class TracerouteViewModel : ViewModelBase
                 return;
 
             field = value;
+            OnPropertyChanged();
         }
-    } = new();
+    } = [];
 
     /// <summary>
     /// Gets the collection view for the traceroute results.
@@ -177,6 +179,34 @@ public class TracerouteViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+ 
+    public bool ExpandMapView
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.Traceroute_ExpandMapView = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets whether the map row (see TracerouteView's MapRow) should be shown at all. Requires
+    /// both IP geolocation lookups and the map itself to be enabled in the settings - without
+    /// geolocation, no hop ever has a resolved Lat/Lon to plot (see TracerouteMapControl.RedrawHops),
+    /// so an always-empty map would just be confusing rather than useful. Computed rather than a
+    /// regular settings-backed property like ExpandMapView above, since it only ever changes in
+    /// response to a global settings change made elsewhere (the settings flyout) - see
+    /// SettingsManager_PropertyChanged.
+    /// </summary>
+    public bool ShowMap =>
+        SettingsManager.Current.Traceroute_CheckIPApiIPGeolocation && SettingsManager.Current.Traceroute_ShowMap;
 
     #endregion
 
@@ -202,7 +232,22 @@ public class TracerouteViewModel : ViewModelBase
         ResultsView.SortDescriptions.Add(new SortDescription(nameof(TracerouteHopInfo.Hop),
             ListSortDirection.Ascending));
 
+        _isLoading = true;
+
         LoadSettings();
+
+        _isLoading = false;
+
+        // ShowMap has no backing field of its own (see its getter) - it's recomputed from these
+        // two settings whenever either changes, e.g. via the settings flyout while this tab stays open.
+        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+    }
+
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName is nameof(SettingsInfo.Traceroute_CheckIPApiIPGeolocation)
+            or nameof(SettingsInfo.Traceroute_ShowMap))
+            OnPropertyChanged(nameof(ShowMap));
     }
 
     /// <summary>
@@ -221,6 +266,7 @@ public class TracerouteViewModel : ViewModelBase
 
     private void LoadSettings()
     {
+        ExpandMapView = SettingsManager.Current.Traceroute_ExpandMapView;
     }
 
     #endregion
@@ -443,6 +489,8 @@ public class TracerouteViewModel : ViewModelBase
             return;
 
         _closed = true;
+
+        SettingsManager.Current.PropertyChanged -= SettingsManager_PropertyChanged;
 
         // Stop trace
         if (IsRunning)

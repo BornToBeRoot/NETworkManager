@@ -146,8 +146,9 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
-                                    <GridSplitter Grid.Column="1" Grid.RowSpan="13" Background="Transparent"
-                                                  HorizontalAlignment="Stretch" />
+                                    <GridSplitter Grid.Column="1" Grid.RowSpan="13"
+                                                  Style="{StaticResource VerticalGridSplitter}"
+                                                  Background="Transparent" />
                                     <TextBlock Grid.Column="0" Grid.Row="0"
                                                Text="{x:Static localization:Strings.Device}" />
                                     <TextBox Grid.Column="2" Grid.Row="0"

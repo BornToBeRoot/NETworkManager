@@ -15,27 +15,35 @@
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
+             xmlns:internalControls="clr-namespace:NETworkManager.Controls"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:TracerouteViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleansAndToVisibilityCollapsedConverter x:Key="BooleansAndToVisibilityCollapsedConverter" />
         <converters:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
         <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
         <converters:StringIsNotNullOrEmptyToBooleanConverter x:Key="StringIsNotNullOrEmptyToBooleanConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
     </UserControl.Resources>
-    <Grid Margin="10">
+    <!--
+    No outer Margin here on purpose (unlike most other views): the map at the bottom of Row 3
+    is meant to bleed all the way to this control's true left/right/bottom edges (see its own
+    Margin below) rather than just to an inset container - so every other piece of content
+    carries its own 10px padding individually instead of relying on one shared outer Margin.
+    -->
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource ResourceKey=HeaderTextBlock}"
+        <TextBlock Grid.Row="0" Margin="10,10,10,0" Style="{StaticResource ResourceKey=HeaderTextBlock}"
                    Text="{x:Static Member=localization:Strings.Destination}" />
-        <Grid Grid.Row="1" Margin="0,0,0,20">
+        <Grid Grid.Row="1" Margin="10,10,10,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -141,10 +149,23 @@
                        Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                        Style="{DynamicResource ResourceKey=StatusMessageTextBlock}" Margin="0,10,0,0" />
         </Grid>
-        <TextBlock Grid.Row="2" Text="{x:Static Member=localization:Strings.Route}"
+        <TextBlock Grid.Row="2" Margin="10,0,10,0" Text="{x:Static Member=localization:Strings.Route}"
                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
-        <controls:MultiSelectDataGrid x:Name="DataGridResults"
-                                      Grid.Row="3" CanUserSortColumns="False" ItemsSource="{Binding Path=ResultsView}"
+        <!--
+        SizeChanged="RouteMapGrid_SizeChanged" keeps MapRow.MaxHeight (see code-behind) a fraction
+        of this Grid's own available height rather than a fixed pixel cap, so dragging MapRow
+        past the usable view (e.g. off the top of the window) is bounded relative to whatever
+        window size the user actually has, instead of a hardcoded value that could be too
+        generous on a small window or too restrictive on a large one.
+        -->
+        <Grid Grid.Row="3" x:Name="RouteMapGrid" SizeChanged="RouteMapGrid_SizeChanged">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" MinHeight="150" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition x:Name="MapRow" Height="300" MinHeight="120" />
+            </Grid.RowDefinitions>
+        <controls:MultiSelectDataGrid x:Name="DataGridResults" Margin="10,0,10,10"
+                                      Grid.Row="0" CanUserSortColumns="False" ItemsSource="{Binding Path=ResultsView}"
                                       SelectedItem="{Binding SelectedResult}"
                                       SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
@@ -493,5 +514,29 @@
                                     MinWidth="100" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
+            <!-- MouseLeftButtonUp is wired up in code-behind (constructor) via AddHandler with
+                 handledEventsToo:true - a plain XAML handler would never run since GridSplitter's
+                 own class handler already marks the event Handled. Hidden not just while
+                 collapsed to a strip (dragging a splitter for that makes no sense) but also
+                 whenever the map itself is hidden (see ShowMap) - both conditions must hold. -->
+            <GridSplitter x:Name="MapGridSplitter" Grid.Row="1" Focusable="False"
+                          Style="{StaticResource ResourceKey=HorizontalGridSplitterTransparent}">
+                <GridSplitter.Visibility>
+                    <MultiBinding Converter="{StaticResource ResourceKey=BooleansAndToVisibilityCollapsedConverter}">
+                        <Binding Path="ShowMap" />
+                        <Binding Path="ExpandMapView" />
+                    </MultiBinding>
+                </GridSplitter.Visibility>
+            </GridSplitter>
+            <!-- No Expander: TracerouteMapControl has its own always-visible top-left toggle
+                 button, so collapsing just shrinks MapRow to GridLength.Auto instead of hiding
+                 behind a separate header row. Hidden entirely (rather than just collapsed to its
+                 strip) whenever ShowMap is false - see TracerouteViewModel.ShowMap for why an
+                 always-empty map (no IP geolocation to plot hops with) is hidden instead of shown. -->
+            <internalControls:TracerouteMapControl x:Name="MapView" Grid.Row="2"
+                                                    Hops="{Binding Results}"
+                                                    IsExpanded="{Binding ExpandMapView, Mode=TwoWay}"
+                                                    Visibility="{Binding ShowMap, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}" />
+        </Grid>
     </Grid>
 </UserControl>
