@@ -573,6 +573,18 @@
   <data name="IPv6DefaultGateway" xml:space="preserve">
     <value>Gateway Padrão IPv6</value>
   </data>
+  <data name="Map" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="PlusXMore" xml:space="preserve">
+    <value>(+{0} more)</value>
+  </data>
+  <data name="ScrollToZoomDragToPan" xml:space="preserve">
+    <value>Scroll = Zoom, Drag = Pan</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
   <data name="Maximum" xml:space="preserve">
     <value>Máximo</value>
   </data>
@@ -2985,6 +2997,9 @@ Mensagem de erro:
   <data name="Resource_ListTLD_Description" xml:space="preserve">
     <value>Lista de domínios de nível superior de iana.org, que é usada para consultar servidores whois do TLD de whois.iana.org por meio da porta 43</value>
   </data>
+  <data name="Resource_NaturalEarth_Description" xml:space="preserve">
+    <value>GeoJSON conversion of Natural Earth vector map data (CC0-1.0).</value>
+  </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>Dados OUI de ieee.org</value>
   </data>
@@ -3683,6 +3698,9 @@ As alterações nesse valor entrarão em vigor depois que o aplicativo for reini
   <data name="CheckIPGeolocation" xml:space="preserve">
     <value>Verificar geolocalização por IP</value>
   </data>
+  <data name="ShowMap" xml:space="preserve">
+    <value>Show map</value>
+  </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>O resolvedor DNS é determinado via ip-api.com.
 
@@ -3822,6 +3840,9 @@ Tente novamente em alguns segundos.</value>
   </data>
   <data name="ExpandHostView" xml:space="preserve">
     <value>Expandir visualização do host</value>
+  </data>
+  <data name="ExpandMapView" xml:space="preserve">
+    <value>Expand map view</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>O host não pode ser definido enquanto outros hosts estão sendo adicionados. Aguarde até que o processo seja concluído e tente novamente.</value>

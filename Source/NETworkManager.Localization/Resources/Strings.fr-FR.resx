@@ -573,6 +573,18 @@
   <data name="IPv6DefaultGateway" xml:space="preserve">
     <value>Passerelle par défaut IPv6</value>
   </data>
+  <data name="Map" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="PlusXMore" xml:space="preserve">
+    <value>(+{0} more)</value>
+  </data>
+  <data name="ScrollToZoomDragToPan" xml:space="preserve">
+    <value>Scroll = Zoom, Drag = Pan</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
   <data name="Maximum" xml:space="preserve">
     <value>Maximum</value>
   </data>
@@ -2985,6 +2997,9 @@ Si cela se produit de manière inattendue ou après une mise à jour, signalez l
   <data name="Resource_ListTLD_Description" xml:space="preserve">
     <value>Liste des domaines de premier niveau de iana.org, qui est utilisée pour interroger les serveurs whois du TLD à partir de whois.iana.org via le port 43</value>
   </data>
+  <data name="Resource_NaturalEarth_Description" xml:space="preserve">
+    <value>GeoJSON conversion of Natural Earth vector map data (CC0-1.0).</value>
+  </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>Données OUI provenant de ieee.org.</value>
   </data>
@@ -3683,6 +3698,9 @@ Les modifications apportées à cette valeur prendront effet après le redémarr
   <data name="CheckIPGeolocation" xml:space="preserve">
     <value>Vérifier la géolocalisation IP</value>
   </data>
+  <data name="ShowMap" xml:space="preserve">
+    <value>Show map</value>
+  </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>Le résolveur DNS est défini via ip-api.com.
 
@@ -3822,6 +3840,9 @@ Réessayez dans quelques secondes.</value>
   </data>
   <data name="ExpandHostView" xml:space="preserve">
     <value>Développer la vue de l'hôte</value>
+  </data>
+  <data name="ExpandMapView" xml:space="preserve">
+    <value>Expand map view</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>L'hôte ne peut pas être défini pendant l'ajout d'autres hôtes. Veuillez attendre la fin du processus et réessayer.</value>
