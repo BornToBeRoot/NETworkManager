@@ -574,16 +574,16 @@
     <value>IPv6-Standardgateway</value>
   </data>
   <data name="Map" xml:space="preserve">
-    <value>Map</value>
+    <value>Karte</value>
   </data>
   <data name="PlusXMore" xml:space="preserve">
-    <value>(+{0} more)</value>
+    <value>(+{0} weitere)</value>
   </data>
   <data name="ScrollToZoomDragToPan" xml:space="preserve">
-    <value>Scroll = Zoom, Drag = Pan</value>
+    <value>Scrollen = Zoomen, Ziehen = Verschieben</value>
   </data>
   <data name="Unknown" xml:space="preserve">
-    <value>Unknown</value>
+    <value>Unbekannt</value>
   </data>
   <data name="Maximum" xml:space="preserve">
     <value>Maximum</value>
@@ -2998,7 +2998,7 @@ Fehlermeldung:
     <value>Liste der Top-Level-Domains von iana.org, die zur Abfrage von Whois-Servern der TLD von whois.iana.org über Port 43 verwendet wird</value>
   </data>
   <data name="Resource_NaturalEarth_Description" xml:space="preserve">
-    <value>GeoJSON conversion of Natural Earth vector map data (CC0-1.0).</value>
+    <value>GeoJSON-Konvertierung der Vektorkartendaten von Natural Earth (CC0-1.0).</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>OUI-Daten von ieee.org.</value>
@@ -3699,7 +3699,7 @@ Wenn der Wert zu hoch ist, können Leistungsprobleme auftreten.
     <value>Prüfe IP-Geolokation</value>
   </data>
   <data name="ShowMap" xml:space="preserve">
-    <value>Show map</value>
+    <value>Karte anzeigen</value>
   </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>Der DNS-Resolver wird über ip-api.com ermittelt.
@@ -3842,7 +3842,7 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
     <value>Hostansicht ausklappen</value>
   </data>
   <data name="ExpandMapView" xml:space="preserve">
-    <value>Expand map view</value>
+    <value>Kartenansicht vergrößern</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>Host kann nicht gesetzt werden, während andere Hosts hinzugefügt werden. Bitte warten Sie, bis der Vorgang abgeschlossen ist, und versuchen Sie es erneut.</value>
