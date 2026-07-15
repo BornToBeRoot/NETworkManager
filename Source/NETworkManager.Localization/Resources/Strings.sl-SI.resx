@@ -573,6 +573,18 @@
   <data name="IPv6DefaultGateway" xml:space="preserve">
     <value>Privzeti prehod IPv6</value>
   </data>
+  <data name="Map" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="PlusXMore" xml:space="preserve">
+    <value>(+{0} more)</value>
+  </data>
+  <data name="ScrollToZoomDragToPan" xml:space="preserve">
+    <value>Scroll = Zoom, Drag = Pan</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
   <data name="Maximum" xml:space="preserve">
     <value>Največ</value>
   </data>
@@ -2980,6 +2992,9 @@ je onemogočeno!</value>
   <data name="Resource_ListTLD_Description" xml:space="preserve">
     <value>Seznam domen najvišje ravni iz iana.org, ki se uporablja za poizvedovanje whois strežnikov TLD s whois.iana.org prek vrat 43</value>
   </data>
+  <data name="Resource_NaturalEarth_Description" xml:space="preserve">
+    <value>GeoJSON conversion of Natural Earth vector map data (CC0-1.0).</value>
+  </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>Podatki OUI z ieee.org.</value>
   </data>
@@ -3670,6 +3685,9 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="CheckIPGeolocation" xml:space="preserve">
     <value>Preveri geolokacijo IP</value>
   </data>
+  <data name="ShowMap" xml:space="preserve">
+    <value>Show map</value>
+  </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>Reševalec DNS se določi prek ip-api.com.
 
@@ -3806,6 +3824,9 @@ URL: https://edns.ip-api.com/</value>
   </data>
   <data name="ExpandHostView" xml:space="preserve">
     <value>Razširi prikaz gostitelja</value>
+  </data>
+  <data name="ExpandMapView" xml:space="preserve">
+    <value>Expand map view</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>Gostitelja ni mogoče nastaviti, medtem ko se dodajajo drugi gostitelji. Počakajte, da se proces konča, in poskusite znova.</value>
