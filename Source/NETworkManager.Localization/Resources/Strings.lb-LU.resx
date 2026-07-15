@@ -573,6 +573,18 @@
   <data name="IPv6DefaultGateway" xml:space="preserve">
     <value>IPv6-Default-Gateway</value>
   </data>
+  <data name="Map" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="PlusXMore" xml:space="preserve">
+    <value>(+{0} more)</value>
+  </data>
+  <data name="ScrollToZoomDragToPan" xml:space="preserve">
+    <value>Scroll = Zoom, Drag = Pan</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
   <data name="Maximum" xml:space="preserve">
     <value>Maximum</value>
   </data>
@@ -2985,6 +2997,9 @@ Feelermeldung:
   <data name="Resource_ListTLD_Description" xml:space="preserve">
     <value>Lëscht vun den Top-Level-Domains vun iana.org, déi benotzt gëtt fir Whois-Server vun der TLD vu whois.iana.org iwwer Port 43 ofzefroen</value>
   </data>
+  <data name="Resource_NaturalEarth_Description" xml:space="preserve">
+    <value>GeoJSON conversion of Natural Earth vector map data (CC0-1.0).</value>
+  </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>OUI-Daten vun ieee.org.</value>
   </data>
@@ -3683,6 +3698,9 @@ Wann de Wäert ze héich ass, kënne Leeschtungsproblemer optrieden.
   <data name="CheckIPGeolocation" xml:space="preserve">
     <value>IP-Geolokatioun iwwerpréiwen</value>
   </data>
+  <data name="ShowMap" xml:space="preserve">
+    <value>Show map</value>
+  </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>De DNS-Resolver gëtt iwwer ip-api.com ermëttelt.
 
@@ -3822,6 +3840,9 @@ Probéiert et an e puer Sekonnen erëm.</value>
   </data>
   <data name="ExpandHostView" xml:space="preserve">
     <value>Hostusiicht opklappen</value>
+  </data>
+  <data name="ExpandMapView" xml:space="preserve">
+    <value>Expand map view</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>Den Host kann net gesat ginn, wärend aner Hosts bäigefüügt ginn. Waart w.e.g. bis de Virgang ofgeschloss ass a probéiert et erëm.</value>
