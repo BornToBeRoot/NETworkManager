@@ -224,8 +224,38 @@ public partial class TracerouteMapControl
 
     #region Load, draw
 
+    // Guards EnsureMapDataInitialized so the (per-instance) ~900-element label/city build below
+    // only ever runs once per control, regardless of how many times Loaded or IsVisibleChanged fire.
+    private bool _mapDataInitialized;
+
     private void TracerouteMapControl_Loaded(object sender, RoutedEventArgs e)
     {
+        // TracerouteView binds this control's Visibility to ShowMap, which is false whenever IP
+        // geolocation checking is disabled - the map can then never show anything (no hop has a
+        // location to plot), so building ~900 city/country WPF elements for it here would be pure
+        // waste. Defer until it's actually shown; if it already is, this fires immediately below.
+        if (IsVisible)
+            EnsureMapDataInitialized();
+        else
+            IsVisibleChanged += TracerouteMapControl_IsVisibleChanged;
+    }
+
+    private void TracerouteMapControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        if (!IsVisible)
+            return;
+
+        IsVisibleChanged -= TracerouteMapControl_IsVisibleChanged;
+        EnsureMapDataInitialized();
+    }
+
+    private void EnsureMapDataInitialized()
+    {
+        if (_mapDataInitialized)
+            return;
+
+        _mapDataInitialized = true;
+
         // The embedded world map is ~1.4 MB of JSON; parsing it and building the (frozen)
         // country geometry synchronously here would briefly hitch the UI thread the first time a
         // Traceroute tab is opened. Materialize the shared Lazy caches on a background thread
@@ -894,6 +924,13 @@ public partial class TracerouteMapControl
         (List<TracerouteHopInfo> Hops, ClusteredPoint Position, IPGeolocationInfo Info) to,
         Action<bool> highlightFromMarker, Action<bool> highlightToMarker)
     {
+        // A hop between these two groups was dropped for lacking geolocation (see the filter in
+        // RedrawHops) - the direct line drawn below isn't the actual route then, just the closest
+        // honest approximation. Rendered in a muted gray (see below) and labelled "Unknown" in the
+        // tooltip instead of the usual accent color, so it doesn't read as an equally-confident,
+        // fully observed segment.
+        var isGap = to.Hops[0].Hop != from.Hops[^1].Hop + 1;
+
         // Skip hops that resolve to (nearly) the same on-screen position. Judged on the resolved,
         // cluster-displaced positions (at the route's own just-computed fit scale) rather than the
         // raw geo anchors - two cluster members of the same location group (see AssignClusterIds)
@@ -909,7 +946,9 @@ public partial class TracerouteMapControl
         if (Math.Sqrt(resolvedDx * resolvedDx + resolvedDy * resolvedDy) < 0.01)
             return static _ => { };
 
-        var tooltip = $"{FormatLocation(from.Info, includeRegion: true)}\n↓\n{FormatLocation(to.Info, includeRegion: true)}";
+        var tooltip = isGap
+            ? $"{FormatLocation(from.Info, includeRegion: true)}\n↓\n{Strings.Unknown}\n↓\n{FormatLocation(to.Info, includeRegion: true)}"
+            : $"{FormatLocation(from.Info, includeRegion: true)}\n↓\n{FormatLocation(to.Info, includeRegion: true)}";
 
         var geometry = new PathGeometry();
         var figure = new PathFigure { IsClosed = false };
@@ -946,7 +985,7 @@ public partial class TracerouteMapControl
             IsHitTestVisible = false
         };
 
-        path.SetResourceReference(Shape.StrokeProperty, "MahApps.Brushes.Accent");
+        path.SetResourceReference(Shape.StrokeProperty, isGap ? "MahApps.Brushes.Gray3" : "MahApps.Brushes.Accent");
 
         HopsCanvas.Children.Add(path);
 
@@ -959,7 +998,7 @@ public partial class TracerouteMapControl
             IsHitTestVisible = false
         };
 
-        arrowHead.SetResourceReference(Shape.FillProperty, "MahApps.Brushes.Accent");
+        arrowHead.SetResourceReference(Shape.FillProperty, isGap ? "MahApps.Brushes.Gray3" : "MahApps.Brushes.Accent");
 
         HopsCanvas.Children.Add(arrowHead);
 
@@ -1100,7 +1139,7 @@ public partial class TracerouteMapControl
     }
 
     /// <summary>
-    /// Shows the fixed info panel (top-left) with the given text - see the XAML comment on
+    /// Shows the fixed info panel (bottom-right) with the given text - see the XAML comment on
     /// InfoPanel for why this replaces a WPF ToolTip popup for hop markers/arrows.
     /// </summary>
     private void ShowInfoPanel(string text)
@@ -1258,9 +1297,13 @@ public partial class TracerouteMapControl
         var centerX = (rawMinX + rawMaxX) / 2;
         var centerY = (rawMinY + rawMaxY) / 2;
 
-        return (scale,
-            BorderHost.ActualWidth / 2 - centerX * scale,
-            BorderHost.ActualHeight / 2 - centerY * scale);
+        // Clamped the same way as FitToView/wheel zoom/drag-pan - otherwise a route near the map's
+        // edge (e.g. close to +/-180 deg longitude or a pole) can center a pan that leaves blank
+        // canvas past the map's real edge in the viewport.
+        var panX = ClampPan(BorderHost.ActualWidth / 2 - centerX * scale, MapWidth * scale, BorderHost.ActualWidth);
+        var panY = ClampPan(BorderHost.ActualHeight / 2 - centerY * scale, MapHeight * scale, BorderHost.ActualHeight);
+
+        return (scale, panX, panY);
     }
 
     private void ApplyTransform()
