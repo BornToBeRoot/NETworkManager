@@ -573,6 +573,18 @@
   <data name="IPv6DefaultGateway" xml:space="preserve">
     <value>IPv6 預設閘道</value>
   </data>
+  <data name="Map" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="PlusXMore" xml:space="preserve">
+    <value>(+{0} more)</value>
+  </data>
+  <data name="ScrollToZoomDragToPan" xml:space="preserve">
+    <value>Scroll = Zoom, Drag = Pan</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
   <data name="Maximum" xml:space="preserve">
     <value>最大</value>
   </data>
@@ -2985,6 +2997,9 @@
   <data name="Resource_ListTLD_Description" xml:space="preserve">
     <value>來自 iana.org 的頂級網域列表，用於從 whois.iana.org 通過連接埠 43 查詢各 TLD 的 whois 伺服器</value>
   </data>
+  <data name="Resource_NaturalEarth_Description" xml:space="preserve">
+    <value>GeoJSON conversion of Natural Earth vector map data (CC0-1.0).</value>
+  </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>來自 IEEE.org 的 OUI 資料。</value>
   </data>
@@ -3683,6 +3698,9 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="CheckIPGeolocation" xml:space="preserve">
     <value>檢查 IP 地理位置定位</value>
   </data>
+  <data name="ShowMap" xml:space="preserve">
+    <value>Show map</value>
+  </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>DNS 解析器由 ip‑api.com 決定。
 
@@ -3822,6 +3840,9 @@ If the option is disabled again, the values are no longer modified. However, the
   </data>
   <data name="ExpandHostView" xml:space="preserve">
     <value>展開主機檢視</value>
+  </data>
+  <data name="ExpandMapView" xml:space="preserve">
+    <value>Expand map view</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>在其他主機正在被加入時，無法設定此主機。請等候流程完成後再試一次。</value>
