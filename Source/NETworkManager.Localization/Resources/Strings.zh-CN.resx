@@ -573,6 +573,18 @@
   <data name="IPv6DefaultGateway" xml:space="preserve">
     <value>IPv6 默认网关</value>
   </data>
+  <data name="Map" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="PlusXMore" xml:space="preserve">
+    <value>(+{0} more)</value>
+  </data>
+  <data name="ScrollToZoomDragToPan" xml:space="preserve">
+    <value>Scroll = Zoom, Drag = Pan</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
   <data name="Maximum" xml:space="preserve">
     <value>最大值</value>
   </data>
@@ -2986,6 +2998,9 @@ URL: https://api.github.com/</value>
   <data name="Resource_ListTLD_Description" xml:space="preserve">
     <value>来自 iana.org 的顶级域名列表，用于从 whois.iana.org 通过 43 端口查询顶级域名的 whois 服务器</value>
   </data>
+  <data name="Resource_NaturalEarth_Description" xml:space="preserve">
+    <value>GeoJSON conversion of Natural Earth vector map data (CC0-1.0).</value>
+  </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>OUI 数据来自 ieee.org。</value>
   </data>
@@ -3684,6 +3699,9 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="CheckIPGeolocation" xml:space="preserve">
     <value>检查 IP 地理位置</value>
   </data>
+  <data name="ShowMap" xml:space="preserve">
+    <value>Show map</value>
+  </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>DNS 解析通过 ip-api.com 确定。
 
@@ -3823,6 +3841,9 @@ URL: http://ip-api.com/</value>
   </data>
   <data name="ExpandHostView" xml:space="preserve">
     <value>展开主机视图</value>
+  </data>
+  <data name="ExpandMapView" xml:space="preserve">
+    <value>Expand map view</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>正在添加其他主机时无法设置主机。请等待进程完成后再试。</value>
