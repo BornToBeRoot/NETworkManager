@@ -573,6 +573,18 @@
   <data name="IPv6DefaultGateway" xml:space="preserve">
     <value>IPv6 기본 게이트웨이</value>
   </data>
+  <data name="Map" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="PlusXMore" xml:space="preserve">
+    <value>(+{0} more)</value>
+  </data>
+  <data name="ScrollToZoomDragToPan" xml:space="preserve">
+    <value>Scroll = Zoom, Drag = Pan</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
   <data name="Maximum" xml:space="preserve">
     <value>최대화</value>
   </data>
@@ -2982,6 +2994,9 @@ URL: https://api.ipify.org/</value>
   <data name="Resource_ListTLD_Description" xml:space="preserve">
     <value>포트 43을 통해 whois.iana.org에서 TLD의 서버를 쿼리하는 데 사용되는 iana.org의 최상위 도메인 목록</value>
   </data>
+  <data name="Resource_NaturalEarth_Description" xml:space="preserve">
+    <value>GeoJSON conversion of Natural Earth vector map data (CC0-1.0).</value>
+  </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>ieee.org의 OUI 데이터입니다.</value>
   </data>
@@ -3680,6 +3695,9 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="CheckIPGeolocation" xml:space="preserve">
     <value>IP 지리적 위치 확인</value>
   </data>
+  <data name="ShowMap" xml:space="preserve">
+    <value>Show map</value>
+  </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>DNS 해결기는 ip-api.com 을 통해 결정됩니다.
 
@@ -3819,6 +3837,9 @@ URL: http://ip-api.com/</value>
   </data>
   <data name="ExpandHostView" xml:space="preserve">
     <value>호스트 보기 확장</value>
+  </data>
+  <data name="ExpandMapView" xml:space="preserve">
+    <value>Expand map view</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>다른 호스트를 추가하는 동안에는 호스트를 설정할 수 없습니다. 프로세스가 완료될 때까지 기다렸다가 다시 시도해 주세요.</value>
