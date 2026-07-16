@@ -574,16 +574,16 @@
     <value>IPv6-デフォルト-ゲートウェイ</value>
   </data>
   <data name="Map" xml:space="preserve">
-    <value>Map</value>
+    <value>マップ</value>
   </data>
   <data name="PlusXMore" xml:space="preserve">
-    <value>(+{0} more)</value>
+    <value>(+{0} 以上)</value>
   </data>
   <data name="ScrollToZoomDragToPan" xml:space="preserve">
-    <value>Scroll = Zoom, Drag = Pan</value>
+    <value>スクロール = ズーム, ドラッグ = パン</value>
   </data>
   <data name="Unknown" xml:space="preserve">
-    <value>Unknown</value>
+    <value>不明</value>
   </data>
   <data name="Maximum" xml:space="preserve">
     <value>最大</value>
@@ -2998,7 +2998,7 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
     <value>iana.org のトップレベルドメインのリスト。これは、ポート 43 経由で whois.iana.org から TLD の whois サーバーを照会するために使用されます。</value>
   </data>
   <data name="Resource_NaturalEarth_Description" xml:space="preserve">
-    <value>GeoJSON conversion of Natural Earth vector map data (CC0-1.0).</value>
+    <value>Natural Earth のベクトル地図データ (CC0-1.0) の GeoJSON 変換。</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>ieee.org からの OUI データ。</value>
@@ -3699,7 +3699,7 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
     <value>IP位置情報の確認</value>
   </data>
   <data name="ShowMap" xml:space="preserve">
-    <value>Show map</value>
+    <value>マップを表示</value>
   </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>DNS リゾルバは ip-api.com によって決定されます。
@@ -3842,7 +3842,7 @@ URL: http://ip-api.com/</value>
     <value>ホストビューを展開</value>
   </data>
   <data name="ExpandMapView" xml:space="preserve">
-    <value>Expand map view</value>
+    <value>マップビューを展開</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>他のホストを追加している間は、ホストを設定できません。処理が完了するまでお待ちいただき、もう一度お試しください。</value>
