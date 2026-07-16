@@ -28,7 +28,7 @@
     "react-image-gallery": "^2.1.2"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.10.1",
+    "@docusaurus/module-type-aliases": "3.10.2",
     "@docusaurus/types": "3.10.1"
   },
   "browserslist": {
