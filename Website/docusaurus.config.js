@@ -206,12 +206,12 @@ const config = {
             to: "/docs/changelog/2026-7-7-0",
           },
           // Redirect pre-versions to the corresponding new versions
-          // {
-          //   from: [
-          //     "/docs/changelog/2026-x-x-0",
-          //   ],
-          //   to: "/docs/changelog/next-release",
-          // },
+          {
+            from: [
+              "/docs/changelog/2026-7-16-0",
+            ],
+            to: "/docs/changelog/next-release",
+          },
           {
             from: [
               "/docs/changelog/2026-3-4-0",
