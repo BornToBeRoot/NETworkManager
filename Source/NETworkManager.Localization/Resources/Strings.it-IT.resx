@@ -575,16 +575,16 @@ La modifica dell'elenco router richiede diritti elevati!</value>
     <value>Gateway IPv6 predefinito</value>
   </data>
   <data name="Map" xml:space="preserve">
-    <value>Map</value>
+    <value>Mappa</value>
   </data>
   <data name="PlusXMore" xml:space="preserve">
-    <value>(+{0} more)</value>
+    <value>(altri +{0})</value>
   </data>
   <data name="ScrollToZoomDragToPan" xml:space="preserve">
-    <value>Scroll = Zoom, Drag = Pan</value>
+    <value>Scorri = Zoom, Trascina = Panoramica</value>
   </data>
   <data name="Unknown" xml:space="preserve">
-    <value>Unknown</value>
+    <value>Sconosciuto</value>
   </data>
   <data name="Maximum" xml:space="preserve">
     <value>Massimo</value>
@@ -3024,7 +3024,7 @@ Segnala questo problema su Github.</value>
     <value>Elenco dei domini di primo livello da iana.org, usato per interrogare i server whois del TLD da whois.iana.org tramite la porta 43</value>
   </data>
   <data name="Resource_NaturalEarth_Description" xml:space="preserve">
-    <value>GeoJSON conversion of Natural Earth vector map data (CC0-1.0).</value>
+    <value>Conversione GeoJSON dati mappa vettoriale Terra naturale (CC0-1.0).</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>Dati OUI da ieee.org.</value>
@@ -3785,7 +3785,7 @@ Disponibile solo se la modalità è "SSH", "Telnet" o "Rlogin".</value>
     <value>Verifica geolocalizzazione IP</value>
   </data>
   <data name="ShowMap" xml:space="preserve">
-    <value>Show map</value>
+    <value>Visualizza mappa</value>
   </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>Il risolutore DNS viene determinato tramite ip-api.com.
@@ -3932,7 +3932,7 @@ Questi non sono ancora completi, contengono bug, possono mandare in crash l'appl
     <value>Espandi visualizzazione host</value>
   </data>
   <data name="ExpandMapView" xml:space="preserve">
-    <value>Expand map view</value>
+    <value>Espandi vista mappa</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>Non è possibile impostare l'host mentre vengono aggiunti altri host. 
