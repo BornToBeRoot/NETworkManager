@@ -310,16 +310,16 @@
     <value>網路介面</value>
   </data>
   <data name="NetworkInterfaceConfigurationAppliedSuccessfully" xml:space="preserve">
-    <value>Configuration applied</value>
+    <value>設定已套用</value>
   </data>
   <data name="NetworkInterfaceConfigureAdminMessage" xml:space="preserve">
-    <value>Configuring the network interface requires elevated rights!</value>
+    <value>設定網路介面需要管理員權限！</value>
   </data>
   <data name="NewTab" xml:space="preserve">
     <value>新標籤</value>
   </data>
   <data name="Next" xml:space="preserve">
-    <value>Next</value>
+    <value>下一步</value>
   </data>
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
@@ -478,16 +478,16 @@
     <value>描述</value>
   </data>
   <data name="Placeholder" xml:space="preserve">
-    <value>Placeholder</value>
+    <value>佔位符</value>
   </data>
   <data name="HelpMessage_CustomCommandFilePath" xml:space="preserve">
-    <value>Path to the file or executable to run. The following placeholders can be used:</value>
+    <value>要執行的檔案或執行檔路徑。可使用下列佔位符：</value>
   </data>
   <data name="HelpMessage_CustomCommandArguments" xml:space="preserve">
-    <value>Arguments passed to the file or executable. The following placeholders can be used:</value>
+    <value>傳遞給檔案或執行檔的參數。可使用下列佔位符：</value>
   </data>
   <data name="HelpMessage_ProfileHostPlaceholder" xml:space="preserve">
-    <value>The following placeholder can be used:</value>
+    <value>可使用下列佔位符：</value>
   </data>
   <data name="DHCPEnabled" xml:space="preserve">
     <value>DHCP 已啟用</value>
@@ -535,28 +535,28 @@
     <value>IPv4 位址</value>
   </data>
   <data name="IPv4AddressAddedSuccessfully" xml:space="preserve">
-    <value>IPv4 address added</value>
+    <value>IPv4 位址已新增</value>
   </data>
   <data name="IPv4AddressRemovedSuccessfully" xml:space="preserve">
-    <value>IPv4 address removed</value>
+    <value>IPv4 位址已移除</value>
   </data>
   <data name="IPv4AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
-    <value>IPv4 address released and renewed</value>
+    <value>IPv4 位址已釋放並更新</value>
   </data>
   <data name="IPv4AddressReleasedSuccessfully" xml:space="preserve">
-    <value>IPv4 address released</value>
+    <value>IPv4 位址已釋放</value>
   </data>
   <data name="IPv4AddressRenewedSuccessfully" xml:space="preserve">
-    <value>IPv4 address renewed</value>
+    <value>IPv4 位址已更新</value>
   </data>
   <data name="IPv6AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
-    <value>IPv6 address released and renewed</value>
+    <value>IPv6 位址已釋放並更新</value>
   </data>
   <data name="IPv6AddressReleasedSuccessfully" xml:space="preserve">
-    <value>IPv6 address released</value>
+    <value>IPv6 位址已釋放</value>
   </data>
   <data name="IPv6AddressRenewedSuccessfully" xml:space="preserve">
-    <value>IPv6 address renewed</value>
+    <value>IPv6 位址已更新</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
     <value>IPv4 預設閘道</value>
@@ -574,16 +574,16 @@
     <value>IPv6 預設閘道</value>
   </data>
   <data name="Map" xml:space="preserve">
-    <value>Map</value>
+    <value>映射</value>
   </data>
   <data name="PlusXMore" xml:space="preserve">
-    <value>(+{0} more)</value>
+    <value>(+ {0}更多)</value>
   </data>
   <data name="ScrollToZoomDragToPan" xml:space="preserve">
-    <value>Scroll = Zoom, Drag = Pan</value>
+    <value>滾動 = 縮放，拖曳 = 平移</value>
   </data>
   <data name="Unknown" xml:space="preserve">
-    <value>Unknown</value>
+    <value>未知</value>
   </data>
   <data name="Maximum" xml:space="preserve">
     <value>最大</value>
@@ -1039,7 +1039,7 @@
     <value>OID</value>
   </data>
   <data name="OnlyCsvFilesAllowed" xml:space="preserve">
-    <value>Only CSV files are allowed!</value>
+    <value>僅允許 CSV 檔案！</value>
   </data>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
     <value>只有在使用全螢幕時</value>
@@ -1355,7 +1355,7 @@
     <value>清除 DNS 快取</value>
   </data>
   <data name="FlushDNSCacheSuccessfully" xml:space="preserve">
-    <value>DNS cache flushed</value>
+    <value>DNS 快取已清除</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
     <value>請先將憑證解密並載入，然後再進行選取。</value>
@@ -1415,7 +1415,7 @@
     <value>覆寫</value>
   </data>
   <data name="Parse" xml:space="preserve">
-    <value>Parse</value>
+    <value>解析</value>
   </data>
   <data name="Paste" xml:space="preserve">
     <value>貼上</value>
@@ -2209,10 +2209,10 @@
     <value>視覺樣式</value>
   </data>
   <data name="ViewOnly" xml:space="preserve">
-    <value>View only</value>
+    <value>僅供檢視</value>
   </data>
   <data name="ViewOnlyDescription" xml:space="preserve">
-    <value>Block keyboard and mouse input to the remote session</value>
+    <value>攔截遠端連線的鍵盤與滑鼠輸入</value>
   </data>
   <data name="RemoteAudio" xml:space="preserve">
     <value>遠端音訊</value>
@@ -2278,19 +2278,19 @@
     <value>Ctrl+Alt+Del</value>
   </data>
   <data name="TaskManager" xml:space="preserve">
-    <value>Task Manager (Ctrl+Shift+Esc)</value>
+    <value>工作管理員 (Ctrl+Shift+Esc)</value>
   </data>
   <data name="Lock" xml:space="preserve">
-    <value>Lock (Win+L)</value>
+    <value>鎖定 (Win+L)</value>
   </data>
   <data name="ShowDesktop" xml:space="preserve">
-    <value>Show Desktop (Win+D)</value>
+    <value>顯示桌面 (Win+D)</value>
   </data>
   <data name="Explorer" xml:space="preserve">
-    <value>Explorer (Win+E)</value>
+    <value>檔案總管 (Win+E)</value>
   </data>
   <data name="RunDialog" xml:space="preserve">
-    <value>Run dialog (Win+R)</value>
+    <value>執行對話框 (Win+R)</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
     <value>鍵盤快捷鍵</value>
@@ -2998,7 +2998,7 @@
     <value>來自 iana.org 的頂級網域列表，用於從 whois.iana.org 通過連接埠 43 查詢各 TLD 的 whois 伺服器</value>
   </data>
   <data name="Resource_NaturalEarth_Description" xml:space="preserve">
-    <value>GeoJSON conversion of Natural Earth vector map data (CC0-1.0).</value>
+    <value>Natural Earth 向量地圖資料的 GeoJSON 轉換 (CC0-1.0)。</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>來自 IEEE.org 的 OUI 資料。</value>
@@ -3189,13 +3189,13 @@
     <value>PowerShell 控制台的配色可以在「設定 &gt; 一般 &gt; 外觀」中，改成與應用程式主題相同。</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
+    <value>若您啟用此選項，註冊表中 HKCU:\Console 下的預設 PowerShell 控制台設定將會被覆寫，以使 PowerShell 控制台視窗符合應用程式的主題。這是一個全域系統設定，可能會影響一般 PowerShell 視窗的外觀。
 
-Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
+僅會修改在「PowerShell 設定」中配置的 PowerShell 控制台。同時支援 Windows PowerShell 與 PWSH（PowerShell 7 及以上版本）。
 
-Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
+請點擊右上角的說明/文件按鈕（位於最小化按鈕左側）或前往 https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance 以瞭解更多詳細資訊。以下是將會被調整的相關文件數值。
 
-If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
+若再次停用此選項，這些數值將不再進行修改。然而，原始數值並不會被恢復。</value>
   </data>
   <data name="InputCannotEndWithSemicolon" xml:space="preserve">
     <value>輸入不能以「;」結尾！</value>
@@ -3699,7 +3699,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>檢查 IP 地理位置定位</value>
   </data>
   <data name="ShowMap" xml:space="preserve">
-    <value>Show map</value>
+    <value>顯示地圖</value>
   </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>DNS 解析器由 ip‑api.com 決定。
@@ -3842,7 +3842,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>展開主機檢視</value>
   </data>
   <data name="ExpandMapView" xml:space="preserve">
-    <value>Expand map view</value>
+    <value>展開地圖檢視</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>在其他主機正在被加入時，無法設定此主機。請等候流程完成後再試一次。</value>
@@ -4248,25 +4248,25 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>Active Directory</value>
   </data>
   <data name="ImportProfiles_Source_Csv" xml:space="preserve">
-    <value>CSV file</value>
+    <value>CSV 檔案</value>
   </data>
   <data name="ImportProfiles_Method_Csv" xml:space="preserve">
-    <value>CSV file</value>
+    <value>CSV 檔案</value>
   </data>
   <data name="ImportProfilesFromCsvFile" xml:space="preserve">
-    <value>Import profiles from CSV file</value>
+    <value>從 CSV 檔案匯入設定檔</value>
   </data>
   <data name="Csv_ImportDescription" xml:space="preserve">
-    <value>Imported from CSV file on {0}</value>
+    <value>從 CSV 檔案於{0}匯入</value>
   </data>
   <data name="CsvNoEntriesFound" xml:space="preserve">
-    <value>No entries were found in the CSV file.</value>
+    <value>CSV 檔案中找不到任何條目。</value>
   </data>
   <data name="CsvImportFormatHint" xml:space="preserve">
-    <value>Expected CSV format — one profile per line:</value>
+    <value>預期的 CSV 格式 — 每行一個設定檔：</value>
   </data>
   <data name="CsvImportFormatNote" xml:space="preserve">
-    <value>A header row and the delimiter (semicolon, comma or tab) are detected automatically. The description column is optional. Entries without a host cannot be imported.</value>
+    <value>標題列與分隔符號（分號、逗號或 Tab）將自動偵測。描述欄位為選填。不含主機資訊的條目無法匯入。</value>
   </data>
   <data name="ImportResults" xml:space="preserve">
     <value>匯入結果</value>
