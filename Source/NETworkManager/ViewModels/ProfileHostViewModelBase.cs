@@ -370,6 +370,22 @@ public abstract class ProfileHostViewModelBase : ViewModelBase, IProfileHostView
         _isViewActive = false;
     }
 
+    /// <summary>
+    ///     Called when a dialog in the <see cref="Profiles.ProfileManager" /> is opened. Virtual so tools with an
+    ///     embedded native window (e.g. PowerShell, PuTTY, RemoteDesktop, TigerVNC, WebConsole) can override it to
+    ///     enable <see cref="ConfigurationManager.FixAirspace" /> while the dialog is shown.
+    /// </summary>
+    public virtual void OnProfileManagerDialogOpen()
+    {
+    }
+
+    /// <summary>
+    ///     Called when a dialog in the <see cref="Profiles.ProfileManager" /> is closed.
+    /// </summary>
+    public virtual void OnProfileManagerDialogClose()
+    {
+    }
+
     private void CreateTags()
     {
         var tags = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(IsProfileEnabled)

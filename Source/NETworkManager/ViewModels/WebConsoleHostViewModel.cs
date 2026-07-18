@@ -104,12 +104,12 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
 
     protected override string GetSearchableField(ProfileInfo profile) => profile.WebConsole_Url;
 
-    public void OnProfileManagerDialogOpen()
+    public override void OnProfileManagerDialogOpen()
     {
         ConfigurationManager.OnDialogOpen();
     }
 
-    public void OnProfileManagerDialogClose()
+    public override void OnProfileManagerDialogClose()
     {
         ConfigurationManager.OnDialogClose();
     }

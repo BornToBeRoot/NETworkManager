@@ -78,12 +78,12 @@ public class RemoteDesktopHostViewModel : ProfileHostViewModelBase
 
     protected override string GetSearchableField(ProfileInfo profile) => profile.RemoteDesktop_Host;
 
-    public void OnProfileManagerDialogOpen()
+    public override void OnProfileManagerDialogOpen()
     {
         ConfigurationManager.OnDialogOpen();
     }
 
-    public void OnProfileManagerDialogClose()
+    public override void OnProfileManagerDialogClose()
     {
         ConfigurationManager.OnDialogClose();
     }
@@ -235,6 +235,13 @@ public class RemoteDesktopHostViewModel : ProfileHostViewModelBase
         args.Add($"/V:{SelectedProfile.RemoteDesktop_Host}");
 
         Process.Start("mstsc.exe", args);
+    }
+
+    public ItemActionCallback CloseItemCommand => CloseItemAction;
+
+    private static void CloseItemAction(ItemActionCallbackArgs<TabablzControl> args)
+    {
+        ((args.DragablzItem.Content as DragablzTabItem)?.View as IDragablzTabItem)?.CloseTab();
     }
 
     #endregion

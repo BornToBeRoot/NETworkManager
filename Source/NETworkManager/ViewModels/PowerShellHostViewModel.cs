@@ -164,12 +164,12 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
         ConfigurationManager.Current.IsProfileFilterPopupOpen = false;
     }
 
-    public void OnProfileManagerDialogOpen()
+    public override void OnProfileManagerDialogOpen()
     {
         ConfigurationManager.OnDialogOpen();
     }
 
-    public void OnProfileManagerDialogClose()
+    public override void OnProfileManagerDialogClose()
     {
         ConfigurationManager.OnDialogClose();
     }
