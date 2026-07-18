@@ -178,6 +178,34 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.General_HistoryListEntries;
 
+    // Profile (shared across all tools with a profile panel)
+
+    public bool Profile_ExpandView
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
+
+    public double Profile_Width
+    {
+        get;
+        set
+        {
+            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
+
     // Window
 
     public bool Window_ConfirmClose
@@ -855,32 +883,6 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    public bool NetworkInterface_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double NetworkInterface_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
-
     public string NetworkInterface_ExportFilePath
     {
         get;
@@ -1230,32 +1232,6 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_MaxPortThreads;
 
-    public bool IPScanner_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double IPScanner_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
-
     public string IPScanner_ExportFilePath
     {
         get;
@@ -1389,32 +1365,6 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.PortScanner_MaxPortThreads;
-
-    public bool PortScanner_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double PortScanner_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public string PortScanner_ExportFilePath
     {
@@ -1641,32 +1591,6 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.PingMonitor_ExportFileType;
 
-    public bool PingMonitor_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double PingMonitor_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
-
     #endregion
 
     #region Traceroute
@@ -1787,32 +1711,6 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.Traceroute_MapHeight;
-
-    public bool Traceroute_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double Traceroute_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public string Traceroute_ExportFilePath
     {
@@ -2027,32 +1925,6 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.DNSLookup_Timeout;
-
-    public bool DNSLookup_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double DNSLookup_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public string DNSLookup_ExportFilePath
     {
@@ -2565,32 +2437,6 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
-    public bool RemoteDesktop_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double RemoteDesktop_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
-
     #endregion
 
     #region PowerShell
@@ -2659,32 +2505,6 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.PowerShell_ExecutionPolicy;
-
-    public bool PowerShell_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double PowerShell_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     #endregion
 
@@ -2898,32 +2718,6 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = [];
 
-    public bool PuTTY_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double PuTTY_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
-
     public string PuTTY_ApplicationFilePath
     {
         get;
@@ -3046,32 +2840,6 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = [];
 
-    public bool TigerVNC_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double TigerVNC_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
-
     public string TigerVNC_ApplicationFilePath
     {
         get;
@@ -3114,32 +2882,6 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = [];
-
-    public bool WebConsole_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double WebConsole_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public bool WebConsole_ShowAddressBar
     {
@@ -3326,32 +3068,6 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.SNMP_PrivacyProvider;
-
-    public bool SNMP_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double SNMP_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
 
     public string SNMP_ExportFilePath
@@ -3633,32 +3349,6 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = [];
 
-    public bool WakeOnLAN_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double WakeOnLAN_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
-
     #endregion
 
     #region Whois
@@ -3675,32 +3365,6 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = [];
-
-    public bool Whois_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double Whois_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public string Whois_ExportFilePath
     {
@@ -3744,32 +3408,6 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = [];
-
-    public bool IPGeolocation_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double IPGeolocation_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
 
     public string IPGeolocation_ExportFilePath
     {

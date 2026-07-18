@@ -1,9 +1,6 @@
-﻿using System;
+using NETworkManager.ViewModels;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
@@ -24,22 +21,10 @@ public partial class PuTTYHostView
         _loaded = true;
     }
 
-    private void ContextMenu_Opened(object sender, RoutedEventArgs e)
-    {
-        if (sender is ContextMenu menu)
-            menu.DataContext = _viewModel;
-    }
-
-    private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-    {
-        if (e.ChangedButton == MouseButton.Left)
-            _viewModel.ConnectProfileCommand.Execute(null);
-    }
-
     public async void AddTab(string host)
     {
-        // Wait for the interface to load, before displaying the dialog to connect a new profile... 
-        // MahApps will throw an exception... 
+        // Wait for the interface to load, before displaying the dialog to connect a new profile...
+        // MahApps will throw an exception...
         while (!_loaded)
             await Task.Delay(250);
 
@@ -60,10 +45,5 @@ public partial class PuTTYHostView
     public void FocusEmbeddedWindow()
     {
         _viewModel.FocusEmbeddedWindow();
-    }
-
-    private void PopupProfileFilter_Closed(object sender, EventArgs e)
-    {
-        _viewModel.OnProfileFilterClosed();
     }
 }

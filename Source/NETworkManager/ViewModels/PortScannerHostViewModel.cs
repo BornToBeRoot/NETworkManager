@@ -1,32 +1,22 @@
-﻿using Dragablz;
+using Dragablz;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Profiles;
-using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
 /// <summary>
 /// The view model for the Port Scanner host, managing tabs and profiles.
 /// </summary>
-public class PortScannerHostViewModel : ViewModelBase, IProfileManager
+public class PortScannerHostViewModel : ProfileHostViewModelBase
 {
     #region Variables
-
-    private readonly DispatcherTimer _searchDispatcherTimer = new();
-    private bool _searchDisabled;
 
     /// <summary>
     /// Gets the InterTabClient for Dragablz.
@@ -54,9 +44,6 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     /// </summary>
     public ObservableCollection<DragablzTabItem> TabItems { get; }
 
-    private readonly bool _isLoading;
-    private bool _isViewActive = true;
-
     /// <summary>
     /// Gets or sets the index of the selected tab.
     /// </summary>
@@ -73,219 +60,15 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    #region Profiles
-
-    /// <summary>
-    /// Gets the collection of filtered profiles.
-    /// </summary>
-    public ICollectionView Profiles
-    {
-        get;
-        private set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets the selected profile.
-    /// </summary>
-    public ProfileInfo SelectedProfile
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = new();
-
-    /// <summary>
-    /// Gets or sets the search query for filtering profiles.
-    /// </summary>
-    public string Search
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-
-            // Start searching...
-            if (!_searchDisabled)
-            {
-                IsSearching = true;
-                _searchDispatcherTimer.Start();
-            }
-
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether a search is currently active.
-    /// </summary>
-    public bool IsSearching
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether the profile filter flyout is open.
-    /// </summary>
-    public bool ProfileFilterIsOpen
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets the collection view for profile filter tags.
-    /// </summary>
-    public ICollectionView ProfileFilterTagsView { get; }
-
-    private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
-
-    /// <summary>
-    /// Gets or sets a value indicating whether to match any selected tag in the filter.
-    /// </summary>
-    public bool ProfileFilterTagsMatchAny
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_TagsMatchAny;
-
-    /// <summary>
-    /// Gets or sets a value indicating whether to match all selected tags in the filter.
-    /// </summary>
-    public bool ProfileFilterTagsMatchAll
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether a profile filter is currently applied.
-    /// </summary>
-    public bool IsProfileFilterSet
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets the store for group expander states.
-    /// </summary>
-    public GroupExpanderStateStore GroupExpanderStateStore { get; } = new();
-
-    private bool _canProfileWidthChange = true;
-    private double _tempProfileWidth;
-
-    /// <summary>
-    /// Gets or sets a value indicating whether the profile view is expanded.
-    /// </summary>
-    public bool ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.PortScanner_ExpandProfileView = value;
-
-            field = value;
-
-            if (_canProfileWidthChange)
-                ResizeProfile(false);
-
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets the width of the profile view.
-    /// </summary>
-    public GridLength ProfileWidth
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
-                GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
-                SettingsManager.Current.PortScanner_ProfileWidth = value.Value;
-
-            field = value;
-
-            if (_canProfileWidthChange)
-                ResizeProfile(true);
-
-            OnPropertyChanged();
-        }
-    }
-
     #endregion
 
-    #endregion
-
-    #region Constructor, load settings
+    #region Constructor
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PortScannerHostViewModel"/> class.
     /// </summary>
     public PortScannerHostViewModel()
     {
-        _isLoading = true;
-
         InterTabClient = new DragablzInterTabClient(ApplicationName.PortScanner);
         InterTabPartition = nameof(ApplicationName.PortScanner);
 
@@ -296,35 +79,18 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
             new DragablzTabItem(Strings.NewTab, new PortScannerView(tabId), tabId)
         ];
 
-        // Profiles
-        CreateTags();
-
-        ProfileFilterTagsView = CollectionViewSource.GetDefaultView(ProfileFilterTags);
-        ProfileFilterTagsView.SortDescriptions.Add(new SortDescription(nameof(ProfileFilterTagsInfo.Name),
-            ListSortDirection.Ascending));
-
-        SetProfilesView(new ProfileFilterInfo());
-
-        ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
-
-        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
-        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
-
-        LoadSettings();
-
-        _isLoading = false;
+        InitializeProfileHost();
     }
 
-    private void LoadSettings()
-    {
-        ExpandProfileView = SettingsManager.Current.PortScanner_ExpandProfileView;
+    #endregion
 
-        ProfileWidth = ExpandProfileView
-            ? new GridLength(SettingsManager.Current.PortScanner_ProfileWidth)
-            : new GridLength(40);
+    #region Profile host
 
-        _tempProfileWidth = SettingsManager.Current.PortScanner_ProfileWidth;
-    }
+    protected override ApplicationName ApplicationName => ApplicationName.PortScanner;
+
+    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.PortScanner_Enabled;
+
+    protected override string GetSearchableField(ProfileInfo profile) => profile.PortScanner_Host;
 
     #endregion
 
@@ -356,126 +122,6 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     }
 
     /// <summary>
-    /// Gets the command to add a new profile.
-    /// </summary>
-    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
-
-    private void AddProfileAction()
-    {
-        _ = ProfileDialogManager
-            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.PortScanner);
-    }
-
-    private bool ModifyProfile_CanExecute(object obj)
-    {
-        return SelectedProfile is { IsDynamic: false };
-    }
-
-    /// <summary>
-    /// Gets the command to edit the selected profile.
-    /// </summary>
-    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
-
-    private void EditProfileAction()
-    {
-        _ = ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
-    }
-
-    /// <summary>
-    /// Gets the command to copy the selected profile.
-    /// </summary>
-    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
-
-    private void CopyAsProfileAction()
-    {
-        _ = ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
-    }
-
-    /// <summary>
-    /// Gets the command to delete the selected profile.
-    /// </summary>
-    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
-
-    private void DeleteProfileAction()
-    {
-        _ = ProfileDialogManager
-            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile });
-    }
-
-    /// <summary>
-    /// Gets the command to edit a profile group.
-    /// </summary>
-    public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
-
-    private void EditGroupAction(object group)
-    {
-        _ = ProfileDialogManager
-            .ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"));
-    }
-
-    /// <summary>
-    /// Gets the command to open the profile filter.
-    /// </summary>
-    public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
-
-    private void OpenProfileFilterAction()
-    {
-        ProfileFilterIsOpen = true;
-    }
-
-    /// <summary>
-    /// Gets the command to apply the profile filter.
-    /// </summary>
-    public ICommand ApplyProfileFilterCommand => new RelayCommand(_ => ApplyProfileFilterAction());
-
-    private void ApplyProfileFilterAction()
-    {
-        RefreshProfiles();
-
-        ProfileFilterIsOpen = false;
-    }
-
-    /// <summary>
-    /// Gets the command to clear the profile filter.
-    /// </summary>
-    public ICommand ClearProfileFilterCommand => new RelayCommand(_ => ClearProfileFilterAction());
-
-    private void ClearProfileFilterAction()
-    {
-        _searchDisabled = true;
-        Search = string.Empty;
-        _searchDisabled = false;
-
-        foreach (var tag in ProfileFilterTags)
-            tag.IsSelected = false;
-
-        RefreshProfiles();
-
-        IsProfileFilterSet = false;
-        ProfileFilterIsOpen = false;
-    }
-
-    /// <summary>
-    /// Gets the command to expand all profile groups.
-    /// </summary>
-    public ICommand ExpandAllProfileGroupsCommand => new RelayCommand(_ => ExpandAllProfileGroupsAction());
-
-    private void ExpandAllProfileGroupsAction()
-    {
-        SetIsExpandedForAllProfileGroups(true);
-    }
-
-    /// <summary>
-    /// Gets the command to collapse all profile groups.
-    /// </summary>
-    public ICommand CollapseAllProfileGroupsCommand => new RelayCommand(_ => CollapseAllProfileGroupsAction());
-
-    private void CollapseAllProfileGroupsAction()
-    {
-        SetIsExpandedForAllProfileGroups(false);
-    }
-
-    /// <summary>
     /// Gets the callback for closing a tab item.
     /// </summary>
     public ItemActionCallback CloseItemCommand => CloseItemAction;
@@ -488,41 +134,6 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Methods
-
-    private void SetIsExpandedForAllProfileGroups(bool isExpanded)
-    {
-        foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
-            GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
-    }
-
-    private void ResizeProfile(bool dueToChangedSize)
-    {
-        _canProfileWidthChange = false;
-
-        if (dueToChangedSize)
-        {
-            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
-                                GlobalStaticConfiguration.FloatPointFix;
-        }
-        else
-        {
-            if (ExpandProfileView)
-            {
-                ProfileWidth =
-                    Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) <
-                    GlobalStaticConfiguration.FloatPointFix
-                        ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded)
-                        : new GridLength(_tempProfileWidth);
-            }
-            else
-            {
-                _tempProfileWidth = ProfileWidth.Value;
-                ProfileWidth = new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
-            }
-        }
-
-        _canProfileWidthChange = true;
-    }
 
     /// <summary>
     /// Adds a new tab with the specified host and ports.
@@ -542,114 +153,6 @@ public class PortScannerHostViewModel : ViewModelBase, IProfileManager
     private void AddTab(ProfileInfo profile)
     {
         AddTab(profile.PortScanner_Host, profile.PortScanner_Ports);
-    }
-
-    /// <summary>
-    /// Called when the view becomes visible.
-    /// </summary>
-    public void OnViewVisible()
-    {
-        _isViewActive = true;
-
-        RefreshProfiles();
-    }
-
-    /// <summary>
-    /// Called when the view is hidden.
-    /// </summary>
-    public void OnViewHide()
-    {
-        _isViewActive = false;
-    }
-
-    private void CreateTags()
-    {
-        var tags = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.PortScanner_Enabled)
-            .SelectMany(x => x.TagsCollection).Distinct().ToList();
-
-        var tagSet = new HashSet<string>(tags);
-
-        for (var i = ProfileFilterTags.Count - 1; i >= 0; i--)
-        {
-            if (!tagSet.Contains(ProfileFilterTags[i].Name))
-                ProfileFilterTags.RemoveAt(i);
-        }
-
-        var existingTagNames = new HashSet<string>(ProfileFilterTags.Select(ft => ft.Name));
-
-        foreach (var tag in tags.Where(tag => !existingTagNames.Contains(tag)))
-        {
-            ProfileFilterTags.Add(new ProfileFilterTagsInfo(false, tag));
-        }
-    }
-
-    private void SetProfilesView(ProfileFilterInfo filter, ProfileInfo profile = null)
-    {
-        Profiles = new CollectionViewSource
-        {
-            Source = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.PortScanner_Enabled && (
-                    string.IsNullOrEmpty(filter.Search) ||
-                    x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                    x.PortScanner_Host.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (
-                    // If no tags are selected, show all profiles
-                    (!filter.Tags.Any()) ||
-                    // Any tag can match
-                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.Any &&
-                     filter.Tags.Any(tag => x.TagsCollection.Contains(tag))) ||
-                    // All tags must match
-                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.All &&
-                     filter.Tags.All(tag => x.TagsCollection.Contains(tag))))
-            ).OrderBy(x => x.Group).ThenBy(x => x.Name)
-        }.View;
-
-        Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-
-        // Set specific profile or first if null
-        SelectedProfile = null;
-
-        if (profile != null)
-            SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
-                              Profiles.Cast<ProfileInfo>().FirstOrDefault();
-        else
-            SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
-    }
-
-
-    private void RefreshProfiles()
-    {
-        if (!_isViewActive)
-            return;
-
-        var filter = new ProfileFilterInfo
-        {
-            Search = Search,
-            Tags = [.. ProfileFilterTags.Where(x => x.IsSelected).Select(x => x.Name)],
-            TagsFilterMatch = ProfileFilterTagsMatchAny ? ProfileFilterTagsMatch.Any : ProfileFilterTagsMatch.All
-        };
-
-        SetProfilesView(filter, SelectedProfile);
-
-        IsProfileFilterSet = !string.IsNullOrEmpty(filter.Search) || filter.Tags.Any();
-    }
-
-    #endregion
-
-    #region Event
-
-    private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
-    {
-        CreateTags();
-
-        RefreshProfiles();
-    }
-
-    private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
-    {
-        _searchDispatcherTimer.Stop();
-
-        RefreshProfiles();
-
-        IsSearching = false;
     }
 
     #endregion
