@@ -25,6 +25,7 @@
         
     </ItemGroup>
     <ItemGroup>
+        <ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj" />
         <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
         <ProjectReference Include="..\NETworkManager.Settings\NETworkManager.Settings.csproj" />
         <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />

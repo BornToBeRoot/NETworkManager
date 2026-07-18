@@ -1,7 +1,4 @@
-﻿using NETworkManager.ViewModels;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
@@ -13,18 +10,6 @@ public partial class PingMonitorHostView
     {
         InitializeComponent();
         DataContext = _viewModel;
-    }
-
-    private void ContextMenu_Opened(object sender, RoutedEventArgs e)
-    {
-        if (sender is ContextMenu menu)
-            menu.DataContext = _viewModel;
-    }
-
-    private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-    {
-        if (e.ChangedButton == MouseButton.Left)
-            _viewModel.PingProfileCommand.Execute(null);
     }
 
     public void AddHost(string host)

@@ -1,4 +1,4 @@
-﻿using Dragablz;
+using Dragablz;
 using log4net;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
@@ -11,7 +11,6 @@ using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -19,19 +18,15 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Threading;
 using PowerShellProfile = NETworkManager.Profiles.Application.PowerShell;
 
 namespace NETworkManager.ViewModels;
 
-public class PowerShellHostViewModel : ViewModelBase, IProfileManager
+public class PowerShellHostViewModel : ProfileHostViewModelBase
 {
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(PowerShellHostViewModel));
-
-    private readonly DispatcherTimer _searchDispatcherTimer = new();
 
     public IInterTabClient InterTabClient { get; }
 
@@ -49,9 +44,6 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     }
 
     public ObservableCollection<DragablzTabItem> TabItems { get; }
-
-    private readonly bool _isLoading;
-    private bool _isViewActive = true;
 
     public bool IsExecutableConfigured
     {
@@ -92,169 +84,13 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    #region Profiles
-
-    public ICollectionView Profiles
-    {
-        get;
-        private set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public ProfileInfo SelectedProfile
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = new();
-
-    public string Search
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-
-            // Start searching...
-            IsSearching = true;
-            _searchDispatcherTimer.Start();
-
-            OnPropertyChanged();
-        }
-    }
-
     private bool _textBoxSearchIsFocused;
 
-    public bool IsSearching
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public bool ProfileFilterIsOpen
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public ICollectionView ProfileFilterTagsView { get; }
-
-    private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
-
-    public bool ProfileFilterTagsMatchAny
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_TagsMatchAny;
-
-    public bool ProfileFilterTagsMatchAll
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public bool IsProfileFilterSet
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public GroupExpanderStateStore GroupExpanderStateStore { get; } = new();
-
-    private bool _canProfileWidthChange = true;
-    private double _tempProfileWidth;
-
-    public bool ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.PowerShell_ExpandProfileView = value;
-
-            field = value;
-
-            if (_canProfileWidthChange)
-                ResizeProfile(false);
-
-            OnPropertyChanged();
-        }
-    }
-
-    public GridLength ProfileWidth
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
-                GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
-                SettingsManager.Current.PowerShell_ProfileWidth = value.Value;
-
-            field = value;
-
-            if (_canProfileWidthChange)
-                ResizeProfile(true);
-
-            OnPropertyChanged();
-        }
-    }
-
+    /// <summary>
+    /// Gets or sets a value indicating whether the profile context menu is open. Bound to
+    /// <see cref="Views.Controls.ProfileExpanderPanel.ProfileContextMenuIsOpen"/> so <see cref="FocusEmbeddedWindow"/>
+    /// can avoid stealing focus while it is open.
+    /// </summary>
     public bool ProfileContextMenuIsOpen
     {
         get;
@@ -270,14 +106,10 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
     #endregion
 
-    #endregion
-
     #region Constructor, load settings
 
     public PowerShellHostViewModel()
     {
-        _isLoading = true;
-
         // Check if PowerShell executable is configured
         CheckExecutable();
 
@@ -293,35 +125,53 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
 
         TabItems = [];
 
-        // Profiles
-        CreateTags();
-
-        ProfileFilterTagsView = CollectionViewSource.GetDefaultView(ProfileFilterTags);
-        ProfileFilterTagsView.SortDescriptions.Add(new SortDescription(nameof(ProfileFilterTagsInfo.Name), ListSortDirection.Ascending));
-
-        SetProfilesView(new ProfileFilterInfo());
-
-        ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
-
-        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
-        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
-
-        LoadSettings();
+        InitializeProfileHost();
 
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
-
-        _isLoading = false;
     }
 
-    private void LoadSettings()
+    #endregion
+
+    #region Profile host
+
+    protected override ApplicationName ApplicationName => ApplicationName.PowerShell;
+
+    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.PowerShell_Enabled;
+
+    protected override string GetSearchableField(ProfileInfo profile) => profile.PowerShell_Host;
+
+    /// <summary>
+    /// Also mirrors the popup state into <see cref="ConfigurationManager"/> so the main window can suppress
+    /// global focus-stealing behavior (e.g. re-focusing the embedded terminal) while the filter popup is open.
+    /// </summary>
+    public new ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
+
+    private void OpenProfileFilterAction()
     {
-        ExpandProfileView = SettingsManager.Current.PowerShell_ExpandProfileView;
+        ConfigurationManager.Current.IsProfileFilterPopupOpen = true;
 
-        ProfileWidth = ExpandProfileView
-            ? new GridLength(SettingsManager.Current.PowerShell_ProfileWidth)
-            : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+        ProfileFilterIsOpen = true;
+    }
 
-        _tempProfileWidth = SettingsManager.Current.PowerShell_ProfileWidth;
+    /// <summary>
+    /// Called when the tag-filter popup closes (including an implicit close, e.g. clicking away), to keep
+    /// <see cref="ConfigurationManager.Current"/> in sync.
+    /// </summary>
+    public ICommand ProfileFilterPopupClosedCommand => new RelayCommand(_ => OnProfileFilterClosed());
+
+    public void OnProfileFilterClosed()
+    {
+        ConfigurationManager.Current.IsProfileFilterPopupOpen = false;
+    }
+
+    public override void OnProfileManagerDialogOpen()
+    {
+        ConfigurationManager.OnDialogOpen();
+    }
+
+    public override void OnProfileManagerDialogClose()
+    {
+        ConfigurationManager.OnDialogClose();
     }
 
     #endregion
@@ -393,48 +243,6 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         ConnectProfileExternal();
     }
 
-    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
-
-    private void AddProfileAction()
-    {
-        _ = ProfileDialogManager
-            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.PowerShell);
-    }
-
-    private bool ModifyProfile_CanExecute(object obj)
-    {
-        return SelectedProfile is { IsDynamic: false };
-    }
-
-    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
-
-    private void EditProfileAction()
-    {
-        _ = ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
-    }
-
-    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
-
-    private void CopyAsProfileAction()
-    {
-        _ = ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
-    }
-
-    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
-
-    private void DeleteProfileAction()
-    {
-        _ = ProfileDialogManager
-            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile });
-    }
-
-    public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
-
-    private void EditGroupAction(object group)
-    {
-        _ = ProfileDialogManager.ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"));
-    }
-
     public ICommand TextBoxSearchGotFocusCommand
     {
         get { return new RelayCommand(_ => _textBoxSearchIsFocused = true); }
@@ -450,52 +258,6 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     private void ClearSearchAction()
     {
         Search = string.Empty;
-    }
-
-    public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
-
-    private void OpenProfileFilterAction()
-    {
-        ConfigurationManager.Current.IsProfileFilterPopupOpen = true;
-
-        ProfileFilterIsOpen = true;
-    }
-
-    public ICommand ApplyProfileFilterCommand => new RelayCommand(_ => ApplyProfileFilterAction());
-
-    private void ApplyProfileFilterAction()
-    {
-        RefreshProfiles();
-
-        IsProfileFilterSet = true;
-        ProfileFilterIsOpen = false;
-    }
-
-    public ICommand ClearProfileFilterCommand => new RelayCommand(_ => ClearProfileFilterAction());
-
-    private void ClearProfileFilterAction()
-    {
-        foreach (var tag in ProfileFilterTags)
-            tag.IsSelected = false;
-
-        RefreshProfiles();
-
-        IsProfileFilterSet = false;
-        ProfileFilterIsOpen = false;
-    }
-
-    public ICommand ExpandAllProfileGroupsCommand => new RelayCommand(_ => ExpandAllProfileGroupsAction());
-
-    private void ExpandAllProfileGroupsAction()
-    {
-        SetIsExpandedForAllProfileGroups(true);
-    }
-
-    public ICommand CollapseAllProfileGroupsCommand => new RelayCommand(_ => CollapseAllProfileGroupsAction());
-
-    private void CollapseAllProfileGroupsAction()
-    {
-        SetIsExpandedForAllProfileGroups(false);
     }
 
     public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
@@ -562,14 +324,14 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     /// <summary>
     /// Resolves the actual installation path of a PowerShell executable that was installed via the
     /// Microsoft Store / WindowsApps and therefore appears as a proxy stub in the user's AppData.
-    /// 
+    ///
     /// Typical input is a path like:
     /// <c>C:\Users\{USERNAME}\AppData\Local\Microsoft\WindowsApps\pwsh.exe</c>
-    /// 
+    ///
     /// This helper attempts to locate the corresponding real executable under the Program Files
     /// WindowsApps package layout, e.g.:
     /// <c>C:\Program Files\WindowsApps\Microsoft.PowerShell_7.*_8wekyb3d8bbwe\pwsh.exe</c>.
-    /// 
+    ///
     /// Workaround for: https://github.com/BornToBeRoot/NETworkManager/issues/3223
     /// </summary>
     /// <param name="path">Path to the pwsh proxy stub, typically located under the current user's <c>%LocalAppData%\Microsoft\WindowsApps\pwsh.exe</c>.</param>
@@ -716,41 +478,6 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
                 SettingsManager.Current.General_HistoryListEntries));
     }
 
-    private void SetIsExpandedForAllProfileGroups(bool isExpanded)
-    {
-        foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
-            GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
-    }
-
-    private void ResizeProfile(bool dueToChangedSize)
-    {
-        _canProfileWidthChange = false;
-
-        if (dueToChangedSize)
-        {
-            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
-                                GlobalStaticConfiguration.FloatPointFix;
-        }
-        else
-        {
-            if (ExpandProfileView)
-            {
-                ProfileWidth =
-                    Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) <
-                    GlobalStaticConfiguration.FloatPointFix
-                        ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded)
-                        : new GridLength(_tempProfileWidth);
-            }
-            else
-            {
-                _tempProfileWidth = ProfileWidth.Value;
-                ProfileWidth = new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
-            }
-        }
-
-        _canProfileWidthChange = true;
-    }
-
     public void FocusEmbeddedWindow()
     {
         /* Don't continue if
@@ -780,95 +507,11 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    public void OnViewVisible()
+    public override void OnViewVisible()
     {
-        _isViewActive = true;
-
-        RefreshProfiles();
+        base.OnViewVisible();
 
         FocusEmbeddedWindow();
-    }
-
-    public void OnViewHide()
-    {
-        _isViewActive = false;
-    }
-
-    private void CreateTags()
-    {
-        var tags = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.PowerShell_Enabled).SelectMany(x => x.TagsCollection).Distinct().ToList();
-
-        var tagSet = new HashSet<string>(tags);
-
-        for (var i = ProfileFilterTags.Count - 1; i >= 0; i--)
-        {
-            if (!tagSet.Contains(ProfileFilterTags[i].Name))
-                ProfileFilterTags.RemoveAt(i);
-        }
-
-        var existingTagNames = new HashSet<string>(ProfileFilterTags.Select(ft => ft.Name));
-
-        foreach (var tag in tags.Where(tag => !existingTagNames.Contains(tag)))
-        {
-            ProfileFilterTags.Add(new ProfileFilterTagsInfo(false, tag));
-        }
-    }
-
-    private void SetProfilesView(ProfileFilterInfo filter, ProfileInfo profile = null)
-    {
-        Profiles = new CollectionViewSource
-        {
-            Source = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.PowerShell_Enabled && (
-                    string.IsNullOrEmpty(filter.Search) ||
-                    x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                    x.PowerShell_Host.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (
-                    // If no tags are selected, show all profiles
-                    (!filter.Tags.Any()) ||
-                    // Any tag can match
-                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.Any && filter.Tags.Any(tag => x.TagsCollection.Contains(tag))) ||
-                    // All tags must match
-                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.All && filter.Tags.All(tag => x.TagsCollection.Contains(tag))))
-            ).OrderBy(x => x.Group).ThenBy(x => x.Name)
-        }.View;
-
-        Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-
-        // Set specific profile or first if null
-        SelectedProfile = null;
-
-        if (profile != null)
-            SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
-                              Profiles.Cast<ProfileInfo>().FirstOrDefault();
-        else
-            SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
-    }
-
-    private void RefreshProfiles()
-    {
-        if (!_isViewActive)
-            return;
-
-        SetProfilesView(new ProfileFilterInfo
-        {
-            Search = Search,
-            Tags = [.. ProfileFilterTags.Where(x => x.IsSelected).Select(x => x.Name)],
-            TagsFilterMatch = ProfileFilterTagsMatchAny ? ProfileFilterTagsMatch.Any : ProfileFilterTagsMatch.All
-        }, SelectedProfile);
-    }
-
-    public void OnProfileFilterClosed()
-    {
-        ConfigurationManager.Current.IsProfileFilterPopupOpen = false;
-    }
-
-    public void OnProfileManagerDialogOpen()
-    {
-        ConfigurationManager.OnDialogOpen();
-    }
-
-    public void OnProfileManagerDialogClose()
-    {
-        ConfigurationManager.OnDialogClose();
     }
 
     private void WriteDefaultProfileToRegistry()
@@ -889,22 +532,6 @@ public class PowerShellHostViewModel : ViewModelBase, IProfileManager
     #endregion
 
     #region Event
-
-    private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
-    {
-        CreateTags();
-
-        RefreshProfiles();
-    }
-
-    private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
-    {
-        _searchDispatcherTimer.Stop();
-
-        RefreshProfiles();
-
-        IsSearching = false;
-    }
 
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {

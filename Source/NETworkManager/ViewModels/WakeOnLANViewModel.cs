@@ -1,4 +1,4 @@
-﻿using MahApps.Metro.Controls;
+using MahApps.Metro.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
@@ -6,7 +6,6 @@ using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -15,23 +14,15 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Threading;
-using NETworkManager.Controls;
 
 namespace NETworkManager.ViewModels;
 
 /// <summary>
 /// ViewModel for the Wake on LAN feature.
 /// </summary>
-public class WakeOnLANViewModel : ViewModelBase, IProfileManager
+public class WakeOnLANViewModel : ProfileHostViewModelBase
 {
     #region Variables
-
-    private readonly DispatcherTimer _searchDispatcherTimer = new();
-    private bool _searchDisabled;
-
-    private readonly bool _isLoading;
-    private bool _isViewActive = true;
 
     /// <summary>
     /// Gets or sets a value indicating whether the Wake on LAN operation is running.
@@ -123,33 +114,16 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         }
     }
 
-    #region Profiles
-
     /// <summary>
-    /// Gets the collection view for the profiles.
+    /// Gets or sets the currently selected profile. Pre-fills <see cref="MACAddress"/>/<see cref="Broadcast"/>
+    /// from the profile, unless a wake-up is currently running.
     /// </summary>
-    public ICollectionView Profiles
+    public override ProfileInfo SelectedProfile
     {
-        get;
-        private set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets the currently selected profile.
-    /// </summary>
-    public ProfileInfo SelectedProfile
-    {
-        get;
+        get => base.SelectedProfile;
         set
         {
-            if (value == field)
+            if (value == base.SelectedProfile)
                 return;
 
             if (value != null && !IsRunning)
@@ -158,205 +132,35 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
                 Broadcast = value.WakeOnLAN_Broadcast;
             }
 
-            field = value;
-            OnPropertyChanged();
-        }
-    } = new();
-
-    /// <summary>
-    /// Gets or sets the search text for filtering profiles.
-    /// </summary>
-    public string Search
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-
-            // Start searching...
-            if (!_searchDisabled)
-            {
-                IsSearching = true;
-                _searchDispatcherTimer.Start();
-            }
-
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether a search operation is in progress.
-    /// </summary>
-    public bool IsSearching
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets a value indicating whether the profile filter flyout is open.
-    /// </summary>
-    public bool ProfileFilterIsOpen
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets the collection view for the profile filter tags.
-    /// </summary>
-    public ICollectionView ProfileFilterTagsView { get; }
-
-    private ObservableCollection<ProfileFilterTagsInfo> ProfileFilterTags { get; } = [];
-
-    public bool ProfileFilterTagsMatchAny
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_TagsMatchAny;
-
-    public bool ProfileFilterTagsMatchAll
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public bool IsProfileFilterSet
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public GroupExpanderStateStore GroupExpanderStateStore { get; } = new();
-
-    private bool _canProfileWidthChange = true;
-    private double _tempProfileWidth;
-
-    public bool ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.WakeOnLAN_ExpandProfileView = value;
-
-            field = value;
-
-            if (_canProfileWidthChange)
-                ResizeProfile(false);
-
-            OnPropertyChanged();
-        }
-    }
-
-    public GridLength ProfileWidth
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            if (!_isLoading && Math.Abs(value.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
-                GlobalStaticConfiguration.FloatPointFix) // Do not save the size when collapsed
-                SettingsManager.Current.WakeOnLAN_ProfileWidth = value.Value;
-
-            field = value;
-
-            if (_canProfileWidthChange)
-                ResizeProfile(true);
-
-            OnPropertyChanged();
+            base.SelectedProfile = value;
         }
     }
 
     #endregion
 
-    #endregion
-
-    #region Constructor, load settings
+    #region Constructor
 
     /// <summary>
     /// Initializes a new instance of the <see cref="WakeOnLANViewModel"/> class.
     /// </summary>
     public WakeOnLANViewModel()
     {
-        _isLoading = true;
-
         MACAddressHistoryView =
             CollectionViewSource.GetDefaultView(SettingsManager.Current.WakeOnLan_MACAddressHistory);
         BroadcastHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.WakeOnLan_BroadcastHistory);
 
-        // Profiles
-        CreateTags();
-
-        ProfileFilterTagsView = CollectionViewSource.GetDefaultView(ProfileFilterTags);
-        ProfileFilterTagsView.SortDescriptions.Add(new SortDescription(nameof(ProfileFilterTagsInfo.Name),
-            ListSortDirection.Ascending));
-
-        SetProfilesView(new ProfileFilterInfo());
-
-        ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
-
-        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
-        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
-
-        LoadSettings();
-
-        _isLoading = false;
+        InitializeProfileHost();
     }
 
-    private void LoadSettings()
-    {
-        ExpandProfileView = SettingsManager.Current.WakeOnLAN_ExpandProfileView;
+    #endregion
 
-        ProfileWidth = ExpandProfileView
-            ? new GridLength(SettingsManager.Current.WakeOnLAN_ProfileWidth)
-            : new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
+    #region Profile host
 
-        _tempProfileWidth = SettingsManager.Current.WakeOnLAN_ProfileWidth;
-    }
+    protected override ApplicationName ApplicationName => ApplicationName.WakeOnLAN;
+
+    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.WakeOnLAN_Enabled;
+
+    protected override string GetSearchableField(ProfileInfo profile) => profile.WakeOnLAN_MACAddress;
 
     #endregion
 
@@ -399,125 +203,6 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
         _ = WakeUp(NETworkManager.Profiles.Application.WakeOnLAN.CreateInfo(SelectedProfile));
     }
 
-    /// <summary>
-    /// Gets the command to add a new profile.
-    /// </summary>
-    public ICommand AddProfileCommand => new RelayCommand(_ => AddProfileAction());
-
-    private void AddProfileAction()
-    {
-        _ = ProfileDialogManager
-            .ShowAddProfileDialog(Application.Current.MainWindow, this, null, null, ApplicationName.WakeOnLAN);
-    }
-
-    private bool ModifyProfile_CanExecute(object obj)
-    {
-        return SelectedProfile is { IsDynamic: false };
-    }
-
-    /// <summary>
-    /// Gets the command to edit the selected profile.
-    /// </summary>
-    public ICommand EditProfileCommand => new RelayCommand(_ => EditProfileAction(), ModifyProfile_CanExecute);
-
-    private void EditProfileAction()
-    {
-        _ = ProfileDialogManager.ShowEditProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
-    }
-
-    /// <summary>
-    /// Gets the command to copy the selected profile as a new profile.
-    /// </summary>
-    public ICommand CopyAsProfileCommand => new RelayCommand(_ => CopyAsProfileAction(), ModifyProfile_CanExecute);
-
-    private void CopyAsProfileAction()
-    {
-        _ = ProfileDialogManager.ShowCopyAsProfileDialog(Application.Current.MainWindow, this, SelectedProfile);
-    }
-
-    /// <summary>
-    /// Gets the command to delete the selected profile.
-    /// </summary>
-    public ICommand DeleteProfileCommand => new RelayCommand(_ => DeleteProfileAction(), ModifyProfile_CanExecute);
-
-    private void DeleteProfileAction()
-    {
-        _ = ProfileDialogManager
-            .ShowDeleteProfileDialog(Application.Current.MainWindow, this, new List<ProfileInfo> { SelectedProfile });
-    }
-
-    /// <summary>
-    /// Gets the command to edit a profile group.
-    /// </summary>
-    public ICommand EditGroupCommand => new RelayCommand(EditGroupAction);
-
-    private void EditGroupAction(object group)
-    {
-        _ = ProfileDialogManager
-            .ShowEditGroupDialog(Application.Current.MainWindow, this, ProfileManager.GetGroupByName($"{group}"));
-    }
-
-    /// <summary>
-    /// Gets the command to open the profile filter flyout.
-    /// </summary>
-    public ICommand OpenProfileFilterCommand => new RelayCommand(_ => OpenProfileFilterAction());
-
-    private void OpenProfileFilterAction()
-    {
-        ProfileFilterIsOpen = true;
-    }
-
-    /// <summary>
-    /// Gets the command to apply the profile filter.
-    /// </summary>
-    public ICommand ApplyProfileFilterCommand => new RelayCommand(_ => ApplyProfileFilterAction());
-
-    private void ApplyProfileFilterAction()
-    {
-        RefreshProfiles();
-
-        ProfileFilterIsOpen = false;
-    }
-
-    /// <summary>
-    /// Gets the command to clear the profile filter.
-    /// </summary>
-    public ICommand ClearProfileFilterCommand => new RelayCommand(_ => ClearProfileFilterAction());
-
-    private void ClearProfileFilterAction()
-    {
-        _searchDisabled = true;
-        Search = string.Empty;
-        _searchDisabled = false;
-
-        foreach (var tag in ProfileFilterTags)
-            tag.IsSelected = false;
-
-        RefreshProfiles();
-
-        IsProfileFilterSet = false;
-        ProfileFilterIsOpen = false;
-    }
-
-    /// <summary>
-    /// Gets the command to expand all profile groups.
-    /// </summary>
-    public ICommand ExpandAllProfileGroupsCommand => new RelayCommand(_ => ExpandAllProfileGroupsAction());
-
-    private void ExpandAllProfileGroupsAction()
-    {
-        SetIsExpandedForAllProfileGroups(true);
-    }
-
-    /// <summary>
-    /// Gets the command to collapse all profile groups.
-    /// </summary>
-    public ICommand CollapseAllProfileGroupsCommand => new RelayCommand(_ => CollapseAllProfileGroupsAction());
-
-    private void CollapseAllProfileGroupsAction()
-    {
-        SetIsExpandedForAllProfileGroups(false);
-    }
     #endregion
 
     #region Methods
@@ -572,142 +257,6 @@ public class WakeOnLANViewModel : ViewModelBase, IProfileManager
 
         // Fill with the new items
         list.ForEach(x => SettingsManager.Current.WakeOnLan_BroadcastHistory.Add(x));
-    }
-
-    private void SetIsExpandedForAllProfileGroups(bool isExpanded)
-    {
-        foreach (var group in Profiles.Groups.Cast<CollectionViewGroup>())
-            GroupExpanderStateStore[group.Name.ToString()] = isExpanded;
-    }
-
-    private void ResizeProfile(bool dueToChangedSize)
-    {
-        _canProfileWidthChange = false;
-
-        if (dueToChangedSize)
-        {
-            ExpandProfileView = Math.Abs(ProfileWidth.Value - GlobalStaticConfiguration.Profile_WidthCollapsed) >
-                                GlobalStaticConfiguration.FloatPointFix;
-        }
-        else
-        {
-            if (ExpandProfileView)
-            {
-                ProfileWidth =
-                    Math.Abs(_tempProfileWidth - GlobalStaticConfiguration.Profile_WidthCollapsed) <
-                    GlobalStaticConfiguration.FloatPointFix
-                        ? new GridLength(GlobalStaticConfiguration.Profile_DefaultWidthExpanded)
-                        : new GridLength(_tempProfileWidth);
-            }
-            else
-            {
-                _tempProfileWidth = ProfileWidth.Value;
-                ProfileWidth = new GridLength(GlobalStaticConfiguration.Profile_WidthCollapsed);
-            }
-        }
-
-        _canProfileWidthChange = true;
-    }
-
-    public void OnViewVisible()
-    {
-        _isViewActive = true;
-
-        RefreshProfiles();
-    }
-
-    public void OnViewHide()
-    {
-        _isViewActive = false;
-    }
-
-    private void CreateTags()
-    {
-        var tags = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.WakeOnLAN_Enabled)
-            .SelectMany(x => x.TagsCollection).Distinct().ToList();
-
-        var tagSet = new HashSet<string>(tags);
-
-        for (var i = ProfileFilterTags.Count - 1; i >= 0; i--)
-        {
-            if (!tagSet.Contains(ProfileFilterTags[i].Name))
-                ProfileFilterTags.RemoveAt(i);
-        }
-
-        var existingTagNames = new HashSet<string>(ProfileFilterTags.Select(ft => ft.Name));
-
-        foreach (var tag in tags.Where(tag => !existingTagNames.Contains(tag)))
-        {
-            ProfileFilterTags.Add(new ProfileFilterTagsInfo(false, tag));
-        }
-    }
-
-    private void SetProfilesView(ProfileFilterInfo filter, ProfileInfo profile = null)
-    {
-        Profiles = new CollectionViewSource
-        {
-            Source = ProfileManager.LoadedProfileFileData.Groups.SelectMany(x => x.Profiles).Where(x => x.WakeOnLAN_Enabled && (
-                    string.IsNullOrEmpty(filter.Search) ||
-                    x.Name.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                    x.WakeOnLAN_MACAddress.IndexOf(filter.Search, StringComparison.OrdinalIgnoreCase) > -1) && (
-                    // If no tags are selected, show all profiles
-                    (!filter.Tags.Any()) ||
-                    // Any tag can match
-                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.Any &&
-                     filter.Tags.Any(tag => x.TagsCollection.Contains(tag))) ||
-                    // All tags must match
-                    (filter.TagsFilterMatch == ProfileFilterTagsMatch.All &&
-                     filter.Tags.All(tag => x.TagsCollection.Contains(tag))))
-            ).OrderBy(x => x.Group).ThenBy(x => x.Name)
-        }.View;
-
-        Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
-
-        // Set specific profile or first if null
-        SelectedProfile = null;
-
-        if (profile != null)
-            SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
-                              Profiles.Cast<ProfileInfo>().FirstOrDefault();
-        else
-            SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
-    }
-
-    private void RefreshProfiles()
-    {
-        if (!_isViewActive)
-            return;
-
-        var filter = new ProfileFilterInfo
-        {
-            Search = Search,
-            Tags = [.. ProfileFilterTags.Where(x => x.IsSelected).Select(x => x.Name)],
-            TagsFilterMatch = ProfileFilterTagsMatchAny ? ProfileFilterTagsMatch.Any : ProfileFilterTagsMatch.All
-        };
-
-        SetProfilesView(filter, SelectedProfile);
-
-        IsProfileFilterSet = !string.IsNullOrEmpty(filter.Search) || filter.Tags.Any();
-    }
-
-    #endregion
-
-    #region Event
-
-    private void ProfileManager_OnProfilesUpdated(object sender, EventArgs e)
-    {
-        CreateTags();
-
-        RefreshProfiles();
-    }
-
-    private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
-    {
-        _searchDispatcherTimer.Stop();
-
-        RefreshProfiles();
-
-        IsSearching = false;
     }
 
     #endregion
