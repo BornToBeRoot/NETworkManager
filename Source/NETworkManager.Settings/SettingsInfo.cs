@@ -10,6 +10,7 @@ using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
 using NETworkManager.Utilities.ActiveDirectory;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -565,6 +566,25 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
+
+    /// <summary>
+    /// Persisted collapsed/expanded state of profile groups, shared across all tools. Outer key is the
+    /// full profile file path, inner key is the group name. Mutated in place by callers - since nested
+    /// dictionary mutations don't raise <see cref="PropertyChanged" />, callers must explicitly set
+    /// <see cref="SettingsChanged" /> themselves.
+    /// </summary>
+    public Dictionary<string, Dictionary<string, bool>> Profiles_GroupExpandState
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
 
     public bool Profiles_IsDailyBackupEnabled
     {
@@ -3198,32 +3218,6 @@ public class SettingsInfo : INotifyPropertyChanged
     #endregion
 
     #region Firewall
-    public bool Firewall_ExpandProfileView
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_ExpandProfileView;
-
-    public double Firewall_ProfileWidth
-    {
-        get;
-        set
-        {
-            if (Math.Abs(value - field) < GlobalStaticConfiguration.FloatPointFix)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Profile_DefaultWidthExpanded;
-
     public string Firewall_ExportFilePath
     {
         get;

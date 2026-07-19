@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -7,6 +8,11 @@ namespace NETworkManager.Controls
     public class GroupExpanderStateStore : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Occurs when a single group's expansion state changes via the indexer (not raised by <see cref="LoadState"/>).
+        /// </summary>
+        public event EventHandler<GroupExpandedChangedArgs> GroupExpandedChanged;
 
         protected void OnPropertyChanged(string propertyName) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -40,7 +46,25 @@ namespace NETworkManager.Controls
 
                 _states[groupName] = value;
                 OnPropertyChanged($"Item[{groupName}]");
+                GroupExpandedChanged?.Invoke(this, new GroupExpandedChangedArgs(groupName, value));
             }
+        }
+
+        /// <summary>
+        /// Replaces all stored states with the given ones (e.g. bulk-loading previously persisted state).
+        /// Does not raise <see cref="PropertyChanged"/> or <see cref="GroupExpandedChanged"/> - consumers
+        /// (e.g. <see cref="GroupExpander"/>) read the current state fresh whenever they bind, so no
+        /// notification is needed, and this avoids a load-triggers-save feedback loop.
+        /// </summary>
+        public void LoadState(IReadOnlyDictionary<string, bool> state)
+        {
+            _states.Clear();
+
+            if (state == null)
+                return;
+
+            foreach (var kvp in state)
+                _states[kvp.Key] = kvp.Value;
         }
     }
 }

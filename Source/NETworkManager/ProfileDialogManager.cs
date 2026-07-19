@@ -256,9 +256,6 @@ public static class ProfileDialogManager
                 ? instance.SNMP_Priv
                 : new SecureString(),
 
-            // Firewall
-            Firewall_Enabled = instance.Firewall_Enabled,
-
             // Wake on LAN
             WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
             WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress?.Trim(),
