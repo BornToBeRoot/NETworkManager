@@ -381,6 +381,8 @@ public static class ProfileManager
         File.Copy(profileFileInfo.Path, newProfileFileInfo.Path);
         ProfileFiles.Add(newProfileFileInfo);
 
+        MigrateGroupExpandState(profileFileInfo.Path, newProfileFileInfo.Path);
+
         // Switch profile, if it was previously loaded
         if (switchProfile)
         {
@@ -406,6 +408,8 @@ public static class ProfileManager
         // Trigger switch via UI (to get the password if the file is encrypted), if the selected profile file is deleted
         if (LoadedProfileFile != null && LoadedProfileFile.Equals(profileFileInfo))
             LoadedProfileFileChanged(ProfileFiles.FirstOrDefault(x => !x.Equals(profileFileInfo)));
+
+        RemoveGroupExpandState(profileFileInfo.Path);
 
         File.Delete(profileFileInfo.Path);
         ProfileFiles.Remove(profileFileInfo);
@@ -477,6 +481,8 @@ public static class ProfileManager
 
         // Add the new profile
         ProfileFiles.Add(newProfileFileInfo);
+
+        MigrateGroupExpandState(profileFileInfo.Path, newProfileFileInfo.Path);
 
         // Switch profile, if it was previously loaded
         if (switchProfile)
@@ -563,6 +569,8 @@ public static class ProfileManager
         // Add the new profile
         ProfileFiles.Add(newProfileFileInfo);
 
+        MigrateGroupExpandState(profileFileInfo.Path, newProfileFileInfo.Path);
+
         // Switch profile, if it was previously loaded
         if (switchProfile)
         {
@@ -631,6 +639,8 @@ public static class ProfileManager
 
         // Add the new profile
         ProfileFiles.Add(newProfileFileInfo);
+
+        MigrateGroupExpandState(profileFileInfo.Path, newProfileFileInfo.Path);
 
         // Switch profile, if it was previously loaded
         if (switchProfile)
@@ -739,6 +749,8 @@ public static class ProfileManager
                     // Add the new profile
                     ProfileFiles.Add(newProfileFileInfo);
 
+                    MigrateGroupExpandState(profileFileInfo.Path, newProfileFileInfo.Path);
+
                     // Switch profile
                     Log.Info($"Switching to migrated profile file: {newProfileFileInfo.Path}.");
                     Switch(newProfileFileInfo, false);
@@ -845,6 +857,70 @@ public static class ProfileManager
         Unload(saveLoadedProfiles);
 
         Load(info);
+    }
+
+    #endregion
+
+    #region Group expand state persistence
+
+    /// <summary>
+    ///     Moves the persisted group-expand state (see <see cref="SettingsInfo.Profiles_GroupExpandState" />)
+    ///     from the old to the new profile file path. No-op if the paths are equal or there is no state for
+    ///     the old path.
+    /// </summary>
+    private static void MigrateGroupExpandState(string oldPath, string newPath)
+    {
+        if (oldPath == newPath)
+            return;
+
+        if (SettingsManager.Current.Profiles_GroupExpandState.Remove(oldPath, out var state))
+        {
+            SettingsManager.Current.Profiles_GroupExpandState[newPath] = state;
+            SettingsManager.Current.SettingsChanged = true;
+        }
+    }
+
+    /// <summary>
+    ///     Removes the persisted group-expand state for a profile file that no longer exists.
+    /// </summary>
+    private static void RemoveGroupExpandState(string path)
+    {
+        if (SettingsManager.Current.Profiles_GroupExpandState.Remove(path))
+            SettingsManager.Current.SettingsChanged = true;
+    }
+
+    /// <summary>
+    ///     Renames the group key inside the persisted group-expand state for the currently loaded profile file.
+    /// </summary>
+    private static void MigrateGroupExpandStateKey(string oldGroupName, string newGroupName)
+    {
+        if (oldGroupName == newGroupName)
+            return;
+
+        if (LoadedProfileFile == null)
+            return;
+
+        if (!SettingsManager.Current.Profiles_GroupExpandState.TryGetValue(LoadedProfileFile.Path, out var state))
+            return;
+
+        if (!state.Remove(oldGroupName, out var isExpanded))
+            return;
+
+        state[newGroupName] = isExpanded;
+        SettingsManager.Current.SettingsChanged = true;
+    }
+
+    /// <summary>
+    ///     Removes the group key from the persisted group-expand state for the currently loaded profile file.
+    /// </summary>
+    private static void RemoveGroupExpandStateKey(string groupName)
+    {
+        if (LoadedProfileFile == null)
+            return;
+
+        if (SettingsManager.Current.Profiles_GroupExpandState.TryGetValue(LoadedProfileFile.Path, out var state)
+            && state.Remove(groupName))
+            SettingsManager.Current.SettingsChanged = true;
     }
 
     #endregion
@@ -1085,6 +1161,8 @@ public static class ProfileManager
         LoadedProfileFileData.Groups.Remove(oldGroup);
         LoadedProfileFileData.Groups.Add(newGroup);
 
+        MigrateGroupExpandStateKey(oldGroup.Name, newGroup.Name);
+
         ProfilesUpdated();
     }
 
@@ -1098,6 +1176,8 @@ public static class ProfileManager
         ArgumentNullException.ThrowIfNull(group);
 
         LoadedProfileFileData.Groups.Remove(group);
+
+        RemoveGroupExpandStateKey(group.Name);
 
         ProfilesUpdated();
     }

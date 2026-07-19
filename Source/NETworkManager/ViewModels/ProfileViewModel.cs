@@ -308,11 +308,6 @@ public class ProfileViewModel : ViewModelBase
         SNMP_PrivacyProvider = SNMP_PrivacyProviders.FirstOrDefault(x => x == profileInfo.SNMP_PrivacyProvider);
         SNMP_Priv = profileInfo.SNMP_Priv;
 
-        // Firewall
-        Firewall_Enabled = editMode == ProfileEditMode.Add
-            ? applicationName == ApplicationName.Firewall
-            : profileInfo.Firewall_Enabled;
-
         // Wake on LAN
         WakeOnLAN_Enabled = editMode == ProfileEditMode.Add
             ? applicationName == ApplicationName.WakeOnLAN
@@ -2754,24 +2749,6 @@ public class ProfileViewModel : ViewModelBase
     }
 
     #endregion
-
-    #region Firewall
-
-    public bool Firewall_Enabled
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-            OnPropertyChanged(nameof(Name));
-        }
-    }
-
-    #endregion Firewall
 
     #region Wake on LAN
 

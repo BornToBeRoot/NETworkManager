@@ -204,6 +204,8 @@ public abstract class ProfileHostViewModelBase : ViewModelBase, IProfileHostView
     /// </summary>
     protected void InitializeProfileHost()
     {
+        LoadGroupExpandState();
+
         CreateTags();
 
         ProfileFilterTagsView = CollectionViewSource.GetDefaultView(ProfileFilterTags);
@@ -213,6 +215,7 @@ public abstract class ProfileHostViewModelBase : ViewModelBase, IProfileHostView
         SetProfilesView(new ProfileFilterInfo());
 
         ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
+        GroupExpanderStateStore.GroupExpandedChanged += GroupExpanderStateStore_GroupExpandedChanged;
 
         _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
         _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
@@ -353,11 +356,29 @@ public abstract class ProfileHostViewModelBase : ViewModelBase, IProfileHostView
     }
 
     /// <summary>
+    ///     Loads the persisted group-expand state for the currently loaded profile file into
+    ///     <see cref="GroupExpanderStateStore" />. Always called, even with no persisted state, so that
+    ///     switching to a different profile file doesn't leak state for a same-named group.
+    /// </summary>
+    private void LoadGroupExpandState()
+    {
+        Dictionary<string, bool> state = null;
+
+        if (ProfileManager.LoadedProfileFile != null)
+            SettingsManager.Current.Profiles_GroupExpandState.TryGetValue(
+                ProfileManager.LoadedProfileFile.Path, out state);
+
+        GroupExpanderStateStore.LoadState(state);
+    }
+
+    /// <summary>
     ///     Called when the view becomes visible.
     /// </summary>
     public virtual void OnViewVisible()
     {
         _isViewActive = true;
+
+        LoadGroupExpandState();
 
         RefreshProfiles();
     }
@@ -464,6 +485,23 @@ public abstract class ProfileHostViewModelBase : ViewModelBase, IProfileHostView
         CreateTags();
 
         RefreshProfiles();
+    }
+
+    private void GroupExpanderStateStore_GroupExpandedChanged(object sender, GroupExpandedChangedArgs e)
+    {
+        if (ProfileManager.LoadedProfileFile == null)
+            return;
+
+        var path = ProfileManager.LoadedProfileFile.Path;
+
+        if (!SettingsManager.Current.Profiles_GroupExpandState.TryGetValue(path, out var state))
+        {
+            state = new Dictionary<string, bool>();
+            SettingsManager.Current.Profiles_GroupExpandState[path] = state;
+        }
+
+        state[e.GroupName] = e.IsExpanded;
+        SettingsManager.Current.SettingsChanged = true;
     }
 
     private void SearchDispatcherTimer_Tick(object sender, EventArgs e)

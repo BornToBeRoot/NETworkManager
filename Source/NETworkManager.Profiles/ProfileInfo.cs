@@ -222,10 +222,6 @@ public class ProfileInfo
         SNMP_PrivacyProvider = profile.SNMP_PrivacyProvider;
         SNMP_Priv = profile.SNMP_Priv;
 
-        // Firewall
-        Firewall_Enabled = profile.Firewall_Enabled;
-        //Firewall_Rules = profile.Firewall_Rules;
-
         // Wake on LAN
         WakeOnLAN_Enabled = profile.WakeOnLAN_Enabled;
         WakeOnLAN_MACAddress = profile.WakeOnLAN_MACAddress;
@@ -485,9 +481,6 @@ public class ProfileInfo
     [XmlIgnore] public SecureString SNMP_Auth { get; set; }
     public SNMPV3PrivacyProvider SNMP_PrivacyProvider { get; set; } = GlobalStaticConfiguration.SNMP_PrivacyProvider;
     [XmlIgnore] public SecureString SNMP_Priv { get; set; }
-
-    public bool Firewall_Enabled { get; set; }
-    //public List<FirewallRule> Firewall_Rules { get; set; }
 
     public bool WakeOnLAN_Enabled { get; set; }
     public string WakeOnLAN_MACAddress { get; set; }

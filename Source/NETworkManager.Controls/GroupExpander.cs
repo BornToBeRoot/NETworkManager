@@ -8,7 +8,7 @@ namespace NETworkManager.Controls
     {
         public static readonly DependencyProperty StateStoreProperty =
             DependencyProperty.Register(
-                "StateStore",
+                nameof(StateStore),
                 typeof(GroupExpanderStateStore),
                 typeof(GroupExpander),
                 new PropertyMetadata(null, OnStateStoreChanged));
