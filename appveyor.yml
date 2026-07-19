@@ -5,7 +5,12 @@ install:
   - git submodule update --init
   - ps: |
       Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
-      & $env:temp\dotnet-install.ps1 -Architecture x64 -Version '10.0.100' -InstallDir "$env:ProgramFiles\dotnet"
+
+      # Read the required SDK version from global.json instead of hardcoding it, so Dependabot's
+      # weekly SDK bumps there don't silently drift out of sync with what CI installs.
+      $DotnetVersion = (Get-Content "$($env:APPVEYOR_BUILD_FOLDER)\Source\global.json" -Raw | ConvertFrom-Json).sdk.version
+      Write-Host "Installing .NET SDK $DotnetVersion (from Source\global.json)"
+      & $env:temp\dotnet-install.ps1 -Architecture x64 -Version $DotnetVersion -InstallDir "$env:ProgramFiles\dotnet"
 before_build:
   - dotnet restore %APPVEYOR_BUILD_FOLDER%\Source\NETworkManager.sln
   - ps: |
