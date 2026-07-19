@@ -40,7 +40,25 @@ before_build:
       $SetupContent | Set-Content -Path "$SetupFile" -Encoding utf8
 
 build_script:
-  - dotnet build %APPVEYOR_BUILD_FOLDER%\Source\NETworkManager.sln --configuration Release --no-restore
+  - ps: |
+      # Build the wixproj directly, not the .sln - `dotnet build` rejects -p:RuntimeIdentifier
+      # at the solution level (NETSDK1134).
+      $Architectures = @(
+        @{ RuntimeIdentifier = "win-x64";   Platform = "x64" },
+        @{ RuntimeIdentifier = "win-arm64"; Platform = "ARM64" }
+      )
+
+      foreach ($Architecture in $Architectures) {
+        Write-Host "Building $($Architecture.RuntimeIdentifier)..."
+
+        dotnet build "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.Setup\NETworkManager.Setup.wixproj" `
+          --configuration Release --no-restore `
+          -p:Platform=$($Architecture.Platform) -p:RuntimeIdentifier=$($Architecture.RuntimeIdentifier) -p:PlatformTarget=$($Architecture.Platform)
+
+        if ($LASTEXITCODE -ne 0) {
+          throw "dotnet build failed for $($Architecture.RuntimeIdentifier) with exit code $LASTEXITCODE"
+        }
+      }
 
 after_build:
   - ps: |
@@ -49,32 +67,41 @@ after_build:
         return
       }
 
-      # Build path
-      $BuildPath = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager\bin\Release\net10.0-windows10.0.22621.0\win-x64"
-      $SetupPath = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.Setup\bin\x64\Release\en-US\NETworkManager.Setup.msi"
       $ArtifactsPath = "$($env:APPVEYOR_BUILD_FOLDER)\Artifacts"
-
-      # Get version
-      $Version = [System.Diagnostics.FileVersionInfo]::GetVersionInfo("$($BuildPath)\NETworkManager.exe").FileVersion
-
-      # Cleanup build
-      Get-ChildItem -Path "$BuildPath" -Recurse | Where-Object { $_.Name.EndsWith(".pdb") } | Remove-Item
-      Remove-Item -Path "$($BuildPath)\WebView2Loader.dll"
 
       # Create release folder
       New-Item -Path "$ArtifactsPath" -ItemType Directory -Force | Out-Null
 
-      # Create archive
-      Compress-Archive -Path "$($BuildPath)\*" -DestinationPath "$($ArtifactsPath)\NETworkManager_$($Version)_Archive.zip"
+      # Architectures to package. RuntimeIdentifier is appended to every file name (e.g. _win-x64, _win-arm64).
+      $Architectures = @(
+        @{ RuntimeIdentifier = "win-x64";   SetupPlatform = "x64" },
+        @{ RuntimeIdentifier = "win-arm64"; SetupPlatform = "ARM64" }
+      )
 
-      # Create portable
-      New-Item -Path "$BuildPath" -Name "IsPortable.settings" -ItemType File | Out-Null
-      Compress-Archive -Path "$($BuildPath)\*" -DestinationPath "$($ArtifactsPath)\NETworkManager_$($Version)_Portable.zip"
-      Remove-Item -Path "$($BuildPath)\IsPortable.settings"
+      foreach ($Architecture in $Architectures) {
+        # Build path
+        $BuildPath = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager\bin\Release\net10.0-windows10.0.22621.0\$($Architecture.RuntimeIdentifier)"
+        $SetupPath = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.Setup\bin\$($Architecture.SetupPlatform)\Release\en-US\NETworkManager.Setup.msi"
 
-      # Copy setup
-      Move-Item -Path "$SetupPath" -Destination "$($ArtifactsPath)\NETworkManager_$($Version)_Setup.msi"
-      
+        # Get version
+        $Version = [System.Diagnostics.FileVersionInfo]::GetVersionInfo("$($BuildPath)\NETworkManager.exe").FileVersion
+
+        # Cleanup build
+        Get-ChildItem -Path "$BuildPath" -Recurse | Where-Object { $_.Name.EndsWith(".pdb") } | Remove-Item
+        Remove-Item -Path "$($BuildPath)\WebView2Loader.dll"
+
+        # Create archive
+        Compress-Archive -Path "$($BuildPath)\*" -DestinationPath "$($ArtifactsPath)\NETworkManager_$($Version)_Archive_$($Architecture.RuntimeIdentifier).zip"
+
+        # Create portable
+        New-Item -Path "$BuildPath" -Name "IsPortable.settings" -ItemType File | Out-Null
+        Compress-Archive -Path "$($BuildPath)\*" -DestinationPath "$($ArtifactsPath)\NETworkManager_$($Version)_Portable_$($Architecture.RuntimeIdentifier).zip"
+        Remove-Item -Path "$($BuildPath)\IsPortable.settings"
+
+        # Copy setup
+        Move-Item -Path "$SetupPath" -Destination "$($ArtifactsPath)\NETworkManager_$($Version)_Setup_$($Architecture.RuntimeIdentifier).msi"
+      }
+
       # Create artifacts archive for signing
       Compress-Archive -Path "$ArtifactsPath\*" -DestinationPath "$($ArtifactsPath).zip"
 

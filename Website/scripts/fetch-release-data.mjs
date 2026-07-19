@@ -38,12 +38,21 @@ const REPO = "BornToBeRoot/NETworkManager";
 // yet, so the link never points at a non-existent doc (onBrokenLinks: "throw").
 const CHANGELOG_FALLBACK = "/docs/category/changelog";
 
-// Maps the data keys to the asset filename suffixes.
-const ASSET_SUFFIXES = {
-  setup: "_Setup.msi",
-  portable: "_Portable.zip",
-  archive: "_Archive.zip",
+// Architectures shown on the download page, in display order.
+const ARCHITECTURES = ["x64", "arm64"];
+
+// Maps the data keys to the asset filename parts (variant suffix + extension).
+// The full asset name is `NETworkManager_<version><suffix>_win-<arch><ext>`.
+const VARIANTS = {
+  setup: { suffix: "_Setup", ext: ".msi" },
+  portable: { suffix: "_Portable", ext: ".zip" },
+  archive: { suffix: "_Archive", ext: ".zip" },
 };
+
+function assetFileName(version, variant, arch) {
+  const { suffix, ext } = VARIANTS[variant];
+  return `NETworkManager_${version}${suffix}_win-${arch}${ext}`;
+}
 
 function ghHeaders() {
   const headers = {
@@ -68,7 +77,9 @@ async function writeJson(path, data) {
 }
 
 // Downloads and parses the "<hash>  <filename>" SHA256SUMS asset into a
-// { setup, portable, archive } map. Throws if any variant is missing.
+// { x64: { setup, portable, archive }, arm64: {...} } map. An architecture is
+// only present if the SUMS file lists at least one asset for it — older
+// releases predate ARM64 and simply won't have that key.
 async function fetchChecksumMap(version) {
   const url = `https://github.com/${REPO}/releases/download/${version}/NETworkManager_${version}_SHA256SUMS`;
   const res = await fetch(url);
@@ -79,16 +90,34 @@ async function fetchChecksumMap(version) {
   for (const line of text.split(/\r?\n/)) {
     const m = line.trim().match(/^([0-9a-fA-F]{64})\s+(.+)$/);
     if (!m) continue;
-    for (const [key, suffix] of Object.entries(ASSET_SUFFIXES)) {
-      if (m[2] === `NETworkManager_${version}${suffix}`) {
-        map[key] = m[1].toUpperCase();
+    for (const arch of ARCHITECTURES) {
+      for (const variant of Object.keys(VARIANTS)) {
+        if (m[2] === assetFileName(version, variant, arch)) {
+          map[arch] ??= {};
+          map[arch][variant] = m[1].toUpperCase();
+        }
       }
     }
   }
-  for (const key of Object.keys(ASSET_SUFFIXES)) {
-    if (!map[key]) throw new Error(`Missing ${key} checksum for ${version}`);
-  }
   return map;
+}
+
+// Builds { x64: { setup, portable, archive }, arm64: {...} } from the GitHub
+// release assets, only including architectures that shipped at least one
+// asset (older releases predate ARM64 support and won't have one).
+function buildDownloads(release, version) {
+  const downloads = {};
+  for (const arch of ARCHITECTURES) {
+    for (const variant of Object.keys(VARIANTS)) {
+      const name = assetFileName(version, variant, arch);
+      const asset = release.assets.find((a) => a.name === name);
+      if (asset) {
+        downloads[arch] ??= {};
+        downloads[arch][variant] = asset.browser_download_url;
+      }
+    }
+  }
+  return downloads;
 }
 
 // Resolves the changelog link for a stable version: its dedicated page if the
@@ -104,12 +133,7 @@ function stableChangelogUrl(version) {
 // from a GitHub release object. Used identically for both stable and pre-release.
 async function buildData(release, changelog) {
   const version = release.tag_name;
-
-  const downloads = {};
-  for (const [key, suffix] of Object.entries(ASSET_SUFFIXES)) {
-    const asset = release.assets.find((a) => a.name.endsWith(suffix));
-    if (asset) downloads[key] = asset.browser_download_url;
-  }
+  const downloads = buildDownloads(release, version);
 
   // Checksums are best-effort — older releases may not ship a SHA256SUMS file.
   let checksums = null;

@@ -114,7 +114,7 @@ Source: [github.com/aaronparker/evergreen](https://github.com/aaronparker/evergr
 Each download is published with a SHA-256 checksum. Use the **📋 Copy SHA-256** button on a download card to copy its expected hash, then compute the hash of the downloaded file and compare the two:
 
 ```powershell
-Get-FileHash -Path .\NETworkManager_{VERSION}_Setup.msi -Algorithm SHA256
+Get-FileHash -Path .\NETworkManager_{VERSION}_Setup_win-x64.msi -Algorithm SHA256
 ```
 
 The computed hash must match the copied checksum. The full list of checksums is also published on the [GitHub releases page](https://github.com/BornToBeRoot/NETworkManager/releases).
@@ -124,7 +124,7 @@ The computed hash must match the copied checksum. The full list of checksums is 
 Install the Setup (MSI) silently using the following command:
 
 ```
-.\NETworkManager_{VERSION}_Setup.msi /quiet /norestart
+.\NETworkManager_{VERSION}_Setup_win-x64.msi /quiet /norestart
 ```
 
 ## Enterprise Deployment / Policies

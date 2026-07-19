@@ -1,0 +1,30 @@
+.switcher {
+  display: inline-flex;
+  padding: 4px;
+  gap: 4px;
+  border-radius: 999px;
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.option {
+  border: none;
+  background: transparent;
+  color: var(--ifm-color-emphasis-700);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 6px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.option:hover {
+  color: var(--ifm-color-emphasis-900);
+}
+
+.optionActive,
+.optionActive:hover {
+  background: var(--ifm-color-primary);
+  color: #000;
+}

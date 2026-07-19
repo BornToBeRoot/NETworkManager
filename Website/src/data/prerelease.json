@@ -1,3 +1,8 @@
 {
-  "available": false
+  "available": true,
+  "version": "2026.7.16.0",
+  "releaseDate": "16.07.2026",
+  "changelog": "/docs/changelog/next-release",
+  "downloads": {},
+  "checksums": {}
 }

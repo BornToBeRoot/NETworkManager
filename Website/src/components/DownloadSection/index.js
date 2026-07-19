@@ -1,5 +1,7 @@
+import { useState } from "react";
 import release from "@site/src/data/release.json";
 import ReleaseHero from "@site/src/components/ReleaseHero";
+import ArchSwitcher from "@site/src/components/ArchSwitcher";
 import DownloadCard, { DownloadGrid } from "@site/src/components/DownloadCard";
 import styles from "./styles.module.css";
 
@@ -34,8 +36,18 @@ const VARIANTS = [
   },
 ];
 
+const ARCH_LABELS = { x64: "x64", arm64: "ARM64" };
+
 export default function DownloadSection() {
   const { version, releaseDate, changelog, downloads, checksums } = release;
+
+  // Only architectures that actually shipped assets for this release (older
+  // releases predate ARM64 and will only have "x64").
+  const architectures = Object.keys(downloads);
+  const [arch, setArch] = useState(architectures[0]);
+
+  const archDownloads = downloads[arch] ?? {};
+  const archChecksums = checksums?.[arch];
 
   return (
     <div className={styles.downloadSection}>
@@ -46,8 +58,21 @@ export default function DownloadSection() {
         changelogLabel="✨ What's new?"
       />
 
+      {architectures.length > 1 && (
+        <div className={styles.archSwitcherRow}>
+          <ArchSwitcher
+            options={architectures.map((a) => ({
+              key: a,
+              label: ARCH_LABELS[a] ?? a,
+            }))}
+            value={arch}
+            onChange={setArch}
+          />
+        </div>
+      )}
+
       <DownloadGrid>
-        {VARIANTS.filter((v) => downloads[v.key]).map((v) => (
+        {VARIANTS.filter((v) => archDownloads[v.key]).map((v) => (
           <DownloadCard
             key={v.key}
             icon={v.icon}
@@ -56,8 +81,8 @@ export default function DownloadSection() {
             color={v.color}
             description={v.description}
             recommended={v.recommended}
-            downloadUrl={downloads[v.key]}
-            checksum={checksums?.[v.key]}
+            downloadUrl={archDownloads[v.key]}
+            checksum={archChecksums?.[v.key]}
           />
         ))}
       </DownloadGrid>

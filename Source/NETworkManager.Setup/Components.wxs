@@ -11,7 +11,8 @@
             <!-- NETworkManager executable -->
             <Component>
                 <File Id="NETworkManagerExecutable"
-                      Source="$(var.NETworkManager.TargetDir)NETworkManager.exe">
+                      Source="$(var.NETworkManager.TargetDir)NETworkManager.exe"
+                      KeyPath="yes">
                     <!-- Start menu shortcut -->
                     <Shortcut Name="NETworkManager"
                               Directory="ProgramMenuFolder"

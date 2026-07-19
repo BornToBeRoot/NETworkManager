@@ -1,16 +1,8 @@
 {
-  "available": false,
-  "version": "202x.x.x.0",
-  "releaseDate": "xx.xx.202x",
-  "changelog": "/docs/category/changelog",
-  "downloads": {
-    "setup": "https://github.com/BornToBeRoot/NETworkManager/releases/download/202x.x.x.0/NETworkManager_202x.x.x.0_Setup.msi",
-    "portable": "https://github.com/BornToBeRoot/NETworkManager/releases/download/202x.x.x.0/NETworkManager_202x.x.x.0_Portable.zip",
-    "archive": "https://github.com/BornToBeRoot/NETworkManager/releases/download/202x.x.x.0/NETworkManager_202x.x.x.0_Archive.zip"
-  },
-  "checksums": {
-    "setup": "0000000000000000000000000000000000000000000000000000000000000000",
-    "portable": "0000000000000000000000000000000000000000000000000000000000000000",
-    "archive": "0000000000000000000000000000000000000000000000000000000000000000"
-  }
+  "available": true,
+  "version": "2026.7.7.0",
+  "releaseDate": "07.07.2026",
+  "changelog": "/docs/changelog/2026-7-7-0",
+  "downloads": {},
+  "checksums": {}
 }

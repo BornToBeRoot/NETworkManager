@@ -5,8 +5,10 @@
 		<RootNamespace>NETworkManager</RootNamespace>
 		<AssemblyName>NETworkManager</AssemblyName>
 		<TargetFramework>net10.0-windows10.0.22621.0</TargetFramework>
-        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-        <PlatformTarget>x64</PlatformTarget>
+        <!-- Restore resolves NuGet assets for both RIDs; the active one for a given build is picked below and can be overridden via -p:RuntimeIdentifier / -p:PlatformTarget -->
+        <RuntimeIdentifiers>win-x64;win-arm64</RuntimeIdentifiers>
+        <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">win-x64</RuntimeIdentifier>
+        <PlatformTarget Condition="'$(PlatformTarget)' == ''">x64</PlatformTarget>
         <SelfContained>false</SelfContained>
         <CsWinRTWindowsMetadata>sdk</CsWinRTWindowsMetadata>        
         <UseWPF>true</UseWPF>
@@ -84,6 +86,14 @@
         <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs" />
     </ItemGroup>
 
+    <!-- Referenced projects don't declare RuntimeIdentifiers themselves (they're plain libraries with
+         no RID-specific packages), so keep RuntimeIdentifier/PlatformTarget from cascading into them -
+         otherwise they'd need a matching restore target for whatever RID this project is built with. -->
+    <ItemDefinitionGroup>
+        <ProjectReference>
+            <GlobalPropertiesToRemove>RuntimeIdentifier;RuntimeIdentifiers;PlatformTarget;SelfContained</GlobalPropertiesToRemove>
+        </ProjectReference>
+    </ItemDefinitionGroup>
     <ItemGroup>
         <ProjectReference Include="..\3rdparty\Dragablz\Dragablz\Dragablz.csproj" />
         <ProjectReference Include="..\NETworkManager.Controls\NETworkManager.Controls.csproj" />

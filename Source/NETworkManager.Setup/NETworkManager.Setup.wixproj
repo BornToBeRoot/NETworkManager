@@ -1,4 +1,10 @@
 ﻿<Project Sdk="WixToolset.Sdk/6.0.2">
+    <PropertyGroup>
+        <!-- ICE69: the desktop shortcut's component is keyed on a registry value (so it can be toggled
+             independently) but its Shortcut targets the exe file, which lives in another component.
+             Both components are in the same feature and always install/remove together - safe to ignore. -->
+        <SuppressIces>ICE69</SuppressIces>
+    </PropertyGroup>
     <ItemGroup>
         <Content Include="Resources\WixUIBanner.png"/>
         <Content Include="Resources\WixUIDialog.png"/>

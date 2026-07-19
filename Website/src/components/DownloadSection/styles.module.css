@@ -1,3 +1,9 @@
 .downloadSection {
   margin: 1.5rem 0 2.5rem;
 }
+
+.archSwitcherRow {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
