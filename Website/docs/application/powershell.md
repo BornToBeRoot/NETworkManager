@@ -17,7 +17,7 @@ keywords:
 
 # PowerShell
 
-With **PowerShell** you can launch PowerShell consoles locally or connect to remote computers using [PowerShell Remoting](https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting). You can also execute command-line applications such as `wsl`, `aws ssm`, `k9s`, or any other tools typically accessible from a PowerShell session. In addition, you can run PowerShell scripts directly within the console.
+With **PowerShell** you can launch PowerShell consoles locally or connect to remote computers using [PowerShell Remoting](https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/08-powershell-remoting). You can also execute command-line applications such as `wsl`, `aws ssm`, `k9s`, or any other tool or module typically accessible from a PowerShell session. In addition, you can run PowerShell scripts directly within the console.
 
 The integration of PowerShell with NETworkManager supports tabs and profiles for hosts (and tools). You can launch the console / establish a connection via a profile (double-click, Enter key or right-click `Connect`) or directly via the [connection](#connect) dialog.
 
@@ -47,7 +47,7 @@ wsl -d <DISTRIBUTION>
 aws ssm start-session --target <instance-id>
 
 # Connect to Kubernetes
-k9s --readonly
+k9s
 ```
 
 See [FAQ > PowerShell with command-line applications](../faq/powershell-cmd-apps) for more information.
