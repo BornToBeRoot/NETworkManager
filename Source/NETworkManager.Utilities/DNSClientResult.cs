@@ -58,4 +58,12 @@ public abstract class DNSClientResult
     ///     Error message when an error has occurred.
     /// </summary>
     public string ErrorMessage { get; set; }
+
+    /// <summary>
+    ///     Indicates that <see cref="HasError" /> is set because no matching record was found (NXDOMAIN,
+    ///     or SERVFAIL/REFUSED on a reverse lookup for a private/RFC1918/ULA IP range), rather than a real
+    ///     failure like a timeout, an unreachable server, or SERVFAIL/REFUSED for any other query. This is
+    ///     a normal outcome (e.g. no PTR record configured) and not a sign of a broken DNS setup.
+    /// </summary>
+    public bool IsNotFound { get; set; }
 }

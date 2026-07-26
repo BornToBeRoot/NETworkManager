@@ -22,6 +22,9 @@ public partial class DashboardView
         ContentControlIPApiIPGeolocation.Content = _ipApiIPGeolocationWidgetView;
         ContentControlIPApiDNSResolver.Content = _ipApiDNSResolverWidgetView;
         ContentControlSpeedTest.Content = _speedTestWidgetView;
+
+        // Check network connection on first open. Later re-opens are covered by OnViewVisible().
+        _networkConnectionWidgetView.Check();
     }
 
     public void OnViewVisible()

@@ -93,8 +93,12 @@ public class DNSClient : SingletonBase<DNSClient>
             var result = await _client.QueryAsync(query, QueryType.A);
 
             // Pass the error we got from the lookup client (dns server).
+            // NXDOMAIN is not a real failure like a timeout - flag it via IsNotFound so callers can
+            // treat it as "no record". SERVFAIL/REFUSED are not included here: for a forward lookup
+            // they mean the resolver actually failed or refused the query, not "record does not exist".
             if (result.HasError)
-                return new DNSClientResultIPAddress(result.HasError, result.ErrorMessage, $"{result.NameServer}");
+                return new DNSClientResultIPAddress(result.HasError, result.ErrorMessage, $"{result.NameServer}")
+                { IsNotFound = IsNotFoundResponseCode(result.Header.ResponseCode) };
 
             // Validate result because of https://github.com/BornToBeRoot/NETworkManager/issues/1934
             var record = result.Answers.ARecords().FirstOrDefault();
@@ -103,7 +107,8 @@ public class DNSClient : SingletonBase<DNSClient>
                 ? new DNSClientResultIPAddress(record.Address, $"{result.NameServer}")
                 : new DNSClientResultIPAddress(true,
                     $"IP address for \"{query}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} {query}",
-                    $"{result.NameServer}");
+                    $"{result.NameServer}")
+                { IsNotFound = true };
         }
         catch (DnsResponseException ex)
         {
@@ -131,8 +136,12 @@ public class DNSClient : SingletonBase<DNSClient>
             var result = await _client.QueryAsync(query, QueryType.AAAA);
 
             // Pass the error we got from the lookup client (dns server).
+            // NXDOMAIN is not a real failure like a timeout - flag it via IsNotFound so callers can
+            // treat it as "no record". SERVFAIL/REFUSED are not included here: for a forward lookup
+            // they mean the resolver actually failed or refused the query, not "record does not exist".
             if (result.HasError)
-                return new DNSClientResultIPAddress(result.HasError, result.ErrorMessage, $"{result.NameServer}");
+                return new DNSClientResultIPAddress(result.HasError, result.ErrorMessage, $"{result.NameServer}")
+                { IsNotFound = IsNotFoundResponseCode(result.Header.ResponseCode) };
 
             // Validate result because of https://github.com/BornToBeRoot/NETworkManager/issues/1934
             var record = result.Answers.AaaaRecords().FirstOrDefault();
@@ -141,7 +150,8 @@ public class DNSClient : SingletonBase<DNSClient>
                 ? new DNSClientResultIPAddress(record.Address, $"{result.NameServer}")
                 : new DNSClientResultIPAddress(true,
                     $"IP address for \"{query}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} {query}",
-                    $"{result.NameServer}");
+                    $"{result.NameServer}")
+                { IsNotFound = true };
         }
         catch (DnsResponseException ex)
         {
@@ -169,8 +179,12 @@ public class DNSClient : SingletonBase<DNSClient>
             var result = await _client.QueryAsync(query, QueryType.CNAME);
 
             // Pass the error we got from the lookup client (dns server).
+            // NXDOMAIN is not a real failure like a timeout - flag it via IsNotFound so callers can
+            // treat it as "no record". SERVFAIL/REFUSED are not included here: for a forward lookup
+            // they mean the resolver actually failed or refused the query, not "record does not exist".
             if (result.HasError)
-                return new DNSClientResultString(result.HasError, result.ErrorMessage, $"{result.NameServer}");
+                return new DNSClientResultString(result.HasError, result.ErrorMessage, $"{result.NameServer}")
+                { IsNotFound = IsNotFoundResponseCode(result.Header.ResponseCode) };
 
             // Validate result because of https://github.com/BornToBeRoot/NETworkManager/issues/1934
             var record = result.Answers.CnameRecords().FirstOrDefault();
@@ -179,7 +193,8 @@ public class DNSClient : SingletonBase<DNSClient>
                 ? new DNSClientResultString(record.CanonicalName, $"{result.NameServer}")
                 : new DNSClientResultString(true,
                     $"CNAME for \"{query}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} {query}",
-                    $"{result.NameServer}");
+                    $"{result.NameServer}")
+                { IsNotFound = true };
         }
         catch (DnsResponseException ex)
         {
@@ -207,8 +222,17 @@ public class DNSClient : SingletonBase<DNSClient>
             var result = await _client.QueryReverseAsync(ipAddress);
 
             // Pass the error we got from the lookup client (dns server).
+            // NXDOMAIN is always a clean "no record". For private/ULA IP ranges (the common case for
+            // router/computer PTR lookups) many resolvers also return SERVFAIL/REFUSED instead of a
+            // clean NXDOMAIN when there is no reverse zone, so those are treated as "not found" too -
+            // but only for private ranges, since for a public IP a SERVFAIL/REFUSED usually means the
+            // resolver actually failed or refused the query.
             if (result.HasError)
-                return new DNSClientResultString(result.HasError, result.ErrorMessage, $"{result.NameServer}");
+                return new DNSClientResultString(result.HasError, result.ErrorMessage, $"{result.NameServer}")
+                {
+                    IsNotFound = IsNotFoundResponseCode(result.Header.ResponseCode,
+                        IPAddressHelper.IsPrivateIPAddress(ipAddress))
+                };
 
             // Validate result because of https://github.com/BornToBeRoot/NETworkManager/issues/1934
             var record = result.Answers.PtrRecords().FirstOrDefault();
@@ -217,7 +241,8 @@ public class DNSClient : SingletonBase<DNSClient>
                 ? new DNSClientResultString(record.PtrDomainName, $"{result.NameServer}")
                 : new DNSClientResultString(true,
                     $"PTR for \"{ipAddress}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} -x {ipAddress}",
-                    $"{result.NameServer}");
+                    $"{result.NameServer}")
+                { IsNotFound = true };
         }
         catch (DnsResponseException ex)
         {
@@ -228,5 +253,28 @@ public class DNSClient : SingletonBase<DNSClient>
             Log.Error($"Error while resolving PTR record (IP address is \"{ipAddress}\".", ex);
             return new DNSClientResultString(true, ex.Message);
         }
+    }
+
+    /// <summary>
+    ///     Determines whether a DNS response code means "no record" rather than a real failure.
+    ///     NXDOMAIN is always a clean "does not exist". SERVFAIL and REFUSED are only treated as
+    ///     "no record" when <paramref name="treatServerErrorsAsNotFound" /> is set, since outside of
+    ///     that case they usually indicate the resolver actually failed or refused the query rather
+    ///     than a confirmed absence of the record.
+    /// </summary>
+    /// <param name="responseCode">The DNS response code to check.</param>
+    /// <param name="treatServerErrorsAsNotFound">
+    ///     Whether SERVFAIL/REFUSED should also count as "no record" - true for reverse (PTR) lookups
+    ///     on private/RFC1918/ULA IP ranges, where many resolvers return them instead of a clean
+    ///     NXDOMAIN when there is no reverse zone.
+    /// </param>
+    private static bool IsNotFoundResponseCode(DnsHeaderResponseCode responseCode,
+        bool treatServerErrorsAsNotFound = false)
+    {
+        if (responseCode is DnsHeaderResponseCode.NotExistentDomain)
+            return true;
+
+        return treatServerErrorsAsNotFound
+               && responseCode is DnsHeaderResponseCode.ServerFailure or DnsHeaderResponseCode.Refused;
     }
 }
