@@ -30,8 +30,7 @@ public class DNSClientResultString : DNSClientResult
     /// <param name="hasError">Indicates if an error has occurred.</param>
     /// <param name="errorMessage">Error message when an error has occurred.</param>
     /// <param name="dnsServer">DNS server which was used for resolving the query.</param>
-    public DNSClientResultString(bool hasError, string errorMessage, string dnsServer) : base(hasError, errorMessage,
-        dnsServer)
+    public DNSClientResultString(bool hasError, string errorMessage, string dnsServer) : base(hasError, errorMessage, dnsServer)
     {
     }
 

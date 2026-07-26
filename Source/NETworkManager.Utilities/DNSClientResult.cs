@@ -58,4 +58,11 @@ public abstract class DNSClientResult
     ///     Error message when an error has occurred.
     /// </summary>
     public string ErrorMessage { get; set; }
+
+    /// <summary>
+    ///     Indicates if the query completed without a server error, but no matching record was found.
+    ///     This is a normal outcome (e.g. no PTR record configured) and not a sign of a broken DNS setup,
+    ///     unlike other <see cref="HasError" /> cases (timeout, unreachable server, SERVFAIL, ...).
+    /// </summary>
+    public bool IsNotFound { get; set; }
 }
