@@ -138,7 +138,7 @@ public sealed class IPScanner(IPScannerOptions options)
                         if (options.ResolveHostname)
                         {
                             var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(host.ipAddress)
-                                .ConfigureAwait(false);
+                                .WaitAsync(ct).ConfigureAwait(false);
 
                             if (!dnsResult.HasError)
                                 dnsHostname = dnsResult.Value;

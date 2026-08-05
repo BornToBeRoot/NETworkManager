@@ -144,7 +144,7 @@ public static class HostRangeHelper
                 // example.com
                 case var _ when RegexHelper.HostnameOrDomainRegex().IsMatch(host):
                     var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(host, dnsResolveHostnamePreferIPv4)
-                        .ConfigureAwait(false);
+                        .WaitAsync(ct).ConfigureAwait(false);
 
                     if (!dnsResult.HasError)
                         hostsBag.Add((IPAddress.Parse($"{dnsResult.Value}"), host));
@@ -160,7 +160,7 @@ public static class HostRangeHelper
 
                     // Only support IPv4
                     var dnsResultWithSubnet = await DNSClientHelper.ResolveAorAaaaAsync(hostAndSubnet[0], true)
-                        .ConfigureAwait(false);
+                        .WaitAsync(ct).ConfigureAwait(false);
 
                     if (!dnsResultWithSubnet.HasError)
                     {

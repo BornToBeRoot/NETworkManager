@@ -38,6 +38,18 @@ public class PortScannerViewModel : ViewModelBase
     private bool _firstLoad = true;
     private bool _closed;
 
+    // Background PortScanned events append here instead of hopping to the UI thread per item -
+    // a DispatcherTimer periodically flushes this into the Results collection instead, so a large
+    // scan doesn't flood the dispatcher queue with one BeginInvoke per port.
+    private readonly List<PortScannerPortInfo> _resultsBuffer = [];
+    private readonly Lock _resultsBufferLock = new();
+    private DispatcherTimer _resultsFlushTimer;
+
+    // Same reasoning as the results buffer above - ProgressChanged fires once per port
+    // (unconditionally, unlike PortScanned), so it's flushed to the bound property on the same
+    // timer instead of updating it directly from the background thread on every event.
+    private int _latestPortsScanned;
+
     /// <summary>
     /// Gets or sets the host to scan.
     /// </summary>
@@ -386,6 +398,13 @@ public class PortScannerViewModel : ViewModelBase
         IsRunning = true;
         PreparingScan = true;
 
+        _resultsFlushTimer?.Stop();
+
+        lock (_resultsBufferLock)
+        {
+            _resultsBuffer.Clear();
+        }
+
         Results.Clear();
 
         DragablzTabItem.SetTabHeader(_tabId, Host);
@@ -420,6 +439,7 @@ public class PortScannerViewModel : ViewModelBase
 
         PortsToScan = ports.Length * hosts.hosts.Count;
         PortsScanned = 0;
+        Volatile.Write(ref _latestPortsScanned, 0);
 
         PreparingScan = false;
 
@@ -439,6 +459,17 @@ public class PortScannerViewModel : ViewModelBase
         portScanner.ScanComplete += ScanComplete;
         portScanner.ProgressChanged += ProgressChanged;
         portScanner.UserHasCanceled += UserHasCanceled;
+
+        _resultsFlushTimer = new DispatcherTimer(DispatcherPriority.Background)
+        {
+            Interval = TimeSpan.FromMilliseconds(150)
+        };
+        _resultsFlushTimer.Tick += (_, _) =>
+        {
+            FlushResultsBuffer();
+            FlushProgress();
+        };
+        _resultsFlushTimer.Start();
 
         portScanner.ScanAsync(hosts.hosts, ports, _cancellationTokenSource.Token);
     }
@@ -531,13 +562,46 @@ public class PortScannerViewModel : ViewModelBase
 
     private void PortScanned(object sender, PortScannerPortScannedArgs e)
     {
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-            new Action(delegate { Results.Add(e.Args); }));
+        lock (_resultsBufferLock)
+        {
+            _resultsBuffer.Add(e.Args);
+        }
+    }
+
+    /// <summary>
+    /// Moves buffered scan results into <see cref="Results"/>. Always called on the UI thread -
+    /// either from the <see cref="_resultsFlushTimer"/> tick, or from within a Dispatcher.Invoke
+    /// call in <see cref="ScanComplete"/> / <see cref="UserHasCanceled"/>.
+    /// </summary>
+    private void FlushResultsBuffer()
+    {
+        List<PortScannerPortInfo> itemsToAdd;
+
+        lock (_resultsBufferLock)
+        {
+            if (_resultsBuffer.Count == 0)
+                return;
+
+            itemsToAdd = [.. _resultsBuffer];
+            _resultsBuffer.Clear();
+        }
+
+        foreach (var item in itemsToAdd)
+            Results.Add(item);
     }
 
     private void ProgressChanged(object sender, ProgressChangedArgs e)
     {
-        PortsScanned = e.Value;
+        Volatile.Write(ref _latestPortsScanned, e.Value);
+    }
+
+    /// <summary>
+    /// Pushes the latest buffered progress value into <see cref="PortsScanned"/>. Always called
+    /// on the UI thread - same calling contexts as <see cref="FlushResultsBuffer"/>.
+    /// </summary>
+    private void FlushProgress()
+    {
+        PortsScanned = Volatile.Read(ref _latestPortsScanned);
     }
 
     private void ScanComplete(object sender, EventArgs e)
@@ -546,6 +610,10 @@ public class PortScannerViewModel : ViewModelBase
         // to ensure all results are added first #3285
         Application.Current.Dispatcher.Invoke(() =>
         {
+            _resultsFlushTimer?.Stop();
+            FlushResultsBuffer();
+            FlushProgress();
+
             if (Results.Count == 0)
             {
                 StatusMessage = Strings.NoOpenPortsFound;
@@ -559,11 +627,18 @@ public class PortScannerViewModel : ViewModelBase
 
     private void UserHasCanceled(object sender, EventArgs e)
     {
-        StatusMessage = Strings.CanceledByUserMessage;
-        IsStatusMessageDisplayed = true;
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            _resultsFlushTimer?.Stop();
+            FlushResultsBuffer();
+            FlushProgress();
 
-        IsCanceling = false;
-        IsRunning = false;
+            StatusMessage = Strings.CanceledByUserMessage;
+            IsStatusMessageDisplayed = true;
+
+            IsCanceling = false;
+            IsRunning = false;
+        });
     }
 
     #endregion

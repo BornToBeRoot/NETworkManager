@@ -235,7 +235,7 @@ Maximum number of threads used to scan for active hosts (1 thread = 1 host / IP 
 
 **Type:** `Integer` [Min `1`, Max `512`]
 
-**Default:** `256`
+**Default:** `64`
 
 :::warning
 

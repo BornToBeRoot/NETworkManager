@@ -133,7 +133,7 @@ public static class GlobalStaticConfiguration
     public static bool IPScanner_PortScanEnabled => true;
     public static string IPScanner_PortScanPorts => "22; 53; 80; 135; 139; 389; 636; 443; 445; 3389; 9100";
     public static int IPScanner_PortScanTimeout => 4000;
-    public static int IPScanner_MaxHostThreads => 256;
+    public static int IPScanner_MaxHostThreads => 64;
     public static int IPScanner_MaxPortThreads => 4;
     public static bool IPScanner_NetBIOSEnabled => true;
     public static int IPScanner_NetBIOSTimeout => 4000;
@@ -141,7 +141,7 @@ public static class GlobalStaticConfiguration
 
     // Application: Port Scanner 
     public static int PortScanner_MaxHostThreads => 4;
-    public static int PortScanner_MaxPortThreads => 256;
+    public static int PortScanner_MaxPortThreads => 64;
     public static int PortScanner_Timeout => 4000;
     public static ExportFileType PortScanner_ExportFileType => ExportFileType.Csv;
 

@@ -26,8 +26,17 @@ public class PortProfilesViewModel : ViewModelBase
     /// <param name="cancelHandler">The action to execute when the Cancel command is invoked.</param>
     public PortProfilesViewModel(Action<PortProfilesViewModel> okCommand, Action<PortProfilesViewModel> cancelHandler)
     {
-        OKCommand = new RelayCommand(_ => okCommand(this));
-        CancelCommand = new RelayCommand(_ => cancelHandler(this));
+        // Clear the filter on close so it doesn't leak into other views sharing this collection's default view.
+        OKCommand = new RelayCommand(_ =>
+        {
+            PortProfiles.Filter = null;
+            okCommand(this);
+        });
+        CancelCommand = new RelayCommand(_ =>
+        {
+            PortProfiles.Filter = null;
+            cancelHandler(this);
+        });
 
         PortProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortProfiles);
         PortProfiles.SortDescriptions.Add(

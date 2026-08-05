@@ -90,7 +90,7 @@ public sealed class PortScanner
                     if (_options.ResolveHostname)
                     {
                         var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(host.ipAddress)
-                            .ConfigureAwait(false);
+                            .WaitAsync(hostCt).ConfigureAwait(false);
 
                         if (!dnsResult.HasError)
                             hostname = dnsResult.Value;

@@ -50,23 +50,17 @@ public static class NetBIOSResolver
 
         var remoteEndPoint = new IPEndPoint(ipAddress, NetBIOSUdpPort);
 
+        // Linked so the receive is genuinely canceled (not just abandoned) on either timeout or
+        // caller cancellation - avoids leaving a pending receive that later faults, unobserved,
+        // once the socket is closed in the finally block below.
+        using var timeoutCts = new CancellationTokenSource(timeout);
+        using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token);
+
         try
         {
             await udpClient.SendAsync(RequestData, RequestData.Length, remoteEndPoint);
 
-            // ReSharper disable once MethodSupportsCancellation - cancellation is handled below by Task.WhenAny
-            var receiveTask = udpClient.ReceiveAsync();
-            var timeoutTask = Task.Delay(timeout, cancellationToken);
-
-            var completedTask = await Task.WhenAny(receiveTask, timeoutTask).ConfigureAwait(false);
-
-            if (completedTask == timeoutTask)
-                return new NetBIOSInfo(ipAddress);
-
-            // Note: if the receive task were still pending here, it would fault once the socket
-            // is closed in the finally block below. Since we only reach this point when it has
-            // already completed, that's not a concern.
-            var response = await receiveTask.ConfigureAwait(false);
+            var response = await udpClient.ReceiveAsync(linkedCts.Token).ConfigureAwait(false);
 
             if (response.Buffer.Length < ResponseBaseLen || response.Buffer[ResponseTypePos] != ResponseTypeNbstat)
                 return new NetBIOSInfo(ipAddress); // response was too short

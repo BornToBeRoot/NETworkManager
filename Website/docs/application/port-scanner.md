@@ -142,6 +142,7 @@ List of common TCP ports to scan for.
 | SMB               | `139; 445`                          |
 | LDAP              | `389; 636`                          |
 | HTTP proxy        | `3128`                              |
+| Well-known ports  | `1-1024`                            |
 
 :::note
 
@@ -197,7 +198,7 @@ Maximum number of threads used to scan for ports for each host (1 thread = 1 por
 
 **Type:** `Integer` [Min `1`, Max `512`]
 
-**Default:** `256`
+**Default:** `64`
 
 :::warning
 

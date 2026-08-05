@@ -43,6 +43,18 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private bool _firstLoad = true;
     private bool _closed;
 
+    // Background HostScanned events append here instead of hopping to the UI thread per item -
+    // a DispatcherTimer periodically flushes this into the Results collection instead, so a large
+    // scan doesn't flood the dispatcher queue with one BeginInvoke per host.
+    private readonly List<IPScannerHostInfo> _resultsBuffer = [];
+    private readonly Lock _resultsBufferLock = new();
+    private DispatcherTimer _resultsFlushTimer;
+
+    // Same reasoning as the results buffer above - ProgressChanged fires once per host
+    // (unconditionally, unlike HostScanned), so it's flushed to the bound property on the same
+    // timer instead of updating it directly from the background thread on every event.
+    private int _latestHostsScanned;
+
     /// <summary>
     /// Gets or sets the host or IP range to scan.
     /// </summary>
@@ -435,6 +447,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         IsRunning = true;
         PreparingScan = true;
 
+        _resultsFlushTimer?.Stop();
+
+        lock (_resultsBufferLock)
+        {
+            _resultsBuffer.Clear();
+        }
+
         Results.Clear();
 
         DragablzTabItem.SetTabHeader(_tabId, Host);
@@ -466,6 +485,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         HostsToScan = hosts.hosts.Count;
         HostsScanned = 0;
+        Volatile.Write(ref _latestHostsScanned, 0);
 
         PreparingScan = false;
 
@@ -492,6 +512,17 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         ipScanner.ScanComplete += ScanComplete;
         ipScanner.ProgressChanged += ProgressChanged;
         ipScanner.UserHasCanceled += UserHasCanceled;
+
+        _resultsFlushTimer = new DispatcherTimer(DispatcherPriority.Background)
+        {
+            Interval = TimeSpan.FromMilliseconds(150)
+        };
+        _resultsFlushTimer.Tick += (_, _) =>
+        {
+            FlushResultsBuffer();
+            FlushProgress();
+        };
+        _resultsFlushTimer.Start();
 
         ipScanner.ScanAsync(hosts.hosts, _cancellationTokenSource.Token);
     }
@@ -704,21 +735,53 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="e">The <see cref="IPScannerHostScannedArgs"/> instance containing the event data.</param>
     private void HostScanned(object sender, IPScannerHostScannedArgs e)
     {
-        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-            new Action(delegate
-            {
-                Results.Add(e.Args);
-            }));
+        lock (_resultsBufferLock)
+        {
+            _resultsBuffer.Add(e.Args);
+        }
     }
 
     /// <summary>
-    /// Handles the ProgressChanged event. Updates the progress.
+    /// Moves buffered scan results into <see cref="Results"/>. Always called on the UI thread -
+    /// either from the <see cref="_resultsFlushTimer"/> tick, or from within a Dispatcher.Invoke
+    /// call in <see cref="ScanComplete"/> / <see cref="UserHasCanceled"/>.
+    /// </summary>
+    private void FlushResultsBuffer()
+    {
+        List<IPScannerHostInfo> itemsToAdd;
+
+        lock (_resultsBufferLock)
+        {
+            if (_resultsBuffer.Count == 0)
+                return;
+
+            itemsToAdd = [.. _resultsBuffer];
+            _resultsBuffer.Clear();
+        }
+
+        foreach (var item in itemsToAdd)
+            Results.Add(item);
+    }
+
+    /// <summary>
+    /// Handles the ProgressChanged event. Stores the value for <see cref="FlushProgress"/> to
+    /// pick up on the next timer tick, instead of updating the bound property directly from a
+    /// background thread on every single host.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="ProgressChangedArgs"/> instance containing the event data.</param>
     private void ProgressChanged(object sender, ProgressChangedArgs e)
     {
-        HostsScanned = e.Value;
+        Volatile.Write(ref _latestHostsScanned, e.Value);
+    }
+
+    /// <summary>
+    /// Pushes the latest buffered progress value into <see cref="HostsScanned"/>. Always called
+    /// on the UI thread - same calling contexts as <see cref="FlushResultsBuffer"/>.
+    /// </summary>
+    private void FlushProgress()
+    {
+        HostsScanned = Volatile.Read(ref _latestHostsScanned);
     }
 
     /// <summary>
@@ -732,6 +795,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         // to ensure all results are added first #3285
         Application.Current.Dispatcher.Invoke(() =>
         {
+            _resultsFlushTimer?.Stop();
+            FlushResultsBuffer();
+            FlushProgress();
+
             if (Results.Count == 0)
             {
                 StatusMessage = Strings.NoReachableHostsFound;
@@ -750,11 +817,18 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
     private void UserHasCanceled(object sender, EventArgs e)
     {
-        StatusMessage = Strings.CanceledByUserMessage;
-        IsStatusMessageDisplayed = true;
+        Application.Current.Dispatcher.Invoke(() =>
+        {
+            _resultsFlushTimer?.Stop();
+            FlushResultsBuffer();
+            FlushProgress();
 
-        IsCanceling = false;
-        IsRunning = false;
+            StatusMessage = Strings.CanceledByUserMessage;
+            IsStatusMessageDisplayed = true;
+
+            IsCanceling = false;
+            IsRunning = false;
+        });
     }
 
     #endregion

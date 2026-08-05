@@ -37,10 +37,13 @@ Release date: **xx.xx.2026**
 
 - Added `135` (RPC) and `9100` (raw printing) to the default **Ports** list used to detect if a host is reachable. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
 - Reduced the default **Max. concurrent port threads** from `5` to `4`. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+- Reduced the default **Max. concurrent host threads** from `256` to `64`, a more conservative default that puts less simultaneous load on the scanned network. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
 
 **Port Scanner**
 
 - Reduced the default **Max. concurrent host threads** from `5` to `4`. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+- Reduced the default **Max. concurrent port threads** from `256` to `64`, a more conservative default that puts less simultaneous load on the scanned host. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+- Added a new **Well-known ports** (`1-1024`) default port profile. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
 
 ## Bug Fixes
 
@@ -53,6 +56,7 @@ Release date: **xx.xx.2026**
 **IP Scanner**
 
 - Fixed NetBIOS lookups (computer name, domain/workgroup, user name) not starting until a host's entire port scan had finished, since the port scan wasn't actually running asynchronously despite being awaited alongside it. Ping, port scan, and NetBIOS resolution now genuinely run concurrently for every host. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+- Fixed the application becoming unresponsive (including the window not reacting to input) during a large scan (e.g. a /24). Scan results and progress were both being pushed to the UI one item/update at a time via a dispatcher call per host/port, which could flood the UI thread's message queue on large scans. Both are now batched and flushed periodically (every 150ms) instead, for **IP Scanner** and **Port Scanner** alike. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
 
 ## Dependencies, Refactoring & Documentation
 
