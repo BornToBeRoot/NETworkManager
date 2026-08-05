@@ -152,20 +152,6 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.General_BackgroundJobInterval;
 
-
-    public int General_ThreadPoolAdditionalMinThreads
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.General_ThreadPoolAdditionalMinThreads;
-
     public int General_HistoryListEntries
     {
         get;

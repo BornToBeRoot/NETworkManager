@@ -5284,21 +5284,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This setting specifies the minimum number of threads that will be created from the application&apos;s ThreadPool on demand. This can improve the performance for example of the IP scanner or port scanner.
-        ///	
-        ///The value is added to the default min. threads (number of CPU threads). The value 0 leaves the default settings. If the value is higher than the default max. threads of the ThreadPool, this value is used.
-        ///
-        ///If the value is too high, performance problems may occur.
-        ///
-        ///Changes to this value will take effect a [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string HelpMessage_ThreadPoolAdditionalMinThreads {
-            get {
-                return ResourceManager.GetString("HelpMessage_ThreadPoolAdditionalMinThreads", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Use custom themes to personalize the appearance of the application. You can edit or add theme in the &quot;Program Folder &gt; Themes&quot; directory. For more details, refer to the documentation..
         /// </summary>
         public static string HelpMessage_UseCustomThemes {
@@ -6891,16 +6876,6 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("MaxPortThreads", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to These settings only change the maximum number of concurrently executed threads per host/port scan. Go to Settings &gt; General &gt; General to adjust the (min) threads of the application..
-        /// </summary>
-        public static string MaxThreadsOnlyGoToSettingsGeneralGeneral {
-            get {
-                return ResourceManager.GetString("MaxThreadsOnlyGoToSettingsGeneralGeneral", resourceCulture);
-            }
-        }
-        
         /// <summary>
         ///   Looks up a localized string similar to Measured time.
         /// </summary>
@@ -11941,15 +11916,6 @@ namespace NETworkManager.Localization.Resources {
         public static string ThisWillResetAllSettings {
             get {
                 return ResourceManager.GetString("ThisWillResetAllSettings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ThreadPool additional min. threads.
-        /// </summary>
-        public static string ThreadPoolAdditionalMinThreads {
-            get {
-                return ResourceManager.GetString("ThreadPoolAdditionalMinThreads", resourceCulture);
             }
         }
         

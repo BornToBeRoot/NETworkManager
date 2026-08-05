@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using NETworkManager.Models.Lookup;
@@ -67,7 +66,7 @@ public sealed class PortScanner
     {
         _progressValue = 0;
 
-        Task.Run(() =>
+        Task.Run(async () =>
         {
             try
             {
@@ -83,58 +82,34 @@ public sealed class PortScanner
                     MaxDegreeOfParallelism = _options.MaxPortThreads
                 };
 
-                Parallel.ForEach(hosts, hostParallelOptions, host =>
+                await Parallel.ForEachAsync(hosts, hostParallelOptions, async (host, hostCt) =>
                 {
                     // Resolve Hostname (PTR)
                     var hostname = string.Empty;
 
                     if (_options.ResolveHostname)
                     {
-                        // Don't use await in Parallel.ForEach, this will break
-                        var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(host.ipAddress);
+                        var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(host.ipAddress)
+                            .ConfigureAwait(false);
 
-                        // Wait for task inside a Parallel.Foreach
-                        dnsResolverTask.Wait(cancellationToken);
-
-                        if (!dnsResolverTask.Result.HasError)
-                            hostname = dnsResolverTask.Result.Value;
+                        if (!dnsResult.HasError)
+                            hostname = dnsResult.Value;
                     }
 
                     // Check each port
-                    Parallel.ForEach(ports, portParallelOptions, port =>
+                    await Parallel.ForEachAsync(ports, portParallelOptions, async (port, portCt) =>
                     {
-                        // Test if port is open
-                        using (var tcpClient = new TcpClient(host.ipAddress.AddressFamily))
-                        {
-                            var portState = PortState.None;
+                        var portState = await PortProbe.ProbeAsync(host.ipAddress, port, _options.Timeout, portCt)
+                            .ConfigureAwait(false);
 
-                            try
-                            {
-                                var task = tcpClient.ConnectAsync(host.ipAddress, port);
-
-                                if (task.Wait(_options.Timeout))
-                                    portState = tcpClient.Connected ? PortState.Open : PortState.Closed;
-                                else
-                                    portState = PortState.TimedOut;
-                            }
-                            catch
-                            {
-                                portState = PortState.Closed;
-                            }
-                            finally
-                            {
-                                tcpClient.Close();
-
-                                if (_options.ShowAllResults || portState == PortState.Open)
-                                    OnPortScanned(new PortScannerPortScannedArgs(
-                                        new PortScannerPortInfo(host.ipAddress, hostname, port,
-                                            PortLookup.LookupByPortAndProtocol(port), portState)));
-                            }
-                        }
+                        if (_options.ShowAllResults || portState == PortState.Open)
+                            OnPortScanned(new PortScannerPortScannedArgs(
+                                new PortScannerPortInfo(host.ipAddress, hostname, port,
+                                    PortLookup.LookupByPortAndProtocol(port), portState)));
 
                         IncreaseProgress();
-                    });
-                });
+                    }).ConfigureAwait(false);
+                }).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {

@@ -154,7 +154,7 @@ List of TCP ports to scan for each IP address.
 
 **Type:** `String`
 
-**Default:** `22; 53; 80; 139; 389; 636; 443; 445; 3389`
+**Default:** `22; 53; 80; 135; 139; 389; 636; 443; 445; 3389; 9100`
 
 :::note
 
@@ -245,30 +245,18 @@ Too many threads can also cause performance problems on the device.
 
 :::
 
-:::note
-
-This setting only changes the maximum number of concurrently executed threads per host scan. See also the [General](../settings/general#threadpool-additional-min-threads) settings to configure the application-wide thread pool.
-
-:::
-
 ### Max. concurrent port threads
 
 Maximum number of threads that are used to scan for open ports for each host (IP address).
 
 **Type:** `Integer` [Min `1`, Max `10`]
 
-**Default:** `5`
+**Default:** `4`
 
 :::warning
 
 Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.
 
 Too many threads can also cause performance problems on the device.
-
-:::
-
-:::note
-
-This setting only changes the maximum number of concurrently executed threads per port scan. See also the [General](../settings/general#threadpool-additional-min-threads) settings to configure the application-wide thread pool.
 
 :::

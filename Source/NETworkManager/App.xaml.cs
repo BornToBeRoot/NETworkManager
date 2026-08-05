@@ -165,27 +165,6 @@ public partial class App
             Log.Info("Background job is disabled.");
         }
 
-        // Setup ThreadPool for the application
-        ThreadPool.GetMaxThreads(out var workerThreadsMax, out var completionPortThreadsMax);
-        ThreadPool.GetMinThreads(out var workerThreadsMin, out var completionPortThreadsMin);
-
-        var workerThreadsMinNew = workerThreadsMin + SettingsManager.Current.General_ThreadPoolAdditionalMinThreads;
-        var completionPortThreadsMinNew = completionPortThreadsMin +
-                                          SettingsManager.Current.General_ThreadPoolAdditionalMinThreads;
-
-        if (workerThreadsMinNew > workerThreadsMax)
-            workerThreadsMinNew = workerThreadsMax;
-
-        if (completionPortThreadsMinNew > completionPortThreadsMax)
-            completionPortThreadsMinNew = completionPortThreadsMax;
-
-        if (ThreadPool.SetMinThreads(workerThreadsMinNew, completionPortThreadsMinNew))
-            Log.Info(
-                $"ThreadPool min threads set to: workerThreads: {workerThreadsMinNew}, completionPortThreads: {completionPortThreadsMinNew}");
-        else
-            Log.Warn(
-                $"ThreadPool min threads could not be set to workerThreads: {workerThreadsMinNew}, completionPortThreads: {completionPortThreadsMinNew}");
-
         // Show splash screen
         if (SettingsManager.Current.SplashScreen_Enabled)
         {

@@ -45,22 +45,6 @@ public class SettingsGeneralViewModel : ViewModelBase
         }
     }
 
-    public int ThreadPoolAdditionalMinThreads
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.General_ThreadPoolAdditionalMinThreads = value;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
     public int HistoryListEntries
     {
         get;
@@ -100,7 +84,6 @@ public class SettingsGeneralViewModel : ViewModelBase
         }.View;
 
         BackgroundJobInterval = SettingsManager.Current.General_BackgroundJobInterval;
-        ThreadPoolAdditionalMinThreads = SettingsManager.Current.General_ThreadPoolAdditionalMinThreads;
         HistoryListEntries = SettingsManager.Current.General_HistoryListEntries;
     }
 
