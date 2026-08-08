@@ -3354,21 +3354,6 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="PingStatus" xml:space="preserve">
     <value>Ping 状态</value>
   </data>
-  <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>线程池额外的最小线程数</value>
-  </data>
-  <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>该设置指定了根据需要从应用程序的线程池中创建的线程的最小数量。例如，这可以提高 IP 扫描仪或端口扫描程序的性能。
-
-该值与默认的最小线程数（CPU 线程数）相加。值 0 则保留默认设置。如果该值高于 ThreadPool 的默认最大线程数，则使用该值。
-
-如果该值过高，可能会出现性能问题。
-
-对该值的更改将在重启应用程序后生效。该值是否设置成功，可在 %LocalAppData%\NETworkManager\NETworkManager.log 下的日志文件中查看。</value>
-  </data>
-  <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
-    <value>这些设置只更改每个主机/端口扫描并发执行线程的最大数量。转到设置 &gt; 常规 &gt; 常规调整应用程序的（最小）线程数。</value>
-  </data>
   <data name="PortStatus" xml:space="preserve">
     <value>端口状态</value>
   </data>
