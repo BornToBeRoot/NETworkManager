@@ -3353,21 +3353,6 @@
   <data name="PingStatus" xml:space="preserve">
     <value>Ping 狀態</value>
   </data>
-  <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>執行緒池額外最小執行緒數。</value>
-  </data>
-  <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>此設定指定應用程式 ThreadPool 在需要時所產生的最小執行緒數。對於 IP 掃描器或埠掃描器等功能，調整此值可提升效能。
-	
-此值會加到預設的「最小執行緒」上（即 CPU 執行緒數）。設為 0 時使用系統預設設定。若該值高於 ThreadPool 的預設最大執行緒，則以此值作為最大值。
-
-過度調整可能會造成效能下降。
-
-更改後需重新啟動程式才能生效；是否成功設定可在 %LocalAppData%\NETworkManager\NETworkManager.log 中查閱。</value>
-  </data>
-  <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
-    <value>此設定僅調整每個主機／埠掃描時同時執行的最大執行緒數。請至 設定 &gt; 一般 &gt; 一般，調整應用程式的（最小）執行緒數。</value>
-  </data>
   <data name="PortStatus" xml:space="preserve">
     <value>連接埠狀態</value>
   </data>
