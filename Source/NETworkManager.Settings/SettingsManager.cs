@@ -741,6 +741,53 @@ public static class SettingsManager
     private static void UpgradeToLatest(Version version)
     {
         Log.Info($"Apply upgrade to {version}...");
+
+        // IP Scanner / Port Scanner - lower the default concurrency (see changelog for why).
+        // Only applied if still at the old default, so a deliberately customized value is left alone.
+        Log.Info("Lower IP Scanner / Port Scanner default concurrency, if still unchanged from the old default...");
+
+        if (Current.IPScanner_MaxHostThreads == 256)
+        {
+            Log.Info("Update \"IPScanner_MaxHostThreads\" from 256 to 64...");
+            Current.IPScanner_MaxHostThreads = 64;
+        }
+
+        if (Current.IPScanner_MaxPortThreads == 5)
+        {
+            Log.Info("Update \"IPScanner_MaxPortThreads\" from 5 to 4...");
+            Current.IPScanner_MaxPortThreads = 4;
+        }
+
+        if (Current.PortScanner_MaxHostThreads == 5)
+        {
+            Log.Info("Update \"PortScanner_MaxHostThreads\" from 5 to 4...");
+            Current.PortScanner_MaxHostThreads = 4;
+        }
+
+        if (Current.PortScanner_MaxPortThreads == 256)
+        {
+            Log.Info("Update \"PortScanner_MaxPortThreads\" from 256 to 64...");
+            Current.PortScanner_MaxPortThreads = 64;
+        }
+
+        if (Current.IPScanner_PortScanPorts == "22; 53; 80; 139; 389; 636; 443; 445; 3389")
+        {
+            Log.Info($"Update \"IPScanner_PortScanPorts\" to \"{GlobalStaticConfiguration.IPScanner_PortScanPorts}\"...");
+            Current.IPScanner_PortScanPorts = GlobalStaticConfiguration.IPScanner_PortScanPorts;
+        }
+
+        // Add new Port Scanner port profiles
+        foreach (var portProfile in PortProfile.GetDefaultList())
+        {
+            var portProfileFound =
+                Current.PortScanner_PortProfiles.FirstOrDefault(x => x.Name == portProfile.Name);
+
+            if (portProfileFound != null)
+                continue;
+
+            Log.Info($"Add \"{portProfile.Name}\" to \"PortScanner_PortProfiles\"...");
+            Current.PortScanner_PortProfiles.Add(portProfile);
+        }
     }
     #endregion
 }

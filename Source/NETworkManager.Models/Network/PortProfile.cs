@@ -18,7 +18,8 @@ public static class PortProfile
             new("Database", "1433-1434; 1521; 1830; 3306; 5432"),
             new("SMB", "139; 445"),
             new("LDAP", "389; 636"),
-            new("HTTP proxy", "3128")
+            new("HTTP proxy", "3128"),
+            new("Well-known ports", "1-1024")
         };
     }
 }

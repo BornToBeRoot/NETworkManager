@@ -142,6 +142,7 @@ List of common TCP ports to scan for.
 | SMB               | `139; 445`                          |
 | LDAP              | `389; 636`                          |
 | HTTP proxy        | `3128`                              |
+| Well-known ports  | `1-1024`                            |
 
 :::note
 
@@ -181,19 +182,13 @@ Maximum number of threads used to scan hosts (1 thread = 1 host).
 
 **Type:** `Integer` [Min `1`, Max `10`]
 
-**Default:** `5`
+**Default:** `4`
 
 :::warning
 
 Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.
 
 Too many threads can also cause performance problems on the device.
-
-:::
-
-:::note
-
-This setting only changes the maximum number of concurrently executed threads per host scan. See also the [General](../settings/general#threadpool-additional-min-threads) settings to configure the application-wide thread pool.
 
 :::
 
@@ -203,18 +198,12 @@ Maximum number of threads used to scan for ports for each host (1 thread = 1 por
 
 **Type:** `Integer` [Min `1`, Max `512`]
 
-**Default:** `256`
+**Default:** `64`
 
 :::warning
 
 Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.
 
 Too many threads can also cause performance problems on the device.
-
-:::
-
-:::note
-
-This setting only changes the maximum number of concurrently executed threads per port scan. See also the [General](../settings/general#threadpool-additional-min-threads) settings to configure the application-wide thread pool.
 
 :::

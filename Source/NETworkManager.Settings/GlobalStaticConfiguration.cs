@@ -61,7 +61,6 @@ public static class GlobalStaticConfiguration
 
     // Settings: General
     public static int General_BackgroundJobInterval => 5;
-    public static int General_ThreadPoolAdditionalMinThreads => 512;
     public static int General_HistoryListEntries => 10;
 
     // Settings: Window
@@ -132,17 +131,17 @@ public static class GlobalStaticConfiguration
     public static int IPScanner_ICMPBuffer => 32;
     public static bool IPScanner_ResolveHostname => true;
     public static bool IPScanner_PortScanEnabled => true;
-    public static string IPScanner_PortScanPorts => "22; 53; 80; 139; 389; 636; 443; 445; 3389";
+    public static string IPScanner_PortScanPorts => "22; 53; 80; 135; 139; 389; 636; 443; 445; 3389; 9100";
     public static int IPScanner_PortScanTimeout => 4000;
-    public static int IPScanner_MaxHostThreads => 256;
-    public static int IPScanner_MaxPortThreads => 5;
+    public static int IPScanner_MaxHostThreads => 64;
+    public static int IPScanner_MaxPortThreads => 4;
     public static bool IPScanner_NetBIOSEnabled => true;
     public static int IPScanner_NetBIOSTimeout => 4000;
     public static ExportFileType IPScanner_ExportFileType => ExportFileType.Csv;
 
     // Application: Port Scanner 
-    public static int PortScanner_MaxHostThreads => 5;
-    public static int PortScanner_MaxPortThreads => 256;
+    public static int PortScanner_MaxHostThreads => 4;
+    public static int PortScanner_MaxPortThreads => 64;
     public static int PortScanner_Timeout => 4000;
     public static ExportFileType PortScanner_ExportFileType => ExportFileType.Csv;
 

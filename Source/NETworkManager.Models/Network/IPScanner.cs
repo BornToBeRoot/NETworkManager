@@ -79,7 +79,7 @@ public sealed class IPScanner(IPScannerOptions options)
         CancellationToken cancellationToken)
     {
         // Start the scan in a separate task
-        Task.Run(() =>
+        Task.Run(async () =>
         {
             _progressValue = 0;
 
@@ -101,40 +101,32 @@ public sealed class IPScanner(IPScannerOptions options)
                 };
 
                 // Start scan
-                Parallel.ForEach(hosts, hostParallelOptions, host =>
+                await Parallel.ForEachAsync(hosts, hostParallelOptions, async (host, ct) =>
                 {
-                    // Start ping async
-                    var pingTask = PingAsync(host.ipAddress, cancellationToken);
+                    // Start ping, port scan and netbios lookup concurrently - none of these block a thread anymore
+                    var pingTask = PingAsync(host.ipAddress, ct);
 
-                    // Start port scan async (if enabled)
                     var portScanTask = options.PortScanEnabled
-                        ? PortScanAsync(host.ipAddress, portScanParallelOptions, cancellationToken)
-                        : Task.FromResult(Enumerable.Empty<PortInfo>());
+                        ? PortScanAsync(host.ipAddress, portScanParallelOptions, ct)
+                        : Task.FromResult(new List<PortInfo>());
 
-                    // Start netbios lookup async (if enabled)
                     var netbiosTask = options.NetBIOSEnabled
-                        ? NetBIOSResolver.ResolveAsync(host.ipAddress, options.NetBIOSTimeout, cancellationToken)
+                        ? NetBIOSResolver.ResolveAsync(host.ipAddress, options.NetBIOSTimeout, ct)
                         : Task.FromResult(new NetBIOSInfo(host.ipAddress));
 
-                    // Get ping result
-                    pingTask.Wait(cancellationToken);
+                    await Task.WhenAll(pingTask, portScanTask, netbiosTask).ConfigureAwait(false);
+
                     var pingInfo = pingTask.Result;
-
-                    // Get port scan result
-                    portScanTask.Wait(cancellationToken);
-                    var portScanResults = portScanTask.Result.ToList();
-
-                    // Get netbios result
-                    netbiosTask.Wait(cancellationToken);
+                    var portScanResults = portScanTask.Result;
                     var netBIOSInfo = netbiosTask.Result;
 
                     // Cancel if the user has canceled
-                    cancellationToken.ThrowIfCancellationRequested();
+                    ct.ThrowIfCancellationRequested();
 
                     // Check if host is up
                     var isAnyPortOpen = portScanResults.Any(x => x.State == PortState.Open);
                     var isReachable = pingInfo.Status == IPStatus.Success || // ICMP response
-                                      isAnyPortOpen || // Any port is open   
+                                      isAnyPortOpen || // Any port is open
                                       netBIOSInfo.IsReachable; // NetBIOS response
 
                     // DNS & ARP
@@ -145,14 +137,11 @@ public sealed class IPScanner(IPScannerOptions options)
 
                         if (options.ResolveHostname)
                         {
-                            // Don't use await in Parallel.ForEach, this will break
-                            var dnsResolverTask = DNSClient.GetInstance().ResolvePtrAsync(host.ipAddress);
+                            var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(host.ipAddress)
+                                .WaitAsync(ct).ConfigureAwait(false);
 
-                            // Wait for task inside a Parallel.Foreach
-                            dnsResolverTask.Wait(cancellationToken);
-
-                            if (!dnsResolverTask.Result.HasError)
-                                dnsHostname = dnsResolverTask.Result.Value;
+                            if (!dnsResult.HasError)
+                                dnsHostname = dnsResult.Value;
                         }
 
                         // ARP
@@ -212,7 +201,7 @@ public sealed class IPScanner(IPScannerOptions options)
                     }
 
                     IncreaseProgress();
-                });
+                }).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
@@ -225,101 +214,79 @@ public sealed class IPScanner(IPScannerOptions options)
         }, cancellationToken);
     }
 
-    private Task<PingInfo> PingAsync(IPAddress ipAddress, CancellationToken cancellationToken)
+    private async Task<PingInfo> PingAsync(IPAddress ipAddress, CancellationToken cancellationToken)
     {
-        return Task.Run(() =>
+        using var ping = new System.Net.NetworkInformation.Ping();
+
+        for (var i = 0; i < options.ICMPAttempts; i++)
         {
-            using var ping = new System.Net.NetworkInformation.Ping();
+            // Get timestamp
+            var timestamp = DateTime.Now;
 
-            for (var i = 0; i < options.ICMPAttempts; i++)
+            try
             {
-                // Get timestamp 
-                var timestamp = DateTime.Now;
+                // Note: the CancellationToken-accepting overload requires a TimeSpan timeout,
+                // unlike the legacy int-based overloads used elsewhere in .NET's Ping API.
+                var pingReply = await ping.SendPingAsync(ipAddress, TimeSpan.FromMilliseconds(options.ICMPTimeout),
+                    options.ICMPBuffer, cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                try
+                // Success
+                if (pingReply is { Status: IPStatus.Success })
                 {
-                    var pingReply = ping.Send(ipAddress, options.ICMPTimeout, options.ICMPBuffer);
-
-                    // Success
-                    if (pingReply is { Status: IPStatus.Success })
+                    switch (ipAddress.AddressFamily)
                     {
-                        switch (ipAddress.AddressFamily)
-                        {
-                            case AddressFamily.InterNetwork:
-                                return new PingInfo(
-                                                             timestamp,
-                                                             pingReply.Address,
-                                                             pingReply.Buffer.Length,
-                                                             pingReply.RoundtripTime,
-                                                             pingReply.Options!.Ttl,
-                                                             pingReply.Status);
-                            case AddressFamily.InterNetworkV6:
-                                return new PingInfo(
+                        case AddressFamily.InterNetwork:
+                            return new PingInfo(
                                                          timestamp,
                                                          pingReply.Address,
                                                          pingReply.Buffer.Length,
                                                          pingReply.RoundtripTime,
+                                                         pingReply.Options!.Ttl,
                                                          pingReply.Status);
-                        }
+                        case AddressFamily.InterNetworkV6:
+                            return new PingInfo(
+                                                     timestamp,
+                                                     pingReply.Address,
+                                                     pingReply.Buffer.Length,
+                                                     pingReply.RoundtripTime,
+                                                     pingReply.Status);
                     }
-
-                    // Failed
-                    if (pingReply != null)
-                        return new PingInfo(timestamp, ipAddress, pingReply.Status);
-                }
-                catch (PingException)
-                {
-                    // Ping failed with unknown status
-                    return new PingInfo(timestamp, ipAddress, IPStatus.Unknown);
                 }
 
-                // Don't scan again, if the user has canceled (when more than 1 attempt)
-                if (cancellationToken.IsCancellationRequested)
-                    break;
+                // Failed
+                if (pingReply != null)
+                    return new PingInfo(timestamp, ipAddress, pingReply.Status);
+            }
+            catch (PingException)
+            {
+                // Ping failed with unknown status
+                return new PingInfo(timestamp, ipAddress, IPStatus.Unknown);
             }
 
-            // Fall back to unknown status
-            return new PingInfo(DateTime.Now, ipAddress, IPStatus.Unknown);
-        }, cancellationToken);
+            // Don't scan again, if the user has canceled (when more than 1 attempt)
+            if (cancellationToken.IsCancellationRequested)
+                break;
+        }
+
+        // Fall back to unknown status
+        return new PingInfo(DateTime.Now, ipAddress, IPStatus.Unknown);
     }
 
-    private Task<IEnumerable<PortInfo>> PortScanAsync(IPAddress ipAddress, ParallelOptions parallelOptions,
+    private async Task<List<PortInfo>> PortScanAsync(IPAddress ipAddress, ParallelOptions parallelOptions,
         CancellationToken cancellationToken)
     {
         ConcurrentBag<PortInfo> results = [];
 
-        Parallel.ForEach(options.PortScanPorts, parallelOptions, port =>
+        await Parallel.ForEachAsync(options.PortScanPorts, parallelOptions, async (port, ct) =>
         {
-            // Test if port is open
-            using var tcpClient = new TcpClient(ipAddress.AddressFamily);
+            var portState = await PortProbe.ProbeAsync(ipAddress, port, options.PortScanTimeout, ct)
+                .ConfigureAwait(false);
 
-            var portState = PortState.None;
+            if (portState == PortState.Open || options.ShowAllResults)
+                results.Add(new PortInfo(port, PortLookup.LookupByPortAndProtocol(port), portState));
+        }).ConfigureAwait(false);
 
-            try
-            {
-                // ReSharper disable once MethodSupportsCancellation - Wait for timeout
-                var task = tcpClient.ConnectAsync(ipAddress, port);
-
-                if (task.Wait(options.PortScanTimeout, cancellationToken))
-                    portState = tcpClient.Connected ? PortState.Open : PortState.Closed;
-                else
-                    portState = PortState.TimedOut;
-            }
-            catch
-            {
-                portState = PortState.Closed;
-            }
-            finally
-            {
-                tcpClient.Close();
-
-                if (portState == PortState.Open || options.ShowAllResults)
-                    results.Add(
-                        new PortInfo(port, PortLookup.LookupByPortAndProtocol(port), portState));
-            }
-        });
-
-        return Task.FromResult(results.AsEnumerable());
+        return results.ToList();
     }
 
     private void IncreaseProgress()

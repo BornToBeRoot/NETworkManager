@@ -19,6 +19,8 @@ Release date: **xx.xx.2026**
 
 ## Breaking Changes
 
+- Removed the **ThreadPool additional min. threads** setting (Settings > General) and the application-wide `ThreadPool.SetMinThreads` workaround it configured for the IP Scanner and Port Scanner. It's no longer needed now that both scan engines use non-blocking async concurrency instead of blocking calls. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+
 ## What's new?
 
 - ARM64 builds are now available. [#3538](https://github.com/BornToBeRoot/NETworkManager/issues/3538)
@@ -31,6 +33,18 @@ Release date: **xx.xx.2026**
 
 - The collapsed/expanded state of profile groups (e.g. **linux-server**) is now remembered per profile file and shared across all tools, instead of resetting every time you switch tools or restart the application. [#3539](https://github.com/BornToBeRoot/NETworkManager/pull/3539)
 
+**IP Scanner**
+
+- Added `135` (RPC) and `9100` (raw printing) to the default **Ports** list used to detect if a host is reachable. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+- Reduced the default **Max. concurrent port threads** from `5` to `4`. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+- Reduced the default **Max. concurrent host threads** from `256` to `64`, a more conservative default that puts less simultaneous load on the scanned network. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+
+**Port Scanner**
+
+- Reduced the default **Max. concurrent host threads** from `5` to `4`. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+- Reduced the default **Max. concurrent port threads** from `256` to `64`, a more conservative default that puts less simultaneous load on the scanned host. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+- Added a new **Well-known ports** (`1-1024`) default port profile. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+
 ## Bug Fixes
 
 **Dashboard**
@@ -39,9 +53,15 @@ Release date: **xx.xx.2026**
 - Fixed the DNS status (Computer/Router/Internet) in the **Network Connection** widget showing as an error when no PTR record exists for the address, which is common and expected for private IP ranges. This is now shown as informational instead of critical. [#3553](https://github.com/BornToBeRoot/NETworkManager/pull/3553)
 - Fixed a race condition in the **Network Connection** widget where results from a superseded check could overwrite the results of a newer, still-running check after quickly reopening the widget. [#3553](https://github.com/BornToBeRoot/NETworkManager/pull/3553)
 
+**IP Scanner**
+
+- Fixed NetBIOS lookups (computer name, domain/workgroup, user name) not starting until a host's entire port scan had finished, since the port scan wasn't actually running asynchronously despite being awaited alongside it. Ping, port scan, and NetBIOS resolution now genuinely run concurrently for every host. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+- Fixed the application becoming unresponsive (including the window not reacting to input) during a large scan (e.g. a /24). Scan results and progress were both being pushed to the UI one item/update at a time via a dispatcher call per host/port, which could flood the UI thread's message queue on large scans. Both are now batched and flushed periodically (every 150ms) instead, for **IP Scanner** and **Port Scanner** alike. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring
+- Converted the **IP Scanner** and **Port Scanner** engines from `Parallel.ForEach` with blocking calls to genuinely asynchronous `Parallel.ForEachAsync`, removing the risk of exhausting the application's ThreadPool at high concurrency settings. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
 - Refactored the **Network Connection** widget's check logic to reduce duplicated code and share the local IP address detection between the Computer and Router checks instead of detecting it twice. [#3553](https://github.com/BornToBeRoot/NETworkManager/pull/3553)
 - Consolidated the duplicated **Profiles** side panel (search, tag filter, grouped list, context menu, add/edit/copy/delete) used across 15 tool views into a single shared control, reducing code duplication. As part of this, the profile panel's expanded/width state is now shared across all tools instead of being tracked per tool. [#3537](https://github.com/BornToBeRoot/NETworkManager/pull/3537)
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
