@@ -3346,15 +3346,6 @@ If the option is disabled again, the values are no longer modified. However, the
   <data name="PingStatus" xml:space="preserve">
     <value>Stanje Pinga</value>
   </data>
-  <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>Dodatnih najm. niti ThreadPool </value>
-  </data>
-  <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>Ta nastavitev določa najmanjše število niti, ki bodo na zahtevo ustvarjene iz ThreadPoola aplikacije. To lahko izboljša delovanje na primer skenerja IP ali skenerja vrat. Vrednost se doda privzeti min. niti (število niti procesorja). Vrednost 0 pusti privzete nastavitve. Če je vrednost višja od privzete najv. niti ThreadPool, se uporabi ta vrednost. Če je vrednost previsoka, lahko pride do težav z delovanjem. Spremembe te vrednosti bodo uveljavljene po ponovnem zagonu aplikacije. Ali je bila vrednost uspešno nastavljena, lahko vidite v dnevniški datoteki pod %LocalAppData%\NETworkManager\NETworkManager.log</value>
-  </data>
-  <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
-    <value>Te nastavitve spremenijo samo največje število sočasno izvedenih niti na skeniranje gostitelja/vrat. Pojdite v Nastavitve &gt; Splošno &gt; Splošno, da prilagodite (najm.) niti aplikacije.</value>
-  </data>
   <data name="PortStatus" xml:space="preserve">
     <value>Stanje vrat</value>
   </data>
