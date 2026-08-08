@@ -770,6 +770,12 @@ public static class SettingsManager
             Current.PortScanner_MaxPortThreads = 64;
         }
 
+        if (Current.IPScanner_PortScanPorts == "22; 53; 80; 139; 389; 636; 443; 445; 3389")
+        {
+            Log.Info($"Update \"IPScanner_PortScanPorts\" to \"{GlobalStaticConfiguration.IPScanner_PortScanPorts}\"...");
+            Current.IPScanner_PortScanPorts = GlobalStaticConfiguration.IPScanner_PortScanPorts;
+        }
+
         // Add new Port Scanner port profiles
         foreach (var portProfile in PortProfile.GetDefaultList())
         {

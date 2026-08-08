@@ -34,15 +34,21 @@ internal static class PortProbe
 
             return tcpClient.Connected ? PortState.Open : PortState.Closed;
         }
-        catch (OperationCanceledException) when (timeoutCts.IsCancellationRequested &&
-                                                   !cancellationToken.IsCancellationRequested)
+        catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
         {
-            // Only our own timeout fired, not the caller's cancellation -> timed out
+            // linkedCts was canceled, but not by the caller -> our own timeout fired
             return PortState.TimedOut;
         }
-        catch (Exception) when (!cancellationToken.IsCancellationRequested)
+        catch (OperationCanceledException)
         {
-            // Connection refused, host unreachable, etc.
+            // Caller's token is why this was canceled -> propagate as a real cancellation
+            throw;
+        }
+        catch (Exception)
+        {
+            // Any other connect failure (refused, unreachable, etc.) -> always Closed, regardless
+            // of whether cancellation also happens to be in flight concurrently for an unrelated
+            // reason (that used to race against this classification via a token-state check here).
             return PortState.Closed;
         }
         finally
