@@ -3380,23 +3380,6 @@ Se l'opzione viene nuovamente disabilitata, i valori non verranno più modificat
   <data name="PingStatus" xml:space="preserve">
     <value>Stato ping</value>
   </data>
-  <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>ThreadPool aggiuntivo min. thread</value>
-  </data>
-  <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>Questa impostazione specifica il numero minimo di thread che verranno creati dal ThreadPool dell'applicazione su richiesta.
-Ciò può migliorare le prestazioni, ad esempio, dello scanner IP o del port scanner.
-Il valore viene aggiunto al n. min. predefinito thread (numero thread CPU). 
-Il valore 0 lascia le impostazioni predefinite. 
-Se il valore è superiore a quello predefinito max. thread del ThreadPool, verrà usato  questo valore.
-Se il valore è troppo alto, potrebbero verificarsi problemi di prestazioni.
-Le modifiche a questo valore avranno effetto dopo il riavvio dell'applicazione. 
-Se il valore è stato impostato correttamente, è possibile verificarlo nel file  registro in %LocalAppData%\NETworkManager\NETworkManager.log</value>
-  </data>
-  <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
-    <value>Queste impostazioni modificano solo il numero massimo di thread eseguiti contemporaneamente per scansione host/porta. 
-Vai in Impostazioni &gt; Generali &gt; Generali per regolare i thread minimi  dell'applicazione.</value>
-  </data>
   <data name="PortStatus" xml:space="preserve">
     <value>Stato porta</value>
   </data>
