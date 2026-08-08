@@ -3353,21 +3353,6 @@ Wann d'Optioun erëm deaktivéiert gëtt, ginn d'Wäerter net méi geännert. D�
   <data name="PingStatus" xml:space="preserve">
     <value>Ping-Status</value>
   </data>
-  <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>ThreadPool zousätzlech min. Threads</value>
-  </data>
-  <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>Dës Astellung leet d'Mindestzuel u Threads fest, déi bei Bedarf aus dem ThreadPool vun der Applikatioun erstallt ginn. Dat kann d'Leeschtung z. B. vum IP-Scanner oder Port-Scanner verbesseren.
-
-De Wäert gëtt zum Standardwäert min. Threads (Unzuel un CPU-Threads) bäigerechent. De Wäert 0 léisst d'Standardastellungen. Ass de Wäert méi héich wéi déi standardméisseg max. Threads vum ThreadPool, gëtt dëse Wäert benotzt.
-
-Wann de Wäert ze héich ass, kënne Leeschtungsproblemer optrieden.
-
-Ännerungen un dësem Wäert gi réischt no engem Neistart vun der Applikatioun wierksam. Ob de Wäert erfollegräich gesat gouf, kann an der Logdatei ënner %LocalAppData%\NETworkManager\NETworkManager.log gekuckt ginn</value>
-  </data>
-  <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
-    <value>Dës Astellunge änneren nëmmen d'maximal Unzuel un gläichzäiteg ausgefouerten Threads pro Host-/Port-Scan. Gitt op Astellungen &gt; Allgemeng &gt; Allgemeng fir déi (minimal) Threads vun der Applikatioun unzepassen.</value>
-  </data>
   <data name="PortStatus" xml:space="preserve">
     <value>Port-Status</value>
   </data>
