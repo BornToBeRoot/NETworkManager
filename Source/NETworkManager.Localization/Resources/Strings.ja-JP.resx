@@ -3353,21 +3353,6 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
   <data name="PingStatus" xml:space="preserve">
     <value>Pingの状態</value>
   </data>
-  <data name="ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>ThreadPool 追加最小スレッド数</value>
-  </data>
-  <data name="HelpMessage_ThreadPoolAdditionalMinThreads" xml:space="preserve">
-    <value>この設定は、アプリケーションのスレッドプールからオンデマンドで作成されるスレッドの最小数を指定します。これにより、例えばIPスキャナーやポートスキャナーのパフォーマンスが向上します。
-	
-この値はデフォルトの最小スレッド数（CPUスレッド数）に追加されます。値が0の場合、デフォルト設定のままとなります。この値がThreadPoolのデフォルトの最大スレッド数よりも大きい場合は、この値が使用されます。
-
-値が高すぎると、パフォーマンスの問題が発生する可能性があります。
-
-この値の変更は、アプリケーションの再起動後に有効になります。値が正常に設定されたかどうかは、%LocalAppData%\NETworkManager\NETworkManager.log のログファイルで確認できます。</value>
-  </data>
-  <data name="MaxThreadsOnlyGoToSettingsGeneralGeneral" xml:space="preserve">
-    <value>これらの設定は、ホスト/ポートスキャンごとに同時に実行されるスレッドの最大数のみを変更します。アプリケーションのスレッド数（最小）を調整するには、「設定」&gt;「一般」&gt;「一般」に移動してください。</value>
-  </data>
   <data name="PortStatus" xml:space="preserve">
     <value>ポートの状態</value>
   </data>
