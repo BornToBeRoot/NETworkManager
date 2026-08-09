@@ -33,6 +33,10 @@ Release date: **xx.xx.2026**
 
 - The collapsed/expanded state of profile groups (e.g. **linux-server**) is now remembered per profile file and shared across all tools, instead of resetting every time you switch tools or restart the application. [#3539](https://github.com/BornToBeRoot/NETworkManager/pull/3539)
 
+**IP Scanner, Port Scanner & Ping Monitor**
+
+- Host input fields now accept newline-separated hosts (one per line, e.g. pasted from Excel) in addition to the existing semicolon (`;`) separator. Shorthand IPv4 ranges like `192.168.0.1-100` are supported as well. [#3568](https://github.com/BornToBeRoot/NETworkManager/pull/3568)
+
 **IP Scanner**
 
 - Added `135` (RPC) and `9100` (raw printing) to the default **Ports** list used to detect if a host is reachable. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
