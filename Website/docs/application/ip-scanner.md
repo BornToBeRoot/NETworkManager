@@ -34,9 +34,11 @@ With the **IP Scanner** you can scan for active devices based on the hostname or
 
 :::note
 
-Multiple inputs can be combined with a semicolon (`;`).
+Multiple inputs can be combined with a semicolon (`;`) or separated by newlines (one input per line, e.g. pasted from Excel).
 
 Example: `10.0.0.0/24; 10.0.[10-20]1`
+
+Shorthand ranges like `192.168.0.1-100` (192.168.0.1 to 192.168.0.100) are also supported.
 
 :::
 

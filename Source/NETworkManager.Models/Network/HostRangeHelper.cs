@@ -1,4 +1,5 @@
 ﻿using NETworkManager.Utilities;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +18,15 @@ namespace NETworkManager.Models.Network;
 public static class HostRangeHelper
 {
     /// <summary>
-    ///     Create a list of hosts from a string input like "10.0.0.1; example.com; 10.0.0.0/24"
+    ///     Create a list of hosts from a string input like "10.0.0.1; example.com; 10.0.0.0/24".
+    ///     Inputs can also be separated by newlines (e.g. pasted from Excel, one host/range per line).
     /// </summary>
-    /// <param name="hosts">Hosts like "10.0.0.1; example.com; 10.0.0.0/24"</param>
+    /// <param name="hosts">Hosts like "10.0.0.1; example.com; 10.0.0.0/24" or newline-separated lines</param>
     /// <returns>List of hosts.</returns>
     public static IEnumerable<string> CreateListFromInput(string hosts)
     {
-        return hosts.Replace(" ", "").Split(';')
-            .Where(x => !string.IsNullOrEmpty(x))
+        return hosts.Replace(" ", "")
+            .Split([';', '\r', '\n'], StringSplitOptions.RemoveEmptyEntries)
             .Select(x => x.Trim())
             .ToArray();
     }
@@ -56,6 +58,22 @@ public static class HostRangeHelper
 
                     Parallel.For(IPv4Address.ToInt32(network.Network), IPv4Address.ToInt32(network.Broadcast) + 1,
                         (i, state) =>
+                        {
+                            if (ct.IsCancellationRequested)
+                                state.Break();
+
+                            hostsBag.Add((IPv4Address.FromInt32(i), string.Empty));
+                        });
+
+                    break;
+
+                // 192.168.0.1-100
+                case var _ when RegexHelper.IPv4AddressShortRangeRegex().IsMatch(host):
+                    var shortRange = host.Split('-');
+                    var shortBase = shortRange[0][..shortRange[0].LastIndexOf('.')];
+
+                    Parallel.For(IPv4Address.ToInt32(IPAddress.Parse(shortRange[0])),
+                        IPv4Address.ToInt32(IPAddress.Parse($"{shortBase}.{shortRange[1]}")) + 1, (i, state) =>
                         {
                             if (ct.IsCancellationRequested)
                                 state.Break();
