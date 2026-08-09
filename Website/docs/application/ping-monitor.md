@@ -31,7 +31,7 @@ ICMP (Internet Control Message Protocol) is a network-layer protocol used to sen
 
 :::note
 
-Multiple inputs can be combined with a semicolon (`;`) or separated by newlines (one input per line, e.g. pasted from Excel).
+Multiple inputs can be combined with a semicolon (`;`). A column pasted from Excel (one entry per line) is converted to the semicolon-separated form automatically.
 
 Example: `10.0.0.0/24; 10.0.[10-20]1`
 
