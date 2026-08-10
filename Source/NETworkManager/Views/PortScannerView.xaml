@@ -80,6 +80,7 @@
                           ItemsSource="{Binding PortsHistoryView}"
                           mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}"
                           IsReadOnly="{Binding Path=IsRunning}"
+                          controls:ComboBoxPasteBehavior.ConvertMultilineToSemicolon="True"
                           Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
