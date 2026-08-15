@@ -22,6 +22,7 @@
         <converters:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
         <converters:PortStateToStringConverter x:Key="PortStateToStringConverter" />
+        <converters:PortOpenStyleConverter x:Key="PortOpenStyleConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -331,6 +332,14 @@
                 </GroupStyle>
             </controls:MultiSelectDataGrid.GroupStyle>
             <controls:MultiSelectDataGrid.Columns>
+                <DataGridTemplateColumn Header="" SortMemberPath="State" CanUserResize="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="16" Height="16"
+                                       Style="{Binding (network:PortScannerPortInfo.State), Converter={StaticResource PortOpenStyleConverter}}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}"
                                     Binding="{Binding (network:PortScannerPortInfo.IPAddress), Converter={StaticResource IPAddressToStringConverter}}"
                                     SortMemberPath="IPAddress"
