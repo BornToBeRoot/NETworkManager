@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
@@ -415,10 +416,19 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
     ///     Bumps <see cref="HostsChangeVersion"/> whenever a host's reachability or running state
     ///     changes, so the per-group up/down summary re-evaluates.
     /// </summary>
+    /// <remarks>
+    ///     <see cref="PingMonitorViewModel.IsReachable"/>/<see cref="PingMonitorViewModel.IsRunning"/>
+    ///     are updated directly from each host's background ping loop (not marshaled to the UI
+    ///     thread), so this handler can be invoked concurrently for multiple hosts. The increment
+    ///     is marshaled to the UI thread so it's never lost - and never silently suppressed by the
+    ///     property setter's equality check - to a concurrent write from another host.
+    /// </remarks>
     private void HostViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName is nameof(PingMonitorViewModel.IsReachable) or nameof(PingMonitorViewModel.IsRunning))
-            HostsChangeVersion++;
+        if (e.PropertyName is not (nameof(PingMonitorViewModel.IsReachable) or nameof(PingMonitorViewModel.IsRunning)))
+            return;
+
+        Application.Current?.Dispatcher.BeginInvoke(DispatcherPriority.Normal, () => HostsChangeVersion++);
     }
 
     #endregion

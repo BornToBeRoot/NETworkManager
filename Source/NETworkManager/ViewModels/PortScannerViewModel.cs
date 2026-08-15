@@ -441,6 +441,17 @@ public class PortScannerViewModel : ViewModelBase
 
         Results.Clear();
 
+        // Reset before hostname resolution too (not just after), so a cancellation during
+        // resolution can't flush the previous scan's stale totals - PortsToScan = 0 also hides
+        // the open/closed summary until the new scan's port count is known.
+        PortsToScan = 0;
+        PortsScanned = 0;
+        PortsOpen = 0;
+        PortsClosed = 0;
+        Volatile.Write(ref _latestPortsScanned, 0);
+        Volatile.Write(ref _latestPortsOpen, 0);
+        Volatile.Write(ref _latestPortsClosed, 0);
+
         DragablzTabItem.SetTabHeader(_tabId, Host);
 
         _cancellationTokenSource?.Dispose();
@@ -472,12 +483,6 @@ public class PortScannerViewModel : ViewModelBase
         var ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
 
         PortsToScan = ports.Length * hosts.hosts.Count;
-        PortsScanned = 0;
-        PortsOpen = 0;
-        PortsClosed = 0;
-        Volatile.Write(ref _latestPortsScanned, 0);
-        Volatile.Write(ref _latestPortsOpen, 0);
-        Volatile.Write(ref _latestPortsClosed, 0);
 
         PreparingScan = false;
 

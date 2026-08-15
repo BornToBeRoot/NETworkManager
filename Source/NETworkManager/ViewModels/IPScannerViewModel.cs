@@ -490,6 +490,17 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         Results.Clear();
 
+        // Reset before hostname resolution too (not just after), so a cancellation during
+        // resolution can't flush the previous scan's stale totals - HostsToScan = 0 also hides
+        // the up/down summary until the new scan's host count is known.
+        HostsToScan = 0;
+        HostsScanned = 0;
+        HostsUp = 0;
+        HostsDown = 0;
+        Volatile.Write(ref _latestHostsScanned, 0);
+        Volatile.Write(ref _latestHostsUp, 0);
+        Volatile.Write(ref _latestHostsDown, 0);
+
         DragablzTabItem.SetTabHeader(_tabId, Host);
 
         _cancellationTokenSource?.Dispose();
@@ -518,12 +529,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }
 
         HostsToScan = hosts.hosts.Count;
-        HostsScanned = 0;
-        HostsUp = 0;
-        HostsDown = 0;
-        Volatile.Write(ref _latestHostsScanned, 0);
-        Volatile.Write(ref _latestHostsUp, 0);
-        Volatile.Write(ref _latestHostsDown, 0);
 
         PreparingScan = false;
 
