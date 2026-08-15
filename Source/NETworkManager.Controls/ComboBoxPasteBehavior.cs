@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace NETworkManager.Controls;
 
@@ -14,10 +13,10 @@ namespace NETworkManager.Controls;
 ///
 /// Without this the WPF TextBox inside the ComboBox (<see cref="TextBox.AcceptsReturn"/> is
 /// <c>false</c>) silently drops everything after the first line when multiline text is pasted.
-/// The conversion happens in <see cref="CommandManager.PreviewExecutedEvent"/> before the paste
-/// command actually runs, by rewriting the clipboard content to the semicolon-separated form.
-/// The original clipboard content is restored afterwards, and clipboard access is guarded since
-/// the Windows clipboard can throw when briefly locked by another process.
+/// The conversion is applied by reading the clipboard, replacing the editable text box's
+/// selection with the converted text, and marking <see cref="ApplicationCommands.Paste"/> as
+/// handled - the system clipboard itself is never modified, so other applications (or a
+/// subsequent paste elsewhere) are unaffected.
 /// </summary>
 public static class ComboBoxPasteBehavior
 {
@@ -52,14 +51,19 @@ public static class ComboBoxPasteBehavior
         if (e.Command != ApplicationCommands.Paste)
             return;
 
-        string originalText;
+        // The command originates from the focused editable text box inside the ComboBox
+        // template, which is where the pasted text actually needs to be inserted.
+        if (e.OriginalSource is not TextBox textBox)
+            return;
+
+        string text;
 
         try
         {
             if (!Clipboard.ContainsText())
                 return;
 
-            originalText = Clipboard.GetText();
+            text = Clipboard.GetText();
         }
         catch (ExternalException)
         {
@@ -67,37 +71,29 @@ public static class ComboBoxPasteBehavior
             return;
         }
 
-        // Only rewrite when there is actual multiline content (e.g. a column pasted from Excel).
-        if (!originalText.Contains('\n') && !originalText.Contains('\r'))
+        // Only intervene when there is actual multiline content (e.g. a column pasted from
+        // Excel). Otherwise let the default paste command handle it as usual.
+        if (!text.Contains('\n') && !text.Contains('\r'))
             return;
 
-        var converted = string.Join(";", originalText
+        var converted = string.Join(";", text
             .Replace("\r\n", "\n")
             .Replace('\r', '\n')
             .Split('\n', StringSplitOptions.RemoveEmptyEntries)
             .Select(x => x.Trim()));
 
-        try
-        {
-            Clipboard.SetText(converted);
-        }
-        catch (ExternalException)
-        {
-            return;
-        }
+        // Replace the current selection with the converted text ourselves and mark the command
+        // handled, instead of letting the default paste run - this avoids touching the system
+        // clipboard entirely (no risk of losing other clipboard formats or racing a paste
+        // elsewhere).
+        var selectionStart = textBox.SelectionStart;
+        var textBefore = textBox.Text[..selectionStart];
+        var textAfter = textBox.Text[(selectionStart + textBox.SelectionLength)..];
 
-        // Restore the original clipboard content once the paste command has consumed the
-        // rewritten text, so pasting elsewhere afterwards still yields what the user actually copied.
-        Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, () =>
-        {
-            try
-            {
-                Clipboard.SetText(originalText);
-            }
-            catch (ExternalException)
-            {
-                // Best effort - leave the rewritten text on the clipboard if restoring fails.
-            }
-        });
+        textBox.Text = textBefore + converted + textAfter;
+        textBox.SelectionStart = selectionStart + converted.Length;
+        textBox.SelectionLength = 0;
+
+        e.Handled = true;
     }
 }

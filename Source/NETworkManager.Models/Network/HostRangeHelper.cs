@@ -31,6 +31,27 @@ public static class HostRangeHelper
             .ToArray();
     }
 
+    /// <summary>
+    ///     Adds every IPv4 address in the inclusive range [<paramref name="start" />, <paramref name="end" />] to
+    ///     <paramref name="hostsBag" />. Iterates using the unsigned IPv4 value widened to <see cref="long" /> so the
+    ///     inclusive upper bound stays representable even for the last address in the 32-bit space
+    ///     (255.255.255.255), which would otherwise overflow <see cref="int" /> arithmetic.
+    /// </summary>
+    private static void AddIPv4RangeToBag(IPAddress start, IPAddress end,
+        ConcurrentBag<(IPAddress ipAddress, string hostname)> hostsBag, CancellationToken ct)
+    {
+        var from = (long)unchecked((uint)IPv4Address.ToInt32(start));
+        var to = (long)unchecked((uint)IPv4Address.ToInt32(end));
+
+        Parallel.For(from, to + 1, (i, state) =>
+        {
+            if (ct.IsCancellationRequested)
+                state.Break();
+
+            hostsBag.Add((IPv4Address.FromInt32(unchecked((int)i)), string.Empty));
+        });
+    }
+
     public static async Task<(List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved)>
         ResolveAsync(IEnumerable<string> hosts, bool dnsResolveHostnamePreferIPv4, CancellationToken cancellationToken)
     {
@@ -56,14 +77,7 @@ public static class HostRangeHelper
                 case var _ when RegexHelper.IPv4AddressSubnetmaskRegex().IsMatch(host):
                     var network = IPNetwork2.Parse(host);
 
-                    Parallel.For(IPv4Address.ToInt32(network.Network), IPv4Address.ToInt32(network.Broadcast) + 1,
-                        (i, state) =>
-                        {
-                            if (ct.IsCancellationRequested)
-                                state.Break();
-
-                            hostsBag.Add((IPv4Address.FromInt32(i), string.Empty));
-                        });
+                    AddIPv4RangeToBag(network.Network, network.Broadcast, hostsBag, ct);
 
                     break;
 
@@ -72,14 +86,8 @@ public static class HostRangeHelper
                     var shortRange = host.Split('-');
                     var shortBase = shortRange[0][..shortRange[0].LastIndexOf('.')];
 
-                    Parallel.For(IPv4Address.ToInt32(IPAddress.Parse(shortRange[0])),
-                        IPv4Address.ToInt32(IPAddress.Parse($"{shortBase}.{shortRange[1]}")) + 1, (i, state) =>
-                        {
-                            if (ct.IsCancellationRequested)
-                                state.Break();
-
-                            hostsBag.Add((IPv4Address.FromInt32(i), string.Empty));
-                        });
+                    AddIPv4RangeToBag(IPAddress.Parse(shortRange[0]),
+                        IPAddress.Parse($"{shortBase}.{shortRange[1]}"), hostsBag, ct);
 
                     break;
 
@@ -87,14 +95,7 @@ public static class HostRangeHelper
                 case var _ when RegexHelper.IPv4AddressRangeRegex().IsMatch(host):
                     var range = host.Split('-');
 
-                    Parallel.For(IPv4Address.ToInt32(IPAddress.Parse(range[0])),
-                        IPv4Address.ToInt32(IPAddress.Parse(range[1])) + 1, (i, state) =>
-                        {
-                            if (ct.IsCancellationRequested)
-                                state.Break();
-
-                            hostsBag.Add((IPv4Address.FromInt32(i), string.Empty));
-                        });
+                    AddIPv4RangeToBag(IPAddress.Parse(range[0]), IPAddress.Parse(range[1]), hostsBag, ct);
 
                     break;
 
@@ -188,14 +189,7 @@ public static class HostRangeHelper
                             network = IPNetwork2.Parse(
                                 $"{dnsResultWithSubnet.Value}/{hostAndSubnet[1]}");
 
-                            Parallel.For(IPv4Address.ToInt32(network.Network),
-                                IPv4Address.ToInt32(network.Broadcast) + 1, (i, state) =>
-                                {
-                                    if (ct.IsCancellationRequested)
-                                        state.Break();
-
-                                    hostsBag.Add((IPv4Address.FromInt32(i), string.Empty));
-                                });
+                            AddIPv4RangeToBag(network.Network, network.Broadcast, hostsBag, ct);
                         }
                         else
                         {
