@@ -22,8 +22,8 @@ public sealed class PortScanner
     #region Variables
 
     private int _progressValue;
-    private int _portsOpen;
-    private int _portsClosed;
+    private readonly InterlockedCounter _portsOpen = new();
+    private readonly InterlockedCounter _portsClosed = new();
 
     private readonly PortScannerOptions _options;
 
@@ -31,13 +31,13 @@ public sealed class PortScanner
     ///     Gets the number of ports found to be open so far. Thread-safe; may be read from any
     ///     thread while the scan is running.
     /// </summary>
-    public int PortsOpen => Volatile.Read(ref _portsOpen);
+    public int PortsOpen => _portsOpen.Value;
 
     /// <summary>
     ///     Gets the number of ports found to be closed (or timed out) so far. Thread-safe; may be
     ///     read from any thread while the scan is running.
     /// </summary>
-    public int PortsClosed => Volatile.Read(ref _portsClosed);
+    public int PortsClosed => _portsClosed.Value;
 
     #endregion
 
@@ -119,9 +119,9 @@ public sealed class PortScanner
                         // Count open/closed ports unconditionally, since ShowAllResults (below)
                         // may prevent closed ports from ever reaching PortScanned
                         if (portState == PortState.Open)
-                            Interlocked.Increment(ref _portsOpen);
+                            _portsOpen.Increment();
                         else
-                            Interlocked.Increment(ref _portsClosed);
+                            _portsClosed.Increment();
 
                         if (_options.ShowAllResults || portState == PortState.Open)
                             OnPortScanned(new PortScannerPortScannedArgs(

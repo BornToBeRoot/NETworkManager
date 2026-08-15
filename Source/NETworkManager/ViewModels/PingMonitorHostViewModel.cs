@@ -1,4 +1,5 @@
 using MahApps.Metro.Controls;
+using NETworkManager.Converters;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;

@@ -56,11 +56,10 @@ When you zoom or pan, the chart leaves live mode and stops scrolling. A **Live**
 
 Right-click a monitored host (anywhere except the chart) to open the context menu:
 
-| Action | Description |
-|--------|-------------|
-| **Export...** | Exports the results of the host to a file |
-
-Right-clicking an individual field (hostname, IP address, ...) instead lets you **Copy** its value to the clipboard.
+| Action        | Description                                      |
+| ------------- | ------------------------------------------------- |
+| **Copy**      | Copies the selected information to the clipboard |
+| **Export...** | Exports the results of the host to a file        |
 
 ### Notifications
 

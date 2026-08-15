@@ -32,7 +32,7 @@ namespace NETworkManager.ViewModels;
 /// <summary>
 /// ViewModel for the Ping Monitor feature, representing a single monitored host.
 /// </summary>
-public class PingMonitorViewModel : ViewModelBase
+public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
 {
     #region Contructor, load settings
 

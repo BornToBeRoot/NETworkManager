@@ -25,7 +25,7 @@
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" />
-        <viewModels:PingMonitorGroupSummaryConverter x:Key="PingMonitorGroupSummaryConverter" />
+        <converters:PingMonitorGroupSummaryConverter x:Key="PingMonitorGroupSummaryConverter" />
         <DataTemplate x:Key="PingMonitorProfileItemTemplate" DataType="{x:Type profiles:ProfileInfo}">
             <Grid Background="Transparent">
                 <Grid.ToolTip>
@@ -253,17 +253,10 @@
                                                                         <TextBlock Text="·"
                                                                                    Style="{StaticResource ResourceKey=DefaultTextBlock}"
                                                                                    Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}"
-                                                                                   Margin="6,0,6,0">
-                                                                            <TextBlock.Visibility>
-                                                                                <MultiBinding Converter="{StaticResource ResourceKey=PingMonitorGroupSummaryConverter}"
-                                                                                              ConverterParameter="PausedVisibility">
-                                                                                    <Binding />
-                                                                                    <Binding Path="DataContext.HostsChangeVersion"
-                                                                                             RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}" />
-                                                                                </MultiBinding>
-                                                                            </TextBlock.Visibility>
-                                                                        </TextBlock>
-                                                                        <TextBlock Style="{StaticResource ResourceKey=DefaultTextBlock}"
+                                                                                   Margin="6,0,6,0"
+                                                                                   Visibility="{Binding ElementName=PausedText, Path=Visibility}" />
+                                                                        <TextBlock x:Name="PausedText"
+                                                                                   Style="{StaticResource ResourceKey=DefaultTextBlock}"
                                                                                    Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}">
                                                                             <TextBlock.Text>
                                                                                 <MultiBinding Converter="{StaticResource ResourceKey=PingMonitorGroupSummaryConverter}"
