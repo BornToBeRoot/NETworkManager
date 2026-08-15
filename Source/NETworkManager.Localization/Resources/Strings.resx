@@ -228,6 +228,9 @@
   <data name="DontFragment" xml:space="preserve">
     <value>Don't fragment</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>Edit credentials</value>
   </data>
@@ -1251,6 +1254,9 @@ Profile files are not affected!</value>
   </data>
   <data name="UntrayBringWindowToForeground" xml:space="preserve">
     <value>Untray / Bring window to foreground</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -2442,6 +2448,9 @@ is disabled!</value>
   <data name="Pause" xml:space="preserve">
     <value>Pause</value>
   </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
   <data name="Resume" xml:space="preserve">
     <value>Resume</value>
   </data>
@@ -2836,7 +2845,7 @@ is disabled!</value>
     <value>Received</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>Status change</value>
+    <value>Last status change</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>Update available!</value>

@@ -3432,7 +3432,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("DontFragment", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Down.
+        /// </summary>
+        public static string Down {
+            get {
+                return ResourceManager.GetString("Down", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Download.
         /// </summary>
@@ -8091,7 +8100,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("Pause", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Paused.
+        /// </summary>
+        public static string Paused {
+            get {
+                return ResourceManager.GetString("Paused", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Performance.
         /// </summary>
@@ -11497,7 +11515,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status change.
+        ///   Looks up a localized string similar to Last status change.
         /// </summary>
         public static string StatusChange {
             get {
@@ -12233,7 +12251,16 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("UntrayBringWindowToForeground", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Up.
+        /// </summary>
+        public static string Up {
+            get {
+                return ResourceManager.GetString("Up", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>

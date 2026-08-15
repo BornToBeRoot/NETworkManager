@@ -54,6 +54,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // (unconditionally, unlike HostScanned), so it's flushed to the bound property on the same
     // timer instead of updating it directly from the background thread on every event.
     private int _latestHostsScanned;
+    private int _latestHostsUp;
+    private int _latestHostsDown;
 
     /// <summary>
     /// Gets or sets the host or IP range to scan.
@@ -197,6 +199,38 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// Gets or sets the number of hosts already scanned.
     /// </summary>
     public int HostsScanned
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the number of hosts found to be reachable so far.
+    /// </summary>
+    public int HostsUp
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the number of hosts found to be unreachable so far.
+    /// </summary>
+    public int HostsDown
     {
         get;
         set
@@ -456,6 +490,17 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         Results.Clear();
 
+        // Reset before hostname resolution too (not just after), so a cancellation during
+        // resolution can't flush the previous scan's stale totals - HostsToScan = 0 also hides
+        // the up/down summary until the new scan's host count is known.
+        HostsToScan = 0;
+        HostsScanned = 0;
+        HostsUp = 0;
+        HostsDown = 0;
+        Volatile.Write(ref _latestHostsScanned, 0);
+        Volatile.Write(ref _latestHostsUp, 0);
+        Volatile.Write(ref _latestHostsDown, 0);
+
         DragablzTabItem.SetTabHeader(_tabId, Host);
 
         _cancellationTokenSource?.Dispose();
@@ -484,8 +529,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }
 
         HostsToScan = hosts.hosts.Count;
-        HostsScanned = 0;
-        Volatile.Write(ref _latestHostsScanned, 0);
 
         PreparingScan = false;
 
@@ -768,20 +811,29 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// pick up on the next timer tick, instead of updating the bound property directly from a
     /// background thread on every single host.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
+    /// <param name="sender">The <see cref="IPScanner"/> instance raising the event.</param>
     /// <param name="e">The <see cref="ProgressChangedArgs"/> instance containing the event data.</param>
     private void ProgressChanged(object sender, ProgressChangedArgs e)
     {
         Volatile.Write(ref _latestHostsScanned, e.Value);
+
+        if (sender is IPScanner ipScanner)
+        {
+            Volatile.Write(ref _latestHostsUp, ipScanner.HostsUp);
+            Volatile.Write(ref _latestHostsDown, ipScanner.HostsDown);
+        }
     }
 
     /// <summary>
-    /// Pushes the latest buffered progress value into <see cref="HostsScanned"/>. Always called
-    /// on the UI thread - same calling contexts as <see cref="FlushResultsBuffer"/>.
+    /// Pushes the latest buffered progress value into <see cref="HostsScanned"/>,
+    /// <see cref="HostsUp"/> and <see cref="HostsDown"/>. Always called on the UI thread - same
+    /// calling contexts as <see cref="FlushResultsBuffer"/>.
     /// </summary>
     private void FlushProgress()
     {
         HostsScanned = Volatile.Read(ref _latestHostsScanned);
+        HostsUp = Volatile.Read(ref _latestHostsUp);
+        HostsDown = Volatile.Read(ref _latestHostsDown);
     }
 
     /// <summary>

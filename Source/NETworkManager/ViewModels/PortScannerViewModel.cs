@@ -49,6 +49,8 @@ public class PortScannerViewModel : ViewModelBase
     // (unconditionally, unlike PortScanned), so it's flushed to the bound property on the same
     // timer instead of updating it directly from the background thread on every event.
     private int _latestPortsScanned;
+    private int _latestPortsOpen;
+    private int _latestPortsClosed;
 
     /// <summary>
     /// Gets or sets the host to scan.
@@ -197,6 +199,38 @@ public class PortScannerViewModel : ViewModelBase
     /// Gets or sets the number of ports already scanned.
     /// </summary>
     public int PortsScanned
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the number of ports found to be open so far.
+    /// </summary>
+    public int PortsOpen
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the number of ports found to be closed so far.
+    /// </summary>
+    public int PortsClosed
     {
         get;
         set
@@ -407,6 +441,17 @@ public class PortScannerViewModel : ViewModelBase
 
         Results.Clear();
 
+        // Reset before hostname resolution too (not just after), so a cancellation during
+        // resolution can't flush the previous scan's stale totals - PortsToScan = 0 also hides
+        // the open/closed summary until the new scan's port count is known.
+        PortsToScan = 0;
+        PortsScanned = 0;
+        PortsOpen = 0;
+        PortsClosed = 0;
+        Volatile.Write(ref _latestPortsScanned, 0);
+        Volatile.Write(ref _latestPortsOpen, 0);
+        Volatile.Write(ref _latestPortsClosed, 0);
+
         DragablzTabItem.SetTabHeader(_tabId, Host);
 
         _cancellationTokenSource?.Dispose();
@@ -438,8 +483,6 @@ public class PortScannerViewModel : ViewModelBase
         var ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
 
         PortsToScan = ports.Length * hosts.hosts.Count;
-        PortsScanned = 0;
-        Volatile.Write(ref _latestPortsScanned, 0);
 
         PreparingScan = false;
 
@@ -593,15 +636,24 @@ public class PortScannerViewModel : ViewModelBase
     private void ProgressChanged(object sender, ProgressChangedArgs e)
     {
         Volatile.Write(ref _latestPortsScanned, e.Value);
+
+        if (sender is PortScanner portScanner)
+        {
+            Volatile.Write(ref _latestPortsOpen, portScanner.PortsOpen);
+            Volatile.Write(ref _latestPortsClosed, portScanner.PortsClosed);
+        }
     }
 
     /// <summary>
-    /// Pushes the latest buffered progress value into <see cref="PortsScanned"/>. Always called
-    /// on the UI thread - same calling contexts as <see cref="FlushResultsBuffer"/>.
+    /// Pushes the latest buffered progress value into <see cref="PortsScanned"/>,
+    /// <see cref="PortsOpen"/> and <see cref="PortsClosed"/>. Always called on the UI thread -
+    /// same calling contexts as <see cref="FlushResultsBuffer"/>.
     /// </summary>
     private void FlushProgress()
     {
         PortsScanned = Volatile.Read(ref _latestPortsScanned);
+        PortsOpen = Volatile.Read(ref _latestPortsOpen);
+        PortsClosed = Volatile.Read(ref _latestPortsClosed);
     }
 
     private void ScanComplete(object sender, EventArgs e)

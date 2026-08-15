@@ -22,8 +22,22 @@ public sealed class PortScanner
     #region Variables
 
     private int _progressValue;
+    private readonly InterlockedCounter _portsOpen = new();
+    private readonly InterlockedCounter _portsClosed = new();
 
     private readonly PortScannerOptions _options;
+
+    /// <summary>
+    ///     Gets the number of ports found to be open so far. Thread-safe; may be read from any
+    ///     thread while the scan is running.
+    /// </summary>
+    public int PortsOpen => _portsOpen.Value;
+
+    /// <summary>
+    ///     Gets the number of ports found to be closed (or timed out) so far. Thread-safe; may be
+    ///     read from any thread while the scan is running.
+    /// </summary>
+    public int PortsClosed => _portsClosed.Value;
 
     #endregion
 
@@ -101,6 +115,13 @@ public sealed class PortScanner
                     {
                         var portState = await PortProbe.ProbeAsync(host.ipAddress, port, _options.Timeout, portCt)
                             .ConfigureAwait(false);
+
+                        // Count open/closed ports unconditionally, since ShowAllResults (below)
+                        // may prevent closed ports from ever reaching PortScanned
+                        if (portState == PortState.Open)
+                            _portsOpen.Increment();
+                        else
+                            _portsClosed.Increment();
 
                         if (_options.ShowAllResults || portState == PortState.Open)
                             OnPortScanned(new PortScannerPortScannedArgs(

@@ -219,6 +219,34 @@
         <TextBlock Grid.Column="0" Grid.Row="2"
                    Style="{StaticResource HeaderTextBlock}"
                    Text="{x:Static localization:Strings.Result}" />
+        <StackPanel Grid.Column="0" Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding Path=HostsToScan, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
+            <TextBlock Style="{StaticResource DefaultTextBlock}"
+                       Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0} {1}">
+                        <Binding Path="HostsUp" />
+                        <Binding Source="{x:Static localization:Strings.Up}" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock Text="·"
+                       Style="{StaticResource DefaultTextBlock}"
+                       Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                       Margin="6,0,6,0" />
+            <TextBlock Style="{StaticResource DefaultTextBlock}"
+                       Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0} {1}">
+                        <Binding Path="HostsDown" />
+                        <Binding Source="{x:Static localization:Strings.Down}" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </StackPanel>
         <controls:MultiSelectDataGrid x:Name="DataGridResults"
                                       Grid.Column="0" Grid.Row="3"
                                       ItemsSource="{Binding Path=ResultsView}"

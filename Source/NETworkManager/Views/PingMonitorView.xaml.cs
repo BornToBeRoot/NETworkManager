@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Net;
 using System.Windows.Controls;
+using NETworkManager.Models.Network;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class PingMonitorView
+public partial class PingMonitorView : IPingMonitorHostStatus
 {
     private readonly PingMonitorViewModel _viewModel;
 
@@ -24,6 +25,20 @@ public partial class PingMonitorView
     public Guid HostId => _viewModel.HostId;
 
     public string Group => _viewModel.Group;
+
+    /// <summary>
+    /// The underlying view model, exposed so <see cref="ViewModels.PingMonitorHostViewModel"/> can
+    /// subscribe to <see cref="PingMonitorViewModel.PropertyChanged"/> for the group up/down
+    /// summary. Prefer <see cref="IsReachable"/>/<see cref="IsRunning"/> (via
+    /// <see cref="IPingMonitorHostStatus"/>) to just read the current status.
+    /// </summary>
+    public PingMonitorViewModel ViewModel => _viewModel;
+
+    /// <inheritdoc />
+    public bool IsReachable => _viewModel.IsReachable;
+
+    /// <inheritdoc />
+    public bool IsRunning => _viewModel.IsRunning;
 
     public void Start()
     {
