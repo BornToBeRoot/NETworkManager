@@ -1,6 +1,7 @@
 ﻿using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
+using System;
 using System.DirectoryServices.ActiveDirectory;
 using System.Globalization;
 using System.Net;
@@ -18,7 +19,9 @@ public class MultipleHostsRangeValidator : ValidationRule
         if (value == null)
             return new ValidationResult(false, Strings.EnterValidIPScanRange);
 
-        foreach (var ipHostOrRange in ((string)value).Replace(" ", "").Split(';'))
+        foreach (var ipHostOrRange in ((string)value)
+            .Replace(" ", "")
+            .Split([';', '\r', '\n'], StringSplitOptions.RemoveEmptyEntries))
         {
             // 192.168.0.1
             if (RegexHelper.IPv4AddressRegex().IsMatch(ipHostOrRange))
@@ -31,6 +34,19 @@ public class MultipleHostsRangeValidator : ValidationRule
             // 192.168.0.0/255.255.255.0
             if (RegexHelper.IPv4AddressSubnetmaskRegex().IsMatch(ipHostOrRange))
                 continue;
+
+            // 192.168.0.1-100
+            if (RegexHelper.IPv4AddressShortRangeRegex().IsMatch(ipHostOrRange))
+            {
+                var shortRange = ipHostOrRange.Split('-');
+                var shortBase = shortRange[0][..shortRange[0].LastIndexOf('.')];
+
+                if (IPv4Address.ToInt32(IPAddress.Parse(shortRange[0])) >
+                    IPv4Address.ToInt32(IPAddress.Parse($"{shortBase}.{shortRange[1]}")))
+                    isValid = false;
+
+                continue;
+            }
 
             // 192.168.0.0 - 192.168.0.100
             if (RegexHelper.IPv4AddressRangeRegex().IsMatch(ipHostOrRange))

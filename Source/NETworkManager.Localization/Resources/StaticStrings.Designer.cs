@@ -241,7 +241,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 192.168.178.0/24; 10.0.0.0 - 10.0.0.9; 10.0.[0-9,20].[1-2]; server-01.borntoberoot.net/24.
+        ///   Looks up a localized string similar to 192.168.178.0/24; 10.8.0.0-100; 10.8.[0-9,254].1; server-01.borntoberoot.net/28.
         /// </summary>
         public static string ExampleHostRange {
             get {

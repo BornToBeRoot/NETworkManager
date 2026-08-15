@@ -31,6 +31,7 @@ TCP (Transmission Control Protocol) is a connection-oriented transport-layer pro
 | -------------------------------- | -------------------------------------------------------------------------------------------- |
 | `10.0.0.1`                       | Single IP address (`10.0.0.1`)                                                               |
 | `10.0.0.100 - 10.0.0.199`        | All IP addresses in a given range (`10.0.0.100`, `10.0.0.101`, ..., `10.0.0.199`)            |
+| `10.0.0.100-199`                 | All IP addresses in a given range, shorthand for the last octet (`10.0.0.100`, ..., `10.0.0.199`) |
 | `10.0.0.0/23`                    | All IP addresses in a subnet (`10.0.0.0`, ..., `10.0.1.255`)                                 |
 | `10.0.0.0/255.255.254.0`         | All IP addresses in a subnet (`10.0.0.0`, ..., `10.0.1.255`)                                 |
 | `10.0.[0-9,20].[1-2]`            | Multiple IP addresses like (`10.0.0.1`, `10.0.0.2`, `10.0.1.1`, ...,`10.0.9.2`, `10.0.20.1`) |
@@ -45,9 +46,9 @@ TCP (Transmission Control Protocol) is a connection-oriented transport-layer pro
 
 :::note
 
-Multiple inputs can be combined with a semicolon (`;`).
+Multiple inputs can be combined with a semicolon (`;`). A column pasted from Excel (one entry per line) is converted to the semicolon-separated form automatically.
 
-Example: `10.0.0.0/24; 10.0.[10-20]1` or `1-1024; 8080; 8443`
+Example: `10.0.0.0/24; 10.0.[10-20].1; 10.0.0.100-199` or `1-1024; 8080; 8443`
 
 :::
 

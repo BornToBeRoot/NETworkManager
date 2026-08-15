@@ -68,6 +68,7 @@
                           ItemsSource="{Binding Path=HostHistoryView}"
                           mah:TextBoxHelper.Watermark="{x:Static Member=localization:StaticStrings.ExampleHostRange}"
                           IsReadOnly="{Binding Path=IsRunning}"
+                          controls:ComboBoxPasteBehavior.ConvertMultilineToSemicolon="True"
                           Style="{StaticResource ResourceKey=HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Host" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">

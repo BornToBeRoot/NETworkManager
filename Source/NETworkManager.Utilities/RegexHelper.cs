@@ -43,13 +43,29 @@ public static partial class RegexHelper
     public static partial Regex IPv4AddressExtractRegex();
 
     /// <summary>
-    /// Provides a compiles regular expression that matches IPv4 address ranges in the format "start-end" like
+    /// Represents a regular expression pattern that matches valid shorthand IPv4 address ranges like
+    /// "192.168.178.1-100" (base IP + last octet range).
+    /// </summary>
+    private const string IPv4AddressShortRangeValues =
+        @"((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\-(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches IPv4 address ranges in the format "start-end" like
     /// "192.168.178.0-192.168.178.255".
-    /// </summary>    
+    /// </summary>
     /// <returns>A <see cref="Regex"/> instance that matches strings representing IPv4 address ranges, such as
     /// "192.168.1.1-192.168.1.100".</returns>
     [GeneratedRegex($"^{IPv4AddressValues}-{IPv4AddressValues}$")]
     public static partial Regex IPv4AddressRangeRegex();
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches shorthand IPv4 address ranges like
+    /// "192.168.178.1-100" (base IP followed by a last-octet range).
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> instance that matches strings representing shorthand IPv4 address ranges,
+    /// such as "192.168.1.1-100" (192.168.1.1 to 192.168.1.100).</returns>
+    [GeneratedRegex($"^{IPv4AddressShortRangeValues}$")]
+    public static partial Regex IPv4AddressShortRangeRegex();
 
     /// <summary>
     /// Provides a compiled regular expression that matches valid IPv4 subnet mask like "255.255.0.0".
