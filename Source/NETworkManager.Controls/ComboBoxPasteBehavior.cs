@@ -1,8 +1,10 @@
 using System;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace NETworkManager.Controls;
 
@@ -14,6 +16,8 @@ namespace NETworkManager.Controls;
 /// <c>false</c>) silently drops everything after the first line when multiline text is pasted.
 /// The conversion happens in <see cref="CommandManager.PreviewExecutedEvent"/> before the paste
 /// command actually runs, by rewriting the clipboard content to the semicolon-separated form.
+/// The original clipboard content is restored afterwards, and clipboard access is guarded since
+/// the Windows clipboard can throw when briefly locked by another process.
 /// </summary>
 public static class ComboBoxPasteBehavior
 {
@@ -48,21 +52,52 @@ public static class ComboBoxPasteBehavior
         if (e.Command != ApplicationCommands.Paste)
             return;
 
-        if (!Clipboard.ContainsText())
-            return;
+        string originalText;
 
-        var text = Clipboard.GetText();
+        try
+        {
+            if (!Clipboard.ContainsText())
+                return;
+
+            originalText = Clipboard.GetText();
+        }
+        catch (ExternalException)
+        {
+            // Clipboard is temporarily locked by another process - fall back to the default paste.
+            return;
+        }
 
         // Only rewrite when there is actual multiline content (e.g. a column pasted from Excel).
-        if (!text.Contains('\n') && !text.Contains('\r'))
+        if (!originalText.Contains('\n') && !originalText.Contains('\r'))
             return;
 
-        var converted = string.Join(";", text
+        var converted = string.Join(";", originalText
             .Replace("\r\n", "\n")
             .Replace('\r', '\n')
             .Split('\n', StringSplitOptions.RemoveEmptyEntries)
             .Select(x => x.Trim()));
 
-        Clipboard.SetText(converted);
+        try
+        {
+            Clipboard.SetText(converted);
+        }
+        catch (ExternalException)
+        {
+            return;
+        }
+
+        // Restore the original clipboard content once the paste command has consumed the
+        // rewritten text, so pasting elsewhere afterwards still yields what the user actually copied.
+        Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, () =>
+        {
+            try
+            {
+                Clipboard.SetText(originalText);
+            }
+            catch (ExternalException)
+            {
+                // Best effort - leave the rewritten text on the clipboard if restoring fails.
+            }
+        });
     }
 }
