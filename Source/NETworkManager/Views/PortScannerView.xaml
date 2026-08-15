@@ -23,6 +23,7 @@
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
         <converters:PortStateToStringConverter x:Key="PortStateToStringConverter" />
         <converters:PortOpenStyleConverter x:Key="PortOpenStyleConverter" />
+        <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -227,6 +228,34 @@
                        Style="{DynamicResource StatusMessageTextBlock}" Margin="0,10,0,0" />
         </Grid>
         <TextBlock Grid.Row="2" Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.Result}" />
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding Path=PortsToScan, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
+            <TextBlock Style="{StaticResource DefaultTextBlock}"
+                       Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0} {1}">
+                        <Binding Path="PortsOpen" />
+                        <Binding Source="{x:Static localization:Strings.Open}" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock Text="·"
+                       Style="{StaticResource DefaultTextBlock}"
+                       Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                       Margin="6,0,6,0" />
+            <TextBlock Style="{StaticResource DefaultTextBlock}"
+                       Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0} {1}">
+                        <Binding Path="PortsClosed" />
+                        <Binding Source="{x:Static localization:Strings.Closed}" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </StackPanel>
         <controls:MultiSelectDataGrid x:Name="DataGridResults"
                                       Grid.Row="3" ItemsSource="{Binding Path=ResultsView}"
                                       SelectedItem="{Binding Path=SelectedResult}"

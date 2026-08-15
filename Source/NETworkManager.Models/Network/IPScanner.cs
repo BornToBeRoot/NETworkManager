@@ -21,6 +21,20 @@ public sealed class IPScanner(IPScannerOptions options)
     #region Variables
 
     private int _progressValue;
+    private int _hostsUp;
+    private int _hostsDown;
+
+    /// <summary>
+    ///     Gets the number of hosts found to be reachable so far. Thread-safe; may be read from
+    ///     any thread while the scan is running.
+    /// </summary>
+    public int HostsUp => Volatile.Read(ref _hostsUp);
+
+    /// <summary>
+    ///     Gets the number of hosts found to be unreachable so far. Thread-safe; may be read from
+    ///     any thread while the scan is running.
+    /// </summary>
+    public int HostsDown => Volatile.Read(ref _hostsDown);
 
     #endregion
 
@@ -128,6 +142,13 @@ public sealed class IPScanner(IPScannerOptions options)
                     var isReachable = pingInfo.Status == IPStatus.Success || // ICMP response
                                       isAnyPortOpen || // Any port is open
                                       netBIOSInfo.IsReachable; // NetBIOS response
+
+                    // Count reachable/unreachable hosts unconditionally, since ShowAllResults
+                    // (below) may prevent unreachable hosts from ever reaching HostScanned
+                    if (isReachable)
+                        Interlocked.Increment(ref _hostsUp);
+                    else
+                        Interlocked.Increment(ref _hostsDown);
 
                     // DNS & ARP
                     if (isReachable || options.ShowAllResults)

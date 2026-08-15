@@ -200,8 +200,14 @@ public class PingMonitorViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(StatusTimeToolTip));
         }
     }
+
+    /// <summary>
+    /// Gets the tooltip text for the connectivity icon, e.g. "Last status change: 14:32:05".
+    /// </summary>
+    public string StatusTimeToolTip => $"{Strings.StatusChange}: {StatusTime:HH:mm:ss}";
 
     /// <summary>
     /// Gets or sets the total number of ping packets transmitted.

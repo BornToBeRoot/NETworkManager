@@ -9,6 +9,7 @@ using NETworkManager.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
@@ -136,6 +137,25 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
     /// </summary>
     public ICollectionView HostsView { get; }
 
+    /// <summary>
+    ///     Bumped whenever a host is added/removed, or a host's reachability/running state
+    ///     changes. Used only as a change-notification trigger for the per-group up/down summary
+    ///     (see <see cref="PingMonitorGroupSummaryConverter"/>) - the value itself carries no
+    ///     meaning.
+    /// </summary>
+    public int HostsChangeVersion
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Constructor, load settings
@@ -152,6 +172,7 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
         HostsView = CollectionViewSource.GetDefaultView(Hosts);
         HostsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PingMonitorView.Group)));
         HostsView.SortDescriptions.Add(new SortDescription(nameof(PingMonitorView.Group), ListSortDirection.Ascending));
+        Hosts.CollectionChanged += Hosts_CollectionChanged;
 
         InitializeProfileHost();
     }
@@ -370,6 +391,34 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
 
         IsCanceling = false;
         IsRunning = false;
+    }
+
+    /// <summary>
+    ///     Keeps each host's <see cref="PingMonitorViewModel.PropertyChanged"/> subscription in
+    ///     sync with <see cref="Hosts"/>, and bumps <see cref="HostsChangeVersion"/> so the
+    ///     per-group up/down summary (<see cref="PingMonitorGroupSummaryConverter"/>) re-evaluates.
+    /// </summary>
+    private void Hosts_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e.NewItems != null)
+            foreach (PingMonitorView host in e.NewItems)
+                host.ViewModel.PropertyChanged += HostViewModel_PropertyChanged;
+
+        if (e.OldItems != null)
+            foreach (PingMonitorView host in e.OldItems)
+                host.ViewModel.PropertyChanged -= HostViewModel_PropertyChanged;
+
+        HostsChangeVersion++;
+    }
+
+    /// <summary>
+    ///     Bumps <see cref="HostsChangeVersion"/> whenever a host's reachability or running state
+    ///     changes, so the per-group up/down summary re-evaluates.
+    /// </summary>
+    private void HostViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName is nameof(PingMonitorViewModel.IsReachable) or nameof(PingMonitorViewModel.IsRunning))
+            HostsChangeVersion++;
     }
 
     #endregion

@@ -25,6 +25,13 @@ public partial class PingMonitorView
 
     public string Group => _viewModel.Group;
 
+    /// <summary>
+    /// The underlying view model, exposed so <see cref="ViewModels.PingMonitorHostViewModel"/> can
+    /// observe per-host status (<see cref="PingMonitorViewModel.IsReachable"/>,
+    /// <see cref="PingMonitorViewModel.IsRunning"/>) for the group up/down summary.
+    /// </summary>
+    public PingMonitorViewModel ViewModel => _viewModel;
+
     public void Start()
     {
         _viewModel.Start();

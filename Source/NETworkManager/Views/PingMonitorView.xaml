@@ -58,6 +58,9 @@
                            Visibility="{Binding IsErrorMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                 <Rectangle Grid.Column="0" Grid.Row="0"
                            Width="24" Height="24"
+                           ToolTip="{Binding StatusTimeToolTip}"
+                           ToolTipService.InitialShowDelay="0"
+                           ToolTipService.ShowDuration="600000"
                            Visibility="{Binding IsErrorMessageDisplayed, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                     <Rectangle.Resources>
                         <VisualBrush x:Key="VisualConnected" Stretch="Uniform"
@@ -69,6 +72,9 @@
                     </Rectangle.Resources>
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
+                            <Style.Resources>
+                                <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource DefaultToolTip}" />
+                            </Style.Resources>
                             <Setter Property="OpacityMask" Value="{StaticResource VisualPending}" />
                             <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
                             <Style.Triggers>
@@ -105,11 +111,13 @@
                            Style="{StaticResource DefaultTextBlock}"
                            Foreground="{StaticResource MahApps.Brushes.Gray5}">
                     <TextBlock.Text>
-                        <MultiBinding StringFormat="{} {0} / {1} / {2} %">
-                            <Binding Path="Transmitted" />
+                        <MultiBinding StringFormat="{}{0}: {1} · {2}: {3} · {4}: {5}%">
+                            <Binding Source="{x:Static localization:Strings.Received}" />
+                            <Binding Path="Received" />
+                            <Binding Source="{x:Static localization:Strings.Lost}" />
                             <Binding Path="Lost" />
+                            <Binding Source="{x:Static localization:Strings.PacketLoss}" />
                             <Binding Path="PacketLoss" />
-                            <Binding Path="TimeMs" />
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
@@ -184,114 +192,60 @@
                 </Button>
             </Grid>
         </Expander.Header>
-        <Grid Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="350" MaxWidth="600" />
-                <ColumnDefinition Width="10" />
-                <ColumnDefinition MinWidth="200" Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Grid.Row="0">
-                <Grid.Resources>
-                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}">
-                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                    </Style>
-                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
-                        <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
-                        <Setter Property="TextWrapping" Value="NoWrap" />
-                    </Style>
-                </Grid.Resources>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="5" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Hostname}" />
-                <TextBox Grid.Column="2" Grid.Row="0" Text="{Binding Hostname, Mode=OneWay}" />
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.IPAddress}" />
-                <TextBox Grid.Column="2" Grid.Row="2" Text="{Binding IPAddress, Mode=OneWay}" />
-                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.StatusChange}" />
-                <TextBox Grid.Column="2" Grid.Row="4" Text="{Binding StatusTime, Mode=OneWay, StringFormat={}{0:HH:mm:ss}}" />
-                <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.Received}" />
-                <TextBox Grid.Column="6" Grid.Row="0" Text="{Binding Received, Mode=OneWay}" />
-                <TextBlock Grid.Column="4" Grid.Row="2" Text="{x:Static localization:Strings.Lost}" />
-                <TextBox Grid.Column="6" Grid.Row="2" Text="{Binding Lost, Mode=OneWay}" />
-                <TextBlock Grid.Column="4" Grid.Row="4" Text="{x:Static localization:Strings.PacketLoss}" />
-                <TextBox Grid.Column="6" Grid.Row="4">
-                    <TextBox.Text>
-                        <MultiBinding Mode="OneWay" StringFormat="{}{0} %">
-                            <Binding Path="PacketLoss" />
-                        </MultiBinding>
-                    </TextBox.Text>
-                </TextBox>
-            </Grid>
-            <Grid Grid.Column="2" Margin="0,0,0,0">
-                <lvc:CartesianChart Background="Transparent"
-                                    Series="{Binding Series}"
-                                    XAxes="{Binding PingXAxes}"
-                                    YAxes="{Binding PingYAxes}"
-                                    DrawMarginFrame="{x:Null}"
-                                    EasingFunction="{x:Null}"
-                                    ZoomMode="PanX, ZoomX, NoFit"
-                                    ContextMenuOpening="Chart_ContextMenuOpening"
-                                    RenderOptions.BitmapScalingMode="NearestNeighbor">
-                    <lvc:CartesianChart.Tooltip>
-                        <controls:LiveChartsPingTimeTooltip />
-                    </lvc:CartesianChart.Tooltip>
-                </lvc:CartesianChart>
-                <Button HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                        Margin="0,5,5,0"
-                        Command="{Binding GoLiveCommand}"
-                        Style="{StaticResource CleanButton}"
-                        Visibility="{Binding IsLiveMode, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-                    <StackPanel Orientation="Horizontal">
-                        <Rectangle Width="16" Height="16"
-                                   VerticalAlignment="Center">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AccessPoint}" />
-                            </Rectangle.OpacityMask>
-                            <Rectangle.Style>
-                                <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Rectangle.Style>
-                        </Rectangle>
-                        <TextBlock Margin="4,0,0,0"
-                                   Text="{x:Static localization:Strings.Live}"
-                                   FontSize="14"
-                                   VerticalAlignment="Center">
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                    </StackPanel>
-                </Button>
-            </Grid>
+        <Grid Margin="10" MinHeight="150">
+            <lvc:CartesianChart Background="Transparent"
+                                Series="{Binding Series}"
+                                XAxes="{Binding PingXAxes}"
+                                YAxes="{Binding PingYAxes}"
+                                DrawMarginFrame="{x:Null}"
+                                EasingFunction="{x:Null}"
+                                ZoomMode="PanX, ZoomX, NoFit"
+                                ContextMenuOpening="Chart_ContextMenuOpening"
+                                RenderOptions.BitmapScalingMode="NearestNeighbor">
+                <lvc:CartesianChart.Tooltip>
+                    <controls:LiveChartsPingTimeTooltip />
+                </lvc:CartesianChart.Tooltip>
+            </lvc:CartesianChart>
+            <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Margin="0,5,5,0"
+                    Command="{Binding GoLiveCommand}"
+                    Style="{StaticResource CleanButton}"
+                    Visibility="{Binding IsLiveMode, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16" Height="16"
+                               VerticalAlignment="Center">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AccessPoint}" />
+                        </Rectangle.OpacityMask>
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                    <TextBlock Margin="4,0,0,0"
+                               Text="{x:Static localization:Strings.Live}"
+                               FontSize="14"
+                               VerticalAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </StackPanel>
+            </Button>
         </Grid>
     </Expander>
 </UserControl>
