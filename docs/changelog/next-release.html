@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.d8493857.css">
-<script src="/NETworkManager/assets/js/runtime~main.75407e76.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.c19bd519.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.3d2a01d1.js" defer="defer"></script>
 </head>
 <body>
@@ -45,12 +45,21 @@ Release date: <strong>xx.xx.2026</strong></p>
 </ul>
 <p><strong>IP Scanner</strong></p>
 <ul>
+<li class="">Host input now accepts newline-separated hosts (one per line, e.g. a column pasted from Excel), converted automatically to the semicolon-separated form. Thanks to <a href="https://github.com/dearmb" target="_blank" rel="noopener noreferrer" class="">@dearmb</a> <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3568" target="_blank" rel="noopener noreferrer" class="">#3568</a></li>
+<li class="">Host input now supports shorthand IPv4 ranges like <code>192.168.0.1-100</code>, in addition to the existing <code>192.168.0.0-192.168.0.100</code> and <code>192.168.[0-100].1</code> range formats. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3568" target="_blank" rel="noopener noreferrer" class="">#3568</a></li>
 <li class="">Added <code>135</code> (RPC) and <code>9100</code> (raw printing) to the default <strong>Ports</strong> list used to detect if a host is reachable. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3564" target="_blank" rel="noopener noreferrer" class="">#3564</a></li>
 <li class="">Reduced the default <strong>Max. concurrent port threads</strong> from <code>5</code> to <code>4</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3564" target="_blank" rel="noopener noreferrer" class="">#3564</a></li>
 <li class="">Reduced the default <strong>Max. concurrent host threads</strong> from <code>256</code> to <code>64</code>, a more conservative default that puts less simultaneous load on the scanned network. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3564" target="_blank" rel="noopener noreferrer" class="">#3564</a></li>
 </ul>
+<p><strong>Ping Monitor</strong></p>
+<ul>
+<li class="">Host input now accepts newline-separated hosts (one per line, e.g. a column pasted from Excel), converted automatically to the semicolon-separated form. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3568" target="_blank" rel="noopener noreferrer" class="">#3568</a></li>
+<li class="">Host input now supports shorthand IPv4 ranges like <code>192.168.0.1-100</code>, in addition to the existing <code>192.168.0.0-192.168.0.100</code> and <code>192.168.[0-100].1</code> range formats. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3568" target="_blank" rel="noopener noreferrer" class="">#3568</a></li>
+</ul>
 <p><strong>Port Scanner</strong></p>
 <ul>
+<li class="">Host and Ports input fields now accept newline-separated entries (one per line, e.g. a column pasted from Excel), converted automatically to the semicolon-separated form. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3568" target="_blank" rel="noopener noreferrer" class="">#3568</a></li>
+<li class="">Host input now supports shorthand IPv4 ranges like <code>192.168.0.1-100</code>, in addition to the existing <code>192.168.0.0-192.168.0.100</code> and <code>192.168.[0-100].1</code> range formats. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3568" target="_blank" rel="noopener noreferrer" class="">#3568</a></li>
 <li class="">Reduced the default <strong>Max. concurrent host threads</strong> from <code>5</code> to <code>4</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3564" target="_blank" rel="noopener noreferrer" class="">#3564</a></li>
 <li class="">Reduced the default <strong>Max. concurrent port threads</strong> from <code>256</code> to <code>64</code>, a more conservative default that puts less simultaneous load on the scanned host. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3564" target="_blank" rel="noopener noreferrer" class="">#3564</a></li>
 <li class="">Added a new <strong>Well-known ports</strong> (<code>1-1024</code>) default port profile. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3564" target="_blank" rel="noopener noreferrer" class="">#3564</a></li>
