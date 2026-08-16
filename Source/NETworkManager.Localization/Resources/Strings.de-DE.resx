@@ -229,7 +229,7 @@
     <value>Nicht fragmentieren</value>
   </data>
   <data name="Down" xml:space="preserve">
-    <value>Down</value>
+    <value>Nicht erreichbar</value>
   </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>Anmeldeinformation bearbeiten</value>
@@ -1256,7 +1256,7 @@ Profildateien sind nicht betroffen!</value>
     <value>Untray / Fenster in den Vordergrund bringen</value>
   </data>
   <data name="Up" xml:space="preserve">
-    <value>Up</value>
+    <value>Erreichbar</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -2449,7 +2449,7 @@ ist deaktiviert!</value>
     <value>Pause</value>
   </data>
   <data name="Paused" xml:space="preserve">
-    <value>Paused</value>
+    <value>Pausiert</value>
   </data>
   <data name="Resume" xml:space="preserve">
     <value>Fortsetzen</value>
@@ -2845,7 +2845,7 @@ ist deaktiviert!</value>
     <value>Empfangen</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>Last status change</value>
+    <value>Letzte Statusänderung</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>Update verfügbar!</value>
@@ -3893,13 +3893,13 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
     <value>Gruppe schließen</value>
   </data>
   <data name="StartGroup" xml:space="preserve">
-    <value>Start group</value>
+    <value>Gruppe starten</value>
   </data>
   <data name="GroupActions" xml:space="preserve">
-    <value>Group actions</value>
+    <value>Gruppenaktionen</value>
   </data>
   <data name="PauseGroup" xml:space="preserve">
-    <value>Pause group</value>
+    <value>Gruppe pausieren</value>
   </data>
   <data name="RunCommandDotsWithHotKey" xml:space="preserve">
     <value>Befehl ausführen… (Strg+Shift+P)</value>
