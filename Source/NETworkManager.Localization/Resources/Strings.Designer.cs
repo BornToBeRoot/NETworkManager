@@ -1898,7 +1898,34 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("CloseGroup", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Start group.
+        /// </summary>
+        public static string StartGroup {
+            get {
+                return ResourceManager.GetString("StartGroup", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Group actions.
+        /// </summary>
+        public static string GroupActions {
+            get {
+                return ResourceManager.GetString("GroupActions", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Pause group.
+        /// </summary>
+        public static string PauseGroup {
+            get {
+                return ResourceManager.GetString("PauseGroup", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Closing in {0} seconds....
         /// </summary>
