@@ -85,9 +85,19 @@ public partial class PingMonitorHostView
         StopGroupActionsAutoCloseTimer((ToggleButton)sender);
     }
 
+    /// <summary>
+    ///     Stops any pending auto-close timer when the group (and its toggle) is torn down, e.g.
+    ///     because the group was closed - otherwise the timer would keep the detached toggle alive
+    ///     until it fires.
+    /// </summary>
+    private void GroupActionsToggle_Unloaded(object sender, RoutedEventArgs e)
+    {
+        StopGroupActionsAutoCloseTimer((ToggleButton)sender);
+    }
+
     private static bool IsMouseOverGroupHeader(ToggleButton toggle)
     {
-        return toggle.Parent is Grid headerGrid && headerGrid.IsMouseOver;
+        return toggle.FindName("GroupHeaderGrid") is Grid headerGrid && headerGrid.IsMouseOver;
     }
 
     private static void StartGroupActionsAutoCloseTimer(ToggleButton toggle)

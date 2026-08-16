@@ -208,7 +208,8 @@
                                                         <Expander IsExpanded="True"
                                                                   Style="{StaticResource ResourceKey=DefaultExpander}">
                                                             <Expander.Header>
-                                                                <Grid MouseEnter="GroupHeader_MouseEnter"
+                                                                <Grid x:Name="GroupHeaderGrid"
+                                                                      MouseEnter="GroupHeader_MouseEnter"
                                                                       MouseLeave="GroupHeader_MouseLeave">
                                                                     <Grid.ColumnDefinitions>
                                                                         <ColumnDefinition Width="*" />
@@ -300,6 +301,7 @@
                                                                                   ToolTip="{x:Static Member=localization:Strings.GroupActions}"
                                                                                   Checked="GroupActionsToggle_Checked"
                                                                                   Unchecked="GroupActionsToggle_Unchecked"
+                                                                                  Unloaded="GroupActionsToggle_Unloaded"
                                                                                   Visibility="{Binding Path=IsChecked, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
                                                                         <Rectangle Width="16" Height="16">
                                                                             <Rectangle.OpacityMask>
