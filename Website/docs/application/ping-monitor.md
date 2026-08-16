@@ -52,6 +52,18 @@ You can interact with the chart to inspect past results:
 
 When you zoom or pan, the chart leaves live mode and stops scrolling. A **Live** button then appears in the top-right corner of the chart — click it to return to live mode and resume auto-scrolling.
 
+### Groups
+
+Hosts are grouped by their profile group (or **Hosts** if none is set). Each group header shows a live count of hosts that are up, down and paused (**Paused** is only shown while at least one host in the group is paused).
+
+Hover over a group header to reveal its action buttons:
+
+| Action | Description |
+|--------|-------------|
+| **Start** | Starts every host in the group that isn't currently running |
+| **Pause** | Pauses every host in the group that's currently running |
+| **Close** | Stops and removes every host in the group |
+
 ### Context menu
 
 Right-click a monitored host (anywhere except the chart) to open the context menu:
