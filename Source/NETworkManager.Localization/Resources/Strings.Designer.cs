@@ -1909,6 +1909,15 @@ namespace NETworkManager.Localization.Resources {
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to Group actions.
+        /// </summary>
+        public static string GroupActions {
+            get {
+                return ResourceManager.GetString("GroupActions", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to Pause group.
         /// </summary>
         public static string PauseGroup {

@@ -3895,6 +3895,9 @@ Try again in a few seconds.</value>
   <data name="StartGroup" xml:space="preserve">
     <value>Start group</value>
   </data>
+  <data name="GroupActions" xml:space="preserve">
+    <value>Group actions</value>
+  </data>
   <data name="PauseGroup" xml:space="preserve">
     <value>Pause group</value>
   </data>

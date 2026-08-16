@@ -208,7 +208,8 @@
                                                         <Expander IsExpanded="True"
                                                                   Style="{StaticResource ResourceKey=DefaultExpander}">
                                                             <Expander.Header>
-                                                                <Grid>
+                                                                <Grid MouseEnter="GroupHeader_MouseEnter"
+                                                                      MouseLeave="GroupHeader_MouseLeave">
                                                                     <Grid.ColumnDefinitions>
                                                                         <ColumnDefinition Width="*" />
                                                                         <ColumnDefinition Width="10" />
@@ -292,23 +293,38 @@
                                                                             </TextBlock.Visibility>
                                                                         </TextBlock>
                                                                     </StackPanel>
-                                                                    <Rectangle Grid.Column="4" Grid.Row="0"
-                                                                               Width="16" Height="16"
-                                                                               Visibility="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Grid}}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
-                                                                        <Rectangle.OpacityMask>
-                                                                            <VisualBrush Stretch="Uniform"
-                                                                                    Visual="{iconPacks:Material Kind=DotsVertical}" />
-                                                                        </Rectangle.OpacityMask>
-                                                                        <Rectangle.Style>
-                                                                            <Style
-                                                                                TargetType="{x:Type TypeName=Rectangle}">
-                                                                                <Setter Property="Fill"
-                                                                                    Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
-                                                                            </Style>
-                                                                        </Rectangle.Style>
-                                                                    </Rectangle>
+                                                                    <ToggleButton x:Name="GroupActionsToggle"
+                                                                                  Grid.Column="4" Grid.Row="0"
+                                                                                  HorizontalAlignment="Right"
+                                                                                  Style="{StaticResource ResourceKey=CleanToggleButton}"
+                                                                                  ToolTip="{x:Static Member=localization:Strings.GroupActions}"
+                                                                                  Checked="GroupActionsToggle_Checked"
+                                                                                  Unchecked="GroupActionsToggle_Unchecked"
+                                                                                  Visibility="{Binding Path=IsChecked, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                                                                        <Rectangle Width="16" Height="16">
+                                                                            <Rectangle.OpacityMask>
+                                                                                <VisualBrush Stretch="Uniform"
+                                                                                        Visual="{iconPacks:Material Kind=DotsVertical}" />
+                                                                            </Rectangle.OpacityMask>
+                                                                            <Rectangle.Style>
+                                                                                <Style
+                                                                                    TargetType="{x:Type TypeName=Rectangle}">
+                                                                                    <Setter Property="Fill"
+                                                                                        Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+                                                                                    <Style.Triggers>
+                                                                                        <DataTrigger
+                                                                                            Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ToggleButton}}, Path=IsMouseOver}"
+                                                                                            Value="True">
+                                                                                            <Setter Property="Fill"
+                                                                                                Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
+                                                                                        </DataTrigger>
+                                                                                    </Style.Triggers>
+                                                                                </Style>
+                                                                            </Rectangle.Style>
+                                                                        </Rectangle>
+                                                                    </ToggleButton>
                                                                     <Grid Grid.Column="4" Grid.Row="0"
-                                                                          Visibility="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Grid}}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                                                          Visibility="{Binding Path=IsChecked, ElementName=GroupActionsToggle, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                                                         <Grid.ColumnDefinitions>
                                                                             <ColumnDefinition Width="Auto" />
                                                                             <ColumnDefinition Width="10" />
