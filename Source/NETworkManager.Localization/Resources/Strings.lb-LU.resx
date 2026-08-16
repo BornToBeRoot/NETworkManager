@@ -3892,6 +3892,15 @@ Probéiert et an e puer Sekonnen erëm.</value>
   <data name="CloseGroup" xml:space="preserve">
     <value>Grupp zoumaachen</value>
   </data>
+  <data name="StartGroup" xml:space="preserve">
+    <value>Start group</value>
+  </data>
+  <data name="GroupActions" xml:space="preserve">
+    <value>Group actions</value>
+  </data>
+  <data name="PauseGroup" xml:space="preserve">
+    <value>Pause group</value>
+  </data>
   <data name="RunCommandDotsWithHotKey" xml:space="preserve">
     <value>Befeel ausféieren… (Ctrl+Shift+P)</value>
   </data>

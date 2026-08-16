@@ -3892,6 +3892,15 @@ Versuchen Sie es in einigen Sekunden erneut.</value>
   <data name="CloseGroup" xml:space="preserve">
     <value>Gruppe schließen</value>
   </data>
+  <data name="StartGroup" xml:space="preserve">
+    <value>Start group</value>
+  </data>
+  <data name="GroupActions" xml:space="preserve">
+    <value>Group actions</value>
+  </data>
+  <data name="PauseGroup" xml:space="preserve">
+    <value>Pause group</value>
+  </data>
   <data name="RunCommandDotsWithHotKey" xml:space="preserve">
     <value>Befehl ausführen… (Strg+Shift+P)</value>
   </data>
