@@ -55,6 +55,7 @@ Release date: **xx.xx.2026**
 **Ping Monitor**
 
 - Added a live count of hosts up/down (and paused, if any) per group, next to the group's close button. [#3572](https://github.com/BornToBeRoot/NETworkManager/pull/3572)
+- Added **Start** and **Pause** buttons to each group header (shown next to the close button on mouse-over), to start every paused host in the group or pause every running one at once. [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 - Reworked each monitored host's card: the collapsed quick info now shows labeled values (`Received: X · Lost: Y · Packet loss: Z%`) instead of unlabeled numbers, the expanded view shows only the latency chart (with more room, since Hostname/IP address are already visible in the header) and the last status change time moved to a tooltip on the connectivity icon. The **Status change** field was also renamed to **Last status change**. [#3572](https://github.com/BornToBeRoot/NETworkManager/pull/3572)
 - Host input now accepts newline-separated hosts (one per line, e.g. a column pasted from Excel), converted automatically to the semicolon-separated form. [#3568](https://github.com/BornToBeRoot/NETworkManager/pull/3568)
 - Host input now supports shorthand IPv4 ranges like `192.168.0.1-100`, in addition to the existing `192.168.0.0-192.168.0.100` and `192.168.[0-100].1` range formats. [#3568](https://github.com/BornToBeRoot/NETworkManager/pull/3568)

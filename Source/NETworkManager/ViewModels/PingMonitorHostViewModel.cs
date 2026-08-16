@@ -239,6 +239,28 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
         RemoveGroup(group.ToString());
     }
 
+    /// <summary>
+    ///     Gets the command to start every host in a group that is not currently running.
+    /// </summary>
+    public ICommand StartGroupCommand => new RelayCommand(StartGroupAction);
+
+    private void StartGroupAction(object group)
+    {
+        foreach (var host in Hosts.Where(host => host.Group.Equals(group.ToString()) && !host.IsRunning))
+            host.Start();
+    }
+
+    /// <summary>
+    ///     Gets the command to pause every host in a group that is currently running.
+    /// </summary>
+    public ICommand PauseGroupCommand => new RelayCommand(PauseGroupAction);
+
+    private void PauseGroupAction(object group)
+    {
+        foreach (var host in Hosts.Where(host => host.Group.Equals(group.ToString()) && host.IsRunning))
+            host.Stop();
+    }
+
     #endregion
 
     #region Methods

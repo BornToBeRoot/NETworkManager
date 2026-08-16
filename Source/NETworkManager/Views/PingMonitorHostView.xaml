@@ -196,8 +196,8 @@
                     <ScrollViewer Grid.Column="0" Grid.Row="2"
                                   HorizontalScrollBarVisibility="Auto">
                         <ItemsControl ItemsSource="{Binding Path=HostsView}"
-                                  Visibility="{Binding Path=Hosts.Count, Converter={StaticResource ResourceKey=IntNotZeroToVisibilityCollapsedConverter}}"
-                                  Background="Transparent">
+                                      Visibility="{Binding Path=Hosts.Count, Converter={StaticResource ResourceKey=IntNotZeroToVisibilityCollapsedConverter}}"
+                                      Background="Transparent">
                             <ItemsControl.GroupStyle>
                                 <GroupStyle>
                                     <GroupStyle.ContainerStyle>
@@ -216,92 +216,191 @@
                                                                         <ColumnDefinition Width="10" />
                                                                         <ColumnDefinition Width="Auto" />
                                                                     </Grid.ColumnDefinitions>
+                                                                    <Rectangle Grid.Column="0" Grid.ColumnSpan="5"
+                                                                               Fill="Transparent" />
                                                                     <TextBlock Grid.Column="0" Grid.Row="0"
                                                                                Text="{Binding Path=(CollectionViewGroup.Name)}"
                                                                                Style="{DynamicResource ResourceKey=HeaderTextBlock}" />
                                                                     <StackPanel Grid.Column="2" Grid.Row="0"
-                                                                                Orientation="Horizontal"
-                                                                                VerticalAlignment="Center">
-                                                                        <TextBlock Style="{StaticResource ResourceKey=DefaultTextBlock}"
-                                                                                   Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}">
+                                                                            Orientation="Horizontal"
+                                                                            VerticalAlignment="Center">
+                                                                        <TextBlock
+                                                                            Style="{StaticResource ResourceKey=DefaultTextBlock}"
+                                                                            Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}">
                                                                             <TextBlock.Text>
-                                                                                <MultiBinding Converter="{StaticResource ResourceKey=PingMonitorGroupSummaryConverter}"
-                                                                                              ConverterParameter="Up">
+                                                                                <MultiBinding
+                                                                                    Converter="{StaticResource ResourceKey=PingMonitorGroupSummaryConverter}"
+                                                                                    ConverterParameter="Up">
                                                                                     <Binding />
-                                                                                    <Binding Path="DataContext.HostsChangeVersion"
-                                                                                             RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}" />
-                                                                                    <Binding Source="{x:Static Member=localization:Strings.Up}" />
+                                                                                    <Binding
+                                                                                        Path="DataContext.HostsChangeVersion"
+                                                                                        RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}" />
+                                                                                    <Binding
+                                                                                        Source="{x:Static Member=localization:Strings.Up}" />
                                                                                 </MultiBinding>
                                                                             </TextBlock.Text>
                                                                         </TextBlock>
                                                                         <TextBlock Text="·"
-                                                                                   Style="{StaticResource ResourceKey=DefaultTextBlock}"
-                                                                                   Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}"
-                                                                                   Margin="6,0,6,0" />
-                                                                        <TextBlock Style="{StaticResource ResourceKey=DefaultTextBlock}"
-                                                                                   Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}">
+                                                                                Style="{StaticResource ResourceKey=DefaultTextBlock}"
+                                                                                Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}"
+                                                                                Margin="6,0,6,0" />
+                                                                        <TextBlock
+                                                                            Style="{StaticResource ResourceKey=DefaultTextBlock}"
+                                                                            Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}">
                                                                             <TextBlock.Text>
-                                                                                <MultiBinding Converter="{StaticResource ResourceKey=PingMonitorGroupSummaryConverter}"
-                                                                                              ConverterParameter="Down">
+                                                                                <MultiBinding
+                                                                                    Converter="{StaticResource ResourceKey=PingMonitorGroupSummaryConverter}"
+                                                                                    ConverterParameter="Down">
                                                                                     <Binding />
-                                                                                    <Binding Path="DataContext.HostsChangeVersion"
-                                                                                             RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}" />
-                                                                                    <Binding Source="{x:Static Member=localization:Strings.Down}" />
+                                                                                    <Binding
+                                                                                        Path="DataContext.HostsChangeVersion"
+                                                                                        RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}" />
+                                                                                    <Binding
+                                                                                        Source="{x:Static Member=localization:Strings.Down}" />
                                                                                 </MultiBinding>
                                                                             </TextBlock.Text>
                                                                         </TextBlock>
                                                                         <TextBlock Text="·"
-                                                                                   Style="{StaticResource ResourceKey=DefaultTextBlock}"
-                                                                                   Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}"
-                                                                                   Margin="6,0,6,0"
-                                                                                   Visibility="{Binding ElementName=PausedText, Path=Visibility}" />
+                                                                                Style="{StaticResource ResourceKey=DefaultTextBlock}"
+                                                                                Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}"
+                                                                                Margin="6,0,6,0"
+                                                                                Visibility="{Binding ElementName=PausedText, Path=Visibility}" />
                                                                         <TextBlock x:Name="PausedText"
-                                                                                   Style="{StaticResource ResourceKey=DefaultTextBlock}"
-                                                                                   Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}">
+                                                                                Style="{StaticResource ResourceKey=DefaultTextBlock}"
+                                                                                Foreground="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}">
                                                                             <TextBlock.Text>
-                                                                                <MultiBinding Converter="{StaticResource ResourceKey=PingMonitorGroupSummaryConverter}"
-                                                                                              ConverterParameter="Paused">
+                                                                                <MultiBinding
+                                                                                    Converter="{StaticResource ResourceKey=PingMonitorGroupSummaryConverter}"
+                                                                                    ConverterParameter="Paused">
                                                                                     <Binding />
-                                                                                    <Binding Path="DataContext.HostsChangeVersion"
-                                                                                             RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}" />
-                                                                                    <Binding Source="{x:Static Member=localization:Strings.Paused}" />
+                                                                                    <Binding
+                                                                                        Path="DataContext.HostsChangeVersion"
+                                                                                        RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}" />
+                                                                                    <Binding
+                                                                                        Source="{x:Static Member=localization:Strings.Paused}" />
                                                                                 </MultiBinding>
                                                                             </TextBlock.Text>
                                                                             <TextBlock.Visibility>
-                                                                                <MultiBinding Converter="{StaticResource ResourceKey=PingMonitorGroupSummaryConverter}"
-                                                                                              ConverterParameter="PausedVisibility">
+                                                                                <MultiBinding
+                                                                                    Converter="{StaticResource ResourceKey=PingMonitorGroupSummaryConverter}"
+                                                                                    ConverterParameter="PausedVisibility">
                                                                                     <Binding />
-                                                                                    <Binding Path="DataContext.HostsChangeVersion"
-                                                                                             RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}" />
+                                                                                    <Binding
+                                                                                        Path="DataContext.HostsChangeVersion"
+                                                                                        RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}" />
                                                                                 </MultiBinding>
                                                                             </TextBlock.Visibility>
                                                                         </TextBlock>
                                                                     </StackPanel>
-                                                                    <Button Grid.Column="4" Grid.Row="0"
-                                                                            HorizontalAlignment="Right"
-                                                                            Command="{Binding Path=DataContext.CloseGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}}"
-                                                                            CommandParameter="{Binding Path=(CollectionViewGroup.Name)}"
-                                                                            Style="{StaticResource ResourceKey=CleanButton}"
-                                                                            ToolTip="{x:Static Member=localization:Strings.CloseGroup}">
-                                                                        <Rectangle Width="16" Height="16">
-                                                                            <Rectangle.OpacityMask>
-                                                                                <VisualBrush Stretch="Fill"
-                                                                                    Visual="{iconPacks:Material Kind=WindowClose}" />
-                                                                            </Rectangle.OpacityMask>
-                                                                            <Rectangle.Style>
-                                                                                <Style TargetType="{x:Type TypeName=Rectangle}">
-                                                                                    <Setter Property="Fill" Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
-                                                                                    <Style.Triggers>
-                                                                                        <DataTrigger
-                                                                                            Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}"
-                                                                                            Value="True">
-                                                                                            <Setter Property="Fill" Value="Red" />
-                                                                                        </DataTrigger>
-                                                                                    </Style.Triggers>
-                                                                                </Style>
-                                                                            </Rectangle.Style>
-                                                                        </Rectangle>
-                                                                    </Button>
+                                                                    <Rectangle Grid.Column="4" Grid.Row="0"
+                                                                               Width="16" Height="16"
+                                                                               Visibility="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Grid}}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                                                                        <Rectangle.OpacityMask>
+                                                                            <VisualBrush Stretch="Uniform"
+                                                                                    Visual="{iconPacks:Material Kind=DotsVertical}" />
+                                                                        </Rectangle.OpacityMask>
+                                                                        <Rectangle.Style>
+                                                                            <Style
+                                                                                TargetType="{x:Type TypeName=Rectangle}">
+                                                                                <Setter Property="Fill"
+                                                                                    Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+                                                                            </Style>
+                                                                        </Rectangle.Style>
+                                                                    </Rectangle>
+                                                                    <Grid Grid.Column="4" Grid.Row="0"
+                                                                          Visibility="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Grid}}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="Auto" />
+                                                                            <ColumnDefinition Width="10" />
+                                                                            <ColumnDefinition Width="Auto" />
+                                                                            <ColumnDefinition Width="10" />
+                                                                            <ColumnDefinition Width="Auto" />
+                                                                        </Grid.ColumnDefinitions>
+                                                                        <Button Grid.Column="0" Grid.Row="0"
+                                                                                HorizontalAlignment="Right"
+                                                                                Command="{Binding Path=DataContext.StartGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}}"
+                                                                                CommandParameter="{Binding Path=(CollectionViewGroup.Name)}"
+                                                                                Style="{StaticResource ResourceKey=CleanButton}"
+                                                                                ToolTip="{x:Static Member=localization:Strings.StartGroup}">
+                                                                            <Rectangle Width="16" Height="16">
+                                                                                <Rectangle.OpacityMask>
+                                                                                    <VisualBrush Stretch="Uniform"
+                                                                                        Visual="{iconPacks:Material Kind=Play}" />
+                                                                                </Rectangle.OpacityMask>
+                                                                                <Rectangle.Style>
+                                                                                    <Style
+                                                                                        TargetType="{x:Type TypeName=Rectangle}">
+                                                                                        <Setter Property="Fill"
+                                                                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+                                                                                        <Style.Triggers>
+                                                                                            <DataTrigger
+                                                                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}"
+                                                                                                Value="True">
+                                                                                                <Setter Property="Fill"
+                                                                                                    Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
+                                                                                            </DataTrigger>
+                                                                                        </Style.Triggers>
+                                                                                    </Style>
+                                                                                </Rectangle.Style>
+                                                                            </Rectangle>
+                                                                        </Button>
+                                                                        <Button Grid.Column="2" Grid.Row="0"
+                                                                                HorizontalAlignment="Right"
+                                                                                Command="{Binding Path=DataContext.PauseGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}}"
+                                                                                CommandParameter="{Binding Path=(CollectionViewGroup.Name)}"
+                                                                                Style="{StaticResource ResourceKey=CleanButton}"
+                                                                                ToolTip="{x:Static Member=localization:Strings.PauseGroup}">
+                                                                            <Rectangle Width="16" Height="16">
+                                                                                <Rectangle.OpacityMask>
+                                                                                    <VisualBrush Stretch="Uniform"
+                                                                                        Visual="{iconPacks:Material Kind=Pause}" />
+                                                                                </Rectangle.OpacityMask>
+                                                                                <Rectangle.Style>
+                                                                                    <Style
+                                                                                        TargetType="{x:Type TypeName=Rectangle}">
+                                                                                        <Setter Property="Fill"
+                                                                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+                                                                                        <Style.Triggers>
+                                                                                            <DataTrigger
+                                                                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}"
+                                                                                                Value="True">
+                                                                                                <Setter Property="Fill"
+                                                                                                    Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray5}" />
+                                                                                            </DataTrigger>
+                                                                                        </Style.Triggers>
+                                                                                    </Style>
+                                                                                </Rectangle.Style>
+                                                                            </Rectangle>
+                                                                        </Button>
+                                                                        <Button Grid.Column="4" Grid.Row="0"
+                                                                                HorizontalAlignment="Right"
+                                                                                Command="{Binding Path=DataContext.CloseGroupCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}}"
+                                                                                CommandParameter="{Binding Path=(CollectionViewGroup.Name)}"
+                                                                                Style="{StaticResource ResourceKey=CleanButton}"
+                                                                                ToolTip="{x:Static Member=localization:Strings.CloseGroup}">
+                                                                            <Rectangle Width="16" Height="16">
+                                                                                <Rectangle.OpacityMask>
+                                                                                    <VisualBrush Stretch="Fill"
+                                                                                        Visual="{iconPacks:Material Kind=WindowClose}" />
+                                                                                </Rectangle.OpacityMask>
+                                                                                <Rectangle.Style>
+                                                                                    <Style
+                                                                                        TargetType="{x:Type TypeName=Rectangle}">
+                                                                                        <Setter Property="Fill"
+                                                                                            Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
+                                                                                        <Style.Triggers>
+                                                                                            <DataTrigger
+                                                                                                Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=Button}}, Path=IsMouseOver}"
+                                                                                                Value="True">
+                                                                                                <Setter Property="Fill"
+                                                                                                    Value="Red" />
+                                                                                            </DataTrigger>
+                                                                                        </Style.Triggers>
+                                                                                    </Style>
+                                                                                </Rectangle.Style>
+                                                                            </Rectangle>
+                                                                        </Button>
+                                                                    </Grid>
                                                                 </Grid>
                                                             </Expander.Header>
                                                             <ItemsPresenter />
@@ -337,8 +436,8 @@
                       Focusable="False"
                       Style="{StaticResource ResourceKey=VerticalGridSplitter}" />
         <hostControls:ProfileExpanderPanel Grid.Column="2" Grid.Row="0"
-                                            ProfileItemTemplate="{StaticResource ResourceKey=PingMonitorProfileItemTemplate}"
-                                            ProfileContextMenuExtraItems="{StaticResource ResourceKey=PingMonitorProfileContextMenuExtraItems}"
-                                            RunProfileCommand="{Binding Path=PingProfileCommand}" />
+                                           ProfileItemTemplate="{StaticResource ResourceKey=PingMonitorProfileItemTemplate}"
+                                           ProfileContextMenuExtraItems="{StaticResource ResourceKey=PingMonitorProfileContextMenuExtraItems}"
+                                           RunProfileCommand="{Binding Path=PingProfileCommand}" />
     </Grid>
 </UserControl>
