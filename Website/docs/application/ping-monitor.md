@@ -56,7 +56,7 @@ When you zoom or pan, the chart leaves live mode and stops scrolling. A **Live**
 
 Hosts are grouped by their profile group (or **Hosts** if none is set). Each group header shows a live count of hosts that are up, down and paused (**Paused** is only shown while at least one host in the group is paused).
 
-Hover over a group header to reveal its action buttons. Without a mouse (touch or keyboard), click/tap the **⋮** icon on the right instead - the buttons then stay visible for 20 seconds, or as long as you keep hovering.
+Click/tap the **⋮** icon on the right of a group header to open its action menu:
 
 | Action | Description |
 |--------|-------------|
