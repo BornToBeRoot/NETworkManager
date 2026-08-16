@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.d8493857.css">
-<script src="/NETworkManager/assets/js/runtime~main.2ea64677.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.16f38a79.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.3d2a01d1.js" defer="defer"></script>
 </head>
 <body>
@@ -64,7 +64,8 @@ Release date: <strong>xx.xx.2026</strong></p>
 </ul>
 <p><strong>Ping Monitor</strong></p>
 <ul>
-<li class="">Added a live count of hosts up/down (and paused, if any) per group, next to the group&#x27;s close button. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3572" target="_blank" rel="noopener noreferrer" class="">#3572</a></li>
+<li class="">Added a live count of hosts up/down (and paused, if any) to each group header. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3572" target="_blank" rel="noopener noreferrer" class="">#3572</a></li>
+<li class="">Added <strong>Start</strong> and <strong>Pause</strong> actions to each group header (next to the existing <strong>Close</strong>), to start every paused host in the group or pause every running one at once. Click/tap the <strong>⋮</strong> icon to open the group&#x27;s action menu. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3575" target="_blank" rel="noopener noreferrer" class="">#3575</a></li>
 <li class="">Reworked each monitored host&#x27;s card: the collapsed quick info now shows labeled values (<code>Received: X · Lost: Y · Packet loss: Z%</code>) instead of unlabeled numbers, the expanded view shows only the latency chart (with more room, since Hostname/IP address are already visible in the header) and the last status change time moved to a tooltip on the connectivity icon. The <strong>Status change</strong> field was also renamed to <strong>Last status change</strong>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3572" target="_blank" rel="noopener noreferrer" class="">#3572</a></li>
 <li class="">Host input now accepts newline-separated hosts (one per line, e.g. a column pasted from Excel), converted automatically to the semicolon-separated form. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3568" target="_blank" rel="noopener noreferrer" class="">#3568</a></li>
 <li class="">Host input now supports shorthand IPv4 ranges like <code>192.168.0.1-100</code>, in addition to the existing <code>192.168.0.0-192.168.0.100</code> and <code>192.168.[0-100].1</code> range formats. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3568" target="_blank" rel="noopener noreferrer" class="">#3568</a></li>
