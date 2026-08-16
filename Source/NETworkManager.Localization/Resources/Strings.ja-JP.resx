@@ -228,6 +228,9 @@
   <data name="DontFragment" xml:space="preserve">
     <value>断片化しない</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>資格情報の編集</value>
   </data>
@@ -1251,6 +1254,9 @@
   </data>
   <data name="UntrayBringWindowToForeground" xml:space="preserve">
     <value>トレイ解除/ウィンドウを前面に移動</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -2442,6 +2448,9 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
   <data name="Pause" xml:space="preserve">
     <value>一時停止</value>
   </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
   <data name="Resume" xml:space="preserve">
     <value>再開</value>
   </data>
@@ -2836,7 +2845,7 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
     <value>受信済み</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>状態の変更</value>
+    <value>Last status change</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>更新が利用可能です!</value>
