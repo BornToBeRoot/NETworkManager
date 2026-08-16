@@ -228,6 +228,9 @@
   <data name="DontFragment" xml:space="preserve">
     <value>不要分段</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>編輯憑證</value>
   </data>
@@ -1251,6 +1254,9 @@
   </data>
   <data name="UntrayBringWindowToForeground" xml:space="preserve">
     <value>從托盤移除／將視窗提升至前景</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>網址</value>
@@ -2442,6 +2448,9 @@
   <data name="Pause" xml:space="preserve">
     <value>暫停</value>
   </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
   <data name="Resume" xml:space="preserve">
     <value>繼續</value>
   </data>
@@ -2836,7 +2845,7 @@
     <value>已接收</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>狀態變更</value>
+    <value>Last status change</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>有可用的更新！</value>

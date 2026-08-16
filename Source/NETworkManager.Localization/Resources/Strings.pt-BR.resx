@@ -228,6 +228,9 @@
   <data name="DontFragment" xml:space="preserve">
     <value>Não fragmentar</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>Editar credenciais</value>
   </data>
@@ -1251,6 +1254,9 @@ Os arquivos do perfil não foram afetados!</value>
   </data>
   <data name="UntrayBringWindowToForeground" xml:space="preserve">
     <value>Trazer janela para a frente</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -2442,6 +2448,9 @@ público está desabilitada!</value>
   <data name="Pause" xml:space="preserve">
     <value>Pausar</value>
   </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
   <data name="Resume" xml:space="preserve">
     <value>Continuar</value>
   </data>
@@ -2836,7 +2845,7 @@ público está desabilitada!</value>
     <value>Recebido</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>Mudança de status</value>
+    <value>Last status change</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>Atualização disponível!</value>

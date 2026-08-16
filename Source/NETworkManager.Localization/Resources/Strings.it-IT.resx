@@ -229,6 +229,9 @@ La modifica dell'elenco router richiede diritti elevati!</value>
   <data name="DontFragment" xml:space="preserve">
     <value>Non frammentare</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>Modifica credenziali</value>
   </data>
@@ -1263,6 +1266,9 @@ Forse l'host non è raggiungibile oppure la community/password è sbagliata.</va
   </data>
   <data name="UntrayBringWindowToForeground" xml:space="preserve">
     <value>Porta la finestra in primo piano</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -2463,6 +2469,9 @@ Prova un altro servizio o usa quello predefinito...</value>
   <data name="Pause" xml:space="preserve">
     <value>Pausa</value>
   </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
   <data name="Resume" xml:space="preserve">
     <value>Riprendi</value>
   </data>
@@ -2859,7 +2868,7 @@ Vedi messaggio errore: "{0}"</value>
     <value>Ricevuti</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>Modifica stato</value>
+    <value>Last status change</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>Disponibile aggiornamento!</value>

@@ -228,6 +228,9 @@
   <data name="DontFragment" xml:space="preserve">
     <value>Nefragmentovat</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>Upravit pověření</value>
   </data>
@@ -1251,6 +1254,9 @@ Profile files are not affected!</value>
   </data>
   <data name="UntrayBringWindowToForeground" xml:space="preserve">
     <value>Untray / Bring window to foreground</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -2441,6 +2447,9 @@ URL: https://api.ipify.org/</value>
   <data name="Pause" xml:space="preserve">
     <value>Pozastavit</value>
   </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
   <data name="Resume" xml:space="preserve">
     <value>Pokračovat</value>
   </data>
@@ -2835,7 +2844,7 @@ URL: https://api.ipify.org/</value>
     <value>Přijato</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>Změna stavu</value>
+    <value>Last status change</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>Je dostupná aktualizace!</value>
