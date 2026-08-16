@@ -228,6 +228,9 @@
   <data name="DontFragment" xml:space="preserve">
     <value>조각내지 않음</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>자격 증명 편집</value>
   </data>
@@ -1248,6 +1251,9 @@
   </data>
   <data name="UntrayBringWindowToForeground" xml:space="preserve">
     <value>트레이 제거 / 창을 전경으로 가져오기</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -2439,6 +2445,9 @@ URL: https://api.ipify.org/</value>
   <data name="Pause" xml:space="preserve">
     <value>일시 중지</value>
   </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
   <data name="Resume" xml:space="preserve">
     <value>재개</value>
   </data>
@@ -2833,7 +2842,7 @@ URL: https://api.ipify.org/</value>
     <value>수신</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>상태 변경</value>
+    <value>Last status change</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>업데이트 가능!</value>
