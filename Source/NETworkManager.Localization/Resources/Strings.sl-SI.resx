@@ -228,6 +228,9 @@
   <data name="DontFragment" xml:space="preserve">
     <value>Ne drobi</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>Uredi poverilnice</value>
   </data>
@@ -1247,6 +1250,9 @@ Ustvarite enega...</value>
   </data>
   <data name="UntrayBringWindowToForeground" xml:space="preserve">
     <value>Odstrani iz programske vrstice/Postavi okno v ospredje</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL naslov</value>
@@ -2438,6 +2444,9 @@ je onemogočeno!</value>
   <data name="Pause" xml:space="preserve">
     <value>Premor</value>
   </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
   <data name="Resume" xml:space="preserve">
     <value>Nadaljuj</value>
   </data>
@@ -2832,7 +2841,7 @@ je onemogočeno!</value>
     <value>Prejeto</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>Stanje spremembe</value>
+    <value>Last status change</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>Posodobitev je na voljo!</value>
