@@ -228,6 +228,9 @@
   <data name="DontFragment" xml:space="preserve">
     <value>No fragmentar</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>Editar credencial</value>
   </data>
@@ -1248,6 +1251,9 @@ Crear uno...</value>
   </data>
   <data name="UntrayBringWindowToForeground" xml:space="preserve">
     <value>Untray / Bring window to foreground</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -2439,6 +2445,9 @@ está deshabilitada!</value>
   <data name="Pause" xml:space="preserve">
     <value>Pausar</value>
   </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
   <data name="Resume" xml:space="preserve">
     <value>Reanudar</value>
   </data>
@@ -2833,7 +2842,7 @@ está deshabilitada!</value>
     <value>Recibido</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>Estado cambiado</value>
+    <value>Last status change</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>¡Actualización disponible!</value>
