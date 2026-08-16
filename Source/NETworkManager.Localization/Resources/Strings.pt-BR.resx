@@ -229,7 +229,7 @@
     <value>Não fragmentar</value>
   </data>
   <data name="Down" xml:space="preserve">
-    <value>Down</value>
+    <value>Download</value>
   </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>Editar credenciais</value>
@@ -1256,7 +1256,7 @@ Os arquivos do perfil não foram afetados!</value>
     <value>Trazer janela para a frente</value>
   </data>
   <data name="Up" xml:space="preserve">
-    <value>Up</value>
+    <value>Upload</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -2449,7 +2449,7 @@ público está desabilitada!</value>
     <value>Pausar</value>
   </data>
   <data name="Paused" xml:space="preserve">
-    <value>Paused</value>
+    <value>Pausado</value>
   </data>
   <data name="Resume" xml:space="preserve">
     <value>Continuar</value>
@@ -2845,7 +2845,7 @@ público está desabilitada!</value>
     <value>Recebido</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>Last status change</value>
+    <value>Última mudança de status</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>Atualização disponível!</value>
