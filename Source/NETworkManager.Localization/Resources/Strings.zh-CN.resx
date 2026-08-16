@@ -228,6 +228,9 @@
   <data name="DontFragment" xml:space="preserve">
     <value>不分段</value>
   </data>
+  <data name="Down" xml:space="preserve">
+    <value>Down</value>
+  </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>编辑凭据</value>
   </data>
@@ -1251,6 +1254,9 @@
   </data>
   <data name="UntrayBringWindowToForeground" xml:space="preserve">
     <value>打开托盘/将窗口放到前台</value>
+  </data>
+  <data name="Up" xml:space="preserve">
+    <value>Up</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -2443,6 +2449,9 @@ URL: https://api.github.com/</value>
   <data name="Pause" xml:space="preserve">
     <value>暂停</value>
   </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
   <data name="Resume" xml:space="preserve">
     <value>恢复</value>
   </data>
@@ -2837,7 +2846,7 @@ URL: https://api.github.com/</value>
     <value>接收</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>状态更改</value>
+    <value>Last status change</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>有可用的更新！</value>
