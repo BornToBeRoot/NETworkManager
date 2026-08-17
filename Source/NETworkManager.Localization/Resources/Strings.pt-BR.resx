@@ -3893,13 +3893,13 @@ Tente novamente em alguns segundos.</value>
     <value>Fechar grupo</value>
   </data>
   <data name="StartGroup" xml:space="preserve">
-    <value>Start group</value>
+    <value>Iniciar grupo</value>
   </data>
   <data name="GroupActions" xml:space="preserve">
-    <value>Group actions</value>
+    <value>Ações do grup</value>
   </data>
   <data name="PauseGroup" xml:space="preserve">
-    <value>Pause group</value>
+    <value>Pausar grupo</value>
   </data>
   <data name="RunCommandDotsWithHotKey" xml:space="preserve">
     <value>Executar comando... (Ctrl+Shift+P)</value>
