@@ -229,7 +229,7 @@
     <value>断片化しない</value>
   </data>
   <data name="Down" xml:space="preserve">
-    <value>Down</value>
+    <value>下へ</value>
   </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>資格情報の編集</value>
@@ -1256,7 +1256,7 @@
     <value>トレイ解除/ウィンドウを前面に移動</value>
   </data>
   <data name="Up" xml:space="preserve">
-    <value>Up</value>
+    <value>上へ</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -2449,7 +2449,7 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
     <value>一時停止</value>
   </data>
   <data name="Paused" xml:space="preserve">
-    <value>Paused</value>
+    <value>一時停止</value>
   </data>
   <data name="Resume" xml:space="preserve">
     <value>再開</value>
@@ -2845,7 +2845,7 @@ URL: https://api.ipify.org and https://api6.ipify.org</value>
     <value>受信済み</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>Last status change</value>
+    <value>前回の変更</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>更新が利用可能です!</value>
@@ -3893,13 +3893,13 @@ URL: http://ip-api.com/</value>
     <value>グループを閉じる</value>
   </data>
   <data name="StartGroup" xml:space="preserve">
-    <value>Start group</value>
+    <value>グループを開始</value>
   </data>
   <data name="GroupActions" xml:space="preserve">
-    <value>Group actions</value>
+    <value>グループアクション</value>
   </data>
   <data name="PauseGroup" xml:space="preserve">
-    <value>Pause group</value>
+    <value>グループを一時停止</value>
   </data>
   <data name="RunCommandDotsWithHotKey" xml:space="preserve">
     <value>コマンドを実行... (Ctrl+Shift+P)</value>
