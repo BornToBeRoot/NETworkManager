@@ -4172,189 +4172,189 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
 You can copy your profile files from “{0}” to “{1}” to migrate your existing profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten.</value>
   </data>
   <data name="NetworkConnection" xml:space="preserve">
-    <value>Network connection</value>
+    <value>网络连接</value>
   </data>
   <data name="NetworkStatus" xml:space="preserve">
-    <value>Network Status</value>
+    <value>网络状态</value>
   </data>
   <data name="ActiveDirectoryImportFailed" xml:space="preserve">
-    <value>Active Directory import failed.</value>
+    <value>活动目录导入失败</value>
   </data>
   <data name="ActiveDirectoryImportOptions" xml:space="preserve">
-    <value>Options</value>
+    <value>选项</value>
   </data>
 
   <data name="ActiveDirectoryImportUsesCurrentCredentials" xml:space="preserve">
-    <value>Uses your current Windows credentials to read from Active Directory. The account must be allowed to enumerate computer objects under the search base (subtree).</value>
+    <value>使用您当前的 Windows 凭据从活动目录读取数据。该账户必须被允许在搜索基准（子树）下枚举计算机对象。</value>
   </data>
   <data name="ActiveDirectorySearchBase" xml:space="preserve">
-    <value>Search base (DN)</value>
+    <value>搜索基准 (DN)</value>
   </data>
   <data name="ActiveDirectoryAdditionalLdapFilter" xml:space="preserve">
-    <value>Additional LDAP filter</value>
+    <value>附加 LDAP 过滤条件</value>
   </data>
   <data name="ActiveDirectoryAdditionalLdapFilterInvalid" xml:space="preserve">
-    <value>Filter must be a valid LDAP expression starting with '(' and ending with ')'.</value>
+    <value>过滤条件必须是有效的 LDAP 表达式，以 '(' 开头并以 ')' 结尾。</value>
   </data>
   <data name="ActiveDirectorySearchBaseInvalid" xml:space="preserve">
-    <value>Search base must be a valid LDAP distinguished name (e.g. DC=example,DC=com).</value>
+    <value>搜索基准必须是有效的 LDAP 可分辨名称（例如 DC=example,DC=com）。</value>
   </data>
   <data name="ActiveDirectory_ImportDescription" xml:space="preserve">
-    <value>Imported from Active Directory on {0}</value>
+    <value>从活动目录导入于{0} </value>
   </data>
   <data name="ActiveDirectoryNoComputersFound" xml:space="preserve">
-    <value>No computers found for the given search base and filter.</value>
+    <value>未在指定的搜索基准和过滤条件下找到任何计算机。</value>
   </data>
   <data name="SearchingActiveDirectoryDots" xml:space="preserve">
-    <value>Searching Active Directory...</value>
+    <value>正在搜索活动目录...</value>
   </data>
   <data name="ActiveDirectoryNonDomainHint" xml:space="preserve">
-    <value>If your computer is not joined to the domain, specify the domain controller (hostname or IP) and use custom credentials.</value>
+    <value>如果您的计算机未加入域，请指定域控制器（主机名或 IP）并使用自定义凭据。</value>
   </data>
   <data name="LdapServer" xml:space="preserve">
-    <value>Server (optional)</value>
+    <value>服务器（可选）</value>
   </data>
   <data name="LdapPort" xml:space="preserve">
-    <value>Port (optional)</value>
+    <value>端口（可选）</value>
   </data>
   <data name="UseSsl" xml:space="preserve">
-    <value>Use SSL (LDAPS)</value>
+    <value>使用 SSL (LDAPS)</value>
   </data>
   <data name="UseCurrentWindowsCredentials" xml:space="preserve">
-    <value>Use current Windows credentials</value>
+    <value>使用当前 Windows 凭据</value>
   </data>
   <data name="UseTheseCredentials" xml:space="preserve">
-    <value>Use these credentials</value>
+    <value>使用这些凭据</value>
   </data>
   <data name="Advanced" xml:space="preserve">
-    <value>Advanced</value>
+    <value>高级设置</value>
   </data>
   <data name="SelectAll" xml:space="preserve">
-    <value>Select all</value>
+    <value>全选</value>
   </data>
   <data name="DeselectAll" xml:space="preserve">
-    <value>Deselect all</value>
+    <value>取消全选</value>
   </data>
   <data name="EnableFor" xml:space="preserve">
-    <value>Enable for</value>
+    <value>启用于</value>
   </data>
   <data name="SkipAlreadyImported" xml:space="preserve">
-    <value>Skip already imported</value>
+    <value>跳过已导入的项</value>
   </data>
   <data name="ImportResultsHeader" xml:space="preserve">
-    <value>{0} · {1} result(s)</value>
+    <value>{0}· {1}结果(s)</value>
   </data>
   <data name="ProfileImportSummary" xml:space="preserve">
-    <value>{0} profile(s) imported.
-{1} duplicate entries skipped.
-{2} without a host skipped.</value>
+    <value>{0}已导入个人配置文件(s)。
+{1}跳过重复条目。
+{2}已跳过没有主机的条目。</value>
   </data>
   <data name="ImportProfiles_Source_ActiveDirectory" xml:space="preserve">
-    <value>Active Directory</value>
+    <value>活动目录</value>
   </data>
   <data name="ImportProfiles_Source_Csv" xml:space="preserve">
-    <value>CSV file</value>
+    <value>CSV 文件</value>
   </data>
   <data name="ImportProfiles_Method_Csv" xml:space="preserve">
-    <value>CSV file</value>
+    <value>CSV 文件</value>
   </data>
   <data name="ImportProfilesFromCsvFile" xml:space="preserve">
-    <value>Import profiles from CSV file</value>
+    <value>从 CSV 文件导入配置文件</value>
   </data>
   <data name="Csv_ImportDescription" xml:space="preserve">
-    <value>Imported from CSV file on {0}</value>
+    <value>从 CSV 文件于{0}导入</value>
   </data>
   <data name="CsvNoEntriesFound" xml:space="preserve">
-    <value>No entries were found in the CSV file.</value>
+    <value>在 CSV 文件中未找到任何条目。</value>
   </data>
   <data name="CsvImportFormatHint" xml:space="preserve">
-    <value>Expected CSV format — one profile per line:</value>
+    <value>预期的 CSV 格式 — 每行一个配置文件：</value>
   </data>
   <data name="CsvImportFormatNote" xml:space="preserve">
-    <value>A header row and the delimiter (semicolon, comma or tab) are detected automatically. The description column is optional. Entries without a host cannot be imported.</value>
+    <value>将自动检测标题行和分隔符（分号、逗号或制表符）。“描述”列为可选。无法导入没有主机的条目。</value>
   </data>
   <data name="ImportResults" xml:space="preserve">
-    <value>Import results</value>
+    <value>导入结果</value>
   </data>
   <data name="ImportProfiles_StatusNew" xml:space="preserve">
-    <value>New</value>
+    <value>新增</value>
   </data>
   <data name="ImportProfiles_StatusImported" xml:space="preserve">
-    <value>Imported</value>
+    <value>已导入</value>
   </data>
   <data name="ImportProfiles_StatusNoHost" xml:space="preserve">
-    <value>No host</value>
+    <value>无主机</value>
   </data>
   <data name="ExcludeDisabledAccounts" xml:space="preserve">
-    <value>Exclude disabled accounts</value>
+    <value>排除已禁用的账户</value>
   </data>
   <data name="ImportComputersFromActiveDirectory" xml:space="preserve">
-    <value>Import computers from Active Directory</value>
+    <value>从活动目录导入计算机</value>
   </data>
   <data name="ImportComputersFromActiveDirectoryDots" xml:space="preserve">
-    <value>Import computers from Active Directory...</value>
+    <value>从活动目录导入计算机...</value>
   </data>
   <data name="ImportProfiles" xml:space="preserve">
-    <value>Import profiles</value>
+    <value>导入配置文件</value>
   </data>
   <data name="Source" xml:space="preserve">
-    <value>Source</value>
+    <value>源</value>
   </data>
   <data name="ImportProfiles_Method_ActiveDirectory" xml:space="preserve">
-    <value>Active Directory</value>
+    <value>活动目录</value>
   </data>
   <data name="ProfileGroup" xml:space="preserve">
-    <value>Profile group</value>
+    <value>配置文件组</value>
   </data>
   <data name="ExistingOrNewGroupDots" xml:space="preserve">
-    <value>Existing or new group name</value>
+    <value>现有或新的组名</value>
   </data>
   <data name="Firewall" xml:space="preserve">
-    <value>Firewall</value>
+    <value>防火墙</value>
   </data>
   <data name="FirewallRules" xml:space="preserve">
-    <value>Firewall rules</value>
+    <value>防火墙规则</value>
   </data>
   <data name="WindowsFirewallSettings" xml:space="preserve">
-    <value>Windows Firewall settings</value>
+    <value>Windows 防火墙设置</value>
   </data>
   <data name="Direction" xml:space="preserve">
-    <value>Direction</value>
+    <value>方向</value>
   </data>
   <data name="Inbound" xml:space="preserve">
-    <value>Inbound</value>
+    <value>入站</value>
   </data>
   <data name="Outbound" xml:space="preserve">
-    <value>Outbound</value>
+    <value>出站</value>
   </data>
   <data name="Action" xml:space="preserve">
-    <value>Action</value>
+    <value>动作</value>
   </data>
   <data name="Allow" xml:space="preserve">
-    <value>Allow</value>
+    <value>允许</value>
   </data>
   <data name="Block" xml:space="preserve">
-    <value>Block</value>
+    <value>阻止</value>
   </data>
   <data name="NetworkProfile" xml:space="preserve">
-    <value>Network profile</value>
+    <value>网络配置文件</value>
   </data>
   <data name="NetworkProfiles" xml:space="preserve">
-    <value>Network profiles</value>
+    <value>网络配置文件列表</value>
   </data>
   <data name="InterfaceType" xml:space="preserve">
-    <value>Interface type</value>
+    <value>接口类型</value>
   </data>
   <data name="FailedToLoadFirewallRulesMessage" xml:space="preserve">
-    <value>Failed to load firewall rules. {0}</value>
+    <value>未能加载防火墙规则。{0}</value>
   </data>
   <data name="DeleteFirewallRuleMessage" xml:space="preserve">
-    <value>The selected firewall rule is permanently deleted:
+    <value>已永久删除所选防火墙规则：
 
 {0}</value>
   </data>
   <data name="FirewallProtocol_Any" xml:space="preserve">
-    <value>Any</value>
+    <value>任意</value>
   </data>
   <data name="FirewallProtocol_TCP" xml:space="preserve">
     <value>TCP</value>
@@ -4378,16 +4378,16 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
     <value>IPv6</value>
   </data>
   <data name="FirewallProtocol_IPv6_Route" xml:space="preserve">
-    <value>IPv6-Route</value>
+    <value>IPv6 路由</value>
   </data>
   <data name="FirewallProtocol_IPv6_Frag" xml:space="preserve">
-    <value>IPv6-Frag</value>
+    <value>IPv6 分片</value>
   </data>
   <data name="FirewallProtocol_IPv6_NoNxt" xml:space="preserve">
-    <value>IPv6-NoNxt</value>
+    <value>IPv6 无下一个标头</value>
   </data>
   <data name="FirewallProtocol_IPv6_Opts" xml:space="preserve">
-    <value>IPv6-Opts</value>
+    <value>IPv6 选项</value>
   </data>
   <data name="FirewallProtocol_VRRP" xml:space="preserve">
     <value>VRRP</value>
@@ -4399,10 +4399,10 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
     <value>L2TP</value>
   </data>
   <data name="FirewallInterfaceType_Any" xml:space="preserve">
-    <value>Any</value>
+    <value>任意</value>
   </data>
   <data name="FirewallInterfaceType_Wired" xml:space="preserve">
-    <value>Wired</value>
+    <value>有线</value>
   </data>
   <data name="FirewallInterfaceType_Wireless" xml:space="preserve">
     <value>无线</value>
