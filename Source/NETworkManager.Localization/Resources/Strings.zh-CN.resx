@@ -3008,7 +3008,7 @@ URL: https://api.github.com/</value>
     <value>来自 iana.org 的顶级域名列表，用于从 whois.iana.org 通过 43 端口查询顶级域名的 whois 服务器</value>
   </data>
   <data name="Resource_NaturalEarth_Description" xml:space="preserve">
-    <value>GeoJSON conversion of Natural Earth vector map data (CC0-1.0).</value>
+    <value>Natural Earth 矢量地图数据的 GeoJSON 转换版（CC0-1.0 许可证）。</value>
   </data>
   <data name="Resource_OUI_Description" xml:space="preserve">
     <value>OUI 数据来自 ieee.org。</value>
@@ -3199,13 +3199,14 @@ URL: https://api.github.com/</value>
     <value>PowerShell控制台的颜色可以更改为“设置”&gt;“常规”&gt;“外观”下的应用程序主题</value>
   </data>
   <data name="HelpMessage_ApplyThemeToPowerShellConsole" xml:space="preserve">
-    <value>If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
+    <value>如果启用此选项，将覆盖注册表 HKCU:\Console 下的默认 PowerShell 控制台设置，使 PowerShell 控制台窗口与应用程序主题相匹配。这是一项全局系统设置，可能会影响普通 PowerShell 窗口的外观。
 
-Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
+仅修改在 PowerShell 设置中配置的 PowerShell 控制台。同时支持 Windows PowerShell 和 PWSH（PowerShell 7 及更高版本）。
 
-Click in the upper right corner on the help / documentation button (left of the minimize button) or navigate to https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance for more details. Here are the values documented which will be adjusted.
+点击右上角的帮助/文档按钮（最小化按钮左侧）或访问 https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance
+https://borntoberoot.net/NETworkManager/Documentation/Settings/Appearance 了解更多详情。此处记录了将被调整的值。
 
-If the option is disabled again, the values are no longer modified. However, the original values are NOT restored.</value>
+如果再次禁用此选项，将不再修改这些值。但是，**不会**恢复原始值。</value>
   </data>
   <data name="InputCannotEndWithSemicolon" xml:space="preserve">
     <value>输入不能以"; "结束！</value>
@@ -3295,7 +3296,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>SNTP 服务器</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv6 address e.g., "xxxx:xx:xxx::xx" as response.</value>
+    <value>一个可通过 http 或 https 访问并返回 IPv6 地址「例如“xxxx:xx:xxx::xx”」作为响应的 Web 服务的 URL。</value>
   </data>
   <data name="IPEndPoint" xml:space="preserve">
     <value>IP 端点</value>
@@ -3337,7 +3338,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>已经存在此名称的 SNTP 服务器!</value>
   </data>
   <data name="EnterValidHostnameOrIPAddress" xml:space="preserve">
-    <value>Enter a valid hostname (e.g., "server-01" or "example.com") or a valid IP address (e.g., 192.168.178.1)!</value>
+    <value>请输入有效的主机名（例如“server-01”或“example.com”）或有效的 IP 地址（例如 192.168.178.1）！</value>
   </data>
   <data name="Servers" xml:space="preserve">
     <value>服务器</value>
@@ -3616,10 +3617,10 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>本页面的设置包含错误，须更正后才能保存。</value>
   </data>
   <data name="HelpMessage_PuTTYHostkey" xml:space="preserve">
-    <value>SSH hostkey to use for the connection (e.g., "71:b8:f2:6e..."). Only available if the mode is "SSH".</value>
+    <value>用于连接的 SSH 主机密钥（例如：“71:b8:f2:6e...”）。仅在模式为“SSH”时可用。</value>
   </data>
   <data name="HelpMessage_PuTTYPrivateKeyFile" xml:space="preserve">
-    <value>Full path to the private key file (e.g., "C:\Users\BornToBeRoot\SSH\private_key.ppk"). Only available if the mode is "SSH".</value>
+    <value>私钥文件的完整路径（如“C:\Users\BornToBeRoot\SSH\private_key.ppk”）。仅当模式为“SSH”时可用。</value>
   </data>
   <data name="HelpMessage_PuTTYUsername" xml:space="preserve">
     <value>将传入 PuTTY 会话的用户名。仅当模式为“SSH”、“Telnet”或“Rlogin”时可用。</value>
@@ -3694,7 +3695,7 @@ If the option is disabled again, the values are no longer modified. However, the
     <value>检查 IP 地理位置</value>
   </data>
   <data name="ShowMap" xml:space="preserve">
-    <value>Show map</value>
+    <value>显示地图</value>
   </data>
   <data name="HelpMessage_CheckDNSResolver" xml:space="preserve">
     <value>DNS 解析通过 ip-api.com 确定。
@@ -3753,7 +3754,7 @@ URL: http://ip-api.com/</value>
     <value>实验性</value>
   </data>
   <data name="RunCommandDots" xml:space="preserve">
-    <value>Run command...</value>
+    <value>运行命令...</value>
   </data>
   <data name="ApplicationName_IPGeolocation" xml:space="preserve">
     <value>IP 地理位置</value>
@@ -3837,7 +3838,7 @@ URL: http://ip-api.com/</value>
     <value>展开主机视图</value>
   </data>
   <data name="ExpandMapView" xml:space="preserve">
-    <value>Expand map view</value>
+    <value>展开地图视图</value>
   </data>
   <data name="CannotSetHostWhileRunningMessage" xml:space="preserve">
     <value>正在添加其他主机时无法设置主机。请等待进程完成后再试。</value>
@@ -3873,7 +3874,7 @@ URL: http://ip-api.com/</value>
     <value>警告</value>
   </data>
   <data name="GroupDomain" xml:space="preserve">
-    <value>Group / domain</value>
+    <value>群组 / 域</value>
   </data>
   <data name="NetBIOSReachable" xml:space="preserve">
     <value>NetBIOS 可访问</value>
@@ -3894,16 +3895,16 @@ URL: http://ip-api.com/</value>
     <value>关闭组</value>
   </data>
   <data name="StartGroup" xml:space="preserve">
-    <value>Start group</value>
+    <value>启动群组</value>
   </data>
   <data name="GroupActions" xml:space="preserve">
-    <value>Group actions</value>
+    <value>群组操作</value>
   </data>
   <data name="PauseGroup" xml:space="preserve">
-    <value>Pause group</value>
+    <value>暂停群组</value>
   </data>
   <data name="RunCommandDotsWithHotKey" xml:space="preserve">
-    <value>Run command... (Ctrl+Shift+P)</value>
+    <value>运行命令... (Ctrl+Shift+P)</value>
   </data>
   <data name="ProfileFiles" xml:space="preserve">
     <value>配置文件</value>
@@ -3915,9 +3916,9 @@ URL: http://ip-api.com/</value>
     <value>展开并打开搜索...</value>
   </data>
   <data name="WiFiAccessNotAvailableMessage" xml:space="preserve">
-    <value>Starting with Windows 11 24H2, you’ll need to allow access to the Wi-Fi adapter.
+    <value>从 Windows 11 24H2 开始，您需要允许程序访问 Wi-Fi 适配器。
 
-Open Windows Settings &gt; Privacy &amp; security &gt; Location, enable access for Desktop Apps / NETworkManager, then restart the application.</value>
+打开“Windows 设置</value>
   </data>
   <data name="DragDropApplicationsToReorderRightClickForMoreOptions" xml:space="preserve">
     <value>拖放应用程序以重新排序它们。
@@ -3945,7 +3946,7 @@ Open Windows Settings &gt; Privacy &amp; security &gt; Location, enable access f
     <value>6 GHz</value>
   </data>
   <data name="SupportThisProjectWithADonation" xml:space="preserve">
-    <value>Support this project with a donation.</value>
+    <value>通过捐赠支持此项目。</value>
   </data>
   <data name="OpenDocumentation" xml:space="preserve">
     <value>打开文档</value>
@@ -3954,129 +3955,129 @@ Open Windows Settings &gt; Privacy &amp; security &gt; Location, enable access f
     <value>捐款</value>
   </data>
   <data name="ProfileFile" xml:space="preserve">
-    <value>Profile file</value>
+    <value>配置文件</value>
   </data>
   <data name="ApplicationName_HostsFileEditor" xml:space="preserve">
-    <value>Hosts File Editor</value>
+    <value>Hosts 文件编辑器</value>
   </data>
   <data name="HostsFileEditor" xml:space="preserve">
-    <value>Hosts File Editor</value>
+    <value>Hosts 文件编辑器</value>
   </data>
   <data name="HostsFileEditorAdminMessage" xml:space="preserve">
-    <value>Read-only mode. Modifying the hosts file requires elevated rights!</value>
+    <value>只读模式。修改 hosts 文件需要提升权限！</value>
   </data>
   <data name="OpenHostsFile" xml:space="preserve">
-    <value>Open hosts file</value>
+    <value>打开 hosts 文件</value>
   </data>
   <data name="Comment" xml:space="preserve">
-    <value>Comment</value>
+    <value>备注</value>
   </data>
   <data name="Disable" xml:space="preserve">
-    <value>Disable</value>
+    <value>禁用</value>
   </data>
   <data name="EditEntry" xml:space="preserve">
-    <value>Edit entry</value>
+    <value>编辑条目</value>
   </data>
   <data name="EditEntryDots" xml:space="preserve">
-    <value>Edit entry...</value>
+    <value>编辑条目...</value>
   </data>
   <data name="EnableEntry" xml:space="preserve">
-    <value>Enable entry</value>
+    <value>启用条目</value>
   </data>
   <data name="DisableEntry" xml:space="preserve">
-    <value>Disable entry</value>
+    <value>禁用条目</value>
   </data>
   <data name="RefreshingDots" xml:space="preserve">
-    <value>Refreshing...</value>
+    <value>正在刷新...</value>
   </data>
   <data name="ReloadedAtX" xml:space="preserve">
-    <value>Reloaded at {0}</value>
+    <value>重新加载于：{0}</value>
   </data>
   <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
-    <value>Failed to load hosts file: {0}</value>
+    <value>加载 hosts 文件失败：{0}</value>
   </data>
   <data name="RetryingInXSecondsDots" xml:space="preserve">
-    <value>Retrying in {0} seconds...</value>
+    <value>将于{0} 秒後重试...</value>
   </data>
   <data name="WhatsNew" xml:space="preserve">
-    <value>What's new?</value>
+    <value>有什么新功能？</value>
   </data>
   <data name="Changelog" xml:space="preserve">
-    <value>Changelog</value>
+    <value>版本更新日志</value>
   </data>
   <data name="UpgradedToXXX" xml:space="preserve">
-    <value>Upgraded to {0}</value>
+    <value>升级至 {0}</value>
   </data>
   <data name="WhatsNewMessage" xml:space="preserve">
-    <value>This release includes new features, improvements, and bug fixes. Check out the changelog for all the details!</value>
+    <value>此版本包含新功能、改进和错误修复。查看更新日志了解所有详情！</value>
   </data>
   <data name="Entries" xml:space="preserve">
-    <value>Entries</value>
+    <value>项目</value>
   </data>
   <data name="DeleteHostsFileEntryMessage" xml:space="preserve">
-    <value>The selected entry is permanently deleted:
+    <value>所选条目已被永久删除
 
-{0} {1} {2}</value>
+{0}{1}{2}</value>
   </data>
   <data name="ExampleHostsFileEntryComment" xml:space="preserve">
-    <value>Primary DNS server</value>
+    <value>主要 DNS 服务器</value>
   </data>
   <data name="EnterValidHostsFileEntryHostname" xml:space="preserve">
-    <value>Enter a valid hostname (e.g., "server-01" or "example.com")! Multiple hostnames can be separated with a space.</value>
+    <value>请输入有效的主机名（例如，“server-01”或“example.com”）！多个主机名可以用空格分隔。</value>
   </data>
   <data name="HostsFileReadErrorMessage" xml:space="preserve">
-    <value>The "hosts" file could not be read! See log file for more details.</value>
+    <value>无法读取 “hosts” 文件！有关详细信息，请参阅日志文件。</value>
   </data>
   <data name="HostsFileWriteErrorMessage" xml:space="preserve">
-    <value>The "hosts" file could not be written to. See log file for more details.</value>
+    <value>无法写入 “hosts” 文件。有关详细信息，请参阅日志文件。</value>
   </data>
   <data name="HostsFileEntryNotFoundMessage" xml:space="preserve">
-    <value>The entry was not found in the "hosts" file! Maybe the file has been modified.</value>
+    <value>在 “hosts” 文件中未找到该条目！文件可能已被修改。</value>
   </data>
   <data name="HostsFileBackupErrorMessage" xml:space="preserve">
-    <value>A backup of the "hosts" file could not be created! See log file for more details.</value>
+    <value>无法创建 “hosts” 文件的备份！有关详细信息，请参阅日志文件。</value>
   </data>
   <data name="ShowStatusBar" xml:space="preserve">
-    <value>Show status bar</value>
+    <value>显示状态栏</value>
   </data>
   <data name="HelpMessage_ShowStatusBar" xml:space="preserve">
-    <value>Displays the status bar in the bottom-left of the WebView when hovering over a link.</value>
+    <value>将鼠标悬停在链接上时，在 WebView 的左下角显示状态栏。</value>
   </data>
   <data name="SaveCredentials" xml:space="preserve">
-    <value>Save credentials</value>
+    <value>存储凭证</value>
   </data>
   <data name="HelpMessage_SaveCredentials" xml:space="preserve">
-    <value>Displays a dialog to save credentials after a successful sign-in.</value>
+    <value>在成功登入后显示对话框以存储凭证。</value>
   </data>
   <data name="DeleteBrowsingData" xml:space="preserve">
-    <value>Delete browsing data</value>
+    <value>删除浏览数据</value>
   </data>
   <data name="DeleteBrowsingDataMessage" xml:space="preserve">
-    <value>Permanently delete browsing data (history, cookies, cache, credentials, etc.) for the current WebView2 profile.</value>
+    <value>永久删除当前 WebView2 配置文件的浏览数据（历史记录、Cookie、缓存、凭据等）。</value>
   </data>
   <data name="BrowsingData" xml:space="preserve">
-    <value>Browsing Data</value>
+    <value>浏览数据</value>
   </data>
   <data name="BrowsingDataSuccessfullyDeletedMessage" xml:space="preserve">
-    <value>Browsing data successfully deleted!</value>
+    <value>浏览数据已成功删除</value>
   </data>
   <data name="BrowsingDataErrorMessage" xml:space="preserve">
-    <value>An error occurred while deleting browsing data. Feel free to report this issue on GitHub.</value>
+    <value>删除浏览数据时发生错误。您可以到 GitHub 上报告此问题。</value>
   </data>
   <data name="ExampleTag" xml:space="preserve">
-    <value>production</value>
+    <value>生产环境</value>
   </data>
   <data name="AddTag" xml:space="preserve">
-    <value>Add tag</value>
+    <value>新增标签</value>
   </data>
   <data name="ApplyFilter" xml:space="preserve">
-    <value>Apply filter</value>
+    <value>应用筛选</value>
   </data>
   <data name="FilterProfilesDots" xml:space="preserve">
-    <value>Filter profiles...</value>
+    <value>筛选配置文件...</value>
   </data>
   <data name="FilterByTags" xml:space="preserve">
-    <value>Filter by tags</value>
+    <value>按标签筛选</value>
   </data>
   <data name="NoTagsFound" xml:space="preserve">
     <value>No tags found!</value>
@@ -4404,97 +4405,96 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
     <value>Wired</value>
   </data>
   <data name="FirewallInterfaceType_Wireless" xml:space="preserve">
-    <value>Wireless</value>
+    <value>无线</value>
   </data>
   <data name="FirewallInterfaceType_RemoteAccess" xml:space="preserve">
-    <value>Remote access</value>
+    <value>远程访问</value>
   </data>
   <data name="FirewallAdminMessage" xml:space="preserve">
-    <value>Read-only mode. Modifying firewall rules requires elevated rights!</value>
+    <value>只读模式。修改防火墙规则需要提升权限！</value>
   </data>
   <data name="FirewallRuleDirection_Inbound" xml:space="preserve">
-    <value>Inbound</value>
+    <value>入站</value>
   </data>
   <data name="FirewallRuleDirection_Outbound" xml:space="preserve">
-    <value>Outbound</value>
+    <value>出站</value>
   </data>
   <data name="FirewallRuleAction_Block" xml:space="preserve">
-    <value>Block</value>
+    <value>阻止</value>
   </data>
   <data name="FirewallRuleAction_Allow" xml:space="preserve">
-    <value>Allow</value>
+    <value>允许</value>
   </data>
   <data name="LocalPorts" xml:space="preserve">
-    <value>Local ports</value>
+    <value>本地端口</value>
   </data>
   <data name="RemotePorts" xml:space="preserve">
-    <value>Remote ports</value>
+    <value>远程端口</value>
   </data>
   <data name="LocalAddresses" xml:space="preserve">
-    <value>Local addresses</value>
+    <value>本地地址</value>
   </data>
   <data name="RemoteAddresses" xml:space="preserve">
-    <value>Remote addresses</value>
+    <value>远程地址</value>
   </data>
   <data name="EnterValidFirewallAddress" xml:space="preserve">
-    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8), range (e.g. 10.0.0.1-10.0.0.10), or keyword (Any, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal)</value>
+    <value>请输入有效的 IP 地址、子网（例如 10.0.0.0/8）、范围（例如 10.0.0.1-10.0.0.10）或关键字（Any、LocalSubnet、DNS、DHCP、WINS、DefaultGateway、Internet、Intranet、IntranetRemoteAccess、PlayToDevice、CaptivePortal）</value>
   </data>
   <data name="AddRule" xml:space="preserve">
-    <value>Add rule</value>
+    <value>添加规则</value>
   </data>
   <data name="AddRuleDots" xml:space="preserve">
-    <value>Add rule...</value>
+    <value>添加规则...</value>
   </data>
   <data name="EditRule" xml:space="preserve">
-    <value>Edit rule</value>
+    <value>编辑规则</value>
   </data>
   <data name="EditRuleDots" xml:space="preserve">
-    <value>Edit rule...</value>
+    <value>编辑规则</value>
   </data>
   <data name="DeleteRule" xml:space="preserve">
-    <value>Delete rule</value>
+    <value>删除规则</value>
   </data>
   <data name="EnableRule" xml:space="preserve">
-    <value>Enable rule</value>
+    <value>启用规则</value>
   </data>
   <data name="DisableRule" xml:space="preserve">
-    <value>Disable rule</value>
+    <value>禁用规则</value>
   </data>
   <data name="ImportProfilesDots" xml:space="preserve">
-    <value>Import profiles...</value>
+    <value>导入配置文件...</value>
   </data>
   <data name="SpeedTest" xml:space="preserve">
-    <value>Speed Test</value>
+    <value>速度测试</value>
   </data>
   <data name="RunSpeedTest" xml:space="preserve">
-    <value>Run speed test</value>
+    <value>运行测速</value>
   </data>
   <data name="FetchingMetadataDots" xml:space="preserve">
-    <value>Fetching metadata...</value>
+    <value>正在获取元数据...</value>
   </data>
   <data name="MeasuringLatencyDots" xml:space="preserve">
-    <value>Measuring latency...</value>
+    <value>正在测量延迟...</value>
   </data>
   <data name="MeasuringDownloadSpeedDots" xml:space="preserve">
-    <value>Measuring download speed...</value>
+    <value>正在测量下载速度...</value>
   </data>
   <data name="MeasuringUploadSpeedDots" xml:space="preserve">
-    <value>Measuring upload speed...</value>
+    <value>正在测量上传速度...</value>
   </data>
   <data name="SpeedTestDisclaimerMessage" xml:space="preserve">
-    <value>Measure download and upload speeds, latency, and jitter with speed.cloudflare.com.
-Cloudflare may log your IP address and network information. See Cloudflare's privacy policy for details.</value>
+    <value>使用 speed.cloudflare.com 测量下载和上传速度、延迟以及抖动。Cloudflare 可能会记录您的 IP 地址和网络信息。有关详细信息，请参阅 Cloudflare 的隐私政策。</value>
   </data>
   <data name="Latency" xml:space="preserve">
-    <value>Latency</value>
+    <value>延迟</value>
   </data>
   <data name="Jitter" xml:space="preserve">
-    <value>Jitter</value>
+    <value>抖动</value>
   </data>
   <data name="ExternalService_speed_cloudflare_Description" xml:space="preserve">
-    <value>Speed test service used to measure download speed, upload speed, latency, and jitter.</value>
+    <value>用于测量下载速度、上传速度、延迟和抖动的测速服务。</value>
   </data>
   <data name="Stop" xml:space="preserve">
-    <value>Stop</value>
+    <value>停止</value>
   </data>
 </root>
