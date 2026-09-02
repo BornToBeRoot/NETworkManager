@@ -139,31 +139,31 @@
     <value>ARP</value>
   </data>
   <data name="NeighborTable" xml:space="preserve">
-    <value>Neighbor Table</value>
+    <value>邻居表</value>
   </data>
   <data name="NeighborTableAdminMessage" xml:space="preserve">
-    <value>Read-only mode. Modifying the neighbor table requires elevated rights!</value>
+    <value>只读模式。修改邻居表需要提升权限！</value>
   </data>
   <data name="NeighborState_Unreachable" xml:space="preserve">
-    <value>Unreachable</value>
+    <value>不可达</value>
   </data>
   <data name="NeighborState_Incomplete" xml:space="preserve">
-    <value>Incomplete</value>
+    <value>不完整</value>
   </data>
   <data name="NeighborState_Probe" xml:space="preserve">
-    <value>Probe</value>
+    <value>探测</value>
   </data>
   <data name="NeighborState_Delay" xml:space="preserve">
-    <value>Delay</value>
+    <value>延迟</value>
   </data>
   <data name="NeighborState_Stale" xml:space="preserve">
-    <value>Stale</value>
+    <value>过时</value>
   </data>
   <data name="NeighborState_Reachable" xml:space="preserve">
-    <value>Reachable</value>
+    <value>可抵达</value>
   </data>
   <data name="NeighborState_Permanent" xml:space="preserve">
-    <value>Permanent</value>
+    <value>永久</value>
   </data>
   <data name="Authentication" xml:space="preserve">
     <value>认证</value>
@@ -313,22 +313,22 @@
     <value>网络接口</value>
   </data>
   <data name="NetworkInterfaceConfigurationAppliedSuccessfully" xml:space="preserve">
-    <value>Configuration applied</value>
+    <value>配置已应用</value>
   </data>
   <data name="NetworkInterfaceConfigureAdminMessage" xml:space="preserve">
-    <value>Configuring the network interface requires elevated rights!</value>
+    <value>配置网络接口需要提升权限！</value>
   </data>
   <data name="NewTab" xml:space="preserve">
     <value>新标签</value>
   </data>
   <data name="Next" xml:space="preserve">
-    <value>Next</value>
+    <value>下一步</value>
   </data>
   <data name="OUI" xml:space="preserve">
     <value>OUI</value>
   </data>
   <data name="Options" xml:space="preserve">
-    <value>Options</value>
+    <value>选项</value>
   </data>
   <data name="OverwriteQuestion" xml:space="preserve">
     <value>是否覆盖?</value>
@@ -481,16 +481,16 @@
     <value>说明</value>
   </data>
   <data name="Placeholder" xml:space="preserve">
-    <value>Placeholder</value>
+    <value>占位符</value>
   </data>
   <data name="HelpMessage_CustomCommandFilePath" xml:space="preserve">
-    <value>Path to the file or executable to run. The following placeholders can be used:</value>
+    <value>要运行的文件或可执行文件的路径。可以使用以下占位符：</value>
   </data>
   <data name="HelpMessage_CustomCommandArguments" xml:space="preserve">
-    <value>Arguments passed to the file or executable. The following placeholders can be used:</value>
+    <value>传递给文件或可执行文件的参数。可以使用以下占位符：</value>
   </data>
   <data name="HelpMessage_ProfileHostPlaceholder" xml:space="preserve">
-    <value>The following placeholder can be used:</value>
+    <value>可以使用以下占位符：</value>
   </data>
   <data name="DHCPEnabled" xml:space="preserve">
     <value>DHCP已启用</value>
@@ -538,28 +538,28 @@
     <value>IPv4 地址</value>
   </data>
   <data name="IPv4AddressAddedSuccessfully" xml:space="preserve">
-    <value>IPv4 address added</value>
+    <value>已添加 IPv4 地址</value>
   </data>
   <data name="IPv4AddressRemovedSuccessfully" xml:space="preserve">
-    <value>IPv4 address removed</value>
+    <value>已移除 IPv4 地址</value>
   </data>
   <data name="IPv4AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
-    <value>IPv4 address released and renewed</value>
+    <value>IPv4 地址已释放并重新获取</value>
   </data>
   <data name="IPv4AddressReleasedSuccessfully" xml:space="preserve">
-    <value>IPv4 address released</value>
+    <value>IPv4 地址已释放</value>
   </data>
   <data name="IPv4AddressRenewedSuccessfully" xml:space="preserve">
-    <value>IPv4 address renewed</value>
+    <value>IPv4 地址已释放</value>
   </data>
   <data name="IPv6AddressReleasedAndRenewedSuccessfully" xml:space="preserve">
-    <value>IPv6 address released and renewed</value>
+    <value>IPv6 地址已释放并重新获取</value>
   </data>
   <data name="IPv6AddressReleasedSuccessfully" xml:space="preserve">
-    <value>IPv6 address released</value>
+    <value>IPv6 地址已释放</value>
   </data>
   <data name="IPv6AddressRenewedSuccessfully" xml:space="preserve">
-    <value>IPv6 address renewed</value>
+    <value>IPv6 地址已释放</value>
   </data>
   <data name="IPv4DefaultGateway" xml:space="preserve">
     <value>IPv4 默认路由</value>
@@ -577,16 +577,16 @@
     <value>IPv6 默认网关</value>
   </data>
   <data name="Map" xml:space="preserve">
-    <value>Map</value>
+    <value>映射</value>
   </data>
   <data name="PlusXMore" xml:space="preserve">
-    <value>(+{0} more)</value>
+    <value>(+ {0}更多)</value>
   </data>
   <data name="ScrollToZoomDragToPan" xml:space="preserve">
-    <value>Scroll = Zoom, Drag = Pan</value>
+    <value>滚动 = 缩放，拖动 = 平移</value>
   </data>
   <data name="Unknown" xml:space="preserve">
-    <value>Unknown</value>
+    <value>未知</value>
   </data>
   <data name="Maximum" xml:space="preserve">
     <value>最大值</value>
@@ -658,7 +658,7 @@
     <value>在启动后显示以下应用：</value>
   </data>
   <data name="Slogan" xml:space="preserve">
-    <value>A powerful open-source tool for managing networks and troubleshooting network problems!</value>
+    <value>一款功能强大的开源工具，用于管理网络和排查网络故障！</value>
   </data>
   <data name="Speed" xml:space="preserve">
     <value>速度</value>
@@ -766,7 +766,7 @@
     <value>应用</value>
   </data>
   <data name="ApplyWindowsKeyCombinationsLikeAltTab" xml:space="preserve">
-    <value>Apply Windows key combinations (e.g., ALT+TAB):</value>
+    <value>应用 Windows 键组合键（例如ALT + TAB）：</value>
   </data>
   <data name="Auth" xml:space="preserve">
     <value>验证</value>
@@ -796,7 +796,7 @@
     <value>大写锁定已启用！</value>
   </data>
   <data name="ChartTimeInSeconds" xml:space="preserve">
-    <value>Chart time (seconds)</value>
+    <value>图表时间（秒）</value>
   </data>
   <data name="CheckForUpdatesAtStartup" xml:space="preserve">
     <value>启动后检查更新</value>
@@ -1042,7 +1042,7 @@
     <value>OID</value>
   </data>
   <data name="OnlyCsvFilesAllowed" xml:space="preserve">
-    <value>Only CSV files are allowed!</value>
+    <value>仅允许上传 CSV 文件！</value>
   </data>
   <data name="OnlyWhenUsingTheFullScreen" xml:space="preserve">
     <value>仅在全屏模式可用</value>
@@ -1361,7 +1361,7 @@
     <value>清理 DNS 缓存</value>
   </data>
   <data name="FlushDNSCacheSuccessfully" xml:space="preserve">
-    <value>DNS cache flushed</value>
+    <value>已刷新 DNS 缓存</value>
   </data>
   <data name="HelpMessage_Credentials" xml:space="preserve">
     <value>解密并载入你选择的的凭据。</value>
@@ -1421,7 +1421,7 @@
     <value>覆盖</value>
   </data>
   <data name="Parse" xml:space="preserve">
-    <value>Parse</value>
+    <value>解析</value>
   </data>
   <data name="Paste" xml:space="preserve">
     <value>粘贴</value>
@@ -1469,16 +1469,16 @@
     <value>輸入有效的 IPv4 地址！</value>
   </data>
   <data name="EnterValidMACAddress" xml:space="preserve">
-    <value>Enter a valid MAC address (e.g., 00:F1:23:AB:F2:35)!</value>
+    <value>输入有效的 MAC 位址（例如：00:F1:23:AB:F2:35）！</value>
   </data>
   <data name="EnterValidPort" xml:space="preserve">
     <value>输入有效端口（1-65535）！</value>
   </data>
   <data name="EnterValidSubnetmask" xml:space="preserve">
-    <value>Enter a valid subnetmask (e.g., 255.255.255.0)!</value>
+    <value>输入有效的子网掩码（如 255.255.255.0）！</value>
   </data>
   <data name="EnterValidSubnetmaskOrCIDR" xml:space="preserve">
-    <value>Enter a valid subnetmask or CIDR (e.g., 255.255.255.0 or /24)!</value>
+    <value>输入有效的子网掩码或 CIDR（例如：255.255.255.0 或 /24）！</value>
   </data>
   <data name="FieldCannotBeEmpty" xml:space="preserve">
     <value>字段不能为空！</value>
@@ -1550,10 +1550,10 @@
     <value>输入有效的端口或端口范围（1 - 65535）！</value>
   </data>
   <data name="EnterValidSubnet" xml:space="preserve">
-    <value>Enter a valid subnet (e.g., 192.168.178.133/26)!</value>
+    <value>输入有效的子网（例如：192.168.178.133/26）！</value>
   </data>
   <data name="EnterValidWebsiteUri" xml:space="preserve">
-    <value>Enter a valid website (e.g., https://example.com/index.html)</value>
+    <value>输入有效的网址（例如  https://example.com/index.html)</value>
   </data>
   <data name="Green" xml:space="preserve">
     <value>绿色</value>
@@ -1848,10 +1848,10 @@
     <value>添加 whois 查询页...</value>
   </data>
   <data name="EnterValidDomain" xml:space="preserve">
-    <value>Enter a valid domain (e.g., "example.com")!</value>
+    <value>输入有效的域名（例如“example.com”）！</value>
   </data>
   <data name="EnterValidUsername" xml:space="preserve">
-    <value>Enter a valid Windows username (e.g., "user", "DOMAIN\user" or "user@domain.com")!</value>
+    <value>请输入有效的 Windows 用户名（例如：“user”、“DOMAIN\user”或“user@domain.com”）！</value>
   </data>
   <data name="WhoisServerNotFoundForTheDomain" xml:space="preserve">
     <value>未找到该域名的 Whois 服务器：“{0}”</value>
@@ -2039,9 +2039,9 @@
     <value>检查公网 IP 地址</value>
   </data>
   <data name="WelcomeMessage" xml:space="preserve">
-    <value>Thank you for using NETworkManager!
+    <value>感谢使用 NETworkManager！
 
-If you enjoy it, please consider supporting its development — whether by leaving a star on GitHub, making a donation, or simply sharing it with others. Your support helps keep the project going and growing.</value>
+如果您喜欢这款软件，请考虑支持其开发——无论是去 GitHub 上点个 Star、进行捐赠，还是简单地分享给他人。您的支持是项目持续发展与成长的动力。</value>
   </data>
   <data name="HelpMessage_CheckForUpdatesAtStartup" xml:space="preserve">
     <value>启动程序时，它会在后台检查GitHub上是否有新的程序版本。
@@ -2063,7 +2063,7 @@ URL: https://api.github.com/</value>
     <value>第三方服务</value>
   </data>
   <data name="StarForkProjectOnGitHub" xml:space="preserve">
-    <value>Star/Fork the Project on GitHub.</value>
+    <value>在 Github 上对项目关注或创建分支</value>
   </data>
   <data name="HelpTranslateOnTransifex" xml:space="preserve">
     <value>Help translate the project on Transifex.</value>
