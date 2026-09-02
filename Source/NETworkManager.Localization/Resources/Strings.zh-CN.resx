@@ -229,7 +229,7 @@
     <value>不分段</value>
   </data>
   <data name="Down" xml:space="preserve">
-    <value>Down</value>
+    <value>下移</value>
   </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>编辑凭据</value>
@@ -1256,7 +1256,7 @@
     <value>打开托盘/将窗口放到前台</value>
   </data>
   <data name="Up" xml:space="preserve">
-    <value>Up</value>
+    <value>上移</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>URL</value>
@@ -4080,96 +4080,96 @@ URL: http://ip-api.com/</value>
     <value>按标签筛选</value>
   </data>
   <data name="NoTagsFound" xml:space="preserve">
-    <value>No tags found!</value>
+    <value>未找到标签！</value>
   </data>
   <data name="Match" xml:space="preserve">
-    <value>Match</value>
+    <value>匹配</value>
   </data>
   <data name="Any" xml:space="preserve">
-    <value>Any</value>
+    <value>任意</value>
   </data>
   <data name="AddGroupDots" xml:space="preserve">
-    <value>Add group...</value>
+    <value>新增群主</value>
   </data>
   <data name="ExpandAll" xml:space="preserve">
-    <value>Expand all</value>
+    <value>展开所有</value>
   </data>
   <data name="CollapseAll" xml:space="preserve">
-    <value>Collapse all</value>
+    <value>收起所有</value>
   </data>
   <data name="HelpMessage_UseCustomThemes" xml:space="preserve">
-    <value>Use custom themes to personalize the appearance of the application. You can edit or add theme in the "Program Folder &gt; Themes" directory. For more details, refer to the documentation.</value>
+    <value>使用自定义主题来个性化应用程序的外观。您可以在「程序文件夹 &gt; 主题」目录中编辑或添加主题。如需更多详细信息，请参阅文档。</value>
   </data>
   <data name="AdminConsoleSession" xml:space="preserve">
-    <value>Admin (console) session</value>
+    <value>管理员（控制台）会话</value>
   </data>
   <data name="DeleteProfileFileXMessage" xml:space="preserve">
-    <value>Profile file "{0}" will be deleted permanently.</value>
+    <value>配置文件「{0}」将被永久删除。</value>
   </data>
   <data name="EnableEncryptionQuestion" xml:space="preserve">
-    <value>Enable encryption?</value>
+    <value>启用加密?</value>
   </data>
   <data name="EnableEncryptionForProfileFileMessage" xml:space="preserve">
-    <value>Do you want to enable profile file encryption to protect sensitive data such as hosts, IP addresses, URLs, and stored credentials?
+    <value>您是否希望启用配置文件加密以保护主机、IP地址、URL和存储的凭证等敏感数据？
 
-You can enable or disable encryption later at any time by right-clicking the profile file to manage encryption settings.
-If you click Cancel, the profile file will remain unencrypted.</value>
+您可以随时通过右键单击配置文件来管理加密设置，从而稍后启用或禁用加密。
+如果单击“取消”，配置文件将保持未加密状态。</value>
   </data>
   <data name="RestartRequiredMessage" xml:space="preserve">
-    <value>A restart is required to apply changes such as language settings.</value>
+    <value>需要重启才能应用语言设置等更改</value>
   </data>
   <data name="CouldNotParseOrResolveDNSServers" xml:space="preserve">
-    <value>Could not parse or resolve any of the specified DNS servers.</value>
+    <value>无法解析或识别任何指定的 DNS 服务器。</value>
   </data>
   <data name="CouldNotParseX" xml:space="preserve">
-    <value>Could not parse "{0}".</value>
+    <value>无法解析「{0}」。</value>
   </data>
   <data name="MaximumNumberOfBackups" xml:space="preserve">
-    <value>Maximum number of backups</value>
+    <value>最大备份数量</value>
   </data>
   <data name="CreateDailyBackup" xml:space="preserve">
-    <value>Create daily backup</value>
+    <value>创建每日备份</value>
   </data>
   <data name="HelpMessage_MaximumNumberOfBackups" xml:space="preserve">
-    <value>Number of backups that are retained before the oldest one is deleted.</value>
+    <value>在删除最旧的备份之前所保留的备份数量。</value>
   </data>
   <data name="SettingManagedByAdministrator" xml:space="preserve">
-    <value>This setting is managed by your administrator.</value>
+    <value>此设置由您的管理员管理。</value>
   </data>
   <data name="RestoreDefaultLocation" xml:space="preserve">
-    <value>Restore default location</value>
+    <value>还原默认位置</value>
   </data>
   <data name="Restore" xml:space="preserve">
-    <value>Restore</value>
+    <value>还原</value>
   </data>
   <data name="RestoreDefaultLocationQuestion" xml:space="preserve">
-    <value>Restore default location?</value>
+    <value>还原默认位置？</value>
   </data>
   <data name="RestoreDefaultSettingsLocationMessage" xml:space="preserve">
-    <value>The default settings location is restored and the application is restarted afterwards.
+    <value>设置位置已更改，随后应用程序将重新启动。
 
-You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+如有必要，您可以将配置文件从「{0}」复制到「{1}」以迁移您现有的配置文件。必须关闭应用程序，以防止配置文件被覆盖。</value>
   </data>
   <data name="ChangeLocationQuestion" xml:space="preserve">
-    <value>Change location?</value>
+    <value>更改位置？</value>
   </data>
   <data name="ChangeSettingsLocationMessage" xml:space="preserve">
-    <value>The settings location is changed and the application is restarted afterwards.
+    <value>设置位置已更改，随后应用程序将重新启动。
 
-You can copy the “settings.json” file from "{0}" to "{1}" to migrate your previous settings, if necessary. The application must be closed for this to prevent the settings from being overwritten.</value>
+如有必要，您可以将“settings.json”文件从「{0}」复制到「{1}」以迁移您现有的配置文件。必须关闭应用程序，以防止配置文件被覆盖。</value>
   </data>
   <data name="EnterValidFolderPath" xml:space="preserve">
-    <value>Enter a valid folder path!</value>
+    <value>请输入有效的文件夹路径！</value>
   </data>
   <data name="ChangeProfilesLocationMessage" xml:space="preserve">
-    <value>The profiles location is changed and the application is restarted afterwards.
+    <value>配置文件位置已更改，随后应用程序将重新启动。
 
-You can copy your profile files from “{0}” to “{1}” to migrate your existing profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten.</value>
+如有必要，您可以将配置文件从「{0}」复制到「{1}」以迁移您现有的配置文件。必须关闭应用程序，以防止配置文件被覆盖。</value>
   </data>
   <data name="RestoreDefaultProfilesLocationMessage" xml:space="preserve">
-    <value>The default profiles location is restored and the application is restarted afterwards.
+    <value>默认配置文件位置已恢复，随后应用程序将重新启动
 
-You can copy your profile files from “{0}” to “{1}” to migrate your existing profiles, if necessary. The application must be closed for this to prevent the profiles from being overwritten.</value>
+如有必要，您可以将配置文件从「{0}」复制到「{1}」以迁移您现有的配置文件。必须关闭应用程序，以防止配置文件被覆盖。</value>
   </data>
   <data name="NetworkConnection" xml:space="preserve">
     <value>网络连接</value>
