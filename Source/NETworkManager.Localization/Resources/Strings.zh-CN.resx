@@ -2066,10 +2066,10 @@ URL: https://api.github.com/</value>
     <value>在 Github 上对项目关注或创建分支</value>
   </data>
   <data name="HelpTranslateOnTransifex" xml:space="preserve">
-    <value>Help translate the project on Transifex.</value>
+    <value>帮助翻译 Transifex 上的项目</value>
   </data>
   <data name="ContactOrContactMeViaX" xml:space="preserve">
-    <value>Follow or contact me via X.</value>
+    <value>通过 X 关注或联系我。</value>
   </data>
   <data name="Connection" xml:space="preserve">
     <value>连接</value>
@@ -2141,7 +2141,7 @@ URL: https://api.github.com/</value>
     <value>使用自定义 IPv4 地址 API</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv4AddressAPI" xml:space="preserve">
-    <value>URL to a web service that can be reached via http or https and returns an IPv4 address e.g., "xx.xx.xx.xx" as response.</value>
+    <value>可通过 HTTP 或 HTTPS 访问并返回 IPv4 地址例如 「“xx.xx.xx.xx”」的 Web 服务 URL。</value>
   </data>
   <data name="CouldNotParsePublicIPAddressFromXXXMessage" xml:space="preserve">
     <value>无法解析公网 IP 地址"{0}"! 尝试其他服务或使用默认的... </value>
@@ -2216,10 +2216,10 @@ URL: https://api.github.com/</value>
     <value>视觉样式</value>
   </data>
   <data name="ViewOnly" xml:space="preserve">
-    <value>View only</value>
+    <value>仅查看</value>
   </data>
   <data name="ViewOnlyDescription" xml:space="preserve">
-    <value>Block keyboard and mouse input to the remote session</value>
+    <value>阻止键盘和鼠标输入发送至远程会话</value>
   </data>
   <data name="RemoteAudio" xml:space="preserve">
     <value>远程音频</value>
@@ -2267,10 +2267,10 @@ URL: https://api.github.com/</value>
     <value>程序</value>
   </data>
   <data name="Private" xml:space="preserve">
-    <value>Private</value>
+    <value>私密</value>
   </data>
   <data name="Public" xml:space="preserve">
-    <value>Public</value>
+    <value>公开</value>
   </data>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>所选自定义命令将被永久删除。</value>
@@ -2285,19 +2285,19 @@ URL: https://api.github.com/</value>
     <value>Ctrl+Alt+Del</value>
   </data>
   <data name="TaskManager" xml:space="preserve">
-    <value>Task Manager (Ctrl+Shift+Esc)</value>
+    <value>任务管理器 (Ctrl+Shift+Esc)</value>
   </data>
   <data name="Lock" xml:space="preserve">
-    <value>Lock (Win+L)</value>
+    <value>锁定（Win+L）</value>
   </data>
   <data name="ShowDesktop" xml:space="preserve">
-    <value>Show Desktop (Win+D)</value>
+    <value>显示桌面 (Win+D)</value>
   </data>
   <data name="Explorer" xml:space="preserve">
-    <value>Explorer (Win+E)</value>
+    <value>文件资源管理器（Win+E）</value>
   </data>
   <data name="RunDialog" xml:space="preserve">
-    <value>Run dialog (Win+R)</value>
+    <value>运行窗口 (Win+R)</value>
   </data>
   <data name="KeyboardShortcuts" xml:space="preserve">
     <value>键盘快捷键</value>
@@ -2363,7 +2363,7 @@ URL: https://api.github.com/</value>
     <value>信道</value>
   </data>
   <data name="ChannelWidth" xml:space="preserve">
-    <value>Channel width</value>
+    <value>通道宽度</value>
   </data>
   <data name="GHz2dot4" xml:space="preserve">
     <value>2.4 GHz</value>
@@ -2414,7 +2414,7 @@ URL: https://api.github.com/</value>
     <value>超时</value>
   </data>
   <data name="ReportIssueOrCreateFeatureRequest" xml:space="preserve">
-    <value>Report an issue or create a feature request.</value>
+    <value>报告一个问题或创建一个功能请求.</value>
   </data>
   <data name="BeaconInterval" xml:space="preserve">
     <value>信标间隔</value>
@@ -2450,7 +2450,7 @@ URL: https://api.github.com/</value>
     <value>暂停</value>
   </data>
   <data name="Paused" xml:space="preserve">
-    <value>Paused</value>
+    <value>已暂停</value>
   </data>
   <data name="Resume" xml:space="preserve">
     <value>恢复</value>
@@ -2459,34 +2459,34 @@ URL: https://api.github.com/</value>
     <value>无法解析主机名ip地址："{0}"</value>
   </data>
   <data name="PingMonitorNotification" xml:space="preserve">
-    <value>Notification</value>
+    <value>通知</value>
   </data>
   <data name="ShowNotificationPopupOnStatusChange" xml:space="preserve">
-    <value>Show notification popup on status change</value>
+    <value>状态改变时显示通知弹窗</value>
   </data>
   <data name="PlaySoundOnStatusChange" xml:space="preserve">
-    <value>Play sound on status change</value>
+    <value>状态改变时播放提示音</value>
   </data>
   <data name="NotificationSuccessThreshold" xml:space="preserve">
-    <value>Success threshold</value>
+    <value>成功阈值</value>
   </data>
   <data name="HelpMessage_NotificationSuccessThreshold" xml:space="preserve">
-    <value>Number of consecutive successful pings required before a "Host is up" notification is shown. Higher values reduce noise from flapping hosts.</value>
+    <value>在显示“主机上线”通知之前所需的连续成功 Ping 次数。较高的值可减少因主机频繁上下线抖动带来的干扰。</value>
   </data>
   <data name="NotificationFailureThreshold" xml:space="preserve">
-    <value>Failure threshold</value>
+    <value>失败阈值</value>
   </data>
   <data name="HelpMessage_NotificationFailureThreshold" xml:space="preserve">
-    <value>Number of consecutive failed pings (timeouts) required before a "Host is down" notification is shown. Higher values reduce noise from flapping hosts.</value>
+    <value>连续失败ping次数（超时）达到多少次后才会显示“主机宕机”通知。更高的值可以减少因主机抖动产生的噪声。</value>
   </data>
   <data name="NotificationDurationInSeconds" xml:space="preserve">
-    <value>Display duration (seconds)</value>
+    <value>显示持续时间（秒）</value>
   </data>
   <data name="HostIsUp" xml:space="preserve">
-    <value>Host is up</value>
+    <value>主机上线</value>
   </data>
   <data name="HostIsDown" xml:space="preserve">
-    <value>Host is down</value>
+    <value>主机下线</value>
   </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>应用程序将重新启动...</value>
@@ -2507,7 +2507,7 @@ URL: https://api.github.com/</value>
     <value>已加密</value>
   </data>
   <data name="OpenTheDocumentation" xml:space="preserve">
-    <value>Open the documentation.</value>
+    <value>打开文档</value>
   </data>
   <data name="ExampleProfileFileName" xml:space="preserve">
     <value>客户 1</value>
@@ -2558,7 +2558,7 @@ URL: https://api.github.com/</value>
     <value>以管理员身份启动</value>
   </data>
   <data name="NetworkPacketsCaptureAdminMessage" xml:space="preserve">
-    <value>Analysing network packets requires elevated rights!</value>
+    <value>分析网络数据包需要提升权限！</value>
   </data>
   <data name="Capture" xml:space="preserve">
     <value>捕获</value>
@@ -2627,7 +2627,7 @@ URL: https://api.github.com/</value>
     <value>Microsoft.Windows.SDK.Contracts是该功能的必要条件，但在该系统上不可用（例如在Windows Server上）。</value>
   </data>
   <data name="ApplicationName_NeighborTable" xml:space="preserve">
-    <value>Neighbor Table</value>
+    <value>邻居表</value>
   </data>
   <data name="ApplicationName_Connections" xml:space="preserve">
     <value>连接</value>
@@ -2846,7 +2846,7 @@ URL: https://api.github.com/</value>
     <value>接收</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>Last status change</value>
+    <value>最后状态改变时间</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>有可用的更新！</value>
@@ -2978,7 +2978,7 @@ URL: https://api.github.com/</value>
     <value>C# 库为 .NET 开发人员处理复杂的网络、IP、IPv4、IPv6、子网掩码、CIDR、子网、子网划分、超网和超网划分计算。</value>
   </data>
   <data name="Library_LiveCharts_Description" xml:space="preserve">
-    <value>Beautiful, interactive charts, maps, and gauges.</value>
+    <value>精美且具有交互性的图表、地图和仪表盘。</value>
   </data>
   <data name="Library_LoadingIndicatorsWPF_Description" xml:space="preserve">
     <value>WPF的加载指示器集合</value>
