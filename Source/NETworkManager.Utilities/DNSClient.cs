@@ -33,12 +33,19 @@ public class DNSClient : SingletonBase<DNSClient>
     private DNSClientSettings _settings;
 
     /// <summary>
+    ///     Indicates if the DNS suffix should be added to a hostname without a dot before resolving it.
+    /// </summary>
+    private bool _addSuffix;
+
+    /// <summary>
     ///     Method to configure the DNS client.
     /// </summary>
     /// <param name="settings"></param>
     public void Configure(DNSClientSettings settings)
     {
         _settings = settings;
+
+        _addSuffix = _settings.AddDNSSuffix && !string.IsNullOrEmpty(_settings.DNSSuffix);
 
         Log.Debug("Configure - Configuring DNS client...");
 
@@ -88,6 +95,8 @@ public class DNSClient : SingletonBase<DNSClient>
         if (!_isConfigured)
             throw new DNSClientNotConfiguredException(NotConfiguredMessage);
 
+        query = AddDNSSuffixIfConfigured(query);
+
         try
         {
             var result = await _client.QueryAsync(query, QueryType.A);
@@ -130,6 +139,8 @@ public class DNSClient : SingletonBase<DNSClient>
     {
         if (!_isConfigured)
             throw new DNSClientNotConfiguredException(NotConfiguredMessage);
+
+        query = AddDNSSuffixIfConfigured(query);
 
         try
         {
@@ -253,6 +264,19 @@ public class DNSClient : SingletonBase<DNSClient>
             Log.Error($"Error while resolving PTR record (IP address is \"{ipAddress}\".", ex);
             return new DNSClientResultString(true, ex.Message);
         }
+    }
+
+    /// <summary>
+    ///     Appends the configured DNS suffix to a hostname without a dot (forward lookups only).
+    ///     FQDNs (containing a dot) are returned unchanged.
+    /// </summary>
+    /// <param name="query">Hostname or FQDN as string like "example.com".</param>
+    /// <returns>Query with the DNS suffix appended, if configured and applicable.</returns>
+    private string AddDNSSuffixIfConfigured(string query)
+    {
+        return _addSuffix && !string.IsNullOrEmpty(query) && !query.Contains('.')
+            ? $"{query}.{_settings.DNSSuffix}"
+            : query;
     }
 
     /// <summary>

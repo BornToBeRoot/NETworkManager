@@ -64,12 +64,30 @@ public sealed partial class MainWindow : INotifyPropertyChanged
                 break;
 
             // Update DNS server if changed in the settings
+            // Delayed via a timer, so rapid/successive changes (e.g. typing in the custom DNS
+            // suffix textbox) don't reconfigure the DNS client on every single change.
             case nameof(SettingsInfo.Network_UseCustomDNSServer):
-            case nameof(SettingsInfo.Network_CustomDNSServer):
-                ConfigureDNSServer();
+            case nameof(SettingsInfo.Network_CustomDNSServers):
+            case nameof(SettingsInfo.Network_AddDNSSuffix):
+            case nameof(SettingsInfo.Network_UseCustomDNSSuffix):
+            case nameof(SettingsInfo.Network_CustomDNSSuffix):
+                // Stop + Start (instead of just Start) to reset the due time on every change --
+                // DispatcherTimer.Start() is a no-op while it's already running.
+                _configureDNSServerDispatcherTimer.Stop();
+                _configureDNSServerDispatcherTimer.Start();
 
                 break;
         }
+    }
+
+    /// <summary>
+    ///     Apply pending DNS server settings changes once they stopped changing for a short delay.
+    /// </summary>
+    private void ConfigureDNSServerDispatcherTimer_Tick(object sender, EventArgs e)
+    {
+        _configureDNSServerDispatcherTimer.Stop();
+
+        ConfigureDNSServer();
     }
 
     #endregion
@@ -100,6 +118,12 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private NotifyIcon _notifyIcon;
     private StatusWindow _statusWindow;
+
+    /// <summary>
+    ///     Timer to delay <see cref="ConfigureDNSServer" /> while the related settings are still changing
+    ///     (e.g. while typing in the custom DNS suffix textbox), so it's only applied once.
+    /// </summary>
+    private readonly DispatcherTimer _configureDNSServerDispatcherTimer = new();
 
     private readonly bool _isLoading;
     private bool _isProfileFilesLoading;
@@ -403,6 +427,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         // Load and change appearance
         AppearanceManager.Load();
+
+        // Delay applying DNS server settings change
+        _configureDNSServerDispatcherTimer.Interval = GlobalStaticConfiguration.NetworkConfigApplyDispatcherTimerTimeSpan;
+        _configureDNSServerDispatcherTimer.Tick += ConfigureDNSServerDispatcherTimer_Tick;
 
         // Load and configure DNS server
         ConfigureDNSServer();
@@ -1866,26 +1894,35 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         if (SettingsManager.Current.Network_UseCustomDNSServer)
         {
-            if (!string.IsNullOrEmpty(SettingsManager.Current.Network_CustomDNSServer))
+            if (SettingsManager.Current.Network_CustomDNSServers.Count > 0)
             {
-                Log.Info($"Use custom DNS servers ({SettingsManager.Current.Network_CustomDNSServer})...");
-
-                List<(string Server, int Port)> dnsServers = SettingsManager.Current.Network_CustomDNSServer.Split(";")
-                    .Select(dnsServer => (dnsServer, 53))
-                    .ToList();
+                Log.Info(
+                    $"Use custom DNS servers ({string.Join("; ", SettingsManager.Current.Network_CustomDNSServers)})...");
 
                 dnsSettings.UseCustomDNSServers = true;
-                dnsSettings.DNSServers = dnsServers;
+                dnsSettings.DNSServers =
+                [
+                    .. SettingsManager.Current.Network_CustomDNSServers
+                        .Select(dnsServer => (dnsServer.Server, dnsServer.Port))
+                ];
             }
             else
             {
                 Log.Info(
-                    $"Custom DNS servers could not be set (Setting \"{nameof(SettingsManager.Current.Network_CustomDNSServer)}\" has value \"{SettingsManager.Current.Network_CustomDNSServer}\")! Fallback to Windows default DNS servers...");
+                    $"Custom DNS servers could not be set (Setting \"{nameof(SettingsManager.Current.Network_CustomDNSServers)}\" is empty)! Fallback to Windows default DNS servers...");
             }
         }
         else
         {
             Log.Info("Use Windows default DNS servers...");
+        }
+
+        if (SettingsManager.Current.Network_AddDNSSuffix)
+        {
+            dnsSettings.AddDNSSuffix = true;
+            dnsSettings.DNSSuffix = SettingsManager.Current.Network_UseCustomDNSSuffix
+                ? SettingsManager.Current.Network_CustomDNSSuffix?.TrimStart('.')
+                : IPGlobalProperties.GetIPGlobalProperties().DomainName;
         }
 
         DNSClient.GetInstance().Configure(dnsSettings);

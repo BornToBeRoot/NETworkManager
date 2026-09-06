@@ -108,13 +108,15 @@ public sealed class DNSLookup
     /// <returns>List of DNS servers as <see cref="IPEndPoint" />.</returns>
     private IEnumerable<IPEndPoint> GetDnsServer(IEnumerable<ServerConnectionInfo> dnsServers = null)
     {
-        List<IPEndPoint> servers = [];
+        // Use Windows dns servers
+        List<IPEndPoint> servers =
+        [
+            .. dnsServers == null
+                ? NameServer.ResolveNameServers(true, false).Select(dnsServer =>
+                    new IPEndPoint(IPAddress.Parse(dnsServer.Address), dnsServer.Port))
+                : dnsServers.Select(dnsServer => new IPEndPoint(IPAddress.Parse(dnsServer.Server), dnsServer.Port))
 
-        // Use windows dns servers
-        servers.AddRange(dnsServers == null
-            ? NameServer.ResolveNameServers(true, false).Select(dnsServer =>
-                new IPEndPoint(IPAddress.Parse(dnsServer.Address), dnsServer.Port))
-            : dnsServers.Select(dnsServer => new IPEndPoint(IPAddress.Parse(dnsServer.Server), dnsServer.Port)));
+        ];
 
         return servers;
     }
@@ -124,9 +126,9 @@ public sealed class DNSLookup
     /// </summary>
     /// <param name="hosts">List of hosts</param>
     /// <returns>List of host with DNS suffix</returns>
-    private IEnumerable<string> GetHostWithSuffix(IEnumerable<string> hosts)
+    private IEnumerable<string> GetHostsWithSuffix(IEnumerable<string> hosts)
     {
-        return hosts.Select(host => host.Contains('.') ? host : $"{host}.{_suffix}").ToList();
+        return [.. hosts.Select(host => host.Contains('.') ? host : $"{host}.{_suffix}")];
     }
 
     /// <summary>
@@ -138,7 +140,7 @@ public sealed class DNSLookup
         Task.Run(() =>
         {
             // Append dns suffix to hostname, if the option is set, otherwise copy the list
-            var queries = _addSuffix && _settings.QueryType != QueryType.PTR ? GetHostWithSuffix(hosts) : hosts;
+            var queries = _addSuffix && _settings.QueryType != QueryType.PTR ? GetHostsWithSuffix(hosts) : hosts;
 
             // For each dns server
             Parallel.ForEach(_servers, dnsServer =>

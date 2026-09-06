@@ -23,4 +23,14 @@ public class DNSClientSettings
     ///     List of name servers as Tuple (string Server, int Port).
     /// </summary>
     public IEnumerable<(string Server, int Port)> DNSServers { get; set; }
+
+    /// <summary>
+    ///     Add the DNS suffix to a hostname without a dot before resolving it (A/AAAA queries only).
+    /// </summary>
+    public bool AddDNSSuffix { get; set; }
+
+    /// <summary>
+    ///     DNS suffix to append. Either the custom DNS suffix from the settings or the Windows DNS suffix.
+    /// </summary>
+    public string DNSSuffix { get; set; }
 }
