@@ -16,13 +16,14 @@ public class ServerConnectionInfoProfileViewModel : ViewModelBase
     public ServerConnectionInfoProfileViewModel(Action<ServerConnectionInfoProfileViewModel> saveCommand,
         Action<ServerConnectionInfoProfileViewModel> cancelHandler,
         (List<string> UsedNames, bool IsEdited, bool allowOnlyIPAddress) options, ServerConnectionInfo defaultValues,
-        ServerConnectionInfoProfile info = null)
+        ServerConnectionInfoProfile info = null, bool isNameReadOnly = false)
     {
         SaveCommand = new RelayCommand(_ => saveCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
         UsedNames = options.UsedNames;
         AllowOnlyIPAddress = options.allowOnlyIPAddress;
+        IsNameReadOnly = isNameReadOnly;
 
         _defaultValues = defaultValues;
 
@@ -88,6 +89,19 @@ public class ServerConnectionInfoProfileViewModel : ViewModelBase
     }
 
     public bool AllowOnlyIPAddress
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsNameReadOnly
     {
         get;
         set

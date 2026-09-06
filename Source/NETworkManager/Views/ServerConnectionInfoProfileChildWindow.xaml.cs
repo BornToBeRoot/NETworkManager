@@ -15,9 +15,14 @@ public partial class ServerConnectionInfoProfileChildWindow
 
     private void ChildWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
+        var isNameReadOnly = (DataContext as ServerConnectionInfoProfileViewModel)?.IsNameReadOnly ?? false;
+
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
-            TextBoxName.Focus();
+            if (isNameReadOnly)
+                TextBoxServer.Focus();
+            else
+                TextBoxName.Focus();
         }));
     }
 
