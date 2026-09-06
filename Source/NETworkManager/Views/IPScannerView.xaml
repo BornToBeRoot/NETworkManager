@@ -530,7 +530,10 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="" SortMemberPath="IsReachable" CanUserResize="False">
+                <DataGridTemplateColumn Header=""
+                                        SortMemberPath="IsReachable" 
+                                        CanUserResize="False"
+                                        MinWidth="26">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Rectangle Width="24" Height="24"
