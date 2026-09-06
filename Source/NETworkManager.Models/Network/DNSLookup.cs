@@ -1,10 +1,10 @@
 ﻿using DnsClient;
 using DnsClient.Protocol;
+using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network;
@@ -24,7 +24,7 @@ public sealed class DNSLookup
         {
             _suffix = _settings.UseCustomDNSSuffix
                 ? _settings.CustomDNSSuffix
-                : IPGlobalProperties.GetIPGlobalProperties().DomainName;
+                : DNSClientHelper.DetectDNSSuffix();
 
             _addSuffix = !string.IsNullOrEmpty(_suffix);
         }

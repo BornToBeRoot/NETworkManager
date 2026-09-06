@@ -1922,7 +1922,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             dnsSettings.AddDNSSuffix = true;
             dnsSettings.DNSSuffix = SettingsManager.Current.Network_UseCustomDNSSuffix
                 ? SettingsManager.Current.Network_CustomDNSSuffix?.TrimStart('.')
-                : IPGlobalProperties.GetIPGlobalProperties().DomainName;
+                : DNSClientHelper.DetectDNSSuffix();
         }
 
         DNSClient.GetInstance().Configure(dnsSettings);

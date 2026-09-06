@@ -43,11 +43,9 @@ public class DNSClient : SingletonBase<DNSClient>
     /// <param name="settings"></param>
     public void Configure(DNSClientSettings settings)
     {
-        _settings = settings;
-
-        _addSuffix = _settings.AddDNSSuffix && !string.IsNullOrEmpty(_settings.DNSSuffix);
-
         Log.Debug("Configure - Configuring DNS client...");
+        
+        _settings = settings;
 
         if (_settings.UseCustomDNSServers)
         {
@@ -63,13 +61,18 @@ public class DNSClient : SingletonBase<DNSClient>
             }
 
             Log.Debug("Configure - Creating LookupClient with custom DNS servers...");
-            _client = new LookupClient(new LookupClientOptions(servers.ToArray()));
+            _client = new LookupClient(new LookupClientOptions([.. servers]));
         }
         else
         {
             Log.Debug("Configure - Creating LookupClient with Windows default DNS servers...");
             _client = new LookupClient();
         }
+
+        _addSuffix = _settings.AddDNSSuffix && !string.IsNullOrEmpty(_settings.DNSSuffix);
+        Log.Debug(_addSuffix
+            ? $"Configure - DNS suffix will be added to hostnames without a dot: {_settings.DNSSuffix}"
+            : "Configure - DNS suffix will NOT be added to hostnames without a dot.");
 
         Log.Debug("Configure - DNS client configured.");
         _isConfigured = true;
