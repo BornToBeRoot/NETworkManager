@@ -26,7 +26,7 @@ The IP addresses (and ports) of the DNS servers to be used for DNS queries when 
 
 ### Add DNS suffix (primary) to hostname
 
-Enables or disables appending a DNS suffix to a bare hostname (one without a dot) before it is resolved. This applies to all tools that resolve hostnames through NETworkManager's DNS resolver (e.g. Ping, Traceroute, Port Scanner, IP Scanner, NTP Lookup). Fully-qualified hostnames and reverse (PTR) lookups are not affected. If disabled, hostnames are resolved as entered. If enabled, either the primary DNS suffix configured in Windows or the [custom DNS suffix](#use-custom-dns-suffix) is appended. If no primary DNS suffix is configured (e.g. the computer is not domain-joined), the connection-specific DNS suffix of the active network adapter is used instead.
+Enables or disables appending a DNS suffix to a bare hostname (one without a dot) before it is resolved. This applies to all tools that resolve hostnames through NETworkManager's DNS resolver (e.g. Ping, Traceroute, Port Scanner, IP Scanner, SNTP Lookup). Fully-qualified hostnames and reverse (PTR) lookups are not affected. If disabled, hostnames are resolved as entered. If enabled, either the primary DNS suffix configured in Windows or the [custom DNS suffix](#use-custom-dns-suffix) is appended. If no primary DNS suffix is configured (e.g. the computer is not domain-joined), the connection-specific DNS suffix of the active network adapter is used instead.
 
 **Type:** `Boolean`
 

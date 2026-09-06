@@ -273,7 +273,10 @@ public class DNSClient : SingletonBase<DNSClient>
     /// <returns>Query with the DNS suffix appended, if configured and applicable.</returns>
     private static string AddDNSSuffixIfConfigured(string query, ResolverState state)
     {
-        return state.AddSuffix && !string.IsNullOrEmpty(query) && !query.Contains('.')
+        // Exclude IP literals - an IPv6 address like "2001:db8::1" has no dot and would otherwise be
+        // mistaken for a bare hostname (e.g. by the profile "Resolve" action, which allows IP literals).
+        return state.AddSuffix && !string.IsNullOrEmpty(query) && !query.Contains('.') &&
+               !IPAddress.TryParse(query, out _)
             ? $"{query}.{state.Settings.DNSSuffix}"
             : query;
     }

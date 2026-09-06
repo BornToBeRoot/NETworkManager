@@ -166,11 +166,14 @@ public class ServerConnectionInfo
     }
 
     /// <summary>
-    ///     Returns a string that represents the current object.
+    ///     Returns a string that represents the current object. IPv6 addresses are bracketed
+    ///     (<c>[::1]:53</c>) so the address and port remain distinguishable.
     /// </summary>
-    /// <returns>Server:Port</returns>
+    /// <returns>Server:Port, or [Server]:Port for an IPv6 address.</returns>
     public override string ToString()
     {
-        return $"{Server}:{Port}";
+        return IPAddress.TryParse(Server, out var ip) && ip.AddressFamily == AddressFamily.InterNetworkV6
+            ? $"[{Server}]:{Port}"
+            : $"{Server}:{Port}";
     }
 }
