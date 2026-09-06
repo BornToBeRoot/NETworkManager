@@ -72,6 +72,7 @@ public static class GlobalStaticConfiguration
     public static bool Appearance_UseCustomTheme => false;
 
     // Settings: Network
+    public static bool Network_AddDNSSuffix => true;
     public static bool Network_ResolveHostnamePreferIPv4 => true;
 
     // Settings: Status

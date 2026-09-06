@@ -3,6 +3,7 @@ using NETworkManager.Models;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -638,7 +639,9 @@ public static class SettingsManager
         // DNS Lookup
         Log.Info("Migrate DNS Lookup settings to new structure...");
 
+#pragma warning disable CS0618 // Type or member is obsolete
         Current.DNSLookup_SelectedDNSServer_v2 = Current.DNSLookup_SelectedDNSServer?.Name;
+#pragma warning restore CS0618 // Type or member is obsolete
 
         Log.Info($"Selected DNS server set to \"{Current.DNSLookup_SelectedDNSServer_v2}\"");
 
@@ -788,6 +791,26 @@ public static class SettingsManager
             Log.Info($"Add \"{portProfile.Name}\" to \"PortScanner_PortProfiles\"...");
             Current.PortScanner_PortProfiles.Add(portProfile);
         }
+        
+        // Migrate custom DNS servers from a semicolon-separated string (no port) to a list of ServerConnectionInfo
+#pragma warning disable CS0618
+        if (!string.IsNullOrEmpty(Current.Network_CustomDNSServer))
+        {
+            Log.Info("Migrate custom DNS servers to new structure...");
+
+            Current.Network_CustomDNSServers =
+            [
+                .. Current
+                    .Network_CustomDNSServer
+                    .Split(';')
+                    .Select(server => server.Trim())
+                    .Where(server => server.Length > 0)
+                    .Select(server => new ServerConnectionInfo(server, 53, TransportProtocol.Udp))
+            ];
+
+            Current.Network_CustomDNSServer = string.Empty; // Clear the old property to avoid multiple migrations with pre-release versions
+        }
+#pragma warning restore CS0618
     }
     #endregion
 }
