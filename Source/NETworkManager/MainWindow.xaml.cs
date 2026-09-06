@@ -1949,12 +1949,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         Log.Info("Network availability or address has changed!");
 
-        // Update DNS server if network changed
-        if (!SettingsManager.Current.Network_UseCustomDNSServer)
-        {
-            Log.Info("Update Windows default DNS servers...");
-            DNSClient.GetInstance().UpdateWindowsDNSSever();
-        }
+        // Reconfigure the DNS client if network changed - re-detects the Windows default DNS servers
+        // and, if enabled, the auto-detected DNS suffix (both of which can differ on the new network).
+        Log.Info("Update DNS server configuration...");
+        ConfigureDNSServer();
 
         // Show status window on network change
         if (SettingsManager.Current.Status_ShowWindowOnNetworkChange)
