@@ -4,6 +4,9 @@ namespace NETworkManager.Utilities;
 
 /// <summary>
 ///     Class is used to store settings for the <see cref="DNSClient" />.
+///     <see cref="DNSClient" /> retains the instance passed to <see cref="DNSClient.Configure" /> and reads
+///     it from concurrent resolve calls without further synchronization - do not mutate an instance after
+///     passing it to <see cref="DNSClient.Configure" />; construct a new one instead.
 /// </summary>
 public class DNSClientSettings
 {

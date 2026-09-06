@@ -20,14 +20,19 @@ public static class DNSClientHelper
         if (!string.IsNullOrWhiteSpace(suffix))
             return suffix;
 
-        // Rank candidates so the adapter most likely to be "the" active connection is tried first:
-        // routed (has a gateway) > wired > wireless > other > faster link speed.
+        // Rank candidates so the adapter most likely to be "the" relevant connection is tried first:
+        // VPN/tunnel > wired > wireless > other, then routed (has a gateway), then faster link speed.
+        // VPN ranks above wired/wireless because it's usually why suffix resolution matters in the first
+        // place (reaching internal/corporate hostnames), and a split-tunnel VPN commonly has no default
+        // gateway at all, so gateway-presence can't be the primary key without losing to e.g. a home
+        // Ethernet connection. A candidate is only ever picked if it has a real suffix (see below), so
+        // ranking a VPN/tunnel first doesn't risk picking up an irrelevant OS-internal pseudo-tunnel
+        // (Teredo, ISATAP, ...) - those essentially never carry a connection-specific DNS suffix.
         var prioritizedAdapters = NetworkInterface.GetAllNetworkInterfaces()
             .Where(nic => nic.OperationalStatus == OperationalStatus.Up &&
-                          nic.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
-                          nic.NetworkInterfaceType != NetworkInterfaceType.Tunnel)
-            .OrderByDescending(nic => nic.GetIPProperties().GatewayAddresses.Count > 0)
-            .ThenByDescending(nic => GetInterfaceTypePriority(nic.NetworkInterfaceType))
+                          nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+            .OrderByDescending(nic => GetInterfaceTypePriority(nic.NetworkInterfaceType))
+            .ThenByDescending(nic => nic.GetIPProperties().GatewayAddresses.Count > 0)
             .ThenByDescending(nic => nic.Speed);
 
         return prioritizedAdapters
@@ -38,6 +43,8 @@ public static class DNSClientHelper
 
     private static int GetInterfaceTypePriority(NetworkInterfaceType type) => type switch
     {
+        NetworkInterfaceType.Tunnel => 3,
+        NetworkInterfaceType.Ppp => 3,
         NetworkInterfaceType.Ethernet => 2,
         NetworkInterfaceType.Wireless80211 => 1,
         _ => 0
