@@ -4496,4 +4496,7 @@ Cloudflare speichert möglicherweise Ihre IP-Adresse und Netzwerkinformationen. 
   <data name="Stop" xml:space="preserve">
     <value>Stoppen</value>
   </data>
+  <data name="NotSet" xml:space="preserve">
+    <value>Nicht gesetzt</value>
+  </data>
 </root>

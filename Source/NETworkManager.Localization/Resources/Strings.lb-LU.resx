@@ -4496,4 +4496,7 @@ Cloudflare späichert méiglecherweis är IP-Adress an Netzwierkinformatiounen. 
   <data name="Stop" xml:space="preserve">
     <value>Stoppen</value>
   </data>
+  <data name="NotSet" xml:space="preserve">
+    <value>Not set</value>
+  </data>
 </root>

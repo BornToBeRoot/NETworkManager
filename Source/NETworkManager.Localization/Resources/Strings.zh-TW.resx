@@ -4496,4 +4496,7 @@ Cloudflare 可能會記錄您的 IP 位址與網路資訊。詳情請參閱 Clou
   <data name="Stop" xml:space="preserve">
     <value>停止</value>
   </data>
+  <data name="NotSet" xml:space="preserve">
+    <value>Not set</value>
+  </data>
 </root>
