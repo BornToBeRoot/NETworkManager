@@ -4497,4 +4497,7 @@ URL: http://ip-api.com/</value>
   <data name="Stop" xml:space="preserve">
     <value>停止</value>
   </data>
+  <data name="NotSet" xml:space="preserve">
+    <value>Not set</value>
+  </data>
 </root>
