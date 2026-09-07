@@ -265,18 +265,15 @@ public class DNSClient : SingletonBase<DNSClient>
     }
 
     /// <summary>
-    ///     Appends the configured DNS suffix to a hostname without a dot (forward lookups only).
-    ///     FQDNs (containing a dot) are returned unchanged.
+    ///     Appends the configured DNS suffix to a bare hostname (forward lookups only).
+    ///     FQDNs and IP literals are returned unchanged.
     /// </summary>
-    /// <param name="query">Hostname or FQDN as string like "example.com".</param>
+    /// <param name="query">Hostname, FQDN, or IP address as string like "example.com".</param>
     /// <param name="state">Resolver state snapshot captured at the start of the resolve call.</param>
     /// <returns>Query with the DNS suffix appended, if configured and applicable.</returns>
     private static string AddDNSSuffixIfConfigured(string query, ResolverState state)
     {
-        // Exclude IP literals - an IPv6 address like "2001:db8::1" has no dot and would otherwise be
-        // mistaken for a bare hostname (e.g. by the profile "Resolve" action, which allows IP literals).
-        return state.AddSuffix && !string.IsNullOrEmpty(query) && !query.Contains('.') &&
-               !IPAddress.TryParse(query, out _)
+        return state.AddSuffix && DNSClientHelper.IsBareHostname(query)
             ? $"{query}.{state.Settings.DNSSuffix}"
             : query;
     }

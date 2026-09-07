@@ -122,19 +122,14 @@ public sealed class DNSLookup
     }
 
     /// <summary>
-    ///     Append DNS suffix to hostname if not set. IP literals are left unchanged - an IPv6 address like
-    ///     "2001:db8::1" has no dot and would otherwise be mistaken for a bare hostname (the Host input
+    ///     Append DNS suffix to hostname if not set. IP literals are left unchanged (the Host input
     ///     accepts hostnames and IP addresses alike, for any query type).
     /// </summary>
     /// <param name="hosts">List of hosts</param>
     /// <returns>List of host with DNS suffix</returns>
     private IEnumerable<string> GetHostsWithSuffix(IEnumerable<string> hosts)
     {
-        return
-        [
-            .. hosts.Select(host =>
-                host.Contains('.') || IPAddress.TryParse(host, out _) ? host : $"{host}.{_suffix}")
-        ];
+        return [.. hosts.Select(host => DNSClientHelper.IsBareHostname(host) ? $"{host}.{_suffix}" : host)];
     }
 
     /// <summary>

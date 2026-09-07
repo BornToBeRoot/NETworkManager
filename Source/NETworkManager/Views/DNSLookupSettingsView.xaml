@@ -116,7 +116,7 @@
             <TextBox.Text>
                 <Binding Path="CustomDNSSuffix" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
-                        <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                        <validators:DNSSuffixValidator ValidatesOnTargetUpdated="True" />
                     </Binding.ValidationRules>
                 </Binding>
             </TextBox.Text>
