@@ -30,6 +30,7 @@ public partial class GroupChildWindow
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
             TextBoxName.Focus();
+            TextBoxName.CaretIndex = TextBoxName.Text.Length;
         }));
     }
 
