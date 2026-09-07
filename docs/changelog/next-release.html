@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.9d036de8.css">
-<script src="/NETworkManager/assets/js/runtime~main.16f38a79.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.efec5729.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.3d2a01d1.js" defer="defer"></script>
 </head>
 <body>
@@ -38,6 +38,11 @@ Release date: <strong>xx.xx.2026</strong></p>
 <p><strong>Traceroute</strong></p>
 <ul>
 <li class="">New <strong>Map</strong> view below the hop list, visualizing each resolved hop&#x27;s geolocation on an offline world map. Consecutive hops are connected with curved, directional arrows; hovering a marker shows its location, ISP/ASN, hostname, IP address and average round-trip time, while hovering an arrow shows the source and destination location of that segment. The map supports mouse-wheel zoom and drag-to-pan, and can be collapsed via a toggle button on the map itself, similar to the Profiles panel. The map is only shown if <strong>Check IP geolocation</strong> and the new <strong>Show map</strong> setting are both enabled, since hops need a resolved geolocation to be plotted. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3520" target="_blank" rel="noopener noreferrer" class="">#3520</a></li>
+</ul>
+<p><strong>Settings</strong></p>
+<ul>
+<li class="">New global <strong>DNS suffix</strong> options in <a class="" href="/NETworkManager/docs/settings/network">Settings &gt; Network</a>: <strong>Add DNS suffix (primary) to hostname</strong> appends the Windows primary (or, if none is set, the active network adapter&#x27;s connection-specific) DNS suffix to a bare hostname before resolving it, and <strong>Use custom DNS suffix</strong> lets you override it with a suffix of your own. Previously only available in DNS Lookup, this now also applies to every other tool that resolves hostnames through NETworkManager&#x27;s shared DNS resolver (e.g. Ping, Traceroute, Port Scanner, IP Scanner, SNTP Lookup) — DNS Lookup stays independent. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3591" target="_blank" rel="noopener noreferrer" class="">#3591</a></li>
+<li class=""><strong>DNS server(s)</strong> in <a class="" href="/NETworkManager/docs/settings/network">Settings &gt; Network</a> is now a list of servers (IP address + port), configured via an <strong>Edit DNS server</strong> dialog, replacing the previous single semicolon-separated, port-53-only text field. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3591" target="_blank" rel="noopener noreferrer" class="">#3591</a></li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="improvements">Improvements<a href="#improvements" class="hash-link" aria-label="Direct link to Improvements" title="Direct link to Improvements" translate="no">​</a></h2>
 <ul>
@@ -76,6 +81,10 @@ Release date: <strong>xx.xx.2026</strong></p>
 <li class="">Fixed the <strong>Network Connection</strong> widget running a full connection check on every application startup, even if the Status Window or Dashboard was never opened. It now only checks when actually shown - via the tray icon, on a network change, or when the Dashboard tab is opened. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3553" target="_blank" rel="noopener noreferrer" class="">#3553</a></li>
 <li class="">Fixed the DNS status (Computer/Router/Internet) in the <strong>Network Connection</strong> widget showing as an error when no PTR record exists for the address, which is common and expected for private IP ranges. This is now shown as informational instead of critical. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3553" target="_blank" rel="noopener noreferrer" class="">#3553</a></li>
 <li class="">Fixed a race condition in the <strong>Network Connection</strong> widget where results from a superseded check could overwrite the results of a newer, still-running check after quickly reopening the widget. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3553" target="_blank" rel="noopener noreferrer" class="">#3553</a></li>
+</ul>
+<p><strong>DNS Lookup</strong></p>
+<ul>
+<li class="">Fixed <strong>Add DNS suffix (primary) to hostname</strong> silently appending no suffix at all on machines without a Windows primary DNS suffix configured (e.g. not domain-joined), even though a usable suffix was available via the active network adapter&#x27;s connection-specific DNS suffix (shown under <strong>DNS Suffix Search List</strong> in <code>ipconfig /all</code>). It now falls back to that adapter&#x27;s suffix in this case. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3591" target="_blank" rel="noopener noreferrer" class="">#3591</a></li>
 </ul>
 <p><strong>IP Scanner</strong></p>
 <ul>
