@@ -4497,6 +4497,6 @@ A Cloudflare pode registrar seu endereço IP e informações de rede. Consulte a
     <value>Parar</value>
   </data>
   <data name="NotSet" xml:space="preserve">
-    <value>Not set</value>
+    <value>Não definido</value>
   </data>
 </root>
