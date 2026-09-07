@@ -16,6 +16,7 @@ public partial class PortProfileChildWindow
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
             TextBoxName.Focus();
+            TextBoxName.CaretIndex = TextBoxName.Text.Length;
         }));
     }
 }

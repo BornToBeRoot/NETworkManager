@@ -18,9 +18,13 @@ public class DNSClient : SingletonBase<DNSClient>
     private const string NotConfiguredMessage = "DNS client is not configured. Call Configure() first.";
 
     /// <summary>
-    ///     Hold the current instance of the LookupClient.
+    ///     Immutable snapshot of everything a resolve call needs (lookup client + settings it was configured
+    ///     with), published as a single reference so concurrent resolves during a <see cref="Configure" />
+    ///     call never observe a torn combination (e.g. the old suffix flag with the new lookup client).
+    ///     Relies on <see cref="DNSClientSettings" /> not being mutated after being passed to
+    ///     <see cref="Configure" /> - see the note on <see cref="DNSClientSettings" /> itself.
     /// </summary>
-    private LookupClient _client;
+    private sealed record ResolverState(LookupClient Client, bool AddSuffix, DNSClientSettings Settings);
 
     /// <summary>
     ///     Indicates if the DNS client is configured.
@@ -28,9 +32,9 @@ public class DNSClient : SingletonBase<DNSClient>
     private bool _isConfigured;
 
     /// <summary>
-    ///     Store the current DNS settings.
+    ///     Current resolver state (lookup client + DNS suffix behavior), swapped atomically on configure.
     /// </summary>
-    private DNSClientSettings _settings;
+    private ResolverState _state;
 
     /// <summary>
     ///     Method to configure the DNS client.
@@ -38,44 +42,41 @@ public class DNSClient : SingletonBase<DNSClient>
     /// <param name="settings"></param>
     public void Configure(DNSClientSettings settings)
     {
-        _settings = settings;
-
         Log.Debug("Configure - Configuring DNS client...");
 
-        if (_settings.UseCustomDNSServers)
+        LookupClient client;
+
+        if (settings.UseCustomDNSServers)
         {
             Log.Debug("Configure - Using custom DNS servers...");
 
             // Setup custom DNS servers
             List<NameServer> servers = [];
 
-            foreach (var (server, port) in _settings.DNSServers)
+            foreach (var (server, port) in settings.DNSServers)
             {
                 Log.Debug($"Configure - Adding custom DNS server: {server}:{port}");
                 servers.Add(new IPEndPoint(IPAddress.Parse(server), port));
             }
 
             Log.Debug("Configure - Creating LookupClient with custom DNS servers...");
-            _client = new LookupClient(new LookupClientOptions(servers.ToArray()));
+            client = new LookupClient(new LookupClientOptions([.. servers]));
         }
         else
         {
             Log.Debug("Configure - Creating LookupClient with Windows default DNS servers...");
-            _client = new LookupClient();
+            client = new LookupClient();
         }
+
+        var addSuffix = settings.AddDNSSuffix && !string.IsNullOrEmpty(settings.DNSSuffix);
+        Log.Debug(addSuffix
+            ? $"Configure - DNS suffix will be added to hostnames without a dot: {settings.DNSSuffix}"
+            : "Configure - DNS suffix will NOT be added to hostnames without a dot.");
+
+        _state = new ResolverState(client, addSuffix, settings);
 
         Log.Debug("Configure - DNS client configured.");
         _isConfigured = true;
-    }
-
-    /// <summary>
-    ///     Method to update the (Windows) name servers of the DNS client
-    ///     when they may have changed due to a network update.
-    /// </summary>
-    public void UpdateWindowsDNSSever()
-    {
-        Log.Debug("UpdateWindowsDNSSever - Recreating LookupClient with with Windows default DNS servers...");
-        _client = new LookupClient();
     }
 
     /// <summary>
@@ -88,9 +89,13 @@ public class DNSClient : SingletonBase<DNSClient>
         if (!_isConfigured)
             throw new DNSClientNotConfiguredException(NotConfiguredMessage);
 
+        var state = _state;
+
+        query = AddDNSSuffixIfConfigured(query, state);
+
         try
         {
-            var result = await _client.QueryAsync(query, QueryType.A);
+            var result = await state.Client.QueryAsync(query, QueryType.A);
 
             // Pass the error we got from the lookup client (dns server).
             // NXDOMAIN is not a real failure like a timeout - flag it via IsNotFound so callers can
@@ -131,9 +136,13 @@ public class DNSClient : SingletonBase<DNSClient>
         if (!_isConfigured)
             throw new DNSClientNotConfiguredException(NotConfiguredMessage);
 
+        var state = _state;
+
+        query = AddDNSSuffixIfConfigured(query, state);
+
         try
         {
-            var result = await _client.QueryAsync(query, QueryType.AAAA);
+            var result = await state.Client.QueryAsync(query, QueryType.AAAA);
 
             // Pass the error we got from the lookup client (dns server).
             // NXDOMAIN is not a real failure like a timeout - flag it via IsNotFound so callers can
@@ -176,7 +185,7 @@ public class DNSClient : SingletonBase<DNSClient>
 
         try
         {
-            var result = await _client.QueryAsync(query, QueryType.CNAME);
+            var result = await _state.Client.QueryAsync(query, QueryType.CNAME);
 
             // Pass the error we got from the lookup client (dns server).
             // NXDOMAIN is not a real failure like a timeout - flag it via IsNotFound so callers can
@@ -219,7 +228,7 @@ public class DNSClient : SingletonBase<DNSClient>
 
         try
         {
-            var result = await _client.QueryReverseAsync(ipAddress);
+            var result = await _state.Client.QueryReverseAsync(ipAddress);
 
             // Pass the error we got from the lookup client (dns server).
             // NXDOMAIN is always a clean "no record". For private/ULA IP ranges (the common case for
@@ -253,6 +262,20 @@ public class DNSClient : SingletonBase<DNSClient>
             Log.Error($"Error while resolving PTR record (IP address is \"{ipAddress}\".", ex);
             return new DNSClientResultString(true, ex.Message);
         }
+    }
+
+    /// <summary>
+    ///     Appends the configured DNS suffix to a bare hostname (forward lookups only).
+    ///     FQDNs and IP literals are returned unchanged.
+    /// </summary>
+    /// <param name="query">Hostname, FQDN, or IP address as string like "example.com".</param>
+    /// <param name="state">Resolver state snapshot captured at the start of the resolve call.</param>
+    /// <returns>Query with the DNS suffix appended, if configured and applicable.</returns>
+    private static string AddDNSSuffixIfConfigured(string query, ResolverState state)
+    {
+        return state.AddSuffix && DNSClientHelper.IsBareHostname(query)
+            ? $"{query}.{state.Settings.DNSSuffix}"
+            : query;
     }
 
     /// <summary>

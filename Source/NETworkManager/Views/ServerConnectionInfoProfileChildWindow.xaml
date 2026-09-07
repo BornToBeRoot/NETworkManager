@@ -43,6 +43,7 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
             <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0"
+                   IsReadOnly="{Binding IsNameReadOnly}"
                    mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGroupServers}">
                 <TextBox.Resources>
                     <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
@@ -106,7 +107,8 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBox x:Name="TextBoxServer" Grid.Column="0" Grid.Row="0"
-                   mah:TextBoxHelper.Watermark="{Binding ServerWatermark}">
+                   mah:TextBoxHelper.Watermark="{Binding ServerWatermark}"
+                   PreviewKeyDown="TextBoxServerOrPort_PreviewKeyDown">
                 <TextBox.Resources>
                     <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 </TextBox.Resources>
@@ -125,7 +127,8 @@
                 </TextBox.Text>
             </TextBox>
             <TextBox x:Name="TextBoxPort" Grid.Column="2" Grid.Row="0"
-                   mah:TextBoxHelper.Watermark="{Binding PortWatermark}">
+                   mah:TextBoxHelper.Watermark="{Binding PortWatermark}"
+                   PreviewKeyDown="TextBoxServerOrPort_PreviewKeyDown">
                 <TextBox.Text>
                     <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -190,6 +193,7 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Path=Servers.Count}" Value="0" />
+                                    <Condition Binding="{Binding Path=IsNameReadOnly}" Value="False" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />

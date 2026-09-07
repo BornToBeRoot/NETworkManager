@@ -110,6 +110,14 @@ public static partial class RegexHelper
     public static partial Regex HostnameOrDomainRegex();
 
     /// <summary>
+    /// Provides a compiled regular expression that matches a DNS suffix, with an optional leading dot, like
+    /// "example.com" or ".example.com".
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> instance that matches valid DNS suffixes.</returns>
+    [GeneratedRegex($@"^\.?{HostnameOrDomainValues}$")]
+    public static partial Regex DNSSuffixRegex();
+
+    /// <summary>
     /// Creates a regular expression that matches a local directory path or one using environment variables,
     /// like "C:\Temp", "C:\My Settings", "%AppData%\settings".
     /// </summary>    

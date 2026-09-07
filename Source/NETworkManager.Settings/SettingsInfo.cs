@@ -374,7 +374,61 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    [Obsolete("Use Network_CustomDNSServers instead.")]
+    [field: Obsolete("Use Network_CustomDNSServers instead.")]
     public string Network_CustomDNSServer
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ObservableCollection<ServerConnectionInfo> Network_CustomDNSServers
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
+
+    public bool Network_AddDNSSuffix
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Network_AddDNSSuffix;
+
+    public bool Network_UseCustomDNSSuffix
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string Network_CustomDNSSuffix
     {
         get;
         set

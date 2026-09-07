@@ -1,10 +1,10 @@
 ﻿using DnsClient;
 using DnsClient.Protocol;
+using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 
 namespace NETworkManager.Models.Network;
@@ -24,7 +24,7 @@ public sealed class DNSLookup
         {
             _suffix = _settings.UseCustomDNSSuffix
                 ? _settings.CustomDNSSuffix
-                : IPGlobalProperties.GetIPGlobalProperties().DomainName;
+                : DNSClientHelper.DetectDNSSuffix();
 
             _addSuffix = !string.IsNullOrEmpty(_suffix);
         }
@@ -108,25 +108,28 @@ public sealed class DNSLookup
     /// <returns>List of DNS servers as <see cref="IPEndPoint" />.</returns>
     private IEnumerable<IPEndPoint> GetDnsServer(IEnumerable<ServerConnectionInfo> dnsServers = null)
     {
-        List<IPEndPoint> servers = [];
+        // Use Windows dns servers
+        List<IPEndPoint> servers =
+        [
+            .. dnsServers == null
+                ? NameServer.ResolveNameServers(true, false).Select(dnsServer =>
+                    new IPEndPoint(IPAddress.Parse(dnsServer.Address), dnsServer.Port))
+                : dnsServers.Select(dnsServer => new IPEndPoint(IPAddress.Parse(dnsServer.Server), dnsServer.Port))
 
-        // Use windows dns servers
-        servers.AddRange(dnsServers == null
-            ? NameServer.ResolveNameServers(true, false).Select(dnsServer =>
-                new IPEndPoint(IPAddress.Parse(dnsServer.Address), dnsServer.Port))
-            : dnsServers.Select(dnsServer => new IPEndPoint(IPAddress.Parse(dnsServer.Server), dnsServer.Port)));
+        ];
 
         return servers;
     }
 
     /// <summary>
-    ///     Append DNS suffix to hostname if not set.
+    ///     Append DNS suffix to hostname if not set. IP literals are left unchanged (the Host input
+    ///     accepts hostnames and IP addresses alike, for any query type).
     /// </summary>
     /// <param name="hosts">List of hosts</param>
     /// <returns>List of host with DNS suffix</returns>
-    private IEnumerable<string> GetHostWithSuffix(IEnumerable<string> hosts)
+    private IEnumerable<string> GetHostsWithSuffix(IEnumerable<string> hosts)
     {
-        return hosts.Select(host => host.Contains('.') ? host : $"{host}.{_suffix}").ToList();
+        return [.. hosts.Select(host => DNSClientHelper.IsBareHostname(host) ? $"{host}.{_suffix}" : host)];
     }
 
     /// <summary>
@@ -138,7 +141,7 @@ public sealed class DNSLookup
         Task.Run(() =>
         {
             // Append dns suffix to hostname, if the option is set, otherwise copy the list
-            var queries = _addSuffix && _settings.QueryType != QueryType.PTR ? GetHostWithSuffix(hosts) : hosts;
+            var queries = _addSuffix && _settings.QueryType != QueryType.PTR ? GetHostsWithSuffix(hosts) : hosts;
 
             // For each dns server
             Parallel.ForEach(_servers, dnsServer =>

@@ -30,6 +30,9 @@ public static class GlobalStaticConfiguration
     // Network config
     public static int NetworkChangeDetectionDelay => 5000;
 
+    // Delay before applying DNS server settings change.
+    public static TimeSpan NetworkConfigApplyDispatcherTimerTimeSpan => new(0, 0, 0, 2, 500);
+
     // Notification config
     // Minimum interval (ms) between two notification sounds, so a burst of near-simultaneous
     // status changes collapses into a single sound instead of an overlapping cacophony.
@@ -72,6 +75,7 @@ public static class GlobalStaticConfiguration
     public static bool Appearance_UseCustomTheme => false;
 
     // Settings: Network
+    public static bool Network_AddDNSSuffix => true;
     public static bool Network_ResolveHostnamePreferIPv4 => true;
 
     // Settings: Status

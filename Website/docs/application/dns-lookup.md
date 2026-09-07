@@ -119,7 +119,7 @@ You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected DNS
 
 ### Add DNS suffix (primary) to hostname
 
-Add the primary DNS suffix to the hostname.
+Add the primary DNS suffix to the hostname. If no primary DNS suffix is configured (e.g. the computer is not domain-joined), the connection-specific DNS suffix of the active network adapter is used instead.
 
 **Type:** `Boolean`
 
