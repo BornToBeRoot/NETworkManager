@@ -4497,6 +4497,6 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>停止</value>
   </data>
   <data name="NotSet" xml:space="preserve">
-    <value>Not set</value>
+    <value>未設定</value>
   </data>
 </root>
