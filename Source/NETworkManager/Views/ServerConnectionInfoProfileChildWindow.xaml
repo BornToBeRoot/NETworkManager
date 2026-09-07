@@ -107,7 +107,8 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBox x:Name="TextBoxServer" Grid.Column="0" Grid.Row="0"
-                   mah:TextBoxHelper.Watermark="{Binding ServerWatermark}">
+                   mah:TextBoxHelper.Watermark="{Binding ServerWatermark}"
+                   PreviewKeyDown="TextBoxServerOrPort_PreviewKeyDown">
                 <TextBox.Resources>
                     <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 </TextBox.Resources>
@@ -126,7 +127,8 @@
                 </TextBox.Text>
             </TextBox>
             <TextBox x:Name="TextBoxPort" Grid.Column="2" Grid.Row="0"
-                   mah:TextBoxHelper.Watermark="{Binding PortWatermark}">
+                   mah:TextBoxHelper.Watermark="{Binding PortWatermark}"
+                   PreviewKeyDown="TextBoxServerOrPort_PreviewKeyDown">
                 <TextBox.Text>
                     <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
