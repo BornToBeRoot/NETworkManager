@@ -229,7 +229,7 @@
     <value>不要分段</value>
   </data>
   <data name="Down" xml:space="preserve">
-    <value>Down</value>
+    <value>下移</value>
   </data>
   <data name="EditCredentials" xml:space="preserve">
     <value>編輯憑證</value>
@@ -1256,7 +1256,7 @@
     <value>從托盤移除／將視窗提升至前景</value>
   </data>
   <data name="Up" xml:space="preserve">
-    <value>Up</value>
+    <value>上移</value>
   </data>
   <data name="URL" xml:space="preserve">
     <value>網址</value>
@@ -2449,7 +2449,7 @@
     <value>暫停</value>
   </data>
   <data name="Paused" xml:space="preserve">
-    <value>Paused</value>
+    <value>已暫停</value>
   </data>
   <data name="Resume" xml:space="preserve">
     <value>繼續</value>
@@ -2845,7 +2845,7 @@
     <value>已接收</value>
   </data>
   <data name="StatusChange" xml:space="preserve">
-    <value>Last status change</value>
+    <value>最後狀態改變時間</value>
   </data>
   <data name="UpdateAvailable" xml:space="preserve">
     <value>有可用的更新！</value>
@@ -3893,13 +3893,13 @@
     <value>關閉群組</value>
   </data>
   <data name="StartGroup" xml:space="preserve">
-    <value>Start group</value>
+    <value>啟動群組</value>
   </data>
   <data name="GroupActions" xml:space="preserve">
-    <value>Group actions</value>
+    <value>群組操作</value>
   </data>
   <data name="PauseGroup" xml:space="preserve">
-    <value>Pause group</value>
+    <value>暫時群組</value>
   </data>
   <data name="RunCommandDotsWithHotKey" xml:space="preserve">
     <value>執行指令... (Ctrl+Shift+P)</value>
@@ -4497,6 +4497,6 @@ Cloudflare 可能會記錄您的 IP 位址與網路資訊。詳情請參閱 Clou
     <value>停止</value>
   </data>
   <data name="NotSet" xml:space="preserve">
-    <value>Not set</value>
+    <value>未設定</value>
   </data>
 </root>
