@@ -10,6 +10,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:RDAPViewModel}"
              Loaded="UserControl_OnLoaded">
     <UserControl.Resources>
@@ -18,6 +19,7 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:RDAPQueryTypeToStringConverter x:Key="RDAPQueryTypeToStringConverter" />
+        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
         <ContextMenu x:Key="RDAPExportContextMenu" MinWidth="150">
             <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                 <MenuItem.Icon>
@@ -148,7 +150,23 @@
                                                TextWrapping="Wrap" />
                                     <TextBox Text="{Binding Description, Mode=OneWay}"
                                              Style="{StaticResource TextBlockAsTextBox}" TextWrapping="Wrap"
-                                         ContextMenu="{StaticResource CopyContextMenu}" />
+                                             ContextMenu="{StaticResource CopyContextMenu}" />
+                                    <ItemsControl ItemsSource="{Binding Links}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type viewModels:RDAPLinkItem}">
+                                                <TextBlock Text="{Binding Text}" ToolTip="{Binding Url}"
+                                                           Style="{StaticResource LinkTextBlock}"
+                                                           HorizontalAlignment="Left" TextWrapping="Wrap">
+                                                    <TextBlock.InputBindings>
+                                                        <MouseBinding
+                                                            Command="{Binding Data.OpenUrlCommand, Source={StaticResource BindingProxy}}"
+                                                            CommandParameter="{Binding Url}"
+                                                            MouseAction="LeftClick" />
+                                                    </TextBlock.InputBindings>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
