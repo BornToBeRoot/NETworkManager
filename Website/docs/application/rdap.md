@@ -12,7 +12,7 @@ RDAP is the standardized successor of Whois ([RFC 7480](https://www.rfc-editor.o
 
 :::info
 
-The RDAP server for a query is determined using the bootstrap files published by IANA at [data.iana.org/rdap](https://data.iana.org/rdap/). They are downloaded with the first query, cached locally and refreshed automatically once a week. See [Settings](#settings).
+The RDAP server for a query is determined using the bootstrap files published by IANA at [data.iana.org/rdap](https://data.iana.org/rdap/). They are downloaded with the first query, cached locally and refreshed automatically once a week. If `data.iana.org` cannot be reached, the cached files are used and the update is retried after an hour (at most 3 times, then with the next weekly update). See [Settings](#settings).
 
 - **Domains** are resolved via the registry of their top-level domain. Some registries (e.g. `.de`, `.ch`, `.li`, `.io`) run an RDAP server that is not (yet) listed by IANA; these are included in NETworkManager.
 - **Top-level domains** (e.g. `de`) are queried at the IANA root zone RDAP server (`rdap.iana.org`).
@@ -104,6 +104,12 @@ The files are stored in `%LocalAppData%\NETworkManager\RDAP_Cache`.
 ### Follow referral to registrar
 
 For many domains (e.g. `.com` and `.net`), the registry only returns basic data and refers to the RDAP server of the registrar for details (e.g. the contacts). If enabled, the RDAP server of the registrar is queried as well and both results are shown. Only applies to domain queries.
+
+:::note
+
+For security reasons, a referral is only followed if it uses HTTPS and does not point to a local or private address (e.g. `192.168.0.0/16`). Otherwise, a message is shown and only the result of the registry is displayed.
+
+:::
 
 **Type:** `Boolean`
 
