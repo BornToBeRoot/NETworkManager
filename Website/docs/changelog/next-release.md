@@ -27,7 +27,7 @@ Release date: **xx.xx.2026**
 
 **RDAP**
 
-- New [**RDAP**](../application/rdap.md) tool to look up registration data via the Registration Data Access Protocol, the standardized, JSON-based successor of Whois. Supports domains, top-level domains, IP addresses/CIDR prefixes, AS numbers and entity handles. The RDAP server is determined automatically using the IANA bootstrap files, which are cached locally and can be updated in the new **Settings > RDAP** page. Results are shown in a structured view (details, status, events, nameservers, DNSSEC, contacts, notices) or as raw JSON, and can be exported as JSON or text. For domains (e.g. `.com`/`.net`), the referral to the registrar's RDAP server is followed as well (can be disabled in **Settings > RDAP**). Includes profile support. If no RDAP server is known for a domain, it can be opened in **Whois** with a single click.
+- New [**RDAP**](../application/rdap.md) tool to look up registration data via the Registration Data Access Protocol, the standardized, JSON-based successor of Whois. Supports domains, top-level domains, IP addresses/CIDR prefixes, AS numbers and entity handles. The RDAP server is determined automatically using the IANA bootstrap files, which are cached locally and can be updated in the new **Settings > RDAP** page. Results are shown in a structured view (details, status, events, nameservers, DNSSEC, contacts, notices) or as raw JSON, and can be exported as JSON or text. For domains (e.g. `.com`/`.net`), the referral to the registrar's RDAP server is followed as well (can be disabled in **Settings > RDAP**). Includes profile support. If no RDAP server is known for a domain, it can be opened in **Whois** with a single click. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
 
 **Traceroute**
 
@@ -44,7 +44,7 @@ Release date: **xx.xx.2026**
 
 **Whois**
 
-- Added an **Export...** button below the result, like in the other tools.
+- Added an **Export...** button below the result, like in the other tools. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
 
 **IP Scanner**
 
@@ -92,7 +92,7 @@ Release date: **xx.xx.2026**
 
 **IP Geolocation**
 
-- Fixed the query history of **IP Geolocation** being written to the history of **Whois** instead of its own.
+- Fixed the query history of **IP Geolocation** being written to the history of **Whois** instead of its own. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
 
 ## Dependencies, Refactoring & Documentation
 
