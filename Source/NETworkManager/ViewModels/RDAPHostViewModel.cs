@@ -2,6 +2,7 @@ using Dragablz;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
+using NETworkManager.Models.RDAP;
 using NETworkManager.Profiles;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
@@ -11,7 +12,7 @@ using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
 
-public class WhoisHostViewModel : ProfileHostViewModelBase
+public class RDAPHostViewModel : ProfileHostViewModelBase
 {
     #region Variables
 
@@ -49,16 +50,16 @@ public class WhoisHostViewModel : ProfileHostViewModelBase
 
     #region Constructor
 
-    public WhoisHostViewModel()
+    public RDAPHostViewModel()
     {
-        InterTabClient = new DragablzInterTabClient(ApplicationName.Whois);
-        InterTabPartition = nameof(ApplicationName.Whois);
+        InterTabClient = new DragablzInterTabClient(ApplicationName.RDAP);
+        InterTabPartition = nameof(ApplicationName.RDAP);
 
         var tabId = Guid.NewGuid();
 
         TabItems =
         [
-            new DragablzTabItem(Strings.NewTab, new WhoisView(tabId), tabId)
+            new DragablzTabItem(Strings.NewTab, new RDAPView(tabId), tabId)
         ];
 
         InitializeProfileHost();
@@ -68,11 +69,11 @@ public class WhoisHostViewModel : ProfileHostViewModelBase
 
     #region Profile host
 
-    protected override ApplicationName ApplicationName => ApplicationName.Whois;
+    protected override ApplicationName ApplicationName => ApplicationName.RDAP;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.Whois_Enabled;
+    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.RDAP_Enabled;
 
-    protected override string GetSearchableField(ProfileInfo profile) => profile.Whois_Domain;
+    protected override string GetSearchableField(ProfileInfo profile) => profile.RDAP_Query;
 
     #endregion
 
@@ -94,7 +95,7 @@ public class WhoisHostViewModel : ProfileHostViewModelBase
 
     private void QueryProfileAction()
     {
-        AddTab(SelectedProfile.Whois_Domain);
+        AddTab(SelectedProfile.RDAP_Query, SelectedProfile.RDAP_QueryType);
     }
 
     public ItemActionCallback CloseItemCommand => CloseItemAction;
@@ -108,11 +109,16 @@ public class WhoisHostViewModel : ProfileHostViewModelBase
 
     #region Methods
 
-    public void AddTab(string domain = null)
+    /// <summary>
+    ///     Adds a new tab and starts the query, if one is given.
+    /// </summary>
+    /// <param name="query">Query (e.g. domain, IP address, AS number).</param>
+    /// <param name="queryType">Type of the query. Uses the last selected type if null.</param>
+    public void AddTab(string query = null, RDAPQueryType? queryType = null)
     {
         var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(domain ?? Strings.NewTab, new WhoisView(tabId, domain),
+        TabItems.Add(new DragablzTabItem(query ?? Strings.NewTab, new RDAPView(tabId, query, queryType),
             tabId));
 
         SelectedTabIndex = TabItems.Count - 1;

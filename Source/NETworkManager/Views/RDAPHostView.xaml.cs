@@ -2,19 +2,19 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class WhoisHostView
+public partial class RDAPHostView
 {
-    private readonly WhoisHostViewModel _viewModel = new();
+    private readonly RDAPHostViewModel _viewModel = new();
 
-    public WhoisHostView()
+    public RDAPHostView()
     {
         InitializeComponent();
         DataContext = _viewModel;
     }
 
-    public void AddTab(string domain)
+    public void AddTab(string query)
     {
-        _viewModel.AddTab(domain);
+        _viewModel.AddTab(query);
     }
 
     public void OnViewHide()
