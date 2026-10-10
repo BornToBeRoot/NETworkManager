@@ -15,6 +15,7 @@
         <None Remove="Resources\OUI.xml" />
         <None Remove="Resources\Ports.xml" />
         <None Remove="Resources\PSDiscoveryProtocol.psm1" />
+        <None Remove="Resources\RDAPStealthEndpoints.json" />
         <None Remove="Resources\WhoisServers.xml" />
     </ItemGroup>
     <ItemGroup>
@@ -22,6 +23,7 @@
     </ItemGroup>
     <ItemGroup>
         <EmbeddedResource Include="Resources\PSDiscoveryProtocol.psm1" />
+        <EmbeddedResource Include="Resources\RDAPStealthEndpoints.json" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="DnsClient" Version="1.8.0" />
