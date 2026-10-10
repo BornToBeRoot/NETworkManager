@@ -5479,7 +5479,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The IANA bootstrap files are used to find the RDAP server for a domain, IP address, AS number or entity. They are downloaded with the first query and refreshed automatically once a day..
+        ///   Looks up a localized string similar to The IANA bootstrap files are used to find the RDAP server for a domain, IP address, AS number or entity. They are downloaded with the first query and refreshed automatically once a week..
         /// </summary>
         public static string HelpMessage_RDAPBootstrapFiles {
             get {

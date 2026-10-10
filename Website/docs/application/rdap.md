@@ -12,7 +12,7 @@ RDAP is the standardized successor of Whois ([RFC 7480](https://www.rfc-editor.o
 
 :::info
 
-The RDAP server for a query is determined using the bootstrap files published by IANA at [data.iana.org/rdap](https://data.iana.org/rdap/). They are downloaded with the first query, cached locally and refreshed automatically once a day. See [Settings](#settings).
+The RDAP server for a query is determined using the bootstrap files published by IANA at [data.iana.org/rdap](https://data.iana.org/rdap/). They are downloaded with the first query, cached locally and refreshed automatically once a week. See [Settings](#settings).
 
 - **Domains** are resolved via the registry of their top-level domain. Some registries (e.g. `.de`, `.ch`, `.li`, `.io`) run an RDAP server that is not (yet) listed by IANA; these are included in NETworkManager.
 - **Top-level domains** (e.g. `de`) are queried at the IANA root zone RDAP server (`rdap.iana.org`).
