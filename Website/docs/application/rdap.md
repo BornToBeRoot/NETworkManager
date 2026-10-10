@@ -8,7 +8,7 @@ keywords: [NETworkManager, RDAP, Registration Data Access Protocol, domain looku
 
 With **RDAP** (Registration Data Access Protocol) you can retrieve registration data for domains, top-level domains, IP addresses and networks, AS numbers and entities (e.g. organizations or contacts) from the responsible registry.
 
-RDAP is the standardized successor of Whois ([RFC 7480](https://www.rfc-editor.org/rfc/rfc7480), [RFC 9082](https://www.rfc-editor.org/rfc/rfc9082), [RFC 9083](https://www.rfc-editor.org/rfc/rfc9083), [RFC 9224](https://www.rfc-editor.org/rfc/rfc9224)). Unlike Whois, it uses HTTPS and returns structured JSON, so the result is shown in a structured view with details, status, events, nameservers, DNSSEC, contacts and notices. The raw JSON response can be shown and exported as well.
+RDAP is the standardized successor of Whois ([RFC 7480](https://www.rfc-editor.org/rfc/rfc7480), [RFC 9082](https://www.rfc-editor.org/rfc/rfc9082), [RFC 9083](https://www.rfc-editor.org/rfc/rfc9083), [RFC 9224](https://www.rfc-editor.org/rfc/rfc9224)). Unlike Whois, it uses HTTPS and returns structured JSON, so the result is shown in a structured view with details, status, events, nameservers, DNSSEC, contacts and notices. Links of notices (e.g. terms of service, privacy policy or the form to report inaccurate data) can be opened in the browser. The raw JSON response can be shown and exported as well.
 
 :::info
 

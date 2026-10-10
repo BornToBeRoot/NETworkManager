@@ -257,6 +257,17 @@ public class RDAPViewModel : ViewModelBase
         EventSystem.RedirectToApplication(ApplicationName.Whois, _whoisDomain);
     }
 
+    /// <summary>
+    ///     Opens a link of a notice (e.g. terms of service). Only URLs validated by <see cref="RDAPObjectViewModel" />
+    ///     are passed to this command.
+    /// </summary>
+    public ICommand OpenUrlCommand => new RelayCommand(OpenUrlAction);
+
+    private static void OpenUrlAction(object url)
+    {
+        ExternalProcessStarter.OpenUrl((string)url);
+    }
+
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()

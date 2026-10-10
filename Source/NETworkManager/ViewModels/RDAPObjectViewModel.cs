@@ -53,7 +53,8 @@ public class RDAPObjectViewModel
 
         Notices = (response.Notices ?? []).Concat(response.Remarks ?? [])
             .Select(x => new RDAPNoticeItem(x.Title,
-                string.Join(Environment.NewLine, x.Description?.Where(d => !string.IsNullOrWhiteSpace(d)) ?? [])))
+                string.Join(Environment.NewLine, x.Description?.Where(d => !string.IsNullOrWhiteSpace(d)) ?? []),
+                GetLinks(x.Links)))
             .ToList();
     }
 
@@ -166,6 +167,24 @@ public class RDAPObjectViewModel
     }
 
     /// <summary>
+    ///     Gets the links of a notice or remark (e.g. terms of service, privacy policy, inaccuracy report). The URLs are
+    ///     sent by the RDAP server and therefore untrusted: only absolute HTTP(S) URLs are used, in their normalized
+    ///     form (<see cref="Uri.AbsoluteUri" /> escapes characters like "|", "^" or "%"), so they can be opened safely.
+    /// </summary>
+    private static List<RDAPLinkItem> GetLinks(List<RDAPLink> links)
+    {
+        return links?
+            .Where(x => !string.Equals(x.Rel, "self", StringComparison.OrdinalIgnoreCase))
+            .Select(x => Uri.TryCreate(x.Href, UriKind.Absolute, out var uri) &&
+                         (uri.Scheme == Uri.UriSchemeHttps || uri.Scheme == Uri.UriSchemeHttp)
+                ? new RDAPLinkItem(string.IsNullOrWhiteSpace(x.Title) ? uri.AbsoluteUri : x.Title, uri.AbsoluteUri)
+                : null)
+            .Where(x => x != null)
+            .DistinctBy(x => x.Url)
+            .ToList() ?? [];
+    }
+
+    /// <summary>
     ///     Formats a domain name with its Unicode form (if different) and without a trailing dot.
     /// </summary>
     private static string FormatDomain(string ldhName, string unicodeName)
@@ -248,6 +267,9 @@ public class RDAPObjectViewModel
                     text.AppendLine(notice.Title);
 
                 text.AppendLine(notice.Description);
+
+                foreach (var link in notice.Links)
+                    text.AppendLine(link.Url);
             }
         }
 
@@ -280,4 +302,11 @@ public record RDAPContactItem(
     string Phone,
     string Address);
 
-public record RDAPNoticeItem(string Title, string Description);
+public record RDAPNoticeItem(string Title, string Description, IReadOnlyList<RDAPLinkItem> Links);
+
+/// <summary>
+///     Link of a notice or remark.
+/// </summary>
+/// <param name="Text">Text to display (title of the link or the URL).</param>
+/// <param name="Url">Validated absolute HTTP(S) URL.</param>
+public record RDAPLinkItem(string Text, string Url);
