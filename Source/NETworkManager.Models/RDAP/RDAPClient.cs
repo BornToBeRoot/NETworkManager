@@ -43,6 +43,13 @@ public class RDAPClient : SingletonBase<RDAPClient>
 
     private readonly HttpClient _client;
 
+    /// <summary>
+    ///     Client for registrar referrals. The URL is sent by the registry and therefore untrusted. Direct connections
+    ///     are only made to the addresses that were checked when connecting (no second DNS lookup, see
+    ///     <see cref="ConnectToPublicAddressAsync" />), which prevents DNS rebinding to local or private addresses.
+    /// </summary>
+    private readonly HttpClient _referralClient;
+
     #endregion
 
     #region Constructor
@@ -59,9 +66,22 @@ public class RDAPClient : SingletonBase<RDAPClient>
             Timeout = Timeout.InfiniteTimeSpan
         };
 
-        _client.DefaultRequestHeaders.UserAgent.ParseAdd("NETworkManager");
-        _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(RDAPMediaType));
-        _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        _referralClient = new HttpClient(new SocketsHttpHandler
+        {
+            AllowAutoRedirect = false,
+            AutomaticDecompression = DecompressionMethods.All,
+            ConnectCallback = ConnectToPublicAddressAsync
+        })
+        {
+            Timeout = Timeout.InfiniteTimeSpan
+        };
+
+        foreach (var client in new[] { _client, _referralClient })
+        {
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("NETworkManager");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(RDAPMediaType));
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
     }
 
     #endregion
@@ -196,12 +216,18 @@ public class RDAPClient : SingletonBase<RDAPClient>
 
             try
             {
-                response = await _client.GetAsync(currentUrl, timeoutSource.Token).ConfigureAwait(false);
+                response = await (isReferral ? _referralClient : _client).GetAsync(currentUrl, timeoutSource.Token)
+                    .ConfigureAwait(false);
                 body = await response.Content.ReadAsStringAsync(timeoutSource.Token).ConfigureAwait(false);
             }
             catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
                 throw;
+            }
+            catch (HttpRequestException ex) when (ex.InnerException is RDAPException inner)
+            {
+                // Blocked by ConnectToPublicAddressAsync.
+                throw new RDAPException(inner.Kind, inner.Message, ex) { RequestUrl = currentUrl.AbsoluteUri };
             }
             catch (Exception ex) when (ex is HttpRequestException or OperationCanceledException)
             {
@@ -261,15 +287,53 @@ public class RDAPClient : SingletonBase<RDAPClient>
             {
                 addresses = await Dns.GetHostAddressesAsync(url.DnsSafeHost, cancellationToken).ConfigureAwait(false);
             }
-            catch (SocketException)
+            catch (SocketException ex)
             {
-                // The request itself fails with a proper network error.
-                return;
+                // Fail closed: a referral is only followed if its address could be checked.
+                throw new RDAPException(RDAPErrorKind.Network, ex.Message, ex) { RequestUrl = url.AbsoluteUri };
             }
         }
 
         if (addresses.Any(IsLocalOrPrivateAddress))
             throw new RDAPException(RDAPErrorKind.PrivateAddress, url.AbsoluteUri) { RequestUrl = url.AbsoluteUri };
+    }
+
+    /// <summary>
+    ///     Connect callback of the referral client: resolves the host once, checks all addresses and connects to exactly
+    ///     these addresses, so a second DNS answer (DNS rebinding) cannot redirect the connection to a local or private
+    ///     address. TLS still validates the certificate against the host name. If a proxy is used, the connection goes to
+    ///     the proxy, which resolves the target itself; in this case the check in
+    ///     <see cref="ValidateReferralTargetAsync" /> applies.
+    /// </summary>
+    private static async ValueTask<Stream> ConnectToPublicAddressAsync(SocketsHttpConnectionContext context,
+        CancellationToken cancellationToken)
+    {
+        var endPoint = context.DnsEndPoint;
+
+        // A tunnel (CONNECT) to the configured proxy. Referrals only use HTTPS, so a proxied connection is always a
+        // tunnel.
+        var isProxy = context.InitialRequestMessage.Method == HttpMethod.Connect;
+
+        var addresses = IPAddress.TryParse(endPoint.Host, out var ipAddress)
+            ? [ipAddress]
+            : await Dns.GetHostAddressesAsync(endPoint.Host, cancellationToken).ConfigureAwait(false);
+
+        if (!isProxy && (addresses.Length == 0 || addresses.Any(IsLocalOrPrivateAddress)))
+            throw new RDAPException(RDAPErrorKind.PrivateAddress, endPoint.Host);
+
+        var socket = new Socket(SocketType.Stream, ProtocolType.Tcp) { NoDelay = true };
+
+        try
+        {
+            await socket.ConnectAsync(addresses, endPoint.Port, cancellationToken).ConfigureAwait(false);
+
+            return new NetworkStream(socket, true);
+        }
+        catch
+        {
+            socket.Dispose();
+            throw;
+        }
     }
 
     /// <summary>
