@@ -9,6 +9,7 @@ using NETworkManager.Models.Export;
 using NETworkManager.Models.RDAP;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using NETworkManager.Validators;
 using NETworkManager.Views;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,9 @@ public class RDAPViewModel : ViewModelBase
             field = value;
             OnPropertyChanged();
             OnPropertyChanged(nameof(QueryWatermark));
+
+            // Validate the query again for the new type.
+            OnPropertyChanged(nameof(Query));
         }
     }
 
@@ -296,7 +300,7 @@ public class RDAPViewModel : ViewModelBase
 
         if (parseError != RDAPQueryParseError.None)
         {
-            ShowStatusMessage(GetParseErrorMessage(parseError));
+            ShowStatusMessage(RDAPQueryValidator.GetErrorMessage(parseError));
             IsRunning = false;
 
             return;
@@ -324,7 +328,7 @@ public class RDAPViewModel : ViewModelBase
             IsResultVisible = true;
 
             if (_result.ReferralError != null)
-                ShowStatusMessage(string.Format(Strings.RDAPReferralFailedX, GetErrorMessage(_result.ReferralError, query)));
+                ShowStatusMessage(GetReferralErrorMessage(_result.ReferralError, query));
 
             AddQueryToHistory(Query);
         }
@@ -353,15 +357,13 @@ public class RDAPViewModel : ViewModelBase
         IsStatusMessageDisplayed = true;
     }
 
-    private static string GetParseErrorMessage(RDAPQueryParseError error)
+    private static string GetReferralErrorMessage(RDAPException ex, RDAPQuery query)
     {
-        return error switch
+        return ex.Kind switch
         {
-            RDAPQueryParseError.InvalidDomain => Strings.EnterValidDomain,
-            RDAPQueryParseError.InvalidTLD => Strings.EnterValidTLD,
-            RDAPQueryParseError.InvalidIPAddress => Strings.EnterValidIPAddressOrCIDR,
-            RDAPQueryParseError.InvalidASN => Strings.EnterValidASN,
-            _ => Strings.EnterValidEntityHandle
+            RDAPErrorKind.InsecureReferral => string.Format(Strings.RDAPReferralInsecureX, ex.RequestUrl),
+            RDAPErrorKind.PrivateAddress => string.Format(Strings.RDAPReferralPrivateAddressX, ex.RequestUrl),
+            _ => string.Format(Strings.RDAPReferralFailedX, GetErrorMessage(ex, query))
         };
     }
 

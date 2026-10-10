@@ -4007,6 +4007,9 @@
                                 <TextBox x:Name="TextBoxRDAPQuery" Grid.Column="2" Grid.Row="2"
                                          IsEnabled="{Binding RDAP_InheritHost, Converter={StaticResource BooleanReverseConverter}}"
                                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleDomain}">
+                                    <TextBox.Resources>
+                                        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                                    </TextBox.Resources>
                                     <TextBox.Style>
                                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                                             <Style.Triggers>
@@ -4026,6 +4029,13 @@
                                                                 <Binding.ValidationRules>
                                                                     <validators:EmptyValidator
                                                                         ValidatesOnTargetUpdated="True" />
+                                                                    <validators:RDAPQueryValidator
+                                                                        ValidatesOnTargetUpdated="True">
+                                                                        <validators:RDAPQueryValidator.Wrapper>
+                                                                            <validators:RDAPQueryDependencyObjectWrapper
+                                                                                QueryType="{Binding Data.RDAP_QueryType, Source={StaticResource BindingProxy}}" />
+                                                                        </validators:RDAPQueryValidator.Wrapper>
+                                                                    </validators:RDAPQueryValidator>
                                                                 </Binding.ValidationRules>
                                                             </Binding>
                                                         </Setter.Value>
