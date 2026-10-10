@@ -50,6 +50,17 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     /// </summary>
     private static readonly TimeSpan RefreshInterval = TimeSpan.FromDays(7);
 
+    /// <summary>
+    ///     Wait time before the next automatic attempt after a failed update.
+    /// </summary>
+    private static readonly TimeSpan RetryInterval = TimeSpan.FromHours(1);
+
+    /// <summary>
+    ///     Number of failed automatic attempts after which a cached file is used until the next regular
+    ///     <see cref="RefreshInterval" /> (e.g. if data.iana.org is blocked). "Update now" always checks.
+    /// </summary>
+    private const int MaxFailedAttempts = 3;
+
     private readonly HttpClient _client;
     private readonly SemaphoreSlim _semaphore = new(1, 1);
 
@@ -184,8 +195,7 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     /// </summary>
     private List<string> FindDomain(string domain)
     {
-        var dns = _dns ?? throw new RDAPException(RDAPErrorKind.BootstrapUnavailable,
-            GetFileName(RDAPBootstrapFileType.DNS));
+        var dns = _dns ?? throw CreateBootstrapUnavailableException(RDAPBootstrapFileType.DNS);
 
         var labels = domain.Split('.');
 
@@ -212,8 +222,10 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     {
         var isIPv4 = ipAddress.AddressFamily == AddressFamily.InterNetwork;
 
-        var registry = (isIPv4 ? _ipv4 : _ipv6) ?? throw new RDAPException(RDAPErrorKind.BootstrapUnavailable,
-            GetFileName(isIPv4 ? RDAPBootstrapFileType.IPv4 : RDAPBootstrapFileType.IPv6));
+        var registry = (isIPv4 ? _ipv4 : _ipv6) ??
+                       throw CreateBootstrapUnavailableException(isIPv4
+                           ? RDAPBootstrapFileType.IPv4
+                           : RDAPBootstrapFileType.IPv6);
 
         var length = prefixLength ?? (isIPv4 ? 32 : 128);
 
@@ -231,8 +243,7 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     /// </summary>
     private List<string> FindASN(uint asn)
     {
-        var registry = _asn ?? throw new RDAPException(RDAPErrorKind.BootstrapUnavailable,
-            GetFileName(RDAPBootstrapFileType.ASN));
+        var registry = _asn ?? throw CreateBootstrapUnavailableException(RDAPBootstrapFileType.ASN);
 
         var match = registry.FirstOrDefault(x => asn >= x.Start && asn <= x.End).Urls;
 
@@ -244,8 +255,7 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     /// </summary>
     private List<string> FindEntity(string handle)
     {
-        var objectTags = _objectTags ?? throw new RDAPException(RDAPErrorKind.BootstrapUnavailable,
-            GetFileName(RDAPBootstrapFileType.ObjectTags));
+        var objectTags = _objectTags ?? throw CreateBootstrapUnavailableException(RDAPBootstrapFileType.ObjectTags);
 
         var index = handle.LastIndexOf('-');
 
@@ -253,6 +263,17 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
             return null;
 
         return objectTags.GetValueOrDefault(handle[(index + 1)..]);
+    }
+
+    /// <summary>
+    ///     Creates the exception for a bootstrap file that is not available, including the reason of the last update.
+    /// </summary>
+    private RDAPException CreateBootstrapUnavailableException(RDAPBootstrapFileType type)
+    {
+        var info = _cacheInfos?.FirstOrDefault(x => x.Type == type);
+
+        return new RDAPException(RDAPErrorKind.BootstrapUnavailable,
+            string.IsNullOrEmpty(info?.LastError) ? GetFileName(type) : $"{GetFileName(type)}: {info.LastError}");
     }
 
     /// <summary>
@@ -297,39 +318,56 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
 
             Directory.CreateDirectory(_cacheDirectory);
 
-            var changed = false;
+            var attempted = false;
+            var contentChanged = false;
+            Exception networkError = null;
 
             foreach (var info in _cacheInfos)
             {
-                var path = Path.Combine(_cacheDirectory, info.FileName);
-                var exists = File.Exists(path);
-
-                if (!force && exists && info.Expires > DateTime.Now)
+                // "Expires" is the time of the next check, after a successful update as well as after a failure.
+                if (!force && info.Expires > DateTime.Now)
                     continue;
+
+                attempted = true;
+
+                // All files are on the same server. After a network error (DNS, connection, timeout), the other files
+                // are not tried, so a blocked server costs at most one timeout per update.
+                if (networkError != null)
+                {
+                    RecordFailure(info, networkError);
+                    errors.Add($"{info.FileName}: {networkError.Message}");
+                    continue;
+                }
+
+                var path = Path.Combine(_cacheDirectory, info.FileName);
 
                 try
                 {
-                    changed |= await DownloadAsync(info, path, exists, cancellationToken).ConfigureAwait(false);
+                    contentChanged |= await DownloadAsync(info, path, File.Exists(path), cancellationToken)
+                        .ConfigureAwait(false);
                 }
                 catch (Exception ex) when (ex is not OperationCanceledException ||
                                            !cancellationToken.IsCancellationRequested)
                 {
                     Log.Warn($"Could not update RDAP bootstrap file {info.FileName}.", ex);
 
-                    info.LastError = ex.Message;
-                    changed = true;
+                    if (IsNetworkError(ex))
+                        networkError = ex;
 
+                    RecordFailure(info, ex);
                     errors.Add($"{info.FileName}: {ex.Message}");
                 }
             }
 
-            SaveCacheInfos();
-
-            if (changed || _dns == null)
+            // The cached copy is kept and used, if an update fails.
+            if (contentChanged || _dns == null)
                 LoadRegistries();
 
-            if (changed)
+            if (attempted)
+            {
+                SaveCacheInfos();
                 CacheInfoChanged?.Invoke(this, EventArgs.Empty);
+            }
         }
         finally
         {
@@ -341,9 +379,34 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     }
 
     /// <summary>
+    ///     Records a failed update. A cached file is retried after <see cref="RetryInterval" />, at most
+    ///     <see cref="MaxFailedAttempts" /> times, then after the regular <see cref="RefreshInterval" />. A missing file
+    ///     is retried after <see cref="RetryInterval" />, since the query type cannot be used without it.
+    /// </summary>
+    private void RecordFailure(RDAPBootstrapCacheInfo info, Exception ex)
+    {
+        info.LastError = ex.Message;
+        info.FailedAttempts++;
+
+        var exists = File.Exists(Path.Combine(_cacheDirectory, info.FileName));
+
+        info.Expires = DateTime.Now + (exists && info.FailedAttempts >= MaxFailedAttempts
+            ? RefreshInterval
+            : RetryInterval);
+    }
+
+    /// <summary>
+    ///     Network errors (DNS, connection, TLS, timeout) as opposed to an HTTP error status or invalid content.
+    /// </summary>
+    private static bool IsNetworkError(Exception ex)
+    {
+        return ex is TaskCanceledException || ex is HttpRequestException { StatusCode: null };
+    }
+
+    /// <summary>
     ///     Downloads a bootstrap file with a conditional request (If-None-Match / If-Modified-Since).
     /// </summary>
-    /// <returns>True if the cache info changed.</returns>
+    /// <returns>True if the file content changed.</returns>
     private async Task<bool> DownloadAsync(RDAPBootstrapCacheInfo info, string path, bool exists,
         CancellationToken cancellationToken)
     {
@@ -371,8 +434,9 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
         if (response.StatusCode == HttpStatusCode.NotModified && exists)
         {
             info.LastError = null;
+            info.FailedAttempts = 0;
 
-            return true;
+            return false;
         }
 
         response.EnsureSuccessStatusCode();
@@ -395,6 +459,7 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
         info.Publication = ParsePublication(json);
         info.Downloaded = DateTime.Now;
         info.LastError = null;
+        info.FailedAttempts = 0;
         info.Size = content.LongLength;
         info.ETag = response.Headers.ETag?.ToString();
         info.LastModified = response.Content.Headers.LastModified;
@@ -438,19 +503,36 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     {
         var tempPath = path + ".tmp";
 
-        await File.WriteAllBytesAsync(tempPath, content, cancellationToken).ConfigureAwait(false);
-
-        for (var attempt = 1; ; attempt++)
+        try
         {
+            await File.WriteAllBytesAsync(tempPath, content, cancellationToken).ConfigureAwait(false);
+
+            for (var attempt = 1; ; attempt++)
+            {
+                try
+                {
+                    File.Move(tempPath, path, true);
+                    return;
+                }
+                catch (Exception ex) when (ex is IOException or UnauthorizedAccessException && attempt < 5)
+                {
+                    await Task.Delay(200 * attempt, cancellationToken).ConfigureAwait(false);
+                }
+            }
+        }
+        catch
+        {
+            // Don't leave a partial file behind, the cached copy is still used.
             try
             {
-                File.Move(tempPath, path, true);
-                return;
+                File.Delete(tempPath);
             }
-            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException && attempt < 5)
+            catch (Exception ex)
             {
-                await Task.Delay(200 * attempt, cancellationToken).ConfigureAwait(false);
+                Log.Warn($"Could not delete {tempPath}.", ex);
             }
+
+            throw;
         }
     }
 
@@ -508,6 +590,7 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
                 // The file may have been deleted manually.
                 info.Downloaded = null;
                 info.Size = 0;
+                info.Expires = null;
             }
             else
             {
@@ -555,7 +638,8 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
             ETag = info.ETag,
             LastModified = info.LastModified,
             Expires = info.Expires,
-            LastError = info.LastError
+            LastError = info.LastError,
+            FailedAttempts = info.FailedAttempts
         };
     }
 
