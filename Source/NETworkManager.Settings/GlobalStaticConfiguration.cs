@@ -290,7 +290,7 @@ public static class GlobalStaticConfiguration
 
     // Application: RDAP
     public static RDAPQueryType RDAP_QueryType => RDAPQueryType.Domain;
-    public static bool RDAP_FollowReferral => false;
+    public static bool RDAP_FollowReferral => true;
     public static int RDAP_Timeout => 10000;
     public static ExportFileType RDAP_ExportFileType => ExportFileType.Json;
 

@@ -107,7 +107,7 @@ For many domains (e.g. `.com` and `.net`), the registry only returns basic data 
 
 **Type:** `Boolean`
 
-**Default:** `Disabled`
+**Default:** `Enabled`
 
 ### Timeout (ms)
 
