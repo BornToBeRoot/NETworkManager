@@ -46,11 +46,9 @@ The firewall must allow outgoing HTTPS connections (TCP port 443) to `data.iana.
 | ASN        | `AS13335`        | Query an AS number (`13335`, `AS13335` and asdot like `1.10` work)  |
 | Entity     | `ORG-RIEN1-RIPE` | Query an entity (organization, contact) by its handle               |
 
-### Follow referral to registrar
-
-For many domains (e.g. `.com` and `.net`), the registry only returns basic data and refers to the RDAP server of the registrar for details (e.g. the contacts). If **Follow referral to registrar** is enabled, the RDAP server of the registrar is queried as well and both results are shown. This option is only available for domain queries.
-
 ### Export
+
+The result can be exported via the **Export...** button below the result or via the context menu (right-click).
 
 | Format   | Description                                                                                                       |
 | -------- | ----------------------------------------------------------------------------------------------------------------- |
@@ -102,6 +100,14 @@ Status of the IANA bootstrap files (`dns.json`, `ipv4.json`, `ipv6.json`, `asn.j
 The files are stored in `%LocalAppData%\NETworkManager\RDAP_Cache`.
 
 :::
+
+### Follow referral to registrar
+
+For many domains (e.g. `.com` and `.net`), the registry only returns basic data and refers to the RDAP server of the registrar for details (e.g. the contacts). If enabled, the RDAP server of the registrar is queried as well and both results are shown. Only applies to domain queries.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
 
 ### Timeout (ms)
 

@@ -27,7 +27,7 @@ Release date: **xx.xx.2026**
 
 **RDAP**
 
-- New [**RDAP**](../application/rdap.md) tool to look up registration data via the Registration Data Access Protocol, the standardized, JSON-based successor of Whois. Supports domains, top-level domains, IP addresses/CIDR prefixes, AS numbers and entity handles. The RDAP server is determined automatically using the IANA bootstrap files, which are cached locally and can be updated in the new **Settings > RDAP** page. Results are shown in a structured view (details, status, events, nameservers, DNSSEC, contacts, notices) or as raw JSON, and can be exported as JSON or text. Optionally, the referral to the registrar's RDAP server is followed for domains (e.g. `.com`/`.net`). Includes profile support. If no RDAP server is known for a domain, it can be opened in **Whois** with a single click.
+- New [**RDAP**](../application/rdap.md) tool to look up registration data via the Registration Data Access Protocol, the standardized, JSON-based successor of Whois. Supports domains, top-level domains, IP addresses/CIDR prefixes, AS numbers and entity handles. The RDAP server is determined automatically using the IANA bootstrap files, which are cached locally and can be updated in the new **Settings > RDAP** page. Results are shown in a structured view (details, status, events, nameservers, DNSSEC, contacts, notices) or as raw JSON, and can be exported as JSON or text. Optionally (**Settings > RDAP**), the referral to the registrar's RDAP server is followed for domains (e.g. `.com`/`.net`). Includes profile support. If no RDAP server is known for a domain, it can be opened in **Whois** with a single click.
 
 **Traceroute**
 

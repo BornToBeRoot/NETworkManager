@@ -90,6 +90,10 @@
                    TextWrapping="Wrap"
                    Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                    Margin="0,0,0,10" />
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.FollowReferralToRegistrar}"
+                          IsOn="{Binding FollowReferral}" Margin="0,10,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.HelpMessage_RDAPFollowReferral}"
+                   Style="{StaticResource InfoTextBlock}" TextWrapping="Wrap" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{DynamicResource DefaultTextBlock}"
                    Margin="0,10,0,10" />
         <mah:NumericUpDown Value="{Binding Timeout}" Maximum="60000" Minimum="1000" Interval="1000" />
