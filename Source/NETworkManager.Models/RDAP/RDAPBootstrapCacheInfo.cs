@@ -56,4 +56,9 @@ public class RDAPBootstrapCacheInfo
     ///     Error of the last update, or null if it was successful.
     /// </summary>
     public string LastError { get; set; }
+
+    /// <summary>
+    ///     Number of failed updates in a row.
+    /// </summary>
+    public int FailedAttempts { get; set; }
 }
