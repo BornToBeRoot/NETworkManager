@@ -314,6 +314,10 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
                                            !cancellationToken.IsCancellationRequested)
                 {
                     Log.Warn($"Could not update RDAP bootstrap file {info.FileName}.", ex);
+
+                    info.LastError = ex.Message;
+                    changed = true;
+
                     errors.Add($"{info.FileName}: {ex.Message}");
                 }
             }
@@ -344,7 +348,9 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     {
         using var request = new HttpRequestMessage(HttpMethod.Get, BootstrapBaseUrl + info.FileName);
 
-        if (exists)
+        // Only send a conditional request if the cache entry is complete. Otherwise, download the file again, so an
+        // inconsistent entry (e.g. from an interrupted update) is repaired.
+        if (exists && info.Downloaded != null && info.Size > 0)
         {
             if (!string.IsNullOrEmpty(info.ETag) &&
                 System.Net.Http.Headers.EntityTagHeaderValue.TryParse(info.ETag, out var eTag))
@@ -360,30 +366,89 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
         info.Expires = DateTime.Now + GetMaxAge(response);
 
         if (response.StatusCode == HttpStatusCode.NotModified && exists)
+        {
+            info.LastError = null;
+
             return true;
+        }
 
         response.EnsureSuccessStatusCode();
 
         var content = await response.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
 
-        // Validate the file before replacing the cached copy.
-        var json = JObject.Parse(System.Text.Encoding.UTF8.GetString(content));
+        // Validate the file before replacing the cached copy. Dates are kept as strings (no culture conversion).
+        using var reader = new JsonTextReader(new StringReader(System.Text.Encoding.UTF8.GetString(content)))
+        {
+            DateParseHandling = DateParseHandling.None
+        };
+
+        var json = JObject.Load(reader);
 
         if (json["services"] is not JArray)
             throw new InvalidDataException($"{info.FileName} does not contain any services.");
 
-        var tempPath = path + ".tmp";
+        await ReplaceFileAsync(path, content, cancellationToken).ConfigureAwait(false);
 
-        await File.WriteAllBytesAsync(tempPath, content, cancellationToken).ConfigureAwait(false);
-        File.Move(tempPath, path, true);
-
-        info.Publication = json["publication"]?.ToString();
+        info.Publication = ParsePublication(json);
         info.Downloaded = DateTime.Now;
+        info.LastError = null;
         info.Size = content.LongLength;
         info.ETag = response.Headers.ETag?.ToString();
         info.LastModified = response.Content.Headers.LastModified;
 
         return true;
+    }
+
+    /// <summary>
+    ///     Gets the publication date (local time) of a bootstrap file.
+    /// </summary>
+    private static DateTime? ParsePublication(JObject json)
+    {
+        return RDAPDateParser.TryParse(json["publication"]?.ToString(), out var publication)
+            ? publication.LocalDateTime
+            : null;
+    }
+
+    /// <summary>
+    ///     Reads the publication date (local time) of a cached bootstrap file.
+    /// </summary>
+    private static DateTime? ReadPublication(string path)
+    {
+        try
+        {
+            using var reader = new JsonTextReader(new StreamReader(path)) { DateParseHandling = DateParseHandling.None };
+
+            return ParsePublication(JObject.Load(reader));
+        }
+        catch (Exception ex)
+        {
+            Log.Warn($"Could not read the publication date of {path}.", ex);
+            return null;
+        }
+    }
+
+    /// <summary>
+    ///     Writes the file to a temporary file first and then replaces the cached copy. The replace is retried, since
+    ///     the file can be locked for a short time (e.g. by a virus scanner checking the new file).
+    /// </summary>
+    private static async Task ReplaceFileAsync(string path, byte[] content, CancellationToken cancellationToken)
+    {
+        var tempPath = path + ".tmp";
+
+        await File.WriteAllBytesAsync(tempPath, content, cancellationToken).ConfigureAwait(false);
+
+        for (var attempt = 1; ; attempt++)
+        {
+            try
+            {
+                File.Move(tempPath, path, true);
+                return;
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException && attempt < 5)
+            {
+                await Task.Delay(200 * attempt, cancellationToken).ConfigureAwait(false);
+            }
+        }
     }
 
     /// <summary>
@@ -415,7 +480,12 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
         try
         {
             if (File.Exists(path))
-                stored = JsonConvert.DeserializeObject<List<RDAPBootstrapCacheInfo>>(File.ReadAllText(path));
+                stored = JsonConvert.DeserializeObject<List<RDAPBootstrapCacheInfo>>(File.ReadAllText(path),
+                    new JsonSerializerSettings
+                    {
+                        // Ignore single invalid values (e.g. from an older format), the entry is repaired below.
+                        Error = (_, args) => args.ErrorContext.Handled = true
+                    });
         }
         catch (Exception ex)
         {
@@ -428,11 +498,28 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
 
             info.FileName = GetFileName(type);
 
-            // The file may have been deleted manually.
-            if (!File.Exists(Path.Combine(cacheDirectory, info.FileName)))
+            var file = new FileInfo(Path.Combine(cacheDirectory, info.FileName));
+
+            if (!file.Exists)
             {
+                // The file may have been deleted manually.
                 info.Downloaded = null;
                 info.Size = 0;
+            }
+            else
+            {
+                // The publication date is always taken from the cached file itself.
+                info.Publication = ReadPublication(file.FullName) ?? info.Publication;
+            }
+
+            if (file.Exists && (info.Downloaded == null || info.Size == 0))
+            {
+                // Incomplete entry: show the file on disk and download it again with the next update.
+                info.Downloaded = file.LastWriteTime;
+                info.Size = file.Length;
+                info.ETag = null;
+                info.LastModified = null;
+                info.Expires = null;
             }
 
             return info;
@@ -464,7 +551,8 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
             Size = info.Size,
             ETag = info.ETag,
             LastModified = info.LastModified,
-            Expires = info.Expires
+            Expires = info.Expires,
+            LastError = info.LastError
         };
     }
 

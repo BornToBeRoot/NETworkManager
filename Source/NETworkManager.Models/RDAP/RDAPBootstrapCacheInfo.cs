@@ -18,9 +18,9 @@ public class RDAPBootstrapCacheInfo
     public string FileName { get; set; }
 
     /// <summary>
-    ///     Publication date from the file itself. This can be years old while the data is still current.
+    ///     Publication date from the file itself (local time). This can be years old while the data is still current.
     /// </summary>
-    public string Publication { get; set; }
+    public DateTime? Publication { get; set; }
 
     /// <summary>
     ///     Time when the file content was last downloaded (HTTP 200).
@@ -51,4 +51,9 @@ public class RDAPBootstrapCacheInfo
     ///     Time until the cached file is considered fresh (from Cache-Control max-age or Expires).
     /// </summary>
     public DateTime? Expires { get; set; }
+
+    /// <summary>
+    ///     Error of the last update, or null if it was successful.
+    /// </summary>
+    public string LastError { get; set; }
 }

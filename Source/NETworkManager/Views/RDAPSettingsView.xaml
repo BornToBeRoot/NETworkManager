@@ -29,7 +29,7 @@
                                     Binding="{Binding (rdap:RDAPBootstrapCacheInfo.FileName)}"
                                     MinWidth="130" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Publication}"
-                                    Binding="{Binding (rdap:RDAPBootstrapCacheInfo.Publication)}"
+                                    Binding="{Binding (rdap:RDAPBootstrapCacheInfo.Publication), Converter={StaticResource DateTimeToStringConverter}}"
                                     MinWidth="160" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Downloaded}"
                                     Binding="{Binding (rdap:RDAPBootstrapCacheInfo.Downloaded), Converter={StaticResource DateTimeToStringConverter}}"
@@ -39,7 +39,17 @@
                                     MinWidth="160" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Size}"
                                     Binding="{Binding (rdap:RDAPBootstrapCacheInfo.Size), Converter={StaticResource Bytes1000ToSizeConverter}}"
-                                    MinWidth="80" Width="*" />
+                                    MinWidth="80" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.Error}"
+                                    Binding="{Binding (rdap:RDAPBootstrapCacheInfo.LastError)}"
+                                    MinWidth="150" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="TextWrapping" Value="Wrap" />
+                            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
