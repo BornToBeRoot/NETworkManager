@@ -34,6 +34,10 @@ For .de domains, DENIC no longer provides information via the Whois protocol.
 |--------|-------------|
 | `borntoberoot.net` | Query Whois information for a .net domain |
 
+### Export
+
+The result can be exported via the **Export...** button below the result or via the context menu (right-click).
+
 ### Context menu
 
 | Action | Description |

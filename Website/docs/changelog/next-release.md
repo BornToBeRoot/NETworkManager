@@ -42,6 +42,10 @@ Release date: **xx.xx.2026**
 
 - The collapsed/expanded state of profile groups (e.g. **linux-server**) is now remembered per profile file and shared across all tools, instead of resetting every time you switch tools or restart the application. [#3539](https://github.com/BornToBeRoot/NETworkManager/pull/3539)
 
+**Whois**
+
+- Added an **Export...** button below the result, like in the other tools.
+
 **IP Scanner**
 
 - Added a live count of hosts up/down next to the **Result** header. Stays visible after the scan finishes. [#3572](https://github.com/BornToBeRoot/NETworkManager/pull/3572)
