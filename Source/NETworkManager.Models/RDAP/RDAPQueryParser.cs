@@ -49,6 +49,34 @@ public static partial class RDAPQueryParser
         return query == null ? GetError(type) : RDAPQueryParseError.None;
     }
 
+    /// <summary>
+    ///     Detects the query type of an input without a type (e.g. data redirected from another tool): IP address or
+    ///     CIDR, AS number ("AS15169", "15169", "1.10"), TLD (single label), entity handle (single label with a hyphen,
+    ///     e.g. "ORG-RIEN1-RIPE"), otherwise domain.
+    /// </summary>
+    /// <param name="input">User input.</param>
+    /// <returns>Detected query type.</returns>
+    public static RDAPQueryType DetectType(string input)
+    {
+        input = input?.Trim() ?? string.Empty;
+
+        if (ParseIPAddress(input) != null)
+            return RDAPQueryType.IPAddress;
+
+        // Digits only or with "AS" prefix. Asdot ("1.10") is also numeric, a TLD is never numeric.
+        if (ASNRegex().IsMatch(input))
+            return RDAPQueryType.ASN;
+
+        var label = input.Trim('.');
+
+        if (!label.Contains('.'))
+            return label.Contains('-') && !label.StartsWith("xn--", StringComparison.OrdinalIgnoreCase)
+                ? RDAPQueryType.Entity
+                : RDAPQueryType.TLD;
+
+        return RDAPQueryType.Domain;
+    }
+
     private static RDAPQueryParseError GetError(RDAPQueryType type)
     {
         return type switch
@@ -126,7 +154,9 @@ public static partial class RDAPQueryParser
         if (parts.Length > 2)
             return null;
 
-        // Zone IDs (e.g. fe80::1%eth0) must not be used in RDAP queries (RFC 9082 3.1.1).
+        // Zone IDs (e.g. fe80::1%eth0) must not be sent in RDAP queries (RFC 9082 3.1.1). They are only meaningful on
+        // the local host and irrelevant for the registration data, so they are removed instead of rejecting the input
+        // (link-local addresses are often copied with a zone ID, e.g. from ipconfig).
         var addressPart = parts[0].Split('%')[0];
 
         // IPAddress.TryParse also accepts shortened IPv4 forms like "1" or "1.2", which are not valid here.
