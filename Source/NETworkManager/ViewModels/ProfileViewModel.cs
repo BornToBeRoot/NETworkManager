@@ -2856,6 +2856,9 @@ public class ProfileViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+
+            // Validate the query again for the new type.
+            OnPropertyChanged(nameof(RDAP_Query));
         }
     }
 

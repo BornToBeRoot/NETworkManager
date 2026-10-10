@@ -218,6 +218,12 @@
                         <Binding Path="Query" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <validators:RDAPQueryValidator ValidatesOnTargetUpdated="True">
+                                    <validators:RDAPQueryValidator.Wrapper>
+                                        <validators:RDAPQueryDependencyObjectWrapper
+                                            QueryType="{Binding Data.QueryType, Source={StaticResource BindingProxy}}" />
+                                    </validators:RDAPQueryValidator.Wrapper>
+                                </validators:RDAPQueryValidator>
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>

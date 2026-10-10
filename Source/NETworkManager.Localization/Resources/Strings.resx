@@ -4694,4 +4694,10 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
   <data name="UpdateNow" xml:space="preserve">
     <value>Update now</value>
   </data>
+  <data name="RDAPReferralInsecureX" xml:space="preserve">
+    <value>The referral to the RDAP server of the registrar was not followed, because it does not use a secure connection (HTTPS): {0}</value>
+  </data>
+  <data name="RDAPReferralPrivateAddressX" xml:space="preserve">
+    <value>The referral to the RDAP server of the registrar was not followed, because it points to a local or private address: {0}</value>
+  </data>
 </root>

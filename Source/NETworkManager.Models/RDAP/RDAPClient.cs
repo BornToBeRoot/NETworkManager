@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using log4net;
@@ -149,11 +150,14 @@ public class RDAPClient : SingletonBase<RDAPClient>
 
         try
         {
-            result.Referral = await GetAsync(result.Query, referralUrl, timeout, cancellationToken)
+            result.Referral = await GetAsync(result.Query, referralUrl, timeout, cancellationToken, true)
                 .ConfigureAwait(false);
         }
         catch (RDAPException ex)
         {
+            if (ex.Kind is RDAPErrorKind.InsecureReferral or RDAPErrorKind.PrivateAddress)
+                Log.Warn($"Referral to the registrar not followed ({ex.Kind}): {ex.RequestUrl}");
+
             // The registry response is still valid if the registrar fails.
             result.ReferralError = ex;
         }
@@ -162,8 +166,16 @@ public class RDAPClient : SingletonBase<RDAPClient>
     /// <summary>
     ///     Sends a GET request, follows redirects and parses the response.
     /// </summary>
+    /// <param name="query">Query.</param>
+    /// <param name="url">URL to request.</param>
+    /// <param name="timeout">Timeout for each request.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <param name="isReferral">
+    ///     The URL comes from a response (registrar referral) and is untrusted: only HTTPS and no local or private
+    ///     addresses are allowed, for the referral and each redirect.
+    /// </param>
     private async Task<RDAPResult> GetAsync(RDAPQuery query, string url, TimeSpan timeout,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken, bool isReferral = false)
     {
         var visited = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var currentUrl = new Uri(url);
@@ -172,6 +184,9 @@ public class RDAPClient : SingletonBase<RDAPClient>
         {
             if (!visited.Add(currentUrl.AbsoluteUri) || redirects > MaxRedirects)
                 throw new RDAPException(RDAPErrorKind.TooManyRedirects) { RequestUrl = currentUrl.AbsoluteUri };
+
+            if (isReferral)
+                await ValidateReferralTargetAsync(currentUrl, cancellationToken).ConfigureAwait(false);
 
             using var timeoutSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             timeoutSource.CancelAfter(timeout);
@@ -218,6 +233,67 @@ public class RDAPClient : SingletonBase<RDAPClient>
                 return CreateResult(query, currentUrl.AbsoluteUri, body);
             }
         }
+    }
+
+    /// <summary>
+    ///     Checks the target of a referral, which is sent by the registry and therefore untrusted. Only HTTPS is allowed
+    ///     (no downgrade to plain text) and the host must not resolve to a local or private address, so a response
+    ///     cannot make the client send requests into the local network.
+    /// </summary>
+    private static async Task ValidateReferralTargetAsync(Uri url, CancellationToken cancellationToken)
+    {
+        if (url.Scheme != Uri.UriSchemeHttps)
+            throw new RDAPException(RDAPErrorKind.InsecureReferral, url.AbsoluteUri) { RequestUrl = url.AbsoluteUri };
+
+        IPAddress[] addresses;
+
+        if (url.IsLoopback)
+        {
+            addresses = [IPAddress.Loopback];
+        }
+        else if (IPAddress.TryParse(url.DnsSafeHost, out var ipAddress))
+        {
+            addresses = [ipAddress];
+        }
+        else
+        {
+            try
+            {
+                addresses = await Dns.GetHostAddressesAsync(url.DnsSafeHost, cancellationToken).ConfigureAwait(false);
+            }
+            catch (SocketException)
+            {
+                // The request itself fails with a proper network error.
+                return;
+            }
+        }
+
+        if (addresses.Any(IsLocalOrPrivateAddress))
+            throw new RDAPException(RDAPErrorKind.PrivateAddress, url.AbsoluteUri) { RequestUrl = url.AbsoluteUri };
+    }
+
+    /// <summary>
+    ///     Loopback, private (RFC 1918, RFC 4193), shared (RFC 6598), link-local, unspecified and multicast addresses.
+    /// </summary>
+    private static bool IsLocalOrPrivateAddress(IPAddress address)
+    {
+        if (address.IsIPv4MappedToIPv6)
+            address = address.MapToIPv4();
+
+        if (IPAddress.IsLoopback(address))
+            return true;
+
+        var bytes = address.GetAddressBytes();
+
+        if (address.AddressFamily == AddressFamily.InterNetwork)
+            return bytes[0] is 0 or 10 or >= 224 ||
+                   bytes[0] == 172 && (bytes[1] & 0xF0) == 16 ||
+                   bytes[0] == 192 && bytes[1] == 168 ||
+                   bytes[0] == 169 && bytes[1] == 254 ||
+                   bytes[0] == 100 && (bytes[1] & 0xC0) == 64;
+
+        return address.Equals(IPAddress.IPv6Any) || address.IsIPv6LinkLocal || address.IsIPv6SiteLocal ||
+               address.IsIPv6Multicast || (bytes[0] & 0xFE) == 0xFC;
     }
 
     private static bool IsRedirect(HttpStatusCode statusCode)

@@ -13662,5 +13662,23 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("ZipCode", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Looks up a localized string similar to The referral to the RDAP server of the registrar was not followed, because it does not use a secure connection (HTTPS): {0}.
+        /// </summary>
+        public static string RDAPReferralInsecureX {
+            get {
+                return ResourceManager.GetString("RDAPReferralInsecureX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The referral to the RDAP server of the registrar was not followed, because it points to a local or private address: {0}.
+        /// </summary>
+        public static string RDAPReferralPrivateAddressX {
+            get {
+                return ResourceManager.GetString("RDAPReferralPrivateAddressX", resourceCulture);
+            }
+        }
+        
     }
 }

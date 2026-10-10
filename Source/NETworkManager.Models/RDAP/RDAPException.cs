@@ -48,6 +48,16 @@ public enum RDAPErrorKind
     InsecureRedirect,
 
     /// <summary>
+    ///     The referral to the registrar was not followed, because it does not use HTTPS.
+    /// </summary>
+    InsecureReferral,
+
+    /// <summary>
+    ///     The referral to the registrar was not followed, because it points to a local or private address.
+    /// </summary>
+    PrivateAddress,
+
+    /// <summary>
     ///     Too many redirects or a redirect loop.
     /// </summary>
     TooManyRedirects,
