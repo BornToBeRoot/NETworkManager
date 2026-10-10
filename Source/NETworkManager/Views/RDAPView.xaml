@@ -18,6 +18,17 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:RDAPQueryTypeToStringConverter x:Key="RDAPQueryTypeToStringConverter" />
+        <ContextMenu x:Key="RDAPExportContextMenu" MinWidth="150">
+            <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
+                <MenuItem.Icon>
+                    <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
         <Style x:Key="RDAPSectionTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Margin" Value="0,20,0,10" />
@@ -47,7 +58,8 @@
                                 <TextBlock Grid.Column="0" Text="{Binding Name}"
                                            Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Top" />
                                 <TextBox Grid.Column="2" Text="{Binding Value, Mode=OneWay}"
-                                         Style="{StaticResource TextBlockAsTextBox}" TextWrapping="Wrap" />
+                                         Style="{StaticResource TextBlockAsTextBox}" TextWrapping="Wrap"
+                                         ContextMenu="{StaticResource CopyContextMenu}" />
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -135,7 +147,8 @@
                                     <TextBlock Text="{Binding Title}" Style="{StaticResource BoldTextBlock}"
                                                TextWrapping="Wrap" />
                                     <TextBox Text="{Binding Description, Mode=OneWay}"
-                                             Style="{StaticResource TextBlockAsTextBox}" TextWrapping="Wrap" />
+                                             Style="{StaticResource TextBlockAsTextBox}" TextWrapping="Wrap"
+                                         ContextMenu="{StaticResource CopyContextMenu}" />
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -169,7 +182,6 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0"
                            Text="{x:Static localization:Strings.Query}"
@@ -202,14 +214,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <CheckBox Grid.Column="8" Margin="0,0,10,0"
-                          Content="{x:Static localization:Strings.FollowReferralToRegistrar}"
-                          ToolTip="{x:Static localization:Strings.HelpMessage_RDAPFollowReferral}"
-                          IsChecked="{Binding FollowReferral}"
-                          IsEnabled="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}"
-                          Visibility="{Binding IsFollowReferralAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                          VerticalAlignment="Center" />
-                <Button Grid.Column="9" Command="{Binding QueryCommand}"
+                <Button Grid.Column="8" Command="{Binding QueryCommand}"
                         IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource ImageWithTextButton}">
@@ -285,12 +290,12 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0"
@@ -300,28 +305,10 @@
                           Content="{x:Static localization:Strings.RawJSON}"
                           IsChecked="{Binding ShowRawJSON}"
                           VerticalAlignment="Center" Margin="0,0,0,10" />
-                <Button Grid.Column="3" Command="{Binding ExportCommand}"
-                        Style="{StaticResource ImageWithTextButton}"
-                        VerticalAlignment="Center" Margin="0,0,0,10">
-                    <Button.Content>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                                <Rectangle.OpacityMask>
-                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.ExportDots}"
-                                       Style="{StaticResource ButtonWithImageTextBlock}" />
-                        </Grid>
-                    </Button.Content>
-                </Button>
             </Grid>
             <ScrollViewer Grid.Row="1"
                           PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
+                          ContextMenu="{StaticResource RDAPExportContextMenu}"
                           HorizontalScrollBarVisibility="Disabled"
                           VerticalScrollBarVisibility="Auto"
                           Visibility="{Binding ShowRawJSON, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
@@ -338,6 +325,31 @@
                      Style="{StaticResource ConsoleTextBox}"
                      ContextMenu="{StaticResource CopyExportContextMenu}"
                      Visibility="{Binding ShowRawJSON, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+            <Button Grid.Row="3"
+                    Command="{Binding Path=ExportCommand}"
+                    HorizontalAlignment="Right">
+                <Button.Style>
+                    <Style TargetType="{x:Type TypeName=Button}"
+                           BasedOn="{StaticResource ResourceKey=ImageWithTextButton}" />
+                </Button.Style>
+                <Button.Content>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Grid.Column="0" Grid.Row="0"
+                                   Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                        <TextBlock Grid.Column="1" Grid.Row="0"
+                                   Text="{x:Static Member=localization:Strings.ExportDots}"
+                                   Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
+                    </Grid>
+                </Button.Content>
+            </Button>
         </Grid>
         <TextBlock Grid.Row="2"
                    Foreground="{DynamicResource MahApps.Brushes.Gray3}"

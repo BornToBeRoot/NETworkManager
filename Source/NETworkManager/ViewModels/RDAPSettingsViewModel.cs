@@ -78,6 +78,22 @@ public class RDAPSettingsViewModel : ViewModelBase
         }
     }
 
+    public bool FollowReferral
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.RDAP_FollowReferral = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     public int Timeout
     {
         get;
@@ -115,6 +131,7 @@ public class RDAPSettingsViewModel : ViewModelBase
 
     private void LoadSettings()
     {
+        FollowReferral = SettingsManager.Current.RDAP_FollowReferral;
         Timeout = SettingsManager.Current.RDAP_Timeout;
     }
 

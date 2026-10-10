@@ -63,7 +63,6 @@ public class RDAPViewModel : ViewModelBase
             field = value;
             OnPropertyChanged();
             OnPropertyChanged(nameof(QueryWatermark));
-            OnPropertyChanged(nameof(IsFollowReferralAvailable));
         }
     }
 
@@ -78,27 +77,6 @@ public class RDAPViewModel : ViewModelBase
         RDAPQueryType.Entity => StaticStrings.ExampleRDAPEntityHandle,
         _ => StaticStrings.ExampleDomain
     };
-
-    /// <summary>
-    ///     Referrals to a registrar are only available for domain queries.
-    /// </summary>
-    public bool IsFollowReferralAvailable => QueryType == RDAPQueryType.Domain;
-
-    public bool FollowReferral
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.RDAP_FollowReferral = value;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
 
     public bool IsRunning
     {
@@ -252,7 +230,6 @@ public class RDAPViewModel : ViewModelBase
     private void LoadSettings()
     {
         QueryType = SettingsManager.Current.RDAP_QueryType;
-        FollowReferral = SettingsManager.Current.RDAP_FollowReferral;
     }
 
     #endregion
@@ -318,7 +295,7 @@ public class RDAPViewModel : ViewModelBase
         {
             _result = await RDAPClient.GetInstance().QueryAsync(query, GlobalStaticConfiguration.RDAP_CachePath,
                 TimeSpan.FromMilliseconds(SettingsManager.Current.RDAP_Timeout),
-                FollowReferral && IsFollowReferralAvailable);
+                SettingsManager.Current.RDAP_FollowReferral);
 
             List<RDAPObjectViewModel> results =
             [
