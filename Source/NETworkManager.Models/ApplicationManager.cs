@@ -99,6 +99,9 @@ public static class ApplicationManager
             case ApplicationName.WakeOnLAN:
                 canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.Power });
                 break;
+            case ApplicationName.RDAP:
+                canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.CardAccountDetailsOutline });
+                break;
             case ApplicationName.Whois:
                 canvas.Children.Add(new PackIconMaterial { Kind = PackIconMaterialKind.CloudSearchOutline });
                 break;

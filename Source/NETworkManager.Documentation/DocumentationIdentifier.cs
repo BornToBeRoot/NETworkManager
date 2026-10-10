@@ -106,6 +106,11 @@ public enum DocumentationIdentifier
     ApplicationWakeOnLan,
 
     /// <summary>
+    ///     RDAP documentation page.
+    /// </summary>
+    ApplicationRdap,
+
+    /// <summary>
     ///     Whois documentation page.
     /// </summary>
     ApplicationWhois,

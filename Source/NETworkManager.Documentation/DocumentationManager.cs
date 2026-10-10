@@ -78,6 +78,9 @@ public static class DocumentationManager
         new DocumentationInfo(DocumentationIdentifier.ApplicationWakeOnLan,
             @"docs/application/wake-on-lan"),
 
+        new DocumentationInfo(DocumentationIdentifier.ApplicationRdap,
+            @"docs/application/rdap"),
+
         new DocumentationInfo(DocumentationIdentifier.ApplicationWhois,
             @"docs/application/whois"),
 
@@ -221,6 +224,7 @@ public static class DocumentationManager
             ApplicationName.DiscoveryProtocol => DocumentationIdentifier.ApplicationDiscoveryProtocol,
             ApplicationName.Firewall => DocumentationIdentifier.ApplicationFirewall,
             ApplicationName.WakeOnLAN => DocumentationIdentifier.ApplicationWakeOnLan,
+            ApplicationName.RDAP => DocumentationIdentifier.ApplicationRdap,
             ApplicationName.Whois => DocumentationIdentifier.ApplicationWhois,
             ApplicationName.IPGeolocation => DocumentationIdentifier.ApplicationIPGeolocation,
             ApplicationName.SubnetCalculator => DocumentationIdentifier.ApplicationSubnetCalculator,
@@ -269,6 +273,7 @@ public static class DocumentationManager
             SettingsName.SNMP => GetIdentifierByApplicationName(ApplicationName.SNMP),
             SettingsName.SNTPLookup => GetIdentifierByApplicationName(ApplicationName.SNTPLookup),
             SettingsName.WakeOnLAN => GetIdentifierByApplicationName(ApplicationName.WakeOnLAN),
+            SettingsName.RDAP => GetIdentifierByApplicationName(ApplicationName.RDAP),
             SettingsName.BitCalculator => GetIdentifierByApplicationName(ApplicationName.BitCalculator),
             _ => DocumentationIdentifier.Default
         };

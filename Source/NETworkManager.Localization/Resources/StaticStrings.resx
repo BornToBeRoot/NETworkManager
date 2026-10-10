@@ -360,4 +360,16 @@
   <data name="ExampleActiveDirectorySearchFilter" xml:space="preserve">
     <value>(name=SRV-*)</value>
   </data>
+  <data name="ExampleTLD" xml:space="preserve">
+    <value>de</value>
+  </data>
+  <data name="ExampleIPAddressOrCIDR" xml:space="preserve">
+    <value>192.0.2.0/24</value>
+  </data>
+  <data name="ExampleASN" xml:space="preserve">
+    <value>AS15169</value>
+  </data>
+  <data name="ExampleRDAPEntityHandle" xml:space="preserve">
+    <value>ORG-RIEN1-RIPE</value>
+  </data>
 </root>

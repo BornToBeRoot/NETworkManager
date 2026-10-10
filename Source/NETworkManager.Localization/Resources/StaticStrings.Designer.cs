@@ -97,6 +97,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AS15169.
+        /// </summary>
+        public static string ExampleASN {
+            get {
+                return ResourceManager.GetString("ExampleASN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 9600.
         /// </summary>
         public static string ExampleBaud9600 {
@@ -255,6 +264,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ExampleHostWithRDPPort {
             get {
                 return ResourceManager.GetString("ExampleHostWithRDPPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 192.0.2.0/24.
+        /// </summary>
+        public static string ExampleIPAddressOrCIDR {
+            get {
+                return ResourceManager.GetString("ExampleIPAddressOrCIDR", resourceCulture);
             }
         }
         
@@ -565,6 +583,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ORG-RIEN1-RIPE.
+        /// </summary>
+        public static string ExampleRDAPEntityHandle {
+            get {
+                return ResourceManager.GetString("ExampleRDAPEntityHandle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to COM5.
         /// </summary>
         public static string ExampleSerialLine {
@@ -669,6 +696,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ExampleTigerVNCPath {
             get {
                 return ResourceManager.GetString("ExampleTigerVNCPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to de.
+        /// </summary>
+        public static string ExampleTLD {
+            get {
+                return ResourceManager.GetString("ExampleTLD", resourceCulture);
             }
         }
         

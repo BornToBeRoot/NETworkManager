@@ -275,6 +275,19 @@ public class ConfigurationInfo : PropertyChangedBase
         }
     }
 
+    public int RDAPTabCount
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     public int WhoisTabCount
     {
         get;
