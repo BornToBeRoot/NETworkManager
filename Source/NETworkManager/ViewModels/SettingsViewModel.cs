@@ -134,6 +134,7 @@ public class SettingsViewModel : ViewModelBase
     private SNMPSettingsView _snmpSettingsView;
     private SNTPLookupSettingsView _sntpLookupSettingsView;
     private WakeOnLANSettingsView _wakeOnLANSettingsView;
+    private RDAPSettingsView _rdapSettingsView;
     private BitCalculatorSettingsView _bitCalculatorSettingsView;
 
     #endregion
@@ -335,6 +336,11 @@ public class SettingsViewModel : ViewModelBase
                 _wakeOnLANSettingsView ??= new WakeOnLANSettingsView();
 
                 SettingsContent = _wakeOnLANSettingsView;
+                break;
+            case SettingsName.RDAP:
+                _rdapSettingsView ??= new RDAPSettingsView();
+
+                SettingsContent = _rdapSettingsView;
                 break;
             case SettingsName.BitCalculator:
                 _bitCalculatorSettingsView ??= new BitCalculatorSettingsView();

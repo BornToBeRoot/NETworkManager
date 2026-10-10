@@ -691,6 +691,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private SubnetCalculatorHostView _subnetCalculatorHostView;
     private BitCalculatorView _bitCalculatorView;
     private LookupHostView _lookupHostView;
+    private RDAPHostView _rdapHostView;
     private WhoisHostView _whoisHostView;
     private IPGeolocationHostView _ipGeolocationHostView;
     private ConnectionsView _connectionsView;
@@ -858,6 +859,14 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
                 ContentControlApplication.Content = _wakeOnLanView;
                 break;
+            case ApplicationName.RDAP:
+                if (_rdapHostView == null)
+                    _rdapHostView = new RDAPHostView();
+                else
+                    _rdapHostView.OnViewVisible();
+
+                ContentControlApplication.Content = _rdapHostView;
+                break;
             case ApplicationName.Whois:
                 if (_whoisHostView == null)
                     _whoisHostView = new WhoisHostView();
@@ -989,6 +998,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             case ApplicationName.WakeOnLAN:
                 _wakeOnLanView?.OnViewHide();
                 break;
+            case ApplicationName.RDAP:
+                _rdapHostView?.OnViewHide();
+                break;
             case ApplicationName.Whois:
                 _whoisHostView?.OnViewHide();
                 break;
@@ -1099,12 +1111,17 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             case ApplicationName.SNMP:
                 _snmpHostView.AddTab(data.Args);
                 break;
+            case ApplicationName.RDAP:
+                _rdapHostView.AddTab(data.Args);
+                break;
+            case ApplicationName.Whois:
+                _whoisHostView.AddTab(data.Args);
+                break;
             case ApplicationName.SNTPLookup:
             case ApplicationName.HostsFileEditor:
             case ApplicationName.Firewall:
             case ApplicationName.DiscoveryProtocol:
             case ApplicationName.WakeOnLAN:
-            case ApplicationName.Whois:
             case ApplicationName.IPGeolocation:
             case ApplicationName.SubnetCalculator:
             case ApplicationName.BitCalculator:
