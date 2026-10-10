@@ -113,6 +113,11 @@ public enum ApplicationName
     WakeOnLAN,
 
     /// <summary>
+    ///     RDAP application.
+    /// </summary>
+    RDAP,
+
+    /// <summary>
     ///     Whois application.
     /// </summary>
     Whois,

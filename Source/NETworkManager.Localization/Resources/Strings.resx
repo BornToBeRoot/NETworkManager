@@ -4499,4 +4499,205 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
   <data name="NotSet" xml:space="preserve">
     <value>Not set</value>
   </data>
+  <data name="RDAP" xml:space="preserve">
+    <value>RDAP</value>
+  </data>
+  <data name="ApplicationName_RDAP" xml:space="preserve">
+    <value>RDAP</value>
+  </data>
+  <data name="RDAPQueryType_Domain" xml:space="preserve">
+    <value>Domain</value>
+  </data>
+  <data name="RDAPQueryType_TLD" xml:space="preserve">
+    <value>TLD</value>
+  </data>
+  <data name="RDAPQueryType_IPAddress" xml:space="preserve">
+    <value>IP address</value>
+  </data>
+  <data name="RDAPQueryType_ASN" xml:space="preserve">
+    <value>ASN</value>
+  </data>
+  <data name="RDAPQueryType_Entity" xml:space="preserve">
+    <value>Entity</value>
+  </data>
+  <data name="AddATabToQueryRDAP" xml:space="preserve">
+    <value>Add a tab to query RDAP...</value>
+  </data>
+  <data name="EnterAQueryToQueryRDAPDots" xml:space="preserve">
+    <value>Enter a domain, IP address, AS number or entity handle to query RDAP...</value>
+  </data>
+  <data name="Actor" xml:space="preserve">
+    <value>Actor</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="Algorithm" xml:space="preserve">
+    <value>Algorithm</value>
+  </data>
+  <data name="BootstrapFiles" xml:space="preserve">
+    <value>Bootstrap files</value>
+  </data>
+  <data name="BootstrapFilesAreUpToDate" xml:space="preserve">
+    <value>The bootstrap files are up to date.</value>
+  </data>
+  <data name="Conformance" xml:space="preserve">
+    <value>Conformance</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Contacts</value>
+  </data>
+  <data name="DNSSEC" xml:space="preserve">
+    <value>DNSSEC</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="DelegationSigned" xml:space="preserve">
+    <value>Delegation signed</value>
+  </data>
+  <data name="Digest" xml:space="preserve">
+    <value>Digest</value>
+  </data>
+  <data name="DigestType" xml:space="preserve">
+    <value>Digest type</value>
+  </data>
+  <data name="Downloaded" xml:space="preserve">
+    <value>Downloaded</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EnterValidASN" xml:space="preserve">
+    <value>Enter a valid AS number (e.g., "AS15169")!</value>
+  </data>
+  <data name="EnterValidEntityHandle" xml:space="preserve">
+    <value>Enter a valid entity handle (e.g., "ORG-RIEN1-RIPE")!</value>
+  </data>
+  <data name="EnterValidIPAddressOrCIDR" xml:space="preserve">
+    <value>Enter a valid IP address or CIDR (e.g., "192.0.2.0/24")!</value>
+  </data>
+  <data name="EnterValidTLD" xml:space="preserve">
+    <value>Enter a valid top-level domain (e.g., "de")!</value>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="FollowReferralToRegistrar" xml:space="preserve">
+    <value>Follow referral to registrar</value>
+  </data>
+  <data name="Handle" xml:space="preserve">
+    <value>Handle</value>
+  </data>
+  <data name="HelpMessage_RDAPBootstrapFiles" xml:space="preserve">
+    <value>The IANA bootstrap files are used to find the RDAP server for a domain, IP address, AS number or entity. They are downloaded with the first query and refreshed automatically once a week.</value>
+  </data>
+  <data name="HelpMessage_RDAPFollowReferral" xml:space="preserve">
+    <value>For many domains (e.g., .com and .net), the registry only returns basic data and refers to the RDAP server of the registrar for details. If enabled, the RDAP server of the registrar is queried as well.</value>
+  </data>
+  <data name="KeyTag" xml:space="preserve">
+    <value>Key tag</value>
+  </data>
+  <data name="LastChecked" xml:space="preserve">
+    <value>Last checked</value>
+  </data>
+  <data name="Nameservers" xml:space="preserve">
+    <value>Nameservers</value>
+  </data>
+  <data name="Notices" xml:space="preserve">
+    <value>Notices</value>
+  </data>
+  <data name="ObjectClass" xml:space="preserve">
+    <value>Object class</value>
+  </data>
+  <data name="OpenInWhois" xml:space="preserve">
+    <value>Open in Whois</value>
+  </data>
+  <data name="ParentHandle" xml:space="preserve">
+    <value>Parent handle</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="Port43" xml:space="preserve">
+    <value>Port 43 (Whois)</value>
+  </data>
+  <data name="PublicIDs" xml:space="preserve">
+    <value>Public IDs</value>
+  </data>
+  <data name="Publication" xml:space="preserve">
+    <value>Publication</value>
+  </data>
+  <data name="RDAPBadRequestX" xml:space="preserve">
+    <value>The server could not process the query: {0}</value>
+  </data>
+  <data name="RDAPBootstrapUnavailableX" xml:space="preserve">
+    <value>The IANA bootstrap files could not be downloaded: {0}</value>
+  </data>
+  <data name="RDAPHttpErrorX" xml:space="preserve">
+    <value>The server returned an error: {0}</value>
+  </data>
+  <data name="RDAPInsecureRedirectX" xml:space="preserve">
+    <value>The server redirected to an insecure URL, which was not followed: {0}</value>
+  </data>
+  <data name="RDAPInvalidResponseX" xml:space="preserve">
+    <value>The server returned an invalid response: {0}</value>
+  </data>
+  <data name="RDAPNetworkErrorX" xml:space="preserve">
+    <value>Could not connect to the RDAP server: {0}</value>
+  </data>
+  <data name="RDAPNoServerForX" xml:space="preserve">
+    <value>No RDAP server is known for "{0}". The registry may only provide Whois.</value>
+  </data>
+  <data name="RDAPNoServerForEntityX" xml:space="preserve">
+    <value>No RDAP server is known for "{0}". Entity handles can only be resolved if they end with a known service provider tag (e.g., "-RIPE" or "-ARIN").</value>
+  </data>
+  <data name="RDAPNotFoundX" xml:space="preserve">
+    <value>No data found for "{0}".</value>
+  </data>
+  <data name="RDAPNotImplemented" xml:space="preserve">
+    <value>The server does not support this query.</value>
+  </data>
+  <data name="RDAPRateLimited" xml:space="preserve">
+    <value>The server limits the number of queries. Try again later.</value>
+  </data>
+  <data name="RDAPRateLimitedTryAgainInXSeconds" xml:space="preserve">
+    <value>The server limits the number of queries. Try again in {0} seconds.</value>
+  </data>
+  <data name="RDAPReferralFailedX" xml:space="preserve">
+    <value>The RDAP server of the registrar could not be queried: {0}</value>
+  </data>
+  <data name="RDAPTooManyRedirects" xml:space="preserve">
+    <value>Too many redirects.</value>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>Range</value>
+  </data>
+  <data name="RawJSON" xml:space="preserve">
+    <value>Raw JSON</value>
+  </data>
+  <data name="Registrar" xml:space="preserve">
+    <value>Registrar</value>
+  </data>
+  <data name="Registry" xml:space="preserve">
+    <value>Registry</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="UpdateNow" xml:space="preserve">
+    <value>Update now</value>
+  </data>
+  <data name="RDAPReferralInsecureX" xml:space="preserve">
+    <value>The referral to the RDAP server of the registrar was not followed, because it does not use a secure connection (HTTPS): {0}</value>
+  </data>
+  <data name="RDAPReferralPrivateAddressX" xml:space="preserve">
+    <value>The referral to the RDAP server of the registrar was not followed, because it points to a local or private address: {0}</value>
+  </data>
 </root>

@@ -745,6 +745,19 @@ public static class SettingsManager
     {
         Log.Info($"Apply upgrade to {version}...");
 
+        // Add RDAP application
+        if (Current.General_ApplicationList.All(x => x.Name != ApplicationName.RDAP))
+        {
+            Log.Info($"Add new app {nameof(ApplicationName.RDAP)}.");
+
+            var defaultList = ApplicationManager.GetDefaultList().ToList();
+
+            Current.General_ApplicationList.Insert(
+                Math.Min(defaultList.FindIndex(x => x.Name == ApplicationName.RDAP),
+                    Current.General_ApplicationList.Count),
+                defaultList.First(x => x.Name == ApplicationName.RDAP));
+        }
+
         // IP Scanner / Port Scanner - lower the default concurrency (see changelog for why).
         // Only applied if still at the old default, so a deliberately customized value is left alone.
         Log.Info("Lower IP Scanner / Port Scanner default concurrency, if still unchanged from the old default...");

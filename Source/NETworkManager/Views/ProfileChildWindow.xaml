@@ -38,6 +38,7 @@
         <converters:RemoteDesktopNetworkConnectionTypeToStringConverter
             x:Key="RemoteDesktopNetworkConnectionTypeToStringConverter" />
         <converters:ProfileNameToTranslatedStringConverter x:Key="ProfileNameToTranslatedStringConverter" />
+        <converters:RDAPQueryTypeToStringConverter x:Key="RDAPQueryTypeToStringConverter" />
         <converters:PuTTYLogModeToStringConverter x:Key="PuTTYLogModeToStringConverter" />
         <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" />
         <converters:StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter
@@ -1041,6 +1042,26 @@
                                                             <Setter Property="Visibility" Value="Visible" />
                                                         </MultiDataTrigger.Setters>
                                                     </MultiDataTrigger>
+                                                    <!-- RDAP -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding (profiles:ProfileViewInfo.Name)}"
+                                                                Value="{x:Static profiles:ProfileName.RDAP}" />
+                                                            <Condition
+                                                                Binding="{Binding Data.RDAP_Enabled, Source={StaticResource BindingProxy}}"
+                                                                Value="True" />
+                                                            <Condition
+                                                                Binding="{Binding Data.RDAP_InheritHost, Source={StaticResource BindingProxy}}"
+                                                                Value="False" />
+                                                            <Condition
+                                                                Binding="{Binding ElementName=TextBoxRDAPQuery, Path=(Validation.HasError)}"
+                                                                Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
                                                     <!-- Whois -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
@@ -1158,6 +1179,11 @@
                                                                  Value="{x:Static profiles:ProfileName.WakeOnLAN}">
                                                         <Setter Property="IsChecked"
                                                                 Value="{Binding DataContext.WakeOnLAN_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type simpleChildWindow:ChildWindow}}}" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}"
+                                                                 Value="{x:Static profiles:ProfileName.RDAP}">
+                                                        <Setter Property="IsChecked"
+                                                                Value="{Binding DataContext.RDAP_Enabled, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type simpleChildWindow:ChildWindow}}}" />
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding (profiles:ProfileViewInfo.Name)}"
                                                                  Value="{x:Static profiles:ProfileName.Whois}">
@@ -3952,6 +3978,88 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
+                <TabItem Header="{x:Static localization:Strings.RDAP}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel IsEnabled="{Binding RDAP_Enabled}">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0"
+                                           Text="{x:Static localization:Strings.InheritHostFromGeneral}" />
+                                <mah:ToggleSwitch Grid.Column="2" Grid.Row="0" OnContent="" OffContent=""
+                                                  IsOn="{Binding RDAP_InheritHost}" />
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Query}" />
+                                <TextBox x:Name="TextBoxRDAPQuery" Grid.Column="2" Grid.Row="2"
+                                         IsEnabled="{Binding RDAP_InheritHost, Converter={StaticResource BooleanReverseConverter}}"
+                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleDomain}">
+                                    <TextBox.Resources>
+                                        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                                    </TextBox.Resources>
+                                    <TextBox.Style>
+                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RDAP_InheritHost}" Value="True">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="Host" Mode="TwoWay"
+                                                                     UpdateSourceTrigger="PropertyChanged" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding RDAP_InheritHost}" Value="False">
+                                                    <Setter Property="TextBox.Text">
+                                                        <Setter.Value>
+                                                            <Binding Path="RDAP_Query" Mode="TwoWay"
+                                                                     UpdateSourceTrigger="PropertyChanged">
+                                                                <Binding.ValidationRules>
+                                                                    <validators:EmptyValidator
+                                                                        ValidatesOnTargetUpdated="True" />
+                                                                    <validators:RDAPQueryValidator
+                                                                        ValidatesOnTargetUpdated="True">
+                                                                        <validators:RDAPQueryValidator.Wrapper>
+                                                                            <validators:RDAPQueryDependencyObjectWrapper
+                                                                                QueryType="{Binding Data.RDAP_QueryType, Source={StaticResource BindingProxy}}" />
+                                                                        </validators:RDAPQueryValidator.Wrapper>
+                                                                    </validators:RDAPQueryValidator>
+                                                                </Binding.ValidationRules>
+                                                            </Binding>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBox.Style>
+                                </TextBox>
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Type}" />
+                                <ComboBox Grid.Column="2" Grid.Row="4"
+                                          ItemsSource="{Binding RDAP_QueryTypes}"
+                                          SelectedItem="{Binding RDAP_QueryType}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock
+                                                Text="{Binding Converter={StaticResource RDAPQueryTypeToStringConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
                 <TabItem Header="{x:Static localization:Strings.Whois}">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding Whois_Enabled}">
@@ -4634,6 +4742,19 @@
                                     <Condition Binding="{Binding Path=WakeOnLAN_Enabled}" Value="True" />
                                     <Condition
                                         Binding="{Binding ElementName=TextBoxWakeOnLanBroadcast, Path=(Validation.HasError)}"
+                                        Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- RDAP -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Path=RDAP_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding Path=RDAP_InheritHost}" Value="False" />
+                                    <Condition
+                                        Binding="{Binding ElementName=TextBoxRDAPQuery, Path=(Validation.HasError)}"
                                         Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>

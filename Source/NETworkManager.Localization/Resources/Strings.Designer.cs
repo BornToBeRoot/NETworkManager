@@ -393,6 +393,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Actor.
+        /// </summary>
+        public static string Actor {
+            get {
+                return ResourceManager.GetString("Actor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Add {
@@ -470,6 +479,15 @@ namespace NETworkManager.Localization.Resources {
         public static string AddATabToPerformATrace {
             get {
                 return ResourceManager.GetString("AddATabToPerformATrace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a tab to query RDAP....
+        /// </summary>
+        public static string AddATabToQueryRDAP {
+            get {
+                return ResourceManager.GetString("AddATabToQueryRDAP", resourceCulture);
             }
         }
         
@@ -672,6 +690,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string Address {
+            get {
+                return ResourceManager.GetString("Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add rule.
         /// </summary>
         public static string AddRule {
@@ -776,6 +803,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Advanced {
             get {
                 return ResourceManager.GetString("Advanced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Algorithm.
+        /// </summary>
+        public static string Algorithm {
+            get {
+                return ResourceManager.GetString("Algorithm", resourceCulture);
             }
         }
         
@@ -1019,6 +1055,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ApplicationName_PuTTY {
             get {
                 return ResourceManager.GetString("ApplicationName_PuTTY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RDAP.
+        /// </summary>
+        public static string ApplicationName_RDAP {
+            get {
+                return ResourceManager.GetString("ApplicationName_RDAP", resourceCulture);
             }
         }
         
@@ -1406,6 +1451,24 @@ namespace NETworkManager.Localization.Resources {
         public static string Blue {
             get {
                 return ResourceManager.GetString("Blue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bootstrap files.
+        /// </summary>
+        public static string BootstrapFiles {
+            get {
+                return ResourceManager.GetString("BootstrapFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The bootstrap files are up to date..
+        /// </summary>
+        public static string BootstrapFilesAreUpToDate {
+            get {
+                return ResourceManager.GetString("BootstrapFilesAreUpToDate", resourceCulture);
             }
         }
         
@@ -2071,6 +2134,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Conformance.
+        /// </summary>
+        public static string Conformance {
+            get {
+                return ResourceManager.GetString("Conformance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect.
         /// </summary>
         public static string Connect {
@@ -2220,6 +2292,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ContactOrContactMeViaX {
             get {
                 return ResourceManager.GetString("ContactOrContactMeViaX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contacts.
+        /// </summary>
+        public static string Contacts {
+            get {
+                return ResourceManager.GetString("Contacts", resourceCulture);
             }
         }
         
@@ -2647,6 +2728,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Credentials must be decrypted and loaded to manage them..
         /// </summary>
         public static string DecryptAndLoadCredentialsMessage {
@@ -2733,6 +2823,15 @@ namespace NETworkManager.Localization.Resources {
         public static string DefaultRegion {
             get {
                 return ResourceManager.GetString("DefaultRegion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delegation signed.
+        /// </summary>
+        public static string DelegationSigned {
+            get {
+                return ResourceManager.GetString("DelegationSigned", resourceCulture);
             }
         }
         
@@ -3146,6 +3245,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Digest.
+        /// </summary>
+        public static string Digest {
+            get {
+                return ResourceManager.GetString("Digest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Digest type.
+        /// </summary>
+        public static string DigestType {
+            get {
+                return ResourceManager.GetString("DigestType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Direction.
         /// </summary>
         public static string Direction {
@@ -3317,6 +3434,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DNSSEC.
+        /// </summary>
+        public static string DNSSEC {
+            get {
+                return ResourceManager.GetString("DNSSEC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DNS server.
         /// </summary>
         public static string DNSServer {
@@ -3403,6 +3529,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Download {
             get {
                 return ResourceManager.GetString("Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloaded.
+        /// </summary>
+        public static string Downloaded {
+            get {
+                return ResourceManager.GetString("Downloaded", resourceCulture);
             }
         }
         
@@ -3606,6 +3741,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Emerald.
         /// </summary>
         public static string Emerald {
@@ -3780,6 +3924,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a domain, IP address, AS number or entity handle to query RDAP....
+        /// </summary>
+        public static string EnterAQueryToQueryRDAPDots {
+            get {
+                return ResourceManager.GetString("EnterAQueryToQueryRDAPDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a subnet to calculate it....
         /// </summary>
         public static string EnterASubnetToCalculateItDots {
@@ -3852,6 +4005,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a valid AS number (e.g., "AS15169")!.
+        /// </summary>
+        public static string EnterValidASN {
+            get {
+                return ResourceManager.GetString("EnterValidASN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a valid baud!.
         /// </summary>
         public static string EnterValidBaud {
@@ -3866,6 +4028,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EnterValidDomain {
             get {
                 return ResourceManager.GetString("EnterValidDomain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid entity handle (e.g., "ORG-RIEN1-RIPE")!.
+        /// </summary>
+        public static string EnterValidEntityHandle {
+            get {
+                return ResourceManager.GetString("EnterValidEntityHandle", resourceCulture);
             }
         }
         
@@ -3956,6 +4127,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EnterValidIPAddress {
             get {
                 return ResourceManager.GetString("EnterValidIPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid IP address or CIDR (e.g., "192.0.2.0/24")!.
+        /// </summary>
+        public static string EnterValidIPAddressOrCIDR {
+            get {
+                return ResourceManager.GetString("EnterValidIPAddressOrCIDR", resourceCulture);
             }
         }
         
@@ -4059,6 +4239,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a valid top-level domain (e.g., "de")!.
+        /// </summary>
+        public static string EnterValidTLD {
+            get {
+                return ResourceManager.GetString("EnterValidTLD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a valid Windows username (e.g., &quot;user&quot;, &quot;DOMAIN\user&quot; or &quot;user@domain.com&quot;)!.
         /// </summary>
         public static string EnterValidUsername {
@@ -4145,6 +4334,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ErrorWhileScanningWiFiAdapterXXXWithErrorXXX {
             get {
                 return ResourceManager.GetString("ErrorWhileScanningWiFiAdapterXXXWithErrorXXX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Events.
+        /// </summary>
+        public static string Events {
+            get {
+                return ResourceManager.GetString("Events", resourceCulture);
             }
         }
         
@@ -4397,6 +4595,15 @@ namespace NETworkManager.Localization.Resources {
         public static string FailedToLoadHostsFileMessage {
             get {
                 return ResourceManager.GetString("FailedToLoadHostsFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fax.
+        /// </summary>
+        public static string Fax {
+            get {
+                return ResourceManager.GetString("Fax", resourceCulture);
             }
         }
         
@@ -4770,6 +4977,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Follow referral to registrar.
+        /// </summary>
+        public static string FollowReferralToRegistrar {
+            get {
+                return ResourceManager.GetString("FollowReferralToRegistrar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Font smoothing.
         /// </summary>
         public static string FontSmoothing {
@@ -4982,6 +5198,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Groups {
             get {
                 return ResourceManager.GetString("Groups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Handle.
+        /// </summary>
+        public static string Handle {
+            get {
+                return ResourceManager.GetString("Handle", resourceCulture);
             }
         }
         
@@ -5250,6 +5475,24 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_PuTTYUsername {
             get {
                 return ResourceManager.GetString("HelpMessage_PuTTYUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The IANA bootstrap files are used to find the RDAP server for a domain, IP address, AS number or entity. They are downloaded with the first query and refreshed automatically once a week..
+        /// </summary>
+        public static string HelpMessage_RDAPBootstrapFiles {
+            get {
+                return ResourceManager.GetString("HelpMessage_RDAPBootstrapFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to For many domains (e.g., .com and .net), the registry only returns basic data and refers to the RDAP server of the registrar for details. If enabled, the RDAP server of the registrar is queried as well..
+        /// </summary>
+        public static string HelpMessage_RDAPFollowReferral {
+            get {
+                return ResourceManager.GetString("HelpMessage_RDAPFollowReferral", resourceCulture);
             }
         }
         
@@ -6140,6 +6383,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Key tag.
+        /// </summary>
+        public static string KeyTag {
+            get {
+                return ResourceManager.GetString("KeyTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kilobits.
         /// </summary>
         public static string Kilobits {
@@ -6163,6 +6415,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last checked.
+        /// </summary>
+        public static string LastChecked {
+            get {
+                return ResourceManager.GetString("LastChecked", resourceCulture);
             }
         }
         
@@ -7067,6 +7328,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nameservers.
+        /// </summary>
+        public static string Nameservers {
+            get {
+                return ResourceManager.GetString("Nameservers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delay.
         /// </summary>
         public static string NeighborState_Delay {
@@ -7545,6 +7815,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notices.
+        /// </summary>
+        public static string Notices {
+            get {
+                return ResourceManager.GetString("Notices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display duration (seconds).
         /// </summary>
         public static string NotificationDurationInSeconds {
@@ -7667,6 +7946,15 @@ namespace NETworkManager.Localization.Resources {
         public static string NumberOfStoredEntries {
             get {
                 return ResourceManager.GetString("NumberOfStoredEntries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Object class.
+        /// </summary>
+        public static string ObjectClass {
+            get {
+                return ResourceManager.GetString("ObjectClass", resourceCulture);
             }
         }
         
@@ -7811,6 +8099,15 @@ namespace NETworkManager.Localization.Resources {
         public static string OpenHostsFile {
             get {
                 return ResourceManager.GetString("OpenHostsFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open in Whois.
+        /// </summary>
+        public static string OpenInWhois {
+            get {
+                return ResourceManager.GetString("OpenInWhois", resourceCulture);
             }
         }
         
@@ -8004,6 +8301,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parent handle.
+        /// </summary>
+        public static string ParentHandle {
+            get {
+                return ResourceManager.GetString("ParentHandle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parse.
         /// </summary>
         public static string Parse {
@@ -8121,6 +8427,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Phone.
+        /// </summary>
+        public static string Phone {
+            get {
+                return ResourceManager.GetString("Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phy kind.
         /// </summary>
         public static string PhyKind {
@@ -8225,6 +8540,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Port {
             get {
                 return ResourceManager.GetString("Port", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Port 43 (Whois).
+        /// </summary>
+        public static string Port43 {
+            get {
+                return ResourceManager.GetString("Port43", resourceCulture);
             }
         }
         
@@ -8662,6 +8986,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Publication.
+        /// </summary>
+        public static string Publication {
+            get {
+                return ResourceManager.GetString("Publication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Public IDs.
+        /// </summary>
+        public static string PublicIDs {
+            get {
+                return ResourceManager.GetString("PublicIDs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Public IP address check
         ///is disabled!.
         /// </summary>
@@ -8771,6 +9113,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Range.
+        /// </summary>
+        public static string Range {
+            get {
+                return ResourceManager.GetString("Range", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rate limit reached! Try again in {0} seconds....
         /// </summary>
         public static string RateLimitReachedTryAgainInXSeconds {
@@ -8785,6 +9136,195 @@ namespace NETworkManager.Localization.Resources {
         public static string RAW {
             get {
                 return ResourceManager.GetString("RAW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raw JSON.
+        /// </summary>
+        public static string RawJSON {
+            get {
+                return ResourceManager.GetString("RawJSON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RDAP.
+        /// </summary>
+        public static string RDAP {
+            get {
+                return ResourceManager.GetString("RDAP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The server could not process the query: {0}.
+        /// </summary>
+        public static string RDAPBadRequestX {
+            get {
+                return ResourceManager.GetString("RDAPBadRequestX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The IANA bootstrap files could not be downloaded: {0}.
+        /// </summary>
+        public static string RDAPBootstrapUnavailableX {
+            get {
+                return ResourceManager.GetString("RDAPBootstrapUnavailableX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The server returned an error: {0}.
+        /// </summary>
+        public static string RDAPHttpErrorX {
+            get {
+                return ResourceManager.GetString("RDAPHttpErrorX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The server redirected to an insecure URL, which was not followed: {0}.
+        /// </summary>
+        public static string RDAPInsecureRedirectX {
+            get {
+                return ResourceManager.GetString("RDAPInsecureRedirectX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The server returned an invalid response: {0}.
+        /// </summary>
+        public static string RDAPInvalidResponseX {
+            get {
+                return ResourceManager.GetString("RDAPInvalidResponseX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not connect to the RDAP server: {0}.
+        /// </summary>
+        public static string RDAPNetworkErrorX {
+            get {
+                return ResourceManager.GetString("RDAPNetworkErrorX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No RDAP server is known for "{0}". Entity handles can only be resolved if they end with a known service provider tag (e.g., "-RIPE" or "-ARIN")..
+        /// </summary>
+        public static string RDAPNoServerForEntityX {
+            get {
+                return ResourceManager.GetString("RDAPNoServerForEntityX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No RDAP server is known for "{0}". The registry may only provide Whois..
+        /// </summary>
+        public static string RDAPNoServerForX {
+            get {
+                return ResourceManager.GetString("RDAPNoServerForX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No data found for "{0}"..
+        /// </summary>
+        public static string RDAPNotFoundX {
+            get {
+                return ResourceManager.GetString("RDAPNotFoundX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The server does not support this query..
+        /// </summary>
+        public static string RDAPNotImplemented {
+            get {
+                return ResourceManager.GetString("RDAPNotImplemented", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ASN.
+        /// </summary>
+        public static string RDAPQueryType_ASN {
+            get {
+                return ResourceManager.GetString("RDAPQueryType_ASN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Domain.
+        /// </summary>
+        public static string RDAPQueryType_Domain {
+            get {
+                return ResourceManager.GetString("RDAPQueryType_Domain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entity.
+        /// </summary>
+        public static string RDAPQueryType_Entity {
+            get {
+                return ResourceManager.GetString("RDAPQueryType_Entity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IP address.
+        /// </summary>
+        public static string RDAPQueryType_IPAddress {
+            get {
+                return ResourceManager.GetString("RDAPQueryType_IPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TLD.
+        /// </summary>
+        public static string RDAPQueryType_TLD {
+            get {
+                return ResourceManager.GetString("RDAPQueryType_TLD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The server limits the number of queries. Try again later..
+        /// </summary>
+        public static string RDAPRateLimited {
+            get {
+                return ResourceManager.GetString("RDAPRateLimited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The server limits the number of queries. Try again in {0} seconds..
+        /// </summary>
+        public static string RDAPRateLimitedTryAgainInXSeconds {
+            get {
+                return ResourceManager.GetString("RDAPRateLimitedTryAgainInXSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The RDAP server of the registrar could not be queried: {0}.
+        /// </summary>
+        public static string RDAPReferralFailedX {
+            get {
+                return ResourceManager.GetString("RDAPReferralFailedX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Too many redirects..
+        /// </summary>
+        public static string RDAPTooManyRedirects {
+            get {
+                return ResourceManager.GetString("RDAPTooManyRedirects", resourceCulture);
             }
         }
         
@@ -8920,6 +9460,24 @@ namespace NETworkManager.Localization.Resources {
         public static string Region {
             get {
                 return ResourceManager.GetString("Region", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registrar.
+        /// </summary>
+        public static string Registrar {
+            get {
+                return ResourceManager.GetString("Registrar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registry.
+        /// </summary>
+        public static string Registry {
+            get {
+                return ResourceManager.GetString("Registry", resourceCulture);
             }
         }
         
@@ -10350,6 +10908,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Roles.
+        /// </summary>
+        public static string Roles {
+            get {
+                return ResourceManager.GetString("Roles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Round trip delay.
         /// </summary>
         public static string RoundTripDelay {
@@ -11079,6 +11646,15 @@ namespace NETworkManager.Localization.Resources {
         public static string SignalStrength {
             get {
                 return ResourceManager.GetString("SignalStrength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size.
+        /// </summary>
+        public static string Size {
+            get {
+                return ResourceManager.GetString("Size", resourceCulture);
             }
         }
         
@@ -12317,6 +12893,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update now.
+        /// </summary>
+        public static string UpdateNow {
+            get {
+                return ResourceManager.GetString("UpdateNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Upgraded to {0}.
         /// </summary>
         public static string UpgradedToXXX {
@@ -13077,5 +13662,23 @@ namespace NETworkManager.Localization.Resources {
                 return ResourceManager.GetString("ZipCode", resourceCulture);
             }
         }
+        /// <summary>
+        ///   Looks up a localized string similar to The referral to the RDAP server of the registrar was not followed, because it does not use a secure connection (HTTPS): {0}.
+        /// </summary>
+        public static string RDAPReferralInsecureX {
+            get {
+                return ResourceManager.GetString("RDAPReferralInsecureX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The referral to the RDAP server of the registrar was not followed, because it points to a local or private address: {0}.
+        /// </summary>
+        public static string RDAPReferralPrivateAddressX {
+            get {
+                return ResourceManager.GetString("RDAPReferralPrivateAddressX", resourceCulture);
+            }
+        }
+        
     }
 }

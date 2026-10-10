@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using log4net;
 using NETworkManager.Localization;
+using NETworkManager.Models.RDAP;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -207,6 +208,7 @@ public sealed class ImportProfilesResultViewModel : ViewModelBase
             new ImportApplicationToggleItem(ProfileName.TigerVNC),
             new ImportApplicationToggleItem(ProfileName.WebConsole),
             new ImportApplicationToggleItem(ProfileName.SNMP),
+            new ImportApplicationToggleItem(ProfileName.RDAP),
             new ImportApplicationToggleItem(ProfileName.Whois),
             new ImportApplicationToggleItem(ProfileName.IPGeolocation)
         ];
@@ -258,6 +260,13 @@ public sealed class ImportProfilesResultViewModel : ViewModelBase
             case ProfileName.SNMP:
                 profile.SNMP_Enabled = true;
                 profile.SNMP_Host = profile.Host;
+                break;
+            case ProfileName.RDAP:
+                profile.RDAP_Enabled = true;
+                profile.RDAP_Query = profile.Host;
+                profile.RDAP_QueryType = System.Net.IPAddress.TryParse(profile.Host, out _)
+                    ? RDAPQueryType.IPAddress
+                    : RDAPQueryType.Domain;
                 break;
             case ProfileName.Whois:
                 profile.Whois_Enabled = true;

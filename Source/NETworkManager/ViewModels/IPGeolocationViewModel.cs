@@ -350,7 +350,7 @@ public class IPGeolocationViewModel : ViewModelBase
         OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
 
         // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.Whois_DomainHistory.Add(x));
+        list.ForEach(x => SettingsManager.Current.IPGeolocation_HostHistory.Add(x));
     }
 
     #endregion

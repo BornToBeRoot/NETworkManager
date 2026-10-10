@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "publication": "2026-10-10T00:00:00Z",
+  "description": "RDAP servers of TLD registries that are not (yet) listed in the IANA DNS bootstrap file. Only add entries documented by the registry itself. Entries in the IANA bootstrap file always take precedence.",
+  "services": [
+    [
+      [ "de" ],
+      [ "https://rdap.denic.de/" ]
+    ],
+    [
+      [ "ch", "li" ],
+      [ "https://rdap.nic.ch/" ]
+    ],
+    [
+      [ "io" ],
+      [ "https://rdap.identitydigital.services/rdap/" ]
+    ]
+  ]
+}

@@ -29,5 +29,6 @@ public enum SettingsName
     SNTPLookup,
     Firewall,
     WakeOnLAN,
+    RDAP,
     BitCalculator,
 }

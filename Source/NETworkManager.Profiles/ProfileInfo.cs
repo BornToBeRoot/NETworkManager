@@ -3,6 +3,7 @@ using NETworkManager.Controls;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
+using NETworkManager.Models.RDAP;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using System.Security;
@@ -226,6 +227,12 @@ public class ProfileInfo
         WakeOnLAN_Enabled = profile.WakeOnLAN_Enabled;
         WakeOnLAN_MACAddress = profile.WakeOnLAN_MACAddress;
         WakeOnLAN_Broadcast = profile.WakeOnLAN_Broadcast;
+
+        // RDAP
+        RDAP_Enabled = profile.RDAP_Enabled;
+        RDAP_InheritHost = profile.RDAP_InheritHost;
+        RDAP_Query = profile.RDAP_Query;
+        RDAP_QueryType = profile.RDAP_QueryType;
 
         // Whois
         Whois_Enabled = profile.Whois_Enabled;
@@ -485,6 +492,11 @@ public class ProfileInfo
     public bool WakeOnLAN_Enabled { get; set; }
     public string WakeOnLAN_MACAddress { get; set; }
     public string WakeOnLAN_Broadcast { get; set; }
+
+    public bool RDAP_Enabled { get; set; }
+    public bool RDAP_InheritHost { get; set; } = true;
+    public string RDAP_Query { get; set; }
+    public RDAPQueryType RDAP_QueryType { get; set; } = GlobalStaticConfiguration.RDAP_QueryType;
 
     public bool Whois_Enabled { get; set; }
     public bool Whois_InheritHost { get; set; } = true;

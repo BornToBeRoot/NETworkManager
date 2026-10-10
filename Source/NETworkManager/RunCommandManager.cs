@@ -56,6 +56,7 @@ public static class RunCommandManager
                     ApplicationName.TigerVNC => true,
                     ApplicationName.WebConsole => true,
                     ApplicationName.SNMP => true,
+                    ApplicationName.RDAP => true,
                     ApplicationName.Whois => true,
                     _ => false
                 },
@@ -72,6 +73,7 @@ public static class RunCommandManager
                     ApplicationName.TigerVNC => DefaultArguments,
                     ApplicationName.WebConsole => "<https://borntoberoot.net>",
                     ApplicationName.SNMP => DefaultArguments,
+                    ApplicationName.RDAP => "<borntoberoot.net>",
                     ApplicationName.Whois => "<borntoberoot.net>",
                     _ => string.Empty
                 }
