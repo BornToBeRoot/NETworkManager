@@ -123,6 +123,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="0"
                            Style="{StaticResource HeaderTextBlock}"
@@ -147,6 +149,31 @@
                         </Style>
                     </TextBox.Style>
                 </TextBox>
+                <Button Grid.Column="0" Grid.Row="3"
+                        Command="{Binding Path=ExportCommand}"
+                        HorizontalAlignment="Right">
+                    <Button.Style>
+                        <Style TargetType="{x:Type TypeName=Button}"
+                               BasedOn="{StaticResource ResourceKey=ImageWithTextButton}" />
+                    </Button.Style>
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Grid.Column="0" Grid.Row="0"
+                                       Style="{StaticResource ResourceKey=ButtonWithImageRectangle}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=FileMoveOutline}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Grid.Row="0"
+                                       Text="{x:Static Member=localization:Strings.ExportDots}"
+                                       Style="{StaticResource ResourceKey=ButtonWithImageTextBlock}" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
             </Grid>
             <TextBlock Grid.Column="0" Grid.Row="2"
                        Foreground="{DynamicResource MahApps.Brushes.Gray3}"
