@@ -1,5 +1,5 @@
 ---
-sidebar_position: 27
+sidebar_position: 28
 description: "View and manage IP-to-MAC address mappings for both IPv4 (ARP) and IPv6 (NDP) with NETworkManager. Add or delete neighbor entries, filter by state, and inspect interface assignments."
 keywords: [NETworkManager, neighbor table, ARP table, NDP, IPv4, IPv6, ARP cache, NDP cache, IP to MAC, MAC address, address resolution, neighbor discovery]
 ---
