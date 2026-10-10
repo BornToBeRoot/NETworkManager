@@ -31,8 +31,10 @@
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>
-        <Style x:Key="RDAPSectionTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlock}">
-            <Setter Property="FontSize" Value="16" />
+        <converters:StringIsNotNullOrEmptyToVisibilityCollapsedConverter
+            x:Key="StringIsNotNullOrEmptyToVisibilityCollapsedConverter" />
+        <Style x:Key="RDAPSectionTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
             <Setter Property="Margin" Value="0,20,0,10" />
         </Style>
         <Style x:Key="RDAPDataGrid" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource DefaultDataGrid}">
@@ -46,19 +48,20 @@
         </Style>
         <DataTemplate x:Key="RDAPObjectTemplate" DataType="{x:Type viewModels:RDAPObjectViewModel}">
             <StackPanel Margin="0,0,0,20">
-                <TextBlock Text="{Binding Title}" Style="{StaticResource HeaderTextBlock}" />
+                <TextBlock Text="{Binding Title}" Style="{StaticResource HeaderTextBlock}"
+                           Visibility="{Binding Title, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
                 <!-- Details -->
                 <ItemsControl ItemsSource="{Binding Details}" Grid.IsSharedSizeScope="True">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type viewModels:RDAPDetailItem}">
-                            <Grid Margin="0,0,0,5">
+                            <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" SharedSizeGroup="RDAPDetailName" />
-                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="10" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="{Binding Name}"
-                                           Style="{StaticResource DefaultTextBlock}" VerticalAlignment="Top" />
+                                           Style="{StaticResource CenterTextBlock}" />
                                 <TextBox Grid.Column="2" Text="{Binding Value, Mode=OneWay}"
                                          Style="{StaticResource TextBlockAsTextBox}" TextWrapping="Wrap"
                                          ContextMenu="{StaticResource CopyContextMenu}" />
@@ -150,6 +153,7 @@
                                                TextWrapping="Wrap" />
                                     <TextBox Text="{Binding Description, Mode=OneWay}"
                                              Style="{StaticResource TextBlockAsTextBox}" TextWrapping="Wrap"
+                                             FontWeight="Normal"
                                              ContextMenu="{StaticResource CopyContextMenu}" />
                                     <ItemsControl ItemsSource="{Binding Links}">
                                         <ItemsControl.ItemTemplate>

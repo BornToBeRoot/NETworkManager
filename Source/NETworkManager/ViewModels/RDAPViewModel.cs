@@ -310,7 +310,8 @@ public class RDAPViewModel : ViewModelBase
 
             List<RDAPObjectViewModel> results =
             [
-                new(_result, _result.Referral == null ? Strings.Result : Strings.Registry)
+                // The "Result" header is already shown. Titles are only needed to tell registry and registrar apart.
+                new(_result, _result.Referral == null ? null : Strings.Registry)
             ];
 
             if (_result.Referral != null)

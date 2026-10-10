@@ -207,8 +207,8 @@ public class RDAPObjectViewModel
     {
         var text = new StringBuilder();
 
-        text.AppendLine($"# {Title}");
-        text.AppendLine();
+        if (!string.IsNullOrEmpty(Title))
+            text.AppendLine($"# {Title}").AppendLine();
 
         foreach (var detail in Details)
             text.AppendLine($"{detail.Name}: {detail.Value}");
