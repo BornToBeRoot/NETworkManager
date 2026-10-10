@@ -45,9 +45,10 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     private const string StealthEndpointsResource = "NETworkManager.Models.Resources.RDAPStealthEndpoints.json";
 
     /// <summary>
-    ///     Refresh interval if the server does not send caching headers. data.iana.org sends max-age=86400.
+    ///     Minimum interval for the automatic refresh. data.iana.org sends max-age=86400 (one day), but the files rarely
+    ///     change, so they are only checked once a week. "Update now" in the settings checks immediately.
     /// </summary>
-    private static readonly TimeSpan DefaultMaxAge = TimeSpan.FromDays(1);
+    private static readonly TimeSpan RefreshInterval = TimeSpan.FromDays(7);
 
     private readonly HttpClient _client;
     private readonly SemaphoreSlim _semaphore = new(1, 1);
@@ -363,7 +364,9 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
         using var response = await _client.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
         info.LastChecked = DateTime.Now;
-        info.Expires = DateTime.Now + GetMaxAge(response);
+        var maxAge = GetMaxAge(response);
+
+        info.Expires = DateTime.Now + (maxAge > RefreshInterval ? maxAge.Value : RefreshInterval);
 
         if (response.StatusCode == HttpStatusCode.NotModified && exists)
         {
@@ -452,9 +455,9 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     }
 
     /// <summary>
-    ///     Gets the cache lifetime from the Cache-Control or Expires header (RFC 9224 8).
+    ///     Gets the cache lifetime from the Cache-Control or Expires header (RFC 9224 8), or null if there is none.
     /// </summary>
-    private static TimeSpan GetMaxAge(HttpResponseMessage response)
+    private static TimeSpan? GetMaxAge(HttpResponseMessage response)
     {
         if (response.Headers.CacheControl?.MaxAge is { } maxAge && maxAge > TimeSpan.Zero)
             return maxAge;
@@ -462,7 +465,7 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
         if (response.Content.Headers.Expires is { } expires && expires > DateTimeOffset.Now)
             return expires - DateTimeOffset.Now;
 
-        return DefaultMaxAge;
+        return null;
     }
 
     private void LoadCacheInfos(string cacheDirectory)

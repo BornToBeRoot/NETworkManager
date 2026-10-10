@@ -4593,7 +4593,7 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
     <value>Handle</value>
   </data>
   <data name="HelpMessage_RDAPBootstrapFiles" xml:space="preserve">
-    <value>The IANA bootstrap files are used to find the RDAP server for a domain, IP address, AS number or entity. They are downloaded with the first query and refreshed automatically once a day.</value>
+    <value>The IANA bootstrap files are used to find the RDAP server for a domain, IP address, AS number or entity. They are downloaded with the first query and refreshed automatically once a week.</value>
   </data>
   <data name="HelpMessage_RDAPFollowReferral" xml:space="preserve">
     <value>For many domains (e.g., .com and .net), the registry only returns basic data and refers to the RDAP server of the registrar for details. If enabled, the RDAP server of the registrar is queried as well.</value>
