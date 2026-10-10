@@ -18,10 +18,17 @@
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.RDAP}" Style="{StaticResource HeaderTextBlock}" />
-        <TextBlock Text="{x:Static localization:Strings.BootstrapFiles}" Style="{DynamicResource DefaultTextBlock}"
-                   Margin="0,0,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.HelpMessage_RDAPBootstrapFiles}"
-                   Style="{StaticResource InfoTextBlock}" TextWrapping="Wrap" Margin="0,0,0,10" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="{x:Static localization:Strings.BootstrapFiles}"
+                       Style="{DynamicResource DefaultTextBlock}" />
+            <Rectangle Width="24" Height="24"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_RDAPBootstrapFiles}"
+                       Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
         <DataGrid ItemsSource="{Binding BootstrapFiles}" AutoGenerateColumns="False" IsReadOnly="True"
                   SelectionMode="Single" Margin="0,0,0,10">
             <DataGrid.Columns>
@@ -100,12 +107,19 @@
                    TextWrapping="Wrap"
                    Visibility="{Binding IsStatusMessageDisplayed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                    Margin="0,0,0,10" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.FollowReferralToRegistrar}"
-                          IsOn="{Binding FollowReferral}" Margin="0,10,0,10" />
-        <TextBlock Text="{x:Static localization:Strings.HelpMessage_RDAPFollowReferral}"
-                   Style="{StaticResource InfoTextBlock}" TextWrapping="Wrap" Margin="0,0,0,10" />
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
+            <mah:ToggleSwitch IsOn="{Binding FollowReferral}"
+                              Header="{x:Static localization:Strings.FollowReferralToRegistrar}" />
+            <Rectangle Width="24" Height="24" VerticalAlignment="Top"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_RDAPFollowReferral}"
+                       Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
         <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{DynamicResource DefaultTextBlock}"
-                   Margin="0,10,0,10" />
+                   Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Timeout}" Maximum="60000" Minimum="1000" Interval="1000" />
     </StackPanel>
 </UserControl>
