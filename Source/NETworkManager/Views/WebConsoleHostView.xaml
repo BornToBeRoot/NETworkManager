@@ -280,13 +280,12 @@
             </StackPanel.Style>
             <TextBlock Text="{x:Static localization:Strings.MicrosoftEdgeWebView2RuntimeIsNotAvailable}"
                        Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
-            <TextBlock Text="{x:Static localization:Strings.DownloadMicrosoftEdgeWebView2Runtime}"
-                       Style="{StaticResource LinkTextBlock}" Margin="0,0,0,5" HorizontalAlignment="Center">
-                <TextBlock.InputBindings>
-                    <MouseBinding Command="{Binding OpenWebsiteCommand}"
-                                  CommandParameter="{x:Static resources:Resources.MicrosoftEdgeWebView2Runtime_DownloadUrl}"
-                                  MouseAction="LeftClick" />
-                </TextBlock.InputBindings>
+            <TextBlock Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,5" HorizontalAlignment="Center">
+                <Hyperlink Command="{Binding OpenWebsiteCommand}"
+                           CommandParameter="{x:Static resources:Resources.MicrosoftEdgeWebView2Runtime_DownloadUrl}"
+                           Style="{StaticResource LinkHyperlink}">
+                    <Run Text="{x:Static localization:Strings.DownloadMicrosoftEdgeWebView2Runtime}" />
+                </Hyperlink>
             </TextBlock>
         </StackPanel>
     </Grid>

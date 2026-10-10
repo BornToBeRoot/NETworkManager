@@ -43,20 +43,6 @@
             <Setter Property="CanUserAddRows" Value="False" />
             <Setter Property="SelectionMode" Value="Extended" />
         </Style>
-        <!-- Keyboard accessible link (Tab + Enter), styled like LinkTextBlock -->
-        <Style x:Key="RDAPHyperlink" TargetType="{x:Type Hyperlink}">
-            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
-            <Setter Property="TextDecorations" Value="{x:Null}" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent2}" />
-                </Trigger>
-                <Trigger Property="IsKeyboardFocused" Value="True">
-                    <Setter Property="TextDecorations" Value="Underline" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
         <Style x:Key="RDAPWrapColumnStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
@@ -178,7 +164,7 @@
                                                         Command="{Binding Data.OpenUrlCommand, Source={StaticResource BindingProxy}}"
                                                         CommandParameter="{Binding Url}"
                                                         ToolTip="{Binding Url}"
-                                                        Style="{StaticResource RDAPHyperlink}">
+                                                        Style="{StaticResource LinkHyperlink}">
                                                         <Run Text="{Binding Text, Mode=OneWay}" />
                                                     </Hyperlink>
                                                 </TextBlock>
