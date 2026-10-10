@@ -6,6 +6,7 @@ using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
+using NETworkManager.Models.RDAP;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
 using NETworkManager.Utilities.ActiveDirectory;
@@ -3385,6 +3386,88 @@ public class SettingsInfo : INotifyPropertyChanged
 
     #endregion
 
+    #region RDAP
+
+    public ObservableCollection<string> RDAP_QueryHistory
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
+
+    public RDAPQueryType RDAP_QueryType
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.RDAP_QueryType;
+
+    public bool RDAP_FollowReferral
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.RDAP_FollowReferral;
+
+    public int RDAP_Timeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.RDAP_Timeout;
+
+    public string RDAP_ExportFilePath
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ExportFileType RDAP_ExportFileType
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.RDAP_ExportFileType;
+
+    #endregion
+
     #region Whois
 
     public ObservableCollection<string> Whois_DomainHistory
@@ -3972,6 +4055,9 @@ public class SettingsInfo : INotifyPropertyChanged
         // Wake on LAN
         WakeOnLan_MACAddressHistory.CollectionChanged += CollectionChanged;
         WakeOnLan_BroadcastHistory.CollectionChanged += CollectionChanged;
+
+        // RDAP
+        RDAP_QueryHistory.CollectionChanged += CollectionChanged;
 
         // Whois
         Whois_DomainHistory.CollectionChanged += CollectionChanged;

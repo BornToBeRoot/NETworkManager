@@ -10,6 +10,7 @@ public enum ResourceIdentifier
     ProfileName,
     ProfileGroup,
     PuTTYLogMode,
+    RDAPQueryType,
     RemoteDesktopAudioCaptureRedirectionMode,
     RemoteDesktopAudioRedirectionMode,
     RemoteDesktopGatewayServerLogonMethod,
