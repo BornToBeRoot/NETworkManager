@@ -261,6 +261,12 @@ public static class ProfileDialogManager
             WakeOnLAN_MACAddress = instance.WakeOnLAN_MACAddress?.Trim(),
             WakeOnLAN_Broadcast = instance.WakeOnLAN_Broadcast?.Trim(),
 
+            // RDAP
+            RDAP_Enabled = instance.RDAP_Enabled,
+            RDAP_InheritHost = instance.RDAP_InheritHost,
+            RDAP_Query = instance.RDAP_InheritHost ? instance.Host?.Trim() : instance.RDAP_Query?.Trim(),
+            RDAP_QueryType = instance.RDAP_QueryType,
+
             // Whois
             Whois_Enabled = instance.Whois_Enabled,
             Whois_InheritHost = instance.Whois_InheritHost,

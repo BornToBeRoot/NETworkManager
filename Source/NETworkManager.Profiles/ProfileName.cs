@@ -17,6 +17,7 @@ public enum ProfileName
     SNMP,
     Firewall,
     WakeOnLAN,
+    RDAP,
     Whois,
     IPGeolocation,
 }

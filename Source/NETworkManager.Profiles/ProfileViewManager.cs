@@ -56,6 +56,8 @@ public static class ProfileViewManager
         */
         new(ProfileName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN),
             ProfileGroup.Application),
+        new(ProfileName.RDAP, ApplicationManager.GetIcon(ApplicationName.RDAP),
+            ProfileGroup.Application),
         new(ProfileName.Whois, ApplicationManager.GetIcon(ApplicationName.Whois),
             ProfileGroup.Application),
         new(ProfileName.IPGeolocation, ApplicationManager.GetIcon(ApplicationName.IPGeolocation),
