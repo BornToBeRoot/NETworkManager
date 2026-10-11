@@ -316,7 +316,7 @@
     <value>Konfiguration angewendet</value>
   </data>
   <data name="NetworkInterfaceConfigureAdminMessage" xml:space="preserve">
-    <value>Konfiguration von Netzwerkschnittstellen erfordert erhöhte Rechte!</value>
+    <value>Konfiguration von Netzwerkschnittstellen erfordert erhöhte Rechte (Administrator oder Mitglied der Gruppe „Netzwerkkonfigurations-Operatoren“)!</value>
   </data>
   <data name="NewTab" xml:space="preserve">
     <value>Neuer Tab</value>
@@ -4498,5 +4498,209 @@ Cloudflare speichert möglicherweise Ihre IP-Adresse und Netzwerkinformationen. 
   </data>
   <data name="NotSet" xml:space="preserve">
     <value>Nicht gesetzt</value>
+  </data>
+  <data name="RDAP" xml:space="preserve">
+    <value>RDAP</value>
+  </data>
+  <data name="ApplicationName_RDAP" xml:space="preserve">
+    <value>RDAP</value>
+  </data>
+  <data name="RDAPQueryType_Domain" xml:space="preserve">
+    <value>Domäne</value>
+  </data>
+  <data name="RDAPQueryType_TLD" xml:space="preserve">
+    <value>TLD</value>
+  </data>
+  <data name="RDAPQueryType_IPAddress" xml:space="preserve">
+    <value>IP-Adresse</value>
+  </data>
+  <data name="RDAPQueryType_ASN" xml:space="preserve">
+    <value>ASN</value>
+  </data>
+  <data name="RDAPQueryType_Entity" xml:space="preserve">
+    <value>Entität</value>
+  </data>
+  <data name="AddATabToQueryRDAP" xml:space="preserve">
+    <value>Füge eine Registerkarte hinzu, um eine RDAP-Abfrage durchzuführen...</value>
+  </data>
+  <data name="EnterAQueryToQueryRDAPDots" xml:space="preserve">
+    <value>Geben Sie eine Domain, IP-Adresse, AS-Nummer oder ein Entity-Handle zur RDAP-Abfrage ein...</value>
+  </data>
+  <data name="Actor" xml:space="preserve">
+    <value>Akteur</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Adresse</value>
+  </data>
+  <data name="Algorithm" xml:space="preserve">
+    <value>Algorithmus</value>
+  </data>
+  <data name="BootstrapFiles" xml:space="preserve">
+    <value>Bootstrap-Dateien</value>
+  </data>
+  <data name="BootstrapFilesAreUpToDate" xml:space="preserve">
+    <value>Die Bootstrap-Dateien sind auf dem neuesten Stand.</value>
+  </data>
+  <data name="Conformance" xml:space="preserve">
+    <value>Konformität</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Kontakte</value>
+  </data>
+  <data name="DNSSEC" xml:space="preserve">
+    <value>DNSSEC</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Datum</value>
+  </data>
+  <data name="DelegationSigned" xml:space="preserve">
+    <value>Delegation signiert</value>
+  </data>
+  <data name="Digest" xml:space="preserve">
+    <value>Digest</value>
+  </data>
+  <data name="DigestType" xml:space="preserve">
+    <value>Digest-Typ</value>
+  </data>
+  <data name="Downloaded" xml:space="preserve">
+    <value>Heruntergeladen</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-Mail</value>
+  </data>
+  <data name="EnterValidASN" xml:space="preserve">
+    <value>Geben Sie eine gültige AS-Nummer ein (z. B. "AS15169")!</value>
+  </data>
+  <data name="EnterValidEntityHandle" xml:space="preserve">
+    <value>Geben Sie ein gültiges Entity-Handle ein (z. B. "ORG-RIEN1-RIPE")!</value>
+  </data>
+  <data name="EnterValidIPAddressOrCIDR" xml:space="preserve">
+    <value>Geben Sie eine gültige IP-Adresse oder CIDR ein (z. B. "192.0.2.0/24")!</value>
+  </data>
+  <data name="EnterValidTLD" xml:space="preserve">
+    <value>Geben Sie eine gültige Top-Level-Domain ein (z. B. "de")!</value>
+  </data>
+  <data name="Events" xml:space="preserve">
+    <value>Ereignisse</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="FollowReferralToRegistrar" xml:space="preserve">
+    <value>Verweis zum Registrar folgen</value>
+  </data>
+  <data name="Handle" xml:space="preserve">
+    <value>Handle</value>
+  </data>
+  <data name="HelpMessage_RDAPBootstrapFiles" xml:space="preserve">
+    <value>Die IANA-Bootstrap-Dateien werden verwendet, um den RDAP-Server für eine Domain, IP-Adresse, AS-Nummer oder Entität zu ermitteln. Sie werden bei der ersten Abfrage heruntergeladen und einmal pro Woche automatisch aktualisiert.</value>
+  </data>
+  <data name="HelpMessage_RDAPFollowReferral" xml:space="preserve">
+    <value>Bei vielen Domains (z. B. .com und .net) liefert die Registry nur Basisdaten und verweist für Details auf den RDAP-Server des Registrars. Wenn aktiviert, wird zusätzlich der RDAP-Server des Registrars abgefragt.</value>
+  </data>
+  <data name="KeyTag" xml:space="preserve">
+    <value>Key-Tag</value>
+  </data>
+  <data name="LastChecked" xml:space="preserve">
+    <value>Zuletzt geprüft</value>
+  </data>
+  <data name="Nameservers" xml:space="preserve">
+    <value>Nameserver</value>
+  </data>
+  <data name="Notices" xml:space="preserve">
+    <value>Hinweise</value>
+  </data>
+  <data name="ObjectClass" xml:space="preserve">
+    <value>Objektklasse</value>
+  </data>
+  <data name="OpenInWhois" xml:space="preserve">
+    <value>In Whois öffnen</value>
+  </data>
+  <data name="ParentHandle" xml:space="preserve">
+    <value>Übergeordnetes Handle</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="Port43" xml:space="preserve">
+    <value>Port 43 (Whois)</value>
+  </data>
+  <data name="PublicIDs" xml:space="preserve">
+    <value>Öffentliche IDs</value>
+  </data>
+  <data name="Publication" xml:space="preserve">
+    <value>Veröffentlicht</value>
+  </data>
+  <data name="RDAPBadRequestX" xml:space="preserve">
+    <value>Der Server konnte die Abfrage nicht verarbeiten: {0}</value>
+  </data>
+  <data name="RDAPBootstrapUnavailableX" xml:space="preserve">
+    <value>Die IANA-Bootstrap-Dateien konnten nicht heruntergeladen werden: {0}</value>
+  </data>
+  <data name="RDAPHttpErrorX" xml:space="preserve">
+    <value>Der Server hat einen Fehler zurückgegeben: {0}</value>
+  </data>
+  <data name="RDAPInsecureRedirectX" xml:space="preserve">
+    <value>Der Server hat auf eine unsichere URL weitergeleitet, der nicht gefolgt wurde: {0}</value>
+  </data>
+  <data name="RDAPInvalidResponseX" xml:space="preserve">
+    <value>Der Server hat eine ungültige Antwort zurückgegeben: {0}</value>
+  </data>
+  <data name="RDAPNetworkErrorX" xml:space="preserve">
+    <value>Verbindung zum RDAP-Server fehlgeschlagen: {0}</value>
+  </data>
+  <data name="RDAPNoServerForX" xml:space="preserve">
+    <value>Für "{0}" ist kein RDAP-Server bekannt. Die Registry stellt möglicherweise nur Whois bereit.</value>
+  </data>
+  <data name="RDAPNoServerForEntityX" xml:space="preserve">
+    <value>Für "{0}" ist kein RDAP-Server bekannt. Entity-Handles können nur aufgelöst werden, wenn sie mit der Kennung eines bekannten Anbieters enden (z. B. "-RIPE" oder "-ARIN").</value>
+  </data>
+  <data name="RDAPNotFoundX" xml:space="preserve">
+    <value>Für "{0}" wurden keine Daten gefunden.</value>
+  </data>
+  <data name="RDAPNotImplemented" xml:space="preserve">
+    <value>Der Server unterstützt diese Abfrage nicht.</value>
+  </data>
+  <data name="RDAPRateLimited" xml:space="preserve">
+    <value>Der Server begrenzt die Anzahl der Abfragen. Versuchen Sie es später erneut.</value>
+  </data>
+  <data name="RDAPRateLimitedTryAgainInXSeconds" xml:space="preserve">
+    <value>Der Server begrenzt die Anzahl der Abfragen. Versuchen Sie es in {0} Sekunden erneut.</value>
+  </data>
+  <data name="RDAPReferralFailedX" xml:space="preserve">
+    <value>Der RDAP-Server des Registrars konnte nicht abgefragt werden: {0}</value>
+  </data>
+  <data name="RDAPTooManyRedirects" xml:space="preserve">
+    <value>Zu viele Weiterleitungen.</value>
+  </data>
+  <data name="Range" xml:space="preserve">
+    <value>Bereich</value>
+  </data>
+  <data name="RawJSON" xml:space="preserve">
+    <value>Raw JSON</value>
+  </data>
+  <data name="Registrar" xml:space="preserve">
+    <value>Registrar</value>
+  </data>
+  <data name="Registry" xml:space="preserve">
+    <value>Registry</value>
+  </data>
+  <data name="Roles" xml:space="preserve">
+    <value>Rollen</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Größe</value>
+  </data>
+  <data name="UpdateNow" xml:space="preserve">
+    <value>Jetzt aktualisieren</value>
+  </data>
+  <data name="RDAPReferralInsecureX" xml:space="preserve">
+    <value>Dem Verweis auf den RDAP-Server des Registrars wurde nicht gefolgt, da er keine sichere Verbindung (HTTPS) verwendet: {0}</value>
+  </data>
+  <data name="RDAPReferralPrivateAddressX" xml:space="preserve">
+    <value>Dem Verweis auf den RDAP-Server des Registrars wurde nicht gefolgt, da er auf eine lokale oder private Adresse zeigt: {0}</value>
+  </data>
+  <data name="DomainCannotBeQueriedViaRDAPTryWhois" xml:space="preserve">
+    <value>Diese Domain kann nicht per RDAP abgefragt werden. Versuchen Sie es stattdessen mit Whois.</value>
   </data>
 </root>
