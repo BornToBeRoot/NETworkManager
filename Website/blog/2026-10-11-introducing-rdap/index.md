@@ -19,7 +19,7 @@ RDAP is the standardized successor of Whois ([RFC 7480](https://www.rfc-editor.o
 
 | | Whois | RDAP |
 | --- | --- | --- |
-| **Transport** | Plain text over TCP port 43 | HTTPS |
+| **Transport** | Plain text over TCP port 43 | HTTPS over TCP port 443 (a few registries still only offer HTTP) |
 | **Response format** | Free text, different for every registry | Standardized JSON |
 | **Finding the server** | Hard-coded list of servers per TLD | Official IANA bootstrap files |
 | **Lookups** | Mainly domains | Domains, IP addresses/networks, AS numbers, entities |
@@ -56,7 +56,7 @@ If you need everything the server sent, switch to **Raw JSON**. Results can be e
 You don't need to know which server is responsible for a query - NETworkManager finds it for you:
 
 1. **Bootstrap**: IANA publishes bootstrap files that map TLDs, IP ranges, AS numbers and entity tags to the responsible RDAP servers. NETworkManager downloads them with the first query, caches them locally and checks for updates once a week. You can see their status and update them manually in **Settings > RDAP**.
-2. **Query**: The query is sent to the responsible registry via HTTPS. Redirects between registries (e.g. from ARIN to RIPE NCC) are followed automatically.
+2. **Query**: The query is sent to the responsible registry - via HTTPS, plain HTTP is only used if a registry offers nothing else. Redirects between registries (e.g. from ARIN to RIPE NCC) are followed automatically.
 3. **Referral**: For many domains (e.g. `.com` and `.net`), the registry only returns basic data and refers to the RDAP server of the registrar for the details. NETworkManager follows this referral and shows both results - registry and registrar - one below the other. You can disable this in the settings.
 
 A few details make the tool work in places where a plain bootstrap lookup would fail:
