@@ -13663,6 +13663,15 @@ namespace NETworkManager.Localization.Resources {
             }
         }
         /// <summary>
+        ///   Looks up a localized string similar to This domain cannot be queried via RDAP. Try Whois instead..
+        /// </summary>
+        public static string DomainCannotBeQueriedViaRDAPTryWhois {
+            get {
+                return ResourceManager.GetString("DomainCannotBeQueriedViaRDAPTryWhois", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The referral to the RDAP server of the registrar was not followed, because it does not use a secure connection (HTTPS): {0}.
         /// </summary>
         public static string RDAPReferralInsecureX {

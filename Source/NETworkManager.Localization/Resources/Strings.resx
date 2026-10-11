@@ -4700,4 +4700,7 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
   <data name="RDAPReferralPrivateAddressX" xml:space="preserve">
     <value>The referral to the RDAP server of the registrar was not followed, because it points to a local or private address: {0}</value>
   </data>
+  <data name="DomainCannotBeQueriedViaRDAPTryWhois" xml:space="preserve">
+    <value>This domain cannot be queried via RDAP. Try Whois instead.</value>
+  </data>
 </root>
