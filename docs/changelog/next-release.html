@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.9d036de8.css">
-<script src="/NETworkManager/assets/js/runtime~main.7882b133.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.ef762dd6.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.b55fa785.js" defer="defer"></script>
 </head>
 <body>
@@ -45,8 +45,14 @@ Release date: <strong>xx.xx.2026</strong></p>
 <li class=""><strong>DNS server(s)</strong> in <a class="" href="/NETworkManager/docs/settings/network">Settings &gt; Network</a> is now a list of servers (IP address + port), configured via an <strong>Edit DNS server</strong> dialog, replacing the previous single semicolon-separated, port-53-only text field. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3591" target="_blank" rel="noopener noreferrer" class="">#3591</a></li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="improvements">Improvements<a href="#improvements" class="hash-link" aria-label="Direct link to Improvements" title="Direct link to Improvements" translate="no">​</a></h2>
+<p><strong>Network Interface</strong></p>
 <ul>
-<li class="">The collapsed/expanded state of profile groups (e.g. <strong>linux-server</strong>) is now remembered per profile file and shared across all tools, instead of resetting every time you switch tools or restart the application. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3539" target="_blank" rel="noopener noreferrer" class="">#3539</a></li>
+<li class="">
+<p>Members of the <strong>Network Configuration Operators</strong> group can now change the network configuration (IP address, DNS servers, release/renew) without being an administrator. NETworkManager has to run elevated (<strong>Restart as Administrator</strong>, confirm with your own credentials). The hint is now also shown as tooltip on <strong>Apply</strong> in the profile context menu. <a href="https://github.com/BornToBeRoot/NETworkManager/issues/3606" target="_blank" rel="noopener noreferrer" class="">#3606</a></p>
+</li>
+<li class="">
+<p>The collapsed/expanded state of profile groups (e.g. <strong>linux-server</strong>) is now remembered per profile file and shared across all tools, instead of resetting every time you switch tools or restart the application. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3539" target="_blank" rel="noopener noreferrer" class="">#3539</a></p>
+</li>
 </ul>
 <p><strong>IP Scanner</strong></p>
 <ul>
@@ -76,6 +82,10 @@ Release date: <strong>xx.xx.2026</strong></p>
 <li class="">Host input now supports shorthand IPv4 ranges like <code>192.168.0.1-100</code>, in addition to the existing <code>192.168.0.0-192.168.0.100</code> and <code>192.168.[0-100].1</code> range formats. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3568" target="_blank" rel="noopener noreferrer" class="">#3568</a></li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="bug-fixes">Bug Fixes<a href="#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes" translate="no">​</a></h2>
+<p><strong>Network Interface</strong></p>
+<ul>
+<li class="">Fixed errors when changing the network configuration (e.g. missing permissions) not being shown — the change was reported as successful although it failed. The error message of Windows is now shown. <a href="https://github.com/BornToBeRoot/NETworkManager/issues/3606" target="_blank" rel="noopener noreferrer" class="">#3606</a></li>
+</ul>
 <p><strong>Dashboard</strong></p>
 <ul>
 <li class="">Fixed the <strong>Network Connection</strong> widget running a full connection check on every application startup, even if the Status Window or Dashboard was never opened. It now only checks when actually shown - via the tray icon, on a network change, or when the Dashboard tab is opened. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3553" target="_blank" rel="noopener noreferrer" class="">#3553</a></li>
