@@ -79,7 +79,11 @@ The options you can set correspond to the network adapter properties `Internetpr
 
 :::note
 
-All actions on this tab require the application to be running with **administrator privileges**. If the app is not elevated, a banner is shown at the bottom with a **Restart as Administrator** button.
+All actions on this tab (and **Apply** from the profile context menu) require the application to be running elevated, either with **administrator privileges** or as a member of the **Network Configuration Operators** group. If the app is not elevated, a banner is shown at the bottom with a **Restart as Administrator** button.
+
+Members of the **Network Configuration Operators** group don't need to be administrators: with User Account Control, the group is only active in an elevated process. Use **Restart as Administrator** and confirm the prompt with your own credentials.
+
+If a change fails (e.g. due to missing permissions), the error message of Windows is shown below the configuration.
 
 :::
 

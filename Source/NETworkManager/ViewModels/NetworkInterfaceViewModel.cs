@@ -61,6 +61,12 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     }
 
     /// <summary>
+    /// Gets a value indicating whether the application has the permission to change the network configuration
+    /// (running as administrator or as member of the "Network Configuration Operators" group).
+    /// </summary>
+    public bool HasPermissionToConfigure { get; } = NetworkInterface.HasPermissionToConfigure();
+
+    /// <summary>
     /// Gets or sets a value indicating whether configuration is allowed.
     /// </summary>
     public bool CanConfigure
@@ -846,7 +852,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                !ConfigurationManager.Current.IsChildWindowOpen;
     }
 
-    private bool ConfigureCommands_CanExecute(object parameter) => ConfigurationManager.Current.IsAdmin &&
+    private bool ConfigureCommands_CanExecute(object parameter) => HasPermissionToConfigure &&
                                                                    Application.Current.MainWindow != null &&
                                                                    !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
                                                                    !ConfigurationManager.Current.IsChildWindowOpen;

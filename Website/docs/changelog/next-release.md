@@ -36,6 +36,10 @@ Release date: **xx.xx.2026**
 
 ## Improvements
 
+**Network Interface**
+
+- Members of the **Network Configuration Operators** group can now change the network configuration (IP address, DNS servers, release/renew) without being an administrator. NETworkManager has to run elevated (**Restart as Administrator**, confirm with your own credentials). The hint is now also shown as tooltip on **Apply** in the profile context menu. [#3606](https://github.com/BornToBeRoot/NETworkManager/issues/3606)
+
 - The collapsed/expanded state of profile groups (e.g. **linux-server**) is now remembered per profile file and shared across all tools, instead of resetting every time you switch tools or restart the application. [#3539](https://github.com/BornToBeRoot/NETworkManager/pull/3539)
 
 **IP Scanner**
@@ -66,6 +70,10 @@ Release date: **xx.xx.2026**
 - Host input now supports shorthand IPv4 ranges like `192.168.0.1-100`, in addition to the existing `192.168.0.0-192.168.0.100` and `192.168.[0-100].1` range formats. [#3568](https://github.com/BornToBeRoot/NETworkManager/pull/3568)
 
 ## Bug Fixes
+
+**Network Interface**
+
+- Fixed errors when changing the network configuration (e.g. missing permissions) not being shown — the change was reported as successful although it failed. The error message of Windows is now shown. [#3606](https://github.com/BornToBeRoot/NETworkManager/issues/3606)
 
 **Dashboard**
 
