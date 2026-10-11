@@ -4,10 +4,71 @@
         <title>NETworkManager Blog</title>
         <link>https://borntoberoot.net/NETworkManager/blog</link>
         <description>NETworkManager Blog</description>
-        <lastBuildDate>Mon, 18 May 2026 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 11 Oct 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Introducing RDAP]]></title>
+            <link>https://borntoberoot.net/NETworkManager/blog/introducing-rdap</link>
+            <guid>https://borntoberoot.net/NETworkManager/blog/introducing-rdap</guid>
+            <pubDate>Sun, 11 Oct 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[NETworkManager introduces RDAP, the modern successor of Whois. Look up registration data for domains, IP addresses, AS numbers and entities - structured, over HTTPS and with the right server found automatically.]]></description>
+            <content:encoded><![CDATA[<p>NETworkManager introduces a new tool, <code>RDAP</code>. With the <strong>Registration Data Access Protocol</strong> you can look up who a domain, an IP address, an AS number or an organization is registered to - with structured results, over HTTPS, and without having to know which server to ask.</p>
+<p><img decoding="async" loading="lazy" alt="RDAP" src="https://borntoberoot.net/NETworkManager/assets/images/rdap-e61eed7dec2c70ba91e1dcd7d3d61320.png" width="1024" height="768" class="img_ev3q"></p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-is-rdap">What is RDAP?<a href="https://borntoberoot.net/NETworkManager/blog/introducing-rdap#what-is-rdap" class="hash-link" aria-label="Direct link to What is RDAP?" title="Direct link to What is RDAP?" translate="no">​</a></h2>
+<p>RDAP is the standardized successor of Whois (<a href="https://www.rfc-editor.org/rfc/rfc7480" target="_blank" rel="noopener noreferrer" class="">RFC 7480</a>, <a href="https://www.rfc-editor.org/rfc/rfc9082" target="_blank" rel="noopener noreferrer" class="">RFC 9082</a>, <a href="https://www.rfc-editor.org/rfc/rfc9083" target="_blank" rel="noopener noreferrer" class="">RFC 9083</a>, <a href="https://www.rfc-editor.org/rfc/rfc9224" target="_blank" rel="noopener noreferrer" class="">RFC 9224</a>). It answers the same questions as Whois - who registered this domain, which organization owns this IP range, which network is behind this AS number - but fixes most of its shortcomings:</p>
+<table><thead><tr><th></th><th>Whois</th><th>RDAP</th></tr></thead><tbody><tr><td><strong>Transport</strong></td><td>Plain text over TCP port 43</td><td>HTTPS over TCP port 443 (a few registries still only offer HTTP)</td></tr><tr><td><strong>Response format</strong></td><td>Free text, different for every registry</td><td>Standardized JSON</td></tr><tr><td><strong>Finding the server</strong></td><td>Hard-coded list of servers per TLD</td><td>Official IANA bootstrap files</td></tr><tr><td><strong>Lookups</strong></td><td>Mainly domains</td><td>Domains, IP addresses/networks, AS numbers, entities</td></tr><tr><td><strong>Internationalized domain names</strong></td><td>Inconsistent</td><td>Supported</td></tr></tbody></table>
+<p>RDAP is mandatory for all generic top-level domains (e.g. <code>.com</code>, <code>.net</code>, <code>.org</code>) and is provided by all five Regional Internet Registries (ARIN, RIPE NCC, APNIC, LACNIC, AFRINIC). Since January 2025, gTLD registries and registrars are no longer required to operate Whois at all - RDAP is the way forward.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="what-you-can-do-with-it">What you can do with it<a href="https://borntoberoot.net/NETworkManager/blog/introducing-rdap#what-you-can-do-with-it" class="hash-link" aria-label="Direct link to What you can do with it" title="Direct link to What you can do with it" translate="no">​</a></h2>
+<p>Pick a type, enter a query and press <strong>Query</strong>:</p>
+<table><thead><tr><th>Type</th><th>Example</th><th>Description</th></tr></thead><tbody><tr><td><strong>Domain</strong></td><td><code>borntoberoot.net</code></td><td>Registration data of a domain from its registry</td></tr><tr><td><strong>TLD</strong></td><td><code>de</code></td><td>Delegation of a top-level domain from the IANA root zone</td></tr><tr><td><strong>IP address</strong></td><td><code>1.1.1.1</code> or <code>2001:db8::/32</code></td><td>Network an IP address or CIDR prefix belongs to</td></tr><tr><td><strong>ASN</strong></td><td><code>AS13335</code></td><td>Autonomous system - <code>13335</code>, <code>AS13335</code> and asdot (<code>1.10</code>) work</td></tr><tr><td><strong>Entity</strong></td><td><code>ORG-RIEN1-RIPE</code></td><td>An organization or contact, by its handle</td></tr></tbody></table>
+<p>The input is validated while you type, depending on the selected type.</p>
+<p>The result is shown in a structured view:</p>
+<ul>
+<li class=""><strong>Details</strong> like handle, name, address range, country, status and DNSSEC</li>
+<li class=""><strong>Events</strong> such as registration, expiration and last change</li>
+<li class=""><strong>Nameservers</strong> including their IP addresses</li>
+<li class=""><strong>Contacts</strong> with roles, name, organization, email, phone and address</li>
+<li class=""><strong>Notices</strong> with links to the terms of service, privacy policy or the form to report inaccurate data</li>
+</ul>
+<p>If you need everything the server sent, switch to <strong>Raw JSON</strong>. Results can be exported as <strong>JSON</strong> (exactly as returned by the server) or as <strong>text</strong>, via the <strong>Export...</strong> button or the context menu.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="how-it-works">How it works<a href="https://borntoberoot.net/NETworkManager/blog/introducing-rdap#how-it-works" class="hash-link" aria-label="Direct link to How it works" title="Direct link to How it works" translate="no">​</a></h2>
+<p>You don't need to know which server is responsible for a query - NETworkManager finds it for you:</p>
+<ol>
+<li class=""><strong>Bootstrap</strong>: IANA publishes bootstrap files that map TLDs, IP ranges, AS numbers and entity tags to the responsible RDAP servers. NETworkManager downloads them with the first query, caches them locally and checks for updates once a week. You can see their status and update them manually in <strong>Settings &gt; RDAP</strong>.</li>
+<li class=""><strong>Query</strong>: The query is sent to the responsible registry - via HTTPS, plain HTTP is only used if a registry offers nothing else. Redirects between registries (e.g. from ARIN to RIPE NCC) are followed automatically.</li>
+<li class=""><strong>Referral</strong>: For many domains (e.g. <code>.com</code> and <code>.net</code>), the registry only returns basic data and refers to the RDAP server of the registrar for the details. NETworkManager follows this referral and shows both results - registry and registrar - one below the other. You can disable this in the settings.</li>
+</ol>
+<p>A few details make the tool work in places where a plain bootstrap lookup would fail:</p>
+<ul>
+<li class="">Some registries run an RDAP server that is not (yet) listed by IANA, for example <code>.de</code>, <code>.ch</code>, <code>.li</code> and <code>.io</code>. These are included in NETworkManager, so you get results for them as well.</li>
+<li class="">Private and reserved IP addresses like <code>10.0.0.1</code> or <code>fe80::1</code> return the IANA reservation instead of an error.</li>
+<li class="">If <code>data.iana.org</code> cannot be reached (e.g. in a restricted network), the cached files are used and the update is retried later.</li>
+</ul>
+<p>Like the other tools, RDAP supports <strong>profiles</strong>: store a query and its type in a profile and run it from the profile panel with a double-click.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="rdap-and-whois">RDAP and Whois<a href="https://borntoberoot.net/NETworkManager/blog/introducing-rdap#rdap-and-whois" class="hash-link" aria-label="Direct link to RDAP and Whois" title="Direct link to RDAP and Whois" translate="no">​</a></h2>
+<p>Not every registry offers RDAP yet. Many country code top-level domains (e.g. <code>.ru</code>, <code>.jp</code> or <code>.it</code>) still only provide Whois. If no RDAP server is known for a domain, NETworkManager tells you so and offers to open the domain in the <strong>Whois</strong> tool with a single click.</p>
+<p>Keep in mind that RDAP does not unlock any data that Whois hides: registration data of personal contacts is usually redacted for privacy reasons (GDPR), with both protocols.</p>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="why-its-useful">Why it's useful<a href="https://borntoberoot.net/NETworkManager/blog/introducing-rdap#why-its-useful" class="hash-link" aria-label="Direct link to Why it's useful" title="Direct link to Why it's useful" translate="no">​</a></h2>
+<ul>
+<li class=""><strong>Find the owner of an IP address or network</strong> - e.g. when analyzing logs, firewall hits or abuse reports - including the abuse contact of the responsible organization.</li>
+<li class=""><strong>Check domains</strong>: registrar, status (e.g. transfer locks), expiration date, nameservers and DNSSEC in one view.</li>
+<li class=""><strong>Look up AS numbers</strong> to see which organization operates a network, e.g. when troubleshooting routing or peering.</li>
+<li class=""><strong>One tool for all registries</strong>: no need to know whether an address belongs to ARIN, RIPE NCC or APNIC, or which registrar manages a domain.</li>
+<li class=""><strong>Structured and exportable</strong>: copy single values or export the full JSON for documentation and further processing.</li>
+</ul>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="try-it-now">Try it now<a href="https://borntoberoot.net/NETworkManager/blog/introducing-rdap#try-it-now" class="hash-link" aria-label="Direct link to Try it now" title="Direct link to Try it now" translate="no">​</a></h2>
+<p>RDAP is available in the <a href="https://borntoberoot.net/NETworkManager/download#pre-release" target="_blank" rel="noopener noreferrer" class="">next pre-release of NETworkManager</a>.</p>
+<p>More details are available in the <a href="https://borntoberoot.net/NETworkManager/docs/application/rdap" target="_blank" rel="noopener noreferrer" class="">official documentation</a>.</p>
+<p>If you find any issues or have suggestions, please open an <a href="https://github.com/BornToBeRoot/NETworkManager/issues" target="_blank" rel="noopener noreferrer" class="">issue on GitHub</a>.</p>]]></content:encoded>
+            <category>rdap</category>
+            <category>whois</category>
+            <category>domain</category>
+            <category>ip address</category>
+            <category>asn</category>
+            <category>new feature</category>
+        </item>
         <item>
             <title><![CDATA[Import Profiles from Active Directory]]></title>
             <link>https://borntoberoot.net/NETworkManager/blog/import-profiles-from-active-directory</link>

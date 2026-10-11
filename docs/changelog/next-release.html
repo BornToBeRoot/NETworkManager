@@ -11,8 +11,8 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.9d036de8.css">
-<script src="/NETworkManager/assets/js/runtime~main.ef762dd6.js" defer="defer"></script>
-<script src="/NETworkManager/assets/js/main.b55fa785.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.abd05fb9.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/main.4a827bf6.js" defer="defer"></script>
 </head>
 <body>
 <svg style="display: none;"><defs>
@@ -35,6 +35,10 @@ Release date: <strong>xx.xx.2026</strong></p>
 <ul>
 <li class="">ARM64 builds are now available. <a href="https://github.com/BornToBeRoot/NETworkManager/issues/3538" target="_blank" rel="noopener noreferrer" class="">#3538</a></li>
 </ul>
+<p><strong>RDAP</strong></p>
+<ul>
+<li class="">New <a class="" href="/NETworkManager/docs/application/rdap"><strong>RDAP</strong></a> tool to look up registration data via the Registration Data Access Protocol, the standardized, JSON-based successor of Whois. Supports domains, top-level domains, IP addresses/CIDR prefixes, AS numbers and entity handles. The RDAP server is determined automatically using the IANA bootstrap files, which are cached locally and can be updated in the new <strong>Settings &gt; RDAP</strong> page. Results are shown in a structured view (details, status, events, nameservers, DNSSEC, contacts, notices) or as raw JSON, and can be exported as JSON or text. For domains (e.g. <code>.com</code>/<code>.net</code>), the referral to the registrar&#x27;s RDAP server is followed as well (can be disabled in <strong>Settings &gt; RDAP</strong>). Includes profile support. If no RDAP server is known for a domain, it can be opened in <strong>Whois</strong> with a single click. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3607" target="_blank" rel="noopener noreferrer" class="">#3607</a></li>
+</ul>
 <p><strong>Traceroute</strong></p>
 <ul>
 <li class="">New <strong>Map</strong> view below the hop list, visualizing each resolved hop&#x27;s geolocation on an offline world map. Consecutive hops are connected with curved, directional arrows; hovering a marker shows its location, ISP/ASN, hostname, IP address and average round-trip time, while hovering an arrow shows the source and destination location of that segment. The map supports mouse-wheel zoom and drag-to-pan, and can be collapsed via a toggle button on the map itself, similar to the Profiles panel. The map is only shown if <strong>Check IP geolocation</strong> and the new <strong>Show map</strong> setting are both enabled, since hops need a resolved geolocation to be plotted. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3520" target="_blank" rel="noopener noreferrer" class="">#3520</a></li>
@@ -45,14 +49,17 @@ Release date: <strong>xx.xx.2026</strong></p>
 <li class=""><strong>DNS server(s)</strong> in <a class="" href="/NETworkManager/docs/settings/network">Settings &gt; Network</a> is now a list of servers (IP address + port), configured via an <strong>Edit DNS server</strong> dialog, replacing the previous single semicolon-separated, port-53-only text field. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3591" target="_blank" rel="noopener noreferrer" class="">#3591</a></li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="improvements">Improvements<a href="#improvements" class="hash-link" aria-label="Direct link to Improvements" title="Direct link to Improvements" translate="no">​</a></h2>
+<ul>
+<li class="">Links (e.g. in <strong>About</strong>, <strong>Web Console</strong> and the notices in <strong>RDAP</strong>) are now keyboard accessible: they can be reached with <code>Tab</code> and opened with <code>Enter</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3607" target="_blank" rel="noopener noreferrer" class="">#3607</a></li>
+<li class="">The collapsed/expanded state of profile groups (e.g. <strong>linux-server</strong>) is now remembered per profile file and shared across all tools, instead of resetting every time you switch tools or restart the application. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3539" target="_blank" rel="noopener noreferrer" class="">#3539</a></li>
+</ul>
 <p><strong>Network Interface</strong></p>
 <ul>
-<li class="">
-<p>Members of the <strong>Network Configuration Operators</strong> group can now change the network configuration (IP address, DNS servers, release/renew) without being an administrator. NETworkManager has to run elevated (<strong>Restart as Administrator</strong>, confirm with your own credentials). The hint is now also shown as tooltip on <strong>Apply</strong> in the profile context menu. <a href="https://github.com/BornToBeRoot/NETworkManager/issues/3606" target="_blank" rel="noopener noreferrer" class="">#3606</a></p>
-</li>
-<li class="">
-<p>The collapsed/expanded state of profile groups (e.g. <strong>linux-server</strong>) is now remembered per profile file and shared across all tools, instead of resetting every time you switch tools or restart the application. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3539" target="_blank" rel="noopener noreferrer" class="">#3539</a></p>
-</li>
+<li class="">Members of the <strong>Network Configuration Operators</strong> group can now change the network configuration (IP address, DNS servers, release/renew) without being an administrator. NETworkManager has to run elevated (<strong>Restart as Administrator</strong>, confirm with your own credentials). The hint is now also shown as tooltip on <strong>Apply</strong> in the profile context menu. <a href="https://github.com/BornToBeRoot/NETworkManager/issues/3606" target="_blank" rel="noopener noreferrer" class="">#3606</a></li>
+</ul>
+<p><strong>Whois</strong></p>
+<ul>
+<li class="">Added an <strong>Export...</strong> button below the result, like in the other tools. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3607" target="_blank" rel="noopener noreferrer" class="">#3607</a></li>
 </ul>
 <p><strong>IP Scanner</strong></p>
 <ul>
@@ -82,6 +89,9 @@ Release date: <strong>xx.xx.2026</strong></p>
 <li class="">Host input now supports shorthand IPv4 ranges like <code>192.168.0.1-100</code>, in addition to the existing <code>192.168.0.0-192.168.0.100</code> and <code>192.168.[0-100].1</code> range formats. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3568" target="_blank" rel="noopener noreferrer" class="">#3568</a></li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="bug-fixes">Bug Fixes<a href="#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes" translate="no">​</a></h2>
+<ul>
+<li class="">Fixed changes to lists in the settings (e.g. query histories, port profiles, custom commands) not being saved if no other setting was changed in the same session. This happened since the settings are stored as JSON. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3607" target="_blank" rel="noopener noreferrer" class="">#3607</a></li>
+</ul>
 <p><strong>Network Interface</strong></p>
 <ul>
 <li class="">Fixed errors when changing the network configuration (e.g. missing permissions) not being shown — the change was reported as successful although it failed. The error message of Windows is now shown. <a href="https://github.com/BornToBeRoot/NETworkManager/issues/3606" target="_blank" rel="noopener noreferrer" class="">#3606</a></li>
@@ -100,6 +110,10 @@ Release date: <strong>xx.xx.2026</strong></p>
 <ul>
 <li class="">Fixed NetBIOS lookups (computer name, domain/workgroup, user name) not starting until a host&#x27;s entire port scan had finished, since the port scan wasn&#x27;t actually running asynchronously despite being awaited alongside it. Ping, port scan, and NetBIOS resolution now genuinely run concurrently for every host. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3564" target="_blank" rel="noopener noreferrer" class="">#3564</a></li>
 <li class="">Fixed the application becoming unresponsive (including the window not reacting to input) during a large scan (e.g. a /24). Scan results and progress were both being pushed to the UI one item/update at a time via a dispatcher call per host/port, which could flood the UI thread&#x27;s message queue on large scans. Both are now batched and flushed periodically (every 150ms) instead, for <strong>IP Scanner</strong> and <strong>Port Scanner</strong> alike. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3564" target="_blank" rel="noopener noreferrer" class="">#3564</a></li>
+</ul>
+<p><strong>IP Geolocation</strong></p>
+<ul>
+<li class="">Fixed the query history of <strong>IP Geolocation</strong> being written to the history of <strong>Whois</strong> instead of its own. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3607" target="_blank" rel="noopener noreferrer" class="">#3607</a></li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="dependencies-refactoring--documentation">Dependencies, Refactoring &amp; Documentation<a href="#dependencies-refactoring--documentation" class="hash-link" aria-label="Direct link to Dependencies, Refactoring &amp; Documentation" title="Direct link to Dependencies, Refactoring &amp; Documentation" translate="no">​</a></h2>
 <ul>
