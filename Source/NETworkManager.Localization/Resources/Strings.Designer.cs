@@ -7238,7 +7238,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Configuring the network interface requires elevated rights!.
+        ///   Looks up a localized string similar to Configuring the network interface requires elevated rights (administrator or member of the "Network Configuration Operators" group)!.
         /// </summary>
         public static string NetworkInterfaceConfigureAdminMessage {
             get {

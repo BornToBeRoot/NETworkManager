@@ -316,7 +316,7 @@
     <value>Configuration applied</value>
   </data>
   <data name="NetworkInterfaceConfigureAdminMessage" xml:space="preserve">
-    <value>Configuring the network interface requires elevated rights!</value>
+    <value>Configuring the network interface requires elevated rights (administrator or member of the "Network Configuration Operators" group)!</value>
   </data>
   <data name="NewTab" xml:space="preserve">
     <value>New tab</value>

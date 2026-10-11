@@ -63,7 +63,10 @@
         </DataTemplate>
         <x:Array x:Key="NetworkInterfaceProfileContextMenuExtraItems" Type="{x:Type MenuItem}">
             <MenuItem Header="{x:Static localization:Strings.Apply}"
-                      Command="{Binding ApplyProfileCommand}">
+                      Command="{Binding ApplyProfileCommand}"
+                      ToolTip="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
+                      ToolTipService.ShowOnDisabled="True"
+                      ToolTipService.IsEnabled="{Binding HasPermissionToConfigure, Converter={StaticResource BooleanReverseConverter}}">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16"
                                Fill="{DynamicResource MahApps.Brushes.Gray3}">
@@ -1464,7 +1467,7 @@
                         </Grid>
                         <Grid Grid.Row="5"
                               Background="{DynamicResource MahApps.Brushes.Gray10}"
-                              Visibility="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                              Visibility="{Binding HasPermissionToConfigure, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
                               Margin="0,10,0,0">
                             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch"
                                         Margin="10">

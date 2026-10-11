@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using log4net;
 using Microsoft.Win32;
@@ -172,12 +173,7 @@ public sealed class NetworkInterface
                 }
             }
 
-            // Check if autoconfiguration for DNS is enabled (only possible via registry key)
-            var nameServerKey =
-                Registry.LocalMachine.OpenSubKey(
-                    $@"SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{networkInterface.Id}");
-            var dnsAutoconfigurationEnabled = nameServerKey?.GetValue("NameServer") != null &&
-                                              string.IsNullOrEmpty(nameServerKey.GetValue("NameServer")?.ToString());
+            var dnsAutoconfigurationEnabled = IsDNSAutoconfigurationEnabled(networkInterface.Id) == true;
 
             // Check if IPv4 protocol is available
             var ipv4ProtocolAvailable = true;
@@ -420,10 +416,13 @@ public sealed class NetworkInterface
         var name = PowerShellHelper.EscapeSingleQuotes(config.Name);
         var commands = new List<string>();
 
+        // netsh returns an error if DHCP is already enabled. Skip these commands, so every error can be reported.
+        var (dhcpEnabled, dnsAutoconfigurationEnabled) = GetCurrentDhcpState(config.Name);
+
         // IP
         if (config.EnableStaticIPAddress)
             commands.Add($"& netsh interface ipv4 set address name='{name}' source=static address={config.IPAddress} mask={config.Subnetmask} gateway={config.Gateway}");
-        else
+        else if (dhcpEnabled != true)
             commands.Add($"& netsh interface ipv4 set address name='{name}' source=dhcp");
 
         // DNS
@@ -434,12 +433,73 @@ public sealed class NetworkInterface
             if (!string.IsNullOrEmpty(config.SecondaryDNSServer))
                 commands.Add($"& netsh interface ipv4 add dnsservers name='{name}' address={config.SecondaryDNSServer} index=2 validate=no");
         }
-        else
+        else if (dnsAutoconfigurationEnabled != true)
         {
             commands.Add($"& netsh interface ipv4 set dnsservers name='{name}' source=dhcp");
         }
 
         RunCommands(commands);
+    }
+
+    /// <summary>
+    /// Checks whether the DNS servers of a network interface are assigned automatically (DHCP). This can only be
+    /// detected via the registry: the "NameServer" value of the interface is empty, if no static DNS servers are set.
+    /// </summary>
+    /// <param name="interfaceId">ID (GUID) of the network interface.</param>
+    /// <returns>Whether DNS autoconfiguration is enabled, or <see langword="null" /> if it cannot be determined.</returns>
+    private static bool? IsDNSAutoconfigurationEnabled(string interfaceId)
+    {
+        using var interfaceKey = Registry.LocalMachine.OpenSubKey(
+            $@"SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces\{interfaceId}");
+
+        var nameServer = interfaceKey?.GetValue("NameServer");
+
+        return nameServer == null ? null : string.IsNullOrEmpty(nameServer.ToString());
+    }
+
+    /// <summary>
+    /// Reads the current DHCP state of a network interface right before it is configured (the information shown in the
+    /// UI can be outdated). Returns <see langword="null" /> for values that cannot be determined, in which case the
+    /// corresponding command is not skipped.
+    /// </summary>
+    /// <param name="name">Name of the network interface.</param>
+    /// <returns>Whether DHCP is enabled for the IPv4 address and for the DNS servers.</returns>
+    private static (bool? DhcpEnabled, bool? DNSAutoconfigurationEnabled) GetCurrentDhcpState(string name)
+    {
+        try
+        {
+            var networkInterface = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
+                .FirstOrDefault(x => x.Name == name);
+
+            if (networkInterface == null)
+                return (null, null);
+
+            return (networkInterface.GetIPProperties().GetIPv4Properties()?.IsDhcpEnabled,
+                IsDNSAutoconfigurationEnabled(networkInterface.Id));
+        }
+        catch (Exception ex)
+        {
+            Log.Warn($"Could not read the DHCP state of network interface \"{name}\".", ex);
+            return (null, null);
+        }
+    }
+
+    /// <summary>
+    /// Checks whether the current process is allowed to change the network configuration (IP addresses, DNS servers,
+    /// release/renew, flush DNS cache). This is the case if it is running as administrator or as member of the
+    /// "Network Configuration Operators" group, which may modify the TCP/IP settings without being an administrator.
+    /// </summary>
+    /// <remarks><see cref="WindowsPrincipal.IsInRole(SecurityIdentifier)" /> only returns <see langword="true" /> if the
+    /// group is enabled in the access token. With UAC, both groups are only enabled if the application is running
+    /// elevated, so a non-elevated process is correctly reported as not allowed.</remarks>
+    /// <returns><see langword="true" /> if the network configuration can be changed.</returns>
+    public static bool HasPermissionToConfigure()
+    {
+        var principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+
+        return principal.IsInRole(WindowsBuiltInRole.Administrator) ||
+               principal.IsInRole(new SecurityIdentifier(WellKnownSidType.BuiltinNetworkConfigurationOperatorsSid,
+                   null));
     }
 
     /// <summary>
@@ -459,7 +519,7 @@ public sealed class NetworkInterface
     /// <remarks>Requires the application to be running with administrator privileges.</remarks>
     private static void FlushDns()
     {
-        RunCommands(["& ipconfig /flushdns"], checkExitCode: true);
+        RunCommands(["& ipconfig /flushdns"]);
     }
 
     /// <summary>
@@ -496,7 +556,7 @@ public sealed class NetworkInterface
         if (mode is IPConfigReleaseRenewMode.ReleaseRenew6 or IPConfigReleaseRenewMode.Renew6)
             commands.Add($"& ipconfig /renew6 '{name}'");
 
-        RunCommands(commands, checkExitCode: true);
+        RunCommands(commands);
     }
 
     /// <summary>
@@ -551,28 +611,47 @@ public sealed class NetworkInterface
     }
 
     /// <summary>
-    /// Runs one or more native commands via a PowerShell runspace.
-    /// When <paramref name="checkExitCode"/> is <see langword="true"/>, a non-zero
-    /// <c>$LASTEXITCODE</c> is treated as an error via <c>Write-Error</c>.
-    /// Use <see langword="false"/> for <c>netsh</c>, whose exit codes are unreliable
-    /// for idempotent operations (e.g. returns 1 when already on DHCP).
+    /// Runs one or more native commands (<c>netsh</c>, <c>ipconfig</c>) one after another via a PowerShell runspace.
+    /// Stops at the first command that fails (non-zero exit code) and throws an exception with the output of the
+    /// command (e.g. "The requested operation requires elevation."), which is localized by Windows and shown to the
+    /// user. Commands that would not change anything (and therefore fail with <c>netsh</c>) must not be passed.
     /// </summary>
-    private static void RunCommands(IEnumerable<string> commands, bool checkExitCode = false)
+    /// <param name="commands">Commands to run, e.g. <c>&amp; netsh interface ipv4 ...</c>.</param>
+    /// <exception cref="Exception">If a command fails.</exception>
+    private static void RunCommands(IEnumerable<string> commands)
     {
-        string script;
+        foreach (var command in commands)
+        {
+            using var ps = SMA.PowerShell.Create();
 
-        if (checkExitCode)
-            script = string.Join(Environment.NewLine, commands.Select(cmd =>
-                $"{cmd}{Environment.NewLine}if ($LASTEXITCODE -ne 0) {{ Write-Error \"Command failed with exit code $LASTEXITCODE\" }}"));
-        else
-            script = string.Join(Environment.NewLine, commands);
+            ps.AddScript($"$output = {command} 2>&1 | Out-String{Environment.NewLine}" +
+                         "[PSCustomObject]@{ Output = $output; ExitCode = $LASTEXITCODE }");
 
-        using var ps = SMA.PowerShell.Create();
-        ps.AddScript(script);
-        ps.Invoke();
+            var result = ps.Invoke().LastOrDefault();
 
-        if (checkExitCode && ps.HadErrors)
-            throw new Exception(string.Join("; ", ps.Streams.Error.Select(e => e.ToString())));
+            // The script itself failed and did not return a result.
+            if (result == null)
+                throw new Exception(ps.HadErrors
+                    ? string.Join("; ", ps.Streams.Error.Select(e => e.ToString()))
+                    : $"\"{command}\" did not return a result.");
+
+            // Each command runs in a new runspace, so the exit code is only set if the native command was started.
+            var exitCode = result.Properties["ExitCode"]?.Value as int?;
+
+            if (exitCode == 0)
+                continue;
+
+            var output = result.Properties["Output"]?.Value?.ToString()?.Trim();
+
+            Log.Error($"Command \"{command}\" failed with exit code {exitCode?.ToString() ?? "-/-"}: {output}");
+
+            if (!string.IsNullOrEmpty(output))
+                throw new Exception(output);
+
+            throw new Exception(exitCode == null
+                ? $"\"{command.TrimStart('&', ' ')}\" could not be run."
+                : $"\"{command.TrimStart('&', ' ')}\" failed with exit code {exitCode}.");
+        }
     }
 
     #endregion
