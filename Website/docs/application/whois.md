@@ -1,5 +1,5 @@
 ---
-sidebar_position: 20
+sidebar_position: 21
 description: "Look up domain registration and ownership details from TLD Whois servers using NETworkManager. Retrieves registrar, creation date, and nameservers."
 keywords: [NETworkManager, Whois, domain lookup, domain registration, Whois query, domain information, domain owner]
 ---
@@ -33,6 +33,10 @@ For .de domains, DENIC no longer provides information via the Whois protocol.
 | Domain | Description |
 |--------|-------------|
 | `borntoberoot.net` | Query Whois information for a .net domain |
+
+### Export
+
+The result can be exported via the **Export...** button below the result or via the context menu (right-click).
 
 ### Context menu
 

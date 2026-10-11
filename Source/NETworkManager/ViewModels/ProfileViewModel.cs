@@ -4,6 +4,7 @@ using NETworkManager.Models;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
+using NETworkManager.Models.RDAP;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
@@ -314,6 +315,14 @@ public class ProfileViewModel : ViewModelBase
             : profileInfo.WakeOnLAN_Enabled;
         WakeOnLAN_MACAddress = profileInfo.WakeOnLAN_MACAddress;
         WakeOnLAN_Broadcast = profileInfo.WakeOnLAN_Broadcast;
+
+        // RDAP
+        RDAP_Enabled = editMode == ProfileEditMode.Add
+            ? applicationName == ApplicationName.RDAP
+            : profileInfo.RDAP_Enabled;
+        RDAP_InheritHost = profileInfo.RDAP_InheritHost;
+        RDAP_Query = profileInfo.RDAP_Query;
+        RDAP_QueryType = profileInfo.RDAP_QueryType;
 
         // Whois
         Whois_Enabled = editMode == ProfileEditMode.Add
@@ -2789,6 +2798,67 @@ public class ProfileViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+        }
+    }
+
+    #endregion
+
+    #region RDAP
+
+    public bool RDAP_Enabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool RDAP_InheritHost
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string RDAP_Query
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public List<RDAPQueryType> RDAP_QueryTypes { get; } = [.. Enum.GetValues<RDAPQueryType>()];
+
+    public RDAPQueryType RDAP_QueryType
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+
+            // Validate the query again for the new type.
+            OnPropertyChanged(nameof(RDAP_Query));
         }
     }
 

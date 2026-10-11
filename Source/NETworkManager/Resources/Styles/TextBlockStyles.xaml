@@ -77,6 +77,24 @@
         </Style.Triggers>
     </Style>
 
+    <!--
+        Link inside a TextBlock, looks like LinkTextBlock but is keyboard accessible (Tab + Enter).
+        Usage: <TextBlock><Hyperlink Command="..." Style="{StaticResource LinkHyperlink}"><Run Text="..." /></Hyperlink></TextBlock>
+    -->
+    <Style x:Key="LinkHyperlink" TargetType="{x:Type Hyperlink}">
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
+        <Setter Property="TextDecorations" Value="{x:Null}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent2}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+                <Setter Property="TextDecorations" Value="Underline" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="DisabledTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">

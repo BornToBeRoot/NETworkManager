@@ -108,7 +108,7 @@ public class WhoisHostViewModel : ProfileHostViewModelBase
 
     #region Methods
 
-    private void AddTab(string domain = null)
+    public void AddTab(string domain = null)
     {
         var tabId = Guid.NewGuid();
 

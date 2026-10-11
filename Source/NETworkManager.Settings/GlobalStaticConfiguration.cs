@@ -5,6 +5,7 @@ using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
+using NETworkManager.Models.RDAP;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Utilities;
 using System;
@@ -286,6 +287,16 @@ public static class GlobalStaticConfiguration
     // Application: Lookup
     public static ExportFileType Lookup_OUI_ExportFileType => ExportFileType.Csv;
     public static ExportFileType Lookup_Port_ExportFileType => ExportFileType.Csv;
+
+    // Application: RDAP
+    public static RDAPQueryType RDAP_QueryType => RDAPQueryType.Domain;
+    public static bool RDAP_FollowReferral => true;
+    public static int RDAP_Timeout => 10000;
+    public static ExportFileType RDAP_ExportFileType => ExportFileType.Json;
+
+    public static string RDAP_CachePath =>
+        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            AssemblyManager.Current.Name, "RDAP_Cache");
 
     // Application: Whois
     public static ExportFileType Whois_ExportFileType => ExportFileType.Txt;

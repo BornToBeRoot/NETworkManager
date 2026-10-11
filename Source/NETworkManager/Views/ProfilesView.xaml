@@ -463,6 +463,10 @@
                                                 Binding="{Binding (profiles:ProfileInfo.WakeOnLAN_Enabled)}"
                                                 SortMemberPath="WakeOnLAN_Enabled" MinWidth="80" Width="Auto" />
                         <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}"
+                                                Header="{x:Static localization:Strings.RDAP}"
+                                                Binding="{Binding (profiles:ProfileInfo.RDAP_Enabled)}"
+                                                SortMemberPath="RDAP_Enabled" MinWidth="80" Width="Auto" />
+                        <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}"
                                                 Header="{x:Static localization:Strings.Whois}"
                                                 Binding="{Binding (profiles:ProfileInfo.Whois_Enabled)}"
                                                 SortMemberPath="Whois_Enabled" MinWidth="80" Width="Auto" />

@@ -53,8 +53,11 @@ Start a specific application on startup.
 - `WebConsole`
 - `SNMP`
 - `SNTPLookup`
+- `HostsFileEditor`
+- `Firewall`
 - `DiscoveryProtocol`
 - `WakeOnLAN`
+- `RDAP`
 - `Whois`
 - `IPGeolocation`
 - `SubnetCalculator`
@@ -62,7 +65,7 @@ Start a specific application on startup.
 - `Lookup`
 - `Connections`
 - `Listeners`
-- `ARPTable`
+- `NeighborTable`
 
 **Example:**
 

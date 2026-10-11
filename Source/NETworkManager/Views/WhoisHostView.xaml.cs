@@ -12,6 +12,11 @@ public partial class WhoisHostView
         DataContext = _viewModel;
     }
 
+    public void AddTab(string domain)
+    {
+        _viewModel.AddTab(domain);
+    }
+
     public void OnViewHide()
     {
         _viewModel.OnViewHide();

@@ -29,6 +29,11 @@ const tools = [
     note: "LLDP, CDP",
   },
   { name: "Wake on LAN", to: "/docs/application/wake-on-lan" },
+  {
+    name: "RDAP",
+    to: "/docs/application/rdap",
+    note: "Domain, TLD, IP address, ASN, Entity",
+  },
   { name: "Whois", to: "/docs/application/whois" },
   { name: "IP Geolocation", to: "/docs/application/ip-geolocation" },
   {

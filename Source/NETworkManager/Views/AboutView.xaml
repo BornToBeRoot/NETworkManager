@@ -43,23 +43,21 @@
                                Margin="0,0,0,5" />
                     <TextBlock Text="{Binding Version}" Style="{StaticResource DefaultTextBlock}" FontWeight="Bold"
                                VerticalAlignment="Center" Margin="0,0,0,10" />                    
-                    <TextBlock Text="{x:Static resources:Resources.NETworkManager_License}"
-                               Style="{StaticResource LinkTextBlock}" HorizontalAlignment="Left" Margin="0,0,0,5">
-                        <TextBlock.InputBindings>
-                            <MouseBinding Command="{Binding OpenWebsiteCommand}"
-                                          CommandParameter="{x:Static resources:Resources.NETworkManager_LicenseUrl}"
-                                          MouseAction="LeftClick" />
-                        </TextBlock.InputBindings>
+                    <TextBlock Style="{StaticResource DefaultTextBlock}" HorizontalAlignment="Left" Margin="0,0,0,5">
+                        <Hyperlink Command="{Binding OpenWebsiteCommand}"
+                                   CommandParameter="{x:Static resources:Resources.NETworkManager_LicenseUrl}"
+                                   Style="{StaticResource LinkHyperlink}">
+                            <Run Text="{x:Static resources:Resources.NETworkManager_License}" />
+                        </Hyperlink>
                     </TextBlock>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,10">
                         <TextBlock Text="{Binding DevelopedByText}" Style="{StaticResource DefaultTextBlock}" />
-                        <TextBlock Text="{x:Static localization:Strings.Community}"
-                                   Style="{StaticResource LinkTextBlock}">
-                            <TextBlock.InputBindings>
-                                <MouseBinding Command="{Binding OpenWebsiteCommand}"
-                                              CommandParameter="{x:Static resources:Resources.NETworkManager_Contributors}"
-                                              MouseAction="LeftClick" />
-                            </TextBlock.InputBindings>
+                        <TextBlock Style="{StaticResource DefaultTextBlock}">
+                            <Hyperlink Command="{Binding OpenWebsiteCommand}"
+                                       CommandParameter="{x:Static resources:Resources.NETworkManager_Contributors}"
+                                       Style="{StaticResource LinkHyperlink}">
+                                <Run Text="{x:Static localization:Strings.Community}" />
+                            </Hyperlink>
                         </TextBlock>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
@@ -99,19 +97,25 @@
                             <StackPanel Grid.Column="2" Grid.Row="0"
                                         Orientation="Horizontal"
                                         Visibility="{Binding IsUpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                                <StackPanel.InputBindings>
-                                    <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}"
-                                                  CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                </StackPanel.InputBindings>
-                                <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}">
+                                <Rectangle Width="20" Height="20" Fill="{DynamicResource MahApps.Brushes.Accent}"
+                                           Cursor="Hand">
+                                    <Rectangle.InputBindings>
+                                        <MouseBinding Gesture="LeftClick" Command="{Binding OpenWebsiteCommand}"
+                                                      CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </Rectangle.InputBindings>
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=RocketLaunchOutline}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <TextBlock Text="{Binding UpdateText}" 
-                                           Style="{StaticResource LinkTextBlock}"
+                                <TextBlock Style="{StaticResource DefaultTextBlock}"
                                            VerticalAlignment="Center"
-                                           Margin="10,0,0,0" />
+                                           Margin="10,0,0,0">
+                                    <Hyperlink Command="{Binding OpenWebsiteCommand}"
+                                               CommandParameter="{Binding UpdateReleaseUrl, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                               Style="{StaticResource LinkHyperlink}">
+                                        <Run Text="{Binding UpdateText, Mode=OneWay}" />
+                                    </Hyperlink>
+                                </TextBlock>
                             </StackPanel>
                             <mahAppsControls:ProgressRing Grid.Column="2" Grid.Row="0"
                                                           Visibility="{Binding IsUpdateCheckRunning, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
