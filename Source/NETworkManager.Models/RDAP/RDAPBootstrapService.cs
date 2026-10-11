@@ -90,6 +90,7 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
             Timeout = TimeSpan.FromSeconds(30)
         };
 
+        _client.MaxResponseContentBufferSize = RDAPClient.MaxResponseSize;
         _client.DefaultRequestHeaders.UserAgent.ParseAdd("NETworkManager");
 
         _stealthEndpoints = LoadStealthEndpoints();

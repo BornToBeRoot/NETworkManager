@@ -31,6 +31,12 @@ public class RDAPClient : SingletonBase<RDAPClient>
     /// </summary>
     private const int MaxRedirects = 5;
 
+    /// <summary>
+    ///     Maximum size of a response (after decompression). Real RDAP responses are well below 1 MB. Larger responses
+    ///     are rejected, so a broken or malicious server (e.g. a referral target) cannot exhaust the memory.
+    /// </summary>
+    public const long MaxResponseSize = 10 * 1024 * 1024;
+
     private static readonly JsonSerializerSettings SerializerSettings = new()
     {
         // Keep dates as strings. Newtonsoft would otherwise convert them to DateTime and lose the offset.
@@ -78,6 +84,7 @@ public class RDAPClient : SingletonBase<RDAPClient>
 
         foreach (var client in new[] { _client, _referralClient })
         {
+            client.MaxResponseContentBufferSize = MaxResponseSize;
             client.DefaultRequestHeaders.UserAgent.ParseAdd("NETworkManager");
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(RDAPMediaType));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
