@@ -135,6 +135,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -398,6 +399,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -1158,6 +1160,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -1262,6 +1265,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -1331,6 +1335,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -1344,6 +1349,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -1357,6 +1363,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -1465,6 +1472,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -1664,6 +1672,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -1811,6 +1820,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -1824,6 +1834,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -2025,6 +2036,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -2510,6 +2522,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -2579,6 +2592,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -2709,6 +2723,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -2722,6 +2737,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -2735,6 +2751,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -2748,6 +2765,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -2761,6 +2779,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -2774,6 +2793,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -2883,6 +2903,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -2896,6 +2917,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -2939,6 +2961,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -2995,6 +3018,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3008,6 +3032,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3021,6 +3046,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3169,6 +3195,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3366,6 +3393,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3379,6 +3407,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3396,6 +3425,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3478,6 +3508,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3521,6 +3552,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3566,6 +3598,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3583,6 +3616,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3596,6 +3630,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3639,6 +3674,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3652,6 +3688,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3671,6 +3708,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3741,6 +3779,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -3780,6 +3819,7 @@ public class SettingsInfo : INotifyPropertyChanged
             if (value == field)
                 return;
 
+            UpdateCollectionChanged(field, value);
             field = value;
             OnPropertyChanged();
         }
@@ -4003,6 +4043,9 @@ public class SettingsInfo : INotifyPropertyChanged
         // General
         General_ApplicationList.CollectionChanged += CollectionChanged;
 
+        // Network
+        Network_CustomDNSServers.CollectionChanged += CollectionChanged;
+
         // IP Scanner
         IPScanner_HostHistory.CollectionChanged += CollectionChanged;
         IPScanner_CustomCommands.CollectionChanged += CollectionChanged;
@@ -4089,6 +4132,22 @@ public class SettingsInfo : INotifyPropertyChanged
     private void CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
         SettingsChanged = true;
+    }
+
+    /// <summary>
+    /// Moves the <see cref="CollectionChanged" /> handler from the old to the new collection, if a collection property
+    /// is replaced (e.g. when the settings are loaded from the JSON file or a history is rebuilt). Otherwise, changes
+    /// to the new collection would not mark the settings as changed and would not be saved.
+    /// </summary>
+    /// <param name="oldCollection">Collection that is replaced.</param>
+    /// <param name="newCollection">New collection.</param>
+    private void UpdateCollectionChanged(INotifyCollectionChanged oldCollection, INotifyCollectionChanged newCollection)
+    {
+        if (oldCollection != null)
+            oldCollection.CollectionChanged -= CollectionChanged;
+
+        if (newCollection != null)
+            newCollection.CollectionChanged += CollectionChanged;
     }
 
     #endregion
