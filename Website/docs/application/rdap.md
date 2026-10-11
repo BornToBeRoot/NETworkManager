@@ -35,6 +35,8 @@ The firewall must allow outgoing HTTPS connections (TCP port 443) to `data.iana.
 
 :::
 
+![RDAP](../img/rdap.png)
+
 ### Example inputs
 
 | Type       | Query            | Description                                                         |
