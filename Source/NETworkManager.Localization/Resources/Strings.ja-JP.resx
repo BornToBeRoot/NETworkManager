@@ -316,7 +316,7 @@
     <value>設定が適用されました</value>
   </data>
   <data name="NetworkInterfaceConfigureAdminMessage" xml:space="preserve">
-    <value>Configuring the network interface requires elevated rights (administrator or member of the "Network Configuration Operators" group)!</value>
+    <value>ネットワークインターフェースの設定には、管理者権限 (管理者、または「ネットワーク構成オペレーター」グループのメンバー) が必要です！</value>
   </data>
   <data name="NewTab" xml:space="preserve">
     <value>新しいタブ</value>
@@ -4506,201 +4506,201 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>RDAP</value>
   </data>
   <data name="RDAPQueryType_Domain" xml:space="preserve">
-    <value>Domain</value>
+    <value>ドメイン</value>
   </data>
   <data name="RDAPQueryType_TLD" xml:space="preserve">
     <value>TLD</value>
   </data>
   <data name="RDAPQueryType_IPAddress" xml:space="preserve">
-    <value>IP address</value>
+    <value>IP アドレス</value>
   </data>
   <data name="RDAPQueryType_ASN" xml:space="preserve">
     <value>ASN</value>
   </data>
   <data name="RDAPQueryType_Entity" xml:space="preserve">
-    <value>Entity</value>
+    <value>エンティティ</value>
   </data>
   <data name="AddATabToQueryRDAP" xml:space="preserve">
-    <value>Add a tab to query RDAP...</value>
+    <value>RDAP をクエリするためのタブを追加...</value>
   </data>
   <data name="EnterAQueryToQueryRDAPDots" xml:space="preserve">
-    <value>Enter a domain, IP address, AS number or entity handle to query RDAP...</value>
+    <value>RDAP を照会するには、ドメイン、IP アドレス、AS 番号、またはエンティティハンドルを入力してください...</value>
   </data>
   <data name="Actor" xml:space="preserve">
     <value>Actor</value>
   </data>
   <data name="Address" xml:space="preserve">
-    <value>Address</value>
+    <value>アドレス</value>
   </data>
   <data name="Algorithm" xml:space="preserve">
-    <value>Algorithm</value>
+    <value>アルゴリズム</value>
   </data>
   <data name="BootstrapFiles" xml:space="preserve">
-    <value>Bootstrap files</value>
+    <value>Bootstrap ファイル</value>
   </data>
   <data name="BootstrapFilesAreUpToDate" xml:space="preserve">
-    <value>The bootstrap files are up to date.</value>
+    <value>Bootstrap ファイルは最新の状態です。</value>
   </data>
   <data name="Conformance" xml:space="preserve">
-    <value>Conformance</value>
+    <value>適合性</value>
   </data>
   <data name="Contacts" xml:space="preserve">
-    <value>Contacts</value>
+    <value>連絡先</value>
   </data>
   <data name="DNSSEC" xml:space="preserve">
     <value>DNSSEC</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>Date</value>
+    <value>日付</value>
   </data>
   <data name="DelegationSigned" xml:space="preserve">
-    <value>Delegation signed</value>
+    <value>委任署名</value>
   </data>
   <data name="Digest" xml:space="preserve">
-    <value>Digest</value>
+    <value>ダイジェスト</value>
   </data>
   <data name="DigestType" xml:space="preserve">
-    <value>Digest type</value>
+    <value>ダイジェストタイプ</value>
   </data>
   <data name="Downloaded" xml:space="preserve">
-    <value>Downloaded</value>
+    <value>ダウンロード済み</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>メール</value>
   </data>
   <data name="EnterValidASN" xml:space="preserve">
-    <value>Enter a valid AS number (e.g., "AS15169")!</value>
+    <value>有効な AS 番号 (例 : "AS15169")を入力してください！</value>
   </data>
   <data name="EnterValidEntityHandle" xml:space="preserve">
-    <value>Enter a valid entity handle (e.g., "ORG-RIEN1-RIPE")!</value>
+    <value>有効なエンティティハンドル (例 : "ORG-RIEN1-RIPE") を入力してください！</value>
   </data>
   <data name="EnterValidIPAddressOrCIDR" xml:space="preserve">
-    <value>Enter a valid IP address or CIDR (e.g., "192.0.2.0/24")!</value>
+    <value>有効な IP アドレスまたは CIDR (例 : "192.0.2.0/24") を入力してください！</value>
   </data>
   <data name="EnterValidTLD" xml:space="preserve">
-    <value>Enter a valid top-level domain (e.g., "de")!</value>
+    <value>有効なトップレベルドメイン (例 : "de") を入力してください！</value>
   </data>
   <data name="Events" xml:space="preserve">
-    <value>Events</value>
+    <value>イベント</value>
   </data>
   <data name="Fax" xml:space="preserve">
-    <value>Fax</value>
+    <value>FAX</value>
   </data>
   <data name="FollowReferralToRegistrar" xml:space="preserve">
-    <value>Follow referral to registrar</value>
+    <value>レジストラへの参照を追跡する</value>
   </data>
   <data name="Handle" xml:space="preserve">
-    <value>Handle</value>
+    <value>ハンドル</value>
   </data>
   <data name="HelpMessage_RDAPBootstrapFiles" xml:space="preserve">
-    <value>The IANA bootstrap files are used to find the RDAP server for a domain, IP address, AS number or entity. They are downloaded with the first query and refreshed automatically once a week.</value>
+    <value>IANA の Bootstrap ファイルは、ドメイン、IP アドレス、AS 番号、またはエンティティの RDAP サーバーを検索するために使用されます。最初のクエリでダウンロードされ、週に一度自動的に更新されます。</value>
   </data>
   <data name="HelpMessage_RDAPFollowReferral" xml:space="preserve">
-    <value>For many domains (e.g., .com and .net), the registry only returns basic data and refers to the RDAP server of the registrar for details. If enabled, the RDAP server of the registrar is queried as well.</value>
+    <value>多くのドメイン (例 : .com や .net) では、レジストリは基本データのみを返し、詳細についてはレジストラの RDAP サーバーを参照します。有効にすると、レジストラの RDAP サーバーにもクエリが送信されます。</value>
   </data>
   <data name="KeyTag" xml:space="preserve">
-    <value>Key tag</value>
+    <value>キータグ</value>
   </data>
   <data name="LastChecked" xml:space="preserve">
-    <value>Last checked</value>
+    <value>最終確認</value>
   </data>
   <data name="Nameservers" xml:space="preserve">
-    <value>Nameservers</value>
+    <value>ネームサーバー</value>
   </data>
   <data name="Notices" xml:space="preserve">
-    <value>Notices</value>
+    <value>通知</value>
   </data>
   <data name="ObjectClass" xml:space="preserve">
-    <value>Object class</value>
+    <value>オブジェクトクラス</value>
   </data>
   <data name="OpenInWhois" xml:space="preserve">
-    <value>Open in Whois</value>
+    <value>Whois で開く</value>
   </data>
   <data name="ParentHandle" xml:space="preserve">
-    <value>Parent handle</value>
+    <value>親ハンドル</value>
   </data>
   <data name="Phone" xml:space="preserve">
-    <value>Phone</value>
+    <value>電話</value>
   </data>
   <data name="Port43" xml:space="preserve">
-    <value>Port 43 (Whois)</value>
+    <value>Port43 (Whois)</value>
   </data>
   <data name="PublicIDs" xml:space="preserve">
-    <value>Public IDs</value>
+    <value>公開 ID</value>
   </data>
   <data name="Publication" xml:space="preserve">
-    <value>Publication</value>
+    <value>公開</value>
   </data>
   <data name="RDAPBadRequestX" xml:space="preserve">
-    <value>The server could not process the query: {0}</value>
+    <value>サーバーがクエリを処理できませんでした : {0}</value>
   </data>
   <data name="RDAPBootstrapUnavailableX" xml:space="preserve">
-    <value>The IANA bootstrap files could not be downloaded: {0}</value>
+    <value>IANA の Bootstrap ファイルをダウンロードできませんでした : {0}</value>
   </data>
   <data name="RDAPHttpErrorX" xml:space="preserve">
-    <value>The server returned an error: {0}</value>
+    <value>サーバーがエラーを返しました : {0}</value>
   </data>
   <data name="RDAPInsecureRedirectX" xml:space="preserve">
-    <value>The server redirected to an insecure URL, which was not followed: {0}</value>
+    <value>サーバーが安全でない URL にリダイレクトしました。追跡されませんでした : {0}</value>
   </data>
   <data name="RDAPInvalidResponseX" xml:space="preserve">
-    <value>The server returned an invalid response: {0}</value>
+    <value>サーバーが無効な応答を返しました : {0}</value>
   </data>
   <data name="RDAPNetworkErrorX" xml:space="preserve">
-    <value>Could not connect to the RDAP server: {0}</value>
+    <value>RDAP サーバーに接続できませんでした : {0}</value>
   </data>
   <data name="RDAPNoServerForX" xml:space="preserve">
-    <value>No RDAP server is known for "{0}". The registry may only provide Whois.</value>
+    <value>「{0}」に対する RDAP サーバーが不明です。レジストリは Whois のみを提供している可能性があります。</value>
   </data>
   <data name="RDAPNoServerForEntityX" xml:space="preserve">
-    <value>No RDAP server is known for "{0}". Entity handles can only be resolved if they end with a known service provider tag (e.g., "-RIPE" or "-ARIN").</value>
+    <value>「{0}」に対する RDAP サーバーが不明です。エンティティハンドルは、既知のサービスプロバイダータグ (例 : "-RIPE" や "-ARIN") で終わる場合にのみ解決できます。</value>
   </data>
   <data name="RDAPNotFoundX" xml:space="preserve">
-    <value>No data found for "{0}".</value>
+    <value>「{0}」に対するデータが見つかりませんでした。</value>
   </data>
   <data name="RDAPNotImplemented" xml:space="preserve">
-    <value>The server does not support this query.</value>
+    <value>サーバーはこのクエリをサポートしていません。</value>
   </data>
   <data name="RDAPRateLimited" xml:space="preserve">
-    <value>The server limits the number of queries. Try again later.</value>
+    <value>サーバーがクエリ数を制限しています。後でもう一度試してください。</value>
   </data>
   <data name="RDAPRateLimitedTryAgainInXSeconds" xml:space="preserve">
-    <value>The server limits the number of queries. Try again in {0} seconds.</value>
+    <value>サーバーがクエリ数を制限しています。{0} 秒後にもう一度試してください。</value>
   </data>
   <data name="RDAPReferralFailedX" xml:space="preserve">
-    <value>The RDAP server of the registrar could not be queried: {0}</value>
+    <value>レジストラの RDAP サーバーにクエリできませんでした: {0}</value>
   </data>
   <data name="RDAPTooManyRedirects" xml:space="preserve">
-    <value>Too many redirects.</value>
+    <value>リダイレクトが多すぎます。</value>
   </data>
   <data name="Range" xml:space="preserve">
-    <value>Range</value>
+    <value>範囲</value>
   </data>
   <data name="RawJSON" xml:space="preserve">
-    <value>Raw JSON</value>
+    <value>生の JSON</value>
   </data>
   <data name="Registrar" xml:space="preserve">
-    <value>Registrar</value>
+    <value>レジストラ</value>
   </data>
   <data name="Registry" xml:space="preserve">
-    <value>Registry</value>
+    <value>レジストリ</value>
   </data>
   <data name="Roles" xml:space="preserve">
-    <value>Roles</value>
+    <value>役割</value>
   </data>
   <data name="Size" xml:space="preserve">
-    <value>Size</value>
+    <value>サイズ</value>
   </data>
   <data name="UpdateNow" xml:space="preserve">
-    <value>Update now</value>
+    <value>今すぐ更新</value>
   </data>
   <data name="RDAPReferralInsecureX" xml:space="preserve">
-    <value>The referral to the RDAP server of the registrar was not followed, because it does not use a secure connection (HTTPS): {0}</value>
+    <value>レジストラの RDAP サーバーへの参照は、安全な接続 (HTTPS) を使用していないため、追跡されませんでした: {0}</value>
   </data>
   <data name="RDAPReferralPrivateAddressX" xml:space="preserve">
-    <value>The referral to the RDAP server of the registrar was not followed, because it points to a local or private address: {0}</value>
+    <value>レジストラの RDAP サーバーへの参照は、ローカルまたはプライベートアドレスを指しているため、追跡されませんでした: {0}</value>
   </data>
   <data name="DomainCannotBeQueriedViaRDAPTryWhois" xml:space="preserve">
-    <value>This domain cannot be queried via RDAP. Try Whois instead.</value>
+    <value>このドメインは RDAP 経由でクエリできません。代わりに Whois をお試しください。</value>
   </data>
 </root>
