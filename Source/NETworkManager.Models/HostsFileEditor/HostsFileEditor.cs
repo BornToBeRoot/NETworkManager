@@ -1,4 +1,4 @@
-﻿using log4net;
+using log4net;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
@@ -165,113 +165,72 @@ public static class HostsFileEditor
     }
 
     /// <summary>
+    /// Enable multiple hosts file entries asynchronously.
+    /// </summary>
+    /// <param name="entries">Entries to enable.</param>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if entries were enabled successfully, otherwise an error result.</returns>
+    public static Task<HostsFileEntryModifyResult> EnableEntriesAsync(IEnumerable<HostsFileEntry> entries)
+    {
+        return Task.Run(() => ModifyEntries(entries, e => new HostsFileEntry(true, e.IPAddress, e.Hostname, e.Comment)));
+    }
+
+    /// <summary>
     /// Enable a hosts file entry asynchronously.
     /// </summary>
     /// <param name="entry">Entry to enable.</param>
     /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was enabled successfully, otherwise an error result.</returns>
     public static Task<HostsFileEntryModifyResult> EnableEntryAsync(HostsFileEntry entry)
     {
-        return Task.Run(() => EnableEntry(entry));
+        return EnableEntriesAsync([entry]);
     }
 
     /// <summary>
-    /// Enable a hosts file entry.
+    /// Disable multiple hosts file entries asynchronously.
     /// </summary>
-    /// <param name="entry">Entry to enable.</param>
-    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was enabled successfully, otherwise an error result.</returns>
-    private static HostsFileEntryModifyResult EnableEntry(HostsFileEntry entry)
+    /// <param name="entries">Entries to disable.</param>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if entries were disabled successfully, otherwise an error result.</returns>
+    public static Task<HostsFileEntryModifyResult> DisableEntriesAsync(IEnumerable<HostsFileEntry> entries)
     {
-        // Create a backup of the hosts file before making changes
-        if (CreateBackup() == false)
-        {
-            Log.Error("EnableEntry - Failed to create backup before enabling entry.");
-            return HostsFileEntryModifyResult.BackupError;
-        }
-
-        // Enable the entry in the hosts file
-        List<string> hostsFileLines;
-
-        try
-        {
-            hostsFileLines = [.. File.ReadAllLines(HostsFilePath)];
-        }
-        catch (Exception ex)
-        {
-            Log.Error($"EnableEntry - Failed to read hosts file: {HostsFilePath}", ex);
-            return HostsFileEntryModifyResult.ReadError;
-        }
-
-        var entryFound = false;
-
-        for (var i = 0; i < hostsFileLines.Count; i++)
-        {
-            if (hostsFileLines[i] != entry.Line)
-                continue;
-
-            entryFound = true;
-
-            Log.Debug($"EnableEntry - Found entry: {hostsFileLines[i]}");
-            hostsFileLines.RemoveAt(i);
-
-            var newEntry = new HostsFileEntry(
-                true,
-                entry.IPAddress,
-                entry.Hostname,
-                entry.Comment
-            );
-
-            Log.Debug($"EnableEntry - Enabling entry: {newEntry.Line}");
-            hostsFileLines.Insert(i, newEntry.Line);
-
-            break;
-        }
-
-        if (!entryFound)
-        {
-            Log.Warn($"EnableEntry - Entry not found in hosts file: {entry}");
-
-            return HostsFileEntryModifyResult.NotFound;
-        }
-
-        try
-        {
-            Log.Debug($"EnableEntry - Writing changes to hosts file: {HostsFilePath}");
-            File.WriteAllLines(HostsFilePath, hostsFileLines);
-        }
-        catch (Exception ex)
-        {
-            Log.Error($"EnableEntry - Failed to write changes to hosts file: {HostsFilePath}", ex);
-            return HostsFileEntryModifyResult.WriteError;
-        }
-
-        return HostsFileEntryModifyResult.Success;
+        return Task.Run(() => ModifyEntries(entries, e => new HostsFileEntry(false, e.IPAddress, e.Hostname, e.Comment)));
     }
 
     /// <summary>
     /// Disable a hosts file entry asynchronously.
     /// </summary>
     /// <param name="entry">Entry to disable.</param>
-    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was enabled successfully, otherwise an error result.</returns>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was disabled successfully, otherwise an error result.</returns>
     public static Task<HostsFileEntryModifyResult> DisableEntryAsync(HostsFileEntry entry)
     {
-        return Task.Run(() => DisableEntry(entry));
+        return DisableEntriesAsync([entry]);
     }
 
     /// <summary>
-    /// Disable a hosts file entry.
+    /// Edit the comment for multiple hosts file entries asynchronously.
     /// </summary>
-    /// <param name="entry">Entry to disable.</param>
-    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was enabled successfully, otherwise an error result.</returns>
-    private static HostsFileEntryModifyResult DisableEntry(HostsFileEntry entry)
+    /// <param name="entries">Entries to update.</param>
+    /// <param name="comment">The new comment to apply.</param>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if entries were edited successfully, otherwise an error result.</returns>
+    public static Task<HostsFileEntryModifyResult> EditCommentAsync(IEnumerable<HostsFileEntry> entries, string comment)
     {
+        return Task.Run(() => ModifyEntries(entries, e => new HostsFileEntry(e.IsEnabled, e.IPAddress, e.Hostname, comment)));
+    }
+
+    /// <summary>
+    /// Modifies multiple hosts file entries using a transform function.
+    /// </summary>
+    private static HostsFileEntryModifyResult ModifyEntries(IEnumerable<HostsFileEntry> entries, Func<HostsFileEntry, HostsFileEntry> transform)
+    {
+        var entriesList = entries?.ToList() ?? [];
+        if (entriesList.Count == 0)
+            return HostsFileEntryModifyResult.Success;
+
         // Create a backup of the hosts file before making changes
         if (CreateBackup() == false)
         {
-            Log.Error("DisableEntry - Failed to create backup before disabling entry.");
+            Log.Error("ModifyEntries - Failed to create backup before modifying entries.");
             return HostsFileEntryModifyResult.BackupError;
         }
 
-        // Disable the entry in the hosts file
         List<string> hostsFileLines;
 
         try
@@ -280,49 +239,42 @@ public static class HostsFileEditor
         }
         catch (Exception ex)
         {
-            Log.Error($"DisableEntry - Failed to read hosts file: {HostsFilePath}", ex);
+            Log.Error($"ModifyEntries - Failed to read hosts file: {HostsFilePath}", ex);
             return HostsFileEntryModifyResult.ReadError;
         }
 
-        var entryFound = false;
+        var anyModified = false;
+        var pending = entriesList.ToList();
 
         for (var i = 0; i < hostsFileLines.Count; i++)
         {
-            if (hostsFileLines[i] != entry.Line)
-                continue;
+            var matchIndex = pending.FindIndex(e => e.Line == hostsFileLines[i]);
+            if (matchIndex >= 0)
+            {
+                var matched = pending[matchIndex];
+                pending.RemoveAt(matchIndex);
 
-            entryFound = true;
-
-            Log.Debug($"DisableEntry - Found entry: {hostsFileLines[i]}");
-            hostsFileLines.RemoveAt(i);
-
-            var newEntry = new HostsFileEntry(
-                false,
-                entry.IPAddress,
-                entry.Hostname,
-                entry.Comment
-            );
-
-            Log.Debug($"DisableEntry - Disabling entry: {newEntry.Line}");
-            hostsFileLines.Insert(i, newEntry.Line);
-
-            break;
+                var newEntry = transform(matched);
+                Log.Debug($"ModifyEntries - Replacing entry: {hostsFileLines[i]} with {newEntry.Line}");
+                hostsFileLines[i] = newEntry.Line;
+                anyModified = true;
+            }
         }
 
-        if (!entryFound)
+        if (!anyModified && entriesList.Count > 0)
         {
-            Log.Warn($"DisableEntry - Entry not found in hosts file: {entry.Line}");
+            Log.Warn("ModifyEntries - None of the specified entries were found in hosts file.");
             return HostsFileEntryModifyResult.NotFound;
         }
 
         try
         {
-            Log.Debug($"DisableEntry - Writing changes to hosts file: {HostsFilePath}");
+            Log.Debug($"ModifyEntries - Writing changes to hosts file: {HostsFilePath}");
             File.WriteAllLines(HostsFilePath, hostsFileLines);
         }
         catch (Exception ex)
         {
-            Log.Error($"DisableEntry - Failed to write changes to hosts file: {HostsFilePath}", ex);
+            Log.Error($"ModifyEntries - Failed to write changes to hosts file: {HostsFilePath}", ex);
             return HostsFileEntryModifyResult.WriteError;
         }
 
@@ -461,30 +413,42 @@ public static class HostsFileEditor
     }
 
     /// <summary>
-    /// Delete a hosts file entry asynchronously.
+    /// Delete multiple hosts file entries asynchronously.
     /// </summary>
-    /// <param name="entry">Entry to delete.</param>"/>
-    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was enabled successfully, otherwise an error result.</returns>s
-    public static Task<HostsFileEntryModifyResult> DeleteEntryAsync(HostsFileEntry entry)
+    /// <param name="entries">Entries to delete.</param>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if entries were deleted successfully, otherwise an error result.</returns>
+    public static Task<HostsFileEntryModifyResult> DeleteEntriesAsync(IEnumerable<HostsFileEntry> entries)
     {
-        return Task.Run(() => DeleteEntry(entry));
+        return Task.Run(() => DeleteEntries(entries));
     }
 
     /// <summary>
-    /// Delete a hosts file entry.
+    /// Delete a hosts file entry asynchronously.
     /// </summary>
-    /// <param name="entry">Entry to delete.</param>"/>
-    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was enabled successfully, otherwise an error result.</returns>
-    private static HostsFileEntryModifyResult DeleteEntry(HostsFileEntry entry)
+    /// <param name="entry">Entry to delete.</param>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was deleted successfully, otherwise an error result.</returns>
+    public static Task<HostsFileEntryModifyResult> DeleteEntryAsync(HostsFileEntry entry)
     {
+        return DeleteEntriesAsync([entry]);
+    }
+
+    /// <summary>
+    /// Delete multiple hosts file entries.
+    /// </summary>
+    private static HostsFileEntryModifyResult DeleteEntries(IEnumerable<HostsFileEntry> entries)
+    {
+        var entriesList = entries?.ToList() ?? [];
+        if (entriesList.Count == 0)
+            return HostsFileEntryModifyResult.Success;
+
         // Create a backup of the hosts file before making changes
         if (CreateBackup() == false)
         {
-            Log.Error("DeleteEntry - Failed to create backup before deleting entry.");
+            Log.Error("DeleteEntries - Failed to create backup before deleting entries.");
             return HostsFileEntryModifyResult.BackupError;
         }
 
-        // Remove the entry from the hosts file
+        // Remove the entries from the hosts file
         List<string> hostsFileLines;
 
         try
@@ -493,39 +457,39 @@ public static class HostsFileEditor
         }
         catch (Exception ex)
         {
-            Log.Error($"DeleteEntry - Failed to read hosts file: {HostsFilePath}", ex);
+            Log.Error($"DeleteEntries - Failed to read hosts file: {HostsFilePath}", ex);
             return HostsFileEntryModifyResult.ReadError;
         }
 
-        var entryFound = false;
+        var anyDeleted = false;
+        var pending = entriesList.ToList();
 
-        for (var i = 0; i < hostsFileLines.Count; i++)
+        for (var i = hostsFileLines.Count - 1; i >= 0; i--)
         {
-            if (hostsFileLines[i] != entry.Line)
-                continue;
-
-            entryFound = true;
-
-            Log.Debug($"DeleteEntry - Found entry: {hostsFileLines[i]}");
-            hostsFileLines.RemoveAt(i);
-
-            break;
+            var matchIndex = pending.FindIndex(e => e.Line == hostsFileLines[i]);
+            if (matchIndex >= 0)
+            {
+                pending.RemoveAt(matchIndex);
+                Log.Debug($"DeleteEntries - Found entry: {hostsFileLines[i]}");
+                hostsFileLines.RemoveAt(i);
+                anyDeleted = true;
+            }
         }
 
-        if (!entryFound)
+        if (!anyDeleted && entriesList.Count > 0)
         {
-            Log.Warn($"DeleteEntry - Entry not found in hosts file: {entry.Line}");
+            Log.Warn("DeleteEntries - None of the specified entries were found in hosts file.");
             return HostsFileEntryModifyResult.NotFound;
         }
 
         try
         {
-            Log.Debug($"DeleteEntry - Writing changes to hosts file: {HostsFilePath}");
+            Log.Debug($"DeleteEntries - Writing changes to hosts file: {HostsFilePath}");
             File.WriteAllLines(HostsFilePath, hostsFileLines);
         }
         catch (Exception ex)
         {
-            Log.Error($"DeleteEntry - Failed to write changes to hosts file: {HostsFilePath}", ex);
+            Log.Error($"DeleteEntries - Failed to write changes to hosts file: {HostsFilePath}", ex);
             return HostsFileEntryModifyResult.WriteError;
         }
 
