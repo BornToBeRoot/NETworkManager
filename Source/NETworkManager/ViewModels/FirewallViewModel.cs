@@ -94,6 +94,23 @@ public class FirewallViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets whether to show all system firewall rules or only rules managed by NETworkManager.
+    /// </summary>
+    public bool ShowAllRules
+    {
+        get => SettingsManager.Current.Firewall_ShowAllRules;
+        set
+        {
+            if (value == SettingsManager.Current.Firewall_ShowAllRules)
+                return;
+
+            SettingsManager.Current.Firewall_ShowAllRules = value;
+            OnPropertyChanged();
+            _ = Refresh();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets whether a refresh is currently running.
     /// </summary>
     public bool IsRefreshing
@@ -549,7 +566,7 @@ public class FirewallViewModel : ViewModelBase
 
         try
         {
-            var rules = await Firewall.GetRulesAsync();
+            var rules = await Firewall.GetRulesAsync(onlyManagedRules: !ShowAllRules);
 
             Application.Current.Dispatcher.Invoke(() =>
             {

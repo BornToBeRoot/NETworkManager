@@ -4313,6 +4313,9 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   <data name="FirewallRules" xml:space="preserve">
     <value>Firewall rules</value>
   </data>
+  <data name="ShowAllRules" xml:space="preserve">
+    <value>Show all rules</value>
+  </data>
   <data name="WindowsFirewallSettings" xml:space="preserve">
     <value>Windows Firewall settings</value>
   </data>

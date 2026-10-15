@@ -67,15 +67,19 @@ Import-Module NetSecurity -ErrorAction Stop").Invoke();
     #region Methods
 
     /// <summary>
-    /// Retrieves all Windows Firewall rules whose display name starts with <see cref="RuleIdentifier"/>
-    /// and maps each one to a <see cref="FirewallRule"/> object.
+    /// Retrieves Windows Firewall rules and maps each one to a <see cref="FirewallRule"/> object.
+    /// When <paramref name="onlyManagedRules"/> is <see langword="true"/>, only rules whose display name
+    /// starts with <see cref="RuleIdentifier"/> are returned; otherwise all rules on the system are returned.
     /// PowerShell errors during the query are logged as warnings; errors for individual
     /// rules are caught so a single malformed rule does not abort the entire load.
     /// </summary>
+    /// <param name="onlyManagedRules">
+    /// <see langword="true"/> to query only rules managed by NETworkManager; <see langword="false"/> to query all system firewall rules.
+    /// </param>
     /// <returns>
     /// A list of <see cref="FirewallRule"/> objects representing the matching rules.
     /// </returns>
-    public static async Task<List<FirewallRule>> GetRulesAsync()
+    public static async Task<List<FirewallRule>> GetRulesAsync(bool onlyManagedRules = true)
     {
         await RunspaceLock.WaitAsync();
         try
@@ -87,7 +91,9 @@ Import-Module NetSecurity -ErrorAction Stop").Invoke();
                 using var ps = SMA.PowerShell.Create();
                 ps.Runspace = SharedRunspace;
 
-                ps.AddScript($@"
+                if (onlyManagedRules)
+                {
+                    ps.AddScript($@"
 Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     $rule              = $_
     $portFilter        = $rule | Get-NetFirewallPortFilter
@@ -111,6 +117,41 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
         Program       = $appFilter.Program
     }}
 }}");
+                }
+                else
+                {
+                    ps.AddScript($@"
+$rules = Get-NetFirewallRule
+$pf = @{{}}; Get-NetFirewallPortFilter | ForEach-Object {{ $pf[$_.InstanceID] = $_ }}
+$af = @{{}}; Get-NetFirewallAddressFilter | ForEach-Object {{ $af[$_.InstanceID] = $_ }}
+$app = @{{}}; Get-NetFirewallApplicationFilter | ForEach-Object {{ $app[$_.InstanceID] = $_ }}
+$if = @{{}}; Get-NetFirewallInterfaceTypeFilter | ForEach-Object {{ $if[$_.InstanceID] = $_ }}
+$list = [System.Collections.Generic.List[PSCustomObject]]::new($rules.Count)
+foreach ($rule in $rules) {{
+    $id = $rule.InstanceID
+    $portFilter    = $pf[$id]
+    $addressFilter = $af[$id]
+    $appFilter     = $app[$id]
+    $ifTypeFilter  = $if[$id]
+    $list.Add([PSCustomObject]@{{
+        Id            = $rule.ID
+        DisplayName   = $rule.DisplayName
+        Enabled       = ($rule.Enabled -eq 'True')
+        Description   = $rule.Description
+        Direction     = [string]$rule.Direction
+        Action        = [string]$rule.Action
+        Protocol      = $portFilter.Protocol
+        LocalPort     = ($portFilter.LocalPort   -join ',')
+        RemotePort    = ($portFilter.RemotePort  -join ',')
+        LocalAddress  = ($addressFilter.LocalAddress  -join ',')
+        RemoteAddress = ($addressFilter.RemoteAddress -join ',')
+        Profile       = [string]$rule.Profile
+        InterfaceType = [string]$ifTypeFilter.InterfaceType
+        Program       = $appFilter.Program
+    }})
+}}
+$list");
+                }
 
                 var results = ps.Invoke();
 

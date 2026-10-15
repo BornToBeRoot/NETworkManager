@@ -55,6 +55,10 @@
                                     Orientation="Horizontal"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Right">
+                            <CheckBox Content="{x:Static localization:Strings.ShowAllRules}"
+                                      IsChecked="{Binding ShowAllRules}"
+                                      VerticalAlignment="Center"
+                                      Margin="0,0,10,0" />
                             <Button Command="{Binding Path=RefreshCommand}"
                                     Style="{StaticResource CleanButton}"
                                     ToolTip="{x:Static localization:Strings.Refresh}"
