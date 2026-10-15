@@ -4703,4 +4703,13 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
   <data name="DomainCannotBeQueriedViaRDAPTryWhois" xml:space="preserve">
     <value>This domain cannot be queried via RDAP. Try Whois instead.</value>
   </data>
+  <data name="EditComment" xml:space="preserve">
+    <value>Edit comment</value>
+  </data>
+  <data name="EditCommentDots" xml:space="preserve">
+    <value>Edit comment...</value>
+  </data>
+  <data name="DeleteHostsFileEntriesMessage" xml:space="preserve">
+    <value>The selected {0} entries will be permanently deleted.</value>
+  </data>
 </root>

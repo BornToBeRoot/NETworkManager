@@ -1,4 +1,4 @@
-﻿using log4net;
+using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
@@ -9,6 +9,7 @@ using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -300,19 +301,37 @@ public class HostsFileEditorViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Helper to get the target entries for operations (either multi-selection or single selected entry).
+    /// </summary>
+    private List<HostsFileEntry> GetTargetEntries()
+    {
+        if (SelectedResults != null && SelectedResults.Count > 1)
+            return [.. SelectedResults.Cast<HostsFileEntry>()];
+
+        if (SelectedResult != null)
+            return [SelectedResult];
+
+        return [];
+    }
+
+    /// <summary>
     /// Gets the command to enable the selected entry.
     /// </summary>
     public ICommand EnableEntryCommand =>
         new RelayCommand(parameter => { _ = EnableEntryAction(); }, ModifyEntry_CanExecute);
 
     /// <summary>
-    /// Action to enable the selected entry.
+    /// Action to enable the selected entry or entries.
     /// </summary>
     private async Task EnableEntryAction()
     {
+        var entries = GetTargetEntries();
+        if (entries.Count == 0)
+            return;
+
         IsModifying = true;
 
-        var result = await HostsFileEditor.EnableEntryAsync(SelectedResult);
+        var result = await HostsFileEditor.EnableEntriesAsync(entries);
 
         if (result != HostsFileEntryModifyResult.Success)
             await ShowErrorMessageAsync(result);
@@ -327,13 +346,17 @@ public class HostsFileEditorViewModel : ViewModelBase
         new RelayCommand(parameter => { _ = DisableEntryAction(); }, ModifyEntry_CanExecute);
 
     /// <summary>
-    /// Action to disable the selected entry.
+    /// Action to disable the selected entry or entries.
     /// </summary>
     private async Task DisableEntryAction()
     {
+        var entries = GetTargetEntries();
+        if (entries.Count == 0)
+            return;
+
         IsModifying = true;
 
-        var result = await HostsFileEditor.DisableEntryAsync(SelectedResult);
+        var result = await HostsFileEditor.DisableEntriesAsync(entries);
 
         if (result != HostsFileEntryModifyResult.Success)
             await ShowErrorMessageAsync(result);
@@ -392,6 +415,56 @@ public class HostsFileEditorViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets the command to edit comments of the selected entry or entries.
+    /// </summary>
+    public ICommand EditCommentCommand =>
+        new RelayCommand(parameter => { _ = EditCommentAction(); }, ModifyEntry_CanExecute);
+
+    /// <summary>
+    /// Action to edit comments of the selected entry or entries.
+    /// </summary>
+    private async Task EditCommentAction()
+    {
+        var entries = GetTargetEntries();
+        if (entries.Count == 0)
+            return;
+
+        IsModifying = true;
+
+        var initialComment = entries.Select(e => e.Comment ?? string.Empty).Distinct().Count() == 1
+            ? entries[0].Comment ?? string.Empty
+            : string.Empty;
+
+        var childWindow = new HostsFileEditorCommentChildWindow();
+
+        var childWindowViewModel = new HostsFileEditorCommentViewModel(async instance =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            var result = await HostsFileEditor.EditCommentAsync(entries, instance.Comment);
+
+            if (result != HostsFileEntryModifyResult.Success)
+                await ShowErrorMessageAsync(result);
+
+            IsModifying = false;
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            IsModifying = false;
+        }, initialComment);
+
+        childWindow.Title = Strings.EditComment;
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
+    }
+
+    /// <summary>
     /// Gets the command to edit the selected entry.
     /// </summary>
     public ICommand EditEntryCommand =>
@@ -402,6 +475,15 @@ public class HostsFileEditorViewModel : ViewModelBase
     /// </summary>
     private async Task EditEntryAction()
     {
+        if (SelectedResults != null && SelectedResults.Count > 1)
+        {
+            await EditCommentAction();
+            return;
+        }
+
+        if (SelectedResult == null)
+            return;
+
         IsModifying = true;
 
         var childWindow = new HostsFileEditorEntryChildWindow();
@@ -448,19 +530,38 @@ public class HostsFileEditorViewModel : ViewModelBase
         new RelayCommand(parameter => { _ = DeleteEntryAction(); }, ModifyEntry_CanExecute);
 
     /// <summary>
-    /// Action to delete the selected entry.
+    /// Action to delete the selected entry or entries.
     /// </summary>
     private async Task DeleteEntryAction()
     {
+        var entries = GetTargetEntries();
+        if (entries.Count == 0)
+            return;
+
         IsModifying = true;
 
-        var result = await DialogHelper.ShowConfirmationMessageAsync(
-            Application.Current.MainWindow,
-            Strings.DeleteEntry,
-            string.Format(Strings.DeleteHostsFileEntryMessage, SelectedResult.IPAddress, SelectedResult.Hostname,
-                string.IsNullOrEmpty(SelectedResult.Comment) ? "" : $"# {SelectedResult.Comment}"),
-            ChildWindowIcon.Info,
-            Strings.Delete);
+        bool result;
+
+        if (entries.Count > 1)
+        {
+            result = await DialogHelper.ShowConfirmationMessageAsync(
+                Application.Current.MainWindow,
+                Strings.Delete,
+                string.Format(Strings.DeleteHostsFileEntriesMessage, entries.Count),
+                ChildWindowIcon.Info,
+                Strings.Delete);
+        }
+        else
+        {
+            var single = entries[0];
+            result = await DialogHelper.ShowConfirmationMessageAsync(
+                Application.Current.MainWindow,
+                Strings.DeleteEntry,
+                string.Format(Strings.DeleteHostsFileEntryMessage, single.IPAddress, single.Hostname,
+                    string.IsNullOrEmpty(single.Comment) ? "" : $"# {single.Comment}"),
+                ChildWindowIcon.Info,
+                Strings.Delete);
+        }
 
         if (!result)
         {
@@ -468,8 +569,7 @@ public class HostsFileEditorViewModel : ViewModelBase
             return;
         }
 
-
-        var modifyResult = await HostsFileEditor.DeleteEntryAsync(SelectedResult);
+        var modifyResult = await HostsFileEditor.DeleteEntriesAsync(entries);
 
         if (modifyResult != HostsFileEntryModifyResult.Success)
             await ShowErrorMessageAsync(modifyResult);
