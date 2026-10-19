@@ -8,6 +8,7 @@
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:DiscoveryProtocolViewModel}">
     <UserControl.Resources>
@@ -65,6 +66,8 @@
                             <ComboBox Grid.Column="6" ItemsSource="{Binding Durations}"
                                       SelectedItem="{Binding SelectedDuration}" />
                             <Button Grid.Column="8" Command="{Binding CaptureCommand}"
+                                    wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NetworkPacketsCaptureAdminMessage}"
+                                    wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}"
                                     Style="{StaticResource ImageWithTextButton}">
                                 <Button.Content>
                                     <Grid>
