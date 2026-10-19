@@ -81,13 +81,13 @@ Release date: **xx.xx.2026**
 
 **Hosts File Editor**
 
-- Added **Copy as...** to the context menu to create a new entry based on an existing one. The copy is added directly below the original entry.
+- Added **Copy as...** to the context menu to create a new entry based on an existing one. The copy is added directly below the original entry. [0544698](https://github.com/BornToBeRoot/NETworkManager/commit/0544698aefc325ab36ca4c8e80250e1fe0b62d4a)
 - Multiple entries can now be selected to enable, disable or delete them at once, or to change their comment via **Edit entries...** (`F2`). The edit dialog switches to a bulk mode in which only the comment can be changed. [#3624](https://github.com/BornToBeRoot/NETworkManager/pull/3624)
 - Entries that don't change (e.g. enabling an already enabled entry, or confirming the edit dialog without changes) are no longer rewritten in the `hosts` file, so custom formatting such as tabs or alignment is kept. [#3624](https://github.com/BornToBeRoot/NETworkManager/pull/3624)
 
 **Firewall**
 
-- Added **Copy as...** to the context menu to create a new rule based on an existing one (name suffixed with ` - Copy`).
+- Added **Copy as...** to the context menu to create a new rule based on an existing one (name suffixed with ` - Copy`). [0544698](https://github.com/BornToBeRoot/NETworkManager/commit/0544698aefc325ab36ca4c8e80250e1fe0b62d4a)
 
 ## Bug Fixes
 
