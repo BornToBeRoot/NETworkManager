@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NETworkManager.ViewModels;
+using System;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -15,7 +16,11 @@ public partial class HostsFileEditorEntryChildWindow
     {
         Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(delegate
         {
-            TextBoxIPAddress.Focus();
+            // Bulk edit only allows changing the comment
+            if (DataContext is HostsFileEditorEntryViewModel { IsBulkEdit: true })
+                TextBoxComment.Focus();
+            else
+                TextBoxIPAddress.Focus();
         }));
     }
 }
