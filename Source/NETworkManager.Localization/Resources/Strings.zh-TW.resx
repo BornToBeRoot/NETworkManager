@@ -316,7 +316,7 @@
     <value>設定已套用</value>
   </data>
   <data name="NetworkInterfaceConfigureAdminMessage" xml:space="preserve">
-    <value>Configuring the network interface requires elevated rights (administrator or member of the "Network Configuration Operators" group)!</value>
+    <value>設定網路介面需要提升權限（管理員或「網路配置操作員」群組成員）！</value>
   </data>
   <data name="NewTab" xml:space="preserve">
     <value>新標籤</value>
@@ -4506,201 +4506,221 @@ Cloudflare 可能會記錄您的 IP 位址與網路資訊。詳情請參閱 Clou
     <value>RDAP</value>
   </data>
   <data name="RDAPQueryType_Domain" xml:space="preserve">
-    <value>Domain</value>
+    <value>網域</value>
   </data>
   <data name="RDAPQueryType_TLD" xml:space="preserve">
     <value>TLD</value>
   </data>
   <data name="RDAPQueryType_IPAddress" xml:space="preserve">
-    <value>IP address</value>
+    <value>IP 位址</value>
   </data>
   <data name="RDAPQueryType_ASN" xml:space="preserve">
     <value>ASN</value>
   </data>
   <data name="RDAPQueryType_Entity" xml:space="preserve">
-    <value>Entity</value>
+    <value>實體</value>
   </data>
   <data name="AddATabToQueryRDAP" xml:space="preserve">
-    <value>Add a tab to query RDAP...</value>
+    <value>新增一個分頁來查詢 RDAP...</value>
   </data>
   <data name="EnterAQueryToQueryRDAPDots" xml:space="preserve">
-    <value>Enter a domain, IP address, AS number or entity handle to query RDAP...</value>
+    <value>請輸入網域、IP 位址、AS 編號或實體處理程序以查詢 RDAP...</value>
   </data>
   <data name="Actor" xml:space="preserve">
-    <value>Actor</value>
+    <value>角色</value>
   </data>
   <data name="Address" xml:space="preserve">
-    <value>Address</value>
+    <value>位址</value>
   </data>
   <data name="Algorithm" xml:space="preserve">
-    <value>Algorithm</value>
+    <value>演算法</value>
   </data>
   <data name="BootstrapFiles" xml:space="preserve">
-    <value>Bootstrap files</value>
+    <value>啟動檔案</value>
   </data>
   <data name="BootstrapFilesAreUpToDate" xml:space="preserve">
-    <value>The bootstrap files are up to date.</value>
+    <value>啟動檔案已更新。</value>
   </data>
   <data name="Conformance" xml:space="preserve">
-    <value>Conformance</value>
+    <value>符合性</value>
   </data>
   <data name="Contacts" xml:space="preserve">
-    <value>Contacts</value>
+    <value>聯絡人</value>
   </data>
   <data name="DNSSEC" xml:space="preserve">
     <value>DNSSEC</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>Date</value>
+    <value>日期</value>
   </data>
   <data name="DelegationSigned" xml:space="preserve">
-    <value>Delegation signed</value>
+    <value>委派已簽署</value>
   </data>
   <data name="Digest" xml:space="preserve">
-    <value>Digest</value>
+    <value>摘要</value>
   </data>
   <data name="DigestType" xml:space="preserve">
-    <value>Digest type</value>
+    <value>摘要類型</value>
   </data>
   <data name="Downloaded" xml:space="preserve">
-    <value>Downloaded</value>
+    <value>已下載</value>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>電子郵件</value>
   </data>
   <data name="EnterValidASN" xml:space="preserve">
-    <value>Enter a valid AS number (e.g., "AS15169")!</value>
+    <value>請輸入有效的 AS 編號（例如："AS15169"）！</value>
   </data>
   <data name="EnterValidEntityHandle" xml:space="preserve">
-    <value>Enter a valid entity handle (e.g., "ORG-RIEN1-RIPE")!</value>
+    <value>請輸入有效的實體處理程序（例如："ORG-RIEN1-RIPE"）！</value>
   </data>
   <data name="EnterValidIPAddressOrCIDR" xml:space="preserve">
-    <value>Enter a valid IP address or CIDR (e.g., "192.0.2.0/24")!</value>
+    <value>請輸入有效的 IP 位址或 CIDR（例如："192.0.2.0/24"）！</value>
   </data>
   <data name="EnterValidTLD" xml:space="preserve">
-    <value>Enter a valid top-level domain (e.g., "de")!</value>
+    <value>請輸入有效的頂級網域（例如："de"）！</value>
   </data>
   <data name="Events" xml:space="preserve">
-    <value>Events</value>
+    <value>事件</value>
   </data>
   <data name="Fax" xml:space="preserve">
-    <value>Fax</value>
+    <value>傳真</value>
   </data>
   <data name="FollowReferralToRegistrar" xml:space="preserve">
-    <value>Follow referral to registrar</value>
+    <value>追蹤至註冊商的參照</value>
   </data>
   <data name="Handle" xml:space="preserve">
-    <value>Handle</value>
+    <value>處理程序</value>
   </data>
   <data name="HelpMessage_RDAPBootstrapFiles" xml:space="preserve">
-    <value>The IANA bootstrap files are used to find the RDAP server for a domain, IP address, AS number or entity. They are downloaded with the first query and refreshed automatically once a week.</value>
+    <value>IANA 啟動檔案用於尋找網域、IP 位址、AS 編號或實體的 RDAP 伺服器。這些檔案會在第一次查詢時下載，並每週自動更新一次。</value>
   </data>
   <data name="HelpMessage_RDAPFollowReferral" xml:space="preserve">
-    <value>For many domains (e.g., .com and .net), the registry only returns basic data and refers to the RDAP server of the registrar for details. If enabled, the RDAP server of the registrar is queried as well.</value>
+    <value>對於許多網域（例如 .com 和 .net），註冊局僅回傳基本資料，並參照註冊商的 RDAP 伺服器以取得詳細資訊。若啟用此功能，也會同時查詢註冊商的 RDAP 伺服器。</value>
   </data>
   <data name="KeyTag" xml:space="preserve">
-    <value>Key tag</value>
+    <value>金鑰標籤</value>
   </data>
   <data name="LastChecked" xml:space="preserve">
-    <value>Last checked</value>
+    <value>最後檢查時間</value>
   </data>
   <data name="Nameservers" xml:space="preserve">
-    <value>Nameservers</value>
+    <value>名稱伺服器</value>
   </data>
   <data name="Notices" xml:space="preserve">
-    <value>Notices</value>
+    <value>公告</value>
   </data>
   <data name="ObjectClass" xml:space="preserve">
-    <value>Object class</value>
+    <value>物件類別</value>
   </data>
   <data name="OpenInWhois" xml:space="preserve">
-    <value>Open in Whois</value>
+    <value>在 Whois 中開啟</value>
   </data>
   <data name="ParentHandle" xml:space="preserve">
-    <value>Parent handle</value>
+    <value>父層處理程序</value>
   </data>
   <data name="Phone" xml:space="preserve">
-    <value>Phone</value>
+    <value>電話</value>
   </data>
   <data name="Port43" xml:space="preserve">
-    <value>Port 43 (Whois)</value>
+    <value>連接埠 43 (Whois)</value>
   </data>
   <data name="PublicIDs" xml:space="preserve">
-    <value>Public IDs</value>
+    <value>公開 ID</value>
   </data>
   <data name="Publication" xml:space="preserve">
-    <value>Publication</value>
+    <value>發佈內容</value>
   </data>
   <data name="RDAPBadRequestX" xml:space="preserve">
-    <value>The server could not process the query: {0}</value>
+    <value>伺服器無法處理此查詢：{0}</value>
   </data>
   <data name="RDAPBootstrapUnavailableX" xml:space="preserve">
-    <value>The IANA bootstrap files could not be downloaded: {0}</value>
+    <value>無法下載 IANA 啟動檔案：{0}</value>
   </data>
   <data name="RDAPHttpErrorX" xml:space="preserve">
-    <value>The server returned an error: {0}</value>
+    <value>伺服器傳回錯誤：{0}</value>
   </data>
   <data name="RDAPInsecureRedirectX" xml:space="preserve">
-    <value>The server redirected to an insecure URL, which was not followed: {0}</value>
+    <value>伺服器重新導向至不安全的 URL，且未進行追蹤：{0}</value>
   </data>
   <data name="RDAPInvalidResponseX" xml:space="preserve">
-    <value>The server returned an invalid response: {0}</value>
+    <value>伺服器傳回無效的內容：{0}</value>
   </data>
   <data name="RDAPNetworkErrorX" xml:space="preserve">
-    <value>Could not connect to the RDAP server: {0}</value>
+    <value>無法連線至 RDAP 伺服器：{0}</value>
   </data>
   <data name="RDAPNoServerForX" xml:space="preserve">
-    <value>No RDAP server is known for "{0}". The registry may only provide Whois.</value>
+    <value>目前無已知的 "{0}" RDAP 伺服器。該註冊局可能僅提供 Whois。</value>
   </data>
   <data name="RDAPNoServerForEntityX" xml:space="preserve">
-    <value>No RDAP server is known for "{0}". Entity handles can only be resolved if they end with a known service provider tag (e.g., "-RIPE" or "-ARIN").</value>
+    <value>目前無已知的 "{0}" RDAP 伺服器。實體處理程序僅能在結尾帶有已知服務供應商標籤（例如 "-RIPE" 或 "-ARIN"）時才能解析。</value>
   </data>
   <data name="RDAPNotFoundX" xml:space="preserve">
-    <value>No data found for "{0}".</value>
+    <value>找不到 "{0}" 的資料。</value>
   </data>
   <data name="RDAPNotImplemented" xml:space="preserve">
-    <value>The server does not support this query.</value>
+    <value>伺服器不支援此查詢。</value>
   </data>
   <data name="RDAPRateLimited" xml:space="preserve">
-    <value>The server limits the number of queries. Try again later.</value>
+    <value>伺服器限制了查詢次數。請稍後再試。</value>
   </data>
   <data name="RDAPRateLimitedTryAgainInXSeconds" xml:space="preserve">
-    <value>The server limits the number of queries. Try again in {0} seconds.</value>
+    <value>伺服器限制了查詢次數。請在{0}秒後再試。</value>
   </data>
   <data name="RDAPReferralFailedX" xml:space="preserve">
-    <value>The RDAP server of the registrar could not be queried: {0}</value>
+    <value>無法查詢註冊商的 RDAP 伺服器：{0}</value>
   </data>
   <data name="RDAPTooManyRedirects" xml:space="preserve">
-    <value>Too many redirects.</value>
+    <value>太多次重新導向。</value>
   </data>
   <data name="Range" xml:space="preserve">
-    <value>Range</value>
+    <value>範圍</value>
   </data>
   <data name="RawJSON" xml:space="preserve">
-    <value>Raw JSON</value>
+    <value>原始 JSON</value>
   </data>
   <data name="Registrar" xml:space="preserve">
-    <value>Registrar</value>
+    <value>註冊商</value>
   </data>
   <data name="Registry" xml:space="preserve">
-    <value>Registry</value>
+    <value>登錄表</value>
   </data>
   <data name="Roles" xml:space="preserve">
-    <value>Roles</value>
+    <value>角色</value>
   </data>
   <data name="Size" xml:space="preserve">
-    <value>Size</value>
+    <value>大小</value>
   </data>
   <data name="UpdateNow" xml:space="preserve">
-    <value>Update now</value>
+    <value>立即更新</value>
   </data>
   <data name="RDAPReferralInsecureX" xml:space="preserve">
-    <value>The referral to the RDAP server of the registrar was not followed, because it does not use a secure connection (HTTPS): {0}</value>
+    <value>由於註冊商的 RDAP 伺服器參照未採用安全連線 (HTTPS)，因此無法連線：{0}</value>
   </data>
   <data name="RDAPReferralPrivateAddressX" xml:space="preserve">
-    <value>The referral to the RDAP server of the registrar was not followed, because it points to a local or private address: {0}</value>
+    <value>由於註冊商的 RDAP 伺服器參照指向一個區域或私有位址，因此無法連線：{0}</value>
   </data>
   <data name="DomainCannotBeQueriedViaRDAPTryWhois" xml:space="preserve">
-    <value>This domain cannot be queried via RDAP. Try Whois instead.</value>
+    <value>此網域無法透過 RDAP 查詢。請嘗試使用 Whois。</value>
+  </data>
+  <data name="DeleteEntries" xml:space="preserve">
+    <value>刪除項目</value>
+  </data>
+  <data name="DeleteHostsFileEntriesMessage" xml:space="preserve">
+    <value>所選項目已永久刪除：
+
+{0}</value>
+  </data>
+  <data name="EditEntriesX" xml:space="preserve">
+    <value>編輯項目 ({0})</value>
+  </data>
+  <data name="EditEntriesDots" xml:space="preserve">
+    <value>編輯項目...</value>
+  </data>
+  <data name="MultipleValues" xml:space="preserve">
+    <value>多個值</value>
+  </data>
+  <data name="DeleteEntriesX" xml:space="preserve">
+    <value>刪除項目 ({0})</value>
   </data>
 </root>
