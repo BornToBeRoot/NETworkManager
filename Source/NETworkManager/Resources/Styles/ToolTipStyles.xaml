@@ -10,7 +10,8 @@
 
     <Style TargetType="{x:Type TypeName=ToolTip}" BasedOn="{StaticResource ResourceKey=DefaultToolTip}" />
 
-    <Style x:Key="HelpToolTip" TargetType="{x:Type TypeName=ToolTip}" BasedOn="{StaticResource ResourceKey=DefaultToolTip}">
+    <!-- Generic tooltip for (long) text, limits the width and wraps the text -->
+    <Style x:Key="WrapToolTip" TargetType="{x:Type TypeName=ToolTip}" BasedOn="{StaticResource ResourceKey=DefaultToolTip}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TypeName=ToolTip}">
@@ -52,6 +53,8 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="HelpToolTip" TargetType="{x:Type TypeName=ToolTip}" BasedOn="{StaticResource ResourceKey=WrapToolTip}" />
 
     <Style x:Key="WarnToolTip" TargetType="{x:Type TypeName=ToolTip}" BasedOn="{StaticResource ResourceKey=HelpToolTip}" />
 

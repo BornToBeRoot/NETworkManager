@@ -89,6 +89,8 @@
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static Member=localization:Strings.EnableEntry}"
                                       Command="{Binding Path=EnableEntryCommand}"
+                                      wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.HostsFileEditorAdminMessage}"
+                                      wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}"
                                       Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16"
@@ -102,6 +104,8 @@
                             </MenuItem>
                             <MenuItem Header="{x:Static Member=localization:Strings.DisableEntry}"
                                       Command="{Binding Path=DisableEntryCommand}"
+                                      wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.HostsFileEditorAdminMessage}"
+                                      wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}"
                                       Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16"
@@ -114,7 +118,9 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="{x:Static Member=localization:Strings.EditEntryDots}"
-                                      Command="{Binding Path=EditEntryCommand}">
+                                      Command="{Binding Path=EditEntryCommand}"
+                                      wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.HostsFileEditorAdminMessage}"
+                                      wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16"
                                                Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
@@ -125,7 +131,9 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="{x:Static Member=localization:Strings.DeleteEntry}"
-                                      Command="{Binding Path=DeleteEntryCommand}">
+                                      Command="{Binding Path=DeleteEntryCommand}"
+                                      wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.HostsFileEditorAdminMessage}"
+                                      wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16"
                                                Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
@@ -170,6 +178,8 @@
                         <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static Member=localization:Strings.Enable}"
                                       Command="{Binding Path=EnableEntryCommand}"
+                                      wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.HostsFileEditorAdminMessage}"
+                                      wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}"
                                       Visibility="{Binding Path=IsAnySelectedEntryDisabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16"
@@ -183,6 +193,8 @@
                             </MenuItem>
                             <MenuItem Header="{x:Static Member=localization:Strings.Disable}"
                                       Command="{Binding Path=DisableEntryCommand}"
+                                      wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.HostsFileEditorAdminMessage}"
+                                      wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}"
                                       Visibility="{Binding Path=IsAnySelectedEntryEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16"
@@ -195,7 +207,9 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="{x:Static Member=localization:Strings.EditEntriesDots}"
-                                      Command="{Binding Path=EditEntryCommand}">
+                                      Command="{Binding Path=EditEntryCommand}"
+                                      wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.HostsFileEditorAdminMessage}"
+                                      wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16"
                                                Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
@@ -206,7 +220,9 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="{x:Static Member=localization:Strings.DeleteEntries}"
-                                      Command="{Binding Path=DeleteEntryCommand}">
+                                      Command="{Binding Path=DeleteEntryCommand}"
+                                      wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.HostsFileEditorAdminMessage}"
+                                      wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16"
                                                Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
@@ -316,7 +332,10 @@
                                Orientation="Horizontal"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Right">
-                        <Button Command="{Binding AddEntryCommand}" Style="{StaticResource ImageWithTextButton}">
+                        <Button Command="{Binding AddEntryCommand}"
+                                wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.HostsFileEditorAdminMessage}"
+                                wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}"
+                                Style="{StaticResource ImageWithTextButton}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />

@@ -64,9 +64,8 @@
         <x:Array x:Key="NetworkInterfaceProfileContextMenuExtraItems" Type="{x:Type MenuItem}">
             <MenuItem Header="{x:Static localization:Strings.Apply}"
                       Command="{Binding ApplyProfileCommand}"
-                      ToolTip="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
-                      ToolTipService.ShowOnDisabled="True"
-                      ToolTipService.IsEnabled="{Binding HasPermissionToConfigure, Converter={StaticResource BooleanReverseConverter}}">
+                      wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
+                      wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding HasPermissionToConfigure}">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16"
                                Fill="{DynamicResource MahApps.Brushes.Gray3}">
@@ -1300,6 +1299,8 @@
                             </Grid.ColumnDefinitions>
                             <WrapPanel Grid.Column="0" HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,0,0,-10">
                                 <Button HorizontalAlignment="Left" Command="{Binding FlushDNSCommand}"
+                                        wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
+                                        wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding HasPermissionToConfigure}"
                                         IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}"
                                         Style="{StaticResource ImageWithTextButton}" Margin="0,0,10,10">
                                     <Button.Content>
@@ -1339,25 +1340,37 @@
                                         <MenuItem Header="{x:Static localization:Strings.IPv4}">
                                             <MenuItem Header="{x:Static localization:Strings.ReleaseRenew}"
                                                       Command="{Binding ReleaseRenewCommand}"
+                                                      wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
+                                                      wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding HasPermissionToConfigure}"
                                                       IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" />
                                             <Separator />
                                             <MenuItem Header="{x:Static localization:Strings.Release}"
                                                       Command="{Binding ReleaseCommand}"
+                                                      wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
+                                                      wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding HasPermissionToConfigure}"
                                                       IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" />
                                             <MenuItem Header="{x:Static localization:Strings.Renew}"
                                                       Command="{Binding RenewCommand}"
+                                                      wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
+                                                      wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding HasPermissionToConfigure}"
                                                       IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" />
                                         </MenuItem>
                                         <MenuItem Header="{x:Static localization:Strings.IPv6}">
                                             <MenuItem Header="{x:Static localization:Strings.ReleaseRenew}"
                                                       Command="{Binding ReleaseRenew6Command}"
+                                                      wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
+                                                      wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding HasPermissionToConfigure}"
                                                       IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" />
                                             <Separator />
                                             <MenuItem Header="{x:Static localization:Strings.Release}"
                                                       Command="{Binding Release6Command}"
+                                                      wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
+                                                      wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding HasPermissionToConfigure}"
                                                       IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" />
                                             <MenuItem Header="{x:Static localization:Strings.Renew}"
                                                       Command="{Binding Renew6Command}"
+                                                      wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
+                                                      wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding HasPermissionToConfigure}"
                                                       IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}" />
                                         </MenuItem>
                                     </mah:DropDownButton.Items>
@@ -1384,6 +1397,8 @@
                                     <mah:DropDownButton.Items>
                                         <MenuItem Header="{x:Static localization:Strings.AddIPv4AddressDots}"
                                                   Command="{Binding AddIPv4AddressCommand}"
+                                                  wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
+                                                  wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding HasPermissionToConfigure}"
                                                   IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
                                             <MenuItem.Icon>
                                                 <Rectangle Width="16" Height="16"
@@ -1397,6 +1412,8 @@
                                         </MenuItem>
                                         <MenuItem Header="{x:Static localization:Strings.RemoveIPv4AddressDots}"
                                                   Command="{Binding RemoveIPv4AddressCommand}"
+                                                  wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
+                                                  wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding HasPermissionToConfigure}"
                                                   IsEnabled="{Binding IsConfigurationRunning, Converter={StaticResource BooleanReverseConverter}}">
                                             <MenuItem.Icon>
                                                 <Rectangle Width="16" Height="16"
@@ -1412,6 +1429,8 @@
                                 </mah:DropDownButton>
                             </WrapPanel>
                             <Button Grid.Column="2" Command="{Binding ApplyConfigurationCommand}"
+                                    wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
+                                    wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding HasPermissionToConfigure}"
                                     VerticalAlignment="Bottom">
                                 <Button.Content>
                                     <Grid>

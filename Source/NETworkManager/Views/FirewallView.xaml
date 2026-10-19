@@ -99,6 +99,8 @@
                             <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                 <MenuItem Header="{x:Static localization:Strings.EnableRule}"
                                           Command="{Binding Path=EnableRuleCommand}"
+                                          wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.FirewallAdminMessage}"
+                                          wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}"
                                           Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
@@ -110,6 +112,8 @@
                                 </MenuItem>
                                 <MenuItem Header="{x:Static localization:Strings.DisableRule}"
                                           Command="{Binding Path=DisableRuleCommand}"
+                                          wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.FirewallAdminMessage}"
+                                          wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}"
                                           Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
@@ -120,7 +124,9 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Header="{x:Static localization:Strings.EditRuleDots}"
-                                          Command="{Binding Path=EditRuleCommand}">
+                                          Command="{Binding Path=EditRuleCommand}"
+                                          wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.FirewallAdminMessage}"
+                                          wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
@@ -130,7 +136,9 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                                 <MenuItem Header="{x:Static localization:Strings.DeleteRule}"
-                                          Command="{Binding Path=DeleteRuleCommand}">
+                                          Command="{Binding Path=DeleteRuleCommand}"
+                                          wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.FirewallAdminMessage}"
+                                          wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}">
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
@@ -529,7 +537,10 @@
                                    Orientation="Horizontal"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Right">
-                            <Button Command="{Binding Path=AddRuleCommand}" Style="{StaticResource ImageWithTextButton}">
+                            <Button Command="{Binding Path=AddRuleCommand}"
+                                    wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.FirewallAdminMessage}"
+                                    wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}"
+                                    Style="{StaticResource ImageWithTextButton}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
