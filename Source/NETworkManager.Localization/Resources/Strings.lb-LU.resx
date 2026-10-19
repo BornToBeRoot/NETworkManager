@@ -4703,4 +4703,24 @@ Cloudflare späichert méiglecherweis är IP-Adress an Netzwierkinformatiounen. 
   <data name="DomainCannotBeQueriedViaRDAPTryWhois" xml:space="preserve">
     <value>This domain cannot be queried via RDAP. Try Whois instead.</value>
   </data>
+  <data name="DeleteEntries" xml:space="preserve">
+    <value>Delete entries</value>
+  </data>
+  <data name="DeleteHostsFileEntriesMessage" xml:space="preserve">
+    <value>The selected entries are permanently deleted:
+
+{0}</value>
+  </data>
+  <data name="EditEntriesX" xml:space="preserve">
+    <value>Edit entries ({0})</value>
+  </data>
+  <data name="EditEntriesDots" xml:space="preserve">
+    <value>Edit entries...</value>
+  </data>
+  <data name="MultipleValues" xml:space="preserve">
+    <value>Multiple values</value>
+  </data>
+  <data name="DeleteEntriesX" xml:space="preserve">
+    <value>Delete entries ({0})</value>
+  </data>
 </root>
