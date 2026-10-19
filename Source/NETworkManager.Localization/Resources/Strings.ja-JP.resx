@@ -4704,23 +4704,29 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>このドメインは RDAP 経由でクエリできません。代わりに Whois をお試しください。</value>
   </data>
   <data name="DeleteEntries" xml:space="preserve">
-    <value>Delete entries</value>
+    <value>エントリを削除</value>
   </data>
   <data name="DeleteHostsFileEntriesMessage" xml:space="preserve">
-    <value>The selected entries are permanently deleted:
+    <value>選択されたエントリは完全に削除されます:
 
 {0}</value>
   </data>
   <data name="EditEntriesX" xml:space="preserve">
-    <value>Edit entries ({0})</value>
+    <value>エントリの編集 ({0})</value>
   </data>
   <data name="EditEntriesDots" xml:space="preserve">
-    <value>Edit entries...</value>
+    <value>エントリの編集...</value>
   </data>
   <data name="MultipleValues" xml:space="preserve">
-    <value>Multiple values</value>
+    <value>複数の値</value>
   </data>
   <data name="DeleteEntriesX" xml:space="preserve">
-    <value>Delete entries ({0})</value>
+    <value>エントリを削除 ({0})</value>
+  </data>
+  <data name="CopyEntry" xml:space="preserve">
+    <value>エントリをコピー</value>
+  </data>
+  <data name="CopyRule" xml:space="preserve">
+    <value>ルールをコピー</value>
   </data>
 </root>
