@@ -349,18 +349,22 @@ public static class HostsFileEditor
     /// Add a hosts file entry asynchronously.
     /// </summary>
     /// <param name="entry">Entry to add.</param>
-    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was added successfully, otherwise an error result.</returns>"/>
-    public static Task<HostsFileEntryModifyResult> AddEntryAsync(HostsFileEntry entry)
+    /// <param name="insertAfter">Optional entry after which the new entry is inserted (e.g. the source entry
+    /// when copying). If <see langword="null"/> or not found, the entry is added at the end of the hosts file.</param>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was added successfully, otherwise an error result.</returns>
+    public static Task<HostsFileEntryModifyResult> AddEntryAsync(HostsFileEntry entry, HostsFileEntry insertAfter = null)
     {
-        return Task.Run(() => AddEntry(entry));
+        return Task.Run(() => AddEntry(entry, insertAfter));
     }
 
     /// <summary>
     /// Add a hosts file entry.
     /// </summary>
     /// <param name="entry">Entry to add.</param>
-    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was added successfully, otherwise an error result.</returns>"/>
-    private static HostsFileEntryModifyResult AddEntry(HostsFileEntry entry)
+    /// <param name="insertAfter">Optional entry after which the new entry is inserted. If <see langword="null"/>
+    /// or not found, the entry is added at the end of the hosts file.</param>
+    /// <returns><see cref="HostsFileEntryModifyResult.Success"/> if the entry was added successfully, otherwise an error result.</returns>
+    private static HostsFileEntryModifyResult AddEntry(HostsFileEntry entry, HostsFileEntry insertAfter)
     {
         // Create a backup of the hosts file before making changes
         if (CreateBackup() == false)
@@ -382,8 +386,22 @@ public static class HostsFileEditor
             return HostsFileEntryModifyResult.ReadError;
         }
 
-        Log.Debug($"AddEntry - Adding entry: {entry.Line}");
-        hostsFileLines.Add(entry.Line);
+        var index = insertAfter == null ? -1 : hostsFileLines.IndexOf(insertAfter.Line);
+
+        if (index >= 0)
+        {
+            Log.Debug($"AddEntry - Inserting entry after line {index + 1}: {entry.Line}");
+            hostsFileLines.Insert(index + 1, entry.Line);
+        }
+        else
+        {
+            // The new entry doesn't depend on the source entry, so add it at the end if it was changed or removed
+            if (insertAfter != null)
+                Log.Debug($"AddEntry - Entry to insert after not found, adding at the end: {insertAfter.Line}");
+
+            Log.Debug($"AddEntry - Adding entry: {entry.Line}");
+            hostsFileLines.Add(entry.Line);
+        }
 
         try
         {

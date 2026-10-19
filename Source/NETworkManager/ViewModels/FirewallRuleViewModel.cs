@@ -1,3 +1,5 @@
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
 using NETworkManager.Models.Firewall;
 using NETworkManager.Utilities;
 using System;
@@ -12,21 +14,23 @@ namespace NETworkManager.ViewModels;
 public class FirewallRuleViewModel : ViewModelBase
 {
     /// <summary>
-    /// Creates a new instance of <see cref="FirewallRuleViewModel"/> for adding or
-    /// editing a firewall rule.
+    /// Creates a new instance of <see cref="FirewallRuleViewModel"/> for adding, editing or
+    /// copying a firewall rule.
     /// </summary>
     /// <param name="okCommand">OK command to save the rule.</param>
     /// <param name="cancelHandler">Cancel command to discard changes.</param>
-    /// <param name="entry">Existing rule to edit; <see langword="null"/> to add a new rule.</param>
+    /// <param name="entry">Existing rule to edit or copy. Ignored when adding a new rule.</param>
+    /// <param name="mode">Mode of the dialog (add, edit or copy).</param>
     public FirewallRuleViewModel(Action<FirewallRuleViewModel> okCommand,
-        Action<FirewallRuleViewModel> cancelHandler, FirewallRule entry = null)
+        Action<FirewallRuleViewModel> cancelHandler, FirewallRule entry = null, EditMode mode = EditMode.Add)
     {
         OKCommand = new RelayCommand(_ => okCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
-        Entry = entry;
+        Mode = mode;
+        Entry = mode == EditMode.Add ? null : entry;
 
-        if (entry == null)
+        if (Entry == null)
         {
             IsEnabled = true;
             Direction = FirewallRuleDirection.Inbound;
@@ -40,6 +44,10 @@ public class FirewallRuleViewModel : ViewModelBase
         else
         {
             Name = entry.Name;
+
+            if (mode == EditMode.Copy)
+                Name += " - " + Strings.CopyNoun;
+
             IsEnabled = entry.IsEnabled;
             Description = entry.Description ?? string.Empty;
             Direction = entry.Direction;
@@ -68,7 +76,13 @@ public class FirewallRuleViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     /// <summary>
-    /// The original firewall rule being edited, or <see langword="null"/> when adding a new rule.
+    /// Mode of the dialog (add, edit or copy).
+    /// </summary>
+    public EditMode Mode { get; }
+
+    /// <summary>
+    /// The original firewall rule being edited (or the source rule when copying),
+    /// or <see langword="null"/> when adding a new rule.
     /// </summary>
     public FirewallRule Entry { get; }
 

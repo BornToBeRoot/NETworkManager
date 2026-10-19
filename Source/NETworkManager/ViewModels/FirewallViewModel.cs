@@ -2,6 +2,7 @@ using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Firewall;
 using NETworkManager.Settings;
@@ -316,9 +317,55 @@ public class FirewallViewModel : ViewModelBase
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
-        }, SelectedResult);
+        }, SelectedResult, EditMode.Edit);
 
         childWindow.Title = Strings.EditRule;
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
+    }
+
+    /// <summary>
+    /// Gets the command to copy the selected firewall rule.
+    /// Only enabled when the application is running as administrator.
+    /// </summary>
+    public ICommand CopyAsRuleCommand => new RelayCommand(parameter => { _ = CopyAsRule(); }, _ => ModifyRule_CanExecute() && SelectedResult != null);
+
+    /// <summary>
+    /// Opens the rule dialog pre-filled with the selected rule's properties (name suffixed with " - Copy").
+    /// On confirmation, creates a new rule via PowerShell (the selected rule is not changed)
+    /// and refreshes the rule list.
+    /// </summary>
+    private async Task CopyAsRule()
+    {
+        var childWindow = new FirewallRuleChildWindow();
+
+        var childWindowViewModel = new FirewallRuleViewModel(async instance =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            try
+            {
+                await Firewall.AddRuleAsync(BuildRule(instance));
+                await Refresh();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error while copying firewall rule", ex);
+
+                StatusMessage = ex.Message;
+                IsStatusMessageDisplayed = true;
+            }
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+        }, SelectedResult, EditMode.Copy);
+
+        childWindow.Title = Strings.CopyRule;
         childWindow.DataContext = childWindowViewModel;
 
         ConfigurationManager.Current.IsChildWindowOpen = true;

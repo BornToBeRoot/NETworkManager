@@ -1,4 +1,5 @@
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
 using NETworkManager.Models.HostsFileEditor;
 using NETworkManager.Utilities;
 using System;
@@ -20,28 +21,31 @@ public class HostsFileEditorEntryViewModel : ViewModelBase
     private readonly bool _isLoading;
 
     /// <summary>
-    /// Creates a new instance of <see cref="HostsFileEditorEntryViewModel" /> for adding or
-    /// editing a hosts file entry.
+    /// Creates a new instance of <see cref="HostsFileEditorEntryViewModel" /> for adding, editing or
+    /// copying a hosts file entry.
     /// </summary>
     /// <param name="okCommand">OK command to save the entry.</param>
     /// <param name="cancelHandler">Cancel command to discard the entry.</param>
-    /// <param name="entry">Entry to edit, if null a new entry will be created.</param>
+    /// <param name="entry">Entry to edit or copy. Ignored when adding a new entry.</param>
+    /// <param name="mode">Mode of the dialog (add, edit or copy).</param>
     public HostsFileEditorEntryViewModel(Action<HostsFileEditorEntryViewModel> okCommand,
-        Action<HostsFileEditorEntryViewModel> cancelHandler, HostsFileEntry entry = null)
+        Action<HostsFileEditorEntryViewModel> cancelHandler, HostsFileEntry entry = null,
+        EditMode mode = EditMode.Add)
     {
         _isLoading = true;
 
         OKCommand = new RelayCommand(_ => okCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
-        Entry = entry;
+        Mode = mode;
+        Entry = mode == EditMode.Add ? null : entry;
 
         // Add entry
         if (Entry == null)
         {
             IsEnabled = true;
         }
-        // Edit entry
+        // Edit or copy entry (the comment is not changed when copying, since it's written to the hosts file)
         else
         {
             IsEnabled = entry.IsEnabled;
@@ -68,6 +72,7 @@ public class HostsFileEditorEntryViewModel : ViewModelBase
         OKCommand = new RelayCommand(_ => okCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
+        Mode = EditMode.Edit;
         Entries = entries;
         IsBulkEdit = true;
 
@@ -93,7 +98,12 @@ public class HostsFileEditorEntryViewModel : ViewModelBase
     public ICommand CancelCommand { get; }
 
     /// <summary>
-    /// Gets the hosts file entry.
+    /// Mode of the dialog (add, edit or copy).
+    /// </summary>
+    public EditMode Mode { get; }
+
+    /// <summary>
+    /// Gets the hosts file entry (to edit, or the source entry when copying).
     /// </summary>
     public HostsFileEntry Entry { get; } = null;
 

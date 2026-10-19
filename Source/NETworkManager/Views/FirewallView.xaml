@@ -135,6 +135,18 @@
                                         </Rectangle>
                                     </MenuItem.Icon>
                                 </MenuItem>
+                                <MenuItem Header="{x:Static localization:Strings.CopyAsDots}"
+                                          Command="{Binding Path=CopyAsRuleCommand}"
+                                          wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.FirewallAdminMessage}"
+                                          wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}">
+                                    <MenuItem.Icon>
+                                        <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                            <Rectangle.OpacityMask>
+                                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentDuplicate}" />
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <MenuItem Header="{x:Static localization:Strings.DeleteRule}"
                                           Command="{Binding Path=DeleteRuleCommand}"
                                           wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.FirewallAdminMessage}"

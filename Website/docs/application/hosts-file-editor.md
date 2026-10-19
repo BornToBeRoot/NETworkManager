@@ -51,6 +51,7 @@ Multiple entries can be selected (`Ctrl` / `Shift` + click) to enable, disable, 
 | **Enable** | Enables the selected entry or entries |
 | **Disable** | Disables the selected entry or entries |
 | **Edit** | Opens the edit dialog for the selected entry. If multiple entries are selected, see [Edit multiple entries](#edit-multiple-entries) |
+| **Copy as** | Opens the dialog pre-filled with the selected entry to create a new entry based on it (single entry only) |
 | **Delete** | Removes the selected entry or entries (after confirmation) |
 | **Copy** | Copies the entry information to the clipboard (single entry only) |
 | **Export** | Exports the selected entries (or all entries) to a file |
@@ -71,7 +72,7 @@ If one of the selected entries was changed or removed in the `hosts` file in the
 
 ## Add entry
 
-The **Add entry** dialog is opened by clicking the **Add entry...** button below the entry list. The same dialog (with the values pre-filled) is used to **edit** an existing entry.
+The **Add entry** dialog is opened by clicking the **Add entry...** button below the entry list. The same dialog (with the values pre-filled) is used to **edit** an existing entry, or to create a new entry based on an existing one via **Copy as...** in the context menu. The copy is added directly below the original entry (or at the end of the file, if the original entry was changed in the meantime).
 
 ![Add entry](../img/hosts-file-editor-entry.png)
 

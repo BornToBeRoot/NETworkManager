@@ -2,6 +2,7 @@
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.HostsFileEditor;
 using NETworkManager.Settings;
@@ -490,8 +491,62 @@ public class HostsFileEditorViewModel : ViewModelBase
         else
         {
             childWindow.Title = Strings.EditEntry;
-            childWindow.DataContext = new HostsFileEditorEntryViewModel(OKAction, CancelAction, entries[0]);
+            childWindow.DataContext = new HostsFileEditorEntryViewModel(OKAction, CancelAction, entries[0], EditMode.Edit);
         }
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        await Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
+    }
+
+    /// <summary>
+    /// Gets the command to copy the selected entry.
+    /// </summary>
+    public ICommand CopyAsEntryCommand =>
+        new RelayCommand(parameter => { _ = CopyAsEntryAction(); }, ModifyEntry_CanExecute);
+
+    /// <summary>
+    /// Action to copy the selected entry. Opens the entry dialog pre-filled with the values of the
+    /// selected entry and adds the new entry directly below it.
+    /// </summary>
+    private async Task CopyAsEntryAction()
+    {
+        if (SelectedResult == null)
+            return;
+
+        IsModifying = true;
+
+        var childWindow = new HostsFileEditorEntryChildWindow();
+
+        var childWindowViewModel = new HostsFileEditorEntryViewModel(async instance =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            var result = await HostsFileEditor.AddEntryAsync(new HostsFileEntry
+                (
+                    instance.IsEnabled,
+                    instance.IPAddress,
+                    instance.Hostname,
+                    instance.Comment
+                ), instance.Entry
+            );
+
+            if (result != HostsFileEntryModifyResult.Success)
+                await ShowErrorMessageAsync(result);
+
+            IsModifying = false;
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            IsModifying = false;
+        }, SelectedResult, EditMode.Copy);
+
+        childWindow.Title = Strings.CopyEntry;
+
+        childWindow.DataContext = childWindowViewModel;
 
         ConfigurationManager.Current.IsChildWindowOpen = true;
 

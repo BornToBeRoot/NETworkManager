@@ -36,6 +36,7 @@ Without administrator privileges, the view is read-only. Use the **Restart as ad
 | **Enable** | Enables the selected rule |
 | **Disable** | Disables the selected rule |
 | **Edit** | Opens the edit dialog for the selected rule |
+| **Copy as** | Opens the dialog pre-filled with the selected rule to create a new rule based on it |
 | **Delete** | Removes the selected rule |
 | **Copy** | Copies the rule information to the clipboard |
 | **Export** | Exports the rule to a file |
@@ -50,7 +51,7 @@ Without administrator privileges, the view is read-only. Use the **Restart as ad
 
 ## Add rule
 
-The **Add rule** dialog is opened by clicking the **Add rule...** button below the rule list. The same dialog (with the values pre-filled) is used to **edit** an existing rule.
+The **Add rule** dialog is opened by clicking the **Add rule...** button below the rule list. The same dialog (with the values pre-filled) is used to **edit** an existing rule, or to create a new rule based on an existing one via **Copy as...** in the context menu (the name is suffixed with ` - Copy`, the original rule is not changed).
 
 ![Add rule](../img/firewall-rule.png)
 

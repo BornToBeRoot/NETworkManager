@@ -2350,6 +2350,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy entry.
+        /// </summary>
+        public static string CopyEntry {
+            get {
+                return ResourceManager.GetString("CopyEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
         public static string CopyNoun {
@@ -2364,6 +2373,15 @@ namespace NETworkManager.Localization.Resources {
         public static string CopyProfile {
             get {
                 return ResourceManager.GetString("CopyProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy rule.
+        /// </summary>
+        public static string CopyRule {
+            get {
+                return ResourceManager.GetString("CopyRule", resourceCulture);
             }
         }
         
