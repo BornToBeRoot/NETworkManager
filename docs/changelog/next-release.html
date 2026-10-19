@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.9d036de8.css">
-<script src="/NETworkManager/assets/js/runtime~main.938dfe4a.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.639b8a6c.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.4a827bf6.js" defer="defer"></script>
 </head>
 <body>
@@ -91,8 +91,13 @@ Release date: <strong>xx.xx.2026</strong></p>
 </ul>
 <p><strong>Hosts File Editor</strong></p>
 <ul>
+<li class="">Added <strong>Copy as...</strong> to the context menu to create a new entry based on an existing one. The copy is added directly below the original entry.</li>
 <li class="">Multiple entries can now be selected to enable, disable or delete them at once, or to change their comment via <strong>Edit entries...</strong> (<code>F2</code>). The edit dialog switches to a bulk mode in which only the comment can be changed. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3624" target="_blank" rel="noopener noreferrer" class="">#3624</a></li>
 <li class="">Entries that don&#x27;t change (e.g. enabling an already enabled entry, or confirming the edit dialog without changes) are no longer rewritten in the <code>hosts</code> file, so custom formatting such as tabs or alignment is kept. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3624" target="_blank" rel="noopener noreferrer" class="">#3624</a></li>
+</ul>
+<p><strong>Firewall</strong></p>
+<ul>
+<li class="">Added <strong>Copy as...</strong> to the context menu to create a new rule based on an existing one (name suffixed with <code> - Copy</code>).</li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="bug-fixes">Bug Fixes<a href="#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes" translate="no">​</a></h2>
 <ul>
