@@ -4723,4 +4723,10 @@ Cloudflare späichert méiglecherweis är IP-Adress an Netzwierkinformatiounen. 
   <data name="DeleteEntriesX" xml:space="preserve">
     <value>Delete entries ({0})</value>
   </data>
+  <data name="CopyEntry" xml:space="preserve">
+    <value>Copy entry</value>
+  </data>
+  <data name="CopyRule" xml:space="preserve">
+    <value>Copy rule</value>
+  </data>
 </root>

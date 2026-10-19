@@ -4723,4 +4723,10 @@ Cloudflare speichert möglicherweise Ihre IP-Adresse und Netzwerkinformationen. 
   <data name="DeleteEntriesX" xml:space="preserve">
     <value>Einträge löschen ({0})</value>
   </data>
+  <data name="CopyEntry" xml:space="preserve">
+    <value>Copy entry</value>
+  </data>
+  <data name="CopyRule" xml:space="preserve">
+    <value>Copy rule</value>
+  </data>
 </root>
