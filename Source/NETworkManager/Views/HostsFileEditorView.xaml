@@ -1,4 +1,4 @@
-<UserControl x:Class="NETworkManager.Views.HostsFileEditorView"
+﻿<UserControl x:Class="NETworkManager.Views.HostsFileEditorView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -169,7 +169,8 @@
                         </ContextMenu>
                         <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static Member=localization:Strings.Enable}"
-                                      Command="{Binding Path=EnableEntryCommand}">
+                                      Command="{Binding Path=EnableEntryCommand}"
+                                      Visibility="{Binding Path=IsAnySelectedEntryDisabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16"
                                                Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
@@ -181,7 +182,8 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem Header="{x:Static Member=localization:Strings.Disable}"
-                                      Command="{Binding Path=DisableEntryCommand}">
+                                      Command="{Binding Path=DisableEntryCommand}"
+                                      Visibility="{Binding Path=IsAnySelectedEntryEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16"
                                                Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
@@ -192,8 +194,8 @@
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="{x:Static Member=localization:Strings.EditCommentDots}"
-                                      Command="{Binding Path=EditCommentCommand}">
+                            <MenuItem Header="{x:Static Member=localization:Strings.EditEntriesDots}"
+                                      Command="{Binding Path=EditEntryCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16"
                                                Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
@@ -203,7 +205,7 @@
                                     </Rectangle>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="{x:Static Member=localization:Strings.Delete}"
+                            <MenuItem Header="{x:Static Member=localization:Strings.DeleteEntries}"
                                       Command="{Binding Path=DeleteEntryCommand}">
                                 <MenuItem.Icon>
                                     <Rectangle Width="16" Height="16"

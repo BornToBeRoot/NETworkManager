@@ -28,6 +28,8 @@ public partial class HostsFileEditorView
     {
         if (sender is ContextMenu menu)
             menu.DataContext = _viewModel;
+
+        _viewModel.OnContextMenuOpened();
     }
 
     private void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)

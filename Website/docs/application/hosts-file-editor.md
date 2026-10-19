@@ -44,22 +44,30 @@ The application automatically creates a daily backup of the `hosts` file, retain
 
 ### Context menu
 
+Multiple entries can be selected (`Ctrl` / `Shift` + click) to enable, disable, edit or delete them at once.
+
 | Action | Description |
 |--------|-------------|
-| **Enable** | Enables the selected entry |
-| **Disable** | Disables the selected entry |
-| **Edit** | Opens the edit dialog for the selected entry |
-| **Delete** | Removes the selected entry |
-| **Copy** | Copies the entry information to the clipboard |
-| **Export** | Exports the entry to a file |
+| **Enable** | Enables the selected entry or entries |
+| **Disable** | Disables the selected entry or entries |
+| **Edit** | Opens the edit dialog for the selected entry. If multiple entries are selected, see [Edit multiple entries](#edit-multiple-entries) |
+| **Delete** | Removes the selected entry or entries (after confirmation) |
+| **Copy** | Copies the entry information to the clipboard (single entry only) |
+| **Export** | Exports the selected entries (or all entries) to a file |
 
 ### Keyboard shortcuts
 
 | Key | Action |
 |-----|--------|
 | `F5` | Refresh |
-| `F2` | Edit selected entry |
-| `Del` | Delete selected entry |
+| `F2` | Edit selected entry or entries |
+| `Del` | Delete selected entry or entries |
+
+:::note
+
+If one of the selected entries was changed or removed in the `hosts` file in the meantime (e.g. by another program), the action is not applied to any of the selected entries and an error is shown. The list is refreshed automatically, so the action can simply be repeated.
+
+:::
 
 ## Add entry
 
@@ -122,3 +130,9 @@ Optional comment associated with the entry. The comment is written after the hos
 **Default:** `Empty`
 
 **Example:** `Test server not reachable via DNS`
+
+## Edit multiple entries
+
+If multiple entries are selected, **Edit entries...** (or `F2`) opens the same dialog in bulk mode. Only the [comment](#comment) can be changed, it is applied to all selected entries. To enable or disable multiple entries, use **Enable** / **Disable** in the context menu.
+
+If all selected entries have the same comment, it is pre-filled. Otherwise the field is empty and shows `Multiple values`. **OK** is only available after the comment was changed, so the existing comments are not overwritten by accident. To remove the comment from all selected entries, clear the field (e.g. type a character and delete it again) and confirm with **OK**.
