@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.9d036de8.css">
-<script src="/NETworkManager/assets/js/runtime~main.7258423f.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.938dfe4a.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.4a827bf6.js" defer="defer"></script>
 </head>
 <body>
@@ -51,6 +51,7 @@ Release date: <strong>xx.xx.2026</strong></p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="improvements">Improvements<a href="#improvements" class="hash-link" aria-label="Direct link to Improvements" title="Direct link to Improvements" translate="no">​</a></h2>
 <ul>
 <li class="">Links (e.g. in <strong>About</strong>, <strong>Web Console</strong> and the notices in <strong>RDAP</strong>) are now keyboard accessible: they can be reached with <code>Tab</code> and opened with <code>Enter</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3607" target="_blank" rel="noopener noreferrer" class="">#3607</a></li>
+<li class="">Actions that require elevated rights now show a tooltip with the reason when they are disabled because the application is not running as administrator (e.g. <strong>Apply</strong>, <strong>Flush DNS cache</strong> and <strong>Release &amp; Renew</strong> in <strong>Network Interface</strong>, the context menu and <strong>Add entry...</strong> in <strong>Hosts File Editor</strong>, <strong>Firewall</strong> and <strong>Neighbor Table</strong>, and <strong>Capture</strong> in <strong>Discovery Protocol</strong>). <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3626" target="_blank" rel="noopener noreferrer" class="">#3626</a></li>
 <li class="">The collapsed/expanded state of profile groups (e.g. <strong>linux-server</strong>) is now remembered per profile file and shared across all tools, instead of resetting every time you switch tools or restart the application. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3539" target="_blank" rel="noopener noreferrer" class="">#3539</a></li>
 </ul>
 <p><strong>Network Interface</strong></p>
@@ -96,6 +97,10 @@ Release date: <strong>xx.xx.2026</strong></p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="bug-fixes">Bug Fixes<a href="#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes" translate="no">​</a></h2>
 <ul>
 <li class="">Fixed changes to lists in the settings (e.g. query histories, port profiles, custom commands) not being saved if no other setting was changed in the same session. This happened since the settings are stored as JSON. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3607" target="_blank" rel="noopener noreferrer" class="">#3607</a></li>
+</ul>
+<p><strong>Ping Monitor</strong></p>
+<ul>
+<li class="">Fixed long error messages (e.g. from a failed host resolution) in the tooltip of the error icon not being wrapped. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3626" target="_blank" rel="noopener noreferrer" class="">#3626</a></li>
 </ul>
 <p><strong>Network Interface</strong></p>
 <ul>
