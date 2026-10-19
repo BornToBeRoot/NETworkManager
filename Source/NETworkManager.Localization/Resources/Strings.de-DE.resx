@@ -4703,4 +4703,24 @@ Cloudflare speichert möglicherweise Ihre IP-Adresse und Netzwerkinformationen. 
   <data name="DomainCannotBeQueriedViaRDAPTryWhois" xml:space="preserve">
     <value>Diese Domain kann nicht per RDAP abgefragt werden. Versuchen Sie es stattdessen mit Whois.</value>
   </data>
+  <data name="DeleteEntries" xml:space="preserve">
+    <value>Einträge löschen</value>
+  </data>
+  <data name="DeleteHostsFileEntriesMessage" xml:space="preserve">
+    <value>Die ausgewählten Einträge werden endgültig gelöscht:
+
+{0}</value>
+  </data>
+  <data name="EditEntriesX" xml:space="preserve">
+    <value>Einträge bearbeiten ({0})</value>
+  </data>
+  <data name="EditEntriesDots" xml:space="preserve">
+    <value>Einträge bearbeiten...</value>
+  </data>
+  <data name="MultipleValues" xml:space="preserve">
+    <value>Mehrere Werte</value>
+  </data>
+  <data name="DeleteEntriesX" xml:space="preserve">
+    <value>Einträge löschen ({0})</value>
+  </data>
 </root>

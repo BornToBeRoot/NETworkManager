@@ -4802,4 +4802,24 @@ Per i dettagli consulta l'informativa sulla privacy di Cloudflare.</value>
   <data name="DomainCannotBeQueriedViaRDAPTryWhois" xml:space="preserve">
     <value>Questo dominio non può essere interrogato tramite RDAP. Prova invece Whois.</value>
   </data>
+  <data name="DeleteEntries" xml:space="preserve">
+    <value>Delete entries</value>
+  </data>
+  <data name="DeleteHostsFileEntriesMessage" xml:space="preserve">
+    <value>The selected entries are permanently deleted:
+
+{0}</value>
+  </data>
+  <data name="EditEntriesX" xml:space="preserve">
+    <value>Edit entries ({0})</value>
+  </data>
+  <data name="EditEntriesDots" xml:space="preserve">
+    <value>Edit entries...</value>
+  </data>
+  <data name="MultipleValues" xml:space="preserve">
+    <value>Multiple values</value>
+  </data>
+  <data name="DeleteEntriesX" xml:space="preserve">
+    <value>Delete entries ({0})</value>
+  </data>
 </root>
