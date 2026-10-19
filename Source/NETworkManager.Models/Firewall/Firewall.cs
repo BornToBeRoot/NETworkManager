@@ -168,9 +168,7 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     }
 
     /// <summary>
-    /// Enables or disables the given <paramref name="rule"/> by running
-    /// <c>Enable-NetFirewallRule</c> or <c>Disable-NetFirewallRule</c> against
-    /// the rule's internal <see cref="FirewallRule.Id"/>.
+    /// Enables or disables the given <paramref name="rule"/>.
     /// </summary>
     /// <param name="rule">
     /// The firewall rule to modify.
@@ -179,43 +177,83 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     /// <see langword="true"/> to enable the rule; <see langword="false"/> to disable it.
     /// </param>
     /// <exception cref="Exception">
-    /// Thrown when the PowerShell pipeline reports one or more errors.
+    /// Thrown when the rule no longer exists or the PowerShell pipeline reports one or more errors.
     /// </exception>
-    public static async Task SetRuleEnabledAsync(FirewallRule rule, bool enabled)
+    public static Task SetRuleEnabledAsync(FirewallRule rule, bool enabled)
     {
-        await RunspaceLock.WaitAsync();
-        try
-        {
-            await Task.Run(() =>
-            {
-                using var ps = SMA.PowerShell.Create();
-                ps.Runspace = SharedRunspace;
-
-                ps.AddScript($@"{(enabled ? "Enable" : "Disable")}-NetFirewallRule -Name '{rule.Id}'");
-                ps.Invoke();
-
-                if (ps.Streams.Error.Count > 0)
-                    throw new Exception(string.Join("; ", ps.Streams.Error));
-            });
-        }
-        finally
-        {
-            RunspaceLock.Release();
-        }
+        return SetRulesEnabledAsync([rule], enabled);
     }
 
     /// <summary>
-    /// Permanently removes the given <paramref name="rule"/> by running
-    /// <c>Remove-NetFirewallRule</c> against the rule's internal <see cref="FirewallRule.Id"/>.
+    /// Enables or disables the given <paramref name="rules"/> by running
+    /// <c>Enable-NetFirewallRule</c> or <c>Disable-NetFirewallRule</c> against the rules'
+    /// internal <see cref="FirewallRule.Id"/>. Rules that are already in the target state are skipped.
+    /// Nothing is changed if one of the rules no longer exists.
+    /// </summary>
+    /// <param name="rules">
+    /// The firewall rules to modify.
+    /// </param>
+    /// <param name="enabled">
+    /// <see langword="true"/> to enable the rules; <see langword="false"/> to disable them.
+    /// </param>
+    /// <exception cref="Exception">
+    /// Thrown when a rule no longer exists or the PowerShell pipeline reports one or more errors.
+    /// </exception>
+    public static Task SetRulesEnabledAsync(IEnumerable<FirewallRule> rules, bool enabled)
+    {
+        var ids = rules.Where(rule => rule.IsEnabled != enabled).Select(rule => rule.Id).ToList();
+
+        return InvokeRuleCommandAsync(enabled ? "Enable-NetFirewallRule" : "Disable-NetFirewallRule", ids);
+    }
+
+    /// <summary>
+    /// Permanently removes the given <paramref name="rule"/>.
     /// </summary>
     /// <param name="rule">
     /// The firewall rule to delete.
     /// </param>
     /// <exception cref="Exception">
-    /// Thrown when the PowerShell pipeline reports one or more errors.
+    /// Thrown when the rule no longer exists or the PowerShell pipeline reports one or more errors.
     /// </exception>
-    public static async Task DeleteRuleAsync(FirewallRule rule)
+    public static Task DeleteRuleAsync(FirewallRule rule)
     {
+        return DeleteRulesAsync([rule]);
+    }
+
+    /// <summary>
+    /// Permanently removes the given <paramref name="rules"/> by running
+    /// <c>Remove-NetFirewallRule</c> against the rules' internal <see cref="FirewallRule.Id"/>.
+    /// Nothing is deleted if one of the rules no longer exists.
+    /// </summary>
+    /// <param name="rules">
+    /// The firewall rules to delete.
+    /// </param>
+    /// <exception cref="Exception">
+    /// Thrown when a rule no longer exists or the PowerShell pipeline reports one or more errors.
+    /// </exception>
+    public static Task DeleteRulesAsync(IEnumerable<FirewallRule> rules)
+    {
+        return InvokeRuleCommandAsync("Remove-NetFirewallRule", rules.Select(rule => rule.Id).ToList());
+    }
+
+    /// <summary>
+    /// Runs the given firewall cmdlet (e.g. <c>Enable-NetFirewallRule</c>) for all rule IDs in a
+    /// single PowerShell call. All rules must still exist, otherwise nothing is changed (all or nothing).
+    /// </summary>
+    /// <param name="command">
+    /// The cmdlet to run. Must accept the rule IDs via <c>-Name</c>.
+    /// </param>
+    /// <param name="ids">
+    /// The internal IDs of the rules. Nothing is done if the list is empty.
+    /// </param>
+    /// <exception cref="Exception">
+    /// Thrown when a rule no longer exists or the PowerShell pipeline reports one or more errors.
+    /// </exception>
+    private static async Task InvokeRuleCommandAsync(string command, IReadOnlyCollection<string> ids)
+    {
+        if (ids.Count == 0)
+            return;
+
         await RunspaceLock.WaitAsync();
         try
         {
@@ -224,7 +262,11 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
                 using var ps = SMA.PowerShell.Create();
                 ps.Runspace = SharedRunspace;
 
-                ps.AddScript($@"Remove-NetFirewallRule -Name '{rule.Id}'");
+                // Check that all rules still exist before changing anything
+                ps.AddScript($@"
+$ids = {ToPsArray(ids)}
+Get-NetFirewallRule -Name $ids -ErrorAction Stop | Out-Null
+{command} -Name $ids");
                 ps.Invoke();
 
                 if (ps.Streams.Error.Count > 0)

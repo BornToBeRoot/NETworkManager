@@ -31,15 +31,17 @@ Without administrator privileges, the view is read-only. Use the **Restart as ad
 
 ### Context menu
 
+Multiple rules can be selected (`Ctrl` / `Shift` + click) to enable, disable or delete them at once.
+
 | Action | Description |
 |--------|-------------|
-| **Enable** | Enables the selected rule |
-| **Disable** | Disables the selected rule |
-| **Edit** | Opens the edit dialog for the selected rule |
-| **Copy as** | Opens the dialog pre-filled with the selected rule to create a new rule based on it |
-| **Delete** | Removes the selected rule |
-| **Copy** | Copies the rule information to the clipboard |
-| **Export** | Exports the rule to a file |
+| **Enable** | Enables the selected rule or rules |
+| **Disable** | Disables the selected rule or rules |
+| **Edit** | Opens the edit dialog for the selected rule (single rule only) |
+| **Copy as** | Opens the dialog pre-filled with the selected rule to create a new rule based on it (single rule only) |
+| **Delete** | Removes the selected rule or rules (after confirmation) |
+| **Copy** | Copies the rule information to the clipboard (single rule only) |
+| **Export** | Exports the selected rules (or all rules) to a file |
 
 ### Keyboard shortcuts
 
@@ -47,7 +49,13 @@ Without administrator privileges, the view is read-only. Use the **Restart as ad
 |-----|--------|
 | `F5` | Refresh |
 | `F2` | Edit selected rule |
-| `Del` | Delete selected rule |
+| `Del` | Delete selected rule or rules |
+
+:::note
+
+If one of the selected rules was removed in the meantime (e.g. in the Windows Firewall management console), the action is not applied to any of the selected rules and an error is shown. The list is refreshed automatically, so the action can simply be repeated.
+
+:::
 
 ## Add rule
 
