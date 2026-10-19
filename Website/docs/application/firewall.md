@@ -53,7 +53,7 @@ Multiple rules can be selected (`Ctrl` / `Shift` + click) to enable, disable or 
 
 :::note
 
-If one of the selected rules was removed in the meantime (e.g. in the Windows Firewall management console), the action is not applied to any of the selected rules and an error is shown. The list is refreshed automatically, so the action can simply be repeated.
+Before enabling, disabling or deleting, it is checked that all selected rules still exist. If one of them was removed in the meantime (e.g. in the Windows Firewall management console), none of the selected rules is changed and an error is shown. If another error occurs while the rules are changed (e.g. access denied), some of the selected rules may already be changed. The rule list is reloaded after every action (also after an error), so it always shows the current state.
 
 :::
 

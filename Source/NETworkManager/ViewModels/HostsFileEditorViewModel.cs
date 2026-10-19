@@ -31,11 +31,6 @@ public class HostsFileEditorViewModel : ViewModelBase
     private static readonly ILog Log = LogManager.GetLogger(typeof(HostsFileEditorViewModel));
 
     /// <summary>
-    /// Maximum number of entries listed in the delete confirmation dialog.
-    /// </summary>
-    private const int DeleteEntriesMaxDisplayed = 10;
-
-    /// <summary>
     /// Indicates whether the view model is loading.
     /// </summary>
     private readonly bool _isLoading;
@@ -580,15 +575,8 @@ public class HostsFileEditorViewModel : ViewModelBase
         }
         else
         {
-            // Show the first entries, the rest is summarized as "(+X more)"
-            var lines = entries.Take(DeleteEntriesMaxDisplayed)
-                .Select(e => $"{e.IPAddress} {e.Hostname} {(string.IsNullOrEmpty(e.Comment) ? "" : $"# {e.Comment}")}".TrimEnd())
-                .ToList();
-
-            if (entries.Count > DeleteEntriesMaxDisplayed)
-                lines.Add(string.Format(Strings.PlusXMore, entries.Count - DeleteEntriesMaxDisplayed));
-
-            message = string.Format(Strings.DeleteHostsFileEntriesMessage, string.Join(Environment.NewLine, lines));
+            message = string.Format(Strings.DeleteHostsFileEntriesMessage, DialogHelper.FormatItemList(entries.Select(e =>
+                $"{e.IPAddress} {e.Hostname} {(string.IsNullOrEmpty(e.Comment) ? "" : $"# {e.Comment}")}".TrimEnd())));
         }
 
         var result = await DialogHelper.ShowConfirmationMessageAsync(

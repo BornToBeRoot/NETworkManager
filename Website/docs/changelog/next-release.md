@@ -88,7 +88,7 @@ Release date: **xx.xx.2026**
 **Firewall**
 
 - Added **Copy as...** to the context menu to create a new rule based on an existing one (name suffixed with ` - Copy`). [0544698](https://github.com/BornToBeRoot/NETworkManager/commit/0544698aefc325ab36ca4c8e80250e1fe0b62d4a)
-- Multiple rules can now be selected to enable, disable or delete them at once. If one of the selected rules was removed in the meantime, nothing is changed.
+- Multiple rules can now be selected to enable, disable or delete them at once. If one of the selected rules was removed in the meantime, nothing is changed. [#3627](https://github.com/BornToBeRoot/NETworkManager/pull/3627)
 
 ## Bug Fixes
 
