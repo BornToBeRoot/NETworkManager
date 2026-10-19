@@ -4723,4 +4723,10 @@ Cloudflare 可能會記錄您的 IP 位址與網路資訊。詳情請參閱 Clou
   <data name="DeleteEntriesX" xml:space="preserve">
     <value>刪除項目 ({0})</value>
   </data>
+  <data name="CopyEntry" xml:space="preserve">
+    <value>Copy entry</value>
+  </data>
+  <data name="CopyRule" xml:space="preserve">
+    <value>Copy rule</value>
+  </data>
 </root>
