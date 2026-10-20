@@ -6,7 +6,7 @@ keywords: [NETworkManager, Windows Firewall, firewall rules, inbound, outbound, 
 
 # Firewall
 
-The **Firewall** allows you to view, add, edit, enable, disable, or delete Windows Firewall rules managed by NETworkManager. Rules are identified by a `NETworkManager_` prefix in their display name so that only rules created through NETworkManager are shown in this view.
+The **Firewall** allows you to view, add, edit, enable, disable, or delete Windows Firewall rules managed by NETworkManager. Rules are identified by a `NETworkManager_` prefix in their display name so that only rules created through NETworkManager are shown in this view. Enable [**Show all rules**](#show-all-rules) in the settings to show all Windows Firewall rules.
 
 :::info
 
@@ -22,12 +22,42 @@ Without administrator privileges, the view is read-only. Use the **Restart as ad
 
 ![Firewall](../img/firewall.png)
 
+The **Program** column shows the file name of the program the rule applies to (e.g. `putty.exe`). The full path (e.g. `%ProgramFiles%\PuTTY\putty.exe`) is shown as tooltip and in the row details.
+
 ### Toolbar
 
 | Button | Description |
 |--------|-------------|
 | **Add rule...** | Opens a dialog to create a new firewall rule |
 | **Windows Firewall Settings** | Opens the Windows Firewall management console (`WF.msc`) |
+
+### Rules not managed by NETworkManager
+
+By default, only rules managed by NETworkManager (display name prefixed with `NETworkManager_`) are shown. If [**Show all rules**](#show-all-rules) is enabled in the settings, all active Windows Firewall rules are shown (e.g. Windows built-in rules, rules created by other applications or from Group Policy).
+
+When all rules are shown, an additional column shows where a rule comes from. Click the column header to sort by it.
+
+| Icon | Description |
+|------|-------------|
+| Shield | Managed by NETworkManager. All actions are available. |
+| Crossed-out shield | Not managed by NETworkManager (e.g. Windows built-in rule or created by another application). The rule can be enabled, disabled, deleted or copied, but not edited. |
+| Shield with lock | Managed by a policy (Group Policy or Mobile Device Management (MDM), e.g. Microsoft Intune) or created by Windows at runtime (e.g. dynamic or hardcoded rules). The rule can't be changed locally, it can only be copied. |
+
+If at least one of the selected rules is managed by a policy, **Enable**, **Disable** and **Delete** are disabled for the whole selection.
+
+Rules not managed by NETworkManager can be enabled, disabled, deleted (also together with other selected rules) or used as a template via **Copy as...** (the copy is created as a new rule managed by NETworkManager), but editing them is not supported (yet). These rules may use properties that can't be shown in the edit dialog (e.g. rule group, service, ICMP types, edge traversal or app packages). The **Edit** action is disabled for these rules.
+
+Some rules (mostly Windows built-in rules) use values that are not supported by NETworkManager, such as port keywords (e.g. `RPC`, `RPCEPMap`, `IPHTTPSIn`), a combination of interface types (e.g. `Wired, Wireless`), a protocol that is not listed in the dialog (e.g. `IGMP` or `IPv6`) or the program `System`. These values are shown as they are, but such rules can neither be **edited** nor used for **Copy as...**, because the dialog can't show or keep these values and the new rule could apply to more traffic (e.g. to all ports). This also applies to rules managed by NETworkManager that were changed outside of NETworkManager (e.g. in the Windows Firewall management console).
+
+When enabling, disabling or deleting rules and at least one of the selected rules is not managed by NETworkManager, a warning listing these rules is shown, which must be confirmed (for delete, the warning is added to the existing confirmation).
+
+When using **Copy as...** on a rule that uses properties which are not supported by NETworkManager but restrict the traffic (ICMP types, a service, an app package, specific network adapters, or users / required authentication, e.g. set in the Windows Firewall management console), a warning listing these properties is shown first, which must be confirmed. These properties are not copied, so the new rule may apply to more traffic than the original rule (e.g. to all services of a program instead of a single one). Review the new rule carefully before saving it. When editing a rule, these properties are kept.
+
+:::warning
+
+Be careful when disabling or deleting Windows built-in rules or rules created by other applications, as this may break network functionality of Windows or the application.
+
+:::
 
 ### Context menu
 
@@ -37,8 +67,8 @@ Multiple rules can be selected (`Ctrl` / `Shift` + click) to enable, disable or 
 |--------|-------------|
 | **Enable** | Enables the selected rule or rules |
 | **Disable** | Disables the selected rule or rules |
-| **Edit** | Opens the edit dialog for the selected rule (single rule only) |
-| **Copy as** | Opens the dialog pre-filled with the selected rule to create a new rule based on it (single rule only) |
+| **Edit** | Opens the edit dialog for the selected rule (single rule only, only rules managed by NETworkManager without [unsupported values](#rules-not-managed-by-networkmanager)) |
+| **Copy as** | Opens the dialog pre-filled with the selected rule to create a new rule based on it (single rule only, not for rules with [unsupported values](#rules-not-managed-by-networkmanager)) |
 | **Delete** | Removes the selected rule or rules (after confirmation) |
 | **Copy** | Copies the rule information to the clipboard (single rule only) |
 | **Export** | Exports the selected rules (or all rules) to a file |
@@ -48,7 +78,7 @@ Multiple rules can be selected (`Ctrl` / `Shift` + click) to enable, disable or 
 | Key | Action |
 |-----|--------|
 | `F5` | Refresh |
-| `F2` | Edit selected rule |
+| `F2` / Double-click | Edit selected rule (only if the rule can be edited) |
 | `Del` | Delete selected rule or rules |
 
 :::note
@@ -60,6 +90,8 @@ Before enabling, disabling or deleting, it is checked that all selected rules st
 ## Add rule
 
 The **Add rule** dialog is opened by clicking the **Add rule...** button below the rule list. The same dialog (with the values pre-filled) is used to **edit** an existing rule, or to create a new rule based on an existing one via **Copy as...** in the context menu (the name is suffixed with ` - Copy`, the original rule is not changed).
+
+When editing a rule, only the changed properties are updated. Properties that are not supported by NETworkManager (e.g. rule group, service or ICMP types set in the Windows Firewall management console) are kept. If the protocol is changed, ICMP types are reset to `Any`, because they are only valid for the ICMP protocol they were set for.
 
 ![Add rule](../img/firewall-rule.png)
 
@@ -263,7 +295,7 @@ Full path to an executable the rule applies to. When set, the rule only matches 
 
 :::note
 
-If a path is provided, the file must exist on the local computer.
+If a path is provided, the file must exist on the local computer. Environment variables (e.g. `%SystemRoot%\System32\svchost.exe`) are supported.
 
 An empty value means **Any** program.
 
@@ -303,3 +335,15 @@ Network profiles the rule applies to. At least one profile must be selected.
 The last enabled profile cannot be unchecked — at least one profile must remain selected.
 
 :::
+
+## Settings
+
+### Show all rules
+
+Show all active Windows Firewall rules (e.g. Windows built-in rules, rules created by other applications or from Group Policy / MDM) instead of only the rules managed by NETworkManager. The rule list is reloaded when the setting is changed.
+
+See [Rules not managed by NETworkManager](#rules-not-managed-by-networkmanager) for what can be done with these rules.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`

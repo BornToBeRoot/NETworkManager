@@ -27,7 +27,7 @@
             <RowDefinition Height="20" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <Grid>
                 <Grid.Resources>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
@@ -207,7 +207,7 @@
                     <TextBox.Text>
                         <Binding Path="Program" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <validators:EmptyOrFileExistsValidator ValidatesOnTargetUpdated="True" />
+                                <validators:EmptyOrFileExistsValidator ValidatesOnTargetUpdated="True" ExpandEnvironmentVariables="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>

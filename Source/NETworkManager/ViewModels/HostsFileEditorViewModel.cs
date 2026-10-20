@@ -570,7 +570,8 @@ public class HostsFileEditorViewModel : ViewModelBase
 
         if (entries.Count == 1)
         {
-            message = string.Format(Strings.DeleteHostsFileEntryMessage, entries[0].IPAddress, entries[0].Hostname,
+            // Prefixed with "- " like the bulleted list for multiple entries (see DialogHelper.FormatItemList)
+            message = string.Format(Strings.DeleteHostsFileEntryMessage, $"- {entries[0].IPAddress}", entries[0].Hostname,
                 string.IsNullOrEmpty(entries[0].Comment) ? "" : $"# {entries[0].Comment}");
         }
         else

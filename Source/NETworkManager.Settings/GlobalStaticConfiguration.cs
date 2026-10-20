@@ -267,6 +267,7 @@ public static class GlobalStaticConfiguration
 
     // Application: Firewall
     public static ExportFileType Firewall_ExportFileType => ExportFileType.Csv;
+    public static bool Firewall_ShowAllRules => false;
 
     // Application: Discovery Protocol
     public static DiscoveryProtocol DiscoveryProtocol_Protocol => DiscoveryProtocol.LldpCdp;

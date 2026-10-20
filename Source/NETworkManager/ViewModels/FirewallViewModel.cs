@@ -1,6 +1,7 @@
 using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
+using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Export;
@@ -37,7 +38,7 @@ public class FirewallViewModel : ViewModelBase
     /// <summary>
     /// Gets the loaded firewall rules.
     /// </summary>
-    public ObservableCollection<FirewallRule> Results { get; } = [];
+    public ObservableRangeCollection<FirewallRule> Results { get; } = new();
 
     /// <summary>
     /// Gets the filtered/sorted view over <see cref="Results"/>.
@@ -87,6 +88,20 @@ public class FirewallViewModel : ViewModelBase
     public bool IsAnySelectedEntryDisabled => GetSelectedRules().Any(rule => !rule.IsEnabled);
 
     /// <summary>
+    /// Indicates whether at least one of the selected rules is managed by a policy (e.g. Group Policy or MDM)
+    /// or created by Windows at runtime. Such rules can't be changed locally, so enable, disable and delete
+    /// are blocked for the whole selection (also for mixed selections).
+    /// The selection is only checked if the list contains such rules (see <see cref="_hasRulesManagedByPolicy"/>),
+    /// because this is evaluated often (e.g. <see cref="ICommand.CanExecute"/>).
+    /// </summary>
+    public bool IsAnySelectedRuleManagedByPolicy => _hasRulesManagedByPolicy && GetSelectedRules().Any(rule => rule.IsManagedByPolicy);
+
+    /// <summary>
+    /// Indicates whether the loaded rules contain at least one rule managed by a policy. Updated on refresh.
+    /// </summary>
+    private bool _hasRulesManagedByPolicy;
+
+    /// <summary>
     /// Gets or sets the search text for filtering rules.
     /// </summary>
     public string RulesSearch
@@ -104,9 +119,44 @@ public class FirewallViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets whether all system firewall rules are shown or only rules managed by NETworkManager.
+    /// Configured in the settings (see <see cref="SettingsInfo.Firewall_ShowAllRules"/>).
+    /// </summary>
+    public bool ShowAllRules => SettingsManager.Current.Firewall_ShowAllRules;
+
+    /// <summary>
+    /// Indicates whether the rules must be reloaded (e.g. because <see cref="ShowAllRules"/> was changed
+    /// in the settings). Checked when the view becomes visible and after a running refresh.
+    /// </summary>
+    private bool _refreshPending;
+
+    /// <summary>
+    /// Indicates whether the view is currently visible.
+    /// </summary>
+    private bool _isViewVisible = true;
+
+    /// <summary>
     /// Gets or sets whether a refresh is currently running.
     /// </summary>
     public bool IsRefreshing
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets whether the rules are loaded initially. The rule list is replaced by a loading indicator
+    /// in this case. Other refreshes (e.g. after a rule was modified or the settings were changed) only show
+    /// the status bar indicator (see <see cref="IsRefreshing"/>), so the list stays visible.
+    /// </summary>
+    public bool IsLoading
     {
         get;
         set
@@ -199,6 +249,9 @@ public class FirewallViewModel : ViewModelBase
         // Load firewall rules
         _ = Refresh(true);
 
+        // Reload the rules when the settings are changed (e.g. show all rules)
+        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+
         _isLoading = false;
     }
 
@@ -258,19 +311,24 @@ public class FirewallViewModel : ViewModelBase
 
     /// <summary>
     /// Gets the command to enable the selected firewall rule(s).
-    /// Only executable when at least one selected rule is disabled and modification is allowed.
+    /// Only executable when at least one selected rule is disabled, no selected rule is managed by a policy
+    /// and modification is allowed.
     /// </summary>
-    public ICommand EnableRuleCommand => new RelayCommand(parameter => { _ = SetRulesEnabled(true); }, _ => ModifyRule_CanExecute() && IsAnySelectedEntryDisabled);
+    public ICommand EnableRuleCommand => new RelayCommand(parameter => { _ = SetRulesEnabled(true); },
+        _ => ModifyRule_CanExecute() && IsAnySelectedEntryDisabled && !IsAnySelectedRuleManagedByPolicy);
 
     /// <summary>
     /// Gets the command to disable the selected firewall rule(s).
-    /// Only executable when at least one selected rule is enabled and modification is allowed.
+    /// Only executable when at least one selected rule is enabled, no selected rule is managed by a policy
+    /// and modification is allowed.
     /// </summary>
-    public ICommand DisableRuleCommand => new RelayCommand(parameter => { _ = SetRulesEnabled(false); }, _ => ModifyRule_CanExecute() && IsAnySelectedEntryEnabled);
+    public ICommand DisableRuleCommand => new RelayCommand(parameter => { _ = SetRulesEnabled(false); },
+        _ => ModifyRule_CanExecute() && IsAnySelectedEntryEnabled && !IsAnySelectedRuleManagedByPolicy);
 
     /// <summary>
     /// Enables or disables the selected rule(s) via PowerShell,
     /// then reloads the rule list to reflect the updated state.
+    /// If at least one rule is not managed by NETworkManager, the user must confirm the change first.
     /// Any PowerShell error is written to the log and shown in the status bar.
     /// </summary>
     /// <param name="enabled">
@@ -283,19 +341,44 @@ public class FirewallViewModel : ViewModelBase
         if (rules.Count == 0)
             return;
 
+        var notManagedWarning = GetNotManagedRulesWarning(rules);
+
+        if (notManagedWarning != null)
+        {
+            var title = rules.Count == 1
+                ? enabled ? Strings.EnableRule : Strings.DisableRule
+                : string.Format(enabled ? Strings.EnableRulesX : Strings.DisableRulesX, rules.Count);
+
+            var result = await DialogHelper.ShowConfirmationMessageAsync(
+                Application.Current.MainWindow,
+                title,
+                notManagedWarning,
+                ChildWindowIcon.Warn,
+                enabled ? Strings.Enable : Strings.Disable);
+
+            if (!result)
+                return;
+        }
+
         await ModifyRulesAsync(() => Firewall.SetRulesEnabledAsync(rules, enabled),
             $"Error while {(enabled ? "enabling" : "disabling")} firewall rule(s)");
     }
 
     /// <summary>
     /// Gets the command to open the dialog for editing the selected firewall rule.
-    /// Only executable when exactly one rule is selected and modification is allowed.
+    /// Only executable when exactly one rule managed by NETworkManager is selected and modification is allowed.
+    /// Rules not managed by NETworkManager can't be edited (not supported yet), because they may use properties
+    /// that can't be shown in the dialog (e.g. group, service or ICMP types). Rules with unsupported values
+    /// (e.g. port keywords like RPC, see <see cref="FirewallRule.HasUnsupportedValues"/>) can't be edited either,
+    /// because the dialog can't show or keep these values.
     /// </summary>
-    public ICommand EditRuleCommand => new RelayCommand(parameter => { _ = EditRule(); }, _ => ModifyRule_CanExecute() && IsSingleRuleSelected);
+    public ICommand EditRuleCommand => new RelayCommand(parameter => { _ = EditRule(); },
+        _ => ModifyRule_CanExecute() && IsSingleRuleSelected && SelectedResult.IsManaged && !SelectedResult.HasUnsupportedValues);
 
     /// <summary>
     /// Opens the edit-firewall-rule dialog pre-filled with the selected rule's properties.
-    /// On confirmation, deletes the old rule, creates the updated rule via PowerShell,
+    /// On confirmation, updates the changed properties of the rule via PowerShell (other properties and the
+    /// internal ID are kept, see <see cref="Firewall.UpdateRuleAsync"/>),
     /// and refreshes the rule list.
     /// </summary>
     private async Task EditRule()
@@ -307,11 +390,8 @@ public class FirewallViewModel : ViewModelBase
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
-            await ModifyRulesAsync(async () =>
-            {
-                await Firewall.DeleteRuleAsync(instance.Entry);
-                await Firewall.AddRuleAsync(BuildRule(instance));
-            }, "Error while editing firewall rule");
+            await ModifyRulesAsync(() => Firewall.UpdateRuleAsync(instance.Entry, BuildRule(instance)),
+                "Error while editing firewall rule");
         }, _ =>
         {
             childWindow.IsOpen = false;
@@ -329,16 +409,37 @@ public class FirewallViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to copy the selected firewall rule.
     /// Only executable when exactly one rule is selected and modification is allowed.
+    /// Rules with unsupported values (e.g. port keywords like RPC, see <see cref="FirewallRule.HasUnsupportedValues"/>)
+    /// can't be copied, because the values would be lost and the copy would apply to more traffic (e.g. all ports).
     /// </summary>
-    public ICommand CopyAsRuleCommand => new RelayCommand(parameter => { _ = CopyAsRule(); }, _ => ModifyRule_CanExecute() && IsSingleRuleSelected);
+    public ICommand CopyAsRuleCommand => new RelayCommand(parameter => { _ = CopyAsRule(); },
+        _ => ModifyRule_CanExecute() && IsSingleRuleSelected && !SelectedResult.HasUnsupportedValues);
 
     /// <summary>
     /// Opens the rule dialog pre-filled with the selected rule's properties (name suffixed with " - Copy").
     /// On confirmation, creates a new rule via PowerShell (the selected rule is not changed)
     /// and refreshes the rule list.
+    /// If the rule has properties that are not supported by NETworkManager and restrict the traffic
+    /// (see <see cref="FirewallRule.HiddenProperties"/>), the user must first acknowledge that they are not copied.
     /// </summary>
     private async Task CopyAsRule()
     {
+        var rule = SelectedResult;
+
+        if (rule.HasHiddenProperties)
+        {
+            var result = await DialogHelper.ShowConfirmationMessageAsync(
+                Application.Current.MainWindow,
+                Strings.CopyRule,
+                string.Format(Strings.CopyFirewallRuleHiddenPropertiesMessage, rule.Name,
+                    GetHiddenPropertiesString(rule.HiddenProperties)),
+                ChildWindowIcon.Warn,
+                Strings.Continue);
+
+            if (!result)
+                return;
+        }
+
         var childWindow = new FirewallRuleChildWindow();
 
         var childWindowViewModel = new FirewallRuleViewModel(async instance =>
@@ -351,7 +452,7 @@ public class FirewallViewModel : ViewModelBase
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
-        }, SelectedResult, EditMode.Copy);
+        }, rule, EditMode.Copy);
 
         childWindow.Title = Strings.CopyRule;
         childWindow.DataContext = childWindowViewModel;
@@ -363,13 +464,15 @@ public class FirewallViewModel : ViewModelBase
 
     /// <summary>
     /// Gets the command to permanently delete the selected firewall rule(s).
-    /// Only executable when a rule is selected and modification is allowed.
+    /// Only executable when a rule is selected, no selected rule is managed by a policy and modification is allowed.
     /// </summary>
-    public ICommand DeleteRuleCommand => new RelayCommand(parameter => { _ = DeleteRules(); }, _ => ModifyRule_CanExecute() && SelectedResult != null);
+    public ICommand DeleteRuleCommand => new RelayCommand(parameter => { _ = DeleteRules(); },
+        _ => ModifyRule_CanExecute() && SelectedResult != null && !IsAnySelectedRuleManagedByPolicy);
 
     /// <summary>
     /// Asks for confirmation and permanently deletes the selected rule(s) via PowerShell,
-    /// then reloads the rule list. Any PowerShell error is written to the log and shown in the status bar.
+    /// then reloads the rule list. If at least one rule is not managed by NETworkManager, a warning
+    /// is added to the confirmation. Any PowerShell error is written to the log and shown in the status bar.
     /// </summary>
     private async Task DeleteRules()
     {
@@ -379,14 +482,19 @@ public class FirewallViewModel : ViewModelBase
             return;
 
         var message = rules.Count == 1
-            ? string.Format(Strings.DeleteFirewallRuleMessage, rules[0].Name)
+            ? string.Format(Strings.DeleteFirewallRuleMessage, DialogHelper.FormatItemList([rules[0].Name]))
             : string.Format(Strings.DeleteFirewallRulesMessage, DialogHelper.FormatItemList(rules.Select(rule => rule.Name)));
+
+        var notManagedWarning = GetNotManagedRulesWarning(rules);
+
+        if (notManagedWarning != null)
+            message += Environment.NewLine + Environment.NewLine + notManagedWarning;
 
         var result = await DialogHelper.ShowConfirmationMessageAsync(
             Application.Current.MainWindow,
             rules.Count == 1 ? Strings.DeleteRule : string.Format(Strings.DeleteRulesX, rules.Count),
             message,
-            ChildWindowIcon.Info,
+            notManagedWarning != null ? ChildWindowIcon.Warn : ChildWindowIcon.Info,
             Strings.Delete);
 
         if (!result)
@@ -435,6 +543,49 @@ public class FirewallViewModel : ViewModelBase
     private List<FirewallRule> GetTargetEntries() => [.. GetSelectedRules()];
 
     /// <summary>
+    /// Converts the hidden properties of a rule to a localized, bulleted list (e.g. "- ICMP types", "- Service").
+    /// </summary>
+    /// <param name="properties">The hidden properties.</param>
+    private static string GetHiddenPropertiesString(FirewallRuleHiddenProperties properties)
+    {
+        var names = new List<string>();
+
+        if (properties.HasFlag(FirewallRuleHiddenProperties.IcmpTypes))
+            names.Add(Strings.IcmpTypes);
+
+        if (properties.HasFlag(FirewallRuleHiddenProperties.Service))
+            names.Add(Strings.Service);
+
+        if (properties.HasFlag(FirewallRuleHiddenProperties.Package))
+            names.Add(Strings.AppPackage);
+
+        if (properties.HasFlag(FirewallRuleHiddenProperties.InterfaceAlias))
+            names.Add(Strings.NetworkAdapters);
+
+        if (properties.HasFlag(FirewallRuleHiddenProperties.Security))
+            names.Add(Strings.UsersAndAuthentication);
+
+        return DialogHelper.FormatItemList(names);
+    }
+
+    /// <summary>
+    /// Builds a warning which lists the given rules that are not managed by NETworkManager
+    /// (e.g. Windows built-in rules), because changing them may affect Windows or other applications.
+    /// </summary>
+    /// <param name="rules">The rules to check.</param>
+    /// <returns>The warning, or <see langword="null"/> if all rules are managed by NETworkManager.</returns>
+    private static string GetNotManagedRulesWarning(List<FirewallRule> rules)
+    {
+        var notManagedRules = rules.Where(rule => !rule.IsManaged).ToList();
+
+        if (notManagedRules.Count == 0)
+            return null;
+
+        return string.Format(Strings.FirewallRulesNotManagedWarningMessage,
+            DialogHelper.FormatItemList(notManagedRules.Select(rule => rule.Name)));
+    }
+
+    /// <summary>
     /// Runs the given modification and reloads the rule list afterwards, also if the modification
     /// failed (e.g. a rule was removed in the meantime), so the list always shows the actual state.
     /// Any error is written to the log and shown in the status bar.
@@ -465,13 +616,21 @@ public class FirewallViewModel : ViewModelBase
             // If the refresh failed too, keep its message, so it's visible that the list is not up to date.
             if (error != null)
             {
-                StatusMessage = refreshed ? error.Message : error.Message + Environment.NewLine + StatusMessage;
+                var errorMessage = error is FirewallRuleNotFoundException
+                    ? Strings.FirewallRulesNoLongerExistMessage
+                    : error.Message;
+
+                StatusMessage = refreshed ? errorMessage : errorMessage + Environment.NewLine + StatusMessage;
                 IsStatusMessageDisplayed = true;
             }
         }
         finally
         {
             IsModifying = false;
+
+            // The settings were changed while the rules were modified (see OnViewVisible)
+            if (_refreshPending && _isViewVisible)
+                _ = Refresh();
         }
     }
 
@@ -580,7 +739,8 @@ public class FirewallViewModel : ViewModelBase
     #region Methods
 
     /// <summary>
-    /// Loads all NETworkManager firewall rules from the system via PowerShell and
+    /// Loads the NETworkManager firewall rules (or all rules, if <see cref="ShowAllRules"/> is enabled)
+    /// from the system via PowerShell and
     /// replaces the contents of <see cref="Results"/> with the new list.
     /// Updates <see cref="StatusMessage"/> throughout to reflect loading progress.
     /// </summary>
@@ -595,6 +755,10 @@ public class FirewallViewModel : ViewModelBase
             return false;
 
         IsRefreshing = true;
+
+        // Show the loading indicator instead of the (empty) list on the initial load, see IsLoading
+        IsLoading = init;
+
         StatusMessage = Strings.RefreshingDots;
         IsStatusMessageDisplayed = true;
 
@@ -603,14 +767,19 @@ public class FirewallViewModel : ViewModelBase
 
         try
         {
-            var rules = await Firewall.GetRulesAsync();
+            // Reset right before the setting is read, so only a change during the query triggers another refresh (see finally)
+            _refreshPending = false;
+
+            var rules = await Firewall.GetRulesAsync(onlyManagedRules: !ShowAllRules);
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Results.Clear();
+                // Replace all rules with a single notification, so the view is filtered / sorted only once
+                // (can be 1000+ rules if all rules are shown). ResultsView.DeferRefresh() can't be used, because
+                // the DataGrid accesses the view (selection / current item) while the items are changed.
+                Results.ReplaceAll(rules);
 
-                foreach (var rule in rules)
-                    Results.Add(rule);
+                _hasRulesManagedByPolicy = rules.Any(rule => rule.IsManagedByPolicy);
             });
 
             StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
@@ -630,6 +799,11 @@ public class FirewallViewModel : ViewModelBase
         finally
         {
             IsRefreshing = false;
+            IsLoading = false;
+
+            // The settings were changed during the refresh, reload with the new settings
+            if (_refreshPending && _isViewVisible)
+                _ = Refresh();
         }
     }
 
@@ -706,13 +880,37 @@ public class FirewallViewModel : ViewModelBase
     {
         OnPropertyChanged(nameof(IsAnySelectedEntryEnabled));
         OnPropertyChanged(nameof(IsAnySelectedEntryDisabled));
+        OnPropertyChanged(nameof(IsAnySelectedRuleManagedByPolicy));
     }
 
     /// <summary>
-    /// Called when the view becomes visible.
+    /// Called when a setting is changed. Marks the rules to be reloaded if a setting changed that
+    /// affects the rule list. The rules are reloaded when the view becomes visible again
+    /// (the settings are opened in place of the view, see <see cref="OnViewVisible"/>).
+    /// </summary>
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SettingsInfo.Firewall_ShowAllRules):
+                OnPropertyChanged(nameof(ShowAllRules));
+
+                _refreshPending = true;
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Called when the view becomes visible. Reloads the rules if a relevant setting was changed in the meantime.
     /// </summary>
     public void OnViewVisible()
     {
+        _isViewVisible = true;
+
+        // If rules are being modified, the refresh is done afterwards (see ModifyRulesAsync),
+        // so the error message of the modification is not mixed up with the status of this refresh
+        if (_refreshPending && !IsModifying)
+            _ = Refresh();
     }
 
     /// <summary>
@@ -720,6 +918,7 @@ public class FirewallViewModel : ViewModelBase
     /// </summary>
     public void OnViewHide()
     {
+        _isViewVisible = false;
     }
 
     #endregion

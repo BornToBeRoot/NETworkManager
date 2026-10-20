@@ -3312,6 +3312,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Firewall_ExportFileType;
 
+    public bool Firewall_ShowAllRules
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.Firewall_ShowAllRules;
+
     #endregion
 
     #region Discovery Protocol

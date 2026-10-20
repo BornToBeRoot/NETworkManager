@@ -71,7 +71,7 @@ public static partial class ExportManager
                 $"{CsvHelper.QuoteString(rule.LocalAddressesDisplay)}," +
                 $"{CsvHelper.QuoteString(rule.RemoteAddressesDisplay)}," +
                 $"{CsvHelper.QuoteString(rule.NetworkProfilesDisplay)}," +
-                $"{rule.InterfaceType}," +
+                $"{CsvHelper.QuoteString(rule.InterfaceTypeDisplay)}," +
                 $"{CsvHelper.QuoteString(rule.ProgramDisplay)}," +
                 $"{CsvHelper.QuoteString(rule.Description)}");
 
@@ -98,7 +98,7 @@ public static partial class ExportManager
                         new XElement(nameof(FirewallRule.LocalAddresses), rule.LocalAddressesDisplay),
                         new XElement(nameof(FirewallRule.RemoteAddresses), rule.RemoteAddressesDisplay),
                         new XElement(nameof(FirewallRule.NetworkProfiles), rule.NetworkProfilesDisplay),
-                        new XElement(nameof(FirewallRule.InterfaceType), rule.InterfaceType),
+                        new XElement(nameof(FirewallRule.InterfaceType), rule.InterfaceTypeDisplay),
                         new XElement(nameof(FirewallRule.Program), rule.ProgramDisplay),
                         new XElement(nameof(FirewallRule.Description), rule.Description)))));
 
@@ -127,7 +127,7 @@ public static partial class ExportManager
                 LocalAddresses = rule.LocalAddressesDisplay,
                 RemoteAddresses = rule.RemoteAddressesDisplay,
                 NetworkProfiles = rule.NetworkProfilesDisplay,
-                InterfaceType = rule.InterfaceType.ToString(),
+                InterfaceType = rule.InterfaceTypeDisplay,
                 Program = rule.ProgramDisplay,
                 rule.Description
             };

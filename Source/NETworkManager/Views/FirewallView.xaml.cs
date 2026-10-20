@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using NETworkManager.ViewModels;
 
@@ -54,6 +56,24 @@ public partial class FirewallView
 
             break;
         }
+    }
+
+    /// <summary>
+    /// Opens the edit dialog for the rule when a row is double-clicked (if the rule can be edited).
+    /// Double-clicks on buttons / checkboxes (e.g. the expand/collapse chevron) and in the row details
+    /// (e.g. to select text) are ignored.
+    /// </summary>
+    private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        for (var element = e.OriginalSource as DependencyObject; element != null && element != sender;
+             element = element is Visual ? VisualTreeHelper.GetParent(element) : LogicalTreeHelper.GetParent(element))
+        {
+            if (element is ButtonBase or DataGridDetailsPresenter)
+                return;
+        }
+
+        if (_viewModel.EditRuleCommand.CanExecute(null))
+            _viewModel.EditRuleCommand.Execute(null);
     }
 
     /// <summary>
