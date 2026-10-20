@@ -66,7 +66,8 @@ Import-Module NetSecurity -ErrorAction Stop").Invoke();
 
     /// <summary>
     /// PowerShell expression that maps a rule (<c>$rule</c>) and its filters (<c>$portFilter</c>,
-    /// <c>$addressFilter</c>, <c>$appFilter</c>, <c>$ifTypeFilter</c>, <c>$svcFilter</c>) to the object parsed by <see cref="GetRulesAsync"/>.
+    /// <c>$addressFilter</c>, <c>$appFilter</c>, <c>$ifTypeFilter</c>, <c>$svcFilter</c>, <c>$ifFilter</c>, <c>$secFilter</c>)
+    /// to the object parsed by <see cref="GetRulesAsync"/>.
     /// Shared by the query for rules managed by NETworkManager and the query for all rules.
     /// </summary>
     private const string RuleProjectionScript = @"[PSCustomObject]@{
@@ -88,6 +89,12 @@ Import-Module NetSecurity -ErrorAction Stop").Invoke();
         IcmpType      = ($portFilter.IcmpType -join ',')
         Service       = [string]$svcFilter.Service
         Package       = [string]$appFilter.Package
+        InterfaceAlias = ($ifFilter.InterfaceAlias -join ',')
+        LocalUser      = [string]$secFilter.LocalUser
+        RemoteUser     = [string]$secFilter.RemoteUser
+        RemoteMachine  = [string]$secFilter.RemoteMachine
+        Authentication = [string]$secFilter.Authentication
+        Encryption     = [string]$secFilter.Encryption
     }";
 
     #region Methods
@@ -128,6 +135,8 @@ Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
     $appFilter         = $rule | Get-NetFirewallApplicationFilter
     $ifTypeFilter      = $rule | Get-NetFirewallInterfaceTypeFilter
     $svcFilter         = $rule | Get-NetFirewallServiceFilter
+    $ifFilter          = $rule | Get-NetFirewallInterfaceFilter
+    $secFilter         = $rule | Get-NetFirewallSecurityFilter
     {RuleProjectionScript}
 }}");
                 }
@@ -140,6 +149,8 @@ $af = @{{}}; Get-NetFirewallAddressFilter -PolicyStore ActiveStore | ForEach-Obj
 $app = @{{}}; Get-NetFirewallApplicationFilter -PolicyStore ActiveStore | ForEach-Object {{ $app[$_.InstanceID] = $_ }}
 $if = @{{}}; Get-NetFirewallInterfaceTypeFilter -PolicyStore ActiveStore | ForEach-Object {{ $if[$_.InstanceID] = $_ }}
 $sf = @{{}}; Get-NetFirewallServiceFilter -PolicyStore ActiveStore | ForEach-Object {{ $sf[$_.InstanceID] = $_ }}
+$inf = @{{}}; Get-NetFirewallInterfaceFilter -PolicyStore ActiveStore | ForEach-Object {{ $inf[$_.InstanceID] = $_ }}
+$sec = @{{}}; Get-NetFirewallSecurityFilter -PolicyStore ActiveStore | ForEach-Object {{ $sec[$_.InstanceID] = $_ }}
 # The filters are matched by InstanceID. If an ID occurs more than once (e.g. a local and a Group Policy rule
 # with the same ID), the filters of these rules are queried per rule, so they are not mixed up.
 $count = @{{}}; foreach ($rule in $rules) {{ $count[$rule.InstanceID]++ }}
@@ -152,12 +163,16 @@ foreach ($rule in $rules) {{
         $appFilter     = $rule | Get-NetFirewallApplicationFilter
         $ifTypeFilter  = $rule | Get-NetFirewallInterfaceTypeFilter
         $svcFilter     = $rule | Get-NetFirewallServiceFilter
+        $ifFilter      = $rule | Get-NetFirewallInterfaceFilter
+        $secFilter     = $rule | Get-NetFirewallSecurityFilter
     }} else {{
         $portFilter    = $pf[$id]
         $addressFilter = $af[$id]
         $appFilter     = $app[$id]
         $ifTypeFilter  = $if[$id]
         $svcFilter     = $sf[$id]
+        $ifFilter      = $inf[$id]
+        $secFilter     = $sec[$id]
     }}
     $list.Add({RuleProjectionScript})
 }}
@@ -203,10 +218,7 @@ $list");
                             NetworkProfiles = ParseProfile(result.Properties["Profile"]?.Value?.ToString()),
                             InterfaceType = ParseInterfaceType(result.Properties["InterfaceType"]?.Value?.ToString(), out var interfaceTypeRaw),
                             InterfaceTypeRaw = interfaceTypeRaw,
-                            HiddenProperties = ParseHiddenProperties(
-                                result.Properties["IcmpType"]?.Value?.ToString(),
-                                result.Properties["Service"]?.Value?.ToString(),
-                                result.Properties["Package"]?.Value?.ToString()),
+                            HiddenProperties = ParseHiddenProperties(result),
                         };
 
                         // Use ToString() (not "as string"), because the value can be wrapped in a PSObject
@@ -812,27 +824,37 @@ $rules | Set-NetFirewallRule @params");
     }
 
     /// <summary>
-    /// Determines the <see cref="FirewallRuleHiddenProperties"/> of a rule. A property is set if its value
-    /// is not empty and not <c>"Any"</c>.
+    /// Determines the <see cref="FirewallRuleHiddenProperties"/> of a rule. A restriction is set if its value
+    /// is not empty and not <c>"Any"</c> (authentication / encryption: not <c>"NotRequired"</c>).
     /// </summary>
-    /// <param name="icmpTypes">The ICMP types (comma-separated) returned by PowerShell.</param>
-    /// <param name="service">The service returned by PowerShell.</param>
-    /// <param name="package">The app package returned by PowerShell.</param>
-    private static FirewallRuleHiddenProperties ParseHiddenProperties(string icmpTypes, string service, string package)
+    /// <param name="result">The rule object returned by PowerShell (see <see cref="RuleProjectionScript"/>).</param>
+    private static FirewallRuleHiddenProperties ParseHiddenProperties(SMA.PSObject result)
     {
+        string Get(string name) => result.Properties[name]?.Value?.ToString();
+
         static bool IsSet(string value) =>
             !string.IsNullOrWhiteSpace(value) && !value.Equals("Any", StringComparison.OrdinalIgnoreCase);
 
+        static bool IsRequired(string value) =>
+            !string.IsNullOrWhiteSpace(value) && !value.Equals("NotRequired", StringComparison.OrdinalIgnoreCase);
+
         var properties = FirewallRuleHiddenProperties.None;
 
-        if (IsSet(icmpTypes))
+        if (IsSet(Get("IcmpType")))
             properties |= FirewallRuleHiddenProperties.IcmpTypes;
 
-        if (IsSet(service))
+        if (IsSet(Get("Service")))
             properties |= FirewallRuleHiddenProperties.Service;
 
-        if (IsSet(package))
+        if (IsSet(Get("Package")))
             properties |= FirewallRuleHiddenProperties.Package;
+
+        if (IsSet(Get("InterfaceAlias")))
+            properties |= FirewallRuleHiddenProperties.InterfaceAlias;
+
+        if (IsSet(Get("LocalUser")) || IsSet(Get("RemoteUser")) || IsSet(Get("RemoteMachine")) ||
+            IsRequired(Get("Authentication")) || IsRequired(Get("Encryption")))
+            properties |= FirewallRuleHiddenProperties.Security;
 
         return properties;
     }

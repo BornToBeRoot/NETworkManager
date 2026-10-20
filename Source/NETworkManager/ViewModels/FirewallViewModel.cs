@@ -559,6 +559,12 @@ public class FirewallViewModel : ViewModelBase
         if (properties.HasFlag(FirewallRuleHiddenProperties.Package))
             names.Add(Strings.AppPackage);
 
+        if (properties.HasFlag(FirewallRuleHiddenProperties.InterfaceAlias))
+            names.Add(Strings.NetworkAdapters);
+
+        if (properties.HasFlag(FirewallRuleHiddenProperties.Security))
+            names.Add(Strings.UsersAndAuthentication);
+
         return DialogHelper.FormatItemList(names);
     }
 

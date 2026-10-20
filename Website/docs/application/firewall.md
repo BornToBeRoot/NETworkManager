@@ -51,7 +51,7 @@ Some rules (mostly Windows built-in rules) use values that are not supported by 
 
 When enabling, disabling or deleting rules and at least one of the selected rules is not managed by NETworkManager, a warning listing these rules is shown, which must be confirmed (for delete, the warning is added to the existing confirmation).
 
-When using **Copy as...** on a rule that uses properties which are not supported by NETworkManager but restrict the traffic (ICMP types, a service or an app package, e.g. set in the Windows Firewall management console), a warning listing these properties is shown first, which must be confirmed. These properties are not copied, so the new rule may apply to more traffic than the original rule (e.g. to all services of a program instead of a single one). Review the new rule carefully before saving it. When editing a rule, these properties are kept.
+When using **Copy as...** on a rule that uses properties which are not supported by NETworkManager but restrict the traffic (ICMP types, a service, an app package, specific network adapters, or users / required authentication, e.g. set in the Windows Firewall management console), a warning listing these properties is shown first, which must be confirmed. These properties are not copied, so the new rule may apply to more traffic than the original rule (e.g. to all services of a program instead of a single one). Review the new rule carefully before saving it. When editing a rule, these properties are kept.
 
 :::warning
 

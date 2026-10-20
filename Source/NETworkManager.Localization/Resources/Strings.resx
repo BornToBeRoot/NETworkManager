@@ -4343,6 +4343,12 @@ You can copy your profile files from “{0}” to “{1}” to migrate your exis
   <data name="IcmpTypes" xml:space="preserve">
     <value>ICMP types</value>
   </data>
+  <data name="NetworkAdapters" xml:space="preserve">
+    <value>Network adapters</value>
+  </data>
+  <data name="UsersAndAuthentication" xml:space="preserve">
+    <value>Users and authentication</value>
+  </data>
   <data name="AppPackage" xml:space="preserve">
     <value>App package</value>
   </data>

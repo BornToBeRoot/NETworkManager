@@ -7716,6 +7716,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network adapters.
+        /// </summary>
+        public static string NetworkAdapters {
+            get {
+                return ResourceManager.GetString("NetworkAdapters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Network address.
         /// </summary>
         public static string NetworkAddress {
@@ -13349,6 +13358,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Username {
             get {
                 return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Users and authentication.
+        /// </summary>
+        public static string UsersAndAuthentication {
+            get {
+                return ResourceManager.GetString("UsersAndAuthentication", resourceCulture);
             }
         }
         

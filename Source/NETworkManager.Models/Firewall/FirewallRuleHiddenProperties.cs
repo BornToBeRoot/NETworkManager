@@ -28,5 +28,15 @@ public enum FirewallRuleHiddenProperties
     /// <summary>
     /// App package (e.g. only a single Microsoft Store app).
     /// </summary>
-    Package = 4
+    Package = 4,
+
+    /// <summary>
+    /// Network adapters (interface aliases, e.g. only the VPN adapter).
+    /// </summary>
+    InterfaceAlias = 8,
+
+    /// <summary>
+    /// Security conditions (local / remote users or computers, required authentication or encryption).
+    /// </summary>
+    Security = 16
 }
