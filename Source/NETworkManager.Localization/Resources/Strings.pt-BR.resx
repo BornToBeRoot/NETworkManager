@@ -4729,4 +4729,15 @@ A Cloudflare pode registrar seu endereço IP e informações de rede. Consulte a
   <data name="CopyRule" xml:space="preserve">
     <value>Copiar regra</value>
   </data>
+  <data name="DeleteFirewallRulesMessage" xml:space="preserve">
+    <value>The selected firewall rules are permanently deleted:
+
+{0}</value>
+  </data>
+  <data name="DeleteRules" xml:space="preserve">
+    <value>Delete rules</value>
+  </data>
+  <data name="DeleteRulesX" xml:space="preserve">
+    <value>Delete rules ({0})</value>
+  </data>
 </root>
