@@ -9,7 +9,7 @@
 - **Primary Language**: C# (.NET 10)
 - **UI Framework**: WPF (Windows Presentation Foundation) with `MahApps.Metro`
 - **Documentation**: Docusaurus-based website and documentation at https://borntoberoot.net/NETworkManager
-- **Platform**: Windows (x64)
+- **Platform**: Windows (x64 and ARM64)
 
 ## Project Structure
 
@@ -41,8 +41,12 @@ REPOSITORY_ROOT/
 │   ├── Create-FlagFromSVG.ps1        # Create flag images
 │   ├── Create-OUIListFromWeb.ps1     # Update OUI (MAC vendor) list
 │   ├── Create-PortListFromWeb.ps1    # Update port list database
+│   ├── Create-ReleaseTable.ps1       # Create the SHA256 sums / file table for release notes
 │   ├── Create-WhoisServerListFromWebAndWhois.ps1  # Update WHOIS servers
+│   ├── Create-WorldMapFromWeb.ps1    # Create the world map (Traceroute map)
 │   └── PreBuildEventCommandLine.ps1  # Pre-build automation
+├── Tests/Environments/               # Test environments for manual testing (e.g. SNMP, Active Directory)
+├── .claude/skills/                   # Skills for AI agents (e.g. feature-review with the app's UI/code conventions)
 ├── Chocolatey/                       # Chocolatey package definition
 ├── WinGet/                           # WinGet package manifest
 └── Images/                           # Application icons and images
@@ -50,30 +54,31 @@ REPOSITORY_ROOT/
 
 ### Key Statistics
 
-- **650+ C# source files** across multiple projects
-- **150+ XAML files** for UI definitions
-- **12 distinct project modules** in the solution
-- **64+ documentation pages** in Docusaurus format
-- **17 supported languages** for localization
+- **750+ C# source files** across multiple projects
+- **160+ XAML files** for UI definitions
+- **13 projects** in the solution (12 C# projects + the WiX installer)
+- **70 documentation pages** in Docusaurus format
+- **18 languages** (English + 17 translations)
 
 ## Technology Stack
 
 ### Application (.NET/WPF)
 
 **Core Framework**:
-- **.NET 10.0** (SDK version: 10.0.100)
+- **.NET 10.0** (SDK version pinned in `Source/global.json`, updated by Dependabot)
 - **WPF** (Windows Presentation Foundation) for UI
 - **Windows Forms** integration for specific controls
-- **Target**: Windows 10.0.22621.0 (Windows 11)
+- **Target framework**: `net10.0-windows10.0.22621.0`, runtime identifiers `win-x64` and `win-arm64`
+- **Supported OS**: Windows 10 / Windows Server (22H2 or later) and Windows 11
 
 **UI Framework & Design**:
 - **MahApps.Metro** - Modern UI toolkit providing Metro-style controls and themes
 - **MahApps.Metro.IconPacks** - Icon libraries (FontAwesome, Material, Modern, Octicons)
 - **MahApps.Metro.SimpleChildWindow** - Dialog windows
 - **Dragablz** - Tearable/draggable tab control
-- **GongSolutions.Wpf.DragDrop** - Drag and drop framework
-- **LoadingIndicators.WPF** - Loading animations
-- **ControlzEx** - Shared WPF controls
+- **GongSolutions.Wpf.DragDrop** (`gong-wpf-dragdrop`) - Drag and drop framework
+- **Loading indicators** - Own implementation in `Source/NETworkManager/LoadingIndicators.cs` (styles e.g. `LoadingIndicatorArcsStyle`, `LoadingIndicatorPulseStyle`)
+- **ControlzEx** - Shared WPF controls (dependency of MahApps.Metro)
 
 **Architecture Pattern**:
 - **MVVM (Model-View-ViewModel)** pattern
@@ -88,11 +93,14 @@ REPOSITORY_ROOT/
 - **PSDiscoveryProtocol** - LLDP/CDP network discovery (PowerShell module embedded)
 - **AirspaceFixer** - WPF/WinForms interop fixes
 - **log4net** - Logging framework
-- **LiveCharts.Wpf** - Charts and graphs
+- **LiveChartsCore.SkiaSharpView.WPF** - Charts and graphs
 - **Microsoft.Web.WebView2** - WebView2 control for web content
-- **Microsoft.PowerShell.SDK** - PowerShell integration
+- **Microsoft.PowerShell.SDK** - PowerShell integration (e.g. Firewall, Neighbor Table)
+- **Microsoft.Windows.CsWinRT** - Windows Runtime APIs (e.g. WiFi)
 - **Microsoft.Xaml.Behaviors.Wpf** - Behaviors for XAML
-- **Newtonsoft.Json** - JSON serialization and deserialization
+- **Octokit** - GitHub API (update check)
+- **System.Text.Json** - Settings and profile files
+- **Newtonsoft.Json** - JSON export of results
 
 **Build Tools**:
 - **NetBeauty2** - Dependency organization
@@ -101,7 +109,7 @@ REPOSITORY_ROOT/
 ### Website (Docusaurus)
 
 **Documentation Stack**:
-- **Docusaurus** - Static site generator
+- **Docusaurus** (v3) - Static site generator
 - **React** - UI framework
 - **@mdx-js/react** - MDX support
 - **react-image-gallery** - Image galleries
@@ -114,10 +122,11 @@ Website/
 │   ├── application/        # Feature documentation
 │   ├── changelog/          # Version history
 │   ├── faq/                # Frequently asked questions
+│   ├── img/                # Screenshots used in the documentation
 │   └── settings/           # Settings documentation
 ├── blog/                   # Blog posts
 ├── src/                    # React components and pages
-├── static/                 # Static assets (images, files)
+├── static/                 # Static assets of the website (logo, favicon, images for pages/blog)
 ├── docusaurus.config.js    # Site configuration
 ├── sidebars.js             # Documentation sidebar structure
 ├── package.json            # npm/yarn dependencies
@@ -130,7 +139,7 @@ Website/
 
 1. **For Application Development**:
    - [.NET 10.x SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
-   - [Visual Studio 2022](https://visualstudio.microsoft.com/) or later with:
+   - [Visual Studio 2026](https://visualstudio.microsoft.com/) with:
      - `.NET desktop development` workload
      - `Universal Windows Platform development` workload
    - Alternative: [JetBrains Rider](https://www.jetbrains.com/rider/) (still requires UWP workload via VS Installer)
@@ -172,10 +181,10 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 ## CI/CD Pipeline
 
 **Primary Build System**: AppVeyor (configuration in `appveyor.yml`)
-- Builds on Visual Studio 2022 image
-- Installs .NET 10.0.100 SDK
+- Builds on the Visual Studio 2022 image
+- Installs the .NET SDK version from `Source/global.json`
 - Restores NuGet packages
-- Builds Release configuration for x64 platform
+- Builds the Release configuration for x64 and ARM64 (setup, portable and archive per architecture)
 - Version format: `yyyy.M.d.0` (date-based)
 - Artifacts are signed via [SignPath.io](https://signpath.io/)
 - Released to GitHub Releases
@@ -189,7 +198,11 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 - **Website Deployment** (`.github/workflows/deploy_website.yml`):
   - Builds and deploys Docusaurus website to GitHub Pages
   - Triggers on changes to `Website/` directory
-  - Uses Node.js 20 with yarn for build
+  - Uses Node.js 22 with yarn for build
+
+- **Label / Milestone** (`.github/workflows/label.yml`, `.github/workflows/milestone.yml`):
+  - Label PRs from Dependabot, Transifex and ImgBot as dependencies
+  - Assign the next-release milestone to PRs from bots and the maintainer
 
 **Automation & Bots**:
 - **Dependabot** (`.github/dependabot.yml`):
@@ -207,7 +220,7 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 - **Stale Bot** (`.github/stale.yml`):
   - Marks issues inactive for 30 days as stale
   - Closes stale issues after 7 days
-  - Excludes bugs, feature requests, and documentation issues
+  - Excludes bugs, feature requests, documentation and code-cleanup issues
 
 ## Contributing Areas
 
@@ -252,8 +265,9 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 
 - **Platform**: [Transifex](https://app.transifex.com/BornToBeRoot/NETworkManager/dashboard/)
 - **Resources**: `Source/NETworkManager.Localization/`
-- **17 languages supported**: cs-CZ, de-DE, es-ES, fr-FR, hu-HU, it-IT, ja-JP, ko-KR, nl-NL, pl-PL, pt-BR, ru-RU, sl-SI, sv-SE, uk-UA, zh-CN, zh-TW
-- **Format**: RESX files
+- **17 translations** (plus English): cs-CZ, de-DE, es-ES, fr-FR, hu-HU, it-IT, ja-JP, ko-KR, lb-LU, nl-NL, pl-PL, pt-BR, ru-RU, sl-SI, uk-UA, zh-CN, zh-TW (enabled languages are listed in `LocalizationManager.cs`; other `Strings.*.resx` files may exist but are not offered yet)
+- **Format**: RESX files. Only `Strings.resx` (English) is edited in the repository; translations come from Transifex.
+- **Adding a string**: add it to `Strings.resx` and, in alphabetical order, to `Strings.Designer.cs`. Reuse existing strings where possible.
 - **Integration**: Automated sync via `.github/transifex.yml`
 
 ## Code Style and Conventions
@@ -268,9 +282,11 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
   - Suffix ViewModels with `ViewModel`
   
 - **MVVM Pattern**:
-  - ViewModels inherit from `PropertyChangedBase` or implement `INotifyPropertyChanged`
+  - ViewModels inherit from `ViewModelBase` (`PropertyChangedBase` + `CopyDataToClipboardCommand`)
   - Commands use `RelayCommand` from utilities
   - Views bind to ViewModels via DataContext
+- **UI and code conventions** (commands, refresh/modify logic, admin rights, context menus, dialogs, tooltips,
+  layout, PowerShell): see `.claude/skills/feature-review/references/conventions.md`
 
 ### XAML Style
 
@@ -283,13 +299,16 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 
 - **Markdown**: All documentation in `.md` or `.mdx` format
 - **Code Blocks**: Use syntax highlighting with language specifiers
-- **Screenshots**: Place in `Website/static/img/`
+- **Screenshots**: Place in `Website/docs/img/` (referenced as `../img/<name>.png` from `docs/application/`)
+- **Changelog**: Every user-visible change gets an entry in `Website/docs/changelog/next-release.md` with a PR or commit link
 - **Links**: Use relative links for internal documentation
 
 ## Testing Strategy
 
-- **Manual Testing**: Primary testing approach
+- **Manual Testing**: Primary testing approach (test environments in `Tests/Environments/`)
 - **Build Verification**: AppVeyor CI ensures builds succeed
+- **Windows only**: The application only builds and runs on Windows (WPF, Windows SDK, CsWinRT). Changes made
+  on other platforms can't be compiled and must be verified on Windows
 - **Real-World Testing**: Pre-release versions on GitHub Releases
 - **Community Feedback**: GitHub Issues for bug reports
 
@@ -313,7 +332,7 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
    - All official binaries and installers are signed
 
 2. **Profile Encryption**: 
-   - Supports encrypted profile files
+   - Supports encrypted profile files (`.encrypted`)
    - Protects sensitive credentials and connection data
 
 3. **Privacy**:
@@ -327,17 +346,21 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 
 - **`Source/NETworkManager.sln`**: Main Visual Studio solution
 - **`Source/GlobalAssemblyInfo.cs`**: Shared assembly version info
-- **`Source/global.json`**: .NET SDK version specification (10.0.100)
+- **`Source/global.json`**: .NET SDK version specification (also used by AppVeyor)
 - **`Source/.editorconfig`**: C# code style configuration
 - **`appveyor.yml`**: AppVeyor CI/CD configuration
 - **`.github/workflows/codeql.yml`**: CodeQL security analysis workflow
 - **`.github/workflows/deploy_website.yml`**: Website deployment workflow
+- **`.github/workflows/label.yml`**, **`.github/workflows/milestone.yml`**: PR label / milestone automation
+- **`.github/ISSUE_TEMPLATE/`**, **`.github/pull_request_template.md`**: Issue and PR templates
 - **`.github/dependabot.yml`**: Dependabot configuration
 - **`.github/mergify.yml`**: Mergify auto-merge configuration
 - **`.github/transifex.yml`**: Transifex translation sync configuration
 - **`.github/stale.yml`**: Stale issue bot configuration
 - **`.gitmodules`**: Git submodule configuration (Dragablz)
 - **`Website/docusaurus.config.js`**: Documentation site configuration
+- **`Website/docs/changelog/next-release.md`**: Changelog of the upcoming release
+- **`.claude/skills/feature-review/`**: Feature review skill incl. the app's conventions (`references/conventions.md`)
 - **`CONTRIBUTING.md`**: Contribution guidelines
 - **`LICENSE`**: GPL v3 license
 - **`README.md`**: Repository overview and quick start
@@ -396,25 +419,30 @@ git diff
 
 ### Adding a New Network Tool
 
-1. Create model in `Source/NETworkManager.Models/Network/`
-2. Create ViewModel in `Source/NETworkManager/ViewModels/`
-3. Create View (XAML) in `Source/NETworkManager/Views/`
-4. Register in `MainWindow.xaml.cs` or appropriate host
-5. Add localization strings
-6. Update documentation in `Website/docs/application/`
+1. Create model in `Source/NETworkManager.Models/` (e.g. `Network/`)
+2. Create ViewModel in `Source/NETworkManager/ViewModels/` and View (XAML) in `Source/NETworkManager/Views/`
+3. Add the tool to `ApplicationName` and `ApplicationManager` (`Source/NETworkManager.Models/`), and show/hide it
+   in `MainWindow.xaml.cs` (`OnApplicationViewVisible` / `OnApplicationViewHide`)
+4. Add it to the application list for existing users in `SettingsManager` (upgrade step)
+5. Add documentation in `Website/docs/application/` and map it in `DocumentationManager`
+6. Add localization strings and a changelog entry
 
 ### Adding a New Setting
 
-1. Add property to settings model in `Source/NETworkManager.Settings/`
-2. Update settings ViewModel
-3. Add UI control in settings View
-4. Add validation if needed
-5. Update settings documentation
+1. Add the property `<Tool>_<Name>` to `SettingsInfo` and its default to `GlobalStaticConfiguration`
+   (`Source/NETworkManager.Settings/`)
+2. Add the UI to the tool's settings page (`<Tool>SettingsView.xaml` + `<Tool>SettingsViewModel.cs`)
+3. If the tool has no settings page yet: create both and register it in `SettingsViewManager`
+   (`SettingsName.<Tool>`), `SettingsViewModel` (switch) and `DocumentationManager`
+4. If the tool must react while it is open, subscribe to `SettingsManager.Current.PropertyChanged` in the tool's
+   ViewModel (reference: `FirewallViewModel`)
+5. Add a help icon/tooltip (`HelpImageRectangle` + `HelpMessage_*` string) if the option needs explanation
+6. Document it in the `## Settings` section of `Website/docs/application/<tool>.md` and add a changelog entry
 
 ### Updating Documentation
 
 1. Edit markdown files in `Website/docs/`
-2. Add images to `Website/static/img/`
+2. Add images to `Website/docs/img/`
 3. Update `Website/sidebars.js` if adding new sections
 4. Test locally with `npm start`
 5. Submit pull request
@@ -452,8 +480,8 @@ git diff
 
 ### Profile System
 
-- **Profile Files**: XML-based profile storage
-- **Encryption**: AES encryption for sensitive data
+- **Profile Files**: JSON-based profile storage (legacy XML files are migrated automatically); settings are stored as JSON too
+- **Encryption**: AES encryption for sensitive data (encrypted profile files use the `.encrypted` extension)
 - **Groups**: Hierarchical organization
 - **Import/Export**: Profile sharing capabilities
 
@@ -468,9 +496,9 @@ git diff
 
 1. **Respect MVVM**: Keep business logic in ViewModels and Models, not in code-behind
 2. **Use MahApps Controls**: Prefer Metro controls over standard WPF controls
-3. **Localization**: Always use resource strings, never hardcode text
+3. **Localization**: Always use resource strings, never hardcode text (also for messages created in Models, e.g. map exceptions to localized strings in the ViewModel)
 4. **Follow Existing Patterns**: Study similar features before implementing new ones
-5. **Update Documentation**: Changes to features should include doc updates
+5. **Update Documentation**: Changes to features should include doc updates and a changelog entry in `Website/docs/changelog/next-release.md`
 6. **Test on Real Networks**: Network tools require real network testing
 7. **Version Management**: Assembly version is auto-generated in CI/CD
 8. **Submodules**: Remember to init/update submodules (Dragablz in `Source/3rdparty/`)
@@ -478,6 +506,8 @@ git diff
 10. **Automation Scripts**: Use scripts in `Scripts/` directory for updating lists (OUI, ports, WHOIS servers)
 11. **Check CI Status**: Both AppVeyor (main build) and GitHub Actions (CodeQL, website) must pass
 12. **Dependency Updates**: Dependabot automatically creates PRs for dependency updates
+13. **Conventions and reviews**: Read `.claude/skills/feature-review/references/conventions.md` before changing UI or ViewModel code; use the `feature-review` skill to review a whole tool
+14. **Windows only**: The solution can't be built on Linux/macOS (WPF, CsWinRT) — say so when changes couldn't be compiled, and list what needs to be tested on Windows
 
 ## Glossary
 
