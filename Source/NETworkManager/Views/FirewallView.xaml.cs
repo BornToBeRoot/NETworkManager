@@ -35,6 +35,8 @@ public partial class FirewallView
     {
         if (sender is ContextMenu menu)
             menu.DataContext = _viewModel;
+
+        _viewModel.OnContextMenuOpened();
     }
 
     /// <summary>

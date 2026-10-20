@@ -77,6 +77,16 @@ public class FirewallViewModel : ViewModelBase
     } = new ArrayList();
 
     /// <summary>
+    /// Indicates whether at least one of the selected rules is enabled (used to show "Disable").
+    /// </summary>
+    public bool IsAnySelectedEntryEnabled => GetSelectedRules().Any(rule => rule.IsEnabled);
+
+    /// <summary>
+    /// Indicates whether at least one of the selected rules is disabled (used to show "Enable").
+    /// </summary>
+    public bool IsAnySelectedEntryDisabled => GetSelectedRules().Any(rule => !rule.IsEnabled);
+
+    /// <summary>
     /// Gets or sets the search text for filtering rules.
     /// </summary>
     public string RulesSearch
@@ -114,6 +124,22 @@ public class FirewallViewModel : ViewModelBase
     /// Gets or sets whether a refresh is currently running.
     /// </summary>
     public bool IsRefreshing
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets whether a rule is currently being modified (added, edited, enabled, disabled or deleted).
+    /// </summary>
+    public bool IsModifying
     {
         get;
         set
@@ -204,9 +230,9 @@ public class FirewallViewModel : ViewModelBase
     public ICommand RefreshCommand => new RelayCommand(parameter => { _ = RefreshAction(); }, Refresh_CanExecute);
 
     /// <summary>
-    /// Returns <see langword="true"/> when no refresh is currently running.
+    /// Returns <see langword="true"/> when no refresh is currently running and no rule is being modified.
     /// </summary>
-    private bool Refresh_CanExecute(object _) => !IsRefreshing;
+    private bool Refresh_CanExecute(object _) => !IsRefreshing && !IsModifying;
 
     /// <summary>
     /// Delegates to <see cref="Refresh"/> to reload the firewall rules.
@@ -232,18 +258,7 @@ public class FirewallViewModel : ViewModelBase
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
-            try
-            {
-                await Firewall.AddRuleAsync(BuildRule(instance));
-                await Refresh();
-            }
-            catch (Exception ex)
-            {
-                Log.Error("Error while adding firewall rule", ex);
-
-                StatusMessage = ex.Message;
-                IsStatusMessageDisplayed = true;
-            }
+            await ModifyRulesAsync(() => Firewall.AddRuleAsync(BuildRule(instance)), "Error while adding firewall rule");
         }, _ =>
         {
             childWindow.IsOpen = false;
@@ -259,49 +274,41 @@ public class FirewallViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets the command to enable the selected firewall rule.
-    /// Only executable when the rule is currently disabled and modification is allowed.
+    /// Gets the command to enable the selected firewall rule(s).
+    /// Only executable when at least one selected rule is disabled and modification is allowed.
     /// </summary>
-    public ICommand EnableRuleCommand => new RelayCommand(parameter => { _ = SetRuleEnabled(SelectedResult, true); }, _ => ModifyRule_CanExecute() && SelectedResult is { IsEnabled: false });
+    public ICommand EnableRuleCommand => new RelayCommand(parameter => { _ = SetRulesEnabled(true); }, _ => ModifyRule_CanExecute() && IsAnySelectedEntryDisabled);
 
     /// <summary>
-    /// Gets the command to disable the selected firewall rule.
-    /// Only executable when the rule is currently enabled and modification is allowed.
+    /// Gets the command to disable the selected firewall rule(s).
+    /// Only executable when at least one selected rule is enabled and modification is allowed.
     /// </summary>
-    public ICommand DisableRuleCommand => new RelayCommand(parameter => { _ = SetRuleEnabled(SelectedResult, false); }, _ => ModifyRule_CanExecute() && SelectedResult is { IsEnabled: true });
+    public ICommand DisableRuleCommand => new RelayCommand(parameter => { _ = SetRulesEnabled(false); }, _ => ModifyRule_CanExecute() && IsAnySelectedEntryEnabled);
 
     /// <summary>
-    /// Enables or disables the given <paramref name="rule"/> via PowerShell,
+    /// Enables or disables the selected rule(s) via PowerShell,
     /// then reloads the rule list to reflect the updated state.
     /// Any PowerShell error is written to the log and shown in the status bar.
     /// </summary>
-    /// <param name="rule">
-    /// The firewall rule to modify.
-    /// </param>
     /// <param name="enabled">
-    /// <see langword="true"/> to enable the rule; <see langword="false"/> to disable it.
+    /// <see langword="true"/> to enable the rules; <see langword="false"/> to disable them.
     /// </param>
-    private async Task SetRuleEnabled(FirewallRule rule, bool enabled)
+    private async Task SetRulesEnabled(bool enabled)
     {
-        try
-        {
-            await Firewall.SetRuleEnabledAsync(rule, enabled);
-            await Refresh();
-        }
-        catch (Exception ex)
-        {
-            Log.Error($"Error while {(enabled ? "enabling" : "disabling")} firewall rule", ex);
+        var rules = GetTargetEntries();
 
-            StatusMessage = ex.Message;
-            IsStatusMessageDisplayed = true;
-        }
+        if (rules.Count == 0)
+            return;
+
+        await ModifyRulesAsync(() => Firewall.SetRulesEnabledAsync(rules, enabled),
+            $"Error while {(enabled ? "enabling" : "disabling")} firewall rule(s)");
     }
 
     /// <summary>
     /// Gets the command to open the dialog for editing the selected firewall rule.
-    /// Only executable when a rule is selected and modification is allowed.
+    /// Only executable when exactly one rule is selected and modification is allowed.
     /// </summary>
-    public ICommand EditRuleCommand => new RelayCommand(parameter => { _ = EditRule(); }, _ => ModifyRule_CanExecute() && SelectedResult != null);
+    public ICommand EditRuleCommand => new RelayCommand(parameter => { _ = EditRule(); }, _ => ModifyRule_CanExecute() && IsSingleRuleSelected);
 
     /// <summary>
     /// Opens the edit-firewall-rule dialog pre-filled with the selected rule's properties.
@@ -317,19 +324,11 @@ public class FirewallViewModel : ViewModelBase
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
-            try
+            await ModifyRulesAsync(async () =>
             {
                 await Firewall.DeleteRuleAsync(instance.Entry);
                 await Firewall.AddRuleAsync(BuildRule(instance));
-                await Refresh();
-            }
-            catch (Exception ex)
-            {
-                Log.Error("Error while editing firewall rule", ex);
-
-                StatusMessage = ex.Message;
-                IsStatusMessageDisplayed = true;
-            }
+            }, "Error while editing firewall rule");
         }, _ =>
         {
             childWindow.IsOpen = false;
@@ -346,9 +345,9 @@ public class FirewallViewModel : ViewModelBase
 
     /// <summary>
     /// Gets the command to copy the selected firewall rule.
-    /// Only enabled when the application is running as administrator.
+    /// Only executable when exactly one rule is selected and modification is allowed.
     /// </summary>
-    public ICommand CopyAsRuleCommand => new RelayCommand(parameter => { _ = CopyAsRule(); }, _ => ModifyRule_CanExecute() && SelectedResult != null);
+    public ICommand CopyAsRuleCommand => new RelayCommand(parameter => { _ = CopyAsRule(); }, _ => ModifyRule_CanExecute() && IsSingleRuleSelected);
 
     /// <summary>
     /// Opens the rule dialog pre-filled with the selected rule's properties (name suffixed with " - Copy").
@@ -364,18 +363,7 @@ public class FirewallViewModel : ViewModelBase
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
-            try
-            {
-                await Firewall.AddRuleAsync(BuildRule(instance));
-                await Refresh();
-            }
-            catch (Exception ex)
-            {
-                Log.Error("Error while copying firewall rule", ex);
-
-                StatusMessage = ex.Message;
-                IsStatusMessageDisplayed = true;
-            }
+            await ModifyRulesAsync(() => Firewall.AddRuleAsync(BuildRule(instance)), "Error while copying firewall rule");
         }, _ =>
         {
             childWindow.IsOpen = false;
@@ -391,52 +379,117 @@ public class FirewallViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets the command to permanently delete the selected firewall rule.
+    /// Gets the command to permanently delete the selected firewall rule(s).
     /// Only executable when a rule is selected and modification is allowed.
     /// </summary>
-    public ICommand DeleteRuleCommand => new RelayCommand(parameter => { _ = DeleteRule(); }, _ => ModifyRule_CanExecute() && SelectedResult != null);
+    public ICommand DeleteRuleCommand => new RelayCommand(parameter => { _ = DeleteRules(); }, _ => ModifyRule_CanExecute() && SelectedResult != null);
 
     /// <summary>
-    /// Shows a confirmation dialog and, if confirmed, deletes the selected firewall rule
-    /// via PowerShell and reloads the rule list.
-    /// Any PowerShell error is written to the log and shown in the status bar.
+    /// Asks for confirmation and permanently deletes the selected rule(s) via PowerShell,
+    /// then reloads the rule list. Any PowerShell error is written to the log and shown in the status bar.
     /// </summary>
-    private async Task DeleteRule()
+    private async Task DeleteRules()
     {
+        var rules = GetTargetEntries();
+
+        if (rules.Count == 0)
+            return;
+
+        var message = rules.Count == 1
+            ? string.Format(Strings.DeleteFirewallRuleMessage, rules[0].Name)
+            : string.Format(Strings.DeleteFirewallRulesMessage, DialogHelper.FormatItemList(rules.Select(rule => rule.Name)));
+
         var result = await DialogHelper.ShowConfirmationMessageAsync(
             Application.Current.MainWindow,
-            Strings.DeleteRule,
-            string.Format(Strings.DeleteFirewallRuleMessage, SelectedResult.Name),
+            rules.Count == 1 ? Strings.DeleteRule : string.Format(Strings.DeleteRulesX, rules.Count),
+            message,
             ChildWindowIcon.Info,
             Strings.Delete);
 
         if (!result)
             return;
 
-        try
-        {
-            await Firewall.DeleteRuleAsync(SelectedResult);
-            await Refresh();
-        }
-        catch (Exception ex)
-        {
-            Log.Error("Error while deleting firewall rule", ex);
-
-            StatusMessage = ex.Message;
-            IsStatusMessageDisplayed = true;
-        }
+        await ModifyRulesAsync(() => Firewall.DeleteRulesAsync(rules), "Error while deleting firewall rule(s)");
     }
 
     /// <summary>
     /// Returns <see langword="true"/> when the application is running as administrator,
-    /// no dialog is open, and no child window is open — i.e. it is safe to modify a rule.
+    /// no dialog is open, no child window is open and no rule is being modified — i.e. it is safe to modify a rule.
     /// </summary>
-    private static bool ModifyRule_CanExecute()
+    private bool ModifyRule_CanExecute()
     {
         return ConfigurationManager.Current.IsAdmin &&
                Application.Current.MainWindow != null &&
                !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
+               !ConfigurationManager.Current.IsChildWindowOpen &&
+               !IsRefreshing &&
+               !IsModifying;
+    }
+
+    /// <summary>
+    /// Gets the selected rules (the multi-selection, or the single selected rule) without copying them.
+    /// Used for checks that are evaluated often (e.g. <see cref="ICommand.CanExecute"/>).
+    /// </summary>
+    private IEnumerable<FirewallRule> GetSelectedRules()
+    {
+        if (SelectedResults is { Count: > 1 })
+            return SelectedResults.Cast<FirewallRule>();
+
+        if (SelectedResult != null)
+            return [SelectedResult];
+
+        return [];
+    }
+
+    /// <summary>
+    /// Indicates whether exactly one rule is selected (e.g. for edit or copy, which only work on a single rule).
+    /// </summary>
+    private bool IsSingleRuleSelected => SelectedResult != null && SelectedResults is not { Count: > 1 };
+
+    /// <summary>
+    /// Gets the rules to modify: the multi-selection, or the single selected rule.
+    /// </summary>
+    private List<FirewallRule> GetTargetEntries() => [.. GetSelectedRules()];
+
+    /// <summary>
+    /// Runs the given modification and reloads the rule list afterwards, also if the modification
+    /// failed (e.g. a rule was removed in the meantime), so the list always shows the actual state.
+    /// Any error is written to the log and shown in the status bar.
+    /// </summary>
+    /// <param name="action">The modification to run.</param>
+    /// <param name="errorLogMessage">Message written to the log if the modification fails.</param>
+    private async Task ModifyRulesAsync(Func<Task> action, string errorLogMessage)
+    {
+        IsModifying = true;
+
+        try
+        {
+            Exception error = null;
+
+            try
+            {
+                await action();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(errorLogMessage, ex);
+                error = ex;
+            }
+
+            var refreshed = await Refresh();
+
+            // Show the error after the refresh, because the refresh overwrites the status message.
+            // If the refresh failed too, keep its message, so it's visible that the list is not up to date.
+            if (error != null)
+            {
+                StatusMessage = refreshed ? error.Message : error.Message + Environment.NewLine + StatusMessage;
+                IsStatusMessageDisplayed = true;
+            }
+        }
+        finally
+        {
+            IsModifying = false;
+        }
     }
 
     /// <summary>
@@ -552,10 +605,11 @@ public class FirewallViewModel : ViewModelBase
     /// When <see langword="true"/> the initial UI delay is skipped so the first load
     /// on startup feels immediate.
     /// </param>
-    private async Task Refresh(bool init = false)
+    /// <returns><see langword="true"/> if the rules were loaded successfully; otherwise, <see langword="false"/>.</returns>
+    private async Task<bool> Refresh(bool init = false)
     {
         if (IsRefreshing)
-            return;
+            return false;
 
         IsRefreshing = true;
         StatusMessage = Strings.RefreshingDots;
@@ -578,6 +632,8 @@ public class FirewallViewModel : ViewModelBase
 
             StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
             IsStatusMessageDisplayed = true;
+
+            return true;
         }
         catch (Exception ex)
         {
@@ -585,9 +641,13 @@ public class FirewallViewModel : ViewModelBase
 
             StatusMessage = string.Format(Strings.FailedToLoadFirewallRulesMessage, ex.Message);
             IsStatusMessageDisplayed = true;
-        }
 
-        IsRefreshing = false;
+            return false;
+        }
+        finally
+        {
+            IsRefreshing = false;
+        }
     }
 
     /// <summary>
@@ -653,6 +713,16 @@ public class FirewallViewModel : ViewModelBase
             return [];
 
         return [.. value.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)];
+    }
+
+    /// <summary>
+    /// Called when a context menu is opened. Updates the selection dependent properties,
+    /// because <see cref="SelectedResults"/> is changed in place (no change notification).
+    /// </summary>
+    public void OnContextMenuOpened()
+    {
+        OnPropertyChanged(nameof(IsAnySelectedEntryEnabled));
+        OnPropertyChanged(nameof(IsAnySelectedEntryDisabled));
     }
 
     /// <summary>

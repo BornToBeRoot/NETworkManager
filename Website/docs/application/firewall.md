@@ -31,15 +31,17 @@ Without administrator privileges, the view is read-only. Use the **Restart as ad
 
 ### Context menu
 
+Multiple rules can be selected (`Ctrl` / `Shift` + click) to enable, disable or delete them at once.
+
 | Action | Description |
 |--------|-------------|
-| **Enable** | Enables the selected rule |
-| **Disable** | Disables the selected rule |
-| **Edit** | Opens the edit dialog for the selected rule |
-| **Copy as** | Opens the dialog pre-filled with the selected rule to create a new rule based on it |
-| **Delete** | Removes the selected rule |
-| **Copy** | Copies the rule information to the clipboard |
-| **Export** | Exports the rule to a file |
+| **Enable** | Enables the selected rule or rules |
+| **Disable** | Disables the selected rule or rules |
+| **Edit** | Opens the edit dialog for the selected rule (single rule only) |
+| **Copy as** | Opens the dialog pre-filled with the selected rule to create a new rule based on it (single rule only) |
+| **Delete** | Removes the selected rule or rules (after confirmation) |
+| **Copy** | Copies the rule information to the clipboard (single rule only) |
+| **Export** | Exports the selected rules (or all rules) to a file |
 
 ### Keyboard shortcuts
 
@@ -47,7 +49,13 @@ Without administrator privileges, the view is read-only. Use the **Restart as ad
 |-----|--------|
 | `F5` | Refresh |
 | `F2` | Edit selected rule |
-| `Del` | Delete selected rule |
+| `Del` | Delete selected rule or rules |
+
+:::note
+
+Before enabling, disabling or deleting, it is checked that all selected rules still exist. If one of them was removed in the meantime (e.g. in the Windows Firewall management console), none of the selected rules is changed and an error is shown. If another error occurs while the rules are changed (e.g. access denied), some of the selected rules may already be changed. The rule list is reloaded after every action (also after an error), so it always shows the current state.
+
+:::
 
 ## Add rule
 

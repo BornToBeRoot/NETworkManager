@@ -2982,6 +2982,17 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The selected firewall rules are permanently deleted:
+        ///
+        ///{0}.
+        /// </summary>
+        public static string DeleteFirewallRulesMessage {
+            get {
+                return ResourceManager.GetString("DeleteFirewallRulesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete group.
         /// </summary>
         public static string DeleteGroup {
@@ -3117,6 +3128,24 @@ namespace NETworkManager.Localization.Resources {
         public static string DeleteRule {
             get {
                 return ResourceManager.GetString("DeleteRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete rules.
+        /// </summary>
+        public static string DeleteRules {
+            get {
+                return ResourceManager.GetString("DeleteRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete rules ({0}).
+        /// </summary>
+        public static string DeleteRulesX {
+            get {
+                return ResourceManager.GetString("DeleteRulesX", resourceCulture);
             }
         }
         
