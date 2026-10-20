@@ -89,16 +89,7 @@ public class FirewallRuleViewModel : ViewModelBase
     /// <summary>
     /// Protocols available in the protocol drop-down.
     /// </summary>
-    public IEnumerable<FirewallProtocol> Protocols { get; } =
-    [
-        FirewallProtocol.Any,
-        FirewallProtocol.TCP,
-        FirewallProtocol.UDP,
-        FirewallProtocol.ICMPv4,
-        FirewallProtocol.ICMPv6,
-        FirewallProtocol.GRE,
-        FirewallProtocol.L2TP
-    ];
+    public IEnumerable<FirewallProtocol> Protocols { get; } = FirewallRule.SupportedProtocols;
 
     /// <summary>
     /// Directions available in the direction drop-down.

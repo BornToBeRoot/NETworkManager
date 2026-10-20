@@ -59,6 +59,10 @@ public class FirewallRuleProgram : ICloneable
 
     /// <summary>
     /// Construct program reference for firewall rule.
+    /// The path is converted to a full path, because Windows Firewall matches programs by their full path.
+    /// Paths with environment variables (e.g. <c>%SystemRoot%\System32\svchost.exe</c>) and the keyword
+    /// <c>System</c> (used by Windows built-in rules) are kept as they are, because they would otherwise be
+    /// resolved relative to the current directory.
     /// </summary>
     /// <param name="pathToExe"></param>
     public FirewallRuleProgram(string pathToExe)
@@ -66,18 +70,20 @@ public class FirewallRuleProgram : ICloneable
         ArgumentNullException.ThrowIfNull(pathToExe);
         var exe = new FileInfo(pathToExe);
         Executable = exe;
-        Name = exe.FullName;
+        Name = pathToExe.Contains('%') || pathToExe.Equals("System", StringComparison.OrdinalIgnoreCase)
+            ? pathToExe
+            : exe.FullName;
     }
     #endregion
 
     #region Methods
     /// <summary>
-    /// Convert the full file path to string.
+    /// Convert the file path (as stored in the rule) to string.
     /// </summary>
     /// <returns></returns>
     public override string ToString()
     {
-        return Executable?.FullName;
+        return Name;
     }
 
     /// <summary>
@@ -88,7 +94,7 @@ public class FirewallRuleProgram : ICloneable
     {
         try
         {
-            return new FirewallRuleProgram(Executable?.FullName);
+            return new FirewallRuleProgram(Name);
         }
         catch (ArgumentNullException)
         {

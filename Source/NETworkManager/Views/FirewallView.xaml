@@ -55,10 +55,6 @@
                                     Orientation="Horizontal"
                                     VerticalAlignment="Center"
                                     HorizontalAlignment="Right">
-                            <CheckBox Content="{x:Static localization:Strings.ShowAllRules}"
-                                      IsChecked="{Binding ShowAllRules}"
-                                      VerticalAlignment="Center"
-                                      Margin="0,0,10,0" />
                             <Button Command="{Binding Path=RefreshCommand}"
                                     Style="{StaticResource CleanButton}"
                                     ToolTip="{x:Static localization:Strings.Refresh}"
@@ -90,6 +86,7 @@
                     <controls:MultiSelectDataGrid
                         x:Name="DataGridFirewallRules"
                         Grid.Row="2"
+                        Visibility="{Binding IsLoading, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
                         ItemsSource="{Binding ResultsView}"
                         SelectedItem="{Binding SelectedResult}"
                         SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -100,9 +97,22 @@
                             <KeyBinding Command="{Binding DeleteRuleCommand}" Key="Delete" />
                         </controls:MultiSelectDataGrid.InputBindings>
                         <controls:MultiSelectDataGrid.Resources>
+                            <!-- Enable, disable and delete are blocked if a selected rule is managed by a policy (see FirewallViewModel.IsAnySelectedRuleManagedByPolicy) -->
+                            <Style x:Key="ManagedByPolicyMenuItem" TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}">
+                                <Style.Resources>
+                                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource WrapToolTip}" />
+                                </Style.Resources>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=IsAnySelectedRuleManagedByPolicy}" Value="True">
+                                        <Setter Property="ToolTip" Value="{x:Static localization:Strings.FirewallRulesManagedByPolicyMessage}" />
+                                        <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
                             <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                 <MenuItem Header="{x:Static localization:Strings.EnableRule}"
                                           Command="{Binding Path=EnableRuleCommand}"
+                                          Style="{StaticResource ManagedByPolicyMenuItem}"
                                           wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.FirewallAdminMessage}"
                                           wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}"
                                           Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
@@ -116,6 +126,7 @@
                                 </MenuItem>
                                 <MenuItem Header="{x:Static localization:Strings.DisableRule}"
                                           Command="{Binding Path=DisableRuleCommand}"
+                                          Style="{StaticResource ManagedByPolicyMenuItem}"
                                           wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.FirewallAdminMessage}"
                                           wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}"
                                           Visibility="{Binding Path=SelectedResult.IsEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
@@ -131,6 +142,28 @@
                                           Command="{Binding Path=EditRuleCommand}"
                                           wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.FirewallAdminMessage}"
                                           wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}">
+                                    <MenuItem.Resources>
+                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource WrapToolTip}" />
+                                    </MenuItem.Resources>
+                                    <MenuItem.Style>
+                                        <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}">
+                                            <Style.Triggers>
+                                                <!-- Rules with unsupported values or not managed by NETworkManager can't be edited (see FirewallViewModel.EditRuleCommand) -->
+                                                <DataTrigger Binding="{Binding Path=SelectedResult.HasUnsupportedValues}" Value="True">
+                                                    <Setter Property="ToolTip" Value="{x:Static localization:Strings.FirewallRuleUnsupportedValuesMessage}" />
+                                                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=SelectedResult.IsManaged}" Value="False">
+                                                    <Setter Property="ToolTip" Value="{x:Static localization:Strings.EditFirewallRuleNotManagedMessage}" />
+                                                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=SelectedResult.IsManagedByPolicy}" Value="True">
+                                                    <Setter Property="ToolTip" Value="{x:Static localization:Strings.FirewallRulesManagedByPolicyMessage}" />
+                                                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </MenuItem.Style>
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
@@ -143,6 +176,20 @@
                                           Command="{Binding Path=CopyAsRuleCommand}"
                                           wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.FirewallAdminMessage}"
                                           wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}">
+                                    <MenuItem.Resources>
+                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource WrapToolTip}" />
+                                    </MenuItem.Resources>
+                                    <MenuItem.Style>
+                                        <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}">
+                                            <Style.Triggers>
+                                                <!-- Rules with unsupported values can't be copied (see FirewallViewModel.CopyAsRuleCommand) -->
+                                                <DataTrigger Binding="{Binding Path=SelectedResult.HasUnsupportedValues}" Value="True">
+                                                    <Setter Property="ToolTip" Value="{x:Static localization:Strings.FirewallRuleUnsupportedValuesMessage}" />
+                                                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </MenuItem.Style>
                                     <MenuItem.Icon>
                                         <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                             <Rectangle.OpacityMask>
@@ -153,6 +200,7 @@
                                 </MenuItem>
                                 <MenuItem Header="{x:Static localization:Strings.DeleteRule}"
                                           Command="{Binding Path=DeleteRuleCommand}"
+                                          Style="{StaticResource ManagedByPolicyMenuItem}"
                                           wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.FirewallAdminMessage}"
                                           wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}">
                                     <MenuItem.Icon>
@@ -207,9 +255,19 @@
                                               CommandParameter="{Binding Path=SelectedResult.ProgramDisplay}"
                                               Style="{StaticResource CopyMenuItem}" />
                                     <MenuItem Header="{x:Static localization:Strings.InterfaceType}"
-                                              Command="{Binding Path=CopyDataToClipboardCommand}"
-                                              CommandParameter="{Binding Path=SelectedResult.InterfaceType, Converter={StaticResource FirewallInterfaceTypeToStringConverter}}"
-                                              Style="{StaticResource CopyMenuItem}" />
+                                              Command="{Binding Path=CopyDataToClipboardCommand}">
+                                        <MenuItem.Style>
+                                            <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource CopyMenuItem}">
+                                                <!-- Unsupported combination of interface types (e.g. "Wired, Wireless") is copied as is -->
+                                                <Setter Property="CommandParameter" Value="{Binding Path=SelectedResult.InterfaceTypeRaw}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=SelectedResult.InterfaceTypeRaw}" Value="{x:Null}">
+                                                        <Setter Property="CommandParameter" Value="{Binding Path=SelectedResult.InterfaceType, Converter={StaticResource FirewallInterfaceTypeToStringConverter}}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </MenuItem.Style>
+                                    </MenuItem>
                                     <MenuItem Header="{x:Static localization:Strings.NetworkProfiles}"
                                               Command="{Binding Path=CopyDataToClipboardCommand}"
                                               CommandParameter="{Binding Path=SelectedResult.NetworkProfiles, Converter={StaticResource FirewallNetworkProfilesToStringConverter}}"
@@ -233,6 +291,7 @@
                             <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                 <MenuItem Header="{x:Static localization:Strings.Enable}"
                                           Command="{Binding Path=EnableRuleCommand}"
+                                          Style="{StaticResource ManagedByPolicyMenuItem}"
                                           wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.FirewallAdminMessage}"
                                           wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}"
                                           Visibility="{Binding Path=IsAnySelectedEntryDisabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
@@ -246,6 +305,7 @@
                                 </MenuItem>
                                 <MenuItem Header="{x:Static localization:Strings.Disable}"
                                           Command="{Binding Path=DisableRuleCommand}"
+                                          Style="{StaticResource ManagedByPolicyMenuItem}"
                                           wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.FirewallAdminMessage}"
                                           wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}"
                                           Visibility="{Binding Path=IsAnySelectedEntryEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
@@ -259,6 +319,7 @@
                                 </MenuItem>
                                 <MenuItem Header="{x:Static localization:Strings.DeleteRules}"
                                           Command="{Binding Path=DeleteRuleCommand}"
+                                          Style="{StaticResource ManagedByPolicyMenuItem}"
                                           wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.FirewallAdminMessage}"
                                           wpfHelpers:PermissionToolTipHelper.HasPermission="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=IsAdmin}">
                                     <MenuItem.Icon>
@@ -284,6 +345,7 @@
                         </controls:MultiSelectDataGrid.Resources>
                         <controls:MultiSelectDataGrid.RowStyle>
                             <Style TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
+                                <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick" />
                                 <Setter Property="ContextMenu" Value="{StaticResource MultiRowContextMenu}" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding SelectedItems.Count, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" Value="1">
@@ -322,6 +384,67 @@
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
 
+                            <!-- Managed by NETworkManager / not managed / managed by policy (only visible if all rules are shown) -->
+                            <DataGridTemplateColumn Header="" SortMemberPath="IsManaged"
+                                                    Width="24" CanUserResize="False"
+                                                    Visibility="{Binding Data.ShowAllRules, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <DataGridTemplateColumn.HeaderStyle>
+                                    <Style TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource DefaultDataGridColumnHeader}">
+                                        <Setter Property="ToolTip" Value="{x:Static localization:Strings.FirewallRuleManagedMessage}" />
+                                    </Style>
+                                </DataGridTemplateColumn.HeaderStyle>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate DataType="{x:Type firewall:FirewallRule}">
+                                        <Border x:Name="ManagedBorder" Background="Transparent"
+                                                ToolTip="{x:Static localization:Strings.FirewallRuleNotManagedMessage}">
+                                            <Border.Resources>
+                                                <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource WrapToolTip}" />
+                                            </Border.Resources>
+                                            <Rectangle x:Name="ManagedIcon" Width="16" Height="16"
+                                                       Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ShieldOffOutline}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                        </Border>
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding (firewall:FirewallRule.IsManaged)}" Value="True">
+                                                <Setter TargetName="ManagedBorder" Property="ToolTip" Value="{x:Static localization:Strings.FirewallRuleManagedMessage}" />
+                                                <Setter TargetName="ManagedIcon" Property="OpacityMask">
+                                                    <Setter.Value>
+                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ShieldOutline}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding (firewall:FirewallRule.Source)}" Value="{x:Static firewall:FirewallRuleSource.GroupPolicy}">
+                                                <Setter TargetName="ManagedBorder" Property="ToolTip" Value="{x:Static localization:Strings.FirewallRuleManagedByGroupPolicyMessage}" />
+                                                <Setter TargetName="ManagedIcon" Property="OpacityMask">
+                                                    <Setter.Value>
+                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ShieldLockOutline}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding (firewall:FirewallRule.Source)}" Value="{x:Static firewall:FirewallRuleSource.MDM}">
+                                                <Setter TargetName="ManagedBorder" Property="ToolTip" Value="{x:Static localization:Strings.FirewallRuleManagedByMDMMessage}" />
+                                                <Setter TargetName="ManagedIcon" Property="OpacityMask">
+                                                    <Setter.Value>
+                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ShieldLockOutline}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding (firewall:FirewallRule.Source)}" Value="{x:Static firewall:FirewallRuleSource.Other}">
+                                                <Setter TargetName="ManagedBorder" Property="ToolTip" Value="{x:Static localization:Strings.FirewallRuleManagedByOtherMessage}" />
+                                                <Setter TargetName="ManagedIcon" Property="OpacityMask">
+                                                    <Setter.Value>
+                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ShieldLockOutline}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
                             <!-- Enabled -->
                             <DataGridCheckBoxColumn Header="{x:Static localization:Strings.Enabled}"
                                                     Binding="{Binding (firewall:FirewallRule.IsEnabled)}"
@@ -333,6 +456,24 @@
                                                 Binding="{Binding (firewall:FirewallRule.Name)}"
                                                 SortMemberPath="Name"
                                                 MinWidth="150" />
+
+                            <!-- Program (file name, full path as tooltip) -->
+                            <DataGridTextColumn Header="{x:Static localization:Strings.Program}"
+                                                SortMemberPath="ProgramFileName"
+                                                MinWidth="100">
+                                <DataGridTextColumn.Binding>
+                                    <Binding Path="(firewall:FirewallRule.ProgramFileName)">
+                                        <Binding.TargetNullValue>
+                                            <x:Static Member="localization:Strings.Any" />
+                                        </Binding.TargetNullValue>
+                                    </Binding>
+                                </DataGridTextColumn.Binding>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="ToolTip" Value="{Binding (firewall:FirewallRule.ProgramDisplay)}" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
                             
                             <!-- Direction -->
                             <DataGridTemplateColumn Header="{x:Static localization:Strings.Direction}"
@@ -519,8 +660,20 @@
                                         <TextBlock Grid.Row="0" Grid.Column="4"
                                                    Text="{x:Static localization:Strings.InterfaceType}"
                                                    Style="{StaticResource InfoTextBlock}" />
-                                        <TextBox Grid.Row="0" Grid.Column="6"
-                                                 Text="{Binding (firewall:FirewallRule.InterfaceType), Mode=OneWay, Converter={StaticResource FirewallInterfaceTypeToStringConverter}}" />
+                                        <TextBox Grid.Row="0" Grid.Column="6">
+                                            <TextBox.Style>
+                                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
+                                                    <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
+                                                    <!-- Unsupported combination of interface types (e.g. "Wired, Wireless") is shown as is -->
+                                                    <Setter Property="Text" Value="{Binding (firewall:FirewallRule.InterfaceTypeRaw), Mode=OneWay}" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding (firewall:FirewallRule.InterfaceTypeRaw)}" Value="{x:Null}">
+                                                            <Setter Property="Text" Value="{Binding (firewall:FirewallRule.InterfaceType), Mode=OneWay, Converter={StaticResource FirewallInterfaceTypeToStringConverter}}" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBox.Style>
+                                        </TextBox>
 
                                         <!-- Row 2: Network profiles | Description -->
                                         <TextBlock Grid.Row="2" Grid.Column="0"
@@ -539,6 +692,37 @@
                             </DataTemplate>
                         </controls:MultiSelectDataGrid.RowDetailsTemplate>
                     </controls:MultiSelectDataGrid>
+
+                    <!-- Row 2: No rules found (not shown while loading) -->
+                    <TextBlock Grid.Row="2"
+                               Text="{x:Static localization:Strings.NoFirewallRulesFoundMessage}">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MessageTextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding IsLoading}" Value="False" />
+                                            <Condition Binding="{Binding Results.Count}" Value="0" />
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                    <!-- Row 2: Loading indicator (initial load only, see FirewallViewModel.IsLoading) -->
+                    <StackPanel Grid.Row="2"
+                                VerticalAlignment="Center"
+                                Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <networkManager:LoadingIndicator IsActive="True"
+                                                         Style="{DynamicResource LoadingIndicatorArcsStyle}"
+                                                         SpeedRatio="1"
+                                                         Margin="0,0,0,10" />
+                        <TextBlock Text="{x:Static localization:Strings.LoadingFirewallRulesDots}"
+                                   Style="{StaticResource MessageTextBlock}" />
+                    </StackPanel>
 
                     <!-- Row 4: Status message -->
                     <Grid Grid.Row="4" VerticalAlignment="Center">

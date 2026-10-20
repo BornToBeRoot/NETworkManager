@@ -99,9 +99,9 @@ namespace NETworkManager
         }
 
         /// <summary>
-        /// Formats the given items as a list (one item per line) to show them in a dialog message,
-        /// e.g. the entries that will be deleted. Only the first <paramref name="maxItems"/> items are
-        /// listed, the remaining items are summarized as "(+X more)".
+        /// Formats the given items as a bulleted list (one item per line, prefixed with "- ") to show them
+        /// in a dialog message, e.g. the entries that will be deleted. Only the first <paramref name="maxItems"/>
+        /// items are listed, the remaining items are summarized as "(+X more)".
         /// </summary>
         /// <param name="items">The items to list.</param>
         /// <param name="maxItems">The maximum number of items to list.</param>
@@ -109,7 +109,7 @@ namespace NETworkManager
         public static string FormatItemList(IEnumerable<string> items, int maxItems = 10)
         {
             var itemList = items.ToList();
-            var lines = itemList.Take(maxItems).ToList();
+            var lines = itemList.Take(maxItems).Select(item => $"- {item}").ToList();
 
             if (itemList.Count > maxItems)
                 lines.Add(string.Format(Strings.PlusXMore, itemList.Count - maxItems));
