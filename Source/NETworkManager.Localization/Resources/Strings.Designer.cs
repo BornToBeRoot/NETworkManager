@@ -1221,6 +1221,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to App package.
+        /// </summary>
+        public static string AppPackage {
+            get {
+                return ResourceManager.GetString("AppPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure?.
         /// </summary>
         public static string AreYouSure {
@@ -2359,6 +2368,19 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The rule "{0}" uses the following properties, which are not supported by NETworkManager and are not copied:
+        ///
+        ///{1}
+        ///
+        ///The new rule may apply to more traffic than the original rule (e.g. to all services of a program instead of a single one). Please review the new rule carefully before saving it..
+        /// </summary>
+        public static string CopyFirewallRuleHiddenPropertiesMessage {
+            get {
+                return ResourceManager.GetString("CopyFirewallRuleHiddenPropertiesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
         public static string CopyNoun {
@@ -3384,6 +3406,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disable rules ({0}).
+        /// </summary>
+        public static string DisableRulesX {
+            get {
+                return ResourceManager.GetString("DisableRulesX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disclaimer.
         /// </summary>
         public static string Disclaimer {
@@ -3745,6 +3776,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Editing rules that are not managed by NETworkManager is not supported (yet), because they may use properties that can't be shown in the dialog (e.g. rule group, service or ICMP types). Use "Copy as..." to create a managed copy of the rule..
+        /// </summary>
+        public static string EditFirewallRuleNotManagedMessage {
+            get {
+                return ResourceManager.GetString("EditFirewallRuleNotManagedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit group.
         /// </summary>
         public static string EditGroup {
@@ -3951,6 +3991,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EnableRule {
             get {
                 return ResourceManager.GetString("EnableRule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable rules ({0}).
+        /// </summary>
+        public static string EnableRulesX {
+            get {
+                return ResourceManager.GetString("EnableRulesX", resourceCulture);
             }
         }
         
@@ -5017,82 +5066,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Firewall rules.
-        /// </summary>
-        public static string FirewallRules {
-            get {
-                return ResourceManager.GetString("FirewallRules", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show all rules.
-        /// </summary>
-        public static string ShowAllRules {
-            get {
-                return ResourceManager.GetString("ShowAllRules", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ICMP types.
-        /// </summary>
-        public static string IcmpTypes {
-            get {
-                return ResourceManager.GetString("IcmpTypes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to App package.
-        /// </summary>
-        public static string AppPackage {
-            get {
-                return ResourceManager.GetString("AppPackage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The rule "{0}" uses the following properties, which are not supported by NETworkManager and are not copied:
-        ///
-        ///{1}
-        ///
-        ///The new rule may apply to more traffic than the original rule (e.g. to all services of a program instead of a single one). Please review the new rule carefully before saving it..
-        /// </summary>
-        public static string CopyFirewallRuleHiddenPropertiesMessage {
-            get {
-                return ResourceManager.GetString("CopyFirewallRuleHiddenPropertiesMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading firewall rules....
-        /// </summary>
-        public static string LoadingFirewallRulesDots {
-            get {
-                return ResourceManager.GetString("LoadingFirewallRulesDots", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No firewall rules found. Use "Add rule..." to create a rule or enable "Show all rules" in the settings to show all Windows Firewall rules..
-        /// </summary>
-        public static string NoFirewallRulesFoundMessage {
-            get {
-                return ResourceManager.GetString("NoFirewallRulesFoundMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to One or more of the selected firewall rules no longer exist (e.g. deleted in the Windows Firewall management console). Nothing was changed..
-        /// </summary>
-        public static string FirewallRulesNoLongerExistMessage {
-            get {
-                return ResourceManager.GetString("FirewallRulesNoLongerExistMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Managed by Group Policy. The rule can't be changed locally, but it can be copied..
         /// </summary>
         public static string FirewallRuleManagedByGroupPolicyMessage {
@@ -5120,33 +5093,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to At least one of the selected rules is managed by a policy (e.g. Group Policy or MDM) or created by Windows at runtime and can't be changed locally..
-        /// </summary>
-        public static string FirewallRulesManagedByPolicyMessage {
-            get {
-                return ResourceManager.GetString("FirewallRulesManagedByPolicyMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to This rule uses values that are not supported by NETworkManager (e.g. port keywords like RPC, a combination of interface types, a protocol like IGMP or the program System). Editing or copying the rule is not supported (yet), because these values would be lost and the new rule could apply to more traffic (e.g. to all ports)..
-        /// </summary>
-        public static string FirewallRuleUnsupportedValuesMessage {
-            get {
-                return ResourceManager.GetString("FirewallRuleUnsupportedValuesMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Show all active Windows Firewall rules (e.g. Windows built-in rules, rules created by other applications or from Group Policy) instead of only the rules managed by NETworkManager. Rules not managed by NETworkManager can be enabled, disabled, deleted or copied, but not edited. Rules from a policy (e.g. Group Policy or MDM) can only be copied..
-        /// </summary>
-        public static string HelpMessage_FirewallShowAllRules {
-            get {
-                return ResourceManager.GetString("HelpMessage_FirewallShowAllRules", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Managed by NETworkManager..
         /// </summary>
         public static string FirewallRuleManagedMessage {
@@ -5165,20 +5111,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable rules ({0}).
+        ///   Looks up a localized string similar to Firewall rules.
         /// </summary>
-        public static string EnableRulesX {
+        public static string FirewallRules {
             get {
-                return ResourceManager.GetString("EnableRulesX", resourceCulture);
+                return ResourceManager.GetString("FirewallRules", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Disable rules ({0}).
+        ///   Looks up a localized string similar to At least one of the selected rules is managed by a policy (e.g. Group Policy or MDM) or created by Windows at runtime and can't be changed locally..
         /// </summary>
-        public static string DisableRulesX {
+        public static string FirewallRulesManagedByPolicyMessage {
             get {
-                return ResourceManager.GetString("DisableRulesX", resourceCulture);
+                return ResourceManager.GetString("FirewallRulesManagedByPolicyMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more of the selected firewall rules no longer exist (e.g. deleted in the Windows Firewall management console). Nothing was changed..
+        /// </summary>
+        public static string FirewallRulesNoLongerExistMessage {
+            get {
+                return ResourceManager.GetString("FirewallRulesNoLongerExistMessage", resourceCulture);
             }
         }
         
@@ -5194,11 +5149,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Editing rules that are not managed by NETworkManager is not supported (yet), because they may use properties that can't be shown in the dialog (e.g. rule group, service or ICMP types). Use "Copy as..." to create a managed copy of the rule..
+        ///   Looks up a localized string similar to This rule uses values that are not supported by NETworkManager (e.g. port keywords like RPC, a combination of interface types, a protocol like IGMP or the program System). Editing or copying the rule is not supported (yet), because these values would be lost and the new rule could apply to more traffic (e.g. to all ports)..
         /// </summary>
-        public static string EditFirewallRuleNotManagedMessage {
+        public static string FirewallRuleUnsupportedValuesMessage {
             get {
-                return ResourceManager.GetString("EditFirewallRuleNotManagedMessage", resourceCulture);
+                return ResourceManager.GetString("FirewallRuleUnsupportedValuesMessage", resourceCulture);
             }
         }
         
@@ -5633,6 +5588,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show all active Windows Firewall rules (e.g. Windows built-in rules, rules created by other applications or from Group Policy) instead of only the rules managed by NETworkManager. Rules not managed by NETworkManager can be enabled, disabled, deleted or copied, but not edited. Rules from a policy (e.g. Group Policy or MDM) can only be copied..
+        /// </summary>
+        public static string HelpMessage_FirewallShowAllRules {
+            get {
+                return ResourceManager.GetString("HelpMessage_FirewallShowAllRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of backups that are retained before the oldest one is deleted..
         /// </summary>
         public static string HelpMessage_MaximumNumberOfBackups {
@@ -6037,6 +6001,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HTTPStatusCode {
             get {
                 return ResourceManager.GetString("HTTPStatusCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ICMP types.
+        /// </summary>
+        public static string IcmpTypes {
+            get {
+                return ResourceManager.GetString("IcmpTypes", resourceCulture);
             }
         }
         
@@ -7041,6 +7014,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading firewall rules....
+        /// </summary>
+        public static string LoadingFirewallRulesDots {
+            get {
+                return ResourceManager.GetString("LoadingFirewallRulesDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Local addresses.
         /// </summary>
         public static string LocalAddresses {
@@ -7982,6 +7964,15 @@ namespace NETworkManager.Localization.Resources {
         public static string NoEnabledNetworkAdaptersFound {
             get {
                 return ResourceManager.GetString("NoEnabledNetworkAdaptersFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No firewall rules found. Use "Add rule..." to create a rule or enable "Show all rules" in the settings to show all Windows Firewall rules..
+        /// </summary>
+        public static string NoFirewallRulesFoundMessage {
+            get {
+                return ResourceManager.GetString("NoFirewallRulesFoundMessage", resourceCulture);
             }
         }
         
@@ -11773,6 +11764,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ShowAddressBar {
             get {
                 return ResourceManager.GetString("ShowAddressBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show all rules.
+        /// </summary>
+        public static string ShowAllRules {
+            get {
+                return ResourceManager.GetString("ShowAllRules", resourceCulture);
             }
         }
         
