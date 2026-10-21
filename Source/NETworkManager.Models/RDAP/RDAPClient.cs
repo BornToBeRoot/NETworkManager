@@ -96,10 +96,7 @@ public class RDAPClient : SingletonBase<RDAPClient>
     #region Public methods
 
     /// <summary>
-    ///     Executes an RDAP query. For a subdomain (e.g. a hostname like "www.example.com"), the registered domain is
-    ///     queried ("example.com"), since registries only know registered domains and answer a subdomain with 404 (e.g.
-    ///     Verisign, Nominet) or 400 (e.g. PIR, Identity Digital, SWITCH, auDA). The queried domain is in
-    ///     <see cref="RDAPResult.Query" />.
+    ///     Executes an RDAP query.
     /// </summary>
     /// <param name="query">Query to execute (see <see cref="RDAPQueryParser" />).</param>
     /// <param name="cacheDirectory">Directory where the IANA bootstrap files are cached.</param>
@@ -116,8 +113,6 @@ public class RDAPClient : SingletonBase<RDAPClient>
         // TLD queries go directly to IANA and don't need the bootstrap files.
         if (query.Type != RDAPQueryType.TLD)
             await bootstrapService.EnsureUpToDateAsync(cacheDirectory, cancellationToken).ConfigureAwait(false);
-
-        query = RDAPQueryParser.GetRegisteredDomain(query) ?? query;
 
         return await QueryServersAsync(query, bootstrapService.GetBaseUrls(query), timeout, followReferral,
             cancellationToken).ConfigureAwait(false);
@@ -292,9 +287,9 @@ public class RDAPClient : SingletonBase<RDAPClient>
     /// <summary>
     ///     Checks the target of a referral, which is sent by the registry and therefore untrusted. Only HTTPS is allowed
     ///     (no downgrade to plain text) and the host must not resolve to a local or private address, so a response
-    ///     cannot make the client send requests into the local network. If the request goes through a proxy, the proxy
-    ///     resolves the host and connects to it, so the host is not resolved locally (often not possible in networks
-    ///     where only the proxy resolves public names); an IP address in the URL is still checked.
+    ///     cannot make the client send requests into the local network. If the host can't be resolved locally and the
+    ///     request goes through a proxy, the referral is followed without the check, since the proxy resolves the host
+    ///     (networks where only the proxy resolves public names).
     /// </summary>
     private static async Task ValidateReferralTargetAsync(Uri url, CancellationToken cancellationToken)
     {
@@ -311,19 +306,20 @@ public class RDAPClient : SingletonBase<RDAPClient>
         {
             addresses = [ipAddress];
         }
-        else if (IsProxied(url))
-        {
-            return;
-        }
         else
         {
             try
             {
                 addresses = await Dns.GetHostAddressesAsync(url.DnsSafeHost, cancellationToken).ConfigureAwait(false);
             }
+            catch (SocketException) when (IsProxied(url))
+            {
+                // The proxy resolves the host.
+                return;
+            }
             catch (SocketException ex)
             {
-                // Fail closed: a referral is only followed if its address could be checked.
+                // Fail closed: without a proxy, a referral is only followed if its address could be checked.
                 throw new RDAPException(RDAPErrorKind.Network, ex.Message, ex) { RequestUrl = url.AbsoluteUri };
             }
         }

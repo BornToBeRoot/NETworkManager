@@ -125,7 +125,7 @@ For many domains (e.g. `.com` and `.net`), the registry only returns basic data 
 
 :::note
 
-For security reasons, a referral is only followed if it uses HTTPS and does not point to a local or private address (e.g. `192.168.0.0/16`). Otherwise, a message is shown and only the result of the registry is displayed. If a proxy is configured in Windows, the proxy resolves the host name of the referral, so it is only checked if it is an IP address.
+For security reasons, a referral is only followed if it uses HTTPS and does not point to a local or private address (e.g. `192.168.0.0/16`). Otherwise, a message is shown and only the result of the registry is displayed. If a proxy is configured in Windows and the host name of the referral can't be resolved locally (e.g. only the proxy resolves public names), the referral is followed without this check.
 
 :::
 

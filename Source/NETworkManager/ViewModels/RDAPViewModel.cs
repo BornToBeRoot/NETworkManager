@@ -301,7 +301,7 @@ public class RDAPViewModel : ViewModelBase
 
         DragablzTabItem.SetTabHeader(_tabId, Query);
 
-        var parseError = RDAPQueryParser.TryParse(QueryType, Query, out var query);
+        var parseError = RDAPQueryParser.TryParse(QueryType, Query, out var input);
 
         if (parseError != RDAPQueryParseError.None)
         {
@@ -310,6 +310,10 @@ public class RDAPViewModel : ViewModelBase
 
             return;
         }
+
+        // A subdomain (e.g. a hostname) is queried as its registered domain, which is also used for the error messages
+        // and Whois.
+        var query = RDAPQueryParser.GetRegisteredDomain(input) ?? input;
 
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
@@ -337,13 +341,11 @@ public class RDAPViewModel : ViewModelBase
 
             List<string> messages = [];
 
-            // The registered domain of a subdomain (e.g. a hostname) was queried.
-            if (_result.Query.Value != query.Value)
-                messages.Add(string.Format(Strings.RDAPXIsNotARegisteredDomainShowingY, query.Value,
-                    _result.Query.Value));
+            if (query != input)
+                messages.Add(string.Format(Strings.RDAPXIsNotARegisteredDomainShowingY, input.Value, query.Value));
 
             if (_result.ReferralError != null)
-                messages.Add(GetReferralErrorMessage(_result.ReferralError, _result.Query));
+                messages.Add(GetReferralErrorMessage(_result.ReferralError, query));
 
             if (messages.Count > 0)
                 ShowStatusMessage(string.Join(Environment.NewLine, messages));

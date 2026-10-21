@@ -142,7 +142,8 @@ public static partial class RDAPQueryParser
 
     /// <summary>
     ///     Gets the query for the registered domain of a domain query, if the domain is a subdomain (e.g. "bbc.co.uk" for
-    ///     "www.bbc.co.uk", see <see cref="PublicSuffixList" />).
+    ///     "www.bbc.co.uk", see <see cref="PublicSuffixList" />). Registries only know registered domains and answer a
+    ///     subdomain with 404 (e.g. Verisign, Nominet) or 400 (e.g. PIR, Identity Digital, SWITCH, auDA).
     /// </summary>
     /// <param name="query">Domain query.</param>
     /// <returns>Query for the registered domain, or null if the domain is a registered domain or a public suffix.</returns>

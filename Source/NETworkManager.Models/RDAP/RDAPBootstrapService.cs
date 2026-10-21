@@ -74,6 +74,11 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     private string _cacheDirectory;
     private List<RDAPBootstrapCacheInfo> _cacheInfos;
 
+    /// <summary>
+    ///     The cached files have been read (<see cref="LoadRegistries" />). They are only read again if a file changed.
+    /// </summary>
+    private bool _registriesLoaded;
+
     private Dictionary<string, List<string>> _dns;
     private List<(IPNetwork Network, List<string> Urls)> _ipv4;
     private List<(IPNetwork Network, List<string> Urls)> _ipv6;
@@ -327,11 +332,9 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
 
             Directory.CreateDirectory(_cacheDirectory);
 
-            // Load the cached files first, so a file that can't be parsed is downloaded again in this update (see
+            // Load the cached files first (once), so a file that can't be parsed is downloaded again in this update (see
             // ReadServices).
-            var loaded = _dns == null;
-
-            if (loaded)
+            if (!_registriesLoaded)
                 LoadRegistries();
 
             var attempted = false;
@@ -376,7 +379,7 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
             }
 
             // The cached copy is kept and used, if an update fails.
-            if (contentChanged || _dns == null && !loaded)
+            if (contentChanged)
                 LoadRegistries();
 
             if (attempted)
@@ -574,7 +577,7 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
             return;
 
         _cacheDirectory = cacheDirectory;
-        _dns = null;
+        _registriesLoaded = false;
 
         List<RDAPBootstrapCacheInfo> stored = null;
 
@@ -667,6 +670,8 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
 
     private void LoadRegistries()
     {
+        _registriesLoaded = true;
+
         _dns = ToDictionary(ReadServices(RDAPBootstrapFileType.DNS));
         _objectTags = ToDictionary(ReadServices(RDAPBootstrapFileType.ObjectTags));
         _ipv4 = ToNetworks(ReadServices(RDAPBootstrapFileType.IPv4));
