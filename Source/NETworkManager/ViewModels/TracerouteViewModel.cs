@@ -321,6 +321,17 @@ public class TracerouteViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets the command to query the registration data of the selected hop's IP address via RDAP. The IP address is
+    /// used, since the hostname of a router is usually not a registered domain.
+    /// </summary>
+    public ICommand PerformRDAPQueryCommand => new RelayCommand(PerformRDAPQueryAction);
+
+    private void PerformRDAPQueryAction(object data)
+    {
+        EventSystem.RedirectToApplication(ApplicationName.RDAP, data.ToString());
+    }
+
+    /// <summary>
     /// Gets the command to copy the round-trip time to the clipboard.
     /// </summary>
     public ICommand CopyTimeToClipboardCommand => new RelayCommand(CopyTimeToClipboardAction);

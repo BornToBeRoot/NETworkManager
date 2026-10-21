@@ -383,6 +383,16 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem Header="{x:Static localization:Strings.RDAP}"
+                              Command="{Binding PerformRDAPQueryCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator />
                     <MenuItem Tag="CustomCommands" Header="{x:Static localization:Strings.CustomCommands}">
                         <MenuItem.Icon>

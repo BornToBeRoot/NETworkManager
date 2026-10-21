@@ -302,6 +302,28 @@
                             </Rectangle>
                         </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem Header="{x:Static Member=localization:Strings.RDAP}"
+                              Command="{Binding PerformRDAPQueryCommand}"
+                              CommandParameter="{Binding SelectedResult.IPAddress}">
+                        <MenuItem.Style>
+                            <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}">
+                                <Style.Triggers>
+                                    <!-- Timed out hops have no IP address -->
+                                    <DataTrigger Binding="{Binding SelectedResult.IPAddress}" Value="{x:Null}">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16"
+                                       Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator />
                     <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
                               Style="{StaticResource ResourceKey=CopyMenuItem}">

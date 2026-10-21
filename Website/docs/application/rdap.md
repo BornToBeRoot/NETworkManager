@@ -39,6 +39,8 @@ The firewall must allow outgoing HTTPS connections (TCP port 443) to `data.iana.
 
 A running query can be canceled with **Cancel** (or `Esc`).
 
+The IP address of a host or hop can also be queried from the context menu of the [IP Scanner](./ip-scanner.md) and [Traceroute](./traceroute.md).
+
 ### Example inputs
 
 With the type **Auto** (default), the type is detected from the query: IP address or CIDR, AS number (e.g. `AS13335`, `13335` or `1.10`), top-level domain (a single label, e.g. `de`), entity handle (a single label with a service provider tag, e.g. `ORG-RIEN1-RIPE`), otherwise domain. Select a type to override the detection, e.g. to query a nameserver (detected as domain).
