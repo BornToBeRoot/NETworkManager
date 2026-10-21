@@ -4410,6 +4410,75 @@ All'account deve essere consentito enumerare gli oggetti del computer nella base
   <data name="FirewallRules" xml:space="preserve">
     <value>Regole firewall</value>
   </data>
+  <data name="HelpMessage_FirewallShowAllRules" xml:space="preserve">
+    <value>Show all active Windows Firewall rules (e.g. Windows built-in rules, rules created by other applications or from Group Policy) instead of only the rules managed by NETworkManager. Rules not managed by NETworkManager can be enabled, disabled, deleted or copied, but not edited. Rules from a policy (e.g. Group Policy or MDM) can only be copied.</value>
+  </data>
+  <data name="FirewallRuleUnsupportedValuesMessage" xml:space="preserve">
+    <value>This rule uses values that are not supported by NETworkManager (e.g. port keywords like RPC, a combination of interface types, a protocol like IGMP or the program System). Editing or copying the rule is not supported (yet), because these values would be lost and the new rule could apply to more traffic (e.g. to all ports).</value>
+  </data>
+  <data name="FirewallRuleManagedByGroupPolicyMessage" xml:space="preserve">
+    <value>Managed by Group Policy. The rule can't be changed locally, but it can be copied.</value>
+  </data>
+  <data name="FirewallRuleManagedByMDMMessage" xml:space="preserve">
+    <value>Managed by Mobile Device Management (MDM), e.g. Microsoft Intune. The rule can't be changed locally, but it can be copied.</value>
+  </data>
+  <data name="FirewallRuleManagedByOtherMessage" xml:space="preserve">
+    <value>Created by Windows at runtime (e.g. dynamic or hardcoded rule). The rule can't be changed locally, but it can be copied.</value>
+  </data>
+  <data name="FirewallRulesManagedByPolicyMessage" xml:space="preserve">
+    <value>At least one of the selected rules is managed by a policy (e.g. Group Policy or MDM) or created by Windows at runtime and can't be changed locally.</value>
+  </data>
+  <data name="FirewallRulesNoLongerExistMessage" xml:space="preserve">
+    <value>One or more of the selected firewall rules no longer exist (e.g. deleted in the Windows Firewall management console). Nothing was changed.</value>
+  </data>
+  <data name="LoadingFirewallRulesDots" xml:space="preserve">
+    <value>Loading firewall rules...</value>
+  </data>
+  <data name="NoFirewallRulesFoundMessage" xml:space="preserve">
+    <value>No firewall rules found. Use "Add rule..." to create a rule or enable "Show all rules" in the settings to show all Windows Firewall rules.</value>
+  </data>
+  <data name="IcmpTypes" xml:space="preserve">
+    <value>ICMP types</value>
+  </data>
+  <data name="NetworkAdapters" xml:space="preserve">
+    <value>Network adapters</value>
+  </data>
+  <data name="UsersAndAuthentication" xml:space="preserve">
+    <value>Users and authentication</value>
+  </data>
+  <data name="AppPackage" xml:space="preserve">
+    <value>App package</value>
+  </data>
+  <data name="CopyFirewallRuleHiddenPropertiesMessage" xml:space="preserve">
+    <value>The rule "{0}" uses the following properties, which are not supported by NETworkManager and are not copied:
+
+{1}
+
+The new rule may apply to more traffic than the original rule (e.g. to all services of a program instead of a single one). Please review the new rule carefully before saving it.</value>
+  </data>
+  <data name="ShowAllRules" xml:space="preserve">
+    <value>Show all rules</value>
+  </data>
+  <data name="FirewallRuleManagedMessage" xml:space="preserve">
+    <value>Managed by NETworkManager.</value>
+  </data>
+  <data name="FirewallRuleNotManagedMessage" xml:space="preserve">
+    <value>Not managed by NETworkManager (e.g. a Windows built-in rule or a rule created by another application). The rule can be enabled, disabled, deleted or copied, but editing is not supported (yet).</value>
+  </data>
+  <data name="EnableRulesX" xml:space="preserve">
+    <value>Enable rules ({0})</value>
+  </data>
+  <data name="DisableRulesX" xml:space="preserve">
+    <value>Disable rules ({0})</value>
+  </data>
+  <data name="FirewallRulesNotManagedWarningMessage" xml:space="preserve">
+    <value>The following rules are not managed by NETworkManager (e.g. Windows built-in rules or rules created by other applications). Changing them may affect the network functionality of Windows or other applications:
+
+{0}</value>
+  </data>
+  <data name="EditFirewallRuleNotManagedMessage" xml:space="preserve">
+    <value>Editing rules that are not managed by NETworkManager is not supported (yet), because they may use properties that can't be shown in the dialog (e.g. rule group, service or ICMP types). Use "Copy as..." to create a managed copy of the rule.</value>
+  </data>
   <data name="WindowsFirewallSettings" xml:space="preserve">
     <value>Impostazioni firewall di Windows</value>
   </data>

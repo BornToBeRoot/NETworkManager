@@ -127,6 +127,10 @@ Release date: **xx.xx.2026**
 
 - Fixed errors when changing the network configuration (e.g. missing permissions) not being shown — the change was reported as successful although it failed. The error message of Windows is now shown. [#3606](https://github.com/BornToBeRoot/NETworkManager/issues/3606)
 
+**Neighbor Table**
+
+- Fixed adding and deleting entries not working until the application was restarted if loading the PowerShell module `NetTCPIP` failed once.
+
 **Dashboard**
 
 - Fixed the **Network Connection** widget running a full connection check on every application startup, even if the Status Window or Dashboard was never opened. It now only checks when actually shown - via the tray icon, on a network change, or when the Dashboard tab is opened. [#3553](https://github.com/BornToBeRoot/NETworkManager/pull/3553)

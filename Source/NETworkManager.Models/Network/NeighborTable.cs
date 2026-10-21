@@ -93,26 +93,51 @@ public class NeighborTable
     private static readonly TimeSpan InterfaceAliasCacheDuration = TimeSpan.FromMinutes(5);
 
     /// <summary>
-    /// Lazily initialized PowerShell runspace. Created and configured on first access so that
-    /// read-only paths (e.g. MAC address lookup in IP Scanner) do not start a PowerShell
-    /// process unless a modifying operation is actually performed.
+    /// Shared PowerShell runspace, see <see cref="SharedRunspace"/>.
     /// </summary>
-    private static readonly Lazy<Runspace> _sharedRunspace = new(() =>
-    {
-        var runspace = RunspaceFactory.CreateRunspace();
-        runspace.Open();
+    private static Runspace _sharedRunspace;
 
-        using var ps = SMA.PowerShell.Create();
-        ps.Runspace = runspace;
-        ps.AddScript(@"
+    /// <summary>
+    /// Returns the shared runspace. It is created and configured on first access, so that read-only paths
+    /// (e.g. MAC address lookup in IP Scanner) do not start a PowerShell process unless a modifying operation
+    /// is actually performed. If the runspace could not be created (e.g. the <c>NetTCPIP</c> module failed to load)
+    /// or is broken, it is created again on the next access, so a temporary error doesn't break adding / deleting
+    /// entries until the application is restarted.
+    /// Must only be accessed while <see cref="RunspaceLock"/> is held.
+    /// </summary>
+    private static Runspace SharedRunspace
+    {
+        get
+        {
+            if (_sharedRunspace?.RunspaceStateInfo.State == RunspaceState.Opened)
+                return _sharedRunspace;
+
+            _sharedRunspace?.Dispose();
+            _sharedRunspace = null;
+
+            var runspace = RunspaceFactory.CreateRunspace();
+
+            try
+            {
+                runspace.Open();
+
+                using var ps = SMA.PowerShell.Create();
+                ps.Runspace = runspace;
+                ps.AddScript(@"
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
 Import-Module NetTCPIP -ErrorAction Stop").Invoke();
+            }
+            catch
+            {
+                runspace.Dispose();
+                throw;
+            }
 
-        return runspace;
-    });
+            _sharedRunspace = runspace;
 
-    /// <summary>Returns the shared runspace, initializing it on first access.</summary>
-    private static Runspace SharedRunspace => _sharedRunspace.Value;
+            return runspace;
+        }
+    }
 
     #endregion
 
