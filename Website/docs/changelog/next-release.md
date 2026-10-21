@@ -112,6 +112,7 @@ Release date: **xx.xx.2026**
 - Fixed `F5` not refreshing the rule list, although it is documented as shortcut.
 - Fixed an empty rule list with "Reloaded at ..." being shown if the rules could not be loaded (e.g. the Windows Firewall service is not running). An error is shown now, and a message if the rules could only be loaded partially.
 - Fixed the Firewall not working until the application was restarted if loading the PowerShell module `NetSecurity` failed once.
+- Fixed keywords like `LocalSubnet` or `DNS` being accepted for **Local addresses** in the add / edit / copy rule dialog, although Windows only accepts `Any` there (saving the rule failed). The same applies to `Any4` / `Any6` for local and remote addresses.
 - Fixed a horizontal scrollbar appearing in the add / edit / copy rule dialog when the name or description is very long. [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
 - Fixed port keywords (e.g. `RPC`) and combinations of interface types being shown as **Any**. Editing a rule that was changed outside of NETworkManager to use such values no longer silently removes them (the rule can't be edited in this case). [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
 - Fixed the program of a rule not being shown in the row details and the edit dialog. Saving the edit dialog then removed the program from the rule, so the rule applied to all programs. [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)

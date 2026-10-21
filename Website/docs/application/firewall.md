@@ -249,7 +249,7 @@ One or more local addresses the rule applies to. Multiple entries are separated 
 - `192.168.1.0/24`
 - `10.0.0.0/255.0.0.0`
 - `192.168.1.10-192.168.1.50`
-- `LocalSubnet; 192.168.10.0/24`
+- `192.168.1.10; 10.0.0.0/8`
 
 :::note
 
@@ -261,9 +261,9 @@ The following formats are accepted:
 - IPv4 / IPv6 subnet by prefix length (e.g. `1.2.3.0/24`, `fe80::/48`)
 - IPv4 subnet by subnet mask (e.g. `10.0.0.0/255.0.0.0`)
 - IPv4 / IPv6 range (e.g. `1.2.3.4-1.2.3.10`, `fe80::1-fe80::9`)
-- Keyword: `Any`, `LocalSubnet`, `DNS`, `DHCP`, `WINS`, `DefaultGateway`, `Internet`, `Intranet`, `IntranetRemoteAccess`, `PlayToDevice`, `CaptivePortal`. Keywords can be restricted to IPv4 or IPv6 by appending `4` or `6` (e.g. `LocalSubnet4`, `Intranet6`).
+- Keyword: `Any`
 
-According to Microsoft, the only keyword officially supported by `LocalAddress` is `Any`. The other keywords are intended for use with [Remote addresses](#remote-addresses).
+Other keywords (e.g. `LocalSubnet` or `DNS`) are not accepted by Windows for local addresses, they can only be used for [Remote addresses](#remote-addresses).
 
 :::
 
@@ -287,7 +287,13 @@ One or more remote addresses the rule applies to. Multiple entries are separated
 
 An empty value means **Any** address.
 
-The same formats as [Local addresses](#local-addresses) are accepted (single address, subnet, range, or keyword).
+The following formats are accepted:
+
+- Single IPv4 / IPv6 address (e.g. `1.2.3.4`, `fe80::1`)
+- IPv4 / IPv6 subnet by prefix length (e.g. `1.2.3.0/24`, `fe80::/48`)
+- IPv4 subnet by subnet mask (e.g. `10.0.0.0/255.0.0.0`)
+- IPv4 / IPv6 range (e.g. `1.2.3.4-1.2.3.10`, `fe80::1-fe80::9`)
+- Keyword: `Any`, `LocalSubnet`, `DNS`, `DHCP`, `WINS`, `DefaultGateway`, `Internet`, `Intranet`, `IntranetRemoteAccess`, `PlayToDevice`, `CaptivePortal`. Keywords except `Any` can be restricted to IPv4 or IPv6 by appending `4` or `6` (e.g. `LocalSubnet4`, `Intranet6`).
 
 :::
 

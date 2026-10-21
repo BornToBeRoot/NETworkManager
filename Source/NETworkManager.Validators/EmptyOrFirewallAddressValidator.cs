@@ -13,11 +13,18 @@ namespace NETworkManager.Validators;
 /// valid IPv4/IPv6 addresses, IPv4/IPv6 CIDR subnets, IPv4 subnets in subnet-mask
 /// notation (e.g. <c>10.0.0.0/255.0.0.0</c>), IPv4/IPv6 ranges (e.g. <c>1.2.3.4-1.2.3.7</c>),
 /// or recognized Windows Firewall keywords (Any, LocalSubnet, DNS, DHCP, WINS, DefaultGateway,
-/// Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal). Keywords may be
+/// Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal). Keywords except <c>Any</c> may be
 /// suffixed with <c>4</c> or <c>6</c> to restrict matching to IPv4 or IPv6 (e.g. <c>LocalSubnet4</c>).
+/// For local addresses (see <see cref="IsLocalAddress"/>), Windows only accepts the keyword <c>Any</c>.
 /// </summary>
 public class EmptyOrFirewallAddressValidator : ValidationRule
 {
+    /// <summary>
+    /// Validate a local address. <c>New-NetFirewallRule</c> / <c>Set-NetFirewallRule</c> reject all keywords
+    /// except <c>Any</c> for <c>-LocalAddress</c> (e.g. <c>LocalSubnet</c> is only valid for <c>-RemoteAddress</c>).
+    /// </summary>
+    public bool IsLocalAddress { get; set; }
+
     private static readonly string[] Keywords =
     [
         "Any", "LocalSubnet", "DNS", "DHCP", "WINS", "DefaultGateway",
@@ -37,7 +44,7 @@ public class EmptyOrFirewallAddressValidator : ValidationRule
             if (string.IsNullOrEmpty(token))
                 continue;
 
-            if (IsKeyword(token))
+            if (IsLocalAddress ? token.Equals("Any", StringComparison.OrdinalIgnoreCase) : IsKeyword(token))
                 continue;
 
             if (!token.Contains('/') && token.Contains('-'))
@@ -45,14 +52,14 @@ public class EmptyOrFirewallAddressValidator : ValidationRule
                 if (IsValidRange(token))
                     continue;
 
-                return new ValidationResult(false, Strings.EnterValidFirewallAddress);
+                return InvalidResult();
             }
 
             var slashIndex = token.IndexOf('/');
             var addressPart = slashIndex > 0 ? token[..slashIndex] : token;
 
             if (!IPAddress.TryParse(addressPart, out var ip))
-                return new ValidationResult(false, Strings.EnterValidFirewallAddress);
+                return InvalidResult();
 
             if (slashIndex <= 0)
                 continue;
@@ -65,11 +72,14 @@ public class EmptyOrFirewallAddressValidator : ValidationRule
             var maxPrefix = ip.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32;
 
             if (!int.TryParse(suffix, out var prefix) || prefix < 0 || prefix > maxPrefix)
-                return new ValidationResult(false, Strings.EnterValidFirewallAddress);
+                return InvalidResult();
         }
 
         return ValidationResult.ValidResult;
     }
+
+    private ValidationResult InvalidResult() => new(false,
+        IsLocalAddress ? Strings.EnterValidFirewallLocalAddress : Strings.EnterValidFirewallAddress);
 
     private static bool IsKeyword(string token)
     {
@@ -79,8 +89,10 @@ public class EmptyOrFirewallAddressValidator : ValidationRule
         if (token.Length < 2 || (token[^1] != '4' && token[^1] != '6'))
             return false;
 
+        // "Any4" / "Any6" are not accepted by Windows
         var bare = token[..^1];
-        return Array.Exists(Keywords, k => k.Equals(bare, StringComparison.OrdinalIgnoreCase));
+        return !bare.Equals("Any", StringComparison.OrdinalIgnoreCase) &&
+               Array.Exists(Keywords, k => k.Equals(bare, StringComparison.OrdinalIgnoreCase));
     }
 
     private static bool IsValidRange(string token)

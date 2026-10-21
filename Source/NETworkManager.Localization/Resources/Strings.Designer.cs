@@ -4211,6 +4211,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a valid IP address, subnet (e.g. 10.0.0.0/8), range (e.g. 10.0.0.1-10.0.0.10), or the keyword Any. Other keywords (e.g. LocalSubnet) are only valid for remote addresses..
+        /// </summary>
+        public static string EnterValidFirewallLocalAddress {
+            get {
+                return ResourceManager.GetString("EnterValidFirewallLocalAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a valid folder path!.
         /// </summary>
         public static string EnterValidFolderPath {

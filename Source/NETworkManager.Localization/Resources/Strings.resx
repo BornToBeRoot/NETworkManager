@@ -4522,6 +4522,9 @@ The new rule may apply to more traffic than the original rule (e.g. to all servi
   <data name="RemoteAddresses" xml:space="preserve">
     <value>Remote addresses</value>
   </data>
+  <data name="EnterValidFirewallLocalAddress" xml:space="preserve">
+    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8), range (e.g. 10.0.0.1-10.0.0.10), or the keyword Any. Other keywords (e.g. LocalSubnet) are only valid for remote addresses.</value>
+  </data>
   <data name="EnterValidFirewallAddress" xml:space="preserve">
     <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8), range (e.g. 10.0.0.1-10.0.0.10), or keyword (Any, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal)</value>
   </data>
