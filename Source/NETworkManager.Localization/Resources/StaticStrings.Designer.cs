@@ -592,6 +592,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to a.iana-servers.net.
+        /// </summary>
+        public static string ExampleRDAPNameserver {
+            get {
+                return ResourceManager.GetString("ExampleRDAPNameserver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to COM5.
         /// </summary>
         public static string ExampleSerialLine {

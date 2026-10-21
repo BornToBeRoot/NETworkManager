@@ -173,7 +173,8 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
         var urls = query.Type switch
         {
             RDAPQueryType.TLD => [IANARootZoneUrl],
-            RDAPQueryType.Domain => FindDomain(query.DomainName),
+            // A nameserver is served by the registry of its TLD (RFC 9224 4).
+            RDAPQueryType.Domain or RDAPQueryType.Nameserver => FindDomain(query.DomainName),
             RDAPQueryType.IPAddress => FindIPAddress(query.IPAddress, query.PrefixLength),
             RDAPQueryType.ASN => FindASN(query.ASN),
             RDAPQueryType.Entity => FindEntity(query.Handle),

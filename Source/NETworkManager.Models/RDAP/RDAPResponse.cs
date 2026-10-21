@@ -47,6 +47,18 @@ public class RDAPObject
     [JsonProperty("roles")] public List<string> Roles { get; set; }
 
     /// <summary>
+    ///     IP networks of an entity (RFC 9083 5.1), e.g. sent by ARIN for an organization.
+    /// </summary>
+    [JsonProperty("networks")]
+    public List<RDAPObject> Networks { get; set; }
+
+    /// <summary>
+    ///     AS numbers of an entity (RFC 9083 5.1), e.g. sent by ARIN for an organization.
+    /// </summary>
+    [JsonProperty("autnums")]
+    public List<RDAPObject> Autnums { get; set; }
+
+    /// <summary>
     ///     jCard (RFC 7095). Kept as raw JSON, since its shape varies between servers. See <see cref="JCardParser" />.
     /// </summary>
     [JsonProperty("vcardArray")]

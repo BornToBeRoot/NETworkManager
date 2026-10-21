@@ -23,6 +23,7 @@ public sealed class RDAPQueryTypeToWatermarkConverter : IValueConverter
     {
         return value switch
         {
+            RDAPQueryType.Nameserver => StaticStrings.ExampleRDAPNameserver,
             RDAPQueryType.TLD => StaticStrings.ExampleTLD,
             RDAPQueryType.IPAddress => StaticStrings.ExampleIPAddressOrCIDR,
             RDAPQueryType.ASN => StaticStrings.ExampleASN,

@@ -4818,4 +4818,13 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
   <data name="RDAPTimeoutAfterXSeconds" xml:space="preserve">
     <value>The RDAP server did not respond within {0} seconds.</value>
   </data>
+  <data name="RDAPQueryType_Nameserver" xml:space="preserve">
+    <value>Nameserver</value>
+  </data>
+  <data name="EnterValidNameserver" xml:space="preserve">
+    <value>Enter a valid nameserver (e.g., "ns1.example.com")!</value>
+  </data>
+  <data name="ASNumbers" xml:space="preserve">
+    <value>AS numbers</value>
+  </data>
 </root>

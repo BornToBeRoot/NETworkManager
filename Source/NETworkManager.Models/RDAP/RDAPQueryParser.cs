@@ -41,6 +41,7 @@ public static partial class RDAPQueryParser
         query = parseType switch
         {
             RDAPQueryType.Domain => ParseDomain(input),
+            RDAPQueryType.Nameserver => ParseNameserver(input),
             RDAPQueryType.TLD => ParseTLD(input),
             RDAPQueryType.IPAddress => ParseIPAddress(input),
             RDAPQueryType.ASN => ParseASN(input),
@@ -86,6 +87,7 @@ public static partial class RDAPQueryParser
         {
             RDAPQueryType.Auto => RDAPQueryParseError.InvalidQuery,
             RDAPQueryType.Domain => RDAPQueryParseError.InvalidDomain,
+            RDAPQueryType.Nameserver => RDAPQueryParseError.InvalidNameserver,
             RDAPQueryType.TLD => RDAPQueryParseError.InvalidTLD,
             RDAPQueryType.IPAddress => RDAPQueryParseError.InvalidIPAddress,
             RDAPQueryType.ASN => RDAPQueryParseError.InvalidASN,
@@ -135,6 +137,25 @@ public static partial class RDAPQueryParser
             Value = domain,
             DomainName = domain,
             PathSegment = $"domain/{domain}"
+        };
+    }
+
+    /// <summary>
+    ///     Parses a nameserver (host name with at least two labels, RFC 9082 3.1.4).
+    /// </summary>
+    private static RDAPQuery ParseNameserver(string input)
+    {
+        var name = ToALabel(input.Trim('.'));
+
+        if (string.IsNullOrEmpty(name) || !name.Contains('.') || HasNumericTLD(name))
+            return null;
+
+        return new RDAPQuery
+        {
+            Type = RDAPQueryType.Nameserver,
+            Value = name,
+            DomainName = name,
+            PathSegment = $"nameserver/{name}"
         };
     }
 

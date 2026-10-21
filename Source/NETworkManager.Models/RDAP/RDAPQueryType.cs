@@ -16,6 +16,11 @@ public enum RDAPQueryType
     Domain,
 
     /// <summary>
+    ///     Nameserver (e.g. a.iana-servers.net), resolved via the IANA DNS bootstrap (registry of its TLD).
+    /// </summary>
+    Nameserver,
+
+    /// <summary>
     ///     Top-level domain (e.g. de), queried directly against the IANA root zone RDAP server.
     /// </summary>
     TLD,

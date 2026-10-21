@@ -23,7 +23,7 @@ public class RDAPQuery
     public string PathSegment { get; init; }
 
     /// <summary>
-    ///     Domain name in A-label form (Domain and TLD queries only).
+    ///     Domain name in A-label form (Domain, Nameserver and TLD queries only).
     /// </summary>
     public string DomainName { get; init; }
 

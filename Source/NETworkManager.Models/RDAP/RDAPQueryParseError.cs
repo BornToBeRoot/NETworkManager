@@ -8,6 +8,7 @@ public enum RDAPQueryParseError
     None,
     InvalidQuery,
     InvalidDomain,
+    InvalidNameserver,
     InvalidTLD,
     InvalidIPAddress,
     InvalidASN,

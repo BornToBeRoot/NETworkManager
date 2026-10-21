@@ -6,7 +6,8 @@ using NETworkManager.Models.RDAP;
 namespace NETworkManager.Validators;
 
 /// <summary>
-///     Validates an RDAP query (domain, TLD, IP address/CIDR, AS number or entity handle) depending on the query type.
+///     Validates an RDAP query (domain, nameserver, TLD, IP address/CIDR, AS number or entity handle) depending on the
+///     query type.
 ///     With <see cref="RDAPQueryType.Auto" />, the input must be valid for the detected type.
 /// </summary>
 public class RDAPQueryValidator : ValidationRule
@@ -33,6 +34,7 @@ public class RDAPQueryValidator : ValidationRule
         {
             RDAPQueryParseError.InvalidQuery => Strings.EnterValidRDAPQuery,
             RDAPQueryParseError.InvalidDomain => Strings.EnterValidDomain,
+            RDAPQueryParseError.InvalidNameserver => Strings.EnterValidNameserver,
             RDAPQueryParseError.InvalidTLD => Strings.EnterValidTLD,
             RDAPQueryParseError.InvalidIPAddress => Strings.EnterValidIPAddressOrCIDR,
             RDAPQueryParseError.InvalidASN => Strings.EnterValidASN,

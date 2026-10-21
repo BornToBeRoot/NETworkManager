@@ -1275,6 +1275,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AS numbers.
+        /// </summary>
+        public static string ASNumbers {
+            get {
+                return ResourceManager.GetString("ASNumbers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to At least one application must be visible!.
         /// </summary>
         public static string AtLeastOneApplicationMustBeVisible {
@@ -4315,6 +4324,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EnterValidMACAddress {
             get {
                 return ResourceManager.GetString("EnterValidMACAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid nameserver (e.g., "ns1.example.com")!.
+        /// </summary>
+        public static string EnterValidNameserver {
+            get {
+                return ResourceManager.GetString("EnterValidNameserver", resourceCulture);
             }
         }
         
@@ -9578,6 +9596,15 @@ namespace NETworkManager.Localization.Resources {
         public static string RDAPQueryType_IPAddress {
             get {
                 return ResourceManager.GetString("RDAPQueryType_IPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nameserver.
+        /// </summary>
+        public static string RDAPQueryType_Nameserver {
+            get {
+                return ResourceManager.GetString("RDAPQueryType_Nameserver", resourceCulture);
             }
         }
         
