@@ -56,6 +56,13 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     private static readonly TimeSpan RetryInterval = TimeSpan.FromHours(1);
 
     /// <summary>
+    ///     Wait time before the next automatic attempt for a file that is not cached (e.g. the first query was made
+    ///     offline). It is short, since the query type can't be used without the file, but a blocked data.iana.org
+    ///     doesn't cost a timeout with every query.
+    /// </summary>
+    private static readonly TimeSpan MissingFileRetryInterval = TimeSpan.FromMinutes(1);
+
+    /// <summary>
     ///     Number of failed automatic attempts after which a cached file is used until the next regular
     ///     <see cref="RefreshInterval" /> (e.g. if data.iana.org is blocked). "Update now" always checks.
     /// </summary>
@@ -66,6 +73,11 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
 
     private string _cacheDirectory;
     private List<RDAPBootstrapCacheInfo> _cacheInfos;
+
+    /// <summary>
+    ///     The cached files have been read (<see cref="LoadRegistries" />). They are only read again if a file changed.
+    /// </summary>
+    private bool _registriesLoaded;
 
     private Dictionary<string, List<string>> _dns;
     private List<(IPNetwork Network, List<string> Urls)> _ipv4;
@@ -173,7 +185,8 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
         var urls = query.Type switch
         {
             RDAPQueryType.TLD => [IANARootZoneUrl],
-            RDAPQueryType.Domain => FindDomain(query.DomainName),
+            // A nameserver is served by the registry of its TLD (RFC 9224 4).
+            RDAPQueryType.Domain or RDAPQueryType.Nameserver => FindDomain(query.DomainName),
             RDAPQueryType.IPAddress => FindIPAddress(query.IPAddress, query.PrefixLength),
             RDAPQueryType.ASN => FindASN(query.ASN),
             RDAPQueryType.Entity => FindEntity(query.Handle),
@@ -319,12 +332,19 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
 
             Directory.CreateDirectory(_cacheDirectory);
 
+            // Load the cached files first (once), so a file that can't be parsed is downloaded again in this update (see
+            // ReadServices).
+            if (!_registriesLoaded)
+                LoadRegistries();
+
             var attempted = false;
             var contentChanged = false;
             Exception networkError = null;
 
             foreach (var info in _cacheInfos)
             {
+                var path = Path.Combine(_cacheDirectory, info.FileName);
+
                 // "Expires" is the time of the next check, after a successful update as well as after a failure.
                 if (!force && info.Expires > DateTime.Now)
                     continue;
@@ -339,8 +359,6 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
                     errors.Add($"{info.FileName}: {networkError.Message}");
                     continue;
                 }
-
-                var path = Path.Combine(_cacheDirectory, info.FileName);
 
                 try
                 {
@@ -361,7 +379,7 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
             }
 
             // The cached copy is kept and used, if an update fails.
-            if (contentChanged || _dns == null)
+            if (contentChanged)
                 LoadRegistries();
 
             if (attempted)
@@ -382,7 +400,7 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     /// <summary>
     ///     Records a failed update. A cached file is retried after <see cref="RetryInterval" />, at most
     ///     <see cref="MaxFailedAttempts" /> times, then after the regular <see cref="RefreshInterval" />. A missing file
-    ///     is retried after <see cref="RetryInterval" />, since the query type cannot be used without it.
+    ///     is retried after <see cref="MissingFileRetryInterval" />.
     /// </summary>
     private void RecordFailure(RDAPBootstrapCacheInfo info, Exception ex)
     {
@@ -391,9 +409,11 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
 
         var exists = File.Exists(Path.Combine(_cacheDirectory, info.FileName));
 
-        info.Expires = DateTime.Now + (exists && info.FailedAttempts >= MaxFailedAttempts
-            ? RefreshInterval
-            : RetryInterval);
+        info.Expires = DateTime.Now + (!exists
+            ? MissingFileRetryInterval
+            : info.FailedAttempts >= MaxFailedAttempts
+                ? RefreshInterval
+                : RetryInterval);
     }
 
     /// <summary>
@@ -557,7 +577,7 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
             return;
 
         _cacheDirectory = cacheDirectory;
-        _dns = null;
+        _registriesLoaded = false;
 
         List<RDAPBootstrapCacheInfo> stored = null;
 
@@ -650,6 +670,8 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
 
     private void LoadRegistries()
     {
+        _registriesLoaded = true;
+
         _dns = ToDictionary(ReadServices(RDAPBootstrapFileType.DNS));
         _objectTags = ToDictionary(ReadServices(RDAPBootstrapFileType.ObjectTags));
         _ipv4 = ToNetworks(ReadServices(RDAPBootstrapFileType.IPv4));
@@ -680,6 +702,16 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
         catch (Exception ex)
         {
             Log.Error($"Could not parse RDAP bootstrap file {path}.", ex);
+
+            // Download the file again with the next query. Without ETag and Last-Modified, the request is not
+            // conditional, so the server can't answer with "304 Not Modified" and the file is replaced.
+            var info = _cacheInfos.First(x => x.Type == type);
+
+            info.ETag = null;
+            info.LastModified = null;
+            info.Expires = null;
+            info.LastError = ex.Message;
+
             return null;
         }
     }

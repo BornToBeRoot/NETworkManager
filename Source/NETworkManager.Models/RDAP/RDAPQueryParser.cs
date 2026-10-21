@@ -23,7 +23,7 @@ public static partial class RDAPQueryParser
     /// <summary>
     ///     Parses the input for the given query type.
     /// </summary>
-    /// <param name="type">Type of the query.</param>
+    /// <param name="type">Type of the query. <see cref="RDAPQueryType.Auto" /> detects the type from the input.</param>
     /// <param name="input">User input.</param>
     /// <param name="query">Normalized query if the input is valid.</param>
     /// <returns><see cref="RDAPQueryParseError.None" /> if the input is valid, otherwise the error.</returns>
@@ -36,9 +36,12 @@ public static partial class RDAPQueryParser
         if (string.IsNullOrEmpty(input))
             return GetError(type);
 
-        query = type switch
+        var parseType = type == RDAPQueryType.Auto ? DetectType(input) : type;
+
+        query = parseType switch
         {
             RDAPQueryType.Domain => ParseDomain(input),
+            RDAPQueryType.Nameserver => ParseNameserver(input),
             RDAPQueryType.TLD => ParseTLD(input),
             RDAPQueryType.IPAddress => ParseIPAddress(input),
             RDAPQueryType.ASN => ParseASN(input),
@@ -52,7 +55,8 @@ public static partial class RDAPQueryParser
     /// <summary>
     ///     Detects the query type of an input without a type (e.g. data redirected from another tool): IP address or
     ///     CIDR, AS number ("AS15169", "15169", "1.10"), TLD (single label), entity handle (single label with a hyphen,
-    ///     e.g. "ORG-RIEN1-RIPE"), otherwise domain.
+    ///     e.g. "ORG-RIEN1-RIPE"), otherwise domain. The detected type is not validated, use
+    ///     <see cref="TryParse" /> for that.
     /// </summary>
     /// <param name="input">User input.</param>
     /// <returns>Detected query type.</returns>
@@ -81,7 +85,9 @@ public static partial class RDAPQueryParser
     {
         return type switch
         {
+            RDAPQueryType.Auto => RDAPQueryParseError.InvalidQuery,
             RDAPQueryType.Domain => RDAPQueryParseError.InvalidDomain,
+            RDAPQueryType.Nameserver => RDAPQueryParseError.InvalidNameserver,
             RDAPQueryType.TLD => RDAPQueryParseError.InvalidTLD,
             RDAPQueryType.IPAddress => RDAPQueryParseError.InvalidIPAddress,
             RDAPQueryType.ASN => RDAPQueryParseError.InvalidASN,
@@ -105,11 +111,20 @@ public static partial class RDAPQueryParser
         }
     }
 
+    /// <summary>
+    ///     A top-level domain is never all-numeric (RFC 3696 2), so inputs like "8.8.8.8" or "13335" are rejected as
+    ///     domain or TLD.
+    /// </summary>
+    private static bool HasNumericTLD(string domain)
+    {
+        return domain[(domain.LastIndexOf('.') + 1)..].All(char.IsAsciiDigit);
+    }
+
     private static RDAPQuery ParseDomain(string input)
     {
         var domain = ToALabel(input.Trim('.'));
 
-        if (string.IsNullOrEmpty(domain))
+        if (string.IsNullOrEmpty(domain) || HasNumericTLD(domain))
             return null;
 
         // A single label is a TLD, which is only served by the IANA root zone RDAP server.
@@ -125,12 +140,48 @@ public static partial class RDAPQueryParser
         };
     }
 
+    /// <summary>
+    ///     Gets the query for the registered domain of a domain query, if the domain is a subdomain (e.g. "bbc.co.uk" for
+    ///     "www.bbc.co.uk", see <see cref="PublicSuffixList" />). Registries only know registered domains and answer a
+    ///     subdomain with 404 (e.g. Verisign, Nominet) or 400 (e.g. PIR, Identity Digital, SWITCH, auDA).
+    /// </summary>
+    /// <param name="query">Domain query.</param>
+    /// <returns>Query for the registered domain, or null if the domain is a registered domain or a public suffix.</returns>
+    public static RDAPQuery GetRegisteredDomain(RDAPQuery query)
+    {
+        if (query.Type != RDAPQueryType.Domain)
+            return null;
+
+        var registeredDomain = PublicSuffixList.GetRegisteredDomain(query.DomainName);
+
+        return registeredDomain == null || registeredDomain == query.DomainName ? null : ParseDomain(registeredDomain);
+    }
+
+    /// <summary>
+    ///     Parses a nameserver (host name with at least two labels, RFC 9082 3.1.4).
+    /// </summary>
+    private static RDAPQuery ParseNameserver(string input)
+    {
+        var name = ToALabel(input.Trim('.'));
+
+        if (string.IsNullOrEmpty(name) || !name.Contains('.') || HasNumericTLD(name))
+            return null;
+
+        return new RDAPQuery
+        {
+            Type = RDAPQueryType.Nameserver,
+            Value = name,
+            DomainName = name,
+            PathSegment = $"nameserver/{name}"
+        };
+    }
+
     private static RDAPQuery ParseTLD(string input)
     {
         // rdap.iana.org returns 400 for ".de", so the leading dot must be removed.
         var tld = ToALabel(input.Trim('.'));
 
-        if (string.IsNullOrEmpty(tld) || tld.Contains('.'))
+        if (string.IsNullOrEmpty(tld) || tld.Contains('.') || HasNumericTLD(tld))
             return null;
 
         return CreateTLDQuery(tld);
@@ -249,9 +300,15 @@ public static partial class RDAPQueryParser
         };
     }
 
+    /// <summary>
+    ///     An entity can only be resolved via its service provider tag after the last hyphen (RFC 8521), so a handle
+    ///     without a tag (e.g. "8.8.8.8") is rejected.
+    /// </summary>
     private static RDAPQuery ParseEntity(string input)
     {
-        if (input.Any(char.IsWhiteSpace) || input.Contains('/'))
+        var index = input.LastIndexOf('-');
+
+        if (input.Any(char.IsWhiteSpace) || input.Contains('/') || index <= 0 || index == input.Length - 1)
             return null;
 
         return new RDAPQuery

@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -30,6 +31,7 @@ public class RDAPViewModel : ViewModelBase
 
     private readonly Guid _tabId;
     private readonly bool _isLoading;
+    private CancellationTokenSource _cancellationTokenSource;
     private bool _firstLoad = true;
     private bool _closed;
 
@@ -63,26 +65,26 @@ public class RDAPViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
-            OnPropertyChanged(nameof(QueryWatermark));
 
             // Validate the query again for the new type.
             OnPropertyChanged(nameof(Query));
         }
     }
 
-    /// <summary>
-    ///     Example input for the selected query type.
-    /// </summary>
-    public string QueryWatermark => QueryType switch
-    {
-        RDAPQueryType.TLD => StaticStrings.ExampleTLD,
-        RDAPQueryType.IPAddress => StaticStrings.ExampleIPAddressOrCIDR,
-        RDAPQueryType.ASN => StaticStrings.ExampleASN,
-        RDAPQueryType.Entity => StaticStrings.ExampleRDAPEntityHandle,
-        _ => StaticStrings.ExampleDomain
-    };
-
     public bool IsRunning
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsCanceling
     {
         get;
         set
@@ -251,7 +253,10 @@ public class RDAPViewModel : ViewModelBase
 
     private void QueryAction()
     {
-        _ = RunQuery();
+        if (IsRunning)
+            Stop();
+        else
+            _ = RunQuery();
     }
 
     public ICommand OpenInWhoisCommand => new RelayCommand(_ => OpenInWhoisAction());
@@ -296,7 +301,7 @@ public class RDAPViewModel : ViewModelBase
 
         DragablzTabItem.SetTabHeader(_tabId, Query);
 
-        var parseError = RDAPQueryParser.TryParse(QueryType, Query, out var query);
+        var parseError = RDAPQueryParser.TryParse(QueryType, Query, out var input);
 
         if (parseError != RDAPQueryParseError.None)
         {
@@ -306,11 +311,18 @@ public class RDAPViewModel : ViewModelBase
             return;
         }
 
+        // A subdomain (e.g. a hostname) is queried as its registered domain, which is also used for the error messages
+        // and Whois.
+        var query = RDAPQueryParser.GetRegisteredDomain(input) ?? input;
+
+        _cancellationTokenSource?.Dispose();
+        _cancellationTokenSource = new CancellationTokenSource();
+
         try
         {
             _result = await RDAPClient.GetInstance().QueryAsync(query, GlobalStaticConfiguration.RDAP_CachePath,
                 TimeSpan.FromMilliseconds(SettingsManager.Current.RDAP_Timeout),
-                SettingsManager.Current.RDAP_FollowReferral);
+                SettingsManager.Current.RDAP_FollowReferral, _cancellationTokenSource.Token);
 
             List<RDAPObjectViewModel> results =
             [
@@ -327,10 +339,22 @@ public class RDAPViewModel : ViewModelBase
 
             IsResultVisible = true;
 
+            List<string> messages = [];
+
+            if (query != input)
+                messages.Add(string.Format(Strings.RDAPXIsNotARegisteredDomainShowingY, input.Value, query.Value));
+
             if (_result.ReferralError != null)
-                ShowStatusMessage(GetReferralErrorMessage(_result.ReferralError, query));
+                messages.Add(GetReferralErrorMessage(_result.ReferralError, query));
+
+            if (messages.Count > 0)
+                ShowStatusMessage(string.Join(Environment.NewLine, messages));
 
             AddQueryToHistory(Query);
+        }
+        catch (OperationCanceledException)
+        {
+            ShowStatusMessage(Strings.CanceledByUserMessage);
         }
         catch (RDAPException ex)
         {
@@ -347,8 +371,17 @@ public class RDAPViewModel : ViewModelBase
             Log.Error("Error while querying RDAP.", ex);
             ShowStatusMessage(ex.Message);
         }
+        finally
+        {
+            IsRunning = false;
+            IsCanceling = false;
+        }
+    }
 
-        IsRunning = false;
+    private void Stop()
+    {
+        IsCanceling = true;
+        _cancellationTokenSource?.Cancel();
     }
 
     private void ShowStatusMessage(string message)
@@ -392,6 +425,9 @@ public class RDAPViewModel : ViewModelBase
             RDAPErrorKind.TooManyRedirects => Strings.RDAPTooManyRedirects,
             RDAPErrorKind.InvalidResponse => string.Format(Strings.RDAPInvalidResponseX, ex.Message),
             RDAPErrorKind.Network => string.Format(Strings.RDAPNetworkErrorX, ex.Message),
+            // The timeout of the query (from the settings) is used for each request.
+            RDAPErrorKind.Timeout => string.Format(Strings.RDAPTimeoutAfterXSeconds,
+                SettingsManager.Current.RDAP_Timeout / 1000.0),
             _ => string.Format(Strings.RDAPHttpErrorX, serverMessage)
         };
     }
@@ -403,6 +439,10 @@ public class RDAPViewModel : ViewModelBase
             return;
 
         _closed = true;
+
+        // Stop the query
+        if (IsRunning)
+            Stop();
 
         ConfigurationManager.Current.RDAPTabCount--;
     }

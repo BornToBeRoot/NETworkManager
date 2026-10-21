@@ -27,7 +27,7 @@ Release date: **xx.xx.2026**
 
 **RDAP**
 
-- New [**RDAP**](../application/rdap.md) tool to look up registration data via the Registration Data Access Protocol, the standardized, JSON-based successor of Whois. Supports domains, top-level domains, IP addresses/CIDR prefixes, AS numbers and entity handles. The RDAP server is determined automatically using the IANA bootstrap files, which are cached locally and can be updated in the new **Settings > RDAP** page. Results are shown in a structured view (details, status, events, nameservers, DNSSEC, contacts, notices) or as raw JSON, and can be exported as JSON or text. For domains (e.g. `.com`/`.net`), the referral to the registrar's RDAP server is followed as well (can be disabled in **Settings > RDAP**). Includes profile support. If no RDAP server is known for a domain, it can be opened in **Whois** with a single click. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
+- New [**RDAP**](../application/rdap.md) tool to look up registration data via the Registration Data Access Protocol, the standardized, JSON-based successor of Whois. Supports domains, nameservers, top-level domains, IP addresses/CIDR prefixes, AS numbers and entity handles; the type is detected automatically or can be selected. The RDAP server is determined automatically using the IANA bootstrap files, which are cached locally and can be updated in the new **Settings > RDAP** page. Results are shown in a structured view (details, status, events, nameservers, DNSSEC, networks and AS numbers of an organization, contacts, notices) or as raw JSON, and can be exported as JSON or text. For domains (e.g. `.com`/`.net`), the referral to the registrar's RDAP server is followed as well (can be disabled in **Settings > RDAP**). Includes profile support. If no RDAP server is known for a domain, it can be opened in **Whois** with a single click. IP addresses and hostnames can be queried from the context menu of **IP Scanner** and **Traceroute**, AS numbers from **Traceroute**; for a hostname (e.g. `www.borntoberoot.net`), the registered domain is queried (determined with the included [Public Suffix List](https://publicsuffix.org/)). [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607) [#3642](https://github.com/BornToBeRoot/NETworkManager/pull/3642)
 
 **Traceroute**
 
@@ -60,6 +60,7 @@ Release date: **xx.xx.2026**
 - Added `135` (RPC) and `9100` (raw printing) to the default **Ports** list used to detect if a host is reachable. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
 - Reduced the default **Max. concurrent port threads** from `5` to `4`. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
 - Reduced the default **Max. concurrent host threads** from `256` to `64`, a more conservative default that puts less simultaneous load on the scanned network. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+- Added **RDAP...** to the context menu to query the registration data of the IP address or hostname of a host in the [**RDAP**](../application/rdap.md) tool. [#3642](https://github.com/BornToBeRoot/NETworkManager/pull/3642)
 
 **Port Scanner**
 
@@ -78,6 +79,10 @@ Release date: **xx.xx.2026**
 - Reworked each monitored host's card: the collapsed quick info now shows labeled values (`Received: X · Lost: Y · Packet loss: Z%`) instead of unlabeled numbers, the expanded view shows only the latency chart (with more room, since Hostname/IP address are already visible in the header) and the last status change time moved to a tooltip on the connectivity icon. The **Status change** field was also renamed to **Last status change**. [#3572](https://github.com/BornToBeRoot/NETworkManager/pull/3572)
 - Host input now accepts newline-separated hosts (one per line, e.g. a column pasted from Excel), converted automatically to the semicolon-separated form. [#3568](https://github.com/BornToBeRoot/NETworkManager/pull/3568)
 - Host input now supports shorthand IPv4 ranges like `192.168.0.1-100`, in addition to the existing `192.168.0.0-192.168.0.100` and `192.168.[0-100].1` range formats. [#3568](https://github.com/BornToBeRoot/NETworkManager/pull/3568)
+
+**Traceroute**
+
+- Added **RDAP...** to the context menu to query the registration data of the IP address, hostname or AS number of a hop in the [**RDAP**](../application/rdap.md) tool. [#3642](https://github.com/BornToBeRoot/NETworkManager/pull/3642)
 
 **Hosts File Editor**
 

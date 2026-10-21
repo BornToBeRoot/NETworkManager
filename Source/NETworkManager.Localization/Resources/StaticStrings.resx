@@ -378,4 +378,7 @@
   <data name="ExampleRDAPEntityHandle" xml:space="preserve">
     <value>ORG-RIEN1-RIPE</value>
   </data>
+  <data name="ExampleRDAPNameserver" xml:space="preserve">
+    <value>a.iana-servers.net</value>
+  </data>
 </root>

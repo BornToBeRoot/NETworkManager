@@ -409,6 +409,26 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Gets the command to query the registration data of the selected IP address via RDAP.
+    /// </summary>
+    public ICommand PerformRDAPQueryIPAddressCommand => new RelayCommand(_ => PerformRDAPQueryIPAddressAction());
+
+    private void PerformRDAPQueryIPAddressAction()
+    {
+        EventSystem.RedirectToApplication(ApplicationName.RDAP, SelectedResult.PingInfo.IPAddress.ToString());
+    }
+
+    /// <summary>
+    /// Gets the command to query the registration data of the selected hostname (its registered domain) via RDAP.
+    /// </summary>
+    public ICommand PerformRDAPQueryHostnameCommand => new RelayCommand(_ => PerformRDAPQueryHostnameAction());
+
+    private void PerformRDAPQueryHostnameAction()
+    {
+        EventSystem.RedirectToApplication(ApplicationName.RDAP, SelectedResult.Hostname);
+    }
+
+    /// <summary>
     /// Gets the command to execute a custom command for the selected host.
     /// </summary>
     public ICommand CustomCommandCommand => new RelayCommand(CustomCommandAction);

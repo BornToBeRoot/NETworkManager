@@ -41,6 +41,7 @@ REPOSITORY_ROOT/
 │   ├── Create-FlagFromSVG.ps1        # Create flag images
 │   ├── Create-OUIListFromWeb.ps1     # Update OUI (MAC vendor) list
 │   ├── Create-PortListFromWeb.ps1    # Update port list database
+│   ├── Create-PublicSuffixListFromWeb.ps1  # Update public suffix list (RDAP: registered domain of a hostname)
 │   ├── Create-ReleaseTable.ps1       # Create the SHA256 sums / file table for release notes
 │   ├── Create-WhoisServerListFromWebAndWhois.ps1  # Update WHOIS servers
 │   ├── Create-WorldMapFromWeb.ps1    # Create the world map (Traceroute map)

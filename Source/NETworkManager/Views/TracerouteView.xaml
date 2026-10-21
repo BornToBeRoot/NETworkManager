@@ -26,6 +26,7 @@
         <converters:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
         <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
         <converters:StringIsNotNullOrEmptyToBooleanConverter x:Key="StringIsNotNullOrEmptyToBooleanConverter" />
+        <converters:HostnameHasDomainToBooleanConverter x:Key="HostnameHasDomainToBooleanConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
     </UserControl.Resources>
     <!--
@@ -237,6 +238,60 @@
                                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="{x:Static Member=localization:Strings.RDAPDots}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                        <MenuItem Header="{x:Static Member=localization:Strings.IPAddress}"
+                                  Command="{Binding Path=PerformRDAPQueryCommand}"
+                                  CommandParameter="{Binding SelectedResult.IPAddress}">
+                            <MenuItem.Style>
+                                <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}">
+                                    <Style.Triggers>
+                                        <!-- Timed out hops have no IP address -->
+                                        <DataTrigger Binding="{Binding SelectedResult.IPAddress}" Value="{x:Null}">
+                                            <Setter Property="IsEnabled" Value="False" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </MenuItem.Style>
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{x:Static Member=localization:Strings.Hostname}"
+                                  Command="{Binding Path=PerformRDAPQueryCommand}"
+                                  CommandParameter="{Binding SelectedResult.Hostname}"
+                                  IsEnabled="{Binding SelectedResult.Hostname, Converter={StaticResource ResourceKey=HostnameHasDomainToBooleanConverter}}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="{x:Static Member=localization:Strings.ASN}"
+                                  Command="{Binding Path=PerformRDAPQueryCommand}"
+                                  CommandParameter="{Binding SelectedResult.IPGeolocationResult.Info.As}"
+                                  IsEnabled="{Binding SelectedResult.IPGeolocationResult.Info.As, Converter={StaticResource ResourceKey=StringIsNotNullOrEmptyToBooleanConverter}}">
+                            <MenuItem.Icon>
+                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
                             </MenuItem.Icon>

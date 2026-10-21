@@ -39,6 +39,7 @@
             x:Key="RemoteDesktopNetworkConnectionTypeToStringConverter" />
         <converters:ProfileNameToTranslatedStringConverter x:Key="ProfileNameToTranslatedStringConverter" />
         <converters:RDAPQueryTypeToStringConverter x:Key="RDAPQueryTypeToStringConverter" />
+        <converters:RDAPQueryTypeToWatermarkConverter x:Key="RDAPQueryTypeToWatermarkConverter" />
         <converters:PuTTYLogModeToStringConverter x:Key="PuTTYLogModeToStringConverter" />
         <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" />
         <converters:StringIsNotNullOrEmptyOrIPv4AddressToBooleanConverter
@@ -1051,9 +1052,6 @@
                                                             <Condition
                                                                 Binding="{Binding Data.RDAP_Enabled, Source={StaticResource BindingProxy}}"
                                                                 Value="True" />
-                                                            <Condition
-                                                                Binding="{Binding Data.RDAP_InheritHost, Source={StaticResource BindingProxy}}"
-                                                                Value="False" />
                                                             <Condition
                                                                 Binding="{Binding ElementName=TextBoxRDAPQuery, Path=(Validation.HasError)}"
                                                                 Value="True" />
@@ -4006,18 +4004,31 @@
                                 <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Query}" />
                                 <TextBox x:Name="TextBoxRDAPQuery" Grid.Column="2" Grid.Row="2"
                                          IsEnabled="{Binding RDAP_InheritHost, Converter={StaticResource BooleanReverseConverter}}"
-                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleDomain}">
+                                         mah:TextBoxHelper.Watermark="{Binding RDAP_QueryType, Converter={StaticResource RDAPQueryTypeToWatermarkConverter}}">
                                     <TextBox.Resources>
                                         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                                     </TextBox.Resources>
                                     <TextBox.Style>
                                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                                             <Style.Triggers>
+                                                <!-- The inherited host must match the type as well -->
                                                 <DataTrigger Binding="{Binding RDAP_InheritHost}" Value="True">
                                                     <Setter Property="TextBox.Text">
                                                         <Setter.Value>
                                                             <Binding Path="Host" Mode="TwoWay"
-                                                                     UpdateSourceTrigger="PropertyChanged" />
+                                                                     UpdateSourceTrigger="PropertyChanged">
+                                                                <Binding.ValidationRules>
+                                                                    <validators:EmptyValidator
+                                                                        ValidatesOnTargetUpdated="True" />
+                                                                    <validators:RDAPQueryValidator
+                                                                        ValidatesOnTargetUpdated="True">
+                                                                        <validators:RDAPQueryValidator.Wrapper>
+                                                                            <validators:RDAPQueryDependencyObjectWrapper
+                                                                                QueryType="{Binding Data.RDAP_QueryType, Source={StaticResource BindingProxy}}" />
+                                                                        </validators:RDAPQueryValidator.Wrapper>
+                                                                    </validators:RDAPQueryValidator>
+                                                                </Binding.ValidationRules>
+                                                            </Binding>
                                                         </Setter.Value>
                                                     </Setter>
                                                 </DataTrigger>
@@ -4752,7 +4763,6 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding Path=RDAP_Enabled}" Value="True" />
-                                    <Condition Binding="{Binding Path=RDAP_InheritHost}" Value="False" />
                                     <Condition
                                         Binding="{Binding ElementName=TextBoxRDAPQuery, Path=(Validation.HasError)}"
                                         Value="True" />

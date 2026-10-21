@@ -1275,6 +1275,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AS numbers.
+        /// </summary>
+        public static string ASNumbers {
+            get {
+                return ResourceManager.GetString("ASNumbers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to At least one application must be visible!.
         /// </summary>
         public static string AtLeastOneApplicationMustBeVisible {
@@ -4328,6 +4337,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a valid nameserver (e.g., "ns1.example.com")!.
+        /// </summary>
+        public static string EnterValidNameserver {
+            get {
+                return ResourceManager.GetString("EnterValidNameserver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a valid number!.
         /// </summary>
         public static string EnterValidNumber {
@@ -4360,6 +4378,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EnterValidPortOrPortRange {
             get {
                 return ResourceManager.GetString("EnterValidPortOrPortRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter a valid domain, IP address, AS number or entity handle!.
+        /// </summary>
+        public static string EnterValidRDAPQuery {
+            get {
+                return ResourceManager.GetString("EnterValidRDAPQuery", resourceCulture);
             }
         }
         
@@ -9510,6 +9537,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RDAP....
+        /// </summary>
+        public static string RDAPDots {
+            get {
+                return ResourceManager.GetString("RDAPDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The server returned an error: {0}.
         /// </summary>
         public static string RDAPHttpErrorX {
@@ -9591,6 +9627,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto.
+        /// </summary>
+        public static string RDAPQueryType_Auto {
+            get {
+                return ResourceManager.GetString("RDAPQueryType_Auto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Domain.
         /// </summary>
         public static string RDAPQueryType_Domain {
@@ -9614,6 +9659,15 @@ namespace NETworkManager.Localization.Resources {
         public static string RDAPQueryType_IPAddress {
             get {
                 return ResourceManager.GetString("RDAPQueryType_IPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nameserver.
+        /// </summary>
+        public static string RDAPQueryType_Nameserver {
+            get {
+                return ResourceManager.GetString("RDAPQueryType_Nameserver", resourceCulture);
             }
         }
         
@@ -9654,11 +9708,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The RDAP server did not respond within {0} seconds..
+        /// </summary>
+        public static string RDAPTimeoutAfterXSeconds {
+            get {
+                return ResourceManager.GetString("RDAPTimeoutAfterXSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Too many redirects..
         /// </summary>
         public static string RDAPTooManyRedirects {
             get {
                 return ResourceManager.GetString("RDAPTooManyRedirects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to "{0}" is not a registered domain, showing the registration data of "{1}"..
+        /// </summary>
+        public static string RDAPXIsNotARegisteredDomainShowingY {
+            get {
+                return ResourceManager.GetString("RDAPXIsNotARegisteredDomainShowingY", resourceCulture);
             }
         }
         
@@ -11036,6 +11108,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Resource_OUI_Description {
             get {
                 return ResourceManager.GetString("Resource_OUI_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of public suffixes (e.g. "co.uk") from publicsuffix.org (MPL-2.0), which is used to get the registered domain of a hostname for RDAP queries..
+        /// </summary>
+        public static string Resource_PublicSuffixList_Description {
+            get {
+                return ResourceManager.GetString("Resource_PublicSuffixList_Description", resourceCulture);
             }
         }
         

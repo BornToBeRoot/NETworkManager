@@ -114,11 +114,19 @@ public class RDAPClient : SingletonBase<RDAPClient>
         if (query.Type != RDAPQueryType.TLD)
             await bootstrapService.EnsureUpToDateAsync(cacheDirectory, cancellationToken).ConfigureAwait(false);
 
-        var baseUrls = bootstrapService.GetBaseUrls(query);
+        return await QueryServersAsync(query, bootstrapService.GetBaseUrls(query), timeout, followReferral,
+            cancellationToken).ConfigureAwait(false);
+    }
 
+    /// <summary>
+    ///     Queries the servers in order until one answers.
+    /// </summary>
+    private async Task<RDAPResult> QueryServersAsync(RDAPQuery query, List<string> baseUrls, TimeSpan timeout,
+        bool followReferral, CancellationToken cancellationToken)
+    {
         RDAPException lastNetworkError = null;
 
-        // Try the next server only on network errors. Any HTTP answer is authoritative for the query.
+        // Try the next server only on network errors and timeouts. Any HTTP answer is authoritative for the query.
         foreach (var baseUrl in baseUrls)
         {
             try
@@ -131,7 +139,7 @@ public class RDAPClient : SingletonBase<RDAPClient>
 
                 return result;
             }
-            catch (RDAPException ex) when (ex.Kind == RDAPErrorKind.Network)
+            catch (RDAPException ex) when (ex.Kind is RDAPErrorKind.Network or RDAPErrorKind.Timeout)
             {
                 Log.Warn($"RDAP request to {ex.RequestUrl} failed: {ex.Message}");
                 lastNetworkError = ex;
@@ -151,14 +159,17 @@ public class RDAPClient : SingletonBase<RDAPClient>
     /// <returns>URL of the referral, or null if there is none.</returns>
     public static string GetReferralUrl(RDAPResponse response, string requestUrl)
     {
+        // Broken servers may send null items in an array.
+        var links = response.Links?.OfType<RDAPLink>().ToList() ?? [];
+
         var selfUrls = new List<string> { requestUrl };
 
-        selfUrls.AddRange(response.Links?.Where(x => HasRel(x, "self")).Select(x => x.Href) ?? []);
+        selfUrls.AddRange(links.Where(x => HasRel(x, "self")).Select(x => x.Href));
 
-        var candidates = response.Links?
+        var candidates = links
             .Where(x => HasRel(x, "related") && IsHttpUrl(x.Href) &&
                         !selfUrls.Any(self => UrlEquals(self, x.Href)))
-            .ToList() ?? [];
+            .ToList();
 
         return (candidates.FirstOrDefault(x => IsRDAPMediaType(x.Type)) ??
                 candidates.FirstOrDefault(x => string.IsNullOrEmpty(x.Type) && HasRDAPPath(x.Href)))?.Href;
@@ -236,11 +247,16 @@ public class RDAPClient : SingletonBase<RDAPClient>
                 // Blocked by ConnectToPublicAddressAsync.
                 throw new RDAPException(inner.Kind, inner.Message, ex) { RequestUrl = currentUrl.AbsoluteUri };
             }
-            catch (Exception ex) when (ex is HttpRequestException or OperationCanceledException)
+            catch (OperationCanceledException ex)
             {
-                var message = ex is OperationCanceledException ? $"Timeout after {timeout.TotalSeconds} s." : ex.Message;
-
-                throw new RDAPException(RDAPErrorKind.Network, message, ex) { RequestUrl = currentUrl.AbsoluteUri };
+                // The message is only logged, the view model shows a localized one.
+                throw new RDAPException(RDAPErrorKind.Timeout,
+                        FormattableString.Invariant($"Timeout after {timeout.TotalSeconds} s."), ex)
+                    { RequestUrl = currentUrl.AbsoluteUri };
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new RDAPException(RDAPErrorKind.Network, ex.Message, ex) { RequestUrl = currentUrl.AbsoluteUri };
             }
 
             using (response)
@@ -271,7 +287,9 @@ public class RDAPClient : SingletonBase<RDAPClient>
     /// <summary>
     ///     Checks the target of a referral, which is sent by the registry and therefore untrusted. Only HTTPS is allowed
     ///     (no downgrade to plain text) and the host must not resolve to a local or private address, so a response
-    ///     cannot make the client send requests into the local network.
+    ///     cannot make the client send requests into the local network. If the host can't be resolved locally and the
+    ///     request goes through a proxy, the referral is followed without the check, since the proxy resolves the host
+    ///     (networks where only the proxy resolves public names).
     /// </summary>
     private static async Task ValidateReferralTargetAsync(Uri url, CancellationToken cancellationToken)
     {
@@ -294,15 +312,30 @@ public class RDAPClient : SingletonBase<RDAPClient>
             {
                 addresses = await Dns.GetHostAddressesAsync(url.DnsSafeHost, cancellationToken).ConfigureAwait(false);
             }
+            catch (SocketException) when (IsProxied(url))
+            {
+                // The proxy resolves the host.
+                return;
+            }
             catch (SocketException ex)
             {
-                // Fail closed: a referral is only followed if its address could be checked.
+                // Fail closed: without a proxy, a referral is only followed if its address could be checked.
                 throw new RDAPException(RDAPErrorKind.Network, ex.Message, ex) { RequestUrl = url.AbsoluteUri };
             }
         }
 
         if (addresses.Any(IsLocalOrPrivateAddress))
             throw new RDAPException(RDAPErrorKind.PrivateAddress, url.AbsoluteUri) { RequestUrl = url.AbsoluteUri };
+    }
+
+    /// <summary>
+    ///     Whether a request to the URL goes through the system proxy (the proxy of the referral client).
+    /// </summary>
+    private static bool IsProxied(Uri url)
+    {
+        var proxy = HttpClient.DefaultProxy;
+
+        return !proxy.IsBypassed(url) && proxy.GetProxy(url) != null;
     }
 
     /// <summary>
@@ -344,7 +377,9 @@ public class RDAPClient : SingletonBase<RDAPClient>
     }
 
     /// <summary>
-    ///     Loopback, private (RFC 1918, RFC 4193), shared (RFC 6598), link-local, unspecified and multicast addresses.
+    ///     Loopback, private (RFC 1918, RFC 4193), shared (RFC 6598), link-local, unspecified, multicast and special
+    ///     purpose (IETF protocol assignments, benchmarking) addresses. IPv6 addresses that contain an IPv4 address
+    ///     (NAT64, 6to4) are checked by that IPv4 address, since they are translated or tunneled to it.
     /// </summary>
     private static bool IsLocalOrPrivateAddress(IPAddress address)
     {
@@ -361,7 +396,19 @@ public class RDAPClient : SingletonBase<RDAPClient>
                    bytes[0] == 172 && (bytes[1] & 0xF0) == 16 ||
                    bytes[0] == 192 && bytes[1] == 168 ||
                    bytes[0] == 169 && bytes[1] == 254 ||
-                   bytes[0] == 100 && (bytes[1] & 0xC0) == 64;
+                   bytes[0] == 100 && (bytes[1] & 0xC0) == 64 ||
+                   bytes[0] == 192 && bytes[1] == 0 && bytes[2] == 0 ||
+                   bytes[0] == 198 && (bytes[1] & 0xFE) == 18;
+
+        // NAT64 (RFC 6052): the well-known prefix 64:ff9b::/96 contains the IPv4 address in the last 4 bytes. Other
+        // addresses in 64:ff9b::/32, e.g. the local-use prefix 64:ff9b:1::/48 (RFC 8215), are translated by the local
+        // network operator and are therefore treated as local.
+        if (bytes[0] == 0x00 && bytes[1] == 0x64 && bytes[2] == 0xFF && bytes[3] == 0x9B)
+            return bytes[4..12].Any(x => x != 0) || IsLocalOrPrivateAddress(new IPAddress(bytes[12..]));
+
+        // 6to4 (RFC 3056): 2002::/16 contains the IPv4 address in bytes 2-5.
+        if (bytes[0] == 0x20 && bytes[1] == 0x02)
+            return IsLocalOrPrivateAddress(new IPAddress(bytes[2..6]));
 
         return address.Equals(IPAddress.IPv6Any) || address.IsIPv6LinkLocal || address.IsIPv6SiteLocal ||
                address.IsIPv6Multicast || (bytes[0] & 0xFE) == 0xFC;

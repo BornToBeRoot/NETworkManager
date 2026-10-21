@@ -114,13 +114,13 @@ public class RDAPHostViewModel : ProfileHostViewModelBase
     /// </summary>
     /// <param name="query">Query (e.g. domain, IP address, AS number).</param>
     /// <param name="queryType">
-    ///     Type of the query. If null, the type is detected from the query (e.g. data redirected from another tool or a
-    ///     run command), or the last selected type is used for an empty tab.
+    ///     Type of the query. If null, the type is detected from the query (<see cref="RDAPQueryType.Auto" />, e.g. data
+    ///     redirected from another tool or a run command), or the last selected type is used for an empty tab.
     /// </param>
     public void AddTab(string query = null, RDAPQueryType? queryType = null)
     {
         if (queryType == null && !string.IsNullOrWhiteSpace(query))
-            queryType = RDAPQueryParser.DetectType(query);
+            queryType = RDAPQueryType.Auto;
 
         var tabId = Guid.NewGuid();
 

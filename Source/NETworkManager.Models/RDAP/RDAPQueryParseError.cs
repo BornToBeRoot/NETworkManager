@@ -6,7 +6,9 @@ namespace NETworkManager.Models.RDAP;
 public enum RDAPQueryParseError
 {
     None,
+    InvalidQuery,
     InvalidDomain,
+    InvalidNameserver,
     InvalidTLD,
     InvalidIPAddress,
     InvalidASN,
