@@ -4930,30 +4930,30 @@ Per i dettagli consulta l'informativa sulla privacy di Cloudflare.</value>
     <value>Elimina regole ({0})</value>
   </data>
   <data name="RDAPQueryType_Auto" xml:space="preserve">
-    <value>Auto</value>
+    <value>Automatica</value>
   </data>
   <data name="EnterValidRDAPQuery" xml:space="preserve">
-    <value>Enter a valid domain, IP address, AS number or entity handle!</value>
+    <value>Inserisci un dominio valido, un indirizzo IP, COME numero o entità handle!</value>
   </data>
   <data name="RDAPTimeoutAfterXSeconds" xml:space="preserve">
-    <value>The RDAP server did not respond within {0} seconds.</value>
+    <value>Il server RDAP non ha risposto entro {0} secondi.</value>
   </data>
   <data name="RDAPQueryType_Nameserver" xml:space="preserve">
     <value>Nameserver</value>
   </data>
   <data name="EnterValidNameserver" xml:space="preserve">
-    <value>Enter a valid nameserver (e.g., "ns1.example.com")!</value>
+    <value>Inserisci un nameserver valido (ad es. "ns1.example.com")!</value>
   </data>
   <data name="ASNumbers" xml:space="preserve">
-    <value>AS numbers</value>
+    <value>COME numeri</value>
   </data>
   <data name="RDAPDots" xml:space="preserve">
     <value>RDAP...</value>
   </data>
   <data name="RDAPXIsNotARegisteredDomainShowingY" xml:space="preserve">
-    <value>"{0}" is not a registered domain, showing the registration data of "{1}".</value>
+    <value>'{0}' non è un dominio registrato, visualizzando i dati di registrazione di '{1}'.</value>
   </data>
   <data name="Resource_PublicSuffixList_Description" xml:space="preserve">
-    <value>List of public suffixes (e.g. "co.uk") from publicsuffix.org (MPL-2.0), which is used to get the registered domain of a hostname for RDAP queries.</value>
+    <value>Elenco dei suffissi pubblici (ad es. 'co.uk') da publicsuffix.org (MPL-2.0), che viene usato per ottenere il dominio registrato di un nome host per le query RDAP.</value>
   </data>
 </root>
