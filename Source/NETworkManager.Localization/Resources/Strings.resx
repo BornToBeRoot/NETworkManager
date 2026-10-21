@@ -4827,4 +4827,10 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
   <data name="ASNumbers" xml:space="preserve">
     <value>AS numbers</value>
   </data>
+  <data name="RDAPDots" xml:space="preserve">
+    <value>RDAP...</value>
+  </data>
+  <data name="RDAPNoRecordForXShowingY" xml:space="preserve">
+    <value>No RDAP record found for "{0}", showing the registration data of "{1}".</value>
+  </data>
 </root>

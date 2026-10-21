@@ -335,8 +335,17 @@ public class RDAPViewModel : ViewModelBase
 
             IsResultVisible = true;
 
+            List<string> messages = [];
+
+            // A subdomain (e.g. a hostname) was not found, but its parent domain.
+            if (_result.Query.Value != query.Value)
+                messages.Add(string.Format(Strings.RDAPNoRecordForXShowingY, query.Value, _result.Query.Value));
+
             if (_result.ReferralError != null)
-                ShowStatusMessage(GetReferralErrorMessage(_result.ReferralError, query));
+                messages.Add(GetReferralErrorMessage(_result.ReferralError, _result.Query));
+
+            if (messages.Count > 0)
+                ShowStatusMessage(string.Join(Environment.NewLine, messages));
 
             AddQueryToHistory(Query);
         }

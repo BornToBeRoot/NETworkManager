@@ -321,14 +321,15 @@ public class TracerouteViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets the command to query the registration data of the selected hop's IP address via RDAP. The IP address is
-    /// used, since the hostname of a router is usually not a registered domain.
+    /// Gets the command to query the registration data of the selected hop's IP address, hostname (its registered
+    /// domain) or AS number via RDAP.
     /// </summary>
     public ICommand PerformRDAPQueryCommand => new RelayCommand(PerformRDAPQueryAction);
 
     private void PerformRDAPQueryAction(object data)
     {
-        EventSystem.RedirectToApplication(ApplicationName.RDAP, data.ToString());
+        // The AS of the IP geolocation contains the name as well (e.g. "AS15169 Google LLC").
+        EventSystem.RedirectToApplication(ApplicationName.RDAP, data.ToString().Split(' ')[0]);
     }
 
     /// <summary>

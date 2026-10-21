@@ -57,7 +57,7 @@ with link-local addresses (`169.254.x.x`) given lower priority.
 
 ### Context menu
 
-Right-clicking a result allows forwarding device information to another tool (e.g. [Port Scanner](./port-scanner), Remote Desktop), querying the registration data of its IP address via [RDAP](./rdap), creating a new profile, or executing a [custom command](#custom-commands).
+Right-clicking a result allows forwarding device information to another tool (e.g. [Port Scanner](./port-scanner), Remote Desktop), querying the registration data of its IP address or hostname via [RDAP](./rdap), creating a new profile, or executing a [custom command](#custom-commands).
 
 | Action        | Description                                      |
 | ------------- | ------------------------------------------------ |

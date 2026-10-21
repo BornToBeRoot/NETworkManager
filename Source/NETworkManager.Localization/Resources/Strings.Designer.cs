@@ -9483,6 +9483,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to RDAP....
+        /// </summary>
+        public static string RDAPDots {
+            get {
+                return ResourceManager.GetString("RDAPDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The server returned an error: {0}.
         /// </summary>
         public static string RDAPHttpErrorX {
@@ -9515,6 +9524,15 @@ namespace NETworkManager.Localization.Resources {
         public static string RDAPNetworkErrorX {
             get {
                 return ResourceManager.GetString("RDAPNetworkErrorX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No RDAP record found for "{0}", showing the registration data of "{1}"..
+        /// </summary>
+        public static string RDAPNoRecordForXShowingY {
+            get {
+                return ResourceManager.GetString("RDAPNoRecordForXShowingY", resourceCulture);
             }
         }
         

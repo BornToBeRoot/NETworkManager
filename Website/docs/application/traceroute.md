@@ -23,7 +23,7 @@ Traceroute works by sending ICMP packets with incrementally increasing TTL (Time
 
 ### Context menu
 
-Right-clicking a hop allows forwarding it to another tool (e.g. [Port Scanner](./port-scanner), [DNS Lookup](./dns-lookup)) or querying the registration data of its IP address (e.g. the network and its owner) via [RDAP](./rdap).
+Right-clicking a hop allows forwarding it to another tool (e.g. [Port Scanner](./port-scanner), [DNS Lookup](./dns-lookup)) or querying the registration data of its IP address (e.g. the network and its owner), hostname or AS number via [RDAP](./rdap).
 
 | Action | Description |
 |--------|-------------|

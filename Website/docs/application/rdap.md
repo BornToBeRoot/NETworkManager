@@ -14,7 +14,7 @@ RDAP is the standardized successor of Whois ([RFC 7480](https://www.rfc-editor.o
 
 The RDAP server for a query is determined using the bootstrap files published by IANA at [data.iana.org/rdap](https://data.iana.org/rdap/). They are downloaded with the first query, cached locally and refreshed automatically once a week. If `data.iana.org` cannot be reached, the cached files are used and the update is retried after an hour (at most 3 times, then with the next weekly update). Files that have not been downloaded yet (or can't be read) are downloaded with the next query. See [Settings](#settings).
 
-- **Domains** and **nameservers** are resolved via the registry of their top-level domain. Some registries (e.g. `.de`, `.ch`, `.li`, `.io`) run an RDAP server that is not (yet) listed by IANA; these are included in NETworkManager.
+- **Domains** and **nameservers** are resolved via the registry of their top-level domain. Registries only know registered domains, not their subdomains: if a domain is not found (e.g. a hostname like `www.borntoberoot.net`), its parent domain is queried (up to 3 levels, e.g. `borntoberoot.net`). Some registries (e.g. `.de`, `.ch`, `.li`, `.io`) run an RDAP server that is not (yet) listed by IANA; these are included in NETworkManager.
 - **Top-level domains** (e.g. `de`) are queried at the IANA root zone RDAP server (`rdap.iana.org`).
 - **IP addresses** and **AS numbers** are resolved via the Regional Internet Registries (RIRs). Private and reserved ranges (e.g. `10.0.0.0/8`, `fe80::/10`) are queried at ARIN, which returns the IANA reservation.
 - **Entities** can only be resolved if their handle ends with a service provider tag registered at IANA (e.g. `ORG-RIEN1-RIPE`, `-ARIN`).
@@ -39,7 +39,7 @@ The firewall must allow outgoing HTTPS connections (TCP port 443) to `data.iana.
 
 A running query can be canceled with **Cancel** (or `Esc`).
 
-The IP address of a host or hop can also be queried from the context menu of the [IP Scanner](./ip-scanner.md) and [Traceroute](./traceroute.md).
+The IP address or hostname of a host can also be queried from the context menu of the [IP Scanner](./ip-scanner.md), and the IP address, hostname or AS number of a hop from the context menu of the [Traceroute](./traceroute.md).
 
 ### Example inputs
 

@@ -141,6 +141,25 @@ public static partial class RDAPQueryParser
     }
 
     /// <summary>
+    ///     Gets the parent domain of a domain query (e.g. "example.com" for "www.example.com"), as long as it has at least
+    ///     two labels.
+    /// </summary>
+    /// <param name="query">Domain query.</param>
+    /// <returns>Query for the parent domain, or null if there is none.</returns>
+    public static RDAPQuery GetParentDomain(RDAPQuery query)
+    {
+        if (query.Type != RDAPQueryType.Domain)
+            return null;
+
+        var index = query.DomainName.IndexOf('.');
+
+        // The parent must still contain a dot, otherwise it is a TLD.
+        return index > 0 && query.DomainName.IndexOf('.', index + 1) > 0
+            ? ParseDomain(query.DomainName[(index + 1)..])
+            : null;
+    }
+
+    /// <summary>
     ///     Parses a nameserver (host name with at least two labels, RFC 9082 3.1.4).
     /// </summary>
     private static RDAPQuery ParseNameserver(string input)

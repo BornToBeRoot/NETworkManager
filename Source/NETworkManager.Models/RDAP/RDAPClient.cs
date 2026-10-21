@@ -32,6 +32,12 @@ public class RDAPClient : SingletonBase<RDAPClient>
     private const int MaxRedirects = 5;
 
     /// <summary>
+    ///     Maximum number of parent domains to query if a domain is not found (e.g. a hostname like
+    ///     "ae-1.router.example.net"), so a long hostname doesn't trigger the rate limit of a registry.
+    /// </summary>
+    private const int MaxParentDomainQueries = 3;
+
+    /// <summary>
     ///     Maximum size of a response (after decompression). Real RDAP responses are well below 1 MB. Larger responses
     ///     are rejected, so a broken or malicious server (e.g. a referral target) cannot exhaust the memory.
     /// </summary>
@@ -96,7 +102,9 @@ public class RDAPClient : SingletonBase<RDAPClient>
     #region Public methods
 
     /// <summary>
-    ///     Executes an RDAP query.
+    ///     Executes an RDAP query. If a domain is not found, its parent domains are queried, since registries only know
+    ///     the registered domain and not its subdomains (e.g. "www.example.com" → "example.com"). The domain that was
+    ///     found is in <see cref="RDAPResult.Query" />.
     /// </summary>
     /// <param name="query">Query to execute (see <see cref="RDAPQueryParser" />).</param>
     /// <param name="cacheDirectory">Directory where the IANA bootstrap files are cached.</param>
@@ -114,8 +122,28 @@ public class RDAPClient : SingletonBase<RDAPClient>
         if (query.Type != RDAPQueryType.TLD)
             await bootstrapService.EnsureUpToDateAsync(cacheDirectory, cancellationToken).ConfigureAwait(false);
 
-        var baseUrls = bootstrapService.GetBaseUrls(query);
+        for (var parentQueries = 0; ; parentQueries++)
+        {
+            try
+            {
+                return await QueryServersAsync(query, bootstrapService.GetBaseUrls(query), timeout, followReferral,
+                    cancellationToken).ConfigureAwait(false);
+            }
+            catch (RDAPException ex) when (ex.Kind == RDAPErrorKind.NotFound &&
+                                           parentQueries < MaxParentDomainQueries &&
+                                           RDAPQueryParser.GetParentDomain(query) is { } parent)
+            {
+                query = parent;
+            }
+        }
+    }
 
+    /// <summary>
+    ///     Queries the servers in order until one answers.
+    /// </summary>
+    private async Task<RDAPResult> QueryServersAsync(RDAPQuery query, List<string> baseUrls, TimeSpan timeout,
+        bool followReferral, CancellationToken cancellationToken)
+    {
         RDAPException lastNetworkError = null;
 
         // Try the next server only on network errors and timeouts. Any HTTP answer is authoritative for the query.
