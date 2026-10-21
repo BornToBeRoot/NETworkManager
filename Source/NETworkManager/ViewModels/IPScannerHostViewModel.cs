@@ -88,10 +88,6 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.IPScanner;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.IPScanner_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.IPScanner_HostOrIPRange;
-
     #endregion
 
     #region ICommand & Actions

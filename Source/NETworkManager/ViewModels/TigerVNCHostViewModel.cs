@@ -92,10 +92,6 @@ public class TigerVNCHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.TigerVNC;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.TigerVNC_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.TigerVNC_Host;
-
     public override void OnProfileManagerDialogOpen()
     {
         ConfigurationManager.OnDialogOpen();

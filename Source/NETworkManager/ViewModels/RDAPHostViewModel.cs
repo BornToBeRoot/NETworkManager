@@ -71,10 +71,6 @@ public class RDAPHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.RDAP;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.RDAP_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.RDAP_Query;
-
     #endregion
 
     #region ICommand & Actions

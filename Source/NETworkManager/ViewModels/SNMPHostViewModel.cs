@@ -68,10 +68,6 @@ public class SNMPHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.SNMP;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.SNMP_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.SNMP_Host;
-
     #endregion
 
     #region ICommand & Actions

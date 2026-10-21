@@ -74,10 +74,6 @@ public class RemoteDesktopHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.RemoteDesktop;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.RemoteDesktop_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.RemoteDesktop_Host;
-
     public override void OnProfileManagerDialogOpen()
     {
         ConfigurationManager.OnDialogOpen();

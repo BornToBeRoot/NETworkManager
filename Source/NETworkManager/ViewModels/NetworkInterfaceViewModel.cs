@@ -732,11 +732,6 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.NetworkInterface;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.NetworkInterface_Enabled;
-
-    // Unlike other tools, profile search here only matches the profile name (no secondary field).
-    protected override string GetSearchableField(ProfileInfo profile) => string.Empty;
-
     #endregion
 
     #region ICommands & Actions

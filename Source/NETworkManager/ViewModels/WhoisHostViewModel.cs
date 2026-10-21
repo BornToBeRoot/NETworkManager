@@ -70,10 +70,6 @@ public class WhoisHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.Whois;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.Whois_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.Whois_Domain;
-
     #endregion
 
     #region ICommand & Actions

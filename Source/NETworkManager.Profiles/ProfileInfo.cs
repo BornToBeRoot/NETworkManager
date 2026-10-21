@@ -534,4 +534,32 @@ public class ProfileInfo
             _ => false
         };
     }
+
+    /// <summary>
+    ///     Gets the target of the profile in an application, e.g. the host, IP range, domain, URL or MAC address.
+    /// </summary>
+    /// <param name="application">Application to get the target for.</param>
+    /// <returns>Target, or null if the application has none.</returns>
+    public string GetTarget(ApplicationName application)
+    {
+        return application switch
+        {
+            ApplicationName.IPScanner => IPScanner_HostOrIPRange,
+            ApplicationName.PortScanner => PortScanner_Host,
+            ApplicationName.PingMonitor => PingMonitor_Host,
+            ApplicationName.Traceroute => Traceroute_Host,
+            ApplicationName.DNSLookup => DNSLookup_Host,
+            ApplicationName.RemoteDesktop => RemoteDesktop_Host,
+            ApplicationName.PowerShell => PowerShell_Host,
+            ApplicationName.PuTTY => PuTTY_HostOrSerialLine,
+            ApplicationName.TigerVNC => TigerVNC_Host,
+            ApplicationName.WebConsole => WebConsole_Url,
+            ApplicationName.SNMP => SNMP_Host,
+            ApplicationName.WakeOnLAN => WakeOnLAN_MACAddress,
+            ApplicationName.RDAP => RDAP_Query,
+            ApplicationName.Whois => Whois_Domain,
+            ApplicationName.IPGeolocation => IPGeolocation_Host,
+            _ => null
+        };
+    }
 }

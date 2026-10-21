@@ -135,10 +135,6 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.PuTTY;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.PuTTY_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.PuTTY_HostOrSerialLine;
-
     /// <summary>
     /// Also mirrors the popup state into <see cref="ConfigurationManager"/> so the main window can suppress
     /// global focus-stealing behavior (e.g. re-focusing the embedded terminal) while the filter popup is open.

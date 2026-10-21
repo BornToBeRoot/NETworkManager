@@ -158,10 +158,6 @@ public class WakeOnLANViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.WakeOnLAN;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.WakeOnLAN_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.WakeOnLAN_MACAddress;
-
     #endregion
 
     #region ICommands & Actions

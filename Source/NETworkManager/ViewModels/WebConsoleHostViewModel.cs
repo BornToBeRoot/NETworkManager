@@ -99,10 +99,6 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.WebConsole;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.WebConsole_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.WebConsole_Url;
-
     public override void OnProfileManagerDialogOpen()
     {
         ConfigurationManager.OnDialogOpen();

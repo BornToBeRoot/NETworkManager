@@ -88,10 +88,6 @@ public class IPGeolocationHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.IPGeolocation;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.IPGeolocation_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.IPGeolocation_Host;
-
     #endregion
 
     #region ICommand & Actions

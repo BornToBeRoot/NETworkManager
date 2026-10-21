@@ -88,10 +88,6 @@ public class PortScannerHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.PortScanner;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.PortScanner_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.PortScanner_Host;
-
     #endregion
 
     #region ICommand & Actions

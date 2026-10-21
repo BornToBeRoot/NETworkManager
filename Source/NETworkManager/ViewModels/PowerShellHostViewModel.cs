@@ -135,10 +135,6 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.PowerShell;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.PowerShell_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.PowerShell_Host;
-
     /// <summary>
     /// Also mirrors the popup state into <see cref="ConfigurationManager"/> so the main window can suppress
     /// global focus-stealing behavior (e.g. re-focusing the embedded terminal) while the filter popup is open.

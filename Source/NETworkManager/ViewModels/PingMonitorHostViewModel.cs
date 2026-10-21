@@ -185,10 +185,6 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.PingMonitor;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.PingMonitor_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.PingMonitor_Host;
-
     #endregion
 
     #region ICommands & Actions

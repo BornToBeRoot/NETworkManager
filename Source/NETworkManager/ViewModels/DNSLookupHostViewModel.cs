@@ -90,10 +90,6 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.DNSLookup;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.DNSLookup_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.DNSLookup_Host;
-
     #endregion
 
     #region ICommand & Actions
