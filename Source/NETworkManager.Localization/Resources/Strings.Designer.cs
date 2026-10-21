@@ -5120,6 +5120,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reloaded at {0}, but not all firewall rules or their properties could be loaded, so the list may be incomplete (see log file for details). {1}.
+        /// </summary>
+        public static string FirewallRulesLoadedWithErrorsMessage {
+            get {
+                return ResourceManager.GetString("FirewallRulesLoadedWithErrorsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to At least one of the selected rules is managed by a policy (e.g. Group Policy or MDM) or created by Windows at runtime and can't be changed locally..
         /// </summary>
         public static string FirewallRulesManagedByPolicyMessage {

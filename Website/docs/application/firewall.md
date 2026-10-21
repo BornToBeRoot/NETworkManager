@@ -91,6 +91,8 @@ Multiple rules can be selected (`Ctrl` / `Shift` + click) to enable, disable or 
 
 Before enabling, disabling or deleting, it is checked that all selected rules still exist. If one of them was removed in the meantime (e.g. in the Windows Firewall management console), none of the selected rules is changed and an error is shown. If another error occurs while the rules are changed (e.g. access denied), some of the selected rules may already be changed. The rule list is reloaded after every action (also after an error), so it always shows the current state.
 
+If the rules can't be loaded (e.g. because the Windows Firewall service is not running), an error is shown instead of an empty list. If only some rules or properties can't be loaded, the loaded rules are shown together with a message that the list may be incomplete (details are written to the log file).
+
 :::
 
 ## Add rule

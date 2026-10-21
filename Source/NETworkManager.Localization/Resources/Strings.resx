@@ -4415,6 +4415,9 @@ The new rule may apply to more traffic than the original rule (e.g. to all servi
   <data name="FailedToLoadFirewallRulesMessage" xml:space="preserve">
     <value>Failed to load firewall rules. {0}</value>
   </data>
+  <data name="FirewallRulesLoadedWithErrorsMessage" xml:space="preserve">
+    <value>Reloaded at {0}, but not all firewall rules or their properties could be loaded, so the list may be incomplete (see log file for details). {1}</value>
+  </data>
   <data name="DeleteFirewallRuleMessage" xml:space="preserve">
     <value>The selected firewall rule is permanently deleted:
 

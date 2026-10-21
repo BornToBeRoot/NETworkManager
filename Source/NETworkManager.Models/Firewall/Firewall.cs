@@ -41,25 +41,50 @@ public class Firewall
     private static readonly SemaphoreSlim RunspaceLock = new(1, 1);
 
     /// <summary>
-    /// Lazily initialized PowerShell runspace. Created and configured on first access, which is
-    /// the initial load of the rules when the Firewall view is opened for the first time.
+    /// Shared PowerShell runspace, see <see cref="SharedRunspace"/>.
     /// </summary>
-    private static readonly Lazy<Runspace> _sharedRunspace = new(() =>
-    {
-        var runspace = RunspaceFactory.CreateRunspace();
-        runspace.Open();
+    private static Runspace _sharedRunspace;
 
-        using var ps = SMA.PowerShell.Create();
-        ps.Runspace = runspace;
-        ps.AddScript(@"
+    /// <summary>
+    /// Returns the shared runspace. It is created and configured on first access, which is the initial load
+    /// of the rules when the Firewall view is opened for the first time. If the runspace could not be created
+    /// (e.g. the <c>NetSecurity</c> module failed to load) or is broken, it is created again on the next access,
+    /// so a temporary error doesn't break the Firewall until the application is restarted.
+    /// Must only be accessed while <see cref="RunspaceLock"/> is held.
+    /// </summary>
+    private static Runspace SharedRunspace
+    {
+        get
+        {
+            if (_sharedRunspace?.RunspaceStateInfo.State == RunspaceState.Opened)
+                return _sharedRunspace;
+
+            _sharedRunspace?.Dispose();
+            _sharedRunspace = null;
+
+            var runspace = RunspaceFactory.CreateRunspace();
+
+            try
+            {
+                runspace.Open();
+
+                using var ps = SMA.PowerShell.Create();
+                ps.Runspace = runspace;
+                ps.AddScript(@"
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
 Import-Module NetSecurity -ErrorAction Stop").Invoke();
+            }
+            catch
+            {
+                runspace.Dispose();
+                throw;
+            }
 
-        return runspace;
-    });
+            _sharedRunspace = runspace;
 
-    /// <summary>Returns the shared runspace, initializing it on first access.</summary>
-    private static Runspace SharedRunspace => _sharedRunspace.Value;
+            return runspace;
+        }
+    }
 
     #endregion
 
@@ -99,64 +124,51 @@ Import-Module NetSecurity -ErrorAction Stop").Invoke();
     #region Methods
 
     /// <summary>
-    /// Retrieves Windows Firewall rules and maps each one to a <see cref="FirewallRule"/> object.
-    /// When <paramref name="onlyManagedRules"/> is <see langword="true"/>, only rules from the local store whose display name
-    /// starts with <see cref="RuleIdentifier"/> are returned; otherwise all active rules on the system are returned
-    /// (including rules from Group Policy, MDM or created by Windows at runtime, see <see cref="FirewallRule.Source"/>).
-    /// PowerShell errors during the query are logged as warnings; errors for individual
-    /// rules are caught so a single malformed rule does not abort the entire load.
+    /// Number of rules up to which the filters (ports, addresses, ...) are queried per rule. For more rules, the
+    /// filters of all rules in the policy store are queried once and matched by <c>InstanceID</c>, which is faster
+    /// than one query per rule and filter type, but has a fixed cost (all rules on the system, often 500+).
+    /// </summary>
+    private const int BulkFilterQueryThreshold = 10;
+
+    /// <summary>
+    /// Builds the PowerShell script that queries the rules and their filters and maps them with
+    /// <see cref="RuleProjectionScript"/>.
     /// </summary>
     /// <param name="onlyManagedRules">
-    /// <see langword="true"/> to query only rules managed by NETworkManager; <see langword="false"/> to query all system firewall rules.
+    /// <see langword="true"/> to query only rules managed by NETworkManager (local store); <see langword="false"/> to
+    /// query all active rules.
     /// </param>
-    /// <returns>
-    /// A list of <see cref="FirewallRule"/> objects representing the matching rules.
-    /// </returns>
-    public static async Task<List<FirewallRule>> GetRulesAsync(bool onlyManagedRules = true)
+    private static string BuildGetRulesScript(bool onlyManagedRules)
     {
-        await RunspaceLock.WaitAsync();
-        try
-        {
-            return await Task.Run(() =>
-            {
-                var rules = new List<FirewallRule>();
+        var rulesQuery = onlyManagedRules
+            ? $"Get-NetFirewallRule -DisplayName '{RuleIdentifier}*'"
+            : "Get-NetFirewallRule -PolicyStore ActiveStore";
 
-                using var ps = SMA.PowerShell.Create();
-                ps.Runspace = SharedRunspace;
+        // Get-NetFirewallRule uses the PersistentStore (local rules) by default
+        var policyStore = onlyManagedRules ? "PersistentStore" : "ActiveStore";
 
-                if (onlyManagedRules)
-                {
-                    ps.AddScript($@"
-Get-NetFirewallRule -DisplayName '{RuleIdentifier}*' | ForEach-Object {{
-    $rule              = $_
-    $portFilter        = $rule | Get-NetFirewallPortFilter
-    $addressFilter     = $rule | Get-NetFirewallAddressFilter
-    $appFilter         = $rule | Get-NetFirewallApplicationFilter
-    $ifTypeFilter      = $rule | Get-NetFirewallInterfaceTypeFilter
-    $svcFilter         = $rule | Get-NetFirewallServiceFilter
-    $ifFilter          = $rule | Get-NetFirewallInterfaceFilter
-    $secFilter         = $rule | Get-NetFirewallSecurityFilter
-    {RuleProjectionScript}
-}}");
-                }
-                else
-                {
-                    ps.AddScript($@"
-$rules = Get-NetFirewallRule -PolicyStore ActiveStore
-$pf = @{{}}; Get-NetFirewallPortFilter -PolicyStore ActiveStore | ForEach-Object {{ $pf[$_.InstanceID] = $_ }}
-$af = @{{}}; Get-NetFirewallAddressFilter -PolicyStore ActiveStore | ForEach-Object {{ $af[$_.InstanceID] = $_ }}
-$app = @{{}}; Get-NetFirewallApplicationFilter -PolicyStore ActiveStore | ForEach-Object {{ $app[$_.InstanceID] = $_ }}
-$if = @{{}}; Get-NetFirewallInterfaceTypeFilter -PolicyStore ActiveStore | ForEach-Object {{ $if[$_.InstanceID] = $_ }}
-$sf = @{{}}; Get-NetFirewallServiceFilter -PolicyStore ActiveStore | ForEach-Object {{ $sf[$_.InstanceID] = $_ }}
-$inf = @{{}}; Get-NetFirewallInterfaceFilter -PolicyStore ActiveStore | ForEach-Object {{ $inf[$_.InstanceID] = $_ }}
-$sec = @{{}}; Get-NetFirewallSecurityFilter -PolicyStore ActiveStore | ForEach-Object {{ $sec[$_.InstanceID] = $_ }}
-# The filters are matched by InstanceID. If an ID occurs more than once (e.g. a local and a Group Policy rule
-# with the same ID), the filters of these rules are queried per rule, so they are not mixed up.
-$count = @{{}}; foreach ($rule in $rules) {{ $count[$rule.InstanceID]++ }}
+        // All rules are always many rules, so the filters are always queried at once
+        var threshold = onlyManagedRules ? BulkFilterQueryThreshold : 0;
+
+        return $@"
+$rules = @({rulesQuery})
+$bulk = $rules.Count -gt {threshold}
+if ($bulk) {{
+    $pf = @{{}}; Get-NetFirewallPortFilter -PolicyStore {policyStore} | ForEach-Object {{ $pf[$_.InstanceID] = $_ }}
+    $af = @{{}}; Get-NetFirewallAddressFilter -PolicyStore {policyStore} | ForEach-Object {{ $af[$_.InstanceID] = $_ }}
+    $app = @{{}}; Get-NetFirewallApplicationFilter -PolicyStore {policyStore} | ForEach-Object {{ $app[$_.InstanceID] = $_ }}
+    $if = @{{}}; Get-NetFirewallInterfaceTypeFilter -PolicyStore {policyStore} | ForEach-Object {{ $if[$_.InstanceID] = $_ }}
+    $sf = @{{}}; Get-NetFirewallServiceFilter -PolicyStore {policyStore} | ForEach-Object {{ $sf[$_.InstanceID] = $_ }}
+    $inf = @{{}}; Get-NetFirewallInterfaceFilter -PolicyStore {policyStore} | ForEach-Object {{ $inf[$_.InstanceID] = $_ }}
+    $sec = @{{}}; Get-NetFirewallSecurityFilter -PolicyStore {policyStore} | ForEach-Object {{ $sec[$_.InstanceID] = $_ }}
+    # The filters are matched by InstanceID. If an ID occurs more than once (e.g. a local and a Group Policy rule
+    # with the same ID), the filters of these rules are queried per rule, so they are not mixed up.
+    $count = @{{}}; foreach ($rule in $rules) {{ $count[$rule.InstanceID]++ }}
+}}
 $list = [System.Collections.Generic.List[PSCustomObject]]::new($rules.Count)
 foreach ($rule in $rules) {{
     $id = $rule.InstanceID
-    if ($count[$id] -gt 1) {{
+    if (-not $bulk -or $count[$id] -gt 1) {{
         $portFilter    = $rule | Get-NetFirewallPortFilter
         $addressFilter = $rule | Get-NetFirewallAddressFilter
         $appFilter     = $rule | Get-NetFirewallApplicationFilter
@@ -175,16 +187,55 @@ foreach ($rule in $rules) {{
     }}
     $list.Add({RuleProjectionScript})
 }}
-$list");
-                }
+$list";
+    }
+
+    /// <summary>
+    /// Retrieves Windows Firewall rules and maps each one to a <see cref="FirewallRule"/> object.
+    /// When <paramref name="onlyManagedRules"/> is <see langword="true"/>, only rules from the local store whose display name
+    /// starts with <see cref="RuleIdentifier"/> are returned; otherwise all active rules on the system are returned
+    /// (including rules from Group Policy, MDM or created by Windows at runtime, see <see cref="FirewallRule.Source"/>).
+    /// If the query fails completely, an exception is thrown. If only parts of it fail (e.g. a filter could not be
+    /// queried or a single rule could not be parsed), the loaded rules are returned together with the errors, so the
+    /// user can be told that the list may be incomplete.
+    /// </summary>
+    /// <param name="onlyManagedRules">
+    /// <see langword="true"/> to query only rules managed by NETworkManager; <see langword="false"/> to query all system firewall rules.
+    /// </param>
+    /// <returns>
+    /// The <see cref="FirewallRule"/> objects representing the matching rules, and the errors that occurred
+    /// (empty if the rules were loaded without errors).
+    /// </returns>
+    /// <exception cref="Exception">
+    /// Thrown when PowerShell reports errors and no rule was returned (e.g. the firewall service is not running).
+    /// </exception>
+    public static async Task<(List<FirewallRule> Rules, List<string> Errors)> GetRulesAsync(bool onlyManagedRules = true)
+    {
+        await RunspaceLock.WaitAsync();
+        try
+        {
+            return await Task.Run(() =>
+            {
+                var rules = new List<FirewallRule>();
+
+                using var ps = SMA.PowerShell.Create();
+                ps.Runspace = SharedRunspace;
+
+                ps.AddScript(BuildGetRulesScript(onlyManagedRules));
 
                 var results = ps.Invoke();
 
-                if (ps.Streams.Error.Count > 0)
-                {
-                    foreach (var error in ps.Streams.Error)
-                        Log.Warn($"PowerShell error: {error}");
-                }
+                // A query without a match (e.g. no rules managed by NETworkManager yet) is not an error
+                var errors = ps.Streams.Error
+                    .Where(error => error.FullyQualifiedErrorId?.StartsWith("CmdletizationQuery_NotFound", StringComparison.Ordinal) != true)
+                    .Select(error => error.ToString())
+                    .ToList();
+
+                foreach (var error in errors)
+                    Log.Warn($"PowerShell error: {error}");
+
+                if (errors.Count > 0 && results.Count == 0)
+                    throw new Exception(string.Join("; ", errors));
 
                 foreach (var result in results)
                 {
@@ -231,10 +282,12 @@ $list");
                     catch (Exception ex)
                     {
                         Log.Warn($"Failed to parse firewall rule: {ex.Message}");
+
+                        errors.Add(ex.Message);
                     }
                 }
 
-                return rules;
+                return (rules, errors);
             });
         }
         finally

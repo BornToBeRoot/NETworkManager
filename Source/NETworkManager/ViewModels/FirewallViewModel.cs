@@ -760,7 +760,10 @@ public class FirewallViewModel : ViewModelBase
     /// When <see langword="true"/> the initial UI delay is skipped so the first load
     /// on startup feels immediate.
     /// </param>
-    /// <returns><see langword="true"/> if the rules were loaded successfully; otherwise, <see langword="false"/>.</returns>
+    /// <returns>
+    /// <see langword="true"/> if the rules were loaded successfully; otherwise (also if the rules were only loaded
+    /// partially), <see langword="false"/>.
+    /// </returns>
     private async Task<bool> Refresh(bool init = false)
     {
         if (IsRefreshing)
@@ -782,7 +785,7 @@ public class FirewallViewModel : ViewModelBase
             // Reset right before the setting is read, so only a change during the query triggers another refresh (see finally)
             _refreshPending = false;
 
-            var rules = await Firewall.GetRulesAsync(onlyManagedRules: !ShowAllRules);
+            var (rules, errors) = await Firewall.GetRulesAsync(onlyManagedRules: !ShowAllRules);
 
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -804,8 +807,18 @@ public class FirewallViewModel : ViewModelBase
                         rule.Id == selectedRule.Id && rule.Source == selectedRule.Source);
             });
 
-            StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
             IsStatusMessageDisplayed = true;
+
+            // Only parts of the query failed (e.g. a single rule or a filter), show that the list may be incomplete
+            if (errors.Count > 0)
+            {
+                StatusMessage = string.Format(Strings.FirewallRulesLoadedWithErrorsMessage,
+                    DateTime.Now.ToShortTimeString(), errors[0]);
+
+                return false;
+            }
+
+            StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
 
             return true;
         }
