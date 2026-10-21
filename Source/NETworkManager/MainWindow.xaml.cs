@@ -304,19 +304,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
     }
 
-    public bool FlyoutRunCommandIsOpen
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
     public bool IsRestartRequired
     {
         get;
@@ -535,9 +522,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         // Load application list, filter, sort, etc.
         LoadApplicationList();
-
-        // Load run commands
-        SetRunCommandsView();
 
         // Load the profiles
         LoadProfiles();
@@ -1099,172 +1083,43 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     #region Run Command
 
-    #region Variables
-
-    public ICollectionView RunCommands
-    {
-        get;
-        private set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public RunCommandInfo SelectedRunCommand
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public string RunCommandSearch
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-
-            RefreshRunCommandsView();
-
-            OnPropertyChanged();
-        }
-    }
-
-    #endregion
-
-    #region ICommands & Actions
-
     public ICommand OpenRunCommand => new RelayCommand(_ => OpenRunAction());
 
     private void OpenRunAction()
     {
+        // Only one dialog at a time (e.g. the shortcut while another dialog is open)
+        if (ConfigurationManager.Current.IsChildWindowOpen)
+            return;
+
+        var childWindow = new RunCommandChildWindow();
+
+        var childWindowViewModel = new RunCommandViewModel(instance =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            ConfigurationManager.OnDialogClose();
+
+            if (instance.IsSettings)
+                NavigationManager.OpenSettings();
+            else
+                NavigationManager.Open(instance.Request);
+        }, _ =>
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            ConfigurationManager.OnDialogClose();
+        });
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
         ConfigurationManager.OnDialogOpen();
 
-        FlyoutRunCommandIsOpen = true;
+        _ = this.ShowChildWindowAsync(childWindow);
     }
-
-    public ICommand RunCommandDoCommand => new RelayCommand(_ => RunCommandDoAction());
-
-    private void RunCommandDoAction()
-    {
-        RunCommandDo();
-    }
-
-    public ICommand RunCommandCloseCommand => new RelayCommand(_ => RunCommandCloseAction());
-
-    private void RunCommandCloseAction()
-    {
-        RunCommandFlyoutClose();
-    }
-
-    #endregion
-
-    #region Methods
-
-    private void SetRunCommandsView(RunCommandInfo selectedRunCommand = null)
-    {
-        RunCommands = new CollectionViewSource { Source = RunCommandManager.GetList() }.View;
-
-        RunCommands.Filter = o =>
-        {
-            if (o is not RunCommandInfo info)
-                return false;
-
-            if (string.IsNullOrEmpty(RunCommandSearch))
-                return true;
-
-            return info.TranslatedName.IndexOf(RunCommandSearch, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.Name.IndexOf(RunCommandSearch, StringComparison.OrdinalIgnoreCase) > -1;
-        };
-
-        if (selectedRunCommand != null)
-            SelectedRunCommand = RunCommands.Cast<RunCommandInfo>()
-                .FirstOrDefault(x => x.Name == selectedRunCommand.Name);
-
-        SelectedRunCommand ??= RunCommands.Cast<RunCommandInfo>().FirstOrDefault();
-    }
-
-    private void RefreshRunCommandsView()
-    {
-        SetRunCommandsView(SelectedRunCommand);
-    }
-
-    /// <summary>
-    ///     Execute the selected run command.
-    /// </summary>
-    private void RunCommandDo()
-    {
-        // Do nothing if no command is selected
-        if (SelectedRunCommand == null)
-            return;
-
-        // Do the command
-        switch (SelectedRunCommand.Type)
-        {
-            // Redirect to application
-            case RunCommandType.Application:
-                var applicationName = (ApplicationName)Enum.Parse(typeof(ApplicationName), SelectedRunCommand.Name);
-                NavigationManager.Open(new ApplicationRequest(applicationName));
-                break;
-            // Redirect to settings
-            case RunCommandType.Setting:
-                NavigationManager.OpenSettings();
-                break;
-        }
-
-        // Close the flyout
-        RunCommandFlyoutClose(true);
-    }
-
-    /// <summary>
-    ///     Close the run command flyout and clear the search.
-    /// </summary>
-    private void RunCommandFlyoutClose(bool clearSearch = false)
-    {
-        if (!FlyoutRunCommandIsOpen)
-            return;
-
-        FlyoutRunCommandIsOpen = false;
-
-        ConfigurationManager.OnDialogClose();
-
-        // Clear the search
-        if (clearSearch)
-            RunCommandSearch = string.Empty;
-    }
-
-    #endregion
-
-    #region Events
-
-    private void ListViewRunCommand_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-        RunCommandDo();
-    }
-
-    private void FlyoutRunCommand_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
-    {
-        // Close flyout if the focus is lost.
-        if (e.NewValue is not false)
-            return;
-
-        RunCommandFlyoutClose();
-    }
-
-    #endregion
 
     #endregion
 

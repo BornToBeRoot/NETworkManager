@@ -1,5 +1,6 @@
 ﻿//using System.Collections.Generic;
 using NETworkManager.Controls;
+using NETworkManager.Models;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
@@ -504,4 +505,33 @@ public class ProfileInfo
     public bool IPGeolocation_Enabled { get; set; }
     public bool IPGeolocation_InheritHost { get; set; } = true;
     public string IPGeolocation_Host { get; set; }
+
+    /// <summary>
+    ///     Checks if the profile is enabled for an application.
+    /// </summary>
+    /// <param name="application">Application to check.</param>
+    /// <returns>True if the profile is enabled for the application.</returns>
+    public bool IsEnabled(ApplicationName application)
+    {
+        return application switch
+        {
+            ApplicationName.NetworkInterface => NetworkInterface_Enabled,
+            ApplicationName.IPScanner => IPScanner_Enabled,
+            ApplicationName.PortScanner => PortScanner_Enabled,
+            ApplicationName.PingMonitor => PingMonitor_Enabled,
+            ApplicationName.Traceroute => Traceroute_Enabled,
+            ApplicationName.DNSLookup => DNSLookup_Enabled,
+            ApplicationName.RemoteDesktop => RemoteDesktop_Enabled,
+            ApplicationName.PowerShell => PowerShell_Enabled,
+            ApplicationName.PuTTY => PuTTY_Enabled,
+            ApplicationName.TigerVNC => TigerVNC_Enabled,
+            ApplicationName.WebConsole => WebConsole_Enabled,
+            ApplicationName.SNMP => SNMP_Enabled,
+            ApplicationName.WakeOnLAN => WakeOnLAN_Enabled,
+            ApplicationName.RDAP => RDAP_Enabled,
+            ApplicationName.Whois => Whois_Enabled,
+            ApplicationName.IPGeolocation => IPGeolocation_Enabled,
+            _ => false
+        };
+    }
 }
