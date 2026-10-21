@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 description: "Use command line arguments to control NETworkManager startup behavior, reset settings, and open a specific feature on launch."
 keywords: [NETworkManager, command line arguments, CLI, command line options, automation, scripting, parameters]
 ---

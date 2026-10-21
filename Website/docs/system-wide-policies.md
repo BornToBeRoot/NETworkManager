@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 7
 description: "Configure system-wide policies to enforce NETworkManager settings for all users in enterprise environments."
 keywords: [NETworkManager, system-wide policies, enterprise deployment, Group Policy, Intune, SCCM, centralized configuration, IT administration]
 ---

@@ -25,6 +25,10 @@ Release date: **xx.xx.2026**
 
 - ARM64 builds are now available. [#3538](https://github.com/BornToBeRoot/NETworkManager/issues/3538)
 
+**Run command**
+
+- The [**Run command**](../run-command.md) (`Ctrl+Shift+P`) now runs a feature directly, e.g. `ping 10.0.0.1`, `dns borntoberoot.net 1.1.1.1 aaaa`, `rdap 1.10 asn` or `rdp @server-01` (profile). It opens in a dialog instead of a flyout, with short aliases (e.g. `ping`, `dns`, `rdp`, `ssh`), suggestions for recent commands, profiles of the feature and types (`Up`/`Down` to select, `Tab` to complete, `Enter` to run, `Esc` to close), and validates the input like the feature does. Only visible features are offered.
+
 **RDAP**
 
 - New [**RDAP**](../application/rdap.md) tool to look up registration data via the Registration Data Access Protocol, the standardized, JSON-based successor of Whois. Supports domains, nameservers, top-level domains, IP addresses/CIDR prefixes, AS numbers and entity handles; the type is detected automatically or can be selected. The RDAP server is determined automatically using the IANA bootstrap files, which are cached locally and can be updated in the new **Settings > RDAP** page. Results are shown in a structured view (details, status, events, nameservers, DNSSEC, networks and AS numbers of an organization, contacts, notices) or as raw JSON, and can be exported as JSON or text. For domains (e.g. `.com`/`.net`), the referral to the registrar's RDAP server is followed as well (can be disabled in **Settings > RDAP**). Includes profile support. If no RDAP server is known for a domain, it can be opened in **Whois** with a single click. IP addresses and hostnames can be queried from the context menu of **IP Scanner** and **Traceroute**, AS numbers from **Traceroute**; for a hostname (e.g. `www.borntoberoot.net`), the registered domain is queried (determined with the included [Public Suffix List](https://publicsuffix.org/)). [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607) [#3642](https://github.com/BornToBeRoot/NETworkManager/pull/3642)
@@ -181,5 +185,7 @@ Release date: **xx.xx.2026**
 - Converted the **IP Scanner** and **Port Scanner** engines from `Parallel.ForEach` with blocking calls to genuinely asynchronous `Parallel.ForEachAsync`, removing the risk of exhausting the application's ThreadPool at high concurrency settings. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
 - Refactored the **Network Connection** widget's check logic to reduce duplicated code and share the local IP address detection between the Computer and Router checks instead of detecting it twice. [#3553](https://github.com/BornToBeRoot/NETworkManager/pull/3553)
 - Consolidated the duplicated **Profiles** side panel (search, tag filter, grouped list, context menu, add/edit/copy/delete) used across 15 tool views into a single shared control, reducing code duplication. As part of this, the profile panel's expanded/width state is now shared across all tools instead of being tracked per tool. [#3537](https://github.com/BornToBeRoot/NETworkManager/pull/3537)
+- Replaced the internal event system for opening a feature with data (e.g. **Open in RDAP** from the **IP Scanner**) with typed requests, which can also carry options (e.g. DNS server and record type) and profiles. Features no longer fail to open from another feature while the application list is filtered by a search.
+- Added a unit test project (xUnit) with tests for the run command parser.
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
