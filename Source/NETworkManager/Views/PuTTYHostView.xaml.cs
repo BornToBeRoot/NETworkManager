@@ -1,6 +1,5 @@
+using NETworkManager.Utilities.WPF;
 using NETworkManager.ViewModels;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace NETworkManager.Views;
 
@@ -8,25 +7,17 @@ public partial class PuTTYHostView : IApplicationRequestHandler
 {
     private readonly PuTTYHostViewModel _viewModel = new();
 
-    private bool _loaded;
-
     public PuTTYHostView()
     {
         InitializeComponent();
         DataContext = _viewModel;
     }
 
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
-    {
-        _loaded = true;
-    }
-
     public async void Open(ApplicationRequest request)
     {
         // Wait for the interface to load, before displaying the dialog to connect a new profile...
         // MahApps will throw an exception...
-        while (!_loaded)
-            await Task.Delay(250);
+        await this.WaitForLoadedAsync();
 
         if (!_viewModel.IsExecutableConfigured)
             return;
