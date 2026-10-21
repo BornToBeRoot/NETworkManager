@@ -151,14 +151,17 @@ public class RDAPClient : SingletonBase<RDAPClient>
     /// <returns>URL of the referral, or null if there is none.</returns>
     public static string GetReferralUrl(RDAPResponse response, string requestUrl)
     {
+        // Broken servers may send null items in an array.
+        var links = response.Links?.OfType<RDAPLink>().ToList() ?? [];
+
         var selfUrls = new List<string> { requestUrl };
 
-        selfUrls.AddRange(response.Links?.Where(x => HasRel(x, "self")).Select(x => x.Href) ?? []);
+        selfUrls.AddRange(links.Where(x => HasRel(x, "self")).Select(x => x.Href));
 
-        var candidates = response.Links?
+        var candidates = links
             .Where(x => HasRel(x, "related") && IsHttpUrl(x.Href) &&
                         !selfUrls.Any(self => UrlEquals(self, x.Href)))
-            .ToList() ?? [];
+            .ToList();
 
         return (candidates.FirstOrDefault(x => IsRDAPMediaType(x.Type)) ??
                 candidates.FirstOrDefault(x => string.IsNullOrEmpty(x.Type) && HasRDAPPath(x.Href)))?.Href;

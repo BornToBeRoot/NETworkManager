@@ -319,14 +319,22 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
 
             Directory.CreateDirectory(_cacheDirectory);
 
+            // Load the cached files first, so a file that can't be parsed is downloaded again in this update (see
+            // ReadServices).
+            if (_dns == null)
+                LoadRegistries();
+
             var attempted = false;
             var contentChanged = false;
             Exception networkError = null;
 
             foreach (var info in _cacheInfos)
             {
-                // "Expires" is the time of the next check, after a successful update as well as after a failure.
-                if (!force && info.Expires > DateTime.Now)
+                var path = Path.Combine(_cacheDirectory, info.FileName);
+
+                // "Expires" is the time of the next check, after a successful update as well as after a failure. A
+                // missing file is tried with every query, since the query type can't be used without it.
+                if (!force && info.Expires > DateTime.Now && File.Exists(path))
                     continue;
 
                 attempted = true;
@@ -339,8 +347,6 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
                     errors.Add($"{info.FileName}: {networkError.Message}");
                     continue;
                 }
-
-                var path = Path.Combine(_cacheDirectory, info.FileName);
 
                 try
                 {
@@ -382,7 +388,7 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     /// <summary>
     ///     Records a failed update. A cached file is retried after <see cref="RetryInterval" />, at most
     ///     <see cref="MaxFailedAttempts" /> times, then after the regular <see cref="RefreshInterval" />. A missing file
-    ///     is retried after <see cref="RetryInterval" />, since the query type cannot be used without it.
+    ///     is tried again with the next query (see <see cref="UpdateAsync" />).
     /// </summary>
     private void RecordFailure(RDAPBootstrapCacheInfo info, Exception ex)
     {
@@ -680,6 +686,16 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
         catch (Exception ex)
         {
             Log.Error($"Could not parse RDAP bootstrap file {path}.", ex);
+
+            // Download the file again with the next query. Without ETag and Last-Modified, the request is not
+            // conditional, so the server can't answer with "304 Not Modified" and the file is replaced.
+            var info = _cacheInfos.First(x => x.Type == type);
+
+            info.ETag = null;
+            info.LastModified = null;
+            info.Expires = null;
+            info.LastError = ex.Message;
+
             return null;
         }
     }

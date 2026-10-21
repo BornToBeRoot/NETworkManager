@@ -28,17 +28,18 @@ public class RDAPObjectViewModel
 
         AddDetails(response);
 
-        Events = response.Events?
+        // Broken servers may send null items in an array, so they are skipped (OfType).
+        Events = response.Events?.OfType<RDAPEvent>()
             .Select(x => new RDAPEventItem(x.EventAction, RDAPDateParser.ToLocalString(x.EventDate), x.EventActor))
             .ToList() ?? [];
 
-        Nameservers = response.Nameservers?
+        Nameservers = response.Nameservers?.OfType<RDAPObject>()
             .Select(x => new RDAPNameserverItem(
                 FormatDomain(x.LdhName, x.UnicodeName),
                 string.Join(", ", (x.IPAddresses?.V4 ?? []).Concat(x.IPAddresses?.V6 ?? []))))
             .ToList() ?? [];
 
-        DSData = response.SecureDNS?.DSData?
+        DSData = response.SecureDNS?.DSData?.OfType<RDAPDSData>()
             .Select(x => new RDAPDSDataItem(x.KeyTag?.ToString(CultureInfo.InvariantCulture),
                 x.Algorithm?.ToString(CultureInfo.InvariantCulture),
                 x.DigestType?.ToString(CultureInfo.InvariantCulture), x.Digest))
@@ -51,7 +52,7 @@ public class RDAPObjectViewModel
         if (response.ObjectClassName == "entity")
             Contacts.Insert(0, CreateContact(response));
 
-        Notices = (response.Notices ?? []).Concat(response.Remarks ?? [])
+        Notices = (response.Notices ?? []).Concat(response.Remarks ?? []).OfType<RDAPNotice>()
             .Select(x => new RDAPNoticeItem(x.Title,
                 string.Join(Environment.NewLine, x.Description?.Where(d => !string.IsNullOrWhiteSpace(d)) ?? []),
                 GetLinks(x.Links)))
@@ -96,7 +97,7 @@ public class RDAPObjectViewModel
 
         if (response.Cidrs is { Count: > 0 })
             AddDetail(Strings.CIDR, string.Join(", ",
-                response.Cidrs.Select(x => $"{x.V4Prefix ?? x.V6Prefix}/{x.Length}")));
+                response.Cidrs.OfType<RDAPCidr>().Select(x => $"{x.V4Prefix ?? x.V6Prefix}/{x.Length}")));
 
         if (response.StartAutnum != null || response.EndAutnum != null)
             AddDetail(Strings.Range, response.StartAutnum == response.EndAutnum
@@ -113,7 +114,7 @@ public class RDAPObjectViewModel
             AddDetail(Strings.DelegationSigned, response.SecureDNS.DelegationSigned.Value ? Strings.Yes : Strings.No);
 
         if (response.PublicIds is { Count: > 0 })
-            AddDetail(Strings.PublicIDs, string.Join(", ", response.PublicIds.Select(x => $"{x.Type}: {x.Identifier}")));
+            AddDetail(Strings.PublicIDs, string.Join(", ", response.PublicIds.OfType<RDAPPublicId>().Select(x => $"{x.Type}: {x.Identifier}")));
 
         AddDetail(Strings.Port43, response.Port43);
 
@@ -132,7 +133,7 @@ public class RDAPObjectViewModel
     /// </summary>
     private void AddContacts(List<RDAPObject> entities)
     {
-        foreach (var entity in entities ?? [])
+        foreach (var entity in entities?.OfType<RDAPObject>() ?? [])
         {
             Contacts.Add(CreateContact(entity));
             AddContacts(entity.Entities);
@@ -173,7 +174,7 @@ public class RDAPObjectViewModel
     /// </summary>
     private static List<RDAPLinkItem> GetLinks(List<RDAPLink> links)
     {
-        return links?
+        return links?.OfType<RDAPLink>()
             .Where(x => !string.Equals(x.Rel, "self", StringComparison.OrdinalIgnoreCase))
             .Select(x => Uri.TryCreate(x.Href, UriKind.Absolute, out var uri) &&
                          (uri.Scheme == Uri.UriSchemeHttps || uri.Scheme == Uri.UriSchemeHttp)

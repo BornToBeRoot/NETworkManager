@@ -12,7 +12,7 @@ RDAP is the standardized successor of Whois ([RFC 7480](https://www.rfc-editor.o
 
 :::info
 
-The RDAP server for a query is determined using the bootstrap files published by IANA at [data.iana.org/rdap](https://data.iana.org/rdap/). They are downloaded with the first query, cached locally and refreshed automatically once a week. If `data.iana.org` cannot be reached, the cached files are used and the update is retried after an hour (at most 3 times, then with the next weekly update). See [Settings](#settings).
+The RDAP server for a query is determined using the bootstrap files published by IANA at [data.iana.org/rdap](https://data.iana.org/rdap/). They are downloaded with the first query, cached locally and refreshed automatically once a week. If `data.iana.org` cannot be reached, the cached files are used and the update is retried after an hour (at most 3 times, then with the next weekly update). Files that have not been downloaded yet (or can't be read) are downloaded with the next query. See [Settings](#settings).
 
 - **Domains** are resolved via the registry of their top-level domain. Some registries (e.g. `.de`, `.ch`, `.li`, `.io`) run an RDAP server that is not (yet) listed by IANA; these are included in NETworkManager.
 - **Top-level domains** (e.g. `de`) are queried at the IANA root zone RDAP server (`rdap.iana.org`).
@@ -121,7 +121,7 @@ For security reasons, a referral is only followed if it uses HTTPS and does not 
 
 ### Timeout (ms)
 
-Timeout in milliseconds for each request to an RDAP server, after which the request is considered lost.
+Timeout in milliseconds for each request to an RDAP server, after which the request is considered lost. The IANA bootstrap files are downloaded with a fixed timeout of 30 seconds.
 
 **Type:** `Integer` [Min `1000`, Max `60000`]
 
