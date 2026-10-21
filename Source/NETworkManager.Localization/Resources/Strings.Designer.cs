@@ -5149,6 +5149,42 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Group Policy.
+        /// </summary>
+        public static string FirewallRuleSource_GroupPolicy {
+            get {
+                return ResourceManager.GetString("FirewallRuleSource_GroupPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local.
+        /// </summary>
+        public static string FirewallRuleSource_Local {
+            get {
+                return ResourceManager.GetString("FirewallRuleSource_Local", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile Device Management (MDM).
+        /// </summary>
+        public static string FirewallRuleSource_MDM {
+            get {
+                return ResourceManager.GetString("FirewallRuleSource_MDM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows (runtime).
+        /// </summary>
+        public static string FirewallRuleSource_Other {
+            get {
+                return ResourceManager.GetString("FirewallRuleSource_Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This rule uses values that are not supported by NETworkManager (e.g. port keywords like RPC, a combination of interface types, a protocol like IGMP or the program System). Editing or copying the rule is not supported (yet), because these values would be lost and the new rule could apply to more traffic (e.g. to all ports)..
         /// </summary>
         public static string FirewallRuleUnsupportedValuesMessage {
@@ -13142,6 +13178,15 @@ namespace NETworkManager.Localization.Resources {
         public static string UnlockTheProfileFileMessage {
             get {
                 return ResourceManager.GetString("UnlockTheProfileFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unsupported properties.
+        /// </summary>
+        public static string UnsupportedProperties {
+            get {
+                return ResourceManager.GetString("UnsupportedProperties", resourceCulture);
             }
         }
         

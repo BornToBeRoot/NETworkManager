@@ -47,6 +47,8 @@ public static partial class ExportManager
         sb.AppendLine(
             $"{nameof(FirewallRule.Name)}," +
             $"{nameof(FirewallRule.IsEnabled)}," +
+            $"{nameof(FirewallRule.IsManaged)}," +
+            $"{nameof(FirewallRule.Source)}," +
             $"{nameof(FirewallRule.Direction)}," +
             $"{nameof(FirewallRule.Action)}," +
             $"{nameof(FirewallRule.Protocol)}," +
@@ -63,6 +65,8 @@ public static partial class ExportManager
             sb.AppendLine(
                 $"{CsvHelper.QuoteString(rule.Name)}," +
                 $"{rule.IsEnabled}," +
+                $"{rule.IsManaged}," +
+                $"{rule.Source}," +
                 $"{rule.Direction}," +
                 $"{rule.Action}," +
                 $"{rule.Protocol}," +
@@ -90,6 +94,8 @@ public static partial class ExportManager
                     select new XElement(nameof(FirewallRule),
                         new XElement(nameof(FirewallRule.Name), rule.Name),
                         new XElement(nameof(FirewallRule.IsEnabled), rule.IsEnabled),
+                        new XElement(nameof(FirewallRule.IsManaged), rule.IsManaged),
+                        new XElement(nameof(FirewallRule.Source), rule.Source),
                         new XElement(nameof(FirewallRule.Direction), rule.Direction),
                         new XElement(nameof(FirewallRule.Action), rule.Action),
                         new XElement(nameof(FirewallRule.Protocol), rule.Protocol),
@@ -119,6 +125,8 @@ public static partial class ExportManager
             {
                 rule.Name,
                 rule.IsEnabled,
+                rule.IsManaged,
+                Source = rule.Source.ToString(),
                 Direction = rule.Direction.ToString(),
                 Action = rule.Action.ToString(),
                 Protocol = rule.Protocol.ToString(),

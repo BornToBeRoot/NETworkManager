@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
@@ -25,9 +27,31 @@ public partial class FirewallView
     {
         InitializeComponent();
         DataContext = _viewModel;
+
+        _viewModel.PropertyChanged += ViewModel_PropertyChanged;
     }
 
     #region Events
+    /// <summary>
+    /// Scrolls the selected rule into view, e.g. when it is selected again after the rules were reloaded
+    /// (see <see cref="FirewallViewModel.SelectedResult"/>).
+    /// </summary>
+    private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName != nameof(FirewallViewModel.SelectedResult) || _viewModel.SelectedResult == null)
+            return;
+
+        // Wait until the DataGrid has processed the new items and the selection
+        Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+        {
+            var rule = _viewModel.SelectedResult;
+
+            // The rule may be hidden by the search
+            if (rule != null && DataGridFirewallRules.Items.Contains(rule))
+                DataGridFirewallRules.ScrollIntoView(rule);
+        }));
+    }
+
     /// <summary>
     /// Set data context for menus.
     /// </summary>

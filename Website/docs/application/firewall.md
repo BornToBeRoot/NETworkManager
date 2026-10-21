@@ -24,6 +24,10 @@ Without administrator privileges, the view is read-only. Use the **Restart as ad
 
 The **Program** column shows the file name of the program the rule applies to (e.g. `putty.exe`). The full path (e.g. `%ProgramFiles%\PuTTY\putty.exe`) is shown as tooltip and in the row details.
 
+Click the chevron in front of a rule to show its details: program (full path), interface type, network profiles, description, source (`Local`, `Group Policy`, `Mobile Device Management (MDM)` or `Windows (runtime)`) and, if set, the [unsupported properties](#rules-not-managed-by-networkmanager) the rule uses (e.g. ICMP types or a service).
+
+The selected rule stays selected (and is scrolled into view) when the list is reloaded, e.g. after it was enabled, disabled or edited. If several rules were selected, only one of them stays selected.
+
 The search above the list finds rules by name, program, direction, action, protocol, local / remote addresses, local / remote ports and description. The list is filtered after a short delay while typing.
 
 ### Toolbar
@@ -73,7 +77,7 @@ Multiple rules can be selected (`Ctrl` / `Shift` + click) to enable, disable or 
 | **Copy as** | Opens the dialog pre-filled with the selected rule to create a new rule based on it (single rule only, not for rules with [unsupported values](#rules-not-managed-by-networkmanager)) |
 | **Delete** | Removes the selected rule or rules (after confirmation) |
 | **Copy** | Copies the rule information to the clipboard (single rule only) |
-| **Export** | Exports the selected rules (or all rules) to a file |
+| **Export** | Exports the selected rules (or all rules) to a file (CSV, XML or JSON, incl. whether the rule is managed by NETworkManager and its source) |
 
 ### Keyboard shortcuts
 
@@ -297,7 +301,7 @@ Full path to an executable the rule applies to. When set, the rule only matches 
 
 :::note
 
-If a path is provided, the file must exist on the local computer. Environment variables (e.g. `%SystemRoot%\System32\svchost.exe`) are supported.
+If a path is provided, the file must exist on the local computer. Environment variables (e.g. `%SystemRoot%\System32\svchost.exe`) are supported. Use the button in the text box to select the program, or drag and drop it onto the text box.
 
 An empty value means **Any** program.
 

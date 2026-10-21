@@ -2,6 +2,7 @@ using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
+using NETworkManager.Converters;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -576,27 +577,8 @@ public class FirewallViewModel : ViewModelBase
     /// Converts the hidden properties of a rule to a localized, bulleted list (e.g. "- ICMP types", "- Service").
     /// </summary>
     /// <param name="properties">The hidden properties.</param>
-    private static string GetHiddenPropertiesString(FirewallRuleHiddenProperties properties)
-    {
-        var names = new List<string>();
-
-        if (properties.HasFlag(FirewallRuleHiddenProperties.IcmpTypes))
-            names.Add(Strings.IcmpTypes);
-
-        if (properties.HasFlag(FirewallRuleHiddenProperties.Service))
-            names.Add(Strings.Service);
-
-        if (properties.HasFlag(FirewallRuleHiddenProperties.Package))
-            names.Add(Strings.AppPackage);
-
-        if (properties.HasFlag(FirewallRuleHiddenProperties.InterfaceAlias))
-            names.Add(Strings.NetworkAdapters);
-
-        if (properties.HasFlag(FirewallRuleHiddenProperties.Security))
-            names.Add(Strings.UsersAndAuthentication);
-
-        return DialogHelper.FormatItemList(names);
-    }
+    private static string GetHiddenPropertiesString(FirewallRuleHiddenProperties properties) =>
+        DialogHelper.FormatItemList(FirewallRuleHiddenPropertiesToStringConverter.GetNames(properties));
 
     /// <summary>
     /// Builds a warning which lists the given rules that are not managed by NETworkManager
@@ -804,12 +786,22 @@ public class FirewallViewModel : ViewModelBase
 
             Application.Current.Dispatcher.Invoke(() =>
             {
+                // Remember the selected rule, because replacing the rules clears the selection. The ID is not unique
+                // if all rules are shown (e.g. a local and a Group Policy rule with the same ID), so the source is compared too.
+                var selectedRule = SelectedResult;
+
                 // Replace all rules with a single notification, so the view is filtered / sorted only once
                 // (can be 1000+ rules if all rules are shown). ResultsView.DeferRefresh() can't be used, because
                 // the DataGrid accesses the view (selection / current item) while the items are changed.
                 Results.ReplaceAll(rules);
 
                 _hasRulesManagedByPolicy = rules.Any(rule => rule.IsManagedByPolicy);
+
+                // Select the rule again (e.g. after it was enabled or edited), so the user doesn't have to search for it.
+                // If several rules were selected, only this rule is selected again. The view scrolls it into view.
+                if (selectedRule != null)
+                    SelectedResult = rules.FirstOrDefault(rule =>
+                        rule.Id == selectedRule.Id && rule.Source == selectedRule.Source);
             });
 
             StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());

@@ -97,6 +97,10 @@ Release date: **xx.xx.2026**
 - The search now also finds rules by program, ports, addresses and description, and by the translated direction, action and protocol. The list is filtered after a short delay while typing, so typing stays smooth with many rules.
 - Sorting by the rule source column (**Show all rules**) now groups rules managed by NETworkManager, rules not managed by NETworkManager and rules from Group Policy / MDM / Windows, instead of mixing the last two.
 - The **Program** field in the add / edit / copy rule dialog now shows an example path of a program instead of the path to PowerShell.
+- The program of a rule can now be selected with a file dialog or by drag and drop in the add / edit / copy rule dialog.
+- The selected rule stays selected and visible when the list is reloaded (e.g. after enabling, disabling or editing it), instead of jumping back to the top of the list.
+- The row details now show the source of a rule (local, Group Policy, MDM or Windows) and the unsupported properties it uses (e.g. ICMP types or a service), which are not copied via **Copy as...**.
+- The export now contains whether a rule is managed by NETworkManager and its source.
 
 ## Bug Fixes
 

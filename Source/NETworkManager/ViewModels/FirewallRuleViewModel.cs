@@ -1,9 +1,11 @@
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Firewall;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
@@ -74,6 +76,25 @@ public class FirewallRuleViewModel : ViewModelBase
     /// Cancel command to discard changes.
     /// </summary>
     public ICommand CancelCommand { get; }
+
+    /// <summary>
+    /// Command to select the <see cref="Program"/> with a file dialog.
+    /// </summary>
+    public ICommand BrowseFileCommand => new RelayCommand(_ => BrowseFileAction());
+
+    /// <summary>
+    /// Opens a file dialog to select the <see cref="Program"/> (executable) the rule applies to.
+    /// </summary>
+    private void BrowseFileAction()
+    {
+        var openFileDialog = new OpenFileDialog
+        {
+            Filter = GlobalStaticConfiguration.ApplicationFileExtensionFilter
+        };
+
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
+            Program = openFileDialog.FileName;
+    }
 
     /// <summary>
     /// Mode of the dialog (add, edit or copy).

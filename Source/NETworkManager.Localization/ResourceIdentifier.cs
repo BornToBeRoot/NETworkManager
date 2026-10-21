@@ -28,5 +28,6 @@ public enum ResourceIdentifier
     FirewallInterfaceType,
     FirewallRuleDirection,
     FirewallRuleAction,
+    FirewallRuleSource,
     NeighborState
 }
