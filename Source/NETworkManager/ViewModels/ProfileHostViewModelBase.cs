@@ -95,8 +95,6 @@ public abstract class ProfileHostViewModelBase : ViewModelBase, IProfileHostView
             if (!_searchDisabled)
             {
                 IsSearching = true;
-
-                // Stop + Start, because Start() doesn't reset a running timer
                 _searchDispatcherTimer.Stop();
                 _searchDispatcherTimer.Start();
             }

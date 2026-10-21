@@ -78,8 +78,6 @@ public sealed class ImportProfilesResultViewModel : ViewModelBase
             field = value;
 
             IsSearching = true;
-
-            // Stop + Start, because Start() doesn't reset a running timer
             _searchDispatcherTimer.Stop();
             _searchDispatcherTimer.Start();
 

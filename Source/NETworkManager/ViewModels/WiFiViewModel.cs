@@ -1166,7 +1166,7 @@ public class WiFiViewModel : ViewModelBase
                 : string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid,
                     ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
 
-            // Hide message automatically (Stop + Start, because Start() doesn't reset a running timer)
+            // Hide message automatically
             _hideConnectionStatusMessageTimer.Stop();
             _hideConnectionStatusMessageTimer.Start();
 
@@ -1205,7 +1205,7 @@ public class WiFiViewModel : ViewModelBase
                 : string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid,
                     ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
 
-            // Hide message automatically (Stop + Start, because Start() doesn't reset a running timer)
+            // Hide message automatically
             _hideConnectionStatusMessageTimer.Stop();
             _hideConnectionStatusMessageTimer.Start();
 
@@ -1244,7 +1244,7 @@ public class WiFiViewModel : ViewModelBase
                 connectedNetwork.AvailableNetwork.Ssid);
             IsConnectionStatusMessageDisplayed = true;
 
-            // Hide message automatically (Stop + Start, because Start() doesn't reset a running timer)
+            // Hide message automatically
             _hideConnectionStatusMessageTimer.Stop();
             _hideConnectionStatusMessageTimer.Start();
         }
