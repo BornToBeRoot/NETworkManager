@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.9d036de8.css">
-<script src="/NETworkManager/assets/js/runtime~main.c444f8bd.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.df5f9f6a.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.4a827bf6.js" defer="defer"></script>
 </head>
 <body>
@@ -37,7 +37,7 @@ Release date: <strong>xx.xx.2026</strong></p>
 </ul>
 <p><strong>RDAP</strong></p>
 <ul>
-<li class="">New <a class="" href="/NETworkManager/docs/application/rdap"><strong>RDAP</strong></a> tool to look up registration data via the Registration Data Access Protocol, the standardized, JSON-based successor of Whois. Supports domains, top-level domains, IP addresses/CIDR prefixes, AS numbers and entity handles. The RDAP server is determined automatically using the IANA bootstrap files, which are cached locally and can be updated in the new <strong>Settings &gt; RDAP</strong> page. Results are shown in a structured view (details, status, events, nameservers, DNSSEC, contacts, notices) or as raw JSON, and can be exported as JSON or text. For domains (e.g. <code>.com</code>/<code>.net</code>), the referral to the registrar&#x27;s RDAP server is followed as well (can be disabled in <strong>Settings &gt; RDAP</strong>). Includes profile support. If no RDAP server is known for a domain, it can be opened in <strong>Whois</strong> with a single click. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3607" target="_blank" rel="noopener noreferrer" class="">#3607</a></li>
+<li class="">New <a class="" href="/NETworkManager/docs/application/rdap"><strong>RDAP</strong></a> tool to look up registration data via the Registration Data Access Protocol, the standardized, JSON-based successor of Whois. Supports domains, nameservers, top-level domains, IP addresses/CIDR prefixes, AS numbers and entity handles; the type is detected automatically or can be selected. The RDAP server is determined automatically using the IANA bootstrap files, which are cached locally and can be updated in the new <strong>Settings &gt; RDAP</strong> page. Results are shown in a structured view (details, status, events, nameservers, DNSSEC, networks and AS numbers of an organization, contacts, notices) or as raw JSON, and can be exported as JSON or text. For domains (e.g. <code>.com</code>/<code>.net</code>), the referral to the registrar&#x27;s RDAP server is followed as well (can be disabled in <strong>Settings &gt; RDAP</strong>). Includes profile support. If no RDAP server is known for a domain, it can be opened in <strong>Whois</strong> with a single click. IP addresses and hostnames can be queried from the context menu of <strong>IP Scanner</strong> and <strong>Traceroute</strong>, AS numbers from <strong>Traceroute</strong>; for a hostname (e.g. <code>www.borntoberoot.net</code>), the registered domain is queried (determined with the included <a href="https://publicsuffix.org/" target="_blank" rel="noopener noreferrer" class="">Public Suffix List</a>). <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3607" target="_blank" rel="noopener noreferrer" class="">#3607</a> <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3642" target="_blank" rel="noopener noreferrer" class="">#3642</a></li>
 </ul>
 <p><strong>Traceroute</strong></p>
 <ul>
@@ -70,6 +70,7 @@ Release date: <strong>xx.xx.2026</strong></p>
 <li class="">Added <code>135</code> (RPC) and <code>9100</code> (raw printing) to the default <strong>Ports</strong> list used to detect if a host is reachable. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3564" target="_blank" rel="noopener noreferrer" class="">#3564</a></li>
 <li class="">Reduced the default <strong>Max. concurrent port threads</strong> from <code>5</code> to <code>4</code>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3564" target="_blank" rel="noopener noreferrer" class="">#3564</a></li>
 <li class="">Reduced the default <strong>Max. concurrent host threads</strong> from <code>256</code> to <code>64</code>, a more conservative default that puts less simultaneous load on the scanned network. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3564" target="_blank" rel="noopener noreferrer" class="">#3564</a></li>
+<li class="">Added <strong>RDAP...</strong> to the context menu to query the registration data of the IP address or hostname of a host in the <a class="" href="/NETworkManager/docs/application/rdap"><strong>RDAP</strong></a> tool. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3642" target="_blank" rel="noopener noreferrer" class="">#3642</a></li>
 </ul>
 <p><strong>Port Scanner</strong></p>
 <ul>
@@ -88,6 +89,10 @@ Release date: <strong>xx.xx.2026</strong></p>
 <li class="">Reworked each monitored host&#x27;s card: the collapsed quick info now shows labeled values (<code>Received: X · Lost: Y · Packet loss: Z%</code>) instead of unlabeled numbers, the expanded view shows only the latency chart (with more room, since Hostname/IP address are already visible in the header) and the last status change time moved to a tooltip on the connectivity icon. The <strong>Status change</strong> field was also renamed to <strong>Last status change</strong>. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3572" target="_blank" rel="noopener noreferrer" class="">#3572</a></li>
 <li class="">Host input now accepts newline-separated hosts (one per line, e.g. a column pasted from Excel), converted automatically to the semicolon-separated form. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3568" target="_blank" rel="noopener noreferrer" class="">#3568</a></li>
 <li class="">Host input now supports shorthand IPv4 ranges like <code>192.168.0.1-100</code>, in addition to the existing <code>192.168.0.0-192.168.0.100</code> and <code>192.168.[0-100].1</code> range formats. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3568" target="_blank" rel="noopener noreferrer" class="">#3568</a></li>
+</ul>
+<p><strong>Traceroute</strong></p>
+<ul>
+<li class="">Added <strong>RDAP...</strong> to the context menu to query the registration data of the IP address, hostname or AS number of a hop in the <a class="" href="/NETworkManager/docs/application/rdap"><strong>RDAP</strong></a> tool. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3642" target="_blank" rel="noopener noreferrer" class="">#3642</a></li>
 </ul>
 <p><strong>Hosts File Editor</strong></p>
 <ul>
