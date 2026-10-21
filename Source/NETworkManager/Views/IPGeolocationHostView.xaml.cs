@@ -2,7 +2,7 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class IPGeolocationHostView
+public partial class IPGeolocationHostView : IApplicationRequestHandler
 {
     private readonly IPGeolocationHostViewModel _viewModel = new();
 
@@ -10,6 +10,14 @@ public partial class IPGeolocationHostView
     {
         InitializeComponent();
         DataContext = _viewModel;
+    }
+
+    public void Open(ApplicationRequest request)
+    {
+        if (request.Profile != null)
+            _viewModel.AddTab(request.Profile);
+        else
+            _viewModel.AddTab(request.Target);
     }
 
     public void OnViewHide()

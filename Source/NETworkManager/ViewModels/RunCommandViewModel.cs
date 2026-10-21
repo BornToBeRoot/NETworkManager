@@ -35,6 +35,16 @@ public class RunCommandViewModel : ViewModelBase
     private readonly IReadOnlyList<RunCommandDefinition> _commands;
     private readonly Action<RunCommandViewModel> _runHandler;
 
+    /// <summary>
+    ///     Recent commands with their command (parsed once, the history doesn't change while the dialog is open).
+    /// </summary>
+    private readonly List<(string Text, RunCommandDefinition Command)> _history;
+
+    /// <summary>
+    ///     Profiles per command (loaded once per command while the dialog is open).
+    /// </summary>
+    private readonly Dictionary<RunCommandDefinition, List<ProfileInfo>> _profiles = [];
+
     private RunCommandParseResult _result;
 
     /// <summary>
@@ -46,6 +56,8 @@ public class RunCommandViewModel : ViewModelBase
     {
         _commands = RunCommandManager.GetCommands();
         _runHandler = runHandler;
+
+        _history = [.. SettingsManager.Current.RunCommand_History.Select(x => (x, RunCommandParser.Parse(x, _commands).Command))];
 
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
@@ -241,9 +253,37 @@ public class RunCommandViewModel : ViewModelBase
         foreach (var suggestion in suggestions)
             Suggestions.Add(suggestion);
 
-        // The input as typed is the first suggestion, so Enter runs what was typed. Profiles, history entries and
-        // types are selected with Up/Down.
-        SelectedSuggestion = Suggestions.FirstOrDefault();
+        SelectedSuggestion = GetPreselectedSuggestion();
+    }
+
+    /// <summary>
+    ///     Gets the suggestion that Enter runs without selecting one, so Enter runs what was typed:
+    ///     - After the command: the input as typed (first suggestion).
+    ///     - While typing the command: the best matching command, but not if the input is empty or an unknown command has
+    ///     arguments (e.g. a typo like "pin 10.0.0.1"), which would drop the input.
+    ///     - While typing a profile ("@"): the profile, only if exactly one matches. Otherwise, the typed name is used,
+    ///     which must be unique (e.g. two profiles with the same name in different groups).
+    /// </summary>
+    private RunCommandSuggestion GetPreselectedSuggestion()
+    {
+        return _result.Position switch
+        {
+            RunCommandPosition.Command when string.IsNullOrWhiteSpace(Input) ||
+                                            _result.Command == null && GetInputAfterCommand().Length > 0 => null,
+            RunCommandPosition.Target when _result.ProfileName != null => Suggestions.Count == 1 ? Suggestions[0] : null,
+            _ => Suggestions.FirstOrDefault()
+        };
+    }
+
+    /// <summary>
+    ///     Gets the input after the first word (the command), e.g. "10.0.0.1" for "pin 10.0.0.1".
+    /// </summary>
+    private string GetInputAfterCommand()
+    {
+        var input = Input.TrimStart();
+        var index = input.IndexOfAny([' ', '\t']);
+
+        return index < 0 ? string.Empty : input[index..].Trim();
     }
 
     /// <summary>
@@ -273,6 +313,9 @@ public class RunCommandViewModel : ViewModelBase
         if (string.IsNullOrEmpty(text))
             suggestions.AddRange(GetHistorySuggestions().Take(MaxHistorySuggestions));
 
+        // Completing the command keeps the arguments (e.g. "pin 10.0.0.1" → "ping 10.0.0.1").
+        var arguments = GetInputAfterCommand();
+
         var commands = new List<(int Rank, RunCommandSuggestion Suggestion)>();
 
         foreach (var command in _commands)
@@ -298,7 +341,7 @@ public class RunCommandViewModel : ViewModelBase
                 Title = translatedName,
                 Description = string.Join(", ", names),
                 Info = command.Syntax,
-                CompletionText = (name ?? command.Command) + " "
+                CompletionText = (name ?? command.Command) + " " + arguments
             }));
         }
 
@@ -331,7 +374,13 @@ public class RunCommandViewModel : ViewModelBase
             return null;
         }
 
-        return RunCommandManager.GetProfiles(_result.Command)
+        if (!_profiles.TryGetValue(_result.Command, out var profiles))
+        {
+            profiles = [.. RunCommandManager.GetProfiles(_result.Command)];
+            _profiles[_result.Command] = profiles;
+        }
+
+        return profiles
             .Select(x => (Profile: x, Target: x.GetTarget(application)))
             .Select(x => (x.Profile, x.Target, Rank: GetRank(x.Profile, x.Target, text)))
             .Where(x => x.Rank != null)
@@ -399,8 +448,7 @@ public class RunCommandViewModel : ViewModelBase
     {
         var input = Input.Trim();
 
-        return SettingsManager.Current.RunCommand_History
-            .Select(x => (Text: x, RunCommandParser.Parse(x, _commands).Command))
+        return _history
             .Where(x => _result.Command == null && string.IsNullOrEmpty(input) ||
                         _result.Command != null &&
                         x.Command == _result.Command &&

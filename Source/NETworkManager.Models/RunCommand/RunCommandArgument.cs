@@ -7,5 +7,6 @@ public enum RunCommandArgument
 {
     None,
     Ports,
-    DNSServer
+    DNSServer,
+    Broadcast
 }

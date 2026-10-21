@@ -644,10 +644,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             SelectedApplication = applicationList.FirstOrDefault(x => x.IsDefault) ??
                                   applicationList.FirstOrDefault(x => x.IsVisible);
 
-        // Scroll into view
-        if (SelectedApplication != null)
-            ListViewApplication.ScrollIntoView(SelectedApplication);
-
         // Expand application view
         ApplicationViewIsExpanded = SettingsManager.Current.ExpandApplicationView;
     }
@@ -1027,7 +1023,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         ApplicationSearch = string.Empty;
 
-        // Scroll into view
+        // Scroll into view. The selection doesn't change here, so ListViewApplication_OnSelectionChanged doesn't scroll.
         ListViewApplication.ScrollIntoView(SelectedApplication);
     }
 
@@ -1158,6 +1154,10 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     private void NavigationManager_SettingsRequested(object sender, EventArgs e)
     {
+        // The settings are already open (e.g. run command "settings"), keep the current page.
+        if (SettingsViewIsOpen)
+            return;
+
         OpenSettings();
     }
 

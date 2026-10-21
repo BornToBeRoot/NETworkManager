@@ -181,6 +181,8 @@ public static class RunCommandManager
             ApplicationName.RemoteDesktop => new RemoteDesktopHostnameAndPortValidator(),
             ApplicationName.WebConsole => new HttpAndHttpsUriValidator(),
             ApplicationName.Whois => new DomainValidator(),
+            ApplicationName.IPGeolocation => new IPAddressOrHostnameValidator(),
+            ApplicationName.WakeOnLAN => new MACAddressValidator(),
             _ => null
         };
 
@@ -189,8 +191,20 @@ public static class RunCommandManager
         if (error != null)
             return error;
 
-        if (result.Command.Argument == RunCommandArgument.Ports && result.Argument != null)
-            return Validate(new PortRangeValidator(), result.Argument);
+        if (result.Argument != null)
+        {
+            ValidationRule argumentValidator = result.Command.Argument switch
+            {
+                RunCommandArgument.Ports => new PortRangeValidator(),
+                RunCommandArgument.Broadcast => new IPv4AddressValidator(),
+                _ => null
+            };
+
+            error = Validate(argumentValidator, result.Argument);
+
+            if (error != null)
+                return error;
+        }
 
         // RDAP: the query must match the type (e.g. "1.10" as ASN)
         if (result.Command.Application == ApplicationName.RDAP)
@@ -231,6 +245,7 @@ public static class RunCommandManager
                 QueryType = result.Type != null ? Enum.Parse<QueryType>(result.Type, true) : null
             },
             ApplicationName.PortScanner => new PortScannerRequest { Target = result.Target, Ports = result.Argument },
+            ApplicationName.WakeOnLAN => new WakeOnLANRequest { Target = result.Target, Broadcast = result.Argument },
             ApplicationName.RDAP => new RDAPRequest { Target = result.Target, QueryType = GetRDAPQueryType(result.Type) },
             _ => new ApplicationRequest(result.Command.Application) { Target = result.Target }
         };
@@ -272,6 +287,9 @@ public static class RunCommandManager
             ApplicationName.RDAP => Create(name, [], $"{Required(Strings.Query)} {Optional(Strings.Type)}", true,
                 types: [.. RDAPTypes.Keys]),
             ApplicationName.Whois => Create(name, [], Required(Strings.Domain), true),
+            ApplicationName.IPGeolocation => Create(name, ["geo"], Required(Strings.Host), true),
+            ApplicationName.WakeOnLAN => Create(name, ["wol"],
+                $"{Required(Strings.MACAddress)} {Optional(Strings.Broadcast)}", true, RunCommandArgument.Broadcast),
             _ => Create(name, [], string.Empty, false)
         }).ToList();
 

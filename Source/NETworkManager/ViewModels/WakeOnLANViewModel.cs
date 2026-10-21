@@ -198,12 +198,38 @@ public class WakeOnLANViewModel : ProfileHostViewModelBase
 
     private void WakeUpProfileAction()
     {
-        _ = WakeUp(NETworkManager.Profiles.Application.WakeOnLAN.CreateInfo(SelectedProfile));
+        WakeUp(SelectedProfile);
     }
 
     #endregion
 
     #region Methods
+
+    /// <summary>
+    ///     Sends the magic packet to the computer of the profile.
+    /// </summary>
+    /// <param name="profile">Profile to wake up.</param>
+    public void WakeUp(ProfileInfo profile)
+    {
+        _ = WakeUp(NETworkManager.Profiles.Application.WakeOnLAN.CreateInfo(profile));
+    }
+
+    /// <summary>
+    ///     Sets the MAC address (and broadcast address) and sends the magic packet, if the broadcast address is valid
+    ///     (e.g. from a previous wake up). Otherwise, the values are only filled in.
+    /// </summary>
+    /// <param name="macAddress">MAC address of the computer.</param>
+    /// <param name="broadcast">Broadcast address. If null, the current broadcast address is used.</param>
+    public void WakeUp(string macAddress, string broadcast)
+    {
+        MACAddress = macAddress;
+
+        if (broadcast != null)
+            Broadcast = broadcast;
+
+        if (Broadcast != null && RegexHelper.IPv4AddressRegex().IsMatch(Broadcast))
+            WakeUpAction();
+    }
 
     private async Task WakeUp(WakeOnLANInfo info)
     {

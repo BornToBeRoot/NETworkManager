@@ -52,6 +52,17 @@ public sealed record PortScannerRequest() : ApplicationRequest(ApplicationName.P
 }
 
 /// <summary>
+///     Request to open Wake on LAN.
+/// </summary>
+public sealed record WakeOnLANRequest() : ApplicationRequest(ApplicationName.WakeOnLAN)
+{
+    /// <summary>
+    ///     Broadcast address. If null, the broadcast address of the application is used.
+    /// </summary>
+    public string Broadcast { get; init; }
+}
+
+/// <summary>
 ///     Request to open RDAP.
 /// </summary>
 public sealed record RDAPRequest() : ApplicationRequest(ApplicationName.RDAP)

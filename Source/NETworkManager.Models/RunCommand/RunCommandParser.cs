@@ -11,10 +11,10 @@ namespace NETworkManager.Models.RunCommand;
 public static partial class RunCommandParser
 {
     /// <summary>
-    ///     A list separator with whitespace around it ("10.0.0.1; 10.0.0.2").
+    ///     A list separator with whitespace around it ("10.0.0.1; 10.0.0.2"), or a value in quotes, which is kept as it is.
     /// </summary>
-    [GeneratedRegex(@"\s*;\s*")]
-    private static partial Regex ListSeparatorRegex();
+    [GeneratedRegex("\"[^\"]*(?:\"|$)|\\s*;\\s*")]
+    private static partial Regex ListSeparatorOrQuoteRegex();
 
     /// <summary>
     ///     A word: a value in quotes (can contain spaces, the closing quote can be missing while typing) or a value
@@ -40,12 +40,16 @@ public static partial class RunCommandParser
     {
         input = (input ?? string.Empty).TrimStart();
 
+        // Whitespace around ";" is removed (outside of quotes), so a list that is being typed ("10.0.0.1; ") is still
+        // the same word.
+        var normalized = ListSeparatorOrQuoteRegex().Replace(input, x => x.Value.StartsWith('"') ? x.Value : ";");
+
         // Words as typed (with quotes, to rebuild the input) and their values (without quotes)
-        var tokens = WordRegex().Matches(ListSeparatorRegex().Replace(input, ";")).Select(x => x.Value).ToArray();
+        var tokens = WordRegex().Matches(normalized).Select(x => x.Value).ToArray();
         var words = tokens.Select(Unquote).ToArray();
 
         // Whitespace in an open quote (e.g. "Google ) is part of the word that is being typed.
-        var endsWithWhitespace = input.Length > 0 && char.IsWhiteSpace(input[^1]) &&
+        var endsWithWhitespace = normalized.Length > 0 && char.IsWhiteSpace(normalized[^1]) &&
                                  !(tokens.Length > 0 && IsOpenQuote(tokens[^1]));
 
         if (words.Length == 0)
@@ -81,7 +85,8 @@ public static partial class RunCommandParser
         // Profile: the rest of the input after "@" is the name.
         if (words[1].StartsWith('@'))
         {
-            var profileName = Unquote(input[(input.IndexOf('@') + 1)..].Trim());
+            // Quotes around the name or the whole target (e.g. @"My Server" or "@My Server") are removed.
+            var profileName = input[(input.IndexOf('@') + 1)..].Trim().Trim('"').Trim();
 
             var error = !command.SupportsProfile
                 ? RunCommandParseError.NoProfiles

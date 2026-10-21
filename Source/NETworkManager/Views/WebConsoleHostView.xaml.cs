@@ -19,6 +19,10 @@ public partial class WebConsoleHostView : IApplicationRequestHandler
         // MahApps will throw an exception...
         await this.WaitForLoadedAsync();
 
+        // WebView2 runtime is required for the web console.
+        if (!_viewModel.IsRuntimeAvailable)
+            return;
+
         if (request.Profile != null)
             _viewModel.ConnectProfile(request.Profile);
         else

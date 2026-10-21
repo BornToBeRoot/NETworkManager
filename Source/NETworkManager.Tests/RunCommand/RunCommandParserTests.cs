@@ -158,12 +158,33 @@ public class RunCommandParserTests
         Assert.Equal("dns borntoberoot.net \"Google Public DNS\" ", result.InputBeforeCurrentWord);
     }
 
-    [Fact]
-    public void QuotedProfileName()
+    [Theory]
+    [InlineData("rdp @\"Web Server 01\"")]
+    [InlineData("rdp \"@Web Server 01\"")]
+    public void QuotedProfileName(string input)
     {
-        var result = Parse("rdp @\"Web Server 01\"");
+        var result = Parse(input);
 
         Assert.Equal("Web Server 01", result.ProfileName);
+    }
+
+    [Fact]
+    public void ListThatIsBeingTyped()
+    {
+        // "; " is the separator of a list that is still being typed, not the end of the target.
+        var result = Parse("ping 10.0.0.1; ");
+
+        Assert.Equal(RunCommandPosition.Target, result.Position);
+        Assert.Equal("10.0.0.1;", result.Target);
+        Assert.Equal("ping ", result.InputBeforeCurrentWord);
+    }
+
+    [Fact]
+    public void SemicolonInQuotesIsKept()
+    {
+        var result = Parse("dns borntoberoot.net \"DNS ; Server\"");
+
+        Assert.Equal("DNS ; Server", result.Argument);
     }
 
     [Fact]
