@@ -24,6 +24,12 @@ Without administrator privileges, the view is read-only. Use the **Restart as ad
 
 The **Program** column shows the file name of the program the rule applies to (e.g. `putty.exe`). The full path (e.g. `%ProgramFiles%\PuTTY\putty.exe`) is shown as tooltip and in the row details.
 
+Click the chevron in front of a rule to show its details: program (full path), interface type, network profiles, description, source (`Local`, `Group Policy`, `Mobile Device Management (MDM)` or `Windows (runtime)`) and, if set, the [unsupported properties](#rules-not-managed-by-networkmanager) the rule uses (e.g. ICMP types or a service).
+
+The selected rule stays selected (and is scrolled into view) when the list is reloaded, e.g. after it was enabled, disabled or edited. If several rules were selected, only one of them stays selected.
+
+The search above the list finds rules by name, program, direction, action, protocol, local / remote addresses, local / remote ports and description. The list is filtered after a short delay while typing.
+
 ### Toolbar
 
 | Button | Description |
@@ -35,7 +41,7 @@ The **Program** column shows the file name of the program the rule applies to (e
 
 By default, only rules managed by NETworkManager (display name prefixed with `NETworkManager_`) are shown. If [**Show all rules**](#show-all-rules) is enabled in the settings, all active Windows Firewall rules are shown (e.g. Windows built-in rules, rules created by other applications or from Group Policy).
 
-When all rules are shown, an additional column shows where a rule comes from. Click the column header to sort by it.
+When all rules are shown, an additional column shows where a rule comes from. Click the column header to sort by it (managed by NETworkManager, not managed by NETworkManager, then managed by a policy).
 
 | Icon | Description |
 |------|-------------|
@@ -71,7 +77,7 @@ Multiple rules can be selected (`Ctrl` / `Shift` + click) to enable, disable or 
 | **Copy as** | Opens the dialog pre-filled with the selected rule to create a new rule based on it (single rule only, not for rules with [unsupported values](#rules-not-managed-by-networkmanager)) |
 | **Delete** | Removes the selected rule or rules (after confirmation) |
 | **Copy** | Copies the rule information to the clipboard (single rule only) |
-| **Export** | Exports the selected rules (or all rules) to a file |
+| **Export** | Exports the selected rules (or all rules) to a file (CSV, XML or JSON, incl. whether the rule is managed by NETworkManager and its source) |
 
 ### Keyboard shortcuts
 
@@ -84,6 +90,8 @@ Multiple rules can be selected (`Ctrl` / `Shift` + click) to enable, disable or 
 :::note
 
 Before enabling, disabling or deleting, it is checked that all selected rules still exist. If one of them was removed in the meantime (e.g. in the Windows Firewall management console), none of the selected rules is changed and an error is shown. If another error occurs while the rules are changed (e.g. access denied), some of the selected rules may already be changed. The rule list is reloaded after every action (also after an error), so it always shows the current state.
+
+If the rules can't be loaded (e.g. because the Windows Firewall service is not running), an error is shown instead of an empty list. If only some rules or properties can't be loaded, the loaded rules are shown together with a message that the list may be incomplete (details are written to the log file).
 
 :::
 
@@ -241,7 +249,7 @@ One or more local addresses the rule applies to. Multiple entries are separated 
 - `192.168.1.0/24`
 - `10.0.0.0/255.0.0.0`
 - `192.168.1.10-192.168.1.50`
-- `LocalSubnet; 192.168.10.0/24`
+- `192.168.1.10; 10.0.0.0/8`
 
 :::note
 
@@ -253,9 +261,9 @@ The following formats are accepted:
 - IPv4 / IPv6 subnet by prefix length (e.g. `1.2.3.0/24`, `fe80::/48`)
 - IPv4 subnet by subnet mask (e.g. `10.0.0.0/255.0.0.0`)
 - IPv4 / IPv6 range (e.g. `1.2.3.4-1.2.3.10`, `fe80::1-fe80::9`)
-- Keyword: `Any`, `LocalSubnet`, `DNS`, `DHCP`, `WINS`, `DefaultGateway`, `Internet`, `Intranet`, `IntranetRemoteAccess`, `PlayToDevice`, `CaptivePortal`. Keywords can be restricted to IPv4 or IPv6 by appending `4` or `6` (e.g. `LocalSubnet4`, `Intranet6`).
+- Keyword: `Any`
 
-According to Microsoft, the only keyword officially supported by `LocalAddress` is `Any`. The other keywords are intended for use with [Remote addresses](#remote-addresses).
+Other keywords (e.g. `LocalSubnet` or `DNS`) are not accepted by Windows for local addresses, they can only be used for [Remote addresses](#remote-addresses).
 
 :::
 
@@ -279,7 +287,13 @@ One or more remote addresses the rule applies to. Multiple entries are separated
 
 An empty value means **Any** address.
 
-The same formats as [Local addresses](#local-addresses) are accepted (single address, subnet, range, or keyword).
+The following formats are accepted:
+
+- Single IPv4 / IPv6 address (e.g. `1.2.3.4`, `fe80::1`)
+- IPv4 / IPv6 subnet by prefix length (e.g. `1.2.3.0/24`, `fe80::/48`)
+- IPv4 subnet by subnet mask (e.g. `10.0.0.0/255.0.0.0`)
+- IPv4 / IPv6 range (e.g. `1.2.3.4-1.2.3.10`, `fe80::1-fe80::9`)
+- Keyword: `Any`, `LocalSubnet`, `DNS`, `DHCP`, `WINS`, `DefaultGateway`, `Internet`, `Intranet`, `IntranetRemoteAccess`, `PlayToDevice`, `CaptivePortal`. Keywords except `Any` can be restricted to IPv4 or IPv6 by appending `4` or `6` (e.g. `LocalSubnet4`, `Intranet6`).
 
 :::
 
@@ -295,7 +309,7 @@ Full path to an executable the rule applies to. When set, the rule only matches 
 
 :::note
 
-If a path is provided, the file must exist on the local computer. Environment variables (e.g. `%SystemRoot%\System32\svchost.exe`) are supported.
+If a path is provided, the file must exist on the local computer. Environment variables (e.g. `%SystemRoot%\System32\svchost.exe`) are supported. Use the button in the text box to select the program.
 
 An empty value means **Any** program.
 

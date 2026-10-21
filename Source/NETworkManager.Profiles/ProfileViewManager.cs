@@ -50,10 +50,6 @@ public static class ProfileViewManager
             ProfileGroup.Application),
         new(ProfileName.SNMP, ApplicationManager.GetIcon(ApplicationName.SNMP),
             ProfileGroup.Application),
-        /*
-        new(ProfileName.Firewall, ApplicationManager.GetIcon(ApplicationName.Firewall),
-            ProfileGroup.Application),
-        */
         new(ProfileName.WakeOnLAN, ApplicationManager.GetIcon(ApplicationName.WakeOnLAN),
             ProfileGroup.Application),
         new(ProfileName.RDAP, ApplicationManager.GetIcon(ApplicationName.RDAP),

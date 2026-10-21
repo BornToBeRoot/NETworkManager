@@ -4211,6 +4211,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a valid IP address, subnet (e.g. 10.0.0.0/8), range (e.g. 10.0.0.1-10.0.0.10), or the keyword Any. Other keywords (e.g. LocalSubnet) are only valid for remote addresses..
+        /// </summary>
+        public static string EnterValidFirewallLocalAddress {
+            get {
+                return ResourceManager.GetString("EnterValidFirewallLocalAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a valid folder path!.
         /// </summary>
         public static string EnterValidFolderPath {
@@ -5120,6 +5129,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reloaded at {0}, but not all firewall rules or their properties could be loaded, so the list may be incomplete (see log file for details). {1}.
+        /// </summary>
+        public static string FirewallRulesLoadedWithErrorsMessage {
+            get {
+                return ResourceManager.GetString("FirewallRulesLoadedWithErrorsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to At least one of the selected rules is managed by a policy (e.g. Group Policy or MDM) or created by Windows at runtime and can't be changed locally..
         /// </summary>
         public static string FirewallRulesManagedByPolicyMessage {
@@ -5145,6 +5163,42 @@ namespace NETworkManager.Localization.Resources {
         public static string FirewallRulesNotManagedWarningMessage {
             get {
                 return ResourceManager.GetString("FirewallRulesNotManagedWarningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group Policy.
+        /// </summary>
+        public static string FirewallRuleSource_GroupPolicy {
+            get {
+                return ResourceManager.GetString("FirewallRuleSource_GroupPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Local.
+        /// </summary>
+        public static string FirewallRuleSource_Local {
+            get {
+                return ResourceManager.GetString("FirewallRuleSource_Local", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mobile Device Management (MDM).
+        /// </summary>
+        public static string FirewallRuleSource_MDM {
+            get {
+                return ResourceManager.GetString("FirewallRuleSource_MDM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows (runtime).
+        /// </summary>
+        public static string FirewallRuleSource_Other {
+            get {
+                return ResourceManager.GetString("FirewallRuleSource_Other", resourceCulture);
             }
         }
         
@@ -13142,6 +13196,15 @@ namespace NETworkManager.Localization.Resources {
         public static string UnlockTheProfileFileMessage {
             get {
                 return ResourceManager.GetString("UnlockTheProfileFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unsupported properties.
+        /// </summary>
+        public static string UnsupportedProperties {
+            get {
+                return ResourceManager.GetString("UnsupportedProperties", resourceCulture);
             }
         }
         

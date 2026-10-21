@@ -25,8 +25,13 @@
         <converters:FirewallRuleActionToStringConverter x:Key="FirewallRuleActionToStringConverter" />
         <converters:FirewallInterfaceTypeToStringConverter x:Key="FirewallInterfaceTypeToStringConverter" />
         <converters:FirewallNetworkProfilesToStringConverter x:Key="FirewallNetworkProfilesToStringConverter" />
+        <converters:FirewallRuleSourceToStringConverter x:Key="FirewallRuleSourceToStringConverter" />
+        <converters:FirewallRuleHiddenPropertiesToStringConverter x:Key="FirewallRuleHiddenPropertiesToStringConverter" />
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="F5" Command="{Binding Path=RefreshCommand}" />
+    </UserControl.InputBindings>
         <TabControl Style="{StaticResource DefaultTabControl}">
             <TabItem Header="{x:Static localization:Strings.Firewall}">
                 <Grid Margin="10">
@@ -385,7 +390,7 @@
                             </DataGridTemplateColumn>
 
                             <!-- Managed by NETworkManager / not managed / managed by policy (only visible if all rules are shown) -->
-                            <DataGridTemplateColumn Header="" SortMemberPath="IsManaged"
+                            <DataGridTemplateColumn Header="" SortMemberPath="SourceSortOrder"
                                                     Width="24" CanUserResize="False"
                                                     Visibility="{Binding Data.ShowAllRules, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                 <DataGridTemplateColumn.HeaderStyle>
@@ -641,6 +646,8 @@
                                             <RowDefinition Height="Auto" />
                                             <RowDefinition Height="5" />
                                             <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="5" />
+                                            <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
 
                                         <!-- Row 0: Program | Interface type -->
@@ -687,6 +694,21 @@
                                                    Style="{StaticResource InfoTextBlock}" />
                                         <TextBox Grid.Row="2" Grid.Column="6"
                                                  Text="{Binding (firewall:FirewallRule.Description), Mode=OneWay}" />
+
+                                        <!-- Row 4: Source | Unsupported properties (only if the rule has properties that are not shown, e.g. ICMP types) -->
+                                        <TextBlock Grid.Row="4" Grid.Column="0"
+                                                   Text="{x:Static localization:Strings.Source}"
+                                                   Style="{StaticResource InfoTextBlock}" />
+                                        <TextBox Grid.Row="4" Grid.Column="2"
+                                                 Text="{Binding (firewall:FirewallRule.Source), Mode=OneWay, Converter={StaticResource FirewallRuleSourceToStringConverter}}" />
+
+                                        <TextBlock Grid.Row="4" Grid.Column="4"
+                                                   Text="{x:Static localization:Strings.UnsupportedProperties}"
+                                                   Style="{StaticResource InfoTextBlock}"
+                                                   Visibility="{Binding (firewall:FirewallRule.HasHiddenProperties), Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                        <TextBox Grid.Row="4" Grid.Column="6"
+                                                 Text="{Binding (firewall:FirewallRule.HiddenProperties), Mode=OneWay, Converter={StaticResource FirewallRuleHiddenPropertiesToStringConverter}}"
+                                                 Visibility="{Binding (firewall:FirewallRule.HasHiddenProperties), Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                                     </Grid>
                                 </Border>
                             </DataTemplate>

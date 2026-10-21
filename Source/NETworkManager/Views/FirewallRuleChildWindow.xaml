@@ -173,11 +173,11 @@
                            Text="{x:Static localization:Strings.LocalAddresses}" />
                 <TextBox x:Name="TextBoxLocalAddresses"
                          Grid.Column="2" Grid.Row="16"
-                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleFirewallAddresses}">
+                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleFirewallLocalAddresses}">
                     <TextBox.Text>
                         <Binding Path="LocalAddresses" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <validators:EmptyOrFirewallAddressValidator ValidatesOnTargetUpdated="True" />
+                                <validators:EmptyOrFirewallAddressValidator ValidatesOnTargetUpdated="True" IsLocalAddress="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
@@ -203,7 +203,9 @@
                            Text="{x:Static localization:Strings.Program}" />
                 <TextBox x:Name="TextBoxProgram"
                          Grid.Column="2" Grid.Row="20"
-                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePowerShellPath}">
+                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleFirewallProgram}"
+                         Style="{StaticResource BrowseFolderTextBox}"
+                         mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}">
                     <TextBox.Text>
                         <Binding Path="Program" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>

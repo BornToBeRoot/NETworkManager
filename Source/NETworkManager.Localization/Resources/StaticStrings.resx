@@ -351,6 +351,12 @@
   <data name="ExampleFirewallAddresses" xml:space="preserve">
     <value>10.0.0.0/8; LocalSubnet</value>
   </data>
+  <data name="ExampleFirewallLocalAddresses" xml:space="preserve">
+    <value>192.168.1.10; 10.0.0.0/8</value>
+  </data>
+  <data name="ExampleFirewallProgram" xml:space="preserve">
+    <value>C:\Program Files\GameServer\server.exe</value>
+  </data>
   <data name="ActiveDirectorySearchBase" xml:space="preserve">
     <value>OU=Computers,DC=borntoberoot,DC=net</value>
   </data>

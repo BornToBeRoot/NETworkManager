@@ -160,6 +160,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 192.168.1.10; 10.0.0.0/8.
+        /// </summary>
+        public static string ExampleFirewallLocalAddresses {
+            get {
+                return ResourceManager.GetString("ExampleFirewallLocalAddresses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C:\Program Files\GameServer\server.exe.
+        /// </summary>
+        public static string ExampleFirewallProgram {
+            get {
+                return ResourceManager.GetString("ExampleFirewallProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MyApp - HTTP.
         /// </summary>
         public static string ExampleFirewallRuleName {

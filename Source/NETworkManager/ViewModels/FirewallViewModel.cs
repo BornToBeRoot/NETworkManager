@@ -2,6 +2,8 @@ using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
+using NETworkManager.Converters;
+using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Export;
@@ -19,6 +21,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
@@ -102,7 +105,14 @@ public class FirewallViewModel : ViewModelBase
     private bool _hasRulesManagedByPolicy;
 
     /// <summary>
+    /// Delays filtering the rules while the user is typing (see <see cref="RulesSearch"/>),
+    /// so the view (can be 1000+ rules if all rules are shown) is not filtered on every key press.
+    /// </summary>
+    private readonly DispatcherTimer _searchDispatcherTimer = new();
+
+    /// <summary>
     /// Gets or sets the search text for filtering rules.
+    /// The rules are filtered after a short delay (see <see cref="_searchDispatcherTimer"/>).
     /// </summary>
     public string RulesSearch
     {
@@ -113,7 +123,10 @@ public class FirewallViewModel : ViewModelBase
                 return;
 
             field = value;
-            ResultsView.Refresh();
+
+            _searchDispatcherTimer.Stop();
+            _searchDispatcherTimer.Start();
+
             OnPropertyChanged();
         }
     }
@@ -240,11 +253,27 @@ public class FirewallViewModel : ViewModelBase
             if (o is not FirewallRule rule)
                 return false;
 
-            return rule.Name.IndexOf(RulesSearch, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   rule.Protocol.ToString().IndexOf(RulesSearch, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   rule.Action.ToString().IndexOf(RulesSearch, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   rule.Direction.ToString().IndexOf(RulesSearch, StringComparison.OrdinalIgnoreCase) > -1;
+            // Display values can be null (e.g. no ports / addresses / program)
+            bool Matches(string value) => value?.Contains(RulesSearch, StringComparison.OrdinalIgnoreCase) == true;
+
+            // Protocol, action and direction are shown translated, so the translated text is searched as well
+            return Matches(rule.Name) ||
+                   Matches(rule.ProgramDisplay) ||
+                   Matches(rule.Protocol.ToString()) ||
+                   Matches(ResourceTranslator.Translate(ResourceIdentifier.FirewallProtocol, rule.Protocol)) ||
+                   Matches(rule.Action.ToString()) ||
+                   Matches(ResourceTranslator.Translate(ResourceIdentifier.FirewallRuleAction, rule.Action)) ||
+                   Matches(rule.Direction.ToString()) ||
+                   Matches(ResourceTranslator.Translate(ResourceIdentifier.FirewallRuleDirection, rule.Direction)) ||
+                   Matches(rule.LocalAddressesDisplay) ||
+                   Matches(rule.LocalPortsDisplay) ||
+                   Matches(rule.RemoteAddressesDisplay) ||
+                   Matches(rule.RemotePortsDisplay) ||
+                   Matches(rule.Description);
         };
+
+        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
+        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
 
         // Load firewall rules
         _ = Refresh(true);
@@ -546,27 +575,8 @@ public class FirewallViewModel : ViewModelBase
     /// Converts the hidden properties of a rule to a localized, bulleted list (e.g. "- ICMP types", "- Service").
     /// </summary>
     /// <param name="properties">The hidden properties.</param>
-    private static string GetHiddenPropertiesString(FirewallRuleHiddenProperties properties)
-    {
-        var names = new List<string>();
-
-        if (properties.HasFlag(FirewallRuleHiddenProperties.IcmpTypes))
-            names.Add(Strings.IcmpTypes);
-
-        if (properties.HasFlag(FirewallRuleHiddenProperties.Service))
-            names.Add(Strings.Service);
-
-        if (properties.HasFlag(FirewallRuleHiddenProperties.Package))
-            names.Add(Strings.AppPackage);
-
-        if (properties.HasFlag(FirewallRuleHiddenProperties.InterfaceAlias))
-            names.Add(Strings.NetworkAdapters);
-
-        if (properties.HasFlag(FirewallRuleHiddenProperties.Security))
-            names.Add(Strings.UsersAndAuthentication);
-
-        return DialogHelper.FormatItemList(names);
-    }
+    private static string GetHiddenPropertiesString(FirewallRuleHiddenProperties properties) =>
+        DialogHelper.FormatItemList(FirewallRuleHiddenPropertiesToStringConverter.GetNames(properties));
 
     /// <summary>
     /// Builds a warning which lists the given rules that are not managed by NETworkManager
@@ -748,7 +758,10 @@ public class FirewallViewModel : ViewModelBase
     /// When <see langword="true"/> the initial UI delay is skipped so the first load
     /// on startup feels immediate.
     /// </param>
-    /// <returns><see langword="true"/> if the rules were loaded successfully; otherwise, <see langword="false"/>.</returns>
+    /// <returns>
+    /// <see langword="true"/> if the rules were loaded successfully; otherwise (also if the rules were only loaded
+    /// partially), <see langword="false"/>.
+    /// </returns>
     private async Task<bool> Refresh(bool init = false)
     {
         if (IsRefreshing)
@@ -770,20 +783,47 @@ public class FirewallViewModel : ViewModelBase
             // Reset right before the setting is read, so only a change during the query triggers another refresh (see finally)
             _refreshPending = false;
 
-            var rules = await Firewall.GetRulesAsync(onlyManagedRules: !ShowAllRules);
+            var (rules, errors) = await Firewall.GetRulesAsync(onlyManagedRules: !ShowAllRules);
 
             Application.Current.Dispatcher.Invoke(() =>
             {
+                // Remember the selected rule, because replacing the rules clears the selection. The ID is not unique
+                // if all rules are shown (e.g. a local and a Group Policy rule with the same ID), so the source is compared too.
+                var selectedRule = SelectedResult;
+
                 // Replace all rules with a single notification, so the view is filtered / sorted only once
                 // (can be 1000+ rules if all rules are shown). ResultsView.DeferRefresh() can't be used, because
                 // the DataGrid accesses the view (selection / current item) while the items are changed.
                 Results.ReplaceAll(rules);
 
                 _hasRulesManagedByPolicy = rules.Any(rule => rule.IsManagedByPolicy);
+
+                // Select the rule again (e.g. after it was enabled or edited), so the user doesn't have to search for it.
+                // If several rules were selected, only this rule is selected again. The view scrolls it into view.
+                // Not if the rule is hidden by the search now (e.g. renamed), otherwise actions (e.g. Del) would
+                // apply to a rule that is not visible.
+                if (selectedRule != null)
+                {
+                    var reloadedRule = rules.FirstOrDefault(rule =>
+                        rule.Id == selectedRule.Id && rule.Source == selectedRule.Source);
+
+                    if (reloadedRule != null && ResultsView.Contains(reloadedRule))
+                        SelectedResult = reloadedRule;
+                }
             });
 
-            StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
             IsStatusMessageDisplayed = true;
+
+            // Only parts of the query failed (e.g. a single rule or a filter), show that the list may be incomplete
+            if (errors.Count > 0)
+            {
+                StatusMessage = string.Format(Strings.FirewallRulesLoadedWithErrorsMessage,
+                    DateTime.Now.ToShortTimeString(), errors[0]);
+
+                return false;
+            }
+
+            StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
 
             return true;
         }
@@ -870,6 +910,16 @@ public class FirewallViewModel : ViewModelBase
             return [];
 
         return [.. value.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)];
+    }
+
+    /// <summary>
+    /// Filters the rules once the user stopped typing (see <see cref="RulesSearch"/>).
+    /// </summary>
+    private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
+    {
+        _searchDispatcherTimer.Stop();
+
+        ResultsView.Refresh();
     }
 
     /// <summary>
