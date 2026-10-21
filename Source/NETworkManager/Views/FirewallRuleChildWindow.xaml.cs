@@ -1,7 +1,6 @@
 using System;
 using System.Windows;
 using System.Windows.Threading;
-using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
@@ -18,22 +17,5 @@ public partial class FirewallRuleChildWindow
         {
             TextBoxName.Focus();
         }));
-    }
-
-    private void TextBoxProgram_Drop(object sender, DragEventArgs e)
-    {
-        if (!e.Data.GetDataPresent(DataFormats.FileDrop))
-            return;
-
-        var files = (string[])e.Data.GetData(DataFormats.FileDrop);
-
-        if (files != null && DataContext is FirewallRuleViewModel viewModel)
-            viewModel.Program = files[0];
-    }
-
-    private void TextBoxProgram_PreviewDragOver(object sender, DragEventArgs e)
-    {
-        e.Effects = DragDropEffects.Copy;
-        e.Handled = true;
     }
 }

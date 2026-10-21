@@ -205,8 +205,7 @@
                          Grid.Column="2" Grid.Row="20"
                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleFirewallProgram}"
                          Style="{StaticResource BrowseFolderTextBox}"
-                         mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}" AllowDrop="True"
-                         Drop="TextBoxProgram_Drop" PreviewDragOver="TextBoxProgram_PreviewDragOver">
+                         mah:TextBoxHelper.ButtonCommand="{Binding BrowseFileCommand}">
                     <TextBox.Text>
                         <Binding Path="Program" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>

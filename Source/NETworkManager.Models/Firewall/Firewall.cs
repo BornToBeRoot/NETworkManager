@@ -225,9 +225,11 @@ $list";
 
                 var results = ps.Invoke();
 
-                // A query without a match (e.g. no rules managed by NETworkManager yet) is not an error
+                // No rule found (e.g. no rules managed by NETworkManager yet) is not an error. Only for the rule query:
+                // a filter that is not found (e.g. the rule was deleted while loading) would show the rule as unrestricted.
                 var errors = ps.Streams.Error
-                    .Where(error => error.FullyQualifiedErrorId?.StartsWith("CmdletizationQuery_NotFound", StringComparison.Ordinal) != true)
+                    .Where(error => !(error.FullyQualifiedErrorId?.StartsWith("CmdletizationQuery_NotFound", StringComparison.Ordinal) == true &&
+                                      error.InvocationInfo?.MyCommand?.Name == "Get-NetFirewallRule"))
                     .Select(error => error.ToString())
                     .ToList();
 

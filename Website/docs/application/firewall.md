@@ -309,7 +309,7 @@ Full path to an executable the rule applies to. When set, the rule only matches 
 
 :::note
 
-If a path is provided, the file must exist on the local computer. Environment variables (e.g. `%SystemRoot%\System32\svchost.exe`) are supported. Use the button in the text box to select the program, or drag and drop it onto the text box.
+If a path is provided, the file must exist on the local computer. Environment variables (e.g. `%SystemRoot%\System32\svchost.exe`) are supported. Use the button in the text box to select the program.
 
 An empty value means **Any** program.
 
