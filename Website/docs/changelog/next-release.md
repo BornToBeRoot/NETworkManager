@@ -117,7 +117,7 @@ Release date: **xx.xx.2026**
 
 **Neighbor Table**
 
-- Fixed adding and deleting entries not working until the application was restarted if loading the PowerShell module `NetTCPIP` failed once.
+- Fixed adding and deleting entries not working until the application was restarted if loading the PowerShell module `NetTCPIP` failed once. [cc05937](https://github.com/BornToBeRoot/NETworkManager/commit/cc05937a7de2bf1247621845f47077f3796b9bb2)
 
 **Dashboard**
 
