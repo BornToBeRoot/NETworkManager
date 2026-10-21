@@ -1,3 +1,4 @@
+using DnsClient;
 using Dragablz;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -8,6 +9,9 @@ using NETworkManager.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
@@ -89,10 +93,6 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.DNSLookup;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.DNSLookup_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.DNSLookup_Host;
-
     #endregion
 
     #region ICommand & Actions
@@ -128,7 +128,7 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
     /// </summary>
     private void LookupProfileAction()
     {
-        AddTab(SelectedProfile.DNSLookup_Host);
+        AddTab(SelectedProfile);
     }
 
     /// <summary>
@@ -152,14 +152,42 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
     /// Adds a new tab for the specified host.
     /// </summary>
     /// <param name="host">The host to lookup.</param>
-    public void AddTab(string host = null)
+    /// <param name="dnsServer">DNS server(s) to use. If null, the selected DNS server is used.</param>
+    /// <param name="queryType">
+    ///     Query type. If null, PTR is used for IP addresses (e.g. from the IP Scanner) and the selected query type for
+    ///     hosts.
+    /// </param>
+    public void AddTab(string host = null, string dnsServer = null, QueryType? queryType = null)
     {
+        if (queryType == null && IsIPAddresses(host))
+            queryType = QueryType.PTR;
+
         var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(host ?? Strings.NewTab, new DNSLookupView(tabId, host),
+        TabItems.Add(new DragablzTabItem(host ?? Strings.NewTab, new DNSLookupView(tabId, host, dnsServer, queryType),
             tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
+    }
+
+    /// <summary>
+    /// Checks if the host(s) are only IP addresses (shortened IPv4 forms like "10" are host names).
+    /// </summary>
+    private static bool IsIPAddresses(string hosts)
+    {
+        return !string.IsNullOrWhiteSpace(hosts) && hosts.Split(';').Select(x => x.Trim()).All(x =>
+            RegexHelper.IPv4AddressRegex().IsMatch(x) ||
+            x.Contains(':') && IPAddress.TryParse(x, out var ipAddress) &&
+            ipAddress.AddressFamily == AddressFamily.InterNetworkV6);
+    }
+
+    /// <summary>
+    /// Adds a new tab for the host of the specified profile.
+    /// </summary>
+    /// <param name="profile">The profile to lookup.</param>
+    public void AddTab(ProfileInfo profile)
+    {
+        AddTab(profile.DNSLookup_Host);
     }
 
     #endregion

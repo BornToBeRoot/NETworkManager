@@ -1,9 +1,8 @@
-using NETworkManager.Profiles;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class TracerouteHostView
+public partial class TracerouteHostView : IApplicationRequestHandler
 {
     private readonly TracerouteHostViewModel _viewModel = new();
 
@@ -13,14 +12,12 @@ public partial class TracerouteHostView
         DataContext = _viewModel;
     }
 
-    public void AddTab(string host)
+    public void Open(ApplicationRequest request)
     {
-        _viewModel.AddTab(host);
-    }
-
-    public void AddTab(ProfileInfo profile)
-    {
-        _viewModel.AddTab(profile);
+        if (request.Profile != null)
+            _viewModel.AddTab(request.Profile);
+        else
+            _viewModel.AddTab(request.Target);
     }
 
     public void OnViewHide()

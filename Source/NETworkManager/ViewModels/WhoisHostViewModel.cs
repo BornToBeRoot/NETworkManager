@@ -70,10 +70,6 @@ public class WhoisHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.Whois;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.Whois_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.Whois_Domain;
-
     #endregion
 
     #region ICommand & Actions
@@ -94,7 +90,7 @@ public class WhoisHostViewModel : ProfileHostViewModelBase
 
     private void QueryProfileAction()
     {
-        AddTab(SelectedProfile.Whois_Domain);
+        AddTab(SelectedProfile);
     }
 
     public ItemActionCallback CloseItemCommand => CloseItemAction;
@@ -116,6 +112,11 @@ public class WhoisHostViewModel : ProfileHostViewModelBase
             tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
+    }
+
+    public void AddTab(ProfileInfo profile)
+    {
+        AddTab(profile.Whois_Domain);
     }
 
     #endregion

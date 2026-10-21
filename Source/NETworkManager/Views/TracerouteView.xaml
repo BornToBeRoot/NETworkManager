@@ -285,7 +285,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
                         <MenuItem Header="{x:Static Member=localization:Strings.ASN}"
-                                  Command="{Binding Path=PerformRDAPQueryCommand}"
+                                  Command="{Binding Path=PerformRDAPQueryASNCommand}"
                                   CommandParameter="{Binding SelectedResult.IPGeolocationResult.Info.As}"
                                   IsEnabled="{Binding SelectedResult.IPGeolocationResult.Info.As, Converter={StaticResource ResourceKey=StringIsNotNullOrEmptyToBooleanConverter}}">
                             <MenuItem.Icon>

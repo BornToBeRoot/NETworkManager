@@ -2,7 +2,7 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class SNMPHostView
+public partial class SNMPHostView : IApplicationRequestHandler
 {
     private readonly SNMPHostViewModel _viewModel = new();
 
@@ -12,9 +12,12 @@ public partial class SNMPHostView
         DataContext = _viewModel;
     }
 
-    public void AddTab(string host)
+    public void Open(ApplicationRequest request)
     {
-        _viewModel.AddTab(host);
+        if (request.Profile != null)
+            _viewModel.AddTab(request.Profile);
+        else
+            _viewModel.AddTab(request.Target);
     }
 
     public void OnViewHide()

@@ -88,10 +88,6 @@ public class IPGeolocationHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.IPGeolocation;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.IPGeolocation_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.IPGeolocation_Host;
-
     #endregion
 
     #region ICommand & Actions
@@ -127,7 +123,7 @@ public class IPGeolocationHostViewModel : ProfileHostViewModelBase
     /// </summary>
     private void QueryProfileAction()
     {
-        AddTab(SelectedProfile.IPGeolocation_Host);
+        AddTab(SelectedProfile);
     }
 
     /// <summary>
@@ -151,7 +147,7 @@ public class IPGeolocationHostViewModel : ProfileHostViewModelBase
     /// Adds a new tab for the specified domain.
     /// </summary>
     /// <param name="domain">The domain to query.</param>
-    private void AddTab(string domain = null)
+    public void AddTab(string domain = null)
     {
         var tabId = Guid.NewGuid();
 
@@ -159,6 +155,15 @@ public class IPGeolocationHostViewModel : ProfileHostViewModelBase
             new IPGeolocationView(tabId, domain), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
+    }
+
+    /// <summary>
+    /// Adds a new tab for the host of the specified profile.
+    /// </summary>
+    /// <param name="profile">The profile to query.</param>
+    public void AddTab(ProfileInfo profile)
+    {
+        AddTab(profile.IPGeolocation_Host);
     }
 
     #endregion

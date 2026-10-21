@@ -2053,6 +2053,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The command "{0}" does not accept arguments!.
+        /// </summary>
+        public static string CommandXDoesNotAcceptArguments {
+            get {
+                return ResourceManager.GetString("CommandXDoesNotAcceptArguments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The command "{0}" does not support profiles!.
+        /// </summary>
+        public static string CommandXDoesNotSupportProfiles {
+            get {
+                return ResourceManager.GetString("CommandXDoesNotSupportProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Comment.
         /// </summary>
         public static string Comment {
@@ -4058,6 +4076,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a command!.
+        /// </summary>
+        public static string EnterACommand {
+            get {
+                return ResourceManager.GetString("EnterACommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a domain to query whois....
         /// </summary>
         public static string EnterADomainToQueryWhoisDots {
@@ -4153,6 +4180,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EnterSubnetsToCreateAWideSubnet {
             get {
                 return ResourceManager.GetString("EnterSubnetsToCreateAWideSubnet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the name of a profile after "@"!.
+        /// </summary>
+        public static string EnterTheNameOfAProfileAfterAt {
+            get {
+                return ResourceManager.GetString("EnterTheNameOfAProfileAfterAt", resourceCulture);
             }
         }
         
@@ -9293,6 +9329,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profile "{0}" not found!.
+        /// </summary>
+        public static string ProfileXNotFound {
+            get {
+                return ResourceManager.GetString("ProfileXNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Program.
         /// </summary>
         public static string Program {
@@ -9749,6 +9794,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ReceivedLost {
             get {
                 return ResourceManager.GetString("ReceivedLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recent.
+        /// </summary>
+        public static string Recent {
+            get {
+                return ResourceManager.GetString("Recent", resourceCulture);
             }
         }
         
@@ -11368,6 +11422,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Run command.
+        /// </summary>
+        public static string RunCommand {
+            get {
+                return ResourceManager.GetString("RunCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Run command....
         /// </summary>
         public static string RunCommandDots {
@@ -11881,6 +11944,15 @@ namespace NETworkManager.Localization.Resources {
         public static string SettingsResetExclamationMark {
             get {
                 return ResourceManager.GetString("SettingsResetExclamationMark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Several profiles are named "{0}", select one!.
+        /// </summary>
+        public static string SeveralProfilesAreNamedXSelectOne {
+            get {
+                return ResourceManager.GetString("SeveralProfilesAreNamedXSelectOne", resourceCulture);
             }
         }
         
@@ -13241,6 +13313,24 @@ namespace NETworkManager.Localization.Resources {
         public static string Unknown {
             get {
                 return ResourceManager.GetString("Unknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown argument "{0}"!.
+        /// </summary>
+        public static string UnknownArgumentX {
+            get {
+                return ResourceManager.GetString("UnknownArgumentX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown command "{0}"!.
+        /// </summary>
+        public static string UnknownCommandX {
+            get {
+                return ResourceManager.GetString("UnknownCommandX", resourceCulture);
             }
         }
         

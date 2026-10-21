@@ -43,28 +43,6 @@ public class LookupOUILookupViewModel : ViewModelBase
 
     #endregion
 
-    #region Methods
-
-    /// <summary>
-    /// Adds the search term to the history.
-    /// </summary>
-    /// <param name="macAddressOrVendor">The MAC address or vendor.</param>
-    private void AddSearchToHistory(string macAddressOrVendor)
-    {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.Lookup_OUI_SearchHistory.ToList(),
-            macAddressOrVendor, SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.Lookup_OUI_SearchHistory.Clear();
-        OnPropertyChanged(
-            nameof(Search)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.Lookup_OUI_SearchHistory.Add(x));
-    }
-
-    #endregion
 
     #region Variables
 
@@ -260,7 +238,8 @@ public class LookupOUILookupViewModel : ViewModelBase
         NothingFound = Results.Count == 0;
 
         // Add the MAC-Address or Vendor to the history
-        AddSearchToHistory(Search);
+        ListHelper.Modify(SettingsManager.Current.Lookup_OUI_SearchHistory, Search,
+            SettingsManager.Current.General_HistoryListEntries);
 
         IsRunning = false;
     }

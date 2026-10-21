@@ -17,7 +17,6 @@
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:hostControls="clr-namespace:NETworkManager.Views.Controls"
-             Loaded="UserControl_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:RemoteDesktopHostViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />

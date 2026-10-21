@@ -90,7 +90,6 @@
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands ShowSeparators="False" IsEnabled="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=IsChildWindowOpen, Converter={StaticResource ResourceKey=BooleanReverseConverter}}">
             <Button Command="{Binding Path=OpenRunCommand}"
-                    Visibility="{Binding Path=FlyoutRunCommandIsOpen, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}"
                     ToolTip="{x:Static Member=localization:Strings.RunCommandDotsWithHotKey}"
                     Cursor="Hand"
                     Focusable="False">
@@ -265,112 +264,6 @@
             </Button>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
-    <mah:MetroWindow.Flyouts>
-        <mah:FlyoutsControl>
-            <mah:Flyout IsKeyboardFocusWithinChanged="FlyoutRunCommand_IsKeyboardFocusWithinChanged"
-                        IsOpen="{Binding FlyoutRunCommandIsOpen, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        AreAnimationsEnabled="False"
-                        Visibility="{Binding FlyoutRunCommandIsOpen, Converter={StaticResource BooleanToVisibilityConverter}}"
-                        Position="Top"
-                        TitleVisibility="Collapsed"
-                        CloseButtonVisibility="Collapsed"
-                        IsModal="False"
-                        Width="600" MaxHeight="400"
-                        BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
-                        BorderThickness="1"
-                        Theme="Adapt">
-                <mah:Flyout.InputBindings>
-                    <KeyBinding Command="{Binding RunCommandCloseCommand}" Key="Escape" />
-                    <KeyBinding Command="{Binding RunCommandDoCommand}" Key="Enter" />
-                </mah:Flyout.InputBindings>
-                <Grid Margin="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid Grid.Column="0" Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Grid.Column="0" Grid.Row="0"
-                                   Margin="5,0"
-                                   Width="20" Height="20"
-                                   HorizontalAlignment="Right"
-                                   Fill="{DynamicResource MahApps.Brushes.Gray8}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronRight}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBox Grid.Column="1" Grid.Row="0"
-                                 FontSize="18"
-                                 FontFamily="Consolas"
-                                 Text="{Binding RunCommandSearch, UpdateSourceTrigger=PropertyChanged}"
-                                 mah:TextBoxHelper.Watermark="{x:Static localization:Strings.RunCommandDots}">
-                            <TextBox.Style>
-                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
-                                    <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
-                                    <Setter Property="BorderThickness" Value="0,0,0,1" />
-                                </Style>
-                            </TextBox.Style>
-                        </TextBox>
-                    </Grid>
-                    <ListView Grid.Column="0" Grid.Row="2"
-                              ItemsSource="{Binding RunCommands}"
-                              SelectedItem="{Binding SelectedRunCommand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                              SelectionMode="Single"
-                              PreviewMouseLeftButtonUp="ListViewRunCommand_OnPreviewMouseLeftButtonUp"
-                              Style="{StaticResource DefaultListBox}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate DataType="{x:Type networkManager:RunCommandInfo}">
-                                <Border BorderThickness="1">
-                                    <Grid Margin="5">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Grid.Column="0" Grid.Row="0"
-                                                   Text="{Binding TranslatedName}"
-                                                   Style="{StaticResource BoldTextBlock}" />
-                                        <TextBlock Grid.Column="0" Grid.Row="1"
-                                                   Style="{StaticResource AccentTextBlock}"
-                                                   FontFamily="Consolas"
-                                                   Margin="0,5,0,0">
-                                            <TextBlock.Text>
-                                                <MultiBinding StringFormat="{}{0} {1}">
-                                                    <Binding Path="Command" />
-                                                    <Binding Path="ExampleArguments" />
-                                                </MultiBinding>
-                                            </TextBlock.Text>
-                                        </TextBlock>
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                    <TextBlock Grid.Column="0" Grid.Row="2" Margin="32,0,0,0">
-                        <TextBlock.Style>
-                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding RunCommands.Count}" Value="0">
-                                        <Setter Property="Visibility" Value="Visible" />
-                                        <Setter Property="Text"
-                                                Value="{x:Static localization:Strings.NoMatchingCommands}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
-                </Grid>
-            </mah:Flyout>
-        </mah:FlyoutsControl>
-    </mah:MetroWindow.Flyouts>
     <Grid>
         <Grid>
             <Grid.Style>
@@ -640,6 +533,7 @@
                                   Style="{StaticResource FadeOutScrollViewer}">
                         <ListView x:Name="ListViewApplication" ItemsSource="{Binding Applications}"
                                   SelectedItem="{Binding SelectedApplication, Mode=TwoWay}"
+                                  SelectionChanged="ListViewApplication_OnSelectionChanged"
                                   SelectionMode="Single"
                                   BorderThickness="0"
                                   dd:DragDrop.IsDragSource="True"

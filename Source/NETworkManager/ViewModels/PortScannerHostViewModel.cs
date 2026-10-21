@@ -88,10 +88,6 @@ public class PortScannerHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.PortScanner;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.PortScanner_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.PortScanner_Host;
-
     #endregion
 
     #region ICommand & Actions
@@ -150,7 +146,7 @@ public class PortScannerHostViewModel : ProfileHostViewModelBase
         SelectedTabIndex = TabItems.Count - 1;
     }
 
-    private void AddTab(ProfileInfo profile)
+    public void AddTab(ProfileInfo profile)
     {
         AddTab(profile.PortScanner_Host, profile.PortScanner_Ports);
     }

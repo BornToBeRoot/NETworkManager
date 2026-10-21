@@ -74,10 +74,6 @@ public class RemoteDesktopHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.RemoteDesktop;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.RemoteDesktop_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.RemoteDesktop_Host;
-
     public override void OnProfileManagerDialogOpen()
     {
         ConfigurationManager.OnDialogOpen();
@@ -213,7 +209,7 @@ public class RemoteDesktopHostViewModel : ProfileHostViewModelBase
 
     private void ConnectProfileAction()
     {
-        ConnectProfile();
+        ConnectProfile(SelectedProfile);
     }
 
     public ICommand ConnectProfileAsCommand => new RelayCommand(_ => ConnectProfileAsAction());
@@ -289,7 +285,8 @@ public class RemoteDesktopHostViewModel : ProfileHostViewModelBase
             // Add to history
             // Note: The history can only be updated after the values have been read.
             //       Otherwise, in some cases, incorrect values are taken over.
-            AddHostToHistory(instance.Host);
+            ListHelper.Modify(SettingsManager.Current.RemoteDesktop_HostHistory, instance.Host,
+                SettingsManager.Current.General_HistoryListEntries);
 
             Connect(sessionInfo);
         }, _ =>
@@ -315,10 +312,12 @@ public class RemoteDesktopHostViewModel : ProfileHostViewModelBase
     }
 
     // Connect via Profile
-    private void ConnectProfile()
+    /// <summary>
+    ///     Connects to the profile.
+    /// </summary>
+    /// <param name="profileInfo">Profile to connect to.</param>
+    public void ConnectProfile(ProfileInfo profileInfo)
     {
-        var profileInfo = SelectedProfile;
-
         var sessionInfo = RemoteDesktop.CreateSessionInfo(profileInfo);
 
         Connect(sessionInfo, profileInfo.Name);
@@ -394,15 +393,5 @@ public class RemoteDesktopHostViewModel : ProfileHostViewModelBase
     }
 
     // Modify history list
-    private static void AddHostToHistory(string host)
-    {
-        if (string.IsNullOrEmpty(host))
-            return;
-
-        SettingsManager.Current.RemoteDesktop_HostHistory = new ObservableCollection<string>(
-            ListHelper.Modify(SettingsManager.Current.RemoteDesktop_HostHistory.ToList(), host,
-                SettingsManager.Current.General_HistoryListEntries));
-    }
-
     #endregion
 }

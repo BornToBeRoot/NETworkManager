@@ -158,10 +158,6 @@ public class WakeOnLANViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.WakeOnLAN;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.WakeOnLAN_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.WakeOnLAN_MACAddress;
-
     #endregion
 
     #region ICommands & Actions
@@ -187,8 +183,10 @@ public class WakeOnLANViewModel : ProfileHostViewModelBase
             Port = SettingsManager.Current.WakeOnLAN_Port
         };
 
-        AddMACAddressToHistory(MACAddress);
-        AddBroadcastToHistory(Broadcast);
+        ListHelper.Modify(SettingsManager.Current.WakeOnLan_MACAddressHistory, MACAddress,
+            SettingsManager.Current.General_HistoryListEntries);
+        ListHelper.Modify(SettingsManager.Current.WakeOnLan_BroadcastHistory, Broadcast,
+            SettingsManager.Current.General_HistoryListEntries);
 
         _ = WakeUp(info);
     }
@@ -200,12 +198,38 @@ public class WakeOnLANViewModel : ProfileHostViewModelBase
 
     private void WakeUpProfileAction()
     {
-        _ = WakeUp(NETworkManager.Profiles.Application.WakeOnLAN.CreateInfo(SelectedProfile));
+        WakeUp(SelectedProfile);
     }
 
     #endregion
 
     #region Methods
+
+    /// <summary>
+    ///     Sends the magic packet to the computer of the profile.
+    /// </summary>
+    /// <param name="profile">Profile to wake up.</param>
+    public void WakeUp(ProfileInfo profile)
+    {
+        _ = WakeUp(NETworkManager.Profiles.Application.WakeOnLAN.CreateInfo(profile));
+    }
+
+    /// <summary>
+    ///     Sets the MAC address (and broadcast address) and sends the magic packet, if the broadcast address is valid
+    ///     (e.g. from a previous wake up). Otherwise, the values are only filled in.
+    /// </summary>
+    /// <param name="macAddress">MAC address of the computer.</param>
+    /// <param name="broadcast">Broadcast address. If null, the current broadcast address is used.</param>
+    public void WakeUp(string macAddress, string broadcast)
+    {
+        MACAddress = macAddress;
+
+        if (broadcast != null)
+            Broadcast = broadcast;
+
+        if (Broadcast != null && RegexHelper.IPv4AddressRegex().IsMatch(Broadcast))
+            WakeUpAction();
+    }
 
     private async Task WakeUp(WakeOnLANInfo info)
     {
@@ -229,34 +253,6 @@ public class WakeOnLANViewModel : ProfileHostViewModelBase
         }
 
         IsRunning = false;
-    }
-
-    private void AddMACAddressToHistory(string macAddress)
-    {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.WakeOnLan_MACAddressHistory.ToList(), macAddress,
-            SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.WakeOnLan_MACAddressHistory.Clear();
-        OnPropertyChanged(nameof(MACAddress)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.WakeOnLan_MACAddressHistory.Add(x));
-    }
-
-    private void AddBroadcastToHistory(string broadcast)
-    {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.WakeOnLan_BroadcastHistory.ToList(), broadcast,
-            SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.WakeOnLan_BroadcastHistory.Clear();
-        OnPropertyChanged(nameof(Broadcast)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.WakeOnLan_BroadcastHistory.Add(x));
     }
 
     #endregion

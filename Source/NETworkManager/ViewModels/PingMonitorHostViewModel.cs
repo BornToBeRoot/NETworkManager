@@ -185,10 +185,6 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.PingMonitor;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.PingMonitor_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.PingMonitor_Host;
-
     #endregion
 
     #region ICommands & Actions
@@ -225,8 +221,7 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
 
     private void PingProfileAction()
     {
-        if (SetHost(SelectedProfile.PingMonitor_Host, SelectedProfile.Group))
-            _ = Start();
+        AddHost(SelectedProfile);
     }
 
     /// <summary>
@@ -264,6 +259,26 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
     #endregion
 
     #region Methods
+
+    /// <summary>
+    ///     Adds the host(s) and starts the ping monitor.
+    /// </summary>
+    /// <param name="host">Host(s) to ping.</param>
+    public void AddHost(string host)
+    {
+        if (SetHost(host))
+            _ = Start();
+    }
+
+    /// <summary>
+    ///     Adds the host(s) of the profile to its group and starts the ping monitor.
+    /// </summary>
+    /// <param name="profile">Profile to ping.</param>
+    public void AddHost(ProfileInfo profile)
+    {
+        if (SetHost(profile.PingMonitor_Host, profile.Group))
+            _ = Start();
+    }
 
     /// <summary>
     ///     Set the host to ping.
@@ -325,7 +340,8 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
         }
 
         // Add host(s) to history
-        AddHostToHistory(Host);
+        ListHelper.Modify(SettingsManager.Current.PingMonitor_HostHistory, Host,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Add host(s) to list and start the ping
         foreach (var hostView in hosts.hosts.Select(currentHost =>
@@ -388,20 +404,6 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
         Hosts[i].Stop();
         Hosts[i].Cleanup();
         Hosts.RemoveAt(i);
-    }
-
-    private void AddHostToHistory(string host)
-    {
-        // Create the new list
-        var list = ListHelper.Modify([.. SettingsManager.Current.PingMonitor_HostHistory], host,
-            SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.PingMonitor_HostHistory.Clear();
-        OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(SettingsManager.Current.PingMonitor_HostHistory.Add);
     }
 
     #endregion

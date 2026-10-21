@@ -36,13 +36,13 @@ public abstract class ProfileHostViewModelBase : ViewModelBase, IProfileHostView
     /// <summary>
     ///     Determines whether the given profile is enabled for this tool.
     /// </summary>
-    protected abstract bool IsProfileEnabled(ProfileInfo profile);
+    private bool IsProfileEnabled(ProfileInfo profile) => profile.IsEnabled(ApplicationName);
 
     /// <summary>
-    ///     Gets the tool-specific field of the given profile that should also be matched against the search text
+    ///     Gets the tool-specific field of the given profile (e.g. host) that is also matched against the search text
     ///     (in addition to the profile name).
     /// </summary>
-    protected abstract string GetSearchableField(ProfileInfo profile);
+    private string GetSearchableField(ProfileInfo profile) => profile.GetTarget(ApplicationName) ?? string.Empty;
 
     /// <summary>
     ///     Gets the view for the profiles.

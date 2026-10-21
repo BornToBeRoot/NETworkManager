@@ -6,7 +6,6 @@ using NETworkManager.Documentation;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
@@ -305,19 +304,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         }
     }
 
-    public bool FlyoutRunCommandIsOpen
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
     public bool IsRestartRequired
     {
         get;
@@ -438,11 +424,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Set window title
         Title = $"NETworkManager {AssemblyManager.Current.Version}";
 
-        // Register event system...
+        // Register navigation requests (e.g. from the run command or other applications)
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
-        EventSystem.OnRedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
-        EventSystem.OnRedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
+        NavigationManager.ApplicationRequested += NavigationManager_ApplicationRequested;
+        NavigationManager.SettingsRequested += NavigationManager_SettingsRequested;
 
         _isLoading = false;
     }
@@ -536,9 +522,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     {
         // Load application list, filter, sort, etc.
         LoadApplicationList();
-
-        // Load run commands
-        SetRunCommandsView();
 
         // Load the profiles
         LoadProfiles();
@@ -660,10 +643,6 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         else
             SelectedApplication = applicationList.FirstOrDefault(x => x.IsDefault) ??
                                   applicationList.FirstOrDefault(x => x.IsVisible);
-
-        // Scroll into view
-        if (SelectedApplication != null)
-            ListViewApplication.ScrollIntoView(SelectedApplication);
 
         // Expand application view
         ApplicationViewIsExpanded = SettingsManager.Current.ExpandApplicationView;
@@ -1044,96 +1023,54 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         ApplicationSearch = string.Empty;
 
-        // Scroll into view
+        // Scroll into view. The selection doesn't change here, so ListViewApplication_OnSelectionChanged doesn't scroll.
         ListViewApplication.ScrollIntoView(SelectedApplication);
     }
 
-    private async void EventSystem_RedirectDataToApplicationEvent(object sender, EventArgs e)
+    /// <summary>
+    ///     Scrolls the selected application into view, also if it was selected from somewhere else (e.g. the dashboard,
+    ///     another application or the run command).
+    /// </summary>
+    private void ListViewApplication_OnSelectionChanged(object sender,
+        System.Windows.Controls.SelectionChangedEventArgs e)
     {
-        if (e is not EventSystemRedirectArgs data)
-            return;
+        if (ListViewApplication.SelectedItem != null)
+            ListViewApplication.ScrollIntoView(ListViewApplication.SelectedItem);
+    }
 
-        // Try to find the application
-        var application = Applications.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == data.Application);
+    private async void NavigationManager_ApplicationRequested(object sender, ApplicationRequest request)
+    {
+        // Clear the search, otherwise the application may be filtered out
+        ApplicationSearch = string.Empty;
+
+        // Try to find the application (hidden applications can't be opened)
+        var application = Applications.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == request.Application);
 
         // Show error message if the application was not found
         if (application == null)
         {
             await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
                 string.Format(Strings.CouldNotFindApplicationXXXMessage,
-                $"{data.Application}"), ChildWindowIcon.Error);
+                $"{request.Application}"), ChildWindowIcon.Error);
 
             return;
         }
+
+        if (SettingsViewIsOpen)
+            CloseSettings();
 
         // Change application view
         SelectedApplication = application;
 
-        if (string.IsNullOrEmpty(data.Args))
+        if (string.IsNullOrEmpty(request.Target) && request.Profile == null)
             return;
 
-        // Crate a new tab / perform action
-        switch (data.Application)
-        {
-            case ApplicationName.Dashboard:
-            case ApplicationName.NetworkInterface:
-            case ApplicationName.WiFi:
-                break;
-            case ApplicationName.IPScanner:
-                _ipScannerHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.PortScanner:
-                _portScannerHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.PingMonitor:
-                _pingMonitorHostView.AddHost(data.Args);
-                break;
-            case ApplicationName.Traceroute:
-                _tracerouteHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.DNSLookup:
-                _dnsLookupHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.RemoteDesktop:
-                _remoteDesktopHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.PowerShell:
-                _powerShellHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.PuTTY:
-                _puttyHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.TigerVNC:
-                _tigerVNCHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.WebConsole:
-                break;
-            case ApplicationName.SNMP:
-                _snmpHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.RDAP:
-                _rdapHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.Whois:
-                _whoisHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.SNTPLookup:
-            case ApplicationName.HostsFileEditor:
-            case ApplicationName.Firewall:
-            case ApplicationName.DiscoveryProtocol:
-            case ApplicationName.WakeOnLAN:
-            case ApplicationName.IPGeolocation:
-            case ApplicationName.SubnetCalculator:
-            case ApplicationName.BitCalculator:
-            case ApplicationName.Lookup:
-            case ApplicationName.Connections:
-            case ApplicationName.Listeners:
-            case ApplicationName.NeighborTable:
-                break;
-            default:
-                Log.Error($"Cannot redirect data to unknown application: {data.Application}");
-                break;
-        }
+        // Create a new tab / perform the action in the application (only if it is shown)
+        if (SelectedApplication?.Name == request.Application &&
+            ContentControlApplication.Content is IApplicationRequestHandler handler)
+            handler.Open(request);
+        else
+            Log.Warn($"Application {request.Application} cannot handle a request with a target or profile.");
     }
 
     /// <summary>
@@ -1154,175 +1091,42 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
     #region Run Command
 
-    #region Variables
-
-    public ICollectionView RunCommands
-    {
-        get;
-        private set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public RunCommandInfo SelectedRunCommand
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public string RunCommandSearch
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-
-            RefreshRunCommandsView();
-
-            OnPropertyChanged();
-        }
-    }
-
-    #endregion
-
-    #region ICommands & Actions
-
     public ICommand OpenRunCommand => new RelayCommand(_ => OpenRunAction());
 
     private void OpenRunAction()
     {
-        ConfigurationManager.OnDialogOpen();
-
-        FlyoutRunCommandIsOpen = true;
-    }
-
-    public ICommand RunCommandDoCommand => new RelayCommand(_ => RunCommandDoAction());
-
-    private void RunCommandDoAction()
-    {
-        RunCommandDo();
-    }
-
-    public ICommand RunCommandCloseCommand => new RelayCommand(_ => RunCommandCloseAction());
-
-    private void RunCommandCloseAction()
-    {
-        RunCommandFlyoutClose();
-    }
-
-    #endregion
-
-    #region Methods
-
-    private void SetRunCommandsView(RunCommandInfo selectedRunCommand = null)
-    {
-        RunCommands = new CollectionViewSource { Source = RunCommandManager.GetList() }.View;
-
-        RunCommands.Filter = o =>
-        {
-            if (o is not RunCommandInfo info)
-                return false;
-
-            if (string.IsNullOrEmpty(RunCommandSearch))
-                return true;
-
-            return info.TranslatedName.IndexOf(RunCommandSearch, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.Name.IndexOf(RunCommandSearch, StringComparison.OrdinalIgnoreCase) > -1;
-        };
-
-        if (selectedRunCommand != null)
-            SelectedRunCommand = RunCommands.Cast<RunCommandInfo>()
-                .FirstOrDefault(x => x.Name == selectedRunCommand.Name);
-
-        SelectedRunCommand ??= RunCommands.Cast<RunCommandInfo>().FirstOrDefault();
-    }
-
-    private void RefreshRunCommandsView()
-    {
-        SetRunCommandsView(SelectedRunCommand);
-    }
-
-    /// <summary>
-    ///     Execute the selected run command.
-    /// </summary>
-    private void RunCommandDo()
-    {
-        // Do nothing if no command is selected
-        if (SelectedRunCommand == null)
+        // Only one dialog at a time (e.g. the shortcut while another dialog is open)
+        if (ConfigurationManager.Current.IsChildWindowOpen)
             return;
 
-        // Do the command
-        switch (SelectedRunCommand.Type)
-        {
-            // Redirect to application
-            case RunCommandType.Application:
-                if (SettingsViewIsOpen)
-                    CloseSettings();
+        var childWindow = new RunCommandChildWindow();
 
-                var applicationName = (ApplicationName)Enum.Parse(typeof(ApplicationName), SelectedRunCommand.Name);
-                EventSystem.RedirectToApplication(applicationName, string.Empty);
-                break;
-            // Redirect to settings
-            case RunCommandType.Setting:
-                EventSystem.RedirectToSettings();
-                break;
+        void CloseDialog()
+        {
+            childWindow.IsOpen = false;
+            ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            ConfigurationManager.OnDialogClose();
         }
 
-        // Close the flyout
-        RunCommandFlyoutClose(true);
+        var childWindowViewModel = new RunCommandViewModel(instance =>
+        {
+            CloseDialog();
+
+            if (instance.IsSettings)
+                NavigationManager.OpenSettings();
+            else
+                NavigationManager.Open(instance.Request);
+        }, _ => CloseDialog());
+
+        childWindow.DataContext = childWindowViewModel;
+
+        ConfigurationManager.Current.IsChildWindowOpen = true;
+
+        ConfigurationManager.OnDialogOpen();
+
+        _ = this.ShowChildWindowAsync(childWindow);
     }
-
-    /// <summary>
-    ///     Close the run command flyout and clear the search.
-    /// </summary>
-    private void RunCommandFlyoutClose(bool clearSearch = false)
-    {
-        if (!FlyoutRunCommandIsOpen)
-            return;
-
-        FlyoutRunCommandIsOpen = false;
-
-        ConfigurationManager.OnDialogClose();
-
-        // Clear the search
-        if (clearSearch)
-            RunCommandSearch = string.Empty;
-    }
-
-    #endregion
-
-    #region Events
-
-    private void ListViewRunCommand_OnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-    {
-        RunCommandDo();
-    }
-
-    private void FlyoutRunCommand_IsKeyboardFocusWithinChanged(object sender, DependencyPropertyChangedEventArgs e)
-    {
-        // Close flyout if the focus is lost.
-        if (e.NewValue is not false)
-            return;
-
-        RunCommandFlyoutClose();
-    }
-
-    #endregion
 
     #endregion
 
@@ -1348,8 +1152,15 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         SettingsViewIsOpen = true;
     }
 
-    private void EventSystem_RedirectToSettingsEvent(object sender, EventArgs e)
+    private void NavigationManager_SettingsRequested(object sender, EventArgs e)
     {
+        // The settings are already open (e.g. run command "settings"), keep the current page.
+        if (SettingsViewIsOpen)
+            return;
+
+        // Clear the search, otherwise no application may be selected (the settings page depends on it)
+        ApplicationSearch = string.Empty;
+
         OpenSettings();
     }
 

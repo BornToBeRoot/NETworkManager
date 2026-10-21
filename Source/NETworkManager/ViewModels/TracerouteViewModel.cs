@@ -4,9 +4,9 @@ using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
+using NETworkManager.Models.RDAP;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
@@ -307,7 +307,7 @@ public class TracerouteViewModel : ViewModelBase
             ? SelectedResult.Hostname
             : SelectedResult.IPAddress.ToString();
 
-        EventSystem.RedirectToApplication(applicationName, host);
+        NavigationManager.Open(new ApplicationRequest(applicationName) { Target = host });
     }
 
     /// <summary>
@@ -317,19 +317,29 @@ public class TracerouteViewModel : ViewModelBase
 
     private void PerformDNSLookupAction(object data)
     {
-        EventSystem.RedirectToApplication(ApplicationName.DNSLookup, data.ToString());
+        NavigationManager.Open(new DNSLookupRequest { Target = data.ToString() });
     }
 
     /// <summary>
-    /// Gets the command to query the registration data of the selected hop's IP address, hostname (its registered
-    /// domain) or AS number via RDAP.
+    /// Gets the command to query the registration data of the selected hop's IP address or hostname (its registered
+    /// domain) via RDAP.
     /// </summary>
     public ICommand PerformRDAPQueryCommand => new RelayCommand(PerformRDAPQueryAction);
 
     private void PerformRDAPQueryAction(object data)
     {
+        NavigationManager.Open(new RDAPRequest { Target = data.ToString() });
+    }
+
+    /// <summary>
+    /// Gets the command to query the registration data of the selected hop's AS number via RDAP.
+    /// </summary>
+    public ICommand PerformRDAPQueryASNCommand => new RelayCommand(PerformRDAPQueryASNAction);
+
+    private void PerformRDAPQueryASNAction(object data)
+    {
         // The AS of the IP geolocation contains the name as well (e.g. "AS15169 Google LLC").
-        EventSystem.RedirectToApplication(ApplicationName.RDAP, data.ToString().Split(' ')[0]);
+        NavigationManager.Open(new RDAPRequest { Target = data.ToString().Split(' ')[0], QueryType = RDAPQueryType.ASN });
     }
 
     /// <summary>
@@ -423,7 +433,8 @@ public class TracerouteViewModel : ViewModelBase
             traceroute.TraceAsync(ipAddress, _cancellationTokenSource.Token);
 
             // Add the host to history
-            AddHostToHistory(Host);
+            ListHelper.Modify(SettingsManager.Current.Traceroute_HostHistory, Host,
+                SettingsManager.Current.General_HistoryListEntries);
         }
         catch (Exception ex) // This will catch any exception
         {
@@ -478,20 +489,6 @@ public class TracerouteViewModel : ViewModelBase
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
         return window.ShowChildWindowAsync(childWindow);
-    }
-
-    private void AddHostToHistory(string host)
-    {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.Traceroute_HostHistory.ToList(), host,
-            SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.Traceroute_HostHistory.Clear();
-        OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.Traceroute_HostHistory.Add(x));
     }
 
     public void OnClose()

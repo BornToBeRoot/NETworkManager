@@ -5,7 +5,6 @@ using NETworkManager.Controls;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
@@ -385,7 +384,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             ? SelectedResult.Hostname
             : SelectedResult.PingInfo.IPAddress.ToString();
 
-        EventSystem.RedirectToApplication(applicationName, host);
+        NavigationManager.Open(new ApplicationRequest(applicationName) { Target = host });
     }
 
     /// <summary>
@@ -395,7 +394,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void PerformDNSLookupIPAddressAction()
     {
-        EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedResult.PingInfo.IPAddress.ToString());
+        NavigationManager.Open(new DNSLookupRequest { Target = SelectedResult.PingInfo.IPAddress.ToString() });
     }
 
     /// <summary>
@@ -405,7 +404,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void PerformDNSLookupHostnameAction()
     {
-        EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedResult.Hostname);
+        NavigationManager.Open(new DNSLookupRequest { Target = SelectedResult.Hostname });
     }
 
     /// <summary>
@@ -415,7 +414,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void PerformRDAPQueryIPAddressAction()
     {
-        EventSystem.RedirectToApplication(ApplicationName.RDAP, SelectedResult.PingInfo.IPAddress.ToString());
+        NavigationManager.Open(new RDAPRequest { Target = SelectedResult.PingInfo.IPAddress.ToString() });
     }
 
     /// <summary>
@@ -425,7 +424,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void PerformRDAPQueryHostnameAction()
     {
-        EventSystem.RedirectToApplication(ApplicationName.RDAP, SelectedResult.Hostname);
+        NavigationManager.Open(new RDAPRequest { Target = SelectedResult.Hostname });
     }
 
     /// <summary>
@@ -553,7 +552,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         PreparingScan = false;
 
         // Add host(s) to the history
-        AddHostToHistory(Host);
+        ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory, Host,
+            SettingsManager.Current.General_HistoryListEntries);
 
         var ipScanner = new IPScanner(new IPScannerOptions(
             SettingsManager.Current.IPScanner_MaxHostThreads,
@@ -698,24 +698,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 await DialogHelper.ShowMessageAsync(window, Strings.Error, ex.Message, ChildWindowIcon.Error);
             }
         }
-    }
-
-    /// <summary>
-    /// Adds the scanned host/range to the history.
-    /// </summary>
-    /// <param name="ipRange">The host or IP range to add.</param>
-    private void AddHostToHistory(string ipRange)
-    {
-        // Create the new list
-        var list = ListHelper.Modify([.. SettingsManager.Current.IPScanner_HostHistory], ipRange,
-            SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.IPScanner_HostHistory.Clear();
-        OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(SettingsManager.Current.IPScanner_HostHistory.Add);
     }
 
     /// <summary>

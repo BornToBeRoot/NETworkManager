@@ -4,7 +4,6 @@ using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.RDAP;
 using NETworkManager.Settings;
@@ -263,7 +262,7 @@ public class RDAPViewModel : ViewModelBase
 
     private void OpenInWhoisAction()
     {
-        EventSystem.RedirectToApplication(ApplicationName.Whois, _whoisDomain);
+        NavigationManager.Open(new ApplicationRequest(ApplicationName.Whois) { Target = _whoisDomain });
     }
 
     /// <summary>
@@ -350,7 +349,8 @@ public class RDAPViewModel : ViewModelBase
             if (messages.Count > 0)
                 ShowStatusMessage(string.Join(Environment.NewLine, messages));
 
-            AddQueryToHistory(Query);
+            ListHelper.Modify(SettingsManager.Current.RDAP_QueryHistory, Query,
+                SettingsManager.Current.General_HistoryListEntries);
         }
         catch (OperationCanceledException)
         {
@@ -445,20 +445,6 @@ public class RDAPViewModel : ViewModelBase
             Stop();
 
         ConfigurationManager.Current.RDAPTabCount--;
-    }
-
-    private void AddQueryToHistory(string query)
-    {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.RDAP_QueryHistory.ToList(), query,
-            SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.RDAP_QueryHistory.Clear();
-        OnPropertyChanged(nameof(Query)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.RDAP_QueryHistory.Add(x));
     }
 
     /// <summary>

@@ -88,10 +88,6 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.IPScanner;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.IPScanner_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.IPScanner_HostOrIPRange;
-
     #endregion
 
     #region ICommand & Actions
@@ -165,7 +161,7 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     /// Adds a new tab for the specified profile.
     /// </summary>
     /// <param name="profile">The profile to scan.</param>
-    private void AddTab(ProfileInfo profile)
+    public void AddTab(ProfileInfo profile)
     {
         AddTab(profile.IPScanner_HostOrIPRange);
     }

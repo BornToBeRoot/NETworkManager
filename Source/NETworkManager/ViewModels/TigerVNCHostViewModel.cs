@@ -3,7 +3,6 @@ using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.TigerVNC;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
@@ -93,10 +92,6 @@ public class TigerVNCHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.TigerVNC;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.TigerVNC_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.TigerVNC_Host;
-
     public override void OnProfileManagerDialogOpen()
     {
         ConfigurationManager.OnDialogOpen();
@@ -150,7 +145,7 @@ public class TigerVNCHostViewModel : ProfileHostViewModelBase
 
     private void ConnectProfileAction()
     {
-        ConnectProfile();
+        ConnectProfile(SelectedProfile);
     }
 
     public ICommand ConnectProfileExternalCommand => new RelayCommand(_ => ConnectProfileExternalAction());
@@ -164,7 +159,7 @@ public class TigerVNCHostViewModel : ProfileHostViewModelBase
 
     private static void OpenSettingsAction()
     {
-        EventSystem.RedirectToSettings();
+        NavigationManager.OpenSettings();
     }
 
     #endregion
@@ -198,8 +193,10 @@ public class TigerVNCHostViewModel : ProfileHostViewModelBase
             // Add to history
             // Note: The history can only be updated after the values have been read.
             //       Otherwise, in some cases, incorrect values are taken over.
-            AddHostToHistory(instance.Host);
-            AddPortToHistory(instance.Port);
+            ListHelper.Modify(SettingsManager.Current.TigerVNC_HostHistory, instance.Host,
+                SettingsManager.Current.General_HistoryListEntries);
+            ListHelper.Modify(SettingsManager.Current.TigerVNC_PortHistory, instance.Port,
+                SettingsManager.Current.General_HistoryListEntries);
 
             // Connect
             Connect(sessionInfo);
@@ -223,9 +220,13 @@ public class TigerVNCHostViewModel : ProfileHostViewModelBase
         return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
-    private void ConnectProfile()
+    /// <summary>
+    ///     Connects to the profile.
+    /// </summary>
+    /// <param name="profileInfo">Profile to connect to.</param>
+    public void ConnectProfile(ProfileInfo profileInfo)
     {
-        Connect(TigerVNC.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+        Connect(TigerVNC.CreateSessionInfo(profileInfo), profileInfo.Name);
     }
 
     private void ConnectProfileExternal()
@@ -256,26 +257,6 @@ public class TigerVNCHostViewModel : ProfileHostViewModelBase
     }
 
     // Modify history list
-    private static void AddHostToHistory(string host)
-    {
-        if (string.IsNullOrEmpty(host))
-            return;
-
-        SettingsManager.Current.TigerVNC_HostHistory = new ObservableCollection<string>(
-            ListHelper.Modify(SettingsManager.Current.TigerVNC_HostHistory.ToList(), host,
-                SettingsManager.Current.General_HistoryListEntries));
-    }
-
-    private static void AddPortToHistory(int port)
-    {
-        if (port == 0)
-            return;
-
-        SettingsManager.Current.TigerVNC_PortHistory = new ObservableCollection<int>(
-            ListHelper.Modify(SettingsManager.Current.TigerVNC_PortHistory.ToList(), port,
-                SettingsManager.Current.General_HistoryListEntries));
-    }
-
     #endregion
 
     #region Event

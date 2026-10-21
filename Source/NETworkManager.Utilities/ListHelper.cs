@@ -1,38 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace NETworkManager.Utilities;
 /// <summary>
-/// Helper class for modifying lists by adding new entries and removing old ones if the list exceeds a specified length.
+/// Helper class for history lists: add an entry as the newest one and remove the oldest ones if the list exceeds a
+/// specified length.
 /// </summary>
 public static class ListHelper
 {
     /// <summary>
-    /// Modify a list by adding the <paramref name="entry"/> and removing the oldest entry if the list is full.
-    /// If an entry or multiple ones already exist in the list, they will be removed before adding the new entry.
+    /// Adds the <paramref name="entry"/> as the newest (first) entry of the list. An existing entry is moved to the top
+    /// (duplicates are removed) and the oldest entries are removed if the list exceeds the <paramref name="length"/>.
+    /// The list is changed in place, so controls bound to it (e.g. the history of a ComboBox) keep their text and are
+    /// notified only about the actual changes. Default values (null, 0) and empty strings are not added (e.g. optional
+    /// inputs).
     /// </summary>
-    /// <param name="list">List to modify. Used with <paramref name="entry"/> to add and remove entries.</param>
+    /// <param name="list">List to modify (e.g. a history of the settings).</param>
     /// <param name="entry">Entry to add to the list.</param>
     /// <param name="length">Maximum length of the list. Oldest entries will be removed if the list exceeds this length.</param>
+    /// <param name="comparer">Comparer for existing entries (e.g. case-insensitive). If null, the default comparer is used.</param>
     /// <typeparam name="T">Type of the list entries. Currently <see cref="string"/> or <see cref="int"/>.</typeparam>
-    /// <returns>Modified list with the new entry added and oldest entries removed if necessary.</returns>
-    public static List<T> Modify<T>(List<T> list, T entry, int length)
+    public static void Modify<T>(ObservableCollection<T> list, T entry, int length,
+        IEqualityComparer<T> comparer = null)
     {
-        int index;
-
-        while ((index = list.IndexOf(entry)) != -1)
-        {
-            list.RemoveAt(index);
-        }
+        comparer ??= EqualityComparer<T>.Default;
 
         if (length <= 0)
             throw new ArgumentOutOfRangeException(nameof(length), "Length must be greater than zero.");
 
-        while (list.Count >= length)
+        if (EqualityComparer<T>.Default.Equals(entry, default) || entry is string text && string.IsNullOrEmpty(text))
+            return;
+
+        var index = -1;
+
+        for (var i = 0; i < list.Count; i++)
+        {
+            if (!comparer.Equals(list[i], entry))
+                continue;
+
+            index = i;
+            break;
+        }
+
+        if (index < 0)
+        {
+            list.Insert(0, entry);
+        }
+        else
+        {
+            if (index > 0)
+                list.Move(index, 0);
+
+            // Keep the latest spelling (e.g. with a case-insensitive comparer)
+            if (!EqualityComparer<T>.Default.Equals(list[0], entry))
+                list[0] = entry;
+        }
+
+        // Remove duplicates (e.g. from older settings files)
+        for (var i = list.Count - 1; i > 0; i--)
+        {
+            if (comparer.Equals(list[i], entry))
+                list.RemoveAt(i);
+        }
+
+        while (list.Count > length)
             list.RemoveAt(list.Count - 1);
-
-        list.Insert(0, entry);
-
-        return list;
     }
 }

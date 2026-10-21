@@ -4,7 +4,6 @@ using Microsoft.Web.WebView2.Core;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.WebConsole;
 using NETworkManager.Profiles;
 using NETworkManager.Profiles.Application;
@@ -100,10 +99,6 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.WebConsole;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.WebConsole_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.WebConsole_Url;
-
     public override void OnProfileManagerDialogOpen()
     {
         ConfigurationManager.OnDialogOpen();
@@ -150,14 +145,14 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
 
     private void ConnectProfileAction()
     {
-        ConnectProfile();
+        ConnectProfile(SelectedProfile);
     }
 
     public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
 
     private static void OpenSettingsAction()
     {
-        EventSystem.RedirectToSettings();
+        NavigationManager.OpenSettings();
     }
 
     public ICommand OpenWebsiteCommand => new RelayCommand(OpenWebsiteAction);
@@ -171,7 +166,7 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
 
     #region Methods
 
-    private Task Connect()
+    private Task Connect(string url = null)
     {
         var childWindow = new WebConsoleConnectChildWindow();
 
@@ -191,7 +186,8 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
             // Add to history
             // Note: The history can only be updated after the values have been read.
             //       Otherwise, in some cases, incorrect values are taken over.
-            AddUrlToHistory(instance.Url);
+            ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory, instance.Url,
+                SettingsManager.Current.General_HistoryListEntries);
 
             Connect(info);
         }, _ =>
@@ -200,7 +196,10 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
             ConfigurationManager.OnDialogClose();
-        });
+        })
+        {
+            Url = url
+        };
 
         childWindow.Title = Strings.Connect;
 
@@ -213,10 +212,22 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
         return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
-    private void ConnectProfile()
+    /// <summary>
+    ///     Connects to the profile.
+    /// </summary>
+    /// <param name="profileInfo">Profile to connect to.</param>
+    public void ConnectProfile(ProfileInfo profileInfo)
     {
-        Connect(WebConsole.CreateSessionInfo(SelectedProfile),
-            SelectedProfile.Name);
+        Connect(WebConsole.CreateSessionInfo(profileInfo), profileInfo.Name);
+    }
+
+    /// <summary>
+    ///     Opens the connect dialog with the URL.
+    /// </summary>
+    /// <param name="url">URL to connect to.</param>
+    public void AddTab(string url)
+    {
+        _ = Connect(url);
     }
 
     private void Connect(WebConsoleSessionInfo sessionInfo, string header = null)
@@ -229,15 +240,5 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
     }
 
     // Modify history list
-    private static void AddUrlToHistory(string url)
-    {
-        if (string.IsNullOrEmpty(url))
-            return;
-
-        SettingsManager.Current.WebConsole_UrlHistory = new ObservableCollection<string>(
-            ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory.ToList(), url,
-                SettingsManager.Current.General_HistoryListEntries));
-    }
-
     #endregion
 }

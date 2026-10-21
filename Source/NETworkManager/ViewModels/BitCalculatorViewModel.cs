@@ -264,27 +264,10 @@ public class BitCalculatorViewModel : ViewModelBase
 
         IsResultVisible = true;
 
-        AddInputToHistory(Input);
-
-        IsRunning = false;
-    }
-
-    /// <summary>
-    /// Adds the input to the history.
-    /// </summary>
-    /// <param name="input">The input string.</param>
-    private void AddInputToHistory(string input)
-    {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.BitCalculator_InputHistory.ToList(), input,
+        ListHelper.Modify(SettingsManager.Current.BitCalculator_InputHistory, Input,
             SettingsManager.Current.General_HistoryListEntries);
 
-        // Clear the old items
-        SettingsManager.Current.BitCalculator_InputHistory.Clear();
-        OnPropertyChanged(nameof(Input)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.BitCalculator_InputHistory.Add(x));
+        IsRunning = false;
     }
 
     /// <summary>

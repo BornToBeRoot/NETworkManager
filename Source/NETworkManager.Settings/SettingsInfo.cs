@@ -808,6 +808,22 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    // Run command
+
+    public ObservableCollection<string> RunCommand_History
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            UpdateCollectionChanged(field, value);
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
+
     #endregion
 
     #region Dashboard
@@ -4055,6 +4071,9 @@ public class SettingsInfo : INotifyPropertyChanged
     {
         // General
         General_ApplicationList.CollectionChanged += CollectionChanged;
+
+        // Run command
+        RunCommand_History.CollectionChanged += CollectionChanged;
 
         // Network
         Network_CustomDNSServers.CollectionChanged += CollectionChanged;

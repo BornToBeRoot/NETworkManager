@@ -192,7 +192,8 @@ public class WhoisViewModel : ViewModelBase
                 Result = await Whois.QueryAsync(Domain, whoisServer);
                 IsResultVisible = true;
 
-                AddDomainToHistory(Domain);
+                ListHelper.Modify(SettingsManager.Current.Whois_DomainHistory, Domain,
+                    SettingsManager.Current.General_HistoryListEntries);
             }
         }
         catch (Exception ex)
@@ -213,20 +214,6 @@ public class WhoisViewModel : ViewModelBase
         _closed = true;
 
         ConfigurationManager.Current.WhoisTabCount--;
-    }
-
-    private void AddDomainToHistory(string domain)
-    {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.Whois_DomainHistory.ToList(), domain,
-            SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.Whois_DomainHistory.Clear();
-        OnPropertyChanged(nameof(Domain)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.Whois_DomainHistory.Add(x));
     }
 
     private Task Export()

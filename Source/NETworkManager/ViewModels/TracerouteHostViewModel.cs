@@ -70,10 +70,6 @@ public class TracerouteHostViewModel : ProfileHostViewModelBase
 
     protected override ApplicationName ApplicationName => ApplicationName.Traceroute;
 
-    protected override bool IsProfileEnabled(ProfileInfo profile) => profile.Traceroute_Enabled;
-
-    protected override string GetSearchableField(ProfileInfo profile) => profile.Traceroute_Host;
-
     #endregion
 
     #region ICommand & Actions

@@ -2,7 +2,7 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class WhoisHostView
+public partial class WhoisHostView : IApplicationRequestHandler
 {
     private readonly WhoisHostViewModel _viewModel = new();
 
@@ -12,9 +12,12 @@ public partial class WhoisHostView
         DataContext = _viewModel;
     }
 
-    public void AddTab(string domain)
+    public void Open(ApplicationRequest request)
     {
-        _viewModel.AddTab(domain);
+        if (request.Profile != null)
+            _viewModel.AddTab(request.Profile);
+        else
+            _viewModel.AddTab(request.Target);
     }
 
     public void OnViewHide()
