@@ -4831,4 +4831,31 @@ The new rule may apply to more traffic than the original rule (e.g. to all servi
   <data name="DeleteRulesX" xml:space="preserve">
     <value>Delete rules ({0})</value>
   </data>
+  <data name="RDAPQueryType_Auto" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="EnterValidRDAPQuery" xml:space="preserve">
+    <value>Enter a valid domain, IP address, AS number or entity handle!</value>
+  </data>
+  <data name="RDAPTimeoutAfterXSeconds" xml:space="preserve">
+    <value>The RDAP server did not respond within {0} seconds.</value>
+  </data>
+  <data name="RDAPQueryType_Nameserver" xml:space="preserve">
+    <value>Nameserver</value>
+  </data>
+  <data name="EnterValidNameserver" xml:space="preserve">
+    <value>Enter a valid nameserver (e.g., "ns1.example.com")!</value>
+  </data>
+  <data name="ASNumbers" xml:space="preserve">
+    <value>AS numbers</value>
+  </data>
+  <data name="RDAPDots" xml:space="preserve">
+    <value>RDAP...</value>
+  </data>
+  <data name="RDAPXIsNotARegisteredDomainShowingY" xml:space="preserve">
+    <value>"{0}" is not a registered domain, showing the registration data of "{1}".</value>
+  </data>
+  <data name="Resource_PublicSuffixList_Description" xml:space="preserve">
+    <value>List of public suffixes (e.g. "co.uk") from publicsuffix.org (MPL-2.0), which is used to get the registered domain of a hostname for RDAP queries.</value>
+  </data>
 </root>
