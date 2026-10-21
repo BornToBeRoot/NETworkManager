@@ -349,7 +349,8 @@ public class RDAPViewModel : ViewModelBase
             if (messages.Count > 0)
                 ShowStatusMessage(string.Join(Environment.NewLine, messages));
 
-            AddQueryToHistory(Query);
+            ListHelper.Modify(SettingsManager.Current.RDAP_QueryHistory, Query,
+                SettingsManager.Current.General_HistoryListEntries);
         }
         catch (OperationCanceledException)
         {
@@ -444,12 +445,6 @@ public class RDAPViewModel : ViewModelBase
             Stop();
 
         ConfigurationManager.Current.RDAPTabCount--;
-    }
-
-    private void AddQueryToHistory(string query)
-    {
-        ListHelper.Modify(SettingsManager.Current.RDAP_QueryHistory, query,
-            SettingsManager.Current.General_HistoryListEntries);
     }
 
     /// <summary>

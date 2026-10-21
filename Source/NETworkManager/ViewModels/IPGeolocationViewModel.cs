@@ -262,7 +262,8 @@ public class IPGeolocationViewModel : ViewModelBase
             Result = result.Info;
             IsResultVisible = true;
 
-            AddHostToHistory(Host);
+            ListHelper.Modify(SettingsManager.Current.IPGeolocation_HostHistory, Host,
+                SettingsManager.Current.General_HistoryListEntries);
         }
         catch (Exception ex)
         {
@@ -333,16 +334,6 @@ public class IPGeolocationViewModel : ViewModelBase
         _closed = true;
 
         ConfigurationManager.Current.IPGeolocationTabCount--;
-    }
-
-    /// <summary>
-    /// Adds the host to the history.
-    /// </summary>
-    /// <param name="host">The host to add.</param>
-    private void AddHostToHistory(string host)
-    {
-        ListHelper.Modify(SettingsManager.Current.IPGeolocation_HostHistory, host,
-            SettingsManager.Current.General_HistoryListEntries);
     }
 
     #endregion

@@ -552,7 +552,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         PreparingScan = false;
 
         // Add host(s) to the history
-        AddHostToHistory(Host);
+        ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory, Host,
+            SettingsManager.Current.General_HistoryListEntries);
 
         var ipScanner = new IPScanner(new IPScannerOptions(
             SettingsManager.Current.IPScanner_MaxHostThreads,
@@ -697,16 +698,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 await DialogHelper.ShowMessageAsync(window, Strings.Error, ex.Message, ChildWindowIcon.Error);
             }
         }
-    }
-
-    /// <summary>
-    /// Adds the scanned host/range to the history.
-    /// </summary>
-    /// <param name="ipRange">The host or IP range to add.</param>
-    private void AddHostToHistory(string ipRange)
-    {
-        ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory, ipRange,
-            SettingsManager.Current.General_HistoryListEntries);
     }
 
     /// <summary>

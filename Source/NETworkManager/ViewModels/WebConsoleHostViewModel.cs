@@ -190,7 +190,8 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
             // Add to history
             // Note: The history can only be updated after the values have been read.
             //       Otherwise, in some cases, incorrect values are taken over.
-            AddUrlToHistory(instance.Url);
+            ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory, instance.Url,
+                SettingsManager.Current.General_HistoryListEntries);
 
             Connect(info);
         }, _ =>
@@ -243,14 +244,5 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
     }
 
     // Modify history list
-    private static void AddUrlToHistory(string url)
-    {
-        if (string.IsNullOrEmpty(url))
-            return;
-
-        ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory, url,
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
     #endregion
 }

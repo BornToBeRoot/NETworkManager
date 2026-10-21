@@ -134,22 +134,12 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
 
         IsResultVisible = true;
 
-        AddSubnet1ToHistory(subnet1);
-        AddSubnet2ToHistory(subnet2);
+        ListHelper.Modify(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1, subnet1,
+            SettingsManager.Current.General_HistoryListEntries);
+        ListHelper.Modify(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2, subnet2,
+            SettingsManager.Current.General_HistoryListEntries);
 
         IsRunning = false;
-    }
-
-    private void AddSubnet1ToHistory(string subnet)
-    {
-        ListHelper.Modify(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1, subnet,
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
-    private void AddSubnet2ToHistory(string subnet)
-    {
-        ListHelper.Modify(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2, subnet,
-            SettingsManager.Current.General_HistoryListEntries);
     }
 
     public void OnShutdown()

@@ -40,19 +40,6 @@ public class LookupPortLookupViewModel : ViewModelBase
 
     #endregion
 
-    #region Methods
-
-    /// <summary>
-    /// Adds the search term to the history.
-    /// </summary>
-    /// <param name="portOrService">The port or service.</param>
-    private void AddSearchToHistory(string portOrService)
-    {
-        ListHelper.Modify(SettingsManager.Current.Lookup_Port_SearchHistory, portOrService,
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
-    #endregion
 
     #region Variables
 
@@ -312,7 +299,8 @@ public class LookupPortLookupViewModel : ViewModelBase
         NothingFound = Results.Count == 0;
 
         // Add the MAC-Address or Vendor to the history
-        AddSearchToHistory(Search);
+        ListHelper.Modify(SettingsManager.Current.Lookup_Port_SearchHistory, Search,
+            SettingsManager.Current.General_HistoryListEntries);
 
         IsRunning = false;
     }

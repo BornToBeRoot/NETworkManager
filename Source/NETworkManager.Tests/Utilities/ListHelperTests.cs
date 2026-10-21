@@ -84,6 +84,29 @@ public class ListHelperTests
         Assert.Equal([NotifyCollectionChangedAction.Move], actions);
     }
 
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void IgnoresEmptyEntries(string entry)
+    {
+        ObservableCollection<string> list = ["a"];
+
+        ListHelper.Modify(list, entry, 5);
+
+        Assert.Equal(["a"], list);
+    }
+
+    [Fact]
+    public void IgnoresDefaultValue()
+    {
+        // E.g. a port of 0 if the port is not used.
+        ObservableCollection<int> list = [22];
+
+        ListHelper.Modify(list, 0, 5);
+
+        Assert.Equal([22], list);
+    }
+
     [Fact]
     public void ThrowsIfTheLengthIsNotPositive()
     {

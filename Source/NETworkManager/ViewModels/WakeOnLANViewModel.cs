@@ -187,8 +187,10 @@ public class WakeOnLANViewModel : ProfileHostViewModelBase
             Port = SettingsManager.Current.WakeOnLAN_Port
         };
 
-        AddMACAddressToHistory(MACAddress);
-        AddBroadcastToHistory(Broadcast);
+        ListHelper.Modify(SettingsManager.Current.WakeOnLan_MACAddressHistory, MACAddress,
+            SettingsManager.Current.General_HistoryListEntries);
+        ListHelper.Modify(SettingsManager.Current.WakeOnLan_BroadcastHistory, Broadcast,
+            SettingsManager.Current.General_HistoryListEntries);
 
         _ = WakeUp(info);
     }
@@ -229,18 +231,6 @@ public class WakeOnLANViewModel : ProfileHostViewModelBase
         }
 
         IsRunning = false;
-    }
-
-    private void AddMACAddressToHistory(string macAddress)
-    {
-        ListHelper.Modify(SettingsManager.Current.WakeOnLan_MACAddressHistory, macAddress,
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
-    private void AddBroadcastToHistory(string broadcast)
-    {
-        ListHelper.Modify(SettingsManager.Current.WakeOnLan_BroadcastHistory, broadcast,
-            SettingsManager.Current.General_HistoryListEntries);
     }
 
     #endregion

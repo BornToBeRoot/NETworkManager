@@ -289,7 +289,8 @@ public class RemoteDesktopHostViewModel : ProfileHostViewModelBase
             // Add to history
             // Note: The history can only be updated after the values have been read.
             //       Otherwise, in some cases, incorrect values are taken over.
-            AddHostToHistory(instance.Host);
+            ListHelper.Modify(SettingsManager.Current.RemoteDesktop_HostHistory, instance.Host,
+                SettingsManager.Current.General_HistoryListEntries);
 
             Connect(sessionInfo);
         }, _ =>
@@ -396,14 +397,5 @@ public class RemoteDesktopHostViewModel : ProfileHostViewModelBase
     }
 
     // Modify history list
-    private static void AddHostToHistory(string host)
-    {
-        if (string.IsNullOrEmpty(host))
-            return;
-
-        ListHelper.Modify(SettingsManager.Current.RemoteDesktop_HostHistory, host,
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
     #endregion
 }

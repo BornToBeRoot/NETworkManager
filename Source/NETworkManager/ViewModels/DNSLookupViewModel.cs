@@ -385,7 +385,8 @@ public class DNSLookupViewModel : ViewModelBase
 
         DragablzTabItem.SetTabHeader(_tabId, Host);
 
-        AddHostToHistory(Host);
+        ListHelper.Modify(SettingsManager.Current.DNSLookup_HostHistory, Host,
+            SettingsManager.Current.General_HistoryListEntries);
 
         DNSLookupSettings dnsSettings = new()
         {
@@ -517,16 +518,6 @@ public class DNSLookupViewModel : ViewModelBase
     }
 
     // Modify history list
-    /// <summary>
-    /// Adds the host to the history.
-    /// </summary>
-    /// <param name="host">The host to add.</param>
-    private void AddHostToHistory(string host)
-    {
-        ListHelper.Modify(SettingsManager.Current.DNSLookup_HostHistory, host,
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
 
     /// <summary>
     /// Exports the results.

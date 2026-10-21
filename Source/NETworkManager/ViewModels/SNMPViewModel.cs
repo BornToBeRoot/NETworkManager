@@ -581,8 +581,10 @@ public class SNMPViewModel : ViewModelBase
         _cancellationTokenSource.CancelAfter(SettingsManager.Current.SNMP_Timeout);
 
         // Add to history...
-        AddHostToHistory(Host);
-        AddOidToHistory(Oid);
+        ListHelper.Modify(SettingsManager.Current.SNMP_HostHistory, Host,
+            SettingsManager.Current.General_HistoryListEntries);
+        ListHelper.Modify(SettingsManager.Current.SNMP_OidHistory, Oid,
+            SettingsManager.Current.General_HistoryListEntries);
     }
 
     private void StopWork()
@@ -631,18 +633,6 @@ public class SNMPViewModel : ViewModelBase
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
         await window.ShowChildWindowAsync(childWindow);
-    }
-
-    private void AddHostToHistory(string host)
-    {
-        ListHelper.Modify(SettingsManager.Current.SNMP_HostHistory, host,
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
-    private void AddOidToHistory(string oid)
-    {
-        ListHelper.Modify(SettingsManager.Current.SNMP_OidHistory, oid,
-            SettingsManager.Current.General_HistoryListEntries);
     }
 
     private Task Export()

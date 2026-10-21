@@ -112,15 +112,10 @@ public class SubnetCalculatorCalculatorViewModel : ViewModelBase
 
         IsResultVisible = true;
 
-        AddSubnetToHistory(subnet);
-
-        IsRunning = false;
-    }
-
-    private void AddSubnetToHistory(string subnet)
-    {
         ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory, subnet,
             SettingsManager.Current.General_HistoryListEntries);
+
+        IsRunning = false;
     }
 
     #endregion

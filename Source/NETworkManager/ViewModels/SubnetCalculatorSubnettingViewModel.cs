@@ -253,22 +253,12 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
         IsResultVisible = true;
 
-        AddSubnetToHistory(subnet);
-        AddNewSubnetmaskOrCidrToHistory(newSubnetmaskOrCidr);
-
-        IsRunning = false;
-    }
-
-    private void AddSubnetToHistory(string subnet)
-    {
         ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory, subnet,
             SettingsManager.Current.General_HistoryListEntries);
-    }
-
-    private void AddNewSubnetmaskOrCidrToHistory(string newSubnetmaskOrCidr)
-    {
         ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory, newSubnetmaskOrCidr,
             SettingsManager.Current.General_HistoryListEntries);
+
+        IsRunning = false;
     }
 
     public void OnShutdown()

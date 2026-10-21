@@ -433,7 +433,8 @@ public class TracerouteViewModel : ViewModelBase
             traceroute.TraceAsync(ipAddress, _cancellationTokenSource.Token);
 
             // Add the host to history
-            AddHostToHistory(Host);
+            ListHelper.Modify(SettingsManager.Current.Traceroute_HostHistory, Host,
+                SettingsManager.Current.General_HistoryListEntries);
         }
         catch (Exception ex) // This will catch any exception
         {
@@ -488,12 +489,6 @@ public class TracerouteViewModel : ViewModelBase
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
         return window.ShowChildWindowAsync(childWindow);
-    }
-
-    private void AddHostToHistory(string host)
-    {
-        ListHelper.Modify(SettingsManager.Current.Traceroute_HostHistory, host,
-            SettingsManager.Current.General_HistoryListEntries);
     }
 
     public void OnClose()

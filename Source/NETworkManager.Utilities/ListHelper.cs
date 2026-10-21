@@ -13,7 +13,8 @@ public static class ListHelper
     /// Adds the <paramref name="entry"/> as the newest (first) entry of the list. An existing entry is moved to the top
     /// (duplicates are removed) and the oldest entries are removed if the list exceeds the <paramref name="length"/>.
     /// The list is changed in place, so controls bound to it (e.g. the history of a ComboBox) keep their text and are
-    /// notified only about the actual changes.
+    /// notified only about the actual changes. Default values (null, 0) and empty strings are not added (e.g. optional
+    /// inputs).
     /// </summary>
     /// <param name="list">List to modify (e.g. a history of the settings).</param>
     /// <param name="entry">Entry to add to the list.</param>
@@ -23,6 +24,9 @@ public static class ListHelper
     {
         if (length <= 0)
             throw new ArgumentOutOfRangeException(nameof(length), "Length must be greater than zero.");
+
+        if (EqualityComparer<T>.Default.Equals(entry, default) || entry is string text && string.IsNullOrEmpty(text))
+            return;
 
         var index = list.IndexOf(entry);
 

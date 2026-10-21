@@ -333,13 +333,26 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
             // Add to history
             // Note: The history can only be updated after the values have been read.
             //       Otherwise, in some cases, incorrect values are taken over.
-            AddHostToHistory(instance.Host);
-            AddSerialLineToHistory(instance.SerialLine);
-            AddPortToHistory(instance.Port);
-            AddBaudToHistory(instance.Baud);
-            AddUsernameToHistory(instance.Username);
-            AddPrivateKeyToHistory(instance.PrivateKeyFile);
-            AddProfileToHistory(instance.Profile);
+            ListHelper.Modify(SettingsManager.Current.PuTTY_HostHistory, instance.Host,
+                SettingsManager.Current.General_HistoryListEntries);
+            ListHelper.Modify(SettingsManager.Current.PuTTY_SerialLineHistory, instance.SerialLine,
+                SettingsManager.Current.General_HistoryListEntries);
+
+            // Port and baud are 0 if they are not set.
+            if (instance.Port > 0)
+                ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory, instance.Port.ToString(),
+                    SettingsManager.Current.General_HistoryListEntries);
+
+            if (instance.Baud > 0)
+                ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory, instance.Baud.ToString(),
+                    SettingsManager.Current.General_HistoryListEntries);
+
+            ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory, instance.Username,
+                SettingsManager.Current.General_HistoryListEntries);
+            ListHelper.Modify(SettingsManager.Current.PuTTY_PrivateKeyFileHistory, instance.PrivateKeyFile,
+                SettingsManager.Current.General_HistoryListEntries);
+            ListHelper.Modify(SettingsManager.Current.PuTTY_ProfileHistory, instance.Profile,
+                SettingsManager.Current.General_HistoryListEntries);
 
             Connect(sessionInfo);
         }, _ =>
@@ -406,69 +419,6 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
     }
 
     // Modify history list
-    private static void AddHostToHistory(string host)
-    {
-        if (string.IsNullOrEmpty(host))
-            return;
-
-        ListHelper.Modify(SettingsManager.Current.PuTTY_HostHistory, host,
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
-    private static void AddSerialLineToHistory(string serialLine)
-    {
-        if (string.IsNullOrEmpty(serialLine))
-            return;
-
-        ListHelper.Modify(SettingsManager.Current.PuTTY_SerialLineHistory, serialLine,
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
-    private static void AddPortToHistory(int port)
-    {
-        if (port == 0)
-            return;
-
-        ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory, port.ToString(),
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
-    private static void AddBaudToHistory(int baud)
-    {
-        if (baud == 0)
-            return;
-
-        ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory, baud.ToString(),
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
-    private static void AddUsernameToHistory(string username)
-    {
-        if (string.IsNullOrEmpty(username))
-            return;
-
-        ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory, username,
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
-    private static void AddPrivateKeyToHistory(string privateKey)
-    {
-        if (string.IsNullOrEmpty(privateKey))
-            return;
-
-        ListHelper.Modify(SettingsManager.Current.PuTTY_PrivateKeyFileHistory, privateKey,
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
-    private static void AddProfileToHistory(string profile)
-    {
-        if (string.IsNullOrEmpty(profile))
-            return;
-
-        ListHelper.Modify(SettingsManager.Current.PuTTY_ProfileHistory, profile,
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
     public void FocusEmbeddedWindow()
     {
         /* Don't continue if

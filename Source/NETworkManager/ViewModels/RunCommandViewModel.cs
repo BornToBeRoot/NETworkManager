@@ -186,7 +186,8 @@ public class RunCommandViewModel : ViewModelBase
         Request = request;
         IsSettings = result.Command.Type == RunCommandType.Setting;
 
-        AddToHistory(text.Trim());
+        ListHelper.Modify(SettingsManager.Current.RunCommand_History, text.Trim(),
+            SettingsManager.Current.General_HistoryListEntries);
 
         _runHandler(this);
     }
@@ -347,12 +348,6 @@ public class RunCommandViewModel : ViewModelBase
                     CompletionText = x
                 };
             });
-    }
-
-    private static void AddToHistory(string text)
-    {
-        ListHelper.Modify(SettingsManager.Current.RunCommand_History, text,
-            SettingsManager.Current.General_HistoryListEntries);
     }
 
     #endregion

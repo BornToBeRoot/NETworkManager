@@ -487,8 +487,10 @@ public class PortScannerViewModel : ViewModelBase
         PreparingScan = false;
 
         // Add host(s) to the history
-        AddHostToHistory(Host);
-        AddPortToHistory(Ports);
+        ListHelper.Modify(SettingsManager.Current.PortScanner_HostHistory, Host,
+            SettingsManager.Current.General_HistoryListEntries);
+        ListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory, Ports,
+            SettingsManager.Current.General_HistoryListEntries);
 
         var portScanner = new PortScanner(new PortScannerOptions(
             SettingsManager.Current.PortScanner_MaxHostThreads,
@@ -569,18 +571,6 @@ public class PortScannerViewModel : ViewModelBase
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
         return window.ShowChildWindowAsync(childWindow);
-    }
-
-    private void AddHostToHistory(string host)
-    {
-        ListHelper.Modify(SettingsManager.Current.PortScanner_HostHistory, host,
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
-    private void AddPortToHistory(string port)
-    {
-        ListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory, port,
-            SettingsManager.Current.General_HistoryListEntries);
     }
 
     #endregion

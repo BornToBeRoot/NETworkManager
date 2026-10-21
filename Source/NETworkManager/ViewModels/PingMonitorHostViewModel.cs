@@ -344,7 +344,8 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
         }
 
         // Add host(s) to history
-        AddHostToHistory(Host);
+        ListHelper.Modify(SettingsManager.Current.PingMonitor_HostHistory, Host,
+            SettingsManager.Current.General_HistoryListEntries);
 
         // Add host(s) to list and start the ping
         foreach (var hostView in hosts.hosts.Select(currentHost =>
@@ -407,12 +408,6 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
         Hosts[i].Stop();
         Hosts[i].Cleanup();
         Hosts.RemoveAt(i);
-    }
-
-    private void AddHostToHistory(string host)
-    {
-        ListHelper.Modify(SettingsManager.Current.PingMonitor_HostHistory, host,
-            SettingsManager.Current.General_HistoryListEntries);
     }
 
     #endregion

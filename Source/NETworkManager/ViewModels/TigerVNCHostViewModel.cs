@@ -197,8 +197,10 @@ public class TigerVNCHostViewModel : ProfileHostViewModelBase
             // Add to history
             // Note: The history can only be updated after the values have been read.
             //       Otherwise, in some cases, incorrect values are taken over.
-            AddHostToHistory(instance.Host);
-            AddPortToHistory(instance.Port);
+            ListHelper.Modify(SettingsManager.Current.TigerVNC_HostHistory, instance.Host,
+                SettingsManager.Current.General_HistoryListEntries);
+            ListHelper.Modify(SettingsManager.Current.TigerVNC_PortHistory, instance.Port,
+                SettingsManager.Current.General_HistoryListEntries);
 
             // Connect
             Connect(sessionInfo);
@@ -259,24 +261,6 @@ public class TigerVNCHostViewModel : ProfileHostViewModelBase
     }
 
     // Modify history list
-    private static void AddHostToHistory(string host)
-    {
-        if (string.IsNullOrEmpty(host))
-            return;
-
-        ListHelper.Modify(SettingsManager.Current.TigerVNC_HostHistory, host,
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
-    private static void AddPortToHistory(int port)
-    {
-        if (port == 0)
-            return;
-
-        ListHelper.Modify(SettingsManager.Current.TigerVNC_PortHistory, port,
-            SettingsManager.Current.General_HistoryListEntries);
-    }
-
     #endregion
 
     #region Event
