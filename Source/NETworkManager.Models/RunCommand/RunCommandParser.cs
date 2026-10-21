@@ -139,8 +139,8 @@ public static partial class RunCommandParser
                 Command = command,
                 CommandText = commandText,
                 Position = RunCommandPosition.Target,
-                CurrentWord = words[1],
-                InputBeforeCurrentWord = commandPrefix,
+                CurrentWord = endsWithWhitespace ? string.Empty : words[^1],
+                InputBeforeCurrentWord = string.Join(" ", tokens[..^(endsWithWhitespace ? 0 : 1)]) + " ",
                 Error = RunCommandParseError.NoArguments,
                 ErrorValue = command.Command
             };

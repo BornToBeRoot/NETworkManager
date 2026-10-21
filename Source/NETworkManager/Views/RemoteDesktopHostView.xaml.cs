@@ -17,7 +17,8 @@ public partial class RemoteDesktopHostView : IApplicationRequestHandler
     {
         // Wait for the interface to load, before displaying the dialog to connect a new Profile...
         // MahApps will throw an exception...
-        await this.WaitForLoadedAsync();
+        if (!await this.WaitForLoadedAsync())
+            return;
 
         if (request.Profile != null)
             _viewModel.ConnectProfile(request.Profile);

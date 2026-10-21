@@ -41,6 +41,11 @@ public class RunCommandViewModel : ViewModelBase
     private readonly List<(string Text, RunCommandDefinition Command)> _history;
 
     /// <summary>
+    ///     Names (command and aliases) and translated name per command.
+    /// </summary>
+    private readonly List<(RunCommandDefinition Command, List<string> Names, string TranslatedName)> _commandNames;
+
+    /// <summary>
     ///     Profiles per command (loaded once per command while the dialog is open).
     /// </summary>
     private readonly Dictionary<RunCommandDefinition, List<ProfileInfo>> _profiles = [];
@@ -56,6 +61,12 @@ public class RunCommandViewModel : ViewModelBase
     {
         _commands = RunCommandManager.GetCommands();
         _runHandler = runHandler;
+
+        _commandNames =
+        [
+            .. _commands.Select(x => (x, new List<string> { x.Command }.Concat(x.Aliases).ToList(),
+                RunCommandManager.GetTranslatedName(x)))
+        ];
 
         // Entries of commands that are not available anymore (e.g. a hidden application) are not shown.
         _history =
@@ -324,14 +335,13 @@ public class RunCommandViewModel : ViewModelBase
 
         var commands = new List<(int Rank, RunCommandSuggestion Suggestion)>();
 
-        foreach (var command in _commands)
+        foreach (var (command, names, translatedName) in _commandNames)
         {
-            var names = new[] { command.Command }.Concat(command.Aliases).ToList();
-            var translatedName = RunCommandManager.GetTranslatedName(command);
-
-            // Complete with the command or alias that was typed (e.g. "ping" instead of "pingmonitor").
+            // Complete with the command or alias that was typed, or the shortest one that starts with the text (e.g.
+            // "pin" → "ping" instead of "pingmonitor").
             var exactName = names.FirstOrDefault(x => string.Equals(x, text, StringComparison.OrdinalIgnoreCase));
-            var name = exactName ?? names.FirstOrDefault(x => x.StartsWith(text, StringComparison.OrdinalIgnoreCase));
+            var name = exactName ?? names.Where(x => x.StartsWith(text, StringComparison.OrdinalIgnoreCase))
+                .OrderBy(x => x.Length).FirstOrDefault();
 
             if (name == null && !translatedName.Contains(text, StringComparison.OrdinalIgnoreCase))
                 continue;

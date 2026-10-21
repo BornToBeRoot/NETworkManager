@@ -17,7 +17,8 @@ public partial class PuTTYHostView : IApplicationRequestHandler
     {
         // Wait for the interface to load, before displaying the dialog to connect a new profile...
         // MahApps will throw an exception...
-        await this.WaitForLoadedAsync();
+        if (!await this.WaitForLoadedAsync())
+            return;
 
         if (!_viewModel.IsExecutableConfigured)
             return;

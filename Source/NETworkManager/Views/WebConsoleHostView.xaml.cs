@@ -17,7 +17,8 @@ public partial class WebConsoleHostView : IApplicationRequestHandler
     {
         // Wait for the interface to load, before displaying the dialog to connect a new profile...
         // MahApps will throw an exception...
-        await this.WaitForLoadedAsync();
+        if (!await this.WaitForLoadedAsync())
+            return;
 
         // WebView2 runtime is required for the web console.
         if (!_viewModel.IsRuntimeAvailable)

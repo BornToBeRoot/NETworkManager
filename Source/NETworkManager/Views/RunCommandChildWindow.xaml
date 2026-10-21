@@ -89,7 +89,7 @@
         <!-- Suggestions -->
         <ListBox x:Name="ListBoxSuggestions" Grid.Row="3"
                  Margin="0,10,0,0"
-                 MaxHeight="450"
+                 MaxHeight="340"
                  ItemsSource="{Binding Suggestions}"
                  SelectedItem="{Binding SelectedSuggestion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  SelectionMode="Single"

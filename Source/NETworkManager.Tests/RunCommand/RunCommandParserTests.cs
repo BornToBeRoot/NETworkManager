@@ -249,6 +249,15 @@ public class RunCommandParserTests
         Assert.Equal(RunCommandParseError.NoArguments, result.Error);
     }
 
+    [Fact]
+    public void NoArgumentsCurrentWordIsTheLastWord()
+    {
+        var result = Parse("settings foo ba");
+
+        Assert.Equal("ba", result.CurrentWord);
+        Assert.Equal("settings foo ", result.InputBeforeCurrentWord);
+    }
+
     [Theory]
     [InlineData("ping @dns-01", "dns-01")]
     [InlineData("ping @Web Server 01", "Web Server 01")]

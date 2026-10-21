@@ -112,8 +112,10 @@ public static class RunCommandManager
         {
             if (profile == null)
             {
+                // The name is compared like it is parsed (without surrounding whitespace and quotes).
                 var profiles = GetProfiles(result.Command)
-                    .Where(x => string.Equals(x.Name, result.ProfileName, StringComparison.OrdinalIgnoreCase))
+                    .Where(x => string.Equals(x.Name.Trim().Trim('"').Trim(), result.ProfileName,
+                        StringComparison.OrdinalIgnoreCase))
                     .ToList();
 
                 switch (profiles.Count)
@@ -231,7 +233,8 @@ public static class RunCommandManager
         if (GetDNSServers().Any(x => string.Equals(x, dnsServer, StringComparison.OrdinalIgnoreCase)))
             return null;
 
-        foreach (var server in dnsServer.Split(';'))
+        foreach (var server in dnsServer.Split(';',
+                     StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
         {
             if (!ServerConnectionInfo.TryParse(server, out var serverInfo, 53, TransportProtocol.Udp) ||
                 !IPAddress.TryParse(serverInfo.Server, out _) && !serverInfo.Server.Contains('.'))

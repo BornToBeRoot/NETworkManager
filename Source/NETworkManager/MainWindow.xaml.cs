@@ -1101,24 +1101,23 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         var childWindow = new RunCommandChildWindow();
 
-        var childWindowViewModel = new RunCommandViewModel(instance =>
+        void CloseDialog()
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
             ConfigurationManager.OnDialogClose();
+        }
+
+        var childWindowViewModel = new RunCommandViewModel(instance =>
+        {
+            CloseDialog();
 
             if (instance.IsSettings)
                 NavigationManager.OpenSettings();
             else
                 NavigationManager.Open(instance.Request);
-        }, _ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            ConfigurationManager.OnDialogClose();
-        });
+        }, _ => CloseDialog());
 
         childWindow.DataContext = childWindowViewModel;
 
