@@ -17,6 +17,11 @@ public partial class SubnetCalculatorSubnettingView
         Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
     }
 
+    public void Calculate(string subnet, string newSubnetmask)
+    {
+        _ = _viewModel.Calculate(subnet, newSubnetmask);
+    }
+
     private void Dispatcher_ShutdownStarted(object sender, EventArgs e)
     {
         _viewModel.OnShutdown();

@@ -51,6 +51,12 @@ public sealed class RunCommandDefinition
     public IReadOnlyList<string> Types { get; init; } = [];
 
     /// <summary>
+    ///     The type keyword is required and is the first word after the command (e.g. "lookup port 22"). The rest of the
+    ///     input is the target, so it can contain spaces (e.g. "lookup oui Cisco Systems").
+    /// </summary>
+    public bool TypeBeforeTarget { get; init; }
+
+    /// <summary>
     ///     Syntax of the arguments for the hint (e.g. "&lt;hosts&gt; [server] [type]"), empty if there are none.
     /// </summary>
     public string Syntax { get; init; } = string.Empty;

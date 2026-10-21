@@ -6,6 +6,7 @@
 public enum RunCommandPosition
 {
     Command,
+    Type,
     Target,
     Argument
 }

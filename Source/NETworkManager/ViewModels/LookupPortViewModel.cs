@@ -193,6 +193,17 @@ public class LookupPortLookupViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Looks up ports or services (e.g. from the run command).
+    /// </summary>
+    /// <param name="search">Ports, port ranges or services, separated by ";".</param>
+    public Task Lookup(string search)
+    {
+        Search = search;
+
+        return PortLookupAction();
+    }
+
+    /// <summary>
     /// Performs the port lookup.
     /// </summary>
     private async Task PortLookupAction()

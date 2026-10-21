@@ -11,4 +11,9 @@ public partial class SubnetCalculatorCalculatorView
         InitializeComponent();
         DataContext = _viewModel;
     }
+
+    public void Calculate(string subnet)
+    {
+        _viewModel.Calculate(subnet);
+    }
 }

@@ -249,6 +249,8 @@ public class RunCommandViewModel : ViewModelBase
         IEnumerable<RunCommandSuggestion> suggestions = _result.Position switch
         {
             RunCommandPosition.Command => GetCommandSuggestions(),
+            RunCommandPosition.Type =>
+                [GetRunSuggestion(), .. GetTypeSuggestions(), .. GetHistorySuggestions()],
             RunCommandPosition.Target when _result.ProfileName != null => GetProfileSuggestions(),
             RunCommandPosition.Target =>
             [
@@ -280,6 +282,7 @@ public class RunCommandViewModel : ViewModelBase
     ///     arguments (e.g. a typo like "pin 10.0.0.1"), which would drop the input.
     ///     - While typing a profile ("@"): the profile, only if exactly one matches. Otherwise, the typed name is used,
     ///     which must be unique (e.g. two profiles with the same name in different groups).
+    ///     - While typing a type before the target (e.g. "lookup po"): the matching type, like the command.
     /// </summary>
     private RunCommandSuggestion GetPreselectedSuggestion()
     {
@@ -288,6 +291,8 @@ public class RunCommandViewModel : ViewModelBase
             RunCommandPosition.Command when string.IsNullOrWhiteSpace(Input) ||
                                             _result.Command == null && GetInputAfterCommand().Length > 0 => null,
             RunCommandPosition.Target when _result.ProfileName != null => Suggestions.Count == 1 ? Suggestions[0] : null,
+            RunCommandPosition.Type when _result.CurrentWord.Length > 0 =>
+                Suggestions.FirstOrDefault(x => x.Kind == RunCommandSuggestionKind.Type) ?? Suggestions.FirstOrDefault(),
             _ => Suggestions.FirstOrDefault()
         };
     }

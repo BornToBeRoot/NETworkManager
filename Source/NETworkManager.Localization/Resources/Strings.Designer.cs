@@ -4175,6 +4175,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a subnet mask or CIDR between /{0} and /{1}!.
+        /// </summary>
+        public static string EnterSubnetmaskOrCIDRBetweenXAndY {
+            get {
+                return ResourceManager.GetString("EnterSubnetmaskOrCIDRBetweenXAndY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter subnets to create a wide subnet....
         /// </summary>
         public static string EnterSubnetsToCreateAWideSubnet {

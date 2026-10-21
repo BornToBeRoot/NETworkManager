@@ -1062,7 +1062,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Change application view
         SelectedApplication = application;
 
-        if (string.IsNullOrEmpty(request.Target) && request.Profile == null)
+        // Only open the application, unless the request shows a part of it (e.g. the port lookup)
+        if (string.IsNullOrEmpty(request.Target) && request.Profile == null && request is not LookupRequest)
             return;
 
         // Create a new tab / perform the action in the application (only if it is shown)

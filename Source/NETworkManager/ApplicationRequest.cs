@@ -1,5 +1,6 @@
 ﻿using DnsClient;
 using NETworkManager.Models;
+using NETworkManager.Models.Lookup;
 using NETworkManager.Models.RDAP;
 using NETworkManager.Profiles;
 
@@ -71,4 +72,32 @@ public sealed record RDAPRequest() : ApplicationRequest(ApplicationName.RDAP)
     ///     Query type. If null, the type is detected from the query (<see cref="RDAPQueryType.Auto" />).
     /// </summary>
     public RDAPQueryType? QueryType { get; init; }
+}
+
+/// <summary>
+///     Request to open the Subnet Calculator. <see cref="ApplicationRequest.Target" /> is the subnet, which is calculated
+///     (or subnetted / combined with <see cref="NewSubnetmask" /> / <see cref="Subnet2" />).
+/// </summary>
+public sealed record SubnetCalculatorRequest() : ApplicationRequest(ApplicationName.SubnetCalculator)
+{
+    /// <summary>
+    ///     New subnet mask or CIDR (e.g. "/26") to split the subnet into (Subnetting).
+    /// </summary>
+    public string NewSubnetmask { get; init; }
+
+    /// <summary>
+    ///     Second subnet to calculate the wide subnet with (Wide Subnet).
+    /// </summary>
+    public string Subnet2 { get; init; }
+}
+
+/// <summary>
+///     Request to open the Lookup. Without a <see cref="ApplicationRequest.Target" />, only the lookup is shown.
+/// </summary>
+public sealed record LookupRequest() : ApplicationRequest(ApplicationName.Lookup)
+{
+    /// <summary>
+    ///     Lookup to show (and run with the target).
+    /// </summary>
+    public LookupType Type { get; init; }
 }

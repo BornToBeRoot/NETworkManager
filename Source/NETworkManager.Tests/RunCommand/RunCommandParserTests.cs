@@ -32,8 +32,15 @@ public class RunCommandParserTests
         new()
         {
             Type = RunCommandType.Application, Application = ApplicationName.SubnetCalculator,
-            Command = "subnetcalculator"
+            Command = "subnetcalculator", Aliases = ["subnet"], SupportsTarget = true,
+            Argument = RunCommandArgument.Subnet
         },
+        new()
+        {
+            Type = RunCommandType.Application, Application = ApplicationName.Lookup, Command = "lookup",
+            SupportsTarget = true, Types = ["oui", "port"], TypeBeforeTarget = true
+        },
+        new() { Type = RunCommandType.Application, Application = ApplicationName.Firewall, Command = "firewall" },
         new() { Type = RunCommandType.Setting, Command = "settings" }
     ];
 
@@ -240,7 +247,7 @@ public class RunCommandParserTests
     }
 
     [Theory]
-    [InlineData("subnetcalculator 10.0.0.0/24")]
+    [InlineData("firewall 10.0.0.1")]
     [InlineData("settings general")]
     public void NoArguments(string input)
     {
@@ -307,6 +314,71 @@ public class RunCommandParserTests
     [InlineData("dns borntoberoot.net 1.1.1.1 cn", RunCommandPosition.Argument, "cn", "dns borntoberoot.net 1.1.1.1 ")]
     [InlineData("dns border", RunCommandPosition.Target, "border", "dns ")]
     public void PositionForSuggestions(string input, RunCommandPosition position, string currentWord, string before)
+    {
+        var result = Parse(input);
+
+        Assert.Equal(position, result.Position);
+        Assert.Equal(currentWord, result.CurrentWord);
+        Assert.Equal(before, result.InputBeforeCurrentWord);
+    }
+
+    [Theory]
+    [InlineData("subnet 10.0.0.0/24", "10.0.0.0/24", null)]
+    [InlineData("subnet 10.0.0.0/16 /24", "10.0.0.0/16", "/24")]
+    [InlineData("subnet 10.0.0.0/24 10.0.1.0/24", "10.0.0.0/24", "10.0.1.0/24")]
+    public void SubnetWithNewSubnetmaskOrSubnet2(string input, string target, string argument)
+    {
+        var result = Parse(input);
+
+        Assert.Equal(RunCommandParseError.None, result.Error);
+        Assert.Equal(target, result.Target);
+        Assert.Equal(argument, result.Argument);
+    }
+
+    [Theory]
+    [InlineData("lookup port 22", "port", "22")]
+    [InlineData("lookup PORT 22; 80; ssh", "port", "22;80;ssh")]
+    [InlineData("lookup oui 00:11:22", "oui", "00:11:22")]
+    [InlineData("lookup oui Cisco Systems", "oui", "Cisco Systems")]
+    [InlineData("lookup oui \"Cisco Systems\"", "oui", "Cisco Systems")]
+    [InlineData("lookup port", "port", null)]
+    public void TypeBeforeTarget(string input, string type, string target)
+    {
+        var result = Parse(input);
+
+        Assert.Equal(RunCommandParseError.None, result.Error);
+        Assert.Equal(type, result.Type);
+        Assert.Equal(target, result.Target);
+    }
+
+    [Theory]
+    [InlineData("lookup po", "po")]
+    [InlineData("lookup foo 22", "foo")]
+    public void TypeBeforeTargetUnknownType(string input, string unknown)
+    {
+        var result = Parse(input);
+
+        Assert.Null(result.Type);
+        Assert.Equal(RunCommandParseError.UnknownArgument, result.Error);
+        Assert.Equal(unknown, result.ErrorValue);
+    }
+
+    [Fact]
+    public void TypeBeforeTargetNoProfiles()
+    {
+        var result = Parse("lookup @server");
+
+        Assert.Equal(RunCommandParseError.NoProfiles, result.Error);
+    }
+
+    [Theory]
+    [InlineData("lookup ", RunCommandPosition.Type, "", "lookup ")]
+    [InlineData("lookup po", RunCommandPosition.Type, "po", "lookup ")]
+    [InlineData("lookup port ", RunCommandPosition.Target, "", "lookup port ")]
+    [InlineData("lookup port 2", RunCommandPosition.Target, "2", "lookup port ")]
+    [InlineData("lookup oui Cisco Sys", RunCommandPosition.Target, "Cisco Sys", "lookup oui ")]
+    public void TypeBeforeTargetPositionForSuggestions(string input, RunCommandPosition position, string currentWord,
+        string before)
     {
         var result = Parse(input);
 

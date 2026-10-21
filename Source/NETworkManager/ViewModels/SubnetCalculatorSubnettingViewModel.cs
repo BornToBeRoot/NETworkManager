@@ -19,7 +19,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
-using IPAddress = System.Net.IPAddress;
 
 namespace NETworkManager.ViewModels;
 
@@ -213,6 +212,19 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
     #region Methods
 
+    /// <summary>
+    ///     Splits the subnet into subnets (e.g. from the run command).
+    /// </summary>
+    /// <param name="subnet">Subnet (e.g. 10.0.0.0/16).</param>
+    /// <param name="newSubnetmask">New subnet mask or CIDR (e.g. /24).</param>
+    public Task Calculate(string subnet, string newSubnetmask)
+    {
+        Subnet = subnet;
+        NewSubnetmask = newSubnetmask;
+
+        return Calculate();
+    }
+
     private async Task Calculate()
     {
         IsRunning = true;
@@ -224,14 +236,24 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
         var ipNetwork = IPNetwork2.Parse(Subnet.Trim());
 
-        var newCidr =
-            // Support subnetmask like 255.255.255.0
-            RegexHelper.SubnetmaskRegex().IsMatch(newSubnetmaskOrCidr)
-                ? Convert.ToByte(Subnetmask.ConvertSubnetmaskToCidr(IPAddress.Parse(newSubnetmaskOrCidr)))
-                : Convert.ToByte(newSubnetmaskOrCidr.TrimStart('/'));
+        // Subnet mask (e.g. 255.255.255.0) or CIDR (e.g. /24)
+        var newCidr = Subnetmask.ConvertSubnetmaskOrCidrToCidr(newSubnetmaskOrCidr);
+
+        var baseCidr = ipNetwork.AddressFamily == AddressFamily.InterNetwork ? 32 : 128;
+
+        // The new subnet mask must split the subnet (e.g. /24 into /26), otherwise the subnetting fails.
+        if (newCidr < ipNetwork.Cidr || newCidr > baseCidr)
+        {
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
+                string.Format(Strings.EnterSubnetmaskOrCIDRBetweenXAndY, ipNetwork.Cidr, baseCidr),
+                ChildWindowIcon.Error);
+
+            IsRunning = false;
+
+            return;
+        }
 
         // Ask the user if there is a large calculation...
-        var baseCidr = ipNetwork.AddressFamily == AddressFamily.InterNetwork ? 32 : 128;
 
         if (65535 < Math.Pow(2, baseCidr - ipNetwork.Cidr) / Math.Pow(2, baseCidr - newCidr))
         {
@@ -246,7 +268,7 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         // This still slows the application / freezes the ui... there are to many updates to the ui thread...
         await Task.Run(() =>
         {
-            foreach (var network in ipNetwork.Subnet(newCidr))
+            foreach (var network in ipNetwork.Subnet((byte)newCidr))
                 Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
                     new Action(delegate { Results.Add(new IPNetworkInfo(network)); }));
         });

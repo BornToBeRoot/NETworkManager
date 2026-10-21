@@ -32,6 +32,8 @@ public static partial class RunCommandParser
     ///     - A value with spaces is written in quotes (e.g. a DNS server "Google Public DNS").
     ///     - Further words are a type keyword of the command or its second argument (e.g. ports, DNS server), in any
     ///     order.
+    ///     - Commands with <see cref="RunCommandDefinition.TypeBeforeTarget" /> have the type keyword before the target
+    ///     and the rest of the input as target ("lookup oui Cisco Systems").
     /// </summary>
     /// <param name="input">Input of the dialog.</param>
     /// <param name="commands">Available commands.</param>
@@ -78,7 +80,7 @@ public static partial class RunCommandParser
             {
                 Command = command,
                 CommandText = commandText,
-                Position = RunCommandPosition.Target,
+                Position = command.TypeBeforeTarget ? RunCommandPosition.Type : RunCommandPosition.Target,
                 InputBeforeCurrentWord = commandPrefix
             };
 
@@ -144,6 +146,28 @@ public static partial class RunCommandParser
                 Error = RunCommandParseError.NoArguments,
                 ErrorValue = command.Command
             };
+
+        // Type keyword before the target (e.g. "lookup port 22"), the rest of the input is the target.
+        if (command.TypeBeforeTarget)
+        {
+            var typeKeyword = words[1].ToLowerInvariant();
+            var typeBeforeTarget = command.Types.Contains(typeKeyword) ? typeKeyword : null;
+            var target = words.Length > 2 ? string.Join(" ", words[2..]) : null;
+            var isTypingType = words.Length == 2 && !endsWithWhitespace;
+
+            return new RunCommandParseResult
+            {
+                Command = command,
+                CommandText = commandText,
+                Target = target,
+                Type = typeBeforeTarget,
+                Position = isTypingType ? RunCommandPosition.Type : RunCommandPosition.Target,
+                CurrentWord = isTypingType ? words[1] : target ?? string.Empty,
+                InputBeforeCurrentWord = isTypingType ? commandPrefix : $"{commandPrefix}{tokens[1]} ",
+                Error = typeBeforeTarget == null ? RunCommandParseError.UnknownArgument : RunCommandParseError.None,
+                ErrorValue = typeBeforeTarget == null ? words[1] : null
+            };
+        }
 
         // Further words: type keyword or second argument, in any order. A type keyword is never the second argument.
         string type = null;

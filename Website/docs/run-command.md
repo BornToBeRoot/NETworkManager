@@ -43,15 +43,19 @@ The input is validated like the input field of the feature (e.g. a valid host or
 | `whois`            |                    | `<domain>`                          | `whois borntoberoot.net`                 |
 | `ipgeolocation`    | `geo`              | `<host>`                            | `geo 1.1.1.1`                            |
 | `wakeonlan`        | `wol`              | `<MAC address> [broadcast]`         | `wol 00:11:22:33:44:55 192.168.1.255`    |
+| `subnetcalculator` | `subnet`, `ipcalc` | `<subnet> [new mask \| subnet 2]`   | `subnet 10.0.0.0/16 /24`                 |
+| `lookup`           |                    | `<oui\|port> <query>`               | `lookup port 22; 443; ssh`               |
 | `settings`         |                    |                                     | `settings`                               |
 
-All features that accept a target also accept a profile (`@profile`). The other features (e.g. `subnetcalculator`, `firewall`) can be opened with their name. Features that are hidden in [Settings > General](./settings/general.md) are not available.
+All features that accept a target also accept a profile (`@profile`), except the Subnet Calculator and the Lookup, which have no profiles. The other features (e.g. `firewall`, `listeners`) can be opened with their name. Features that are hidden in [Settings > General](./settings/general.md) are not available.
 
 :::note
 
 - **Remote Desktop, PowerShell, PuTTY, TigerVNC and Web Console** open the connect dialog with the host, so the connection settings can be adjusted before connecting. A profile connects directly with its settings.
 - **DNS lookup:** The type is the DNS record type (`a`, `aaaa`, `any`, `caa`, `cname`, `dnskey`, `mx`, `ns`, `ptr`, `soa`, `srv`, `txt`). Without a type, IP addresses are looked up with `ptr` and other hosts with the type selected in the feature. The DNS server is the name of a configured DNS server (case-insensitive, e.g. `cloudflare`) or custom DNS server(s): an IP address or a host with a domain, with an optional port, separated by `;` (e.g. `1.1.1.1`, `dns.google:53`).
 - **RDAP:** The type is `domain`, `nameserver`, `tld`, `ip`, `asn` or `entity`. Without a type, it is detected from the query (see [RDAP](./application/rdap.md#example-inputs)).
+- **Subnet Calculator:** A subnet (e.g. `subnet 10.0.0.0/24`) is calculated in **Calculator**. With a new subnet mask or CIDR (e.g. `/26`, `26` or `255.255.255.192`), it is split in **Subnetting**; the new mask must be between the CIDR of the subnet and `/32` (IPv4) or `/128` (IPv6). With a second subnet (e.g. `subnet 10.0.0.0/24 10.0.1.0/24`), the **Wide Subnet** is calculated (IPv4 only).
+- **Lookup:** The first word after the command is the lookup: `oui` (MAC addresses or vendors, e.g. `lookup oui 00:11:22`) or `port` (ports, port ranges or services, e.g. `lookup port 22; 80-90/tcp; ssh`). The rest of the input is the query, so vendors can contain spaces without quotes (e.g. `lookup oui Cisco Systems`). Without a query (e.g. `lookup port`), the lookup is only shown.
 - **Wake on LAN:** The magic packet is sent to the broadcast address (or the one last used in the feature). If there is no valid broadcast address yet, the MAC address is only filled in. A profile sends the magic packet with its settings.
 
 :::
@@ -65,10 +69,11 @@ While typing, suggestions are shown below the input:
 | _empty_                      | Recently run commands and all features                                   |
 | Command (e.g. `tr`)          | Matching features                                                        |
 | After the command (`rdp `)   | The input as typed, recent commands of the feature and its profiles      |
+| After `lookup `              | The input as typed, the lookups (`oui`, `port`) and recent commands      |
 | `@` (e.g. `rdp @web`)        | Profiles of the feature (with group and host); exact names first         |
 | After the target             | The input as typed, types of the feature (e.g. DNS record types), configured DNS servers (DNS lookup) and recent commands |
 
-`Enter` runs what was typed: after the command, the input as typed is the first suggestion; profiles, recent commands, types and DNS servers are selected with the arrow keys. While typing the command, the best matching feature is selected (completing it keeps the arguments, e.g. `pin 10.0.0.1` → `ping 10.0.0.1`), but not if the input is empty or an unknown command has arguments. While typing `@`, a profile is only selected if exactly one matches.
+`Enter` runs what was typed: after the command, the input as typed is the first suggestion; profiles, recent commands, types and DNS servers are selected with the arrow keys. While typing the command, the best matching feature is selected (completing it keeps the arguments, e.g. `pin 10.0.0.1` → `ping 10.0.0.1`), but not if the input is empty or an unknown command has arguments. While typing `@`, a profile is only selected if exactly one matches. While typing the lookup (e.g. `lookup po`), the matching lookup is selected.
 
 | Key          | Action                                         |
 | ------------ | ---------------------------------------------- |

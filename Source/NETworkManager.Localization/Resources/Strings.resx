@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -4886,5 +4886,8 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
   </data>
   <data name="Recent" xml:space="preserve">
     <value>Recent</value>
+  </data>
+  <data name="EnterSubnetmaskOrCIDRBetweenXAndY" xml:space="preserve">
+    <value>Enter a subnet mask or CIDR between /{0} and /{1}!</value>
   </data>
 </root>

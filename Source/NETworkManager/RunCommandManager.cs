@@ -2,6 +2,7 @@
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
+using NETworkManager.Models.Lookup;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.RDAP;
 using NETworkManager.Models.RunCommand;
@@ -13,6 +14,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Windows.Controls;
 
 namespace NETworkManager;
@@ -33,6 +35,15 @@ public static class RunCommandManager
         ["ip"] = RDAPQueryType.IPAddress,
         ["asn"] = RDAPQueryType.ASN,
         ["entity"] = RDAPQueryType.Entity
+    };
+
+    /// <summary>
+    ///     Type keywords of the Lookup and their lookup.
+    /// </summary>
+    private static readonly Dictionary<string, LookupType> LookupTypes = new()
+    {
+        ["oui"] = LookupType.OUI,
+        ["port"] = LookupType.Port
     };
 
     /// <summary>
@@ -134,10 +145,10 @@ public static class RunCommandManager
             return null;
         }
 
-        // Only open the application
+        // Only open the application (Lookup: show the lookup of the type)
         if (result.Target == null)
         {
-            request = new ApplicationRequest(result.Command.Application);
+            request = result.Type != null ? CreateRequest(result) : new ApplicationRequest(result.Command.Application);
 
             return null;
         }
@@ -186,6 +197,8 @@ public static class RunCommandManager
             ApplicationName.Whois => new DomainValidator(),
             ApplicationName.IPGeolocation => new IPAddressOrHostnameValidator(),
             ApplicationName.WakeOnLAN => new MACAddressValidator(),
+            ApplicationName.SubnetCalculator => new IPv4IPv6SubnetValidator(),
+            ApplicationName.Lookup => new NotEndWithSemicolonValidator(),
             _ => null
         };
 
@@ -203,9 +216,12 @@ public static class RunCommandManager
                 _ => null
             };
 
-            error = result.Command.Argument == RunCommandArgument.DNSServer
-                ? ValidateDNSServer(result.Argument)
-                : Validate(argumentValidator, result.Argument);
+            error = result.Command.Argument switch
+            {
+                RunCommandArgument.DNSServer => ValidateDNSServer(result.Argument),
+                RunCommandArgument.Subnet => ValidateSubnetArgument(result.Target, result.Argument),
+                _ => Validate(argumentValidator, result.Argument)
+            };
 
             if (error != null)
                 return error;
@@ -244,6 +260,31 @@ public static class RunCommandManager
         return null;
     }
 
+    /// <summary>
+    ///     Validates the second argument of the Subnet Calculator: a new subnet mask or CIDR (Subnetting), which must be
+    ///     between the CIDR of the subnet and the maximum of the address family, or a second subnet (Wide Subnet, IPv4
+    ///     only like in the application).
+    /// </summary>
+    private static string ValidateSubnetArgument(string subnet, string argument)
+    {
+        if (!IsSubnetmaskOrCidr(argument))
+            return Validate(new IPv4SubnetValidator(), subnet) ?? Validate(new IPv4SubnetValidator(), argument);
+
+        var ipNetwork = IPNetwork2.Parse(subnet.Trim());
+        var maxCidr = ipNetwork.AddressFamily == AddressFamily.InterNetwork ? 32 : 128;
+
+        var newCidr = Subnetmask.ConvertSubnetmaskOrCidrToCidr(argument);
+
+        return newCidr >= ipNetwork.Cidr && newCidr <= maxCidr
+            ? null
+            : string.Format(Strings.EnterSubnetmaskOrCIDRBetweenXAndY, ipNetwork.Cidr, maxCidr);
+    }
+
+    private static bool IsSubnetmaskOrCidr(string value)
+    {
+        return Validate(new IPv4IPv6SubnetmaskOrCIDRValidator(), value) == null;
+    }
+
     private static string Validate(ValidationRule validator, string value)
     {
         if (validator == null)
@@ -273,6 +314,11 @@ public static class RunCommandManager
             ApplicationName.PortScanner => new PortScannerRequest { Target = result.Target, Ports = result.Argument },
             ApplicationName.WakeOnLAN => new WakeOnLANRequest { Target = result.Target, Broadcast = result.Argument },
             ApplicationName.RDAP => new RDAPRequest { Target = result.Target, QueryType = GetRDAPQueryType(result.Type) },
+            // The argument is a new subnet mask (Subnetting) or a second subnet (Wide Subnet).
+            ApplicationName.SubnetCalculator => result.Argument != null && IsSubnetmaskOrCidr(result.Argument)
+                ? new SubnetCalculatorRequest { Target = result.Target, NewSubnetmask = result.Argument }
+                : new SubnetCalculatorRequest { Target = result.Target, Subnet2 = result.Argument },
+            ApplicationName.Lookup => new LookupRequest { Target = result.Target, Type = LookupTypes[result.Type] },
             _ => new ApplicationRequest(result.Command.Application) { Target = result.Target }
         };
     }
@@ -316,6 +362,12 @@ public static class RunCommandManager
             ApplicationName.IPGeolocation => Create(name, ["geo"], Required(Strings.Host), true),
             ApplicationName.WakeOnLAN => Create(name, ["wol"],
                 $"{Required(Strings.MACAddress)} {Optional(Strings.Broadcast)}", true, RunCommandArgument.Broadcast),
+            ApplicationName.SubnetCalculator => Create(name, ["subnet", "ipcalc"],
+                $"{Required(Strings.Subnet)} {Optional($"{Strings.NewSubnetMask} | {Strings.Subnet2}")}", true,
+                RunCommandArgument.Subnet, supportsProfile: false),
+            ApplicationName.Lookup => Create(name, [],
+                $"{Required(string.Join("|", LookupTypes.Keys))} {Required(Strings.Query)}", true,
+                types: [.. LookupTypes.Keys], supportsProfile: false, typeBeforeTarget: true),
             _ => Create(name, [], string.Empty, false)
         }).ToList();
 
@@ -330,8 +382,12 @@ public static class RunCommandManager
     }
 
     private static RunCommandDefinition Create(ApplicationName application, string[] aliases, string syntax,
-        bool supportsTarget, RunCommandArgument argument = RunCommandArgument.None, string[] types = null)
+        bool supportsTarget, RunCommandArgument argument = RunCommandArgument.None, string[] types = null,
+        bool supportsProfile = true, bool typeBeforeTarget = false)
     {
+        // Applications that accept a target support profiles, unless they have none (e.g. Subnet Calculator).
+        supportsProfile &= supportsTarget;
+
         return new RunCommandDefinition
         {
             Type = RunCommandType.Application,
@@ -339,11 +395,11 @@ public static class RunCommandManager
             Command = application.ToString().ToLowerInvariant(),
             Aliases = aliases,
             SupportsTarget = supportsTarget,
-            // Every application that accepts a target also supports profiles.
-            SupportsProfile = supportsTarget,
+            SupportsProfile = supportsProfile,
             Argument = argument,
             Types = types ?? [],
-            Syntax = supportsTarget ? $"{syntax} | @<{Strings.Profile}>" : string.Empty
+            TypeBeforeTarget = typeBeforeTarget,
+            Syntax = supportsProfile ? $"{syntax} | @<{Strings.Profile}>" : syntax
         };
     }
 }
