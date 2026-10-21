@@ -89,6 +89,7 @@ public class NeighborTableViewModel : ViewModelBase
     private readonly bool _isLoading;
 
     private readonly DispatcherTimer _autoRefreshTimer = new();
+    private bool _isViewVisible = true;
 
     public string Search
     {
@@ -471,12 +472,16 @@ public class NeighborTableViewModel : ViewModelBase
 
     public void OnViewVisible()
     {
+        _isViewVisible = true;
+
         if (AutoRefreshEnabled)
             _autoRefreshTimer.Start();
     }
 
     public void OnViewHide()
     {
+        _isViewVisible = false;
+
         if (AutoRefreshEnabled)
             _autoRefreshTimer.Stop();
     }
@@ -494,7 +499,9 @@ public class NeighborTableViewModel : ViewModelBase
         if (!IsModifying)
             await Refresh();
 
-        _autoRefreshTimer.Start();
+        // Restart timer, unless auto refresh was disabled or the view was hidden in the meantime
+        if (AutoRefreshEnabled && _isViewVisible)
+            _autoRefreshTimer.Start();
     }
 
     #endregion

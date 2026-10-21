@@ -151,6 +151,11 @@ public partial class StatusWindow : INotifyPropertyChanged
             return;
         }
 
+        // Opened by the user, cancel a running close timer (e.g. if the window was opened on a network change)
+        _dispatcherTimerClose.Stop();
+        _stopwatch.Stop();
+        ShowTime = false;
+
         // Focus the window
         Activate();
     }

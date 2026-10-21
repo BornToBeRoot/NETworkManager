@@ -41,6 +41,7 @@ public class WiFiViewModel : ViewModelBase
 
     private readonly bool _isLoading;
     private readonly DispatcherTimer _autoRefreshTimer = new();
+    private bool _isViewVisible = true;
     private readonly DispatcherTimer _hideConnectionStatusMessageTimer = new();
 
     public bool SdkContractAvailable
@@ -1301,13 +1302,17 @@ public class WiFiViewModel : ViewModelBase
 
     public void OnViewVisible()
     {
-        // Temporarily stop timer...
+        _isViewVisible = true;
+
+        // Restart timer...
         if (AutoRefreshEnabled)
-            _autoRefreshTimer.Stop();
+            _autoRefreshTimer.Start();
     }
 
     public void OnViewHide()
     {
+        _isViewVisible = false;
+
         // Temporarily stop timer...
         if (AutoRefreshEnabled)
             _autoRefreshTimer.Stop();
@@ -1329,8 +1334,9 @@ public class WiFiViewModel : ViewModelBase
         // Scan networks
         await ScanAsync(SelectedAdapter, true);
 
-        // Restart timer...
-        _autoRefreshTimer.Start();
+        // Restart timer, unless auto refresh was disabled or the view was hidden in the meantime
+        if (AutoRefreshEnabled && _isViewVisible)
+            _autoRefreshTimer.Start();
     }
 
     private void HideConnectionStatusMessageTimer_Tick(object sender, EventArgs e)
