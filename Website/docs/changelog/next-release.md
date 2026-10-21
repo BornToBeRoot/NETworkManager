@@ -115,14 +115,23 @@ Release date: **xx.xx.2026**
 
 - Fixed errors when changing the network configuration (e.g. missing permissions) not being shown — the change was reported as successful although it failed. The error message of Windows is now shown. [#3606](https://github.com/BornToBeRoot/NETworkManager/issues/3606)
 
-**Connections**, **Listeners**, **Neighbor Table** and **WiFi**
+**Connections**
 
 - Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running.
-- Fixed the auto refresh of **WiFi** not being resumed after switching back from another tool.
+
+**Listeners**
+
+- Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running.
 
 **Neighbor Table**
 
 - Fixed adding and deleting entries not working until the application was restarted if loading the PowerShell module `NetTCPIP` failed once. [cc05937](https://github.com/BornToBeRoot/NETworkManager/commit/cc05937a7de2bf1247621845f47077f3796b9bb2)
+- Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running.
+
+**WiFi**
+
+- Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running.
+- Fixed the auto refresh not being resumed after switching back from another tool.
 
 **Dashboard**
 
