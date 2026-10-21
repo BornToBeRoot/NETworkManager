@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.9d036de8.css">
-<script src="/NETworkManager/assets/js/runtime~main.a328f626.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.85aff09e.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.4a827bf6.js" defer="defer"></script>
 </head>
 <body>
@@ -108,6 +108,7 @@ Release date: <strong>xx.xx.2026</strong></p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="bug-fixes">Bug Fixes<a href="#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes" translate="no">​</a></h2>
 <ul>
 <li class="">Fixed changes to lists in the settings (e.g. query histories, port profiles, custom commands) not being saved if no other setting was changed in the same session. This happened since the settings are stored as JSON. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3607" target="_blank" rel="noopener noreferrer" class="">#3607</a></li>
+<li class="">Fixed the profile search (profile list in the tools, <strong>Profiles</strong> settings and import result) filtering the profiles while still typing. The profiles are now filtered once after the user stopped typing, instead of every 750 ms after the first key press. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3638" target="_blank" rel="noopener noreferrer" class="">#3638</a></li>
 </ul>
 <p><strong>Firewall</strong></p>
 <ul>
@@ -147,6 +148,10 @@ Release date: <strong>xx.xx.2026</strong></p>
 <p><strong>IP Geolocation</strong></p>
 <ul>
 <li class="">Fixed the query history of <strong>IP Geolocation</strong> being written to the history of <strong>Whois</strong> instead of its own. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3607" target="_blank" rel="noopener noreferrer" class="">#3607</a></li>
+</ul>
+<p><strong>WiFi</strong></p>
+<ul>
+<li class="">Fixed the connection status message (e.g. &quot;Connecting to ...&quot;) being hidden too early, while still connecting, if a previous message (e.g. after connecting or disconnecting) was shown shortly before. Each message is now shown for 15 seconds. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3638" target="_blank" rel="noopener noreferrer" class="">#3638</a></li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="dependencies-refactoring--documentation">Dependencies, Refactoring &amp; Documentation<a href="#dependencies-refactoring--documentation" class="hash-link" aria-label="Direct link to Dependencies, Refactoring &amp; Documentation" title="Direct link to Dependencies, Refactoring &amp; Documentation" translate="no">​</a></h2>
 <ul>
