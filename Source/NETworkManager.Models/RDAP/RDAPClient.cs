@@ -118,7 +118,7 @@ public class RDAPClient : SingletonBase<RDAPClient>
 
         RDAPException lastNetworkError = null;
 
-        // Try the next server only on network errors. Any HTTP answer is authoritative for the query.
+        // Try the next server only on network errors and timeouts. Any HTTP answer is authoritative for the query.
         foreach (var baseUrl in baseUrls)
         {
             try
@@ -131,7 +131,7 @@ public class RDAPClient : SingletonBase<RDAPClient>
 
                 return result;
             }
-            catch (RDAPException ex) when (ex.Kind == RDAPErrorKind.Network)
+            catch (RDAPException ex) when (ex.Kind is RDAPErrorKind.Network or RDAPErrorKind.Timeout)
             {
                 Log.Warn($"RDAP request to {ex.RequestUrl} failed: {ex.Message}");
                 lastNetworkError = ex;
@@ -239,11 +239,16 @@ public class RDAPClient : SingletonBase<RDAPClient>
                 // Blocked by ConnectToPublicAddressAsync.
                 throw new RDAPException(inner.Kind, inner.Message, ex) { RequestUrl = currentUrl.AbsoluteUri };
             }
-            catch (Exception ex) when (ex is HttpRequestException or OperationCanceledException)
+            catch (OperationCanceledException ex)
             {
-                var message = ex is OperationCanceledException ? $"Timeout after {timeout.TotalSeconds} s." : ex.Message;
-
-                throw new RDAPException(RDAPErrorKind.Network, message, ex) { RequestUrl = currentUrl.AbsoluteUri };
+                // The message is only logged, the view model shows a localized one.
+                throw new RDAPException(RDAPErrorKind.Timeout,
+                        FormattableString.Invariant($"Timeout after {timeout.TotalSeconds} s."), ex)
+                    { RequestUrl = currentUrl.AbsoluteUri };
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new RDAPException(RDAPErrorKind.Network, ex.Message, ex) { RequestUrl = currentUrl.AbsoluteUri };
             }
 
             using (response)

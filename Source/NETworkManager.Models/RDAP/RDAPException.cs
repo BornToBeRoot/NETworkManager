@@ -68,9 +68,14 @@ public enum RDAPErrorKind
     InvalidResponse,
 
     /// <summary>
-    ///     DNS, connection, TLS or timeout error for all known servers.
+    ///     DNS, connection or TLS error for all known servers.
     /// </summary>
-    Network
+    Network,
+
+    /// <summary>
+    ///     The server did not respond within the timeout.
+    /// </summary>
+    Timeout
 }
 
 /// <summary>

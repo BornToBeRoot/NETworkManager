@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -30,6 +31,7 @@ public class RDAPViewModel : ViewModelBase
 
     private readonly Guid _tabId;
     private readonly bool _isLoading;
+    private CancellationTokenSource _cancellationTokenSource;
     private bool _firstLoad = true;
     private bool _closed;
 
@@ -70,6 +72,19 @@ public class RDAPViewModel : ViewModelBase
     }
 
     public bool IsRunning
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsCanceling
     {
         get;
         set
@@ -238,7 +253,10 @@ public class RDAPViewModel : ViewModelBase
 
     private void QueryAction()
     {
-        _ = RunQuery();
+        if (IsRunning)
+            Stop();
+        else
+            _ = RunQuery();
     }
 
     public ICommand OpenInWhoisCommand => new RelayCommand(_ => OpenInWhoisAction());
@@ -293,11 +311,14 @@ public class RDAPViewModel : ViewModelBase
             return;
         }
 
+        _cancellationTokenSource?.Dispose();
+        _cancellationTokenSource = new CancellationTokenSource();
+
         try
         {
             _result = await RDAPClient.GetInstance().QueryAsync(query, GlobalStaticConfiguration.RDAP_CachePath,
                 TimeSpan.FromMilliseconds(SettingsManager.Current.RDAP_Timeout),
-                SettingsManager.Current.RDAP_FollowReferral);
+                SettingsManager.Current.RDAP_FollowReferral, _cancellationTokenSource.Token);
 
             List<RDAPObjectViewModel> results =
             [
@@ -319,6 +340,10 @@ public class RDAPViewModel : ViewModelBase
 
             AddQueryToHistory(Query);
         }
+        catch (OperationCanceledException)
+        {
+            ShowStatusMessage(Strings.CanceledByUserMessage);
+        }
         catch (RDAPException ex)
         {
             ShowStatusMessage(GetErrorMessage(ex, query));
@@ -334,8 +359,17 @@ public class RDAPViewModel : ViewModelBase
             Log.Error("Error while querying RDAP.", ex);
             ShowStatusMessage(ex.Message);
         }
+        finally
+        {
+            IsRunning = false;
+            IsCanceling = false;
+        }
+    }
 
-        IsRunning = false;
+    private void Stop()
+    {
+        IsCanceling = true;
+        _cancellationTokenSource?.Cancel();
     }
 
     private void ShowStatusMessage(string message)
@@ -379,6 +413,9 @@ public class RDAPViewModel : ViewModelBase
             RDAPErrorKind.TooManyRedirects => Strings.RDAPTooManyRedirects,
             RDAPErrorKind.InvalidResponse => string.Format(Strings.RDAPInvalidResponseX, ex.Message),
             RDAPErrorKind.Network => string.Format(Strings.RDAPNetworkErrorX, ex.Message),
+            // The timeout of the query (from the settings) is used for each request.
+            RDAPErrorKind.Timeout => string.Format(Strings.RDAPTimeoutAfterXSeconds,
+                SettingsManager.Current.RDAP_Timeout / 1000.0),
             _ => string.Format(Strings.RDAPHttpErrorX, serverMessage)
         };
     }
@@ -390,6 +427,10 @@ public class RDAPViewModel : ViewModelBase
             return;
 
         _closed = true;
+
+        // Stop the query
+        if (IsRunning)
+            Stop();
 
         ConfigurationManager.Current.RDAPTabCount--;
     }

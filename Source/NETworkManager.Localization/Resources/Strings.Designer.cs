@@ -9618,6 +9618,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The RDAP server did not respond within {0} seconds..
+        /// </summary>
+        public static string RDAPTimeoutAfterXSeconds {
+            get {
+                return ResourceManager.GetString("RDAPTimeoutAfterXSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Too many redirects..
         /// </summary>
         public static string RDAPTooManyRedirects {

@@ -37,6 +37,8 @@ The firewall must allow outgoing HTTPS connections (TCP port 443) to `data.iana.
 
 ![RDAP](../img/rdap.png)
 
+A running query can be canceled with **Cancel** (or `Esc`).
+
 ### Example inputs
 
 With the type **Auto** (default), the type is detected from the query: IP address or CIDR, AS number (e.g. `AS13335`, `13335` or `1.10`), top-level domain (a single label, e.g. `de`), entity handle (a single label with a service provider tag, e.g. `ORG-RIEN1-RIPE`), otherwise domain. Select a type to override the detection, e.g. to query `1.10` as something other than an AS number.
@@ -58,6 +60,15 @@ The result can be exported via the **Export...** button below the result or via 
 | -------- | ----------------------------------------------------------------------------------------------------------------- |
 | **JSON** | Exports the response exactly as returned by the server. If the referral was followed, both responses as an array. |
 | **TXT**  | Exports the structured view as text.                                                                              |
+
+### Context menu
+
+Right-click a row in one of the tables (events, nameservers, DNSSEC, contacts).
+
+| Action        | Description                                                          |
+| ------------- | -------------------------------------------------------------------- |
+| **Copy**      | Copies a value of the selected row (e.g. the email of a contact)     |
+| **Export...** | Exports the result to a file (see [Export](#export))                 |
 
 ## Profile
 

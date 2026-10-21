@@ -4815,4 +4815,7 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
   <data name="EnterValidRDAPQuery" xml:space="preserve">
     <value>Enter a valid domain, IP address, AS number or entity handle!</value>
   </data>
+  <data name="RDAPTimeoutAfterXSeconds" xml:space="preserve">
+    <value>The RDAP server did not respond within {0} seconds.</value>
+  </data>
 </root>
