@@ -4890,4 +4890,7 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
   <data name="EnterSubnetmaskOrCIDRBetweenXAndY" xml:space="preserve">
     <value>Enter a subnet mask or CIDR between /{0} and /{1}!</value>
   </data>
+  <data name="BringWindowToForegroundAndOpenRunCommand" xml:space="preserve">
+    <value>Bring window to foreground and open the run command</value>
+  </data>
 </root>

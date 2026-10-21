@@ -1491,6 +1491,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bring window to foreground and open the run command.
+        /// </summary>
+        public static string BringWindowToForegroundAndOpenRunCommand {
+            get {
+                return ResourceManager.GetString("BringWindowToForegroundAndOpenRunCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Broadcast.
         /// </summary>
         public static string Broadcast {

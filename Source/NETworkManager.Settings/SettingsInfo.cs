@@ -541,6 +541,45 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.HotKey_ShowWindowModifier;
 
+    public bool HotKey_RunCommandEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public int HotKey_RunCommandKey
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.HotKey_RunCommandKey;
+
+    public int HotKey_RunCommandModifier
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.HotKey_RunCommandModifier;
+
     // Update
 
     public bool Update_CheckForUpdatesAtStartup

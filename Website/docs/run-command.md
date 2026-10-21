@@ -8,7 +8,7 @@ keywords: [NETworkManager, run command, command palette, keyboard shortcut, Ctrl
 
 The **Run Command** opens a feature and runs it directly from the keyboard: press `Ctrl+Shift+P`, type a command like `ping 10.0.0.1` and press `Enter`.
 
-The run command can also be opened with the **Run command...** button in the title bar.
+The run command can also be opened with the **Run command...** button in the title bar, or from anywhere with a global hotkey (default `Ctrl+Alt+P`, disabled by default), which brings the window to the foreground, see [Settings > HotKeys](./settings/hotkeys.md).
 
 ## Syntax
 

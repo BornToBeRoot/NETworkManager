@@ -29,6 +29,7 @@ Release date: **xx.xx.2026**
 
 - The [**Run command**](../run-command.md) (`Ctrl+Shift+P`) now runs a feature directly, e.g. `ping 10.0.0.1`, `dns borntoberoot.net 1.1.1.1 aaaa`, `rdap 1.10 asn` or `rdp @server-01` (profile). It opens in a dialog instead of a flyout, with short aliases (e.g. `ping`, `dns`, `rdp`, `ssh`, `geo`, `wol`), suggestions for recent commands, profiles of the feature and types (`Up`/`Down` to select, `Tab` to complete, `Enter` to run, `Esc` to close), and validates the input like the feature does. Only visible features are offered. [#3644](https://github.com/BornToBeRoot/NETworkManager/pull/3644)
 - New run command targets for the **Subnet Calculator** (`subnet 10.0.0.0/24`, `subnet 10.0.0.0/16 /24` for subnetting, `subnet 10.0.0.0/24 10.0.1.0/24` for the wide subnet) and the **Lookup** (`lookup oui 00:11:22`, `lookup port 22; ssh`). [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
+- New global hotkey to bring the window to the foreground and open the run command (default `Ctrl+Alt+P`, disabled by default), see [Settings > HotKeys](../settings/hotkeys.md). [#XXXX](https://github.com/BornToBeRoot/NETworkManager/pull/XXXX)
 
 **RDAP**
 

@@ -1382,6 +1382,16 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             return IntPtr.Zero;
         }
 
+        // Hotkey --> Show window and open the run command
+        if (msg == WmHotkey && wParam.ToInt32() == 2)
+        {
+            ShowWindow();
+            OpenRunAction();
+            handled = true;
+
+            return IntPtr.Zero;
+        }
+
         // Window size events
         switch (msg)
         {
@@ -1444,6 +1454,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     /* ID | Command
      *  ---|-------------------
      *  1  | ShowWindow()
+     *  2  | ShowWindow() + OpenRunAction()
      */
 
     private readonly List<int> _registeredHotKeys = [];
@@ -1455,6 +1466,13 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             RegisterHotKey(new WindowInteropHelper(this).Handle, 1, SettingsManager.Current.HotKey_ShowWindowModifier,
                 SettingsManager.Current.HotKey_ShowWindowKey);
             _registeredHotKeys.Add(1);
+        }
+
+        if (SettingsManager.Current.HotKey_RunCommandEnabled)
+        {
+            RegisterHotKey(new WindowInteropHelper(this).Handle, 2, SettingsManager.Current.HotKey_RunCommandModifier,
+                SettingsManager.Current.HotKey_RunCommandKey);
+            _registeredHotKeys.Add(2);
         }
     }
 
