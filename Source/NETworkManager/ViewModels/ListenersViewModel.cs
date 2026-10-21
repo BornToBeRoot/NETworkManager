@@ -85,8 +85,9 @@ public class ListenersViewModel : ViewModelBase
         // Refresh
         await Refresh();
 
-        // Restart timer...
-        _autoRefreshTimer.Start();
+        // Restart timer, unless auto refresh was disabled or the view was hidden in the meantime
+        if (AutoRefreshEnabled && _isViewVisible)
+            _autoRefreshTimer.Start();
     }
 
     #endregion
@@ -104,6 +105,7 @@ public class ListenersViewModel : ViewModelBase
     /// The timer for auto-refresh.
     /// </summary>
     private readonly DispatcherTimer _autoRefreshTimer = new();
+    private bool _isViewVisible = true;
 
     /// <summary>
     /// Gets or sets the search text.
@@ -405,6 +407,8 @@ public class ListenersViewModel : ViewModelBase
     /// </summary>
     public void OnViewVisible()
     {
+        _isViewVisible = true;
+
         // Restart timer...
         if (AutoRefreshEnabled)
             _autoRefreshTimer.Start();
@@ -415,6 +419,8 @@ public class ListenersViewModel : ViewModelBase
     /// </summary>
     public void OnViewHide()
     {
+        _isViewVisible = false;
+
         // Temporarily stop timer...
         if (AutoRefreshEnabled)
             _autoRefreshTimer.Stop();
