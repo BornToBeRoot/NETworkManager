@@ -4313,6 +4313,75 @@ Bei Bedarf können Sie die Profildateien von „{0}“ nach „{1}“ kopieren, 
   <data name="FirewallRules" xml:space="preserve">
     <value>Firewall-Regeln</value>
   </data>
+  <data name="HelpMessage_FirewallShowAllRules" xml:space="preserve">
+    <value>Alle aktiven Windows-Firewall-Regeln anzeigen (z. B. integrierte Windows-Regeln, von anderen Anwendungen erstellte Regeln oder Regeln aus Gruppenrichtlinien) statt nur der von NETworkManager verwalteten Regeln. Nicht von NETworkManager verwaltete Regeln können aktiviert, deaktiviert, gelöscht oder kopiert, aber nicht bearbeitet werden. Regeln aus einer Richtlinie (z. B. Gruppenrichtlinie oder MDM) können nur kopiert werden.</value>
+  </data>
+  <data name="FirewallRuleUnsupportedValuesMessage" xml:space="preserve">
+    <value>Diese Regel verwendet Werte, die von NETworkManager nicht unterstützt werden (z. B. Port-Schlüsselwörter wie RPC, eine Kombination von Schnittstellentypen, ein Protokoll wie IGMP oder das Programm System). Bearbeiten oder Kopieren der Regel wird (noch) nicht unterstützt, da diese Werte verloren gehen würden und die neue Regel für mehr Datenverkehr gelten könnte (z. B. für alle Ports).</value>
+  </data>
+  <data name="FirewallRuleManagedByGroupPolicyMessage" xml:space="preserve">
+    <value>Durch Gruppenrichtlinie verwaltet. Die Regel kann lokal nicht geändert, aber kopiert werden.</value>
+  </data>
+  <data name="FirewallRuleManagedByMDMMessage" xml:space="preserve">
+    <value>Durch Mobile Device Management (MDM) verwaltet, z. B. Microsoft Intune. Die Regel kann lokal nicht geändert, aber kopiert werden.</value>
+  </data>
+  <data name="FirewallRuleManagedByOtherMessage" xml:space="preserve">
+    <value>Zur Laufzeit von Windows erstellt (z. B. dynamische oder fest codierte Regel). Die Regel kann lokal nicht geändert, aber kopiert werden.</value>
+  </data>
+  <data name="FirewallRulesManagedByPolicyMessage" xml:space="preserve">
+    <value>Mindestens eine der ausgewählten Regeln wird durch eine Richtlinie verwaltet (z. B. Gruppenrichtlinie oder MDM) oder wurde zur Laufzeit von Windows erstellt und kann lokal nicht geändert werden.</value>
+  </data>
+  <data name="FirewallRulesNoLongerExistMessage" xml:space="preserve">
+    <value>Eine oder mehrere der ausgewählten Firewall-Regeln sind nicht mehr vorhanden (z. B. in der Verwaltungskonsole der Windows-Firewall gelöscht). Es wurde nichts geändert.</value>
+  </data>
+  <data name="LoadingFirewallRulesDots" xml:space="preserve">
+    <value>Firewall-Regeln werden geladen...</value>
+  </data>
+  <data name="NoFirewallRulesFoundMessage" xml:space="preserve">
+    <value>Keine Firewall-Regeln gefunden. Verwenden Sie „Regel hinzufügen...“, um eine Regel zu erstellen, oder aktivieren Sie „Alle Regeln anzeigen“ in den Einstellungen, um alle Windows-Firewall-Regeln anzuzeigen.</value>
+  </data>
+  <data name="IcmpTypes" xml:space="preserve">
+    <value>ICMP-Typen</value>
+  </data>
+  <data name="NetworkAdapters" xml:space="preserve">
+    <value>Netzwerkadapter</value>
+  </data>
+  <data name="UsersAndAuthentication" xml:space="preserve">
+    <value>Benutzer und Authentifizierung</value>
+  </data>
+  <data name="AppPackage" xml:space="preserve">
+    <value>App-Paket</value>
+  </data>
+  <data name="CopyFirewallRuleHiddenPropertiesMessage" xml:space="preserve">
+    <value>Die Regel „{0}“ verwendet die folgenden Eigenschaften, die von NETworkManager nicht unterstützt und nicht kopiert werden:
+
+{1}
+
+Die neue Regel kann für mehr Datenverkehr gelten als die ursprüngliche Regel (z. B. für alle Dienste eines Programms statt nur für einen einzelnen). Bitte überprüfen Sie die neue Regel sorgfältig, bevor Sie sie speichern.</value>
+  </data>
+  <data name="ShowAllRules" xml:space="preserve">
+    <value>Alle Regeln anzeigen</value>
+  </data>
+  <data name="FirewallRuleManagedMessage" xml:space="preserve">
+    <value>Von NETworkManager verwaltet.</value>
+  </data>
+  <data name="FirewallRuleNotManagedMessage" xml:space="preserve">
+    <value>Nicht von NETworkManager verwaltet (z. B. eine integrierte Windows-Regel oder eine von einer anderen Anwendung erstellte Regel). Die Regel kann aktiviert, deaktiviert, gelöscht oder kopiert werden, Bearbeiten wird aber (noch) nicht unterstützt.</value>
+  </data>
+  <data name="EnableRulesX" xml:space="preserve">
+    <value>Regeln aktivieren ({0})</value>
+  </data>
+  <data name="DisableRulesX" xml:space="preserve">
+    <value>Regeln deaktivieren ({0})</value>
+  </data>
+  <data name="FirewallRulesNotManagedWarningMessage" xml:space="preserve">
+    <value>Die folgenden Regeln werden nicht von NETworkManager verwaltet (z. B. integrierte Windows-Regeln oder von anderen Anwendungen erstellte Regeln). Das Ändern dieser Regeln kann die Netzwerkfunktionen von Windows oder anderen Anwendungen beeinträchtigen:
+
+{0}</value>
+  </data>
+  <data name="EditFirewallRuleNotManagedMessage" xml:space="preserve">
+    <value>Das Bearbeiten von Regeln, die nicht von NETworkManager verwaltet werden, wird (noch) nicht unterstützt, da sie Eigenschaften verwenden können, die im Dialog nicht angezeigt werden können (z. B. Regelgruppe, Dienst oder ICMP-Typen). Verwenden Sie „Kopieren als...“, um eine verwaltete Kopie der Regel zu erstellen.</value>
+  </data>
   <data name="WindowsFirewallSettings" xml:space="preserve">
     <value>Windows Firewall Einstellungen</value>
   </data>
@@ -4724,20 +4793,20 @@ Cloudflare speichert möglicherweise Ihre IP-Adresse und Netzwerkinformationen. 
     <value>Einträge löschen ({0})</value>
   </data>
   <data name="CopyEntry" xml:space="preserve">
-    <value>Copy entry</value>
+    <value>Eintrag kopieren</value>
   </data>
   <data name="CopyRule" xml:space="preserve">
-    <value>Copy rule</value>
+    <value>Regel kopieren</value>
   </data>
   <data name="DeleteFirewallRulesMessage" xml:space="preserve">
-    <value>The selected firewall rules are permanently deleted:
+    <value>Die ausgewählten Firewall-Regeln werden endgültig gelöscht:
 
 {0}</value>
   </data>
   <data name="DeleteRules" xml:space="preserve">
-    <value>Delete rules</value>
+    <value>Regeln löschen</value>
   </data>
   <data name="DeleteRulesX" xml:space="preserve">
-    <value>Delete rules ({0})</value>
+    <value>Regeln löschen ({0})</value>
   </data>
 </root>
