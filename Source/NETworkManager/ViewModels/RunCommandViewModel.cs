@@ -36,9 +36,10 @@ public class RunCommandViewModel : ViewModelBase
     private readonly Action<RunCommandViewModel> _runHandler;
 
     /// <summary>
-    ///     Recent commands with their command (parsed once, the history doesn't change while the dialog is open).
+    ///     Recent commands with their command and profile name (parsed once, the history doesn't change while the dialog
+    ///     is open).
     /// </summary>
-    private readonly List<(string Text, RunCommandDefinition Command)> _history;
+    private readonly List<(string Text, RunCommandDefinition Command, string ProfileName)> _history;
 
     /// <summary>
     ///     Names (command and aliases) and translated name per command.
@@ -71,8 +72,10 @@ public class RunCommandViewModel : ViewModelBase
         // Entries of commands that are not available anymore (e.g. a hidden application) are not shown.
         _history =
         [
-            .. SettingsManager.Current.RunCommand_History.Select(x => (x, RunCommandParser.Parse(x, _commands).Command))
-                .Where(x => x.Command != null)
+            .. SettingsManager.Current.RunCommand_History
+                .Select(x => (Text: x, Result: RunCommandParser.Parse(x, _commands)))
+                .Where(x => x.Result.Command != null)
+                .Select(x => (x.Text, x.Result.Command, x.Result.ProfileName))
         ];
 
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
@@ -372,7 +375,8 @@ public class RunCommandViewModel : ViewModelBase
     }
 
     /// <summary>
-    ///     Profiles of the command that match the typed profile name (or target).
+    ///     Profiles of the command that match the typed profile name (or target). Recently run profiles of the command
+    ///     come first within the same rank, since the recent commands are not shown while typing a profile ("@").
     /// </summary>
     private IEnumerable<RunCommandSuggestion> GetProfileSuggestions()
     {
@@ -401,11 +405,22 @@ public class RunCommandViewModel : ViewModelBase
             _profiles[_result.Command] = profiles;
         }
 
+        // Position of the profile name in the history of the command (most recent first)
+        var recentProfileNames = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var entry in _history.Where(x => x.Command == _result.Command && !string.IsNullOrEmpty(x.ProfileName)))
+            recentProfileNames.TryAdd(entry.ProfileName, recentProfileNames.Count);
+
+        // The name is compared like it is parsed (without surrounding whitespace and quotes).
+        int GetRecentIndex(ProfileInfo profile) =>
+            recentProfileNames.GetValueOrDefault(profile.Name.Trim().Trim('"').Trim(), int.MaxValue);
+
         return profiles
             .Select(x => (Profile: x, Target: x.GetTarget(application)))
             .Select(x => (x.Profile, x.Target, Rank: GetRank(x.Profile, x.Target, text)))
             .Where(x => x.Rank != null)
             .OrderBy(x => x.Rank)
+            .ThenBy(x => GetRecentIndex(x.Profile))
             .Select(x => new RunCommandSuggestion
             {
                 Kind = RunCommandSuggestionKind.Profile,

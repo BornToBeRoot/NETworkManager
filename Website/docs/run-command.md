@@ -70,7 +70,7 @@ While typing, suggestions are shown below the input:
 | Command (e.g. `tr`)          | Matching features                                                        |
 | After the command (`rdp `)   | The input as typed, recent commands of the feature and its profiles      |
 | After `lookup `              | The input as typed, the lookups (`oui`, `port`) and recent commands      |
-| `@` (e.g. `rdp @web`)        | Profiles of the feature (with group and host); exact names first         |
+| `@` (e.g. `rdp @web`)        | Profiles of the feature (with group and host); exact names first, recently run profiles first within the same match |
 | After the target             | The input as typed, types of the feature (e.g. DNS record types), configured DNS servers (DNS lookup) and recent commands |
 
 `Enter` runs what was typed: after the command, the input as typed is the first suggestion; profiles, recent commands, types and DNS servers are selected with the arrow keys. While typing the command, the best matching feature is selected (completing it keeps the arguments, e.g. `pin 10.0.0.1` → `ping 10.0.0.1`), but not if the input is empty or an unknown command has arguments. While typing `@`, a profile is only selected if exactly one matches. While typing the lookup (e.g. `lookup po`), the matching lookup is selected.
