@@ -1031,6 +1031,17 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         ListViewApplication.ScrollIntoView(SelectedApplication);
     }
 
+    /// <summary>
+    ///     Scrolls the selected application into view, also if it was selected from somewhere else (e.g. the dashboard,
+    ///     another application or the run command).
+    /// </summary>
+    private void ListViewApplication_OnSelectionChanged(object sender,
+        System.Windows.Controls.SelectionChangedEventArgs e)
+    {
+        if (ListViewApplication.SelectedItem != null)
+            ListViewApplication.ScrollIntoView(ListViewApplication.SelectedItem);
+    }
+
     private async void NavigationManager_ApplicationRequested(object sender, ApplicationRequest request)
     {
         // Clear the search, otherwise the application may be filtered out

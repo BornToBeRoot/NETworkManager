@@ -533,6 +533,7 @@
                                   Style="{StaticResource FadeOutScrollViewer}">
                         <ListView x:Name="ListViewApplication" ItemsSource="{Binding Applications}"
                                   SelectedItem="{Binding SelectedApplication, Mode=TwoWay}"
+                                  SelectionChanged="ListViewApplication_OnSelectionChanged"
                                   SelectionMode="Single"
                                   BorderThickness="0"
                                   dd:DragDrop.IsDragSource="True"
