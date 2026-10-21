@@ -4857,4 +4857,34 @@ Cloudflare späichert méiglecherweis är IP-Adress an Netzwierkinformatiounen. 
   <data name="Resource_PublicSuffixList_Description" xml:space="preserve">
     <value>List of public suffixes (e.g. "co.uk") from publicsuffix.org (MPL-2.0), which is used to get the registered domain of a hostname for RDAP queries.</value>
   </data>
+  <data name="ProfileXNotFound" xml:space="preserve">
+    <value>Profile "{0}" not found!</value>
+  </data>
+  <data name="SeveralProfilesAreNamedXSelectOne" xml:space="preserve">
+    <value>Several profiles are named "{0}", select one!</value>
+  </data>
+  <data name="EnterACommand" xml:space="preserve">
+    <value>Enter a command!</value>
+  </data>
+  <data name="UnknownCommandX" xml:space="preserve">
+    <value>Unknown command "{0}"!</value>
+  </data>
+  <data name="CommandXDoesNotAcceptArguments" xml:space="preserve">
+    <value>The command "{0}" does not accept arguments!</value>
+  </data>
+  <data name="CommandXDoesNotSupportProfiles" xml:space="preserve">
+    <value>The command "{0}" does not support profiles!</value>
+  </data>
+  <data name="EnterTheNameOfAProfileAfterAt" xml:space="preserve">
+    <value>Enter the name of a profile after "@"!</value>
+  </data>
+  <data name="UnknownArgumentX" xml:space="preserve">
+    <value>Unknown argument "{0}"!</value>
+  </data>
+  <data name="RunCommand" xml:space="preserve">
+    <value>Run command</value>
+  </data>
+  <data name="Recent" xml:space="preserve">
+    <value>Recent</value>
+  </data>
 </root>

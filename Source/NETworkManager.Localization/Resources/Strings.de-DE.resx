@@ -4416,7 +4416,7 @@ Die neue Regel kann für mehr Datenverkehr gelten als die ursprüngliche Regel (
     <value>Firewall-Regeln konnten nicht geladen werden. {0}</value>
   </data>
   <data name="FirewallRulesLoadedWithErrorsMessage" xml:space="preserve">
-    <value>Reloaded at {0}, but not all firewall rules or their properties could be loaded, so the list may be incomplete (see log file for details). {1}</value>
+    <value>Neu geladen um {0}, aber nicht alle Firewall-Regeln oder deren Eigenschaften konnten geladen werden, daher ist die Liste möglicherweise unvollständig (siehe Logdatei für Details). {1}</value>
   </data>
   <data name="DeleteFirewallRuleMessage" xml:space="preserve">
     <value>Die ausgewählte Firewall-Regel wird endgültig gelöscht:
@@ -4496,19 +4496,19 @@ Die neue Regel kann für mehr Datenverkehr gelten als die ursprüngliche Regel (
     <value>Zulassen</value>
   </data>
   <data name="FirewallRuleSource_Local" xml:space="preserve">
-    <value>Local</value>
+    <value>Lokal</value>
   </data>
   <data name="FirewallRuleSource_GroupPolicy" xml:space="preserve">
-    <value>Group Policy</value>
+    <value>Gruppenrichtlinie</value>
   </data>
   <data name="FirewallRuleSource_MDM" xml:space="preserve">
     <value>Mobile Device Management (MDM)</value>
   </data>
   <data name="FirewallRuleSource_Other" xml:space="preserve">
-    <value>Windows (runtime)</value>
+    <value>Windows (Runtime)</value>
   </data>
   <data name="UnsupportedProperties" xml:space="preserve">
-    <value>Unsupported properties</value>
+    <value>Nicht unterstützte Eigenschaften</value>
   </data>
   <data name="LocalPorts" xml:space="preserve">
     <value>Lokale Ports</value>
@@ -4523,7 +4523,7 @@ Die neue Regel kann für mehr Datenverkehr gelten als die ursprüngliche Regel (
     <value>Remote Adressen</value>
   </data>
   <data name="EnterValidFirewallLocalAddress" xml:space="preserve">
-    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8), range (e.g. 10.0.0.1-10.0.0.10), or the keyword Any. Other keywords (e.g. LocalSubnet) are only valid for remote addresses.</value>
+    <value>Gib eine gültige IP-Adresse, ein Subnetz (z. B. 10.0.0.0/8), einen Bereich (z. B. 10.0.0.1-10.0.0.10) oder das Schlüsselwort Any ein. Andere Schlüsselwörter (z. B. LocalSubnet) sind nur für Remote-Adressen gültig.</value>
   </data>
   <data name="EnterValidFirewallAddress" xml:space="preserve">
     <value>Geben Sie eine gültige IP-Adresse, ein Subnetz (z. B. 10.0.0.0/8), einen Bereich (z. B. 10.0.0.1–10.0.0.10) oder ein Schlüsselwort ein (Any, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal)</value>
@@ -4834,27 +4834,57 @@ Cloudflare speichert möglicherweise Ihre IP-Adresse und Netzwerkinformationen. 
     <value>Auto</value>
   </data>
   <data name="EnterValidRDAPQuery" xml:space="preserve">
-    <value>Enter a valid domain, IP address, AS number or entity handle!</value>
+    <value>Gib eine gültige Domain, IP-Adresse, AS-Nummer oder ein gültiges Entity-Handle ein!</value>
   </data>
   <data name="RDAPTimeoutAfterXSeconds" xml:space="preserve">
-    <value>The RDAP server did not respond within {0} seconds.</value>
+    <value>Der RDAP-Server hat nicht innerhalb von {0} Sekunden geantwortet.</value>
   </data>
   <data name="RDAPQueryType_Nameserver" xml:space="preserve">
     <value>Nameserver</value>
   </data>
   <data name="EnterValidNameserver" xml:space="preserve">
-    <value>Enter a valid nameserver (e.g., "ns1.example.com")!</value>
+    <value>Gib einen gültigen Nameserver ein (z. B. „ns1.example.com“)!</value>
   </data>
   <data name="ASNumbers" xml:space="preserve">
-    <value>AS numbers</value>
+    <value>AS-Nummern</value>
   </data>
   <data name="RDAPDots" xml:space="preserve">
     <value>RDAP...</value>
   </data>
   <data name="RDAPXIsNotARegisteredDomainShowingY" xml:space="preserve">
-    <value>"{0}" is not a registered domain, showing the registration data of "{1}".</value>
+    <value>„{0}“ ist keine registrierte Domain, es werden die Registrierungsdaten von „{1}“ angezeigt.</value>
   </data>
   <data name="Resource_PublicSuffixList_Description" xml:space="preserve">
-    <value>List of public suffixes (e.g. "co.uk") from publicsuffix.org (MPL-2.0), which is used to get the registered domain of a hostname for RDAP queries.</value>
+    <value>Liste der Public Suffixes (z. B. „co.uk“) von publicsuffix.org (MPL-2.0), die verwendet wird, um die registrierte Domain eines Hostnamens für RDAP-Abfragen zu ermitteln.</value>
+  </data>
+  <data name="ProfileXNotFound" xml:space="preserve">
+    <value>Profil „{0}“ nicht gefunden!</value>
+  </data>
+  <data name="SeveralProfilesAreNamedXSelectOne" xml:space="preserve">
+    <value>Mehrere Profile heißen „{0}“, wähle eines aus!</value>
+  </data>
+  <data name="EnterACommand" xml:space="preserve">
+    <value>Gib einen Befehl ein!</value>
+  </data>
+  <data name="UnknownCommandX" xml:space="preserve">
+    <value>Unbekannter Befehl „{0}“!</value>
+  </data>
+  <data name="CommandXDoesNotAcceptArguments" xml:space="preserve">
+    <value>Der Befehl „{0}“ akzeptiert keine Argumente!</value>
+  </data>
+  <data name="CommandXDoesNotSupportProfiles" xml:space="preserve">
+    <value>Der Befehl „{0}“ unterstützt keine Profile!</value>
+  </data>
+  <data name="EnterTheNameOfAProfileAfterAt" xml:space="preserve">
+    <value>Gib nach „@“ den Namen eines Profils ein!</value>
+  </data>
+  <data name="UnknownArgumentX" xml:space="preserve">
+    <value>Unbekanntes Argument „{0}“!</value>
+  </data>
+  <data name="RunCommand" xml:space="preserve">
+    <value>Befehl ausführen</value>
+  </data>
+  <data name="Recent" xml:space="preserve">
+    <value>Zuletzt verwendet</value>
   </data>
 </root>
