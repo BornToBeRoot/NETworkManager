@@ -4,7 +4,6 @@ using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
@@ -241,7 +240,7 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
 
     private void ConnectProfileAction()
     {
-        ConnectProfile();
+        ConnectProfile(SelectedProfile);
     }
 
     public ICommand ConnectProfileExternalCommand => new RelayCommand(_ => ConnectProfileExternalAction());
@@ -265,7 +264,7 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
 
     private static void OpenSettingsAction()
     {
-        EventSystem.RedirectToSettings();
+        NavigationManager.OpenSettings();
     }
 
     #endregion
@@ -362,9 +361,13 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
         return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
-    private void ConnectProfile()
+    /// <summary>
+    ///     Connects to the profile.
+    /// </summary>
+    /// <param name="profileInfo">Profile to connect to.</param>
+    public void ConnectProfile(ProfileInfo profileInfo)
     {
-        Connect(NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+        Connect(NETworkManager.Profiles.Application.PuTTY.CreateSessionInfo(profileInfo), profileInfo.Name);
     }
 
     private void ConnectProfileExternal()

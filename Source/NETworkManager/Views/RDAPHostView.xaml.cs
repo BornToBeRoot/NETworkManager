@@ -2,7 +2,7 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class RDAPHostView
+public partial class RDAPHostView : IApplicationRequestHandler
 {
     private readonly RDAPHostViewModel _viewModel = new();
 
@@ -12,9 +12,12 @@ public partial class RDAPHostView
         DataContext = _viewModel;
     }
 
-    public void AddTab(string query)
+    public void Open(ApplicationRequest request)
     {
-        _viewModel.AddTab(query);
+        if (request.Profile != null)
+            _viewModel.AddTab(request.Profile);
+        else
+            _viewModel.AddTab(request.Target, (request as RDAPRequest)?.QueryType);
     }
 
     public void OnViewHide()

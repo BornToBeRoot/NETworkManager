@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace NETworkManager.Views;
 
-public partial class RemoteDesktopHostView
+public partial class RemoteDesktopHostView : IApplicationRequestHandler
 {
     private readonly RemoteDesktopHostViewModel _viewModel = new();
 
@@ -21,14 +21,17 @@ public partial class RemoteDesktopHostView
         _loaded = true;
     }
 
-    public async void AddTab(string host)
+    public async void Open(ApplicationRequest request)
     {
         // Wait for the interface to load, before displaying the dialog to connect a new Profile...
         // MahApps will throw an exception...
         while (!_loaded)
             await Task.Delay(250);
 
-        _viewModel.AddTab(host);
+        if (request.Profile != null)
+            _viewModel.ConnectProfile(request.Profile);
+        else
+            _viewModel.AddTab(request.Target);
     }
 
     public void OnViewHide()

@@ -248,7 +248,9 @@ public class DNSLookupViewModel : ViewModelBase
     /// </summary>
     /// <param name="tabId">The ID of the tab.</param>
     /// <param name="host">The host to lookup.</param>
-    public DNSLookupViewModel(Guid tabId, string host)
+    /// <param name="dnsServer">DNS server(s) to use (not saved as default). If null, the last selected one is used.</param>
+    /// <param name="queryType">Query type (not saved as default). If null, the last selected one is used.</param>
+    public DNSLookupViewModel(Guid tabId, string host, string dnsServer = null, QueryType? queryType = null)
     {
         _isLoading = true;
 
@@ -275,6 +277,13 @@ public class DNSLookupViewModel : ViewModelBase
             ListSortDirection.Descending));
 
         LoadSettings();
+
+        // Options of a request (e.g. run command), which are not saved as default.
+        if (!string.IsNullOrEmpty(dnsServer))
+            DNSServer = dnsServer;
+
+        if (queryType != null && QueryTypes.Contains(queryType.Value))
+            QueryType = queryType.Value;
 
         _isLoading = false;
     }

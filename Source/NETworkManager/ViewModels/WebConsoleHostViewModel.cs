@@ -4,7 +4,6 @@ using Microsoft.Web.WebView2.Core;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.WebConsole;
 using NETworkManager.Profiles;
 using NETworkManager.Profiles.Application;
@@ -150,14 +149,14 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
 
     private void ConnectProfileAction()
     {
-        ConnectProfile();
+        ConnectProfile(SelectedProfile);
     }
 
     public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
 
     private static void OpenSettingsAction()
     {
-        EventSystem.RedirectToSettings();
+        NavigationManager.OpenSettings();
     }
 
     public ICommand OpenWebsiteCommand => new RelayCommand(OpenWebsiteAction);
@@ -171,7 +170,7 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
 
     #region Methods
 
-    private Task Connect()
+    private Task Connect(string url = null)
     {
         var childWindow = new WebConsoleConnectChildWindow();
 
@@ -200,7 +199,10 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
             ConfigurationManager.OnDialogClose();
-        });
+        })
+        {
+            Url = url
+        };
 
         childWindow.Title = Strings.Connect;
 
@@ -213,10 +215,22 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
         return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
-    private void ConnectProfile()
+    /// <summary>
+    ///     Connects to the profile.
+    /// </summary>
+    /// <param name="profileInfo">Profile to connect to.</param>
+    public void ConnectProfile(ProfileInfo profileInfo)
     {
-        Connect(WebConsole.CreateSessionInfo(SelectedProfile),
-            SelectedProfile.Name);
+        Connect(WebConsole.CreateSessionInfo(profileInfo), profileInfo.Name);
+    }
+
+    /// <summary>
+    ///     Opens the connect dialog with the URL.
+    /// </summary>
+    /// <param name="url">URL to connect to.</param>
+    public void AddTab(string url)
+    {
+        _ = Connect(url);
     }
 
     private void Connect(WebConsoleSessionInfo sessionInfo, string header = null)

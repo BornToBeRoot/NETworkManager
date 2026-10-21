@@ -213,7 +213,7 @@ public class RemoteDesktopHostViewModel : ProfileHostViewModelBase
 
     private void ConnectProfileAction()
     {
-        ConnectProfile();
+        ConnectProfile(SelectedProfile);
     }
 
     public ICommand ConnectProfileAsCommand => new RelayCommand(_ => ConnectProfileAsAction());
@@ -315,10 +315,12 @@ public class RemoteDesktopHostViewModel : ProfileHostViewModelBase
     }
 
     // Connect via Profile
-    private void ConnectProfile()
+    /// <summary>
+    ///     Connects to the profile.
+    /// </summary>
+    /// <param name="profileInfo">Profile to connect to.</param>
+    public void ConnectProfile(ProfileInfo profileInfo)
     {
-        var profileInfo = SelectedProfile;
-
         var sessionInfo = RemoteDesktop.CreateSessionInfo(profileInfo);
 
         Connect(sessionInfo, profileInfo.Name);

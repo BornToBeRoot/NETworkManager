@@ -4,7 +4,6 @@ using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.RDAP;
 using NETworkManager.Settings;
@@ -263,7 +262,7 @@ public class RDAPViewModel : ViewModelBase
 
     private void OpenInWhoisAction()
     {
-        EventSystem.RedirectToApplication(ApplicationName.Whois, _whoisDomain);
+        NavigationManager.Open(new ApplicationRequest(ApplicationName.Whois) { Target = _whoisDomain });
     }
 
     /// <summary>

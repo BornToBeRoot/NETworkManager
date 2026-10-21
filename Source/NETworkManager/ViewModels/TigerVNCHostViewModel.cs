@@ -3,7 +3,6 @@ using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.TigerVNC;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
@@ -150,7 +149,7 @@ public class TigerVNCHostViewModel : ProfileHostViewModelBase
 
     private void ConnectProfileAction()
     {
-        ConnectProfile();
+        ConnectProfile(SelectedProfile);
     }
 
     public ICommand ConnectProfileExternalCommand => new RelayCommand(_ => ConnectProfileExternalAction());
@@ -164,7 +163,7 @@ public class TigerVNCHostViewModel : ProfileHostViewModelBase
 
     private static void OpenSettingsAction()
     {
-        EventSystem.RedirectToSettings();
+        NavigationManager.OpenSettings();
     }
 
     #endregion
@@ -223,9 +222,13 @@ public class TigerVNCHostViewModel : ProfileHostViewModelBase
         return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
-    private void ConnectProfile()
+    /// <summary>
+    ///     Connects to the profile.
+    /// </summary>
+    /// <param name="profileInfo">Profile to connect to.</param>
+    public void ConnectProfile(ProfileInfo profileInfo)
     {
-        Connect(TigerVNC.CreateSessionInfo(SelectedProfile), SelectedProfile.Name);
+        Connect(TigerVNC.CreateSessionInfo(profileInfo), profileInfo.Name);
     }
 
     private void ConnectProfileExternal()

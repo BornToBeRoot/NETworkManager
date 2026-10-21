@@ -1,3 +1,4 @@
+using DnsClient;
 using Dragablz;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -128,7 +129,7 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
     /// </summary>
     private void LookupProfileAction()
     {
-        AddTab(SelectedProfile.DNSLookup_Host);
+        AddTab(SelectedProfile);
     }
 
     /// <summary>
@@ -152,14 +153,25 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
     /// Adds a new tab for the specified host.
     /// </summary>
     /// <param name="host">The host to lookup.</param>
-    public void AddTab(string host = null)
+    /// <param name="dnsServer">DNS server(s) to use. If null, the selected DNS server is used.</param>
+    /// <param name="queryType">Query type. If null, the selected query type is used.</param>
+    public void AddTab(string host = null, string dnsServer = null, QueryType? queryType = null)
     {
         var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(host ?? Strings.NewTab, new DNSLookupView(tabId, host),
+        TabItems.Add(new DragablzTabItem(host ?? Strings.NewTab, new DNSLookupView(tabId, host, dnsServer, queryType),
             tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
+    }
+
+    /// <summary>
+    /// Adds a new tab for the host of the specified profile.
+    /// </summary>
+    /// <param name="profile">The profile to lookup.</param>
+    public void AddTab(ProfileInfo profile)
+    {
+        AddTab(profile.DNSLookup_Host);
     }
 
     #endregion

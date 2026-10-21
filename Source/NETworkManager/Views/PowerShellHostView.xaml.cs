@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace NETworkManager.Views;
 
-public partial class PowerShellHostView
+public partial class PowerShellHostView : IApplicationRequestHandler
 {
     private readonly PowerShellHostViewModel _viewModel = new();
 
@@ -21,15 +21,20 @@ public partial class PowerShellHostView
         _loaded = true;
     }
 
-    public async void AddTab(string host)
+    public async void Open(ApplicationRequest request)
     {
         // Wait for the interface to load, before displaying the dialog to connect a new profile...
         // MahApps will throw an exception...
         while (!_loaded)
             await Task.Delay(250);
 
-        if (_viewModel.IsExecutableConfigured)
-            _viewModel.AddTab(host);
+        if (!_viewModel.IsExecutableConfigured)
+            return;
+
+        if (request.Profile != null)
+            _viewModel.ConnectProfile(request.Profile);
+        else
+            _viewModel.AddTab(request.Target);
     }
 
     public void OnViewHide()

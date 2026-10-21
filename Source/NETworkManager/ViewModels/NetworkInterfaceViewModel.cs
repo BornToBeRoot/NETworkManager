@@ -9,7 +9,6 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
@@ -899,8 +898,10 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         if (ipTuple == null)
             return;
 
-        EventSystem.RedirectToApplication(ApplicationName.IPScanner,
-            $"{ipTuple.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(ipTuple.Item2)}");
+        NavigationManager.Open(new ApplicationRequest(ApplicationName.IPScanner)
+        {
+            Target = $"{ipTuple.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(ipTuple.Item2)}"
+        });
     }
 
     /// <summary>

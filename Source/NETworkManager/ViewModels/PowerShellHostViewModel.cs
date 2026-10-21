@@ -4,7 +4,6 @@ using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.PowerShell;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
@@ -233,7 +232,7 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
 
     private void ConnectProfileAction()
     {
-        ConnectProfile();
+        ConnectProfile(SelectedProfile);
     }
 
     public ICommand ConnectProfileExternalCommand => new RelayCommand(_ => ConnectProfileExternalAction());
@@ -264,7 +263,7 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
 
     private static void OpenSettingsAction()
     {
-        EventSystem.RedirectToSettings();
+        NavigationManager.OpenSettings();
     }
 
     #endregion
@@ -430,10 +429,13 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
         return Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
-    private void ConnectProfile()
+    /// <summary>
+    ///     Connects to the profile.
+    /// </summary>
+    /// <param name="profileInfo">Profile to connect to.</param>
+    public void ConnectProfile(ProfileInfo profileInfo)
     {
-        Connect(PowerShellProfile.CreateSessionInfo(SelectedProfile),
-            SelectedProfile.Name);
+        Connect(PowerShellProfile.CreateSessionInfo(profileInfo), profileInfo.Name);
     }
 
     private void ConnectProfileExternal()

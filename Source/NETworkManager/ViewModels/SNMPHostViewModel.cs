@@ -132,7 +132,7 @@ public class SNMPHostViewModel : ProfileHostViewModelBase
         AddTab(sessionInfo);
     }
 
-    private void AddTab(ProfileInfo profile)
+    public void AddTab(ProfileInfo profile)
     {
         var sessionInfo = SNMP.CreateSessionInfo(profile);
 

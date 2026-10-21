@@ -6,7 +6,6 @@ using NETworkManager.Documentation;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
@@ -438,11 +437,11 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Set window title
         Title = $"NETworkManager {AssemblyManager.Current.Version}";
 
-        // Register event system...
+        // Register navigation requests (e.g. from the run command or other applications)
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
-        EventSystem.OnRedirectDataToApplicationEvent += EventSystem_RedirectDataToApplicationEvent;
-        EventSystem.OnRedirectToSettingsEvent += EventSystem_RedirectToSettingsEvent;
+        NavigationManager.ApplicationRequested += NavigationManager_ApplicationRequested;
+        NavigationManager.SettingsRequested += NavigationManager_SettingsRequested;
 
         _isLoading = false;
     }
@@ -1048,92 +1047,38 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         ListViewApplication.ScrollIntoView(SelectedApplication);
     }
 
-    private async void EventSystem_RedirectDataToApplicationEvent(object sender, EventArgs e)
+    private async void NavigationManager_ApplicationRequested(object sender, ApplicationRequest request)
     {
-        if (e is not EventSystemRedirectArgs data)
-            return;
+        // Clear the search, otherwise the application may be filtered out
+        ApplicationSearch = string.Empty;
 
-        // Try to find the application
-        var application = Applications.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == data.Application);
+        // Try to find the application (hidden applications can't be opened)
+        var application = Applications.Cast<ApplicationInfo>().FirstOrDefault(x => x.Name == request.Application);
 
         // Show error message if the application was not found
         if (application == null)
         {
             await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
                 string.Format(Strings.CouldNotFindApplicationXXXMessage,
-                $"{data.Application}"), ChildWindowIcon.Error);
+                $"{request.Application}"), ChildWindowIcon.Error);
 
             return;
         }
+
+        if (SettingsViewIsOpen)
+            CloseSettings();
 
         // Change application view
         SelectedApplication = application;
 
-        if (string.IsNullOrEmpty(data.Args))
+        if (string.IsNullOrEmpty(request.Target) && request.Profile == null)
             return;
 
-        // Crate a new tab / perform action
-        switch (data.Application)
-        {
-            case ApplicationName.Dashboard:
-            case ApplicationName.NetworkInterface:
-            case ApplicationName.WiFi:
-                break;
-            case ApplicationName.IPScanner:
-                _ipScannerHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.PortScanner:
-                _portScannerHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.PingMonitor:
-                _pingMonitorHostView.AddHost(data.Args);
-                break;
-            case ApplicationName.Traceroute:
-                _tracerouteHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.DNSLookup:
-                _dnsLookupHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.RemoteDesktop:
-                _remoteDesktopHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.PowerShell:
-                _powerShellHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.PuTTY:
-                _puttyHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.TigerVNC:
-                _tigerVNCHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.WebConsole:
-                break;
-            case ApplicationName.SNMP:
-                _snmpHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.RDAP:
-                _rdapHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.Whois:
-                _whoisHostView.AddTab(data.Args);
-                break;
-            case ApplicationName.SNTPLookup:
-            case ApplicationName.HostsFileEditor:
-            case ApplicationName.Firewall:
-            case ApplicationName.DiscoveryProtocol:
-            case ApplicationName.WakeOnLAN:
-            case ApplicationName.IPGeolocation:
-            case ApplicationName.SubnetCalculator:
-            case ApplicationName.BitCalculator:
-            case ApplicationName.Lookup:
-            case ApplicationName.Connections:
-            case ApplicationName.Listeners:
-            case ApplicationName.NeighborTable:
-                break;
-            default:
-                Log.Error($"Cannot redirect data to unknown application: {data.Application}");
-                break;
-        }
+        // Create a new tab / perform the action in the application
+        if (ContentControlApplication.Content is IApplicationRequestHandler handler)
+            handler.Open(request);
+        else
+            Log.Warn($"Application {request.Application} cannot handle a request with a target or profile.");
     }
 
     /// <summary>
@@ -1271,15 +1216,12 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         {
             // Redirect to application
             case RunCommandType.Application:
-                if (SettingsViewIsOpen)
-                    CloseSettings();
-
                 var applicationName = (ApplicationName)Enum.Parse(typeof(ApplicationName), SelectedRunCommand.Name);
-                EventSystem.RedirectToApplication(applicationName, string.Empty);
+                NavigationManager.Open(new ApplicationRequest(applicationName));
                 break;
             // Redirect to settings
             case RunCommandType.Setting:
-                EventSystem.RedirectToSettings();
+                NavigationManager.OpenSettings();
                 break;
         }
 
@@ -1348,7 +1290,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         SettingsViewIsOpen = true;
     }
 
-    private void EventSystem_RedirectToSettingsEvent(object sender, EventArgs e)
+    private void NavigationManager_SettingsRequested(object sender, EventArgs e)
     {
         OpenSettings();
     }

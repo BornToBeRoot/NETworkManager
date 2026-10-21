@@ -4,7 +4,7 @@ using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
 
-public partial class PingMonitorHostView
+public partial class PingMonitorHostView : IApplicationRequestHandler
 {
     private readonly PingMonitorHostViewModel _viewModel = new();
 
@@ -14,10 +14,12 @@ public partial class PingMonitorHostView
         DataContext = _viewModel;
     }
 
-    public void AddHost(string host)
+    public void Open(ApplicationRequest request)
     {
-        if (_viewModel.SetHost(host))
-            _ = _viewModel.Start();
+        if (request.Profile != null)
+            _viewModel.AddHost(request.Profile);
+        else
+            _viewModel.AddHost(request.Target);
     }
 
     public void OnViewHide()

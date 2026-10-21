@@ -5,7 +5,6 @@ using NETworkManager.Controls;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.EventSystem;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
@@ -385,7 +384,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             ? SelectedResult.Hostname
             : SelectedResult.PingInfo.IPAddress.ToString();
 
-        EventSystem.RedirectToApplication(applicationName, host);
+        NavigationManager.Open(new ApplicationRequest(applicationName) { Target = host });
     }
 
     /// <summary>
@@ -395,7 +394,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void PerformDNSLookupIPAddressAction()
     {
-        EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedResult.PingInfo.IPAddress.ToString());
+        NavigationManager.Open(new DNSLookupRequest { Target = SelectedResult.PingInfo.IPAddress.ToString() });
     }
 
     /// <summary>
@@ -405,7 +404,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void PerformDNSLookupHostnameAction()
     {
-        EventSystem.RedirectToApplication(ApplicationName.DNSLookup, SelectedResult.Hostname);
+        NavigationManager.Open(new DNSLookupRequest { Target = SelectedResult.Hostname });
     }
 
     /// <summary>
@@ -415,7 +414,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void PerformRDAPQueryIPAddressAction()
     {
-        EventSystem.RedirectToApplication(ApplicationName.RDAP, SelectedResult.PingInfo.IPAddress.ToString());
+        NavigationManager.Open(new RDAPRequest { Target = SelectedResult.PingInfo.IPAddress.ToString() });
     }
 
     /// <summary>
@@ -425,7 +424,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void PerformRDAPQueryHostnameAction()
     {
-        EventSystem.RedirectToApplication(ApplicationName.RDAP, SelectedResult.Hostname);
+        NavigationManager.Open(new RDAPRequest { Target = SelectedResult.Hostname });
     }
 
     /// <summary>

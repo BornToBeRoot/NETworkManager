@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using DnsClient;
 using NETworkManager.Controls;
 using NETworkManager.ViewModels;
 
@@ -10,11 +11,11 @@ public partial class DNSLookupView : IDragablzTabItem
 {
     private readonly DNSLookupViewModel _viewModel;
 
-    public DNSLookupView(Guid tabId, string host = null)
+    public DNSLookupView(Guid tabId, string host = null, string dnsServer = null, QueryType? queryType = null)
     {
         InitializeComponent();
 
-        _viewModel = new DNSLookupViewModel(tabId, host);
+        _viewModel = new DNSLookupViewModel(tabId, host, dnsServer, queryType);
 
         DataContext = _viewModel;
 

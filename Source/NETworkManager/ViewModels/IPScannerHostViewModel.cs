@@ -165,7 +165,7 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     /// Adds a new tab for the specified profile.
     /// </summary>
     /// <param name="profile">The profile to scan.</param>
-    private void AddTab(ProfileInfo profile)
+    public void AddTab(ProfileInfo profile)
     {
         AddTab(profile.IPScanner_HostOrIPRange);
     }

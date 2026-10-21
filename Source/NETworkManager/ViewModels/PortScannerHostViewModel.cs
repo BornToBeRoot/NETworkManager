@@ -150,7 +150,7 @@ public class PortScannerHostViewModel : ProfileHostViewModelBase
         SelectedTabIndex = TabItems.Count - 1;
     }
 
-    private void AddTab(ProfileInfo profile)
+    public void AddTab(ProfileInfo profile)
     {
         AddTab(profile.PortScanner_Host, profile.PortScanner_Ports);
     }

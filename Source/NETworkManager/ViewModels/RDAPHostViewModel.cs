@@ -95,7 +95,7 @@ public class RDAPHostViewModel : ProfileHostViewModelBase
 
     private void QueryProfileAction()
     {
-        AddTab(SelectedProfile.RDAP_Query, SelectedProfile.RDAP_QueryType);
+        AddTab(SelectedProfile);
     }
 
     public ItemActionCallback CloseItemCommand => CloseItemAction;
@@ -128,6 +128,15 @@ public class RDAPHostViewModel : ProfileHostViewModelBase
             tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
+    }
+
+    /// <summary>
+    ///     Adds a new tab and starts the query of the profile.
+    /// </summary>
+    /// <param name="profile">Profile to query.</param>
+    public void AddTab(ProfileInfo profile)
+    {
+        AddTab(profile.RDAP_Query, profile.RDAP_QueryType);
     }
 
     #endregion
