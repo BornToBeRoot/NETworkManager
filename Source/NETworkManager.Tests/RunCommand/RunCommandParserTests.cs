@@ -15,6 +15,11 @@ public class RunCommandParserTests
         },
         new()
         {
+            Type = RunCommandType.Application, Application = ApplicationName.RemoteDesktop, Command = "remotedesktop",
+            Aliases = ["rdp"], SupportsTarget = true, SupportsProfile = true
+        },
+        new()
+        {
             Type = RunCommandType.Application, Application = ApplicationName.DNSLookup, Command = "dnslookup",
             Aliases = ["dns", "nslookup"], SupportsTarget = true, SupportsProfile = true,
             Argument = RunCommandArgument.DNSServer, Types = ["a", "aaaa", "cname", "ptr"]
@@ -119,6 +124,46 @@ public class RunCommandParserTests
         Assert.Equal("1.1.1.1", result.Argument);
         Assert.Equal("cname", result.Type);
         Assert.Equal(RunCommandParseError.None, result.Error);
+    }
+
+    [Theory]
+    [InlineData("dns borntoberoot.net \"Google Public DNS\" aaaa")]
+    [InlineData("dns borntoberoot.net aaaa \"Google Public DNS\"")]
+    public void QuotedArgument(string input)
+    {
+        var result = Parse(input);
+
+        Assert.Equal("Google Public DNS", result.Argument);
+        Assert.Equal("aaaa", result.Type);
+        Assert.Equal(RunCommandParseError.None, result.Error);
+    }
+
+    [Fact]
+    public void OpenQuoteIsTheWordThatIsBeingTyped()
+    {
+        // Whitespace in an open quote doesn't start a new word.
+        var result = Parse("dns borntoberoot.net \"Google ");
+
+        Assert.Equal(RunCommandPosition.Argument, result.Position);
+        Assert.Equal("Google ", result.CurrentWord);
+        Assert.Equal("dns borntoberoot.net ", result.InputBeforeCurrentWord);
+    }
+
+    [Fact]
+    public void CompletionKeepsQuotes()
+    {
+        var result = Parse("dns borntoberoot.net \"Google Public DNS\" aa");
+
+        Assert.Equal("aa", result.CurrentWord);
+        Assert.Equal("dns borntoberoot.net \"Google Public DNS\" ", result.InputBeforeCurrentWord);
+    }
+
+    [Fact]
+    public void QuotedProfileName()
+    {
+        var result = Parse("rdp @\"Web Server 01\"");
+
+        Assert.Equal("Web Server 01", result.ProfileName);
     }
 
     [Fact]

@@ -19,8 +19,8 @@ command @profile
 
 - **Command:** Name or alias of the feature (e.g. `dnslookup` or `dns`), see [Commands](#commands). Without a target, the feature is only opened.
 - **Target:** Host(s), IP range, query or URL, depending on the feature. Lists are separated with `;` as everywhere in NETworkManager, spaces around `;` are allowed (e.g. `ping 10.0.0.1; 10.0.0.2`).
-- **Argument** and **type:** Additional values of some features (e.g. DNS server and record type of the DNS lookup), in any order after the target.
-- **Profile:** `@` followed by the name of a profile runs the profile with its settings (e.g. `rdp @server-01`). Only profiles that are enabled for the feature can be used. The name can contain spaces (e.g. `rdp @Web Server 01`). An `@` that is not at the beginning of the target is part of the host (e.g. `admin@server-01`).
+- **Argument** and **type:** Additional values of some features (e.g. DNS server and record type of the DNS lookup), in any order after the target. A value with spaces is written in quotes (e.g. `dns borntoberoot.net "Google Public DNS" aaaa`).
+- **Profile:** `@` at the beginning of the target, followed by the name of a profile, runs the profile with its settings (e.g. `rdp @server-01`). Only profiles that are enabled for the feature can be used. The name can contain spaces (e.g. `rdp @Web Server 01`). If several profiles have the same name, select the profile in the [suggestions](#suggestions), which show its group.
 
 The input is validated like the input field of the feature (e.g. a valid host or IP range). If it is not valid, an error is shown and the dialog stays open.
 
@@ -48,7 +48,7 @@ All features that accept a target also accept a profile (`@profile`). The other 
 :::note
 
 - **Remote Desktop, PowerShell, PuTTY, TigerVNC and Web Console** open the connect dialog with the host, so the connection settings can be adjusted before connecting. A profile connects directly with its settings.
-- **DNS lookup:** The type is the DNS record type (`a`, `aaaa`, `any`, `caa`, `cname`, `dnskey`, `mx`, `ns`, `ptr`, `soa`, `srv`, `txt`). Without a type, IP addresses are looked up with `ptr` and other hosts with the type selected in the feature. The DNS server is an IP address or a configured DNS server.
+- **DNS lookup:** The type is the DNS record type (`a`, `aaaa`, `any`, `caa`, `cname`, `dnskey`, `mx`, `ns`, `ptr`, `soa`, `srv`, `txt`). Without a type, IP addresses are looked up with `ptr` and other hosts with the type selected in the feature. The DNS server is the name of a configured DNS server (case-insensitive, e.g. `cloudflare`) or a custom DNS server (e.g. `1.1.1.1`).
 - **RDAP:** The type is `domain`, `nameserver`, `tld`, `ip`, `asn` or `entity`. Without a type, it is detected from the query (see [RDAP](./application/rdap.md#example-inputs)).
 
 :::
@@ -61,11 +61,11 @@ While typing, suggestions are shown below the input:
 | ---------------------------- | ------------------------------------------------------------------------ |
 | _empty_                      | Recently run commands and all features                                   |
 | Command (e.g. `tr`)          | Matching features                                                        |
-| After the command (`rdp `)   | The input as typed, profiles of the feature and recent commands          |
-| `@` (e.g. `rdp @web`)        | Profiles of the feature (with group and host)                            |
-| After the target             | The input as typed, types of the feature (e.g. DNS record types) and recent commands |
+| After the command (`rdp `)   | The input as typed, recent commands of the feature and its profiles      |
+| `@` (e.g. `rdp @web`)        | Profiles of the feature (with group and host); exact names first         |
+| After the target             | The input as typed, types of the feature (e.g. DNS record types), configured DNS servers (DNS lookup) and recent commands |
 
-The input as typed is always the first suggestion, so `Enter` runs what was typed. Profiles, recent commands and types are selected with the arrow keys.
+The input as typed is always the first suggestion, so `Enter` runs what was typed. Profiles, recent commands, types and DNS servers are selected with the arrow keys. While typing `@`, the best matching profile is selected instead.
 
 | Key          | Action                                         |
 | ------------ | ---------------------------------------------- |

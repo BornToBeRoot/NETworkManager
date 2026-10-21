@@ -31,7 +31,12 @@ public enum RunCommandSuggestionKind
     /// <summary>
     ///     Type keyword of the command (e.g. DNS record type).
     /// </summary>
-    Type
+    Type,
+
+    /// <summary>
+    ///     DNS server configured in the DNS lookup.
+    /// </summary>
+    DNSServer
 }
 
 /// <summary>

@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Net;
 using System.Windows.Controls;
 
 namespace NETworkManager;
@@ -35,8 +34,6 @@ public static class RunCommandManager
         ["entity"] = RDAPQueryType.Entity
     };
 
-    private static readonly IReadOnlyList<RunCommandDefinition> Commands = CreateCommands();
-
     /// <summary>
     ///     Gets the commands of the visible applications and the settings.
     /// </summary>
@@ -46,7 +43,17 @@ public static class RunCommandManager
         var visibleApplications = SettingsManager.Current.General_ApplicationList.Where(x => x.IsVisible)
             .Select(x => x.Name).ToHashSet();
 
-        return [.. Commands.Where(x => x.Type == RunCommandType.Setting || visibleApplications.Contains(x.Application))];
+        // Created on each call, since the syntax is translated.
+        return [.. CreateCommands().Where(x => x.Type == RunCommandType.Setting || visibleApplications.Contains(x.Application))];
+    }
+
+    /// <summary>
+    ///     Gets the names of the DNS servers configured in the DNS lookup (e.g. "Cloudflare").
+    /// </summary>
+    /// <returns>Names of the DNS servers.</returns>
+    public static IEnumerable<string> GetDNSServers()
+    {
+        return SettingsManager.Current.DNSLookup_DNSServers.Select(x => x.Name);
     }
 
     /// <summary>
@@ -217,13 +224,11 @@ public static class RunCommandManager
             ApplicationName.DNSLookup => new DNSLookupRequest
             {
                 Target = result.Target,
-                DNSServer = result.Argument,
-                QueryType = result.Type != null
-                    ? Enum.Parse<QueryType>(result.Type, true)
-                    // Only IP addresses: reverse lookup
-                    : result.Target.Split(';').All(x => IPAddress.TryParse(x, out _))
-                        ? QueryType.PTR
-                        : null
+                // A configured DNS server is matched by its name (case-insensitive), otherwise it's a custom server.
+                DNSServer = GetDNSServers().FirstOrDefault(x =>
+                    string.Equals(x, result.Argument, StringComparison.OrdinalIgnoreCase)) ?? result.Argument,
+                // Without a type, the DNS lookup uses PTR for IP addresses and its selected type for hosts.
+                QueryType = result.Type != null ? Enum.Parse<QueryType>(result.Type, true) : null
             },
             ApplicationName.PortScanner => new PortScannerRequest { Target = result.Target, Ports = result.Argument },
             ApplicationName.RDAP => new RDAPRequest { Target = result.Target, QueryType = GetRDAPQueryType(result.Type) },
@@ -242,24 +247,31 @@ public static class RunCommandManager
     /// </summary>
     private static List<RunCommandDefinition> CreateCommands()
     {
+        // Syntax of the arguments, e.g. "<Hosts> [Ports]"
+        static string Required(string name) => $"<{name}>";
+        static string Optional(string name) => $"[{name}]";
+
         var commands = ApplicationManager.GetNames().Where(x => x != ApplicationName.None).Select(name => name switch
         {
-            ApplicationName.IPScanner => Create(name, ["scan"], "<range>", true),
-            ApplicationName.PortScanner => Create(name, ["portscan"], "<hosts> [ports]", true,
-                RunCommandArgument.Ports),
-            ApplicationName.PingMonitor => Create(name, ["ping"], "<hosts>", true),
-            ApplicationName.Traceroute => Create(name, ["trace", "tracert"], "<host>", true),
-            ApplicationName.DNSLookup => Create(name, ["dns", "nslookup"], "<hosts> [server] [type]", true,
+            ApplicationName.IPScanner => Create(name, ["scan"], Required(Strings.IPRange), true),
+            ApplicationName.PortScanner => Create(name, ["portscan"],
+                $"{Required(Strings.Hosts)} {Optional(Strings.Ports)}", true, RunCommandArgument.Ports),
+            ApplicationName.PingMonitor => Create(name, ["ping"], Required(Strings.Hosts), true),
+            ApplicationName.Traceroute => Create(name, ["trace", "tracert"], Required(Strings.Host), true),
+            ApplicationName.DNSLookup => Create(name, ["dns", "nslookup"],
+                $"{Required(Strings.Hosts)} {Optional(Strings.DNSServer)} {Optional(Strings.Type)}", true,
                 RunCommandArgument.DNSServer,
                 [.. DNSLookup.QueryTypes.Select(x => x.ToString().ToLowerInvariant()).Order()]),
-            ApplicationName.RemoteDesktop => Create(name, ["rdp", "mstsc"], "<host[:port]>", true),
-            ApplicationName.PowerShell => Create(name, ["ps", "pwsh"], "<host>", true),
-            ApplicationName.PuTTY => Create(name, ["ssh"], "<host>", true),
-            ApplicationName.TigerVNC => Create(name, ["vnc"], "<host>", true),
-            ApplicationName.WebConsole => Create(name, ["web"], "<url>", true),
-            ApplicationName.SNMP => Create(name, [], "<host>", true),
-            ApplicationName.RDAP => Create(name, [], "<query> [type]", true, types: [.. RDAPTypes.Keys]),
-            ApplicationName.Whois => Create(name, [], "<domain>", true),
+            ApplicationName.RemoteDesktop => Create(name, ["rdp", "mstsc"],
+                $"{Required(Strings.Host)}[:{Required(Strings.Port)}]", true),
+            ApplicationName.PowerShell => Create(name, ["ps", "pwsh"], Required(Strings.Host), true),
+            ApplicationName.PuTTY => Create(name, ["ssh"], Required(Strings.Host), true),
+            ApplicationName.TigerVNC => Create(name, ["vnc"], Required(Strings.Host), true),
+            ApplicationName.WebConsole => Create(name, ["web"], Required(Strings.URL), true),
+            ApplicationName.SNMP => Create(name, [], Required(Strings.Host), true),
+            ApplicationName.RDAP => Create(name, [], $"{Required(Strings.Query)} {Optional(Strings.Type)}", true,
+                types: [.. RDAPTypes.Keys]),
+            ApplicationName.Whois => Create(name, [], Required(Strings.Domain), true),
             _ => Create(name, [], string.Empty, false)
         }).ToList();
 
@@ -287,7 +299,7 @@ public static class RunCommandManager
             SupportsProfile = supportsTarget,
             Argument = argument,
             Types = types ?? [],
-            Syntax = supportsTarget ? $"{syntax} | @<profile>" : string.Empty
+            Syntax = supportsTarget ? $"{syntax} | @<{Strings.Profile}>" : string.Empty
         };
     }
 }

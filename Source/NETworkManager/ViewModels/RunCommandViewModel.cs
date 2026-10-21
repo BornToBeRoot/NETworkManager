@@ -23,9 +23,14 @@ public class RunCommandViewModel : ViewModelBase
     private const int MaxSuggestions = 10;
 
     /// <summary>
-    ///     Maximum number of recent commands shown in the suggestions.
+    ///     Maximum number of recent commands shown with an empty input (before the commands).
     /// </summary>
     private const int MaxHistorySuggestions = 5;
+
+    /// <summary>
+    ///     Maximum number of recent commands of a command shown before its profiles.
+    /// </summary>
+    private const int MaxCommandHistorySuggestions = 3;
 
     private readonly IReadOnlyList<RunCommandDefinition> _commands;
     private readonly Action<RunCommandViewModel> _runHandler;
@@ -178,10 +183,19 @@ public class RunCommandViewModel : ViewModelBase
         var text = suggestion?.CompletionText ?? Input;
         var result = RunCommandParser.Parse(text, _commands);
 
-        ErrorMessage = RunCommandManager.TryCreateRequest(result, suggestion?.Profile, out var request);
+        var error = RunCommandManager.TryCreateRequest(result, suggestion?.Profile, out var request);
 
-        if (ErrorMessage != null)
+        if (error != null)
+        {
+            // Show the text of a failed suggestion (e.g. a recent command with an ambiguous profile name), so it can be
+            // corrected or completed with the suggestions.
+            if (suggestion != null && suggestion.Kind != RunCommandSuggestionKind.Run)
+                Input = text;
+
+            ErrorMessage = error;
+
             return;
+        }
 
         Request = request;
         IsSettings = result.Command.Type == RunCommandType.Setting;
@@ -207,8 +221,16 @@ public class RunCommandViewModel : ViewModelBase
         {
             RunCommandPosition.Command => GetCommandSuggestions(),
             RunCommandPosition.Target when _result.ProfileName != null => GetProfileSuggestions(),
-            RunCommandPosition.Target => [GetRunSuggestion(), .. GetProfileSuggestions(), .. GetHistorySuggestions()],
-            _ => [GetRunSuggestion(), .. GetTypeSuggestions(), .. GetHistorySuggestions()]
+            RunCommandPosition.Target =>
+            [
+                GetRunSuggestion(), .. GetHistorySuggestions().Take(MaxCommandHistorySuggestions),
+                .. GetProfileSuggestions()
+            ],
+            _ =>
+            [
+                GetRunSuggestion(), .. GetTypeSuggestions(), .. GetDNSServerSuggestions(),
+                .. GetHistorySuggestions()
+            ]
         };
 
         if (_result.Position != RunCommandPosition.Command)
@@ -251,19 +273,25 @@ public class RunCommandViewModel : ViewModelBase
         if (string.IsNullOrEmpty(text))
             suggestions.AddRange(GetHistorySuggestions().Take(MaxHistorySuggestions));
 
+        var commands = new List<(int Rank, RunCommandSuggestion Suggestion)>();
+
         foreach (var command in _commands)
         {
             var names = new[] { command.Command }.Concat(command.Aliases).ToList();
             var translatedName = RunCommandManager.GetTranslatedName(command);
 
             // Complete with the command or alias that was typed (e.g. "ping" instead of "pingmonitor").
-            var name = names.FirstOrDefault(x => string.Equals(x, text, StringComparison.OrdinalIgnoreCase)) ??
-                       names.FirstOrDefault(x => x.StartsWith(text, StringComparison.OrdinalIgnoreCase));
+            var exactName = names.FirstOrDefault(x => string.Equals(x, text, StringComparison.OrdinalIgnoreCase));
+            var name = exactName ?? names.FirstOrDefault(x => x.StartsWith(text, StringComparison.OrdinalIgnoreCase));
 
             if (name == null && !translatedName.Contains(text, StringComparison.OrdinalIgnoreCase))
                 continue;
 
-            suggestions.Add(new RunCommandSuggestion
+            // Exact command or alias first, then commands that start with the text, then translated names that contain
+            // it (e.g. "lookup" before "DNS Lookup").
+            var rank = exactName != null ? 0 : name != null ? 1 : 2;
+
+            commands.Add((rank, new RunCommandSuggestion
             {
                 Kind = RunCommandSuggestionKind.Command,
                 Application = command.Application,
@@ -271,8 +299,10 @@ public class RunCommandViewModel : ViewModelBase
                 Description = string.Join(", ", names),
                 Info = command.Syntax,
                 CompletionText = (name ?? command.Command) + " "
-            });
+            }));
         }
+
+        suggestions.AddRange(commands.OrderBy(x => x.Rank).Select(x => x.Suggestion));
 
         return suggestions;
     }
@@ -283,20 +313,39 @@ public class RunCommandViewModel : ViewModelBase
     private IEnumerable<RunCommandSuggestion> GetProfileSuggestions()
     {
         var text = _result.ProfileName ?? _result.CurrentWord;
+        var application = _result.Command.Application;
+
+        // Exact name first, then names that start with the text, then names and targets (e.g. host) that contain it.
+        static int? GetRank(ProfileInfo profile, string target, string text)
+        {
+            if (string.IsNullOrEmpty(text) || string.Equals(profile.Name, text, StringComparison.OrdinalIgnoreCase))
+                return 0;
+
+            if (profile.Name.StartsWith(text, StringComparison.OrdinalIgnoreCase))
+                return 1;
+
+            if (profile.Name.Contains(text, StringComparison.OrdinalIgnoreCase) ||
+                (target?.Contains(text, StringComparison.OrdinalIgnoreCase) ?? false))
+                return 2;
+
+            return null;
+        }
 
         return RunCommandManager.GetProfiles(_result.Command)
-            .Where(x => string.IsNullOrEmpty(text) ||
-                        x.Name.Contains(text, StringComparison.OrdinalIgnoreCase) ||
-                        (x.Host?.Contains(text, StringComparison.OrdinalIgnoreCase) ?? false))
+            .Select(x => (Profile: x, Target: x.GetTarget(application)))
+            .Select(x => (x.Profile, x.Target, Rank: GetRank(x.Profile, x.Target, text)))
+            .Where(x => x.Rank != null)
+            .OrderBy(x => x.Rank)
             .Select(x => new RunCommandSuggestion
             {
                 Kind = RunCommandSuggestionKind.Profile,
-                Application = _result.Command.Application,
-                Title = x.Name,
-                Description = string.IsNullOrEmpty(x.Host) ? x.Group : $"{x.Group} · {x.Host}",
-                Info = "@" + x.Name,
-                CompletionText = _result.InputBeforeCurrentWord + "@" + x.Name,
-                Profile = x
+                Application = application,
+                Title = x.Profile.Name,
+                // The target of the application (e.g. the RDP host), which can differ from the general host.
+                Description = string.IsNullOrEmpty(x.Target) ? x.Profile.Group : $"{x.Profile.Group} · {x.Target}",
+                Info = "@" + x.Profile.Name,
+                CompletionText = _result.InputBeforeCurrentWord + "@" + x.Profile.Name,
+                Profile = x.Profile
             });
     }
 
@@ -322,6 +371,28 @@ public class RunCommandViewModel : ViewModelBase
     }
 
     /// <summary>
+    ///     DNS servers configured in the DNS lookup (e.g. "Cloudflare") that contain the typed word, if no DNS server was
+    ///     entered yet. Names with spaces are inserted in quotes.
+    /// </summary>
+    private IEnumerable<RunCommandSuggestion> GetDNSServerSuggestions()
+    {
+        if (_result.Command.Argument != RunCommandArgument.DNSServer ||
+            _result.Argument != null && !string.Equals(_result.Argument, _result.CurrentWord))
+            return [];
+
+        return RunCommandManager.GetDNSServers()
+            .Where(x => x.Contains(_result.CurrentWord, StringComparison.OrdinalIgnoreCase))
+            .Select(x => new RunCommandSuggestion
+            {
+                Kind = RunCommandSuggestionKind.DNSServer,
+                Application = _result.Command.Application,
+                Title = x,
+                Description = Strings.DNSServer,
+                CompletionText = _result.InputBeforeCurrentWord + (x.Contains(' ') ? $"\"{x}\"" : x) + " "
+            });
+    }
+
+    /// <summary>
     ///     Recent commands. With a command, only its entries that contain the input.
     /// </summary>
     private IEnumerable<RunCommandSuggestion> GetHistorySuggestions()
@@ -329,24 +400,20 @@ public class RunCommandViewModel : ViewModelBase
         var input = Input.Trim();
 
         return SettingsManager.Current.RunCommand_History
+            .Select(x => (Text: x, RunCommandParser.Parse(x, _commands).Command))
             .Where(x => _result.Command == null && string.IsNullOrEmpty(input) ||
                         _result.Command != null &&
-                        RunCommandParser.Parse(x, _commands).Command == _result.Command &&
-                        x.Contains(_result.CurrentWord, StringComparison.OrdinalIgnoreCase) &&
-                        !string.Equals(x, input, StringComparison.OrdinalIgnoreCase))
-            .Select(x =>
+                        x.Command == _result.Command &&
+                        x.Text.Contains(_result.CurrentWord, StringComparison.OrdinalIgnoreCase) &&
+                        !string.Equals(x.Text, input, StringComparison.OrdinalIgnoreCase))
+            .Select(x => new RunCommandSuggestion
             {
-                var command = RunCommandParser.Parse(x, _commands).Command;
-
-                return new RunCommandSuggestion
-                {
-                    Kind = RunCommandSuggestionKind.History,
-                    Application = command?.Application ?? Models.ApplicationName.None,
-                    Title = x,
-                    Description = command == null ? null : RunCommandManager.GetTranslatedName(command),
-                    Info = Strings.Recent,
-                    CompletionText = x
-                };
+                Kind = RunCommandSuggestionKind.History,
+                Application = x.Command?.Application ?? Models.ApplicationName.None,
+                Title = x.Text,
+                Description = x.Command == null ? null : RunCommandManager.GetTranslatedName(x.Command),
+                Info = Strings.Recent,
+                CompletionText = x.Text
             });
     }
 

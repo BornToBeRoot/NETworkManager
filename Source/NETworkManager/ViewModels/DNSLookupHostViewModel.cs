@@ -9,6 +9,9 @@ using NETworkManager.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
@@ -150,15 +153,32 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
     /// </summary>
     /// <param name="host">The host to lookup.</param>
     /// <param name="dnsServer">DNS server(s) to use. If null, the selected DNS server is used.</param>
-    /// <param name="queryType">Query type. If null, the selected query type is used.</param>
+    /// <param name="queryType">
+    ///     Query type. If null, PTR is used for IP addresses (e.g. from the IP Scanner) and the selected query type for
+    ///     hosts.
+    /// </param>
     public void AddTab(string host = null, string dnsServer = null, QueryType? queryType = null)
     {
+        if (queryType == null && IsIPAddresses(host))
+            queryType = QueryType.PTR;
+
         var tabId = Guid.NewGuid();
 
         TabItems.Add(new DragablzTabItem(host ?? Strings.NewTab, new DNSLookupView(tabId, host, dnsServer, queryType),
             tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
+    }
+
+    /// <summary>
+    /// Checks if the host(s) are only IP addresses (shortened IPv4 forms like "10" are host names).
+    /// </summary>
+    private static bool IsIPAddresses(string hosts)
+    {
+        return !string.IsNullOrWhiteSpace(hosts) && hosts.Split(';').Select(x => x.Trim()).All(x =>
+            RegexHelper.IPv4AddressRegex().IsMatch(x) ||
+            x.Contains(':') && IPAddress.TryParse(x, out var ipAddress) &&
+            ipAddress.AddressFamily == AddressFamily.InterNetworkV6);
     }
 
     /// <summary>

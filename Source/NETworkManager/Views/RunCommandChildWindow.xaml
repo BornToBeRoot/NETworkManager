@@ -32,6 +32,8 @@
                      Visual="{iconPacks:Material Kind=History}" />
         <VisualBrush x:Key="RunCommandTypeIcon" Stretch="Uniform"
                      Visual="{iconPacks:Material Kind=TagOutline}" />
+        <VisualBrush x:Key="RunCommandDNSServerIcon" Stretch="Uniform"
+                     Visual="{iconPacks:Material Kind=Dns}" />
     </simpleChildWindow:ChildWindow.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -142,6 +144,11 @@
                                                      Value="{x:Static networkManager:RunCommandSuggestionKind.Type}">
                                             <Setter Property="OpacityMask"
                                                     Value="{StaticResource RunCommandTypeIcon}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Kind}"
+                                                     Value="{x:Static networkManager:RunCommandSuggestionKind.DNSServer}">
+                                            <Setter Property="OpacityMask"
+                                                    Value="{StaticResource RunCommandDNSServerIcon}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>

@@ -17,11 +17,19 @@ public static partial class RunCommandParser
     private static partial Regex ListSeparatorRegex();
 
     /// <summary>
+    ///     A word: a value in quotes (can contain spaces, the closing quote can be missing while typing) or a value
+    ///     without spaces.
+    /// </summary>
+    [GeneratedRegex("\"[^\"]*(?:\"|$)|[^\\s\"]+")]
+    private static partial Regex WordRegex();
+
+    /// <summary>
     ///     Parses the input.
     ///     - Lists use ";" as everywhere in the application. Whitespace around ";" is removed, so whitespace only
     ///     separates the arguments.
     ///     - The first word is the command (name or alias), the second word the target. "@name" (the rest of the input,
     ///     since profile names can contain spaces) is a profile instead of a target.
+    ///     - A value with spaces is written in quotes (e.g. a DNS server "Google Public DNS").
     ///     - Further words are a type keyword of the command or its second argument (e.g. ports, DNS server), in any
     ///     order.
     /// </summary>
@@ -32,8 +40,13 @@ public static partial class RunCommandParser
     {
         input = (input ?? string.Empty).TrimStart();
 
-        var endsWithWhitespace = input.Length > 0 && char.IsWhiteSpace(input[^1]);
-        var words = ListSeparatorRegex().Replace(input, ";").Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
+        // Words as typed (with quotes, to rebuild the input) and their values (without quotes)
+        var tokens = WordRegex().Matches(ListSeparatorRegex().Replace(input, ";")).Select(x => x.Value).ToArray();
+        var words = tokens.Select(Unquote).ToArray();
+
+        // Whitespace in an open quote (e.g. "Google ) is part of the word that is being typed.
+        var endsWithWhitespace = input.Length > 0 && char.IsWhiteSpace(input[^1]) &&
+                                 !(tokens.Length > 0 && IsOpenQuote(tokens[^1]));
 
         if (words.Length == 0)
             return new RunCommandParseResult { Position = RunCommandPosition.Command, Error = RunCommandParseError.Empty };
@@ -68,7 +81,7 @@ public static partial class RunCommandParser
         // Profile: the rest of the input after "@" is the name.
         if (words[1].StartsWith('@'))
         {
-            var profileName = input[(input.IndexOf('@') + 1)..].Trim();
+            var profileName = Unquote(input[(input.IndexOf('@') + 1)..].Trim());
 
             var error = !command.SupportsProfile
                 ? RunCommandParseError.NoProfiles
@@ -139,9 +152,22 @@ public static partial class RunCommandParser
             Type = type,
             Position = isTypingTarget ? RunCommandPosition.Target : RunCommandPosition.Argument,
             CurrentWord = currentWord,
-            InputBeforeCurrentWord = string.Join(" ", words[..^(currentWord.Length == 0 ? 0 : 1)]) + " ",
+            InputBeforeCurrentWord = string.Join(" ", tokens[..^(endsWithWhitespace ? 0 : 1)]) + " ",
             Error = unknownArgument == null ? RunCommandParseError.None : RunCommandParseError.UnknownArgument,
             ErrorValue = unknownArgument
         };
+    }
+
+    /// <summary>
+    ///     Removes the quotes of a value (e.g. "Google Public DNS").
+    /// </summary>
+    private static string Unquote(string word)
+    {
+        return word.StartsWith('"') ? word.Trim('"') : word;
+    }
+
+    private static bool IsOpenQuote(string token)
+    {
+        return token.StartsWith('"') && (token.Length == 1 || !token.EndsWith('"'));
     }
 }
