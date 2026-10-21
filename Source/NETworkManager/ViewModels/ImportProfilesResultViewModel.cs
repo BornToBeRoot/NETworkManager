@@ -78,6 +78,10 @@ public sealed class ImportProfilesResultViewModel : ViewModelBase
             field = value;
 
             IsSearching = true;
+
+            // Stop + Start (instead of just Start) to reset the due time on every change --
+            // DispatcherTimer.Start() is a no-op while it's already running.
+            _searchDispatcherTimer.Stop();
             _searchDispatcherTimer.Start();
 
             OnPropertyChanged();
