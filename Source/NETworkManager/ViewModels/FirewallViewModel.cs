@@ -802,9 +802,16 @@ public class FirewallViewModel : ViewModelBase
 
                 // Select the rule again (e.g. after it was enabled or edited), so the user doesn't have to search for it.
                 // If several rules were selected, only this rule is selected again. The view scrolls it into view.
+                // Not if the rule is hidden by the search now (e.g. renamed), otherwise actions (e.g. Del) would
+                // apply to a rule that is not visible.
                 if (selectedRule != null)
-                    SelectedResult = rules.FirstOrDefault(rule =>
+                {
+                    var reloadedRule = rules.FirstOrDefault(rule =>
                         rule.Id == selectedRule.Id && rule.Source == selectedRule.Source);
+
+                    if (reloadedRule != null && ResultsView.Contains(reloadedRule))
+                        SelectedResult = reloadedRule;
+                }
             });
 
             IsStatusMessageDisplayed = true;
