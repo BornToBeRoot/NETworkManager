@@ -233,30 +233,14 @@ public class WakeOnLANViewModel : ProfileHostViewModelBase
 
     private void AddMACAddressToHistory(string macAddress)
     {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.WakeOnLan_MACAddressHistory.ToList(), macAddress,
+        ListHelper.Modify(SettingsManager.Current.WakeOnLan_MACAddressHistory, macAddress,
             SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.WakeOnLan_MACAddressHistory.Clear();
-        OnPropertyChanged(nameof(MACAddress)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.WakeOnLan_MACAddressHistory.Add(x));
     }
 
     private void AddBroadcastToHistory(string broadcast)
     {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.WakeOnLan_BroadcastHistory.ToList(), broadcast,
+        ListHelper.Modify(SettingsManager.Current.WakeOnLan_BroadcastHistory, broadcast,
             SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.WakeOnLan_BroadcastHistory.Clear();
-        OnPropertyChanged(nameof(Broadcast)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.WakeOnLan_BroadcastHistory.Add(x));
     }
 
     #endregion

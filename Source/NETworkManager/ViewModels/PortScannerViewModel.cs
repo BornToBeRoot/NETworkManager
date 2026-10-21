@@ -573,30 +573,14 @@ public class PortScannerViewModel : ViewModelBase
 
     private void AddHostToHistory(string host)
     {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.PortScanner_HostHistory.ToList(), host,
+        ListHelper.Modify(SettingsManager.Current.PortScanner_HostHistory, host,
             SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.PortScanner_HostHistory.Clear();
-        OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.PortScanner_HostHistory.Add(x));
     }
 
     private void AddPortToHistory(string port)
     {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory.ToList(), port,
+        ListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory, port,
             SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.PortScanner_PortHistory.Clear();
-        OnPropertyChanged(nameof(Ports)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.PortScanner_PortHistory.Add(x));
     }
 
     #endregion

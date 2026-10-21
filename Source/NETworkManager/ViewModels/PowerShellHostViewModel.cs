@@ -475,9 +475,8 @@ public class PowerShellHostViewModel : ProfileHostViewModelBase
         if (string.IsNullOrEmpty(host))
             return;
 
-        SettingsManager.Current.PowerShell_HostHistory = new ObservableCollection<string>(
-            ListHelper.Modify(SettingsManager.Current.PowerShell_HostHistory.ToList(), host,
-                SettingsManager.Current.General_HistoryListEntries));
+        ListHelper.Modify(SettingsManager.Current.PowerShell_HostHistory, host,
+            SettingsManager.Current.General_HistoryListEntries);
     }
 
     public void FocusEmbeddedWindow()

@@ -261,30 +261,14 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
     private void AddSubnetToHistory(string subnet)
     {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory.ToList(), subnet,
+        ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory, subnet,
             SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory.Clear();
-        OnPropertyChanged(nameof(Subnet)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.SubnetCalculator_Subnetting_SubnetHistory.Add(x));
     }
 
     private void AddNewSubnetmaskOrCidrToHistory(string newSubnetmaskOrCidr)
     {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory.ToList(),
-            newSubnetmaskOrCidr, SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory.Clear();
-        OnPropertyChanged(nameof(NewSubnetmask)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory.Add(x));
+        ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Subnetting_NewSubnetmaskHistory, newSubnetmaskOrCidr,
+            SettingsManager.Current.General_HistoryListEntries);
     }
 
     public void OnShutdown()

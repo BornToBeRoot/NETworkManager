@@ -187,6 +187,7 @@ Release date: **xx.xx.2026**
 - Refactored the **Network Connection** widget's check logic to reduce duplicated code and share the local IP address detection between the Computer and Router checks instead of detecting it twice. [#3553](https://github.com/BornToBeRoot/NETworkManager/pull/3553)
 - Consolidated the duplicated **Profiles** side panel (search, tag filter, grouped list, context menu, add/edit/copy/delete) used across 15 tool views into a single shared control, reducing code duplication. As part of this, the profile panel's expanded/width state is now shared across all tools instead of being tracked per tool. [#3537](https://github.com/BornToBeRoot/NETworkManager/pull/3537)
 - Replaced the internal event system for opening a feature with data (e.g. **Open in RDAP** from the **IP Scanner**) with typed requests, which can also carry options (e.g. DNS server and record type) and profiles. Features no longer fail to open from another feature while the application list is filtered by a search.
-- Added a unit test project (xUnit) with tests for the run command parser.
+- Input histories (e.g. hosts, domains, ports) are updated in place instead of being cleared and refilled, which avoids clearing the text of the input field and unnecessary updates.
+- Added a unit test project (xUnit) with tests for the run command parser and the history lists.
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)

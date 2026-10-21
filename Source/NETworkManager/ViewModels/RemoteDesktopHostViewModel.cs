@@ -401,9 +401,8 @@ public class RemoteDesktopHostViewModel : ProfileHostViewModelBase
         if (string.IsNullOrEmpty(host))
             return;
 
-        SettingsManager.Current.RemoteDesktop_HostHistory = new ObservableCollection<string>(
-            ListHelper.Modify(SettingsManager.Current.RemoteDesktop_HostHistory.ToList(), host,
-                SettingsManager.Current.General_HistoryListEntries));
+        ListHelper.Modify(SettingsManager.Current.RemoteDesktop_HostHistory, host,
+            SettingsManager.Current.General_HistoryListEntries);
     }
 
     #endregion

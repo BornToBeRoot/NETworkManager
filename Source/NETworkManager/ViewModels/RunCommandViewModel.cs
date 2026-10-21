@@ -351,12 +351,8 @@ public class RunCommandViewModel : ViewModelBase
 
     private static void AddToHistory(string text)
     {
-        var list = ListHelper.Modify(SettingsManager.Current.RunCommand_History.ToList(), text,
+        ListHelper.Modify(SettingsManager.Current.RunCommand_History, text,
             SettingsManager.Current.General_HistoryListEntries);
-
-        SettingsManager.Current.RunCommand_History.Clear();
-
-        list.ForEach(x => SettingsManager.Current.RunCommand_History.Add(x));
     }
 
     #endregion

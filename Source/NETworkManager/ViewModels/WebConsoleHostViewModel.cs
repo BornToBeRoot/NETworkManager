@@ -248,9 +248,8 @@ public class WebConsoleHostViewModel : ProfileHostViewModelBase
         if (string.IsNullOrEmpty(url))
             return;
 
-        SettingsManager.Current.WebConsole_UrlHistory = new ObservableCollection<string>(
-            ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory.ToList(), url,
-                SettingsManager.Current.General_HistoryListEntries));
+        ListHelper.Modify(SettingsManager.Current.WebConsole_UrlHistory, url,
+            SettingsManager.Current.General_HistoryListEntries);
     }
 
     #endregion

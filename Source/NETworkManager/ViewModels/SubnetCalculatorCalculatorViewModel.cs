@@ -119,16 +119,8 @@ public class SubnetCalculatorCalculatorViewModel : ViewModelBase
 
     private void AddSubnetToHistory(string subnet)
     {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory.ToList(), subnet,
+        ListHelper.Modify(SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory, subnet,
             SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory.Clear();
-        OnPropertyChanged(nameof(Subnet)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.SubnetCalculator_Calculator_SubnetHistory.Add(x));
     }
 
     #endregion

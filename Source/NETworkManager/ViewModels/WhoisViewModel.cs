@@ -217,16 +217,8 @@ public class WhoisViewModel : ViewModelBase
 
     private void AddDomainToHistory(string domain)
     {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.Whois_DomainHistory.ToList(), domain,
+        ListHelper.Modify(SettingsManager.Current.Whois_DomainHistory, domain,
             SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.Whois_DomainHistory.Clear();
-        OnPropertyChanged(nameof(Domain)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.Whois_DomainHistory.Add(x));
     }
 
     private Task Export()

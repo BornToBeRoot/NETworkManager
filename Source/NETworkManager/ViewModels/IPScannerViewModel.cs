@@ -705,16 +705,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="ipRange">The host or IP range to add.</param>
     private void AddHostToHistory(string ipRange)
     {
-        // Create the new list
-        var list = ListHelper.Modify([.. SettingsManager.Current.IPScanner_HostHistory], ipRange,
+        ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory, ipRange,
             SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.IPScanner_HostHistory.Clear();
-        OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(SettingsManager.Current.IPScanner_HostHistory.Add);
     }
 
     /// <summary>

@@ -142,30 +142,14 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
 
     private void AddSubnet1ToHistory(string subnet)
     {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1.ToList(), subnet,
+        ListHelper.Modify(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1, subnet,
             SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1.Clear();
-        OnPropertyChanged(nameof(Subnet1)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet1.Add(x));
     }
 
     private void AddSubnet2ToHistory(string subnet)
     {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2.ToList(), subnet,
+        ListHelper.Modify(SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2, subnet,
             SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2.Clear();
-        OnPropertyChanged(nameof(Subnet2)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.SubnetCalculator_WideSubnet_Subnet2.Add(x));
     }
 
     public void OnShutdown()

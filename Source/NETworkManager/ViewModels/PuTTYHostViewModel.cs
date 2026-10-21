@@ -411,9 +411,8 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
         if (string.IsNullOrEmpty(host))
             return;
 
-        SettingsManager.Current.PuTTY_HostHistory = new ObservableCollection<string>(
-            ListHelper.Modify(SettingsManager.Current.PuTTY_HostHistory.ToList(), host,
-                SettingsManager.Current.General_HistoryListEntries));
+        ListHelper.Modify(SettingsManager.Current.PuTTY_HostHistory, host,
+            SettingsManager.Current.General_HistoryListEntries);
     }
 
     private static void AddSerialLineToHistory(string serialLine)
@@ -421,9 +420,8 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
         if (string.IsNullOrEmpty(serialLine))
             return;
 
-        SettingsManager.Current.PuTTY_SerialLineHistory = new ObservableCollection<string>(
-            ListHelper.Modify(SettingsManager.Current.PuTTY_SerialLineHistory.ToList(), serialLine,
-                SettingsManager.Current.General_HistoryListEntries));
+        ListHelper.Modify(SettingsManager.Current.PuTTY_SerialLineHistory, serialLine,
+            SettingsManager.Current.General_HistoryListEntries);
     }
 
     private static void AddPortToHistory(int port)
@@ -431,9 +429,8 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
         if (port == 0)
             return;
 
-        SettingsManager.Current.PuTTY_PortHistory = new ObservableCollection<string>(
-            ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory.ToList(), port.ToString(),
-                SettingsManager.Current.General_HistoryListEntries));
+        ListHelper.Modify(SettingsManager.Current.PuTTY_PortHistory, port.ToString(),
+            SettingsManager.Current.General_HistoryListEntries);
     }
 
     private static void AddBaudToHistory(int baud)
@@ -441,9 +438,8 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
         if (baud == 0)
             return;
 
-        SettingsManager.Current.PuTTY_BaudHistory = new ObservableCollection<string>(
-            ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory.ToList(), baud.ToString(),
-                SettingsManager.Current.General_HistoryListEntries));
+        ListHelper.Modify(SettingsManager.Current.PuTTY_BaudHistory, baud.ToString(),
+            SettingsManager.Current.General_HistoryListEntries);
     }
 
     private static void AddUsernameToHistory(string username)
@@ -451,9 +447,8 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
         if (string.IsNullOrEmpty(username))
             return;
 
-        SettingsManager.Current.PuTTY_UsernameHistory = new ObservableCollection<string>(
-            ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory.ToList(), username,
-                SettingsManager.Current.General_HistoryListEntries));
+        ListHelper.Modify(SettingsManager.Current.PuTTY_UsernameHistory, username,
+            SettingsManager.Current.General_HistoryListEntries);
     }
 
     private static void AddPrivateKeyToHistory(string privateKey)
@@ -461,9 +456,8 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
         if (string.IsNullOrEmpty(privateKey))
             return;
 
-        SettingsManager.Current.PuTTY_PrivateKeyFileHistory = new ObservableCollection<string>(
-            ListHelper.Modify(SettingsManager.Current.PuTTY_PrivateKeyFileHistory.ToList(), privateKey,
-                SettingsManager.Current.General_HistoryListEntries));
+        ListHelper.Modify(SettingsManager.Current.PuTTY_PrivateKeyFileHistory, privateKey,
+            SettingsManager.Current.General_HistoryListEntries);
     }
 
     private static void AddProfileToHistory(string profile)
@@ -471,9 +465,8 @@ public class PuTTYHostViewModel : ProfileHostViewModelBase
         if (string.IsNullOrEmpty(profile))
             return;
 
-        SettingsManager.Current.PuTTY_ProfileHistory = new ObservableCollection<string>(
-            ListHelper.Modify(SettingsManager.Current.PuTTY_ProfileHistory.ToList(), profile,
-                SettingsManager.Current.General_HistoryListEntries));
+        ListHelper.Modify(SettingsManager.Current.PuTTY_ProfileHistory, profile,
+            SettingsManager.Current.General_HistoryListEntries);
     }
 
     public void FocusEmbeddedWindow()

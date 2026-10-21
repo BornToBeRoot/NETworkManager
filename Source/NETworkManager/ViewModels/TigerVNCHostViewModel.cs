@@ -264,9 +264,8 @@ public class TigerVNCHostViewModel : ProfileHostViewModelBase
         if (string.IsNullOrEmpty(host))
             return;
 
-        SettingsManager.Current.TigerVNC_HostHistory = new ObservableCollection<string>(
-            ListHelper.Modify(SettingsManager.Current.TigerVNC_HostHistory.ToList(), host,
-                SettingsManager.Current.General_HistoryListEntries));
+        ListHelper.Modify(SettingsManager.Current.TigerVNC_HostHistory, host,
+            SettingsManager.Current.General_HistoryListEntries);
     }
 
     private static void AddPortToHistory(int port)
@@ -274,9 +273,8 @@ public class TigerVNCHostViewModel : ProfileHostViewModelBase
         if (port == 0)
             return;
 
-        SettingsManager.Current.TigerVNC_PortHistory = new ObservableCollection<int>(
-            ListHelper.Modify(SettingsManager.Current.TigerVNC_PortHistory.ToList(), port,
-                SettingsManager.Current.General_HistoryListEntries));
+        ListHelper.Modify(SettingsManager.Current.TigerVNC_PortHistory, port,
+            SettingsManager.Current.General_HistoryListEntries);
     }
 
     #endregion

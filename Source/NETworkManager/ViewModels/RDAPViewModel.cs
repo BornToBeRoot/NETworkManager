@@ -448,16 +448,8 @@ public class RDAPViewModel : ViewModelBase
 
     private void AddQueryToHistory(string query)
     {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.RDAP_QueryHistory.ToList(), query,
+        ListHelper.Modify(SettingsManager.Current.RDAP_QueryHistory, query,
             SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.RDAP_QueryHistory.Clear();
-        OnPropertyChanged(nameof(Query)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.RDAP_QueryHistory.Add(x));
     }
 
     /// <summary>

@@ -492,16 +492,8 @@ public class TracerouteViewModel : ViewModelBase
 
     private void AddHostToHistory(string host)
     {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.Traceroute_HostHistory.ToList(), host,
+        ListHelper.Modify(SettingsManager.Current.Traceroute_HostHistory, host,
             SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.Traceroute_HostHistory.Clear();
-        OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.Traceroute_HostHistory.Add(x));
     }
 
     public void OnClose()

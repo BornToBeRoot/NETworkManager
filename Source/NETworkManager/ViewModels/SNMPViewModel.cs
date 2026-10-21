@@ -635,30 +635,14 @@ public class SNMPViewModel : ViewModelBase
 
     private void AddHostToHistory(string host)
     {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.SNMP_HostHistory.ToList(), host,
+        ListHelper.Modify(SettingsManager.Current.SNMP_HostHistory, host,
             SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.SNMP_HostHistory.Clear();
-        OnPropertyChanged(nameof(Host)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.SNMP_HostHistory.Add(x));
     }
 
     private void AddOidToHistory(string oid)
     {
-        // Create the new list
-        var list = ListHelper.Modify(SettingsManager.Current.SNMP_OidHistory.ToList(), oid,
+        ListHelper.Modify(SettingsManager.Current.SNMP_OidHistory, oid,
             SettingsManager.Current.General_HistoryListEntries);
-
-        // Clear the old items
-        SettingsManager.Current.SNMP_OidHistory.Clear();
-        OnPropertyChanged(nameof(Oid)); // Raise property changed again, after the collection has been cleared
-
-        // Fill with the new items
-        list.ForEach(x => SettingsManager.Current.SNMP_OidHistory.Add(x));
     }
 
     private Task Export()
