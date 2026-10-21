@@ -98,7 +98,7 @@ Release date: **xx.xx.2026**
 ## Bug Fixes
 
 - Fixed changes to lists in the settings (e.g. query histories, port profiles, custom commands) not being saved if no other setting was changed in the same session. This happened since the settings are stored as JSON. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
-- Fixed the profile search (profile list in the tools, **Profiles** settings and import result) filtering the profiles while still typing. The profiles are now filtered once after the user stopped typing, instead of every 750 ms after the first key press.
+- Fixed the profile search (profile list in the tools, **Profiles** settings and import result) filtering the profiles while still typing. The profiles are now filtered once after the user stopped typing, instead of every 750 ms after the first key press. [#3638](https://github.com/BornToBeRoot/NETworkManager/pull/3638)
 
 **Firewall**
 
@@ -137,7 +137,7 @@ Release date: **xx.xx.2026**
 
 **WiFi**
 
-- Fixed the connection status message (e.g. "Connecting to ...") being hidden too early, while still connecting, if a previous message (e.g. after connecting or disconnecting) was shown shortly before. Each message is now shown for 15 seconds.
+- Fixed the connection status message (e.g. "Connecting to ...") being hidden too early, while still connecting, if a previous message (e.g. after connecting or disconnecting) was shown shortly before. Each message is now shown for 15 seconds. [#3638](https://github.com/BornToBeRoot/NETworkManager/pull/3638)
 
 ## Dependencies, Refactoring & Documentation
 
