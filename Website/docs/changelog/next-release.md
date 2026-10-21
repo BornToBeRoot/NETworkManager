@@ -135,6 +135,10 @@ Release date: **xx.xx.2026**
 
 - Fixed the query history of **IP Geolocation** being written to the history of **Whois** instead of its own. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
 
+**WiFi**
+
+- Fixed the connection status message (e.g. "Connecting to ...") being hidden too early, while still connecting, if a previous message (e.g. after connecting or disconnecting) was shown shortly before. Each message is now shown for 15 seconds.
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring
