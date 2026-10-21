@@ -4512,6 +4512,9 @@ The new rule may apply to more traffic than the original rule (e.g. to all servi
   <data name="FailedToLoadFirewallRulesMessage" xml:space="preserve">
     <value>Impossibile caricare le regole del firewall. {0}</value>
   </data>
+  <data name="FirewallRulesLoadedWithErrorsMessage" xml:space="preserve">
+    <value>Reloaded at {0}, but not all firewall rules or their properties could be loaded, so the list may be incomplete (see log file for details). {1}</value>
+  </data>
   <data name="DeleteFirewallRuleMessage" xml:space="preserve">
     <value>È stata permanentemente eliminata la regola firewall selezionata:
 
@@ -4590,6 +4593,21 @@ La modifica delle regole del firewall richiede diritti elevati!</value>
   <data name="FirewallRuleAction_Allow" xml:space="preserve">
     <value>Consenti</value>
   </data>
+  <data name="FirewallRuleSource_Local" xml:space="preserve">
+    <value>Local</value>
+  </data>
+  <data name="FirewallRuleSource_GroupPolicy" xml:space="preserve">
+    <value>Group Policy</value>
+  </data>
+  <data name="FirewallRuleSource_MDM" xml:space="preserve">
+    <value>Mobile Device Management (MDM)</value>
+  </data>
+  <data name="FirewallRuleSource_Other" xml:space="preserve">
+    <value>Windows (runtime)</value>
+  </data>
+  <data name="UnsupportedProperties" xml:space="preserve">
+    <value>Unsupported properties</value>
+  </data>
   <data name="LocalPorts" xml:space="preserve">
     <value>Porte locali</value>
   </data>
@@ -4601,6 +4619,9 @@ La modifica delle regole del firewall richiede diritti elevati!</value>
   </data>
   <data name="RemoteAddresses" xml:space="preserve">
     <value>Indirizzi remoti</value>
+  </data>
+  <data name="EnterValidFirewallLocalAddress" xml:space="preserve">
+    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8), range (e.g. 10.0.0.1-10.0.0.10), or the keyword Any. Other keywords (e.g. LocalSubnet) are only valid for remote addresses.</value>
   </data>
   <data name="EnterValidFirewallAddress" xml:space="preserve">
     <value>Inserisci un indirizzo IP, una sottorete (ad esempio 10.0.0.0/8), un intervallo (ad esempio 10.0.0.1-10.0.0.10) o una parola chiave valida (Qualsiasi, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal)</value>
