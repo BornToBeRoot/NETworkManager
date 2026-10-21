@@ -94,14 +94,14 @@ Release date: **xx.xx.2026**
 - Added a **Program** column that shows the file name of the program (full path as tooltip). [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
 - New **Settings > Firewall** page. [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
 - Added the **Show all rules** option (**Settings > Firewall**) to show all active Windows Firewall rules (including rules from Group Policy / MDM) instead of only the rules managed by NETworkManager. A new column with an icon shows whether a rule is managed by NETworkManager, not managed, or managed by a policy. Rules managed by a policy can only be copied. Rules not managed by NETworkManager can be enabled, disabled, deleted (after confirming a warning) or used as a template via **Copy as...** (with a warning if the rule uses properties that are not copied, e.g. ICMP types, a service, an app package, specific network adapters or users / required authentication), but editing them is not supported (yet). Rules with values that are not supported by NETworkManager (e.g. port keywords like `RPC`, a combination of interface types, a protocol like `IGMP` or the program `System`) are shown correctly, but can't be edited or copied. [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
-- The search now also finds rules by program, ports, addresses and description, and by the translated direction, action and protocol. The list is filtered after a short delay while typing, so typing stays smooth with many rules.
-- Sorting by the rule source column (**Show all rules**) now groups rules managed by NETworkManager, rules not managed by NETworkManager and rules from Group Policy / MDM / Windows, instead of mixing the last two.
-- The **Program** field in the add / edit / copy rule dialog now shows an example path of a program instead of the path to PowerShell.
-- The program of a rule can now be selected with a file dialog or by drag and drop in the add / edit / copy rule dialog.
-- The selected rule stays selected and visible when the list is reloaded (e.g. after enabling, disabling or editing it), instead of jumping back to the top of the list.
-- The row details now show the source of a rule (local, Group Policy, MDM or Windows) and the unsupported properties it uses (e.g. ICMP types or a service), which are not copied via **Copy as...**.
-- The export now contains whether a rule is managed by NETworkManager and its source.
-- Faster loading of the rules managed by NETworkManager if there are many of them (the ports, addresses, programs etc. of all rules are queried at once instead of per rule).
+- The search now also finds rules by program, ports, addresses and description, and by the translated direction, action and protocol. The list is filtered after a short delay while typing, so typing stays smooth with many rules. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
+- Sorting by the rule source column (**Show all rules**) now groups rules managed by NETworkManager, rules not managed by NETworkManager and rules from Group Policy / MDM / Windows, instead of mixing the last two. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
+- The **Program** field in the add / edit / copy rule dialog now shows an example path of a program instead of the path to PowerShell. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
+- The program of a rule can now be selected with a file dialog or by drag and drop in the add / edit / copy rule dialog. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
+- The selected rule stays selected and visible when the list is reloaded (e.g. after enabling, disabling or editing it), instead of jumping back to the top of the list. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
+- The row details now show the source of a rule (local, Group Policy, MDM or Windows) and the unsupported properties it uses (e.g. ICMP types or a service), which are not copied via **Copy as...**. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
+- The export now contains whether a rule is managed by NETworkManager and its source. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
+- Faster loading of the rules managed by NETworkManager if there are many of them (the ports, addresses, programs etc. of all rules are queried at once instead of per rule). [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
 
 ## Bug Fixes
 
@@ -109,10 +109,10 @@ Release date: **xx.xx.2026**
 
 **Firewall**
 
-- Fixed `F5` not refreshing the rule list, although it is documented as shortcut.
-- Fixed an empty rule list with "Reloaded at ..." being shown if the rules could not be loaded (e.g. the Windows Firewall service is not running). An error is shown now, and a message if the rules could only be loaded partially.
-- Fixed the Firewall not working until the application was restarted if loading the PowerShell module `NetSecurity` failed once.
-- Fixed keywords like `LocalSubnet` or `DNS` being accepted for **Local addresses** in the add / edit / copy rule dialog, although Windows only accepts `Any` there (saving the rule failed). The same applies to `Any4` / `Any6` for local and remote addresses.
+- Fixed `F5` not refreshing the rule list, although it is documented as shortcut. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
+- Fixed an empty rule list with "Reloaded at ..." being shown if the rules could not be loaded (e.g. the Windows Firewall service is not running). An error is shown now, and a message if the rules could only be loaded partially. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
+- Fixed the Firewall not working until the application was restarted if loading the PowerShell module `NetSecurity` failed once. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
+- Fixed keywords like `LocalSubnet` or `DNS` being accepted for **Local addresses** in the add / edit / copy rule dialog, although Windows only accepts `Any` there (saving the rule failed). The same applies to `Any4` / `Any6` for local and remote addresses. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
 - Fixed a horizontal scrollbar appearing in the add / edit / copy rule dialog when the name or description is very long. [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
 - Fixed port keywords (e.g. `RPC`) and combinations of interface types being shown as **Any**. Editing a rule that was changed outside of NETworkManager to use such values no longer silently removes them (the rule can't be edited in this case). [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
 - Fixed the program of a rule not being shown in the row details and the edit dialog. Saving the edit dialog then removed the program from the rule, so the rule applied to all programs. [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
