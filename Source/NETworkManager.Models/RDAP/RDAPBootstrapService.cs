@@ -56,6 +56,13 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     private static readonly TimeSpan RetryInterval = TimeSpan.FromHours(1);
 
     /// <summary>
+    ///     Wait time before the next automatic attempt for a file that is not cached (e.g. the first query was made
+    ///     offline). It is short, since the query type can't be used without the file, but a blocked data.iana.org
+    ///     doesn't cost a timeout with every query.
+    /// </summary>
+    private static readonly TimeSpan MissingFileRetryInterval = TimeSpan.FromMinutes(1);
+
+    /// <summary>
     ///     Number of failed automatic attempts after which a cached file is used until the next regular
     ///     <see cref="RefreshInterval" /> (e.g. if data.iana.org is blocked). "Update now" always checks.
     /// </summary>
@@ -322,7 +329,9 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
 
             // Load the cached files first, so a file that can't be parsed is downloaded again in this update (see
             // ReadServices).
-            if (_dns == null)
+            var loaded = _dns == null;
+
+            if (loaded)
                 LoadRegistries();
 
             var attempted = false;
@@ -333,9 +342,8 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
             {
                 var path = Path.Combine(_cacheDirectory, info.FileName);
 
-                // "Expires" is the time of the next check, after a successful update as well as after a failure. A
-                // missing file is tried with every query, since the query type can't be used without it.
-                if (!force && info.Expires > DateTime.Now && File.Exists(path))
+                // "Expires" is the time of the next check, after a successful update as well as after a failure.
+                if (!force && info.Expires > DateTime.Now)
                     continue;
 
                 attempted = true;
@@ -368,7 +376,7 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
             }
 
             // The cached copy is kept and used, if an update fails.
-            if (contentChanged || _dns == null)
+            if (contentChanged || _dns == null && !loaded)
                 LoadRegistries();
 
             if (attempted)
@@ -389,7 +397,7 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
     /// <summary>
     ///     Records a failed update. A cached file is retried after <see cref="RetryInterval" />, at most
     ///     <see cref="MaxFailedAttempts" /> times, then after the regular <see cref="RefreshInterval" />. A missing file
-    ///     is tried again with the next query (see <see cref="UpdateAsync" />).
+    ///     is retried after <see cref="MissingFileRetryInterval" />.
     /// </summary>
     private void RecordFailure(RDAPBootstrapCacheInfo info, Exception ex)
     {
@@ -398,9 +406,11 @@ public class RDAPBootstrapService : SingletonBase<RDAPBootstrapService>
 
         var exists = File.Exists(Path.Combine(_cacheDirectory, info.FileName));
 
-        info.Expires = DateTime.Now + (exists && info.FailedAttempts >= MaxFailedAttempts
-            ? RefreshInterval
-            : RetryInterval);
+        info.Expires = DateTime.Now + (!exists
+            ? MissingFileRetryInterval
+            : info.FailedAttempts >= MaxFailedAttempts
+                ? RefreshInterval
+                : RetryInterval);
     }
 
     /// <summary>

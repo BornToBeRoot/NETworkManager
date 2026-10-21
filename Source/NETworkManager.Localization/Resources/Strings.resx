@@ -4830,7 +4830,10 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
   <data name="RDAPDots" xml:space="preserve">
     <value>RDAP...</value>
   </data>
-  <data name="RDAPNoRecordForXShowingY" xml:space="preserve">
-    <value>No RDAP record found for "{0}", showing the registration data of "{1}".</value>
+  <data name="RDAPXIsNotARegisteredDomainShowingY" xml:space="preserve">
+    <value>"{0}" is not a registered domain, showing the registration data of "{1}".</value>
+  </data>
+  <data name="Resource_PublicSuffixList_Description" xml:space="preserve">
+    <value>List of public suffixes (e.g. "co.uk") from publicsuffix.org (MPL-2.0), which is used to get the registered domain of a hostname for RDAP queries.</value>
   </data>
 </root>

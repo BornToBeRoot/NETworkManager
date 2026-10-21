@@ -15,6 +15,7 @@
         <None Remove="Resources\OUI.xml" />
         <None Remove="Resources\Ports.xml" />
         <None Remove="Resources\PSDiscoveryProtocol.psm1" />
+        <None Remove="Resources\PublicSuffixList.dat" />
         <None Remove="Resources\RDAPStealthEndpoints.json" />
         <None Remove="Resources\WhoisServers.xml" />
     </ItemGroup>
@@ -23,6 +24,7 @@
     </ItemGroup>
     <ItemGroup>
         <EmbeddedResource Include="Resources\PSDiscoveryProtocol.psm1" />
+        <EmbeddedResource Include="Resources\PublicSuffixList.dat" />
         <EmbeddedResource Include="Resources\RDAPStealthEndpoints.json" />
     </ItemGroup>
     <ItemGroup>

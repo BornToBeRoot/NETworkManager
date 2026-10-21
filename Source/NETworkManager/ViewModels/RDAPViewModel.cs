@@ -337,9 +337,10 @@ public class RDAPViewModel : ViewModelBase
 
             List<string> messages = [];
 
-            // A subdomain (e.g. a hostname) was not found, but its parent domain.
+            // The registered domain of a subdomain (e.g. a hostname) was queried.
             if (_result.Query.Value != query.Value)
-                messages.Add(string.Format(Strings.RDAPNoRecordForXShowingY, query.Value, _result.Query.Value));
+                messages.Add(string.Format(Strings.RDAPXIsNotARegisteredDomainShowingY, query.Value,
+                    _result.Query.Value));
 
             if (_result.ReferralError != null)
                 messages.Add(GetReferralErrorMessage(_result.ReferralError, _result.Query));

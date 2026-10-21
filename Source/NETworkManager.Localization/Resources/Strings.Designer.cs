@@ -9528,15 +9528,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No RDAP record found for "{0}", showing the registration data of "{1}"..
-        /// </summary>
-        public static string RDAPNoRecordForXShowingY {
-            get {
-                return ResourceManager.GetString("RDAPNoRecordForXShowingY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No RDAP server is known for "{0}". Entity handles can only be resolved if they end with a known service provider tag (e.g., "-RIPE" or "-ARIN")..
         /// </summary>
         public static string RDAPNoServerForEntityX {
@@ -9677,6 +9668,15 @@ namespace NETworkManager.Localization.Resources {
         public static string RDAPTooManyRedirects {
             get {
                 return ResourceManager.GetString("RDAPTooManyRedirects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to "{0}" is not a registered domain, showing the registration data of "{1}"..
+        /// </summary>
+        public static string RDAPXIsNotARegisteredDomainShowingY {
+            get {
+                return ResourceManager.GetString("RDAPXIsNotARegisteredDomainShowingY", resourceCulture);
             }
         }
         
@@ -11054,6 +11054,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Resource_OUI_Description {
             get {
                 return ResourceManager.GetString("Resource_OUI_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of public suffixes (e.g. "co.uk") from publicsuffix.org (MPL-2.0), which is used to get the registered domain of a hostname for RDAP queries..
+        /// </summary>
+        public static string Resource_PublicSuffixList_Description {
+            get {
+                return ResourceManager.GetString("Resource_PublicSuffixList_Description", resourceCulture);
             }
         }
         

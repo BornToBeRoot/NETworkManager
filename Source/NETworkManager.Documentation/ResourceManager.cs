@@ -27,6 +27,9 @@ public static class ResourceManager
             Strings.Resource_ListTLD_Description),
 
         new("natural-earth-geojson", "https://github.com/martynafford/natural-earth-geojson",
-            Strings.Resource_NaturalEarth_Description)
+            Strings.Resource_NaturalEarth_Description),
+
+        new("Public Suffix List", "https://publicsuffix.org/",
+            Strings.Resource_PublicSuffixList_Description)
     ];
 }

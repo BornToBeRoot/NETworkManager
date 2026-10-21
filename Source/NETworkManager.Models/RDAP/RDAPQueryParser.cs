@@ -141,22 +141,19 @@ public static partial class RDAPQueryParser
     }
 
     /// <summary>
-    ///     Gets the parent domain of a domain query (e.g. "example.com" for "www.example.com"), as long as it has at least
-    ///     two labels.
+    ///     Gets the query for the registered domain of a domain query, if the domain is a subdomain (e.g. "bbc.co.uk" for
+    ///     "www.bbc.co.uk", see <see cref="PublicSuffixList" />).
     /// </summary>
     /// <param name="query">Domain query.</param>
-    /// <returns>Query for the parent domain, or null if there is none.</returns>
-    public static RDAPQuery GetParentDomain(RDAPQuery query)
+    /// <returns>Query for the registered domain, or null if the domain is a registered domain or a public suffix.</returns>
+    public static RDAPQuery GetRegisteredDomain(RDAPQuery query)
     {
         if (query.Type != RDAPQueryType.Domain)
             return null;
 
-        var index = query.DomainName.IndexOf('.');
+        var registeredDomain = PublicSuffixList.GetRegisteredDomain(query.DomainName);
 
-        // The parent must still contain a dot, otherwise it is a TLD.
-        return index > 0 && query.DomainName.IndexOf('.', index + 1) > 0
-            ? ParseDomain(query.DomainName[(index + 1)..])
-            : null;
+        return registeredDomain == null || registeredDomain == query.DomainName ? null : ParseDomain(registeredDomain);
     }
 
     /// <summary>
