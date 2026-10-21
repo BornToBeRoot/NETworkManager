@@ -61,7 +61,9 @@ public partial class RunCommandChildWindow
         ViewModel.SelectedSuggestion = (RunCommandSuggestion)item.DataContext;
         ViewModel.Run();
 
-        TextBoxInput.Focus();
+        // The dialog stays open if the input is not valid (otherwise the opened application or dialog gets the focus).
+        if (IsOpen)
+            TextBoxInput.Focus();
     }
 
     private void ListBoxSuggestions_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

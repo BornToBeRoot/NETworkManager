@@ -169,6 +169,16 @@ public class RunCommandParserTests
     }
 
     [Fact]
+    public void TextAfterAQuotedProfileName()
+    {
+        var result = Parse("rdp @\"Web Server\" x");
+
+        Assert.Equal("Web Server", result.ProfileName);
+        Assert.Equal(RunCommandParseError.UnknownArgument, result.Error);
+        Assert.Equal("x", result.ErrorValue);
+    }
+
+    [Fact]
     public void ListThatIsBeingTyped()
     {
         // "; " is the separator of a list that is still being typed, not the end of the target.

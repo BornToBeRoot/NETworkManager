@@ -85,14 +85,35 @@ public static partial class RunCommandParser
         // Profile: the rest of the input after "@" is the name.
         if (words[1].StartsWith('@'))
         {
-            // Quotes around the name or the whole target (e.g. @"My Server" or "@My Server") are removed.
-            var profileName = input[(input.IndexOf('@') + 1)..].Trim().Trim('"').Trim();
+            var rest = input[(input.IndexOf('@') + 1)..].Trim();
+            string profileName;
+            string textAfterName = null;
+
+            // Name in quotes (e.g. @"My Server"): text after the closing quote is not part of the name.
+            var closingQuote = rest.StartsWith('"') ? rest.IndexOf('"', 1) : -1;
+
+            if (closingQuote > 0)
+            {
+                profileName = rest[1..closingQuote].Trim();
+
+                var remainder = rest[(closingQuote + 1)..].Trim();
+
+                if (remainder.Length > 0)
+                    textAfterName = remainder;
+            }
+            else
+            {
+                // Quotes around the whole target (e.g. "@My Server") or an open quote while typing are removed.
+                profileName = rest.Trim('"').Trim();
+            }
 
             var error = !command.SupportsProfile
                 ? RunCommandParseError.NoProfiles
                 : profileName.Length == 0
                     ? RunCommandParseError.MissingProfileName
-                    : RunCommandParseError.None;
+                    : textAfterName != null
+                        ? RunCommandParseError.UnknownArgument
+                        : RunCommandParseError.None;
 
             return new RunCommandParseResult
             {
@@ -103,7 +124,12 @@ public static partial class RunCommandParser
                 CurrentWord = "@" + profileName,
                 InputBeforeCurrentWord = commandPrefix,
                 Error = error,
-                ErrorValue = error == RunCommandParseError.NoProfiles ? command.Command : null
+                ErrorValue = error switch
+                {
+                    RunCommandParseError.NoProfiles => command.Command,
+                    RunCommandParseError.UnknownArgument => textAfterName,
+                    _ => null
+                }
             };
         }
 

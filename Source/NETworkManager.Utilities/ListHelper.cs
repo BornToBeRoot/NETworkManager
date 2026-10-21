@@ -19,26 +19,48 @@ public static class ListHelper
     /// <param name="list">List to modify (e.g. a history of the settings).</param>
     /// <param name="entry">Entry to add to the list.</param>
     /// <param name="length">Maximum length of the list. Oldest entries will be removed if the list exceeds this length.</param>
+    /// <param name="comparer">Comparer for existing entries (e.g. case-insensitive). If null, the default comparer is used.</param>
     /// <typeparam name="T">Type of the list entries. Currently <see cref="string"/> or <see cref="int"/>.</typeparam>
-    public static void Modify<T>(ObservableCollection<T> list, T entry, int length)
+    public static void Modify<T>(ObservableCollection<T> list, T entry, int length,
+        IEqualityComparer<T> comparer = null)
     {
+        comparer ??= EqualityComparer<T>.Default;
+
         if (length <= 0)
             throw new ArgumentOutOfRangeException(nameof(length), "Length must be greater than zero.");
 
         if (EqualityComparer<T>.Default.Equals(entry, default) || entry is string text && string.IsNullOrEmpty(text))
             return;
 
-        var index = list.IndexOf(entry);
+        var index = -1;
 
-        if (index > 0)
-            list.Move(index, 0);
-        else if (index < 0)
+        for (var i = 0; i < list.Count; i++)
+        {
+            if (!comparer.Equals(list[i], entry))
+                continue;
+
+            index = i;
+            break;
+        }
+
+        if (index < 0)
+        {
             list.Insert(0, entry);
+        }
+        else
+        {
+            if (index > 0)
+                list.Move(index, 0);
+
+            // Keep the latest spelling (e.g. with a case-insensitive comparer)
+            if (!EqualityComparer<T>.Default.Equals(list[0], entry))
+                list[0] = entry;
+        }
 
         // Remove duplicates (e.g. from older settings files)
         for (var i = list.Count - 1; i > 0; i--)
         {
-            if (EqualityComparer<T>.Default.Equals(list[i], entry))
+            if (comparer.Equals(list[i], entry))
                 list.RemoveAt(i);
         }
 

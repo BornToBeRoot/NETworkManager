@@ -1065,8 +1065,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (string.IsNullOrEmpty(request.Target) && request.Profile == null)
             return;
 
-        // Create a new tab / perform the action in the application
-        if (ContentControlApplication.Content is IApplicationRequestHandler handler)
+        // Create a new tab / perform the action in the application (only if it is shown)
+        if (SelectedApplication?.Name == request.Application &&
+            ContentControlApplication.Content is IApplicationRequestHandler handler)
             handler.Open(request);
         else
             Log.Warn($"Application {request.Application} cannot handle a request with a target or profile.");
@@ -1157,6 +1158,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // The settings are already open (e.g. run command "settings"), keep the current page.
         if (SettingsViewIsOpen)
             return;
+
+        // Clear the search, otherwise no application may be selected (the settings page depends on it)
+        ApplicationSearch = string.Empty;
 
         OpenSettings();
     }

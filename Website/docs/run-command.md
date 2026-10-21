@@ -50,7 +50,7 @@ All features that accept a target also accept a profile (`@profile`). The other 
 :::note
 
 - **Remote Desktop, PowerShell, PuTTY, TigerVNC and Web Console** open the connect dialog with the host, so the connection settings can be adjusted before connecting. A profile connects directly with its settings.
-- **DNS lookup:** The type is the DNS record type (`a`, `aaaa`, `any`, `caa`, `cname`, `dnskey`, `mx`, `ns`, `ptr`, `soa`, `srv`, `txt`). Without a type, IP addresses are looked up with `ptr` and other hosts with the type selected in the feature. The DNS server is the name of a configured DNS server (case-insensitive, e.g. `cloudflare`) or a custom DNS server (e.g. `1.1.1.1`).
+- **DNS lookup:** The type is the DNS record type (`a`, `aaaa`, `any`, `caa`, `cname`, `dnskey`, `mx`, `ns`, `ptr`, `soa`, `srv`, `txt`). Without a type, IP addresses are looked up with `ptr` and other hosts with the type selected in the feature. The DNS server is the name of a configured DNS server (case-insensitive, e.g. `cloudflare`) or custom DNS server(s): an IP address or a host with a domain, with an optional port, separated by `;` (e.g. `1.1.1.1`, `dns.google:53`).
 - **RDAP:** The type is `domain`, `nameserver`, `tld`, `ip`, `asn` or `entity`. Without a type, it is detected from the query (see [RDAP](./application/rdap.md#example-inputs)).
 - **Wake on LAN:** The magic packet is sent to the broadcast address (or the one last used in the feature). If there is no valid broadcast address yet, the MAC address is only filled in. A profile sends the magic packet with its settings.
 
@@ -75,6 +75,6 @@ While typing, suggestions are shown below the input:
 | `Up`, `Down` | Select a suggestion                            |
 | `Tab`        | Insert the selected suggestion into the input  |
 | `Enter`      | Run the selected suggestion                    |
-| `Esc`        | Close the dialog                               |
+| `Esc`        | Close the dialog (or the close button)         |
 
 Run commands are saved in a history (the number of entries is set in [Settings > General](./settings/general.md)).

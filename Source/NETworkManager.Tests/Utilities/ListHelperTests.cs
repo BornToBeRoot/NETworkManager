@@ -108,6 +108,16 @@ public class ListHelperTests
     }
 
     [Fact]
+    public void UsesTheComparerAndKeepsTheLatestSpelling()
+    {
+        ObservableCollection<string> list = ["a", "ping 10.0.0.1"];
+
+        ListHelper.Modify(list, "Ping 10.0.0.1", 5, StringComparer.OrdinalIgnoreCase);
+
+        Assert.Equal(["Ping 10.0.0.1", "a"], list);
+    }
+
+    [Fact]
     public void ThrowsIfTheLengthIsNotPositive()
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => ListHelper.Modify(new ObservableCollection<string>(), "a", 0));

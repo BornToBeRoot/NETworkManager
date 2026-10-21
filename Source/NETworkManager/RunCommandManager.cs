@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Windows.Controls;
 
 namespace NETworkManager;
@@ -200,7 +201,9 @@ public static class RunCommandManager
                 _ => null
             };
 
-            error = Validate(argumentValidator, result.Argument);
+            error = result.Command.Argument == RunCommandArgument.DNSServer
+                ? ValidateDNSServer(result.Argument)
+                : Validate(argumentValidator, result.Argument);
 
             if (error != null)
                 return error;
@@ -213,6 +216,26 @@ public static class RunCommandManager
 
             if (parseError != RDAPQueryParseError.None)
                 return RDAPQueryValidator.GetErrorMessage(parseError);
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    ///     Validates the DNS server argument: the name of a configured DNS server, or custom DNS server(s) in the format
+    ///     of the DNS lookup (IP address or host with a domain, optional port). A single word that is neither (e.g. a
+    ///     mistyped type like "aaa") is an unknown argument instead of a DNS server.
+    /// </summary>
+    private static string ValidateDNSServer(string dnsServer)
+    {
+        if (GetDNSServers().Any(x => string.Equals(x, dnsServer, StringComparison.OrdinalIgnoreCase)))
+            return null;
+
+        foreach (var server in dnsServer.Split(';'))
+        {
+            if (!ServerConnectionInfo.TryParse(server, out var serverInfo, 53, TransportProtocol.Udp) ||
+                !IPAddress.TryParse(serverInfo.Server, out _) && !serverInfo.Server.Contains('.'))
+                return string.Format(Strings.UnknownArgumentX, server);
         }
 
         return null;

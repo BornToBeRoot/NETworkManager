@@ -57,7 +57,12 @@ public class RunCommandViewModel : ViewModelBase
         _commands = RunCommandManager.GetCommands();
         _runHandler = runHandler;
 
-        _history = [.. SettingsManager.Current.RunCommand_History.Select(x => (x, RunCommandParser.Parse(x, _commands).Command))];
+        // Entries of commands that are not available anymore (e.g. a hidden application) are not shown.
+        _history =
+        [
+            .. SettingsManager.Current.RunCommand_History.Select(x => (x, RunCommandParser.Parse(x, _commands).Command))
+                .Where(x => x.Command != null)
+        ];
 
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
@@ -212,8 +217,9 @@ public class RunCommandViewModel : ViewModelBase
         Request = request;
         IsSettings = result.Command.Type == RunCommandType.Setting;
 
+        // Commands are case-insensitive, so "Ping 10.0.0.1" and "ping 10.0.0.1" are the same entry.
         ListHelper.Modify(SettingsManager.Current.RunCommand_History, text.Trim(),
-            SettingsManager.Current.General_HistoryListEntries);
+            SettingsManager.Current.General_HistoryListEntries, StringComparer.OrdinalIgnoreCase);
 
         _runHandler(this);
     }
