@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.9d036de8.css">
-<script src="/NETworkManager/assets/js/runtime~main.d62654eb.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.c444f8bd.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.4a827bf6.js" defer="defer"></script>
 </head>
 <body>
@@ -138,15 +138,30 @@ Release date: <strong>xx.xx.2026</strong></p>
 <ul>
 <li class="">Fixed errors when changing the network configuration (e.g. missing permissions) not being shown — the change was reported as successful although it failed. The error message of Windows is now shown. <a href="https://github.com/BornToBeRoot/NETworkManager/issues/3606" target="_blank" rel="noopener noreferrer" class="">#3606</a></li>
 </ul>
+<p><strong>Connections</strong></p>
+<ul>
+<li class="">Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3639" target="_blank" rel="noopener noreferrer" class="">#3639</a></li>
+</ul>
+<p><strong>Listeners</strong></p>
+<ul>
+<li class="">Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3639" target="_blank" rel="noopener noreferrer" class="">#3639</a></li>
+</ul>
 <p><strong>Neighbor Table</strong></p>
 <ul>
 <li class="">Fixed adding and deleting entries not working until the application was restarted if loading the PowerShell module <code>NetTCPIP</code> failed once. <a href="https://github.com/BornToBeRoot/NETworkManager/commit/cc05937a7de2bf1247621845f47077f3796b9bb2" target="_blank" rel="noopener noreferrer" class="">cc05937</a></li>
+<li class="">Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3639" target="_blank" rel="noopener noreferrer" class="">#3639</a></li>
+</ul>
+<p><strong>WiFi</strong></p>
+<ul>
+<li class="">Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3639" target="_blank" rel="noopener noreferrer" class="">#3639</a></li>
+<li class="">Fixed the auto refresh not being resumed after switching back from another tool. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3639" target="_blank" rel="noopener noreferrer" class="">#3639</a></li>
 </ul>
 <p><strong>Dashboard</strong></p>
 <ul>
 <li class="">Fixed the <strong>Network Connection</strong> widget running a full connection check on every application startup, even if the Status Window or Dashboard was never opened. It now only checks when actually shown - via the tray icon, on a network change, or when the Dashboard tab is opened. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3553" target="_blank" rel="noopener noreferrer" class="">#3553</a></li>
 <li class="">Fixed the DNS status (Computer/Router/Internet) in the <strong>Network Connection</strong> widget showing as an error when no PTR record exists for the address, which is common and expected for private IP ranges. This is now shown as informational instead of critical. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3553" target="_blank" rel="noopener noreferrer" class="">#3553</a></li>
 <li class="">Fixed a race condition in the <strong>Network Connection</strong> widget where results from a superseded check could overwrite the results of a newer, still-running check after quickly reopening the widget. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3553" target="_blank" rel="noopener noreferrer" class="">#3553</a></li>
+<li class="">Fixed the Status Window closing by itself after being opened from the tray icon (or with the hotkey), if it was opened automatically on a network change shortly before. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3639" target="_blank" rel="noopener noreferrer" class="">#3639</a></li>
 </ul>
 <p><strong>DNS Lookup</strong></p>
 <ul>
