@@ -8,7 +8,6 @@ using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Settings;
 using System.Security;
 using System.Xml.Serialization;
-//using NETworkManager.Models.Firewall;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable PropertyCanBeMadeInitOnly.Global
