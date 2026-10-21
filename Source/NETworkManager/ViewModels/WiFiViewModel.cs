@@ -1120,7 +1120,8 @@ public class WiFiViewModel : ViewModelBase
 
             var ssid = selectedNetwork.IsHidden ? instance.Ssid : selectedNetwork.AvailableNetwork.Ssid;
 
-            // Show status message
+            // Show status message (not hidden by the timer of a previous message)
+            _hideConnectionStatusMessageTimer.Stop();
             IsConnecting = true;
             ConnectionStatusMessage = string.Format(Strings.ConnectingToXXX, ssid);
             IsConnectionStatusMessageDisplayed = true;
@@ -1166,6 +1167,7 @@ public class WiFiViewModel : ViewModelBase
                     ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
 
             // Hide message automatically
+            _hideConnectionStatusMessageTimer.Stop();
             _hideConnectionStatusMessageTimer.Start();
 
             // Update the Wi-Fi networks.
@@ -1179,7 +1181,8 @@ public class WiFiViewModel : ViewModelBase
 
             var ssid = selectedNetwork.IsHidden ? instance.Ssid : selectedNetwork.AvailableNetwork.Ssid;
 
-            // Show status message
+            // Show status message (not hidden by the timer of a previous message)
+            _hideConnectionStatusMessageTimer.Stop();
             IsConnecting = true;
             ConnectionStatusMessage = string.Format(Strings.ConnectingToXXX, ssid);
             IsConnectionStatusMessageDisplayed = true;
@@ -1203,6 +1206,7 @@ public class WiFiViewModel : ViewModelBase
                     ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
 
             // Hide message automatically
+            _hideConnectionStatusMessageTimer.Stop();
             _hideConnectionStatusMessageTimer.Start();
 
             // Update the Wi-Fi networks.
@@ -1241,6 +1245,7 @@ public class WiFiViewModel : ViewModelBase
             IsConnectionStatusMessageDisplayed = true;
 
             // Hide message automatically
+            _hideConnectionStatusMessageTimer.Stop();
             _hideConnectionStatusMessageTimer.Start();
         }
 

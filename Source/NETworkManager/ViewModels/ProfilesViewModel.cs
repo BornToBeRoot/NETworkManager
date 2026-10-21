@@ -150,6 +150,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
             if (!_searchDisabled)
             {
                 IsSearching = true;
+                _searchDispatcherTimer.Stop();
                 _searchDispatcherTimer.Start();
             }
 

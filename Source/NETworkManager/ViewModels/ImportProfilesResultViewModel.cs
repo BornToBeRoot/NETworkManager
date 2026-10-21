@@ -78,6 +78,7 @@ public sealed class ImportProfilesResultViewModel : ViewModelBase
             field = value;
 
             IsSearching = true;
+            _searchDispatcherTimer.Stop();
             _searchDispatcherTimer.Start();
 
             OnPropertyChanged();
