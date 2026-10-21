@@ -338,9 +338,13 @@ public class RDAPObjectViewModel
 
     /// <summary>
     ///     Formats a network or AS number for the text export, e.g. "192.0.2.0/24 EXAMPLE-NET (NET-192-0-2-0-1, US)".
+    ///     The handle is left out if it is the range (e.g. RIPE uses the prefix as handle).
     /// </summary>
     private static string FormatListItem(string range, string name, string handle, string country)
     {
+        if (string.Equals(handle, range, StringComparison.OrdinalIgnoreCase))
+            handle = null;
+
         var details = string.Join(", ", new[] { handle, country }.Where(x => !string.IsNullOrWhiteSpace(x)));
 
         return string.Join(" ", new[] { range, name, details.Length > 0 ? $"({details})" : null }

@@ -32,6 +32,7 @@
         <converters:PortOpenStyleConverter x:Key="PortOpenStyleConverter" />
         <converters:PortOpenToStringConverter x:Key="PortOpenToStringConverter" />
         <converters:StringIsNotNullOrEmptyToBooleanConverter x:Key="StringIsNotNullOrEmptyToBooleanConverter" />
+        <converters:HostnameHasDomainToBooleanConverter x:Key="HostnameHasDomainToBooleanConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
@@ -348,7 +349,7 @@
                         </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Hostname}"
                                   Command="{Binding PerformRDAPQueryHostnameCommand}"
-                                  IsEnabled="{Binding Path=Data.(viewModels:IPScannerViewModel.SelectedResult).Hostname, Source={StaticResource BindingProxy}, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
+                                  IsEnabled="{Binding Path=Data.(viewModels:IPScannerViewModel.SelectedResult).Hostname, Source={StaticResource BindingProxy}, Converter={StaticResource HostnameHasDomainToBooleanConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>

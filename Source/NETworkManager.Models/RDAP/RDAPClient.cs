@@ -103,8 +103,9 @@ public class RDAPClient : SingletonBase<RDAPClient>
 
     /// <summary>
     ///     Executes an RDAP query. If a domain is not found, its parent domains are queried, since registries only know
-    ///     the registered domain and not its subdomains (e.g. "www.example.com" → "example.com"). The domain that was
-    ///     found is in <see cref="RDAPResult.Query" />.
+    ///     the registered domain and not its subdomains (e.g. "www.example.com" → "example.com"). Registries answer a
+    ///     subdomain with 404 (e.g. Verisign, Nominet) or 400 (e.g. PIR, Identity Digital, SWITCH, auDA). The domain that
+    ///     was found is in <see cref="RDAPResult.Query" />.
     /// </summary>
     /// <param name="query">Query to execute (see <see cref="RDAPQueryParser" />).</param>
     /// <param name="cacheDirectory">Directory where the IANA bootstrap files are cached.</param>
@@ -129,7 +130,7 @@ public class RDAPClient : SingletonBase<RDAPClient>
                 return await QueryServersAsync(query, bootstrapService.GetBaseUrls(query), timeout, followReferral,
                     cancellationToken).ConfigureAwait(false);
             }
-            catch (RDAPException ex) when (ex.Kind == RDAPErrorKind.NotFound &&
+            catch (RDAPException ex) when ((ex.Kind is RDAPErrorKind.NotFound or RDAPErrorKind.BadRequest) &&
                                            parentQueries < MaxParentDomainQueries &&
                                            RDAPQueryParser.GetParentDomain(query) is { } parent)
             {
