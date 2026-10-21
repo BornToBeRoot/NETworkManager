@@ -4809,4 +4809,10 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
   <data name="DeleteRulesX" xml:space="preserve">
     <value>Delete rules ({0})</value>
   </data>
+  <data name="RDAPQueryType_Auto" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="EnterValidRDAPQuery" xml:space="preserve">
+    <value>Enter a valid domain, IP address, AS number or entity handle!</value>
+  </data>
 </root>

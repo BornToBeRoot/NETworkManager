@@ -290,7 +290,7 @@ public static class GlobalStaticConfiguration
     public static ExportFileType Lookup_Port_ExportFileType => ExportFileType.Csv;
 
     // Application: RDAP
-    public static RDAPQueryType RDAP_QueryType => RDAPQueryType.Domain;
+    public static RDAPQueryType RDAP_QueryType => RDAPQueryType.Auto;
     public static bool RDAP_FollowReferral => true;
     public static int RDAP_Timeout => 10000;
     public static ExportFileType RDAP_ExportFileType => ExportFileType.Json;

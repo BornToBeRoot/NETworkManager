@@ -63,24 +63,11 @@ public class RDAPViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
-            OnPropertyChanged(nameof(QueryWatermark));
 
             // Validate the query again for the new type.
             OnPropertyChanged(nameof(Query));
         }
     }
-
-    /// <summary>
-    ///     Example input for the selected query type.
-    /// </summary>
-    public string QueryWatermark => QueryType switch
-    {
-        RDAPQueryType.TLD => StaticStrings.ExampleTLD,
-        RDAPQueryType.IPAddress => StaticStrings.ExampleIPAddressOrCIDR,
-        RDAPQueryType.ASN => StaticStrings.ExampleASN,
-        RDAPQueryType.Entity => StaticStrings.ExampleRDAPEntityHandle,
-        _ => StaticStrings.ExampleDomain
-    };
 
     public bool IsRunning
     {

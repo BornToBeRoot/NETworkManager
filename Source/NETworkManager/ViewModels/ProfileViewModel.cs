@@ -2857,8 +2857,8 @@ public class ProfileViewModel : ViewModelBase
             field = value;
             OnPropertyChanged();
 
-            // Validate the query again for the new type.
-            OnPropertyChanged(nameof(RDAP_Query));
+            // Validate the query (or the inherited host) again for the new type.
+            OnPropertyChanged(RDAP_InheritHost ? nameof(Host) : nameof(RDAP_Query));
         }
     }
 

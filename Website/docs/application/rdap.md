@@ -39,6 +39,8 @@ The firewall must allow outgoing HTTPS connections (TCP port 443) to `data.iana.
 
 ### Example inputs
 
+With the type **Auto** (default), the type is detected from the query: IP address or CIDR, AS number (e.g. `AS13335`, `13335` or `1.10`), top-level domain (a single label, e.g. `de`), entity handle (a single label with a service provider tag, e.g. `ORG-RIEN1-RIPE`), otherwise domain. Select a type to override the detection, e.g. to query `1.10` as something other than an AS number.
+
 | Type       | Query            | Description                                                         |
 | ---------- | ---------------- | ------------------------------------------------------------------- |
 | Domain     | `borntoberoot.net` | Query a domain at the registry of the top-level domain              |
@@ -69,7 +71,7 @@ Inherit the host from the general settings.
 
 :::note
 
-If this option is enabled, the [query](#query) is overwritten by the host from the general settings and the [query](#query) is disabled.
+If this option is enabled, the [query](#query) is overwritten by the host from the general settings and the [query](#query) is disabled. The host must be valid for the selected [type](#type) (e.g. an IP address can't be queried as a domain); with `Auto`, the type is detected from the host.
 
 :::
 
@@ -85,11 +87,11 @@ Domain, top-level domain, IP address, AS number or entity handle to query.
 
 ### Type
 
-Type of the query.
+Type of the query. `Auto` detects the type from the query (see [Example inputs](#example-inputs)).
 
-**Type:** `Domain`, `TLD`, `IP address`, `ASN`, `Entity`
+**Type:** `Auto`, `Domain`, `TLD`, `IP address`, `ASN`, `Entity`
 
-**Default:** `Domain`
+**Default:** `Auto`
 
 ## Settings
 

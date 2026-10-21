@@ -4355,6 +4355,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter a valid domain, IP address, AS number or entity handle!.
+        /// </summary>
+        public static string EnterValidRDAPQuery {
+            get {
+                return ResourceManager.GetString("EnterValidRDAPQuery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a valid subnet (e.g., 192.168.178.133/26)!.
         /// </summary>
         public static string EnterValidSubnet {
@@ -9533,6 +9542,15 @@ namespace NETworkManager.Localization.Resources {
         public static string RDAPQueryType_ASN {
             get {
                 return ResourceManager.GetString("RDAPQueryType_ASN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto.
+        /// </summary>
+        public static string RDAPQueryType_Auto {
+            get {
+                return ResourceManager.GetString("RDAPQueryType_Auto", resourceCulture);
             }
         }
         

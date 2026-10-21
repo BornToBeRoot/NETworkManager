@@ -6,6 +6,11 @@ namespace NETworkManager.Models.RDAP;
 public enum RDAPQueryType
 {
     /// <summary>
+    ///     Detects the type from the input (see <see cref="RDAPQueryParser.DetectType" />).
+    /// </summary>
+    Auto,
+
+    /// <summary>
     ///     Domain name (e.g. example.com), resolved via the IANA DNS bootstrap.
     /// </summary>
     Domain,

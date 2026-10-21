@@ -19,6 +19,7 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:RDAPQueryTypeToStringConverter x:Key="RDAPQueryTypeToStringConverter" />
+        <converters:RDAPQueryTypeToWatermarkConverter x:Key="RDAPQueryTypeToWatermarkConverter" />
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
         <ContextMenu x:Key="RDAPExportContextMenu" MinWidth="150">
             <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
@@ -211,7 +212,7 @@
                            VerticalAlignment="Center" />
                 <ComboBox Grid.Column="2"
                           x:Name="ComboBoxQuery" ItemsSource="{Binding QueryHistoryView}"
-                          mah:TextBoxHelper.Watermark="{Binding QueryWatermark}"
+                          mah:TextBoxHelper.Watermark="{Binding QueryType, Converter={StaticResource RDAPQueryTypeToWatermarkConverter}}"
                           IsReadOnly="{Binding IsRunning}"
                           Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>

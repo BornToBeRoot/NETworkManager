@@ -264,9 +264,7 @@ public sealed class ImportProfilesResultViewModel : ViewModelBase
             case ProfileName.RDAP:
                 profile.RDAP_Enabled = true;
                 profile.RDAP_Query = profile.Host;
-                profile.RDAP_QueryType = System.Net.IPAddress.TryParse(profile.Host, out _)
-                    ? RDAPQueryType.IPAddress
-                    : RDAPQueryType.Domain;
+                profile.RDAP_QueryType = RDAPQueryType.Auto;
                 break;
             case ProfileName.Whois:
                 profile.Whois_Enabled = true;
