@@ -160,6 +160,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to C:\Program Files\GameServer\server.exe.
+        /// </summary>
+        public static string ExampleFirewallProgram {
+            get {
+                return ResourceManager.GetString("ExampleFirewallProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MyApp - HTTP.
         /// </summary>
         public static string ExampleFirewallRuleName {

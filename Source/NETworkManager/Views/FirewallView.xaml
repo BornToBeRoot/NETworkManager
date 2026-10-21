@@ -27,6 +27,9 @@
         <converters:FirewallNetworkProfilesToStringConverter x:Key="FirewallNetworkProfilesToStringConverter" />
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="F5" Command="{Binding Path=RefreshCommand}" />
+    </UserControl.InputBindings>
         <TabControl Style="{StaticResource DefaultTabControl}">
             <TabItem Header="{x:Static localization:Strings.Firewall}">
                 <Grid Margin="10">
@@ -385,7 +388,7 @@
                             </DataGridTemplateColumn>
 
                             <!-- Managed by NETworkManager / not managed / managed by policy (only visible if all rules are shown) -->
-                            <DataGridTemplateColumn Header="" SortMemberPath="IsManaged"
+                            <DataGridTemplateColumn Header="" SortMemberPath="SourceSortOrder"
                                                     Width="24" CanUserResize="False"
                                                     Visibility="{Binding Data.ShowAllRules, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                 <DataGridTemplateColumn.HeaderStyle>

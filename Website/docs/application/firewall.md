@@ -24,6 +24,8 @@ Without administrator privileges, the view is read-only. Use the **Restart as ad
 
 The **Program** column shows the file name of the program the rule applies to (e.g. `putty.exe`). The full path (e.g. `%ProgramFiles%\PuTTY\putty.exe`) is shown as tooltip and in the row details.
 
+The search above the list finds rules by name, program, direction, action, protocol, local / remote addresses, local / remote ports and description. The list is filtered after a short delay while typing.
+
 ### Toolbar
 
 | Button | Description |
@@ -35,7 +37,7 @@ The **Program** column shows the file name of the program the rule applies to (e
 
 By default, only rules managed by NETworkManager (display name prefixed with `NETworkManager_`) are shown. If [**Show all rules**](#show-all-rules) is enabled in the settings, all active Windows Firewall rules are shown (e.g. Windows built-in rules, rules created by other applications or from Group Policy).
 
-When all rules are shown, an additional column shows where a rule comes from. Click the column header to sort by it.
+When all rules are shown, an additional column shows where a rule comes from. Click the column header to sort by it (managed by NETworkManager, not managed by NETworkManager, then managed by a policy).
 
 | Icon | Description |
 |------|-------------|

@@ -2,6 +2,7 @@ using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
+using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Export;
@@ -19,6 +20,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
@@ -102,7 +104,14 @@ public class FirewallViewModel : ViewModelBase
     private bool _hasRulesManagedByPolicy;
 
     /// <summary>
+    /// Delays filtering the rules while the user is typing (see <see cref="RulesSearch"/>),
+    /// so the view (can be 1000+ rules if all rules are shown) is not filtered on every key press.
+    /// </summary>
+    private readonly DispatcherTimer _searchDispatcherTimer = new();
+
+    /// <summary>
     /// Gets or sets the search text for filtering rules.
+    /// The rules are filtered after a short delay (see <see cref="_searchDispatcherTimer"/>).
     /// </summary>
     public string RulesSearch
     {
@@ -113,7 +122,12 @@ public class FirewallViewModel : ViewModelBase
                 return;
 
             field = value;
-            ResultsView.Refresh();
+
+            // Stop + Start (instead of just Start) to reset the due time on every change --
+            // DispatcherTimer.Start() is a no-op while it's already running.
+            _searchDispatcherTimer.Stop();
+            _searchDispatcherTimer.Start();
+
             OnPropertyChanged();
         }
     }
@@ -240,11 +254,27 @@ public class FirewallViewModel : ViewModelBase
             if (o is not FirewallRule rule)
                 return false;
 
-            return rule.Name.IndexOf(RulesSearch, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   rule.Protocol.ToString().IndexOf(RulesSearch, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   rule.Action.ToString().IndexOf(RulesSearch, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   rule.Direction.ToString().IndexOf(RulesSearch, StringComparison.OrdinalIgnoreCase) > -1;
+            // Display values can be null (e.g. no ports / addresses / program)
+            bool Matches(string value) => value?.Contains(RulesSearch, StringComparison.OrdinalIgnoreCase) == true;
+
+            // Protocol, action and direction are shown translated, so the translated text is searched as well
+            return Matches(rule.Name) ||
+                   Matches(rule.ProgramDisplay) ||
+                   Matches(rule.Protocol.ToString()) ||
+                   Matches(ResourceTranslator.Translate(ResourceIdentifier.FirewallProtocol, rule.Protocol)) ||
+                   Matches(rule.Action.ToString()) ||
+                   Matches(ResourceTranslator.Translate(ResourceIdentifier.FirewallRuleAction, rule.Action)) ||
+                   Matches(rule.Direction.ToString()) ||
+                   Matches(ResourceTranslator.Translate(ResourceIdentifier.FirewallRuleDirection, rule.Direction)) ||
+                   Matches(rule.LocalAddressesDisplay) ||
+                   Matches(rule.LocalPortsDisplay) ||
+                   Matches(rule.RemoteAddressesDisplay) ||
+                   Matches(rule.RemotePortsDisplay) ||
+                   Matches(rule.Description);
         };
+
+        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
+        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
 
         // Load firewall rules
         _ = Refresh(true);
@@ -870,6 +900,16 @@ public class FirewallViewModel : ViewModelBase
             return [];
 
         return [.. value.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)];
+    }
+
+    /// <summary>
+    /// Filters the rules once the user stopped typing (see <see cref="RulesSearch"/>).
+    /// </summary>
+    private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
+    {
+        _searchDispatcherTimer.Stop();
+
+        ResultsView.Refresh();
     }
 
     /// <summary>

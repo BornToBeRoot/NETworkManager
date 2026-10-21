@@ -41,9 +41,8 @@ public class Firewall
     private static readonly SemaphoreSlim RunspaceLock = new(1, 1);
 
     /// <summary>
-    /// Lazily initialized PowerShell runspace. Created and configured on first access so that
-    /// simply navigating to the Firewall view does not start a PowerShell process unless a
-    /// modifying operation is actually performed.
+    /// Lazily initialized PowerShell runspace. Created and configured on first access, which is
+    /// the initial load of the rules when the Firewall view is opened for the first time.
     /// </summary>
     private static readonly Lazy<Runspace> _sharedRunspace = new(() =>
     {

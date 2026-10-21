@@ -37,6 +37,13 @@ public class FirewallRule
     public bool IsManagedByPolicy => Source != FirewallRuleSource.Local;
 
     /// <summary>
+    /// Sort order of the rule by where it comes from: managed by NETworkManager (0), not managed by NETworkManager (1),
+    /// Group Policy (2), MDM (3) or created by Windows at runtime (4). Used to sort the rule list, so rules managed
+    /// by a policy are not mixed up with rules that are only not managed by NETworkManager.
+    /// </summary>
+    public int SourceSortOrder => IsManaged ? 0 : IsManagedByPolicy ? 1 + (int)Source : 1;
+
+    /// <summary>
     /// Human-readable display name of the firewall rule. Used for display purposes
     /// or as an identifier in various contexts.
     /// </summary>
