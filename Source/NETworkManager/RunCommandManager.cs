@@ -51,31 +51,27 @@ public static class RunCommandManager
     /// </summary>
     private static readonly Dictionary<RunCommandTargetKind, ApplicationName[]> TargetApplications = new()
     {
+        // The Port Scanner is not suggested, since it needs ports (or a port profile).
         [RunCommandTargetKind.Host] =
         [
             ApplicationName.PingMonitor, ApplicationName.Traceroute, ApplicationName.DNSLookup,
-            ApplicationName.PortScanner, ApplicationName.RemoteDesktop, ApplicationName.PuTTY,
-            ApplicationName.PowerShell, ApplicationName.TigerVNC, ApplicationName.IPGeolocation, ApplicationName.Whois,
-            ApplicationName.RDAP, ApplicationName.SNMP, ApplicationName.IPScanner
+            ApplicationName.RemoteDesktop, ApplicationName.PuTTY, ApplicationName.PowerShell, ApplicationName.TigerVNC,
+            ApplicationName.IPGeolocation, ApplicationName.Whois, ApplicationName.RDAP, ApplicationName.SNMP,
+            ApplicationName.IPScanner
         ],
         // Without a domain (e.g. in a company network): no tools for public hosts (Whois, RDAP, IP Geolocation)
         [RunCommandTargetKind.Hostname] =
         [
             ApplicationName.PingMonitor, ApplicationName.Traceroute, ApplicationName.DNSLookup,
-            ApplicationName.PortScanner, ApplicationName.RemoteDesktop, ApplicationName.PuTTY,
-            ApplicationName.PowerShell, ApplicationName.TigerVNC, ApplicationName.SNMP, ApplicationName.IPScanner
+            ApplicationName.RemoteDesktop, ApplicationName.PuTTY, ApplicationName.PowerShell, ApplicationName.TigerVNC,
+            ApplicationName.SNMP, ApplicationName.IPScanner
         ],
-        [RunCommandTargetKind.Hosts] =
-        [
-            ApplicationName.PingMonitor, ApplicationName.DNSLookup, ApplicationName.PortScanner,
-            ApplicationName.IPScanner
-        ],
-        [RunCommandTargetKind.IPRange] =
-            [ApplicationName.IPScanner, ApplicationName.PortScanner, ApplicationName.PingMonitor],
+        [RunCommandTargetKind.Hosts] = [ApplicationName.PingMonitor, ApplicationName.DNSLookup, ApplicationName.IPScanner],
+        [RunCommandTargetKind.IPRange] = [ApplicationName.IPScanner, ApplicationName.PingMonitor],
         [RunCommandTargetKind.Subnet] =
         [
-            ApplicationName.IPScanner, ApplicationName.SubnetCalculator, ApplicationName.PortScanner,
-            ApplicationName.PingMonitor, ApplicationName.RDAP
+            ApplicationName.IPScanner, ApplicationName.SubnetCalculator, ApplicationName.PingMonitor,
+            ApplicationName.RDAP
         ],
         [RunCommandTargetKind.MACAddress] = [ApplicationName.WakeOnLAN, ApplicationName.Lookup],
         [RunCommandTargetKind.OUI] = [ApplicationName.Lookup],

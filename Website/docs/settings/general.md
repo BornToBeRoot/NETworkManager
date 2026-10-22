@@ -42,7 +42,7 @@ The value 0 will disable the background job. Changes to this value will take eff
 
 ### Number of stored entries
 
-Maximum number of entries stored in the history for several application inputs.
+Maximum number of entries stored in the history for several application inputs. With `0`, no entries are stored (existing entries are removed with the next input).
 
 Type: `Integer`
 
@@ -50,7 +50,7 @@ Default: `5` [Min `0`, Max `25`]
 
 ### Number of stored entries (Run command)
 
-Maximum number of commands stored in the history of the [run command](../run-command.md#suggestions).
+Maximum number of commands stored in the history of the [run command](../run-command.md#suggestions). With `0`, no commands are stored.
 
 Type: `Integer`
 

@@ -146,6 +146,8 @@ public class RunCommandViewModel : ViewModelBase
         _history =
         [
             .. SettingsManager.Current.RunCommand_History
+                // The setting may have been lowered (the history is trimmed with the next run).
+                .Take(SettingsManager.Current.RunCommand_HistoryEntries)
                 .Select(x => (Text: x, Result: RunCommandParser.Parse(x, _commands)))
                 .Where(x => x.Result.Command != null)
                 .Select(x => CreateHistoryEntry(x.Text, x.Result))
@@ -425,8 +427,9 @@ public class RunCommandViewModel : ViewModelBase
 
         var index = SelectedSuggestion == null ? -1 : Suggestions.IndexOf(SelectedSuggestion);
 
-        // Up from the first suggestion selects none, so Enter runs the input as typed. A page up stops at the first.
-        SelectedSuggestion = (index + offset) switch
+        // Nothing selected: Down and PageDown select the first. Up from the first suggestion selects none, so Enter runs
+        // the input as typed. A page up stops at the first.
+        SelectedSuggestion = (index < 0 && offset > 0 ? 0 : index + offset) switch
         {
             < 0 when index > 0 && offset < -1 => Suggestions[0],
             < 0 => null,
@@ -456,6 +459,10 @@ public class RunCommandViewModel : ViewModelBase
             return;
 
         Input = suggestion.CompletionText;
+
+        // Keep the completed profile selected, so Enter runs it (also if several profiles have the same name).
+        if (suggestion.Profile != null)
+            SelectedSuggestion = Suggestions.FirstOrDefault(x => x.Profile == suggestion.Profile) ?? SelectedSuggestion;
     }
 
     /// <summary>
@@ -498,11 +505,13 @@ public class RunCommandViewModel : ViewModelBase
         KeepOpen = mode == RunCommandRunMode.RunAndKeepOpen &&
                    !RunCommandManager.OpensDialog(IsSettings ? null : request);
 
-        // Commands are case-insensitive, so "Ping 10.0.0.1" and "ping 10.0.0.1" are the same entry.
+        // Commands are case-insensitive, so "Ping 10.0.0.1" and "ping 10.0.0.1" are the same entry. Not if the text can't
+        // be run again (e.g. a profile selected in the suggestions, whose name starts with a quote).
         var historyText = text.Trim();
 
-        ListHelper.Modify(SettingsManager.Current.RunCommand_History, historyText,
-            SettingsManager.Current.RunCommand_HistoryEntries, StringComparer.OrdinalIgnoreCase);
+        if (result.Error == RunCommandParseError.None)
+            ListHelper.Modify(SettingsManager.Current.RunCommand_History, historyText,
+                SettingsManager.Current.RunCommand_HistoryEntries, StringComparer.OrdinalIgnoreCase);
 
         _runHandler(this);
 
@@ -511,8 +520,11 @@ public class RunCommandViewModel : ViewModelBase
 
         // Show the command in the recent commands and keep it in the input (e.g. "ping "), so it can be run with the
         // next target.
-        _history.RemoveAll(x => string.Equals(x.Text, historyText, StringComparison.OrdinalIgnoreCase));
-        _history.Insert(0, CreateHistoryEntry(historyText, result));
+        if (result.Error == RunCommandParseError.None && SettingsManager.Current.RunCommand_HistoryEntries > 0)
+        {
+            _history.RemoveAll(x => string.Equals(x.Text, historyText, StringComparison.OrdinalIgnoreCase));
+            _history.Insert(0, CreateHistoryEntry(historyText, result));
+        }
 
         var commandPrefix = result.Command.TypeBeforeTarget && result.Type != null
             ? $"{result.CommandText} {result.Type} "
@@ -1108,50 +1120,53 @@ public class RunCommandViewModel : ViewModelBase
 
     /// <summary>
     ///     Port profiles of the Port Scanner (e.g. "Webserver") that contain the typed word, if no ports were entered
-    ///     yet. Names with spaces are inserted in quotes.
+    ///     yet.
     /// </summary>
     private IEnumerable<RunCommandSuggestion> GetPortProfileSuggestions()
     {
-        if (_result.Command.Argument != RunCommandArgument.Ports ||
-            _result.Argument != null && !string.Equals(_result.Argument, _result.CurrentWord))
-            return [];
-
-        return RunCommandManager.GetPortProfiles()
-            .Where(x => x.Name.Contains(_result.CurrentWord, StringComparison.OrdinalIgnoreCase))
-            .Select(x => new RunCommandSuggestion
-            {
-                Kind = RunCommandSuggestionKind.PortProfile,
-                Application = _result.Command.Application,
-                Title = x.Name,
-                Description = x.Ports,
-                CompletionText =
-                    _result.InputBeforeCurrentWord + (x.Name.Contains(' ') ? $"\"{x.Name}\"" : x.Name) + " ",
-                Highlight = _result.CurrentWord,
-                Group = Strings.PortProfiles
-            });
+        return GetArgumentValueSuggestions(RunCommandArgument.Ports,
+            RunCommandManager.GetPortProfiles().Select(x => (x.Name, x.Ports)), RunCommandSuggestionKind.PortProfile,
+            Strings.PortProfiles);
     }
 
     /// <summary>
     ///     DNS servers configured in the DNS lookup (e.g. "Cloudflare") that contain the typed word, if no DNS server was
-    ///     entered yet. Names with spaces are inserted in quotes.
+    ///     entered yet.
     /// </summary>
     private IEnumerable<RunCommandSuggestion> GetDNSServerSuggestions()
     {
-        if (_result.Command.Argument != RunCommandArgument.DNSServer ||
+        return GetArgumentValueSuggestions(RunCommandArgument.DNSServer,
+            RunCommandManager.GetDNSServers().Select(x => (x, Strings.DNSServer)), RunCommandSuggestionKind.DNSServer,
+            Strings.DNSServers);
+    }
+
+    /// <summary>
+    ///     Named values of the second argument of the command (e.g. DNS servers, port profiles) that contain the typed
+    ///     word, if the argument was not entered yet. Names with spaces are inserted in quotes.
+    /// </summary>
+    /// <param name="argument">Argument the values are for.</param>
+    /// <param name="values">Names and descriptions of the values.</param>
+    /// <param name="kind">Kind of the suggestions.</param>
+    /// <param name="group">Group of the suggestions.</param>
+    private IEnumerable<RunCommandSuggestion> GetArgumentValueSuggestions(RunCommandArgument argument,
+        IEnumerable<(string Name, string Description)> values, RunCommandSuggestionKind kind, string group)
+    {
+        if (_result.Command.Argument != argument ||
             _result.Argument != null && !string.Equals(_result.Argument, _result.CurrentWord))
             return [];
 
-        return RunCommandManager.GetDNSServers()
-            .Where(x => x.Contains(_result.CurrentWord, StringComparison.OrdinalIgnoreCase))
+        return values
+            .Where(x => x.Name.Contains(_result.CurrentWord, StringComparison.OrdinalIgnoreCase))
             .Select(x => new RunCommandSuggestion
             {
-                Kind = RunCommandSuggestionKind.DNSServer,
+                Kind = kind,
                 Application = _result.Command.Application,
-                Title = x,
-                Description = Strings.DNSServer,
-                CompletionText = _result.InputBeforeCurrentWord + (x.Contains(' ') ? $"\"{x}\"" : x) + " ",
+                Title = x.Name,
+                Description = x.Description,
+                CompletionText =
+                    _result.InputBeforeCurrentWord + (x.Name.Contains(' ') ? $"\"{x.Name}\"" : x.Name) + " ",
                 Highlight = _result.CurrentWord,
-                Group = Strings.DNSServers
+                Group = group
             });
     }
 

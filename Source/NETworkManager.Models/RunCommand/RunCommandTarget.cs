@@ -14,6 +14,17 @@ namespace NETworkManager.Models.RunCommand;
 public static class RunCommandTarget
 {
     /// <summary>
+    ///     Checks if the ports of an entry of the port lookup (e.g. "22", "80-90/tcp") are valid: from 1 to 65535, a range
+    ///     from a lower to a higher port.
+    /// </summary>
+    private static bool IsValidPortLookupEntry(string entry)
+    {
+        var ports = entry.Split('/')[0].Split('-').Select(x => int.TryParse(x, out var port) ? port : 0).ToArray();
+
+        return ports.All(x => x is > 0 and < 65536) && (ports.Length == 1 || ports[0] < ports[1]);
+    }
+
+    /// <summary>
     ///     Gets the kind of the target.
     /// </summary>
     /// <param name="target">Target without spaces (e.g. "10.0.0.1" or "10.0.0.1;10.0.0.2").</param>
@@ -33,11 +44,10 @@ public static class RunCommandTarget
         if (RegexHelper.MACAddressFirst3BytesWithSeparatorRegex().IsMatch(target))
             return RunCommandTargetKind.OUI;
 
-        // Only ports from 1 to 65535 (e.g. not "99999", which the port lookup searches as a service)
+        // Like the port lookup: ports from 1 to 65535 and ranges from a lower to a higher port (e.g. not "99999" or
+        // "90-80", which the port lookup searches as a service)
         if (RegexHelper.PortLookupEntriesRegex().IsMatch(target))
-            return Regex.Matches(target, "[0-9]+").All(x => int.TryParse(x.Value, out var port) && port is > 0 and < 65536)
-                ? RunCommandTargetKind.Ports
-                : RunCommandTargetKind.None;
+            return target.Split(';').All(IsValidPortLookupEntry) ? RunCommandTargetKind.Ports : RunCommandTargetKind.None;
 
         if (RegexHelper.ASNumberWithPrefixRegex().IsMatch(target))
             return RunCommandTargetKind.ASN;

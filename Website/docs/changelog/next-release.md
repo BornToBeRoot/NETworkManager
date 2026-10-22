@@ -188,6 +188,10 @@ Release date: **xx.xx.2026**
 
 - Fixed the connection status message (e.g. "Connecting to ...") being hidden too early, while still connecting, if a previous message (e.g. after connecting or disconnecting) was shown shortly before. Each message is now shown for 15 seconds. [#3638](https://github.com/BornToBeRoot/NETworkManager/pull/3638)
 
+**History**
+
+- Fixed adding an entry to the history of an input (e.g. hosts, ports, domains) failing when the number of stored entries is set to `0` in [Settings > General](../settings/general.md#number-of-stored-entries). With `0`, no entries are stored. Removing an entry from the history (also the oldest one, shared by several tabs) no longer clears the input that shows it. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+
 **Input validation**
 
 - Fixed host names being accepted with a hyphen at the start or end of a label other than the first (e.g. `server.-bad-.com`) and with only digits (e.g. `10.0.0.` or `192.168.1`, which are an incomplete IPv4 address). IPv4 addresses are still accepted in all host fields, now checked explicitly in the **Remote Desktop** host field. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)

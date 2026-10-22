@@ -72,6 +72,10 @@ public class RunCommandTargetTests
     [InlineData("0")]
     [InlineData("99999")]
     [InlineData("22;99999")]
+    // A range from a lower to a higher port, like the port lookup
+    [InlineData("90-80")]
+    [InlineData("80-80")]
+    [InlineData("22;90-80/tcp")]
     // A shortened or partly typed IPv4 address
     [InlineData("10.1")]
     [InlineData("192.168.1")]

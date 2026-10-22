@@ -18,7 +18,10 @@ public static class ListHelper
     /// </summary>
     /// <param name="list">List to modify (e.g. a history of the settings).</param>
     /// <param name="entry">Entry to add to the list.</param>
-    /// <param name="length">Maximum length of the list. Oldest entries will be removed if the list exceeds this length.</param>
+    /// <param name="length">
+    ///     Maximum length of the list. Oldest entries will be removed if the list exceeds this length. 0 stores no
+    ///     entries (e.g. "Number of stored entries" is set to 0), the list is emptied.
+    /// </param>
     /// <param name="comparer">Comparer for existing entries (e.g. case-insensitive). If null, the default comparer is used.</param>
     /// <typeparam name="T">Type of the list entries. Currently <see cref="string"/> or <see cref="int"/>.</typeparam>
     public static void Modify<T>(ObservableCollection<T> list, T entry, int length,
@@ -26,8 +29,18 @@ public static class ListHelper
     {
         comparer ??= EqualityComparer<T>.Default;
 
-        if (length <= 0)
-            throw new ArgumentOutOfRangeException(nameof(length), "Length must be greater than zero.");
+        if (length < 0)
+            throw new ArgumentOutOfRangeException(nameof(length), "Length must not be negative.");
+
+        // No history: all entries are removed, one by one like the oldest entries below. An editable ComboBox that shows
+        // the list keeps its text (ComboBoxHistoryBehavior in the HistoryComboBox style).
+        if (length == 0)
+        {
+            while (list.Count > 0)
+                list.RemoveAt(list.Count - 1);
+
+            return;
+        }
 
         if (EqualityComparer<T>.Default.Equals(entry, default) || entry is string text && string.IsNullOrEmpty(text))
             return;
