@@ -224,6 +224,10 @@ public class LookupPortLookupViewModel : ViewModelBase
         {
             var searchTrim = search.Trim();
 
+            // Empty entry (e.g. "22;;80"), which would find every service
+            if (searchTrim.Length == 0)
+                continue;
+
             // Check if the search is a port number like 22
             if (RegexHelper.PortLookupPortRegex().IsMatch(searchTrim))
                 if (int.TryParse(searchTrim, out var port))

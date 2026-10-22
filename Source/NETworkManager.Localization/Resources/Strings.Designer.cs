@@ -9095,6 +9095,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Port profile.
+        /// </summary>
+        public static string PortProfile {
+            get {
+                return ResourceManager.GetString("PortProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Port profiles.
         /// </summary>
         public static string PortProfiles {

@@ -39,6 +39,8 @@
                      Visual="{iconPacks:Material Kind=TagOutline}" />
         <VisualBrush x:Key="RunCommandDNSServerIcon" Stretch="Uniform"
                      Visual="{iconPacks:Material Kind=Dns}" />
+        <VisualBrush x:Key="RunCommandPortProfileIcon" Stretch="Uniform"
+                     Visual="{iconPacks:Material Kind=FormatListBulleted}" />
         <!-- Key of the key hints (e.g. "Enter") -->
         <Style x:Key="RunCommandKeyBorder" TargetType="{x:Type Border}">
             <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
@@ -293,6 +295,11 @@
                                                      Value="{x:Static networkManager:RunCommandSuggestionKind.DNSServer}">
                                             <Setter Property="OpacityMask"
                                                     Value="{StaticResource RunCommandDNSServerIcon}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Kind}"
+                                                     Value="{x:Static networkManager:RunCommandSuggestionKind.PortProfile}">
+                                            <Setter Property="OpacityMask"
+                                                    Value="{StaticResource RunCommandPortProfileIcon}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>

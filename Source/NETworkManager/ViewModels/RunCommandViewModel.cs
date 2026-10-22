@@ -1,6 +1,7 @@
 ﻿using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.RunCommand;
+using NETworkManager.Controls;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -45,6 +46,11 @@ public class RunCommandViewModel : ViewModelBase
     ///     Maximum number of commands suggested for the clipboard content (empty input).
     /// </summary>
     private const int MaxClipboardSuggestions = 3;
+
+    /// <summary>
+    ///     Number of suggestions that PageUp and PageDown move the selection.
+    /// </summary>
+    private const int SuggestionsPerPage = 5;
 
     /// <summary>
     ///     Maximum length of the clipboard content that is suggested as target.
@@ -97,6 +103,8 @@ public class RunCommandViewModel : ViewModelBase
     /// </summary>
     private readonly List<(RunCommandDefinition Command, string Text)> _clipboardCommands = [];
 
+    private readonly RunCommandTargetKind _clipboardKind;
+
     private readonly DispatcherTimer _validationTimer;
 
     private RunCommandParseResult _result;
@@ -147,7 +155,10 @@ public class RunCommandViewModel : ViewModelBase
             _clipboardTarget = GetClipboardTarget();
 
         if (_clipboardTarget != null)
-            _clipboardCommands = [.. RunCommandManager.GetCommandsForTarget(_clipboardTarget, _commands)];
+        {
+            _clipboardKind = RunCommandTarget.GetKind(_clipboardTarget);
+            _clipboardCommands = [.. RunCommandManager.GetCommandsForTarget(_clipboardTarget, _commands, _clipboardKind)];
+        }
 
         SuggestionsView = CollectionViewSource.GetDefaultView(Suggestions);
         SuggestionsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(RunCommandSuggestion.Group)));
@@ -192,7 +203,10 @@ public class RunCommandViewModel : ViewModelBase
         }
     } = string.Empty;
 
-    public ObservableCollection<RunCommandSuggestion> Suggestions { get; } = [];
+    /// <summary>
+    ///     Suggestions, replaced completely on every input (one notification for the grouped view).
+    /// </summary>
+    public ObservableRangeCollection<RunCommandSuggestion> Suggestions { get; } = [];
 
     /// <summary>
     ///     Suggestions grouped by <see cref="RunCommandSuggestion.Group" /> (e.g. "Recent", "Profiles").
@@ -388,6 +402,22 @@ public class RunCommandViewModel : ViewModelBase
         Select(-1);
     }
 
+    /// <summary>
+    ///     Selects the suggestion one page below (PageDown).
+    /// </summary>
+    public void SelectNextPage()
+    {
+        Select(SuggestionsPerPage);
+    }
+
+    /// <summary>
+    ///     Selects the suggestion one page above (PageUp).
+    /// </summary>
+    public void SelectPreviousPage()
+    {
+        Select(-SuggestionsPerPage);
+    }
+
     private void Select(int offset)
     {
         if (Suggestions.Count == 0)
@@ -395,10 +425,13 @@ public class RunCommandViewModel : ViewModelBase
 
         var index = SelectedSuggestion == null ? -1 : Suggestions.IndexOf(SelectedSuggestion);
 
-        // Up from the first suggestion selects none, so Enter runs the input as typed.
-        SelectedSuggestion = index + offset < 0
-            ? null
-            : Suggestions[Math.Min(index + offset, Suggestions.Count - 1)];
+        // Up from the first suggestion selects none, so Enter runs the input as typed. A page up stops at the first.
+        SelectedSuggestion = (index + offset) switch
+        {
+            < 0 when index > 0 && offset < -1 => Suggestions[0],
+            < 0 => null,
+            var newIndex => Suggestions[Math.Min(newIndex, Suggestions.Count - 1)]
+        };
     }
 
     /// <summary>
@@ -406,13 +439,18 @@ public class RunCommandViewModel : ViewModelBase
     /// </summary>
     public void Complete()
     {
-        // Nothing selected: the first DNS server or type that matches the typed word (e.g. "dns host c" → the DNS
-        // server "Cloudflare", then the types), in the order of the syntax.
-        var suggestion = SelectedSuggestion ?? (_result.Position == RunCommandPosition.Argument &&
-                                                _result.CurrentWord.Length > 0
-            ? Suggestions.FirstOrDefault(x =>
-                x.Kind is RunCommandSuggestionKind.DNSServer or RunCommandSuggestionKind.Type)
-            : null);
+        // Nothing selected: the first value of the part that is being typed, in the order of the syntax, e.g. a profile
+        // ("rdp @ser" → the first matching profile) or a DNS server, port profile or type ("dns host c" → the DNS
+        // server "Cloudflare", then the types).
+        var suggestion = SelectedSuggestion ?? (_result.Position switch
+        {
+            RunCommandPosition.Target when _result.ProfileName is { Length: > 0 } =>
+                Suggestions.FirstOrDefault(x => x.Kind == RunCommandSuggestionKind.Profile),
+            RunCommandPosition.Argument when _result.CurrentWord.Length > 0 =>
+                Suggestions.FirstOrDefault(x => x.Kind is RunCommandSuggestionKind.DNSServer
+                    or RunCommandSuggestionKind.PortProfile or RunCommandSuggestionKind.Type),
+            _ => null
+        });
 
         if (suggestion == null)
             return;
@@ -464,7 +502,7 @@ public class RunCommandViewModel : ViewModelBase
         var historyText = text.Trim();
 
         ListHelper.Modify(SettingsManager.Current.RunCommand_History, historyText,
-            SettingsManager.Current.General_HistoryListEntries, StringComparer.OrdinalIgnoreCase);
+            SettingsManager.Current.RunCommand_HistoryEntries, StringComparer.OrdinalIgnoreCase);
 
         _runHandler(this);
 
@@ -598,15 +636,12 @@ public class RunCommandViewModel : ViewModelBase
             // In the order of the syntax (e.g. "[DNS server] [Type]")
             _ =>
             [
-                .. GetDNSServerSuggestions().Take(MaxSuggestions),
+                .. GetDNSServerSuggestions().Take(MaxSuggestions), .. GetPortProfileSuggestions().Take(MaxSuggestions),
                 .. GetTypeSuggestions().Take(MaxSuggestions), .. GetHistorySuggestions().Take(MaxSuggestions)
             ]
         };
 
-        Suggestions.Clear();
-
-        foreach (var suggestion in suggestions)
-            Suggestions.Add(suggestion);
+        Suggestions.ReplaceAll(suggestions);
 
         SelectedSuggestion = GetPreselectedSuggestion();
 
@@ -805,7 +840,8 @@ public class RunCommandViewModel : ViewModelBase
 
         if (_clipboardTarget != null)
             suggestions.AddRange(GetTargetSuggestions(_clipboardTarget, Strings.Clipboard,
-                RunCommandSuggestionKind.Clipboard, commands: _clipboardCommands).Take(MaxClipboardSuggestions));
+                RunCommandSuggestionKind.Clipboard, commands: _clipboardCommands, targetKind: _clipboardKind)
+                .Take(MaxClipboardSuggestions));
 
         suggestions.AddRange(GetHistorySuggestions().Take(MaxHistorySuggestions));
 
@@ -826,14 +862,16 @@ public class RunCommandViewModel : ViewModelBase
     {
         var word = _result.CurrentWord;
 
-        var targetOnlySuggestions = GetTargetOnlySuggestions(CommandStartsWith(word)).ToList();
+        // Detected once per input (also used for the ranking and the commands of the target)
+        var targetKind = RunCommandTarget.GetKind(_result.CommandText);
+
+        var targetOnlySuggestions = GetTargetOnlySuggestions(CommandStartsWith(word), targetKind).ToList();
 
         // Not for a host name without a domain, which can also be a mistyped command (e.g. "pnig"), and not for a port,
         // which can also be the start of an IP address (e.g. "192").
-        _targetOnlyPreselection =
-            RunCommandTarget.GetKind(_result.CommandText) is RunCommandTargetKind.Hostname or RunCommandTargetKind.Ports
-                ? null
-                : targetOnlySuggestions.FirstOrDefault()?.CompletionText;
+        _targetOnlyPreselection = targetKind is RunCommandTargetKind.Hostname or RunCommandTargetKind.Ports
+            ? null
+            : targetOnlySuggestions.FirstOrDefault()?.CompletionText;
 
         var suggestions = new List<RunCommandSuggestion>(GetCommandSuggestions());
 
@@ -842,7 +880,7 @@ public class RunCommandViewModel : ViewModelBase
 
         if (_clipboardTarget != null)
             suggestions.AddRange(GetTargetSuggestions(_clipboardTarget, Strings.Clipboard,
-                RunCommandSuggestionKind.Clipboard, word, _clipboardCommands));
+                RunCommandSuggestionKind.Clipboard, word, _clipboardCommands, _clipboardKind));
 
         // A command for the target that was already run is shown as recent command (only once).
         return Distinct(suggestions);
@@ -913,16 +951,19 @@ public class RunCommandViewModel : ViewModelBase
     ///     Commands for a target typed without a command (e.g. "ping 10.0.0.1", "trace 10.0.0.1" for "10.0.0.1").
     /// </summary>
     /// <param name="commandStartsWithWord">A command starts with the typed word.</param>
-    private IEnumerable<RunCommandSuggestion> GetTargetOnlySuggestions(bool commandStartsWithWord)
+    /// <param name="targetKind">Kind of the typed word as target.</param>
+    private IEnumerable<RunCommandSuggestion> GetTargetOnlySuggestions(bool commandStartsWithWord,
+        RunCommandTargetKind targetKind)
     {
         if (_result.Command != null || HasArguments())
             return [];
 
         // A host name without a domain can also be a command that is being typed (e.g. "pi").
-        if (commandStartsWithWord && RunCommandTarget.GetKind(_result.CommandText) == RunCommandTargetKind.Hostname)
+        if (commandStartsWithWord && targetKind == RunCommandTargetKind.Hostname)
             return [];
 
-        return GetTargetSuggestions(_result.CommandText, Strings.Commands, RunCommandSuggestionKind.Target);
+        return GetTargetSuggestions(_result.CommandText, Strings.Commands, RunCommandSuggestionKind.Target,
+            targetKind: targetKind);
     }
 
     /// <summary>
@@ -934,17 +975,18 @@ public class RunCommandViewModel : ViewModelBase
     /// <param name="suggestionKind">Kind of the suggestions (typed target or clipboard).</param>
     /// <param name="commandPrefix">Only commands of which a name starts with it (e.g. "pi" for "ping"), or null.</param>
     /// <param name="commands">Commands for the target if they are already known (clipboard), otherwise null.</param>
+    /// <param name="targetKind">Kind of the target if it is already known, otherwise it is detected.</param>
     private IEnumerable<RunCommandSuggestion> GetTargetSuggestions(string target, string group,
         RunCommandSuggestionKind suggestionKind, string commandPrefix = null,
-        IEnumerable<(RunCommandDefinition Command, string Text)> commands = null)
+        IEnumerable<(RunCommandDefinition Command, string Text)> commands = null, RunCommandTargetKind? targetKind = null)
     {
-        var kind = RunCommandTarget.GetKind(target);
+        var kind = targetKind ?? RunCommandTarget.GetKind(target);
 
         var usage = _history.Where(x => x.TargetKind == kind)
             .GroupBy(x => x.Command)
             .ToDictionary(x => x.Key, x => x.Count());
 
-        return (commands ?? RunCommandManager.GetCommandsForTarget(target, _commands))
+        return (commands ?? RunCommandManager.GetCommandsForTarget(target, _commands, kind))
             .Where(x => commandPrefix == null || _commandNames.Any(c =>
                 c.Command == x.Command &&
                 c.Names.Any(name => name.StartsWith(commandPrefix, StringComparison.OrdinalIgnoreCase))))
@@ -1061,6 +1103,31 @@ public class RunCommandViewModel : ViewModelBase
                 CompletionText = _result.InputBeforeCurrentWord + x + " ",
                 Highlight = _result.CurrentWord,
                 Group = Strings.Type
+            });
+    }
+
+    /// <summary>
+    ///     Port profiles of the Port Scanner (e.g. "Webserver") that contain the typed word, if no ports were entered
+    ///     yet. Names with spaces are inserted in quotes.
+    /// </summary>
+    private IEnumerable<RunCommandSuggestion> GetPortProfileSuggestions()
+    {
+        if (_result.Command.Argument != RunCommandArgument.Ports ||
+            _result.Argument != null && !string.Equals(_result.Argument, _result.CurrentWord))
+            return [];
+
+        return RunCommandManager.GetPortProfiles()
+            .Where(x => x.Name.Contains(_result.CurrentWord, StringComparison.OrdinalIgnoreCase))
+            .Select(x => new RunCommandSuggestion
+            {
+                Kind = RunCommandSuggestionKind.PortProfile,
+                Application = _result.Command.Application,
+                Title = x.Name,
+                Description = x.Ports,
+                CompletionText =
+                    _result.InputBeforeCurrentWord + (x.Name.Contains(' ') ? $"\"{x.Name}\"" : x.Name) + " ",
+                Highlight = _result.CurrentWord,
+                Group = Strings.PortProfiles
             });
     }
 

@@ -116,6 +116,23 @@ public static class RunCommandManager
     }
 
     /// <summary>
+    ///     Gets the port profiles of the Port Scanner (e.g. "Webserver"), which can be used instead of ports.
+    /// </summary>
+    /// <returns>Port profiles.</returns>
+    public static IEnumerable<PortProfileInfo> GetPortProfiles()
+    {
+        return SettingsManager.Current.PortScanner_PortProfiles;
+    }
+
+    /// <summary>
+    ///     Gets the port profile with the name (case-insensitive), or null if there is none.
+    /// </summary>
+    private static PortProfileInfo GetPortProfile(string name)
+    {
+        return GetPortProfiles().FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
+    }
+
+    /// <summary>
     ///     Gets the translated name of the application (or settings) of a command.
     /// </summary>
     /// <param name="command">Command.</param>
@@ -148,13 +165,14 @@ public static class RunCommandManager
     /// </summary>
     /// <param name="target">Target (e.g. "10.0.0.1").</param>
     /// <param name="commands">Available commands.</param>
+    /// <param name="kind">Kind of the target if it is already known, otherwise it is detected.</param>
     /// <returns>Commands with the input to run, in the default order of the kind of the target.</returns>
     public static IEnumerable<(RunCommandDefinition Command, string Text)> GetCommandsForTarget(string target,
-        IReadOnlyList<RunCommandDefinition> commands)
+        IReadOnlyList<RunCommandDefinition> commands, RunCommandTargetKind? kind = null)
     {
-        var kind = RunCommandTarget.GetKind(target);
+        kind ??= RunCommandTarget.GetKind(target);
 
-        if (!TargetApplications.TryGetValue(kind, out var applications))
+        if (!TargetApplications.TryGetValue(kind.Value, out var applications))
             yield break;
 
         foreach (var application in applications)
@@ -210,6 +228,15 @@ public static class RunCommandManager
     {
         request = null;
 
+        // A profile selected in the suggestions is run with its settings, also if its name can't be typed (e.g. it
+        // starts with a quote, which is parsed as a quoted name).
+        if (profile != null && result.Command is { Type: RunCommandType.Application })
+        {
+            request = new ApplicationRequest(result.Command.Application) { Profile = profile };
+
+            return null;
+        }
+
         var error = GetParseErrorMessage(result);
 
         if (error != null)
@@ -223,6 +250,10 @@ public static class RunCommandManager
         {
             if (profile == null)
             {
+                // The profiles are not loaded until the (encrypted) profile file is unlocked.
+                if (ConfigurationManager.Current.ProfileManagerShowUnlock)
+                    return Strings.UnlockTheProfileFileMessage;
+
                 // The name is compared like it is parsed (without surrounding whitespace and quotes).
                 var profiles = GetProfiles(result.Command)
                     .Where(x => string.Equals(x.Name.Trim().Trim('"').Trim(), result.ProfileName,
@@ -307,6 +338,10 @@ public static class RunCommandManager
         if (error != null)
             return error;
 
+        // The Port Scanner needs ports (or a port profile), a new tab has none.
+        if (result.Command.Argument == RunCommandArgument.Ports && result.Argument == null)
+            return Strings.EnterValidPortOrPortRange;
+
         if (result.Argument != null)
         {
             ValidationRule argumentValidator = result.Command.Argument switch
@@ -319,6 +354,8 @@ public static class RunCommandManager
             error = result.Command.Argument switch
             {
                 RunCommandArgument.DNSServer => ValidateDNSServer(result.Argument),
+                // A port profile (e.g. "Webserver") or ports
+                RunCommandArgument.Ports when GetPortProfile(result.Argument) != null => null,
                 RunCommandArgument.Subnet => ValidateSubnetArgument(result.Target, result.Argument),
                 _ => Validate(argumentValidator, result.Argument)
             };
@@ -409,7 +446,12 @@ public static class RunCommandManager
                 // Without a type, the DNS lookup uses PTR for IP addresses and its selected type for hosts.
                 QueryType = result.Type != null ? Enum.Parse<QueryType>(result.Type, true) : null
             },
-            ApplicationName.PortScanner => new PortScannerRequest { Target = result.Target, Ports = result.Argument },
+            // A port profile is used with its ports.
+            ApplicationName.PortScanner => new PortScannerRequest
+            {
+                Target = result.Target,
+                Ports = GetPortProfile(result.Argument)?.Ports ?? result.Argument
+            },
             ApplicationName.WakeOnLAN => new WakeOnLANRequest { Target = result.Target, Broadcast = result.Argument },
             ApplicationName.RDAP => new RDAPRequest { Target = result.Target, QueryType = GetRDAPQueryType(result.Type) },
             // The argument is a new subnet mask (Subnetting) or a second subnet (Wide Subnet).
@@ -444,8 +486,12 @@ public static class RunCommandManager
         var commands = ApplicationManager.GetNames().Where(x => x != ApplicationName.None).Select(name => name switch
         {
             ApplicationName.IPScanner => Create(name, ["ipscan"], [Target(Strings.IPRange)]),
-            ApplicationName.PortScanner => Create(name, ["portscan"], [Target(Strings.Hosts), Argument(Strings.Ports)],
-                RunCommandArgument.Ports),
+            ApplicationName.PortScanner => Create(name, ["portscan"],
+            [
+                Target(Strings.Hosts),
+                RunCommandSyntaxPart.Required(RunCommandSyntaxPartKind.Argument,
+                    $"{Strings.Ports} | {Strings.PortProfile}")
+            ], RunCommandArgument.Ports),
             ApplicationName.PingMonitor => Create(name, ["ping"], [Target(Strings.Hosts)]),
             ApplicationName.Traceroute => Create(name, ["trace", "tracert"], [Target(Strings.Host)]),
             ApplicationName.DNSLookup => Create(name, ["dns", "nslookup"],

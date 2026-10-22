@@ -37,6 +37,9 @@ public class RegexHelperTests
     [InlineData("::ffff:192.168.0.1/96", true)]
     [InlineData("sss2001:db8::/32", false)]
     [InlineData("2001:db8::/129", false)]
+    // Whitespace and zone index can't be parsed as a subnet
+    [InlineData("2001:db8:: /32", false)]
+    [InlineData("fe80::1%eth0/64", false)]
     public void IPv6AddressCidr(string input, bool isMatch)
     {
         Assert.Equal(isMatch, Regex.IsMatch(input, RegexHelper.IPv6AddressCidrRegex));

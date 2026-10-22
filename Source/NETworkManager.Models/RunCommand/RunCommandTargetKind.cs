@@ -22,12 +22,12 @@ public enum RunCommandTargetKind
     Hostname,
 
     /// <summary>
-    ///     Several hosts separated by ";".
+    ///     Several hosts separated by ";", at least one is an IP address or a host with a domain.
     /// </summary>
     Hosts,
 
     /// <summary>
-    ///     IPv4 range (e.g. "10.0.0.1-10.0.0.100", "10.0.[0-1].1").
+    ///     IPv4 range (e.g. "10.0.0.1-10.0.0.100", "10.0.[0-1].1"), or several hosts with at least one range or subnet.
     /// </summary>
     IPRange,
 

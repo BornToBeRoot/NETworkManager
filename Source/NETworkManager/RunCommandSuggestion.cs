@@ -34,6 +34,11 @@ public enum RunCommandSuggestionKind
     DNSServer,
 
     /// <summary>
+    ///     Port profile of the Port Scanner (e.g. "Webserver").
+    /// </summary>
+    PortProfile,
+
+    /// <summary>
     ///     Command for a target typed without a command (e.g. "ping 10.0.0.1" for "10.0.0.1").
     /// </summary>
     Target,

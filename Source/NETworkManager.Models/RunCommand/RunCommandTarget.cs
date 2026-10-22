@@ -33,8 +33,11 @@ public static class RunCommandTarget
         if (RegexHelper.MACAddressFirst3BytesWithSeparatorRegex().IsMatch(target))
             return RunCommandTargetKind.OUI;
 
+        // Only ports from 1 to 65535 (e.g. not "99999", which the port lookup searches as a service)
         if (RegexHelper.PortLookupEntriesRegex().IsMatch(target))
-            return RunCommandTargetKind.Ports;
+            return Regex.Matches(target, "[0-9]+").All(x => int.TryParse(x.Value, out var port) && port is > 0 and < 65536)
+                ? RunCommandTargetKind.Ports
+                : RunCommandTargetKind.None;
 
         if (RegexHelper.ASNumberWithPrefixRegex().IsMatch(target))
             return RunCommandTargetKind.ASN;
@@ -42,12 +45,21 @@ public static class RunCommandTarget
         // Several hosts, IP ranges or subnets
         if (target.Contains(';'))
         {
-            var parts = target.Split(';', StringSplitOptions.RemoveEmptyEntries);
+            var kinds = target.Split(';', StringSplitOptions.RemoveEmptyEntries).Select(GetKind).ToList();
 
-            return parts.Length > 0 && parts.All(x => GetKind(x) is RunCommandTargetKind.Host
-                       or RunCommandTargetKind.Hostname or RunCommandTargetKind.IPRange or RunCommandTargetKind.Subnet)
-                ? RunCommandTargetKind.Hosts
-                : RunCommandTargetKind.None;
+            if (kinds.Count == 0 || kinds.Any(x => x is not (RunCommandTargetKind.Host or RunCommandTargetKind.Hostname
+                    or RunCommandTargetKind.IPRange or RunCommandTargetKind.Subnet)))
+                return RunCommandTargetKind.None;
+
+            // Only host names without a domain (e.g. "foo;" or "a;b" from copied text) can also be any words, like a
+            // single host name without a domain is not a list.
+            if (kinds.All(x => x == RunCommandTargetKind.Hostname))
+                return RunCommandTargetKind.None;
+
+            // With an IP range or subnet, it is a range for the scanners (e.g. not for a DNS lookup).
+            return kinds.Any(x => x is RunCommandTargetKind.IPRange or RunCommandTargetKind.Subnet)
+                ? RunCommandTargetKind.IPRange
+                : RunCommandTargetKind.Hosts;
         }
 
         // Subnet with CIDR or subnet mask (e.g. 10.0.0.0/24, 10.0.0.0/255.255.255.0, 2001:db8::/32), like the input

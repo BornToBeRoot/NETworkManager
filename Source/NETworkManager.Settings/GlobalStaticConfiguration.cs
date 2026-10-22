@@ -90,6 +90,7 @@ public static class GlobalStaticConfiguration
     public static int HotKey_RunCommandModifier => 3;
 
     // Settings: Run command
+    public static int RunCommand_HistoryEntries => 20;
     public static bool RunCommand_ShowKeyHints => true;
 
     // Settings: Update

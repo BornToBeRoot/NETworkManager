@@ -228,6 +228,10 @@ public class LookupOUILookupViewModel : ViewModelBase
         {
             var searchTrim = search.Trim();
 
+            // Empty entry (e.g. "Cisco;;Juniper"), which would find every vendor
+            if (searchTrim.Length == 0)
+                continue;
+
             if (Regex.IsMatch(searchTrim, RegexHelper.MACAddressRegex) ||
                 Regex.IsMatch(searchTrim, RegexHelper.MACAddressFirst3BytesRegex))
                 macAddresses.Add(searchTrim);

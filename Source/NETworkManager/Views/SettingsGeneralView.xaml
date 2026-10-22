@@ -189,6 +189,10 @@
         <mah:NumericUpDown Value="{Binding HistoryListEntries}" Maximum="25" Minimum="0" Interval="1"
                            Margin="0,0,0,20" />
         <TextBlock Style="{StaticResource HeaderTextBlock}" Text="{x:Static localization:Strings.RunCommand}" />
+        <TextBlock Text="{x:Static localization:Strings.NumberOfStoredEntries}"
+                   Style="{DynamicResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding RunCommandHistoryEntries}" Maximum="50" Minimum="0" Interval="1"
+                           Margin="0,0,0,10" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.SuggestTheClipboardAsTarget}"
                           IsOn="{Binding RunCommandSuggestClipboard}" Margin="0,0,0,10" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowKeyHints}"

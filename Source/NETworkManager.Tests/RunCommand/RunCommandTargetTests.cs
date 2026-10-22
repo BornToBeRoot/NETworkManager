@@ -11,7 +11,9 @@ public class RunCommandTargetTests
     [InlineData("server-01.borntoberoot.net", RunCommandTargetKind.Host)]
     [InlineData("borntoberoot.net", RunCommandTargetKind.Host)]
     [InlineData("10.0.0.1;10.0.0.2", RunCommandTargetKind.Hosts)]
-    [InlineData("borntoberoot.net;10.0.0.0/24", RunCommandTargetKind.Hosts)]
+    // A list with a range or subnet is a range (for the scanners, not for a DNS lookup).
+    [InlineData("borntoberoot.net;10.0.0.0/24", RunCommandTargetKind.IPRange)]
+    [InlineData("10.0.0.0/24;10.0.0.1", RunCommandTargetKind.IPRange)]
     [InlineData("10.0.0.1-10.0.0.100", RunCommandTargetKind.IPRange)]
     [InlineData("10.0.0.1-100", RunCommandTargetKind.IPRange)]
     [InlineData("10.0.[0-1].1", RunCommandTargetKind.IPRange)]
@@ -46,8 +48,8 @@ public class RunCommandTargetTests
     }
 
     [Theory]
-    [InlineData("server01;server02")]
     [InlineData("10.0.0.1;server01")]
+    [InlineData("server01;server02.borntoberoot.net")]
     public void HostsWithHostnames(string target)
     {
         Assert.Equal(RunCommandTargetKind.Hosts, RunCommandTarget.GetKind(target));
@@ -63,6 +65,13 @@ public class RunCommandTargetTests
     [InlineData("server_01")]
     [InlineData("@server")]
     [InlineData("10.0.0.1;server_01")]
+    // Only host names without a domain can be any words (e.g. copied text)
+    [InlineData("server01;server02")]
+    [InlineData("foo;")]
+    // Ports only from 1 to 65535
+    [InlineData("0")]
+    [InlineData("99999")]
+    [InlineData("22;99999")]
     // A shortened or partly typed IPv4 address
     [InlineData("10.1")]
     [InlineData("192.168.1")]

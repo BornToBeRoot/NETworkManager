@@ -29,7 +29,7 @@ The input is validated like the input field of the feature (e.g. a valid host or
 | Command            | Aliases            | Arguments                           | Example                                  |
 | ------------------ | ------------------ | ----------------------------------- | ---------------------------------------- |
 | `ipscanner`        | `ipscan`           | `<range>`                           | `ipscan 10.0.0.0/24`                     |
-| `portscanner`      | `portscan`         | `<hosts> [ports]`                   | `portscan 10.0.0.1 22; 80; 443`          |
+| `portscanner`      | `portscan`         | `<hosts> <ports\|port profile>`     | `portscan 10.0.0.1 22; 80; 443`          |
 | `pingmonitor`      | `ping`             | `<hosts>`                           | `ping 10.0.0.1; 10.0.0.2`                |
 | `traceroute`       | `trace`, `tracert` | `<host>`                            | `trace borntoberoot.net`                 |
 | `dnslookup`        | `dns`, `nslookup`  | `<hosts> [server] [type]`           | `dns borntoberoot.net 1.1.1.1 aaaa`      |
@@ -56,6 +56,8 @@ All features that accept a target also accept a profile (`@profile`), except the
 - **RDAP:** The type is `domain`, `nameserver`, `tld`, `ip`, `asn` or `entity`. Without a type, it is detected from the query (see [RDAP](./application/rdap.md#example-inputs)).
 - **Subnet Calculator:** A subnet (e.g. `subnet 10.0.0.0/24`) is calculated in **Calculator**. With a new subnet mask or CIDR (e.g. `/26`, `26` or `255.255.255.192`), it is split in **Subnetting**; the new mask must be between the CIDR of the subnet and `/32` (IPv4) or `/128` (IPv6). With a second subnet (e.g. `subnet 10.0.0.0/24 10.0.1.0/24`), the **Wide Subnet** is calculated (IPv4 only).
 - **Lookup:** The first word after the command is the lookup: `oui` (MAC addresses or vendors, e.g. `lookup oui 00:11:22`) or `port` (ports, port ranges or services, e.g. `lookup port 22; 80-90/tcp; ssh`). The rest of the input is the query, so vendors can contain spaces without quotes (e.g. `lookup oui Cisco Systems`). Without a query (e.g. `lookup port`), the lookup is only shown.
+- **Port Scanner:** The ports are required (a new tab has none): ports and port ranges (e.g. `22; 80; 443`, `1-1024`) or the name of a port profile of the Port Scanner (case-insensitive, e.g. `portscan 10.0.0.1 webserver`; a name with spaces in quotes). The port profiles are suggested after the host.
+- **SNMP:** Opens a tab with the host; the query is started in the feature (as before), also with `Enter`.
 - **Wake on LAN:** The magic packet is sent to the broadcast address (or the one last used in the feature). If there is no valid broadcast address yet, the MAC address is only filled in. A profile sends the magic packet with its settings.
 
 :::
@@ -66,17 +68,17 @@ Type only the target (e.g. `10.0.0.1`) to get the commands that accept it, e.g. 
 
 | Target                                              | Suggested commands                                                                  |
 | --------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| IP address or host with a domain (`server.lan`)     | Ping Monitor, Traceroute, DNS Lookup, Port Scanner, remote tools, IP Geolocation, … |
-| Host without a domain (`server01`)                  | Ping Monitor, Traceroute, DNS Lookup, Port Scanner, remote tools, SNMP, IP Scanner  |
-| Several hosts (`10.0.0.1; 10.0.0.2`)                | Ping Monitor, DNS Lookup, Port Scanner, IP Scanner                                  |
-| IP range (`10.0.0.1-100`) or subnet (`10.0.0.0/24`) | IP Scanner, Subnet Calculator (subnet), Port Scanner, Ping Monitor, RDAP (subnet)   |
+| IP address or host with a domain (`server.lan`)     | Ping Monitor, Traceroute, DNS Lookup, remote tools, IP Geolocation, Whois, …        |
+| Host without a domain (`server01`)                  | Ping Monitor, Traceroute, DNS Lookup, remote tools, SNMP, IP Scanner                |
+| Several hosts (`10.0.0.1; 10.0.0.2`)                | Ping Monitor, DNS Lookup, IP Scanner                                                |
+| IP range (`10.0.0.1-100`) or subnet (`10.0.0.0/24`) | IP Scanner, Subnet Calculator (subnet), Ping Monitor, RDAP (subnet)                 |
 | MAC address (`00:11:22:33:44:55`)                   | Wake on LAN, `lookup oui`                                                           |
 | First 3 bytes of a MAC address (`00:11:22`)         | `lookup oui`                                                                        |
 | Port(s) (`22`, `80-90/tcp`)                         | `lookup port`                                                                       |
 | AS number (`AS13335`)                               | RDAP                                                                                |
 | URL (`https://...`)                                 | Web Console                                                                         |
 
-A command always has priority (e.g. `web` is the Web Console). A host without a domain (e.g. `server01`) can also be a mistyped command, so its commands are only suggested if no command starts with the word (e.g. not for `pi`), and none is selected: select one with the arrow keys.
+A command always has priority (e.g. `web` is the Web Console). A list (e.g. `10.0.0.1; server01`) is a target if at least one entry is an IP address, a host with a domain, a range or a subnet; with a range or subnet, it is handled like an IP range. Ports are `1` to `65535`. A host without a domain (e.g. `server01`) can also be a mistyped command, so its commands are only suggested if no command starts with the word (e.g. not for `pi`), and none is selected: select one with the arrow keys.
 
 **Clipboard:** If enabled in [Settings > General](./settings/general.md#suggest-the-clipboard-content-as-target), the commands for a target in the clipboard (e.g. a copied IP address) are suggested when the dialog is opened (up to 3), and `Enter` runs the first one. While typing the command, the commands for the clipboard that start with it are suggested (e.g. `pi` → `ping 10.0.0.1`). The clipboard is read when the dialog is opened; a single word (host without a domain) is not suggested. Disabled by default.
 
@@ -100,14 +102,14 @@ While typing, suggestions are shown below the input, grouped (e.g. _Recent_, _Pr
 | After the command (`rdp `)   | Recent commands of the feature and its profiles                          |
 | After `lookup `              | The lookups (`oui`, `port`) and recent commands                          |
 | `@` (e.g. `rdp @web`)        | Profiles of the feature (with group and host); exact names first, recently run profiles first within the same match |
-| After the target             | Configured DNS servers (DNS lookup), types of the feature (e.g. DNS record types) and recent commands, up to 10 of each |
+| After the target             | Configured DNS servers (DNS lookup), port profiles (Port Scanner), types of the feature (e.g. DNS record types) and recent commands, up to 10 of each |
 
 `Enter` runs what was typed if no suggestion is selected: after the command, nothing is selected; profiles, recent commands, types and DNS servers are selected with the arrow keys (`Up` on the first suggestion selects none again). While typing the command, the best matching feature is selected (completing it keeps the arguments, e.g. `pin 10.0.0.1` → `ping 10.0.0.1`), but not if an unknown command has arguments; for a target without a command, see [Target without a command](#target-without-a-command). With an empty input, only the first command for the clipboard is selected (if enabled). While typing `@`, a profile is only selected if exactly one matches. While typing the lookup (e.g. `lookup po`), the matching lookup is selected.
 
 | Key           | Action                                                                                          |
 | ------------- | ----------------------------------------------------------------------------------------------- |
-| `Up`, `Down`  | Select a suggestion                                                                             |
-| `Tab`         | Insert the selected suggestion into the input. If none is selected, the first DNS server or type that matches the typed word (e.g. `dns borntoberoot.net c` → `cloudflare`) |
+| `Up`, `Down`  | Select a suggestion (`PageUp`, `PageDown`: 5 suggestions)                                       |
+| `Tab`         | Insert the selected suggestion into the input. If none is selected, the first profile, DNS server, port profile or type that matches the typed word (e.g. `dns borntoberoot.net c` → `cloudflare`) |
 | `Enter`       | Run the selected suggestion, or the input if none is selected                                   |
 | `Ctrl+Enter`  | Run and keep the dialog open, with the command in the input (e.g. `ping `) to run it with the next target. Commands that open a dialog (connect dialog of the remote tools, settings, Subnetting, which can ask for confirmation) close the dialog. |
 | `Shift+Enter` | Open the feature with the input filled in, without starting it (e.g. to adjust the options of a scan). The remote tools open the connect dialog (target) or connect (profile) as with `Enter`. |
@@ -116,4 +118,4 @@ While typing, suggestions are shown below the input, grouped (e.g. _Recent_, _Pr
 
 The keys are also shown at the bottom of the dialog (can be hidden in [Settings > General](./settings/general.md#show-key-hints)).
 
-Run commands are saved in a history (the number of entries is set in [Settings > General](./settings/general.md)).
+Run commands are saved in a history (20 entries by default, set in [Settings > General](./settings/general.md#number-of-stored-entries-run-command)).

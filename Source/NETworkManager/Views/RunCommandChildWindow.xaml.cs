@@ -10,9 +10,9 @@ using System.Windows.Threading;
 namespace NETworkManager.Views;
 
 /// <summary>
-///     Run command dialog. The input keeps the focus; Up/Down select a suggestion, Tab completes it, Enter runs it
-///     (Ctrl+Enter keeps the dialog open, Shift+Enter only fills in), Shift+Del removes a recent command and Escape
-///     closes the dialog.
+///     Run command dialog. The input keeps the focus; Up/Down (PageUp/PageDown) select a suggestion, Tab completes
+///     it, Enter runs it (Ctrl+Enter keeps the dialog open, Shift+Enter only fills in), Shift+Del removes a recent
+///     command and Escape closes the dialog.
 /// </summary>
 public partial class RunCommandChildWindow
 {
@@ -125,6 +125,13 @@ public partial class RunCommandChildWindow
                 break;
             case Key.Up:
                 ViewModel.SelectPrevious();
+                break;
+            // Home and End move the caret in the input.
+            case Key.PageDown:
+                ViewModel.SelectNextPage();
+                break;
+            case Key.PageUp:
+                ViewModel.SelectPreviousPage();
                 break;
             case Key.Tab:
                 ViewModel.Complete();

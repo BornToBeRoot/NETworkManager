@@ -863,6 +863,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = [];
 
+    public int RunCommand_HistoryEntries
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.RunCommand_HistoryEntries;
+
     public bool RunCommand_SuggestClipboard
     {
         get;
