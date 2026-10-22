@@ -157,15 +157,16 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
     ///     Query type. If null, PTR is used for IP addresses (e.g. from the IP Scanner) and the selected query type for
     ///     hosts.
     /// </param>
-    public void AddTab(string host = null, string dnsServer = null, QueryType? queryType = null)
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    public void AddTab(string host = null, string dnsServer = null, QueryType? queryType = null, bool start = true)
     {
         if (queryType == null && IsIPAddresses(host))
             queryType = QueryType.PTR;
 
         var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(host ?? Strings.NewTab, new DNSLookupView(tabId, host, dnsServer, queryType),
-            tabId));
+        TabItems.Add(new DragablzTabItem(host ?? Strings.NewTab,
+            new DNSLookupView(tabId, host, dnsServer, queryType, start), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
@@ -185,9 +186,10 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
     /// Adds a new tab for the host of the specified profile.
     /// </summary>
     /// <param name="profile">The profile to lookup.</param>
-    public void AddTab(ProfileInfo profile)
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    public void AddTab(ProfileInfo profile, bool start = true)
     {
-        AddTab(profile.DNSLookup_Host);
+        AddTab(profile.DNSLookup_Host, start: start);
     }
 
     #endregion

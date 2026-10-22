@@ -264,9 +264,10 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
     ///     Adds the host(s) and starts the ping monitor.
     /// </summary>
     /// <param name="host">Host(s) to ping.</param>
-    public void AddHost(string host)
+    /// <param name="start">Starts the ping monitor. If false, the host is only filled in.</param>
+    public void AddHost(string host, bool start = true)
     {
-        if (SetHost(host))
+        if (SetHost(host) && start)
             _ = Start();
     }
 
@@ -274,9 +275,10 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
     ///     Adds the host(s) of the profile to its group and starts the ping monitor.
     /// </summary>
     /// <param name="profile">Profile to ping.</param>
-    public void AddHost(ProfileInfo profile)
+    /// <param name="start">Starts the ping monitor. If false, the host is only filled in.</param>
+    public void AddHost(ProfileInfo profile, bool start = true)
     {
-        if (SetHost(profile.PingMonitor_Host, profile.Group))
+        if (SetHost(profile.PingMonitor_Host, profile.Group) && start)
             _ = Start();
     }
 

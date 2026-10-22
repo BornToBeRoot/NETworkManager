@@ -7,6 +7,8 @@
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
                  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                 xmlns:shell="clr-namespace:ControlzEx.Windows.Shell;assembly=ControlzEx"
+                 xmlns:controls="clr-namespace:NETworkManager.Controls"
                  xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
                  xmlns:asf="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
                  xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
@@ -18,7 +20,7 @@
                  Style="{DynamicResource ResourceKey=DefaultWindow}"                 
                  MinWidth="800" MinHeight="600"
                  Width="1024" Height="768" 
-                 SaveWindowPosition="True" TitleAlignment="Left"
+                 SaveWindowPosition="True" TitleAlignment="Stretch"
                  ContentRendered="MetroMainWindow_ContentRendered" StateChanged="MetroWindowMain_StateChanged"
                  Activated="MetroMainWindow_Activated" Closing="MetroWindowMain_Closing"
                  d:DataContext="{d:DesignInstance networkManager:MainWindow}">
@@ -89,19 +91,6 @@
     </mah:MetroWindow.LeftWindowCommands>
     <mah:MetroWindow.RightWindowCommands>
         <mah:WindowCommands ShowSeparators="False" IsEnabled="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=IsChildWindowOpen, Converter={StaticResource ResourceKey=BooleanReverseConverter}}">
-            <Button Command="{Binding Path=OpenRunCommand}"
-                    ToolTip="{x:Static Member=localization:Strings.RunCommandDotsWithHotKey}"
-                    Cursor="Hand"
-                    Focusable="False">
-                <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="20" Height="20"
-                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                </StackPanel>
-            </Button>
             <Button Command="{Binding Path=RestartApplicationCommand}"
                     Opacity="1"
                     Visibility="{Binding Path=IsRestartRequired, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
@@ -264,6 +253,77 @@
             </Button>
         </mah:WindowCommands>
     </mah:MetroWindow.RightWindowCommands>
+    <!-- Title on the left and the run command in the center of the window (like the command center of VS Code) -->
+    <mah:MetroWindow.TitleTemplate>
+        <DataTemplate>
+            <controls:TitleBarPanel>
+                <!-- Like the default title of MahApps -->
+                <TextBlock Text="{Binding}"
+                           Margin="8,-1,1,0"
+                           VerticalAlignment="Center"
+                           TextTrimming="CharacterEllipsis"
+                           FontSize="{DynamicResource MahApps.Font.Size.Window.Title}"
+                           FontFamily="{DynamicResource MahApps.Fonts.Family.Window.Title}" />
+                <!-- Opens the run command; like the profile file selector (height, background, icon and font size),
+                     shrinks with the window (text first, then the shortcut) -->
+                <Button MaxWidth="300"
+                        Height="30"
+                        VerticalAlignment="Center"
+                        Command="{Binding DataContext.OpenRunCommand, RelativeSource={RelativeSource AncestorType={x:Type mah:MetroWindow}}}"
+                        IsEnabled="{Binding Source={x:Static Member=settings:ConfigurationManager.Current}, Path=IsChildWindowOpen, Converter={StaticResource ResourceKey=BooleanReverseConverter}}"
+                        ToolTip="{x:Static Member=localization:Strings.RunCommandDotsWithHotKey}"
+                        Cursor="Hand"
+                        Focusable="False"
+                        shell:WindowChrome.IsHitTestVisibleInChrome="True">
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="Border"
+                                    Background="{DynamicResource MahApps.Brushes.Gray10}"
+                                    Padding="10,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle Grid.Column="0"
+                                               Width="20" Height="20"
+                                               Margin="0,0,10,0"
+                                               Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                        <Rectangle.OpacityMask>
+                                            <VisualBrush Stretch="Uniform"
+                                                         Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
+                                        </Rectangle.OpacityMask>
+                                    </Rectangle>
+                                    <TextBlock Grid.Column="1"
+                                               Text="{x:Static Member=localization:Strings.RunCommandDots}"
+                                               FontSize="14"
+                                               Foreground="{DynamicResource MahApps.Brushes.Gray3}"
+                                               VerticalAlignment="Center"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="2"
+                                               Text="{x:Static Member=localization:Strings.CtrlShiftP}"
+                                               FontSize="14"
+                                               Margin="10,0,0,0"
+                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                               VerticalAlignment="Center" />
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Border" Property="Background"
+                                            Value="{DynamicResource MahApps.Brushes.Gray9}" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="Border" Property="Opacity" Value="0.5" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </controls:TitleBarPanel>
+        </DataTemplate>
+    </mah:MetroWindow.TitleTemplate>
     <Grid>
         <Grid>
             <Grid.Style>

@@ -104,19 +104,19 @@ public class WhoisHostViewModel : ProfileHostViewModelBase
 
     #region Methods
 
-    public void AddTab(string domain = null)
+    public void AddTab(string domain = null, bool start = true)
     {
         var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(domain ?? Strings.NewTab, new WhoisView(tabId, domain),
+        TabItems.Add(new DragablzTabItem(domain ?? Strings.NewTab, new WhoisView(tabId, domain, start),
             tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
 
-    public void AddTab(ProfileInfo profile)
+    public void AddTab(ProfileInfo profile, bool start = true)
     {
-        AddTab(profile.Whois_Domain);
+        AddTab(profile.Whois_Domain, start: start);
     }
 
     #endregion

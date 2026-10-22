@@ -86,6 +86,12 @@ public static class GlobalStaticConfiguration
     // Settings: HotKey
     public static int HotKey_ShowWindowKey => 79;
     public static int HotKey_ShowWindowModifier => 3;
+    public static int HotKey_RunCommandKey => 80;
+    public static int HotKey_RunCommandModifier => 3;
+
+    // Settings: Run command
+    public static int RunCommand_HistoryEntries => 20;
+    public static bool RunCommand_ShowKeyHints => true;
 
     // Settings: Update
     public static bool Update_CheckForUpdatesAtStartup => true;

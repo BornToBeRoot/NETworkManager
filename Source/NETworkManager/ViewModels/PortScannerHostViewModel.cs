@@ -136,19 +136,20 @@ public class PortScannerHostViewModel : ProfileHostViewModelBase
     /// </summary>
     /// <param name="host">The host to scan.</param>
     /// <param name="ports">The ports to scan.</param>
-    public void AddTab(string host = null, string ports = null)
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    public void AddTab(string host = null, string ports = null, bool start = true)
     {
         var tabId = Guid.NewGuid();
 
         TabItems.Add(new DragablzTabItem(string.IsNullOrEmpty(host) ? Strings.NewTab : host,
-            new PortScannerView(tabId, host, ports), tabId));
+            new PortScannerView(tabId, host, ports, start), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
 
-    public void AddTab(ProfileInfo profile)
+    public void AddTab(ProfileInfo profile, bool start = true)
     {
-        AddTab(profile.PortScanner_Host, profile.PortScanner_Ports);
+        AddTab(profile.PortScanner_Host, profile.PortScanner_Ports, start: start);
     }
 
     #endregion

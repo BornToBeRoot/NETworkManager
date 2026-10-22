@@ -25,3 +25,9 @@ updates:
   target-branch: main
   commit-message:
     prefix: "Dependency (dependabot/npm):"
+  groups:
+    # react and react-dom must have the exact same version (otherwise the website build fails)
+    react:
+      patterns:
+        - "react"
+        - "react-dom"

@@ -1062,7 +1062,8 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         // Change application view
         SelectedApplication = application;
 
-        if (string.IsNullOrEmpty(request.Target) && request.Profile == null)
+        // Only open the application, unless the request shows a part of it (e.g. the port lookup)
+        if (string.IsNullOrEmpty(request.Target) && request.Profile == null && request is not LookupRequest)
             return;
 
         // Create a new tab / perform the action in the application (only if it is shown)
@@ -1099,19 +1100,29 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (ConfigurationManager.Current.IsChildWindowOpen)
             return;
 
-        var childWindow = new RunCommandChildWindow();
+        var childWindow = new RunCommandChildWindow(this);
+
+        // A message of an application that was run with Ctrl+Enter (the dialog stays open, e.g. an error of the Ping
+        // Monitor) closes the dialog first, so the dialogs are not shown on top of each other.
+        void DialogHelper_DialogOpening(object sender, EventArgs e) => CloseDialog();
 
         void CloseDialog()
         {
+            DialogHelper.DialogOpening -= DialogHelper_DialogOpening;
+
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
             ConfigurationManager.OnDialogClose();
         }
 
+        DialogHelper.DialogOpening += DialogHelper_DialogOpening;
+
         var childWindowViewModel = new RunCommandViewModel(instance =>
         {
-            CloseDialog();
+            // Ctrl+Enter: the dialog stays open to run another command.
+            if (!instance.KeepOpen)
+                CloseDialog();
 
             if (instance.IsSettings)
                 NavigationManager.OpenSettings();
@@ -1381,6 +1392,16 @@ public sealed partial class MainWindow : INotifyPropertyChanged
             return IntPtr.Zero;
         }
 
+        // Hotkey --> Show window and open the run command
+        if (msg == WmHotkey && wParam.ToInt32() == 2)
+        {
+            ShowWindow();
+            OpenRunAction();
+            handled = true;
+
+            return IntPtr.Zero;
+        }
+
         // Window size events
         switch (msg)
         {
@@ -1443,6 +1464,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     /* ID | Command
      *  ---|-------------------
      *  1  | ShowWindow()
+     *  2  | ShowWindow() + OpenRunAction()
      */
 
     private readonly List<int> _registeredHotKeys = [];
@@ -1450,11 +1472,24 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private void RegisterHotKeys()
     {
         if (SettingsManager.Current.HotKey_ShowWindowEnabled)
-        {
-            RegisterHotKey(new WindowInteropHelper(this).Handle, 1, SettingsManager.Current.HotKey_ShowWindowModifier,
+            RegisterHotKey(1, SettingsManager.Current.HotKey_ShowWindowModifier,
                 SettingsManager.Current.HotKey_ShowWindowKey);
-            _registeredHotKeys.Add(1);
-        }
+
+        if (SettingsManager.Current.HotKey_RunCommandEnabled)
+            RegisterHotKey(2, SettingsManager.Current.HotKey_RunCommandModifier,
+                SettingsManager.Current.HotKey_RunCommandKey);
+    }
+
+    /// <summary>
+    ///     Registers a hotkey. It fails if the combination is already used (e.g. by the other hotkey or another
+    ///     application), then it is logged and not unregistered later.
+    /// </summary>
+    private void RegisterHotKey(int id, int modifier, int key)
+    {
+        if (RegisterHotKey(new WindowInteropHelper(this).Handle, id, modifier, key))
+            _registeredHotKeys.Add(id);
+        else
+            Log.Warn($"Hotkey {id} could not be registered, the key combination is already in use.");
     }
 
     private void UnregisterHotKeys()

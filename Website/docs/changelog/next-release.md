@@ -28,6 +28,10 @@ Release date: **xx.xx.2026**
 **Run command**
 
 - The [**Run command**](../run-command.md) (`Ctrl+Shift+P`) now runs a feature directly, e.g. `ping 10.0.0.1`, `dns borntoberoot.net 1.1.1.1 aaaa`, `rdap 1.10 asn` or `rdp @server-01` (profile). It opens in a dialog instead of a flyout, with short aliases (e.g. `ping`, `dns`, `rdp`, `ssh`, `geo`, `wol`), suggestions for recent commands, profiles of the feature and types (`Up`/`Down` to select, `Tab` to complete, `Enter` to run, `Esc` to close), and validates the input like the feature does. Only visible features are offered. [#3644](https://github.com/BornToBeRoot/NETworkManager/pull/3644)
+- New run command targets for the **Subnet Calculator** (`subnet 10.0.0.0/24`, `subnet 10.0.0.0/16 /24` for subnetting, `subnet 10.0.0.0/24 10.0.1.0/24` for the wide subnet) and the **Lookup** (`lookup oui 00:11:22`, `lookup port 22; ssh`). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- New global hotkey to bring the window to the foreground and open the run command (default `Ctrl+Alt+P`, disabled by default), see [Settings > HotKeys](../settings/hotkeys.md). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Run command: the **Port Scanner** needs ports, which can also be the name of a port profile (e.g. `portscan 10.0.0.1 webserver`, suggested after the host). Own history size for the run command (default 20, [Settings > General](../settings/general.md#number-of-stored-entries-run-command)). `Tab` also completes profiles and port profiles, `PageUp`/`PageDown` move the selection by 5 suggestions. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Run command dialog redesigned: the icon of the recognized feature, the syntax with the part being typed highlighted, the values as they were understood (e.g. `Hosts: borntoberoot.net`, `Type: AAAA`), validation while typing, grouped suggestions with the typed text highlighted, examples and key hints (can be hidden in the settings). The dialog uses more space in a large window. The title bar shows a **Run command...** box in the center (like the command center of VS Code) instead of the icon. Type only a target (e.g. `10.0.0.1`, `server-01`, `00:11:22:33:44:55`, `10.0.0.0/24`) to get the commands that accept it, recent commands are also suggested while typing (e.g. a host); optionally, a target in the clipboard is suggested ([Settings > General](../settings/general.md#suggest-the-clipboard-content-as-target)). `Ctrl+Enter` runs and keeps the dialog open, `Shift+Enter` fills in the input without starting, `Shift+Del` or the remove button removes a recent command. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
 
 **RDAP**
 
@@ -183,6 +187,25 @@ Release date: **xx.xx.2026**
 **WiFi**
 
 - Fixed the connection status message (e.g. "Connecting to ...") being hidden too early, while still connecting, if a previous message (e.g. after connecting or disconnecting) was shown shortly before. Each message is now shown for 15 seconds. [#3638](https://github.com/BornToBeRoot/NETworkManager/pull/3638)
+
+**History**
+
+- Fixed adding an entry to the history of an input (e.g. hosts, ports, domains) failing when the number of stored entries is set to `0` in [Settings > General](../settings/general.md#number-of-stored-entries). With `0`, no entries are stored. Removing an entry from the history (also the oldest one, shared by several tabs) no longer clears the input that shows it. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+
+**Input validation**
+
+- Fixed host names being accepted with a hyphen at the start or end of a label other than the first (e.g. `server.-bad-.com`) and with only digits (e.g. `10.0.0.` or `192.168.1`, which are an incomplete IPv4 address). The same applies to the domain in **Whois**. IPv4 addresses are still accepted in all host fields, now checked explicitly in the **Remote Desktop** host field. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed MAC addresses and their first 3 bytes (**Wake on LAN**, **Lookup** > **OUI**, profiles) being accepted with any character instead of a dot in the format `0000.0000.0000` (e.g. `0011 2233 4455`). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed IPv6 subnets in the **Subnet Calculator** being accepted with a leading `s` (e.g. `sss2001:db8::/32`) and rejected with an embedded IPv4 address (e.g. `::ffff:192.168.0.1/96`). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed the port of the **Remote Desktop** host field (`host:port`) being accepted empty or as `0`. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed the application freezing when validating an invalid domain with many labels in **Whois** (exponential backtracking of the regular expression). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed IPv6 subnets with whitespace or a zone index (e.g. `fe80::1%eth0/64`) being accepted in the **Subnet Calculator**, which can't calculate them. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed an empty entry in **Lookup** > **OUI** / **Port** (e.g. `22;;80`) finding every vendor or service. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed **Lookup** > **Port** searching for a port with an upper-case protocol (e.g. `22/TCP`) as a service instead of the port and protocol. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+
+**Subnet Calculator**
+
+- Fixed **Subnetting** getting stuck when the new subnet mask is smaller than the subnet mask of the subnet (e.g. `10.0.0.0/24` with `/16`) or too large for the address family (e.g. `/40` for IPv4). An error is shown instead. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
 
 ## Dependencies, Refactoring & Documentation
 

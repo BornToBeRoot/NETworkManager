@@ -51,9 +51,23 @@ public sealed class RunCommandDefinition
     public IReadOnlyList<string> Types { get; init; } = [];
 
     /// <summary>
-    ///     Syntax of the arguments for the hint (e.g. "&lt;hosts&gt; [server] [type]"), empty if there are none.
+    ///     The type keyword is required and is the first word after the command (e.g. "lookup port 22"). The rest of the
+    ///     input is the target, so it can contain spaces (e.g. "lookup oui Cisco Systems").
     /// </summary>
-    public string Syntax { get; init; } = string.Empty;
+    public bool TypeBeforeTarget { get; init; }
+
+    /// <summary>
+    ///     Parts of the syntax of the arguments for the hint (e.g. "&lt;Hosts&gt;", "[DNS server]", "[Type]",
+    ///     "@&lt;Profile&gt;"), empty if there are none.
+    /// </summary>
+    public IReadOnlyList<RunCommandSyntaxPart> SyntaxParts { get; init; } = [];
+
+    /// <summary>
+    ///     Syntax of the arguments (e.g. "&lt;Hosts&gt; [DNS server] [Type] | @&lt;Profile&gt;"), empty if there are
+    ///     none.
+    /// </summary>
+    public string Syntax => string.Join(" ",
+        SyntaxParts.Select(x => x.Kind == RunCommandSyntaxPartKind.Profile ? $"| {x.Text}" : x.Text));
 
     /// <summary>
     ///     Checks if the text is the command or one of its aliases (case-insensitive).

@@ -15,6 +15,11 @@ public partial class LookupPortLookupView
         DataContext = _viewModel;
     }
 
+    public void Lookup(string search, bool start)
+    {
+        _ = _viewModel.Lookup(search, start);
+    }
+
     private void ContextMenu_Opened(object sender, RoutedEventArgs e)
     {
         if (sender is ContextMenu menu)

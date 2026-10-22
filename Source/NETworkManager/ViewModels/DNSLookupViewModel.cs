@@ -250,8 +250,12 @@ public class DNSLookupViewModel : ViewModelBase
     /// <param name="host">The host to lookup.</param>
     /// <param name="dnsServer">DNS server(s) to use (not saved as default). If null, the last selected one is used.</param>
     /// <param name="queryType">Query type (not saved as default). If null, the last selected one is used.</param>
-    public DNSLookupViewModel(Guid tabId, string host, string dnsServer = null, QueryType? queryType = null)
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    public DNSLookupViewModel(Guid tabId, string host, string dnsServer = null, QueryType? queryType = null,
+        bool start = true)
     {
+        _firstLoad = start;
+
         _isLoading = true;
 
         ConfigurationManager.Current.DNSLookupTabCount++;

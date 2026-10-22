@@ -16,13 +16,13 @@ public partial class DNSLookupHostView : IApplicationRequestHandler
     {
         if (request.Profile != null)
         {
-            _viewModel.AddTab(request.Profile);
+            _viewModel.AddTab(request.Profile, request.Start);
             return;
         }
 
         var dnsLookupRequest = request as DNSLookupRequest;
 
-        _viewModel.AddTab(request.Target, dnsLookupRequest?.DNSServer, dnsLookupRequest?.QueryType);
+        _viewModel.AddTab(request.Target, dnsLookupRequest?.DNSServer, dnsLookupRequest?.QueryType, request.Start);
     }
 
     public void OnViewHide()

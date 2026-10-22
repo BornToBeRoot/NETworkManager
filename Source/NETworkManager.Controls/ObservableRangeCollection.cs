@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 
 namespace NETworkManager.Controls;
 
@@ -23,9 +24,12 @@ public class ObservableRangeCollection<T> : ObservableCollection<T>
     {
         CheckReentrancy();
 
+        // Read the items first: if a lazy sequence throws, the collection is unchanged (and in sync with the views).
+        var newItems = items.ToList();
+
         Items.Clear();
 
-        foreach (var item in items)
+        foreach (var item in newItems)
             Items.Add(item);
 
         OnPropertyChanged(new PropertyChangedEventArgs(nameof(Count)));

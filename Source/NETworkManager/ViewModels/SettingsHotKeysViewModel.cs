@@ -51,6 +51,47 @@ public class SettingsHotKeysViewModel : ViewModelBase
         }
     }
 
+    public bool HotKeyRunCommandEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+            {
+                SettingsManager.Current.HotKey_RunCommandEnabled = value;
+
+                SettingsManager.HotKeysChanged = true;
+            }
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public HotKey HotKeyRunCommand
+    {
+        get;
+        set
+        {
+            if (Equals(value, field))
+                return;
+
+            if (!_isLoading && value != null)
+            {
+                SettingsManager.Current.HotKey_RunCommandKey = (int)HotKeys.WpfKeyToFormsKeys(value.Key);
+                SettingsManager.Current.HotKey_RunCommandModifier = HotKeys.GetModifierKeysSum(value.ModifierKeys);
+
+                SettingsManager.HotKeysChanged = true;
+            }
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Constructor, LoadSettings
@@ -69,6 +110,9 @@ public class SettingsHotKeysViewModel : ViewModelBase
         HotKeyShowWindowEnabled = SettingsManager.Current.HotKey_ShowWindowEnabled;
         HotKeyShowWindow = new HotKey(HotKeys.FormsKeysToWpfKey(SettingsManager.Current.HotKey_ShowWindowKey),
             HotKeys.GetModifierKeysFromInt(SettingsManager.Current.HotKey_ShowWindowModifier));
+        HotKeyRunCommandEnabled = SettingsManager.Current.HotKey_RunCommandEnabled;
+        HotKeyRunCommand = new HotKey(HotKeys.FormsKeysToWpfKey(SettingsManager.Current.HotKey_RunCommandKey),
+            HotKeys.GetModifierKeysFromInt(SettingsManager.Current.HotKey_RunCommandModifier));
     }
 
     #endregion

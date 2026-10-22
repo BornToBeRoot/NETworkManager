@@ -17,11 +17,11 @@ public partial class IPScannerView : IDragablzTabItem
 {
     private readonly IPScannerViewModel _viewModel;
 
-    public IPScannerView(Guid tabId, string hostOrIPRange = null)
+    public IPScannerView(Guid tabId, string hostOrIPRange = null, bool start = true)
     {
         InitializeComponent();
 
-        _viewModel = new IPScannerViewModel(tabId, hostOrIPRange);
+        _viewModel = new IPScannerViewModel(tabId, hostOrIPRange, start);
 
         DataContext = _viewModel;
 

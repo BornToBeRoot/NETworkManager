@@ -117,9 +117,20 @@ public class ListHelperTests
         Assert.Equal(["Ping 10.0.0.1", "a"], list);
     }
 
+    // "Number of stored entries" can be set to 0 in the settings.
     [Fact]
-    public void ThrowsIfTheLengthIsNotPositive()
+    public void LengthZeroStoresNoEntries()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => ListHelper.Modify(new ObservableCollection<string>(), "a", 0));
+        var list = new ObservableCollection<string> { "a", "b" };
+
+        ListHelper.Modify(list, "c", 0);
+
+        Assert.Empty(list);
+    }
+
+    [Fact]
+    public void ThrowsIfTheLengthIsNegative()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => ListHelper.Modify(new ObservableCollection<string>(), "a", -1));
     }
 }

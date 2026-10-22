@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators;
 
@@ -11,7 +12,7 @@ public class PortValidator : ValidationRule
         if (!int.TryParse(value as string, out var portNumber))
             return new ValidationResult(false, Strings.EnterValidPort);
 
-        if (portNumber > 0 && portNumber < 65536)
+        if (PortRangeHelper.IsValidPort(portNumber))
             return ValidationResult.ValidResult;
 
         return new ValidationResult(false, Strings.EnterValidPort);

@@ -120,6 +120,21 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
 
     #region Methods
 
+    /// <summary>
+    ///     Calculates the wide subnet of two subnets (e.g. from the run command).
+    /// </summary>
+    /// <param name="subnet1">First subnet (e.g. 10.0.0.0/24).</param>
+    /// <param name="subnet2">Second subnet (e.g. 10.0.1.0/24).</param>
+    /// <param name="start">Calculates the wide subnet. If false, the subnets are only filled in.</param>
+    public void Calculate(string subnet1, string subnet2, bool start = true)
+    {
+        Subnet1 = subnet1;
+        Subnet2 = subnet2;
+
+        if (start)
+            Calculate();
+    }
+
     private void Calculate()
     {
         IsRunning = true;

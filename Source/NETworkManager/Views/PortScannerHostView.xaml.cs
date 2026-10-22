@@ -15,9 +15,9 @@ public partial class PortScannerHostView : IApplicationRequestHandler
     public void Open(ApplicationRequest request)
     {
         if (request.Profile != null)
-            _viewModel.AddTab(request.Profile);
+            _viewModel.AddTab(request.Profile, request.Start);
         else
-            _viewModel.AddTab(request.Target, (request as PortScannerRequest)?.Ports);
+            _viewModel.AddTab(request.Target, (request as PortScannerRequest)?.Ports, request.Start);
     }
 
     public void OnViewHide()

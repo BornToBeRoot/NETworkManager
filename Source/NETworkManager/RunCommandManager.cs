@@ -2,6 +2,7 @@
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
+using NETworkManager.Models.Lookup;
 using NETworkManager.Models.Network;
 using NETworkManager.Models.RDAP;
 using NETworkManager.Models.RunCommand;
@@ -36,6 +37,59 @@ public static class RunCommandManager
     };
 
     /// <summary>
+    ///     Type keywords of the Lookup and their lookup.
+    /// </summary>
+    private static readonly Dictionary<string, LookupType> LookupTypes = new()
+    {
+        ["oui"] = LookupType.OUI,
+        ["port"] = LookupType.Port
+    };
+
+    /// <summary>
+    ///     Applications that are suggested for a target typed without a command, in the order they are suggested (if
+    ///     they were not used with this kind of target before).
+    /// </summary>
+    private static readonly Dictionary<RunCommandTargetKind, ApplicationName[]> TargetApplications = new()
+    {
+        // The Port Scanner is not suggested, since it needs ports (or a port profile).
+        [RunCommandTargetKind.Host] =
+        [
+            ApplicationName.PingMonitor, ApplicationName.Traceroute, ApplicationName.DNSLookup,
+            ApplicationName.RemoteDesktop, ApplicationName.PuTTY, ApplicationName.PowerShell, ApplicationName.TigerVNC,
+            ApplicationName.IPGeolocation, ApplicationName.Whois, ApplicationName.RDAP, ApplicationName.SNMP,
+            ApplicationName.IPScanner
+        ],
+        // Without a domain (e.g. in a company network): no tools for public hosts (Whois, RDAP, IP Geolocation)
+        [RunCommandTargetKind.Hostname] =
+        [
+            ApplicationName.PingMonitor, ApplicationName.Traceroute, ApplicationName.DNSLookup,
+            ApplicationName.RemoteDesktop, ApplicationName.PuTTY, ApplicationName.PowerShell, ApplicationName.TigerVNC,
+            ApplicationName.SNMP, ApplicationName.IPScanner
+        ],
+        [RunCommandTargetKind.Hosts] = [ApplicationName.PingMonitor, ApplicationName.DNSLookup, ApplicationName.IPScanner],
+        [RunCommandTargetKind.IPRange] = [ApplicationName.IPScanner, ApplicationName.PingMonitor],
+        [RunCommandTargetKind.Subnet] =
+        [
+            ApplicationName.IPScanner, ApplicationName.SubnetCalculator, ApplicationName.PingMonitor,
+            ApplicationName.RDAP
+        ],
+        [RunCommandTargetKind.MACAddress] = [ApplicationName.WakeOnLAN, ApplicationName.Lookup],
+        [RunCommandTargetKind.OUI] = [ApplicationName.Lookup],
+        [RunCommandTargetKind.Ports] = [ApplicationName.Lookup],
+        [RunCommandTargetKind.ASN] = [ApplicationName.RDAP],
+        [RunCommandTargetKind.URL] = [ApplicationName.WebConsole]
+    };
+
+    /// <summary>
+    ///     Remote tools, which open the connect dialog for a target (instead of connecting directly).
+    /// </summary>
+    private static readonly HashSet<ApplicationName> ConnectDialogApplications =
+    [
+        ApplicationName.RemoteDesktop, ApplicationName.PowerShell, ApplicationName.PuTTY, ApplicationName.TigerVNC,
+        ApplicationName.WebConsole
+    ];
+
+    /// <summary>
     ///     Gets the commands of the visible applications and the settings.
     /// </summary>
     /// <returns>Available commands.</returns>
@@ -55,6 +109,23 @@ public static class RunCommandManager
     public static IEnumerable<string> GetDNSServers()
     {
         return SettingsManager.Current.DNSLookup_DNSServers.Select(x => x.Name);
+    }
+
+    /// <summary>
+    ///     Gets the port profiles of the Port Scanner (e.g. "Webserver"), which can be used instead of ports.
+    /// </summary>
+    /// <returns>Port profiles.</returns>
+    public static IEnumerable<PortProfileInfo> GetPortProfiles()
+    {
+        return SettingsManager.Current.PortScanner_PortProfiles;
+    }
+
+    /// <summary>
+    ///     Gets the port profile with the name (case-insensitive), or null if there is none.
+    /// </summary>
+    private static PortProfileInfo GetPortProfile(string name)
+    {
+        return GetPortProfiles().FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>
@@ -85,6 +156,55 @@ public static class RunCommandManager
     }
 
     /// <summary>
+    ///     Gets the commands that accept a target typed without a command (e.g. "ping 10.0.0.1", "trace 10.0.0.1" for
+    ///     "10.0.0.1"). Only valid commands are returned (validated like the input).
+    /// </summary>
+    /// <param name="target">Target (e.g. "10.0.0.1").</param>
+    /// <param name="commands">Available commands.</param>
+    /// <param name="kind">Kind of the target if it is already known, otherwise it is detected.</param>
+    /// <returns>Commands with the input to run, in the default order of the kind of the target.</returns>
+    public static IEnumerable<(RunCommandDefinition Command, string Text)> GetCommandsForTarget(string target,
+        IReadOnlyList<RunCommandDefinition> commands, RunCommandTargetKind? kind = null)
+    {
+        kind ??= RunCommandTarget.GetKind(target);
+
+        if (!TargetApplications.TryGetValue(kind.Value, out var applications))
+            yield break;
+
+        foreach (var application in applications)
+        {
+            var command = commands.FirstOrDefault(x => x.Application == application);
+
+            // Hidden application
+            if (command == null)
+                continue;
+
+            // The shortest name (e.g. "ping" instead of "pingmonitor")
+            var name = command.Aliases.FirstOrDefault() ?? command.Command;
+
+            var text = application == ApplicationName.Lookup
+                ? $"{name} {(kind == RunCommandTargetKind.Ports ? "port" : "oui")} {target}"
+                : $"{name} {target}";
+
+            if (TryCreateRequest(RunCommandParser.Parse(text, commands), null, out _) == null)
+                yield return (command, text);
+        }
+    }
+
+    /// <summary>
+    ///     Checks if the request opens a dialog, so the run command dialog must be closed: the settings or the connect
+    ///     dialog of a remote tool. Messages of the applications (e.g. an error or a confirmation) close the run command
+    ///     dialog when they are shown (<see cref="DialogHelper.DialogOpening" />).
+    /// </summary>
+    /// <param name="request">Request, or null for the settings.</param>
+    /// <returns>True if the request opens a dialog.</returns>
+    public static bool OpensDialog(ApplicationRequest request)
+    {
+        return request == null || request.Profile == null && !string.IsNullOrEmpty(request.Target) &&
+            ConnectDialogApplications.Contains(request.Application);
+    }
+
+    /// <summary>
     ///     Validates the input and creates the request to run.
     /// </summary>
     /// <param name="result">Parsed input.</param>
@@ -99,6 +219,15 @@ public static class RunCommandManager
     {
         request = null;
 
+        // A profile selected in the suggestions is run with its settings, also if its name can't be typed (e.g. it
+        // starts with a quote, which is parsed as a quoted name).
+        if (profile != null && result.Command is { Type: RunCommandType.Application })
+        {
+            request = new ApplicationRequest(result.Command.Application) { Profile = profile };
+
+            return null;
+        }
+
         var error = GetParseErrorMessage(result);
 
         if (error != null)
@@ -112,6 +241,10 @@ public static class RunCommandManager
         {
             if (profile == null)
             {
+                // The profiles are not loaded until the (encrypted) profile file is unlocked.
+                if (ConfigurationManager.Current.ProfileManagerShowUnlock)
+                    return Strings.UnlockTheProfileFileMessage;
+
                 // The name is compared like it is parsed (without surrounding whitespace and quotes).
                 var profiles = GetProfiles(result.Command)
                     .Where(x => string.Equals(x.Name.Trim().Trim('"').Trim(), result.ProfileName,
@@ -134,10 +267,10 @@ public static class RunCommandManager
             return null;
         }
 
-        // Only open the application
+        // Only open the application (Lookup: show the lookup of the type)
         if (result.Target == null)
         {
-            request = new ApplicationRequest(result.Command.Application);
+            request = result.Type != null ? CreateRequest(result) : new ApplicationRequest(result.Command.Application);
 
             return null;
         }
@@ -186,6 +319,8 @@ public static class RunCommandManager
             ApplicationName.Whois => new DomainValidator(),
             ApplicationName.IPGeolocation => new IPAddressOrHostnameValidator(),
             ApplicationName.WakeOnLAN => new MACAddressValidator(),
+            ApplicationName.SubnetCalculator => new IPv4IPv6SubnetValidator(),
+            ApplicationName.Lookup => new NotEndWithSemicolonValidator(),
             _ => null
         };
 
@@ -193,6 +328,10 @@ public static class RunCommandManager
 
         if (error != null)
             return error;
+
+        // The Port Scanner needs ports (or a port profile), a new tab has none.
+        if (result.Command.Argument == RunCommandArgument.Ports && result.Argument == null)
+            return Strings.EnterValidPortOrPortRange;
 
         if (result.Argument != null)
         {
@@ -203,9 +342,14 @@ public static class RunCommandManager
                 _ => null
             };
 
-            error = result.Command.Argument == RunCommandArgument.DNSServer
-                ? ValidateDNSServer(result.Argument)
-                : Validate(argumentValidator, result.Argument);
+            error = result.Command.Argument switch
+            {
+                RunCommandArgument.DNSServer => ValidateDNSServer(result.Argument),
+                // A port profile (e.g. "Webserver") or ports
+                RunCommandArgument.Ports when GetPortProfile(result.Argument) != null => null,
+                RunCommandArgument.Subnet => ValidateSubnetArgument(result.Target, result.Argument),
+                _ => Validate(argumentValidator, result.Argument)
+            };
 
             if (error != null)
                 return error;
@@ -244,6 +388,29 @@ public static class RunCommandManager
         return null;
     }
 
+    /// <summary>
+    ///     Validates the second argument of the Subnet Calculator: a new subnet mask or CIDR (Subnetting), which must be
+    ///     between the CIDR of the subnet and the maximum of the address family, or a second subnet (Wide Subnet, IPv4
+    ///     only like in the application).
+    /// </summary>
+    private static string ValidateSubnetArgument(string subnet, string argument)
+    {
+        if (!IsSubnetmaskOrCidr(argument))
+            return Validate(new IPv4SubnetValidator(), subnet) ?? Validate(new IPv4SubnetValidator(), argument);
+
+        var (minCidr, maxCidr) = Subnetmask.GetSubnettingCidrRange(IPNetwork2.Parse(subnet.Trim()));
+        var newCidr = Subnetmask.ConvertSubnetmaskOrCidrToCidr(argument);
+
+        return newCidr >= minCidr && newCidr <= maxCidr
+            ? null
+            : string.Format(Strings.EnterSubnetmaskOrCIDRBetweenXAndY, minCidr, maxCidr);
+    }
+
+    private static bool IsSubnetmaskOrCidr(string value)
+    {
+        return Validate(new IPv4IPv6SubnetmaskOrCIDRValidator(), value) == null;
+    }
+
     private static string Validate(ValidationRule validator, string value)
     {
         if (validator == null)
@@ -270,9 +437,19 @@ public static class RunCommandManager
                 // Without a type, the DNS lookup uses PTR for IP addresses and its selected type for hosts.
                 QueryType = result.Type != null ? Enum.Parse<QueryType>(result.Type, true) : null
             },
-            ApplicationName.PortScanner => new PortScannerRequest { Target = result.Target, Ports = result.Argument },
+            // A port profile is used with its ports.
+            ApplicationName.PortScanner => new PortScannerRequest
+            {
+                Target = result.Target,
+                Ports = GetPortProfile(result.Argument)?.Ports ?? result.Argument
+            },
             ApplicationName.WakeOnLAN => new WakeOnLANRequest { Target = result.Target, Broadcast = result.Argument },
             ApplicationName.RDAP => new RDAPRequest { Target = result.Target, QueryType = GetRDAPQueryType(result.Type) },
+            // The argument is a new subnet mask (Subnetting) or a second subnet (Wide Subnet).
+            ApplicationName.SubnetCalculator => result.Argument != null && IsSubnetmaskOrCidr(result.Argument)
+                ? new SubnetCalculatorRequest { Target = result.Target, NewSubnetmask = result.Argument }
+                : new SubnetCalculatorRequest { Target = result.Target, Subnet2 = result.Argument },
+            ApplicationName.Lookup => new LookupRequest { Target = result.Target, Type = LookupTypes[result.Type] },
             _ => new ApplicationRequest(result.Command.Application) { Target = result.Target }
         };
     }
@@ -288,35 +465,54 @@ public static class RunCommandManager
     /// </summary>
     private static List<RunCommandDefinition> CreateCommands()
     {
-        // Syntax of the arguments, e.g. "<Hosts> [Ports]"
-        static string Required(string name) => $"<{name}>";
-        static string Optional(string name) => $"[{name}]";
+        // Parts of the syntax, e.g. "<Hosts> [Ports]"
+        static RunCommandSyntaxPart Target(string name) =>
+            RunCommandSyntaxPart.Required(RunCommandSyntaxPartKind.Target, name);
+
+        static RunCommandSyntaxPart Argument(string name) =>
+            RunCommandSyntaxPart.Optional(RunCommandSyntaxPartKind.Argument, name);
+
+        var type = RunCommandSyntaxPart.Optional(RunCommandSyntaxPartKind.Type, Strings.Type);
 
         var commands = ApplicationManager.GetNames().Where(x => x != ApplicationName.None).Select(name => name switch
         {
-            ApplicationName.IPScanner => Create(name, ["scan"], Required(Strings.IPRange), true),
+            ApplicationName.IPScanner => Create(name, ["ipscan"], [Target(Strings.IPRange)]),
             ApplicationName.PortScanner => Create(name, ["portscan"],
-                $"{Required(Strings.Hosts)} {Optional(Strings.Ports)}", true, RunCommandArgument.Ports),
-            ApplicationName.PingMonitor => Create(name, ["ping"], Required(Strings.Hosts), true),
-            ApplicationName.Traceroute => Create(name, ["trace", "tracert"], Required(Strings.Host), true),
+            [
+                Target(Strings.Hosts),
+                RunCommandSyntaxPart.Required(RunCommandSyntaxPartKind.Argument,
+                    $"{Strings.Ports} | {Strings.PortProfile}")
+            ], RunCommandArgument.Ports),
+            ApplicationName.PingMonitor => Create(name, ["ping"], [Target(Strings.Hosts)]),
+            ApplicationName.Traceroute => Create(name, ["trace", "tracert"], [Target(Strings.Host)]),
             ApplicationName.DNSLookup => Create(name, ["dns", "nslookup"],
-                $"{Required(Strings.Hosts)} {Optional(Strings.DNSServer)} {Optional(Strings.Type)}", true,
-                RunCommandArgument.DNSServer,
+                [Target(Strings.Hosts), Argument(Strings.DNSServer), type], RunCommandArgument.DNSServer,
                 [.. DNSLookup.QueryTypes.Select(x => x.ToString().ToLowerInvariant()).Order()]),
             ApplicationName.RemoteDesktop => Create(name, ["rdp", "mstsc"],
-                $"{Required(Strings.Host)}[:{Required(Strings.Port)}]", true),
-            ApplicationName.PowerShell => Create(name, ["ps", "pwsh"], Required(Strings.Host), true),
-            ApplicationName.PuTTY => Create(name, ["ssh"], Required(Strings.Host), true),
-            ApplicationName.TigerVNC => Create(name, ["vnc"], Required(Strings.Host), true),
-            ApplicationName.WebConsole => Create(name, ["web"], Required(Strings.URL), true),
-            ApplicationName.SNMP => Create(name, [], Required(Strings.Host), true),
-            ApplicationName.RDAP => Create(name, [], $"{Required(Strings.Query)} {Optional(Strings.Type)}", true,
-                types: [.. RDAPTypes.Keys]),
-            ApplicationName.Whois => Create(name, [], Required(Strings.Domain), true),
-            ApplicationName.IPGeolocation => Create(name, ["geo"], Required(Strings.Host), true),
-            ApplicationName.WakeOnLAN => Create(name, ["wol"],
-                $"{Required(Strings.MACAddress)} {Optional(Strings.Broadcast)}", true, RunCommandArgument.Broadcast),
-            _ => Create(name, [], string.Empty, false)
+            [
+                new RunCommandSyntaxPart(RunCommandSyntaxPartKind.Target, Strings.Host,
+                    $"<{Strings.Host}>[:<{Strings.Port}>]")
+            ]),
+            ApplicationName.PowerShell => Create(name, ["ps", "pwsh"], [Target(Strings.Host)]),
+            ApplicationName.PuTTY => Create(name, ["ssh"], [Target(Strings.Host)]),
+            ApplicationName.TigerVNC => Create(name, ["vnc"], [Target(Strings.Host)]),
+            ApplicationName.WebConsole => Create(name, ["web"], [Target(Strings.URL)]),
+            ApplicationName.SNMP => Create(name, [], [Target(Strings.Host)]),
+            ApplicationName.RDAP => Create(name, [], [Target(Strings.Query), type], types: [.. RDAPTypes.Keys]),
+            ApplicationName.Whois => Create(name, [], [Target(Strings.Domain)]),
+            ApplicationName.IPGeolocation => Create(name, ["geo"], [Target(Strings.Host)]),
+            ApplicationName.WakeOnLAN => Create(name, ["wol"], [Target(Strings.MACAddress), Argument(Strings.Broadcast)],
+                RunCommandArgument.Broadcast),
+            ApplicationName.SubnetCalculator => Create(name, ["subnet", "ipcalc"],
+                [Target(Strings.Subnet), Argument($"{Strings.NewSubnetMask} | {Strings.Subnet2}")],
+                RunCommandArgument.Subnet, supportsProfile: false),
+            ApplicationName.Lookup => Create(name, [],
+            [
+                new RunCommandSyntaxPart(RunCommandSyntaxPartKind.Type, Strings.Type,
+                    $"<{string.Join("|", LookupTypes.Keys)}>"),
+                Target(Strings.Query)
+            ], types: [.. LookupTypes.Keys], supportsProfile: false, typeBeforeTarget: true),
+            _ => Create(name, [], null)
         }).ToList();
 
         commands.Add(new RunCommandDefinition
@@ -329,9 +525,25 @@ public static class RunCommandManager
         return commands;
     }
 
-    private static RunCommandDefinition Create(ApplicationName application, string[] aliases, string syntax,
-        bool supportsTarget, RunCommandArgument argument = RunCommandArgument.None, string[] types = null)
+    /// <summary>
+    ///     Creates the command of an application.
+    /// </summary>
+    /// <param name="application">Application.</param>
+    /// <param name="aliases">Short forms of the command.</param>
+    /// <param name="syntaxParts">Syntax of the arguments, or null if the command accepts no target.</param>
+    /// <param name="argument">Second argument after the target.</param>
+    /// <param name="types">Type keywords.</param>
+    /// <param name="supportsProfile">The application has profiles (only with a target).</param>
+    /// <param name="typeBeforeTarget">The type keyword comes before the target.</param>
+    private static RunCommandDefinition Create(ApplicationName application, string[] aliases,
+        RunCommandSyntaxPart[] syntaxParts, RunCommandArgument argument = RunCommandArgument.None,
+        string[] types = null, bool supportsProfile = true, bool typeBeforeTarget = false)
     {
+        var supportsTarget = syntaxParts != null;
+
+        // Applications that accept a target support profiles, unless they have none (e.g. Subnet Calculator).
+        supportsProfile &= supportsTarget;
+
         return new RunCommandDefinition
         {
             Type = RunCommandType.Application,
@@ -339,11 +551,13 @@ public static class RunCommandManager
             Command = application.ToString().ToLowerInvariant(),
             Aliases = aliases,
             SupportsTarget = supportsTarget,
-            // Every application that accepts a target also supports profiles.
-            SupportsProfile = supportsTarget,
+            SupportsProfile = supportsProfile,
             Argument = argument,
             Types = types ?? [],
-            Syntax = supportsTarget ? $"{syntax} | @<{Strings.Profile}>" : string.Empty
+            TypeBeforeTarget = typeBeforeTarget,
+            SyntaxParts = supportsProfile
+                ? [.. syntaxParts, RunCommandSyntaxPart.Profile(Strings.Profile)]
+                : syntaxParts ?? []
         };
     }
 }

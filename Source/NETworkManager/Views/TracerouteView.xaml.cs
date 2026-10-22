@@ -19,11 +19,11 @@ public partial class TracerouteView : IDragablzTabItem
     // window size.
     private const double MapRowMaxHeightFraction = 2.0 / 3.0;
 
-    public TracerouteView(Guid tabId, string host = null)
+    public TracerouteView(Guid tabId, string host = null, bool start = true)
     {
         InitializeComponent();
 
-        _viewModel = new TracerouteViewModel(tabId, host);
+        _viewModel = new TracerouteViewModel(tabId, host, start);
 
         DataContext = _viewModel;
 

@@ -22,7 +22,14 @@ public class RunCommandParserTests
         {
             Type = RunCommandType.Application, Application = ApplicationName.DNSLookup, Command = "dnslookup",
             Aliases = ["dns", "nslookup"], SupportsTarget = true, SupportsProfile = true,
-            Argument = RunCommandArgument.DNSServer, Types = ["a", "aaaa", "cname", "ptr"]
+            Argument = RunCommandArgument.DNSServer, Types = ["a", "aaaa", "cname", "ptr"],
+            SyntaxParts =
+            [
+                RunCommandSyntaxPart.Required(RunCommandSyntaxPartKind.Target, "Hosts"),
+                RunCommandSyntaxPart.Optional(RunCommandSyntaxPartKind.Argument, "DNS server"),
+                RunCommandSyntaxPart.Optional(RunCommandSyntaxPartKind.Type, "Type"),
+                RunCommandSyntaxPart.Profile("Profile")
+            ]
         },
         new()
         {
@@ -32,8 +39,15 @@ public class RunCommandParserTests
         new()
         {
             Type = RunCommandType.Application, Application = ApplicationName.SubnetCalculator,
-            Command = "subnetcalculator"
+            Command = "subnetcalculator", Aliases = ["subnet"], SupportsTarget = true,
+            Argument = RunCommandArgument.Subnet
         },
+        new()
+        {
+            Type = RunCommandType.Application, Application = ApplicationName.Lookup, Command = "lookup",
+            SupportsTarget = true, Types = ["oui", "port"], TypeBeforeTarget = true
+        },
+        new() { Type = RunCommandType.Application, Application = ApplicationName.Firewall, Command = "firewall" },
         new() { Type = RunCommandType.Setting, Command = "settings" }
     ];
 
@@ -123,6 +137,18 @@ public class RunCommandParserTests
         Assert.Equal("borntoberoot.net", result.Target);
         Assert.Equal("1.1.1.1", result.Argument);
         Assert.Equal("cname", result.Type);
+        Assert.Equal(RunCommandParseError.None, result.Error);
+    }
+
+    // A configured DNS server (by name) after the type, e.g. for a reverse lookup
+    [Fact]
+    public void DNSServerNameAfterType()
+    {
+        var result = Parse("dns 1.1.1.1 PTR Cloudflare");
+
+        Assert.Equal("1.1.1.1", result.Target);
+        Assert.Equal("ptr", result.Type);
+        Assert.Equal("Cloudflare", result.Argument);
         Assert.Equal(RunCommandParseError.None, result.Error);
     }
 
@@ -240,7 +266,7 @@ public class RunCommandParserTests
     }
 
     [Theory]
-    [InlineData("subnetcalculator 10.0.0.0/24")]
+    [InlineData("firewall 10.0.0.1")]
     [InlineData("settings general")]
     public void NoArguments(string input)
     {
@@ -313,5 +339,101 @@ public class RunCommandParserTests
         Assert.Equal(position, result.Position);
         Assert.Equal(currentWord, result.CurrentWord);
         Assert.Equal(before, result.InputBeforeCurrentWord);
+    }
+
+    [Theory]
+    [InlineData("subnet 10.0.0.0/24", "10.0.0.0/24", null)]
+    [InlineData("subnet 10.0.0.0/16 /24", "10.0.0.0/16", "/24")]
+    [InlineData("subnet 10.0.0.0/24 10.0.1.0/24", "10.0.0.0/24", "10.0.1.0/24")]
+    public void SubnetWithNewSubnetmaskOrSubnet2(string input, string target, string argument)
+    {
+        var result = Parse(input);
+
+        Assert.Equal(RunCommandParseError.None, result.Error);
+        Assert.Equal(target, result.Target);
+        Assert.Equal(argument, result.Argument);
+    }
+
+    [Theory]
+    [InlineData("lookup port 22", "port", "22")]
+    [InlineData("lookup PORT 22; 80; ssh", "port", "22;80;ssh")]
+    [InlineData("lookup oui 00:11:22", "oui", "00:11:22")]
+    [InlineData("lookup oui Cisco Systems", "oui", "Cisco Systems")]
+    [InlineData("lookup oui \"Cisco Systems\"", "oui", "Cisco Systems")]
+    [InlineData("lookup port", "port", null)]
+    public void TypeBeforeTarget(string input, string type, string target)
+    {
+        var result = Parse(input);
+
+        Assert.Equal(RunCommandParseError.None, result.Error);
+        Assert.Equal(type, result.Type);
+        Assert.Equal(target, result.Target);
+    }
+
+    [Theory]
+    [InlineData("lookup po", "po")]
+    [InlineData("lookup foo 22", "foo")]
+    public void TypeBeforeTargetUnknownType(string input, string unknown)
+    {
+        var result = Parse(input);
+
+        Assert.Null(result.Type);
+        Assert.Equal(RunCommandParseError.UnknownArgument, result.Error);
+        Assert.Equal(unknown, result.ErrorValue);
+    }
+
+    [Fact]
+    public void TypeBeforeTargetNoProfiles()
+    {
+        var result = Parse("lookup @server");
+
+        Assert.Equal(RunCommandParseError.NoProfiles, result.Error);
+    }
+
+    [Theory]
+    [InlineData("lookup ", RunCommandPosition.Type, "", "lookup ")]
+    [InlineData("lookup po", RunCommandPosition.Type, "po", "lookup ")]
+    [InlineData("lookup port ", RunCommandPosition.Target, "", "lookup port ")]
+    [InlineData("lookup port 2", RunCommandPosition.Target, "2", "lookup port ")]
+    [InlineData("lookup oui Cisco Sys", RunCommandPosition.Target, "Cisco Sys", "lookup oui ")]
+    public void TypeBeforeTargetPositionForSuggestions(string input, RunCommandPosition position, string currentWord,
+        string before)
+    {
+        var result = Parse(input);
+
+        Assert.Equal(position, result.Position);
+        Assert.Equal(currentWord, result.CurrentWord);
+        Assert.Equal(before, result.InputBeforeCurrentWord);
+    }
+
+    [Fact]
+    public void Syntax()
+    {
+        var result = Parse("dns ");
+
+        Assert.Equal("<Hosts> [DNS server] [Type] | @<Profile>", result.Command.Syntax);
+    }
+
+    [Theory]
+    [InlineData("dns", null)]
+    [InlineData("dns ", RunCommandSyntaxPartKind.Target)]
+    [InlineData("dns border", RunCommandSyntaxPartKind.Target)]
+    [InlineData("dns @web", RunCommandSyntaxPartKind.Profile)]
+    [InlineData("dns borntoberoot.net ", RunCommandSyntaxPartKind.Argument)]
+    [InlineData("dns borntoberoot.net 1.1", RunCommandSyntaxPartKind.Argument)]
+    // The DNS server comes before the type, unless a complete type is typed.
+    [InlineData("dns borntoberoot.net aa", RunCommandSyntaxPartKind.Argument)]
+    [InlineData("dns borntoberoot.net c", RunCommandSyntaxPartKind.Argument)]
+    [InlineData("dns borntoberoot.net aaaa", RunCommandSyntaxPartKind.Type)]
+    [InlineData("dns borntoberoot.net 1.1.1.1 c", RunCommandSyntaxPartKind.Type)]
+    [InlineData("dns borntoberoot.net 1.1.1.1 ", RunCommandSyntaxPartKind.Type)]
+    [InlineData("dns borntoberoot.net aaaa ", RunCommandSyntaxPartKind.Argument)]
+    [InlineData("dns borntoberoot.net 1.1.1.1 aaaa ", null)]
+    [InlineData("lookup ", RunCommandSyntaxPartKind.Type)]
+    [InlineData("lookup port 2", RunCommandSyntaxPartKind.Target)]
+    [InlineData("portscan 10.0.0.1 ", RunCommandSyntaxPartKind.Argument)]
+    public void CurrentSyntaxPart(string input, RunCommandSyntaxPartKind? part)
+    {
+        Assert.Equal(part, Parse(input).CurrentSyntaxPart);
     }
 }

@@ -5,9 +5,11 @@
                                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                                xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
                                xmlns:networkManager="clr-namespace:NETworkManager"
+                               xmlns:views="clr-namespace:NETworkManager.Views"
                                xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
                                xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
                                xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+                               xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
                                xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
                                xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                                xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -15,7 +17,6 @@
                                Title="{x:Static localization:Strings.RunCommand}"
                                CloseButtonCommand="{Binding CancelCommand}"
                                AllowMove="False"
-                               ChildWindowWidth="650"
                                VerticalContentAlignment="Top"
                                Padding="0,80,0,0"
                                Loaded="ChildWindow_OnLoaded"
@@ -24,6 +25,10 @@
         <converters:ApplicationNameToIconConverter x:Key="ApplicationNameToIconConverter" />
         <converters:StringIsNotNullOrEmptyToVisibilityCollapsedConverter
             x:Key="StringIsNotNullOrEmptyToVisibilityCollapsedConverter" />
+        <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <!-- Like the run command in the title bar -->
+        <VisualBrush x:Key="RunCommandInputIcon" Stretch="Uniform"
+                     Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
         <VisualBrush x:Key="RunCommandSettingsIcon" Stretch="Uniform"
                      Visual="{iconPacks:MaterialLight Kind=Cog}" />
         <VisualBrush x:Key="RunCommandProfileIcon" Stretch="Uniform"
@@ -34,63 +39,189 @@
                      Visual="{iconPacks:Material Kind=TagOutline}" />
         <VisualBrush x:Key="RunCommandDNSServerIcon" Stretch="Uniform"
                      Visual="{iconPacks:Material Kind=Dns}" />
+        <VisualBrush x:Key="RunCommandPortProfileIcon" Stretch="Uniform"
+                     Visual="{iconPacks:Material Kind=FormatListBulleted}" />
+        <!-- Key of the key hints (e.g. "Enter") -->
+        <Style x:Key="RunCommandKeyBorder" TargetType="{x:Type Border}">
+            <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="3" />
+            <Setter Property="Padding" Value="4,0" />
+            <Setter Property="Margin" Value="0,0,5,5" />
+        </Style>
+        <Style x:Key="RunCommandKeyTextBlock" TargetType="{x:Type TextBlock}"
+               BasedOn="{StaticResource DefaultTextBlock}">
+            <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+        </Style>
+        <Style x:Key="RunCommandKeyActionTextBlock" TargetType="{x:Type TextBlock}"
+               BasedOn="{StaticResource DefaultTextBlock}">
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+            <Setter Property="Margin" Value="0,0,15,5" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
     </simpleChildWindow:ChildWindow.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <!-- Suggestions: the height that is left (scrolls), so the key hints stay visible -->
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <!-- Input -->
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Rectangle Grid.Column="0"
-                       Margin="5,0"
-                       Width="20" Height="20"
-                       Fill="{DynamicResource MahApps.Brushes.Gray8}">
-                <Rectangle.OpacityMask>
-                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ChevronRight}" />
-                </Rectangle.OpacityMask>
-            </Rectangle>
-            <TextBox x:Name="TextBoxInput" Grid.Column="1"
-                     FontSize="18"
-                     FontFamily="Consolas"
-                     Text="{Binding Input, UpdateSourceTrigger=PropertyChanged}"
-                     mah:TextBoxHelper.Watermark="{x:Static localization:Strings.RunCommandDots}"
-                     PreviewKeyDown="TextBoxInput_OnPreviewKeyDown">
-                <TextBox.Style>
-                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
-                        <Setter Property="BorderThickness" Value="0,0,0,1" />
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
-        </Grid>
-        <!-- Syntax of the command -->
-        <TextBlock Grid.Row="1"
-                   Text="{Binding Hint}"
-                   FontFamily="Consolas"
-                   Foreground="{DynamicResource MahApps.Brushes.Gray5}"
-                   Margin="32,5,0,0"
-                   TextTrimming="CharacterEllipsis"
-                   Visibility="{Binding Hint, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}"
-                   Style="{StaticResource DefaultTextBlock}" />
-        <!-- Error of the last run -->
-        <TextBlock Grid.Row="2"
-                   Text="{Binding ErrorMessage}"
-                   Margin="32,5,0,0"
-                   TextWrapping="Wrap"
-                   Visibility="{Binding ErrorMessage, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}"
-                   Style="{StaticResource StatusMessageTextBlock}"
-                   Foreground="{DynamicResource MahApps.Brushes.Accent}" />
-        <!-- Suggestions -->
+        <!-- Input: icon of the recognized command, input and validation -->
+        <!-- Bottom border like the search (gray, also with the focus) -->
+        <Border Grid.Row="0" BorderThickness="0,0,0,1" Padding="0,0,0,2"
+                BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Rectangle Grid.Column="0"
+                           Margin="5,0"
+                           Width="20" Height="20">
+                    <Rectangle.Style>
+                        <Style TargetType="{x:Type Rectangle}">
+                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                            <Setter Property="OpacityMask">
+                                <Setter.Value>
+                                    <VisualBrush Stretch="Uniform"
+                                                 Visual="{Binding CommandApplication, Converter={StaticResource ApplicationNameToIconConverter}}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CommandApplication}"
+                                             Value="{x:Static models:ApplicationName.None}">
+                                    <Setter Property="OpacityMask" Value="{StaticResource RunCommandSettingsIcon}" />
+                                </DataTrigger>
+                                <!-- No command recognized (yet) -->
+                                <DataTrigger Binding="{Binding HasCommand}" Value="False">
+                                    <Setter Property="OpacityMask" Value="{StaticResource RunCommandInputIcon}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Rectangle.Style>
+                </Rectangle>
+                <TextBox x:Name="TextBoxInput" Grid.Column="1"
+                         FontSize="18"
+                         FontFamily="Consolas"
+                         Text="{Binding Input, UpdateSourceTrigger=PropertyChanged}"
+                         mah:TextBoxHelper.Watermark="{Binding Watermark}"
+                         PreviewKeyDown="TextBoxInput_OnPreviewKeyDown">
+                    <TextBox.Style>
+                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="Background" Value="Transparent" />
+                            <!-- Clear button only with text, like the search -->
+                            <Style.Triggers>
+                                <Trigger Property="mah:TextBoxHelper.HasText" Value="True">
+                                    <Setter Property="mah:TextBoxHelper.ClearTextButton" Value="True" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <!-- Validation of what Enter runs, with the colors of the status icons (green like the check of the network
+                     connection, red like the error icon of the profile dialog). The error is the tooltip, which is
+                     also opened if Enter fails. -->
+                <Rectangle Grid.Column="2"
+                           Margin="5,0"
+                           Width="16" Height="16"
+                           Fill="#badc58"
+                           Visibility="{Binding IsValid, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CheckCircleOutline}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <Rectangle x:Name="RectangleInvalid" Grid.Column="2"
+                           Margin="5,0"
+                           Width="16" Height="16"
+                           Style="{StaticResource ErrorImageRectangle}"
+                           IsVisibleChanged="RectangleInvalid_OnIsVisibleChanged"
+                           Visibility="{Binding IsInvalid, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                    <!-- Circle like the check (the style has an octagon) -->
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=AlertCircleOutline}" />
+                    </Rectangle.OpacityMask>
+                    <Rectangle.ToolTip>
+                        <ToolTip x:Name="ToolTipInvalid" Content="{Binding ValidationMessage}"
+                                 Style="{StaticResource ErrorToolTip}" />
+                    </Rectangle.ToolTip>
+                </Rectangle>
+            </Grid>
+        </Border>
+        <!-- Syntax of the command, the part that is being typed is highlighted -->
+        <ItemsControl Grid.Row="1"
+                      ItemsSource="{Binding HintParts}"
+                      Margin="32,5,0,0"
+                      Focusable="False"
+                      Visibility="{Binding Hint, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type networkManager:RunCommandHintPart}">
+                    <TextBlock Text="{Binding Text}"
+                               FontFamily="Consolas"
+                               Margin="0,0,7,0">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                                <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsCurrent}" Value="True">
+                                        <Setter Property="Foreground"
+                                                Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
+                                        <Setter Property="FontWeight" Value="SemiBold" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <!-- Input as it was understood (target, argument, type, profile) -->
+        <ItemsControl Grid.Row="2"
+                      ItemsSource="{Binding Chips}"
+                      Margin="32,8,0,0"
+                      Focusable="False"
+                      Visibility="{Binding HasChips, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type networkManager:RunCommandChip}">
+                    <Border Background="{DynamicResource MahApps.Brushes.Gray10}"
+                            CornerRadius="3"
+                            Padding="6,2"
+                            Margin="0,0,5,5">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Label, StringFormat='{}{0}: '}"
+                                       Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                       Visibility="{Binding Label, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}"
+                                       Style="{StaticResource DefaultTextBlock}" />
+                            <TextBlock Text="{Binding Value}"
+                                       MaxWidth="400"
+                                       TextTrimming="CharacterEllipsis"
+                                       Style="{StaticResource DefaultTextBlock}" />
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <!-- Suggestions, grouped (e.g. Recent, Profiles) -->
         <ListBox x:Name="ListBoxSuggestions" Grid.Row="3"
                  Margin="0,10,0,0"
-                 MaxHeight="340"
-                 ItemsSource="{Binding Suggestions}"
+                 ItemsSource="{Binding SuggestionsView}"
                  SelectedItem="{Binding SelectedSuggestion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                  SelectionMode="Single"
                  Focusable="False"
@@ -98,6 +229,20 @@
                  PreviewMouseLeftButtonUp="ListBoxSuggestions_OnPreviewMouseLeftButtonUp"
                  SelectionChanged="ListBoxSuggestions_OnSelectionChanged"
                  Style="{StaticResource DefaultListBox}">
+            <ListBox.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <!-- Like the section headers of the RDAP view -->
+                            <TextBlock Text="{Binding Name}"
+                                       Margin="5,10,0,5"
+                                       Foreground="{DynamicResource MahApps.Brushes.Gray3}"
+                                       Visibility="{Binding Name, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}"
+                                       Style="{StaticResource DefaultTextBlock}" />
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListBox.GroupStyle>
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                     <Setter Property="Focusable" Value="False" />
@@ -105,7 +250,8 @@
             </ListBox.ItemContainerStyle>
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type networkManager:RunCommandSuggestion}">
-                    <Grid Margin="5">
+                    <!-- 10 on the right like the Ping Monitor (e.g. the remove button) -->
+                    <Grid Margin="5,5,10,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="10" />
@@ -117,7 +263,7 @@
                                    Fill="{DynamicResource MahApps.Brushes.Gray3}">
                             <Rectangle.Style>
                                 <Style TargetType="{x:Type Rectangle}">
-                                    <!-- Application icon (run, command, history) -->
+                                    <!-- Application icon (command, target, example, history) -->
                                     <Setter Property="OpacityMask">
                                         <Setter.Value>
                                             <VisualBrush Stretch="Uniform"
@@ -150,30 +296,45 @@
                                             <Setter Property="OpacityMask"
                                                     Value="{StaticResource RunCommandDNSServerIcon}" />
                                         </DataTrigger>
+                                        <DataTrigger Binding="{Binding Kind}"
+                                                     Value="{x:Static networkManager:RunCommandSuggestionKind.PortProfile}">
+                                            <Setter Property="OpacityMask"
+                                                    Value="{StaticResource RunCommandPortProfileIcon}" />
+                                        </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Rectangle.Style>
                         </Rectangle>
                         <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                            <TextBlock Text="{Binding Title}"
+                            <TextBlock wpfHelpers:TextBlockHighlightHelper.Text="{Binding Title}"
+                                       wpfHelpers:TextBlockHighlightHelper.Highlight="{Binding Highlight}"
                                        TextTrimming="CharacterEllipsis">
                                 <TextBlock.Style>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
                                         <Style.Triggers>
-                                            <!-- Commands as typed are shown in the font of the input -->
+                                            <!-- Commands are shown in the font of the input -->
                                             <DataTrigger Binding="{Binding Kind}"
-                                                         Value="{x:Static networkManager:RunCommandSuggestionKind.Run}">
+                                                         Value="{x:Static networkManager:RunCommandSuggestionKind.History}">
                                                 <Setter Property="FontFamily" Value="Consolas" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Kind}"
-                                                         Value="{x:Static networkManager:RunCommandSuggestionKind.History}">
+                                                         Value="{x:Static networkManager:RunCommandSuggestionKind.Target}">
+                                                <Setter Property="FontFamily" Value="Consolas" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Kind}"
+                                                         Value="{x:Static networkManager:RunCommandSuggestionKind.Clipboard}">
+                                                <Setter Property="FontFamily" Value="Consolas" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Kind}"
+                                                         Value="{x:Static networkManager:RunCommandSuggestionKind.Example}">
                                                 <Setter Property="FontFamily" Value="Consolas" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <TextBlock Text="{Binding Description}"
+                            <TextBlock wpfHelpers:TextBlockHighlightHelper.Text="{Binding Description}"
+                                       wpfHelpers:TextBlockHighlightHelper.Highlight="{Binding Highlight}"
                                        Foreground="{DynamicResource MahApps.Brushes.Gray5}"
                                        TextTrimming="CharacterEllipsis"
                                        Visibility="{Binding Description, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}"
@@ -184,12 +345,110 @@
                                    FontFamily="Consolas"
                                    Foreground="{DynamicResource MahApps.Brushes.Gray5}"
                                    VerticalAlignment="Center"
-                                   MaxWidth="250"
+                                   MaxWidth="{Binding InfoMaxWidth, RelativeSource={RelativeSource AncestorType={x:Type views:RunCommandChildWindow}}}"
                                    TextTrimming="CharacterEllipsis"
                                    Style="{StaticResource DefaultTextBlock}" />
+                        <!-- Remove a recent command (shown while the entry is hovered or selected) -->
+                        <Button Grid.Column="4"
+                                Focusable="False"
+                                ToolTip="{x:Static localization:Strings.RemoveFromHistory}"
+                                Click="ButtonRemoveSuggestion_OnClick">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Kind}"
+                                                     Value="{x:Static networkManager:RunCommandSuggestionKind.History}">
+                                            <Setter Property="Visibility" Value="Hidden" />
+                                        </DataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Kind}"
+                                                           Value="{x:Static networkManager:RunCommandSuggestionKind.History}" />
+                                                <Condition
+                                                    Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"
+                                                    Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Kind}"
+                                                           Value="{x:Static networkManager:RunCommandSuggestionKind.History}" />
+                                                <Condition
+                                                    Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}}"
+                                                    Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            <!-- Like the close button of the Ping Monitor (red on hover) -->
+                            <Rectangle Width="16" Height="16">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=WindowClose}" />
+                                </Rectangle.OpacityMask>
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                                                Value="True">
+                                                <Setter Property="Fill" Value="Red" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                        </Button>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <!-- Key hints (can be hidden in the settings) -->
+        <WrapPanel Grid.Row="4" Margin="0,10,0,0"
+                   Visibility="{Binding ShowKeyHints, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+            <Border Style="{StaticResource RunCommandKeyBorder}">
+                <TextBlock Text="↑ ↓" Style="{StaticResource RunCommandKeyTextBlock}" />
+            </Border>
+            <TextBlock Text="{x:Static localization:Strings.Select}"
+                       Style="{StaticResource RunCommandKeyActionTextBlock}" />
+            <Border Style="{StaticResource RunCommandKeyBorder}">
+                <TextBlock Text="{x:Static localization:Strings.KeyTab}" Style="{StaticResource RunCommandKeyTextBlock}" />
+            </Border>
+            <TextBlock Text="{x:Static localization:Strings.Complete}"
+                       Style="{StaticResource RunCommandKeyActionTextBlock}" />
+            <Border Style="{StaticResource RunCommandKeyBorder}">
+                <TextBlock Text="{x:Static localization:Strings.KeyEnter}" Style="{StaticResource RunCommandKeyTextBlock}" />
+            </Border>
+            <TextBlock Text="{x:Static localization:Strings.Run}"
+                       Style="{StaticResource RunCommandKeyActionTextBlock}" />
+            <Border Style="{StaticResource RunCommandKeyBorder}">
+                <TextBlock Text="{x:Static localization:Strings.CtrlEnter}" Style="{StaticResource RunCommandKeyTextBlock}" />
+            </Border>
+            <TextBlock Text="{x:Static localization:Strings.RunAndKeepOpen}"
+                       Style="{StaticResource RunCommandKeyActionTextBlock}" />
+            <Border Style="{StaticResource RunCommandKeyBorder}">
+                <TextBlock Text="{x:Static localization:Strings.ShiftEnter}" Style="{StaticResource RunCommandKeyTextBlock}" />
+            </Border>
+            <TextBlock Text="{x:Static localization:Strings.FillInWithoutStarting}"
+                       Style="{StaticResource RunCommandKeyActionTextBlock}" />
+            <!-- Only for a selected recent command -->
+            <StackPanel Orientation="Horizontal"
+                        Visibility="{Binding CanRemoveSelectedSuggestion, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                <Border Style="{StaticResource RunCommandKeyBorder}">
+                    <TextBlock Text="{x:Static localization:Strings.ShiftDel}" Style="{StaticResource RunCommandKeyTextBlock}" />
+                </Border>
+                <TextBlock Text="{x:Static localization:Strings.RemoveFromHistory}"
+                           Style="{StaticResource RunCommandKeyActionTextBlock}" />
+            </StackPanel>
+            <Border Style="{StaticResource RunCommandKeyBorder}">
+                <TextBlock Text="{x:Static localization:Strings.KeyEsc}" Style="{StaticResource RunCommandKeyTextBlock}" />
+            </Border>
+            <TextBlock Text="{x:Static localization:Strings.Close}"
+                       Style="{StaticResource RunCommandKeyActionTextBlock}" />
+        </WrapPanel>
     </Grid>
 </simpleChildWindow:ChildWindow>

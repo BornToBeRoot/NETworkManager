@@ -17,7 +17,7 @@ public class RemoteDesktopHostnameAndPortValidator : ValidationRule
         {
             var hostnameAndPortValues = hostnameAndPort.Split(':');
 
-            if (RegexHelper.HostnameOrDomainRegex().IsMatch(hostnameAndPortValues[0]) &&
+            if (IsHost(hostnameAndPortValues[0]) &&
                 !string.IsNullOrEmpty(hostnameAndPortValues[1]) &&
                 Regex.IsMatch(hostnameAndPortValues[1], RegexHelper.PortRegex))
                 return ValidationResult.ValidResult;
@@ -25,8 +25,17 @@ public class RemoteDesktopHostnameAndPortValidator : ValidationRule
             return new ValidationResult(false, Strings.EnterValidHostnameAndPort);
         }
 
-        return RegexHelper.HostnameOrDomainRegex().IsMatch((string)value)
+        return IsHost(hostnameAndPort)
             ? ValidationResult.ValidResult
             : new ValidationResult(false, Strings.EnterValidHostname);
+    }
+
+    /// <summary>
+    ///     Checks if the value is an IPv4 address or a hostname (a hostname must contain a letter, so IPv4 addresses are
+    ///     checked separately).
+    /// </summary>
+    private static bool IsHost(string value)
+    {
+        return RegexHelper.IPv4AddressRegex().IsMatch(value) || RegexHelper.HostnameOrDomainRegex().IsMatch(value);
     }
 }

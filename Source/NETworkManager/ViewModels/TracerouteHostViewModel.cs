@@ -104,19 +104,19 @@ public class TracerouteHostViewModel : ProfileHostViewModelBase
 
     #region Methods
 
-    public void AddTab(string host = null)
+    public void AddTab(string host = null, bool start = true)
     {
         var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(host ?? Strings.NewTab, new TracerouteView(tabId, host),
+        TabItems.Add(new DragablzTabItem(host ?? Strings.NewTab, new TracerouteView(tabId, host, start),
             tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
 
-    public void AddTab(ProfileInfo profile)
+    public void AddTab(ProfileInfo profile, bool start = true)
     {
-        AddTab(profile.Traceroute_Host);
+        AddTab(profile.Traceroute_Host, start: start);
     }
 
     #endregion

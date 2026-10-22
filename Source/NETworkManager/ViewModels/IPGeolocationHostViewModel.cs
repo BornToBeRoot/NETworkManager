@@ -147,12 +147,13 @@ public class IPGeolocationHostViewModel : ProfileHostViewModelBase
     /// Adds a new tab for the specified domain.
     /// </summary>
     /// <param name="domain">The domain to query.</param>
-    public void AddTab(string domain = null)
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    public void AddTab(string domain = null, bool start = true)
     {
         var tabId = Guid.NewGuid();
 
         TabItems.Add(new DragablzTabItem(domain ?? Strings.NewTab,
-            new IPGeolocationView(tabId, domain), tabId));
+            new IPGeolocationView(tabId, domain, start), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
@@ -161,9 +162,10 @@ public class IPGeolocationHostViewModel : ProfileHostViewModelBase
     /// Adds a new tab for the host of the specified profile.
     /// </summary>
     /// <param name="profile">The profile to query.</param>
-    public void AddTab(ProfileInfo profile)
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    public void AddTab(ProfileInfo profile, bool start = true)
     {
-        AddTab(profile.IPGeolocation_Host);
+        AddTab(profile.IPGeolocation_Host, start: start);
     }
 
     #endregion

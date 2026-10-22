@@ -8,11 +8,11 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:LookupHostViewModel}">
     <TabControl Style="{StaticResource DefaultTabControl}">
-        <TabItem Header="{x:Static localization:Strings.OUI}">
-            <views:LookupOUILookupView Margin="10" />
+        <TabItem x:Name="TabItemOUILookup" Header="{x:Static localization:Strings.OUI}">
+            <views:LookupOUILookupView x:Name="OUILookupView" Margin="10" />
         </TabItem>
-        <TabItem Header="{x:Static localization:Strings.Port}">
-            <views:LookupPortLookupView Margin="10" />
+        <TabItem x:Name="TabItemPortLookup" Header="{x:Static localization:Strings.Port}">
+            <views:LookupPortLookupView x:Name="PortLookupView" Margin="10" />
         </TabItem>
     </TabControl>
 </UserControl>

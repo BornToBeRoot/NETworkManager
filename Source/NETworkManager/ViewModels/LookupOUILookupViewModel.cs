@@ -195,6 +195,23 @@ public class LookupOUILookupViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Looks up MAC addresses or vendors (e.g. from the run command).
+    /// </summary>
+    /// <param name="search">MAC addresses or vendors, separated by ";".</param>
+    /// <param name="start">Starts the lookup. If false, the search is only filled in.</param>
+    public void Lookup(string search, bool start = true)
+    {
+        // Not while a lookup is running (the results would be mixed).
+        if (IsRunning)
+            return;
+
+        Search = search;
+
+        if (start)
+            OUILookupAction();
+    }
+
+    /// <summary>
     /// Performs the OUI lookup.
     /// </summary>
     private async void OUILookupAction()
@@ -210,6 +227,10 @@ public class LookupOUILookupViewModel : ViewModelBase
         foreach (var search in Search.Split(';'))
         {
             var searchTrim = search.Trim();
+
+            // Empty entry (e.g. "Cisco;;Juniper"), which would find every vendor
+            if (searchTrim.Length == 0)
+                continue;
 
             if (Regex.IsMatch(searchTrim, RegexHelper.MACAddressRegex) ||
                 Regex.IsMatch(searchTrim, RegexHelper.MACAddressFirst3BytesRegex))

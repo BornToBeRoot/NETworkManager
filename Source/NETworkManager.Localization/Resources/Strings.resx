@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -4886,5 +4886,122 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
   </data>
   <data name="Recent" xml:space="preserve">
     <value>Recent</value>
+  </data>
+  <data name="EnterSubnetmaskOrCIDRBetweenXAndY" xml:space="preserve">
+    <value>Enter a subnet mask or CIDR between /{0} and /{1}!</value>
+  </data>
+  <data name="BringWindowToForegroundAndOpenRunCommand" xml:space="preserve">
+    <value>Bring window to foreground and open the run command</value>
+  </data>
+  <data name="Commands" xml:space="preserve">
+    <value>Commands</value>
+  </data>
+  <data name="Clipboard" xml:space="preserve">
+    <value>Clipboard</value>
+  </data>
+  <data name="Examples" xml:space="preserve">
+    <value>Examples</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>Complete</value>
+  </data>
+  <data name="Run" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="RunAndKeepOpen" xml:space="preserve">
+    <value>Run and keep open</value>
+  </data>
+  <data name="FillInWithoutStarting" xml:space="preserve">
+    <value>Fill in without starting</value>
+  </data>
+  <data name="RemoveFromHistory" xml:space="preserve">
+    <value>Remove from history</value>
+  </data>
+  <data name="SuggestTheClipboardAsTarget" xml:space="preserve">
+    <value>Suggest the clipboard content (e.g. an IP address) as target</value>
+  </data>
+  <data name="ShowKeyHints" xml:space="preserve">
+    <value>Show key hints</value>
+  </data>
+  <data name="CtrlShiftP" xml:space="preserve">
+    <value>Ctrl+Shift+P</value>
+  </data>
+  <data name="CtrlEnter" xml:space="preserve">
+    <value>Ctrl+Enter</value>
+  </data>
+  <data name="ShiftEnter" xml:space="preserve">
+    <value>Shift+Enter</value>
+  </data>
+  <data name="ShiftDel" xml:space="preserve">
+    <value>Shift+Del</value>
+  </data>
+  <data name="KeyEnter" xml:space="preserve">
+    <value>Enter</value>
+  </data>
+  <data name="KeyTab" xml:space="preserve">
+    <value>Tab</value>
+  </data>
+  <data name="KeyEsc" xml:space="preserve">
+    <value>Esc</value>
+  </data>
+  <data name="RunCommandWatermark1" xml:space="preserve">
+    <value>Ping it, trace it, scan it...</value>
+  </data>
+  <data name="RunCommandWatermark2" xml:space="preserve">
+    <value>Got an IP address? Drop it here...</value>
+  </data>
+  <data name="RunCommandWatermark3" xml:space="preserve">
+    <value>Your whole network, one command away...</value>
+  </data>
+  <data name="RunCommandWatermark4" xml:space="preserve">
+    <value>Every tool, one line away...</value>
+  </data>
+  <data name="RunCommandWatermark5" xml:space="preserve">
+    <value>Something down? Let's check it...</value>
+  </data>
+  <data name="RunCommandWatermark6" xml:space="preserve">
+    <value>Is it DNS? It's always DNS...</value>
+  </data>
+  <data name="RunCommandWatermark7" xml:space="preserve">
+    <value>Have you tried pinging it?</value>
+  </data>
+  <data name="RunCommandWatermark8" xml:space="preserve">
+    <value>Packets in, answers out...</value>
+  </data>
+  <data name="RunCommandWatermark9" xml:space="preserve">
+    <value>Ready when your network isn't...</value>
+  </data>
+  <data name="RunCommandWatermark10" xml:space="preserve">
+    <value>Before you reboot it, ping it...</value>
+  </data>
+  <data name="RunCommandWatermark11" xml:space="preserve">
+    <value>Ping it, trace it, fix it...</value>
+  </data>
+  <data name="RunCommandWatermark12" xml:space="preserve">
+    <value>Is it up? Let's find out...</value>
+  </data>
+  <data name="RunCommandWatermark13" xml:space="preserve">
+    <value>Need to connect? Just type the host...</value>
+  </data>
+  <data name="RunCommandWatermark14" xml:space="preserve">
+    <value>It's not the network. Probably...</value>
+  </data>
+  <data name="RunCommandWatermark15" xml:space="preserve">
+    <value>Blame the firewall later, ping first...</value>
+  </data>
+  <data name="RunCommandWatermark16" xml:space="preserve">
+    <value>Works on my machine? Let's check yours...</value>
+  </data>
+  <data name="RunCommandWatermark17" xml:space="preserve">
+    <value>Somewhere between here and there...</value>
+  </data>
+  <data name="RunCommandWatermark18" xml:space="preserve">
+    <value>Ping first, panic later...</value>
+  </data>
+  <data name="PortProfile" xml:space="preserve">
+    <value>Port profile</value>
   </data>
 </root>
