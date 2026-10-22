@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -226,7 +225,7 @@ public class LookupPortLookupViewModel : ViewModelBase
             var searchTrim = search.Trim();
 
             // Check if the search is a port number like 22
-            if (Regex.IsMatch(searchTrim, "^[0-9]{1,5}$"))
+            if (RegexHelper.PortLookupPortRegex().IsMatch(searchTrim))
                 if (int.TryParse(searchTrim, out var port))
                     if (port is > 0 and < 65536)
                     {
@@ -235,7 +234,7 @@ public class LookupPortLookupViewModel : ViewModelBase
                     }
 
             // Check if the search is a port number with protocol like 22/tcp
-            if (Regex.IsMatch(searchTrim, "^[0-9]{1,5}/(tcp|udp|sctp)$"))
+            if (RegexHelper.PortLookupPortAndProtocolRegex().IsMatch(searchTrim))
             {
                 var portAndProtocol = searchTrim.Split('/');
 
@@ -248,7 +247,7 @@ public class LookupPortLookupViewModel : ViewModelBase
             }
 
             // Check if the search is a port range like 1-100
-            if (Regex.IsMatch(searchTrim, "^[0-9]{1,5}-[0-9]{1,5}$"))
+            if (RegexHelper.PortLookupPortRangeRegex().IsMatch(searchTrim))
             {
                 var portRange = searchTrim.Split('-');
 
@@ -263,7 +262,7 @@ public class LookupPortLookupViewModel : ViewModelBase
             }
 
             // Check if the search is a port range with protocol like 1-100/tcp
-            if (Regex.IsMatch(searchTrim, "^[0-9]{1,5}-[0-9]{1,5}/(tcp|udp|sctp)$"))
+            if (RegexHelper.PortLookupPortRangeAndProtocolRegex().IsMatch(searchTrim))
             {
                 var portRangeAndProtocol = searchTrim.Split('/');
 

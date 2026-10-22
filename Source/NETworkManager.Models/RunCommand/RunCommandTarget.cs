@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.RunCommand;
 
@@ -10,40 +11,8 @@ namespace NETworkManager.Models.RunCommand;
 ///     (e.g. "10.0.0.1" → ping, traceroute, ...). A single word without a domain is
 ///     <see cref="RunCommandTargetKind.Hostname" />, since it can also be a mistyped command.
 /// </summary>
-public static partial class RunCommandTarget
+public static class RunCommandTarget
 {
-    [GeneratedRegex("^https?://", RegexOptions.IgnoreCase)]
-    private static partial Regex UrlRegex();
-
-    [GeneratedRegex("^(?:[0-9a-f]{2}[:-]){5}[0-9a-f]{2}$|^[0-9a-f]{12}$|^(?:[0-9a-f]{4}\\.){2}[0-9a-f]{4}$",
-        RegexOptions.IgnoreCase)]
-    private static partial Regex MACAddressRegex();
-
-    [GeneratedRegex("^(?:[0-9a-f]{2}[:-]){2}[0-9a-f]{2}$", RegexOptions.IgnoreCase)]
-    private static partial Regex OUIRegex();
-
-    [GeneratedRegex("^\\d{1,5}(?:-\\d{1,5})?(?:/(?:tcp|udp|sctp))?(?:;\\d{1,5}(?:-\\d{1,5})?(?:/(?:tcp|udp|sctp))?)*$",
-        RegexOptions.IgnoreCase)]
-    private static partial Regex PortsRegex();
-
-    [GeneratedRegex("^as\\d{1,10}$", RegexOptions.IgnoreCase)]
-    private static partial Regex ASNRegex();
-
-    [GeneratedRegex("^[0-9.\\-\\[\\],]+$")]
-    private static partial Regex IPv4RangeRegex();
-
-    // The last label (top-level domain) has at least one letter, so a shortened or partly typed IPv4 address (e.g.
-    // "192.168.1") is not a host name.
-    [GeneratedRegex(
-        "^(?=.{1,253}\\.?$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+" +
-        "(?=[a-z0-9-]*[a-z])[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.?$",
-        RegexOptions.IgnoreCase)]
-    private static partial Regex HostnameWithDomainRegex();
-
-    // A label with at least one letter (only digits is not a host name)
-    [GeneratedRegex("^(?=[a-z0-9-]*[a-z])[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$", RegexOptions.IgnoreCase)]
-    private static partial Regex HostnameRegex();
-
     /// <summary>
     ///     Gets the kind of the target.
     /// </summary>
@@ -54,19 +23,20 @@ public static partial class RunCommandTarget
         if (string.IsNullOrEmpty(target) || target.Any(char.IsWhiteSpace))
             return RunCommandTargetKind.None;
 
-        if (UrlRegex().IsMatch(target))
+        if (RegexHelper.HttpOrHttpsSchemeRegex().IsMatch(target))
             return Uri.TryCreate(target, UriKind.Absolute, out _) ? RunCommandTargetKind.URL : RunCommandTargetKind.None;
 
-        if (MACAddressRegex().IsMatch(target))
+        if (Regex.IsMatch(target, RegexHelper.MACAddressRegex))
             return RunCommandTargetKind.MACAddress;
 
-        if (OUIRegex().IsMatch(target))
+        // Only with separators: 6 hex digits without separators (e.g. "facade") are more likely a word.
+        if (RegexHelper.MACAddressFirst3BytesWithSeparatorRegex().IsMatch(target))
             return RunCommandTargetKind.OUI;
 
-        if (PortsRegex().IsMatch(target))
+        if (RegexHelper.PortLookupEntriesRegex().IsMatch(target))
             return RunCommandTargetKind.Ports;
 
-        if (ASNRegex().IsMatch(target))
+        if (RegexHelper.ASNumberWithPrefixRegex().IsMatch(target))
             return RunCommandTargetKind.ASN;
 
         // Several hosts, IP ranges or subnets
@@ -80,26 +50,32 @@ public static partial class RunCommandTarget
                 : RunCommandTargetKind.None;
         }
 
-        // Subnet with CIDR or subnet mask (e.g. 10.0.0.0/24, 10.0.0.0/255.255.255.0, 2001:db8::/32)
-        var slash = target.IndexOf('/');
-
-        if (slash > 0)
-            return IPAddress.TryParse(target[..slash], out _) &&
-                   (int.TryParse(target[(slash + 1)..], out _) || IPAddress.TryParse(target[(slash + 1)..], out _))
+        // Subnet with CIDR or subnet mask (e.g. 10.0.0.0/24, 10.0.0.0/255.255.255.0, 2001:db8::/32), like the input
+        // validation of the tools
+        if (target.Contains('/'))
+            return RegexHelper.IPv4AddressCidrRegex().IsMatch(target) ||
+                   RegexHelper.IPv4AddressSubnetmaskRegex().IsMatch(target) ||
+                   Regex.IsMatch(target, RegexHelper.IPv6AddressCidrRegex)
                 ? RunCommandTargetKind.Subnet
                 : RunCommandTargetKind.None;
 
-        // IPv4 range (e.g. 10.0.0.1-10.0.0.100, 10.0.0.1-100, 10.0.[0-1].1)
-        if ((target.Contains('-') || target.Contains('[')) && target.Contains('.') && IPv4RangeRegex().IsMatch(target))
+        // IPv4 range (e.g. 10.0.0.1-10.0.0.100, 10.0.0.1-100, 10.0.[0-1].1). The special range also matches an IPv4
+        // address without a range, so only with "-" or "[".
+        if ((target.Contains('-') || target.Contains('[')) &&
+            (RegexHelper.IPv4AddressRangeRegex().IsMatch(target) ||
+             RegexHelper.IPv4AddressShortRangeRegex().IsMatch(target) ||
+             RegexHelper.IPv4AddressSpecialRangeRegex().IsMatch(target)))
             return RunCommandTargetKind.IPRange;
 
         // IP address: IPv4 with all 4 parts (a shortened or partly typed form like "10.1" is not a target) or IPv6
         if (IPAddress.TryParse(target, out _) && (target.Count(x => x == '.') == 3 || target.Contains(':')))
             return RunCommandTargetKind.Host;
 
-        if (HostnameWithDomainRegex().IsMatch(target))
-            return RunCommandTargetKind.Host;
+        // Host name with or without a domain (a shortened or partly typed IPv4 address like "192.168.1" is not a host
+        // name, since the last label must contain a letter)
+        if (!RegexHelper.HostnameOrDomainRegex().IsMatch(target))
+            return RunCommandTargetKind.None;
 
-        return HostnameRegex().IsMatch(target) ? RunCommandTargetKind.Hostname : RunCommandTargetKind.None;
+        return target.TrimEnd('.').Contains('.') ? RunCommandTargetKind.Host : RunCommandTargetKind.Hostname;
     }
 }

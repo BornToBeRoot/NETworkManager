@@ -22,10 +22,18 @@ public static partial class RegexHelper
     private const string CidrRegexValues = @"([1-9]|[1-2][0-9]|3[0-2])";
 
     /// <summary>
+    /// Represents a regular expression pattern that matches a label of a hostname (1-63 characters, letters, digits and
+    /// hyphens, not starting or ending with a hyphen).
+    /// </summary>
+    private const string HostnameLabelValues = @"[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?";
+
+    /// <summary>
     /// Represents a regular expression pattern that matches valid hostnames or fully qualified domain names (FQDNs).
+    /// Every label follows <see cref="HostnameLabelValues" />. The last label (or the hostname) must contain a letter,
+    /// so IPv4 addresses, shortened or partly typed ones (e.g. "10.0.0.", "192.168.1") are not hostnames.
     /// </summary>
     private const string HostnameOrDomainValues =
-        @"(?=.{1,255}$)(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.[A-Za-z0-9-]{1,63})*\.?";
+        $@"(?=.{{1,255}}$)(?:{HostnameLabelValues}\.)*(?=[A-Za-z0-9-]*[A-Za-z]){HostnameLabelValues}\.?";
 
     /// <summary>
     /// Provides a compiled regular expression that matches valid IPv4 addresses in dot-decimal notation like "192.168.178.0".
@@ -133,23 +141,23 @@ public static partial class RegexHelper
     [GeneratedRegex($@"^\\\\[a-zA-Z0-9_\-\.]+(\\[a-zA-Z0-9_\-\s\.]+\$?)(\\[a-zA-Z0-9_\-\s\.]+)*\\?$")]
     public static partial Regex UncPathRegex();
 
-    // Match a MAC-Address 000000000000 00:00:00:00:00:00, 00-00-00-00-00-00-00 or 0000.0000.0000
+    // Match a MAC-Address 000000000000, 00:00:00:00:00:00, 00-00-00-00-00-00 or 0000.0000.0000
     public const string MACAddressRegex =
-        @"^^[A-Fa-f0-9]{12}$|^[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}$|^[A-Fa-f0-9]{4}.[A-Fa-f0-9]{4}.[A-Fa-f0-9]{4}$$";
+        @"^[A-Fa-f0-9]{12}$|^[A-Fa-f0-9]{2}([:-][A-Fa-f0-9]{2}){5}$|^[A-Fa-f0-9]{4}\.[A-Fa-f0-9]{4}\.[A-Fa-f0-9]{4}$";
 
-    // Match the first 3 bytes of a MAC-Address 000000, 00:00:00, 00-00-00
+    // Match the first 3 bytes of a MAC-Address 000000, 00:00:00, 00-00-00 or 0000.00
     public const string MACAddressFirst3BytesRegex =
-        @"^[A-Fa-f0-9]{6}$|^[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}(:|-){1}[A-Fa-f0-9]{2}$|^[A-Fa-f0-9]{4}.[A-Fa-f0-9]{2}$";
+        @"^[A-Fa-f0-9]{6}$|^[A-Fa-f0-9]{2}[:-][A-Fa-f0-9]{2}[:-][A-Fa-f0-9]{2}$|^[A-Fa-f0-9]{4}\.[A-Fa-f0-9]{2}$";
 
     // Match IPv6 address like ::1
     // ReSharper disable once InconsistentNaming
     public const string IPv6AddressRegex =
         @"(?:^|(?<=\s))(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))(?=\s|$)";
 
-    // Match a subnet like 2001:0db8::/64
+    // Match a subnet like 2001:0db8::/64 (also with an embedded IPv4 address like ::ffff:192.168.0.1/96)
     // ReSharper disable once InconsistentNaming
     public const string IPv6AddressCidrRegex =
-        @"^s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:)))(%.+)?s*(\/([0-9]|[1-9][0-9]|1[0-1][0-9]|12[0-8])){1}?$";
+        @"^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*(\/([0-9]|[1-9][0-9]|1[0-1][0-9]|12[0-8])){1}?$";
 
     // Match a range like [0-255], [0,2,4] and [2,4-6]
     public const string SpecialRangeRegex =
@@ -161,16 +169,96 @@ public static partial class RegexHelper
     // Match a hostname with subnetmask like server-01.example.com/255.255.255.0
     public const string HostnameOrDomainWithSubnetmaskRegex = $@"^{HostnameOrDomainValues}\/{SubnetmaskValues}$";
 
-    // Match a domain local.example.com
+    // Match a domain local.example.com (labels without nested quantifiers, which backtrack exponentially for an invalid
+    // input with many labels)
     public const string DomainRegex =
-        @"^(?=.{1,255}$)[a-zA-Z0-9\-_]{1,63}((\.[a-zA-Z0-9\-_]+){1,63})*\.[a-zA-Z]{2,}\.?$";
+        @"^(?=.{1,255}$)[a-zA-Z0-9\-_]{1,63}(\.[a-zA-Z0-9\-_]{1,63})*\.[a-zA-Z]{2,63}\.?$";
 
-    // Private port values
+    // Private port values (1-65535, without leading zeros)
     private const string PortValues =
-        @"((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))";
+        @"(6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{0,3})";
 
     // Match a port between 1-65535
     public const string PortRegex = $@"^{PortValues}$";
+
+    /// <summary>
+    /// Represents a regular expression pattern that matches a port number of the port lookup (1-5 digits, the range is
+    /// checked separately).
+    /// </summary>
+    private const string PortLookupPortValues = @"[0-9]{1,5}";
+
+    /// <summary>
+    /// Represents a regular expression pattern that matches a transport protocol of the port lookup.
+    /// </summary>
+    private const string PortLookupProtocolValues = @"(tcp|udp|sctp)";
+
+    /// <summary>
+    /// Represents a regular expression pattern that matches an entry of the port lookup: a port or port range, optional
+    /// with a protocol, like "22", "22/tcp", "80-90" or "80-90/tcp".
+    /// </summary>
+    private const string PortLookupEntryValues =
+        $@"{PortLookupPortValues}(-{PortLookupPortValues})?(/{PortLookupProtocolValues})?";
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches a port of the port lookup like "22".
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> instance that matches a port.</returns>
+    [GeneratedRegex($"^{PortLookupPortValues}$")]
+    public static partial Regex PortLookupPortRegex();
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches a port with a protocol of the port lookup like "22/tcp".
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> instance that matches a port with a protocol.</returns>
+    [GeneratedRegex($"^{PortLookupPortValues}/{PortLookupProtocolValues}$", RegexOptions.IgnoreCase)]
+    public static partial Regex PortLookupPortAndProtocolRegex();
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches a port range of the port lookup like "80-90".
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> instance that matches a port range.</returns>
+    [GeneratedRegex($"^{PortLookupPortValues}-{PortLookupPortValues}$")]
+    public static partial Regex PortLookupPortRangeRegex();
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches a port range with a protocol of the port lookup like
+    /// "80-90/tcp".
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> instance that matches a port range with a protocol.</returns>
+    [GeneratedRegex($"^{PortLookupPortValues}-{PortLookupPortValues}/{PortLookupProtocolValues}$",
+        RegexOptions.IgnoreCase)]
+    public static partial Regex PortLookupPortRangeAndProtocolRegex();
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches entries of the port lookup separated by ";" like
+    /// "22;80-90/tcp".
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> instance that matches a list of ports, port ranges and protocols.</returns>
+    [GeneratedRegex($"^{PortLookupEntryValues}(;{PortLookupEntryValues})*$", RegexOptions.IgnoreCase)]
+    public static partial Regex PortLookupEntriesRegex();
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches the first 3 bytes of a MAC address with separators like
+    /// "00:11:22" or "00-11-22". Stricter than <see cref="MACAddressFirst3BytesRegex"/>, since 6 hex digits without
+    /// separators (e.g. "facade") are more likely a word.
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> instance that matches the first 3 bytes of a MAC address with separators.</returns>
+    [GeneratedRegex("^[A-Fa-f0-9]{2}[:-][A-Fa-f0-9]{2}[:-][A-Fa-f0-9]{2}$")]
+    public static partial Regex MACAddressFirst3BytesWithSeparatorRegex();
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches an AS number with the prefix "AS" like "AS13335".
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> instance that matches an AS number with the prefix.</returns>
+    [GeneratedRegex("^AS[0-9]{1,10}$", RegexOptions.IgnoreCase)]
+    public static partial Regex ASNumberWithPrefixRegex();
+
+    /// <summary>
+    /// Provides a compiled regular expression that matches the scheme of an HTTP or HTTPS URL like "https://".
+    /// </summary>
+    /// <returns>A <see cref="Regex"/> instance that matches the start of an HTTP or HTTPS URL.</returns>
+    [GeneratedRegex("^https?://", RegexOptions.IgnoreCase)]
+    public static partial Regex HttpOrHttpsSchemeRegex();
 
     // Match any fullname (like "c:\temp\test.txt") --> https://www.codeproject.com/Tips/216238/Regular-Expression-to-Validate-File-Path-and-Exten
     public const string FullNameRegex =

@@ -187,6 +187,15 @@ Release date: **xx.xx.2026**
 
 - Fixed the connection status message (e.g. "Connecting to ...") being hidden too early, while still connecting, if a previous message (e.g. after connecting or disconnecting) was shown shortly before. Each message is now shown for 15 seconds. [#3638](https://github.com/BornToBeRoot/NETworkManager/pull/3638)
 
+**Input validation**
+
+- Fixed host names being accepted with a hyphen at the start or end of a label other than the first (e.g. `server.-bad-.com`) and with only digits (e.g. `10.0.0.` or `192.168.1`, which are an incomplete IPv4 address). IPv4 addresses are still accepted in all host fields, now checked explicitly in the **Remote Desktop** host field. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed MAC addresses and their first 3 bytes (**Wake on LAN**, **Lookup** > **OUI**, profiles) being accepted with any character instead of a dot in the format `0000.0000.0000` (e.g. `0011 2233 4455`). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed IPv6 subnets in the **Subnet Calculator** being accepted with a leading `s` (e.g. `sss2001:db8::/32`) and rejected with an embedded IPv4 address (e.g. `::ffff:192.168.0.1/96`). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed the port of the **Remote Desktop** host field (`host:port`) being accepted empty or as `0`. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed the application freezing when validating an invalid domain with many labels in **Whois** (exponential backtracking of the regular expression). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed **Lookup** > **Port** searching for a port with an upper-case protocol (e.g. `22/TCP`) as a service instead of the port and protocol. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+
 **Subnet Calculator**
 
 - Fixed **Subnetting** getting stuck when the new subnet mask is smaller than the subnet mask of the subnet (e.g. `10.0.0.0/24` with `/16`) or too large for the address family (e.g. `/40` for IPv4). An error is shown instead. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
