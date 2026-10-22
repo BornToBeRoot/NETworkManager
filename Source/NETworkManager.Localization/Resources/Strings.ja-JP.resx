@@ -4314,73 +4314,73 @@ Windows の「設定」&gt;「プライバシーとセキュリティ」&gt;「�
     <value>ファイアウォールの規則</value>
   </data>
   <data name="HelpMessage_FirewallShowAllRules" xml:space="preserve">
-    <value>Show all active Windows Firewall rules (e.g. Windows built-in rules, rules created by other applications or from Group Policy) instead of only the rules managed by NETworkManager. Rules not managed by NETworkManager can be enabled, disabled, deleted or copied, but not edited. Rules from a policy (e.g. Group Policy or MDM) can only be copied.</value>
+    <value>NETworkManager で管理されているルールだけでなく、アクティブな Windows ファイアウォールのルールすべて (Windows 標準のルール、他のアプリケーションによって作成されたルール、グループポリシーによるルールなど) を表示します。NETworkManager で管理されていないルールについては、有効化、無効化、削除、コピーは可能ですが、編集はできません。ポリシー (グループポリシーや MDM など) に基づくルールは、コピーのみ可能です。</value>
   </data>
   <data name="FirewallRuleUnsupportedValuesMessage" xml:space="preserve">
-    <value>This rule uses values that are not supported by NETworkManager (e.g. port keywords like RPC, a combination of interface types, a protocol like IGMP or the program System). Editing or copying the rule is not supported (yet), because these values would be lost and the new rule could apply to more traffic (e.g. to all ports).</value>
+    <value>このルールには、NETworkManager がサポートしていない値 (RPC のようなポートキーワード、インターフェースタイプの組み合わせ、IGMP といったプロトコル、あるいは System というプログラムなど) が含まれています。これらの値は編集やコピーの際に失われてしまう可能性があり、その結果、新しいルールが意図せずより広範なトラフィック (例えばすべてのポートなど)  に適用されてしまう恐れがあるため、現時点では (まだ) このルールの編集やコピーはサポートされていません。</value>
   </data>
   <data name="FirewallRuleManagedByGroupPolicyMessage" xml:space="preserve">
-    <value>Managed by Group Policy. The rule can't be changed locally, but it can be copied.</value>
+    <value>グループポリシーによって管理されています。このルールをローカルで変更することはできませんが、コピーすることは可能です。</value>
   </data>
   <data name="FirewallRuleManagedByMDMMessage" xml:space="preserve">
-    <value>Managed by Mobile Device Management (MDM), e.g. Microsoft Intune. The rule can't be changed locally, but it can be copied.</value>
+    <value>Microsoft Intune などのモバイルデバイス管理 (MDM) によって管理されています。このルールはローカルで変更することはできませんが、コピーすることは可能です。</value>
   </data>
   <data name="FirewallRuleManagedByOtherMessage" xml:space="preserve">
-    <value>Created by Windows at runtime (e.g. dynamic or hardcoded rule). The rule can't be changed locally, but it can be copied.</value>
+    <value>実行時に Windows によって作成されます (例：動的ルールまたはハードコードされたルール)。このルールはローカルで変更することはできませんが、コピーすることは可能です。</value>
   </data>
   <data name="FirewallRulesManagedByPolicyMessage" xml:space="preserve">
-    <value>At least one of the selected rules is managed by a policy (e.g. Group Policy or MDM) or created by Windows at runtime and can't be changed locally.</value>
+    <value>選択されたルールのうち、少なくとも 1つはポリシー (グループポリシーや MDM など) によって管理されているか、実行時に Windows によって作成されたものであり、ローカルで変更することはできません。</value>
   </data>
   <data name="FirewallRulesNoLongerExistMessage" xml:space="preserve">
-    <value>One or more of the selected firewall rules no longer exist (e.g. deleted in the Windows Firewall management console). Nothing was changed.</value>
+    <value>選択されたファイアウォール規則のうち、1つ以上が存在しなくなりました (例 : Windows ファイアウォールの管理コンソールで削除された）。設定の変更は一切行われていません。</value>
   </data>
   <data name="LoadingFirewallRulesDots" xml:space="preserve">
-    <value>Loading firewall rules...</value>
+    <value>ファイアウォールルールを読み込んでいます...</value>
   </data>
   <data name="NoFirewallRulesFoundMessage" xml:space="preserve">
-    <value>No firewall rules found. Use "Add rule..." to create a rule or enable "Show all rules" in the settings to show all Windows Firewall rules.</value>
+    <value>ファイアウォールルールが見つかりませんでした。「ルールの追加...」を使用してルールを作成するか、設定で「すべてのルールを表示」を有効にして、Windows ファイアウォールのすべてのルールを表示してください。</value>
   </data>
   <data name="IcmpTypes" xml:space="preserve">
-    <value>ICMP types</value>
+    <value>ICMP の種類</value>
   </data>
   <data name="NetworkAdapters" xml:space="preserve">
-    <value>Network adapters</value>
+    <value>ネットワーク アダプター</value>
   </data>
   <data name="UsersAndAuthentication" xml:space="preserve">
-    <value>Users and authentication</value>
+    <value>ユーザーと認証</value>
   </data>
   <data name="AppPackage" xml:space="preserve">
-    <value>App package</value>
+    <value>アプリのパッケージ</value>
   </data>
   <data name="CopyFirewallRuleHiddenPropertiesMessage" xml:space="preserve">
-    <value>The rule "{0}" uses the following properties, which are not supported by NETworkManager and are not copied:
+    <value>ルール "{0}" では、以下のプロパティが使用されていますが、これらはNetworkManagerではサポートされておらず、コピーされません :
 
 {1}
 
-The new rule may apply to more traffic than the original rule (e.g. to all services of a program instead of a single one). Please review the new rule carefully before saving it.</value>
+新しいルールは、元のルールよりも広い範囲のトラフィックに適用される可能性があります (例 : 単一のサービスではなく、プログラムのすべてのサービスに適用されるなど）。保存する前に、新しいルールをよく確認してください。</value>
   </data>
   <data name="ShowAllRules" xml:space="preserve">
-    <value>Show all rules</value>
+    <value>すべてのルールを表示</value>
   </data>
   <data name="FirewallRuleManagedMessage" xml:space="preserve">
-    <value>Managed by NETworkManager.</value>
+    <value>NETworkManagerによって管理されています。</value>
   </data>
   <data name="FirewallRuleNotManagedMessage" xml:space="preserve">
-    <value>Not managed by NETworkManager (e.g. a Windows built-in rule or a rule created by another application). The rule can be enabled, disabled, deleted or copied, but editing is not supported (yet).</value>
+    <value>NetworkManager によって管理されていないルール (例 : Windows の組み込みルールや、他のアプリケーションによって作成されたルール）。このルールは有効化、無効化、削除、コピーが可能ですが、編集機能は (現時点では) サポートされていません。</value>
   </data>
   <data name="EnableRulesX" xml:space="preserve">
-    <value>Enable rules ({0})</value>
+    <value>ルールを有効化 ({0})</value>
   </data>
   <data name="DisableRulesX" xml:space="preserve">
-    <value>Disable rules ({0})</value>
+    <value>ルールを無効化 ({0})</value>
   </data>
   <data name="FirewallRulesNotManagedWarningMessage" xml:space="preserve">
-    <value>The following rules are not managed by NETworkManager (e.g. Windows built-in rules or rules created by other applications). Changing them may affect the network functionality of Windows or other applications:
+    <value>以下のルールは、NETworkManager によって管理されていません (例：Windows に組み込まれているルールや、他のアプリケーションによって作成されたルールなど）。これらを変更すると、Windows や他のアプリケーションのネットワーク機能に影響が出る可能性があります :
 
 {0}</value>
   </data>
   <data name="EditFirewallRuleNotManagedMessage" xml:space="preserve">
-    <value>Editing rules that are not managed by NETworkManager is not supported (yet), because they may use properties that can't be shown in the dialog (e.g. rule group, service or ICMP types). Use "Copy as..." to create a managed copy of the rule.</value>
+    <value>NETworkManager によって管理されていないルールの編集は、（現時点では) サポートされていません。これは、ダイアログに表示できないプロパティ (ルールグループ、サービス、ICMP タイプなど) が使用されている可能性があるためです。「[名前を付けてコピー...]」を使用して、管理対象のルールのコピーを作成してください。</value>
   </data>
   <data name="WindowsFirewallSettings" xml:space="preserve">
     <value>Windows ファイアウォールの設定</value>
@@ -4416,7 +4416,7 @@ The new rule may apply to more traffic than the original rule (e.g. to all servi
     <value>ファイアウォール規則の読み込みに失敗しました。 {0}</value>
   </data>
   <data name="FirewallRulesLoadedWithErrorsMessage" xml:space="preserve">
-    <value>Reloaded at {0}, but not all firewall rules or their properties could be loaded, so the list may be incomplete (see log file for details). {1}</value>
+    <value>{0}で再読み込みを行いましたが、すべてのファイアウォールルールまたはそのプロパティを読み込めなかったため、リストに不備がある可能性があります (詳細についてはログファイルを参照してください）。 {1}</value>
   </data>
   <data name="DeleteFirewallRuleMessage" xml:space="preserve">
     <value>選択されたファイアウォールルールは完全に削除されます :
@@ -4496,19 +4496,19 @@ The new rule may apply to more traffic than the original rule (e.g. to all servi
     <value>許可</value>
   </data>
   <data name="FirewallRuleSource_Local" xml:space="preserve">
-    <value>Local</value>
+    <value>ローカル</value>
   </data>
   <data name="FirewallRuleSource_GroupPolicy" xml:space="preserve">
-    <value>Group Policy</value>
+    <value>グループポリシー</value>
   </data>
   <data name="FirewallRuleSource_MDM" xml:space="preserve">
-    <value>Mobile Device Management (MDM)</value>
+    <value>モバイルデバイス管理 (MDM)</value>
   </data>
   <data name="FirewallRuleSource_Other" xml:space="preserve">
-    <value>Windows (runtime)</value>
+    <value>Windows (ランタイム)</value>
   </data>
   <data name="UnsupportedProperties" xml:space="preserve">
-    <value>Unsupported properties</value>
+    <value>サポートされていないプロパティ</value>
   </data>
   <data name="LocalPorts" xml:space="preserve">
     <value>ローカルポート</value>
@@ -4523,7 +4523,7 @@ The new rule may apply to more traffic than the original rule (e.g. to all servi
     <value>リモートアドレス</value>
   </data>
   <data name="EnterValidFirewallLocalAddress" xml:space="preserve">
-    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8), range (e.g. 10.0.0.1-10.0.0.10), or the keyword Any. Other keywords (e.g. LocalSubnet) are only valid for remote addresses.</value>
+    <value>有効な IP アドレス、サブネット (例 : 10.0.0.0/8）、範囲 (例：10.0.0.1-10.0.0.10）、またはキーワード「Any」を入力してください。その他のキーワード (例 : LocalSubnet) は、リモートアドレスの場合にのみ有効です。</value>
   </data>
   <data name="EnterValidFirewallAddress" xml:space="preserve">
     <value>有効なIPアドレス、サブネット (例：10.0.0.0/8)、範囲 (例：10.0.0.1-10.0.0.10)、またはキーワード (Any、LocalSubnet、DNS、DHCP、WINS、DefaultGateway、Internet、Intranet、IntranetRemoteAccess、PlayToDevice、CaptivePortal) を入力してください。</value>
@@ -4820,71 +4820,71 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>ルールをコピー</value>
   </data>
   <data name="DeleteFirewallRulesMessage" xml:space="preserve">
-    <value>The selected firewall rules are permanently deleted:
+    <value>選択したファイアウォールルールは完全に削除されます :
 
 {0}</value>
   </data>
   <data name="DeleteRules" xml:space="preserve">
-    <value>Delete rules</value>
+    <value>ルールの削除</value>
   </data>
   <data name="DeleteRulesX" xml:space="preserve">
-    <value>Delete rules ({0})</value>
+    <value>ルールの削除 ({0})</value>
   </data>
   <data name="RDAPQueryType_Auto" xml:space="preserve">
-    <value>Auto</value>
+    <value>自動</value>
   </data>
   <data name="EnterValidRDAPQuery" xml:space="preserve">
-    <value>Enter a valid domain, IP address, AS number or entity handle!</value>
+    <value>有効なドメイン、IP アドレス、AS 番号、またはエンティティハンドルを入力してください！</value>
   </data>
   <data name="RDAPTimeoutAfterXSeconds" xml:space="preserve">
-    <value>The RDAP server did not respond within {0} seconds.</value>
+    <value>RDAP サーバーは {0} 秒以内に応答しませんでした。</value>
   </data>
   <data name="RDAPQueryType_Nameserver" xml:space="preserve">
-    <value>Nameserver</value>
+    <value>ネームサーバー</value>
   </data>
   <data name="EnterValidNameserver" xml:space="preserve">
-    <value>Enter a valid nameserver (e.g., "ns1.example.com")!</value>
+    <value>有効なネームサーバー (例 : ns1.example.com）を入力してください！</value>
   </data>
   <data name="ASNumbers" xml:space="preserve">
-    <value>AS numbers</value>
+    <value>AS 番号</value>
   </data>
   <data name="RDAPDots" xml:space="preserve">
     <value>RDAP...</value>
   </data>
   <data name="RDAPXIsNotARegisteredDomainShowingY" xml:space="preserve">
-    <value>"{0}" is not a registered domain, showing the registration data of "{1}".</value>
+    <value>"{0}" は登録済みのドメインではありません。"{1}" の登録情報が表示されています。</value>
   </data>
   <data name="Resource_PublicSuffixList_Description" xml:space="preserve">
-    <value>List of public suffixes (e.g. "co.uk") from publicsuffix.org (MPL-2.0), which is used to get the registered domain of a hostname for RDAP queries.</value>
+    <value>publicsuffix.org (MPL-2.0) が提供するパブリックサフィックス (例 : co.uk) の一覧。これは、RDAP クエリにおいてホスト名の登録ドメインを取得するために使用される。</value>
   </data>
   <data name="ProfileXNotFound" xml:space="preserve">
-    <value>Profile "{0}" not found!</value>
+    <value>プロファイル "{0}" が見つかりません！</value>
   </data>
   <data name="SeveralProfilesAreNamedXSelectOne" xml:space="preserve">
-    <value>Several profiles are named "{0}", select one!</value>
+    <value>"{0}" という名前のプロファイルがいくつかあります。その中から 1つを選んでください！</value>
   </data>
   <data name="EnterACommand" xml:space="preserve">
-    <value>Enter a command!</value>
+    <value>コマンドを入力してください！</value>
   </data>
   <data name="UnknownCommandX" xml:space="preserve">
-    <value>Unknown command "{0}"!</value>
+    <value>不明なコマンド "{0}"!</value>
   </data>
   <data name="CommandXDoesNotAcceptArguments" xml:space="preserve">
-    <value>The command "{0}" does not accept arguments!</value>
+    <value>コマンド "{0}" は引数を受け付けません！</value>
   </data>
   <data name="CommandXDoesNotSupportProfiles" xml:space="preserve">
-    <value>The command "{0}" does not support profiles!</value>
+    <value>コマンド "{0}" はプロファイルに対応していません！</value>
   </data>
   <data name="EnterTheNameOfAProfileAfterAt" xml:space="preserve">
-    <value>Enter the name of a profile after "@"!</value>
+    <value>"@" の後にプロファイルの名前を入力してください！</value>
   </data>
   <data name="UnknownArgumentX" xml:space="preserve">
-    <value>Unknown argument "{0}"!</value>
+    <value>不明な引数 "{0}"!</value>
   </data>
   <data name="RunCommand" xml:space="preserve">
-    <value>Run command</value>
+    <value>コマンドを実行</value>
   </data>
   <data name="Recent" xml:space="preserve">
-    <value>Recent</value>
+    <value>最近使った項目</value>
   </data>
 </root>
