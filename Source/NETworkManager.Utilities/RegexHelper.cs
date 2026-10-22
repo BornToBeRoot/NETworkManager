@@ -170,10 +170,11 @@ public static partial class RegexHelper
     // Match a hostname with subnetmask like server-01.example.com/255.255.255.0
     public const string HostnameOrDomainWithSubnetmaskRegex = $@"^{HostnameOrDomainValues}\/{SubnetmaskValues}$";
 
-    // Match a domain local.example.com (labels without nested quantifiers, which backtrack exponentially for an invalid
-    // input with many labels)
+    // Match a domain local.example.com: labels like a hostname (see HostnameLabelValues, no hyphen at the start or end)
+    // and a top-level domain of letters. Without nested quantifiers, which backtrack exponentially for an invalid input
+    // with many labels.
     public const string DomainRegex =
-        @"^(?=.{1,255}$)[a-zA-Z0-9\-_]{1,63}(\.[a-zA-Z0-9\-_]{1,63})*\.[a-zA-Z]{2,63}\.?$";
+        $@"^(?=.{{1,255}}$)(?:{HostnameLabelValues}\.)+[a-zA-Z]{{2,63}}\.?$";
 
     // Private port values (1-65535, without leading zeros)
     private const string PortValues =

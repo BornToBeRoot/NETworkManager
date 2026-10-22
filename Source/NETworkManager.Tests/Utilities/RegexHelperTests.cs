@@ -80,7 +80,14 @@ public class RegexHelperTests
     [Theory]
     [InlineData("borntoberoot.net", true)]
     [InlineData("local.example.com", true)]
+    [InlineData("server-01.example.com", true)]
+    [InlineData("example.com.", true)]
     [InlineData("example", false)]
+    [InlineData("example.c", false)]
+    // A hyphen at the start or end of a label, like hostnames
+    [InlineData("server.-bad-.com", false)]
+    [InlineData("-example.com", false)]
+    [InlineData("example-.com", false)]
     public void Domain(string input, bool isMatch)
     {
         Assert.Equal(isMatch, Regex.IsMatch(input, RegexHelper.DomainRegex));

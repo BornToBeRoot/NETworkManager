@@ -194,7 +194,7 @@ Release date: **xx.xx.2026**
 
 **Input validation**
 
-- Fixed host names being accepted with a hyphen at the start or end of a label other than the first (e.g. `server.-bad-.com`) and with only digits (e.g. `10.0.0.` or `192.168.1`, which are an incomplete IPv4 address). IPv4 addresses are still accepted in all host fields, now checked explicitly in the **Remote Desktop** host field. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed host names being accepted with a hyphen at the start or end of a label other than the first (e.g. `server.-bad-.com`) and with only digits (e.g. `10.0.0.` or `192.168.1`, which are an incomplete IPv4 address). The same applies to the domain in **Whois**. IPv4 addresses are still accepted in all host fields, now checked explicitly in the **Remote Desktop** host field. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
 - Fixed MAC addresses and their first 3 bytes (**Wake on LAN**, **Lookup** > **OUI**, profiles) being accepted with any character instead of a dot in the format `0000.0000.0000` (e.g. `0011 2233 4455`). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
 - Fixed IPv6 subnets in the **Subnet Calculator** being accepted with a leading `s` (e.g. `sss2001:db8::/32`) and rejected with an embedded IPv4 address (e.g. `::ffff:192.168.0.1/96`). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
 - Fixed the port of the **Remote Desktop** host field (`host:port`) being accepted empty or as `0`. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
