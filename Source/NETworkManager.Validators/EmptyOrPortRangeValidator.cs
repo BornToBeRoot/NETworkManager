@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Validators;
 
@@ -20,8 +21,7 @@ public class EmptyOrPortRangeValidator : ValidationRule
 
                 if (int.TryParse(portRange[0], out var startPort) && int.TryParse(portRange[1], out var endPort))
                 {
-                    if (!(startPort > 0 && startPort < 65536 && endPort > 0 && endPort < 65536 &&
-                          startPort < endPort))
+                    if (!PortRangeHelper.IsValidPortRange(startPort, endPort))
                         isValid = false;
                 }
                 else
@@ -33,7 +33,7 @@ public class EmptyOrPortRangeValidator : ValidationRule
             {
                 if (int.TryParse(portOrRange, out var portNumber))
                 {
-                    if (!(portNumber > 0 && portNumber < 65536))
+                    if (!PortRangeHelper.IsValidPort(portNumber))
                         isValid = false;
                 }
                 else

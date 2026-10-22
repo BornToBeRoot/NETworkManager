@@ -524,6 +524,11 @@ public class RunCommandViewModel : ViewModelBase
         {
             _history.RemoveAll(x => string.Equals(x.Text, historyText, StringComparison.OrdinalIgnoreCase));
             _history.Insert(0, CreateHistoryEntry(historyText, result));
+
+            // Like the stored history
+            if (_history.Count > SettingsManager.Current.RunCommand_HistoryEntries)
+                _history.RemoveRange(SettingsManager.Current.RunCommand_HistoryEntries,
+                    _history.Count - SettingsManager.Current.RunCommand_HistoryEntries);
         }
 
         var commandPrefix = result.Command.TypeBeforeTarget && result.Type != null

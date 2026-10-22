@@ -14,14 +14,15 @@ namespace NETworkManager.Models.RunCommand;
 public static class RunCommandTarget
 {
     /// <summary>
-    ///     Checks if the ports of an entry of the port lookup (e.g. "22", "80-90/tcp") are valid: from 1 to 65535, a range
-    ///     from a lower to a higher port.
+    ///     Checks if the ports of an entry of the port lookup (e.g. "22", "80-90/tcp") are valid, like the port lookup.
     /// </summary>
     private static bool IsValidPortLookupEntry(string entry)
     {
         var ports = entry.Split('/')[0].Split('-').Select(x => int.TryParse(x, out var port) ? port : 0).ToArray();
 
-        return ports.All(x => x is > 0 and < 65536) && (ports.Length == 1 || ports[0] < ports[1]);
+        return ports.Length == 1
+            ? PortRangeHelper.IsValidPort(ports[0])
+            : PortRangeHelper.IsValidPortRange(ports[0], ports[1]);
     }
 
     /// <summary>

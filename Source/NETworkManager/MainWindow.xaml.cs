@@ -1102,13 +1102,21 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         var childWindow = new RunCommandChildWindow(this);
 
+        // A message of an application that was run with Ctrl+Enter (the dialog stays open, e.g. an error of the Ping
+        // Monitor) closes the dialog first, so the dialogs are not shown on top of each other.
+        void DialogHelper_DialogOpening(object sender, EventArgs e) => CloseDialog();
+
         void CloseDialog()
         {
+            DialogHelper.DialogOpening -= DialogHelper_DialogOpening;
+
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
             ConfigurationManager.OnDialogClose();
         }
+
+        DialogHelper.DialogOpening += DialogHelper_DialogOpening;
 
         var childWindowViewModel = new RunCommandViewModel(instance =>
         {
@@ -1464,18 +1472,24 @@ public sealed partial class MainWindow : INotifyPropertyChanged
     private void RegisterHotKeys()
     {
         if (SettingsManager.Current.HotKey_ShowWindowEnabled)
-        {
-            RegisterHotKey(new WindowInteropHelper(this).Handle, 1, SettingsManager.Current.HotKey_ShowWindowModifier,
+            RegisterHotKey(1, SettingsManager.Current.HotKey_ShowWindowModifier,
                 SettingsManager.Current.HotKey_ShowWindowKey);
-            _registeredHotKeys.Add(1);
-        }
 
         if (SettingsManager.Current.HotKey_RunCommandEnabled)
-        {
-            RegisterHotKey(new WindowInteropHelper(this).Handle, 2, SettingsManager.Current.HotKey_RunCommandModifier,
+            RegisterHotKey(2, SettingsManager.Current.HotKey_RunCommandModifier,
                 SettingsManager.Current.HotKey_RunCommandKey);
-            _registeredHotKeys.Add(2);
-        }
+    }
+
+    /// <summary>
+    ///     Registers a hotkey. It fails if the combination is already used (e.g. by the other hotkey or another
+    ///     application), then it is logged and not unregistered later.
+    /// </summary>
+    private void RegisterHotKey(int id, int modifier, int key)
+    {
+        if (RegisterHotKey(new WindowInteropHelper(this).Handle, id, modifier, key))
+            _registeredHotKeys.Add(id);
+        else
+            Log.Warn($"Hotkey {id} could not be registered, the key combination is already in use.");
     }
 
     private void UnregisterHotKeys()

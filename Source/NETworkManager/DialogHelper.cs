@@ -18,6 +18,12 @@ namespace NETworkManager
     public static class DialogHelper
     {
         /// <summary>
+        /// Occurs before a message or confirmation dialog is shown, e.g. so a dialog that stays open (the run command
+        /// with Ctrl+Enter) can close itself first instead of the dialogs being shown on top of each other.
+        /// </summary>
+        public static event EventHandler DialogOpening;
+
+        /// <summary>
         /// Displays a modal message dialog with an OK button, allowing the user to acknowledge the message before
         /// continuing.
         /// </summary>
@@ -32,6 +38,8 @@ namespace NETworkManager
         public static Task ShowMessageAsync(Window parentWindow, string title, string message, ChildWindowIcon icon = ChildWindowIcon.Info, string confirmButtonText = null)
         {
             confirmButtonText ??= Strings.OK;
+
+            DialogOpening?.Invoke(null, EventArgs.Empty);
 
             var childWindow = new MessageChildWindow();
 
@@ -71,6 +79,8 @@ namespace NETworkManager
             cancelButtonText ??= Strings.Cancel;
 
             var result = false;
+
+            DialogOpening?.Invoke(null, EventArgs.Empty);
 
             var childWindow = new MessageConfirmationChildWindow();
 

@@ -231,7 +231,7 @@ public class LookupPortLookupViewModel : ViewModelBase
             // Check if the search is a port number like 22
             if (RegexHelper.PortLookupPortRegex().IsMatch(searchTrim))
                 if (int.TryParse(searchTrim, out var port))
-                    if (port is > 0 and < 65536)
+                    if (PortRangeHelper.IsValidPort(port))
                     {
                         ports.Add(port);
                         continue;
@@ -243,7 +243,7 @@ public class LookupPortLookupViewModel : ViewModelBase
                 var portAndProtocol = searchTrim.Split('/');
 
                 if (int.TryParse(portAndProtocol[0], out var port))
-                    if (port is > 0 and < 65536)
+                    if (PortRangeHelper.IsValidPort(port))
                     {
                         portsAndProtocols.Add(new Tuple<int, string>(port, portAndProtocol[1]));
                         continue;
@@ -256,7 +256,7 @@ public class LookupPortLookupViewModel : ViewModelBase
                 var portRange = searchTrim.Split('-');
 
                 if (int.TryParse(portRange[0], out var startPort) && int.TryParse(portRange[1], out var endPort))
-                    if (startPort is > 0 and < 65536 && endPort is > 0 and < 65536 && startPort < endPort)
+                    if (PortRangeHelper.IsValidPortRange(startPort, endPort))
                     {
                         for (var i = startPort; i < endPort + 1; i++)
                             ports.Add(i);
@@ -273,7 +273,7 @@ public class LookupPortLookupViewModel : ViewModelBase
                 var portRange = portRangeAndProtocol[0].Split('-');
 
                 if (int.TryParse(portRange[0], out var startPort) && int.TryParse(portRange[1], out var endPort))
-                    if (startPort is > 0 and < 65536 && endPort is > 0 and < 65536 && startPort < endPort)
+                    if (PortRangeHelper.IsValidPortRange(startPort, endPort))
                     {
                         for (var i = startPort; i < endPort + 1; i++)
                             portsAndProtocols.Add(new Tuple<int, string>(i, portRangeAndProtocol[1]));

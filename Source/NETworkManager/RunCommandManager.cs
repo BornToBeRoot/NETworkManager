@@ -192,21 +192,16 @@ public static class RunCommandManager
     }
 
     /// <summary>
-    ///     Checks if the request opens (or can open) a dialog, so the run command dialog must be closed: the settings,
-    ///     the connect dialog of a remote tool, or the Subnetting, which asks for confirmation for a large calculation
-    ///     and shows an error for an invalid subnet mask.
+    ///     Checks if the request opens a dialog, so the run command dialog must be closed: the settings or the connect
+    ///     dialog of a remote tool. Messages of the applications (e.g. an error or a confirmation) close the run command
+    ///     dialog when they are shown (<see cref="DialogHelper.DialogOpening" />).
     /// </summary>
     /// <param name="request">Request, or null for the settings.</param>
     /// <returns>True if the request opens a dialog.</returns>
     public static bool OpensDialog(ApplicationRequest request)
     {
-        return request switch
-        {
-            null => true,
-            SubnetCalculatorRequest { NewSubnetmask: not null } => true,
-            _ => request.Profile == null && !string.IsNullOrEmpty(request.Target) &&
-                 ConnectDialogApplications.Contains(request.Application)
-        };
+        return request == null || request.Profile == null && !string.IsNullOrEmpty(request.Target) &&
+            ConnectDialogApplications.Contains(request.Application);
     }
 
     /// <summary>

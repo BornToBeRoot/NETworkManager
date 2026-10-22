@@ -111,7 +111,7 @@ While typing, suggestions are shown below the input, grouped (e.g. _Recent_, _Pr
 | `Up`, `Down`  | Select a suggestion (`PageUp`, `PageDown`: 5 suggestions)                                       |
 | `Tab`         | Insert the selected suggestion into the input. If none is selected, the first profile, DNS server, port profile or type that matches the typed word (e.g. `dns borntoberoot.net c` → `cloudflare`) |
 | `Enter`       | Run the selected suggestion, or the input if none is selected                                   |
-| `Ctrl+Enter`  | Run and keep the dialog open, with the command in the input (e.g. `ping `) to run it with the next target. Commands that open a dialog (connect dialog of the remote tools, settings, Subnetting, which can ask for confirmation) close the dialog. |
+| `Ctrl+Enter`  | Run and keep the dialog open, with the command in the input (e.g. `ping `) to run it with the next target. Commands that open a dialog (connect dialog of the remote tools, settings) close the dialog, as does a message of a feature (e.g. an error or the confirmation of a large subnetting). |
 | `Shift+Enter` | Open the feature with the input filled in, without starting it (e.g. to adjust the options of a scan). The remote tools open the connect dialog (target) or connect (profile) as with `Enter`. |
 | `Shift+Del`   | Remove the selected recent command from the history (or click the remove button of a recent command) |
 | `Esc`         | Close the dialog (or the close button)                                                          |
