@@ -11693,7 +11693,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Somewhere between here and there....
+        ///   Looks up a localized string similar to Somewhere between here and there, a packet got lost....
         /// </summary>
         public static string RunCommandWatermark17 {
             get {
