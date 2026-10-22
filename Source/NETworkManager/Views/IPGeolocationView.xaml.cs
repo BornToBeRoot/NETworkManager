@@ -9,11 +9,11 @@ public partial class IPGeolocationView : IDragablzTabItem
 {
     private readonly IPGeolocationViewModel _viewModel;
 
-    public IPGeolocationView(Guid tabId, string domain = null)
+    public IPGeolocationView(Guid tabId, string domain = null, bool start = true)
     {
         InitializeComponent();
 
-        _viewModel = new IPGeolocationViewModel(tabId, domain);
+        _viewModel = new IPGeolocationViewModel(tabId, domain, start);
 
         DataContext = _viewModel;
 

@@ -1100,7 +1100,7 @@ public sealed partial class MainWindow : INotifyPropertyChanged
         if (ConfigurationManager.Current.IsChildWindowOpen)
             return;
 
-        var childWindow = new RunCommandChildWindow();
+        var childWindow = new RunCommandChildWindow(this);
 
         void CloseDialog()
         {
@@ -1112,7 +1112,9 @@ public sealed partial class MainWindow : INotifyPropertyChanged
 
         var childWindowViewModel = new RunCommandViewModel(instance =>
         {
-            CloseDialog();
+            // Ctrl+Enter: the dialog stays open to run another command.
+            if (!instance.KeepOpen)
+                CloseDialog();
 
             if (instance.IsSettings)
                 NavigationManager.OpenSettings();

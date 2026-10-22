@@ -200,8 +200,10 @@ public class RDAPViewModel : ViewModelBase
 
     #region Contructor, load settings
 
-    public RDAPViewModel(Guid tabId, string query, RDAPQueryType? queryType)
+    public RDAPViewModel(Guid tabId, string query, RDAPQueryType? queryType, bool start = true)
     {
+        _firstLoad = start;
+
         _isLoading = true;
 
         ConfigurationManager.Current.RDAPTabCount++;

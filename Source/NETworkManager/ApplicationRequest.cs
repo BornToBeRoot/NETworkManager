@@ -23,6 +23,13 @@ public record ApplicationRequest(ApplicationName Application)
     ///     Profile to run in the application with its settings. <see cref="Target" /> is ignored if set.
     /// </summary>
     public ProfileInfo Profile { get; init; }
+
+    /// <summary>
+    ///     Starts the application with the target or profile (e.g. the scan). If false, the input is only filled in, so
+    ///     the options can be adjusted before starting. Remote tools always open the connect dialog (target) or connect
+    ///     (profile).
+    /// </summary>
+    public bool Start { get; init; } = true;
 }
 
 /// <summary>

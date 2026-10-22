@@ -17,9 +17,9 @@ public partial class PingMonitorHostView : IApplicationRequestHandler
     public void Open(ApplicationRequest request)
     {
         if (request.Profile != null)
-            _viewModel.AddHost(request.Profile);
+            _viewModel.AddHost(request.Profile, request.Start);
         else
-            _viewModel.AddHost(request.Target);
+            _viewModel.AddHost(request.Target, request.Start);
     }
 
     public void OnViewHide()

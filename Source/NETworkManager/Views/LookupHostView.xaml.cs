@@ -24,14 +24,14 @@ public partial class LookupHostView : IApplicationRequestHandler
                 TabItemOUILookup.IsSelected = true;
 
                 if (!string.IsNullOrEmpty(request.Target))
-                    OUILookupView.Lookup(request.Target);
+                    OUILookupView.Lookup(request.Target, request.Start);
 
                 break;
             case LookupType.Port:
                 TabItemPortLookup.IsSelected = true;
 
                 if (!string.IsNullOrEmpty(request.Target))
-                    PortLookupView.Lookup(request.Target);
+                    PortLookupView.Lookup(request.Target, request.Start);
 
                 break;
         }

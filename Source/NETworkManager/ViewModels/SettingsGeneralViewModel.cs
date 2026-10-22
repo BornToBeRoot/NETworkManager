@@ -61,6 +61,38 @@ public class SettingsGeneralViewModel : ViewModelBase
         }
     }
 
+    public bool RunCommandSuggestClipboard
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.RunCommand_SuggestClipboard = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool RunCommandShowKeyHints
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.RunCommand_ShowKeyHints = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Constructor, LoadSettings
@@ -85,6 +117,8 @@ public class SettingsGeneralViewModel : ViewModelBase
 
         BackgroundJobInterval = SettingsManager.Current.General_BackgroundJobInterval;
         HistoryListEntries = SettingsManager.Current.General_HistoryListEntries;
+        RunCommandSuggestClipboard = SettingsManager.Current.RunCommand_SuggestClipboard;
+        RunCommandShowKeyHints = SettingsManager.Current.RunCommand_ShowKeyHints;
     }
 
     #endregion

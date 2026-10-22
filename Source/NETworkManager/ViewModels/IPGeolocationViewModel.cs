@@ -141,8 +141,11 @@ public class IPGeolocationViewModel : ViewModelBase
     /// </summary>
     /// <param name="tabId">The ID of the tab.</param>
     /// <param name="host">The host to query.</param>
-    public IPGeolocationViewModel(Guid tabId, string host)
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    public IPGeolocationViewModel(Guid tabId, string host, bool start = true)
     {
+        _firstLoad = start;
+
         ConfigurationManager.Current.IPGeolocationTabCount++;
 
         _tabId = tabId;

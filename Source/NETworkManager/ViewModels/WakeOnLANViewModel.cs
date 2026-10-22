@@ -209,8 +209,17 @@ public class WakeOnLANViewModel : ProfileHostViewModelBase
     ///     Sends the magic packet to the computer of the profile.
     /// </summary>
     /// <param name="profile">Profile to wake up.</param>
-    public void WakeUp(ProfileInfo profile)
+    /// <param name="start">Sends the magic packet. If false, the values of the profile are only filled in.</param>
+    public void WakeUp(ProfileInfo profile, bool start = true)
     {
+        if (!start)
+        {
+            MACAddress = profile.WakeOnLAN_MACAddress;
+            Broadcast = profile.WakeOnLAN_Broadcast;
+
+            return;
+        }
+
         _ = WakeUp(NETworkManager.Profiles.Application.WakeOnLAN.CreateInfo(profile));
     }
 
@@ -220,14 +229,15 @@ public class WakeOnLANViewModel : ProfileHostViewModelBase
     /// </summary>
     /// <param name="macAddress">MAC address of the computer.</param>
     /// <param name="broadcast">Broadcast address. If null, the current broadcast address is used.</param>
-    public void WakeUp(string macAddress, string broadcast)
+    /// <param name="start">Sends the magic packet. If false, the values are only filled in.</param>
+    public void WakeUp(string macAddress, string broadcast, bool start = true)
     {
         MACAddress = macAddress;
 
         if (broadcast != null)
             Broadcast = broadcast;
 
-        if (Broadcast != null && RegexHelper.IPv4AddressRegex().IsMatch(Broadcast))
+        if (start && Broadcast != null && RegexHelper.IPv4AddressRegex().IsMatch(Broadcast))
             WakeUpAction();
     }
 

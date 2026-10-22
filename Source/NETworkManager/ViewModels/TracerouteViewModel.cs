@@ -217,8 +217,11 @@ public class TracerouteViewModel : ViewModelBase
     /// </summary>
     /// <param name="tabId">The unique identifier for the tab.</param>
     /// <param name="host">The initial host to trace.</param>
-    public TracerouteViewModel(Guid tabId, string host)
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    public TracerouteViewModel(Guid tabId, string host, bool start = true)
     {
+        _firstLoad = start;
+
         ConfigurationManager.Current.TracerouteTabCount++;
 
         _tabId = tabId;

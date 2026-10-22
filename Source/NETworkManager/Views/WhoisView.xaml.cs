@@ -9,11 +9,11 @@ public partial class WhoisView : IDragablzTabItem
 {
     private readonly WhoisViewModel _viewModel;
 
-    public WhoisView(Guid tabId, string domain = null)
+    public WhoisView(Guid tabId, string domain = null, bool start = true)
     {
         InitializeComponent();
 
-        _viewModel = new WhoisViewModel(tabId, domain);
+        _viewModel = new WhoisViewModel(tabId, domain, start);
 
         DataContext = _viewModel;
 

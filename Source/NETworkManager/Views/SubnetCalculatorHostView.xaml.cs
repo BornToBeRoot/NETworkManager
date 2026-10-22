@@ -19,17 +19,17 @@ public partial class SubnetCalculatorHostView : IApplicationRequestHandler
         if (subnetCalculatorRequest?.NewSubnetmask != null)
         {
             TabItemSubnetting.IsSelected = true;
-            SubnettingView.Calculate(request.Target, subnetCalculatorRequest.NewSubnetmask);
+            SubnettingView.Calculate(request.Target, subnetCalculatorRequest.NewSubnetmask, request.Start);
         }
         else if (subnetCalculatorRequest?.Subnet2 != null)
         {
             TabItemWideSubnet.IsSelected = true;
-            WideSubnetView.Calculate(request.Target, subnetCalculatorRequest.Subnet2);
+            WideSubnetView.Calculate(request.Target, subnetCalculatorRequest.Subnet2, request.Start);
         }
         else
         {
             TabItemCalculator.IsSelected = true;
-            CalculatorView.Calculate(request.Target);
+            CalculatorView.Calculate(request.Target, request.Start);
         }
     }
 

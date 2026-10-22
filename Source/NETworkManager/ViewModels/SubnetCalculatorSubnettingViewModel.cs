@@ -13,7 +13,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -217,12 +216,17 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
     /// </summary>
     /// <param name="subnet">Subnet (e.g. 10.0.0.0/16).</param>
     /// <param name="newSubnetmask">New subnet mask or CIDR (e.g. /24).</param>
-    public Task Calculate(string subnet, string newSubnetmask)
+    /// <param name="start">Calculates the subnets. If false, the values are only filled in.</param>
+    public Task Calculate(string subnet, string newSubnetmask, bool start = true)
     {
+        // Like the calculate button, not while a calculation is running (the results would be mixed).
+        if (IsRunning)
+            return Task.CompletedTask;
+
         Subnet = subnet;
         NewSubnetmask = newSubnetmask;
 
-        return Calculate();
+        return start ? Calculate() : Task.CompletedTask;
     }
 
     private async Task Calculate()
@@ -239,13 +243,13 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
         // Subnet mask (e.g. 255.255.255.0) or CIDR (e.g. /24)
         var newCidr = Subnetmask.ConvertSubnetmaskOrCidrToCidr(newSubnetmaskOrCidr);
 
-        var baseCidr = ipNetwork.AddressFamily == AddressFamily.InterNetwork ? 32 : 128;
+        var (minCidr, baseCidr) = Subnetmask.GetSubnettingCidrRange(ipNetwork);
 
         // The new subnet mask must split the subnet (e.g. /24 into /26), otherwise the subnetting fails.
-        if (newCidr < ipNetwork.Cidr || newCidr > baseCidr)
+        if (newCidr < minCidr || newCidr > baseCidr)
         {
             await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.Error,
-                string.Format(Strings.EnterSubnetmaskOrCIDRBetweenXAndY, ipNetwork.Cidr, baseCidr),
+                string.Format(Strings.EnterSubnetmaskOrCIDRBetweenXAndY, minCidr, baseCidr),
                 ChildWindowIcon.Error);
 
             IsRunning = false;

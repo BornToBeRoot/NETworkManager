@@ -1,4 +1,6 @@
-﻿namespace NETworkManager.Models.RunCommand;
+﻿using System;
+
+namespace NETworkManager.Models.RunCommand;
 
 /// <summary>
 ///     Result of <see cref="RunCommandParser.Parse" />.
@@ -60,4 +62,39 @@ public sealed class RunCommandParseResult
     ///     Value the error refers to (e.g. the unknown command or argument).
     /// </summary>
     public string ErrorValue { get; init; }
+
+    /// <summary>
+    ///     Part of the syntax that is being typed (highlighted in the hint), or null if there is none (e.g. while typing
+    ///     the command). After the target, the second argument comes first until it is entered (e.g. "[DNS server]"),
+    ///     then the type, unless a complete type keyword is typed (e.g. "aaaa").
+    /// </summary>
+    public RunCommandSyntaxPartKind? CurrentSyntaxPart
+    {
+        get
+        {
+            if (Command == null || Position == RunCommandPosition.Command)
+                return null;
+
+            if (ProfileName != null)
+                return RunCommandSyntaxPartKind.Profile;
+
+            switch (Position)
+            {
+                case RunCommandPosition.Type:
+                    return RunCommandSyntaxPartKind.Type;
+                case RunCommandPosition.Target:
+                    return RunCommandSyntaxPartKind.Target;
+            }
+
+            // A complete type keyword is being typed (e.g. "aaaa").
+            if (Type != null && string.Equals(Type, CurrentWord, StringComparison.OrdinalIgnoreCase))
+                return RunCommandSyntaxPartKind.Type;
+
+            // The second argument comes before the type (e.g. "[DNS server] [Type]"), until it is entered.
+            if (Command.Argument != RunCommandArgument.None && (Argument == null || Argument == CurrentWord))
+                return RunCommandSyntaxPartKind.Argument;
+
+            return Command.Types.Count > 0 && Type == null ? RunCommandSyntaxPartKind.Type : null;
+        }
+    }
 }

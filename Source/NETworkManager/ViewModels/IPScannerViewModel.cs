@@ -304,8 +304,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// </summary>
     /// <param name="tabId">The unique identifier for the tab.</param>
     /// <param name="hostOrIPRange">The initial host or IP range to scan.</param>
-    public IPScannerViewModel(Guid tabId, string hostOrIPRange)
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    public IPScannerViewModel(Guid tabId, string hostOrIPRange, bool start = true)
     {
+        _firstLoad = start;
+
         ConfigurationManager.Current.IPScannerTabCount++;
 
         _tabId = tabId;

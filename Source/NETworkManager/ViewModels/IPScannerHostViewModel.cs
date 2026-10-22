@@ -147,11 +147,12 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     /// Adds a new tab for the specified host or IP range.
     /// </summary>
     /// <param name="hostOrIPRange">The host or IP range to scan.</param>
-    public void AddTab(string hostOrIPRange = null)
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    public void AddTab(string hostOrIPRange = null, bool start = true)
     {
         var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(Strings.NewTab, new IPScannerView(tabId, hostOrIPRange),
+        TabItems.Add(new DragablzTabItem(Strings.NewTab, new IPScannerView(tabId, hostOrIPRange, start),
             tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
@@ -161,9 +162,10 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     /// Adds a new tab for the specified profile.
     /// </summary>
     /// <param name="profile">The profile to scan.</param>
-    public void AddTab(ProfileInfo profile)
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    public void AddTab(ProfileInfo profile, bool start = true)
     {
-        AddTab(profile.IPScanner_HostOrIPRange);
+        AddTab(profile.IPScanner_HostOrIPRange, start: start);
     }
 
     #endregion

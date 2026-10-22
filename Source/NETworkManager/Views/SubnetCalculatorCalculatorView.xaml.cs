@@ -12,8 +12,8 @@ public partial class SubnetCalculatorCalculatorView
         DataContext = _viewModel;
     }
 
-    public void Calculate(string subnet)
+    public void Calculate(string subnet, bool start)
     {
-        _viewModel.Calculate(subnet);
+        _viewModel.Calculate(subnet, start);
     }
 }

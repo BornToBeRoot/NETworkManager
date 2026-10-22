@@ -111,8 +111,10 @@ public class WhoisViewModel : ViewModelBase
 
     #region Contructor, load settings
 
-    public WhoisViewModel(Guid tabId, string domain)
+    public WhoisViewModel(Guid tabId, string domain, bool start = true)
     {
+        _firstLoad = start;
+
         ConfigurationManager.Current.WhoisTabCount++;
 
         _tabId = tabId;

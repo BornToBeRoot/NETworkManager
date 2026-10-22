@@ -89,6 +89,9 @@ public static class GlobalStaticConfiguration
     public static int HotKey_RunCommandKey => 80;
     public static int HotKey_RunCommandModifier => 3;
 
+    // Settings: Run command
+    public static bool RunCommand_ShowKeyHints => true;
+
     // Settings: Update
     public static bool Update_CheckForUpdatesAtStartup => true;
     public static bool Update_CheckForPreReleases => false;

@@ -863,6 +863,32 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = [];
 
+    public bool RunCommand_SuggestClipboard
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool RunCommand_ShowKeyHints
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.RunCommand_ShowKeyHints;
+
     #endregion
 
     #region Dashboard

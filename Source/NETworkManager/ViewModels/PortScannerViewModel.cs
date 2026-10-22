@@ -301,8 +301,11 @@ public class PortScannerViewModel : ViewModelBase
     /// <param name="tabId">The unique identifier for the tab.</param>
     /// <param name="host">The initial host to scan.</param>
     /// <param name="port">The initial ports to scan.</param>
-    public PortScannerViewModel(Guid tabId, string host, string port)
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    public PortScannerViewModel(Guid tabId, string host, string port, bool start = true)
     {
+        _firstLoad = start;
+
         ConfigurationManager.Current.PortScannerTabCount++;
 
         _tabId = tabId;

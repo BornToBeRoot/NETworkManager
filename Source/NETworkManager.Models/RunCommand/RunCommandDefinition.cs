@@ -57,9 +57,17 @@ public sealed class RunCommandDefinition
     public bool TypeBeforeTarget { get; init; }
 
     /// <summary>
-    ///     Syntax of the arguments for the hint (e.g. "&lt;hosts&gt; [server] [type]"), empty if there are none.
+    ///     Parts of the syntax of the arguments for the hint (e.g. "&lt;Hosts&gt;", "[DNS server]", "[Type]",
+    ///     "@&lt;Profile&gt;"), empty if there are none.
     /// </summary>
-    public string Syntax { get; init; } = string.Empty;
+    public IReadOnlyList<RunCommandSyntaxPart> SyntaxParts { get; init; } = [];
+
+    /// <summary>
+    ///     Syntax of the arguments (e.g. "&lt;Hosts&gt; [DNS server] [Type] | @&lt;Profile&gt;"), empty if there are
+    ///     none.
+    /// </summary>
+    public string Syntax => string.Join(" ",
+        SyntaxParts.Select(x => x.Kind == RunCommandSyntaxPartKind.Profile ? $"| {x.Text}" : x.Text));
 
     /// <summary>
     ///     Checks if the text is the command or one of its aliases (case-insensitive).

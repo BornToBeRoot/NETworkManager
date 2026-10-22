@@ -12,11 +12,11 @@ public partial class RDAPView : IDragablzTabItem
 {
     private readonly RDAPViewModel _viewModel;
 
-    public RDAPView(Guid tabId, string query = null, RDAPQueryType? queryType = null)
+    public RDAPView(Guid tabId, string query = null, RDAPQueryType? queryType = null, bool start = true)
     {
         InitializeComponent();
 
-        _viewModel = new RDAPViewModel(tabId, query, queryType);
+        _viewModel = new RDAPViewModel(tabId, query, queryType, start);
 
         DataContext = _viewModel;
 

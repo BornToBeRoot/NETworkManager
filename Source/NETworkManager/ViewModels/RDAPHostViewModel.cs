@@ -113,14 +113,15 @@ public class RDAPHostViewModel : ProfileHostViewModelBase
     ///     Type of the query. If null, the type is detected from the query (<see cref="RDAPQueryType.Auto" />, e.g. data
     ///     redirected from another tool or a run command), or the last selected type is used for an empty tab.
     /// </param>
-    public void AddTab(string query = null, RDAPQueryType? queryType = null)
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    public void AddTab(string query = null, RDAPQueryType? queryType = null, bool start = true)
     {
         if (queryType == null && !string.IsNullOrWhiteSpace(query))
             queryType = RDAPQueryType.Auto;
 
         var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(query ?? Strings.NewTab, new RDAPView(tabId, query, queryType),
+        TabItems.Add(new DragablzTabItem(query ?? Strings.NewTab, new RDAPView(tabId, query, queryType, start),
             tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
@@ -130,9 +131,10 @@ public class RDAPHostViewModel : ProfileHostViewModelBase
     ///     Adds a new tab and starts the query of the profile.
     /// </summary>
     /// <param name="profile">Profile to query.</param>
-    public void AddTab(ProfileInfo profile)
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    public void AddTab(ProfileInfo profile, bool start = true)
     {
-        AddTab(profile.RDAP_Query, profile.RDAP_QueryType);
+        AddTab(profile.RDAP_Query, profile.RDAP_QueryType, start: start);
     }
 
     #endregion

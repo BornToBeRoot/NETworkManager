@@ -8,7 +8,7 @@ keywords: [NETworkManager, run command, command palette, keyboard shortcut, Ctrl
 
 The **Run Command** opens a feature and runs it directly from the keyboard: press `Ctrl+Shift+P`, type a command like `ping 10.0.0.1` and press `Enter`.
 
-The run command can also be opened with the **Run command...** button in the title bar, or from anywhere with a global hotkey (default `Ctrl+Alt+P`, disabled by default), which brings the window to the foreground, see [Settings > HotKeys](./settings/hotkeys.md).
+The run command can also be opened with the **Run command...** box in the center of the title bar, or from anywhere with a global hotkey (default `Ctrl+Alt+P`, disabled by default), which brings the window to the foreground, see [Settings > HotKeys](./settings/hotkeys.md).
 
 ## Syntax
 
@@ -28,7 +28,7 @@ The input is validated like the input field of the feature (e.g. a valid host or
 
 | Command            | Aliases            | Arguments                           | Example                                  |
 | ------------------ | ------------------ | ----------------------------------- | ---------------------------------------- |
-| `ipscanner`        | `scan`             | `<range>`                           | `scan 10.0.0.0/24`                       |
+| `ipscanner`        | `ipscan`           | `<range>`                           | `ipscan 10.0.0.0/24`                     |
 | `portscanner`      | `portscan`         | `<hosts> [ports]`                   | `portscan 10.0.0.1 22; 80; 443`          |
 | `pingmonitor`      | `ping`             | `<hosts>`                           | `ping 10.0.0.1; 10.0.0.2`                |
 | `traceroute`       | `trace`, `tracert` | `<host>`                            | `trace borntoberoot.net`                 |
@@ -60,26 +60,60 @@ All features that accept a target also accept a profile (`@profile`), except the
 
 :::
 
+## Target without a command
+
+Type only the target (e.g. `10.0.0.1`) to get the commands that accept it, e.g. `ping 10.0.0.1`, `trace 10.0.0.1`, `dns 10.0.0.1`. Commands that were used with the same kind of target before (e.g. IP addresses) come first, otherwise they are in the order of the table. `Enter` runs the first command, which is selected; if it was already run with this target, it is shown under the recent commands, which are listed above. A host without a domain and a port are not selected, since they can also be a mistyped command or the start of an IP address (e.g. `192`). A shortened or partly typed IP address (e.g. `192.168.1`) is not a target.
+
+| Target                                              | Suggested commands                                                                  |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| IP address or host with a domain (`server.lan`)     | Ping Monitor, Traceroute, DNS Lookup, Port Scanner, remote tools, IP Geolocation, … |
+| Host without a domain (`server01`)                  | Ping Monitor, Traceroute, DNS Lookup, Port Scanner, remote tools, SNMP, IP Scanner  |
+| Several hosts (`10.0.0.1; 10.0.0.2`)                | Ping Monitor, DNS Lookup, Port Scanner, IP Scanner                                  |
+| IP range (`10.0.0.1-100`) or subnet (`10.0.0.0/24`) | IP Scanner, Subnet Calculator (subnet), Port Scanner, Ping Monitor, RDAP (subnet)   |
+| MAC address (`00:11:22:33:44:55`)                   | Wake on LAN, `lookup oui`                                                           |
+| First 3 bytes of a MAC address (`00:11:22`)         | `lookup oui`                                                                        |
+| Port(s) (`22`, `80-90/tcp`)                         | `lookup port`                                                                       |
+| AS number (`AS13335`)                               | RDAP                                                                                |
+| URL (`https://...`)                                 | Web Console                                                                         |
+
+A command always has priority (e.g. `web` is the Web Console). A host without a domain (e.g. `server01`) can also be a mistyped command, so its commands are only suggested if no command starts with the word (e.g. not for `pi`), and none is selected: select one with the arrow keys.
+
+**Clipboard:** If enabled in [Settings > General](./settings/general.md#suggest-the-clipboard-content-as-target), the commands for a target in the clipboard (e.g. a copied IP address) are suggested when the dialog is opened (up to 3), and `Enter` runs the first one. While typing the command, the commands for the clipboard that start with it are suggested (e.g. `pi` → `ping 10.0.0.1`). The clipboard is read when the dialog is opened; a single word (host without a domain) is not suggested. Disabled by default.
+
+## Dialog
+
+- **Icon:** The icon of the recognized feature is shown in front of the input.
+- **Syntax:** Below the input, the syntax of the command is shown; the part that is being typed is highlighted (e.g. `[DNS server]`). After the target, the argument comes before the type (e.g. DNS server, then record type), unless a complete type is typed (e.g. `aaaa`).
+- **Values:** The values as they were understood are shown (e.g. `Hosts: borntoberoot.net` · `DNS server: 1.1.1.1` · `Type: AAAA`).
+- **Validation:** While typing, what `Enter` runs is validated: a green check mark for valid input, or a red warning icon with the error as tooltip (e.g. an invalid host). If `Enter` is pressed with an invalid input, the dialog stays open and the tooltip with the error is shown until the next key.
+- **Size:** The dialog and the suggestions use more space in a large window.
+
 ## Suggestions
 
-While typing, suggestions are shown below the input:
+While typing, suggestions are shown below the input, grouped (e.g. _Recent_, _Profiles_, _Type_). The typed text is highlighted.
 
 | Input                        | Suggestions                                                              |
 | ---------------------------- | ------------------------------------------------------------------------ |
-| _empty_                      | Recently run commands and all features                                   |
-| Command (e.g. `tr`)          | Matching features                                                        |
-| After the command (`rdp `)   | The input as typed, recent commands of the feature and its profiles      |
-| After `lookup `              | The input as typed, the lookups (`oui`, `port`) and recent commands      |
+| _empty_                      | Commands for the clipboard (if enabled), recently run commands, examples (without recent commands) and all features |
+| Command (e.g. `tr`)          | Matching features, recent commands that contain the word (e.g. a host) and commands for the clipboard (if enabled) that start with it |
+| Target (e.g. `10.0.0.1`)     | Recent commands that contain the target and the commands that accept it, see [Target without a command](#target-without-a-command) |
+| After the command (`rdp `)   | Recent commands of the feature and its profiles                          |
+| After `lookup `              | The lookups (`oui`, `port`) and recent commands                          |
 | `@` (e.g. `rdp @web`)        | Profiles of the feature (with group and host); exact names first, recently run profiles first within the same match |
-| After the target             | The input as typed, types of the feature (e.g. DNS record types), configured DNS servers (DNS lookup) and recent commands |
+| After the target             | Configured DNS servers (DNS lookup), types of the feature (e.g. DNS record types) and recent commands, up to 10 of each |
 
-`Enter` runs what was typed: after the command, the input as typed is the first suggestion; profiles, recent commands, types and DNS servers are selected with the arrow keys. While typing the command, the best matching feature is selected (completing it keeps the arguments, e.g. `pin 10.0.0.1` → `ping 10.0.0.1`), but not if the input is empty or an unknown command has arguments. While typing `@`, a profile is only selected if exactly one matches. While typing the lookup (e.g. `lookup po`), the matching lookup is selected.
+`Enter` runs what was typed if no suggestion is selected: after the command, nothing is selected; profiles, recent commands, types and DNS servers are selected with the arrow keys (`Up` on the first suggestion selects none again). While typing the command, the best matching feature is selected (completing it keeps the arguments, e.g. `pin 10.0.0.1` → `ping 10.0.0.1`), but not if an unknown command has arguments; for a target without a command, see [Target without a command](#target-without-a-command). With an empty input, only the first command for the clipboard is selected (if enabled). While typing `@`, a profile is only selected if exactly one matches. While typing the lookup (e.g. `lookup po`), the matching lookup is selected.
 
-| Key          | Action                                         |
-| ------------ | ---------------------------------------------- |
-| `Up`, `Down` | Select a suggestion                            |
-| `Tab`        | Insert the selected suggestion into the input  |
-| `Enter`      | Run the selected suggestion                    |
-| `Esc`        | Close the dialog (or the close button)         |
+| Key           | Action                                                                                          |
+| ------------- | ----------------------------------------------------------------------------------------------- |
+| `Up`, `Down`  | Select a suggestion                                                                             |
+| `Tab`         | Insert the selected suggestion into the input. If none is selected, the first DNS server or type that matches the typed word (e.g. `dns borntoberoot.net c` → `cloudflare`) |
+| `Enter`       | Run the selected suggestion, or the input if none is selected                                   |
+| `Ctrl+Enter`  | Run and keep the dialog open, with the command in the input (e.g. `ping `) to run it with the next target. Commands that open a dialog (connect dialog of the remote tools, settings, Subnetting, which can ask for confirmation) close the dialog. |
+| `Shift+Enter` | Open the feature with the input filled in, without starting it (e.g. to adjust the options of a scan). The remote tools open the connect dialog (target) or connect (profile) as with `Enter`. |
+| `Shift+Del`   | Remove the selected recent command from the history (or click the remove button of a recent command) |
+| `Esc`         | Close the dialog (or the close button)                                                          |
+
+The keys are also shown at the bottom of the dialog (can be hidden in [Settings > General](./settings/general.md#show-key-hints)).
 
 Run commands are saved in a history (the number of entries is set in [Settings > General](./settings/general.md)).

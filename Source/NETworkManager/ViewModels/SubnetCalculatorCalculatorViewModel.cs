@@ -106,11 +106,13 @@ public class SubnetCalculatorCalculatorViewModel : ViewModelBase
     ///     Calculates the subnet (e.g. from the run command).
     /// </summary>
     /// <param name="subnet">Subnet (e.g. 10.0.0.0/24).</param>
-    public void Calculate(string subnet)
+    /// <param name="start">Calculates the subnet. If false, the subnet is only filled in.</param>
+    public void Calculate(string subnet, bool start = true)
     {
         Subnet = subnet;
 
-        Calculate();
+        if (start)
+            Calculate();
     }
 
     private void Calculate()

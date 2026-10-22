@@ -15,9 +15,9 @@ public partial class LookupOUILookupView
         DataContext = _viewModel;
     }
 
-    public void Lookup(string search)
+    public void Lookup(string search, bool start)
     {
-        _viewModel.Lookup(search);
+        _viewModel.Lookup(search, start);
     }
 
     private void ContextMenu_Opened(object sender, RoutedEventArgs e)

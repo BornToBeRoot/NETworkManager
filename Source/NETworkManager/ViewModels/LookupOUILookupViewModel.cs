@@ -198,11 +198,17 @@ public class LookupOUILookupViewModel : ViewModelBase
     /// Looks up MAC addresses or vendors (e.g. from the run command).
     /// </summary>
     /// <param name="search">MAC addresses or vendors, separated by ";".</param>
-    public void Lookup(string search)
+    /// <param name="start">Starts the lookup. If false, the search is only filled in.</param>
+    public void Lookup(string search, bool start = true)
     {
+        // Not while a lookup is running (the results would be mixed).
+        if (IsRunning)
+            return;
+
         Search = search;
 
-        OUILookupAction();
+        if (start)
+            OUILookupAction();
     }
 
     /// <summary>

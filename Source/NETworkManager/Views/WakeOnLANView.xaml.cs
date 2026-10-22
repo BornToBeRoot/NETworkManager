@@ -15,9 +15,9 @@ public partial class WakeOnLANView : IApplicationRequestHandler
     public void Open(ApplicationRequest request)
     {
         if (request.Profile != null)
-            _viewModel.WakeUp(request.Profile);
+            _viewModel.WakeUp(request.Profile, request.Start);
         else
-            _viewModel.WakeUp(request.Target, (request as WakeOnLANRequest)?.Broadcast);
+            _viewModel.WakeUp(request.Target, (request as WakeOnLANRequest)?.Broadcast, request.Start);
     }
 
     public void OnViewHide()

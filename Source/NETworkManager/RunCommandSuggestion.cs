@@ -9,11 +9,6 @@ namespace NETworkManager;
 public enum RunCommandSuggestionKind
 {
     /// <summary>
-    ///     Run the input as typed.
-    /// </summary>
-    Run,
-
-    /// <summary>
     ///     Command of an application (or the settings).
     /// </summary>
     Command,
@@ -36,7 +31,22 @@ public enum RunCommandSuggestionKind
     /// <summary>
     ///     DNS server configured in the DNS lookup.
     /// </summary>
-    DNSServer
+    DNSServer,
+
+    /// <summary>
+    ///     Command for a target typed without a command (e.g. "ping 10.0.0.1" for "10.0.0.1").
+    /// </summary>
+    Target,
+
+    /// <summary>
+    ///     Command for the target in the clipboard (e.g. "ping 10.0.0.1").
+    /// </summary>
+    Clipboard,
+
+    /// <summary>
+    ///     Example command (empty input without history).
+    /// </summary>
+    Example
 }
 
 /// <summary>
@@ -52,6 +62,16 @@ public sealed class RunCommandSuggestion
     public ApplicationName Application { get; init; }
 
     public string Title { get; init; }
+
+    /// <summary>
+    ///     Typed text that is highlighted in the title and description.
+    /// </summary>
+    public string Highlight { get; init; }
+
+    /// <summary>
+    ///     Header of the group in the list (e.g. "Recent"), null for no header.
+    /// </summary>
+    public string Group { get; init; }
 
     /// <summary>
     ///     Second line (e.g. group and host of a profile).
