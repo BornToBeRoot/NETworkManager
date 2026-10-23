@@ -777,11 +777,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType,
-                    instance.ExportAll
-                        ? Results
-                        : new ObservableCollection<IPScannerHostInfo>(SelectedResults.Cast<IPScannerHostInfo>()
-                            .ToArray()));
+                // Copy the results on the UI thread (they may still change while a scan is running) and
+                // export them in the background, so a large export doesn't freeze the window
+                var results = instance.ExportAll
+                    ? Results.ToList()
+                    : SelectedResults.Cast<IPScannerHostInfo>().ToList();
+
+                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }
             catch (Exception ex)
             {

@@ -582,11 +582,13 @@ public class PortScannerViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType,
-                    instance.ExportAll
-                        ? Results
-                        : new ObservableCollection<PortScannerPortInfo>(SelectedResults.Cast<PortScannerPortInfo>()
-                            .ToArray()));
+                // Copy the results on the UI thread (they may still change while a scan is running) and
+                // export them in the background, so a large export doesn't freeze the window
+                var results = instance.ExportAll
+                    ? Results.ToList()
+                    : SelectedResults.Cast<PortScannerPortInfo>().ToList();
+
+                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }
             catch (Exception ex)
             {
