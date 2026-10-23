@@ -149,12 +149,18 @@ public static class GlobalStaticConfiguration
     public static bool IPScanner_NetBIOSEnabled => true;
     public static int IPScanner_NetBIOSTimeout => 2000;
     public static ExportFileType IPScanner_ExportFileType => ExportFileType.Csv;
+    // Larger scans need a confirmation, even larger ones are refused (every IP address / port is kept in memory)
+    public static long IPScanner_ConfirmHostCount => 65536;
+    public static long IPScanner_MaxHostCount => 16777216;
 
     // Application: Port Scanner 
     public static int PortScanner_MaxHostThreads => 4;
     public static int PortScanner_MaxPortThreads => 128;
     public static int PortScanner_Timeout => 2000;
     public static ExportFileType PortScanner_ExportFileType => ExportFileType.Csv;
+    // Larger scans (hosts x ports) need a confirmation, even larger ones are refused
+    public static long PortScanner_ConfirmPortCount => 65536;
+    public static long PortScanner_MaxPortCount => 16777216;
 
     // Application: Ping Monitor
     public static int PingMonitor_Buffer => 32;

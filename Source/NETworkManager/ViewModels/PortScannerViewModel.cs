@@ -429,6 +429,34 @@ public class PortScannerViewModel : ViewModelBase
 
     private async Task Start()
     {
+        // Every port is kept in memory - ask before a large scan and refuse a too large one
+        // (e.g. 10.0.0.0/8 with 1-65535) instead of running out of memory
+        var hostCount = HostRangeHelper.GetHostCount(HostRangeHelper.CreateListFromInput(Host));
+        var portsPerHost = PortRangeHelper.ConvertPortRangeToIntArray(Ports).Length;
+        var portCount = hostCount * portsPerHost;
+
+        if (portCount > GlobalStaticConfiguration.PortScanner_MaxPortCount)
+        {
+            StatusMessage = string.Format(Strings.ScanTooManyPortsMessage, portCount.ToString("N0"),
+                hostCount.ToString("N0"), portsPerHost.ToString("N0"),
+                GlobalStaticConfiguration.PortScanner_MaxPortCount.ToString("N0"));
+            IsStatusMessageDisplayed = true;
+
+            return;
+        }
+
+        if (portCount > GlobalStaticConfiguration.PortScanner_ConfirmPortCount)
+        {
+            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive) ??
+                         Application.Current.MainWindow;
+
+            if (!await DialogHelper.ShowConfirmationMessageAsync(window, Strings.Scan,
+                    string.Format(Strings.ScanManyPortsMessage, portCount.ToString("N0"), hostCount.ToString("N0"),
+                        portsPerHost.ToString("N0")),
+                    ChildWindowIcon.Warn, Strings.Scan))
+                return;
+        }
+
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
 

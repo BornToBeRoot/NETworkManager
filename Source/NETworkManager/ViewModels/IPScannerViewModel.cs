@@ -499,6 +499,30 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// </summary>
     private async Task Start()
     {
+        // Every IP address is kept in memory - ask before a large scan and refuse a too large one
+        // (e.g. 10.0.0.0/1) instead of running out of memory
+        var hostCount = HostRangeHelper.GetHostCount(HostRangeHelper.CreateListFromInput(Host));
+
+        if (hostCount > GlobalStaticConfiguration.IPScanner_MaxHostCount)
+        {
+            StatusMessage = string.Format(Strings.ScanTooManyIPAddressesMessage, hostCount.ToString("N0"),
+                GlobalStaticConfiguration.IPScanner_MaxHostCount.ToString("N0"));
+            IsStatusMessageDisplayed = true;
+
+            return;
+        }
+
+        if (hostCount > GlobalStaticConfiguration.IPScanner_ConfirmHostCount)
+        {
+            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive) ??
+                         Application.Current.MainWindow;
+
+            if (!await DialogHelper.ShowConfirmationMessageAsync(window, Strings.Scan,
+                    string.Format(Strings.ScanManyIPAddressesMessage, hostCount.ToString("N0")),
+                    ChildWindowIcon.Warn, Strings.Scan))
+                return;
+        }
+
         IsStatusMessageDisplayed = false;
         IsRunning = true;
         PreparingScan = true;

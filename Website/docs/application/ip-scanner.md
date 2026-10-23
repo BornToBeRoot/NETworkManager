@@ -39,6 +39,10 @@ Multiple inputs can be combined with a semicolon (`;`). A column pasted from Exc
 
 Example: `10.0.0.0/24; 10.0.[10-20].1; 10.0.0.100-199`
 
+IP addresses that are part of multiple inputs (e.g. `10.0.0.1; 10.0.0.0/24`) are scanned only once. The network and broadcast address of a subnet are scanned as well.
+
+A scan of more than `65,536` IP addresses (e.g. a `/15`) must be confirmed, more than `16,777,216` IP addresses (a `/8`) cannot be scanned at once.
+
 :::
 
 ### Toolbar

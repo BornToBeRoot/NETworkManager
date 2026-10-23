@@ -11846,6 +11846,28 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} IP addresses will be scanned. This can take a long time and needs a lot of memory.
+        ///
+        ///Do you want to start the scan?.
+        /// </summary>
+        public static string ScanManyIPAddressesMessage {
+            get {
+                return ResourceManager.GetString("ScanManyIPAddressesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} ports will be scanned ({1} hosts × {2} ports). This can take a long time and needs a lot of memory.
+        ///
+        ///Do you want to start the scan?.
+        /// </summary>
+        public static string ScanManyPortsMessage {
+            get {
+                return ResourceManager.GetString("ScanManyPortsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scanned.
         /// </summary>
         public static string Scanned {
@@ -11860,6 +11882,24 @@ namespace NETworkManager.Localization.Resources {
         public static string ScanPorts {
             get {
                 return ResourceManager.GetString("ScanPorts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} IP addresses cannot be scanned at once (maximum {1}). Split the input into smaller ranges..
+        /// </summary>
+        public static string ScanTooManyIPAddressesMessage {
+            get {
+                return ResourceManager.GetString("ScanTooManyIPAddressesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} ports cannot be scanned at once ({1} hosts × {2} ports, maximum {3}). Split the input into fewer hosts or ports..
+        /// </summary>
+        public static string ScanTooManyPortsMessage {
+            get {
+                return ResourceManager.GetString("ScanTooManyPortsMessage", resourceCulture);
             }
         }
         

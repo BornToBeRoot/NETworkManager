@@ -66,7 +66,28 @@ public static class HostRangeHelper
     private static void AddIPv4SpecialRange(string host, List<(IPAddress ipAddress, string hostname)> hosts,
         CancellationToken ct)
     {
-        // Get the numbers of each octet
+        var octets = GetIPv4SpecialRangeOctets(host);
+
+        // Build the new ipv4
+        var count = 0;
+
+        foreach (var i in octets[0])
+        foreach (var j in octets[1])
+        foreach (var k in octets[2])
+        foreach (var h in octets[3])
+        {
+            if (count++ % CancellationCheckInterval == 0)
+                ct.ThrowIfCancellationRequested();
+
+            hosts.Add((new IPAddress([i, j, k, h]), string.Empty));
+        }
+    }
+
+    /// <summary>
+    ///     Gets the numbers of each octet of a special range like "192.168.[50-100,200].1".
+    /// </summary>
+    private static List<List<byte>> GetIPv4SpecialRangeOctets(string host)
+    {
         var octets = new List<List<byte>>();
 
         foreach (var octet in host.Split('.'))
@@ -94,19 +115,80 @@ public static class HostRangeHelper
             octets.Add(numbers);
         }
 
-        // Build the new ipv4
-        var count = 0;
+        return octets;
+    }
 
-        foreach (var i in octets[0])
-        foreach (var j in octets[1])
-        foreach (var k in octets[2])
-        foreach (var h in octets[3])
+    /// <summary>
+    ///     Gets the number of IP addresses of the inputs without expanding the ranges or resolving the hostnames
+    ///     (a hostname counts as 1, overlapping inputs are counted multiple times). Used to warn about (or refuse)
+    ///     very large scans before any memory is allocated.
+    /// </summary>
+    /// <param name="hosts">Inputs like "10.0.0.1", "example.com", "10.0.0.0/24" (see <see cref="CreateListFromInput" />).</param>
+    /// <returns>Number of IP addresses.</returns>
+    public static long GetHostCount(IEnumerable<string> hosts)
+    {
+        long count = 0;
+
+        foreach (var host in hosts)
         {
-            if (count++ % CancellationCheckInterval == 0)
-                ct.ThrowIfCancellationRequested();
+            switch (host)
+            {
+                // 192.168.0.1
+                case var _ when RegexHelper.IPv4AddressRegex().IsMatch(host):
+                    count++;
+                    break;
 
-            hosts.Add((new IPAddress([i, j, k, h]), string.Empty));
+                // 192.168.0.0/24 or 192.168.0.0/255.255.255.0
+                case var _ when RegexHelper.IPv4AddressCidrRegex().IsMatch(host):
+                case var _ when RegexHelper.IPv4AddressSubnetmaskRegex().IsMatch(host):
+                    count += (long)IPNetwork2.Parse(host).Total;
+                    break;
+
+                // 192.168.0.1-100
+                case var _ when RegexHelper.IPv4AddressShortRangeRegex().IsMatch(host):
+                    var shortRange = host.Split('-');
+                    var shortBase = shortRange[0][..shortRange[0].LastIndexOf('.')];
+
+                    count += GetIPv4RangeCount(IPAddress.Parse(shortRange[0]),
+                        IPAddress.Parse($"{shortBase}.{shortRange[1]}"));
+                    break;
+
+                // 192.168.0.0 - 192.168.0.100
+                case var _ when RegexHelper.IPv4AddressRangeRegex().IsMatch(host):
+                    var range = host.Split('-');
+
+                    count += GetIPv4RangeCount(IPAddress.Parse(range[0]), IPAddress.Parse(range[1]));
+                    break;
+
+                // 192.168.[50-100].1
+                case var _ when RegexHelper.IPv4AddressSpecialRangeRegex().IsMatch(host):
+                    count += GetIPv4SpecialRangeOctets(host).Aggregate(1L, (product, octet) => product * octet.Count);
+                    break;
+
+                // example.com/24 or example.com/255.255.255.128 (IPv6 address and example.com count as 1)
+                case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainWithCidrRegex):
+                case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainWithSubnetmaskRegex):
+                    count += (long)IPNetwork2.Parse($"0.0.0.0/{host.Split('/')[1]}").Total;
+                    break;
+
+                default:
+                    count++;
+                    break;
+            }
         }
+
+        return count;
+    }
+
+    /// <summary>
+    ///     Gets the number of IPv4 addresses in the inclusive range [<paramref name="start" />, <paramref name="end" />].
+    /// </summary>
+    private static long GetIPv4RangeCount(IPAddress start, IPAddress end)
+    {
+        var from = (long)unchecked((uint)IPv4Address.ToInt32(start));
+        var to = (long)unchecked((uint)IPv4Address.ToInt32(end));
+
+        return Math.Max(to - from + 1, 0);
     }
 
     /// <summary>
