@@ -20,6 +20,16 @@ public sealed class IPScanner(IPScannerOptions options)
 {
     #region Variables
 
+    /// <summary>
+    ///     Minimum time between the start of two hosts, see <see cref="StartScheduler" />. 128 hosts are started
+    ///     within ~1.3 s instead of at the same moment (~11 connection requests per 10 ms instead of ~1400 at once).
+    ///     A host takes up to ~4 s (2 x 2000 ms ICMP), so once all slots are busy, the hosts start when a slot is
+    ///     free anyway (no slowdown); the ramp-up costs ~1.3 s once per scan.
+    /// </summary>
+    private static readonly TimeSpan HostStartInterval = TimeSpan.FromMilliseconds(10);
+
+    private readonly StartScheduler _hostStartScheduler = new(HostStartInterval);
+
     private int _progressValue;
     private readonly InterlockedCounter _hostsUp = new();
     private readonly InterlockedCounter _hostsDown = new();
@@ -117,6 +127,9 @@ public sealed class IPScanner(IPScannerOptions options)
                 // Start scan
                 await Parallel.ForEachAsync(hosts, hostParallelOptions, async (host, ct) =>
                 {
+                    // Spread the start of the hosts over time instead of starting all at once
+                    await _hostStartScheduler.WaitAsync(ct).ConfigureAwait(false);
+
                     // Start ping, port scan and netbios lookup concurrently - none of these block a thread anymore
                     var pingTask = PingAsync(host.ipAddress, ct);
 

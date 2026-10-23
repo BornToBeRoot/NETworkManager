@@ -1,0 +1,48 @@
+using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace NETworkManager.Models.Network;
+
+/// <summary>
+///     Spreads the start of concurrent operations over time (at most one start per interval) instead of starting
+///     them all at the same moment. Used by <see cref="IPScanner" /> and <see cref="PortScanner" />: without it, all
+///     hosts / ports of a "wave" start (and, because of the same timeouts, also finish) at once. That sends hundreds of
+///     connection requests within a few milliseconds and makes the progress jump in large steps.
+/// </summary>
+/// <remarks>
+///     Every caller reserves the next free start time (one interval after the previous one) and only waits until
+///     then, so the waits don't add up. Once all concurrent slots are busy, an operation only starts when another
+///     one has finished - usually later than its reserved time - so there is no additional delay.
+/// </remarks>
+/// <param name="interval">Minimum time between two starts.</param>
+internal sealed class StartScheduler(TimeSpan interval)
+{
+    private readonly Lock _lock = new();
+    private readonly long _intervalTicks = (long)(interval.TotalSeconds * Stopwatch.Frequency);
+    private long _nextStartTimestamp;
+
+    /// <summary>
+    ///     Waits until the next free start time.
+    /// </summary>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    public Task WaitAsync(CancellationToken cancellationToken)
+    {
+        if (_intervalTicks <= 0)
+            return Task.CompletedTask;
+
+        var now = Stopwatch.GetTimestamp();
+        long start;
+
+        lock (_lock)
+        {
+            start = Math.Max(now, _nextStartTimestamp);
+            _nextStartTimestamp = start + _intervalTicks;
+        }
+
+        var delay = Stopwatch.GetElapsedTime(now, start);
+
+        return delay > TimeSpan.Zero ? Task.Delay(delay, cancellationToken) : Task.CompletedTask;
+    }
+}
