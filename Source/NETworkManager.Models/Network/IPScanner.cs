@@ -238,6 +238,8 @@ public sealed class IPScanner(IPScannerOptions options)
     {
         using var ping = new System.Net.NetworkInformation.Ping();
 
+        PingInfo pingInfo = null;
+
         for (var i = 0; i < options.ICMPAttempts; i++)
         {
             // Get timestamp
@@ -274,22 +276,22 @@ public sealed class IPScanner(IPScannerOptions options)
                 }
 
                 // Failed
-                if (pingReply != null)
-                    return new PingInfo(timestamp, ipAddress, pingReply.Status);
+                pingInfo = new PingInfo(timestamp, ipAddress, pingReply.Status);
+
+                // Only try again if the request timed out (e.g. a lost packet). Other states like
+                // "destination host unreachable" are a definitive answer.
+                if (pingReply.Status != IPStatus.TimedOut)
+                    break;
             }
             catch (PingException)
             {
                 // Ping failed with unknown status
                 return new PingInfo(timestamp, ipAddress, IPStatus.Unknown);
             }
-
-            // Don't scan again, if the user has canceled (when more than 1 attempt)
-            if (cancellationToken.IsCancellationRequested)
-                break;
         }
 
-        // Fall back to unknown status
-        return new PingInfo(DateTime.Now, ipAddress, IPStatus.Unknown);
+        // Result of the last attempt (falls back to unknown status if there was no attempt)
+        return pingInfo ?? new PingInfo(DateTime.Now, ipAddress, IPStatus.Unknown);
     }
 
     private async Task<List<PortInfo>> PortScanAsync(IPAddress ipAddress, ParallelOptions parallelOptions,

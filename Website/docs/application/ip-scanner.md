@@ -111,7 +111,7 @@ Show the scan result for all IP addresses and ports including the ones that are 
 
 ### Attempts
 
-Number of times an ICMP request is retried for each IP address if the request has timed out.
+Maximum number of ICMP requests sent to each IP address. Another request is only sent if the previous one has timed out (e.g. a lost packet), other replies like "destination host unreachable" are final.
 
 **Type:** `Integer` [Min `1`, Max `10`]
 
