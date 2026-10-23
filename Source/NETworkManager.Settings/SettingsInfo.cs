@@ -1312,6 +1312,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_PortScanTimeout;
 
+    public int IPScanner_PortScanAttempts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_PortScanAttempts;
+
     public bool IPScanner_NetBIOSEnabled
     {
         get;
@@ -1349,7 +1362,7 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.IPScanner_ResolveMACAddress;
 
     public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
     {
@@ -1501,6 +1514,19 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.PortScanner_Timeout;
+
+    public int PortScanner_Attempts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PortScanner_Attempts;
 
     public int PortScanner_MaxHostThreads
     {

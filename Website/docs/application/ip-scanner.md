@@ -15,7 +15,7 @@ keywords:
 
 # IP Scanner
 
-With the **IP Scanner** you can scan for active devices based on the hostname or in IP ranges that are reachable via ICMP or have a common TCP port open.
+With the **IP Scanner** you can scan for active devices based on the hostname or in IP ranges that are reachable via ICMP, answer on a common TCP port (open, or closed with a TCP reset) or reply to a NetBIOS request.
 
 ![IP Scanner](../img/ip-scanner.png)
 
@@ -39,6 +39,10 @@ Multiple inputs can be combined with a semicolon (`;`). A column pasted from Exc
 
 Example: `10.0.0.0/24; 10.0.[10-20].1; 10.0.0.100-199`
 
+IP addresses that are part of multiple inputs (e.g. `10.0.0.1; 10.0.0.0/24`) are scanned only once. If an IP address is also entered as hostname, the hostname is kept; an IP address entered with different hostnames (e.g. two names of one server) is scanned once per hostname. The network and broadcast address of a subnet are scanned as well.
+
+A scan of more than `65,536` IP addresses (e.g. a `/15`) must be confirmed, more than `16,777,216` IP addresses (a `/8`) cannot be scanned at once.
+
 :::
 
 ### Toolbar
@@ -59,10 +63,32 @@ with link-local addresses (`169.254.x.x`) given lower priority.
 
 Right-clicking a result allows forwarding device information to another tool (e.g. [Port Scanner](./port-scanner), Remote Desktop), querying the registration data of its IP address or hostname via [RDAP](./rdap), creating a new profile, or executing a [custom command](#custom-commands).
 
-| Action        | Description                                      |
-| ------------- | ------------------------------------------------ |
-| **Copy**      | Copies the selected information to the clipboard |
-| **Export...** | Exports the selected or all results to a file    |
+| Action                                                                            | Description                                                                                                   |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| **Port Scanner** / **Ping Monitor** / **Traceroute**                              | Opens the host (hostname if resolved, otherwise the IP address) in the tool                                  |
+| **DNS lookup...** > **IP address** / **Hostname**                                 | Looks up the IP address (`PTR`) or the hostname in [DNS Lookup](./dns-lookup)                                 |
+| **RDAP...** > **IP address** / **Hostname**                                       | Queries the registration data of the IP address or the registered domain of the hostname in [RDAP](./rdap)    |
+| **Remote Desktop** / **PowerShell** / **PuTTY** / **TigerVNC** / **SNMP**         | Opens the host (hostname if resolved, otherwise the IP address) in the tool                                  |
+| **Custom commands**                                                               | Executes a [custom command](#custom-commands) for the host                                                    |
+| **Add profile...**                                                                | Creates a new profile with the host (IP address), the hostname as name and the MAC address for Wake on LAN    |
+| **Copy**                                                                          | Copies the selected information to the clipboard                                                              |
+| **Export...**                                                                     | Exports the selected or all results to a file                                                                 |
+
+If multiple results are selected, only **Export...** is available.
+
+### Result
+
+The number of reachable (up) and unreachable (down) IP addresses is shown next to the **Result** header. Expand a row to see the ping details, the scanned ports and the NetBIOS information (computer name, domain/workgroup, user and MAC address) of the host.
+
+Only reachable hosts are shown, unless [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) is enabled. A message below the input is shown if no reachable host was found, the scan was canceled, a hostname could not be resolved or an error occurred.
+
+### Keyboard shortcuts
+
+| Key      | Action                         |
+| -------- | ------------------------------ |
+| `Enter`  | Start the scan                 |
+| `Esc`    | Cancel the running scan        |
+| `Ctrl+T` | Open a new tab                 |
 
 ## Profile
 
@@ -111,7 +137,7 @@ Show the scan result for all IP addresses and ports including the ones that are 
 
 ### Attempts
 
-Number of times an ICMP request is retried for each IP address if the request has timed out.
+Maximum number of ICMP requests sent to each IP address. Another request is only sent if the previous one has timed out (e.g. a lost packet), other replies like "destination host unreachable" are final.
 
 **Type:** `Integer` [Min `1`, Max `10`]
 
@@ -123,13 +149,13 @@ Timeout in milliseconds for each ICMP request, after which the packet is conside
 
 **Type:** `Integer` [Min `100`, Max `15000`]
 
-**Default:** `4000`
+**Default:** `2000`
 
 ### Buffer
 
 Size of the buffer for each ICMP request in bytes.
 
-**Type:** `Integer` [Min `1`, Max `65535`]
+**Type:** `Integer` [Min `1`, Max `65500`]
 
 **Default:** `32`
 
@@ -165,11 +191,31 @@ Multiple ports and port ranges can be combined with a semicolon (e.g. `22; 80; 4
 
 ### Timeout (ms)
 
-Timeout in milliseconds after which a port is considered closed / timed out.
+Timeout in milliseconds after which a port is considered timed out (no answer). A port is closed if the host refused the connection.
 
 **Type:** `Integer` [Min `100`, Max `15000`]
 
-**Default:** `4000`
+**Default:** `2000`
+
+:::note
+
+A closed port is reported as soon as the host refuses the connection. Each attempt sends the connection request once (see [Attempts](#attempts-1)).
+
+:::
+
+### Attempts
+
+Number of connection requests sent to each port. Another request is only sent if there was no answer (timed out), an open or closed port is final.
+
+**Type:** `Integer` [Min `1`, Max `10`]
+
+**Default:** `1`
+
+:::tip
+
+In a local network (LAN), `1` is enough. On an unreliable network (e.g. Wi-Fi, VPN) or for hosts on the internet, a lost connection request can make an open port appear as timed out and a host appear as unreachable - increase it to `2` in this case. This only takes longer for ports without answer (attempts × timeout); with the default settings, unreachable hosts are not slower up to `2` attempts, because the ping takes as long (2 × 2000 ms).
+
+:::
 
 ### Scan for NetBIOS
 
@@ -185,7 +231,7 @@ Timeout in milliseconds after which a NetBIOS request is considered lost.
 
 **Type:** `Integer` [Min `100`, Max `15000`]
 
-**Default:** `4000`
+**Default:** `2000`
 
 ### Resolve MAC address and vendor
 
@@ -224,6 +270,12 @@ In the arguments you can use the following placeholders:
 
 :::note
 
+The hostname comes from the network (DNS PTR record or NetBIOS name). For security reasons, `{{Hostname}}` is replaced with an empty value if the hostname contains characters that are not allowed in a hostname (e.g. `&` or a space), so it can't be used to run other commands.
+
+:::
+
+:::note
+
 Right-click on a selected custom command to `edit` or `delete` it.
 
 You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected custom command.
@@ -232,32 +284,28 @@ You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected cus
 
 ### Max. concurrent host threads
 
-Maximum number of threads used to scan for active hosts (1 thread = 1 host / IP address).
+Maximum number of hosts (IP addresses) that are scanned at the same time. A thread is not an operating system thread, but one host that is pinged, scanned for ports and NetBIOS concurrently.
 
-**Type:** `Integer` [Min `1`, Max `512`]
+**Type:** `Integer` [Min `1`, Max `256`]
 
-**Default:** `64`
+**Default:** `128`
 
 :::warning
 
-Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.
-
-Too many threads can also cause performance problems on the device.
+Every host opens up to [Max. concurrent port threads](#max-concurrent-port-threads) TCP connections at the same time (with the default settings up to 128 × 11 = 1408). Too many simultaneous requests may be detected as a port scan and blocked or rate-limited by a firewall (local, on the network or on the scanned devices) and can overload small routers. If hosts are missing in the result or the network becomes slow during the scan, reduce the number of threads. This will increase the scan time.
 
 :::
 
 ### Max. concurrent port threads
 
-Maximum number of threads that are used to scan for open ports for each host (IP address).
+Maximum number of ports that are scanned at the same time for each host (IP address). If this is less than the number of [ports](#ports), the remaining ports are scanned after the first ones are finished, which increases the time per host by the [timeout](#timeout-ms-1).
 
-**Type:** `Integer` [Min `1`, Max `10`]
+**Type:** `Integer` [Min `1`, Max `32`]
 
-**Default:** `4`
+**Default:** `16`
 
 :::warning
 
-Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.
-
-Too many threads can also cause performance problems on the device.
+Too many simultaneous requests may be detected as a port scan and blocked or rate-limited by a firewall (local, on the network or on the scanned devices). If hosts are missing in the result, reduce the number of threads. This will increase the scan time.
 
 :::

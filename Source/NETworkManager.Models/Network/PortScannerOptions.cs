@@ -11,14 +11,16 @@ public class PortScannerOptions
     /// <param name="maxHostThreads">Max cuncurrent threads for the host scan.</param>
     /// <param name="maxPortThreads">Max cuncurrent threads for the port scan of each host.</param>
     /// <param name="timeout">Timeout in ms after which the port is considered closed.</param>
+    /// <param name="attempts">Number of attempts to connect to a port if there was no answer.</param>
     /// <param name="resolveHostname">Resolve the hostname for an IP address.</param>
     /// <param name="showAllResults">Include closed ports in the result.</param>
-    public PortScannerOptions(int maxHostThreads, int maxPortThreads, int timeout, bool resolveHostname,
-        bool showAllResults)
+    public PortScannerOptions(int maxHostThreads, int maxPortThreads, int timeout, int attempts,
+        bool resolveHostname, bool showAllResults)
     {
         MaxHostThreads = maxHostThreads;
         MaxPortThreads = maxPortThreads;
         Timeout = timeout;
+        Attempts = attempts;
         ResolveHostname = resolveHostname;
         ShowAllResults = showAllResults;
     }
@@ -37,6 +39,11 @@ public class PortScannerOptions
     ///     Timeout in ms after which the port is considered closed.
     /// </summary>
     public int Timeout { get; set; }
+
+    /// <summary>
+    ///     Number of attempts to connect to a port if there was no answer (timed out).
+    /// </summary>
+    public int Attempts { get; set; }
 
     /// <summary>
     ///     Resolve the hostname for an IP address.

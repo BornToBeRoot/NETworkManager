@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NETworkManager.Utilities;
@@ -31,7 +32,8 @@ public static class PortRangeHelper
         return Task.Run(() => ConvertPortRangeToIntArray(portRange));
     }
 
-    // Generate from a string like "9; 11-13; 15" an list with "9,11,12,13,15"
+    // Generate from a string like "9; 11-13; 15" an list with "9,11,12,13,15". Ports entered multiple times
+    // (e.g. "80; 1-100") are only added once (first occurrence, order is kept)
     public static int[] ConvertPortRangeToIntArray(string portRange)
     {
         var list = new List<int>();
@@ -48,6 +50,6 @@ public static class PortRangeHelper
                 list.Add(int.Parse(portOrRange));
             }
 
-        return list.ToArray();
+        return list.Distinct().ToArray();
     }
 }

@@ -312,13 +312,24 @@ Import-Module NetTCPIP -ErrorAction Stop").Invoke();
     }
 
     /// <summary>
-    /// Returns the MAC address for <paramref name="ipAddress"/> by scanning the neighbor
-    /// cache, or <see langword="null"/> when no entry exists. Supports both IPv4 and IPv6.
+    /// Returns a snapshot of the neighbor cache (IPv4 and IPv6) as map from IP address to MAC address
+    /// (e.g. "001122AABBCC"). IPv6 addresses are stored without scope id (see
+    /// <see cref="IPAddressHelper.WithoutScopeId"/>), entries without a MAC address are skipped.
+    /// Reading the table once and looking up many addresses is much cheaper than reading it per address.
     /// </summary>
-    public static string GetMACAddress(IPAddress ipAddress)
+    public static Dictionary<IPAddress, string> GetMACAddressMap()
     {
-        var entry = GetTable().FirstOrDefault(x => x.IPAddress.Equals(ipAddress));
-        return entry?.MACAddress.ToString();
+        var map = new Dictionary<IPAddress, string>();
+
+        foreach (var entry in GetTable())
+        {
+            var macAddress = entry.MACAddress.ToString();
+
+            if (!string.IsNullOrEmpty(macAddress))
+                map[IPAddressHelper.WithoutScopeId(entry.IPAddress)] = macAddress;
+        }
+
+        return map;
     }
 
     /// <summary>

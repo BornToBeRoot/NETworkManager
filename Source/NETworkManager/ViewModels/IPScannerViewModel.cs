@@ -499,6 +499,48 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// </summary>
     private async Task Start()
     {
+        // Every IP address is kept in memory - ask before a large scan and refuse a too large one
+        // (e.g. 10.0.0.0/1) instead of running out of memory
+        long hostCount;
+
+        try
+        {
+            hostCount = HostRangeHelper.GetHostCount(HostRangeHelper.CreateListFromInput(Host));
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while counting the hosts", ex);
+
+            StatusMessage = ex.Message;
+            IsStatusMessageDisplayed = true;
+
+            return;
+        }
+
+        if (hostCount > GlobalStaticConfiguration.IPScanner_MaxHostCount)
+        {
+            StatusMessage = string.Format(Strings.ScanTooManyIPAddressesMessage, hostCount.ToString("N0"),
+                GlobalStaticConfiguration.IPScanner_MaxHostCount.ToString("N0"));
+            IsStatusMessageDisplayed = true;
+
+            return;
+        }
+
+        if (hostCount > GlobalStaticConfiguration.IPScanner_ConfirmHostCount)
+        {
+            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive) ??
+                         Application.Current.MainWindow;
+
+            if (!await DialogHelper.ShowConfirmationMessageAsync(window, Strings.Scan,
+                    string.Format(Strings.ScanManyIPAddressesMessage, hostCount.ToString("N0")),
+                    ChildWindowIcon.Warn, Strings.Scan))
+                return;
+
+            // The tab may have been closed while the dialog was open (OnClose only stops a running scan)
+            if (_closed)
+                return;
+        }
+
         IsStatusMessageDisplayed = false;
         IsRunning = true;
         PreparingScan = true;
@@ -528,17 +570,27 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
 
-        // Resolve hostnames
+        // Resolve hostnames and convert the ports. Start() is fire-and-forget, so every exception has to be
+        // handled here - otherwise the scan would never end (IsRunning stays true).
         (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved) hosts;
+        int[] ports;
 
         try
         {
             hosts = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(Host),
                 SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
+
+            ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(
+                SettingsManager.Current.IPScanner_PortScanPorts);
         }
         catch (OperationCanceledException)
         {
-            UserHasCanceled(this, EventArgs.Empty);
+            ScanComplete(this, new ScanCompleteArgs(true));
+            return;
+        }
+        catch (Exception ex)
+        {
+            ScanComplete(this, new ScanCompleteArgs(false, ex));
             return;
         }
 
@@ -566,8 +618,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
             SettingsManager.Current.IPScanner_ResolveHostname,
             SettingsManager.Current.IPScanner_PortScanEnabled,
-            await PortRangeHelper.ConvertPortRangeToIntArrayAsync(SettingsManager.Current.IPScanner_PortScanPorts),
+            ports,
             SettingsManager.Current.IPScanner_PortScanTimeout,
+            SettingsManager.Current.IPScanner_PortScanAttempts,
             SettingsManager.Current.IPScanner_NetBIOSEnabled,
             SettingsManager.Current.IPScanner_NetBIOSTimeout,
             SettingsManager.Current.IPScanner_ResolveMACAddress,
@@ -577,7 +630,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         ipScanner.HostScanned += HostScanned;
         ipScanner.ScanComplete += ScanComplete;
         ipScanner.ProgressChanged += ProgressChanged;
-        ipScanner.UserHasCanceled += UserHasCanceled;
 
         _resultsFlushTimer = new DispatcherTimer(DispatcherPriority.Background)
         {
@@ -612,52 +664,65 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         IsSubnetDetectionRunning = true;
 
-        // Try to detect local IP address based on routing to public IP
-        var localIP = await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse(GlobalStaticConfiguration.Dashboard_PublicIPv4Address));
-
-        // Fallback: Try to detect local IP address from network interfaces -> Prefer non link-local addresses
-        localIP ??= await NetworkInterface.DetectLocalIPAddressFromNetworkInterfaceAsync(System.Net.Sockets.AddressFamily.InterNetwork);
-
-        // If local IP address detected, try to find subnetmask from network interfaces
-        if (localIP != null)
+        try
         {
-            var subnetDetected = false;
+            // Try to detect local IP address based on routing to public IP
+            var localIP = await NetworkInterface.DetectLocalIPAddressBasedOnRoutingAsync(IPAddress.Parse(GlobalStaticConfiguration.Dashboard_PublicIPv4Address));
 
-            // Get network interfaces, where local IP address is assigned
-            var networkInterface = (await NetworkInterface.GetNetworkInterfacesAsync())
-                .FirstOrDefault(x => x.IPv4Address.Any(y => y.Item1.Equals(localIP)));
+            // Fallback: Try to detect local IP address from network interfaces -> Prefer non link-local addresses
+            localIP ??= await NetworkInterface.DetectLocalIPAddressFromNetworkInterfaceAsync(System.Net.Sockets.AddressFamily.InterNetwork);
 
-            // If found, get subnetmask
-            if (networkInterface != null)
+            // If local IP address detected, try to find subnetmask from network interfaces
+            if (localIP != null)
             {
+                var subnetDetected = false;
 
-                // Find the correct IP address and the associated subnetmask
-                var ipAddressWithSubnet = networkInterface.IPv4Address.First(x => x.Item1.Equals(localIP));
+                // Get network interfaces, where local IP address is assigned
+                var networkInterface = (await NetworkInterface.GetNetworkInterfacesAsync())
+                    .FirstOrDefault(x => x.IPv4Address.Any(y => y.Item1.Equals(localIP)));
 
-                Host = $"{ipAddressWithSubnet.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(ipAddressWithSubnet.Item2)}";
+                // If found, get subnetmask
+                if (networkInterface != null)
+                {
 
-                subnetDetected = true;
+                    // Find the correct IP address and the associated subnetmask
+                    var ipAddressWithSubnet = networkInterface.IPv4Address.First(x => x.Item1.Equals(localIP));
 
-                // Fix: If the user clears the TextBox and then clicks again on the button, the TextBox remains empty...
-                OnPropertyChanged(nameof(Host));
+                    Host = $"{ipAddressWithSubnet.Item1}/{Subnetmask.ConvertSubnetmaskToCidr(ipAddressWithSubnet.Item2)}";
+
+                    subnetDetected = true;
+
+                    // Fix: If the user clears the TextBox and then clicks again on the button, the TextBox remains empty...
+                    OnPropertyChanged(nameof(Host));
+                }
+
+                // Show error message if subnet could not be detected
+                if (!subnetDetected)
+                {
+                    var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+                    await DialogHelper.ShowMessageAsync(window, Strings.Error, Strings.CouldNotDetectSubnetmask, ChildWindowIcon.Error);
+                }
             }
-
-            // Show error message if subnet could not be detected
-            if (!subnetDetected)
+            else
             {
                 var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
-                await DialogHelper.ShowMessageAsync(window, Strings.Error, Strings.CouldNotDetectSubnetmask, ChildWindowIcon.Error);
+                await DialogHelper.ShowMessageAsync(window, Strings.Error, Strings.CouldNotDetectLocalIPAddressMessage, ChildWindowIcon.Error);
             }
         }
-        else
+        catch (Exception ex)
         {
+            Log.Error("Error while detecting the local subnet", ex);
+
             var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
 
-            await DialogHelper.ShowMessageAsync(window, Strings.Error, Strings.CouldNotDetectLocalIPAddressMessage, ChildWindowIcon.Error);
+            await DialogHelper.ShowMessageAsync(window, Strings.Error, ex.Message, ChildWindowIcon.Error);
         }
-
-        IsSubnetDetectionRunning = false;
+        finally
+        {
+            IsSubnetDetectionRunning = false;
+        }
     }
 
     /// <summary>
@@ -671,10 +736,21 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             var info = (CustomCommandInfo)CustomCommands.FirstOrDefault(x => x.ID == id)?.Clone();
 
             if (info == null)
-                return; // ToDo: Log and error message
+            {
+                Log.Warn($"Custom command with ID \"{id}\" not found (deleted while the context menu was open?)");
+                return;
+            }
 
             // Replace vars
             var hostname = !string.IsNullOrEmpty(SelectedResult.Hostname) ? SelectedResult.Hostname.TrimEnd('.') : "";
+
+            // The hostname comes from the network (PTR record or NetBIOS name) and could contain characters
+            // like "&" that would run additional commands (e.g. "cmd.exe /c ... {{Hostname}}") - only use valid ones
+            if (!string.IsNullOrEmpty(hostname) && !RegexHelper.HostnameOrDomainRegex().IsMatch(hostname))
+            {
+                Log.Warn($"Hostname \"{hostname}\" of {SelectedResult.PingInfo.IPAddress} is not a valid hostname and is not used for the custom command.");
+                hostname = "";
+            }
             var ipAddress = SelectedResult.PingInfo.IPAddress.ToString();
 
             info.FilePath = PlaceholderHelper.Resolve(info.FilePath,
@@ -720,11 +796,17 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType,
-                    instance.ExportAll
-                        ? Results
-                        : new ObservableCollection<IPScannerHostInfo>(SelectedResults.Cast<IPScannerHostInfo>()
-                            .ToArray()));
+                // Copy the results on the UI thread (they may still change while a scan is running) and
+                // export them in the background, so a large export doesn't freeze the window. In the order
+                // shown in the grid (Results is in the order the hosts were finished).
+                var viewResults = ResultsView.Cast<IPScannerHostInfo>();
+
+                var results = instance.ExportAll
+                    ? viewResults.ToList()
+                    : viewResults.Where(new HashSet<IPScannerHostInfo>(SelectedResults.Cast<IPScannerHostInfo>())
+                        .Contains).ToList();
+
+                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }
             catch (Exception ex)
             {
@@ -791,8 +873,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     /// <summary>
     /// Moves buffered scan results into <see cref="Results"/>. Always called on the UI thread -
-    /// either from the <see cref="_resultsFlushTimer"/> tick, or from within a Dispatcher.Invoke
-    /// call in <see cref="ScanComplete"/> / <see cref="UserHasCanceled"/>.
+    /// either from the <see cref="_resultsFlushTimer"/> tick, or from within the Dispatcher.Invoke
+    /// call in <see cref="ScanComplete"/>.
     /// </summary>
     private void FlushResultsBuffer()
     {
@@ -842,47 +924,50 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
-    /// Handles the ScanComplete event.
+    /// Handles the ScanComplete event. This is the only place where a scan ends (completed, canceled
+    /// or failed), so the state is reset exactly once and a new scan can't be started before it ran.
+    /// Also called directly (on the UI thread) if the scan is canceled while the hosts are resolved.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-    private void ScanComplete(object sender, EventArgs e)
+    /// <param name="sender">The <see cref="IPScanner"/> instance raising the event, or this view model.</param>
+    /// <param name="e">The <see cref="ScanCompleteArgs"/> instance containing the event data.</param>
+    private void ScanComplete(object sender, ScanCompleteArgs e)
     {
-        // Run in UI thread with lower priority than HostScanned event
-        // to ensure all results are added first #3285
         Application.Current.Dispatcher.Invoke(() =>
         {
+            if (sender is IPScanner ipScanner)
+            {
+                ipScanner.HostScanned -= HostScanned;
+                ipScanner.ScanComplete -= ScanComplete;
+                ipScanner.ProgressChanged -= ProgressChanged;
+            }
+
+            // Results are buffered - add the remaining ones
             _resultsFlushTimer?.Stop();
             FlushResultsBuffer();
             FlushProgress();
 
-            if (Results.Count == 0)
+            if (e.IsCanceled)
             {
-                StatusMessage = Strings.NoReachableHostsFound;
+                StatusMessage = Strings.CanceledByUserMessage;
+                IsStatusMessageDisplayed = true;
+            }
+            else if (e.Exception != null)
+            {
+                Log.Error("Error while scanning", e.Exception);
+
+                StatusMessage = e.Exception.Message;
+                IsStatusMessageDisplayed = true;
+            }
+            else if (Results.Count == 0)
+            {
+                // Keep a message from the preparation (e.g. hostnames that could not be resolved)
+                StatusMessage = IsStatusMessageDisplayed
+                    ? StatusMessage + Environment.NewLine + Strings.NoReachableHostsFound
+                    : Strings.NoReachableHostsFound;
                 IsStatusMessageDisplayed = true;
             }
 
-            IsCanceling = false;
-            IsRunning = false;
-        }, DispatcherPriority.Background);
-    }
-
-    /// <summary>
-    /// Handles the UserHasCanceled event.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-    private void UserHasCanceled(object sender, EventArgs e)
-    {
-        Application.Current.Dispatcher.Invoke(() =>
-        {
-            _resultsFlushTimer?.Stop();
-            FlushResultsBuffer();
-            FlushProgress();
-
-            StatusMessage = Strings.CanceledByUserMessage;
-            IsStatusMessageDisplayed = true;
-
+            PreparingScan = false;
             IsCanceling = false;
             IsRunning = false;
         });

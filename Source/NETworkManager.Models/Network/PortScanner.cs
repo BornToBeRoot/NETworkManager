@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,15 @@ public sealed class PortScanner
     #endregion
 
     #region Variables
+
+    /// <summary>
+    ///     Time between the start of two port probes (of all hosts) during the ramp-up, see
+    ///     <see cref="StartScheduler" />. Smaller than in the IP Scanner, because there are more concurrent probes:
+    ///     with the default settings the first 4 hosts x 128 ports are started within ~0.5 s instead of at the same
+    ///     moment, the following ones when a slot is free. Shorter if a probe takes less than 512 x 1 ms
+    ///     (see <see cref="StartScheduler.GetInterval" />).
+    /// </summary>
+    private static readonly TimeSpan MaxPortStartInterval = TimeSpan.FromMilliseconds(1);
 
     private int _progressValue;
     private readonly InterlockedCounter _portsOpen = new();
@@ -50,11 +60,15 @@ public sealed class PortScanner
         PortScanned?.Invoke(this, e);
     }
 
-    public event EventHandler ScanComplete;
+    /// <summary>
+    ///     Occurs when the scan is complete. Raised exactly once per scan, also when the scan was canceled
+    ///     or failed (see <see cref="ScanCompleteArgs" />).
+    /// </summary>
+    public event EventHandler<ScanCompleteArgs> ScanComplete;
 
-    private void OnScanComplete()
+    private void OnScanComplete(ScanCompleteArgs e)
     {
-        ScanComplete?.Invoke(this, EventArgs.Empty);
+        ScanComplete?.Invoke(this, e);
     }
 
     public event EventHandler<ProgressChangedArgs> ProgressChanged;
@@ -62,13 +76,6 @@ public sealed class PortScanner
     private void OnProgressChanged()
     {
         ProgressChanged?.Invoke(this, new ProgressChangedArgs(_progressValue));
-    }
-
-    public event EventHandler UserHasCanceled;
-
-    private void OnUserHasCanceled()
-    {
-        UserHasCanceled?.Invoke(this, EventArgs.Empty);
     }
 
     #endregion
@@ -80,8 +87,13 @@ public sealed class PortScanner
     {
         _progressValue = 0;
 
+        // The token is not passed to Task.Run on purpose: with an already canceled token the delegate
+        // would never run and ScanComplete would never be raised.
         Task.Run(async () =>
         {
+            var isCanceled = false;
+            Exception exception = null;
+
             try
             {
                 var hostParallelOptions = new ParallelOptions
@@ -96,25 +108,38 @@ public sealed class PortScanner
                     MaxDegreeOfParallelism = _options.MaxPortThreads
                 };
 
+                // Spread the start of the port probes over time instead of starting all at once
+                var hostConcurrency = hosts.TryGetNonEnumeratedCount(out var hostCount)
+                    ? Math.Min(hostCount, _options.MaxHostThreads)
+                    : _options.MaxHostThreads;
+
+                var portConcurrency = hostConcurrency * (ports.TryGetNonEnumeratedCount(out var portCount)
+                    ? Math.Min(portCount, _options.MaxPortThreads)
+                    : _options.MaxPortThreads);
+
+                var portStartScheduler = new StartScheduler(StartScheduler.GetInterval(MaxPortStartInterval,
+                    TimeSpan.FromMilliseconds(_options.Timeout * _options.Attempts), portConcurrency), portConcurrency);
+
                 await Parallel.ForEachAsync(hosts, hostParallelOptions, async (host, hostCt) =>
                 {
-                    // Resolve Hostname (PTR)
-                    var hostname = string.Empty;
-
-                    if (_options.ResolveHostname)
-                    {
-                        var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(host.ipAddress)
-                            .WaitAsync(hostCt).ConfigureAwait(false);
-
-                        if (!dnsResult.HasError)
-                            hostname = dnsResult.Value;
-                    }
+                    // Resolve Hostname (PTR) while the ports are scanned
+                    var hostnameTask = _options.ResolveHostname
+                        ? ResolveHostnameAsync(host.ipAddress, hostCt)
+                        : Task.FromResult(string.Empty);
 
                     // Check each port
                     await Parallel.ForEachAsync(ports, portParallelOptions, async (port, portCt) =>
                     {
-                        var portState = await PortProbe.ProbeAsync(host.ipAddress, port, _options.Timeout, portCt)
+                        // Spread the start of the port probes over time instead of starting all at once
+                        await portStartScheduler.WaitAsync(portCt).ConfigureAwait(false);
+
+                        var portState = await PortProbe.ProbeAsync(host.ipAddress, port, _options.Timeout,
+                                _options.Attempts, portCt)
                             .ConfigureAwait(false);
+
+                        // Every result needs the hostname (results are grouped by it) - usually resolved
+                        // long before the first port is finished
+                        var hostname = await hostnameTask.ConfigureAwait(false);
 
                         // Count open/closed ports unconditionally, since ShowAllResults (below)
                         // may prevent closed ports from ever reaching PortScanned
@@ -132,15 +157,27 @@ public sealed class PortScanner
                     }).ConfigureAwait(false);
                 }).ConfigureAwait(false);
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
-                OnUserHasCanceled();
+                isCanceled = true;
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
             }
             finally
             {
-                OnScanComplete();
+                OnScanComplete(new ScanCompleteArgs(isCanceled, exception));
             }
-        }, cancellationToken);
+        });
+    }
+
+    private static async Task<string> ResolveHostnameAsync(IPAddress ipAddress, CancellationToken cancellationToken)
+    {
+        var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddress)
+            .WaitAsync(cancellationToken).ConfigureAwait(false);
+
+        return dnsResult.HasError ? string.Empty : dnsResult.Value;
     }
 
     private void IncreaseProgress()

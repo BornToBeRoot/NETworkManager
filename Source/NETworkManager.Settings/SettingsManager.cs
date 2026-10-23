@@ -758,38 +758,87 @@ public static class SettingsManager
                 defaultList.First(x => x.Name == ApplicationName.RDAP));
         }
 
-        // IP Scanner / Port Scanner - lower the default concurrency (see changelog for why).
-        // Only applied if still at the old default, so a deliberately customized value is left alone.
-        Log.Info("Lower IP Scanner / Port Scanner default concurrency, if still unchanged from the old default...");
+        // IP Scanner / Port Scanner - new default concurrency and timeouts (see changelog for why).
+        // Only applied if still at an old default (of the last release or of a pre-release of this
+        // release), so a deliberately customized value is left alone.
+        Log.Info("Update IP Scanner / Port Scanner default concurrency and timeouts, if still unchanged from an old default...");
 
-        if (Current.IPScanner_MaxHostThreads == 256)
+        if (Current.IPScanner_MaxHostThreads is 256 or 64)
         {
-            Log.Info("Update \"IPScanner_MaxHostThreads\" from 256 to 64...");
-            Current.IPScanner_MaxHostThreads = 64;
+            Log.Info($"Update \"IPScanner_MaxHostThreads\" from {Current.IPScanner_MaxHostThreads} to {GlobalStaticConfiguration.IPScanner_MaxHostThreads}...");
+            Current.IPScanner_MaxHostThreads = GlobalStaticConfiguration.IPScanner_MaxHostThreads;
+        }
+        else if (Current.IPScanner_MaxHostThreads > 256)
+        {
+            Log.Info($"Update \"IPScanner_MaxHostThreads\" from {Current.IPScanner_MaxHostThreads} to the new maximum 256...");
+            Current.IPScanner_MaxHostThreads = 256;
         }
 
-        if (Current.IPScanner_MaxPortThreads == 5)
+        if (Current.IPScanner_MaxPortThreads is 5 or 4)
         {
-            Log.Info("Update \"IPScanner_MaxPortThreads\" from 5 to 4...");
-            Current.IPScanner_MaxPortThreads = 4;
+            Log.Info($"Update \"IPScanner_MaxPortThreads\" from {Current.IPScanner_MaxPortThreads} to {GlobalStaticConfiguration.IPScanner_MaxPortThreads}...");
+            Current.IPScanner_MaxPortThreads = GlobalStaticConfiguration.IPScanner_MaxPortThreads;
         }
 
         if (Current.PortScanner_MaxHostThreads == 5)
         {
-            Log.Info("Update \"PortScanner_MaxHostThreads\" from 5 to 4...");
-            Current.PortScanner_MaxHostThreads = 4;
+            Log.Info($"Update \"PortScanner_MaxHostThreads\" from 5 to {GlobalStaticConfiguration.PortScanner_MaxHostThreads}...");
+            Current.PortScanner_MaxHostThreads = GlobalStaticConfiguration.PortScanner_MaxHostThreads;
         }
 
-        if (Current.PortScanner_MaxPortThreads == 256)
+        if (Current.PortScanner_MaxPortThreads is 256 or 64)
         {
-            Log.Info("Update \"PortScanner_MaxPortThreads\" from 256 to 64...");
-            Current.PortScanner_MaxPortThreads = 64;
+            Log.Info($"Update \"PortScanner_MaxPortThreads\" from {Current.PortScanner_MaxPortThreads} to {GlobalStaticConfiguration.PortScanner_MaxPortThreads}...");
+            Current.PortScanner_MaxPortThreads = GlobalStaticConfiguration.PortScanner_MaxPortThreads;
+        }
+
+        if (Current.IPScanner_ICMPTimeout == 4000)
+        {
+            Log.Info($"Update \"IPScanner_ICMPTimeout\" from 4000 to {GlobalStaticConfiguration.IPScanner_ICMPTimeout}...");
+            Current.IPScanner_ICMPTimeout = GlobalStaticConfiguration.IPScanner_ICMPTimeout;
+        }
+
+        if (Current.IPScanner_PortScanTimeout == 4000)
+        {
+            Log.Info($"Update \"IPScanner_PortScanTimeout\" from 4000 to {GlobalStaticConfiguration.IPScanner_PortScanTimeout}...");
+            Current.IPScanner_PortScanTimeout = GlobalStaticConfiguration.IPScanner_PortScanTimeout;
+        }
+
+        if (Current.IPScanner_NetBIOSTimeout == 4000)
+        {
+            Log.Info($"Update \"IPScanner_NetBIOSTimeout\" from 4000 to {GlobalStaticConfiguration.IPScanner_NetBIOSTimeout}...");
+            Current.IPScanner_NetBIOSTimeout = GlobalStaticConfiguration.IPScanner_NetBIOSTimeout;
+        }
+
+        if (Current.PortScanner_Timeout == 4000)
+        {
+            Log.Info($"Update \"PortScanner_Timeout\" from 4000 to {GlobalStaticConfiguration.PortScanner_Timeout}...");
+            Current.PortScanner_Timeout = GlobalStaticConfiguration.PortScanner_Timeout;
         }
 
         if (Current.IPScanner_PortScanPorts == "22; 53; 80; 139; 389; 636; 443; 445; 3389")
         {
             Log.Info($"Update \"IPScanner_PortScanPorts\" to \"{GlobalStaticConfiguration.IPScanner_PortScanPorts}\"...");
             Current.IPScanner_PortScanPorts = GlobalStaticConfiguration.IPScanner_PortScanPorts;
+        }
+
+        // ICMP buffer - .NET's Ping throws for more than 65500 bytes, the settings allowed up to 65535
+        if (Current.IPScanner_ICMPBuffer > 65500)
+        {
+            Log.Info($"Update \"IPScanner_ICMPBuffer\" from {Current.IPScanner_ICMPBuffer} to 65500...");
+            Current.IPScanner_ICMPBuffer = 65500;
+        }
+
+        if (Current.PingMonitor_Buffer > 65500)
+        {
+            Log.Info($"Update \"PingMonitor_Buffer\" from {Current.PingMonitor_Buffer} to 65500...");
+            Current.PingMonitor_Buffer = 65500;
+        }
+
+        if (Current.Traceroute_Buffer > 65500)
+        {
+            Log.Info($"Update \"Traceroute_Buffer\" from {Current.Traceroute_Buffer} to 65500...");
+            Current.Traceroute_Buffer = 65500;
         }
 
         // Add new Port Scanner port profiles

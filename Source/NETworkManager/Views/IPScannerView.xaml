@@ -23,6 +23,7 @@
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleansOrToVisibilityCollapsedConverter x:Key="BooleansOrToVisibilityCollapsedConverter" />
+        <converters:HostReachableToStringConverter x:Key="HostReachableToStringConverter" />
         <converters:HostUpStyleConverter x:Key="HostUpStyleConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
@@ -446,7 +447,7 @@
                         </MenuItem.Icon>
                         <MenuItem Header="{x:Static localization:Strings.Status}"
                                   Command="{Binding CopyDataToClipboardCommand}"
-                                  CommandParameter="{Binding Path=SelectedResult.IsReachable}"
+                                  CommandParameter="{Binding Path=SelectedResult.IsReachable, Converter={StaticResource HostReachableToStringConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.IPAddress}"
                                   Command="{Binding CopyDataToClipboardCommand}"
@@ -455,8 +456,16 @@
                         <MenuItem Header="{x:Static localization:Strings.Hostname}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.Hostname}"
-                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}">
+                            <MenuItem.Visibility>
+                                <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
+                                    <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
+                                             Path="IPScanner_ResolveHostname" />
+                                    <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
+                                             Path="IPScanner_NetBIOSEnabled" />
+                                </MultiBinding>
+                            </MenuItem.Visibility>
+                        </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.PortStatus}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.IsAnyPortOpen, Converter={StaticResource PortOpenToStringConverter}}"
@@ -469,13 +478,29 @@
                         <MenuItem Header="{x:Static localization:Strings.MACAddress}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.MACAddress}"
-                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveMACAddress, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}">
+                            <MenuItem.Visibility>
+                                <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
+                                    <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
+                                             Path="IPScanner_ResolveMACAddress" />
+                                    <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
+                                             Path="IPScanner_NetBIOSEnabled" />
+                                </MultiBinding>
+                            </MenuItem.Visibility>
+                        </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Vendor}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.Vendor}"
-                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_ResolveMACAddress, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}">
+                            <MenuItem.Visibility>
+                                <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
+                                    <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
+                                             Path="IPScanner_ResolveMACAddress" />
+                                    <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
+                                             Path="IPScanner_NetBIOSEnabled" />
+                                </MultiBinding>
+                            </MenuItem.Visibility>
+                        </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Ports}"
                                   Command="{Binding CopySelectedPortsCommand}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
@@ -600,7 +625,8 @@
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.NetBIOSReachable}"
                                     Binding="{Binding (network:IPScannerHostInfo.NetBIOSInfo).IsReachable, Converter={StaticResource ResourceKey=BooleanToStringConverter}}"
-                                    SortMemberPath="IsNetBIOSReachable"
+                                    SortMemberPath="NetBIOSInfo.IsReachable"
+                                    Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_NetBIOSEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}"
                                     Binding="{Binding (network:IPScannerHostInfo.MACAddress), Converter={StaticResource StringNullOrEmptyToStringConverter}}"

@@ -3,6 +3,7 @@ using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -176,6 +177,25 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets the number of attempts to connect to a port if there was no answer.
+    /// </summary>
+    public int PortScanAttempts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_PortScanAttempts = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets a value indicating whether NetBIOS is enabled.
     /// </summary>
     public bool NetBIOSEnabled
@@ -324,6 +344,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
         PortScanEnabled = SettingsManager.Current.IPScanner_PortScanEnabled;
         PortScanPorts = SettingsManager.Current.IPScanner_PortScanPorts;
         PortScanTimeout = SettingsManager.Current.IPScanner_PortScanTimeout;
+        PortScanAttempts = SettingsManager.Current.IPScanner_PortScanAttempts;
         NetBIOSEnabled = SettingsManager.Current.IPScanner_NetBIOSEnabled;
         NetBIOSTimeout = SettingsManager.Current.IPScanner_NetBIOSTimeout;
         ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
@@ -351,7 +372,16 @@ public class IPScannerSettingsViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to edit a custom command.
     /// </summary>
-    public ICommand EditCustomCommandCommand => new RelayCommand(_ => EditCustomCommandAction());
+    public ICommand EditCustomCommandCommand =>
+        new RelayCommand(_ => EditCustomCommandAction(), CustomCommandSelected_CanExecute);
+
+    /// <summary>
+    /// Checks if a custom command is selected (edit and delete need one, e.g. F2 / Del without a selection).
+    /// </summary>
+    private bool CustomCommandSelected_CanExecute(object parameter)
+    {
+        return SelectedCustomCommand != null;
+    }
 
     /// <summary>
     /// Action to edit a custom command.
@@ -364,7 +394,8 @@ public class IPScannerSettingsViewModel : ViewModelBase
     /// <summary>
     /// Gets the command to delete a custom command.
     /// </summary>
-    public ICommand DeleteCustomCommandCommand => new RelayCommand(_ => DeleteCustomCommandAction());
+    public ICommand DeleteCustomCommandCommand =>
+        new RelayCommand(_ => DeleteCustomCommandAction(), CustomCommandSelected_CanExecute);
 
     /// <summary>
     /// Action to delete a custom command.
@@ -449,7 +480,8 @@ public class IPScannerSettingsViewModel : ViewModelBase
     {
         var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.DeleteCustomCommand,
-            Strings.DeleteCustomCommandMessage,
+            Strings.DeleteCustomCommandMessage + Environment.NewLine + Environment.NewLine +
+            DialogHelper.FormatItemList([SelectedCustomCommand.Name]),
             ChildWindowIcon.Info,
             Strings.Delete);
 

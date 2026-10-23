@@ -50,6 +50,10 @@ Multiple inputs can be combined with a semicolon (`;`). A column pasted from Exc
 
 Example: `10.0.0.0/24; 10.0.[10-20].1; 10.0.0.100-199` or `1-1024; 8080; 8443`
 
+IP addresses and ports that are part of multiple inputs (e.g. `10.0.0.1; 10.0.0.0/24` or `80; 1-100`) are scanned only once. If an IP address is also entered as hostname, the hostname is kept; an IP address entered with different hostnames is scanned once per hostname.
+
+A scan of more than `65,536` ports (hosts × ports, e.g. 64 hosts with `1-1024`) must be confirmed, more than `16,777,216` ports cannot be scanned at once.
+
 :::
 
 ### Toolbar
@@ -64,6 +68,20 @@ Example: `10.0.0.0/24; 10.0.[10-20].1; 10.0.0.100-199` or `1-1024; 8080; 8443`
 | ------------- | ------------------------------------------------ |
 | **Copy**      | Copies the selected information to the clipboard |
 | **Export...** | Exports the selected or all results to a file    |
+
+If multiple results are selected, only **Export...** is available.
+
+### Result
+
+The results are grouped by host and sorted by IP address and port. The number of open and closed ports is shown next to the **Result** header. A port is **open** if the connection was established, **closed** if the host refused the connection and **timed out** if there was no answer within the [timeout](#timeout-ms) (e.g. blocked by a firewall). Only open ports are shown, unless [Show closed ports](#show-closed-ports) is enabled.
+
+### Keyboard shortcuts
+
+| Key      | Action                         |
+| -------- | ------------------------------ |
+| `Enter`  | Start the scan                 |
+| `Esc`    | Cancel the running scan        |
+| `Ctrl+T` | Open a new tab                 |
 
 ## Profile
 
@@ -163,11 +181,31 @@ Show closed ports in the result list.
 
 ### Timeout (ms)
 
-Timeout in milliseconds after which a port is considered closed / timed out.
+Timeout in milliseconds after which a port is considered timed out (no answer). A port is closed if the host refused the connection.
 
 **Type:** `Integer` [Min `100`, Max `15000`]
 
-**Default:** `4000`
+**Default:** `2000`
+
+:::note
+
+A closed port is reported as soon as the host refuses the connection. Each attempt sends the connection request once (see [Attempts](#attempts)).
+
+:::
+
+### Attempts
+
+Number of connection requests sent to each port. Another request is only sent if there was no answer (timed out), an open or closed port is final.
+
+**Type:** `Integer` [Min `1`, Max `10`]
+
+**Default:** `1`
+
+:::tip
+
+In a local network (LAN), `1` is enough. On an unreliable network (e.g. Wi-Fi, VPN) or for hosts on the internet, a lost connection request can make an open port appear as timed out - increase it to `2` in this case. This only takes longer for ports without answer (attempts × timeout), e.g. ports blocked by a firewall.
+
+:::
 
 ### Resolve hostname
 
@@ -179,7 +217,7 @@ Resolve the hostname for given IP addresses.
 
 ### Max. concurrent host threads
 
-Maximum number of threads used to scan hosts (1 thread = 1 host).
+Maximum number of hosts that are scanned at the same time. A thread is not an operating system thread, but one host whose ports are scanned concurrently.
 
 **Type:** `Integer` [Min `1`, Max `10`]
 
@@ -187,24 +225,20 @@ Maximum number of threads used to scan hosts (1 thread = 1 host).
 
 :::warning
 
-Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.
-
-Too many threads can also cause performance problems on the device.
+Every host opens up to [Max. concurrent port threads](#max-concurrent-port-threads) TCP connections at the same time (with the default settings up to 4 × 128 = 512). Too many simultaneous requests may be detected as a port scan and blocked or rate-limited by a firewall (local, on the network or on the scanned host) and can overload small routers. If ports are missing in the result (shown as timed out) or the network becomes slow during the scan, reduce the number of threads. This will increase the scan time.
 
 :::
 
 ### Max. concurrent port threads
 
-Maximum number of threads used to scan for ports for each host (1 thread = 1 port per host).
+Maximum number of ports that are scanned at the same time for each host.
 
 **Type:** `Integer` [Min `1`, Max `512`]
 
-**Default:** `64`
+**Default:** `128`
 
 :::warning
 
-Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.
-
-Too many threads can also cause performance problems on the device.
+Too many simultaneous requests may be detected as a port scan and blocked or rate-limited by a firewall (local, on the network or on the scanned host). If ports are missing in the result (shown as timed out), reduce the number of threads. This will increase the scan time.
 
 :::

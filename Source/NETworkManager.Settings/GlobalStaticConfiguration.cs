@@ -138,23 +138,32 @@ public static class GlobalStaticConfiguration
 
     // Application: IP Scanner    
     public static int IPScanner_ICMPAttempts => 2;
-    public static int IPScanner_ICMPTimeout => 4000;
+    public static int IPScanner_ICMPTimeout => 2000;
     public static int IPScanner_ICMPBuffer => 32;
     public static bool IPScanner_ResolveHostname => true;
     public static bool IPScanner_PortScanEnabled => true;
     public static string IPScanner_PortScanPorts => "22; 53; 80; 135; 139; 389; 636; 443; 445; 3389; 9100";
-    public static int IPScanner_PortScanTimeout => 4000;
-    public static int IPScanner_MaxHostThreads => 64;
-    public static int IPScanner_MaxPortThreads => 4;
+    public static int IPScanner_PortScanTimeout => 2000;
+    public static int IPScanner_PortScanAttempts => 1;
+    public static int IPScanner_MaxHostThreads => 128;
+    public static int IPScanner_MaxPortThreads => 16;
     public static bool IPScanner_NetBIOSEnabled => true;
-    public static int IPScanner_NetBIOSTimeout => 4000;
+    public static int IPScanner_NetBIOSTimeout => 2000;
+    public static bool IPScanner_ResolveMACAddress => true;
     public static ExportFileType IPScanner_ExportFileType => ExportFileType.Csv;
+    // Larger scans need a confirmation, even larger ones are refused (every IP address / port is kept in memory)
+    public static long IPScanner_ConfirmHostCount => 65536;
+    public static long IPScanner_MaxHostCount => 16777216;
 
     // Application: Port Scanner 
     public static int PortScanner_MaxHostThreads => 4;
-    public static int PortScanner_MaxPortThreads => 64;
-    public static int PortScanner_Timeout => 4000;
+    public static int PortScanner_MaxPortThreads => 128;
+    public static int PortScanner_Timeout => 2000;
+    public static int PortScanner_Attempts => 1;
     public static ExportFileType PortScanner_ExportFileType => ExportFileType.Csv;
+    // Larger scans (hosts x ports) need a confirmation, even larger ones are refused
+    public static long PortScanner_ConfirmPortCount => 65536;
+    public static long PortScanner_MaxPortCount => 16777216;
 
     // Application: Ping Monitor
     public static int PingMonitor_Buffer => 32;

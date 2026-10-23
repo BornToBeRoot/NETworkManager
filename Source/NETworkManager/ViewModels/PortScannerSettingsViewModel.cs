@@ -82,6 +82,25 @@ public class PortScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets the number of attempts to connect to a port if there was no answer.
+    /// </summary>
+    public int Attempts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PortScanner_Attempts = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets a value indicating whether to resolve hostnames.
     /// </summary>
     public bool ResolveHostname
@@ -164,6 +183,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
     {
         ShowAllResults = SettingsManager.Current.PortScanner_ShowAllResults;
         Timeout = SettingsManager.Current.PortScanner_Timeout;
+        Attempts = SettingsManager.Current.PortScanner_Attempts;
         ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname;
         MaxHostThreads = SettingsManager.Current.PortScanner_MaxHostThreads;
         MaxPortThreads = SettingsManager.Current.PortScanner_MaxPortThreads;

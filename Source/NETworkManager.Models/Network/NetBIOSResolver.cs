@@ -26,6 +26,7 @@ public static class NetBIOSResolver
     private const int ResponseBaseLen = 57;
     private const int ResponseNameLen = 15;
     private const int ResponseBlockLen = 18;
+    private const int MacAddressLen = 6;
 
     private const int GroupNameFlag = 128;
 
@@ -43,34 +44,67 @@ public static class NetBIOSResolver
         0x00, 0x01
     };
 
+    /// <summary>
+    ///     Maximum size of a NetBIOS name status response (57 bytes header + 255 names x 18 bytes + statistics).
+    /// </summary>
+    private const int ResponseBufferSize = 8192;
+
     public static async Task<NetBIOSInfo> ResolveAsync(IPAddress ipAddress, int timeout,
         CancellationToken cancellationToken)
     {
-        var udpClient = new UdpClient();
-
-        var remoteEndPoint = new IPEndPoint(ipAddress, NetBIOSUdpPort);
-
-        // Linked so the receive is genuinely canceled (not just abandoned) on either timeout or
-        // caller cancellation - avoids leaving a pending receive that later faults, unobserved,
-        // once the socket is closed in the finally block below.
-        using var timeoutCts = new CancellationTokenSource(timeout);
-        using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token);
-
         try
         {
-            await udpClient.SendAsync(RequestData, RequestData.Length, remoteEndPoint);
+            using var socket = new Socket(ipAddress.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
 
-            var response = await udpClient.ReceiveAsync(linkedCts.Token).ConfigureAwait(false);
+            // Closing the socket on timeout or cancellation aborts a pending send / receive, it completes with
+            // OperationAborted. The results are reported as SocketError, no exception if the host doesn't
+            // answer (see SocketOperation).
+            using var timeoutCts = new CancellationTokenSource(timeout);
+            using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token);
+            await using var registration = linkedCts.Token.Register(socket.Dispose);
 
-            if (response.Buffer.Length < ResponseBaseLen || response.Buffer[ResponseTypePos] != ResponseTypeNbstat)
+            using var sendArgs = new SocketAsyncEventArgs();
+            sendArgs.RemoteEndPoint = new IPEndPoint(ipAddress, NetBIOSUdpPort);
+            sendArgs.SetBuffer(RequestData);
+
+            if (await SocketOperation.RunAsync(sendArgs, socket.SendToAsync).ConfigureAwait(false) !=
+                SocketError.Success)
+                return new NetBIOSInfo(ipAddress);
+
+            var buffer = new byte[ResponseBufferSize];
+            byte[] response;
+
+            // Wait for the answer of the host - a datagram from another address (e.g. a stray or spoofed one) is
+            // ignored, until the timeout
+            while (true)
+            {
+                using var receiveArgs = new SocketAsyncEventArgs();
+                receiveArgs.RemoteEndPoint = new IPEndPoint(
+                    ipAddress.AddressFamily == AddressFamily.InterNetworkV6 ? IPAddress.IPv6Any : IPAddress.Any, 0);
+                receiveArgs.SetBuffer(buffer);
+
+                // No answer (timeout), port unreachable, etc.
+                if (await SocketOperation.RunAsync(receiveArgs, socket.ReceiveFromAsync).ConfigureAwait(false) !=
+                    SocketError.Success)
+                    return new NetBIOSInfo(ipAddress);
+
+                if (receiveArgs.RemoteEndPoint is not IPEndPoint remoteEndPoint ||
+                    IPAddressHelper.CompareIPAddresses(remoteEndPoint.Address, ipAddress) != 0)
+                    continue;
+
+                response = buffer[..receiveArgs.BytesTransferred];
+                break;
+            }
+
+            if (response.Length < ResponseBaseLen || response[ResponseTypePos] != ResponseTypeNbstat)
                 return new NetBIOSInfo(ipAddress); // response was too short
 
-            var count = response.Buffer[ResponseBaseLen - 1] & 0xFF;
+            var count = response[ResponseBaseLen - 1] & 0xFF;
 
-            if (response.Buffer.Length < ResponseBaseLen + ResponseBlockLen * count)
+            if (response.Length < ResponseBaseLen + ResponseBlockLen * count)
                 return new NetBIOSInfo(ipAddress); // data was truncated or something is wrong
 
-            var result = ExtractNames(response.Buffer, count);
+            var result = ExtractNames(response, count);
 
             var vendor = string.Empty;
 
@@ -89,17 +123,15 @@ public static class NetBIOSResolver
                 result.ComputerName,
                 result.UserName,
                 result.GroupName,
-                MACAddressHelper.GetDefaultFormat(result.MacAddress),
+                string.IsNullOrEmpty(result.MacAddress)
+                    ? string.Empty
+                    : MACAddressHelper.GetDefaultFormat(result.MacAddress),
                 vendor
             );
         }
         catch (Exception)
         {
             return new NetBIOSInfo(ipAddress);
-        }
-        finally
-        {
-            udpClient.Close();
         }
     }
 
@@ -135,11 +167,12 @@ public static class NetBIOSResolver
             break;
         }
 
-        // MAC address
-        var macAddress =
-            $"{GetByte(response, count, 0):X2}{GetByte(response, count, 1):X2}" +
-            $"{GetByte(response, count, 2):X2}{GetByte(response, count, 3):X2}" +
-            $"{GetByte(response, count, 4):X2}{GetByte(response, count, 5):X2}";
+        // MAC address (first 6 bytes after the names, only if the response contains them)
+        var macAddress = response.Length >= ResponseBaseLen + ResponseBlockLen * count + MacAddressLen
+            ? $"{GetByte(response, count, 0):X2}{GetByte(response, count, 1):X2}" +
+              $"{GetByte(response, count, 2):X2}{GetByte(response, count, 3):X2}" +
+              $"{GetByte(response, count, 4):X2}{GetByte(response, count, 5):X2}"
+            : string.Empty;
 
         return (computerName, userName, groupName, macAddress);
     }

@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
+using System.Net.Sockets;
 
 namespace NETworkManager.Utilities;
 
@@ -28,6 +30,19 @@ public static class IPAddressHelper
     }
 
     /// <summary>
+    ///     Returns the IP address without the IPv6 scope id (e.g. "fe80::1%12" -> "fe80::1"), so it can be compared
+    ///     with (or used as key for) an address that was entered without one. IPv4 addresses are returned as is.
+    /// </summary>
+    /// <param name="ipAddress">IP address.</param>
+    /// <returns>IP address without scope id.</returns>
+    public static IPAddress WithoutScopeId(IPAddress ipAddress)
+    {
+        return ipAddress.AddressFamily == AddressFamily.InterNetworkV6 && ipAddress.ScopeId != 0
+            ? new IPAddress(ipAddress.GetAddressBytes())
+            : ipAddress;
+    }
+
+    /// <summary>
     ///     Compare two IP addresses.
     /// </summary>
     /// <param name="x">First IP address.</param>
@@ -35,6 +50,14 @@ public static class IPAddressHelper
     /// <returns>0 if the IP addresses are equal, otherwise a negative or positive value.</returns>
     public static int CompareIPAddresses(IPAddress x, IPAddress y)
     {
-        return ByteHelper.Compare(x.GetAddressBytes(), y.GetAddressBytes());
+        // Write the bytes to the stack instead of allocating two arrays per call (GetAddressBytes),
+        // this is called very often when sorting large lists (e.g. the hosts of an IP Scanner range)
+        Span<byte> xBytes = stackalloc byte[16];
+        Span<byte> yBytes = stackalloc byte[16];
+
+        x.TryWriteBytes(xBytes, out var xLength);
+        y.TryWriteBytes(yBytes, out var yLength);
+
+        return ByteHelper.Compare(xBytes[..xLength], yBytes[..yLength]);
     }
 }

@@ -320,6 +320,14 @@ public class PortScannerViewModel : ViewModelBase
         ResultsView = CollectionViewSource.GetDefaultView(Results);
         ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortScannerPortInfo.HostAsString)));
 
+        // Sort by IP address and port - results are added in the order the ports are finished
+        ((ListCollectionView)ResultsView).CustomSort = Comparer<PortScannerPortInfo>.Create((x, y) =>
+        {
+            var result = IPAddressHelper.CompareIPAddresses(x.IPAddress, y.IPAddress);
+
+            return result != 0 ? result : x.Port.CompareTo(y.Port);
+        });
+
         LoadSettings();
     }
 
@@ -429,6 +437,54 @@ public class PortScannerViewModel : ViewModelBase
 
     private async Task Start()
     {
+        // Every port is kept in memory - ask before a large scan and refuse a too large one
+        // (e.g. 10.0.0.0/8 with 1-65535) instead of running out of memory
+        long hostCount;
+        int portsPerHost;
+
+        try
+        {
+            hostCount = HostRangeHelper.GetHostCount(HostRangeHelper.CreateListFromInput(Host));
+            portsPerHost = PortRangeHelper.ConvertPortRangeToIntArray(Ports).Length;
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while counting the hosts and ports", ex);
+
+            StatusMessage = ex.Message;
+            IsStatusMessageDisplayed = true;
+
+            return;
+        }
+
+        var portCount = hostCount * portsPerHost;
+
+        if (portCount > GlobalStaticConfiguration.PortScanner_MaxPortCount)
+        {
+            StatusMessage = string.Format(Strings.ScanTooManyPortsMessage, portCount.ToString("N0"),
+                hostCount.ToString("N0"), portsPerHost.ToString("N0"),
+                GlobalStaticConfiguration.PortScanner_MaxPortCount.ToString("N0"));
+            IsStatusMessageDisplayed = true;
+
+            return;
+        }
+
+        if (portCount > GlobalStaticConfiguration.PortScanner_ConfirmPortCount)
+        {
+            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive) ??
+                         Application.Current.MainWindow;
+
+            if (!await DialogHelper.ShowConfirmationMessageAsync(window, Strings.Scan,
+                    string.Format(Strings.ScanManyPortsMessage, portCount.ToString("N0"), hostCount.ToString("N0"),
+                        portsPerHost.ToString("N0")),
+                    ChildWindowIcon.Warn, Strings.Scan))
+                return;
+
+            // The tab may have been closed while the dialog was open (OnClose only stops a running scan)
+            if (_closed)
+                return;
+        }
+
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
 
@@ -460,17 +516,26 @@ public class PortScannerViewModel : ViewModelBase
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
 
-        // Resolve hostnames
+        // Resolve hostnames and convert the ports. Start() is fire-and-forget, so every exception has to be
+        // handled here - otherwise the scan would never end (IsRunning stays true).
         (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved) hosts;
+        int[] ports;
 
         try
         {
             hosts = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(Host),
                 SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
+
+            ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
         }
         catch (OperationCanceledException)
         {
-            UserHasCanceled(this, EventArgs.Empty);
+            ScanComplete(this, new ScanCompleteArgs(true));
+            return;
+        }
+        catch (Exception ex)
+        {
+            ScanComplete(this, new ScanCompleteArgs(false, ex));
             return;
         }
 
@@ -481,9 +546,6 @@ public class PortScannerViewModel : ViewModelBase
                 $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
             IsStatusMessageDisplayed = true;
         }
-
-        // Convert ports to int array
-        var ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
 
         PortsToScan = ports.Length * hosts.hosts.Count;
 
@@ -499,6 +561,7 @@ public class PortScannerViewModel : ViewModelBase
             SettingsManager.Current.PortScanner_MaxHostThreads,
             SettingsManager.Current.PortScanner_MaxPortThreads,
             SettingsManager.Current.PortScanner_Timeout,
+            SettingsManager.Current.PortScanner_Attempts,
             SettingsManager.Current.PortScanner_ResolveHostname,
             SettingsManager.Current.PortScanner_ShowAllResults
         ));
@@ -506,7 +569,6 @@ public class PortScannerViewModel : ViewModelBase
         portScanner.PortScanned += PortScanned;
         portScanner.ScanComplete += ScanComplete;
         portScanner.ProgressChanged += ProgressChanged;
-        portScanner.UserHasCanceled += UserHasCanceled;
 
         _resultsFlushTimer = new DispatcherTimer(DispatcherPriority.Background)
         {
@@ -541,11 +603,19 @@ public class PortScannerViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType,
-                    instance.ExportAll
-                        ? Results
-                        : new ObservableCollection<PortScannerPortInfo>(SelectedResults.Cast<PortScannerPortInfo>()
-                            .ToArray()));
+                // Copy the results on the UI thread (they may still change while a scan is running) and
+                // export them in the background, so a large export doesn't freeze the window. In the order
+                // shown in the grid: grouped by host, sorted within the group (Results is in the order the
+                // ports were finished).
+                var viewResults = ResultsView.Groups.Cast<CollectionViewGroup>()
+                    .SelectMany(group => group.Items.Cast<PortScannerPortInfo>());
+
+                var results = instance.ExportAll
+                    ? viewResults.ToList()
+                    : viewResults.Where(new HashSet<PortScannerPortInfo>(SelectedResults.Cast<PortScannerPortInfo>())
+                        .Contains).ToList();
+
+                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }
             catch (Exception ex)
             {
@@ -590,8 +660,8 @@ public class PortScannerViewModel : ViewModelBase
 
     /// <summary>
     /// Moves buffered scan results into <see cref="Results"/>. Always called on the UI thread -
-    /// either from the <see cref="_resultsFlushTimer"/> tick, or from within a Dispatcher.Invoke
-    /// call in <see cref="ScanComplete"/> / <see cref="UserHasCanceled"/>.
+    /// either from the <see cref="_resultsFlushTimer"/> tick, or from within the Dispatcher.Invoke
+    /// call in <see cref="ScanComplete"/>.
     /// </summary>
     private void FlushResultsBuffer()
     {
@@ -633,38 +703,51 @@ public class PortScannerViewModel : ViewModelBase
         PortsClosed = Volatile.Read(ref _latestPortsClosed);
     }
 
-    private void ScanComplete(object sender, EventArgs e)
+    /// <summary>
+    /// Handles the ScanComplete event. This is the only place where a scan ends (completed, canceled
+    /// or failed), so the state is reset exactly once and a new scan can't be started before it ran.
+    /// Also called directly (on the UI thread) if the scan is canceled while the hosts are resolved.
+    /// </summary>
+    /// <param name="sender">The <see cref="PortScanner"/> instance raising the event, or this view model.</param>
+    /// <param name="e">The <see cref="ScanCompleteArgs"/> instance containing the event data.</param>
+    private void ScanComplete(object sender, ScanCompleteArgs e)
     {
-        // Run in UI thread with lower priority than PortScanned event
-        // to ensure all results are added first #3285
         Application.Current.Dispatcher.Invoke(() =>
         {
+            if (sender is PortScanner portScanner)
+            {
+                portScanner.PortScanned -= PortScanned;
+                portScanner.ScanComplete -= ScanComplete;
+                portScanner.ProgressChanged -= ProgressChanged;
+            }
+
+            // Results are buffered - add the remaining ones
             _resultsFlushTimer?.Stop();
             FlushResultsBuffer();
             FlushProgress();
 
-            if (Results.Count == 0)
+            if (e.IsCanceled)
             {
-                StatusMessage = Strings.NoOpenPortsFound;
+                StatusMessage = Strings.CanceledByUserMessage;
+                IsStatusMessageDisplayed = true;
+            }
+            else if (e.Exception != null)
+            {
+                Log.Error("Error while scanning", e.Exception);
+
+                StatusMessage = e.Exception.Message;
+                IsStatusMessageDisplayed = true;
+            }
+            else if (Results.Count == 0)
+            {
+                // Keep a message from the preparation (e.g. hostnames that could not be resolved)
+                StatusMessage = IsStatusMessageDisplayed
+                    ? StatusMessage + Environment.NewLine + Strings.NoOpenPortsFound
+                    : Strings.NoOpenPortsFound;
                 IsStatusMessageDisplayed = true;
             }
 
-            IsCanceling = false;
-            IsRunning = false;
-        }, DispatcherPriority.Background);
-    }
-
-    private void UserHasCanceled(object sender, EventArgs e)
-    {
-        Application.Current.Dispatcher.Invoke(() =>
-        {
-            _resultsFlushTimer?.Stop();
-            FlushResultsBuffer();
-            FlushProgress();
-
-            StatusMessage = Strings.CanceledByUserMessage;
-            IsStatusMessageDisplayed = true;
-
+            PreparingScan = false;
             IsCanceling = false;
             IsRunning = false;
         });

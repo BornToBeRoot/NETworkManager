@@ -260,6 +260,7 @@
                                       Grid.Row="3" ItemsSource="{Binding Path=ResultsView}"
                                       SelectedItem="{Binding Path=SelectedResult}"
                                       SelectedItemsList="{Binding Path=SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      Sorting="DataGrid_OnSorting"
                                       wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True"
                                       EnableRowVirtualization="True"
                                       ScrollViewer.CanContentScroll="True"

@@ -20,9 +20,22 @@ public sealed class IPScanner(IPScannerOptions options)
 {
     #region Variables
 
+    /// <summary>
+    ///     Time between the start of two hosts during the ramp-up, see <see cref="StartScheduler" />. With the
+    ///     default settings the first 128 hosts are started within ~1.3 s instead of at the same moment (~11 connection
+    ///     requests per 10 ms instead of ~1400 at once), the following ones when a slot is free. Shorter if a host
+    ///     takes less than 128 x 10 ms (see <see cref="StartScheduler.GetInterval" />).
+    /// </summary>
+    private static readonly TimeSpan MaxHostStartInterval = TimeSpan.FromMilliseconds(10);
+
     private int _progressValue;
     private readonly InterlockedCounter _hostsUp = new();
     private readonly InterlockedCounter _hostsDown = new();
+
+    // Snapshot of the neighbor table (IP address -> MAC address), see GetMACAddressFromNeighborTableAsync
+    private readonly SemaphoreSlim _neighborTableSemaphore = new(1, 1);
+    private Dictionary<IPAddress, string> _neighborTable = [];
+    private DateTime _neighborTableTimestamp = DateTime.MinValue;
 
     /// <summary>
     ///     Gets the number of hosts found to be reachable so far. Thread-safe; may be read from
@@ -51,13 +64,14 @@ public sealed class IPScanner(IPScannerOptions options)
     }
 
     /// <summary>
-    ///     Occurs when the scan is complete.
+    ///     Occurs when the scan is complete. Raised exactly once per scan, also when the scan was canceled
+    ///     or failed (see <see cref="ScanCompleteArgs" />).
     /// </summary>
-    public event EventHandler ScanComplete;
+    public event EventHandler<ScanCompleteArgs> ScanComplete;
 
-    private void OnScanComplete()
+    private void OnScanComplete(ScanCompleteArgs e)
     {
-        ScanComplete?.Invoke(this, EventArgs.Empty);
+        ScanComplete?.Invoke(this, e);
     }
 
     /// <summary>
@@ -68,16 +82,6 @@ public sealed class IPScanner(IPScannerOptions options)
     private void OnProgressChanged()
     {
         ProgressChanged?.Invoke(this, new ProgressChangedArgs(_progressValue));
-    }
-
-    /// <summary>
-    ///     Occurs when the user has canceled the scan.
-    /// </summary>
-    public event EventHandler UserHasCanceled;
-
-    private void OnUserHasCanceled()
-    {
-        UserHasCanceled?.Invoke(this, EventArgs.Empty);
     }
 
     #endregion
@@ -92,16 +96,20 @@ public sealed class IPScanner(IPScannerOptions options)
     public void ScanAsync(IEnumerable<(IPAddress ipAddress, string hostname)> hosts,
         CancellationToken cancellationToken)
     {
-        // Start the scan in a separate task
+        // Start the scan in a separate task. The token is not passed to Task.Run on purpose: with an
+        // already canceled token the delegate would never run and ScanComplete would never be raised.
         Task.Run(async () =>
         {
             _progressValue = 0;
 
-            // Get all network interfaces (for local mac address lookup)
-            var networkInterfaces = options.ResolveMACAddress ? NetworkInterface.GetNetworkInterfaces() : [];
+            var isCanceled = false;
+            Exception exception = null;
 
             try
             {
+                // Get all network interfaces (for local mac address lookup)
+                var networkInterfaces = options.ResolveMACAddress ? NetworkInterface.GetNetworkInterfaces() : [];
+
                 var hostParallelOptions = new ParallelOptions
                 {
                     CancellationToken = cancellationToken,
@@ -114,9 +122,29 @@ public sealed class IPScanner(IPScannerOptions options)
                     MaxDegreeOfParallelism = options.MaxPortThreads
                 };
 
+                // Spread the start of the hosts over time instead of starting all at once - based on the time
+                // an unreachable host takes (the slowest of ping attempts, port scan and NetBIOS)
+                var hostDuration = Math.Max(options.ICMPAttempts * options.ICMPTimeout,
+                    Math.Max(
+                        options.PortScanEnabled
+                            ? options.PortScanTimeout * options.PortScanAttempts *
+                              (int)Math.Ceiling(options.PortScanPorts.Length / (double)options.MaxPortThreads)
+                            : 0,
+                        options.NetBIOSEnabled ? options.NetBIOSTimeout : 0));
+
+                var hostConcurrency = hosts.TryGetNonEnumeratedCount(out var hostCount)
+                    ? Math.Min(hostCount, options.MaxHostThreads)
+                    : options.MaxHostThreads;
+
+                var hostStartScheduler = new StartScheduler(StartScheduler.GetInterval(MaxHostStartInterval,
+                    TimeSpan.FromMilliseconds(hostDuration), hostConcurrency), hostConcurrency);
+
                 // Start scan
                 await Parallel.ForEachAsync(hosts, hostParallelOptions, async (host, ct) =>
                 {
+                    // Spread the start of the hosts over time instead of starting all at once
+                    await hostStartScheduler.WaitAsync(ct).ConfigureAwait(false);
+
                     // Start ping, port scan and netbios lookup concurrently - none of these block a thread anymore
                     var pingTask = PingAsync(host.ipAddress, ct);
 
@@ -130,6 +158,10 @@ public sealed class IPScanner(IPScannerOptions options)
 
                     await Task.WhenAll(pingTask, portScanTask, netbiosTask).ConfigureAwait(false);
 
+                    // A reachable host is in the neighbor table (ARP/NDP) from now on (before it can answer, the
+                    // local system has to resolve its MAC address)
+                    var discoveredAt = DateTime.UtcNow;
+
                     var pingInfo = pingTask.Result;
                     var portScanResults = portScanTask.Result;
                     var netBIOSInfo = netbiosTask.Result;
@@ -141,6 +173,7 @@ public sealed class IPScanner(IPScannerOptions options)
                     var isAnyPortOpen = portScanResults.Any(x => x.State == PortState.Open);
                     var isReachable = pingInfo.Status == IPStatus.Success || // ICMP response
                                       isAnyPortOpen || // Any port is open
+                                      portScanResults.Any(x => x.State == PortState.Closed) || // Connection refused (TCP reset)
                                       netBIOSInfo.IsReachable; // NetBIOS response
 
                     // Count reachable/unreachable hosts unconditionally, since ShowAllResults
@@ -171,14 +204,21 @@ public sealed class IPScanner(IPScannerOptions options)
 
                         if (options.ResolveMACAddress)
                         {
-                            // Get info from neighbor table
-                            arpMACAddress = NeighborTable.GetMACAddress(host.ipAddress);
+                            // Get info from neighbor table. Only hosts in a local subnet are in it (for any other
+                            // host it contains the router), an unreachable host never needs a new snapshot.
+                            if (IsInLocalSubnet(host.ipAddress, networkInterfaces))
+                                arpMACAddress = await GetMACAddressFromNeighborTableAsync(host.ipAddress,
+                                    isReachable ? discoveredAt : DateTime.MinValue, ct).ConfigureAwait(false);
 
                             // Check if it is the local mac
                             if (string.IsNullOrEmpty(arpMACAddress))
                             {
+                                var ipAddress = IPAddressHelper.WithoutScopeId(host.ipAddress);
+
                                 var networkInterfaceInfo = networkInterfaces.FirstOrDefault(p =>
-                                    p.IPv4Address.Any(x => x.Item1.Equals(host.ipAddress)));
+                                    p.IPv4Address.Any(x => x.Item1.Equals(ipAddress)) ||
+                                    p.IPv6Address.Concat(p.IPv6AddressLinkLocal)
+                                        .Any(x => IPAddressHelper.WithoutScopeId(x).Equals(ipAddress)));
 
                                 if (networkInterfaceInfo != null)
                                     arpMACAddress = networkInterfaceInfo.PhysicalAddress.ToString();
@@ -207,7 +247,9 @@ public sealed class IPScanner(IPScannerOptions options)
                                         : netBIOSInfo?.ComputerName ?? string.Empty,
                                     dnsHostname,
                                     isAnyPortOpen,
-                                    portScanResults.OrderBy(x => x.Port).ToList(),
+                                    portScanResults
+                                        .Where(x => x.State == PortState.Open || options.ShowAllResults)
+                                        .OrderBy(x => x.Port).ToList(),
                                     netBIOSInfo,
                                     // ARP/NDP is preferred, fallback to NetBIOS
                                     !string.IsNullOrEmpty(arpMACAddress)
@@ -224,20 +266,102 @@ public sealed class IPScanner(IPScannerOptions options)
                     IncreaseProgress();
                 }).ConfigureAwait(false);
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
-                OnUserHasCanceled();
+                isCanceled = true;
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
             }
             finally
             {
-                OnScanComplete();
+                OnScanComplete(new ScanCompleteArgs(isCanceled, exception));
             }
-        }, cancellationToken);
+        });
+    }
+
+    /// <summary>
+    ///     Gets the MAC address of <paramref name="ipAddress" /> from the neighbor table (ARP / NDP). The table is
+    ///     read once and cached for the scan instead of reading it for every host. It is only read again on a miss
+    ///     if the cached snapshot is older than <paramref name="discoveredAt" /> (the time the host answered, when
+    ///     its entry was already created) - a host is always looked up in a table read after its answer, and hosts
+    ///     that finish at the same time share one read.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host (in a local subnet, see <see cref="IsInLocalSubnet" />).</param>
+    /// <param name="discoveredAt">Time the host answered, <see cref="DateTime.MinValue" /> to use the cache only.</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    /// <returns>MAC address or an empty string.</returns>
+    private async Task<string> GetMACAddressFromNeighborTableAsync(IPAddress ipAddress, DateTime discoveredAt,
+        CancellationToken cancellationToken)
+    {
+        var key = IPAddressHelper.WithoutScopeId(ipAddress);
+
+        // Hosts wait without blocking a thread while another host reads the table
+        await _neighborTableSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+
+        try
+        {
+            if (_neighborTable.TryGetValue(key, out var macAddress))
+                return macAddress;
+
+            // Already read after the host answered -> no entry
+            if (_neighborTableTimestamp > discoveredAt)
+                return string.Empty;
+
+            // Timestamp before reading the table, so entries created while reading are covered by the next read
+            _neighborTableTimestamp = DateTime.UtcNow;
+            _neighborTable = NeighborTable.GetMACAddressMap();
+
+            return _neighborTable.GetValueOrDefault(key, string.Empty);
+        }
+        finally
+        {
+            _neighborTableSemaphore.Release();
+        }
+    }
+
+    /// <summary>
+    ///     Checks if <paramref name="ipAddress" /> is in a subnet of a local network interface (on-link). Only these
+    ///     hosts are in the neighbor table - for a host behind a router, its MAC address can't be resolved via ARP/NDP
+    ///     (the table contains the router), so there is no need to look it up (and to read the table again).
+    ///     IPv6: link-local addresses, other addresses if they are in the same /64 as a local address (the prefix
+    ///     length is not known, local IPv6 subnets are /64).
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="networkInterfaces">Local network interfaces.</param>
+    /// <returns>True if the IP address is in a local subnet.</returns>
+    private static bool IsInLocalSubnet(IPAddress ipAddress, IEnumerable<NetworkInterfaceInfo> networkInterfaces)
+    {
+        if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
+        {
+            var address = IPv4Address.ToUInt32(ipAddress);
+
+            return networkInterfaces.Any(networkInterface => networkInterface.IPv4Address.Any(x =>
+            {
+                if (x.Item2 == null)
+                    return false;
+
+                var subnetmask = IPv4Address.ToUInt32(x.Item2);
+
+                return (address & subnetmask) == (IPv4Address.ToUInt32(x.Item1) & subnetmask);
+            }));
+        }
+
+        if (ipAddress.IsIPv6LinkLocal)
+            return true;
+
+        var prefix = ipAddress.GetAddressBytes().AsSpan(0, 8).ToArray();
+
+        return networkInterfaces.Any(networkInterface => networkInterface.IPv6Address.Any(x =>
+            x.GetAddressBytes().AsSpan(0, 8).SequenceEqual(prefix)));
     }
 
     private async Task<PingInfo> PingAsync(IPAddress ipAddress, CancellationToken cancellationToken)
     {
         using var ping = new System.Net.NetworkInformation.Ping();
+
+        PingInfo pingInfo = null;
 
         for (var i = 0; i < options.ICMPAttempts; i++)
         {
@@ -275,24 +399,28 @@ public sealed class IPScanner(IPScannerOptions options)
                 }
 
                 // Failed
-                if (pingReply != null)
-                    return new PingInfo(timestamp, ipAddress, pingReply.Status);
+                pingInfo = new PingInfo(timestamp, ipAddress, pingReply.Status);
+
+                // Only try again if the request timed out (e.g. a lost packet). Other states like
+                // "destination host unreachable" are a definitive answer.
+                if (pingReply.Status != IPStatus.TimedOut)
+                    break;
             }
             catch (PingException)
             {
                 // Ping failed with unknown status
                 return new PingInfo(timestamp, ipAddress, IPStatus.Unknown);
             }
-
-            // Don't scan again, if the user has canceled (when more than 1 attempt)
-            if (cancellationToken.IsCancellationRequested)
-                break;
         }
 
-        // Fall back to unknown status
-        return new PingInfo(DateTime.Now, ipAddress, IPStatus.Unknown);
+        // Result of the last attempt (falls back to unknown status if there was no attempt)
+        return pingInfo ?? new PingInfo(DateTime.Now, ipAddress, IPStatus.Unknown);
     }
 
+    /// <summary>
+    ///     Probes all configured ports of a host. Returns every port (also closed / timed out ones), because
+    ///     a closed port is used to detect a reachable host as well - the caller filters what is shown.
+    /// </summary>
     private async Task<List<PortInfo>> PortScanAsync(IPAddress ipAddress, ParallelOptions parallelOptions,
         CancellationToken cancellationToken)
     {
@@ -300,11 +428,11 @@ public sealed class IPScanner(IPScannerOptions options)
 
         await Parallel.ForEachAsync(options.PortScanPorts, parallelOptions, async (port, ct) =>
         {
-            var portState = await PortProbe.ProbeAsync(ipAddress, port, options.PortScanTimeout, ct)
+            var portState = await PortProbe.ProbeAsync(ipAddress, port, options.PortScanTimeout,
+                    options.PortScanAttempts, ct)
                 .ConfigureAwait(false);
 
-            if (portState == PortState.Open || options.ShowAllResults)
-                results.Add(new PortInfo(port, PortLookup.LookupByPortAndProtocol(port), portState));
+            results.Add(new PortInfo(port, PortLookup.LookupByPortAndProtocol(port), portState));
         }).ConfigureAwait(false);
 
         return results.ToList();
