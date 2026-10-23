@@ -70,7 +70,7 @@ Release date: **xx.xx.2026**
 - The neighbor table (ARP/NDP) is read once and cached during a scan instead of once per reachable host to resolve the MAC address. The MAC address of the own IPv6 addresses and of IPv6 link-local neighbors is resolved as well. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - **Resolve MAC address and vendor** is enabled by default for new installations (as documented). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - The export runs in the background, so the window stays responsive while a large result is exported (also in the **Port Scanner**). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
-- Hosts are started one after another (every 10 ms) instead of all at the same moment, the **Port Scanner** does the same with ports (every 1 ms). This avoids bursts of more than a thousand connection requests within a few milliseconds and makes the progress smoother. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Hosts are started one after another (every 10 ms, shorter with short timeouts and many threads) instead of all at the same moment, the **Port Scanner** does the same with ports (every 1 ms). This avoids bursts of more than a thousand connection requests within a few milliseconds and makes the progress smoother. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Added **RDAP...** to the context menu to query the registration data of the IP address or hostname of a host in the [**RDAP**](../application/rdap.md) tool. [#3642](https://github.com/BornToBeRoot/NETworkManager/pull/3642)
 
 **Port Scanner**

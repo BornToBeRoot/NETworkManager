@@ -21,14 +21,13 @@ public sealed class IPScanner(IPScannerOptions options)
     #region Variables
 
     /// <summary>
-    ///     Minimum time between the start of two hosts, see <see cref="StartScheduler" />. 128 hosts are started
-    ///     within ~1.3 s instead of at the same moment (~11 connection requests per 10 ms instead of ~1400 at once).
-    ///     A host takes up to ~4 s (2 x 2000 ms ICMP), so once all slots are busy, the hosts start when a slot is
-    ///     free anyway (no slowdown); the ramp-up costs ~1.3 s once per scan.
+    ///     Time between the start of two hosts, see <see cref="StartScheduler" />. With the default settings 128
+    ///     hosts are started within ~1.3 s instead of at the same moment (~11 connection requests per 10 ms instead
+    ///     of ~1400 at once). A host takes up to ~4 s (2 x 2000 ms ICMP), so once all slots are busy, the hosts start
+    ///     when a slot is free anyway (no slowdown); the ramp-up costs ~1.3 s once per scan. Shorter if the
+    ///     settings allow more than 100 hosts per second (see <see cref="StartScheduler.GetInterval" />).
     /// </summary>
-    private static readonly TimeSpan HostStartInterval = TimeSpan.FromMilliseconds(10);
-
-    private readonly StartScheduler _hostStartScheduler = new(HostStartInterval);
+    private static readonly TimeSpan MaxHostStartInterval = TimeSpan.FromMilliseconds(10);
 
     private int _progressValue;
     private readonly InterlockedCounter _hostsUp = new();
@@ -124,11 +123,24 @@ public sealed class IPScanner(IPScannerOptions options)
                     MaxDegreeOfParallelism = options.MaxPortThreads
                 };
 
+                // Spread the start of the hosts over time instead of starting all at once - based on the time
+                // an unreachable host takes (the slowest of ping attempts, port scan and NetBIOS)
+                var hostDuration = Math.Max(options.ICMPAttempts * options.ICMPTimeout,
+                    Math.Max(
+                        options.PortScanEnabled
+                            ? options.PortScanTimeout *
+                              (int)Math.Ceiling(options.PortScanPorts.Length / (double)options.MaxPortThreads)
+                            : 0,
+                        options.NetBIOSEnabled ? options.NetBIOSTimeout : 0));
+
+                var hostStartScheduler = new StartScheduler(StartScheduler.GetInterval(MaxHostStartInterval,
+                    TimeSpan.FromMilliseconds(hostDuration), options.MaxHostThreads));
+
                 // Start scan
                 await Parallel.ForEachAsync(hosts, hostParallelOptions, async (host, ct) =>
                 {
                     // Spread the start of the hosts over time instead of starting all at once
-                    await _hostStartScheduler.WaitAsync(ct).ConfigureAwait(false);
+                    await hostStartScheduler.WaitAsync(ct).ConfigureAwait(false);
 
                     // Start ping, port scan and netbios lookup concurrently - none of these block a thread anymore
                     var pingTask = PingAsync(host.ipAddress, ct);

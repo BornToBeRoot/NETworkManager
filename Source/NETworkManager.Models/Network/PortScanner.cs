@@ -22,14 +22,13 @@ public sealed class PortScanner
     #region Variables
 
     /// <summary>
-    ///     Minimum time between the start of two port probes (of all hosts), see <see cref="StartScheduler" />.
-    ///     Much smaller than in the IP Scanner, because ports are much more and faster: 4 hosts x 128 ports with a
+    ///     Time between the start of two port probes (of all hosts), see <see cref="StartScheduler" />. Much
+    ///     smaller than in the IP Scanner, because ports are much more and faster: 4 hosts x 128 ports with a
     ///     2000 ms timeout can finish up to ~256 ports per second, a 10 ms interval (100 per second) would slow
-    ///     the scan down. 512 probes are started within ~0.5 s instead of at the same moment.
+    ///     the scan down. 512 probes are started within ~0.5 s instead of at the same moment. Shorter if the
+    ///     settings allow more than 1000 ports per second (see <see cref="StartScheduler.GetInterval" />).
     /// </summary>
-    private static readonly TimeSpan PortStartInterval = TimeSpan.FromMilliseconds(1);
-
-    private readonly StartScheduler _portStartScheduler = new(PortStartInterval);
+    private static readonly TimeSpan MaxPortStartInterval = TimeSpan.FromMilliseconds(1);
 
     private int _progressValue;
     private readonly InterlockedCounter _portsOpen = new();
@@ -108,6 +107,10 @@ public sealed class PortScanner
                     MaxDegreeOfParallelism = _options.MaxPortThreads
                 };
 
+                // Spread the start of the port probes over time instead of starting all at once
+                var portStartScheduler = new StartScheduler(StartScheduler.GetInterval(MaxPortStartInterval,
+                    TimeSpan.FromMilliseconds(_options.Timeout), _options.MaxHostThreads * _options.MaxPortThreads));
+
                 await Parallel.ForEachAsync(hosts, hostParallelOptions, async (host, hostCt) =>
                 {
                     // Resolve Hostname (PTR) while the ports are scanned
@@ -119,7 +122,7 @@ public sealed class PortScanner
                     await Parallel.ForEachAsync(ports, portParallelOptions, async (port, portCt) =>
                     {
                         // Spread the start of the port probes over time instead of starting all at once
-                        await _portStartScheduler.WaitAsync(portCt).ConfigureAwait(false);
+                        await portStartScheduler.WaitAsync(portCt).ConfigureAwait(false);
 
                         var portState = await PortProbe.ProbeAsync(host.ipAddress, port, _options.Timeout, portCt)
                             .ConfigureAwait(false);

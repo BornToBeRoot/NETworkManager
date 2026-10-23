@@ -19,6 +19,23 @@ namespace NETworkManager.Models.Network;
 /// <param name="interval">Minimum time between two starts.</param>
 internal sealed class StartScheduler(TimeSpan interval)
 {
+    /// <summary>
+    ///     Gets the interval between two starts: <paramref name="maxInterval" />, but at most
+    ///     <paramref name="duration" /> / <paramref name="concurrency" />. A longer interval would start fewer
+    ///     operations per second than can finish and limit the throughput (e.g. with short timeouts and many
+    ///     threads), a shorter one only smooths the start.
+    /// </summary>
+    /// <param name="maxInterval">Interval that should be used, if it doesn't limit the throughput.</param>
+    /// <param name="duration">Maximum duration of one operation (e.g. the timeout).</param>
+    /// <param name="concurrency">Maximum number of concurrent operations.</param>
+    /// <returns>Interval between two starts.</returns>
+    public static TimeSpan GetInterval(TimeSpan maxInterval, TimeSpan duration, int concurrency)
+    {
+        return concurrency <= 0
+            ? maxInterval
+            : TimeSpan.FromTicks(Math.Min(maxInterval.Ticks, duration.Ticks / concurrency));
+    }
+
     private readonly Lock _lock = new();
     private readonly long _intervalTicks = (long)(interval.TotalSeconds * Stopwatch.Frequency);
     private long _nextStartTimestamp;
