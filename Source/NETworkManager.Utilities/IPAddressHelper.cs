@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Net.Sockets;
 
 namespace NETworkManager.Utilities;
 
@@ -26,6 +27,19 @@ public static class IPAddressHelper
             default:
                 return false;
         }
+    }
+
+    /// <summary>
+    ///     Returns the IP address without the IPv6 scope id (e.g. "fe80::1%12" -> "fe80::1"), so it can be compared
+    ///     with (or used as key for) an address that was entered without one. IPv4 addresses are returned as is.
+    /// </summary>
+    /// <param name="ipAddress">IP address.</param>
+    /// <returns>IP address without scope id.</returns>
+    public static IPAddress WithoutScopeId(IPAddress ipAddress)
+    {
+        return ipAddress.AddressFamily == AddressFamily.InterNetworkV6 && ipAddress.ScopeId != 0
+            ? new IPAddress(ipAddress.GetAddressBytes())
+            : ipAddress;
     }
 
     /// <summary>

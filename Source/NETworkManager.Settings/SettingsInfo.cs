@@ -1349,7 +1349,7 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    }
+    } = GlobalStaticConfiguration.IPScanner_ResolveMACAddress;
 
     public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
     {

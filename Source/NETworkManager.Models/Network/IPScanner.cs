@@ -24,6 +24,11 @@ public sealed class IPScanner(IPScannerOptions options)
     private readonly InterlockedCounter _hostsUp = new();
     private readonly InterlockedCounter _hostsDown = new();
 
+    // Snapshot of the neighbor table (IP address -> MAC address), see GetMACAddressFromNeighborTable
+    private readonly Lock _neighborTableLock = new();
+    private Dictionary<IPAddress, string> _neighborTable = [];
+    private DateTime _neighborTableTimestamp = DateTime.MinValue;
+
     /// <summary>
     ///     Gets the number of hosts found to be reachable so far. Thread-safe; may be read from
     ///     any thread while the scan is running.
@@ -125,6 +130,10 @@ public sealed class IPScanner(IPScannerOptions options)
 
                     await Task.WhenAll(pingTask, portScanTask, netbiosTask).ConfigureAwait(false);
 
+                    // A reachable host is in the neighbor table (ARP/NDP) from now on (before it can answer, the
+                    // local system has to resolve its MAC address)
+                    var discoveredAt = DateTime.UtcNow;
+
                     var pingInfo = pingTask.Result;
                     var portScanResults = portScanTask.Result;
                     var netBIOSInfo = netbiosTask.Result;
@@ -167,14 +176,19 @@ public sealed class IPScanner(IPScannerOptions options)
 
                         if (options.ResolveMACAddress)
                         {
-                            // Get info from neighbor table
-                            arpMACAddress = NeighborTable.GetMACAddress(host.ipAddress);
+                            // Get info from neighbor table (an unreachable host never needs a new snapshot)
+                            arpMACAddress = GetMACAddressFromNeighborTable(host.ipAddress,
+                                isReachable ? discoveredAt : DateTime.MinValue);
 
                             // Check if it is the local mac
                             if (string.IsNullOrEmpty(arpMACAddress))
                             {
+                                var ipAddress = IPAddressHelper.WithoutScopeId(host.ipAddress);
+
                                 var networkInterfaceInfo = networkInterfaces.FirstOrDefault(p =>
-                                    p.IPv4Address.Any(x => x.Item1.Equals(host.ipAddress)));
+                                    p.IPv4Address.Any(x => x.Item1.Equals(ipAddress)) ||
+                                    p.IPv6Address.Concat(p.IPv6AddressLinkLocal)
+                                        .Any(x => IPAddressHelper.WithoutScopeId(x).Equals(ipAddress)));
 
                                 if (networkInterfaceInfo != null)
                                     arpMACAddress = networkInterfaceInfo.PhysicalAddress.ToString();
@@ -235,6 +249,37 @@ public sealed class IPScanner(IPScannerOptions options)
                 OnScanComplete(new ScanCompleteArgs(isCanceled, exception));
             }
         });
+    }
+
+    /// <summary>
+    ///     Gets the MAC address of <paramref name="ipAddress" /> from the neighbor table (ARP / NDP). The table is
+    ///     read once and cached for the scan instead of reading it for every host. It is only read again on a miss
+    ///     if the cached snapshot is older than <paramref name="discoveredAt" /> (the time the host answered, when
+    ///     its entry was already created) - a host is always looked up in a table read after its answer, and hosts
+    ///     that finish at the same time share one read.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="discoveredAt">Time the host answered, <see cref="DateTime.MinValue" /> to use the cache only.</param>
+    /// <returns>MAC address or an empty string.</returns>
+    private string GetMACAddressFromNeighborTable(IPAddress ipAddress, DateTime discoveredAt)
+    {
+        var key = IPAddressHelper.WithoutScopeId(ipAddress);
+
+        lock (_neighborTableLock)
+        {
+            if (_neighborTable.TryGetValue(key, out var macAddress))
+                return macAddress;
+
+            // Already read after the host answered -> no entry
+            if (_neighborTableTimestamp > discoveredAt)
+                return string.Empty;
+
+            // Timestamp before reading the table, so entries created while reading are covered by the next read
+            _neighborTableTimestamp = DateTime.UtcNow;
+            _neighborTable = NeighborTable.GetMACAddressMap();
+
+            return _neighborTable.GetValueOrDefault(key, string.Empty);
+        }
     }
 
     private async Task<PingInfo> PingAsync(IPAddress ipAddress, CancellationToken cancellationToken)
