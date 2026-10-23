@@ -50,7 +50,7 @@ Multiple inputs can be combined with a semicolon (`;`). A column pasted from Exc
 
 Example: `10.0.0.0/24; 10.0.[10-20].1; 10.0.0.100-199` or `1-1024; 8080; 8443`
 
-IP addresses and ports that are part of multiple inputs (e.g. `10.0.0.1; 10.0.0.0/24` or `80; 1-100`) are scanned only once.
+IP addresses and ports that are part of multiple inputs (e.g. `10.0.0.1; 10.0.0.0/24` or `80; 1-100`) are scanned only once. If an IP address is also entered as hostname, the hostname is kept; an IP address entered with different hostnames is scanned once per hostname.
 
 A scan of more than `65,536` ports (hosts × ports, e.g. 64 hosts with `1-1024`) must be confirmed, more than `16,777,216` ports cannot be scanned at once.
 

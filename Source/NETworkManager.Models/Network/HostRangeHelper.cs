@@ -193,8 +193,8 @@ public static class HostRangeHelper
 
     /// <summary>
     ///     Resolves the inputs (IP addresses, ranges, subnets, hostnames) into a list of hosts. The list is sorted
-    ///     by IP address and contains every IP address only once (e.g. overlapping ranges); if an IP address was
-    ///     also entered as hostname, the entry with the hostname is kept.
+    ///     by IP address and contains every IP address only once (e.g. overlapping ranges), see
+    ///     <see cref="SortAndRemoveDuplicates" />.
     /// </summary>
     /// <param name="hosts">Inputs like "10.0.0.1", "example.com", "10.0.0.0/24" (see <see cref="CreateListFromInput" />).</param>
     /// <param name="dnsResolveHostnamePreferIPv4">Prefer the A record over the AAAA record for hostnames.</param>
@@ -305,8 +305,12 @@ public static class HostRangeHelper
     }
 
     /// <summary>
-    ///     Merges the hosts of all inputs into one list sorted by IP address, with every IP address only once.
-    ///     If an IP address exists with and without hostname, the entry with the hostname is kept.
+    ///     Merges the hosts of all inputs into one list sorted by IP address, with every IP address only once
+    ///     (e.g. overlapping ranges). If the same IP address was entered with different hostnames (e.g. two names of
+    ///     one server), every hostname is kept once; an entry without hostname is only kept if there is no entry
+    ///     with a hostname. Entries with the same IP address keep the input order (stable sort), so the result is
+    ///     the same on every run. IPv6 addresses with a different scope id (e.g. "fe80::1%3" and "fe80::1%7",
+    ///     two devices on different interfaces) are different hosts.
     /// </summary>
     private static List<(IPAddress ipAddress, string hostname)> SortAndRemoveDuplicates(
         List<(IPAddress ipAddress, string hostname)>[] hostsPerInput)
@@ -319,7 +323,7 @@ public static class HostRangeHelper
 
         for (var i = 1; i < hosts.Count; i++)
         {
-            if (IPAddressHelper.CompareIPAddresses(hosts[i - 1].ipAddress, hosts[i].ipAddress) < 0)
+            if (CompareHosts(hosts[i - 1].ipAddress, hosts[i].ipAddress) < 0)
                 continue;
 
             isSortedAndDistinct = false;
@@ -329,25 +333,48 @@ public static class HostRangeHelper
         if (isSortedAndDistinct)
             return hosts;
 
-        hosts.Sort((x, y) => IPAddressHelper.CompareIPAddresses(x.ipAddress, y.ipAddress));
+        // Stable sort (OrderBy), entries with the same IP address keep the input order
+        var sortedHosts = hosts.OrderBy(x => x.ipAddress, Comparer<IPAddress>.Create(CompareHosts)).ToList();
 
-        var distinctHosts = new List<(IPAddress ipAddress, string hostname)>(hosts.Count);
+        var distinctHosts = new List<(IPAddress ipAddress, string hostname)>(sortedHosts.Count);
 
-        foreach (var host in hosts)
+        for (var start = 0; start < sortedHosts.Count;)
         {
-            if (distinctHosts.Count > 0 &&
-                IPAddressHelper.CompareIPAddresses(distinctHosts[^1].ipAddress, host.ipAddress) == 0)
-            {
-                // Keep the entry with the hostname (e.g. "server01.example.com; 10.0.0.0/24")
-                if (string.IsNullOrEmpty(distinctHosts[^1].hostname) && !string.IsNullOrEmpty(host.hostname))
-                    distinctHosts[^1] = host;
+            // All entries with the same IP address
+            var end = start + 1;
 
-                continue;
-            }
+            while (end < sortedHosts.Count &&
+                   CompareHosts(sortedHosts[start].ipAddress, sortedHosts[end].ipAddress) == 0)
+                end++;
 
-            distinctHosts.Add(host);
+            var entriesWithHostname = sortedHosts.GetRange(start, end - start)
+                .Where(x => !string.IsNullOrEmpty(x.hostname))
+                .DistinctBy(x => x.hostname, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+
+            if (entriesWithHostname.Count > 0)
+                distinctHosts.AddRange(entriesWithHostname);
+            else
+                distinctHosts.Add(sortedHosts[start]);
+
+            start = end;
         }
 
         return distinctHosts;
+    }
+
+    /// <summary>
+    ///     Compares two IP addresses like <see cref="IPAddressHelper.CompareIPAddresses" />, IPv6 addresses with the
+    ///     same bytes are compared by their scope id.
+    /// </summary>
+    private static int CompareHosts(IPAddress x, IPAddress y)
+    {
+        var result = IPAddressHelper.CompareIPAddresses(x, y);
+
+        // Same bytes -> same address family
+        if (result != 0 || x.AddressFamily != AddressFamily.InterNetworkV6)
+            return result;
+
+        return x.ScopeId.CompareTo(y.ScopeId);
     }
 }
