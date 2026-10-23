@@ -72,18 +72,29 @@ public static class NetBIOSResolver
                 return new NetBIOSInfo(ipAddress);
 
             var buffer = new byte[ResponseBufferSize];
+            byte[] response;
 
-            using var receiveArgs = new SocketAsyncEventArgs();
-            receiveArgs.RemoteEndPoint = new IPEndPoint(
-                ipAddress.AddressFamily == AddressFamily.InterNetworkV6 ? IPAddress.IPv6Any : IPAddress.Any, 0);
-            receiveArgs.SetBuffer(buffer);
+            // Wait for the answer of the host - a datagram from another address (e.g. a stray or spoofed one) is
+            // ignored, until the timeout
+            while (true)
+            {
+                using var receiveArgs = new SocketAsyncEventArgs();
+                receiveArgs.RemoteEndPoint = new IPEndPoint(
+                    ipAddress.AddressFamily == AddressFamily.InterNetworkV6 ? IPAddress.IPv6Any : IPAddress.Any, 0);
+                receiveArgs.SetBuffer(buffer);
 
-            // No answer (timeout), port unreachable, etc.
-            if (await SocketOperation.RunAsync(receiveArgs, socket.ReceiveFromAsync).ConfigureAwait(false) !=
-                SocketError.Success)
-                return new NetBIOSInfo(ipAddress);
+                // No answer (timeout), port unreachable, etc.
+                if (await SocketOperation.RunAsync(receiveArgs, socket.ReceiveFromAsync).ConfigureAwait(false) !=
+                    SocketError.Success)
+                    return new NetBIOSInfo(ipAddress);
 
-            var response = buffer[..receiveArgs.BytesTransferred];
+                if (receiveArgs.RemoteEndPoint is not IPEndPoint remoteEndPoint ||
+                    IPAddressHelper.CompareIPAddresses(remoteEndPoint.Address, ipAddress) != 0)
+                    continue;
+
+                response = buffer[..receiveArgs.BytesTransferred];
+                break;
+            }
 
             if (response.Length < ResponseBaseLen || response[ResponseTypePos] != ResponseTypeNbstat)
                 return new NetBIOSInfo(ipAddress); // response was too short
