@@ -21,11 +21,10 @@ public sealed class IPScanner(IPScannerOptions options)
     #region Variables
 
     /// <summary>
-    ///     Time between the start of two hosts, see <see cref="StartScheduler" />. With the default settings 128
-    ///     hosts are started within ~1.3 s instead of at the same moment (~11 connection requests per 10 ms instead
-    ///     of ~1400 at once). A host takes up to ~4 s (2 x 2000 ms ICMP), so once all slots are busy, the hosts start
-    ///     when a slot is free anyway (no slowdown); the ramp-up costs ~1.3 s once per scan. Shorter if the
-    ///     settings allow more than 100 hosts per second (see <see cref="StartScheduler.GetInterval" />).
+    ///     Time between the start of two hosts during the ramp-up, see <see cref="StartScheduler" />. With the
+    ///     default settings the first 128 hosts are started within ~1.3 s instead of at the same moment (~11 connection
+    ///     requests per 10 ms instead of ~1400 at once), the following ones when a slot is free. Shorter if a host
+    ///     takes less than 128 x 10 ms (see <see cref="StartScheduler.GetInterval" />).
     /// </summary>
     private static readonly TimeSpan MaxHostStartInterval = TimeSpan.FromMilliseconds(10);
 
@@ -133,8 +132,12 @@ public sealed class IPScanner(IPScannerOptions options)
                             : 0,
                         options.NetBIOSEnabled ? options.NetBIOSTimeout : 0));
 
+                var hostConcurrency = hosts.TryGetNonEnumeratedCount(out var hostCount)
+                    ? Math.Min(hostCount, options.MaxHostThreads)
+                    : options.MaxHostThreads;
+
                 var hostStartScheduler = new StartScheduler(StartScheduler.GetInterval(MaxHostStartInterval,
-                    TimeSpan.FromMilliseconds(hostDuration), options.MaxHostThreads));
+                    TimeSpan.FromMilliseconds(hostDuration), hostConcurrency), hostConcurrency);
 
                 // Start scan
                 await Parallel.ForEachAsync(hosts, hostParallelOptions, async (host, ct) =>

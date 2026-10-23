@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,11 +23,11 @@ public sealed class PortScanner
     #region Variables
 
     /// <summary>
-    ///     Time between the start of two port probes (of all hosts), see <see cref="StartScheduler" />. Much
-    ///     smaller than in the IP Scanner, because ports are much more and faster: 4 hosts x 128 ports with a
-    ///     2000 ms timeout can finish up to ~256 ports per second, a 10 ms interval (100 per second) would slow
-    ///     the scan down. 512 probes are started within ~0.5 s instead of at the same moment. Shorter if the
-    ///     settings allow more than 1000 ports per second (see <see cref="StartScheduler.GetInterval" />).
+    ///     Time between the start of two port probes (of all hosts) during the ramp-up, see
+    ///     <see cref="StartScheduler" />. Smaller than in the IP Scanner, because there are more concurrent probes:
+    ///     with the default settings the first 4 hosts x 128 ports are started within ~0.5 s instead of at the same
+    ///     moment, the following ones when a slot is free. Shorter if a probe takes less than 512 x 1 ms
+    ///     (see <see cref="StartScheduler.GetInterval" />).
     /// </summary>
     private static readonly TimeSpan MaxPortStartInterval = TimeSpan.FromMilliseconds(1);
 
@@ -108,8 +109,16 @@ public sealed class PortScanner
                 };
 
                 // Spread the start of the port probes over time instead of starting all at once
+                var hostConcurrency = hosts.TryGetNonEnumeratedCount(out var hostCount)
+                    ? Math.Min(hostCount, _options.MaxHostThreads)
+                    : _options.MaxHostThreads;
+
+                var portConcurrency = hostConcurrency * (ports.TryGetNonEnumeratedCount(out var portCount)
+                    ? Math.Min(portCount, _options.MaxPortThreads)
+                    : _options.MaxPortThreads);
+
                 var portStartScheduler = new StartScheduler(StartScheduler.GetInterval(MaxPortStartInterval,
-                    TimeSpan.FromMilliseconds(_options.Timeout), _options.MaxHostThreads * _options.MaxPortThreads));
+                    TimeSpan.FromMilliseconds(_options.Timeout), portConcurrency), portConcurrency);
 
                 await Parallel.ForEachAsync(hosts, hostParallelOptions, async (host, hostCt) =>
                 {
