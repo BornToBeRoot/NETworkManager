@@ -134,9 +134,9 @@
         <TextBlock Text="{x:Static localization:Strings.Multithreading}" Style="{StaticResource HeaderTextBlock}" />
         <TextBlock Text="{x:Static localization:Strings.MaxHostThreads}" Style="{StaticResource DefaultTextBlock}"
                    Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding MaxHostThreads}" Maximum="512" Minimum="1" Interval="1" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding MaxHostThreads}" Maximum="256" Minimum="1" Interval="1" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.MaxPortThreads}" Style="{StaticResource DefaultTextBlock}"
                    Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding MaxPortThreads}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding MaxPortThreads}" Maximum="32" Minimum="1" Interval="1" Margin="0,0,0,10" />
     </StackPanel>
 </UserControl>

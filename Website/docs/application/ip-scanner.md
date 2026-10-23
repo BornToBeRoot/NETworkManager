@@ -123,7 +123,7 @@ Timeout in milliseconds for each ICMP request, after which the packet is conside
 
 **Type:** `Integer` [Min `100`, Max `15000`]
 
-**Default:** `4000`
+**Default:** `2000`
 
 ### Buffer
 
@@ -169,7 +169,7 @@ Timeout in milliseconds after which a port is considered timed out (no answer). 
 
 **Type:** `Integer` [Min `100`, Max `15000`]
 
-**Default:** `4000`
+**Default:** `2000`
 
 ### Scan for NetBIOS
 
@@ -185,7 +185,7 @@ Timeout in milliseconds after which a NetBIOS request is considered lost.
 
 **Type:** `Integer` [Min `100`, Max `15000`]
 
-**Default:** `4000`
+**Default:** `2000`
 
 ### Resolve MAC address and vendor
 
@@ -232,32 +232,28 @@ You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected cus
 
 ### Max. concurrent host threads
 
-Maximum number of threads used to scan for active hosts (1 thread = 1 host / IP address).
+Maximum number of hosts (IP addresses) that are scanned at the same time. A thread is not an operating system thread, but one host that is pinged, scanned for ports and NetBIOS concurrently.
 
-**Type:** `Integer` [Min `1`, Max `512`]
+**Type:** `Integer` [Min `1`, Max `256`]
 
-**Default:** `64`
+**Default:** `128`
 
 :::warning
 
-Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.
-
-Too many threads can also cause performance problems on the device.
+Every host opens up to [Max. concurrent port threads](#max-concurrent-port-threads) TCP connections at the same time (with the default settings up to 128 × 11 = 1408). Too many simultaneous requests may be detected as a port scan and blocked or rate-limited by a firewall (local, on the network or on the scanned devices) and can overload small routers. If hosts are missing in the result or the network becomes slow during the scan, reduce the number of threads. This will increase the scan time.
 
 :::
 
 ### Max. concurrent port threads
 
-Maximum number of threads that are used to scan for open ports for each host (IP address).
+Maximum number of ports that are scanned at the same time for each host (IP address). If this is less than the number of [ports](#ports), the remaining ports are scanned after the first ones are finished, which increases the time per host by the [timeout](#timeout-ms-1).
 
-**Type:** `Integer` [Min `1`, Max `10`]
+**Type:** `Integer` [Min `1`, Max `32`]
 
-**Default:** `4`
+**Default:** `16`
 
 :::warning
 
-Too many simultaneous requests may be blocked by a firewall. You can reduce the number of threads to avoid this, but this will increase the scan time.
-
-Too many threads can also cause performance problems on the device.
+Too many simultaneous requests may be detected as a port scan and blocked or rate-limited by a firewall (local, on the network or on the scanned devices). If hosts are missing in the result, reduce the number of threads. This will increase the scan time.
 
 :::
