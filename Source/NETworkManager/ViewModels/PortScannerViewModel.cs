@@ -460,17 +460,26 @@ public class PortScannerViewModel : ViewModelBase
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
 
-        // Resolve hostnames
+        // Resolve hostnames and convert the ports. Start() is fire-and-forget, so every exception has to be
+        // handled here - otherwise the scan would never end (IsRunning stays true).
         (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved) hosts;
+        int[] ports;
 
         try
         {
             hosts = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(Host),
                 SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
+
+            ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
         }
         catch (OperationCanceledException)
         {
             ScanComplete(this, new ScanCompleteArgs(true));
+            return;
+        }
+        catch (Exception ex)
+        {
+            ScanComplete(this, new ScanCompleteArgs(false, ex));
             return;
         }
 
@@ -481,9 +490,6 @@ public class PortScannerViewModel : ViewModelBase
                 $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
             IsStatusMessageDisplayed = true;
         }
-
-        // Convert ports to int array
-        var ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
 
         PortsToScan = ports.Length * hosts.hosts.Count;
 
@@ -669,7 +675,10 @@ public class PortScannerViewModel : ViewModelBase
             }
             else if (Results.Count == 0)
             {
-                StatusMessage = Strings.NoOpenPortsFound;
+                // Keep a message from the preparation (e.g. hostnames that could not be resolved)
+                StatusMessage = IsStatusMessageDisplayed
+                    ? StatusMessage + Environment.NewLine + Strings.NoOpenPortsFound
+                    : Strings.NoOpenPortsFound;
                 IsStatusMessageDisplayed = true;
             }
 
