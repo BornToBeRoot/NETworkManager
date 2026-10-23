@@ -179,6 +179,7 @@ Release date: **xx.xx.2026**
 
 - Fixed NetBIOS lookups (computer name, domain/workgroup, user name) not starting until a host's entire port scan had finished, since the port scan wasn't actually running asynchronously despite being awaited alongside it. Ping, port scan, and NetBIOS resolution now genuinely run concurrently for every host. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
 - Fixed the application becoming unresponsive (including the window not reacting to input) during a large scan (e.g. a /24). Scan results and progress were both being pushed to the UI one item/update at a time via a dispatcher call per host/port, which could flood the UI thread's message queue on large scans. Both are now batched and flushed periodically (every 150ms) instead, for **IP Scanner** and **Port Scanner** alike. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+- Fixed every host being shown as unreachable when the ICMP **Buffer** was set to more than `65500` bytes (Windows limit), the same applies to **Ping Monitor** and **Traceroute**. The maximum is now `65500`, higher values are lowered to `65500`. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **IP Scanner** / **Port Scanner**
 

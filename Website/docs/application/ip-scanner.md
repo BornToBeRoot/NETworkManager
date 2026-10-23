@@ -129,7 +129,7 @@ Timeout in milliseconds for each ICMP request, after which the packet is conside
 
 Size of the buffer for each ICMP request in bytes.
 
-**Type:** `Integer` [Min `1`, Max `65535`]
+**Type:** `Integer` [Min `1`, Max `65500`]
 
 **Default:** `32`
 

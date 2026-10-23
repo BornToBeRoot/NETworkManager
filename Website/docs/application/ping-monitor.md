@@ -133,7 +133,7 @@ Timeout in milliseconds for each ICMP packet, after which the packet is consider
 
 Buffer size of the ICMP packet.
 
-**Type:** `Integer` [Min `1`, Max `65535`]
+**Type:** `Integer` [Min `1`, Max `65500`]
 
 **Default:** `32`
 

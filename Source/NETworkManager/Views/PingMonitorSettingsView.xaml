@@ -14,7 +14,7 @@
         <mah:NumericUpDown Value="{Binding Timeout}" Minimum="100" Maximum="15000" Interval="100" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.Buffer}" Style="{StaticResource CenterTextBlock}"
                    Margin="0,0,0,10" />
-        <mah:NumericUpDown Value="{Binding Buffer}" Minimum="1" Maximum="65535" Interval="1" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding Buffer}" Minimum="1" Maximum="65500" Interval="1" Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.TTL}" Style="{StaticResource CenterTextBlock}"
                    Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding TTL}" Minimum="1" Maximum="255" Interval="1" Margin="0,0,0,10" />
