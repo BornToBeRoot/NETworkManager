@@ -320,6 +320,14 @@ public class PortScannerViewModel : ViewModelBase
         ResultsView = CollectionViewSource.GetDefaultView(Results);
         ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortScannerPortInfo.HostAsString)));
 
+        // Sort by IP address and port - results are added in the order the ports are finished
+        ((ListCollectionView)ResultsView).CustomSort = Comparer<PortScannerPortInfo>.Create((x, y) =>
+        {
+            var result = IPAddressHelper.CompareIPAddresses(x.IPAddress, y.IPAddress);
+
+            return result != 0 ? result : x.Port.CompareTo(y.Port);
+        });
+
         LoadSettings();
     }
 

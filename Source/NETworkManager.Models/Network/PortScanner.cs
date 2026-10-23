@@ -100,23 +100,20 @@ public sealed class PortScanner
 
                 await Parallel.ForEachAsync(hosts, hostParallelOptions, async (host, hostCt) =>
                 {
-                    // Resolve Hostname (PTR)
-                    var hostname = string.Empty;
-
-                    if (_options.ResolveHostname)
-                    {
-                        var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(host.ipAddress)
-                            .WaitAsync(hostCt).ConfigureAwait(false);
-
-                        if (!dnsResult.HasError)
-                            hostname = dnsResult.Value;
-                    }
+                    // Resolve Hostname (PTR) while the ports are scanned
+                    var hostnameTask = _options.ResolveHostname
+                        ? ResolveHostnameAsync(host.ipAddress, hostCt)
+                        : Task.FromResult(string.Empty);
 
                     // Check each port
                     await Parallel.ForEachAsync(ports, portParallelOptions, async (port, portCt) =>
                     {
                         var portState = await PortProbe.ProbeAsync(host.ipAddress, port, _options.Timeout, portCt)
                             .ConfigureAwait(false);
+
+                        // Every result needs the hostname (results are grouped by it) - usually resolved
+                        // long before the first port is finished
+                        var hostname = await hostnameTask.ConfigureAwait(false);
 
                         // Count open/closed ports unconditionally, since ShowAllResults (below)
                         // may prevent closed ports from ever reaching PortScanned
@@ -147,6 +144,14 @@ public sealed class PortScanner
                 OnScanComplete(new ScanCompleteArgs(isCanceled, exception));
             }
         });
+    }
+
+    private static async Task<string> ResolveHostnameAsync(IPAddress ipAddress, CancellationToken cancellationToken)
+    {
+        var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddress)
+            .WaitAsync(cancellationToken).ConfigureAwait(false);
+
+        return dnsResult.HasError ? string.Empty : dnsResult.Value;
     }
 
     private void IncreaseProgress()
