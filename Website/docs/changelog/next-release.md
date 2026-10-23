@@ -188,6 +188,8 @@ Release date: **xx.xx.2026**
 - Fixed the message "Canceled by user" being replaced by "No reachable hosts found" / "No open ports found" when the scan was canceled before the first result, and a new scan started right after canceling showing no progress or stopping too early. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the message "The following hostnames could not be resolved" being replaced by "No reachable hosts found" / "No open ports found". Both messages are shown now. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the scan getting stuck when an error occurred while the hosts or ports were prepared, and the **IP Scanner** subnet detection button staying disabled after an error. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed ports being shown as closed when there was no answer at all (e.g. host or network unreachable). Closed now means the host refused the connection, otherwise the port is timed out. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed large scans using up the local (ephemeral) ports: every open port left a connection in the `TIME_WAIT` state for several minutes, so later connections failed (also in other applications). Connections are now closed with a reset. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **IP Geolocation**
 

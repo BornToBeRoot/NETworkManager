@@ -165,7 +165,7 @@ Multiple ports and port ranges can be combined with a semicolon (e.g. `22; 80; 4
 
 ### Timeout (ms)
 
-Timeout in milliseconds after which a port is considered closed / timed out.
+Timeout in milliseconds after which a port is considered timed out (no answer). A port is closed if the host refused the connection.
 
 **Type:** `Integer` [Min `100`, Max `15000`]
 
