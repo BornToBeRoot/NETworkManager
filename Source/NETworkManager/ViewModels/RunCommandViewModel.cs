@@ -584,7 +584,13 @@ public class RunCommandViewModel : ViewModelBase
             Strings.RunCommandWatermark7, Strings.RunCommandWatermark8, Strings.RunCommandWatermark9,
             Strings.RunCommandWatermark10, Strings.RunCommandWatermark11, Strings.RunCommandWatermark12,
             Strings.RunCommandWatermark13, Strings.RunCommandWatermark14, Strings.RunCommandWatermark15,
-            Strings.RunCommandWatermark16, Strings.RunCommandWatermark17, Strings.RunCommandWatermark18
+            Strings.RunCommandWatermark16, Strings.RunCommandWatermark17, Strings.RunCommandWatermark18,
+            Strings.RunCommandWatermark19, Strings.RunCommandWatermark20, Strings.RunCommandWatermark21,
+            Strings.RunCommandWatermark22, Strings.RunCommandWatermark23, Strings.RunCommandWatermark24,
+            Strings.RunCommandWatermark25, Strings.RunCommandWatermark26, Strings.RunCommandWatermark27,
+            Strings.RunCommandWatermark28, Strings.RunCommandWatermark29, Strings.RunCommandWatermark30,
+            Strings.RunCommandWatermark31, Strings.RunCommandWatermark32, Strings.RunCommandWatermark33,
+            Strings.RunCommandWatermark34, Strings.RunCommandWatermark35
         ];
 
         return watermarks[Random.Shared.Next(watermarks.Length)];
