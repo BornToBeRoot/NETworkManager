@@ -187,6 +187,12 @@ Timeout in milliseconds after which a port is considered timed out (no answer). 
 
 **Default:** `2000`
 
+:::note
+
+Windows retries a connection that was refused, so a closed port is only reported after about 1 second. With a timeout below `1000` ms, closed ports are shown as timed out.
+
+:::
+
 ### Resolve hostname
 
 Resolve the hostname for given IP addresses.
