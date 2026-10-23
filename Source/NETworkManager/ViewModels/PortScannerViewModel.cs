@@ -603,10 +603,16 @@ public class PortScannerViewModel : ViewModelBase
             try
             {
                 // Copy the results on the UI thread (they may still change while a scan is running) and
-                // export them in the background, so a large export doesn't freeze the window
+                // export them in the background, so a large export doesn't freeze the window. In the order
+                // shown in the grid: grouped by host, sorted within the group (Results is in the order the
+                // ports were finished).
+                var viewResults = ResultsView.Groups.Cast<CollectionViewGroup>()
+                    .SelectMany(group => group.Items.Cast<PortScannerPortInfo>());
+
                 var results = instance.ExportAll
-                    ? Results.ToList()
-                    : SelectedResults.Cast<PortScannerPortInfo>().ToList();
+                    ? viewResults.ToList()
+                    : viewResults.Where(new HashSet<PortScannerPortInfo>(SelectedResults.Cast<PortScannerPortInfo>())
+                        .Contains).ToList();
 
                 await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }

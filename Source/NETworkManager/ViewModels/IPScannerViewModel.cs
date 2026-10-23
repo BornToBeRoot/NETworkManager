@@ -796,10 +796,14 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             try
             {
                 // Copy the results on the UI thread (they may still change while a scan is running) and
-                // export them in the background, so a large export doesn't freeze the window
+                // export them in the background, so a large export doesn't freeze the window. In the order
+                // shown in the grid (Results is in the order the hosts were finished).
+                var viewResults = ResultsView.Cast<IPScannerHostInfo>();
+
                 var results = instance.ExportAll
-                    ? Results.ToList()
-                    : SelectedResults.Cast<IPScannerHostInfo>().ToList();
+                    ? viewResults.ToList()
+                    : viewResults.Where(new HashSet<IPScannerHostInfo>(SelectedResults.Cast<IPScannerHostInfo>())
+                        .Contains).ToList();
 
                 await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }
