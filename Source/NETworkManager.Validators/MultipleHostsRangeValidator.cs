@@ -41,8 +41,7 @@ public class MultipleHostsRangeValidator : ValidationRule
                 var shortRange = ipHostOrRange.Split('-');
                 var shortBase = shortRange[0][..shortRange[0].LastIndexOf('.')];
 
-                if (IPv4Address.ToInt32(IPAddress.Parse(shortRange[0])) >
-                    IPv4Address.ToInt32(IPAddress.Parse($"{shortBase}.{shortRange[1]}")))
+                if (ToUInt32(shortRange[0]) > ToUInt32($"{shortBase}.{shortRange[1]}"))
                     isValid = false;
 
                 continue;
@@ -53,7 +52,7 @@ public class MultipleHostsRangeValidator : ValidationRule
             {
                 var range = ipHostOrRange.Split('-');
 
-                if (IPv4Address.ToInt32(IPAddress.Parse(range[0])) > IPv4Address.ToInt32(IPAddress.Parse(range[1])))
+                if (ToUInt32(range[0]) > ToUInt32(range[1]))
                     isValid = false;
 
                 continue;
@@ -108,5 +107,14 @@ public class MultipleHostsRangeValidator : ValidationRule
         return isValid
             ? ValidationResult.ValidResult
             : new ValidationResult(false, Strings.EnterValidIPScanRange);
+    }
+
+    /// <summary>
+    ///     Converts an IPv4 address to its unsigned value, so ranges across 128.0.0.0 compare correctly
+    ///     (the signed value of 128.0.0.0 and above is negative).
+    /// </summary>
+    private static uint ToUInt32(string ipAddress)
+    {
+        return unchecked((uint)IPv4Address.ToInt32(IPAddress.Parse(ipAddress)));
     }
 }

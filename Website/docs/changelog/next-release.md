@@ -192,6 +192,7 @@ Release date: **xx.xx.2026**
 - Fixed IP addresses being scanned twice if the inputs overlap (e.g. `10.0.0.1; 10.0.0.0/24`), the same applies to **Ping Monitor**. If an IP address is also entered as hostname, the hostname is kept. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the application running out of memory (and the scan getting stuck) for very large inputs like `10.0.0.0/1`. A scan of more than `65,536` IP addresses (**Port Scanner**: hosts × ports) must now be confirmed, more than `16,777,216` are refused with a message. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - **Port Scanner**: Fixed ports being scanned twice if they are part of multiple inputs (e.g. `80; 1-100` or multiple port profiles). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed IP ranges across `128.0.0.0` (e.g. `127.255.255.250 - 128.0.0.5`) being rejected as invalid. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **IP Geolocation**
 
