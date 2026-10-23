@@ -189,7 +189,7 @@ Timeout in milliseconds after which a port is considered timed out (no answer). 
 
 :::note
 
-Windows retries a connection that was refused, so a closed port is only reported after about 1 second. With a timeout below `1000` ms, closed ports are shown as timed out.
+A closed port is reported as soon as the host refuses the connection. The connection request is sent once and not repeated, so on an unreliable network a port can occasionally be shown as timed out - scan it again if in doubt.
 
 :::
 
