@@ -195,6 +195,8 @@ Release date: **xx.xx.2026**
 - Fixed IP ranges across `128.0.0.0` (e.g. `127.255.255.250 - 128.0.0.5`) being rejected as invalid. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - **Port Scanner**: Fixed the application crashing when the results of multiple hosts were sorted by IP address. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - **Port Scanner**: Results are sorted by IP address and port (before, in the order the ports were finished), and the hostname is resolved while the ports are scanned instead of before. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- **IP Scanner**: Fixed sorting by **NetBIOS reachable** not working and the column being shown with NetBIOS disabled. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- **IP Scanner**: Fixed **Copy** > **Hostname** / **MAC address** / **Vendor** being hidden in the context menu while the column was shown (resolved via NetBIOS only), and **Copy** > **Status** copying `True` / `False` instead of `Up` / `Down`. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **IP Geolocation**
 
