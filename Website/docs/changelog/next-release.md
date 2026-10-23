@@ -191,6 +191,7 @@ Release date: **xx.xx.2026**
 - **IP Scanner**: Fixed hosts that block ICMP and refuse the connection on the scanned ports (TCP reset) being shown as unreachable. A refused connection is an answer from the host, so it is now shown as reachable. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed IP addresses being scanned twice if the inputs overlap (e.g. `10.0.0.1; 10.0.0.0/24`), the same applies to **Ping Monitor**. If an IP address is also entered as hostname, the hostname is kept. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the application running out of memory (and the scan getting stuck) for very large inputs like `10.0.0.0/1`. A scan of more than `65,536` IP addresses (**Port Scanner**: hosts × ports) must now be confirmed, more than `16,777,216` are refused with a message. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- **Port Scanner**: Fixed ports being scanned twice if they are part of multiple inputs (e.g. `80; 1-100` or multiple port profiles). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **IP Geolocation**
 
