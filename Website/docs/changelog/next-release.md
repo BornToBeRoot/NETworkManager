@@ -189,6 +189,7 @@ Release date: **xx.xx.2026**
 - Fixed ports being shown as closed when there was no answer at all (e.g. host or network unreachable). Closed now means the host refused the connection, otherwise the port is timed out. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed large scans using up the local (ephemeral) ports: every open port left a connection in the `TIME_WAIT` state for several minutes, so later connections failed (also in other applications). Connections are now closed with a reset. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - **IP Scanner**: Fixed hosts that block ICMP and refuse the connection on the scanned ports (TCP reset) being shown as unreachable. A refused connection is an answer from the host, so it is now shown as reachable. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed IP addresses being scanned twice if the inputs overlap (e.g. `10.0.0.1; 10.0.0.0/24`), the same applies to **Ping Monitor**. If an IP address is also entered as hostname, the hostname is kept. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **IP Geolocation**
 
