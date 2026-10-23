@@ -4888,43 +4888,43 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>最近使った項目</value>
   </data>
   <data name="EnterSubnetmaskOrCIDRBetweenXAndY" xml:space="preserve">
-    <value>Enter a subnet mask or CIDR between /{0} and /{1}!</value>
+    <value>Enter a subnet mask or CIDR between /{0} ～ /{1} の範囲で、サブネットマスクまたは CIDR を入力してください!</value>
   </data>
   <data name="BringWindowToForegroundAndOpenRunCommand" xml:space="preserve">
-    <value>Bring window to foreground and open the run command</value>
+    <value>ウィンドウを最前面に移動し、実行コマンドを開く</value>
   </data>
   <data name="Commands" xml:space="preserve">
-    <value>Commands</value>
+    <value>コマンド</value>
   </data>
   <data name="Clipboard" xml:space="preserve">
-    <value>Clipboard</value>
+    <value>クリップボード</value>
   </data>
   <data name="Examples" xml:space="preserve">
-    <value>Examples</value>
+    <value>例</value>
   </data>
   <data name="Select" xml:space="preserve">
-    <value>Select</value>
+    <value>選択</value>
   </data>
   <data name="Complete" xml:space="preserve">
-    <value>Complete</value>
+    <value>完了</value>
   </data>
   <data name="Run" xml:space="preserve">
-    <value>Run</value>
+    <value>実行</value>
   </data>
   <data name="RunAndKeepOpen" xml:space="preserve">
-    <value>Run and keep open</value>
+    <value>実行し、開いたままにする</value>
   </data>
   <data name="FillInWithoutStarting" xml:space="preserve">
-    <value>Fill in without starting</value>
+    <value>開始せずに入力する</value>
   </data>
   <data name="RemoveFromHistory" xml:space="preserve">
-    <value>Remove from history</value>
+    <value>履歴から削除</value>
   </data>
   <data name="SuggestTheClipboardAsTarget" xml:space="preserve">
-    <value>Suggest the clipboard content (e.g. an IP address) as target</value>
+    <value>クリップボードの内容 (IP アドレスなど) をターゲットとして提案する</value>
   </data>
   <data name="ShowKeyHints" xml:space="preserve">
-    <value>Show key hints</value>
+    <value>キーヒントを表示する</value>
   </data>
   <data name="CtrlShiftP" xml:space="preserve">
     <value>Ctrl+Shift+P</value>
@@ -4948,60 +4948,60 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>Esc</value>
   </data>
   <data name="RunCommandWatermark1" xml:space="preserve">
-    <value>Ping it, trace it, scan it...</value>
+    <value>Ping、トレース、スキャン...</value>
   </data>
   <data name="RunCommandWatermark2" xml:space="preserve">
-    <value>Got an IP address? Drop it here...</value>
+    <value>IP アドレスをお持ちですか? ここにドロップ...</value>
   </data>
   <data name="RunCommandWatermark3" xml:space="preserve">
-    <value>Your whole network, one command away...</value>
+    <value>ネットワーク全体を、1つのコマンドで操作できます…</value>
   </data>
   <data name="RunCommandWatermark4" xml:space="preserve">
-    <value>Every tool, one line away...</value>
+    <value>すべてのツールを 1行で...</value>
   </data>
   <data name="RunCommandWatermark5" xml:space="preserve">
-    <value>Something down? Let's check it...</value>
+    <value>何かあった? 確認してみよう...</value>
   </data>
   <data name="RunCommandWatermark6" xml:space="preserve">
-    <value>Is it DNS? It's always DNS...</value>
+    <value>DNS のせいかな? いつも DNS のせいなんだよね……</value>
   </data>
   <data name="RunCommandWatermark7" xml:space="preserve">
-    <value>Have you tried pinging it?</value>
+    <value>ping してみましたか?</value>
   </data>
   <data name="RunCommandWatermark8" xml:space="preserve">
-    <value>Packets in, answers out...</value>
+    <value>パケットが入り、答えが出てくる...</value>
   </data>
   <data name="RunCommandWatermark9" xml:space="preserve">
-    <value>Ready when your network isn't...</value>
+    <value>ネットワークが準備できていなくても、いつでも対応可能...</value>
   </data>
   <data name="RunCommandWatermark10" xml:space="preserve">
-    <value>Before you reboot it, ping it...</value>
+    <value>再起動する前に、ping を打ってみてください...</value>
   </data>
   <data name="RunCommandWatermark11" xml:space="preserve">
-    <value>Ping it, trace it, fix it...</value>
+    <value>ping、トレース、修正...</value>
   </data>
   <data name="RunCommandWatermark12" xml:space="preserve">
-    <value>Is it up? Let's find out...</value>
+    <value>動いているかな? 確認してみよう...</value>
   </data>
   <data name="RunCommandWatermark13" xml:space="preserve">
-    <value>Need to connect? Just type the host...</value>
+    <value>接続が必要ですか? ホスト名を入力するだけです...</value>
   </data>
   <data name="RunCommandWatermark14" xml:space="preserve">
-    <value>It's not the network. Probably...</value>
+    <value>ネットワークの問題じゃない。たぶん...</value>
   </data>
   <data name="RunCommandWatermark15" xml:space="preserve">
-    <value>Blame the firewall later, ping first...</value>
+    <value>ファイアウォールのせいにするのは後回し、まずは ping...</value>
   </data>
   <data name="RunCommandWatermark16" xml:space="preserve">
-    <value>Works on my machine? Let's check yours...</value>
+    <value>私のマシンで動作しますか? あなたのを確認しましょう...</value>
   </data>
   <data name="RunCommandWatermark17" xml:space="preserve">
-    <value>Somewhere between here and there, a packet got lost...</value>
+    <value>こことそこの間のどこかで、パケットが失われました...</value>
   </data>
   <data name="RunCommandWatermark18" xml:space="preserve">
-    <value>Ping first, panic later...</value>
+    <value>まずは ping、パニックはその後...</value>
   </data>
   <data name="PortProfile" xml:space="preserve">
-    <value>Port profile</value>
+    <value>ポートのプロファイル</value>
   </data>
 </root>
