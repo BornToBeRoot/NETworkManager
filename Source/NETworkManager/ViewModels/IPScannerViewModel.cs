@@ -501,7 +501,21 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         // Every IP address is kept in memory - ask before a large scan and refuse a too large one
         // (e.g. 10.0.0.0/1) instead of running out of memory
-        var hostCount = HostRangeHelper.GetHostCount(HostRangeHelper.CreateListFromInput(Host));
+        long hostCount;
+
+        try
+        {
+            hostCount = HostRangeHelper.GetHostCount(HostRangeHelper.CreateListFromInput(Host));
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while counting the hosts", ex);
+
+            StatusMessage = ex.Message;
+            IsStatusMessageDisplayed = true;
+
+            return;
+        }
 
         if (hostCount > GlobalStaticConfiguration.IPScanner_MaxHostCount)
         {

@@ -439,8 +439,24 @@ public class PortScannerViewModel : ViewModelBase
     {
         // Every port is kept in memory - ask before a large scan and refuse a too large one
         // (e.g. 10.0.0.0/8 with 1-65535) instead of running out of memory
-        var hostCount = HostRangeHelper.GetHostCount(HostRangeHelper.CreateListFromInput(Host));
-        var portsPerHost = PortRangeHelper.ConvertPortRangeToIntArray(Ports).Length;
+        long hostCount;
+        int portsPerHost;
+
+        try
+        {
+            hostCount = HostRangeHelper.GetHostCount(HostRangeHelper.CreateListFromInput(Host));
+            portsPerHost = PortRangeHelper.ConvertPortRangeToIntArray(Ports).Length;
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while counting the hosts and ports", ex);
+
+            StatusMessage = ex.Message;
+            IsStatusMessageDisplayed = true;
+
+            return;
+        }
+
         var portCount = hostCount * portsPerHost;
 
         if (portCount > GlobalStaticConfiguration.PortScanner_MaxPortCount)
