@@ -479,6 +479,10 @@ public class PortScannerViewModel : ViewModelBase
                         portsPerHost.ToString("N0")),
                     ChildWindowIcon.Warn, Strings.Scan))
                 return;
+
+            // The tab may have been closed while the dialog was open (OnClose only stops a running scan)
+            if (_closed)
+                return;
         }
 
         IsStatusMessageDisplayed = false;

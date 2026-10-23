@@ -535,6 +535,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                     string.Format(Strings.ScanManyIPAddressesMessage, hostCount.ToString("N0")),
                     ChildWindowIcon.Warn, Strings.Scan))
                 return;
+
+            // The tab may have been closed while the dialog was open (OnClose only stops a running scan)
+            if (_closed)
+                return;
         }
 
         IsStatusMessageDisplayed = false;
