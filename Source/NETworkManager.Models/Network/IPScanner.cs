@@ -34,8 +34,8 @@ public sealed class IPScanner(IPScannerOptions options)
     private readonly InterlockedCounter _hostsUp = new();
     private readonly InterlockedCounter _hostsDown = new();
 
-    // Snapshot of the neighbor table (IP address -> MAC address), see GetMACAddressFromNeighborTable
-    private readonly Lock _neighborTableLock = new();
+    // Snapshot of the neighbor table (IP address -> MAC address), see GetMACAddressFromNeighborTableAsync
+    private readonly SemaphoreSlim _neighborTableSemaphore = new(1, 1);
     private Dictionary<IPAddress, string> _neighborTable = [];
     private DateTime _neighborTableTimestamp = DateTime.MinValue;
 
@@ -189,9 +189,11 @@ public sealed class IPScanner(IPScannerOptions options)
 
                         if (options.ResolveMACAddress)
                         {
-                            // Get info from neighbor table (an unreachable host never needs a new snapshot)
-                            arpMACAddress = GetMACAddressFromNeighborTable(host.ipAddress,
-                                isReachable ? discoveredAt : DateTime.MinValue);
+                            // Get info from neighbor table. Only hosts in a local subnet are in it (for any other
+                            // host it contains the router), an unreachable host never needs a new snapshot.
+                            if (IsInLocalSubnet(host.ipAddress, networkInterfaces))
+                                arpMACAddress = await GetMACAddressFromNeighborTableAsync(host.ipAddress,
+                                    isReachable ? discoveredAt : DateTime.MinValue, ct).ConfigureAwait(false);
 
                             // Check if it is the local mac
                             if (string.IsNullOrEmpty(arpMACAddress))
@@ -271,14 +273,19 @@ public sealed class IPScanner(IPScannerOptions options)
     ///     its entry was already created) - a host is always looked up in a table read after its answer, and hosts
     ///     that finish at the same time share one read.
     /// </summary>
-    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="ipAddress">IP address of the host (in a local subnet, see <see cref="IsInLocalSubnet" />).</param>
     /// <param name="discoveredAt">Time the host answered, <see cref="DateTime.MinValue" /> to use the cache only.</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     /// <returns>MAC address or an empty string.</returns>
-    private string GetMACAddressFromNeighborTable(IPAddress ipAddress, DateTime discoveredAt)
+    private async Task<string> GetMACAddressFromNeighborTableAsync(IPAddress ipAddress, DateTime discoveredAt,
+        CancellationToken cancellationToken)
     {
         var key = IPAddressHelper.WithoutScopeId(ipAddress);
 
-        lock (_neighborTableLock)
+        // Hosts wait without blocking a thread while another host reads the table
+        await _neighborTableSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+
+        try
         {
             if (_neighborTable.TryGetValue(key, out var macAddress))
                 return macAddress;
@@ -293,6 +300,46 @@ public sealed class IPScanner(IPScannerOptions options)
 
             return _neighborTable.GetValueOrDefault(key, string.Empty);
         }
+        finally
+        {
+            _neighborTableSemaphore.Release();
+        }
+    }
+
+    /// <summary>
+    ///     Checks if <paramref name="ipAddress" /> is in a subnet of a local network interface (on-link). Only these
+    ///     hosts are in the neighbor table - for a host behind a router, its MAC address can't be resolved via ARP/NDP
+    ///     (the table contains the router), so there is no need to look it up (and to read the table again).
+    ///     IPv6: link-local addresses, other addresses if they are in the same /64 as a local address (the prefix
+    ///     length is not known, local IPv6 subnets are /64).
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="networkInterfaces">Local network interfaces.</param>
+    /// <returns>True if the IP address is in a local subnet.</returns>
+    private static bool IsInLocalSubnet(IPAddress ipAddress, IEnumerable<NetworkInterfaceInfo> networkInterfaces)
+    {
+        if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
+        {
+            var address = IPv4Address.ToUInt32(ipAddress);
+
+            return networkInterfaces.Any(networkInterface => networkInterface.IPv4Address.Any(x =>
+            {
+                if (x.Item2 == null)
+                    return false;
+
+                var subnetmask = IPv4Address.ToUInt32(x.Item2);
+
+                return (address & subnetmask) == (IPv4Address.ToUInt32(x.Item1) & subnetmask);
+            }));
+        }
+
+        if (ipAddress.IsIPv6LinkLocal)
+            return true;
+
+        var prefix = ipAddress.GetAddressBytes().AsSpan(0, 8).ToArray();
+
+        return networkInterfaces.Any(networkInterface => networkInterface.IPv6Address.Any(x =>
+            x.GetAddressBytes().AsSpan(0, 8).SequenceEqual(prefix)));
     }
 
     private async Task<PingInfo> PingAsync(IPAddress ipAddress, CancellationToken cancellationToken)
