@@ -28,47 +28,55 @@ internal static class PortProbe
     public static async Task<PortState> ProbeAsync(IPAddress ipAddress, int port, int timeoutMs,
         CancellationToken cancellationToken)
     {
-        using var tcpClient = new TcpClient(ipAddress.AddressFamily);
-
-        // Close with a reset instead of a graceful shutdown. Otherwise every open port leaves a socket in
-        // TIME_WAIT for minutes, which can use up all local (ephemeral) ports on large scans.
-        tcpClient.LingerState = new LingerOption(true, 0);
-
-        using var timeoutCts = new CancellationTokenSource(timeoutMs);
-        using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token);
+        cancellationToken.ThrowIfCancellationRequested();
 
         try
         {
-            await tcpClient.ConnectAsync(ipAddress, port, linkedCts.Token).ConfigureAwait(false);
+            using var socket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
-            return tcpClient.Connected ? PortState.Open : PortState.Closed;
-        }
-        catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
-        {
-            // linkedCts was canceled, but not by the caller -> our own timeout fired
-            return PortState.TimedOut;
+            // Close with a reset instead of a graceful shutdown. Otherwise every open port leaves a socket in
+            // TIME_WAIT for minutes, which can use up all local (ephemeral) ports on large scans.
+            socket.LingerState = new LingerOption(true, 0);
+
+            using var connectArgs = new SocketAsyncEventArgs();
+            connectArgs.RemoteEndPoint = new IPEndPoint(ipAddress, port);
+
+            using var timeoutCts = new CancellationTokenSource(timeoutMs);
+            using var linkedCts =
+                CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token);
+
+            // The result is reported as SocketError, no exception for a refused connection or a timeout
+            // (see SocketOperation)
+            var connectTask = SocketOperation.RunAsync(connectArgs, socket.ConnectAsync);
+
+            SocketError socketError;
+
+            // Timeout or cancellation -> abort the connect, it completes with OperationAborted
+            await using (linkedCts.Token.Register(() => Socket.CancelConnectAsync(connectArgs)))
+            {
+                socketError = await connectTask.ConfigureAwait(false);
+            }
+
+            // Caller's token is why this was aborted -> propagate as a real cancellation
+            cancellationToken.ThrowIfCancellationRequested();
+
+            return socketError switch
+            {
+                SocketError.Success => PortState.Open,
+                // The host answered with a reset -> port is closed (and the host is reachable)
+                SocketError.ConnectionRefused => PortState.Closed,
+                // Timeout (aborted), host/network unreachable, local socket error, etc. -> no answer from the host
+                _ => PortState.TimedOut
+            };
         }
         catch (OperationCanceledException)
         {
-            // Caller's token is why this was canceled -> propagate as a real cancellation
             throw;
-        }
-        catch (SocketException ex) when (ex.SocketErrorCode == SocketError.ConnectionRefused)
-        {
-            // The host answered with a reset -> port is closed (and the host is reachable)
-            return PortState.Closed;
         }
         catch (Exception)
         {
-            // Any other connect failure (host/network unreachable, local socket error, etc.) -> no answer
-            // from the host, same as a timeout. Regardless of whether cancellation also happens to be in
-            // flight concurrently for an unrelated reason (that used to race against this classification
-            // via a token-state check here).
+            // Unexpected local error (e.g. no free local port to bind) -> no answer from the host
             return PortState.TimedOut;
-        }
-        finally
-        {
-            tcpClient.Close();
         }
     }
 }

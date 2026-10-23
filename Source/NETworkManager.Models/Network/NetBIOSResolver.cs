@@ -43,34 +43,56 @@ public static class NetBIOSResolver
         0x00, 0x01
     };
 
+    /// <summary>
+    ///     Maximum size of a NetBIOS name status response (57 bytes header + 255 names x 18 bytes + statistics).
+    /// </summary>
+    private const int ResponseBufferSize = 8192;
+
     public static async Task<NetBIOSInfo> ResolveAsync(IPAddress ipAddress, int timeout,
         CancellationToken cancellationToken)
     {
-        var udpClient = new UdpClient();
-
-        var remoteEndPoint = new IPEndPoint(ipAddress, NetBIOSUdpPort);
-
-        // Linked so the receive is genuinely canceled (not just abandoned) on either timeout or
-        // caller cancellation - avoids leaving a pending receive that later faults, unobserved,
-        // once the socket is closed in the finally block below.
-        using var timeoutCts = new CancellationTokenSource(timeout);
-        using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token);
-
         try
         {
-            await udpClient.SendAsync(RequestData, RequestData.Length, remoteEndPoint);
+            using var socket = new Socket(ipAddress.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
 
-            var response = await udpClient.ReceiveAsync(linkedCts.Token).ConfigureAwait(false);
+            // Closing the socket on timeout or cancellation aborts a pending send / receive, it completes with
+            // OperationAborted. The results are reported as SocketError, no exception if the host doesn't
+            // answer (see SocketOperation).
+            using var timeoutCts = new CancellationTokenSource(timeout);
+            using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token);
+            await using var registration = linkedCts.Token.Register(socket.Dispose);
 
-            if (response.Buffer.Length < ResponseBaseLen || response.Buffer[ResponseTypePos] != ResponseTypeNbstat)
+            using var sendArgs = new SocketAsyncEventArgs();
+            sendArgs.RemoteEndPoint = new IPEndPoint(ipAddress, NetBIOSUdpPort);
+            sendArgs.SetBuffer(RequestData);
+
+            if (await SocketOperation.RunAsync(sendArgs, socket.SendToAsync).ConfigureAwait(false) !=
+                SocketError.Success)
+                return new NetBIOSInfo(ipAddress);
+
+            var buffer = new byte[ResponseBufferSize];
+
+            using var receiveArgs = new SocketAsyncEventArgs();
+            receiveArgs.RemoteEndPoint = new IPEndPoint(
+                ipAddress.AddressFamily == AddressFamily.InterNetworkV6 ? IPAddress.IPv6Any : IPAddress.Any, 0);
+            receiveArgs.SetBuffer(buffer);
+
+            // No answer (timeout), port unreachable, etc.
+            if (await SocketOperation.RunAsync(receiveArgs, socket.ReceiveFromAsync).ConfigureAwait(false) !=
+                SocketError.Success)
+                return new NetBIOSInfo(ipAddress);
+
+            var response = buffer[..receiveArgs.BytesTransferred];
+
+            if (response.Length < ResponseBaseLen || response[ResponseTypePos] != ResponseTypeNbstat)
                 return new NetBIOSInfo(ipAddress); // response was too short
 
-            var count = response.Buffer[ResponseBaseLen - 1] & 0xFF;
+            var count = response[ResponseBaseLen - 1] & 0xFF;
 
-            if (response.Buffer.Length < ResponseBaseLen + ResponseBlockLen * count)
+            if (response.Length < ResponseBaseLen + ResponseBlockLen * count)
                 return new NetBIOSInfo(ipAddress); // data was truncated or something is wrong
 
-            var result = ExtractNames(response.Buffer, count);
+            var result = ExtractNames(response, count);
 
             var vendor = string.Empty;
 
@@ -96,10 +118,6 @@ public static class NetBIOSResolver
         catch (Exception)
         {
             return new NetBIOSInfo(ipAddress);
-        }
-        finally
-        {
-            udpClient.Close();
         }
     }
 
