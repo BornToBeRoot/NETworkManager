@@ -4888,55 +4888,55 @@ Cloudflare speichert möglicherweise Ihre IP-Adresse und Netzwerkinformationen. 
     <value>Zuletzt verwendet</value>
   </data>
   <data name="EnterSubnetmaskOrCIDRBetweenXAndY" xml:space="preserve">
-    <value>Enter a subnet mask or CIDR between /{0} and /{1}!</value>
+    <value>Geben Sie eine Subnetzmaske oder CIDR zwischen /{0} und /{1} ein!</value>
   </data>
   <data name="BringWindowToForegroundAndOpenRunCommand" xml:space="preserve">
-    <value>Bring window to foreground and open the run command</value>
+    <value>Fenster in den Vordergrund bringen und „Befehl ausführen“ öffnen</value>
   </data>
   <data name="Commands" xml:space="preserve">
-    <value>Commands</value>
+    <value>Befehle</value>
   </data>
   <data name="Clipboard" xml:space="preserve">
-    <value>Clipboard</value>
+    <value>Zwischenablage</value>
   </data>
   <data name="Examples" xml:space="preserve">
-    <value>Examples</value>
+    <value>Beispiele</value>
   </data>
   <data name="Select" xml:space="preserve">
-    <value>Select</value>
+    <value>Auswählen</value>
   </data>
   <data name="Complete" xml:space="preserve">
-    <value>Complete</value>
+    <value>Vervollständigen</value>
   </data>
   <data name="Run" xml:space="preserve">
-    <value>Run</value>
+    <value>Ausführen</value>
   </data>
   <data name="RunAndKeepOpen" xml:space="preserve">
-    <value>Run and keep open</value>
+    <value>Ausführen und geöffnet lassen</value>
   </data>
   <data name="FillInWithoutStarting" xml:space="preserve">
-    <value>Fill in without starting</value>
+    <value>Eintragen ohne zu starten</value>
   </data>
   <data name="RemoveFromHistory" xml:space="preserve">
-    <value>Remove from history</value>
+    <value>Aus Verlauf entfernen</value>
   </data>
   <data name="SuggestTheClipboardAsTarget" xml:space="preserve">
-    <value>Suggest the clipboard content (e.g. an IP address) as target</value>
+    <value>Inhalt der Zwischenablage (z. B. eine IP-Adresse) als Ziel vorschlagen</value>
   </data>
   <data name="ShowKeyHints" xml:space="preserve">
-    <value>Show key hints</value>
+    <value>Tastenkürzel-Hinweise anzeigen</value>
   </data>
   <data name="CtrlShiftP" xml:space="preserve">
-    <value>Ctrl+Shift+P</value>
+    <value>Strg+Shift+P</value>
   </data>
   <data name="CtrlEnter" xml:space="preserve">
-    <value>Ctrl+Enter</value>
+    <value>Strg+Enter</value>
   </data>
   <data name="ShiftEnter" xml:space="preserve">
     <value>Shift+Enter</value>
   </data>
   <data name="ShiftDel" xml:space="preserve">
-    <value>Shift+Del</value>
+    <value>Shift+Entf</value>
   </data>
   <data name="KeyEnter" xml:space="preserve">
     <value>Enter</value>
@@ -4948,60 +4948,60 @@ Cloudflare speichert möglicherweise Ihre IP-Adresse und Netzwerkinformationen. 
     <value>Esc</value>
   </data>
   <data name="RunCommandWatermark1" xml:space="preserve">
-    <value>Ping it, trace it, scan it...</value>
+    <value>Pingen, tracen, scannen...</value>
   </data>
   <data name="RunCommandWatermark2" xml:space="preserve">
-    <value>Got an IP address? Drop it here...</value>
+    <value>IP-Adresse zur Hand? Einfach hier eingeben...</value>
   </data>
   <data name="RunCommandWatermark3" xml:space="preserve">
-    <value>Your whole network, one command away...</value>
+    <value>Das ganze Netzwerk – nur einen Befehl entfernt...</value>
   </data>
   <data name="RunCommandWatermark4" xml:space="preserve">
-    <value>Every tool, one line away...</value>
+    <value>Jedes Tool – nur eine Zeile entfernt...</value>
   </data>
   <data name="RunCommandWatermark5" xml:space="preserve">
-    <value>Something down? Let's check it...</value>
+    <value>Etwas ausgefallen? Schauen wir mal nach...</value>
   </data>
   <data name="RunCommandWatermark6" xml:space="preserve">
-    <value>Is it DNS? It's always DNS...</value>
+    <value>Ist es DNS? Es ist immer DNS...</value>
   </data>
   <data name="RunCommandWatermark7" xml:space="preserve">
-    <value>Have you tried pinging it?</value>
+    <value>Schon mal versucht, es zu pingen?</value>
   </data>
   <data name="RunCommandWatermark8" xml:space="preserve">
-    <value>Packets in, answers out...</value>
+    <value>Pakete rein, Antworten raus...</value>
   </data>
   <data name="RunCommandWatermark9" xml:space="preserve">
-    <value>Ready when your network isn't...</value>
+    <value>Bereit, wenn das Netzwerk es nicht ist...</value>
   </data>
   <data name="RunCommandWatermark10" xml:space="preserve">
-    <value>Before you reboot it, ping it...</value>
+    <value>Vor dem Neustart erst mal pingen...</value>
   </data>
   <data name="RunCommandWatermark11" xml:space="preserve">
-    <value>Ping it, trace it, fix it...</value>
+    <value>Pingen, tracen, fixen...</value>
   </data>
   <data name="RunCommandWatermark12" xml:space="preserve">
-    <value>Is it up? Let's find out...</value>
+    <value>Ist es erreichbar? Finden wir es heraus...</value>
   </data>
   <data name="RunCommandWatermark13" xml:space="preserve">
-    <value>Need to connect? Just type the host...</value>
+    <value>Verbindung gefällig? Einfach den Host eingeben...</value>
   </data>
   <data name="RunCommandWatermark14" xml:space="preserve">
-    <value>It's not the network. Probably...</value>
+    <value>Es liegt nicht am Netzwerk. Vermutlich...</value>
   </data>
   <data name="RunCommandWatermark15" xml:space="preserve">
-    <value>Blame the firewall later, ping first...</value>
+    <value>Erst pingen, dann der Firewall die Schuld geben...</value>
   </data>
   <data name="RunCommandWatermark16" xml:space="preserve">
-    <value>Works on my machine? Let's check yours...</value>
+    <value>Gestern ging's noch? Schauen wir mal nach...</value>
   </data>
   <data name="RunCommandWatermark17" xml:space="preserve">
-    <value>Somewhere between here and there...</value>
+    <value>Irgendwo zwischen hier und dort ist ein Paket verloren gegangen...</value>
   </data>
   <data name="RunCommandWatermark18" xml:space="preserve">
-    <value>Ping first, panic later...</value>
+    <value>Erst pingen, dann Panik...</value>
   </data>
   <data name="PortProfile" xml:space="preserve">
-    <value>Port profile</value>
+    <value>Port-Profil</value>
   </data>
 </root>

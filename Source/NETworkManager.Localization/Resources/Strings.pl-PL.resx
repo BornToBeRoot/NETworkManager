@@ -4993,7 +4993,7 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
     <value>Works on my machine? Let's check yours...</value>
   </data>
   <data name="RunCommandWatermark17" xml:space="preserve">
-    <value>Somewhere between here and there...</value>
+    <value>Somewhere between here and there, a packet got lost...</value>
   </data>
   <data name="RunCommandWatermark18" xml:space="preserve">
     <value>Ping first, panic later...</value>
