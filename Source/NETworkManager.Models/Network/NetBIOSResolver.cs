@@ -26,6 +26,7 @@ public static class NetBIOSResolver
     private const int ResponseBaseLen = 57;
     private const int ResponseNameLen = 15;
     private const int ResponseBlockLen = 18;
+    private const int MacAddressLen = 6;
 
     private const int GroupNameFlag = 128;
 
@@ -111,7 +112,9 @@ public static class NetBIOSResolver
                 result.ComputerName,
                 result.UserName,
                 result.GroupName,
-                MACAddressHelper.GetDefaultFormat(result.MacAddress),
+                string.IsNullOrEmpty(result.MacAddress)
+                    ? string.Empty
+                    : MACAddressHelper.GetDefaultFormat(result.MacAddress),
                 vendor
             );
         }
@@ -153,11 +156,12 @@ public static class NetBIOSResolver
             break;
         }
 
-        // MAC address
-        var macAddress =
-            $"{GetByte(response, count, 0):X2}{GetByte(response, count, 1):X2}" +
-            $"{GetByte(response, count, 2):X2}{GetByte(response, count, 3):X2}" +
-            $"{GetByte(response, count, 4):X2}{GetByte(response, count, 5):X2}";
+        // MAC address (first 6 bytes after the names, only if the response contains them)
+        var macAddress = response.Length >= ResponseBaseLen + ResponseBlockLen * count + MacAddressLen
+            ? $"{GetByte(response, count, 0):X2}{GetByte(response, count, 1):X2}" +
+              $"{GetByte(response, count, 2):X2}{GetByte(response, count, 3):X2}" +
+              $"{GetByte(response, count, 4):X2}{GetByte(response, count, 5):X2}"
+            : string.Empty;
 
         return (computerName, userName, groupName, macAddress);
     }
