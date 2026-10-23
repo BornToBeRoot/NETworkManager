@@ -1,3 +1,4 @@
+using log4net;
 using System;
 using System.Net;
 using System.Net.Sockets;
@@ -12,6 +13,13 @@ namespace NETworkManager.Models.Network;
 /// </summary>
 internal static class PortProbe
 {
+    private static readonly ILog Log = LogManager.GetLogger(typeof(PortProbe));
+
+    /// <summary>
+    ///     Set once the failure of <see cref="DisableSynRetransmissions" /> was logged (it fails for every probe).
+    /// </summary>
+    private static int _disableSynRetransmissionsFailureLogged;
+
     /// <summary>
     ///     <c>SIO_TCP_INITIAL_RTO</c>: sets the initial retransmission timeout and the number of SYN
     ///     retransmissions of a socket (Windows 10 1703 and later).
@@ -116,9 +124,13 @@ internal static class PortProbe
         {
             socket.IOControl(SIO_TCP_INITIAL_RTO, parameters, null);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // Not supported (older Windows) -> Windows default (closed ports are reported after ~2 s)
+            // Should not happen (supported since Windows 10 1703) - the Windows default is used: closed ports are
+            // only reported after ~2 s (as timed out with a timeout of 2000 ms or less)
+            if (Interlocked.Exchange(ref _disableSynRetransmissionsFailureLogged, 1) == 0)
+                Log.Warn("Could not disable the SYN retransmissions (SIO_TCP_INITIAL_RTO), " +
+                         "closed ports are reported after ~2 s.", ex);
         }
     }
 }
