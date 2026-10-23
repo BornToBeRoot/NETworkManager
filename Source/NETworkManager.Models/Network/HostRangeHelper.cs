@@ -44,8 +44,8 @@ public static class HostRangeHelper
     private static void AddIPv4Range(IPAddress start, IPAddress end,
         List<(IPAddress ipAddress, string hostname)> hosts, CancellationToken ct)
     {
-        var from = (long)unchecked((uint)IPv4Address.ToInt32(start));
-        var to = (long)unchecked((uint)IPv4Address.ToInt32(end));
+        long from = IPv4Address.ToUInt32(start);
+        long to = IPv4Address.ToUInt32(end);
 
         // Allocate the list once instead of growing it step by step (e.g. 65536 entries for a /16)
         if (hosts.Count == 0 && to >= from && to - from + 1 <= Array.MaxLength)
@@ -185,8 +185,8 @@ public static class HostRangeHelper
     /// </summary>
     private static long GetIPv4RangeCount(IPAddress start, IPAddress end)
     {
-        var from = (long)unchecked((uint)IPv4Address.ToInt32(start));
-        var to = (long)unchecked((uint)IPv4Address.ToInt32(end));
+        long from = IPv4Address.ToUInt32(start);
+        long to = IPv4Address.ToUInt32(end);
 
         return Math.Max(to - from + 1, 0);
     }

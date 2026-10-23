@@ -66,6 +66,18 @@ public static class IPv4Address
     }
 
     /// <summary>
+    ///     Method to convert an <see cref="IPAddress" /> to its unsigned value (e.g. "192.168.0.1" -> 3232235521).
+    ///     Use this to compare IPv4 addresses or to calculate ranges: the signed value of
+    ///     <see cref="ToInt32" /> is negative for 128.0.0.0 and above, so a range across it compares wrong.
+    /// </summary>
+    /// <param name="ipAddress"><see cref="IPAddress" />.</param>
+    /// <returns>IP address as <see cref="uint" /></returns>
+    public static uint ToUInt32(IPAddress ipAddress)
+    {
+        return unchecked((uint)ToInt32(ipAddress));
+    }
+
+    /// <summary>
     ///     Method to convert an <see cref="int" /> to an <see cref="IPAddress" />.
     /// </summary>
     /// <param name="i">IP address as <see cref="int" />.</param>

@@ -110,11 +110,10 @@ public class MultipleHostsRangeValidator : ValidationRule
     }
 
     /// <summary>
-    ///     Converts an IPv4 address to its unsigned value, so ranges across 128.0.0.0 compare correctly
-    ///     (the signed value of 128.0.0.0 and above is negative).
+    ///     Converts an IPv4 address to its unsigned value, so ranges across 128.0.0.0 compare correctly.
     /// </summary>
     private static uint ToUInt32(string ipAddress)
     {
-        return unchecked((uint)IPv4Address.ToInt32(IPAddress.Parse(ipAddress)));
+        return IPv4Address.ToUInt32(IPAddress.Parse(ipAddress));
     }
 }
