@@ -717,10 +717,21 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             var info = (CustomCommandInfo)CustomCommands.FirstOrDefault(x => x.ID == id)?.Clone();
 
             if (info == null)
-                return; // ToDo: Log and error message
+            {
+                Log.Warn($"Custom command with ID \"{id}\" not found (deleted while the context menu was open?)");
+                return;
+            }
 
             // Replace vars
             var hostname = !string.IsNullOrEmpty(SelectedResult.Hostname) ? SelectedResult.Hostname.TrimEnd('.') : "";
+
+            // The hostname comes from the network (PTR record or NetBIOS name) and could contain characters
+            // like "&" that would run additional commands (e.g. "cmd.exe /c ... {{Hostname}}") - only use valid ones
+            if (!string.IsNullOrEmpty(hostname) && !RegexHelper.HostnameOrDomainRegex().IsMatch(hostname))
+            {
+                Log.Warn($"Hostname \"{hostname}\" of {SelectedResult.PingInfo.IPAddress} is not a valid hostname and is not used for the custom command.");
+                hostname = "";
+            }
             var ipAddress = SelectedResult.PingInfo.IPAddress.ToString();
 
             info.FilePath = PlaceholderHelper.Resolve(info.FilePath,

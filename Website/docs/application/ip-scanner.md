@@ -228,6 +228,12 @@ In the arguments you can use the following placeholders:
 
 :::note
 
+The hostname comes from the network (DNS PTR record or NetBIOS name). For security reasons, `{{Hostname}}` is replaced with an empty value if the hostname contains characters that are not allowed in a hostname (e.g. `&` or a space), so it can't be used to run other commands.
+
+:::
+
+:::note
+
 Right-click on a selected custom command to `edit` or `delete` it.
 
 You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected custom command.

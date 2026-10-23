@@ -197,6 +197,8 @@ Release date: **xx.xx.2026**
 - **Port Scanner**: Results are sorted by IP address and port (before, in the order the ports were finished), and the hostname is resolved while the ports are scanned instead of before. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - **IP Scanner**: Fixed sorting by **NetBIOS reachable** not working and the column being shown with NetBIOS disabled. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - **IP Scanner**: Fixed **Copy** > **Hostname** / **MAC address** / **Vendor** being hidden in the context menu while the column was shown (resolved via NetBIOS only), and **Copy** > **Status** copying `True` / `False` instead of `Up` / `Down`. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- **IP Scanner**: Fixed a hostname received from the network (DNS PTR record or NetBIOS name) with special characters like `&` being able to run additional commands through a custom command with `{{Hostname}}` (e.g. `cmd.exe /c ...`). Such a hostname is now replaced with an empty value. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- **IP Scanner**: Fixed **Edit** (`F2`) and **Delete** (`Del`) of a custom command in the settings being available without a selected command. The delete confirmation shows the name of the command. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **IP Geolocation**
 
