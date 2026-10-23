@@ -63,10 +63,32 @@ with link-local addresses (`169.254.x.x`) given lower priority.
 
 Right-clicking a result allows forwarding device information to another tool (e.g. [Port Scanner](./port-scanner), Remote Desktop), querying the registration data of its IP address or hostname via [RDAP](./rdap), creating a new profile, or executing a [custom command](#custom-commands).
 
-| Action        | Description                                      |
-| ------------- | ------------------------------------------------ |
-| **Copy**      | Copies the selected information to the clipboard |
-| **Export...** | Exports the selected or all results to a file    |
+| Action                                                                            | Description                                                                                                   |
+| --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| **Port Scanner** / **Ping Monitor** / **Traceroute**                              | Opens the host (hostname if resolved, otherwise the IP address) in the tool                                  |
+| **DNS lookup...** > **IP address** / **Hostname**                                 | Looks up the IP address (`PTR`) or the hostname in [DNS Lookup](./dns-lookup)                                 |
+| **RDAP...** > **IP address** / **Hostname**                                       | Queries the registration data of the IP address or the registered domain of the hostname in [RDAP](./rdap)    |
+| **Remote Desktop** / **PowerShell** / **PuTTY** / **TigerVNC** / **SNMP**         | Opens the host (hostname if resolved, otherwise the IP address) in the tool                                  |
+| **Custom commands**                                                               | Executes a [custom command](#custom-commands) for the host                                                    |
+| **Add profile...**                                                                | Creates a new profile with the host (IP address), the hostname as name and the MAC address for Wake on LAN    |
+| **Copy**                                                                          | Copies the selected information to the clipboard                                                              |
+| **Export...**                                                                     | Exports the selected or all results to a file                                                                 |
+
+If multiple results are selected, only **Export...** is available.
+
+### Result
+
+The number of reachable (up) and unreachable (down) IP addresses is shown next to the **Result** header. Expand a row to see the ping details, the scanned ports and the NetBIOS information (computer name, domain/workgroup, user and MAC address) of the host.
+
+Only reachable hosts are shown, unless [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) is enabled. A message below the input is shown if no reachable host was found, the scan was canceled, a hostname could not be resolved or an error occurred.
+
+### Keyboard shortcuts
+
+| Key      | Action                         |
+| -------- | ------------------------------ |
+| `Enter`  | Start the scan                 |
+| `Esc`    | Cancel the running scan        |
+| `Ctrl+T` | Open a new tab                 |
 
 ## Profile
 

@@ -69,6 +69,20 @@ A scan of more than `65,536` ports (hosts × ports, e.g. 64 hosts with `1-1024`)
 | **Copy**      | Copies the selected information to the clipboard |
 | **Export...** | Exports the selected or all results to a file    |
 
+If multiple results are selected, only **Export...** is available.
+
+### Result
+
+The results are grouped by host and sorted by IP address and port. The number of open and closed ports is shown next to the **Result** header. A port is **open** if the connection was established, **closed** if the host refused the connection and **timed out** if there was no answer within the [timeout](#timeout-ms) (e.g. blocked by a firewall). Only open ports are shown, unless [Show closed ports](#show-closed-ports) is enabled.
+
+### Keyboard shortcuts
+
+| Key      | Action                         |
+| -------- | ------------------------------ |
+| `Enter`  | Start the scan                 |
+| `Esc`    | Cancel the running scan        |
+| `Ctrl+T` | Open a new tab                 |
+
 ## Profile
 
 ### Inherit host from general
