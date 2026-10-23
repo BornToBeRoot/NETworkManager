@@ -190,6 +190,7 @@ Release date: **xx.xx.2026**
 - Fixed the scan getting stuck when an error occurred while the hosts or ports were prepared, and the **IP Scanner** subnet detection button staying disabled after an error. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed ports being shown as closed when there was no answer at all (e.g. host or network unreachable). Closed now means the host refused the connection, otherwise the port is timed out. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed large scans using up the local (ephemeral) ports: every open port left a connection in the `TIME_WAIT` state for several minutes, so later connections failed (also in other applications). Connections are now closed with a reset. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- **IP Scanner**: Fixed hosts that block ICMP and refuse the connection on the scanned ports (TCP reset) being shown as unreachable. A refused connection is an answer from the host, so it is now shown as reachable. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **IP Geolocation**
 

@@ -15,7 +15,7 @@ keywords:
 
 # IP Scanner
 
-With the **IP Scanner** you can scan for active devices based on the hostname or in IP ranges that are reachable via ICMP or have a common TCP port open.
+With the **IP Scanner** you can scan for active devices based on the hostname or in IP ranges that are reachable via ICMP, answer on a common TCP port (open, or closed with a TCP reset) or reply to a NetBIOS request.
 
 ![IP Scanner](../img/ip-scanner.png)
 

@@ -136,6 +136,7 @@ public sealed class IPScanner(IPScannerOptions options)
                     var isAnyPortOpen = portScanResults.Any(x => x.State == PortState.Open);
                     var isReachable = pingInfo.Status == IPStatus.Success || // ICMP response
                                       isAnyPortOpen || // Any port is open
+                                      portScanResults.Any(x => x.State == PortState.Closed) || // Connection refused (TCP reset)
                                       netBIOSInfo.IsReachable; // NetBIOS response
 
                     // Count reachable/unreachable hosts unconditionally, since ShowAllResults
@@ -202,7 +203,9 @@ public sealed class IPScanner(IPScannerOptions options)
                                         : netBIOSInfo?.ComputerName ?? string.Empty,
                                     dnsHostname,
                                     isAnyPortOpen,
-                                    portScanResults.OrderBy(x => x.Port).ToList(),
+                                    portScanResults
+                                        .Where(x => x.State == PortState.Open || options.ShowAllResults)
+                                        .OrderBy(x => x.Port).ToList(),
                                     netBIOSInfo,
                                     // ARP/NDP is preferred, fallback to NetBIOS
                                     !string.IsNullOrEmpty(arpMACAddress)
@@ -294,6 +297,10 @@ public sealed class IPScanner(IPScannerOptions options)
         return pingInfo ?? new PingInfo(DateTime.Now, ipAddress, IPStatus.Unknown);
     }
 
+    /// <summary>
+    ///     Probes all configured ports of a host. Returns every port (also closed / timed out ones), because
+    ///     a closed port is used to detect a reachable host as well - the caller filters what is shown.
+    /// </summary>
     private async Task<List<PortInfo>> PortScanAsync(IPAddress ipAddress, ParallelOptions parallelOptions,
         CancellationToken cancellationToken)
     {
@@ -304,8 +311,7 @@ public sealed class IPScanner(IPScannerOptions options)
             var portState = await PortProbe.ProbeAsync(ipAddress, port, options.PortScanTimeout, ct)
                 .ConfigureAwait(false);
 
-            if (portState == PortState.Open || options.ShowAllResults)
-                results.Add(new PortInfo(port, PortLookup.LookupByPortAndProtocol(port), portState));
+            results.Add(new PortInfo(port, PortLookup.LookupByPortAndProtocol(port), portState));
         }).ConfigureAwait(false);
 
         return results.ToList();
