@@ -180,6 +180,11 @@ Release date: **xx.xx.2026**
 - Fixed NetBIOS lookups (computer name, domain/workgroup, user name) not starting until a host's entire port scan had finished, since the port scan wasn't actually running asynchronously despite being awaited alongside it. Ping, port scan, and NetBIOS resolution now genuinely run concurrently for every host. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
 - Fixed the application becoming unresponsive (including the window not reacting to input) during a large scan (e.g. a /24). Scan results and progress were both being pushed to the UI one item/update at a time via a dispatcher call per host/port, which could flood the UI thread's message queue on large scans. Both are now batched and flushed periodically (every 150ms) instead, for **IP Scanner** and **Port Scanner** alike. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
 
+**IP Scanner** / **Port Scanner**
+
+- Fixed the scan getting stuck (button disabled, scan never ends) when it was canceled right before the scan started, and when an unexpected error occurred. Errors are now shown as status message. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed the message "Canceled by user" being replaced by "No reachable hosts found" / "No open ports found" when the scan was canceled before the first result, and a new scan started right after canceling showing no progress or stopping too early. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+
 **IP Geolocation**
 
 - Fixed the query history of **IP Geolocation** being written to the history of **Whois** instead of its own. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)

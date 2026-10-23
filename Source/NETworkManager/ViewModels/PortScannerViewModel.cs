@@ -470,7 +470,7 @@ public class PortScannerViewModel : ViewModelBase
         }
         catch (OperationCanceledException)
         {
-            UserHasCanceled(this, EventArgs.Empty);
+            ScanComplete(this, new ScanCompleteArgs(true));
             return;
         }
 
@@ -506,7 +506,6 @@ public class PortScannerViewModel : ViewModelBase
         portScanner.PortScanned += PortScanned;
         portScanner.ScanComplete += ScanComplete;
         portScanner.ProgressChanged += ProgressChanged;
-        portScanner.UserHasCanceled += UserHasCanceled;
 
         _resultsFlushTimer = new DispatcherTimer(DispatcherPriority.Background)
         {
@@ -590,8 +589,8 @@ public class PortScannerViewModel : ViewModelBase
 
     /// <summary>
     /// Moves buffered scan results into <see cref="Results"/>. Always called on the UI thread -
-    /// either from the <see cref="_resultsFlushTimer"/> tick, or from within a Dispatcher.Invoke
-    /// call in <see cref="ScanComplete"/> / <see cref="UserHasCanceled"/>.
+    /// either from the <see cref="_resultsFlushTimer"/> tick, or from within the Dispatcher.Invoke
+    /// call in <see cref="ScanComplete"/>.
     /// </summary>
     private void FlushResultsBuffer()
     {
@@ -633,38 +632,48 @@ public class PortScannerViewModel : ViewModelBase
         PortsClosed = Volatile.Read(ref _latestPortsClosed);
     }
 
-    private void ScanComplete(object sender, EventArgs e)
+    /// <summary>
+    /// Handles the ScanComplete event. This is the only place where a scan ends (completed, canceled
+    /// or failed), so the state is reset exactly once and a new scan can't be started before it ran.
+    /// Also called directly (on the UI thread) if the scan is canceled while the hosts are resolved.
+    /// </summary>
+    /// <param name="sender">The <see cref="PortScanner"/> instance raising the event, or this view model.</param>
+    /// <param name="e">The <see cref="ScanCompleteArgs"/> instance containing the event data.</param>
+    private void ScanComplete(object sender, ScanCompleteArgs e)
     {
-        // Run in UI thread with lower priority than PortScanned event
-        // to ensure all results are added first #3285
         Application.Current.Dispatcher.Invoke(() =>
         {
+            if (sender is PortScanner portScanner)
+            {
+                portScanner.PortScanned -= PortScanned;
+                portScanner.ScanComplete -= ScanComplete;
+                portScanner.ProgressChanged -= ProgressChanged;
+            }
+
+            // Results are buffered - add the remaining ones
             _resultsFlushTimer?.Stop();
             FlushResultsBuffer();
             FlushProgress();
 
-            if (Results.Count == 0)
+            if (e.IsCanceled)
+            {
+                StatusMessage = Strings.CanceledByUserMessage;
+                IsStatusMessageDisplayed = true;
+            }
+            else if (e.Exception != null)
+            {
+                Log.Error("Error while scanning", e.Exception);
+
+                StatusMessage = e.Exception.Message;
+                IsStatusMessageDisplayed = true;
+            }
+            else if (Results.Count == 0)
             {
                 StatusMessage = Strings.NoOpenPortsFound;
                 IsStatusMessageDisplayed = true;
             }
 
-            IsCanceling = false;
-            IsRunning = false;
-        }, DispatcherPriority.Background);
-    }
-
-    private void UserHasCanceled(object sender, EventArgs e)
-    {
-        Application.Current.Dispatcher.Invoke(() =>
-        {
-            _resultsFlushTimer?.Stop();
-            FlushResultsBuffer();
-            FlushProgress();
-
-            StatusMessage = Strings.CanceledByUserMessage;
-            IsStatusMessageDisplayed = true;
-
+            PreparingScan = false;
             IsCanceling = false;
             IsRunning = false;
         });

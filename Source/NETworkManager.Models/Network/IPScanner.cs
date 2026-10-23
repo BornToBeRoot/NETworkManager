@@ -51,13 +51,14 @@ public sealed class IPScanner(IPScannerOptions options)
     }
 
     /// <summary>
-    ///     Occurs when the scan is complete.
+    ///     Occurs when the scan is complete. Raised exactly once per scan, also when the scan was canceled
+    ///     or failed (see <see cref="ScanCompleteArgs" />).
     /// </summary>
-    public event EventHandler ScanComplete;
+    public event EventHandler<ScanCompleteArgs> ScanComplete;
 
-    private void OnScanComplete()
+    private void OnScanComplete(ScanCompleteArgs e)
     {
-        ScanComplete?.Invoke(this, EventArgs.Empty);
+        ScanComplete?.Invoke(this, e);
     }
 
     /// <summary>
@@ -68,16 +69,6 @@ public sealed class IPScanner(IPScannerOptions options)
     private void OnProgressChanged()
     {
         ProgressChanged?.Invoke(this, new ProgressChangedArgs(_progressValue));
-    }
-
-    /// <summary>
-    ///     Occurs when the user has canceled the scan.
-    /// </summary>
-    public event EventHandler UserHasCanceled;
-
-    private void OnUserHasCanceled()
-    {
-        UserHasCanceled?.Invoke(this, EventArgs.Empty);
     }
 
     #endregion
@@ -92,16 +83,20 @@ public sealed class IPScanner(IPScannerOptions options)
     public void ScanAsync(IEnumerable<(IPAddress ipAddress, string hostname)> hosts,
         CancellationToken cancellationToken)
     {
-        // Start the scan in a separate task
+        // Start the scan in a separate task. The token is not passed to Task.Run on purpose: with an
+        // already canceled token the delegate would never run and ScanComplete would never be raised.
         Task.Run(async () =>
         {
             _progressValue = 0;
 
-            // Get all network interfaces (for local mac address lookup)
-            var networkInterfaces = options.ResolveMACAddress ? NetworkInterface.GetNetworkInterfaces() : [];
+            var isCanceled = false;
+            Exception exception = null;
 
             try
             {
+                // Get all network interfaces (for local mac address lookup)
+                var networkInterfaces = options.ResolveMACAddress ? NetworkInterface.GetNetworkInterfaces() : [];
+
                 var hostParallelOptions = new ParallelOptions
                 {
                     CancellationToken = cancellationToken,
@@ -224,15 +219,19 @@ public sealed class IPScanner(IPScannerOptions options)
                     IncreaseProgress();
                 }).ConfigureAwait(false);
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
-                OnUserHasCanceled();
+                isCanceled = true;
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
             }
             finally
             {
-                OnScanComplete();
+                OnScanComplete(new ScanCompleteArgs(isCanceled, exception));
             }
-        }, cancellationToken);
+        });
     }
 
     private async Task<PingInfo> PingAsync(IPAddress ipAddress, CancellationToken cancellationToken)

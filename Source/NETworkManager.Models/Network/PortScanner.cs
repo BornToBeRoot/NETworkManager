@@ -50,11 +50,15 @@ public sealed class PortScanner
         PortScanned?.Invoke(this, e);
     }
 
-    public event EventHandler ScanComplete;
+    /// <summary>
+    ///     Occurs when the scan is complete. Raised exactly once per scan, also when the scan was canceled
+    ///     or failed (see <see cref="ScanCompleteArgs" />).
+    /// </summary>
+    public event EventHandler<ScanCompleteArgs> ScanComplete;
 
-    private void OnScanComplete()
+    private void OnScanComplete(ScanCompleteArgs e)
     {
-        ScanComplete?.Invoke(this, EventArgs.Empty);
+        ScanComplete?.Invoke(this, e);
     }
 
     public event EventHandler<ProgressChangedArgs> ProgressChanged;
@@ -62,13 +66,6 @@ public sealed class PortScanner
     private void OnProgressChanged()
     {
         ProgressChanged?.Invoke(this, new ProgressChangedArgs(_progressValue));
-    }
-
-    public event EventHandler UserHasCanceled;
-
-    private void OnUserHasCanceled()
-    {
-        UserHasCanceled?.Invoke(this, EventArgs.Empty);
     }
 
     #endregion
@@ -80,8 +77,13 @@ public sealed class PortScanner
     {
         _progressValue = 0;
 
+        // The token is not passed to Task.Run on purpose: with an already canceled token the delegate
+        // would never run and ScanComplete would never be raised.
         Task.Run(async () =>
         {
+            var isCanceled = false;
+            Exception exception = null;
+
             try
             {
                 var hostParallelOptions = new ParallelOptions
@@ -132,15 +134,19 @@ public sealed class PortScanner
                     }).ConfigureAwait(false);
                 }).ConfigureAwait(false);
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
-                OnUserHasCanceled();
+                isCanceled = true;
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
             }
             finally
             {
-                OnScanComplete();
+                OnScanComplete(new ScanCompleteArgs(isCanceled, exception));
             }
-        }, cancellationToken);
+        });
     }
 
     private void IncreaseProgress()
