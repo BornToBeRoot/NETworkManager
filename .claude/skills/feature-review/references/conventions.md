@@ -17,6 +17,7 @@ report that too.
 - Layout
 - Export and history
 - Settings and profiles
+- Navigation and run command
 - PowerShell and external processes
 - Strings, docs and changelog
 
@@ -98,6 +99,12 @@ Reference: `HostsFileEditorView.xaml`, `FirewallView.xaml`.
   `ICollectionView.DeferRefresh()` — the DataGrid accesses the view (selection / current item) while the
   items change, which throws "Cannot change or check the contents or Current position of CollectionView
   while Refresh is being deferred". Reference: `FirewallViewModel.Refresh`.
+  Other users: `RunCommandViewModel.Suggestions`. Not yet used (same `Clear()` + `ForEach(Results.Add)` pattern on every
+  refresh / auto refresh): `ConnectionsViewModel`, `ListenersViewModel`, `NeighborTableViewModel`,
+  `HostsFileEditorViewModel` — report as a performance finding when reviewing them.
+- Don't use a `Reset` for results that are *appended* while a scan runs (IP Scanner, Port Scanner, Traceroute): with a
+  sorted view every `Reset` re-sorts the whole list and the grid loses its selection / scroll position. Those tools buffer
+  results and flush them with a `DispatcherTimer` (reference: `IPScannerViewModel.FlushResultsBuffer`).
 
 ## Dialogs and confirmations
 
@@ -147,6 +154,25 @@ Reference: `HostsFileEditorView.xaml`, `FirewallView.xaml`.
   profile → group → settings. The same option should have the same label, default and validation in the
   settings page, the profile dialog and the group dialog.
 
+## Navigation and run command
+
+Reference: `NavigationManager`, `ApplicationRequest`, `IPScannerHostView.Open`, `RunCommandManager`.
+
+- "Open in <other tool>" (context menus, buttons) calls `NavigationManager.Open(new ApplicationRequest(app) { Target = ... })`
+  or a derived request with the tool's extra options (`PortScannerRequest.Ports`, `DNSLookupRequest`, `RDAPRequest`,
+  `WakeOnLANRequest`, ...). Don't reference other view models or views directly.
+- The main window switches to the tool and calls `IApplicationRequestHandler.Open(request)` on its view; host views
+  turn it into `AddTab(target or profile, start: request.Start)`. `Start = false` only fills in the input (the user can
+  adjust options first). A request for a hidden application shows an error.
+- Every tool that accepts a target has a run command (`RunCommandManager.CreateCommands`: lowercase English command +
+  aliases, translated syntax). The target is validated with the **same validator** as the tool's input field and the
+  profile dialog (`ValidateTarget`); drift between these is a finding (see `.claude/reviews/run-command.md`).
+- A new tool option that is useful from the keyboard can become a run command argument/type (and a property on a derived
+  request); update the command table in `Website/docs/run-command.md` and `TargetApplications` (suggestions for a target
+  without a command) when the accepted targets change.
+- Values passed to another tool come from the result (e.g. hostname from DNS/NetBIOS). Pass a value the other tool can
+  actually use (e.g. the IP address when the name is not resolvable by the app's DNS client).
+
 ## PowerShell and external processes
 
 Reference: `Source/NETworkManager.Models/Firewall/Firewall.cs`.
@@ -161,6 +187,10 @@ Reference: `Source/NETworkManager.Models/Firewall/Firewall.cs`.
 - Cmdlet parameters like `-Name` / `-DisplayName` of the `*-NetFirewallRule` cmdlets accept wildcards. IDs and names
   not created by the application (e.g. Windows rules with `[x64]` in the name) must be matched exactly
   (e.g. `Get-NetFirewallRule | Where-Object Name -eq ...`), otherwise a different or no item is changed.
+- Custom commands (`CustomCommandInfo`, `PlaceholderHelper`, e.g. IP Scanner `{{IPAddress}}` / `{{Hostname}}`) insert
+  values into a process command line. Values received from the network (DNS PTR, NetBIOS name, SNMP, HTTP) are
+  untrusted: with `cmd.exe /c ...` characters like `&` or `|` run other commands. Only insert values that match the
+  expected format (IP address, hostname regex).
 
 ## Strings, docs and changelog
 

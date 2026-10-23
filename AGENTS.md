@@ -425,8 +425,12 @@ git diff
 3. Add the tool to `ApplicationName` and `ApplicationManager` (`Source/NETworkManager.Models/`), and show/hide it
    in `MainWindow.xaml.cs` (`OnApplicationViewVisible` / `OnApplicationViewHide`)
 4. Add it to the application list for existing users in `SettingsManager` (upgrade step)
-5. Add documentation in `Website/docs/application/` and map it in `DocumentationManager`
-6. Add localization strings and a changelog entry
+5. If the tool accepts a target or profile: implement `IApplicationRequestHandler` in its (host) view and add a run
+   command in `RunCommandManager` (command, aliases, validator = the one of the input field; suggestions in
+   `TargetApplications`), see [Navigation and Run Command](#navigation-and-run-command)
+6. Add documentation in `Website/docs/application/` (and the command table in `Website/docs/run-command.md`) and map it
+   in `DocumentationManager`
+7. Add localization strings and a changelog entry
 
 ### Adding a New Setting
 
@@ -486,6 +490,23 @@ git diff
 - **Groups**: Hierarchical organization
 - **Import/Export**: Profile sharing capabilities
 
+### Navigation and Run Command
+
+- **Open a tool from code**: `NavigationManager.Open(new ApplicationRequest(ApplicationName.X) { Target = ... })` or a
+  derived request with extra options (`ApplicationRequest.cs`: `PortScannerRequest`, `DNSLookupRequest`, `RDAPRequest`,
+  `WakeOnLANRequest`, `SubnetCalculatorRequest`, `LookupRequest`). Used for "open in other tool" context menus
+  (e.g. IP Scanner, Traceroute, Network Interface) and the run command. `Profile` runs a profile, `Start = false` only fills in the input.
+- **MainWindow** switches to the tool and calls `IApplicationRequestHandler.Open(request)` on its view (host views call
+  `AddTab(...)`). Don't reference other tools' views or view models directly.
+- **Run command** (`Ctrl+Shift+P`, title bar box, optional global hotkey): parser in
+  `Source/NETworkManager.Models/RunCommand/`, commands, validation and requests in `Source/NETworkManager/RunCommandManager.cs`,
+  dialog in `RunCommandViewModel` / `RunCommandChildWindow`, docs in `Website/docs/run-command.md`. The run command must
+  validate a target with the same validator as the tool's input field and profile dialog.
+- **Large lists**: `ObservableRangeCollection<T>.ReplaceAll(items)` (`Source/NETworkManager.Controls/`) replaces all items
+  with a single `Reset` notification. Use it for lists that are reloaded completely (e.g. Firewall rules, run command
+  suggestions); not for results that are appended while a scan runs (those are buffered and flushed by a timer, see
+  `IPScannerViewModel`).
+
 ### Embedded Tools Integration
 
 - **Remote Desktop**: Native RDP using `AxMSTSCLib`, `AxMsRdpClient10NotSafeForScripting` and `WindowsFormsHost`
@@ -508,7 +529,10 @@ git diff
 11. **Check CI Status**: Both AppVeyor (main build) and GitHub Actions (CodeQL, website) must pass
 12. **Dependency Updates**: Dependabot automatically creates PRs for dependency updates
 13. **Conventions and reviews**: Read `.claude/skills/feature-review/references/conventions.md` before changing UI or ViewModel code; use the `feature-review` skill to review a whole tool
-14. **Windows only**: The solution can't be built on Linux/macOS (WPF, CsWinRT) — say so when changes couldn't be compiled, and list what needs to be tested on Windows
+14. **Plans and reviews**: Local (not committed) plans and review results are in `.claude/plans/` and `.claude/reviews/`
+    (e.g. `.claude/reviews/ip-scanner.md`). Read the file for the area you work on first — it lists verified findings,
+    decisions and open items
+15. **Windows only**: The solution can't be built on Linux/macOS (WPF, CsWinRT) — say so when changes couldn't be compiled, and list what needs to be tested on Windows
 
 ## Glossary
 

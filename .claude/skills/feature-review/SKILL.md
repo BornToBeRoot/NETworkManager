@@ -23,7 +23,7 @@ existing patterns and not introduce new abstractions unless the same problem exi
 
 Find every file that belongs to the feature. Don't stop at the obvious View/ViewModel — most bugs and
 inconsistencies hide in the integration points (settings, profiles, group settings, export, command line,
-documentation). [references/integration-map.md](references/integration-map.md) lists where a tool lives and
+run command, "open in other tool" navigation, documentation). [references/integration-map.md](references/integration-map.md) lists where a tool lives and
 how to find all touch points (`git grep -l "<ApplicationName>" -- Source Website` is a good start).
 
 ### 2. Understand how it works
@@ -38,6 +38,8 @@ Read the code in this order: model (business logic) → view model (state, comma
   view hide/visible, app close
 - Integrations: which settings it reads, which profile/group fields it uses, history lists, export formats,
   admin rights requirement, external dependencies (PowerShell, WebView2, external processes, APIs)
+- Entry points: how the tool is opened with a target or profile (run command `Ctrl+Shift+P`, `NavigationManager.Open`
+  from other tools, profile panel, command line) and which other tools it sends data to
 
 This section matters on its own: it lets the user verify that the reviewer understood the feature, and
 it is the basis for spotting what is missing. If something is unclear after reading the code, say so
@@ -62,10 +64,12 @@ Go through these areas. Skip an area if it doesn't apply, but say so in one line
 1. **Bugs and logic errors** — wrong results, unhandled exceptions, race conditions (async commands that can
    overlap, refresh vs. modify), cancellation that doesn't stop work, state flags that can get stuck
    (set without `try/finally`), stale data after an action, edge cases (empty input, IPv6, very large
-   ranges, invalid/duplicate entries, no network adapter, no admin rights), wrong disposal / event handlers
-   that are never unsubscribed (static events!).
+   ranges, invalid/duplicate/overlapping entries, no network adapter, no admin rights), wrong disposal / event handlers
+   that are never unsubscribed (static events!), status messages overwritten by a later event (e.g. a completion
+   event after cancel or after an input error), exceptions in fire-and-forget `async Task` methods (`_ = Start()`)
+   that leave flags set.
 2. **Consistency within the feature** — the same action behaving differently depending on where it is
-   triggered (button vs. context menu vs. keyboard shortcut vs. profile), single vs. multi selection,
+   triggered (button vs. context menu vs. keyboard shortcut vs. profile vs. run command / other tool), single vs. multi selection,
    texts/terms that differ inside the feature.
 3. **Consistency across the application** — compare with the features from step 3 and the conventions:
    layout and spacing, icons, button placement, header/status texts, context menu items and order,
@@ -75,12 +79,16 @@ Go through these areas. Skip an area if it doesn't apply, but say so in one line
    allocations in hot paths, repeated PowerShell/process calls) *and* in the UI (UI thread blocked, too many
    `Dispatcher.Invoke` calls per result, large collections updated item by item, `CanExecute` doing
    expensive work, missing virtualization in large grids, timers that keep running when the view is hidden).
-   The UI has to stay smooth while a scan runs.
+   The UI has to stay smooth while a scan runs. Estimate the worst-case duration with the default settings for a
+   typical input (e.g. an empty /24): rounds per item (items ÷ concurrency) × timeout, for every probe — the slowest
+   probe decides when a result and the progress appear. Also check synchronous work on the UI thread after the action
+   (export, sorting, large `Clear`/`Add` loops).
 5. **Missing essentials** — functions a user would expect for this kind of tool, especially ones that
    similar tools in the app already have (export, copy, history, cancel, profile support, search/filter,
    multi-select actions, refresh, keyboard shortcuts). Separate small gaps (fix directly) from larger
    features (write an issue draft, see below).
-6. **Robustness and security** — input passed to PowerShell/command lines/processes without escaping,
+6. **Robustness and security** — input passed to PowerShell/command lines/processes without escaping (also values
+   received from the network, e.g. hostnames in custom commands),
    credentials in logs or plain text, unvalidated input, behaviour without admin rights, behaviour when
    an external dependency (PuTTY, WebView2, API) is missing or fails.
 7. **Localization and texts** — hard-coded user-visible strings, strings used for multiple meanings,
@@ -144,7 +152,15 @@ the motivation, a proposed behaviour (UI + logic), and which existing feature it
 
 ### 7. After the report
 
-Don't change code during the review. Ask the user which findings to fix. When fixing:
+Don't change code during the review. Ask the user which findings to fix.
+
+When the user wants the work handed over (to another agent or for later), write the result to
+`.claude/reviews/<feature>.md` (kebab-case, e.g. `ip-scanner.md`; the folder is not committed). Write it as an
+implementation plan, not as a report: verified findings with `path:line`, the concrete fix, the work packages / PR
+order, decisions taken and still open, and what must be tested on Windows. Read existing files in `.claude/reviews/`
+and `.claude/plans/` for the area first — they record earlier decisions.
+
+When fixing:
 
 - Follow the conventions and keep the change minimal; extract shared helpers only when the same code
   already exists in two or more places.

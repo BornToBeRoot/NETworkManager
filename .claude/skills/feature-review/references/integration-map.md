@@ -16,7 +16,8 @@ sort the hits into the categories below. Some names differ between places (e.g. 
 | Area | Location | What to check there |
 |---|---|---|
 | Registration | `Source/NETworkManager.Models/ApplicationName.cs`, `ApplicationManager.cs` (name, icon, default visibility) | Icon matches the one used elsewhere for the tool |
-| Main window | `Source/NETworkManager/MainWindow.xaml.cs` — view creation (`case ApplicationName.X`), `OnViewHide`/`OnViewVisible`, `AddTab(...)` for "open in other tool" | View lifecycle: what keeps running when hidden |
+| Main window | `Source/NETworkManager/MainWindow.xaml.cs` — view creation (`case ApplicationName.X`), `OnViewHide`/`OnViewVisible`, `NavigationManager_ApplicationRequested` (passes requests to the view) | View lifecycle: what keeps running when hidden |
+| Navigation ("open in other tool") | `Source/NETworkManager/NavigationManager.cs` (`Open(request)`, `OpenSettings()`), `ApplicationRequest.cs` (`Target`, `Profile`, `Start` + derived requests like `PortScannerRequest`, `WakeOnLANRequest`), `IApplicationRequestHandler` implemented by `<Tool>HostView.xaml.cs` (`Open(request)` → `AddTab(...)`) | Tool accepts target **and** profile, honours `Start = false` (fill in only), context menu items of other tools use `NavigationManager.Open` |
 | Business logic | `Source/NETworkManager.Models/<Tool>/` or `Source/NETworkManager.Models/Network/<Tool>*.cs` (+ `*Options`, `*Info`, `*Args`) | Bugs, performance, cancellation, events |
 | View model | `Source/NETworkManager/ViewModels/<Tool>ViewModel.cs`, `<Tool>HostViewModel.cs` (tabs + profiles), `<Tool>SettingsViewModel.cs`, dialog view models | Commands, `CanExecute`, state flags, threading |
 | View | `Source/NETworkManager/Views/<Tool>View.xaml(.cs)`, `<Tool>HostView.xaml`, `<Tool>SettingsView.xaml`, `*ChildWindow.xaml` | Layout, context menus, bindings, shortcuts |
@@ -26,8 +27,8 @@ sort the hits into the categories below. Some names differ between places (e.g. 
 | Profiles | `Source/NETworkManager.Profiles/ProfileInfo.cs` (`<Tool>_*` fields), `ProfileName.cs`, `ProfileViewManager.cs`, `Application/<Tool>.cs` (build session info from profile + group), `GroupInfo.cs` / `GroupViewName.cs` (group-level settings) | Profile field ↔ group inheritance ↔ settings fallback |
 | Profile UI | `Source/NETworkManager/ViewModels/ProfileViewModel.cs`, `Views/ProfileChildWindow.xaml` (tool tab), `Views/GroupChildWindow.xaml`, `ProfileDialogManager.cs` | Same fields, labels and validation in profile, group and settings |
 | Export | `Source/NETworkManager.Models/Export/ExportManager.<Tool>*.cs`, `ExportChildWindow` | Same columns/formats as similar tools |
-| Run command | `Source/NETworkManager/RunCommandManager.cs` | Arguments/placeholder accepted |
-| Documentation | `Source/NETworkManager.Documentation/DocumentationManager.cs` (help links), `Website/docs/application/<tool>.md`, `Website/docs/settings/*.md`, `Website/docs/commandline-arguments.md` | Docs match behaviour, defaults and shortcuts |
+| Run command | `Source/NETworkManager/RunCommandManager.cs` (command/aliases in `CreateCommands`, suggested apps per target kind in `TargetApplications`, target/argument validators in `ValidateTarget`, request in `CreateRequest`), parser in `Source/NETworkManager.Models/RunCommand/`, dialog `RunCommandViewModel` / `RunCommandChildWindow`, docs `Website/docs/run-command.md` | Same validator as the tool's input field and profile dialog; new options of the tool (e.g. a new input) are reachable via argument/type or deliberately not; command table in the docs matches |
+| Documentation | `Source/NETworkManager.Documentation/DocumentationManager.cs` (help links), `Website/docs/application/<tool>.md`, `Website/docs/settings/*.md`, `Website/docs/commandline-arguments.md`, `Website/docs/run-command.md` | Docs match behaviour, defaults and shortcuts |
 | Strings | `Source/NETworkManager.Localization/Resources/Strings.resx` (+ `Strings.Designer.cs`) | Only `Strings.resx` (English) is edited; other languages come from Transifex |
 | Styles | `Source/NETworkManager/Resources/Styles/*.xaml` (buttons, text blocks, tooltips, rectangles) | Shared styles used instead of local ones |
 | Helpers | `Source/NETworkManager.Utilities/`, `Source/NETworkManager.Utilities.WPF/`, `Source/NETworkManager.Converters/`, `Source/NETworkManager.Validators/`, `Source/NETworkManager/DialogHelper.cs` | Existing helper not reused / duplicated logic |
@@ -63,8 +64,10 @@ Cross-cutting areas:
 
 - **Profiles and groups**: `NETworkManager.Profiles`, `ProfilesView`, `ProfileChildWindow`, `GroupChildWindow`,
   profile files, encryption (`Credentials*ChildWindow`), import (CSV/AD), filter/tags, profile panel in host views
-- **Main window and navigation**: `MainWindow.xaml(.cs)`, application list, run command (`CommandLineWindow`,
-  `RunCommandManager`), tray, hotkeys, `StatusWindow`, `NotificationWindow`, welcome/upgrade dialogs
+- **Main window and navigation**: `MainWindow.xaml(.cs)`, application list, `NavigationManager` / `ApplicationRequest`,
+  tray, hotkeys, `StatusWindow`, `NotificationWindow`, welcome/upgrade dialogs
+- **Run command** (`Ctrl+Shift+P`, global hotkey): `RunCommandManager`, `Models/RunCommand/` (parser), `RunCommandViewModel`,
+  `RunCommandChildWindow`, docs `run-command.md`; open items and earlier decisions in `.claude/reviews/run-command*.md`
 - **Export and dialogs**: `ExportManager`, `ExportChildWindow`, `DialogHelper`, message/confirmation child windows
 - **Settings infrastructure**: `SettingsManager` (load/save/upgrade), `LocalSettingsManager`, policies
   (`PolicyManager`, `config.json.example`: settings managed by administrator)
