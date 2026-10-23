@@ -561,6 +561,7 @@ public class PortScannerViewModel : ViewModelBase
             SettingsManager.Current.PortScanner_MaxHostThreads,
             SettingsManager.Current.PortScanner_MaxPortThreads,
             SettingsManager.Current.PortScanner_Timeout,
+            SettingsManager.Current.PortScanner_Attempts,
             SettingsManager.Current.PortScanner_ResolveHostname,
             SettingsManager.Current.PortScanner_ShowAllResults
         ));

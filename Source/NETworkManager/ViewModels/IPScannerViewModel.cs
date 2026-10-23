@@ -620,6 +620,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             SettingsManager.Current.IPScanner_PortScanEnabled,
             ports,
             SettingsManager.Current.IPScanner_PortScanTimeout,
+            SettingsManager.Current.IPScanner_PortScanAttempts,
             SettingsManager.Current.IPScanner_NetBIOSEnabled,
             SettingsManager.Current.IPScanner_NetBIOSTimeout,
             SettingsManager.Current.IPScanner_ResolveMACAddress,

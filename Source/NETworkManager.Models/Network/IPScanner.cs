@@ -127,7 +127,7 @@ public sealed class IPScanner(IPScannerOptions options)
                 var hostDuration = Math.Max(options.ICMPAttempts * options.ICMPTimeout,
                     Math.Max(
                         options.PortScanEnabled
-                            ? options.PortScanTimeout *
+                            ? options.PortScanTimeout * options.PortScanAttempts *
                               (int)Math.Ceiling(options.PortScanPorts.Length / (double)options.MaxPortThreads)
                             : 0,
                         options.NetBIOSEnabled ? options.NetBIOSTimeout : 0));
@@ -428,7 +428,8 @@ public sealed class IPScanner(IPScannerOptions options)
 
         await Parallel.ForEachAsync(options.PortScanPorts, parallelOptions, async (port, ct) =>
         {
-            var portState = await PortProbe.ProbeAsync(ipAddress, port, options.PortScanTimeout, ct)
+            var portState = await PortProbe.ProbeAsync(ipAddress, port, options.PortScanTimeout,
+                    options.PortScanAttempts, ct)
                 .ConfigureAwait(false);
 
             results.Add(new PortInfo(port, PortLookup.LookupByPortAndProtocol(port), portState));

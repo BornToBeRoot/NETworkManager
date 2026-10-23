@@ -38,13 +38,38 @@ internal static class PortProbe
     /// <param name="ipAddress">IP address to connect to.</param>
     /// <param name="port">Port to connect to.</param>
     /// <param name="timeoutMs">Timeout in milliseconds after which the port is considered timed out.</param>
+    /// <param name="attempts">
+    ///     Number of attempts. Another connection request is only sent if there was no answer (timed out) - the
+    ///     connection request is not retransmitted by Windows (see <see cref="DisableSynRetransmissions" />), so this
+    ///     is the retry for a lost request on an unreliable network.
+    /// </param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     /// <returns>
     ///     <see cref="PortState.Open" /> if the connect succeeded, <see cref="PortState.Closed" /> if the host
     ///     refused the connection (TCP reset - the host is reachable) and <see cref="PortState.TimedOut" /> if
     ///     there was no answer (timeout, host or network unreachable, local socket error).
     /// </returns>
-    public static async Task<PortState> ProbeAsync(IPAddress ipAddress, int port, int timeoutMs,
+    public static async Task<PortState> ProbeAsync(IPAddress ipAddress, int port, int timeoutMs, int attempts,
+        CancellationToken cancellationToken)
+    {
+        var portState = PortState.TimedOut;
+
+        for (var i = 0; i < Math.Max(attempts, 1); i++)
+        {
+            portState = await ProbeOnceAsync(ipAddress, port, timeoutMs, cancellationToken).ConfigureAwait(false);
+
+            // Open or closed is a definitive answer
+            if (portState != PortState.TimedOut)
+                break;
+        }
+
+        return portState;
+    }
+
+    /// <summary>
+    ///     Sends one connection request, see <see cref="ProbeAsync" />.
+    /// </summary>
+    private static async Task<PortState> ProbeOnceAsync(IPAddress ipAddress, int port, int timeoutMs,
         CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();

@@ -189,7 +189,21 @@ Timeout in milliseconds after which a port is considered timed out (no answer). 
 
 :::note
 
-A closed port is reported as soon as the host refuses the connection. The connection request is sent once and not repeated, so on an unreliable network a port can occasionally be shown as timed out - scan it again if in doubt.
+A closed port is reported as soon as the host refuses the connection. Each attempt sends the connection request once (see [Attempts](#attempts)).
+
+:::
+
+### Attempts
+
+Number of connection requests sent to each port. Another request is only sent if there was no answer (timed out), an open or closed port is final.
+
+**Type:** `Integer` [Min `1`, Max `10`]
+
+**Default:** `1`
+
+:::tip
+
+In a local network (LAN), `1` is enough. On an unreliable network (e.g. Wi-Fi, VPN) or for hosts on the internet, a lost connection request can make an open port appear as timed out - increase it to `2` in this case. This only takes longer for ports without answer (attempts × timeout), e.g. ports blocked by a firewall.
 
 :::
 

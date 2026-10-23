@@ -16,6 +16,7 @@ public class IPScannerOptions
     /// <param name="portScanEnabled">Scan the ports of the host.</param>
     /// <param name="portScanPorts">List of ports to scan.</param>
     /// <param name="portScanTimeout">Timeout in milliseconds after which a port is considered closed.</param>
+    /// <param name="portScanAttempts">Number of attempts to connect to a port if there was no answer.</param>
     /// <param name="resolveHostname">Resolve the hostname for an IP address.</param>
     /// <param name="netBIOSEnabled">Resolve the NetBIOS name for an IP address.</param>
     /// <param name="netBIOSTimeout">Timeout in milliseconds after which a NetBIOS request is considered lost.</param>
@@ -23,7 +24,7 @@ public class IPScannerOptions
     /// <param name="showAllResults">Include unreachable IP addresses in the result.</param>
     public IPScannerOptions(int maxHostThreads, int maxPortThreads, int icmpAttempts, int icmpTimeout,
         byte[] icmpBuffer, bool resolveHostname, bool portScanEnabled, int[] portScanPorts, int portScanTimeout,
-        bool netBIOSEnabled, int netBIOSTimeout, bool resolveMACAddress, bool showAllResults)
+        int portScanAttempts, bool netBIOSEnabled, int netBIOSTimeout, bool resolveMACAddress, bool showAllResults)
     {
         MaxHostThreads = maxHostThreads;
         MaxPortThreads = maxPortThreads;
@@ -34,6 +35,7 @@ public class IPScannerOptions
         PortScanEnabled = portScanEnabled;
         PortScanPorts = portScanPorts;
         PortScanTimeout = portScanTimeout;
+        PortScanAttempts = portScanAttempts;
         NetBIOSEnabled = netBIOSEnabled;
         NetBIOSTimeout = netBIOSTimeout;
         ResolveMACAddress = resolveMACAddress;
@@ -84,6 +86,11 @@ public class IPScannerOptions
     ///     Timeout in milliseconds after which a port is considered closed.
     /// </summary>
     public int PortScanTimeout { get; }
+
+    /// <summary>
+    ///     Number of attempts to connect to a port if there was no answer (timed out).
+    /// </summary>
+    public int PortScanAttempts { get; }
 
     /// <summary>
     ///     Resolve the NetBIOS name for an IP address.

@@ -118,7 +118,7 @@ public sealed class PortScanner
                     : _options.MaxPortThreads);
 
                 var portStartScheduler = new StartScheduler(StartScheduler.GetInterval(MaxPortStartInterval,
-                    TimeSpan.FromMilliseconds(_options.Timeout), portConcurrency), portConcurrency);
+                    TimeSpan.FromMilliseconds(_options.Timeout * _options.Attempts), portConcurrency), portConcurrency);
 
                 await Parallel.ForEachAsync(hosts, hostParallelOptions, async (host, hostCt) =>
                 {
@@ -133,7 +133,8 @@ public sealed class PortScanner
                         // Spread the start of the port probes over time instead of starting all at once
                         await portStartScheduler.WaitAsync(portCt).ConfigureAwait(false);
 
-                        var portState = await PortProbe.ProbeAsync(host.ipAddress, port, _options.Timeout, portCt)
+                        var portState = await PortProbe.ProbeAsync(host.ipAddress, port, _options.Timeout,
+                                _options.Attempts, portCt)
                             .ConfigureAwait(false);
 
                         // Every result needs the hostname (results are grouped by it) - usually resolved

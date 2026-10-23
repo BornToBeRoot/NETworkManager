@@ -144,6 +144,7 @@ public static class GlobalStaticConfiguration
     public static bool IPScanner_PortScanEnabled => true;
     public static string IPScanner_PortScanPorts => "22; 53; 80; 135; 139; 389; 636; 443; 445; 3389; 9100";
     public static int IPScanner_PortScanTimeout => 2000;
+    public static int IPScanner_PortScanAttempts => 1;
     public static int IPScanner_MaxHostThreads => 128;
     public static int IPScanner_MaxPortThreads => 16;
     public static bool IPScanner_NetBIOSEnabled => true;
@@ -158,6 +159,7 @@ public static class GlobalStaticConfiguration
     public static int PortScanner_MaxHostThreads => 4;
     public static int PortScanner_MaxPortThreads => 128;
     public static int PortScanner_Timeout => 2000;
+    public static int PortScanner_Attempts => 1;
     public static ExportFileType PortScanner_ExportFileType => ExportFileType.Csv;
     // Larger scans (hosts x ports) need a confirmation, even larger ones are refused
     public static long PortScanner_ConfirmPortCount => 65536;

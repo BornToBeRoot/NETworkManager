@@ -47,6 +47,10 @@
                    Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding PortScanTimeout}" Maximum="15000" Minimum="100" Interval="100"
                            Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.Attempts}" Style="{StaticResource DefaultTextBlock}"
+                   Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding PortScanAttempts}" Maximum="10" Minimum="1" Interval="1"
+                           Margin="0,0,0,10" />
         <TextBlock Text="{x:Static localization:Strings.NetBIOS}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ScanForNetBIOS}" IsOn="{Binding NetBIOSEnabled}"
                           Margin="0,0,0,10" />

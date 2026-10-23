@@ -177,6 +177,25 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets the number of attempts to connect to a port if there was no answer.
+    /// </summary>
+    public int PortScanAttempts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_PortScanAttempts = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets a value indicating whether NetBIOS is enabled.
     /// </summary>
     public bool NetBIOSEnabled
@@ -325,6 +344,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
         PortScanEnabled = SettingsManager.Current.IPScanner_PortScanEnabled;
         PortScanPorts = SettingsManager.Current.IPScanner_PortScanPorts;
         PortScanTimeout = SettingsManager.Current.IPScanner_PortScanTimeout;
+        PortScanAttempts = SettingsManager.Current.IPScanner_PortScanAttempts;
         NetBIOSEnabled = SettingsManager.Current.IPScanner_NetBIOSEnabled;
         NetBIOSTimeout = SettingsManager.Current.IPScanner_NetBIOSTimeout;
         ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
