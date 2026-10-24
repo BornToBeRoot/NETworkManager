@@ -4948,7 +4948,7 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>Esc</value>
   </data>
   <data name="RunCommandWatermark1" xml:space="preserve">
-    <value>It's always DNS. Until it's not.</value>
+    <value>いつもDNSのせいだ。そうじゃない場合を除いては。</value>
   </data>
   <data name="RunCommandWatermark2" xml:space="preserve">
     <value>IP アドレスをお持ちですか? ここにドロップ...</value>
@@ -4960,7 +4960,7 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>すべてのツールを 1行で...</value>
   </data>
   <data name="RunCommandWatermark5" xml:space="preserve">
-    <value>Something down? Let's investigate...</value>
+    <value>何かあった? 確認してみよう...</value>
   </data>
   <data name="RunCommandWatermark6" xml:space="preserve">
     <value>DNS のせいかな? いつも DNS のせいなんだよね……</value>
@@ -5005,70 +5005,70 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>ポートのプロファイル</value>
   </data>
   <data name="ScanManyIPAddressesMessage" xml:space="preserve">
-    <value>{0} IP addresses will be scanned. This can take a long time and needs a lot of memory.
+    <value>{0} IP アドレスのスキャンが行われます。これには時間がかかる場合があり、大量のメモリを必要とします。
 
-Do you want to start the scan?</value>
+スキャンを開始しますか？</value>
   </data>
   <data name="ScanTooManyIPAddressesMessage" xml:space="preserve">
-    <value>{0} IP addresses cannot be scanned at once (maximum {1}). Split the input into smaller ranges.</value>
+    <value>{0} IPアドレスは一度にスキャンできません (最大 {1})。 入力をより小さな範囲に分割します。</value>
   </data>
   <data name="ScanManyPortsMessage" xml:space="preserve">
-    <value>{0} ports will be scanned ({1} hosts × {2} ports). This can take a long time and needs a lot of memory.
+    <value>{0} 個のポートがスキャンされます ({1} 台のホスト × {2} 個のポート)。 これには長い時間がかかり、大量のメモリが必要になります。
 
-Do you want to start the scan?</value>
+スキャンを開始しますか？</value>
   </data>
   <data name="ScanTooManyPortsMessage" xml:space="preserve">
-    <value>{0} ports cannot be scanned at once ({1} hosts × {2} ports, maximum {3}). Split the input into fewer hosts or ports.</value>
+    <value>{0} 個のポートを一度にスキャンすることはできません ({1} 台のホスト × {2} 個のポート、最大 {3})。 入力先を、より少ないホストまたはポートに分割してください。</value>
   </data>
   <data name="RunCommandWatermark19" xml:space="preserve">
-    <value>Can you reach it, or just ping it?</value>
+    <value>それに到達できますか、またはpingだけですか?</value>
   </data>
   <data name="RunCommandWatermark20" xml:space="preserve">
-    <value>The network is down. Your coffee isn't.</value>
+    <value>ネットワークがダウンしています。あなたのコーヒーは違います。</value>
   </data>
   <data name="RunCommandWatermark21" xml:space="preserve">
-    <value>Every timeout has a story.</value>
+    <value>すべてのタイムアウトにはストーリーがあります。</value>
   </data>
   <data name="RunCommandWatermark22" xml:space="preserve">
-    <value>Your network tools, at your fingertips.</value>
+    <value>ネットワークツールをすぐに利用できます。</value>
   </data>
   <data name="RunCommandWatermark23" xml:space="preserve">
-    <value>No route to sanity.</value>
+    <value>正気へのルートがありません。</value>
   </data>
   <data name="RunCommandWatermark24" xml:space="preserve">
-    <value>The firewall says no.</value>
+    <value>ファイアウォールが NO と言っています。</value>
   </data>
   <data name="RunCommandWatermark25" xml:space="preserve">
-    <value>One command closer to "it's working".</value>
+    <value>「動いた」まであとコマンド 1つ。</value>
   </data>
   <data name="RunCommandWatermark26" xml:space="preserve">
-    <value>Commands are faster than mouse adventures.</value>
+    <value>マウスで冒険するより、コマンドの方が速い。</value>
   </data>
   <data name="RunCommandWatermark27" xml:space="preserve">
-    <value>Packets don't lie. Monitoring sometimes does.</value>
+    <value>パケットは嘘をつかない。監視は時に嘘をつく。</value>
   </data>
   <data name="RunCommandWatermark28" xml:space="preserve">
-    <value>First, establish whether it's actually broken.</value>
+    <value>まず、本当に壊れているのかを確認すること。</value>
   </data>
   <data name="RunCommandWatermark29" xml:space="preserve">
-    <value>It's not a bug. It's packet loss.</value>
+    <value>バグじゃない。パケットロスだ。</value>
   </data>
   <data name="RunCommandWatermark30" xml:space="preserve">
-    <value>There is no cloud. Just someone else's network.</value>
+    <value>クラウドなんてない。あるのは誰かのネットワークだけ。</value>
   </data>
   <data name="RunCommandWatermark31" xml:space="preserve">
-    <value>It's a feature. Probably.</value>
+    <value>仕様です。たぶん。</value>
   </data>
   <data name="RunCommandWatermark32" xml:space="preserve">
-    <value>Trust, but verify with ping.</value>
+    <value>信じるのはいいが、ping で確かめよう。</value>
   </data>
   <data name="RunCommandWatermark33" xml:space="preserve">
-    <value>The packets know what they did.</value>
+    <value>パケットは何をしでかしたか知っている。</value>
   </data>
   <data name="RunCommandWatermark34" xml:space="preserve">
-    <value>Have you checked the obvious?</value>
+    <value>まず当たり前のことを確認した？</value>
   </data>
   <data name="RunCommandWatermark35" xml:space="preserve">
-    <value>If it resolves, it exists. If it doesn't, clear the cache.</value>
+    <value>引ければ存在する。引けなければキャッシュを消せ。</value>
   </data>
 </root>
