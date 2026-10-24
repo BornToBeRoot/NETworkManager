@@ -285,13 +285,14 @@ public sealed class IPScanner(IPScannerOptions options)
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
-    /// <returns>Hostname or an empty string.</returns>
+    /// <returns>Hostname without the trailing dot or an empty string.</returns>
     private static async Task<string> ResolveHostnameAsync(IPAddress ipAddress, CancellationToken cancellationToken)
     {
         var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddress)
             .WaitAsync(cancellationToken).ConfigureAwait(false);
 
-        return dnsResult.HasError ? string.Empty : dnsResult.Value;
+        // The PTR record is fully qualified (trailing dot) - trim it once for the grid, export and other tools
+        return dnsResult.HasError ? string.Empty : dnsResult.Value.TrimEnd('.');
     }
 
     /// <summary>

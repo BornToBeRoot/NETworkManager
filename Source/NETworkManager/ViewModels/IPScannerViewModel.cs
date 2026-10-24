@@ -451,7 +451,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         {
             Name = string.IsNullOrEmpty(SelectedResult.Hostname)
                 ? SelectedResult.PingInfo.IPAddress.ToString()
-                : SelectedResult.Hostname.TrimEnd('.'),
+                : SelectedResult.Hostname,
             Host = SelectedResult.PingInfo.IPAddress.ToString(),
 
             // Additional data
@@ -743,7 +743,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             }
 
             // Replace vars
-            var hostname = !string.IsNullOrEmpty(SelectedResult.Hostname) ? SelectedResult.Hostname.TrimEnd('.') : "";
+            var hostname = SelectedResult.Hostname ?? "";
 
             // The hostname comes from the network (PTR record or NetBIOS name) and could contain characters
             // like "&" that would run additional commands (e.g. "cmd.exe /c ... {{Hostname}}") - only use valid ones

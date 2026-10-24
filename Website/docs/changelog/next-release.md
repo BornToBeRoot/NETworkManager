@@ -205,6 +205,7 @@ Release date: **xx.xx.2026**
 - **IP Scanner**: Fixed **Copy** > **Hostname** / **MAC address** / **Vendor** being hidden in the context menu while the column was shown (resolved via NetBIOS only), and **Copy** > **Status** copying `True` / `False` instead of `Up` / `Down`. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - **IP Scanner**: Fixed a hostname received from the network (DNS PTR record or NetBIOS name) with special characters like `&` being able to run additional commands through a custom command with `{{Hostname}}` (e.g. `cmd.exe /c ...`). Such a hostname is now replaced with an empty value. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - **IP Scanner**: Fixed **Edit** (`F2`) and **Delete** (`Del`) of a custom command in the settings being available without a selected command. The delete confirmation shows the name of the command. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
+- Fixed hostnames resolved via DNS (`PTR`) being shown with a trailing dot (e.g. `server.example.com.`), also in the export and when opened in another feature (e.g. **DNS Lookup**, **Remote Desktop**). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **IP Geolocation**
 
