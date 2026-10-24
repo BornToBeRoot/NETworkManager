@@ -557,14 +557,15 @@ public class PortScannerViewModel : ViewModelBase
         ListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory, Ports,
             SettingsManager.Current.General_HistoryListEntries);
 
-        var portScanner = new PortScanner(new PortScannerOptions(
-            SettingsManager.Current.PortScanner_MaxHostThreads,
-            SettingsManager.Current.PortScanner_MaxPortThreads,
-            SettingsManager.Current.PortScanner_Timeout,
-            SettingsManager.Current.PortScanner_Attempts,
-            SettingsManager.Current.PortScanner_ResolveHostname,
-            SettingsManager.Current.PortScanner_ShowAllResults
-        ));
+        var portScanner = new PortScanner(new PortScannerOptions
+        {
+            MaxHostThreads = SettingsManager.Current.PortScanner_MaxHostThreads,
+            MaxPortThreads = SettingsManager.Current.PortScanner_MaxPortThreads,
+            Timeout = SettingsManager.Current.PortScanner_Timeout,
+            Attempts = SettingsManager.Current.PortScanner_Attempts,
+            ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname,
+            ShowAllResults = SettingsManager.Current.PortScanner_ShowAllResults
+        });
 
         portScanner.PortScanned += PortScanned;
         portScanner.ScanComplete += ScanComplete;

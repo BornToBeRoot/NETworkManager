@@ -610,22 +610,23 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory, Host,
             SettingsManager.Current.General_HistoryListEntries);
 
-        var ipScanner = new IPScanner(new IPScannerOptions(
-            SettingsManager.Current.IPScanner_MaxHostThreads,
-            SettingsManager.Current.IPScanner_MaxPortThreads,
-            SettingsManager.Current.IPScanner_ICMPAttempts,
-            SettingsManager.Current.IPScanner_ICMPTimeout,
-            new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
-            SettingsManager.Current.IPScanner_ResolveHostname,
-            SettingsManager.Current.IPScanner_PortScanEnabled,
-            ports,
-            SettingsManager.Current.IPScanner_PortScanTimeout,
-            SettingsManager.Current.IPScanner_PortScanAttempts,
-            SettingsManager.Current.IPScanner_NetBIOSEnabled,
-            SettingsManager.Current.IPScanner_NetBIOSTimeout,
-            SettingsManager.Current.IPScanner_ResolveMACAddress,
-            SettingsManager.Current.IPScanner_ShowAllResults
-        ));
+        var ipScanner = new IPScanner(new IPScannerOptions
+        {
+            MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads,
+            MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads,
+            ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
+            ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout,
+            ICMPBuffer = new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
+            ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
+            PortScanEnabled = SettingsManager.Current.IPScanner_PortScanEnabled,
+            PortScanPorts = ports,
+            PortScanTimeout = SettingsManager.Current.IPScanner_PortScanTimeout,
+            PortScanAttempts = SettingsManager.Current.IPScanner_PortScanAttempts,
+            NetBIOSEnabled = SettingsManager.Current.IPScanner_NetBIOSEnabled,
+            NetBIOSTimeout = SettingsManager.Current.IPScanner_NetBIOSTimeout,
+            ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
+            ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults
+        });
 
         ipScanner.HostScanned += HostScanned;
         ipScanner.ScanComplete += ScanComplete;
