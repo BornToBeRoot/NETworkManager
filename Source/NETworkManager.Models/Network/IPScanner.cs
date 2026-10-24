@@ -145,123 +145,23 @@ public sealed class IPScanner(IPScannerOptions options)
                     // Spread the start of the hosts over time instead of starting all at once
                     await hostStartScheduler.WaitAsync(ct).ConfigureAwait(false);
 
-                    // Start ping, port scan and netbios lookup concurrently - none of these block a thread anymore
-                    var pingTask = PingAsync(host.ipAddress, ct);
-
-                    var portScanTask = options.PortScanEnabled
-                        ? PortScanAsync(host.ipAddress, portScanParallelOptions, ct)
-                        : Task.FromResult(new List<PortInfo>());
-
-                    var netbiosTask = options.NetBIOSEnabled
-                        ? NetBIOSResolver.ResolveAsync(host.ipAddress, options.NetBIOSTimeout, ct)
-                        : Task.FromResult(new NetBIOSInfo(host.ipAddress));
-
-                    await Task.WhenAll(pingTask, portScanTask, netbiosTask).ConfigureAwait(false);
-
-                    // A reachable host is in the neighbor table (ARP/NDP) from now on (before it can answer, the
-                    // local system has to resolve its MAC address)
-                    var discoveredAt = DateTime.UtcNow;
-
-                    var pingInfo = pingTask.Result;
-                    var portScanResults = portScanTask.Result;
-                    var netBIOSInfo = netbiosTask.Result;
+                    var discovery = await DiscoverAsync(host.ipAddress, portScanParallelOptions, ct)
+                        .ConfigureAwait(false);
 
                     // Cancel if the user has canceled
                     ct.ThrowIfCancellationRequested();
 
-                    // Check if host is up
-                    var isAnyPortOpen = portScanResults.Any(x => x.State == PortState.Open);
-                    var isReachable = pingInfo.Status == IPStatus.Success || // ICMP response
-                                      isAnyPortOpen || // Any port is open
-                                      portScanResults.Any(x => x.State == PortState.Closed) || // Connection refused (TCP reset)
-                                      netBIOSInfo.IsReachable; // NetBIOS response
-
                     // Count reachable/unreachable hosts unconditionally, since ShowAllResults
                     // (below) may prevent unreachable hosts from ever reaching HostScanned
-                    if (isReachable)
+                    if (discovery.IsReachable)
                         _hostsUp.Increment();
                     else
                         _hostsDown.Increment();
 
-                    // DNS & ARP
-                    if (isReachable || options.ShowAllResults)
-                    {
-                        // DNS
-                        var dnsHostname = string.Empty;
-
-                        if (options.ResolveHostname)
-                        {
-                            var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(host.ipAddress)
-                                .WaitAsync(ct).ConfigureAwait(false);
-
-                            if (!dnsResult.HasError)
-                                dnsHostname = dnsResult.Value;
-                        }
-
-                        // ARP
-                        var arpMACAddress = string.Empty;
-                        var arpVendor = string.Empty;
-
-                        if (options.ResolveMACAddress)
-                        {
-                            // Get info from neighbor table. Only hosts in a local subnet are in it (for any other
-                            // host it contains the router), an unreachable host never needs a new snapshot.
-                            if (IsInLocalSubnet(host.ipAddress, networkInterfaces))
-                                arpMACAddress = await GetMACAddressFromNeighborTableAsync(host.ipAddress,
-                                    isReachable ? discoveredAt : DateTime.MinValue, ct).ConfigureAwait(false);
-
-                            // Check if it is the local mac
-                            if (string.IsNullOrEmpty(arpMACAddress))
-                            {
-                                var ipAddress = IPAddressHelper.WithoutScopeId(host.ipAddress);
-
-                                var networkInterfaceInfo = networkInterfaces.FirstOrDefault(p =>
-                                    p.IPv4Address.Any(x => x.Item1.Equals(ipAddress)) ||
-                                    p.IPv6Address.Concat(p.IPv6AddressLinkLocal)
-                                        .Any(x => IPAddressHelper.WithoutScopeId(x).Equals(ipAddress)));
-
-                                if (networkInterfaceInfo != null)
-                                    arpMACAddress = networkInterfaceInfo.PhysicalAddress.ToString();
-                            }
-
-                            // Vendor lookup & default format
-                            if (!string.IsNullOrEmpty(arpMACAddress))
-                            {
-                                var info = OUILookup.LookupByMacAddress(arpMACAddress).FirstOrDefault();
-
-                                if (info != null)
-                                    arpVendor = info.Vendor;
-
-                                // Apply default format
-                                arpMACAddress = MACAddressHelper.GetDefaultFormat(arpMACAddress);
-                            }
-                        }
-
+                    if (discovery.IsReachable || options.ShowAllResults)
                         OnHostScanned(new IPScannerHostScannedArgs(
-                                new IPScannerHostInfo(
-                                    isReachable,
-                                    pingInfo,
-                                    // DNS is default, fallback to netbios
-                                    !string.IsNullOrEmpty(dnsHostname)
-                                        ? dnsHostname
-                                        : netBIOSInfo?.ComputerName ?? string.Empty,
-                                    dnsHostname,
-                                    isAnyPortOpen,
-                                    portScanResults
-                                        .Where(x => x.State == PortState.Open || options.ShowAllResults)
-                                        .OrderBy(x => x.Port).ToList(),
-                                    netBIOSInfo,
-                                    // ARP/NDP is preferred, fallback to NetBIOS
-                                    !string.IsNullOrEmpty(arpMACAddress)
-                                        ? arpMACAddress
-                                        : netBIOSInfo?.MACAddress ?? string.Empty,
-                                    !string.IsNullOrEmpty(arpMACAddress)
-                                        ? arpVendor
-                                        : netBIOSInfo?.Vendor ?? string.Empty
-                                )
-                            )
-                        );
-                    }
+                            await EnrichAsync(host.ipAddress, discovery, networkInterfaces, ct)
+                                .ConfigureAwait(false)));
 
                     IncreaseProgress();
                 }).ConfigureAwait(false);
@@ -279,6 +179,162 @@ public sealed class IPScanner(IPScannerOptions options)
                 OnScanComplete(new ScanCompleteArgs(isCanceled, exception));
             }
         });
+    }
+
+    /// <summary>
+    ///     Result of <see cref="DiscoverAsync" />: the probes that decide if a host is reachable.
+    /// </summary>
+    /// <param name="PingInfo">Result of the ping (last attempt).</param>
+    /// <param name="Ports">All probed ports (also closed / timed out ones).</param>
+    /// <param name="NetBIOSInfo">Result of the NetBIOS request.</param>
+    /// <param name="DiscoveredAt">Time all probes were finished (UTC).</param>
+    private sealed record HostDiscovery(
+        PingInfo PingInfo,
+        List<PortInfo> Ports,
+        NetBIOSInfo NetBIOSInfo,
+        DateTime DiscoveredAt)
+    {
+        /// <summary>
+        ///     Indicates whether any port is open.
+        /// </summary>
+        public bool IsAnyPortOpen { get; } = Ports.Any(x => x.State == PortState.Open);
+
+        /// <summary>
+        ///     Indicates whether the host answered any probe.
+        /// </summary>
+        public bool IsReachable => PingInfo.Status == IPStatus.Success || // ICMP response
+                                   IsAnyPortOpen || // Any port is open
+                                   Ports.Any(x => x.State == PortState.Closed) || // Connection refused (TCP reset)
+                                   NetBIOSInfo.IsReachable; // NetBIOS response
+    }
+
+    /// <summary>
+    ///     Discovers a host: ping, port scan and NetBIOS request run concurrently (none of these block a thread).
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="portScanParallelOptions">Options for the concurrent port probes of the host.</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    /// <returns>Results of all probes.</returns>
+    private async Task<HostDiscovery> DiscoverAsync(IPAddress ipAddress, ParallelOptions portScanParallelOptions,
+        CancellationToken cancellationToken)
+    {
+        var pingTask = PingAsync(ipAddress, cancellationToken);
+
+        var portScanTask = options.PortScanEnabled
+            ? PortScanAsync(ipAddress, portScanParallelOptions, cancellationToken)
+            : Task.FromResult(new List<PortInfo>());
+
+        var netbiosTask = options.NetBIOSEnabled
+            ? NetBIOSResolver.ResolveAsync(ipAddress, options.NetBIOSTimeout, cancellationToken)
+            : Task.FromResult(new NetBIOSInfo(ipAddress));
+
+        await Task.WhenAll(pingTask, portScanTask, netbiosTask).ConfigureAwait(false);
+
+        // A reachable host is in the neighbor table (ARP/NDP) from now on (before it can answer, the
+        // local system has to resolve its MAC address)
+        return new HostDiscovery(pingTask.Result, portScanTask.Result, netbiosTask.Result, DateTime.UtcNow);
+    }
+
+    /// <summary>
+    ///     Enriches a discovered host with the DNS hostname (PTR), MAC address and vendor and creates the result.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="discovery">Result of <see cref="DiscoverAsync" />.</param>
+    /// <param name="networkInterfaces">Local network interfaces (for the MAC address lookup).</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    /// <returns>Result of the host.</returns>
+    private async Task<IPScannerHostInfo> EnrichAsync(IPAddress ipAddress, HostDiscovery discovery,
+        List<NetworkInterfaceInfo> networkInterfaces, CancellationToken cancellationToken)
+    {
+        var dnsHostname = options.ResolveHostname
+            ? await ResolveHostnameAsync(ipAddress, cancellationToken).ConfigureAwait(false)
+            : string.Empty;
+
+        var (arpMACAddress, arpVendor) = options.ResolveMACAddress
+            ? await ResolveMACAddressAsync(ipAddress, discovery.IsReachable ? discovery.DiscoveredAt : DateTime.MinValue,
+                networkInterfaces, cancellationToken).ConfigureAwait(false)
+            : (string.Empty, string.Empty);
+
+        var netBIOSInfo = discovery.NetBIOSInfo;
+
+        return new IPScannerHostInfo(
+            discovery.IsReachable,
+            discovery.PingInfo,
+            // DNS is default, fallback to netbios
+            !string.IsNullOrEmpty(dnsHostname)
+                ? dnsHostname
+                : netBIOSInfo?.ComputerName ?? string.Empty,
+            dnsHostname,
+            discovery.IsAnyPortOpen,
+            discovery.Ports
+                .Where(x => x.State == PortState.Open || options.ShowAllResults)
+                .OrderBy(x => x.Port).ToList(),
+            netBIOSInfo,
+            // ARP/NDP is preferred, fallback to NetBIOS
+            !string.IsNullOrEmpty(arpMACAddress)
+                ? arpMACAddress
+                : netBIOSInfo?.MACAddress ?? string.Empty,
+            !string.IsNullOrEmpty(arpMACAddress)
+                ? arpVendor
+                : netBIOSInfo?.Vendor ?? string.Empty
+        );
+    }
+
+    /// <summary>
+    ///     Resolves the DNS hostname (PTR record) of a host.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    /// <returns>Hostname or an empty string.</returns>
+    private static async Task<string> ResolveHostnameAsync(IPAddress ipAddress, CancellationToken cancellationToken)
+    {
+        var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddress)
+            .WaitAsync(cancellationToken).ConfigureAwait(false);
+
+        return dnsResult.HasError ? string.Empty : dnsResult.Value;
+    }
+
+    /// <summary>
+    ///     Resolves the MAC address of a host from the neighbor table (ARP/NDP) or the local network interfaces,
+    ///     and its vendor.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="discoveredAt">Time the host answered, <see cref="DateTime.MinValue" /> if it is unreachable.</param>
+    /// <param name="networkInterfaces">Local network interfaces.</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    /// <returns>MAC address (default format) and vendor, empty strings if not found.</returns>
+    private async Task<(string macAddress, string vendor)> ResolveMACAddressAsync(IPAddress ipAddress,
+        DateTime discoveredAt, List<NetworkInterfaceInfo> networkInterfaces, CancellationToken cancellationToken)
+    {
+        var macAddress = string.Empty;
+
+        // Get info from neighbor table. Only hosts in a local subnet are in it (for any other
+        // host it contains the router), an unreachable host never needs a new snapshot.
+        if (IsInLocalSubnet(ipAddress, networkInterfaces))
+            macAddress = await GetMACAddressFromNeighborTableAsync(ipAddress, discoveredAt, cancellationToken)
+                .ConfigureAwait(false);
+
+        // Check if it is the local mac
+        if (string.IsNullOrEmpty(macAddress))
+        {
+            var ipAddressWithoutScopeId = IPAddressHelper.WithoutScopeId(ipAddress);
+
+            var networkInterfaceInfo = networkInterfaces.FirstOrDefault(p =>
+                p.IPv4Address.Any(x => x.Item1.Equals(ipAddressWithoutScopeId)) ||
+                p.IPv6Address.Concat(p.IPv6AddressLinkLocal)
+                    .Any(x => IPAddressHelper.WithoutScopeId(x).Equals(ipAddressWithoutScopeId)));
+
+            if (networkInterfaceInfo != null)
+                macAddress = networkInterfaceInfo.PhysicalAddress.ToString();
+        }
+
+        if (string.IsNullOrEmpty(macAddress))
+            return (string.Empty, string.Empty);
+
+        // Vendor lookup & default format
+        var vendor = OUILookup.LookupByMacAddress(macAddress).FirstOrDefault()?.Vendor ?? string.Empty;
+
+        return (MACAddressHelper.GetDefaultFormat(macAddress), vendor);
     }
 
     /// <summary>
