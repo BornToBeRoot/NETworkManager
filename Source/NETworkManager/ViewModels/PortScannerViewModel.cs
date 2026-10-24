@@ -293,8 +293,8 @@ public class PortScannerViewModel : ViewModelBase
 
     /// <summary>
     /// Gets the options of the scan whose results are shown. Columns and context menu follow them instead of
-    /// the current settings, which may have been changed since. Before the first scan: the settings when the
-    /// tab was opened.
+    /// the current settings, which may have been changed since. While no results are shown, they follow the
+    /// current settings.
     /// </summary>
     public PortScannerOptions ScanOptions
     {
@@ -337,6 +337,8 @@ public class PortScannerViewModel : ViewModelBase
         // Columns etc. until the first scan
         ScanOptions = CreateScanOptions();
 
+        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+
         // Result view
         ResultsView = CollectionViewSource.GetDefaultView(Results);
         ResultsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(PortScannerPortInfo.HostAsString)));
@@ -374,6 +376,8 @@ public class PortScannerViewModel : ViewModelBase
             return;
 
         _closed = true;
+
+        SettingsManager.Current.PropertyChanged -= SettingsManager_PropertyChanged;
 
         // Stop scan
         if (IsRunning)
@@ -682,6 +686,23 @@ public class PortScannerViewModel : ViewModelBase
     #endregion
 
     #region Events
+
+    /// <summary>
+    /// Handles changes of the settings. While no results are shown, the columns etc. follow the current
+    /// settings (see <see cref="ScanOptions"/>).
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SettingsInfo.PortScanner_ResolveHostname):
+                if (!IsRunning && Results.Count == 0)
+                    ScanOptions = CreateScanOptions();
+                break;
+        }
+    }
 
     private void PortScanned(object sender, PortScannerPortScannedArgs e)
     {

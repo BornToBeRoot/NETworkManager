@@ -292,8 +292,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     /// <summary>
     /// Gets the options of the scan whose results are shown. Columns, context menu and row details follow them
-    /// instead of the current settings, which may have been changed since. Before the first scan: the settings
-    /// when the tab was opened.
+    /// instead of the current settings, which may have been changed since. While no results are shown, they
+    /// follow the current settings.
     /// </summary>
     public IPScannerOptions ScanOptions
     {
@@ -336,7 +336,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_HostHistory);
 
         // Columns etc. until the first scan
-        ScanOptions = CreateScanOptions([]);
+        ScanOptions = CreateScanOptions(null);
+
+        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
         // Result view
         ResultsView = CollectionViewSource.GetDefaultView(Results);
@@ -656,7 +658,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <summary>
     /// Creates the scan options from the current settings.
     /// </summary>
-    /// <param name="ports">Ports to scan.</param>
+    /// <param name="ports">Ports to scan, <c>null</c> for options that are only shown (no ports, no ICMP buffer).</param>
     /// <returns>Options for the <see cref="IPScanner"/>.</returns>
     private static IPScannerOptions CreateScanOptions(int[] ports)
     {
@@ -666,10 +668,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads,
             ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
             ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout,
-            ICMPBuffer = new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
+            ICMPBuffer = ports != null ? new byte[SettingsManager.Current.IPScanner_ICMPBuffer] : [],
             ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
             PortScanEnabled = SettingsManager.Current.IPScanner_PortScanEnabled,
-            PortScanPorts = ports,
+            PortScanPorts = ports ?? [],
             PortScanTimeout = SettingsManager.Current.IPScanner_PortScanTimeout,
             PortScanAttempts = SettingsManager.Current.IPScanner_PortScanAttempts,
             NetBIOSEnabled = SettingsManager.Current.IPScanner_NetBIOSEnabled,
@@ -881,6 +883,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         _closed = true;
 
+        SettingsManager.Current.PropertyChanged -= SettingsManager_PropertyChanged;
+
         // Stop scan
         if (IsRunning)
             Stop();
@@ -891,6 +895,26 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     #endregion
 
     #region Events
+
+    /// <summary>
+    /// Handles changes of the settings. While no results are shown, the columns etc. follow the current
+    /// settings (see <see cref="ScanOptions"/>).
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SettingsInfo.IPScanner_ResolveHostname):
+            case nameof(SettingsInfo.IPScanner_PortScanEnabled):
+            case nameof(SettingsInfo.IPScanner_NetBIOSEnabled):
+            case nameof(SettingsInfo.IPScanner_ResolveMACAddress):
+                if (!IsRunning && Results.Count == 0)
+                    ScanOptions = CreateScanOptions(null);
+                break;
+        }
+    }
 
     /// <summary>
     /// Handles the HostScanned event. Adds the result to the list.
