@@ -51,7 +51,6 @@ public static partial class ExportManager
             $"{nameof(IPScannerHostInfo.IsReachable)}," +
             $"{nameof(PingInfo.IPAddress)}," +
             $"{nameof(IPScannerHostInfo.Hostname)}," +
-            $"{nameof(IPScannerHostInfo.DNSHostname)}," +
             $"PingStatus," +
             $"{nameof(PingInfo.Timestamp)}," +
             $"{nameof(PingInfo.Time)}," +
@@ -67,7 +66,9 @@ public static partial class ExportManager
             $"NetBIOSMACAddress," +
             $"NetBIOSVendor," +
             $"{nameof(IPScannerHostInfo.MACAddress)}," +
-            $"{nameof(IPScannerHostInfo.Vendor)}"
+            $"{nameof(IPScannerHostInfo.Vendor)}," +
+            // Added later - last column, so the position of the other columns doesn't change
+            $"{nameof(IPScannerHostInfo.DNSHostname)}"
         );
 
         foreach (var info in collection)
@@ -89,7 +90,6 @@ public static partial class ExportManager
                 $"{info.IsReachable}," +
                 $"{info.PingInfo.IPAddress}," +
                 $"{CsvHelper.QuoteString(info.Hostname)}," +
-                $"{CsvHelper.QuoteString(info.DNSHostname)}," +
                 $"{info.PingInfo.Status}," +
                 $"{DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)}," +
                 $"{Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)}," +
@@ -105,7 +105,8 @@ public static partial class ExportManager
                 $"{info.NetBIOSInfo?.MACAddress}," +
                 $"{CsvHelper.QuoteString(info.NetBIOSInfo?.Vendor)}," +
                 $"{info.MACAddress}," +
-                $"{CsvHelper.QuoteString(info.Vendor)}"
+                $"{CsvHelper.QuoteString(info.Vendor)}," +
+                $"{CsvHelper.QuoteString(info.DNSHostname)}"
             );
         }
 
