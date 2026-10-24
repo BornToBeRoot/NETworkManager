@@ -202,10 +202,10 @@ public sealed class IPScanner(IPScannerOptions options)
         /// <summary>
         ///     Indicates whether the host answered any probe.
         /// </summary>
-        public bool IsReachable => PingInfo.Status == IPStatus.Success || // ICMP response
-                                   IsAnyPortOpen || // Any port is open
-                                   Ports.Any(x => x.State == PortState.Closed) || // Connection refused (TCP reset)
-                                   NetBIOSInfo.IsReachable; // NetBIOS response
+        public bool IsReachable { get; } = PingInfo.Status == IPStatus.Success || // ICMP response
+                                           // Any port is open or the connection was refused (TCP reset)
+                                           Ports.Any(x => x.State is PortState.Open or PortState.Closed) ||
+                                           NetBIOSInfo.IsReachable; // NetBIOS response
     }
 
     /// <summary>
