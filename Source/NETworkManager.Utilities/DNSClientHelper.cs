@@ -22,6 +22,24 @@ public static class DNSClientHelper
     }
 
     /// <summary>
+    ///     Removes the trailing dot of a fully qualified domain name (e.g. "server.example.com." ->
+    ///     "server.example.com"). A single-label name (e.g. "gateway.") keeps it: without the dot it would be
+    ///     a bare hostname (see <see cref="IsBareHostname" />) and the DNS suffix would be appended when it is
+    ///     resolved again (e.g. when opened in another tool).
+    /// </summary>
+    /// <param name="name">Domain name, e.g. from a PTR record.</param>
+    /// <returns>Domain name without the trailing dot, unless it is a single-label name.</returns>
+    public static string TrimTrailingDot(string name)
+    {
+        if (string.IsNullOrEmpty(name) || !name.EndsWith('.'))
+            return name;
+
+        var trimmed = name.TrimEnd('.');
+
+        return trimmed.Contains('.') ? trimmed : name;
+    }
+
+    /// <summary>
     ///     Detect the DNS suffix to use for suffix-appending. Prefers the Windows "Primary DNS Suffix"
     ///     (<see cref="IPGlobalProperties.DomainName" />), falling back to the connection-specific suffix
     ///     of an active network adapter if no primary suffix is configured (e.g. machine is not domain-joined
