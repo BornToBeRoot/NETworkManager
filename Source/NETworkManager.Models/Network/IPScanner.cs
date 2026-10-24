@@ -246,14 +246,21 @@ public sealed class IPScanner(IPScannerOptions options)
     private async Task<IPScannerHostInfo> EnrichAsync(IPAddress ipAddress, HostDiscovery discovery,
         List<NetworkInterfaceInfo> networkInterfaces, CancellationToken cancellationToken)
     {
-        var dnsHostname = options.ResolveHostname
-            ? await ResolveHostnameAsync(ipAddress, cancellationToken).ConfigureAwait(false)
-            : string.Empty;
+        // DNS and MAC address lookup don't depend on each other - run them concurrently, the host is finished
+        // after the slower one instead of after both
+        var dnsTask = options.ResolveHostname
+            ? ResolveHostnameAsync(ipAddress, cancellationToken)
+            : Task.FromResult(string.Empty);
 
-        var (arpMACAddress, arpVendor) = options.ResolveMACAddress
-            ? await ResolveMACAddressAsync(ipAddress, discovery.IsReachable ? discovery.DiscoveredAt : DateTime.MinValue,
-                networkInterfaces, cancellationToken).ConfigureAwait(false)
-            : (string.Empty, string.Empty);
+        var macAddressTask = options.ResolveMACAddress
+            ? ResolveMACAddressAsync(ipAddress, discovery.IsReachable ? discovery.DiscoveredAt : DateTime.MinValue,
+                networkInterfaces, cancellationToken)
+            : Task.FromResult((macAddress: string.Empty, vendor: string.Empty));
+
+        await Task.WhenAll(dnsTask, macAddressTask).ConfigureAwait(false);
+
+        var dnsHostname = dnsTask.Result;
+        var (arpMACAddress, arpVendor) = macAddressTask.Result;
 
         var netBIOSInfo = discovery.NetBIOSInfo;
 
