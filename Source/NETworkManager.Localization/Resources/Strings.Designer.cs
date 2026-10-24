@@ -11746,7 +11746,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Can you reach it, or just ping it?.
+        ///   Looks up a localized string similar to Your network tools, at your fingertips..
         /// </summary>
         public static string RunCommandWatermark22 {
             get {
