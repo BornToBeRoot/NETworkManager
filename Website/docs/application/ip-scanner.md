@@ -82,6 +82,8 @@ The number of reachable (up) and unreachable (down) IP addresses is shown next t
 
 Only reachable hosts are shown, unless [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) is enabled. A message below the input is shown if no reachable host was found, the scan was canceled, a hostname could not be resolved or an error occurred.
 
+The columns (e.g. **Hostname**, **Port status**, **MAC address**) and the row details are shown according to the settings the scan was started with. Settings changed afterwards apply to the next scan.
+
 ### Keyboard shortcuts
 
 | Key      | Action                         |

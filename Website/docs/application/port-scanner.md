@@ -73,7 +73,7 @@ If multiple results are selected, only **Export...** is available.
 
 ### Result
 
-The results are grouped by host and sorted by IP address and port. The number of open and closed ports is shown next to the **Result** header. A port is **open** if the connection was established, **closed** if the host refused the connection and **timed out** if there was no answer within the [timeout](#timeout-ms) (e.g. blocked by a firewall). Only open ports are shown, unless [Show closed ports](#show-closed-ports) is enabled.
+The results are grouped by host and sorted by IP address and port. The number of open and closed ports is shown next to the **Result** header. A port is **open** if the connection was established, **closed** if the host refused the connection and **timed out** if there was no answer within the [timeout](#timeout-ms) (e.g. blocked by a firewall). Only open ports are shown, unless [Show closed ports](#show-closed-ports) is enabled. The **Hostname** column is shown if [Resolve hostname](#resolve-hostname) was enabled when the scan was started.
 
 ### Keyboard shortcuts
 

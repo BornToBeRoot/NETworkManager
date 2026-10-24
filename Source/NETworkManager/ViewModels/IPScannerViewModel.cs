@@ -291,6 +291,24 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Gets the options of the scan whose results are shown. Columns, context menu and row details follow them
+    /// instead of the current settings, which may have been changed since. Before the first scan: the settings
+    /// when the tab was opened.
+    /// </summary>
+    public IPScannerOptions ScanOptions
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets the available custom commands for the IP Scanner.
     /// </summary>
     public static IEnumerable<CustomCommandInfo> CustomCommands => SettingsManager.Current.IPScanner_CustomCommands;
@@ -316,6 +334,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Host history
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_HostHistory);
+
+        // Columns etc. until the first scan
+        ScanOptions = CreateScanOptions([]);
 
         // Result view
         ResultsView = CollectionViewSource.GetDefaultView(Results);
@@ -610,23 +631,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory, Host,
             SettingsManager.Current.General_HistoryListEntries);
 
-        var ipScanner = new IPScanner(new IPScannerOptions
-        {
-            MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads,
-            MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads,
-            ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
-            ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout,
-            ICMPBuffer = new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
-            ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
-            PortScanEnabled = SettingsManager.Current.IPScanner_PortScanEnabled,
-            PortScanPorts = ports,
-            PortScanTimeout = SettingsManager.Current.IPScanner_PortScanTimeout,
-            PortScanAttempts = SettingsManager.Current.IPScanner_PortScanAttempts,
-            NetBIOSEnabled = SettingsManager.Current.IPScanner_NetBIOSEnabled,
-            NetBIOSTimeout = SettingsManager.Current.IPScanner_NetBIOSTimeout,
-            ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
-            ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults
-        });
+        ScanOptions = CreateScanOptions(ports);
+
+        var ipScanner = new IPScanner(ScanOptions);
 
         ipScanner.HostScanned += HostScanned;
         ipScanner.ScanComplete += ScanComplete;
@@ -644,6 +651,32 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _resultsFlushTimer.Start();
 
         ipScanner.ScanAsync(hosts.hosts, _cancellationTokenSource.Token);
+    }
+
+    /// <summary>
+    /// Creates the scan options from the current settings.
+    /// </summary>
+    /// <param name="ports">Ports to scan.</param>
+    /// <returns>Options for the <see cref="IPScanner"/>.</returns>
+    private static IPScannerOptions CreateScanOptions(int[] ports)
+    {
+        return new IPScannerOptions
+        {
+            MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads,
+            MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads,
+            ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
+            ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout,
+            ICMPBuffer = new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
+            ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
+            PortScanEnabled = SettingsManager.Current.IPScanner_PortScanEnabled,
+            PortScanPorts = ports,
+            PortScanTimeout = SettingsManager.Current.IPScanner_PortScanTimeout,
+            PortScanAttempts = SettingsManager.Current.IPScanner_PortScanAttempts,
+            NetBIOSEnabled = SettingsManager.Current.IPScanner_NetBIOSEnabled,
+            NetBIOSTimeout = SettingsManager.Current.IPScanner_NetBIOSTimeout,
+            ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
+            ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults
+        };
     }
 
     /// <summary>

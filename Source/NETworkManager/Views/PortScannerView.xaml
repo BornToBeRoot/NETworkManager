@@ -12,7 +12,6 @@
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
-             xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerViewModel}">
@@ -270,6 +269,7 @@
                                       VirtualizingPanel.VirtualizationMode="Recycling"
                                       VirtualizingPanel.ScrollUnit="Item">
             <controls:MultiSelectDataGrid.Resources>
+                <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
                               Style="{StaticResource ResourceKey=CopyMenuItem}">
@@ -280,7 +280,7 @@
                         <MenuItem Header="{x:Static Member=localization:Strings.Hostname}"
                                   Command="{Binding Path=CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.Hostname, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
-                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=PortScanner_ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                  Visibility="{Binding Path=Data.(viewModels:PortScannerViewModel.ScanOptions).ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static Member=localization:Strings.Port}"
                                   Command="{Binding Path=CopyDataToClipboardCommand}"
@@ -377,7 +377,7 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}"
                                     Binding="{Binding (network:PortScannerPortInfo.Hostname), Converter={StaticResource StringNullOrEmptyToStringConverter}}"
                                     SortMemberPath="Hostname"
-                                    Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=PortScanner_ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                    Visibility="{Binding Path=Data.(viewModels:PortScannerViewModel.ScanOptions).ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Port}"
                                     Binding="{Binding (network:PortScannerPortInfo.Port)}"

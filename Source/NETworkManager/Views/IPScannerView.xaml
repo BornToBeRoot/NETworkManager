@@ -12,7 +12,6 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
-             xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
              Loaded="UserControl_Loaded"
@@ -459,17 +458,17 @@
                                   Style="{StaticResource ResourceKey=CopyMenuItem}">
                             <MenuItem.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
-                                    <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
-                                             Path="IPScanner_ResolveHostname" />
-                                    <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
-                                             Path="IPScanner_NetBIOSEnabled" />
+                                    <Binding Source="{StaticResource BindingProxy}"
+                                             Path="Data.(viewModels:IPScannerViewModel.ScanOptions).ResolveHostname" />
+                                    <Binding Source="{StaticResource BindingProxy}"
+                                             Path="Data.(viewModels:IPScannerViewModel.ScanOptions).NetBIOSEnabled" />
                                 </MultiBinding>
                             </MenuItem.Visibility>
                         </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.PortStatus}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.IsAnyPortOpen, Converter={StaticResource PortOpenToStringConverter}}"
-                                  Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_PortScanEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                  Visibility="{Binding Path=Data.(viewModels:IPScannerViewModel.ScanOptions).PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.PingStatus}"
                                   Command="{Binding CopyDataToClipboardCommand}"
@@ -481,10 +480,10 @@
                                   Style="{StaticResource ResourceKey=CopyMenuItem}">
                             <MenuItem.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
-                                    <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
-                                             Path="IPScanner_ResolveMACAddress" />
-                                    <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
-                                             Path="IPScanner_NetBIOSEnabled" />
+                                    <Binding Source="{StaticResource BindingProxy}"
+                                             Path="Data.(viewModels:IPScannerViewModel.ScanOptions).ResolveMACAddress" />
+                                    <Binding Source="{StaticResource BindingProxy}"
+                                             Path="Data.(viewModels:IPScannerViewModel.ScanOptions).NetBIOSEnabled" />
                                 </MultiBinding>
                             </MenuItem.Visibility>
                         </MenuItem>
@@ -494,10 +493,10 @@
                                   Style="{StaticResource ResourceKey=CopyMenuItem}">
                             <MenuItem.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
-                                    <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
-                                             Path="IPScanner_ResolveMACAddress" />
-                                    <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
-                                             Path="IPScanner_NetBIOSEnabled" />
+                                    <Binding Source="{StaticResource BindingProxy}"
+                                             Path="Data.(viewModels:IPScannerViewModel.ScanOptions).ResolveMACAddress" />
+                                    <Binding Source="{StaticResource BindingProxy}"
+                                             Path="Data.(viewModels:IPScannerViewModel.ScanOptions).NetBIOSEnabled" />
                                 </MultiBinding>
                             </MenuItem.Visibility>
                         </MenuItem>
@@ -607,10 +606,10 @@
                                     MinWidth="150">
                     <DataGridTextColumn.Visibility>
                         <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
-                            <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
-                                     Path="IPScanner_ResolveHostname" />
-                            <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
-                                     Path="IPScanner_NetBIOSEnabled" />
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.(viewModels:IPScannerViewModel.ScanOptions).ResolveHostname" />
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.(viewModels:IPScannerViewModel.ScanOptions).NetBIOSEnabled" />
                         </MultiBinding>
                     </DataGridTextColumn.Visibility>
                 </DataGridTextColumn>
@@ -621,12 +620,12 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.PortStatus}"
                                     Binding="{Binding (network:IPScannerHostInfo.IsAnyPortOpen), Converter={StaticResource ResourceKey=PortOpenToStringConverter}}"
                                     SortMemberPath="IsAnyPortOpen"
-                                    Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_PortScanEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                    Visibility="{Binding Path=Data.(viewModels:IPScannerViewModel.ScanOptions).PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.NetBIOSReachable}"
                                     Binding="{Binding (network:IPScannerHostInfo.NetBIOSInfo).IsReachable, Converter={StaticResource ResourceKey=BooleanToStringConverter}}"
                                     SortMemberPath="NetBIOSInfo.IsReachable"
-                                    Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_NetBIOSEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                    Visibility="{Binding Path=Data.(viewModels:IPScannerViewModel.ScanOptions).NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}"
                                     Binding="{Binding (network:IPScannerHostInfo.MACAddress), Converter={StaticResource StringNullOrEmptyToStringConverter}}"
@@ -634,10 +633,10 @@
                                     MinWidth="150">
                     <DataGridTextColumn.Visibility>
                         <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
-                            <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
-                                     Path="IPScanner_ResolveMACAddress" />
-                            <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
-                                     Path="IPScanner_NetBIOSEnabled" />
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.(viewModels:IPScannerViewModel.ScanOptions).ResolveMACAddress" />
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.(viewModels:IPScannerViewModel.ScanOptions).NetBIOSEnabled" />
                         </MultiBinding>
                     </DataGridTextColumn.Visibility>
                 </DataGridTextColumn>
@@ -648,10 +647,10 @@
                                     Width="*">
                     <DataGridTextColumn.Visibility>
                         <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
-                            <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
-                                     Path="IPScanner_ResolveMACAddress" />
-                            <Binding Source="{x:Static Member=settings:SettingsManager.Current}"
-                                     Path="IPScanner_NetBIOSEnabled" />
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.(viewModels:IPScannerViewModel.ScanOptions).ResolveMACAddress" />
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.(viewModels:IPScannerViewModel.ScanOptions).NetBIOSEnabled" />
                         </MultiBinding>
                     </DataGridTextColumn.Visibility>
                 </DataGridTextColumn>
@@ -789,7 +788,7 @@
                                 <StackPanel Grid.Row="2"
                                             VerticalAlignment="Top"
                                             Orientation="Horizontal"
-                                            Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_PortScanEnabled, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                                            Visibility="{Binding Path=Data.(viewModels:IPScannerViewModel.ScanOptions).PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
                                     <Rectangle Width="16" Height="16"
                                                Style="{StaticResource InfoImageRectangle}" />
                                     <TextBlock Text="{x:Static localization:Strings.PortScanIsDisabled}"
@@ -797,7 +796,7 @@
                                                Margin="10,0,0,0" />
                                 </StackPanel>
                                 <Grid Grid.Row="2"
-                                      Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_PortScanEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                      Visibility="{Binding Path=Data.(viewModels:IPScannerViewModel.ScanOptions).PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                     <ListView Background="Transparent"
                                               ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                               ItemsSource="{Binding Path=(network:IPScannerHostInfo.Ports)}"
@@ -870,7 +869,7 @@
                                 <StackPanel Grid.Row="2"
                                             VerticalAlignment="Top"
                                             Orientation="Horizontal"
-                                            Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_NetBIOSEnabled, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                                            Visibility="{Binding Path=Data.(viewModels:IPScannerViewModel.ScanOptions).NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
                                     <Rectangle Width="16" Height="16"
                                                Style="{StaticResource InfoImageRectangle}" />
                                     <TextBlock Text="{x:Static localization:Strings.NetBIOSIsDisabled}"
@@ -879,7 +878,7 @@
                                 </StackPanel>
                                 <ListView Grid.Row="2"
                                           Background="Transparent"
-                                          Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=IPScanner_NetBIOSEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                          Visibility="{Binding Path=Data.(viewModels:IPScannerViewModel.ScanOptions).NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="{x:Type ListViewItem}"
                                                BasedOn="{StaticResource MahApps.Styles.ListViewItem}">

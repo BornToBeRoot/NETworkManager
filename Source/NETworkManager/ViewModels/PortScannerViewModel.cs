@@ -291,6 +291,24 @@ public class PortScannerViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the options of the scan whose results are shown. Columns and context menu follow them instead of
+    /// the current settings, which may have been changed since. Before the first scan: the settings when the
+    /// tab was opened.
+    /// </summary>
+    public PortScannerOptions ScanOptions
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Constructor, load settings, shutdown
@@ -315,6 +333,9 @@ public class PortScannerViewModel : ViewModelBase
         // Set collection view
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_HostHistory);
         PortsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortHistory);
+
+        // Columns etc. until the first scan
+        ScanOptions = CreateScanOptions();
 
         // Result view
         ResultsView = CollectionViewSource.GetDefaultView(Results);
@@ -557,15 +578,9 @@ public class PortScannerViewModel : ViewModelBase
         ListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory, Ports,
             SettingsManager.Current.General_HistoryListEntries);
 
-        var portScanner = new PortScanner(new PortScannerOptions
-        {
-            MaxHostThreads = SettingsManager.Current.PortScanner_MaxHostThreads,
-            MaxPortThreads = SettingsManager.Current.PortScanner_MaxPortThreads,
-            Timeout = SettingsManager.Current.PortScanner_Timeout,
-            Attempts = SettingsManager.Current.PortScanner_Attempts,
-            ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname,
-            ShowAllResults = SettingsManager.Current.PortScanner_ShowAllResults
-        });
+        ScanOptions = CreateScanOptions();
+
+        var portScanner = new PortScanner(ScanOptions);
 
         portScanner.PortScanned += PortScanned;
         portScanner.ScanComplete += ScanComplete;
@@ -583,6 +598,23 @@ public class PortScannerViewModel : ViewModelBase
         _resultsFlushTimer.Start();
 
         portScanner.ScanAsync(hosts.hosts, ports, _cancellationTokenSource.Token);
+    }
+
+    /// <summary>
+    /// Creates the scan options from the current settings.
+    /// </summary>
+    /// <returns>Options for the <see cref="PortScanner"/>.</returns>
+    private static PortScannerOptions CreateScanOptions()
+    {
+        return new PortScannerOptions
+        {
+            MaxHostThreads = SettingsManager.Current.PortScanner_MaxHostThreads,
+            MaxPortThreads = SettingsManager.Current.PortScanner_MaxPortThreads,
+            Timeout = SettingsManager.Current.PortScanner_Timeout,
+            Attempts = SettingsManager.Current.PortScanner_Attempts,
+            ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname,
+            ShowAllResults = SettingsManager.Current.PortScanner_ShowAllResults
+        };
     }
 
     private void Stop()
