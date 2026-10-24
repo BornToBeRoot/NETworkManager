@@ -152,10 +152,12 @@ Release date: **xx.xx.2026**
 - Fixed long error messages (e.g. from a failed host resolution) in the tooltip of the error icon not being wrapped. [#3626](https://github.com/BornToBeRoot/NETworkManager/pull/3626)
 - Fixed the ping not working when the ICMP **Buffer** was set to more than `65500` bytes (Windows limit). The maximum is now `65500`, higher values are lowered to `65500`. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Fixed hosts being added twice if the inputs overlap (e.g. `10.0.0.1; 10.0.0.0/24`). If an IP address is also entered as hostname, the hostname is kept; different hostnames of the same IP address (e.g. two names of one server) are all kept. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
+- Fixed **Copy** > **Hostname** copying a hostname resolved via DNS (`PTR`) with a trailing dot (e.g. `server.example.com.`). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Traceroute**
 
 - Fixed the trace not working when the ICMP **Buffer** was set to more than `65500` bytes (Windows limit). The maximum is now `65500`, higher values are lowered to `65500`. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
+- Fixed hostnames of the hops resolved via DNS (`PTR`) being shown with a trailing dot (e.g. `server.example.com.`), also in the export and when opened in another feature (e.g. **RDAP**). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Network Interface**
 
@@ -164,6 +166,7 @@ Release date: **xx.xx.2026**
 **Connections**
 
 - Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
+- Fixed the hostname of the remote address (DNS `PTR`) being shown with a trailing dot (e.g. `server.example.com.`), also in the export. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Listeners**
 
@@ -185,6 +188,7 @@ Release date: **xx.xx.2026**
 - Fixed the DNS status (Computer/Router/Internet) in the **Network Connection** widget showing as an error when no PTR record exists for the address, which is common and expected for private IP ranges. This is now shown as informational instead of critical. [#3553](https://github.com/BornToBeRoot/NETworkManager/pull/3553)
 - Fixed a race condition in the **Network Connection** widget where results from a superseded check could overwrite the results of a newer, still-running check after quickly reopening the widget. [#3553](https://github.com/BornToBeRoot/NETworkManager/pull/3553)
 - Fixed the Status Window closing by itself after being opened from the tray icon (or with the hotkey), if it was opened automatically on a network change shortly before. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
+- Fixed the DNS hostname (`PTR`) in the **Network Connection** widget being shown with a trailing dot (e.g. `router.example.com.`). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **DNS Lookup**
 

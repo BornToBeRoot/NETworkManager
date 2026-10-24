@@ -105,7 +105,7 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
     /// otherwise the IP address as a fallback.
     /// </summary>
     private string NotificationHostDisplay =>
-        string.IsNullOrEmpty(Hostname) ? IPAddress.ToString() : Hostname.TrimEnd('.');
+        string.IsNullOrEmpty(Hostname) ? IPAddress.ToString() : Hostname;
 
     /// <summary>
     /// Gets the hostname of the monitored host.
@@ -802,7 +802,7 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
     {
         // Update title if name was not set in the constructor
         if (string.IsNullOrEmpty(Hostname))
-            Title = $"{e.Hostname.TrimEnd('.')} # {IPAddress}";
+            Title = $"{e.Hostname} # {IPAddress}";
 
         Hostname = e.Hostname;
     }

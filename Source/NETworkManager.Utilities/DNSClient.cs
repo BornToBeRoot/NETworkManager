@@ -220,7 +220,7 @@ public class DNSClient : SingletonBase<DNSClient>
     ///     Resolve a PTR for an IP address.
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
-    /// <returns>PTR domain name.</returns>
+    /// <returns>PTR domain name without the trailing dot (e.g. "server.example.com").</returns>
     public async Task<DNSClientResultString> ResolvePtrAsync(IPAddress ipAddress)
     {
         if (!_isConfigured)
@@ -246,8 +246,10 @@ public class DNSClient : SingletonBase<DNSClient>
             // Validate result because of https://github.com/BornToBeRoot/NETworkManager/issues/1934
             var record = result.Answers.PtrRecords().FirstOrDefault();
 
+            // The PTR domain name is fully qualified (trailing dot) - trimmed once here for every tool (grid,
+            // export, copy and when opened in another tool)
             return record != null
-                ? new DNSClientResultString(record.PtrDomainName, $"{result.NameServer}")
+                ? new DNSClientResultString(record.PtrDomainName.Value.TrimEnd('.'), $"{result.NameServer}")
                 : new DNSClientResultString(true,
                     $"PTR for \"{ipAddress}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} -x {ipAddress}",
                     $"{result.NameServer}")

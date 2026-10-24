@@ -177,8 +177,7 @@ public sealed class PortScanner
         var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddress)
             .WaitAsync(cancellationToken).ConfigureAwait(false);
 
-        // The PTR record is fully qualified (trailing dot) - trim it once for the grid, export and other tools
-        return dnsResult.HasError ? string.Empty : dnsResult.Value.TrimEnd('.');
+        return dnsResult.HasError ? string.Empty : dnsResult.Value;
     }
 
     private void IncreaseProgress()
