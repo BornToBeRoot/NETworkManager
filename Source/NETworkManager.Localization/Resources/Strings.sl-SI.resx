@@ -4938,7 +4938,7 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
     <value>Esc</value>
   </data>
   <data name="RunCommandWatermark1" xml:space="preserve">
-    <value>Ping it, trace it, scan it...</value>
+    <value>It's always DNS. Until it's not.</value>
   </data>
   <data name="RunCommandWatermark2" xml:space="preserve">
     <value>Got an IP address? Drop it here...</value>
@@ -4950,7 +4950,7 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
     <value>Every tool, one line away...</value>
   </data>
   <data name="RunCommandWatermark5" xml:space="preserve">
-    <value>Something down? Let's check it...</value>
+    <value>Something down? Let's investigate...</value>
   </data>
   <data name="RunCommandWatermark6" xml:space="preserve">
     <value>Is it DNS? It's always DNS...</value>
@@ -4993,5 +4993,72 @@ Cloudflare may log your IP address and network information. See Cloudflare's pri
   </data>
   <data name="PortProfile" xml:space="preserve">
     <value>Port profile</value>
+  </data>
+  <data name="ScanManyIPAddressesMessage" xml:space="preserve">
+    <value>{0} IP addresses will be scanned. This can take a long time and needs a lot of memory.
+
+Do you want to start the scan?</value>
+  </data>
+  <data name="ScanTooManyIPAddressesMessage" xml:space="preserve">
+    <value>{0} IP addresses cannot be scanned at once (maximum {1}). Split the input into smaller ranges.</value>
+  </data>
+  <data name="ScanManyPortsMessage" xml:space="preserve">
+    <value>{0} ports will be scanned ({1} hosts × {2} ports). This can take a long time and needs a lot of memory.
+
+Do you want to start the scan?</value>
+  </data>
+  <data name="ScanTooManyPortsMessage" xml:space="preserve">
+    <value>{0} ports cannot be scanned at once ({1} hosts × {2} ports, maximum {3}). Split the input into fewer hosts or ports.</value>
+  </data>
+  <data name="RunCommandWatermark19" xml:space="preserve">
+    <value>Can you reach it, or just ping it?</value>
+  </data>
+  <data name="RunCommandWatermark20" xml:space="preserve">
+    <value>The network is down. Your coffee isn't.</value>
+  </data>
+  <data name="RunCommandWatermark21" xml:space="preserve">
+    <value>Every timeout has a story.</value>
+  </data>
+  <data name="RunCommandWatermark22" xml:space="preserve">
+    <value>Your network tools, at your fingertips.</value>
+  </data>
+  <data name="RunCommandWatermark23" xml:space="preserve">
+    <value>No route to sanity.</value>
+  </data>
+  <data name="RunCommandWatermark24" xml:space="preserve">
+    <value>The firewall says no.</value>
+  </data>
+  <data name="RunCommandWatermark25" xml:space="preserve">
+    <value>One command closer to "it's working".</value>
+  </data>
+  <data name="RunCommandWatermark26" xml:space="preserve">
+    <value>Commands are faster than mouse adventures.</value>
+  </data>
+  <data name="RunCommandWatermark27" xml:space="preserve">
+    <value>Packets don't lie. Monitoring sometimes does.</value>
+  </data>
+  <data name="RunCommandWatermark28" xml:space="preserve">
+    <value>First, establish whether it's actually broken.</value>
+  </data>
+  <data name="RunCommandWatermark29" xml:space="preserve">
+    <value>It's not a bug. It's packet loss.</value>
+  </data>
+  <data name="RunCommandWatermark30" xml:space="preserve">
+    <value>There is no cloud. Just someone else's network.</value>
+  </data>
+  <data name="RunCommandWatermark31" xml:space="preserve">
+    <value>It's a feature. Probably.</value>
+  </data>
+  <data name="RunCommandWatermark32" xml:space="preserve">
+    <value>Trust, but verify with ping.</value>
+  </data>
+  <data name="RunCommandWatermark33" xml:space="preserve">
+    <value>The packets know what they did.</value>
+  </data>
+  <data name="RunCommandWatermark34" xml:space="preserve">
+    <value>Have you checked the obvious?</value>
+  </data>
+  <data name="RunCommandWatermark35" xml:space="preserve">
+    <value>If it resolves, it exists. If it doesn't, clear the cache.</value>
   </data>
 </root>

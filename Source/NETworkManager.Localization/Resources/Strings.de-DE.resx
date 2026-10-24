@@ -4948,7 +4948,7 @@ Cloudflare speichert möglicherweise Ihre IP-Adresse und Netzwerkinformationen. 
     <value>Esc</value>
   </data>
   <data name="RunCommandWatermark1" xml:space="preserve">
-    <value>Pingen, tracen, scannen...</value>
+    <value>Es ist immer DNS. Bis es das mal nicht ist.</value>
   </data>
   <data name="RunCommandWatermark2" xml:space="preserve">
     <value>IP-Adresse zur Hand? Einfach hier eingeben...</value>
@@ -4960,7 +4960,7 @@ Cloudflare speichert möglicherweise Ihre IP-Adresse und Netzwerkinformationen. 
     <value>Jedes Tool – nur eine Zeile entfernt...</value>
   </data>
   <data name="RunCommandWatermark5" xml:space="preserve">
-    <value>Etwas ausgefallen? Schauen wir mal nach...</value>
+    <value>Irgendwas down? Finden wir's raus...</value>
   </data>
   <data name="RunCommandWatermark6" xml:space="preserve">
     <value>Ist es DNS? Es ist immer DNS...</value>
@@ -4975,7 +4975,7 @@ Cloudflare speichert möglicherweise Ihre IP-Adresse und Netzwerkinformationen. 
     <value>Bereit, wenn das Netzwerk es nicht ist...</value>
   </data>
   <data name="RunCommandWatermark10" xml:space="preserve">
-    <value>Vor dem Neustart erst mal pingen...</value>
+    <value>Erst pingen, dann neu starten...</value>
   </data>
   <data name="RunCommandWatermark11" xml:space="preserve">
     <value>Pingen, tracen, fixen...</value>
@@ -4984,7 +4984,7 @@ Cloudflare speichert möglicherweise Ihre IP-Adresse und Netzwerkinformationen. 
     <value>Ist es erreichbar? Finden wir es heraus...</value>
   </data>
   <data name="RunCommandWatermark13" xml:space="preserve">
-    <value>Verbindung gefällig? Einfach den Host eingeben...</value>
+    <value>Verbinden? Einfach den Host eingeben...</value>
   </data>
   <data name="RunCommandWatermark14" xml:space="preserve">
     <value>Es liegt nicht am Netzwerk. Vermutlich...</value>
@@ -4993,7 +4993,7 @@ Cloudflare speichert möglicherweise Ihre IP-Adresse und Netzwerkinformationen. 
     <value>Erst pingen, dann der Firewall die Schuld geben...</value>
   </data>
   <data name="RunCommandWatermark16" xml:space="preserve">
-    <value>Gestern ging's noch? Schauen wir mal nach...</value>
+    <value>Auf meinem Rechner geht's. Auf deinem auch?</value>
   </data>
   <data name="RunCommandWatermark17" xml:space="preserve">
     <value>Irgendwo zwischen hier und dort ist ein Paket verloren gegangen...</value>
@@ -5003,5 +5003,72 @@ Cloudflare speichert möglicherweise Ihre IP-Adresse und Netzwerkinformationen. 
   </data>
   <data name="PortProfile" xml:space="preserve">
     <value>Port-Profil</value>
+  </data>
+  <data name="ScanManyIPAddressesMessage" xml:space="preserve">
+    <value>Es werden {0} IP-Adressen gescannt. Dies kann längere Zeit dauern und benötigt viel Arbeitsspeicher.
+
+Scan starten?</value>
+  </data>
+  <data name="ScanTooManyIPAddressesMessage" xml:space="preserve">
+    <value>Es können nicht mehr als {1} IP-Adressen gleichzeitig gescannt werden (angegeben: {0}). Den Eingabebereich in kleinere Bereiche aufteilen.</value>
+  </data>
+  <data name="ScanManyPortsMessage" xml:space="preserve">
+    <value>{0} Ports werden gescannt ({1} Hosts × {2} Ports). Dies kann längere Zeit dauern und benötigt viel Arbeitsspeicher.
+
+Scan starten?</value>
+  </data>
+  <data name="ScanTooManyPortsMessage" xml:space="preserve">
+    <value>Es können nicht mehr als {3} Ports gleichzeitig gescannt werden ({1} Hosts × {2} Ports = {0}). Die Eingabe auf weniger Hosts oder Ports aufteilen.</value>
+  </data>
+  <data name="RunCommandWatermark19" xml:space="preserve">
+    <value>Erreichbar oder nur pingbar?</value>
+  </data>
+  <data name="RunCommandWatermark20" xml:space="preserve">
+    <value>Das Netzwerk ist down. Der Kaffee nicht.</value>
+  </data>
+  <data name="RunCommandWatermark21" xml:space="preserve">
+    <value>Jedes Timeout hat eine Geschichte.</value>
+  </data>
+  <data name="RunCommandWatermark22" xml:space="preserve">
+    <value>Deine Netzwerktools direkt zur Hand.</value>
+  </data>
+  <data name="RunCommandWatermark23" xml:space="preserve">
+    <value>Keine Route zur Vernunft.</value>
+  </data>
+  <data name="RunCommandWatermark24" xml:space="preserve">
+    <value>Die Firewall sagt Nein.</value>
+  </data>
+  <data name="RunCommandWatermark25" xml:space="preserve">
+    <value>Ein Befehl näher an „Es geht wieder“.</value>
+  </data>
+  <data name="RunCommandWatermark26" xml:space="preserve">
+    <value>Befehle sind schneller als Maus-Expeditionen.</value>
+  </data>
+  <data name="RunCommandWatermark27" xml:space="preserve">
+    <value>Pakete lügen nicht. Monitoring manchmal schon.</value>
+  </data>
+  <data name="RunCommandWatermark28" xml:space="preserve">
+    <value>Erst mal prüfen, ob es wirklich kaputt ist.</value>
+  </data>
+  <data name="RunCommandWatermark29" xml:space="preserve">
+    <value>Kein Bug. Paketverlust.</value>
+  </data>
+  <data name="RunCommandWatermark30" xml:space="preserve">
+    <value>Es gibt keine Cloud. Nur das Netzwerk von jemand anderem.</value>
+  </data>
+  <data name="RunCommandWatermark31" xml:space="preserve">
+    <value>Das ist ein Feature. Vermutlich.</value>
+  </data>
+  <data name="RunCommandWatermark32" xml:space="preserve">
+    <value>Vertrauen ist gut, Pingen ist besser.</value>
+  </data>
+  <data name="RunCommandWatermark33" xml:space="preserve">
+    <value>Die Pakete wissen, was sie getan haben.</value>
+  </data>
+  <data name="RunCommandWatermark34" xml:space="preserve">
+    <value>Schon das Naheliegende geprüft?</value>
+  </data>
+  <data name="RunCommandWatermark35" xml:space="preserve">
+    <value>Wenn es aufgelöst wird, existiert es. Sonst: Cache leeren.</value>
   </data>
 </root>
