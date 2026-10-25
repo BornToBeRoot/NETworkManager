@@ -130,7 +130,6 @@ public static partial class ExportManager
                             new XElement(nameof(IPScannerHostInfo.IsReachable), info.IsReachable),
                             new XElement(nameof(PingInfo.IPAddress), info.PingInfo.IPAddress),
                             new XElement(nameof(IPScannerHostInfo.Hostname), info.Hostname),
-                            new XElement(nameof(IPScannerHostInfo.DNSHostname), info.DNSHostname),
                             new XElement("PingStatus", info.PingInfo.Status),
                             new XElement(nameof(PingInfo.Timestamp),
                                 DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)),
@@ -156,7 +155,9 @@ public static partial class ExportManager
                             new XElement("NetBIOSMACAddress", info.NetBIOSInfo?.MACAddress),
                             new XElement("NetBIOSVendor", info.NetBIOSInfo?.Vendor),
                             new XElement(nameof(IPScannerHostInfo.MACAddress), info.MACAddress),
-                            new XElement(nameof(IPScannerHostInfo.Vendor), info.Vendor)
+                            new XElement(nameof(IPScannerHostInfo.Vendor), info.Vendor),
+                            // Added later - last element, so the position of the other elements doesn't change
+                            new XElement(nameof(IPScannerHostInfo.DNSHostname), info.DNSHostname)
                         )
                 )
             )
@@ -203,12 +204,12 @@ public static partial class ExportManager
                 info.IsReachable,
                 IPAddress = info.PingInfo.IPAddress.ToString(),
                 info.Hostname,
-                info.DNSHostname,
                 PingStatus = info.PingInfo.Status.ToString(),
                 Timestamp = DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp),
                 Time = Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true),
                 info.PingInfo.TTL,
                 info.PingInfo.Bytes,
+                info.DNSHostname,
                 PortStatus = info.IsAnyPortOpen ? PortState.Open.ToString() : PortState.Closed.ToString(),
                 Ports = jsonDataPorts,
                 NetBIOSIsReachable = info.NetBIOSInfo?.IsReachable,
