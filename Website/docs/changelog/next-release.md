@@ -71,6 +71,7 @@ Release date: **xx.xx.2026**
 - **Resolve MAC address and vendor** is enabled by default for new installations (as documented). [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - The export runs in the background, so the window stays responsive while a large result is exported, and uses the order shown in the result (sorting) instead of the order in which the hosts were scanned. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - The DNS hostname and the MAC address of a host are resolved at the same time instead of one after the other. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- New **Expand host view** setting to show the details of every host in the result (also hosts added while the scan is running), like in the **Ping Monitor**. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - The up / down counter next to the **Result** header is translated as one text, so translations can put the number in a different position. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - **Rescan** in the context menu scans the selected host(s) again with the settings of the shown scan and updates their rows, e.g. to check if a host is up again. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Added **Web Console** (https / http depending on the open ports) and **Wake on LAN** (with the MAC address) to the context menu. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)

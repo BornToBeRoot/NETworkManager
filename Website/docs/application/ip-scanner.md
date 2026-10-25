@@ -91,6 +91,8 @@ Only reachable hosts are shown, unless [Show unreachable IP addresses and ports]
 
 The search box right of the **Result** header filters the results by IP address, hostname, MAC address, vendor and open ports (number or service), also while the scan is running (hosts whose hostname or MAC address arrives later are filtered again). **Export...** > all exports the filtered results; the up / down counters always count all hosts.
 
+Expand a row with the button in front of it to see its details, or enable [Expand host view](#expand-host-view) to expand all hosts.
+
 The **Time** column shows the round trip time of the ping reply (`-/-` without a reply); sorted by time, hosts without a reply are always at the end.
 
 The columns (e.g. **Hostname**, **Port status**, **MAC address**) and the row details are shown according to the settings the scan was started with. Settings changed afterwards apply to the next scan.
@@ -143,6 +145,14 @@ See also the [IP Scanner](./ip-scanner) example inputs for more information abou
 ### Show unreachable IP addresses and ports
 
 Show the scan result for all IP addresses and ports including the ones that are not active.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+### Expand host view
+
+Show the details (ping, ports, NetBIOS) of every host in the result, also of hosts that are added while the scan is running. A host that was expanded or collapsed with the button in front of the row keeps its state. Applies immediately.
 
 **Type:** `Boolean`
 

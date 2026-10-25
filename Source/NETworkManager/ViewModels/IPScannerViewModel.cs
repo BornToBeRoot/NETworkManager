@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -352,6 +353,15 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             OnPropertyChanged();
         }
     }
+
+    /// <summary>
+    /// Gets whether the details of every host are shown (setting <see cref="SettingsInfo.IPScanner_ExpandHostView"/>,
+    /// follows the current setting). A row that was expanded / collapsed with its button keeps its state.
+    /// </summary>
+    public DataGridRowDetailsVisibilityMode HostDetailsVisibilityMode =>
+        SettingsManager.Current.IPScanner_ExpandHostView
+            ? DataGridRowDetailsVisibilityMode.Visible
+            : DataGridRowDetailsVisibilityMode.Collapsed;
 
     /// <summary>
     /// Gets the available custom commands for the IP Scanner.
@@ -1178,6 +1188,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
+        if (e.PropertyName == nameof(SettingsInfo.IPScanner_ExpandHostView))
+            OnPropertyChanged(nameof(HostDetailsVisibilityMode));
+
         UpdateScanOptionsIfNoResults();
     }
 

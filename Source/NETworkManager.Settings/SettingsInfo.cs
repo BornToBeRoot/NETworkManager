@@ -1207,6 +1207,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    public bool IPScanner_ExpandHostView
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_ExpandHostView;
+
     public int IPScanner_ICMPTimeout
     {
         get;

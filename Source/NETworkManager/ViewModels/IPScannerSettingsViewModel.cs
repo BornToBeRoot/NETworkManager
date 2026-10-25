@@ -44,6 +44,25 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the details of every host are expanded in the result.
+    /// </summary>
+    public bool ExpandHostView
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_ExpandHostView = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets the number of ICMP attempts.
     /// </summary>
     public int ICMPAttempts
@@ -337,6 +356,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     private void LoadSettings()
     {
         ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults;
+        ExpandHostView = SettingsManager.Current.IPScanner_ExpandHostView;
         ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts;
         ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout;
         ICMPBuffer = SettingsManager.Current.IPScanner_ICMPBuffer;
