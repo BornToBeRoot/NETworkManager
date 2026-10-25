@@ -275,6 +275,7 @@ Release date: **xx.xx.2026**
 - Fixed the **Hostname** column and **Copy** > **Hostname** being shown or hidden according to the current settings instead of the settings the shown scan was started with. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed hostnames resolved via DNS (`PTR`) being shown with a trailing dot (e.g. `server.example.com.`), also in the group header and the export. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the progress and the open / closed counters possibly staying below the final values (e.g. 1023 of 1024 ports scanned) when the results of several ports arrived at the same time. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed `Enter` in the search box of the port profiles dialog closing the dialog with **OK**. It only filters the port profiles now. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **IP Geolocation**
 
