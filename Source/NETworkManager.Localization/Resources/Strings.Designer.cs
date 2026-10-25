@@ -11166,6 +11166,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rescan.
+        /// </summary>
+        public static string Rescan {
+            get {
+                return ResourceManager.GetString("Rescan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
         public static string Reset {

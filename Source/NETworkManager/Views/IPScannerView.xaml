@@ -276,6 +276,18 @@
             <controls:MultiSelectDataGrid.Resources>
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                    <MenuItem Header="{x:Static localization:Strings.Rescan}"
+                              Command="{Binding RescanSelectedHostsCommand}"
+                              IsEnabled="{Binding Path=Data.(viewModels:IPScannerViewModel.IsRunning), Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseConverter}}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
                     <MenuItem Header="{x:Static localization:Strings.PortScanner}"
                               Command="{Binding RedirectDataToApplicationCommand}"
                               CommandParameter="{x:Static models:ApplicationName.PortScanner}">
@@ -562,6 +574,18 @@
                     </MenuItem>
                 </ContextMenu>
                 <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                    <MenuItem Header="{x:Static localization:Strings.Rescan}"
+                              Command="{Binding RescanSelectedHostsCommand}"
+                              IsEnabled="{Binding Path=Data.(viewModels:IPScannerViewModel.IsRunning), Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseConverter}}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
                     <MenuItem Header="{x:Static localization:Strings.CopyDots}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">

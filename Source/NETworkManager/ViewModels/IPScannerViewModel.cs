@@ -54,6 +54,19 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // Scanner of the running scan - events of another (finished) scanner are ignored
     private IPScanner _ipScanner;
 
+    // Options of the last scan, to rescan hosts with the same options (the columns follow them, see ScanOptions)
+    private IPScannerOptions _lastScanOptions;
+
+    // Rescan of shown hosts (see RescanSelectedHosts), null if no rescan is running: rows per rescanned IP address.
+    // The scanner creates new results - their values are copied into the existing rows (selection and expanded
+    // details stay), the updates of a new result are applied to the rows it was copied to (_rescanResults).
+    private Dictionary<IPAddress, List<IPScannerHostInfo>> _rescanRows;
+    private readonly Dictionary<IPScannerHostInfo, List<IPScannerHostInfo>> _rescanResults = [];
+
+    // Counters of the last scan, restored after a rescan (the rescan shows its own progress)
+    private int _rescanHostsToScan;
+    private int _rescanHostsScanned;
+
     // Same reasoning as the results buffer above - ProgressChanged fires once per host
     // (unconditionally, unlike HostFound), so it's flushed to the bound property on the same
     // timer instead of updating it directly from the background thread on every event.
@@ -625,6 +638,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Gets the command to rescan the selected hosts (with the options of the last scan).
+    /// </summary>
+    public ICommand RescanSelectedHostsCommand => new RelayCommand(_ => RescanSelectedHosts());
+
+    /// <summary>
     /// Gets the command to export the scan results.
     /// </summary>
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
@@ -761,6 +779,62 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         ScanOptions = new IPScannerResultOptions(scanOptions);
 
+        _lastScanOptions = scanOptions;
+
+        StartScanner(scanOptions, hosts.hosts);
+    }
+
+    /// <summary>
+    /// Rescans the selected hosts with the options of the last scan. The rows are updated in place (all rows with
+    /// the IP address of a selected row); a host that is unreachable now is shown as down.
+    /// </summary>
+    private void RescanSelectedHosts()
+    {
+        if (IsRunning || _lastScanOptions == null)
+            return;
+
+        var selectedIPAddresses = GetSelectedResultsInGridOrder().Select(x => x.IPAddress).ToHashSet();
+
+        if (selectedIPAddresses.Count == 0)
+            return;
+
+        _rescanRows = Results.Where(x => selectedIPAddresses.Contains(x.IPAddress))
+            .GroupBy(x => x.IPAddress)
+            .ToDictionary(x => x.Key, x => x.ToList());
+
+        _rescanResults.Clear();
+
+        _rescanHostsToScan = HostsToScan;
+        _rescanHostsScanned = HostsScanned;
+
+        IsStatusMessageDisplayed = false;
+        IsRunning = true;
+
+        _resultsFlushTimer?.Stop();
+
+        lock (_resultsBufferLock)
+        {
+            _resultsBuffer.Clear();
+        }
+
+        HostsToScan = _rescanRows.Count;
+        HostsScanned = 0;
+        Volatile.Write(ref _latestHostsScanned, 0);
+
+        _cancellationTokenSource?.Dispose();
+        _cancellationTokenSource = new CancellationTokenSource();
+
+        // Same options (columns, ports), but every host is reported - also if it is unreachable now
+        StartScanner(CreateRescanOptions(_lastScanOptions), [.. _rescanRows.Keys.Select(x => (x, string.Empty))]);
+    }
+
+    /// <summary>
+    /// Creates the scanner, subscribes to its events, starts the flush timer and the scan.
+    /// </summary>
+    /// <param name="scanOptions">Options of the scan.</param>
+    /// <param name="hosts">Hosts to scan.</param>
+    private void StartScanner(IPScannerOptions scanOptions, List<(IPAddress ipAddress, string hostname)> hosts)
+    {
         var ipScanner = new IPScanner(scanOptions);
 
         _ipScanner = ipScanner;
@@ -781,7 +855,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         };
         _resultsFlushTimer.Start();
 
-        ipScanner.ScanAsync(hosts.hosts, _cancellationTokenSource.Token);
+        ipScanner.ScanAsync(hosts, _cancellationTokenSource.Token);
     }
 
     /// <summary>
@@ -806,7 +880,36 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             NetBIOSEnabled = SettingsManager.Current.IPScanner_NetBIOSEnabled,
             NetBIOSTimeout = SettingsManager.Current.IPScanner_NetBIOSTimeout,
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
-            ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults
+            ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults,
+            ReportAllHosts = false
+        };
+    }
+
+    /// <summary>
+    /// Creates the options for a rescan: the options of the last scan, every host is reported (also if it is
+    /// unreachable now, so its row is updated).
+    /// </summary>
+    /// <param name="options">Options of the last scan.</param>
+    /// <returns>Options for the rescan.</returns>
+    private static IPScannerOptions CreateRescanOptions(IPScannerOptions options)
+    {
+        return new IPScannerOptions
+        {
+            MaxHostThreads = options.MaxHostThreads,
+            MaxPortThreads = options.MaxPortThreads,
+            ICMPAttempts = options.ICMPAttempts,
+            ICMPTimeout = options.ICMPTimeout,
+            ICMPBuffer = options.ICMPBuffer,
+            ResolveHostname = options.ResolveHostname,
+            PortScanEnabled = options.PortScanEnabled,
+            PortScanPorts = options.PortScanPorts,
+            PortScanTimeout = options.PortScanTimeout,
+            PortScanAttempts = options.PortScanAttempts,
+            NetBIOSEnabled = options.NetBIOSEnabled,
+            NetBIOSTimeout = options.NetBIOSTimeout,
+            ResolveMACAddress = options.ResolveMACAddress,
+            ShowAllResults = options.ShowAllResults,
+            ReportAllHosts = true
         };
     }
 
@@ -1156,11 +1259,41 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         foreach (var (host, update) in items)
         {
-            if (update == null)
+            if (_rescanRows != null)
+                ApplyRescanResult(host, update);
+            else if (update == null)
                 Results.Add(host);
             else
                 update.Apply();
         }
+    }
+
+    /// <summary>
+    /// Applies a buffered result of a rescan to the existing rows: a found host is copied into the rows of its IP
+    /// address, its updates are applied to these rows.
+    /// </summary>
+    /// <param name="host">Result of the rescan.</param>
+    /// <param name="update">Update of the result, null if the host was found.</param>
+    private void ApplyRescanResult(IPScannerHostInfo host, IPScannerHostUpdatedArgs update)
+    {
+        if (update == null)
+        {
+            if (!_rescanRows.TryGetValue(host.IPAddress, out var rows))
+                return;
+
+            foreach (var row in rows)
+                row.CopyFrom(host);
+
+            _rescanResults[host] = rows;
+
+            return;
+        }
+
+        if (!_rescanResults.TryGetValue(update.Host, out var targets))
+            return;
+
+        foreach (var row in targets)
+            update.ApplyTo(row);
     }
 
     /// <summary>
@@ -1197,6 +1330,17 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private void FlushProgress()
     {
         HostsScanned = Volatile.Read(ref _latestHostsScanned);
+
+        // Rescan: the counters of the scanner only cover the rescanned hosts - count the shown rows instead (every
+        // reachable host is shown), unreachable = all scanned hosts of the last scan minus the reachable ones
+        if (_rescanRows != null)
+        {
+            HostsUp = Results.Count(x => x.IsReachable);
+            HostsDown = _rescanHostsScanned - HostsUp;
+
+            return;
+        }
+
         HostsUp = Volatile.Read(ref _latestHostsUp);
         HostsDown = Volatile.Read(ref _latestHostsDown);
     }
@@ -1221,6 +1365,16 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 StoreProgress(finishedScanner);
 
             FlushProgress();
+
+            // Rescan: back to the progress of the last scan
+            if (_rescanRows != null)
+            {
+                _rescanRows = null;
+                _rescanResults.Clear();
+
+                HostsToScan = _rescanHostsToScan;
+                HostsScanned = _rescanHostsScanned;
+            }
 
             if (sender is IPScanner ipScanner)
             {

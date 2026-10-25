@@ -74,4 +74,10 @@ public class IPScannerOptions
     ///     Include unreachable IP addresses in the result.
     /// </summary>
     public required bool ShowAllResults { get; init; }
+
+    /// <summary>
+    ///     Raise every host in <see cref="IPScanner.HostFound" />, also unreachable ones (e.g. for a rescan of shown
+    ///     hosts), without showing all ports like <see cref="ShowAllResults" />.
+    /// </summary>
+    public required bool ReportAllHosts { get; init; }
 }

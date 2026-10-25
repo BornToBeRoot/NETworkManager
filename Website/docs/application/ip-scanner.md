@@ -65,6 +65,7 @@ Right-clicking a result allows forwarding device information to another tool (e.
 
 | Action                                                                            | Description                                                                                                   |
 | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| **Rescan**                                                                        | Scans the selected host(s) again with the settings of the shown scan and updates their rows (a host that is unreachable now is shown as down). Not available while a scan is running |
 | **Port Scanner** / **Ping Monitor** / **Traceroute**                              | Opens the host (DNS hostname if resolved, otherwise the IP address) in the tool                              |
 | **DNS lookup...** > **IP address** / **Hostname**                                 | Looks up the IP address (`PTR`) or the DNS hostname in [DNS Lookup](./dns-lookup)                             |
 | **RDAP...** > **IP address** / **Hostname**                                       | Queries the registration data of the IP address or the registered domain of the DNS hostname in [RDAP](./rdap) |
@@ -78,7 +79,7 @@ Right-clicking a result allows forwarding device information to another tool (e.
 
 A NetBIOS name (shown as hostname if there is no DNS hostname) is not passed to other tools, because it may not be resolvable via DNS - the IP address is used instead. **DNS lookup...** / **RDAP...** > **Hostname** are only available with a DNS hostname. In [custom commands](#custom-commands), `{{Hostname}}` is the shown hostname (DNS or NetBIOS).
 
-If multiple results are selected, **Copy** > **IP address** / **Hostname** / **MAC address** (one value per line, in the order shown, without duplicates) and **Export...** are available.
+If multiple results are selected, **Rescan**, **Copy** > **IP address** / **Hostname** / **MAC address** (one value per line, in the order shown, without duplicates) and **Export...** are available.
 
 ### Result
 

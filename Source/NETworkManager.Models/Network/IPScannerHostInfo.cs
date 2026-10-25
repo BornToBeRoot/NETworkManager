@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
@@ -15,20 +16,28 @@ public class IPScannerHostInfo : PropertyChangedBase
     /// <summary>
     ///     Creates a new instance of <see cref="IPScannerHostInfo" /> with the results of the discovery.
     /// </summary>
+    /// <param name="ipAddress">Scanned IP address.</param>
     /// <param name="isReachable">Indicates whether the host is reachable.</param>
     /// <param name="pingInfo">Information about the ping to the host.</param>
     /// <param name="isAnyPortOpen">Indicates whether any port is open.</param>
     /// <param name="ports">List of ports to show (open ports, all ports if unreachable ones are shown).</param>
     /// <param name="netBIOSInfo">NetBIOS information about the host.</param>
-    public IPScannerHostInfo(bool isReachable, PingInfo pingInfo, bool isAnyPortOpen, List<PortInfo> ports,
-        NetBIOSInfo netBIOSInfo)
+    public IPScannerHostInfo(IPAddress ipAddress, bool isReachable, PingInfo pingInfo, bool isAnyPortOpen,
+        List<PortInfo> ports, NetBIOSInfo netBIOSInfo)
     {
+        IPAddress = ipAddress;
         IsReachable = isReachable;
         PingInfo = pingInfo;
         IsAnyPortOpen = isAnyPortOpen;
         Ports = ports;
         NetBIOSInfo = netBIOSInfo;
     }
+
+    /// <summary>
+    ///     Scanned IP address (input of the scan, e.g. with the IPv6 scope id). <see cref="PingInfo" /> contains the
+    ///     address of the ping reply.
+    /// </summary>
+    public IPAddress IPAddress { get; }
 
     /// <summary>
     ///     Indicates whether the host is reachable.
@@ -237,13 +246,33 @@ public class IPScannerHostInfo : PropertyChangedBase
         : NetBIOSInfo?.Vendor ?? string.Empty;
 
     /// <summary>
+    ///     Takes over all values of another result of the same host (e.g. a rescan), so the shown row keeps its
+    ///     identity (selection, expanded details). Call it on the thread that owns the host (UI thread).
+    /// </summary>
+    /// <param name="source">New result of the host.</param>
+    public void CopyFrom(IPScannerHostInfo source)
+    {
+        IsReachable = source.IsReachable;
+        PingInfo = source.PingInfo;
+        IsAnyPortOpen = source.IsAnyPortOpen;
+        Ports = source.Ports;
+        NetBIOSInfo = source.NetBIOSInfo;
+        IsPingPending = source.IsPingPending;
+        IsPortScanPending = source.IsPortScanPending;
+        IsNetBIOSPending = source.IsNetBIOSPending;
+        DNSHostname = source.DNSHostname;
+        NeighborMACAddress = source.NeighborMACAddress;
+        NeighborVendor = source.NeighborVendor;
+    }
+
+    /// <summary>
     ///     Creates a copy with the current values, e.g. for an export in the background while the scan still updates
     ///     the host. Call it on the thread that applies the updates (UI thread).
     /// </summary>
     /// <returns>Copy of the host information (without event subscribers).</returns>
     public IPScannerHostInfo Clone()
     {
-        return new IPScannerHostInfo(IsReachable, PingInfo, IsAnyPortOpen, Ports, NetBIOSInfo)
+        return new IPScannerHostInfo(IPAddress, IsReachable, PingInfo, IsAnyPortOpen, Ports, NetBIOSInfo)
         {
             IsPingPending = IsPingPending,
             IsPortScanPending = IsPortScanPending,

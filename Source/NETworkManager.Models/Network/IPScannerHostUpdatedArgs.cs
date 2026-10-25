@@ -24,4 +24,14 @@ public class IPScannerHostUpdatedArgs(IPScannerHostInfo host, Action<IPScannerHo
     {
         update(Host);
     }
+
+    /// <summary>
+    ///     Applies the update to another host with the same values (e.g. the shown result of a host that is rescanned,
+    ///     see <see cref="IPScannerHostInfo.CopyFrom" />). Call it on the thread that owns the host (UI thread).
+    /// </summary>
+    /// <param name="host">Host to update.</param>
+    public void ApplyTo(IPScannerHostInfo host)
+    {
+        update(host);
+    }
 }

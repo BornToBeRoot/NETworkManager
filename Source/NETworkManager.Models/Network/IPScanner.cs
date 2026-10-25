@@ -322,7 +322,7 @@ public sealed class IPScanner(IPScannerOptions options)
                 // reaching HostFound
                 _hostsDown.Increment();
 
-                if (options.ShowAllResults)
+                if (options.ShowAllResults || options.ReportAllHosts)
                 {
                     hostInfo = CreateHostInfo(ipAddress, false, pingInfo, ports, netBIOSInfo);
 
@@ -386,6 +386,7 @@ public sealed class IPScanner(IPScannerOptions options)
         List<PortInfo> ports, NetBIOSInfo netBIOSInfo)
     {
         return new IPScannerHostInfo(
+            ipAddress,
             isReachable,
             pingInfo ?? new PingInfo(DateTime.Now, ipAddress, IPStatus.Unknown),
             ports?.Any(x => x.State == PortState.Open) ?? false,

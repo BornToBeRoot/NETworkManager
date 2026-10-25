@@ -5071,4 +5071,7 @@ Do you want to start the scan?</value>
   <data name="RunCommandWatermark35" xml:space="preserve">
     <value>If it resolves, it exists. If it doesn't, clear the cache.</value>
   </data>
+  <data name="Rescan" xml:space="preserve">
+    <value>Rescan</value>
+  </data>
 </root>

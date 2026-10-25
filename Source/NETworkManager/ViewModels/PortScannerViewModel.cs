@@ -54,6 +54,18 @@ public class PortScannerViewModel : ViewModelBase
     private int _latestPortsOpen;
     private int _latestPortsClosed;
 
+    // Ports of the last scan, to rescan hosts with the same ports (and ScanOptions)
+    private int[] _lastPorts;
+
+    // Rescan of shown hosts (see RescanSelectedHosts): their rows are removed and added again by the rescan. The
+    // counters are the ones of the other hosts (base) plus the ones of the rescan; the progress of the last scan is
+    // restored afterwards.
+    private bool _isRescan;
+    private int _rescanBasePortsOpen;
+    private int _rescanBasePortsClosed;
+    private int _rescanPortsToScan;
+    private int _rescanPortsScanned;
+
     /// <summary>
     /// Gets or sets the host to scan.
     /// </summary>
@@ -484,6 +496,11 @@ public class PortScannerViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets the command to rescan the selected hosts (with the ports and options of the last scan).
+    /// </summary>
+    public ICommand RescanSelectedHostsCommand => new RelayCommand(_ => RescanSelectedHosts());
+
+    /// <summary>
     /// Gets the command to open the selected open web port in the Web Console.
     /// </summary>
     public ICommand OpenWebConsoleCommand => new RelayCommand(_ => OpenWebConsoleAction());
@@ -694,6 +711,69 @@ public class PortScannerViewModel : ViewModelBase
 
         ScanOptions = CreateScanOptions();
 
+        _lastPorts = ports;
+
+        StartScanner(hosts.hosts, ports);
+    }
+
+    /// <summary>
+    /// Rescans the selected hosts with the ports and options of the last scan. Their rows are replaced by the
+    /// results of the rescan (a port may be open / closed now).
+    /// </summary>
+    private void RescanSelectedHosts()
+    {
+        if (IsRunning || _lastPorts == null)
+            return;
+
+        var ipAddresses = GetSelectedResultsInGridOrder().Select(x => x.IPAddress).Distinct().ToList();
+
+        if (ipAddresses.Count == 0)
+            return;
+
+        var rescannedIPAddresses = ipAddresses.ToHashSet();
+
+        foreach (var row in Results.Where(x => rescannedIPAddresses.Contains(x.IPAddress)).ToList())
+            Results.Remove(row);
+
+        // Every host was scanned with all ports: the other hosts keep their counters
+        var rescanPortCount = ipAddresses.Count * _lastPorts.Length;
+
+        _rescanPortsToScan = PortsToScan;
+        _rescanPortsScanned = PortsScanned;
+        _rescanBasePortsOpen = Results.Count(x => x.State == PortState.Open);
+        _rescanBasePortsClosed = Math.Max(0, PortsScanned - rescanPortCount - _rescanBasePortsOpen);
+        _isRescan = true;
+
+        IsStatusMessageDisplayed = false;
+        IsRunning = true;
+
+        _resultsFlushTimer?.Stop();
+
+        lock (_resultsBufferLock)
+        {
+            _resultsBuffer.Clear();
+        }
+
+        PortsToScan = rescanPortCount;
+        PortsScanned = 0;
+        Volatile.Write(ref _latestPortsScanned, 0);
+        Volatile.Write(ref _latestPortsOpen, _rescanBasePortsOpen);
+        Volatile.Write(ref _latestPortsClosed, _rescanBasePortsClosed);
+
+        _cancellationTokenSource?.Dispose();
+        _cancellationTokenSource = new CancellationTokenSource();
+
+        StartScanner([.. ipAddresses.Select(x => (x, string.Empty))], _lastPorts);
+    }
+
+    /// <summary>
+    /// Creates the scanner (with <see cref="ScanOptions"/>), subscribes to its events, starts the flush timer and
+    /// the scan.
+    /// </summary>
+    /// <param name="hosts">Hosts to scan.</param>
+    /// <param name="ports">Ports to scan.</param>
+    private void StartScanner(List<(IPAddress ipAddress, string hostname)> hosts, int[] ports)
+    {
         var portScanner = new PortScanner(ScanOptions);
 
         portScanner.PortScanned += PortScanned;
@@ -711,7 +791,7 @@ public class PortScannerViewModel : ViewModelBase
         };
         _resultsFlushTimer.Start();
 
-        portScanner.ScanAsync(hosts.hosts, ports, _cancellationTokenSource.Token);
+        portScanner.ScanAsync(hosts, ports, _cancellationTokenSource.Token);
     }
 
     /// <summary>
@@ -898,8 +978,12 @@ public class PortScannerViewModel : ViewModelBase
     private void StoreProgress(PortScanner portScanner)
     {
         Volatile.Write(ref _latestPortsScanned, portScanner.PortsScanned);
-        Volatile.Write(ref _latestPortsOpen, portScanner.PortsOpen);
-        Volatile.Write(ref _latestPortsClosed, portScanner.PortsClosed);
+
+        // Rescan: the scanner only counts the rescanned hosts
+        var isRescan = Volatile.Read(ref _isRescan);
+
+        Volatile.Write(ref _latestPortsOpen, (isRescan ? _rescanBasePortsOpen : 0) + portScanner.PortsOpen);
+        Volatile.Write(ref _latestPortsClosed, (isRescan ? _rescanBasePortsClosed : 0) + portScanner.PortsClosed);
     }
 
     /// <summary>
@@ -940,6 +1024,15 @@ public class PortScannerViewModel : ViewModelBase
                 StoreProgress(finishedScanner);
 
             FlushProgress();
+
+            // Rescan: back to the progress of the last scan (open / closed include the rescan)
+            if (_isRescan)
+            {
+                _isRescan = false;
+
+                PortsToScan = _rescanPortsToScan;
+                PortsScanned = _rescanPortsScanned;
+            }
 
             if (e.IsCanceled)
             {

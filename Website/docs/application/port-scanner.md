@@ -66,11 +66,12 @@ A scan of more than `65,536` ports (hosts × ports, e.g. 64 hosts with `1-1024`)
 
 | Action          | Description                                                                                                    |
 | --------------- | -------------------------------------------------------------------------------------------------------------- |
+| **Rescan**      | Scans the selected host(s) again with the ports and settings of the shown scan and replaces their results. Not available while a scan is running |
 | **Web Console** | Opens the open web port (`80`, `443`, `8080`, `8443`) in the [Web Console](./web-console) (https for 443 / 8443) |
 | **Copy**        | Copies the selected information to the clipboard                                                               |
 | **Export...**   | Exports the selected or all results to a file                                                                  |
 
-If multiple results are selected, **Copy** > **IP address** / **Hostname** / **Port** / **IP address:Port** (one value per line, in the order shown, without duplicates; IPv6 as `[address]:port`) and **Export...** are available.
+If multiple results are selected, **Rescan**, **Copy** > **IP address** / **Hostname** / **Port** / **IP address:Port** (one value per line, in the order shown, without duplicates; IPv6 as `[address]:port`) and **Export...** are available.
 
 ### Result
 
