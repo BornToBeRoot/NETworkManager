@@ -256,6 +256,7 @@ Release date: **xx.xx.2026**
 - Fixed hostnames resolved via DNS (`PTR`) being shown with a trailing dot (e.g. `server.example.com.`), also in the export and when opened in another feature (e.g. **DNS Lookup**, **Remote Desktop**). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed a NetBIOS name (shown as hostname if there is no DNS hostname) being passed to other features (e.g. **Remote Desktop**, **Port Scanner**, **DNS Lookup**, **RDAP**), where it may not be resolvable via DNS. The DNS hostname is used, otherwise the IP address; **DNS lookup...** / **RDAP...** > **Hostname** need a DNS hostname. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the progress and the up / down counters possibly staying below the final values (e.g. 255 of 256 hosts scanned) when the results of several hosts arrived at the same time. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed columns that couldn't be made wider (by dragging or double-clicking the gripper) if the window was not wide enough, e.g. to see a long hostname. The last column still fills the remaining width, other columns can now grow beyond the window with a horizontal scrollbar. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
 **Port Scanner**
 

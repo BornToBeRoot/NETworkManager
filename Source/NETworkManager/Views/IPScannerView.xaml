@@ -258,7 +258,7 @@
                                       SelectedItem="{Binding Path=SelectedResult}"
                                       SelectedItemsList="{Binding Path=SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Sorting="DataGrid_OnSorting"
-                                      wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True"
+                                      wpfHelpers:DataGridHelper.FillLastColumn="True"
                                       RowDetailsVisibilityMode="{Binding Path=HostDetailsVisibilityMode}"
                                       EnableRowVirtualization="True"
                                       ScrollViewer.CanContentScroll="True"
@@ -760,8 +760,7 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}"
                                     Binding="{Binding Vendor, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
                                     SortMemberPath="Vendor"
-                                    MinWidth="200"
-                                    Width="*">
+                                    MinWidth="200">
                     <DataGridTextColumn.Visibility>
                         <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
                             <Binding Source="{StaticResource BindingProxy}"
