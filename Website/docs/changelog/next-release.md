@@ -157,6 +157,10 @@ Release date: **xx.xx.2026**
 
 - The search filters after a short delay while typing instead of on every key press (smoother with many listeners), `Enter` filters right away. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
+**Neighbor Table**
+
+- The search filters after a short delay while typing instead of on every key press (smoother with many entries), `Enter` filters right away. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+
 ## Bug Fixes
 
 - Fixed changes to lists in the settings (e.g. query histories, port profiles, custom commands) not being saved if no other setting was changed in the same session. This happened since the settings are stored as JSON. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)

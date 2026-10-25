@@ -29,10 +29,19 @@ public class NeighborTableViewModel : ViewModelBase
     #region Contructor, load settings
 
     /// <summary>
+    /// Delays filtering while the user is typing (see <see cref="Search"/>), so a large list is not filtered on
+    /// every key press.
+    /// </summary>
+    private readonly DispatcherTimer _searchDispatcherTimer = new();
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="NeighborTableViewModel"/> class.
     /// </summary>
     public NeighborTableViewModel()
     {
+        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
+        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+
         _isLoading = true;
 
         // Result view + search
@@ -101,7 +110,9 @@ public class NeighborTableViewModel : ViewModelBase
 
             field = value;
 
-            ResultsView.Refresh();
+            // Filter after a short delay while typing (see _searchDispatcherTimer)
+            _searchDispatcherTimer.Stop();
+            _searchDispatcherTimer.Start();
 
             OnPropertyChanged();
         }
@@ -502,6 +513,30 @@ public class NeighborTableViewModel : ViewModelBase
         // Restart timer, unless auto refresh was disabled or the view was hidden in the meantime
         if (AutoRefreshEnabled && _isViewVisible)
             _autoRefreshTimer.Start();
+    }
+
+    /// <summary>
+    /// Filters once the user stopped typing (see <see cref="Search"/>).
+    /// </summary>
+    private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
+    {
+        ApplySearch();
+    }
+
+    /// <summary>
+    /// Gets the command to filter right away (Enter in the search box, see
+    /// <see cref="NETworkManager.Utilities.WPF.SearchTextBoxHelper"/>).
+    /// </summary>
+    public ICommand ApplySearchCommand => new RelayCommand(_ => ApplySearch());
+
+    /// <summary>
+    /// Filters with the current <see cref="Search"/> right away.
+    /// </summary>
+    private void ApplySearch()
+    {
+        _searchDispatcherTimer.Stop();
+
+        ResultsView.Refresh();
     }
 
     #endregion
