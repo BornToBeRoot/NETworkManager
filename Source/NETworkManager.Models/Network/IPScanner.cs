@@ -249,7 +249,7 @@ public sealed class IPScanner(IPScannerOptions options)
         // DNS and MAC address lookup don't depend on each other - run them concurrently, the host is finished
         // after the slower one instead of after both
         var dnsTask = options.ResolveHostname
-            ? ResolveHostnameAsync(ipAddress, cancellationToken)
+            ? DNSClient.GetInstance().ResolvePtrOrEmptyAsync(ipAddress, cancellationToken)
             : Task.FromResult(string.Empty);
 
         var macAddressTask = options.ResolveMACAddress
@@ -285,20 +285,6 @@ public sealed class IPScanner(IPScannerOptions options)
                 ? arpVendor
                 : netBIOSInfo?.Vendor ?? string.Empty
         );
-    }
-
-    /// <summary>
-    ///     Resolves the DNS hostname (PTR record) of a host.
-    /// </summary>
-    /// <param name="ipAddress">IP address of the host.</param>
-    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
-    /// <returns>Hostname or an empty string.</returns>
-    private static async Task<string> ResolveHostnameAsync(IPAddress ipAddress, CancellationToken cancellationToken)
-    {
-        var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddress)
-            .WaitAsync(cancellationToken).ConfigureAwait(false);
-
-        return dnsResult.HasError ? string.Empty : dnsResult.Value;
     }
 
     /// <summary>

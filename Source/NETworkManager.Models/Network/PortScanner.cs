@@ -124,7 +124,7 @@ public sealed class PortScanner
                 {
                     // Resolve Hostname (PTR) while the ports are scanned
                     var hostnameTask = _options.ResolveHostname
-                        ? ResolveHostnameAsync(host.ipAddress, hostCt)
+                        ? DNSClient.GetInstance().ResolvePtrOrEmptyAsync(host.ipAddress, hostCt)
                         : Task.FromResult(string.Empty);
 
                     // Check each port
@@ -170,14 +170,6 @@ public sealed class PortScanner
                 OnScanComplete(new ScanCompleteArgs(isCanceled, exception));
             }
         });
-    }
-
-    private static async Task<string> ResolveHostnameAsync(IPAddress ipAddress, CancellationToken cancellationToken)
-    {
-        var dnsResult = await DNSClient.GetInstance().ResolvePtrAsync(ipAddress)
-            .WaitAsync(cancellationToken).ConfigureAwait(false);
-
-        return dnsResult.HasError ? string.Empty : dnsResult.Value;
     }
 
     private void IncreaseProgress()
