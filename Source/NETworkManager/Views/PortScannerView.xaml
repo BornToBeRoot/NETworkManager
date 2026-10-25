@@ -276,7 +276,7 @@
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.Rescan}"
                               Command="{Binding Path=RescanSelectedHostsCommand}"
-                              IsEnabled="{Binding Path=Data.(viewModels:PortScannerViewModel.IsRunning), Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseConverter}}">
+                              IsEnabled="{Binding Path=Data.IsRunning, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseConverter}}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -306,7 +306,7 @@
                         <MenuItem Header="{x:Static Member=localization:Strings.Hostname}"
                                   Command="{Binding Path=CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.Hostname, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
-                                  Visibility="{Binding Path=Data.(viewModels:PortScannerViewModel.ScanOptions).ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                  Visibility="{Binding Path=Data.ScanOptions.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static Member=localization:Strings.Port}"
                                   Command="{Binding Path=CopyDataToClipboardCommand}"
@@ -342,7 +342,7 @@
                 <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.Rescan}"
                               Command="{Binding Path=RescanSelectedHostsCommand}"
-                              IsEnabled="{Binding Path=Data.(viewModels:PortScannerViewModel.IsRunning), Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseConverter}}">
+                              IsEnabled="{Binding Path=Data.IsRunning, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseConverter}}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -367,7 +367,7 @@
                         <MenuItem Header="{x:Static Member=localization:Strings.Hostname}"
                                   Command="{Binding Path=CopySelectedResultsCommand}"
                                   CommandParameter="Hostname"
-                                  Visibility="{Binding Path=Data.(viewModels:PortScannerViewModel.ScanOptions).ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                  Visibility="{Binding Path=Data.ScanOptions.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static Member=localization:Strings.Port}"
                                   Command="{Binding Path=CopySelectedResultsCommand}"
@@ -452,7 +452,7 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}"
                                     Binding="{Binding (network:PortScannerPortInfo.Hostname), Converter={StaticResource StringNullOrEmptyToStringConverter}}"
                                     SortMemberPath="Hostname"
-                                    Visibility="{Binding Path=Data.(viewModels:PortScannerViewModel.ScanOptions).ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                    Visibility="{Binding Path=Data.ScanOptions.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Port}"
                                     Binding="{Binding (network:PortScannerPortInfo.Port)}"
