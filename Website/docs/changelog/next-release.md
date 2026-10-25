@@ -171,6 +171,7 @@ Release date: **xx.xx.2026**
 - Fixed changes to lists in the settings (e.g. query histories, port profiles, custom commands) not being saved if no other setting was changed in the same session. This happened since the settings are stored as JSON. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
 - Fixed the profile search (profile list in the tools, **Profiles** settings and import result) filtering the profiles while still typing. The profiles are now filtered once after the user stopped typing, instead of every 750 ms after the first key press. [#3638](https://github.com/BornToBeRoot/NETworkManager/pull/3638)
 - Fixed the application list not scrolling to the selected application if it was opened from somewhere else (e.g. from the **Dashboard**, another application or the run command). [#3644](https://github.com/BornToBeRoot/NETworkManager/pull/3644)
+- Fixed `Enter` in the application search (title bar) being able to trigger the default button of the shown tool (e.g. start a scan in the **IP Scanner**). It only filters the applications now. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Firewall**
 
