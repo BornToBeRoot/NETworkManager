@@ -8,6 +8,7 @@
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SNMPSettingsViewModel}">
     <StackPanel>
@@ -15,7 +16,8 @@
         <TextBlock Text="{x:Static localization:Strings.OIDProfiles}" Style="{DynamicResource DefaultTextBlock}"
                    Margin="0,0,0,10" />
         <DataGrid x:Name="DataGridOidProfiles" ItemsSource="{Binding OIDProfiles}" SelectionMode="Single"
-                  SelectedItem="{Binding SelectedOIDProfile}" Height="200" Margin="0,0,0,10">
+                  SelectedItem="{Binding SelectedOIDProfile}" Height="200" Margin="0,0,0,10"
+                  wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <DataGrid.Resources>
                 <ContextMenu x:Key="RowContextMenu" Opened="RowContextMenu_OnOpened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.EditDots}"
@@ -54,8 +56,7 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Mode}"
                                     Binding="{Binding (network:SNMPOIDProfileInfo.Mode)}"
                                     SortMemberPath="Mode"
-                                    MinWidth="100"
-                                    Width="*" />
+                                    MinWidth="100" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditOIDProfileCommand}" Key="F2" />

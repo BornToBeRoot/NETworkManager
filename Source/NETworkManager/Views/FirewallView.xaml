@@ -96,8 +96,8 @@
                         ItemsSource="{Binding ResultsView}"
                         SelectedItem="{Binding SelectedResult}"
                         SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True"
-                        RowDetailsVisibilityMode="Collapsed">
+                        RowDetailsVisibilityMode="Collapsed"
+                        wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                         <controls:MultiSelectDataGrid.InputBindings>
                             <KeyBinding Command="{Binding EditRuleCommand}" Key="F2" />
                             <KeyBinding Command="{Binding DeleteRuleCommand}" Key="Delete" />
@@ -601,8 +601,7 @@
                             <!-- Remote ports -->
                             <DataGridTextColumn Header="{x:Static localization:Strings.RemotePort}"
                                                 SortMemberPath="RemotePortsDisplay"
-                                                MinWidth="100"
-                                                Width="*">
+                                                MinWidth="100">
                                 <DataGridTextColumn.Binding>
                                     <Binding Path="(firewall:FirewallRule.RemotePortsDisplay)">
                                         <Binding.TargetNullValue>

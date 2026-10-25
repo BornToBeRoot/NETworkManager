@@ -169,7 +169,7 @@
                                       Grid.Row="0" CanUserSortColumns="False" ItemsSource="{Binding Path=ResultsView}"
                                       SelectedItem="{Binding SelectedResult}"
                                       SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
+                                      wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <controls:MultiSelectDataGrid.Resources>
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.IPScanner}"
@@ -518,7 +518,7 @@
                                     Binding="{Binding (network:TracerouteHopInfo.Hostname), Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}"
                                     Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="150"
-                                    Width="*" />
+                                    wpfHelpers:DataGridHelper.IsFillColumn="True" />
                 <DataGridTextColumn Header="{x:Static Member=localization:Strings.Continent}"
                                     Binding="{Binding (network:TracerouteHopInfo.IPGeolocationResult).Info.Continent, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}"
                                     Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_CheckIPApiIPGeolocation, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"

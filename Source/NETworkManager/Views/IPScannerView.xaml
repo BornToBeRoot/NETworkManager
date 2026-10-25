@@ -258,7 +258,7 @@
                                       SelectedItem="{Binding Path=SelectedResult}"
                                       SelectedItemsList="{Binding Path=SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Sorting="DataGrid_OnSorting"
-                                      wpfHelpers:DataGridHelper.FillLastColumn="True"
+                                      wpfHelpers:DataGridHelper.FillRemainingWidth="True"
                                       RowDetailsVisibilityMode="{Binding Path=HostDetailsVisibilityMode}"
                                       EnableRowVirtualization="True"
                                       ScrollViewer.CanContentScroll="True"

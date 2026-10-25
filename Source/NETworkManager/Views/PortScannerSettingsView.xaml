@@ -7,6 +7,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"             
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerSettingsViewModel}">
     <StackPanel>
@@ -14,7 +15,8 @@
         <TextBlock Text="{x:Static localization:Strings.PortProfiles}" Style="{DynamicResource DefaultTextBlock}"
                    Margin="0,0,0,10" />
         <DataGrid x:Name="DataGridPortProfiles" ItemsSource="{Binding PortProfiles}" SelectionMode="Single"
-                  SelectedItem="{Binding SelectedPortProfile}" Height="200" Margin="0,0,0,10">
+                  SelectedItem="{Binding SelectedPortProfile}" Height="200" Margin="0,0,0,10"
+                  wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <DataGrid.Resources>
                 <ContextMenu x:Key="RowContextMenu" Opened="RowContextMenu_OnOpened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.EditDots}"
@@ -48,8 +50,7 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Ports}"
                                     Binding="{Binding (network:PortProfileInfo.Ports)}"
                                     SortMemberPath="Ports"
-                                    MinWidth="200"
-                                    Width="*" />
+                                    MinWidth="200" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditPortProfileCommand}" Key="F2" />

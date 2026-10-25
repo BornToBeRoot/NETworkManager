@@ -263,14 +263,14 @@
                                       SelectedItem="{Binding Path=SelectedResult}"
                                       SelectedItemsList="{Binding Path=SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Sorting="DataGrid_OnSorting"
-                                      wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True"
                                       EnableRowVirtualization="True"
                                       ScrollViewer.CanContentScroll="True"
                                       VirtualizingPanel.IsVirtualizing="True"
                                       VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                                       VirtualizingPanel.IsContainerVirtualizable="True"
                                       VirtualizingPanel.VirtualizationMode="Recycling"
-                                      VirtualizingPanel.ScrollUnit="Item">
+                                      VirtualizingPanel.ScrollUnit="Item"
+                                      wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <controls:MultiSelectDataGrid.Resources>
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
@@ -473,8 +473,7 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Description}"
                                     Binding="{Binding (network:PortScannerPortInfo.LookupInfo).Description}"
                                     SortMemberPath="LookupInfo.Description"
-                                    MinWidth="200"
-                                    Width="*" />
+                                    MinWidth="200" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
     </Grid>

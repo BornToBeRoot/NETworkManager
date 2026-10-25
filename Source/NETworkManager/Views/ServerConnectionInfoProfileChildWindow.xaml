@@ -65,7 +65,8 @@
         </Grid>
         <controls:MultiSelectDataGrid x:Name="DataGridServers" Grid.Column="0" Grid.Row="2"                                    
                                     ItemsSource="{Binding Servers}"
-                                    SelectedItemsList="{Binding SelectedServers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    SelectedItemsList="{Binding SelectedServers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <controls:MultiSelectDataGrid.Resources>
                 <ContextMenu x:Key="ContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.Delete}" Command="{Binding DeleteServerCommand}">
@@ -87,7 +88,7 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Port}"
                                   SortMemberPath="Port"
                                   Binding="{Binding (network:ServerConnectionInfo.Port)}"
-                                  Width="*" />
+                                  MinWidth="150" />
             </controls:MultiSelectDataGrid.Columns>
             <controls:MultiSelectDataGrid.InputBindings>
                 <KeyBinding Command="{Binding DeleteServerCommand}" Key="Delete" />

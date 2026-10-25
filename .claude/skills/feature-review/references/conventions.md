@@ -102,6 +102,11 @@ Reference: `HostsFileEditorView.xaml`, `FirewallView.xaml`.
   Other users: `RunCommandViewModel.Suggestions`. Not yet used (same `Clear()` + `ForEach(Results.Add)` pattern on every
   refresh / auto refresh): `ConnectionsViewModel`, `ListenersViewModel`, `NeighborTableViewModel`,
   `HostsFileEditorViewModel` — report as a performance finding when reviewing them.
+- Column widths: no star (`Width="*"`) columns in a `DataGrid` — with a visible star column WPF only lets a column
+  grow by taking the width from the columns to its right, so columns can't be made wider than the window (#3557).
+  Use `wpfHelpers:DataGridHelper.FillRemainingWidth="True"` on the grid: the last visible column (or the one marked with
+  `wpfHelpers:DataGridHelper.IsFillColumn="True"`) fills the remaining width with a pixel width, every column can be
+  resized freely and the grid scrolls horizontally. Give the fill column a `MinWidth`.
 - Bindings on items that implement `INotifyPropertyChanged` (e.g. `IPScannerHostInfo`, view models via `BindingProxy`)
   use **plain paths** (`IsPingPending`, `PingInfo.Status`, `Data.ScanOptions.ResolveHostname`), not the typed form
   `(network:Type.Property)`. WPF registers a `PropertyChanged` listener with the property name the path parser stored;

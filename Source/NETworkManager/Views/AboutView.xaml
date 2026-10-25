@@ -9,6 +9,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:AboutViewModel}">
     <UserControl.Resources>
@@ -249,7 +250,8 @@
             <DataGrid Grid.Column="0" Grid.Row="2" 
                       ItemsSource="{Binding LibrariesView}" 
                       SelectedItem="{Binding SelectedLibraryInfo}"
-                      Margin="0,0,0,10">
+                      Margin="0,0,0,10"
+                      wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                 <DataGrid.Resources>
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                         <MenuItem Header="{x:Static localization:Strings.OpenProject}"
@@ -292,7 +294,7 @@
                                         Binding="{Binding (documentation:LibraryInfo.Name)}" MinWidth="150" />
                     <DataGridTextColumn Header="{x:Static localization:Strings.Description}"
                                         Binding="{Binding (documentation:LibraryInfo.Description)}" MinWidth="300"
-                                        Width="*">
+                                        wpfHelpers:DataGridHelper.IsFillColumn="True">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
@@ -330,7 +332,8 @@
             <DataGrid Grid.Column="0" Grid.Row="5"
                       x:Name="DataGridExternalServices"                      
                       ItemsSource="{Binding ExternalServicesView}"
-                      SelectedItem="{Binding SelectedExternalServicesInfo}" Margin="0,0,0,20">
+                      SelectedItem="{Binding SelectedExternalServicesInfo}" Margin="0,0,0,20"
+                      wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                 <DataGrid.Resources>
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                         <MenuItem Header="{x:Static localization:Strings.OpenWebsite}"
@@ -362,7 +365,7 @@
                                         Binding="{Binding (documentation:ExternalServicesInfo.Name)}" MinWidth="150" />
                     <DataGridTextColumn Header="{x:Static localization:Strings.Description}"
                                         Binding="{Binding (documentation:ExternalServicesInfo.Description)}"
-                                        MinWidth="300" Width="*">
+                                        MinWidth="300">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
@@ -377,7 +380,8 @@
             <DataGrid Grid.Column="0" Grid.Row="7" 
                       x:Name="DataGridResources" 
                       ItemsSource="{Binding ResourcesView}"
-                      SelectedItem="{Binding SelectedResourceInfo}">
+                      SelectedItem="{Binding SelectedResourceInfo}"
+                      wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                 <DataGrid.Resources>
                     <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                         <MenuItem Header="{x:Static localization:Strings.OpenWebsite}"
@@ -408,8 +412,7 @@
                     <DataGridTextColumn Header="{x:Static localization:Strings.Name}"
                                         Binding="{Binding (documentation:ResourceInfo.Name)}" MinWidth="150" />
                     <DataGridTextColumn Header="{x:Static localization:Strings.Description}"
-                                        Binding="{Binding (documentation:ResourceInfo.Description)}" MinWidth="300"
-                                        Width="*">
+                                        Binding="{Binding (documentation:ResourceInfo.Description)}" MinWidth="300">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextWrapping" Value="Wrap" />

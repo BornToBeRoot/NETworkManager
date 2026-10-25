@@ -63,7 +63,8 @@
                         </Rectangle>
                     </Button>
                     <DataGrid Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Groups}" SelectionMode="Single"
-                              SelectedItem="{Binding SelectedGroup}">
+                              SelectedItem="{Binding SelectedGroup}"
+                              wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                         <DataGrid.Resources>
                             <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                                 <MenuItem Header="{x:Static localization:Strings.EditDots}"
@@ -92,7 +93,9 @@
                         </DataGrid.Resources>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="{x:Static localization:Strings.Name}"
-                                                Binding="{Binding Path=(profiles:GroupInfo.Name)}" Width="*" />
+                                                Binding="{Binding Path=(profiles:GroupInfo.Name)}"
+                                                MinWidth="150"
+                                                wpfHelpers:DataGridHelper.IsFillColumn="True" />
                             <DataGridTextColumn Header="{x:Static localization:Strings.Profiles}"
                                                 Binding="{Binding Path=(profiles:GroupInfo.Profiles).Count}"
                                                 Width="Auto" />

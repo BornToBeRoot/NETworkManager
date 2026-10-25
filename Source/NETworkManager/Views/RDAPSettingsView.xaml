@@ -6,6 +6,7 @@
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:rdap="clr-namespace:NETworkManager.Models.RDAP;assembly=NETworkManager.Models"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -30,7 +31,8 @@
             </Rectangle>
         </StackPanel>
         <DataGrid ItemsSource="{Binding BootstrapFiles}" AutoGenerateColumns="False" IsReadOnly="True"
-                  SelectionMode="Single" Margin="0,0,0,10">
+                  SelectionMode="Single" Margin="0,0,0,10"
+                  wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static localization:Strings.File}"
                                     Binding="{Binding (rdap:RDAPBootstrapCacheInfo.FileName)}"
@@ -49,7 +51,7 @@
                                     MinWidth="80" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Error}"
                                     Binding="{Binding (rdap:RDAPBootstrapCacheInfo.LastError)}"
-                                    MinWidth="150" Width="*">
+                                    MinWidth="150">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="TextWrapping" Value="Wrap" />

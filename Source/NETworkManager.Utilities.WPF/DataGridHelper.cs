@@ -13,59 +13,12 @@ namespace NETworkManager.Utilities.WPF;
 /// </summary>
 public static class DataGridHelper
 {
-    /// <summary>
-    /// When set to <see langword="true"/>, forces star-sized columns to recompute their width after
-    /// the first row is realized. Without this, an initially empty <see cref="DataGrid"/> sizes star
-    /// columns to <c>MinWidth</c> because the inner <see cref="System.Windows.Controls.ScrollViewer"/>
-    /// measures with infinite width; only a window resize would otherwise trigger a correct re-measure.
-    /// The handler unsubscribes itself after the first row so there is no ongoing overhead.
-    /// </summary>
-    public static readonly DependencyProperty RefreshStarColumnsOnFirstRowProperty =
-        DependencyProperty.RegisterAttached(
-            "RefreshStarColumnsOnFirstRow",
-            typeof(bool),
-            typeof(DataGridHelper),
-            new PropertyMetadata(false, OnRefreshStarColumnsOnFirstRowChanged));
-
-    public static void SetRefreshStarColumnsOnFirstRow(DataGrid element, bool value) =>
-        element.SetValue(RefreshStarColumnsOnFirstRowProperty, value);
-
-    public static bool GetRefreshStarColumnsOnFirstRow(DataGrid element) =>
-        (bool)element.GetValue(RefreshStarColumnsOnFirstRowProperty);
-
-    private static void OnRefreshStarColumnsOnFirstRowChanged(DependencyObject d,
-        DependencyPropertyChangedEventArgs e)
-    {
-        if (d is not DataGrid dataGrid || e.NewValue is not bool enabled || !enabled)
-            return;
-
-        dataGrid.LoadingRow += Handler;
-        return;
-
-        void Handler(object sender, DataGridRowEventArgs args)
-        {
-            dataGrid.LoadingRow -= Handler;
-
-            dataGrid.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                foreach (var column in dataGrid.Columns)
-                {
-                    if (!column.Width.IsStar)
-                        continue;
-
-                    var width = column.Width;
-                    column.Width = 0;
-                    column.Width = width;
-                }
-            }), DispatcherPriority.ContextIdle);
-        }
-    }
-
-    #region FillLastColumn
+    #region FillRemainingWidth
 
     /// <summary>
-    /// When set to <see langword="true"/>, the last visible column fills the remaining width of the
-    /// <see cref="DataGrid"/> - like a star (<c>*</c>) column, but with a pixel width. With a visible star column the
+    /// When set to <see langword="true"/>, a column fills the remaining width of the <see cref="DataGrid"/> - like a
+    /// star (<c>*</c>) column, but with a pixel width: the visible column marked with <see cref="IsFillColumnProperty"/>,
+    /// otherwise the last visible column. With a visible star column the
     /// DataGrid only lets a column grow by taking the width from the columns to its right (down to their
     /// <c>MinWidth</c>), so a column can't be resized wider than the grid (also not with a double-click on the
     /// gripper), there is never a horizontal scrollbar (#3557). Without star columns a column grows freely and the
@@ -73,24 +26,42 @@ public static class DataGridHelper
     /// <para>
     /// The fill column gets max(base width, available width - other visible columns). The base width is its
     /// <c>MinWidth</c>, or the width the user resized it to. It is updated when the size of the grid / its viewport
-    /// changes and when another column is resized or shown / hidden. A column that is no longer the last visible one
+    /// changes and when another column is resized or shown / hidden. A column that no longer fills (e.g. hidden)
     /// gets its original width back. Don't use star columns in the same grid.
     /// </para>
     /// </summary>
-    public static readonly DependencyProperty FillLastColumnProperty =
+    public static readonly DependencyProperty FillRemainingWidthProperty =
         DependencyProperty.RegisterAttached(
-            "FillLastColumn",
+            "FillRemainingWidth",
             typeof(bool),
             typeof(DataGridHelper),
-            new PropertyMetadata(false, OnFillLastColumnChanged));
+            new PropertyMetadata(false, OnFillRemainingWidthChanged));
 
-    public static void SetFillLastColumn(DataGrid element, bool value) =>
-        element.SetValue(FillLastColumnProperty, value);
+    public static void SetFillRemainingWidth(DataGrid element, bool value) =>
+        element.SetValue(FillRemainingWidthProperty, value);
 
-    public static bool GetFillLastColumn(DataGrid element) =>
-        (bool)element.GetValue(FillLastColumnProperty);
+    public static bool GetFillRemainingWidth(DataGrid element) =>
+        (bool)element.GetValue(FillRemainingWidthProperty);
 
-    // State of a grid with FillLastColumn (subscriptions, current fill column)
+    /// <summary>
+    /// Marks the column that fills the remaining width (see <see cref="FillRemainingWidthProperty"/>), if it isn't the
+    /// last column (e.g. a description in the middle of the columns). While it is hidden, the last visible column
+    /// fills.
+    /// </summary>
+    public static readonly DependencyProperty IsFillColumnProperty =
+        DependencyProperty.RegisterAttached(
+            "IsFillColumn",
+            typeof(bool),
+            typeof(DataGridHelper),
+            new PropertyMetadata(false));
+
+    public static void SetIsFillColumn(DataGridColumn element, bool value) =>
+        element.SetValue(IsFillColumnProperty, value);
+
+    public static bool GetIsFillColumn(DataGridColumn element) =>
+        (bool)element.GetValue(IsFillColumnProperty);
+
+    // State of a grid with FillRemainingWidth (subscriptions, current fill column)
     private static readonly DependencyProperty FillStateProperty =
         DependencyProperty.RegisterAttached(
             "FillState",
@@ -104,7 +75,7 @@ public static class DataGridHelper
     private static readonly DependencyPropertyDescriptor ColumnVisibilityDescriptor =
         DependencyPropertyDescriptor.FromProperty(DataGridColumn.VisibilityProperty, typeof(DataGridColumn));
 
-    private static void OnFillLastColumnChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    private static void OnFillRemainingWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is not DataGrid dataGrid)
             return;
@@ -239,22 +210,25 @@ public static class DataGridHelper
             if (!dataGrid.IsLoaded)
                 return;
 
-            var lastVisibleColumn = dataGrid.Columns
+            var visibleColumns = dataGrid.Columns
                 .Where(x => x.Visibility == Visibility.Visible)
                 .OrderBy(x => x.DisplayIndex)
-                .LastOrDefault();
+                .ToList();
+
+            // Marked fill column, otherwise the last visible column
+            var fillColumn = visibleColumns.FirstOrDefault(GetIsFillColumn) ?? visibleColumns.LastOrDefault();
 
             _isUpdating = true;
 
             try
             {
-                if (!ReferenceEquals(lastVisibleColumn, _fillColumn))
+                if (!ReferenceEquals(fillColumn, _fillColumn))
                 {
                     // Give the previous fill column its original width back
                     if (_fillColumn != null && dataGrid.Columns.Contains(_fillColumn))
                         _fillColumn.Width = _fillColumnOriginalWidth;
 
-                    _fillColumn = lastVisibleColumn;
+                    _fillColumn = fillColumn;
                     _lastSetWidth = double.NaN;
 
                     if (_fillColumn == null)

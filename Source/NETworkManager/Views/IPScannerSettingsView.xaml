@@ -8,6 +8,7 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:IPScannerSettingsViewModel}">
     <StackPanel>
@@ -65,7 +66,8 @@
                           IsOn="{Binding ResolveMACAddress}" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.CustomCommands}" Style="{StaticResource HeaderTextBlock}" />
         <DataGrid x:Name="DataGridCustomCommands" ItemsSource="{Binding CustomCommands}"
-                  SelectedItem="{Binding SelectedCustomCommand}" Height="200" Margin="0,0,0,10">
+                  SelectedItem="{Binding SelectedCustomCommand}" Height="200" Margin="0,0,0,10"
+                  wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <DataGrid.Resources>
                 <ContextMenu x:Key="RowContextMenu" Opened="RowContextMenu_OnOpened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.EditDots}"
@@ -97,8 +99,7 @@
                                     Binding="{Binding (utilities:CustomCommandInfo.FilePath)}" MinWidth="150"
                                     Width="Auto" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Arguments}"
-                                    Binding="{Binding (utilities:CustomCommandInfo.Arguments)}" MinWidth="200"
-                                    Width="*" />
+                                    Binding="{Binding (utilities:CustomCommandInfo.Arguments)}" MinWidth="200" />
             </DataGrid.Columns>
             <DataGrid.InputBindings>
                 <KeyBinding Command="{Binding EditCustomCommandCommand}" Key="F2" />

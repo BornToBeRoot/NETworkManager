@@ -103,7 +103,7 @@
                                               SelectedItem="{Binding SelectedResult}"
                                               SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Sorting="DataGrid_OnSorting"
-                                              wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
+                                              wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                     <DataGrid.Resources>
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.CopyDots}"
@@ -215,8 +215,7 @@
                                             SortMemberPath="ProcessName" MinWidth="150" />
                         <DataGridTextColumn Header="{x:Static Member=localization:Strings.ProcessPath}"
                                             Binding="{Binding Path=(network:ConnectionInfo.ProcessPath)}"
-                                            SortMemberPath="ProcessPath" MinWidth="150"
-                                            Width="*" />
+                                            SortMemberPath="ProcessPath" MinWidth="150" />
                     </DataGrid.Columns>
                 </controls:MultiSelectDataGrid>
                 <WrapPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal"

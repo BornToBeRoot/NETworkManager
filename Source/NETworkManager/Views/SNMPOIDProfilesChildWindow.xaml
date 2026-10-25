@@ -31,20 +31,22 @@
             <DataGrid x:Name="DataGridProfiles"
               ItemsSource="{Binding Path=OIDProfiles}"
               SelectedItem="{Binding Path=SelectedOIDProfile}"
-              SelectionMode="Single">
+              SelectionMode="Single"
+              wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{x:Static Member=localization:Strings.Name}"
                                 Binding="{Binding Path=(network:SNMPOIDProfileInfo.Name)}"
                                 SortMemberPath="Name"
-                                Width="1*" />
+                                MinWidth="150" />
                     <DataGridTextColumn Header="{x:Static Member=localization:Strings.OID}"
                                 Binding="{Binding Path=(network:SNMPOIDProfileInfo.OID)}"
                                 SortMemberPath="OID"
-                                Width="2*" />
+                                MinWidth="150"
+                                wpfHelpers:DataGridHelper.IsFillColumn="True" />
                     <DataGridTextColumn Header="{x:Static Member=localization:Strings.Mode}"
                                 Binding="{Binding (network:SNMPOIDProfileInfo.Mode)}"
                                 SortMemberPath="Mode"
-                                Width="1*" />
+                                MinWidth="150" />
                 </DataGrid.Columns>                
                 <DataGrid.InputBindings>
                     <KeyBinding Command="{Binding Path=OKCommand}" Key="Return" />

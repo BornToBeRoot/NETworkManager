@@ -290,7 +290,7 @@
                                                                    ItemsSource="{Binding Path=NetworksView}"
                                                                    SelectedItem="{Binding Path=SelectedNetwork}"
                                                                    SelectedItemsList="{Binding Path=SelectedNetworks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                                   wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
+                                                                   wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                                         <controls2:MultiSelectDataGrid.Resources>
                                             <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"
                                                          MinWidth="150">
@@ -659,8 +659,7 @@
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.Uptime}"
                                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).Uptime, Converter={StaticResource ResourceKey=TimeSpanToStringConverter}}"
                                                                 SortMemberPath="AvailableNetwork.Uptime"
-                                                                MinWidth="100"
-                                                                Width="*" />
+                                                                MinWidth="100" />
                                         </controls2:MultiSelectDataGrid.Columns>
                                     </controls2:MultiSelectDataGrid>
                                     <TextBlock Grid.Row="2"

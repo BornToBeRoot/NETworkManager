@@ -30,16 +30,17 @@
         <Grid Grid.Column="0" Grid.Row="2">
             <controls:MultiSelectDataGrid x:Name="DataGridProfiles"
                                   ItemsSource="{Binding Path=PortProfiles}"
-                                  SelectedItemsList="{Binding Path=SelectedPortProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                  SelectedItemsList="{Binding Path=SelectedPortProfiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                 <controls:MultiSelectDataGrid.Columns>
                     <DataGridTextColumn Header="{x:Static Member=localization:Strings.Name}"
                                 Binding="{Binding Path=(network:PortProfileInfo.Name)}"
                                 SortMemberPath="Name"
-                                Width="1*" />
+                                MinWidth="150" />
                     <DataGridTextColumn Header="{x:Static Member=localization:Strings.Ports}"
                                 Binding="{Binding Path=(network:PortProfileInfo.Ports)}"
                                 SortMemberPath="Ports"
-                                Width="2*" />
+                                MinWidth="150" />
                 </controls:MultiSelectDataGrid.Columns>
                 <controls:MultiSelectDataGrid.InputBindings>
                     <KeyBinding Command="{Binding Path=OKCommand}" Key="Return" />
