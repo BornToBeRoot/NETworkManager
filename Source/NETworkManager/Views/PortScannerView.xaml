@@ -238,10 +238,7 @@
                 <TextBlock Style="{StaticResource DefaultTextBlock}"
                            Foreground="{DynamicResource MahApps.Brushes.Gray5}">
                     <TextBlock.Text>
-                        <MultiBinding StringFormat="{}{0} {1}">
-                            <Binding Path="PortsOpen" />
-                            <Binding Source="{x:Static localization:Strings.Open}" />
-                        </MultiBinding>
+                        <Binding Path="PortsOpen" StringFormat="{x:Static localization:Strings.XOpen}" />
                     </TextBlock.Text>
                 </TextBlock>
                 <TextBlock Text="·"
@@ -251,10 +248,7 @@
                 <TextBlock Style="{StaticResource DefaultTextBlock}"
                            Foreground="{DynamicResource MahApps.Brushes.Gray5}">
                     <TextBlock.Text>
-                        <MultiBinding StringFormat="{}{0} {1}">
-                            <Binding Path="PortsClosed" />
-                            <Binding Source="{x:Static localization:Strings.Closed}" />
-                        </MultiBinding>
+                        <Binding Path="PortsClosed" StringFormat="{x:Static localization:Strings.XClosed}" />
                     </TextBlock.Text>
                 </TextBlock>
             </StackPanel>

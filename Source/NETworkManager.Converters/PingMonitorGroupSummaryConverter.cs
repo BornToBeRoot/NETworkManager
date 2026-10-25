@@ -9,9 +9,10 @@ namespace NETworkManager.Converters;
 
 /// <summary>
 /// Formats the count of hosts up (reachable), down (unreachable) or paused (not running) within
-/// a Ping Monitor group, selected via <c>ConverterParameter</c> ("Up", "Down", "Paused" - formats
-/// "{count} {label}" using the label bound as the third value - or "PausedVisibility", which
-/// instead returns a <see cref="Visibility"/> so the paused count can be hidden while zero).
+/// a Ping Monitor group, selected via <c>ConverterParameter</c> ("Up", "Down", "Paused" - formats the
+/// count with the format string bound as the third value, e.g. <c>Strings.XUp</c> = "{0} Up", so the
+/// word order can be translated - or "PausedVisibility", which instead returns a
+/// <see cref="Visibility"/> so the paused count can be hidden while zero).
 /// </summary>
 /// <remarks>
 /// Bound as a <see cref="MultiBinding"/> with the <see cref="CollectionViewGroup"/> as the first
@@ -41,11 +42,13 @@ public sealed class PingMonitorGroupSummaryConverter : IMultiValueConverter
                 down++;
         }
 
+        var format = values.Length > 2 ? values[2] as string ?? "{0}" : "{0}";
+
         return parameter as string switch
         {
-            "Up" => $"{up} {values[2]}",
-            "Down" => $"{down} {values[2]}",
-            "Paused" => $"{paused} {values[2]}",
+            "Up" => string.Format(culture, format, up),
+            "Down" => string.Format(culture, format, down),
+            "Paused" => string.Format(culture, format, paused),
             "PausedVisibility" => paused > 0 ? Visibility.Visible : Visibility.Collapsed,
             _ => string.Empty
         };

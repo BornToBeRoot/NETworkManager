@@ -232,10 +232,7 @@
                 <TextBlock Style="{StaticResource DefaultTextBlock}"
                            Foreground="{DynamicResource MahApps.Brushes.Gray5}">
                     <TextBlock.Text>
-                        <MultiBinding StringFormat="{}{0} {1}">
-                            <Binding Path="HostsUp" />
-                            <Binding Source="{x:Static localization:Strings.Up}" />
-                        </MultiBinding>
+                        <Binding Path="HostsUp" StringFormat="{x:Static localization:Strings.XUp}" />
                     </TextBlock.Text>
                 </TextBlock>
                 <TextBlock Text="·"
@@ -245,10 +242,7 @@
                 <TextBlock Style="{StaticResource DefaultTextBlock}"
                            Foreground="{DynamicResource MahApps.Brushes.Gray5}">
                     <TextBlock.Text>
-                        <MultiBinding StringFormat="{}{0} {1}">
-                            <Binding Path="HostsDown" />
-                            <Binding Source="{x:Static localization:Strings.Down}" />
-                        </MultiBinding>
+                        <Binding Path="HostsDown" StringFormat="{x:Static localization:Strings.XDown}" />
                     </TextBlock.Text>
                 </TextBlock>
             </StackPanel>

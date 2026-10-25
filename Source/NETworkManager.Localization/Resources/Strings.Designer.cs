@@ -14686,6 +14686,51 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} Closed.
+        /// </summary>
+        public static string XClosed {
+            get {
+                return ResourceManager.GetString("XClosed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Down.
+        /// </summary>
+        public static string XDown {
+            get {
+                return ResourceManager.GetString("XDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Open.
+        /// </summary>
+        public static string XOpen {
+            get {
+                return ResourceManager.GetString("XOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Paused.
+        /// </summary>
+        public static string XPaused {
+            get {
+                return ResourceManager.GetString("XPaused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Up.
+        /// </summary>
+        public static string XUp {
+            get {
+                return ResourceManager.GetString("XUp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} seconds remaining....
         /// </summary>
         public static string XXSecondsRemainingDots {
