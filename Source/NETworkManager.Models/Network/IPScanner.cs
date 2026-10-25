@@ -38,6 +38,12 @@ public sealed class IPScanner(IPScannerOptions options)
     private DateTime _neighborTableTimestamp = DateTime.MinValue;
 
     /// <summary>
+    ///     Gets the number of hosts finished so far (all probes and lookups). Thread-safe; may be read from
+    ///     any thread while the scan is running.
+    /// </summary>
+    public int HostsScanned => Volatile.Read(ref _progressValue);
+
+    /// <summary>
     ///     Gets the number of hosts found to be reachable so far. Thread-safe; may be read from
     ///     any thread while the scan is running.
     /// </summary>

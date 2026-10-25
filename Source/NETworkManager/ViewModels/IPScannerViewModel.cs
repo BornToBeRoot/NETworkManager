@@ -1030,13 +1030,21 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="e">The <see cref="ProgressChangedArgs"/> instance containing the event data.</param>
     private void ProgressChanged(object sender, ProgressChangedArgs e)
     {
-        Volatile.Write(ref _latestHostsScanned, e.Value);
-
         if (sender is IPScanner ipScanner)
-        {
-            Volatile.Write(ref _latestHostsUp, ipScanner.HostsUp);
-            Volatile.Write(ref _latestHostsDown, ipScanner.HostsDown);
-        }
+            StoreProgress(ipScanner);
+    }
+
+    /// <summary>
+    /// Stores the current counters of the scanner for <see cref="FlushProgress"/>. Read from the scanner instead of
+    /// the event args: events of different hosts may arrive in a different order than they were raised (e.g. a
+    /// found host and a finished host at the same time), the scanner always has the current values.
+    /// </summary>
+    /// <param name="ipScanner">Scanner of the running scan.</param>
+    private void StoreProgress(IPScanner ipScanner)
+    {
+        Volatile.Write(ref _latestHostsScanned, ipScanner.HostsScanned);
+        Volatile.Write(ref _latestHostsUp, ipScanner.HostsUp);
+        Volatile.Write(ref _latestHostsDown, ipScanner.HostsDown);
     }
 
     /// <summary>
@@ -1063,9 +1071,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         Application.Current.Dispatcher.Invoke(() =>
         {
             // All hosts and lookups are finished when the scanner raises ScanComplete - add the remaining
-            // buffered hosts and apply the remaining updates before the scan ends
+            // buffered hosts and apply the remaining updates before the scan ends, with the final counters
             _resultsFlushTimer?.Stop();
             FlushResultsBuffer();
+
+            if (sender is IPScanner finishedScanner)
+                StoreProgress(finishedScanner);
+
             FlushProgress();
 
             if (sender is IPScanner ipScanner)

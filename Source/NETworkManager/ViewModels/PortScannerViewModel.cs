@@ -743,13 +743,21 @@ public class PortScannerViewModel : ViewModelBase
 
     private void ProgressChanged(object sender, ProgressChangedArgs e)
     {
-        Volatile.Write(ref _latestPortsScanned, e.Value);
-
         if (sender is PortScanner portScanner)
-        {
-            Volatile.Write(ref _latestPortsOpen, portScanner.PortsOpen);
-            Volatile.Write(ref _latestPortsClosed, portScanner.PortsClosed);
-        }
+            StoreProgress(portScanner);
+    }
+
+    /// <summary>
+    /// Stores the current counters of the scanner for <see cref="FlushProgress"/>. Read from the scanner instead of
+    /// the event args: events of different ports may arrive in a different order than they were raised, the
+    /// scanner always has the current values.
+    /// </summary>
+    /// <param name="portScanner">Scanner of the running scan.</param>
+    private void StoreProgress(PortScanner portScanner)
+    {
+        Volatile.Write(ref _latestPortsScanned, portScanner.PortsScanned);
+        Volatile.Write(ref _latestPortsOpen, portScanner.PortsOpen);
+        Volatile.Write(ref _latestPortsClosed, portScanner.PortsClosed);
     }
 
     /// <summary>
@@ -782,9 +790,13 @@ public class PortScannerViewModel : ViewModelBase
                 portScanner.ProgressChanged -= ProgressChanged;
             }
 
-            // Results are buffered - add the remaining ones
+            // Results are buffered - add the remaining ones, with the final counters
             _resultsFlushTimer?.Stop();
             FlushResultsBuffer();
+
+            if (sender is PortScanner finishedScanner)
+                StoreProgress(finishedScanner);
+
             FlushProgress();
 
             if (e.IsCanceled)

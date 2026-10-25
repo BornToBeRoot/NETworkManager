@@ -38,6 +38,12 @@ public sealed class PortScanner
     private readonly PortScannerOptions _options;
 
     /// <summary>
+    ///     Gets the number of ports scanned so far. Thread-safe; may be read from any thread while the scan is
+    ///     running.
+    /// </summary>
+    public int PortsScanned => Volatile.Read(ref _progressValue);
+
+    /// <summary>
     ///     Gets the number of ports found to be open so far. Thread-safe; may be read from any
     ///     thread while the scan is running.
     /// </summary>

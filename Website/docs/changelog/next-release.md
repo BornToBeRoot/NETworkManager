@@ -218,6 +218,7 @@ Release date: **xx.xx.2026**
 - Fixed **Edit** (`F2`) and **Delete** (`Del`) of a custom command in the settings being available without a selected command. The delete confirmation shows the name of the command. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Fixed columns, **Copy** menu entries and row details being shown or hidden according to the current settings instead of the settings the shown scan was started with (e.g. **MAC address** column shown, but empty, after enabling **Resolve MAC address and vendor** without a new scan). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed hostnames resolved via DNS (`PTR`) being shown with a trailing dot (e.g. `server.example.com.`), also in the export and when opened in another feature (e.g. **DNS Lookup**, **Remote Desktop**). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed the progress and the up / down counters possibly staying below the final values (e.g. 255 of 256 hosts scanned) when the results of several hosts arrived at the same time. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Port Scanner**
 
@@ -236,6 +237,7 @@ Release date: **xx.xx.2026**
 - Results are sorted by IP address and port (before, in the order the ports were finished), and the hostname is resolved while the ports are scanned instead of before. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Fixed the **Hostname** column and **Copy** > **Hostname** being shown or hidden according to the current settings instead of the settings the shown scan was started with. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed hostnames resolved via DNS (`PTR`) being shown with a trailing dot (e.g. `server.example.com.`), also in the group header and the export. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed the progress and the open / closed counters possibly staying below the final values (e.g. 1023 of 1024 ports scanned) when the results of several ports arrived at the same time. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **IP Geolocation**
 
