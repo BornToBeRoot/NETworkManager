@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Net.NetworkInformation;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -120,6 +121,9 @@ public partial class IPScannerView : IDragablzTabItem
             case nameof(IPScannerHostInfo.MACAddress):
                 selectedComparer = 1;
                 break;
+            case $"{nameof(PingInfo)}.{nameof(PingInfo.Time)}":
+                selectedComparer = 2;
+                break;
             default:
                 return;
         }
@@ -165,8 +169,37 @@ public partial class IPScannerView : IDragablzTabItem
                 1 => direction == ListSortDirection.Ascending
                     ? MACAddressHelper.CompareMACAddresses(first.MACAddress, second.MACAddress)
                     : MACAddressHelper.CompareMACAddresses(second.MACAddress, first.MACAddress),
+                // Ping time - hosts without a ping reply always last (their time is 0)
+                2 => direction == ListSortDirection.Ascending
+                    ? GetPingTime(first).CompareTo(GetPingTime(second))
+                    : CompareDescendingNoReplyLast(first, second),
                 _ => 0
             };
+        }
+
+        /// <summary>
+        ///     Gets the ping time for sorting, <see cref="long.MaxValue" /> without a ping reply (or while the ping is
+        ///     still running).
+        /// </summary>
+        private static long GetPingTime(IPScannerHostInfo info)
+        {
+            return !info.IsPingPending && info.PingInfo.Status == IPStatus.Success
+                ? info.PingInfo.Time
+                : long.MaxValue;
+        }
+
+        /// <summary>
+        ///     Compares the ping time descending, hosts without a ping reply still last.
+        /// </summary>
+        private static int CompareDescendingNoReplyLast(IPScannerHostInfo first, IPScannerHostInfo second)
+        {
+            var x = GetPingTime(first);
+            var y = GetPingTime(second);
+
+            if (x == long.MaxValue || y == long.MaxValue)
+                return x.CompareTo(y);
+
+            return y.CompareTo(x);
         }
     }
 }

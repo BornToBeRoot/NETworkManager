@@ -624,6 +624,17 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
+                <DataGridTextColumn Header="{x:Static localization:Strings.Time}"
+                                    SortMemberPath="PingInfo.Time"
+                                    MinWidth="100">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
+                            <Binding Path="(network:IPScannerHostInfo.PingInfo).Status" />
+                            <Binding Path="(network:IPScannerHostInfo.PingInfo).Time" />
+                            <Binding Path="(network:IPScannerHostInfo.IsPingPending)" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.PortStatus}"
                                     SortMemberPath="IsAnyPortOpen"
                                     Visibility="{Binding Path=Data.(viewModels:IPScannerViewModel.ScanOptions).PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
