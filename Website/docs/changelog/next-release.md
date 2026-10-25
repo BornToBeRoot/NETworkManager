@@ -143,6 +143,7 @@ Release date: **xx.xx.2026**
 - The row details now show the source of a rule (local, Group Policy, MDM or Windows) and the unsupported properties it uses (e.g. ICMP types or a service), which are not copied via **Copy as...**. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
 - The export now contains whether a rule is managed by NETworkManager and its source. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
 - Faster loading of the rules managed by NETworkManager if there are many of them (the ports, addresses, programs etc. of all rules are queried at once instead of per rule). [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
+- `Enter` in the search box filters the rules right away instead of after the delay while typing. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 ## Bug Fixes
 

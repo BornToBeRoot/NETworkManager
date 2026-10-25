@@ -917,6 +917,20 @@ public class FirewallViewModel : ViewModelBase
     /// </summary>
     private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
     {
+        ApplySearch();
+    }
+
+    /// <summary>
+    /// Gets the command to filter right away (Enter in the search box, see
+    /// <see cref="NETworkManager.Utilities.WPF.SearchTextBoxHelper"/>).
+    /// </summary>
+    public ICommand ApplySearchCommand => new RelayCommand(_ => ApplySearch());
+
+    /// <summary>
+    /// Filters with the current <see cref="RulesSearch"/> right away.
+    /// </summary>
+    private void ApplySearch()
+    {
         _searchDispatcherTimer.Stop();
 
         ResultsView.Refresh();
