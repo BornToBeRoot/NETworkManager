@@ -1,0 +1,25 @@
+﻿namespace NETworkManager.Models.Network;
+
+/// <summary>
+///     Options of an IP scan that decide which columns and details of its result are shown. Only these flags of the
+///     <see cref="IPScannerOptions" />, without the ports and the ICMP buffer of the scan.
+/// </summary>
+/// <param name="ResolveHostname">The hostname was resolved via DNS.</param>
+/// <param name="PortScanEnabled">The ports of the hosts were scanned.</param>
+/// <param name="NetBIOSEnabled">The NetBIOS information was requested.</param>
+/// <param name="ResolveMACAddress">The MAC address and vendor were resolved.</param>
+public sealed record IPScannerResultOptions(
+    bool ResolveHostname,
+    bool PortScanEnabled,
+    bool NetBIOSEnabled,
+    bool ResolveMACAddress)
+{
+    /// <summary>
+    ///     Creates the result options from the options of a scan.
+    /// </summary>
+    /// <param name="options">Options of the scan.</param>
+    public IPScannerResultOptions(IPScannerOptions options)
+        : this(options.ResolveHostname, options.PortScanEnabled, options.NetBIOSEnabled, options.ResolveMACAddress)
+    {
+    }
+}

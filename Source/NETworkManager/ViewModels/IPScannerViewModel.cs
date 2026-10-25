@@ -295,7 +295,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// instead of the current settings, which may have been changed since. While no results are shown, they
     /// follow the current settings.
     /// </summary>
-    public IPScannerOptions ScanOptions
+    public IPScannerResultOptions ScanOptions
     {
         get;
         private set
@@ -336,7 +336,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.IPScanner_HostHistory);
 
         // Columns etc. until the first scan
-        ScanOptions = CreateScanOptions(null);
+        ScanOptions = CreateResultOptions();
 
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
 
@@ -634,9 +634,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory, Host,
             SettingsManager.Current.General_HistoryListEntries);
 
-        ScanOptions = CreateScanOptions(ports);
+        var scanOptions = CreateScanOptions(ports);
 
-        var ipScanner = new IPScanner(ScanOptions);
+        ScanOptions = new IPScannerResultOptions(scanOptions);
+
+        var ipScanner = new IPScanner(scanOptions);
 
         ipScanner.HostScanned += HostScanned;
         ipScanner.ScanComplete += ScanComplete;
@@ -659,7 +661,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <summary>
     /// Creates the scan options from the current settings.
     /// </summary>
-    /// <param name="ports">Ports to scan, <c>null</c> for options that are only shown (no ports, no ICMP buffer).</param>
+    /// <param name="ports">Ports to scan.</param>
     /// <returns>Options for the <see cref="IPScanner"/>.</returns>
     private static IPScannerOptions CreateScanOptions(int[] ports)
     {
@@ -669,10 +671,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads,
             ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
             ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout,
-            ICMPBuffer = ports != null ? new byte[SettingsManager.Current.IPScanner_ICMPBuffer] : [],
+            ICMPBuffer = new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
             ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
             PortScanEnabled = SettingsManager.Current.IPScanner_PortScanEnabled,
-            PortScanPorts = ports ?? [],
+            PortScanPorts = ports,
             PortScanTimeout = SettingsManager.Current.IPScanner_PortScanTimeout,
             PortScanAttempts = SettingsManager.Current.IPScanner_PortScanAttempts,
             NetBIOSEnabled = SettingsManager.Current.IPScanner_NetBIOSEnabled,
@@ -680,6 +682,19 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
             ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults
         };
+    }
+
+    /// <summary>
+    /// Creates the result options (columns, context menu and row details) from the current settings.
+    /// </summary>
+    /// <returns>Options for <see cref="ScanOptions"/>.</returns>
+    private static IPScannerResultOptions CreateResultOptions()
+    {
+        return new IPScannerResultOptions(
+            SettingsManager.Current.IPScanner_ResolveHostname,
+            SettingsManager.Current.IPScanner_PortScanEnabled,
+            SettingsManager.Current.IPScanner_NetBIOSEnabled,
+            SettingsManager.Current.IPScanner_ResolveMACAddress);
     }
 
     /// <summary>
@@ -913,7 +928,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             case nameof(SettingsInfo.IPScanner_NetBIOSEnabled):
             case nameof(SettingsInfo.IPScanner_ResolveMACAddress):
                 if (!IsRunning && Results.Count == 0)
-                    ScanOptions = CreateScanOptions(null);
+                    ScanOptions = CreateResultOptions();
                 break;
         }
     }
