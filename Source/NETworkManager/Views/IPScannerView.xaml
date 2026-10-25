@@ -28,6 +28,7 @@
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
+        <converters:PendingToStringConverter x:Key="PendingToStringConverter" />
         <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
         <converters:PortOpenStyleConverter x:Key="PortOpenStyleConverter" />
         <converters:PortOpenToStringConverter x:Key="PortOpenToStringConverter" />
@@ -614,19 +615,37 @@
                     </DataGridTextColumn.Visibility>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.PingStatus}"
-                                    Binding="{Binding (network:IPScannerHostInfo.PingInfo).Status, Converter={StaticResource ResourceKey=IPStatusToStringConverter}}"
                                     SortMemberPath="PingInfo.Status"
-                                    MinWidth="150" />
+                                    MinWidth="150">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
+                            <Binding Path="(network:IPScannerHostInfo.IsPingPending)" />
+                            <Binding Path="(network:IPScannerHostInfo.PingInfo).Status" Converter="{StaticResource ResourceKey=IPStatusToStringConverter}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.PortStatus}"
-                                    Binding="{Binding (network:IPScannerHostInfo.IsAnyPortOpen), Converter={StaticResource ResourceKey=PortOpenToStringConverter}}"
                                     SortMemberPath="IsAnyPortOpen"
                                     Visibility="{Binding Path=Data.(viewModels:IPScannerViewModel.ScanOptions).PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                    MinWidth="150" />
+                                    MinWidth="150">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
+                            <Binding Path="(network:IPScannerHostInfo.IsPortScanPending)" />
+                            <Binding Path="(network:IPScannerHostInfo.IsAnyPortOpen)" Converter="{StaticResource ResourceKey=PortOpenToStringConverter}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.NetBIOSReachable}"
-                                    Binding="{Binding (network:IPScannerHostInfo.NetBIOSInfo).IsReachable, Converter={StaticResource ResourceKey=BooleanToStringConverter}}"
                                     SortMemberPath="NetBIOSInfo.IsReachable"
                                     Visibility="{Binding Path=Data.(viewModels:IPScannerViewModel.ScanOptions).NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                    MinWidth="150" />
+                                    MinWidth="150">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
+                            <Binding Path="(network:IPScannerHostInfo.IsNetBIOSPending)" />
+                            <Binding Path="(network:IPScannerHostInfo.NetBIOSInfo).IsReachable" Converter="{StaticResource ResourceKey=BooleanToStringConverter}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}"
                                     Binding="{Binding (network:IPScannerHostInfo.MACAddress), Converter={StaticResource StringNullOrEmptyToStringConverter}}"
                                     SortMemberPath="MACAddress"
@@ -697,8 +716,10 @@
                                            Text="{x:Static localization:Strings.PingDetails}"
                                            Style="{StaticResource BoldTextBlock}"
                                            Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <!-- Hidden while the ping is still running (placeholder values) -->
                                 <ListView Grid.Row="2"
-                                          Background="Transparent">
+                                          Background="Transparent"
+                                          Visibility="{Binding Path=(network:IPScannerHostInfo.IsPingPending), Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="{x:Type ListViewItem}"
                                                BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
@@ -845,14 +866,17 @@
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
                                     </ListView>
-                                    <StackPanel VerticalAlignment="Top"
-                                                Orientation="Horizontal"
-                                                Visibility="{Binding Path=(network:IPScannerHostInfo.Ports).Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
-                                        <Rectangle Width="16" Height="16" Style="{StaticResource InfoImageRectangle}" />
-                                        <TextBlock Text="{x:Static localization:Strings.NoOpenPortsFound}"
-                                                   Style="{StaticResource InfoTextBlock}"
-                                                   Margin="10,0,0,0" />
-                                    </StackPanel>
+                                    <!-- Not while the port scan is still running -->
+                                    <Grid Visibility="{Binding Path=(network:IPScannerHostInfo.IsPortScanPending), Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                                        <StackPanel VerticalAlignment="Top"
+                                                    Orientation="Horizontal"
+                                                    Visibility="{Binding Path=(network:IPScannerHostInfo.Ports).Count, Converter={StaticResource IntZeroToVisibilityCollapsedConverter}}">
+                                            <Rectangle Width="16" Height="16" Style="{StaticResource InfoImageRectangle}" />
+                                            <TextBlock Text="{x:Static localization:Strings.NoOpenPortsFound}"
+                                                       Style="{StaticResource InfoTextBlock}"
+                                                       Margin="10,0,0,0" />
+                                        </StackPanel>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                             <!-- NetBIOS -->

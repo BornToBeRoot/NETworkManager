@@ -158,31 +158,9 @@ public sealed class IPScanner(IPScannerOptions options)
                     // Spread the start of the hosts over time instead of starting all at once
                     await hostStartScheduler.WaitAsync(ct).ConfigureAwait(false);
 
-                    var discovery = await DiscoverAsync(host.ipAddress, portScanParallelOptions, ct)
+                    // Returns only when every probe and lookup of the host is finished
+                    await ScanHostAsync(host.ipAddress, portScanParallelOptions, networkInterfaces, ct)
                         .ConfigureAwait(false);
-
-                    // Cancel if the user has canceled
-                    ct.ThrowIfCancellationRequested();
-
-                    // Count reachable/unreachable hosts unconditionally, since ShowAllResults
-                    // (below) may prevent unreachable hosts from ever reaching HostFound
-                    if (discovery.IsReachable)
-                        _hostsUp.Increment();
-                    else
-                        _hostsDown.Increment();
-
-                    if (discovery.IsReachable || options.ShowAllResults)
-                    {
-                        // Show the host now, the DNS hostname and MAC address follow as updates
-                        var hostInfo = CreateHostInfo(discovery);
-
-                        OnHostFound(new IPScannerHostFoundArgs(hostInfo));
-
-                        // Wait for all lookups - the host is only finished (progress) when nothing is pending
-                        await EnrichAsync(host.ipAddress, hostInfo,
-                            discovery.IsReachable ? discovery.DiscoveredAt : DateTime.MinValue, networkInterfaces,
-                            ct).ConfigureAwait(false);
-                    }
 
                     IncreaseProgress();
                 }).ConfigureAwait(false);
@@ -206,96 +184,212 @@ public sealed class IPScanner(IPScannerOptions options)
     }
 
     /// <summary>
-    ///     Result of <see cref="DiscoverAsync" />: the probes that decide if a host is reachable. Immutable, the
-    ///     derived values are computed once.
-    /// </summary>
-    /// <param name="pingInfo">Result of the ping (last attempt).</param>
-    /// <param name="ports">All probed ports (also closed / timed out ones).</param>
-    /// <param name="netBIOSInfo">Result of the NetBIOS request.</param>
-    /// <param name="discoveredAt">Time all probes were finished (UTC).</param>
-    private sealed class HostDiscovery(
-        PingInfo pingInfo,
-        List<PortInfo> ports,
-        NetBIOSInfo netBIOSInfo,
-        DateTime discoveredAt)
-    {
-        /// <summary>
-        ///     Result of the ping (last attempt).
-        /// </summary>
-        public PingInfo PingInfo { get; } = pingInfo;
-
-        /// <summary>
-        ///     All probed ports (also closed / timed out ones).
-        /// </summary>
-        public List<PortInfo> Ports { get; } = ports;
-
-        /// <summary>
-        ///     Result of the NetBIOS request.
-        /// </summary>
-        public NetBIOSInfo NetBIOSInfo { get; } = netBIOSInfo;
-
-        /// <summary>
-        ///     Time all probes were finished (UTC).
-        /// </summary>
-        public DateTime DiscoveredAt { get; } = discoveredAt;
-
-        /// <summary>
-        ///     Indicates whether any port is open.
-        /// </summary>
-        public bool IsAnyPortOpen { get; } = ports.Any(x => x.State == PortState.Open);
-
-        /// <summary>
-        ///     Indicates whether the host answered any probe.
-        /// </summary>
-        public bool IsReachable { get; } = pingInfo.Status == IPStatus.Success || // ICMP response
-                                           // Any port is open or the connection was refused (TCP reset)
-                                           ports.Any(x => x.State is PortState.Open or PortState.Closed) ||
-                                           netBIOSInfo.IsReachable; // NetBIOS response
-    }
-
-    /// <summary>
-    ///     Discovers a host: ping, port scan and NetBIOS request run concurrently (none of these block a thread).
+    ///     Scans a host: ping, port scan and NetBIOS request run concurrently (none of these block a thread). The host
+    ///     is raised in <see cref="HostFound" /> as soon as it answers the first probe (ping reply, open or refused
+    ///     port, NetBIOS answer) with placeholders for the probes that are still running - their results follow as
+    ///     <see cref="HostUpdated" />, and the DNS hostname and MAC address are resolved right away
+    ///     (<see cref="EnrichAsync" />). An unreachable host is raised when all probes are finished, if unreachable
+    ///     hosts are shown. Returns only when every probe and lookup of the host is finished, also on cancellation or
+    ///     an error.
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="portScanParallelOptions">Options for the concurrent port probes of the host.</param>
+    /// <param name="networkInterfaces">Local network interfaces (for the MAC address lookup).</param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
-    /// <returns>Results of all probes.</returns>
-    private async Task<HostDiscovery> DiscoverAsync(IPAddress ipAddress, ParallelOptions portScanParallelOptions,
-        CancellationToken cancellationToken)
+    private async Task ScanHostAsync(IPAddress ipAddress, ParallelOptions portScanParallelOptions,
+        List<NetworkInterfaceInfo> networkInterfaces, CancellationToken cancellationToken)
     {
+        // Completed by the port scan when the first port answers (open or refused), so the host is found before
+        // all ports are finished
+        var portAnswered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+
         var pingTask = PingAsync(ipAddress, cancellationToken);
 
         var portScanTask = options.PortScanEnabled
-            ? PortScanAsync(ipAddress, portScanParallelOptions, cancellationToken)
+            ? PortScanAsync(ipAddress, portScanParallelOptions, () => portAnswered.TrySetResult(), cancellationToken)
             : Task.FromResult(new List<PortInfo>());
 
-        var netbiosTask = options.NetBIOSEnabled
+        var netBIOSTask = options.NetBIOSEnabled
             ? NetBIOSResolver.ResolveAsync(ipAddress, options.NetBIOSTimeout, cancellationToken)
             : Task.FromResult(new NetBIOSInfo(ipAddress));
 
-        await Task.WhenAll(pingTask, portScanTask, netbiosTask).ConfigureAwait(false);
+        var enrichTask = Task.CompletedTask;
 
-        // A reachable host is in the neighbor table (ARP/NDP) from now on (before it can answer, the
-        // local system has to resolve its MAC address)
-        return new HostDiscovery(pingTask.Result, portScanTask.Result, netbiosTask.Result, DateTime.UtcNow);
+        // Results of the finished probes, null while a probe is running
+        PingInfo pingInfo = null;
+        List<PortInfo> ports = null;
+        NetBIOSInfo netBIOSInfo = null;
+
+        IPScannerHostInfo hostInfo = null;
+
+        try
+        {
+            List<Task> pending = [pingTask, portScanTask, netBIOSTask, portAnswered.Task];
+
+            while (pending.Count > 0)
+            {
+                var completed = await Task.WhenAny(pending).ConfigureAwait(false);
+                pending.Remove(completed);
+
+                // Rethrow the cancellation / error of the probe
+                await completed.ConfigureAwait(false);
+
+                cancellationToken.ThrowIfCancellationRequested();
+
+                bool isAnswer;
+                Action<IPScannerHostInfo> update = null;
+
+                if (completed == pingTask)
+                {
+                    var value = pingInfo = pingTask.Result;
+
+                    isAnswer = value.Status == IPStatus.Success; // ICMP response
+                    update = x =>
+                    {
+                        x.PingInfo = value;
+                        x.IsPingPending = false;
+                    };
+                }
+                else if (completed == portScanTask)
+                {
+                    ports = portScanTask.Result;
+
+                    // If no port answered, the signal never completes
+                    pending.Remove(portAnswered.Task);
+
+                    // Any port is open or the connection was refused (TCP reset)
+                    isAnswer = ports.Any(x => x.State is PortState.Open or PortState.Closed);
+
+                    var shownPorts = GetShownPorts(ports);
+                    var isAnyPortOpen = ports.Any(x => x.State == PortState.Open);
+
+                    update = x =>
+                    {
+                        x.Ports = shownPorts;
+                        x.IsAnyPortOpen = isAnyPortOpen;
+                        x.IsPortScanPending = false;
+                    };
+                }
+                else if (completed == netBIOSTask)
+                {
+                    var value = netBIOSInfo = netBIOSTask.Result;
+
+                    isAnswer = value.IsReachable; // NetBIOS response
+                    update = x =>
+                    {
+                        x.NetBIOSInfo = value;
+                        x.IsNetBIOSPending = false;
+                    };
+                }
+                else
+                {
+                    // A port answered - its result follows with the port scan
+                    isAnswer = true;
+                }
+
+                if (hostInfo != null)
+                {
+                    if (update != null)
+                        OnHostUpdated(new IPScannerHostUpdatedArgs(hostInfo, update));
+
+                    continue;
+                }
+
+                if (!isAnswer)
+                    continue;
+
+                // First answer: the host is up. Before it could answer, the local system had to resolve its MAC
+                // address, so it is in the neighbor table (ARP/NDP) from now on.
+                hostInfo = CreateHostInfo(ipAddress, true, pingInfo, ports, netBIOSInfo);
+
+                _hostsUp.Increment();
+
+                OnHostFound(new IPScannerHostFoundArgs(hostInfo));
+                OnProgressChanged();
+
+                enrichTask = EnrichAsync(ipAddress, hostInfo, DateTime.UtcNow, networkInterfaces, cancellationToken);
+            }
+
+            if (hostInfo == null)
+            {
+                // Count unreachable hosts unconditionally, since ShowAllResults may prevent them from ever
+                // reaching HostFound
+                _hostsDown.Increment();
+
+                if (options.ShowAllResults)
+                {
+                    hostInfo = CreateHostInfo(ipAddress, false, pingInfo, ports, netBIOSInfo);
+
+                    OnHostFound(new IPScannerHostFoundArgs(hostInfo));
+
+                    // An unreachable host never needs a new snapshot of the neighbor table
+                    enrichTask = EnrichAsync(ipAddress, hostInfo, DateTime.MinValue, networkInterfaces,
+                        cancellationToken);
+                }
+            }
+
+            await enrichTask.ConfigureAwait(false);
+        }
+        finally
+        {
+            // Never return while a probe or lookup is still running (e.g. another probe was canceled or failed)
+            await WaitIgnoringErrorsAsync(pingTask, portScanTask, netBIOSTask, enrichTask).ConfigureAwait(false);
+        }
     }
 
     /// <summary>
-    ///     Creates the result of a discovered host (without DNS hostname and MAC address, see
-    ///     <see cref="EnrichAsync" />).
+    ///     Waits until all tasks are finished. Their errors are ignored - the caller already handles (or rethrows)
+    ///     the first one.
     /// </summary>
-    /// <param name="discovery">Result of <see cref="DiscoverAsync" />.</param>
+    /// <param name="tasks">Tasks to wait for.</param>
+    private static async Task WaitIgnoringErrorsAsync(params Task[] tasks)
+    {
+        try
+        {
+            await Task.WhenAll(tasks).ConfigureAwait(false);
+        }
+        catch (Exception)
+        {
+            // Handled by the caller (see summary)
+        }
+    }
+
+    /// <summary>
+    ///     Gets the ports shown in the result: open ports, all ports if unreachable ones are shown.
+    /// </summary>
+    /// <param name="ports">All probed ports.</param>
+    /// <returns>Ports to show, sorted by port.</returns>
+    private List<PortInfo> GetShownPorts(List<PortInfo> ports)
+    {
+        return ports
+            .Where(x => x.State == PortState.Open || options.ShowAllResults)
+            .OrderBy(x => x.Port).ToList();
+    }
+
+    /// <summary>
+    ///     Creates the result of a host with the results of the finished probes and placeholders for the running ones
+    ///     (marked as pending).
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="isReachable">Indicates whether the host answered a probe.</param>
+    /// <param name="pingInfo">Result of the ping, null if it is still running.</param>
+    /// <param name="ports">All probed ports, null if the port scan is still running.</param>
+    /// <param name="netBIOSInfo">Result of the NetBIOS request, null if it is still running.</param>
     /// <returns>Result of the host.</returns>
-    private IPScannerHostInfo CreateHostInfo(HostDiscovery discovery)
+    private IPScannerHostInfo CreateHostInfo(IPAddress ipAddress, bool isReachable, PingInfo pingInfo,
+        List<PortInfo> ports, NetBIOSInfo netBIOSInfo)
     {
         return new IPScannerHostInfo(
-            discovery.IsReachable,
-            discovery.PingInfo,
-            discovery.IsAnyPortOpen,
-            discovery.Ports
-                .Where(x => x.State == PortState.Open || options.ShowAllResults)
-                .OrderBy(x => x.Port).ToList(),
-            discovery.NetBIOSInfo);
+            isReachable,
+            pingInfo ?? new PingInfo(DateTime.Now, ipAddress, IPStatus.Unknown),
+            ports?.Any(x => x.State == PortState.Open) ?? false,
+            ports != null ? GetShownPorts(ports) : [],
+            netBIOSInfo ?? new NetBIOSInfo(ipAddress))
+        {
+            IsPingPending = pingInfo == null,
+            IsPortScanPending = ports == null,
+            IsNetBIOSPending = netBIOSInfo == null
+        };
     }
 
     /// <summary>
@@ -523,8 +617,12 @@ public sealed class IPScanner(IPScannerOptions options)
     ///     Probes all configured ports of a host. Returns every port (also closed / timed out ones), because
     ///     a closed port is used to detect a reachable host as well - the caller filters what is shown.
     /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="parallelOptions">Options for the concurrent port probes.</param>
+    /// <param name="onAnswer">Called when a port answered (open or refused), may be called multiple times.</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     private async Task<List<PortInfo>> PortScanAsync(IPAddress ipAddress, ParallelOptions parallelOptions,
-        CancellationToken cancellationToken)
+        Action onAnswer, CancellationToken cancellationToken)
     {
         ConcurrentBag<PortInfo> results = [];
 
@@ -535,6 +633,9 @@ public sealed class IPScanner(IPScannerOptions options)
                 .ConfigureAwait(false);
 
             results.Add(new PortInfo(port, PortLookup.LookupByPortAndProtocol(port), portState));
+
+            if (portState is PortState.Open or PortState.Closed)
+                onAnswer();
         }).ConfigureAwait(false);
 
         return results.ToList();

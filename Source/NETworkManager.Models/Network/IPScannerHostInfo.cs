@@ -4,9 +4,11 @@ using NETworkManager.Utilities;
 namespace NETworkManager.Models.Network;
 
 /// <summary>
-///     Class containing information about a host in a <see cref="IPScanner" />. Created by the scanner when a host is
-///     found and updated afterwards, as further results arrive (see <see cref="IPScanner.HostUpdated" />). Values are
-///     only changed through the updates of the scanner, which the consumer applies on the UI thread.
+///     Class containing information about a host in a <see cref="IPScanner" />. Created by the scanner when a host
+///     answered the first probe and updated afterwards, as further results arrive (see
+///     <see cref="IPScanner.HostUpdated" />): values of probes that are still running are placeholders, marked by the
+///     <c>Is...Pending</c> properties. Values are only changed through the updates of the scanner, which the consumer
+///     applies on the UI thread.
 /// </summary>
 public class IPScannerHostInfo : PropertyChangedBase
 {
@@ -136,6 +138,55 @@ public class IPScannerHostInfo : PropertyChangedBase
     }
 
     /// <summary>
+    ///     Indicates whether the ping is still running (<see cref="PingInfo" /> is a placeholder).
+    /// </summary>
+    public bool IsPingPending
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Indicates whether the port scan is still running (<see cref="Ports" /> and <see cref="IsAnyPortOpen" />
+    ///     are placeholders).
+    /// </summary>
+    public bool IsPortScanPending
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Indicates whether the NetBIOS request is still running (<see cref="NetBIOSInfo" /> is a placeholder).
+    /// </summary>
+    public bool IsNetBIOSPending
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     ///     MAC address from the neighbor table (ARP / NDP) or of a local network interface, empty if not resolved
     ///     (yet).
     /// </summary>
@@ -194,6 +245,9 @@ public class IPScannerHostInfo : PropertyChangedBase
     {
         return new IPScannerHostInfo(IsReachable, PingInfo, IsAnyPortOpen, Ports, NetBIOSInfo)
         {
+            IsPingPending = IsPingPending,
+            IsPortScanPending = IsPortScanPending,
+            IsNetBIOSPending = IsNetBIOSPending,
             DNSHostname = DNSHostname,
             NeighborMACAddress = NeighborMACAddress,
             NeighborVendor = NeighborVendor
