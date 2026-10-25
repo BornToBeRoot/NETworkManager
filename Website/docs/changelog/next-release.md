@@ -308,6 +308,10 @@ Release date: **xx.xx.2026**
 
 - Fixed `Enter` in the search box of the import result importing the profiles (default button). It filters the found profiles right away now, instead of after the delay while typing. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
+**SNMP**
+
+- Fixed `Enter` in the search box of the OID profiles dialog closing the dialog with **OK**. It only filters the OID profiles now. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring
