@@ -283,6 +283,7 @@ public sealed class IPScanner(IPScannerOptions options)
         var dnsHostname = dnsTask.Result;
         var (arpMACAddress, arpVendor) = macAddressTask.Result;
 
+        // Never null (an empty NetBIOSInfo if NetBIOS is disabled or there was no answer), its values may be
         var netBIOSInfo = discovery.NetBIOSInfo;
 
         return new IPScannerHostInfo(
@@ -291,7 +292,7 @@ public sealed class IPScanner(IPScannerOptions options)
             // DNS is default, fallback to netbios
             !string.IsNullOrEmpty(dnsHostname)
                 ? dnsHostname
-                : netBIOSInfo?.ComputerName ?? string.Empty,
+                : netBIOSInfo.ComputerName ?? string.Empty,
             dnsHostname,
             discovery.IsAnyPortOpen,
             discovery.Ports
@@ -301,10 +302,10 @@ public sealed class IPScanner(IPScannerOptions options)
             // ARP/NDP is preferred, fallback to NetBIOS
             !string.IsNullOrEmpty(arpMACAddress)
                 ? arpMACAddress
-                : netBIOSInfo?.MACAddress ?? string.Empty,
+                : netBIOSInfo.MACAddress ?? string.Empty,
             !string.IsNullOrEmpty(arpMACAddress)
                 ? arpVendor
-                : netBIOSInfo?.Vendor ?? string.Empty
+                : netBIOSInfo.Vendor ?? string.Empty
         );
     }
 
