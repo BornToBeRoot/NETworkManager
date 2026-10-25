@@ -578,6 +578,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         Results.Clear();
 
+        // No results are shown until the scan's options are known - follow the current settings
+        ScanOptions = CreateResultOptions();
+
         // Reset before hostname resolution too (not just after), so a cancellation during
         // resolution can't flush the previous scan's stale totals - HostsToScan = 0 also hides
         // the up/down summary until the new scan's host count is known.
@@ -915,22 +918,23 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     /// <summary>
     /// Handles changes of the settings. While no results are shown, the columns etc. follow the current
-    /// settings (see <see cref="ScanOptions"/>).
+    /// settings (see <see cref="ScanOptions"/>). Any setting, so new columns don't need to be added here.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        switch (e.PropertyName)
-        {
-            case nameof(SettingsInfo.IPScanner_ResolveHostname):
-            case nameof(SettingsInfo.IPScanner_PortScanEnabled):
-            case nameof(SettingsInfo.IPScanner_NetBIOSEnabled):
-            case nameof(SettingsInfo.IPScanner_ResolveMACAddress):
-                if (!IsRunning && Results.Count == 0)
-                    ScanOptions = CreateResultOptions();
-                break;
-        }
+        UpdateScanOptionsIfNoResults();
+    }
+
+    /// <summary>
+    /// While no results are shown and no scan is running, the columns etc. follow the current settings
+    /// (see <see cref="ScanOptions"/>).
+    /// </summary>
+    private void UpdateScanOptionsIfNoResults()
+    {
+        if (!IsRunning && Results.Count == 0)
+            ScanOptions = CreateResultOptions();
     }
 
     /// <summary>
@@ -1045,6 +1049,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             PreparingScan = false;
             IsCanceling = false;
             IsRunning = false;
+
+            // E.g. canceled during the preparation, or nothing found
+            UpdateScanOptionsIfNoResults();
         });
     }
 

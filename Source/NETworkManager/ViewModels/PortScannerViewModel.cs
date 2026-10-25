@@ -525,6 +525,9 @@ public class PortScannerViewModel : ViewModelBase
 
         Results.Clear();
 
+        // No results are shown until the scan's options are known - follow the current settings
+        ScanOptions = CreateScanOptions();
+
         // Reset before hostname resolution too (not just after), so a cancellation during
         // resolution can't flush the previous scan's stale totals - PortsToScan = 0 also hides
         // the open/closed summary until the new scan's port count is known.
@@ -689,19 +692,23 @@ public class PortScannerViewModel : ViewModelBase
 
     /// <summary>
     /// Handles changes of the settings. While no results are shown, the columns etc. follow the current
-    /// settings (see <see cref="ScanOptions"/>).
+    /// settings (see <see cref="ScanOptions"/>). Any setting, so new columns don't need to be added here.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
     private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        switch (e.PropertyName)
-        {
-            case nameof(SettingsInfo.PortScanner_ResolveHostname):
-                if (!IsRunning && Results.Count == 0)
-                    ScanOptions = CreateScanOptions();
-                break;
-        }
+        UpdateScanOptionsIfNoResults();
+    }
+
+    /// <summary>
+    /// While no results are shown and no scan is running, the columns etc. follow the current settings
+    /// (see <see cref="ScanOptions"/>).
+    /// </summary>
+    private void UpdateScanOptionsIfNoResults()
+    {
+        if (!IsRunning && Results.Count == 0)
+            ScanOptions = CreateScanOptions();
     }
 
     private void PortScanned(object sender, PortScannerPortScannedArgs e)
@@ -804,6 +811,9 @@ public class PortScannerViewModel : ViewModelBase
             PreparingScan = false;
             IsCanceling = false;
             IsRunning = false;
+
+            // E.g. canceled during the preparation, or nothing found
+            UpdateScanOptionsIfNoResults();
         });
     }
 
