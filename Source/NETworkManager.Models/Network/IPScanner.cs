@@ -54,18 +54,31 @@ public sealed class IPScanner(IPScannerOptions options)
     #region Events
 
     /// <summary>
-    ///     Occurs when a host has been scanned.
+    ///     Occurs when a host has been found (reachable, or unreachable if unreachable hosts are shown). Further
+    ///     results of the host arrive via <see cref="HostUpdated" />.
     /// </summary>
-    public event EventHandler<IPScannerHostScannedArgs> HostScanned;
+    public event EventHandler<IPScannerHostFoundArgs> HostFound;
 
-    private void OnHostScanned(IPScannerHostScannedArgs e)
+    private void OnHostFound(IPScannerHostFoundArgs e)
     {
-        HostScanned?.Invoke(this, e);
+        HostFound?.Invoke(this, e);
+    }
+
+    /// <summary>
+    ///     Occurs when a result of a found host arrived (e.g. DNS hostname, MAC address). Never raised for a host
+    ///     before its <see cref="HostFound" /> and never after <see cref="ScanComplete" />.
+    /// </summary>
+    public event EventHandler<IPScannerHostUpdatedArgs> HostUpdated;
+
+    private void OnHostUpdated(IPScannerHostUpdatedArgs e)
+    {
+        HostUpdated?.Invoke(this, e);
     }
 
     /// <summary>
     ///     Occurs when the scan is complete. Raised exactly once per scan, also when the scan was canceled
-    ///     or failed (see <see cref="ScanCompleteArgs" />).
+    ///     or failed (see <see cref="ScanCompleteArgs" />) - only after every host is finished, including all
+    ///     lookups (no <see cref="HostFound" /> / <see cref="HostUpdated" /> afterwards).
     /// </summary>
     public event EventHandler<ScanCompleteArgs> ScanComplete;
 
@@ -152,19 +165,30 @@ public sealed class IPScanner(IPScannerOptions options)
                     ct.ThrowIfCancellationRequested();
 
                     // Count reachable/unreachable hosts unconditionally, since ShowAllResults
-                    // (below) may prevent unreachable hosts from ever reaching HostScanned
+                    // (below) may prevent unreachable hosts from ever reaching HostFound
                     if (discovery.IsReachable)
                         _hostsUp.Increment();
                     else
                         _hostsDown.Increment();
 
                     if (discovery.IsReachable || options.ShowAllResults)
-                        OnHostScanned(new IPScannerHostScannedArgs(
-                            await EnrichAsync(host.ipAddress, discovery, networkInterfaces, ct)
-                                .ConfigureAwait(false)));
+                    {
+                        // Show the host now, the DNS hostname and MAC address follow as updates
+                        var hostInfo = CreateHostInfo(discovery);
+
+                        OnHostFound(new IPScannerHostFoundArgs(hostInfo));
+
+                        // Wait for all lookups - the host is only finished (progress) when nothing is pending
+                        await EnrichAsync(host.ipAddress, hostInfo,
+                            discovery.IsReachable ? discovery.DiscoveredAt : DateTime.MinValue, networkInterfaces,
+                            ct).ConfigureAwait(false);
+                    }
 
                     IncreaseProgress();
                 }).ConfigureAwait(false);
+
+                // Parallel.ForEachAsync completes (also on cancellation or an exception) only after every host body
+                // has returned, so nothing is still running when ScanComplete is raised below
             }
             catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
@@ -257,56 +281,63 @@ public sealed class IPScanner(IPScannerOptions options)
     }
 
     /// <summary>
-    ///     Enriches a discovered host with the DNS hostname (PTR), MAC address and vendor and creates the result.
+    ///     Creates the result of a discovered host (without DNS hostname and MAC address, see
+    ///     <see cref="EnrichAsync" />).
     /// </summary>
-    /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="discovery">Result of <see cref="DiscoverAsync" />.</param>
-    /// <param name="networkInterfaces">Local network interfaces (for the MAC address lookup).</param>
-    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     /// <returns>Result of the host.</returns>
-    private async Task<IPScannerHostInfo> EnrichAsync(IPAddress ipAddress, HostDiscovery discovery,
-        List<NetworkInterfaceInfo> networkInterfaces, CancellationToken cancellationToken)
+    private IPScannerHostInfo CreateHostInfo(HostDiscovery discovery)
     {
-        // DNS and MAC address lookup don't depend on each other - run them concurrently, the host is finished
-        // after the slower one instead of after both
-        var dnsTask = options.ResolveHostname
-            ? DNSClient.GetInstance().ResolvePtrOrEmptyAsync(ipAddress, cancellationToken)
-            : Task.FromResult(string.Empty);
-
-        var macAddressTask = options.ResolveMACAddress
-            ? ResolveMACAddressAsync(ipAddress, discovery.IsReachable ? discovery.DiscoveredAt : DateTime.MinValue,
-                networkInterfaces, cancellationToken)
-            : Task.FromResult((macAddress: string.Empty, vendor: string.Empty));
-
-        await Task.WhenAll(dnsTask, macAddressTask).ConfigureAwait(false);
-
-        var dnsHostname = dnsTask.Result;
-        var (arpMACAddress, arpVendor) = macAddressTask.Result;
-
-        // Never null (an empty NetBIOSInfo if NetBIOS is disabled or there was no answer), its values may be
-        var netBIOSInfo = discovery.NetBIOSInfo;
-
         return new IPScannerHostInfo(
             discovery.IsReachable,
             discovery.PingInfo,
-            // DNS is default, fallback to netbios
-            !string.IsNullOrEmpty(dnsHostname)
-                ? dnsHostname
-                : netBIOSInfo.ComputerName ?? string.Empty,
-            dnsHostname,
             discovery.IsAnyPortOpen,
             discovery.Ports
                 .Where(x => x.State == PortState.Open || options.ShowAllResults)
                 .OrderBy(x => x.Port).ToList(),
-            netBIOSInfo,
-            // ARP/NDP is preferred, fallback to NetBIOS
-            !string.IsNullOrEmpty(arpMACAddress)
-                ? arpMACAddress
-                : netBIOSInfo.MACAddress ?? string.Empty,
-            !string.IsNullOrEmpty(arpMACAddress)
-                ? arpVendor
-                : netBIOSInfo.Vendor ?? string.Empty
-        );
+            discovery.NetBIOSInfo);
+    }
+
+    /// <summary>
+    ///     Enriches a found host with the DNS hostname (PTR), MAC address and vendor. Each result is raised as
+    ///     <see cref="HostUpdated" /> as soon as it arrives; the task completes only when all lookups are finished, so
+    ///     the host (and the scan) is never finished while a lookup is still running.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="host">Result of the host, already raised in <see cref="HostFound" />.</param>
+    /// <param name="discoveredAt">Time the host answered, <see cref="DateTime.MinValue" /> if it is unreachable.</param>
+    /// <param name="networkInterfaces">Local network interfaces (for the MAC address lookup).</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    private async Task EnrichAsync(IPAddress ipAddress, IPScannerHostInfo host, DateTime discoveredAt,
+        List<NetworkInterfaceInfo> networkInterfaces, CancellationToken cancellationToken)
+    {
+        async Task UpdateHostnameAsync()
+        {
+            var dnsHostname = await DNSClient.GetInstance().ResolvePtrOrEmptyAsync(ipAddress, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (!string.IsNullOrEmpty(dnsHostname))
+                OnHostUpdated(new IPScannerHostUpdatedArgs(host, x => x.DNSHostname = dnsHostname));
+        }
+
+        async Task UpdateMACAddressAsync()
+        {
+            var (macAddress, vendor) = await ResolveMACAddressAsync(ipAddress, discoveredAt, networkInterfaces,
+                cancellationToken).ConfigureAwait(false);
+
+            if (!string.IsNullOrEmpty(macAddress))
+                OnHostUpdated(new IPScannerHostUpdatedArgs(host, x =>
+                {
+                    x.NeighborMACAddress = macAddress;
+                    x.NeighborVendor = vendor;
+                }));
+        }
+
+        // DNS and MAC address lookup don't depend on each other - run them concurrently, the host is finished
+        // after the slower one instead of after both
+        await Task.WhenAll(
+            options.ResolveHostname ? UpdateHostnameAsync() : Task.CompletedTask,
+            options.ResolveMACAddress ? UpdateMACAddressAsync() : Task.CompletedTask).ConfigureAwait(false);
     }
 
     /// <summary>

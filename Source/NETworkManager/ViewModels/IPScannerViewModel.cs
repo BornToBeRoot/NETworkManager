@@ -42,15 +42,20 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private bool _firstLoad = true;
     private bool _closed;
 
-    // Background HostScanned events append here instead of hopping to the UI thread per item -
-    // a DispatcherTimer periodically flushes this into the Results collection instead, so a large
-    // scan doesn't flood the dispatcher queue with one BeginInvoke per host.
-    private readonly List<IPScannerHostInfo> _resultsBuffer = [];
+    // Background HostFound / HostUpdated events append here instead of hopping to the UI thread per
+    // item - a DispatcherTimer periodically flushes this into the Results collection instead, so a large
+    // scan doesn't flood the dispatcher queue with one BeginInvoke per host. One list for both, so an
+    // update is always applied after its host was added and updates keep their order.
+    // Entry: (host, null) = add the found host, (host, update) = apply the update to the host.
+    private readonly List<(IPScannerHostInfo host, IPScannerHostUpdatedArgs update)> _resultsBuffer = [];
     private readonly Lock _resultsBufferLock = new();
     private DispatcherTimer _resultsFlushTimer;
 
+    // Scanner of the running scan - events of another (finished) scanner are ignored
+    private IPScanner _ipScanner;
+
     // Same reasoning as the results buffer above - ProgressChanged fires once per host
-    // (unconditionally, unlike HostScanned), so it's flushed to the bound property on the same
+    // (unconditionally, unlike HostFound), so it's flushed to the bound property on the same
     // timer instead of updating it directly from the background thread on every event.
     private int _latestHostsScanned;
     private int _latestHostsUp;
@@ -643,7 +648,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         var ipScanner = new IPScanner(scanOptions);
 
-        ipScanner.HostScanned += HostScanned;
+        _ipScanner = ipScanner;
+
+        ipScanner.HostFound += HostFound;
+        ipScanner.HostUpdated += HostUpdated;
         ipScanner.ScanComplete += ScanComplete;
         ipScanner.ProgressChanged += ProgressChanged;
 
@@ -852,15 +860,16 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             try
             {
-                // Copy the results on the UI thread (they may still change while a scan is running) and
-                // export them in the background, so a large export doesn't freeze the window. In the order
-                // shown in the grid (Results is in the order the hosts were finished).
+                // Copy the results on the UI thread (they are still updated while a scan is running) and
+                // export the copies in the background, so a large export doesn't freeze the window. In the
+                // order shown in the grid (Results is in the order the hosts were found).
                 var viewResults = ResultsView.Cast<IPScannerHostInfo>();
 
-                var results = instance.ExportAll
-                    ? viewResults.ToList()
-                    : viewResults.Where(new HashSet<IPScannerHostInfo>(SelectedResults.Cast<IPScannerHostInfo>())
-                        .Contains).ToList();
+                var results = (instance.ExportAll
+                        ? viewResults
+                        : viewResults.Where(new HashSet<IPScannerHostInfo>(SelectedResults.Cast<IPScannerHostInfo>())
+                            .Contains))
+                    .Select(x => x.Clone()).ToList();
 
                 await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }
@@ -938,38 +947,78 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
-    /// Handles the HostScanned event. Adds the result to the list.
+    /// Handles the HostFound event. Buffers the host, it's added to the list in <see cref="FlushResultsBuffer"/>.
     /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">The <see cref="IPScannerHostScannedArgs"/> instance containing the event data.</param>
-    private void HostScanned(object sender, IPScannerHostScannedArgs e)
+    /// <param name="sender">The <see cref="IPScanner"/> instance raising the event.</param>
+    /// <param name="e">The <see cref="IPScannerHostFoundArgs"/> instance containing the event data.</param>
+    private void HostFound(object sender, IPScannerHostFoundArgs e)
     {
+        if (!IsCurrentScanner(sender, nameof(HostFound)))
+            return;
+
         lock (_resultsBufferLock)
         {
-            _resultsBuffer.Add(e.Args);
+            _resultsBuffer.Add((e.Host, null));
         }
     }
 
     /// <summary>
-    /// Moves buffered scan results into <see cref="Results"/>. Always called on the UI thread -
-    /// either from the <see cref="_resultsFlushTimer"/> tick, or from within the Dispatcher.Invoke
-    /// call in <see cref="ScanComplete"/>.
+    /// Handles the HostUpdated event. Buffers the update, it's applied in <see cref="FlushResultsBuffer"/>.
+    /// </summary>
+    /// <param name="sender">The <see cref="IPScanner"/> instance raising the event.</param>
+    /// <param name="e">The <see cref="IPScannerHostUpdatedArgs"/> instance containing the event data.</param>
+    private void HostUpdated(object sender, IPScannerHostUpdatedArgs e)
+    {
+        if (!IsCurrentScanner(sender, nameof(HostUpdated)))
+            return;
+
+        lock (_resultsBufferLock)
+        {
+            _resultsBuffer.Add((e.Host, e));
+        }
+    }
+
+    /// <summary>
+    /// Checks that an event comes from the scanner of the running scan. The scanner raises nothing after
+    /// ScanComplete (all hosts and lookups are finished before), so this only guards against a broken contract.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="eventName">Name of the event (for the log).</param>
+    /// <returns>True if the event comes from the scanner of the running scan.</returns>
+    private bool IsCurrentScanner(object sender, string eventName)
+    {
+        if (ReferenceEquals(sender, Volatile.Read(ref _ipScanner)))
+            return true;
+
+        Log.Warn($"{eventName} of a finished scan ignored.");
+        return false;
+    }
+
+    /// <summary>
+    /// Adds buffered hosts to <see cref="Results"/> and applies the buffered updates, in the order they were
+    /// raised. Always called on the UI thread - either from the <see cref="_resultsFlushTimer"/> tick, or from
+    /// within the Dispatcher.Invoke call in <see cref="ScanComplete"/>.
     /// </summary>
     private void FlushResultsBuffer()
     {
-        List<IPScannerHostInfo> itemsToAdd;
+        List<(IPScannerHostInfo host, IPScannerHostUpdatedArgs update)> items;
 
         lock (_resultsBufferLock)
         {
             if (_resultsBuffer.Count == 0)
                 return;
 
-            itemsToAdd = [.. _resultsBuffer];
+            items = [.. _resultsBuffer];
             _resultsBuffer.Clear();
         }
 
-        foreach (var item in itemsToAdd)
-            Results.Add(item);
+        foreach (var (host, update) in items)
+        {
+            if (update == null)
+                Results.Add(host);
+            else
+                update.Apply();
+        }
     }
 
     /// <summary>
@@ -1013,17 +1062,22 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         Application.Current.Dispatcher.Invoke(() =>
         {
-            if (sender is IPScanner ipScanner)
-            {
-                ipScanner.HostScanned -= HostScanned;
-                ipScanner.ScanComplete -= ScanComplete;
-                ipScanner.ProgressChanged -= ProgressChanged;
-            }
-
-            // Results are buffered - add the remaining ones
+            // All hosts and lookups are finished when the scanner raises ScanComplete - add the remaining
+            // buffered hosts and apply the remaining updates before the scan ends
             _resultsFlushTimer?.Stop();
             FlushResultsBuffer();
             FlushProgress();
+
+            if (sender is IPScanner ipScanner)
+            {
+                ipScanner.HostFound -= HostFound;
+                ipScanner.HostUpdated -= HostUpdated;
+                ipScanner.ScanComplete -= ScanComplete;
+                ipScanner.ProgressChanged -= ProgressChanged;
+
+                if (ReferenceEquals(ipScanner, _ipScanner))
+                    _ipScanner = null;
+            }
 
             if (e.IsCanceled)
             {
