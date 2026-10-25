@@ -5,7 +5,6 @@ using System.Net.NetworkInformation;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
 using System.Windows.Media;
 using NETworkManager.Controls;
 using NETworkManager.Models.Network;
@@ -202,19 +201,5 @@ public partial class IPScannerView : IDragablzTabItem
 
             return y.CompareTo(x);
         }
-    }
-
-    /// <summary>
-    ///     Enter in the search box filters the results right away instead of starting a new scan (the scan button is
-    ///     the default button of the view).
-    /// </summary>
-    private void SearchTextBox_OnPreviewKeyDown(object sender, KeyEventArgs e)
-    {
-        if (e.Key != Key.Enter)
-            return;
-
-        e.Handled = true;
-
-        _viewModel.ApplySearch();
     }
 }
