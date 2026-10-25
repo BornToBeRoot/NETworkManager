@@ -64,10 +64,11 @@ A scan of more than `65,536` ports (hosts × ports, e.g. 64 hosts with `1-1024`)
 
 ### Context menu
 
-| Action        | Description                                      |
-| ------------- | ------------------------------------------------ |
-| **Copy**      | Copies the selected information to the clipboard |
-| **Export...** | Exports the selected or all results to a file    |
+| Action          | Description                                                                                                    |
+| --------------- | -------------------------------------------------------------------------------------------------------------- |
+| **Web Console** | Opens the open web port (`80`, `443`, `8080`, `8443`) in the [Web Console](./web-console) (https for 443 / 8443) |
+| **Copy**        | Copies the selected information to the clipboard                                                               |
+| **Export...**   | Exports the selected or all results to a file                                                                  |
 
 If multiple results are selected, **Copy** > **IP address** / **Hostname** / **Port** / **IP address:Port** (one value per line, in the order shown, without duplicates; IPv6 as `[address]:port`) and **Export...** are available.
 

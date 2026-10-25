@@ -467,12 +467,47 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         if (name is not ApplicationName applicationName)
             return;
 
-        // Only a DNS hostname - a NetBIOS name (shown as fallback) may not be resolvable via DNS in the other tool
-        var host = !string.IsNullOrEmpty(SelectedResult.DNSHostname)
+        NavigationManager.Open(new ApplicationRequest(applicationName) { Target = GetSelectedHost() });
+    }
+
+    /// <summary>
+    /// Gets the host of the selected result for other tools: the DNS hostname, otherwise the IP address. Not a NetBIOS
+    /// name (shown as fallback), it may not be resolvable via DNS in the other tool.
+    /// </summary>
+    /// <returns>DNS hostname or IP address.</returns>
+    private string GetSelectedHost()
+    {
+        return !string.IsNullOrEmpty(SelectedResult.DNSHostname)
             ? SelectedResult.DNSHostname
             : SelectedResult.PingInfo.IPAddress.ToString();
+    }
 
-        NavigationManager.Open(new ApplicationRequest(applicationName) { Target = host });
+    /// <summary>
+    /// Gets the command to open the selected host in the Web Console (https / http depending on the open ports).
+    /// </summary>
+    public ICommand OpenWebConsoleCommand => new RelayCommand(_ => OpenWebConsoleAction());
+
+    private void OpenWebConsoleAction()
+    {
+        // Ports may still be scanned - then http on the default port
+        var openPorts = SelectedResult.IsPortScanPending
+            ? []
+            : SelectedResult.Ports.Where(x => x.State == PortState.Open).Select(x => x.Port);
+
+        NavigationManager.Open(new ApplicationRequest(ApplicationName.WebConsole)
+        {
+            Target = WebConsoleUrlHelper.CreateUrl(GetSelectedHost(), openPorts)
+        });
+    }
+
+    /// <summary>
+    /// Gets the command to wake up the selected host (sends the magic packet to its MAC address).
+    /// </summary>
+    public ICommand WakeOnLANCommand => new RelayCommand(_ => WakeOnLANAction());
+
+    private void WakeOnLANAction()
+    {
+        NavigationManager.Open(new WakeOnLANRequest { Target = SelectedResult.MACAddress });
     }
 
     /// <summary>

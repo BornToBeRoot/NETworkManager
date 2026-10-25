@@ -4,6 +4,7 @@ using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
@@ -161,8 +162,15 @@ public class PortScannerViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(IsWebConsoleAvailable));
         }
     }
+
+    /// <summary>
+    /// Gets a value indicating whether the selected result is an open web port (80, 443, 8080, 8443).
+    /// </summary>
+    public bool IsWebConsoleAvailable => SelectedResult is { State: PortState.Open } selectedResult &&
+                                         WebConsoleUrlHelper.IsWebPort(selectedResult.Port);
 
     /// <summary>
     /// Gets or sets the list of currently selected scan results (for multi-selection).
@@ -473,6 +481,27 @@ public class PortScannerViewModel : ViewModelBase
             Stop();
         else
             _ = Start();
+    }
+
+    /// <summary>
+    /// Gets the command to open the selected open web port in the Web Console.
+    /// </summary>
+    public ICommand OpenWebConsoleCommand => new RelayCommand(_ => OpenWebConsoleAction());
+
+    private void OpenWebConsoleAction()
+    {
+        if (!IsWebConsoleAvailable)
+            return;
+
+        // The hostname of the Port Scanner is always a DNS hostname (PTR)
+        var host = !string.IsNullOrEmpty(SelectedResult.Hostname)
+            ? SelectedResult.Hostname
+            : SelectedResult.IPAddress.ToString();
+
+        NavigationManager.Open(new ApplicationRequest(ApplicationName.WebConsole)
+        {
+            Target = WebConsoleUrlHelper.CreateUrl(host, SelectedResult.Port)
+        });
     }
 
     /// <summary>

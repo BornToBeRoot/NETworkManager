@@ -69,6 +69,8 @@ Right-clicking a result allows forwarding device information to another tool (e.
 | **DNS lookup...** > **IP address** / **Hostname**                                 | Looks up the IP address (`PTR`) or the DNS hostname in [DNS Lookup](./dns-lookup)                             |
 | **RDAP...** > **IP address** / **Hostname**                                       | Queries the registration data of the IP address or the registered domain of the DNS hostname in [RDAP](./rdap) |
 | **Remote Desktop** / **PowerShell** / **PuTTY** / **TigerVNC** / **SNMP**         | Opens the host (DNS hostname if resolved, otherwise the IP address) in the tool                              |
+| **Web Console**                                                                   | Opens the host in the [Web Console](./web-console): https if port `443` is open, otherwise http on `80`, `8443` (https) or `8080`, http if none of them is open (or the port scan is disabled) |
+| **Wake on LAN**                                                                   | Sends a magic packet to the MAC address of the host with [Wake on LAN](./wake-on-lan) (only with a MAC address) |
 | **Custom commands**                                                               | Executes a [custom command](#custom-commands) for the host                                                    |
 | **Add profile...**                                                                | Creates a new profile with the host (IP address), the hostname as name and the MAC address for Wake on LAN    |
 | **Copy**                                                                          | Copies the selected information to the clipboard                                                              |
