@@ -92,6 +92,7 @@
                         </Button>
                         <TextBox Width="250"
                                  Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
+                                 wpfHelpers:SearchTextBoxHelper.EnterCommand="{Binding ApplySearchCommand}"
                                  Style="{StaticResource ResourceKey=SearchTextBox}" />
                     </StackPanel>
                 </Grid>

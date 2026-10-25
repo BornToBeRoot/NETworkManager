@@ -33,6 +33,9 @@ public class ListenersViewModel : ViewModelBase
     /// </summary>
     public ListenersViewModel()
     {
+        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
+        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+
         _isLoading = true;
 
         // Result view + search
@@ -108,6 +111,12 @@ public class ListenersViewModel : ViewModelBase
     private bool _isViewVisible = true;
 
     /// <summary>
+    /// Delays filtering while the user is typing (see <see cref="Search"/>), so a large list is not filtered on
+    /// every key press.
+    /// </summary>
+    private readonly DispatcherTimer _searchDispatcherTimer = new();
+
+    /// <summary>
     /// Gets or sets the search text.
     /// </summary>
     public string Search
@@ -120,7 +129,9 @@ public class ListenersViewModel : ViewModelBase
 
             field = value;
 
-            ResultsView.Refresh();
+            // Filter after a short delay while typing (see _searchDispatcherTimer)
+            _searchDispatcherTimer.Stop();
+            _searchDispatcherTimer.Start();
 
             OnPropertyChanged();
         }
@@ -424,6 +435,30 @@ public class ListenersViewModel : ViewModelBase
         // Temporarily stop timer...
         if (AutoRefreshEnabled)
             _autoRefreshTimer.Stop();
+    }
+
+    /// <summary>
+    /// Filters once the user stopped typing (see <see cref="Search"/>).
+    /// </summary>
+    private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
+    {
+        ApplySearch();
+    }
+
+    /// <summary>
+    /// Gets the command to filter right away (Enter in the search box, see
+    /// <see cref="NETworkManager.Utilities.WPF.SearchTextBoxHelper"/>).
+    /// </summary>
+    public ICommand ApplySearchCommand => new RelayCommand(_ => ApplySearch());
+
+    /// <summary>
+    /// Filters with the current <see cref="Search"/> right away.
+    /// </summary>
+    private void ApplySearch()
+    {
+        _searchDispatcherTimer.Stop();
+
+        ResultsView.Refresh();
     }
 
     #endregion
