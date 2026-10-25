@@ -25,7 +25,7 @@
         <TextBox x:Name="TextBoxSearch"
                  Grid.Column="0" Grid.Row="0"
                  VerticalAlignment="Center" Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
- wpfHelpers:SearchTextBoxHelper.HandleEnter="True"
+                 wpfHelpers:SearchTextBoxHelper.HandleEnter="True"
                  Style="{StaticResource ResourceKey=SearchTextBox}" />
         <Grid Grid.Column="0" Grid.Row="2">
             <controls:MultiSelectDataGrid x:Name="DataGridProfiles"
