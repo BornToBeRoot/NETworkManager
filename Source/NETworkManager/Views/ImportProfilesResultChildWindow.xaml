@@ -7,6 +7,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
@@ -45,6 +46,7 @@
                          VerticalAlignment="Top"
                          Width="250"
                          Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
+                         wpfHelpers:SearchTextBoxHelper.EnterCommand="{Binding ApplySearchCommand}"
                          Style="{StaticResource ResourceKey=SearchTextBox}" />
             </Grid>
      

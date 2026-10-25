@@ -310,6 +310,20 @@ public sealed class ImportProfilesResultViewModel : ViewModelBase
 
     private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
     {
+        ApplySearch();
+    }
+
+    /// <summary>
+    /// Gets the command to filter right away (Enter in the search box, see
+    /// <see cref="NETworkManager.Utilities.WPF.SearchTextBoxHelper"/>).
+    /// </summary>
+    public ICommand ApplySearchCommand => new RelayCommand(_ => ApplySearch());
+
+    /// <summary>
+    /// Filters with the current <see cref="Search"/> right away.
+    /// </summary>
+    private void ApplySearch()
+    {
         _searchDispatcherTimer.Stop();
         CandidatesView.Refresh();
         IsSearching = false;

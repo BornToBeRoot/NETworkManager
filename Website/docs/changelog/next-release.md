@@ -285,6 +285,10 @@ Release date: **xx.xx.2026**
 
 - Fixed **Subnetting** getting stuck when the new subnet mask is smaller than the subnet mask of the subnet (e.g. `10.0.0.0/24` with `/16`) or too large for the address family (e.g. `/40` for IPv4). An error is shown instead. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
 
+**Profiles**
+
+- Fixed `Enter` in the search box of the import result importing the profiles (default button). It filters the found profiles right away now, instead of after the delay while typing. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring
