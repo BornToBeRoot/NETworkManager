@@ -65,14 +65,16 @@ Right-clicking a result allows forwarding device information to another tool (e.
 
 | Action                                                                            | Description                                                                                                   |
 | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| **Port Scanner** / **Ping Monitor** / **Traceroute**                              | Opens the host (hostname if resolved, otherwise the IP address) in the tool                                  |
-| **DNS lookup...** > **IP address** / **Hostname**                                 | Looks up the IP address (`PTR`) or the hostname in [DNS Lookup](./dns-lookup)                                 |
-| **RDAP...** > **IP address** / **Hostname**                                       | Queries the registration data of the IP address or the registered domain of the hostname in [RDAP](./rdap)    |
-| **Remote Desktop** / **PowerShell** / **PuTTY** / **TigerVNC** / **SNMP**         | Opens the host (hostname if resolved, otherwise the IP address) in the tool                                  |
+| **Port Scanner** / **Ping Monitor** / **Traceroute**                              | Opens the host (DNS hostname if resolved, otherwise the IP address) in the tool                              |
+| **DNS lookup...** > **IP address** / **Hostname**                                 | Looks up the IP address (`PTR`) or the DNS hostname in [DNS Lookup](./dns-lookup)                             |
+| **RDAP...** > **IP address** / **Hostname**                                       | Queries the registration data of the IP address or the registered domain of the DNS hostname in [RDAP](./rdap) |
+| **Remote Desktop** / **PowerShell** / **PuTTY** / **TigerVNC** / **SNMP**         | Opens the host (DNS hostname if resolved, otherwise the IP address) in the tool                              |
 | **Custom commands**                                                               | Executes a [custom command](#custom-commands) for the host                                                    |
 | **Add profile...**                                                                | Creates a new profile with the host (IP address), the hostname as name and the MAC address for Wake on LAN    |
 | **Copy**                                                                          | Copies the selected information to the clipboard                                                              |
 | **Export...**                                                                     | Exports the selected or all results to a file                                                                 |
+
+A NetBIOS name (shown as hostname if there is no DNS hostname) is not passed to other tools, because it may not be resolvable via DNS - the IP address is used instead. **DNS lookup...** / **RDAP...** > **Hostname** are only available with a DNS hostname. In [custom commands](#custom-commands), `{{Hostname}}` is the shown hostname (DNS or NetBIOS).
 
 If multiple results are selected, only **Export...** is available.
 
@@ -269,10 +271,10 @@ Custom commands that can be executed with a right click on the selected result.
 
 In the arguments you can use the following placeholders:
 
-| Placeholder      | Description |
-| ---------------- | ------------ |
-| `{{IPAddress}}`  | IP address  |
-| `{{Hostname}}`   | Hostname    |
+| Placeholder      | Description                                          |
+| ---------------- | ---------------------------------------------------- |
+| `{{IPAddress}}`  | IP address                                           |
+| `{{Hostname}}`   | Hostname (DNS hostname, otherwise the NetBIOS name)  |
 
 :::note
 

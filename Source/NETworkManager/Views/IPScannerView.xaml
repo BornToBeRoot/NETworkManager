@@ -320,7 +320,7 @@
                         </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Hostname}"
                                   Command="{Binding PerformDNSLookupHostnameCommand}"
-                                  IsEnabled="{Binding Path=Data.(viewModels:IPScannerViewModel.SelectedResult).Hostname, Source={StaticResource BindingProxy}, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
+                                  IsEnabled="{Binding Path=Data.(viewModels:IPScannerViewModel.SelectedResult).DNSHostname, Source={StaticResource BindingProxy}, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -350,7 +350,7 @@
                         </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Hostname}"
                                   Command="{Binding PerformRDAPQueryHostnameCommand}"
-                                  IsEnabled="{Binding Path=Data.(viewModels:IPScannerViewModel.SelectedResult).Hostname, Source={StaticResource BindingProxy}, Converter={StaticResource HostnameHasDomainToBooleanConverter}}">
+                                  IsEnabled="{Binding Path=Data.(viewModels:IPScannerViewModel.SelectedResult).DNSHostname, Source={StaticResource BindingProxy}, Converter={StaticResource HostnameHasDomainToBooleanConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>

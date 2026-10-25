@@ -411,8 +411,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         if (name is not ApplicationName applicationName)
             return;
 
-        var host = !string.IsNullOrEmpty(SelectedResult.Hostname)
-            ? SelectedResult.Hostname
+        // Only a DNS hostname - a NetBIOS name (shown as fallback) may not be resolvable via DNS in the other tool
+        var host = !string.IsNullOrEmpty(SelectedResult.DNSHostname)
+            ? SelectedResult.DNSHostname
             : SelectedResult.PingInfo.IPAddress.ToString();
 
         NavigationManager.Open(new ApplicationRequest(applicationName) { Target = host });
@@ -435,7 +436,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void PerformDNSLookupHostnameAction()
     {
-        NavigationManager.Open(new DNSLookupRequest { Target = SelectedResult.Hostname });
+        NavigationManager.Open(new DNSLookupRequest { Target = SelectedResult.DNSHostname });
     }
 
     /// <summary>
@@ -455,7 +456,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void PerformRDAPQueryHostnameAction()
     {
-        NavigationManager.Open(new RDAPRequest { Target = SelectedResult.Hostname });
+        NavigationManager.Open(new RDAPRequest { Target = SelectedResult.DNSHostname });
     }
 
     /// <summary>

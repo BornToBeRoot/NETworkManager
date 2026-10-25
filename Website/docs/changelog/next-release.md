@@ -219,6 +219,7 @@ Release date: **xx.xx.2026**
 - Fixed **Edit** (`F2`) and **Delete** (`Del`) of a custom command in the settings being available without a selected command. The delete confirmation shows the name of the command. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Fixed columns, **Copy** menu entries and row details being shown or hidden according to the current settings instead of the settings the shown scan was started with (e.g. **MAC address** column shown, but empty, after enabling **Resolve MAC address and vendor** without a new scan). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed hostnames resolved via DNS (`PTR`) being shown with a trailing dot (e.g. `server.example.com.`), also in the export and when opened in another feature (e.g. **DNS Lookup**, **Remote Desktop**). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed a NetBIOS name (shown as hostname if there is no DNS hostname) being passed to other features (e.g. **Remote Desktop**, **Port Scanner**, **DNS Lookup**, **RDAP**), where it may not be resolvable via DNS. The DNS hostname is used, otherwise the IP address; **DNS lookup...** / **RDAP...** > **Hostname** need a DNS hostname. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the progress and the up / down counters possibly staying below the final values (e.g. 255 of 256 hosts scanned) when the results of several hosts arrived at the same time. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Port Scanner**
