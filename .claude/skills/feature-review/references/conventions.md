@@ -102,6 +102,12 @@ Reference: `HostsFileEditorView.xaml`, `FirewallView.xaml`.
   Other users: `RunCommandViewModel.Suggestions`. Not yet used (same `Clear()` + `ForEach(Results.Add)` pattern on every
   refresh / auto refresh): `ConnectionsViewModel`, `ListenersViewModel`, `NeighborTableViewModel`,
   `HostsFileEditorViewModel` — report as a performance finding when reviewing them.
+- Bindings on items that implement `INotifyPropertyChanged` (e.g. `IPScannerHostInfo`, view models via `BindingProxy`)
+  use **plain paths** (`IsPingPending`, `PingInfo.Status`, `Data.ScanOptions.ResolveHostname`), not the typed form
+  `(network:Type.Property)`. WPF registers a `PropertyChanged` listener with the property name the path parser stored;
+  for a typed part that name stays `null` if the owner type can't be resolved early (templates, child bindings of a
+  `MultiBinding`) → `ArgumentNullException` (`Parameter 'key'`) in `PropertyChangedEventManager.AddListener` as soon as
+  the item is shown. The typed form is only safe on plain (non-notifying) items.
 - Don't use a `Reset` for results that are *appended* while a scan runs (IP Scanner, Port Scanner, Traceroute): with a
   sorted view every `Reset` re-sorts the whole list and the grid loses its selection / scroll position. Those tools buffer
   results and flush them with a `DispatcherTimer` (reference: `IPScannerViewModel.FlushResultsBuffer`).
