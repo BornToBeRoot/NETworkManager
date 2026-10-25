@@ -255,7 +255,7 @@
             <TextBox Width="250"
                      Margin="20,0,0,0"
                      Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
-                     PreviewKeyDown="SearchTextBox_OnPreviewKeyDown"
+                     wpfHelpers:SearchTextBoxHelper.EnterCommand="{Binding ApplySearchCommand}"
                      Style="{StaticResource SearchTextBox}" />
         </StackPanel>
         <controls:MultiSelectDataGrid x:Name="DataGridResults"

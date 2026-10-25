@@ -903,9 +903,15 @@ public class PortScannerViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets the command to filter the results right away (Enter in the search box, see
+    /// <see cref="NETworkManager.Utilities.WPF.SearchTextBoxHelper"/>).
+    /// </summary>
+    public ICommand ApplySearchCommand => new RelayCommand(_ => ApplySearch());
+
+    /// <summary>
     /// Filters the results with the current <see cref="Search"/> right away (e.g. Enter in the search box).
     /// </summary>
-    public void ApplySearch()
+    private void ApplySearch()
     {
         _searchDispatcherTimer.Stop();
 
