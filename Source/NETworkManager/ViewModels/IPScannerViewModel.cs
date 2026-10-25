@@ -511,6 +511,29 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Gets the command to copy a value of all selected results (one per line, in the order shown in the grid).
+    /// Parameter: <c>IPAddress</c>, <c>Hostname</c> or <c>MACAddress</c>.
+    /// </summary>
+    public ICommand CopySelectedResultsCommand => new RelayCommand(CopySelectedResultsAction);
+
+    private void CopySelectedResultsAction(object parameter)
+    {
+        Func<IPScannerHostInfo, string> selector = parameter switch
+        {
+            "IPAddress" => x => x.PingInfo.IPAddress.ToString(),
+            "Hostname" => x => x.Hostname,
+            "MACAddress" => x => x.MACAddress,
+            _ => null
+        };
+
+        if (selector == null)
+            return;
+
+        ClipboardHelper.SetClipboard(string.Join(Environment.NewLine,
+            GetSelectedResultsInGridOrder().Select(selector).Where(x => !string.IsNullOrEmpty(x)).Distinct()));
+    }
+
+    /// <summary>
     /// Gets the command to export the scan results.
     /// </summary>
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
@@ -845,6 +868,18 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Gets the selected results in the order shown in the grid (<see cref="SelectedResults"/> is in the order they
+    /// were selected).
+    /// </summary>
+    /// <returns>Selected results.</returns>
+    private List<IPScannerHostInfo> GetSelectedResultsInGridOrder()
+    {
+        var selectedResults = new HashSet<IPScannerHostInfo>(SelectedResults.Cast<IPScannerHostInfo>());
+
+        return ResultsView.Cast<IPScannerHostInfo>().Where(selectedResults.Contains).ToList();
+    }
+
+    /// <summary>
     /// Exports the scan results.
     /// </summary>
     /// <returns>A task that represents the asynchronous operation.</returns>
@@ -864,12 +899,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 // Copy the results on the UI thread (they are still updated while a scan is running) and
                 // export the copies in the background, so a large export doesn't freeze the window. In the
                 // order shown in the grid (Results is in the order the hosts were found).
-                var viewResults = ResultsView.Cast<IPScannerHostInfo>();
-
                 var results = (instance.ExportAll
-                        ? viewResults
-                        : viewResults.Where(new HashSet<IPScannerHostInfo>(SelectedResults.Cast<IPScannerHostInfo>())
-                            .Contains))
+                        ? ResultsView.Cast<IPScannerHostInfo>()
+                        : GetSelectedResultsInGridOrder())
                     .Select(x => x.Clone()).ToList();
 
                 await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));

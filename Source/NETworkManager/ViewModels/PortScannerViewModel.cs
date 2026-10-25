@@ -422,6 +422,31 @@ public class PortScannerViewModel : ViewModelBase
             _ = Start();
     }
 
+    /// <summary>
+    /// Gets the command to copy a value of all selected results (one per line, in the order shown in the grid).
+    /// Parameter: <c>IPAddress</c>, <c>Hostname</c>, <c>Port</c> or <c>IPAddressPort</c> (<c>ip:port</c>).
+    /// </summary>
+    public ICommand CopySelectedResultsCommand => new RelayCommand(CopySelectedResultsAction);
+
+    private void CopySelectedResultsAction(object parameter)
+    {
+        Func<PortScannerPortInfo, string> selector = parameter switch
+        {
+            "IPAddress" => x => x.IPAddress.ToString(),
+            "Hostname" => x => x.Hostname,
+            "Port" => x => x.Port.ToString(),
+            // IPv6 in brackets, so the port can be separated
+            "IPAddressPort" => x => new IPEndPoint(x.IPAddress, x.Port).ToString(),
+            _ => null
+        };
+
+        if (selector == null)
+            return;
+
+        ClipboardHelper.SetClipboard(string.Join(Environment.NewLine,
+            GetSelectedResultsInGridOrder().Select(selector).Where(x => !string.IsNullOrEmpty(x)).Distinct()));
+    }
+
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()
@@ -630,6 +655,28 @@ public class PortScannerViewModel : ViewModelBase
         _cancellationTokenSource.Cancel();
     }
 
+    /// <summary>
+    /// Gets the results in the order shown in the grid: grouped by host, sorted within the group.
+    /// </summary>
+    /// <returns>Results.</returns>
+    private IEnumerable<PortScannerPortInfo> GetResultsInGridOrder()
+    {
+        return ResultsView.Groups.Cast<CollectionViewGroup>()
+            .SelectMany(group => group.Items.Cast<PortScannerPortInfo>());
+    }
+
+    /// <summary>
+    /// Gets the selected results in the order shown in the grid (<see cref="SelectedResults"/> is in the order they
+    /// were selected).
+    /// </summary>
+    /// <returns>Selected results.</returns>
+    private List<PortScannerPortInfo> GetSelectedResultsInGridOrder()
+    {
+        var selectedResults = new HashSet<PortScannerPortInfo>(SelectedResults.Cast<PortScannerPortInfo>());
+
+        return GetResultsInGridOrder().Where(selectedResults.Contains).ToList();
+    }
+
     private Task Export()
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -645,15 +692,10 @@ public class PortScannerViewModel : ViewModelBase
             {
                 // Copy the results on the UI thread (they may still change while a scan is running) and
                 // export them in the background, so a large export doesn't freeze the window. In the order
-                // shown in the grid: grouped by host, sorted within the group (Results is in the order the
-                // ports were finished).
-                var viewResults = ResultsView.Groups.Cast<CollectionViewGroup>()
-                    .SelectMany(group => group.Items.Cast<PortScannerPortInfo>());
-
+                // shown in the grid (Results is in the order the ports were finished).
                 var results = instance.ExportAll
-                    ? viewResults.ToList()
-                    : viewResults.Where(new HashSet<PortScannerPortInfo>(SelectedResults.Cast<PortScannerPortInfo>())
-                        .Contains).ToList();
+                    ? GetResultsInGridOrder().ToList()
+                    : GetSelectedResultsInGridOrder();
 
                 await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }

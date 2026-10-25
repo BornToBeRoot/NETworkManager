@@ -69,7 +69,7 @@ A scan of more than `65,536` ports (hosts × ports, e.g. 64 hosts with `1-1024`)
 | **Copy**      | Copies the selected information to the clipboard |
 | **Export...** | Exports the selected or all results to a file    |
 
-If multiple results are selected, only **Export...** is available.
+If multiple results are selected, **Copy** > **IP address** / **Hostname** / **Port** / **IP address:Port** (one value per line, in the order shown, without duplicates; IPv6 as `[address]:port`) and **Export...** are available.
 
 ### Result
 

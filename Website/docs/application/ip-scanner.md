@@ -76,7 +76,7 @@ Right-clicking a result allows forwarding device information to another tool (e.
 
 A NetBIOS name (shown as hostname if there is no DNS hostname) is not passed to other tools, because it may not be resolvable via DNS - the IP address is used instead. **DNS lookup...** / **RDAP...** > **Hostname** are only available with a DNS hostname. In [custom commands](#custom-commands), `{{Hostname}}` is the shown hostname (DNS or NetBIOS).
 
-If multiple results are selected, only **Export...** is available.
+If multiple results are selected, **Copy** > **IP address** / **Hostname** / **MAC address** (one value per line, in the order shown, without duplicates) and **Export...** are available.
 
 ### Result
 

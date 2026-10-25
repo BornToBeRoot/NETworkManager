@@ -532,6 +532,45 @@
                     </MenuItem>
                 </ContextMenu>
                 <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                    <MenuItem Header="{x:Static localization:Strings.CopyDots}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=ContentCopy}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                        <MenuItem Header="{x:Static localization:Strings.IPAddress}"
+                                  Command="{Binding CopySelectedResultsCommand}"
+                                  CommandParameter="IPAddress"
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static localization:Strings.Hostname}"
+                                  Command="{Binding CopySelectedResultsCommand}"
+                                  CommandParameter="Hostname"
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}">
+                            <MenuItem.Visibility>
+                                <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
+                                    <Binding Source="{StaticResource BindingProxy}"
+                                             Path="Data.(viewModels:IPScannerViewModel.ScanOptions).ResolveHostname" />
+                                    <Binding Source="{StaticResource BindingProxy}"
+                                             Path="Data.(viewModels:IPScannerViewModel.ScanOptions).NetBIOSEnabled" />
+                                </MultiBinding>
+                            </MenuItem.Visibility>
+                        </MenuItem>
+                        <MenuItem Header="{x:Static localization:Strings.MACAddress}"
+                                  Command="{Binding CopySelectedResultsCommand}"
+                                  CommandParameter="MACAddress"
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}">
+                            <MenuItem.Visibility>
+                                <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
+                                    <Binding Source="{StaticResource BindingProxy}"
+                                             Path="Data.(viewModels:IPScannerViewModel.ScanOptions).ResolveMACAddress" />
+                                    <Binding Source="{StaticResource BindingProxy}"
+                                             Path="Data.(viewModels:IPScannerViewModel.ScanOptions).NetBIOSEnabled" />
+                                </MultiBinding>
+                            </MenuItem.Visibility>
+                        </MenuItem>
+                    </MenuItem>
                     <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
