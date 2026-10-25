@@ -472,9 +472,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         ProfileInfo profileInfo = new()
         {
+            // Only displayed - also trim the dot a single-label name still has (e.g. "gateway.")
             Name = string.IsNullOrEmpty(SelectedResult.Hostname)
                 ? SelectedResult.PingInfo.IPAddress.ToString()
-                : SelectedResult.Hostname,
+                : SelectedResult.Hostname.TrimEnd('.'),
             Host = SelectedResult.PingInfo.IPAddress.ToString(),
 
             // Additional data
@@ -777,8 +778,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 return;
             }
 
-            // Replace vars
-            var hostname = SelectedResult.Hostname ?? "";
+            // Replace vars. Also trim the dot a single-label name still has (e.g. "gateway."), so Windows resolves
+            // it like a name typed by the user (DNS suffix search, LLMNR / NetBIOS)
+            var hostname = SelectedResult.Hostname?.TrimEnd('.') ?? "";
 
             // The hostname comes from the network (PTR record or NetBIOS name) and could contain characters
             // like "&" that would run additional commands (e.g. "cmd.exe /c ... {{Hostname}}") - only use valid ones
