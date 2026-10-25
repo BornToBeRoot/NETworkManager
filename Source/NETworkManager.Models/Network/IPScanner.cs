@@ -182,30 +182,51 @@ public sealed class IPScanner(IPScannerOptions options)
     }
 
     /// <summary>
-    ///     Result of <see cref="DiscoverAsync" />: the probes that decide if a host is reachable.
+    ///     Result of <see cref="DiscoverAsync" />: the probes that decide if a host is reachable. Immutable, the
+    ///     derived values are computed once.
     /// </summary>
-    /// <param name="PingInfo">Result of the ping (last attempt).</param>
-    /// <param name="Ports">All probed ports (also closed / timed out ones).</param>
-    /// <param name="NetBIOSInfo">Result of the NetBIOS request.</param>
-    /// <param name="DiscoveredAt">Time all probes were finished (UTC).</param>
-    private sealed record HostDiscovery(
-        PingInfo PingInfo,
-        List<PortInfo> Ports,
-        NetBIOSInfo NetBIOSInfo,
-        DateTime DiscoveredAt)
+    /// <param name="pingInfo">Result of the ping (last attempt).</param>
+    /// <param name="ports">All probed ports (also closed / timed out ones).</param>
+    /// <param name="netBIOSInfo">Result of the NetBIOS request.</param>
+    /// <param name="discoveredAt">Time all probes were finished (UTC).</param>
+    private sealed class HostDiscovery(
+        PingInfo pingInfo,
+        List<PortInfo> ports,
+        NetBIOSInfo netBIOSInfo,
+        DateTime discoveredAt)
     {
+        /// <summary>
+        ///     Result of the ping (last attempt).
+        /// </summary>
+        public PingInfo PingInfo { get; } = pingInfo;
+
+        /// <summary>
+        ///     All probed ports (also closed / timed out ones).
+        /// </summary>
+        public List<PortInfo> Ports { get; } = ports;
+
+        /// <summary>
+        ///     Result of the NetBIOS request.
+        /// </summary>
+        public NetBIOSInfo NetBIOSInfo { get; } = netBIOSInfo;
+
+        /// <summary>
+        ///     Time all probes were finished (UTC).
+        /// </summary>
+        public DateTime DiscoveredAt { get; } = discoveredAt;
+
         /// <summary>
         ///     Indicates whether any port is open.
         /// </summary>
-        public bool IsAnyPortOpen { get; } = Ports.Any(x => x.State == PortState.Open);
+        public bool IsAnyPortOpen { get; } = ports.Any(x => x.State == PortState.Open);
 
         /// <summary>
         ///     Indicates whether the host answered any probe.
         /// </summary>
-        public bool IsReachable { get; } = PingInfo.Status == IPStatus.Success || // ICMP response
+        public bool IsReachable { get; } = pingInfo.Status == IPStatus.Success || // ICMP response
                                            // Any port is open or the connection was refused (TCP reset)
-                                           Ports.Any(x => x.State is PortState.Open or PortState.Closed) ||
-                                           NetBIOSInfo.IsReachable; // NetBIOS response
+                                           ports.Any(x => x.State is PortState.Open or PortState.Closed) ||
+                                           netBIOSInfo.IsReachable; // NetBIOS response
     }
 
     /// <summary>
