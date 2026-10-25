@@ -2,6 +2,7 @@
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
+using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
@@ -276,6 +277,33 @@ public class PortScannerViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Delays filtering the results while the user is typing (see <see cref="Search"/>), so a large result is not
+    /// filtered on every key press.
+    /// </summary>
+    private readonly DispatcherTimer _searchDispatcherTimer = new();
+
+    /// <summary>
+    /// Gets or sets the search text for filtering the results (IP address, hostname, port, protocol, service, status).
+    /// The results are filtered after a short delay (see <see cref="_searchDispatcherTimer"/>).
+    /// </summary>
+    public string Search
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+
+            _searchDispatcherTimer.Stop();
+            _searchDispatcherTimer.Start();
+
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets the status message to display.
     /// </summary>
     public string StatusMessage
@@ -350,6 +378,31 @@ public class PortScannerViewModel : ViewModelBase
 
             return result != 0 ? result : x.Port.CompareTo(y.Port);
         });
+
+        // Results don't change after they were added, no live filtering needed
+        ResultsView.Filter = o =>
+        {
+            if (string.IsNullOrEmpty(Search))
+                return true;
+
+            if (o is not PortScannerPortInfo info)
+                return false;
+
+            bool Matches(string value) => value?.Contains(Search, StringComparison.OrdinalIgnoreCase) == true;
+
+            // The status is shown translated, so the translated text is searched as well
+            return Matches(info.IPAddress.ToString()) ||
+                   Matches(info.Hostname) ||
+                   Matches(info.Port.ToString()) ||
+                   Matches(info.LookupInfo.Protocol.ToString()) ||
+                   Matches(info.LookupInfo.Service) ||
+                   Matches(info.LookupInfo.Description) ||
+                   Matches(info.State.ToString()) ||
+                   Matches(ResourceTranslator.Translate(ResourceIdentifier.PortState, info.State));
+        };
+
+        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
+        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
 
         LoadSettings();
     }
@@ -731,6 +784,24 @@ public class PortScannerViewModel : ViewModelBase
     #endregion
 
     #region Events
+
+    /// <summary>
+    /// Filters the results once the user stopped typing (see <see cref="Search"/>).
+    /// </summary>
+    private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
+    {
+        ApplySearch();
+    }
+
+    /// <summary>
+    /// Filters the results with the current <see cref="Search"/> right away (e.g. Enter in the search box).
+    /// </summary>
+    public void ApplySearch()
+    {
+        _searchDispatcherTimer.Stop();
+
+        ResultsView.Refresh();
+    }
 
     /// <summary>
     /// Handles changes of the settings. While no results are shown, the columns etc. follow the current

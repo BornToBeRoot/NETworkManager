@@ -147,6 +147,33 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     } = [];
 
     /// <summary>
+    /// Delays filtering the results while the user is typing (see <see cref="Search"/>), so a large result is not
+    /// filtered on every key press.
+    /// </summary>
+    private readonly DispatcherTimer _searchDispatcherTimer = new();
+
+    /// <summary>
+    /// Gets or sets the search text for filtering the results (IP address, hostname, MAC address, vendor, ports).
+    /// The results are filtered after a short delay (see <see cref="_searchDispatcherTimer"/>).
+    /// </summary>
+    public string Search
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+
+            _searchDispatcherTimer.Stop();
+            _searchDispatcherTimer.Start();
+
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets the collection view for the scan results.
     /// </summary>
     public ICollectionView ResultsView { get; }
@@ -351,6 +378,35 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         // Custom comparer to sort by IP address
         ((ListCollectionView)ResultsView).CustomSort = Comparer<IPScannerHostInfo>.Create((x, y) =>
             IPAddressHelper.CompareIPAddresses(x.PingInfo.IPAddress, y.PingInfo.IPAddress));
+
+        ResultsView.Filter = o =>
+        {
+            if (string.IsNullOrEmpty(Search))
+                return true;
+
+            if (o is not IPScannerHostInfo info)
+                return false;
+
+            bool Matches(string value) => value?.Contains(Search, StringComparison.OrdinalIgnoreCase) == true;
+
+            return Matches(info.PingInfo.IPAddress.ToString()) ||
+                   Matches(info.Hostname) ||
+                   Matches(info.MACAddress) ||
+                   Matches(info.Vendor) ||
+                   info.Ports.Any(x => Matches(x.Port.ToString()) || Matches(x.LookupInfo.Service));
+        };
+
+        // Hostname, MAC address, vendor and ports arrive after the host was added - filter it again when they
+        // change (without live filtering a host found before its hostname arrived would stay hidden)
+        var liveShaping = (ICollectionViewLiveShaping)ResultsView;
+        liveShaping.IsLiveFiltering = true;
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Hostname));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MACAddress));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Vendor));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Ports));
+
+        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
+        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
     }
 
     /// <summary>
@@ -957,6 +1013,24 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     #endregion
 
     #region Events
+
+    /// <summary>
+    /// Filters the results once the user stopped typing (see <see cref="Search"/>).
+    /// </summary>
+    private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
+    {
+        ApplySearch();
+    }
+
+    /// <summary>
+    /// Filters the results with the current <see cref="Search"/> right away (e.g. Enter in the search box).
+    /// </summary>
+    public void ApplySearch()
+    {
+        _searchDispatcherTimer.Stop();
+
+        ResultsView.Refresh();
+    }
 
     /// <summary>
     /// Handles changes of the settings. While no results are shown, the columns etc. follow the current

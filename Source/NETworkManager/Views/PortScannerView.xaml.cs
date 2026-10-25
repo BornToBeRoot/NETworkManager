@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using NETworkManager.Controls;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
@@ -96,5 +97,19 @@ public partial class PortScannerView : IDragablzTabItem
 
             return direction == ListSortDirection.Ascending ? result : -result;
         }
+    }
+
+    /// <summary>
+    ///     Enter in the search box filters the results right away instead of starting a new scan (the scan button is
+    ///     the default button of the view).
+    /// </summary>
+    private void SearchTextBox_OnPreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key != Key.Enter)
+            return;
+
+        e.Handled = true;
+
+        _viewModel.ApplySearch();
     }
 }

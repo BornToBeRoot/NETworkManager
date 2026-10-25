@@ -75,13 +75,15 @@ If multiple results are selected, **Copy** > **IP address** / **Hostname** / **P
 
 The results are grouped by host and sorted by IP address and port. The number of open and closed ports is shown next to the **Result** header. A port is **open** if the connection was established, **closed** if the host refused the connection and **timed out** if there was no answer within the [timeout](#timeout-ms) (e.g. blocked by a firewall). Only open ports are shown, unless [Show closed ports](#show-closed-ports) is enabled. The **Hostname** column is shown if [Resolve hostname](#resolve-hostname) was enabled when the scan was started.
 
+The search box right of the **Result** header filters the results by IP address, hostname, port, protocol, service, description and status, also while the scan is running. **Export...** > all exports the filtered results; the open / closed counters always count all ports.
+
 ### Keyboard shortcuts
 
-| Key      | Action                         |
-| -------- | ------------------------------ |
-| `Enter`  | Start the scan                 |
-| `Esc`    | Cancel the running scan        |
-| `Ctrl+T` | Open a new tab                 |
+| Key      | Action                                                        |
+| -------- | ------------------------------------------------------------- |
+| `Enter`  | Start the scan (in the search box: filter the results)        |
+| `Esc`    | Cancel the running scan                                       |
+| `Ctrl+T` | Open a new tab                                                |
 
 ## Profile
 
