@@ -136,6 +136,12 @@ Reference: `HostsFileEditorView.xaml`, `FirewallView.xaml`.
 
 - Tool view: `Grid Margin="10"`, 10px spacer rows/columns. Header row: `HeaderTextBlock` left, refresh
   (`CleanButton` with `ReloadAnimationHelper.IsReloading`) and search (`SearchTextBox`, width 250) right.
+- Search box (`SearchTextBox`): filters while typing. Lists that can be large or slow to filter use a delay
+  (`DispatcherTimer` with `GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan`, reference: `FirewallViewModel`),
+  short fixed lists filter on every key press. `Enter` only filters: `wpfHelpers:SearchTextBoxHelper.EnterCommand`
+  (delayed search, e.g. `ApplySearchCommand` = stop the timer + `Refresh()`) or `SearchTextBoxHelper.HandleEnter="True"`
+  (immediate search), so `Enter` never triggers the default button of the view / dialog / window. Exception: the
+  profile panel search runs the selected profile on `Enter` (`ProfileExpanderPanel`).
 - Bottom row: secondary actions left (e.g. Open hosts file, Windows Firewall settings), primary action right
   (e.g. Add entry...), `ImageWithTextButton`.
 - Dialog: two-column grid (`1*`, 10, `2*`), 10px spacing between rows, OK (`HighlightedButton`, `IsDefault`)
