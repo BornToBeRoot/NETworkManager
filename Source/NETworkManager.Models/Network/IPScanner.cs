@@ -512,8 +512,9 @@ public sealed class IPScanner(IPScannerOptions options)
             if (_neighborTable.TryGetValue(ipAddress, out var macAddress))
                 return macAddress;
 
-            // Already read after the host answered -> no entry
-            if (_neighborTableTimestamp > discoveredAt)
+            // Already read after the host answered -> no entry. An unreachable host (MinValue) uses the cache only,
+            // also if the table was not read yet (MinValue > MinValue is false)
+            if (discoveredAt == DateTime.MinValue || _neighborTableTimestamp > discoveredAt)
                 return string.Empty;
 
             // Timestamp before reading the table, so entries created while reading are covered by the next read
