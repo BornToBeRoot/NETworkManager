@@ -215,7 +215,8 @@ public sealed class IPScanner(IPScannerOptions options)
             ? PortScanAsync(ipAddress, portScanParallelOptions, () => portAnswered.TrySetResult(), cancellationToken)
             : Task.FromResult(new List<PortInfo>());
 
-        var netBIOSTask = options.NetBIOSEnabled
+        // NetBIOS only exists over IPv4 - an IPv6 host would never answer and wait for the timeout
+        var netBIOSTask = options.NetBIOSEnabled && ipAddress.AddressFamily == AddressFamily.InterNetwork
             ? NetBIOSResolver.ResolveAsync(ipAddress, options.NetBIOSTimeout, cancellationToken)
             : Task.FromResult(new NetBIOSInfo(ipAddress));
 

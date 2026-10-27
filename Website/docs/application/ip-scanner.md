@@ -242,7 +242,7 @@ In a local network (LAN), `1` is enough. On an unreliable network (e.g. Wi-Fi, V
 
 ### Scan for NetBIOS
 
-Scan each IP address for NetBIOS information.
+Scan each IP address for NetBIOS information. Only IPv4 addresses are scanned, NetBIOS doesn't exist over IPv6.
 
 **Type:** `Boolean`
 

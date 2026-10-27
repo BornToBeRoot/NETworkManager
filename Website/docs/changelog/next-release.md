@@ -267,6 +267,7 @@ Release date: **xx.xx.2026**
 - Fixed the application crashing when the results were sorted by **MAC address** and a host had no MAC address (e.g. a host behind a router, or while the MAC address was still resolved). Hosts without a MAC address are shown at the end. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed the sort arrow of the previously sorted column still being shown after sorting by **IP address**, **MAC address** or **Time**. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed **Copy** > **Ports** being shown in the context menu with the port scan disabled (it copied nothing). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- Fixed IPv6 hosts waiting for the NetBIOS timeout (NetBIOS doesn't exist over IPv6). NetBIOS is only requested from IPv4 addresses. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed columns that couldn't be made wider (by dragging or double-clicking the gripper) if the window was not wide enough, e.g. to see a long hostname. The last column still fills the remaining width, other columns can now grow beyond the window with a horizontal scrollbar. This also applies to the custom commands in the settings. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
 **Port Scanner**
