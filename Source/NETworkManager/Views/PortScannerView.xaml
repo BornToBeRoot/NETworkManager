@@ -24,7 +24,6 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:IPAddressToStringConverter x:Key="IPAddressToStringConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
-        <converters:StringIsNotNullOrEmptyToVisibilityCollapsedConverter x:Key="StringIsNotNullOrEmptyToVisibilityCollapsedConverter" />
         <converters:PortStateToStringConverter x:Key="PortStateToStringConverter" />
         <converters:PortOpenStyleConverter x:Key="PortOpenStyleConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
@@ -83,34 +82,15 @@
                           x:Name="ComboBoxPorts"
                           ItemsSource="{Binding PortsSuggestions}"
                           TextSearch.TextPath="Text"
+                          ItemTemplate="{StaticResource PortScannerPortsSuggestionTemplate}"
                           mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}"
                           IsReadOnly="{Binding Path=IsRunning}"
                           controls:ComboBoxPasteBehavior.ConvertMultilineToSemicolon="True"
                           Style="{StaticResource HistoryComboBox}">
                     <!-- Port profiles (name and ports) and history, like the DNS servers of DNS Lookup -->
                     <ComboBox.GroupStyle>
-                        <GroupStyle>
-                            <GroupStyle.HeaderTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=Name}"
-                                               Style="{StaticResource DefaultTextBlock}"
-                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
-                                               Margin="5,5,5,2" />
-                                </DataTemplate>
-                            </GroupStyle.HeaderTemplate>
-                        </GroupStyle>
+                        <GroupStyle HeaderTemplate="{StaticResource ComboBoxGroupHeaderTemplate}" />
                     </ComboBox.GroupStyle>
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Path=Text}" />
-                                <TextBlock Text="{Binding Path=Ports}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}"
-                                           Margin="10,0,0,0"
-                                           Visibility="{Binding Path=Ports, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
                     <ComboBox.Text>
                         <Binding Path="Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>

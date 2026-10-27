@@ -79,6 +79,78 @@ public static class PortProfile
         return true;
     }
 
+    /// <summary>
+    ///     Replaces the names of port profiles in a ports input by references to their ID (e.g. "Webserver; 8080" ->
+    ///     "{8f1c...}; 8080"), so a profile still finds the port profile after it was renamed. Entries that are no
+    ///     port profile (ports, unknown names) are kept.
+    /// </summary>
+    /// <param name="input">Ports input (see <see cref="TryResolvePorts" />).</param>
+    /// <param name="portProfiles">Port profiles.</param>
+    /// <returns>Input with references, null if it contains no port profile.</returns>
+    public static string EncodeReferences(string input, IEnumerable<PortProfileInfo> portProfiles)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+            return null;
+
+        var hasReference = false;
+        List<string> entries = [];
+
+        foreach (var entry in input.Split(EntrySeparator))
+        {
+            var portProfile = PortRangeHelper.IsValidPortOrPortRange(entry) ? null : FindByName(portProfiles, entry);
+
+            if (portProfile == null || portProfile.Id == Guid.Empty)
+            {
+                entries.Add(entry.Trim());
+                continue;
+            }
+
+            entries.Add(portProfile.Id.ToString("B"));
+            hasReference = true;
+        }
+
+        return hasReference ? string.Join("; ", entries) : null;
+    }
+
+    /// <summary>
+    ///     Replaces the references in a ports input (see <see cref="EncodeReferences" />) by the current names of the
+    ///     port profiles (e.g. "{8f1c...}; 8080" -> "Webserver; 8080").
+    /// </summary>
+    /// <param name="inputWithReferences">Ports input with references.</param>
+    /// <param name="portProfiles">Port profiles.</param>
+    /// <param name="input">Ports input with the names of the port profiles, null if a port profile was not found.</param>
+    /// <returns>True if every referenced port profile was found.</returns>
+    public static bool TryDecodeReferences(string inputWithReferences, IEnumerable<PortProfileInfo> portProfiles,
+        out string input)
+    {
+        input = null;
+
+        if (string.IsNullOrWhiteSpace(inputWithReferences))
+            return false;
+
+        List<string> entries = [];
+
+        foreach (var entry in inputWithReferences.Split(EntrySeparator))
+        {
+            if (!Guid.TryParseExact(entry.Trim(), "B", out var id))
+            {
+                entries.Add(entry.Trim());
+                continue;
+            }
+
+            var portProfile = portProfiles.FirstOrDefault(x => x.Id == id);
+
+            if (portProfile == null)
+                return false;
+
+            entries.Add(portProfile.Name);
+        }
+
+        input = string.Join("; ", entries);
+
+        return true;
+    }
+
     public static List<PortProfileInfo> GetDefaultList()
     {
         return new List<PortProfileInfo>

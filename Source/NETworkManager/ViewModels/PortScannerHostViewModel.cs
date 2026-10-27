@@ -2,7 +2,9 @@ using Dragablz;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
+using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System;
@@ -137,19 +139,36 @@ public class PortScannerHostViewModel : ProfileHostViewModelBase
     /// <param name="host">The host to scan.</param>
     /// <param name="ports">The ports to scan.</param>
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
-    public void AddTab(string host = null, string ports = null, bool start = true)
+    /// <param name="message">Message shown below the input (e.g. a port profile of the profile was not found).</param>
+    public void AddTab(string host = null, string ports = null, bool start = true, string message = null)
     {
         var tabId = Guid.NewGuid();
 
         TabItems.Add(new DragablzTabItem(string.IsNullOrEmpty(host) ? Strings.NewTab : host,
-            new PortScannerView(tabId, host, ports, start), tabId));
+            new PortScannerView(tabId, host, ports, start, message), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
 
     public void AddTab(ProfileInfo profile, bool start = true)
     {
-        AddTab(profile.PortScanner_Host, profile.PortScanner_Ports, start: start);
+        // Port profiles with their current name and ports. A port profile that can't be found (deleted, or a profile
+        // file shared from another computer - port profiles are saved in the settings): the ports saved with the
+        // profile, with a note.
+        if (string.IsNullOrEmpty(profile.PortScanner_PortsInput))
+        {
+            AddTab(profile.PortScanner_Host, profile.PortScanner_Ports, start);
+        }
+        else if (PortProfile.TryDecodeReferences(profile.PortScanner_PortsInput,
+                     SettingsManager.Current.PortScanner_PortProfiles, out var ports))
+        {
+            AddTab(profile.PortScanner_Host, ports, start);
+        }
+        else
+        {
+            AddTab(profile.PortScanner_Host, profile.PortScanner_Ports, start,
+                Strings.PortProfileOfProfileNotFoundMessage);
+        }
     }
 
     #endregion

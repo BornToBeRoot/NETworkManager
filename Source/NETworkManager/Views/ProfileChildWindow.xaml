@@ -320,7 +320,7 @@
                                                                 Binding="{Binding Data.PortScanner_Enabled, Source={StaticResource BindingProxy}}"
                                                                 Value="True" />
                                                             <Condition
-                                                                Binding="{Binding ElementName=TextBoxPortScannerPorts, Path=(Validation.HasError)}"
+                                                                Binding="{Binding ElementName=ComboBoxPortScannerPorts, Path=(Validation.HasError)}"
                                                                 Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
@@ -1718,17 +1718,26 @@
                                     </TextBox.Style>
                                 </TextBox>
                                 <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.Ports}" />
-                                <TextBox x:Name="TextBoxPortScannerPorts" Grid.Column="2" Grid.Row="4"
-                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}">
-                                    <TextBox.Text>
+                                <!-- Port profiles (name and ports) and history, like the ports input of the Port Scanner -->
+                                <ComboBox x:Name="ComboBoxPortScannerPorts" Grid.Column="2" Grid.Row="4"
+                                          ItemsSource="{Binding PortScanner_PortsSuggestions}"
+                                          TextSearch.TextPath="Text"
+                                          ItemTemplate="{StaticResource PortScannerPortsSuggestionTemplate}"
+                                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}"
+                                          Style="{StaticResource HistoryComboBox}">
+                                    <ComboBox.GroupStyle>
+                                        <GroupStyle HeaderTemplate="{StaticResource ComboBoxGroupHeaderTemplate}" />
+                                    </ComboBox.GroupStyle>
+                                    <ComboBox.Text>
                                         <Binding Path="PortScanner_Ports" Mode="TwoWay"
                                                  UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <validators:EmptyOrPortRangeValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:PortsOrPortProfilesValidator AllowEmpty="True"
+                                                                                         ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                    </ComboBox.Text>
+                                </ComboBox>
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>
@@ -4321,7 +4330,7 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding PortScanner_Enabled}" Value="True" />
                                     <Condition
-                                        Binding="{Binding ElementName=TextBoxPortScannerPorts, Path=(Validation.HasError)}"
+                                        Binding="{Binding ElementName=ComboBoxPortScannerPorts, Path=(Validation.HasError)}"
                                         Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>

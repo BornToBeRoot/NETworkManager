@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                    xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls">
+                    xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
+                    xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters">
     <Style x:Key="DefaultComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MahApps.Styles.ComboBox}">
         <Setter Property="FontSize" Value="14" />
         <!--<Setter Property="BorderThickness" Value="0,0,0,1" />-->
@@ -22,4 +23,23 @@
         <Setter Property="controls:ComboBoxHistoryBehavior.KeepTextWhenSelectedItemIsRemoved" Value="True" />
         <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />
     </Style>
+
+    <!-- Ports input of the Port Scanner (tool, profile): port profiles (name and ports) and history, grouped -->
+    <converters:StringIsNotNullOrEmptyToVisibilityCollapsedConverter
+        x:Key="ComboBoxStringIsNotNullOrEmptyToVisibilityCollapsedConverter" />
+    <DataTemplate x:Key="ComboBoxGroupHeaderTemplate">
+        <TextBlock Text="{Binding Path=Name}"
+                   FontSize="14"
+                   Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                   Margin="5,5,5,2" />
+    </DataTemplate>
+    <DataTemplate x:Key="PortScannerPortsSuggestionTemplate">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Path=Text}" />
+            <TextBlock Text="{Binding Path=Ports}"
+                       Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                       Margin="10,0,0,0"
+                       Visibility="{Binding Path=Ports, Converter={StaticResource ComboBoxStringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
+        </StackPanel>
+    </DataTemplate>
 </ResourceDictionary>

@@ -63,6 +63,7 @@ public class ProfileInfo
         PortScanner_InheritHost = profile.PortScanner_InheritHost;
         PortScanner_Host = profile.PortScanner_Host;
         PortScanner_Ports = profile.PortScanner_Ports;
+        PortScanner_PortsInput = profile.PortScanner_PortsInput;
 
         // Ping Monitor
         PingMonitor_Enabled = profile.PingMonitor_Enabled;
@@ -310,7 +311,20 @@ public class ProfileInfo
     public bool PortScanner_Enabled { get; set; }
     public bool PortScanner_InheritHost { get; set; } = true;
     public string PortScanner_Host { get; set; }
+
+    /// <summary>
+    ///     Ports to scan (ports and port ranges). If port profiles were entered, their ports at the time the profile was
+    ///     saved - used if a port profile of <see cref="PortScanner_PortsInput" /> can't be found (e.g. a profile file
+    ///     from another computer, port profiles are saved in the settings).
+    /// </summary>
     public string PortScanner_Ports { get; set; }
+
+    /// <summary>
+    ///     Ports as entered, if they contain port profiles: port profiles are referenced by their ID (e.g.
+    ///     "{8f1c...}; 8080", see <c>PortProfile.EncodeReferences</c>), so they are also found after a rename. Null if no
+    ///     port profile was entered.
+    /// </summary>
+    public string PortScanner_PortsInput { get; set; }
 
     public bool PingMonitor_Enabled { get; set; }
     public bool PingMonitor_InheritHost { get; set; } = true;

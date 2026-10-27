@@ -89,7 +89,12 @@ public class ProfileViewModel : ViewModelBase
             : profileInfo.PortScanner_Enabled;
         PortScanner_InheritHost = profileInfo.PortScanner_InheritHost;
         PortScanner_Host = profileInfo.PortScanner_Host;
-        PortScanner_Ports = profileInfo.PortScanner_Ports;
+        // Port profiles with their current name (also after a rename). A port profile that can't be found (deleted, or
+        // a profile file from another computer): the ports saved with the profile.
+        PortScanner_Ports = PortProfile.TryDecodeReferences(profileInfo.PortScanner_PortsInput,
+            SettingsManager.Current.PortScanner_PortProfiles, out var portScannerPortsInput)
+            ? portScannerPortsInput
+            : profileInfo.PortScanner_Ports;
 
         // Ping Monitor
         PingMonitor_Enabled = editMode == ProfileEditMode.Add
@@ -733,6 +738,11 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    /// <summary>
+    /// Gets the port profiles and the ports history of the Port Scanner for the ports input (grouped).
+    /// </summary>
+    public ICollectionView PortScanner_PortsSuggestions { get; } = new PortScannerPortsSuggestions().View;
 
     public string PortScanner_Ports
     {

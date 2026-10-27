@@ -9158,6 +9158,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A port profile of this profile was not found, the ports saved with the profile are used. Port profiles are saved in the settings - if the profile file was shared from another computer, create the port profile here or edit the profile..
+        /// </summary>
+        public static string PortProfileOfProfileNotFoundMessage {
+            get {
+                return ResourceManager.GetString("PortProfileOfProfileNotFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Port profiles.
         /// </summary>
         public static string PortProfiles {

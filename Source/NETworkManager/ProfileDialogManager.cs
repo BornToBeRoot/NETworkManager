@@ -6,6 +6,7 @@ using NETworkManager.Models.Network;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.ViewModels;
 using NETworkManager.Views;
@@ -54,7 +55,14 @@ public static class ProfileDialogManager
             PortScanner_Host = instance.PortScanner_InheritHost
                 ? instance.Host?.Trim()
                 : instance.PortScanner_Host?.Trim(),
-            PortScanner_Ports = instance.PortScanner_Ports?.Trim(),
+            // Port profiles are referenced by their ID (found after a rename), their ports are saved as well (used if
+            // a port profile can't be found, e.g. a profile file from another computer)
+            PortScanner_Ports = PortProfile.TryResolvePorts(instance.PortScanner_Ports,
+                SettingsManager.Current.PortScanner_PortProfiles, out var portScannerPorts)
+                ? portScannerPorts
+                : instance.PortScanner_Ports?.Trim(),
+            PortScanner_PortsInput = PortProfile.EncodeReferences(instance.PortScanner_Ports,
+                SettingsManager.Current.PortScanner_PortProfiles),
 
             // Ping Monitor
             PingMonitor_Enabled = instance.PingMonitor_Enabled,

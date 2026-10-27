@@ -12,8 +12,16 @@ namespace NETworkManager.Validators;
 /// </summary>
 public class PortsOrPortProfilesValidator : ValidationRule
 {
+    /// <summary>
+    ///     An empty input is valid (e.g. the ports of a profile).
+    /// </summary>
+    public bool AllowEmpty { get; set; }
+
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
+        if (AllowEmpty && string.IsNullOrWhiteSpace(value as string))
+            return ValidationResult.ValidResult;
+
         return PortProfile.TryResolvePorts(value as string, SettingsManager.Current.PortScanner_PortProfiles, out _)
             ? ValidationResult.ValidResult
             : new ValidationResult(false, Strings.EnterValidPortsOrPortProfiles);

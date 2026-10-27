@@ -15,11 +15,12 @@ public partial class PortScannerView : IDragablzTabItem
 {
     private readonly PortScannerViewModel _viewModel;
 
-    public PortScannerView(Guid tabId, string host = null, string ports = null, bool start = true)
+    public PortScannerView(Guid tabId, string host = null, string ports = null, bool start = true,
+        string message = null)
     {
         InitializeComponent();
 
-        _viewModel = new PortScannerViewModel(tabId, host, ports, start);
+        _viewModel = new PortScannerViewModel(tabId, host, ports, start, message);
 
         DataContext = _viewModel;
 

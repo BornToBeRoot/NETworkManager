@@ -67,6 +67,9 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // Ports of the last scan as entered (e.g. "22; 80; 443"), for a profile created from a result
     private string _lastPortsInput;
 
+    // Message of the tab, shown until the first scan has started (see constructor)
+    private string _message;
+
     // Rescan of shown hosts (see RescanSelectedHosts): their rows are removed and added again by the rescan. The
     // counters are the ones of the other hosts (base) plus the ones of the rescan; the progress of the last scan is
     // restored afterwards.
@@ -417,9 +420,20 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="host">The initial host to scan.</param>
     /// <param name="port">The initial ports to scan.</param>
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
-    public PortScannerViewModel(Guid tabId, string host, string port, bool start = true)
+    /// <param name="message">
+    ///     Message shown below the input, also with the first scan (e.g. a port profile of the profile was not found).
+    /// </param>
+    public PortScannerViewModel(Guid tabId, string host, string port, bool start = true, string message = null)
     {
         _firstLoad = start;
+
+        if (!string.IsNullOrEmpty(message))
+        {
+            _message = message;
+
+            StatusMessage = message;
+            IsStatusMessageDisplayed = true;
+        }
 
         ConfigurationManager.Current.PortScannerTabCount++;
 
@@ -739,6 +753,15 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
+
+        // Message of the tab (see constructor): still shown with the first scan
+        if (_message != null)
+        {
+            StatusMessage = _message;
+            IsStatusMessageDisplayed = true;
+
+            _message = null;
+        }
 
         IsRunning = true;
         PreparingScan = true;

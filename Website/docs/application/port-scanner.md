@@ -130,7 +130,7 @@ See also the [Port Scanner](./port-scanner) example inputs for more information 
 
 ### Ports
 
-TCP ports to scan each host for.
+TCP ports to scan each host for: ports, port ranges and names of [port profiles](#port-profiles) (selectable in the list).
 
 **Type:** `String`
 
@@ -140,6 +140,13 @@ TCP ports to scan each host for.
 
 - `1-1024`
 - `80; 443; 8080; 8443`
+- `Webserver; Database; 8080`
+
+:::note
+
+A port profile is referenced by the profile, so changes to the port profile apply to the profile, also if it is renamed. Its ports are saved with the profile as well: if the port profile can't be found (it was deleted, or the profile file is shared from another computer - port profiles are saved in the settings of each computer), the saved ports are used and a note is shown.
+
+:::
 
 :::note
 

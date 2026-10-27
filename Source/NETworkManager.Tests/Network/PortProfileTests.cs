@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models.Network;
+﻿using System;
+using NETworkManager.Models.Network;
 using Xunit;
 
 namespace NETworkManager.Tests.Network;
@@ -37,6 +38,43 @@ public class PortProfileTests
     {
         Assert.False(PortProfile.TryResolvePorts(input, PortProfiles, out var ports));
         Assert.Null(ports);
+    }
+
+    [Fact]
+    public void EncodeReferences_ReplacesNamesById()
+    {
+        var input = PortProfile.EncodeReferences("webserver; 8080; Database", PortProfiles);
+
+        Assert.Equal($"{PortProfiles[0].Id:B}; 8080; {PortProfiles[2].Id:B}", input);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("22; 80")]
+    [InlineData("Unknown")]
+    public void EncodeReferences_NullWithoutPortProfile(string input)
+    {
+        Assert.Null(PortProfile.EncodeReferences(input, PortProfiles));
+    }
+
+    [Fact]
+    public void DecodeReferences_CurrentNameAfterRename()
+    {
+        var portProfile = new PortProfileInfo("Web", "80");
+        var input = PortProfile.EncodeReferences("Web; 22", [portProfile]);
+
+        portProfile.Name = "Web (renamed)";
+
+        Assert.True(PortProfile.TryDecodeReferences(input, [portProfile], out var decoded));
+        Assert.Equal("Web (renamed); 22", decoded);
+    }
+
+    [Fact]
+    public void DecodeReferences_FalseIfPortProfileIsMissing()
+    {
+        Assert.False(PortProfile.TryDecodeReferences($"{Guid.NewGuid():B}; 22", PortProfiles, out var decoded));
+        Assert.Null(decoded);
     }
 
     [Theory]
