@@ -8708,15 +8708,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open port profiles....
-        /// </summary>
-        public static string OpenPortProfilesDots {
-            get {
-                return ResourceManager.GetString("OpenPortProfilesDots", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Open project.
         /// </summary>
         public static string OpenProject {
@@ -12278,15 +12269,6 @@ namespace NETworkManager.Localization.Resources {
         public static string SelectOIDProfile {
             get {
                 return ResourceManager.GetString("SelectOIDProfile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Select port profile.
-        /// </summary>
-        public static string SelectPortProfile {
-            get {
-                return ResourceManager.GetString("SelectPortProfile", resourceCulture);
             }
         }
         
