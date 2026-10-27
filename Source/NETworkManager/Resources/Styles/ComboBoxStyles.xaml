@@ -24,21 +24,27 @@
         <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />
     </Style>
 
-    <!-- Input with profiles (name and description, e.g. ports) and history, grouped - see InputSuggestions -->
+    <!-- Input with history and profiles (name and description, e.g. ports), grouped - see InputSuggestions. Looks like
+         the suggestions of the run command (group header, profile in two lines). -->
     <converters:StringIsNotNullOrEmptyToVisibilityCollapsedConverter
         x:Key="ComboBoxStringIsNotNullOrEmptyToVisibilityCollapsedConverter" />
     <DataTemplate x:Key="ComboBoxGroupHeaderTemplate">
         <TextBlock Text="{Binding Path=Name}"
                    FontSize="14"
-                   Foreground="{DynamicResource MahApps.Brushes.Gray5}"
-                   Margin="5,5,5,2" />
+                   Foreground="{DynamicResource MahApps.Brushes.Gray3}"
+                   Margin="5,10,0,5" />
     </DataTemplate>
     <DataTemplate x:Key="InputSuggestionTemplate">
-        <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding Path=Text}" />
+        <!-- As wide as the ComboBox (the drop down would grow with a long description), long text is trimmed -->
+        <StackPanel Margin="0,2,0,2"
+                    MaxWidth="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}">
+            <TextBlock Text="{Binding Path=Text}"
+                       TextTrimming="CharacterEllipsis" />
+            <!-- Profile: description (e.g. ports, IP addresses) in the second line -->
             <TextBlock Text="{Binding Path=Description}"
+                       ToolTip="{Binding Path=Description}"
                        Foreground="{DynamicResource MahApps.Brushes.Gray5}"
-                       Margin="10,0,0,0"
+                       TextTrimming="CharacterEllipsis"
                        Visibility="{Binding Path=Description, Converter={StaticResource ComboBoxStringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
         </StackPanel>
     </DataTemplate>

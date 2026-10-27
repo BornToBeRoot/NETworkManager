@@ -31,8 +31,9 @@ public sealed record InputSuggestion(string Text, string Description, string Gro
 }
 
 /// <summary>
-///     Profiles and history for an input (an editable ComboBox like the ports of the Port Scanner or the DNS server of
-///     DNS Lookup): the profiles and the history, grouped, and the names of the profiles for the Tab completion.
+///     History and profiles for an input (an editable ComboBox like the ports of the Port Scanner or the DNS server of
+///     DNS Lookup): the history first (recently used, at most the number of history entries, a single profile name is
+///     not added), then the profiles, grouped, and the names of the profiles for the Tab completion.
 ///     Updated when the profiles or the history change (weak events, the list doesn't keep a closed tab or dialog
 ///     alive).
 /// </summary>
@@ -97,7 +98,7 @@ public sealed class InputSuggestions
     }
 
     /// <summary>
-    ///     Gets the view of the entries, grouped (profiles, history).
+    ///     Gets the view of the entries, grouped (history, profiles).
     /// </summary>
     public ICollectionView View { get; }
 
@@ -118,8 +119,10 @@ public sealed class InputSuggestions
 
         ProfileNames.ReplaceAll(profiles.Select(x => x.Name));
 
-        _suggestions.ReplaceAll(profiles
-            .Select(x => new InputSuggestion(x.Name, x.Description, _profilesGroup))
-            .Concat(_history.Select(x => new InputSuggestion(x, null, Strings.History))));
+        // History first: the recently used inputs (few, usually custom ones) are visible without scrolling below the
+        // profiles; the groups are shown in the order of their first entry
+        _suggestions.ReplaceAll(_history
+            .Select(x => new InputSuggestion(x, null, Strings.History))
+            .Concat(profiles.Select(x => new InputSuggestion(x.Name, x.Description, _profilesGroup))));
     }
 }
