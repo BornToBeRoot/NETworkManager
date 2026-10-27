@@ -1098,11 +1098,71 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return;
         }
 
-        foreach (var row in oldRows)
-            Results.Remove(row);
+        try
+        {
+            foreach (var row in oldRows)
+                Results.Remove(row);
 
-        foreach (var row in rows)
-            AddResult(row);
+            foreach (var row in rows)
+                AddResult(row);
+        }
+        catch (ArgumentException ex) when (IsGroupVirtualizationSizeException(ex))
+        {
+            Log.Warn("Replacing the results of hosts failed in WPF (collapsed groups), the results are reset.", ex);
+
+            // Rows of the hosts (old, not yet removed or already added) replaced at once, counted again
+            foreach (var ipAddress in ipAddresses)
+                OpenPortsPerHost.Remove(ipAddress);
+
+            foreach (var row in rows)
+                CountOpenPort(row);
+
+            Results.ReplaceAll(Results.Where(x => !ipAddresses.Contains(x.IPAddress)).Concat(rows));
+        }
+    }
+
+    /// <summary>
+    /// Adds results one by one (see <see cref="AddResult"/>). If WPF fails to add a row (see
+    /// <see cref="IsGroupVirtualizationSizeException"/>), the remaining results are added with one reset.
+    /// </summary>
+    /// <param name="results">Results to add.</param>
+    private void AddResults(IReadOnlyList<PortScannerPortInfo> results)
+    {
+        for (var i = 0; i < results.Count; i++)
+        {
+            try
+            {
+                AddResult(results[i]);
+            }
+            catch (ArgumentException ex) when (IsGroupVirtualizationSizeException(ex))
+            {
+                Log.Warn("Adding a result failed in WPF (collapsed groups), the results are reset.", ex);
+
+                // The row is already in the results (the exception comes from the notification of the view), the
+                // reset rebuilds the view and its containers
+                var remaining = results.Skip(i + 1).ToList();
+
+                foreach (var result in remaining)
+                    CountOpenPort(result);
+
+                Results.ReplaceAll(Results.Concat(remaining));
+
+                return;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Checks if an exception is the WPF bug of the virtualization with grouping: <c>VirtualizingStackPanel</c>
+    /// computes a negative average row size while rows are added / removed and groups are collapsed (e.g. during a
+    /// scan) and throws "Width and Height must be non-negative" (<see cref="Size"/>). Also on <c>main</c> (grouping,
+    /// <c>IsVirtualizingWhenGrouping</c>, collapsible group headers).
+    /// </summary>
+    /// <param name="exception">Exception thrown while a row was added or removed.</param>
+    /// <returns>True if it is this WPF exception.</returns>
+    private static bool IsGroupVirtualizationSizeException(ArgumentException exception)
+    {
+        return exception.TargetSite?.DeclaringType == typeof(Size);
     }
 
     /// <summary>
@@ -1339,8 +1399,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return;
         }
 
-        foreach (var item in itemsToAdd)
-            AddResult(item);
+        AddResults(itemsToAdd);
     }
 
     private void ProgressChanged(object sender, ProgressChangedArgs e)
