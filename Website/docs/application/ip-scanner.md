@@ -284,11 +284,17 @@ Custom commands that can be executed with a right click on the selected result.
 
 **Default:**
 
-| Name                  | File path      | Arguments                                        |
-| --------------------- | -------------- | ------------------------------------------------- |
-| Edge                  | `cmd.exe`      | `/c start microsoft-edge:http://{{IPAddress}}/`  |
-| Edge (https)          | `cmd.exe`      | `/c start microsoft-edge:https://{{IPAddress}}/` |
-| Windows Explorer (c$) | `explorer.exe` | `\\{{IPAddress}}\c$`                             |
+| Name                      | File path      | Arguments                                        |
+| ------------------------- | -------------- | ------------------------------------------------ |
+| Edge                      | `cmd.exe`      | `/c start microsoft-edge:http://{{IPAddress}}/`  |
+| Edge (https)              | `cmd.exe`      | `/c start microsoft-edge:https://{{IPAddress}}/` |
+| Windows Explorer (c$)     | `explorer.exe` | `\\{{IPAddress}}\c$`                             |
+| Windows Explorer (shares) | `explorer.exe` | `\\{{IPAddress}}`                                |
+| Computer Management       | `mmc.exe`      | `compmgmt.msc /computer:\\{{IPAddress}}`         |
+| Event Viewer              | `eventvwr.exe` | `\\{{IPAddress}}`                                |
+| System Information        | `msinfo32.exe` | `/computer {{IPAddress}}`                        |
+
+Computer Management, Event Viewer and System Information need administrative rights on the remote computer.
 
 In the arguments you can use the following placeholders:
 
