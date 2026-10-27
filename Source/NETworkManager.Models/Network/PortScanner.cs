@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -34,6 +35,7 @@ public sealed class PortScanner
     private int _progressValue;
     private readonly InterlockedCounter _portsOpen = new();
     private readonly InterlockedCounter _portsClosed = new();
+    private readonly ConcurrentDictionary<IPAddress, InterlockedCounter> _portsClosedPerHost = new();
 
     private readonly PortScannerOptions _options;
 
@@ -54,6 +56,17 @@ public sealed class PortScanner
     ///     read from any thread while the scan is running.
     /// </summary>
     public int PortsClosed => _portsClosed.Value;
+
+    /// <summary>
+    ///     Gets the number of closed (or timed out) ports per host scanned so far, only hosts with a closed port. Closed
+    ///     ports are only raised in <see cref="PortScanned" /> if they are shown - e.g. a rescan of some hosts needs
+    ///     them to keep the counters of the other hosts.
+    /// </summary>
+    /// <returns>Number of closed ports per IP address.</returns>
+    public Dictionary<IPAddress, int> GetPortsClosedPerHost()
+    {
+        return _portsClosedPerHost.ToDictionary(x => x.Key, x => x.Value.Value);
+    }
 
     #endregion
 
@@ -150,9 +163,15 @@ public sealed class PortScanner
                         // Count open/closed ports unconditionally, since ShowAllResults (below)
                         // may prevent closed ports from ever reaching PortScanned
                         if (portState == PortState.Open)
+                        {
                             _portsOpen.Increment();
+                        }
                         else
+                        {
                             _portsClosed.Increment();
+                            _portsClosedPerHost.GetOrAdd(host.ipAddress, static _ => new InterlockedCounter())
+                                .Increment();
+                        }
 
                         if (_options.ShowAllResults || portState == PortState.Open)
                             OnPortScanned(new PortScannerPortScannedArgs(

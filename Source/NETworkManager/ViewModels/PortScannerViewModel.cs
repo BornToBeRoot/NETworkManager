@@ -77,6 +77,14 @@ public class PortScannerViewModel : ViewModelBase
     private int _rescanPortsOpen;
     private int _rescanPortsClosed;
 
+    // Ports of the last scan without the rescanned hosts, the ports of the rescan are added when it is finished
+    private int _rescanBasePortsScanned;
+
+    // Closed (or timed out) ports per host of the shown result. Closed ports are not shown unless enabled - a rescan
+    // needs them to keep the counters of the other hosts (also if the last scan was canceled before all ports of a
+    // host were scanned)
+    private readonly Dictionary<IPAddress, int> _portsClosedPerHost = [];
+
     /// <summary>
     /// Gets or sets the host to scan.
     /// </summary>
@@ -659,6 +667,7 @@ public class PortScannerViewModel : ViewModelBase
         }
 
         Results.Clear();
+        _portsClosedPerHost.Clear();
 
         // No results are shown until the scan's options are known - follow the current settings
         ScanOptions = CreateScanOptions();
@@ -751,13 +760,17 @@ public class PortScannerViewModel : ViewModelBase
 
         ReplaceResults(rescannedIPAddresses, []);
 
-        // Every host was scanned with all ports: the other hosts keep their counters
         var rescanPortCount = ipAddresses.Count * _lastPorts.Length;
+
+        // The other hosts keep their counters: without the open (all shown) and closed ports of the rescanned hosts
+        var removedPortsOpen = _rescanRemovedRows.Count(x => x.State == PortState.Open);
+        var removedPortsClosed = ipAddresses.Sum(x => _portsClosedPerHost.GetValueOrDefault(x));
 
         _rescanPortsToScan = PortsToScan;
         _rescanPortsScanned = PortsScanned;
-        _rescanBasePortsOpen = Results.Count(x => x.State == PortState.Open);
-        _rescanBasePortsClosed = Math.Max(0, PortsScanned - rescanPortCount - _rescanBasePortsOpen);
+        _rescanBasePortsOpen = Math.Max(0, PortsOpen - removedPortsOpen);
+        _rescanBasePortsClosed = Math.Max(0, PortsClosed - removedPortsClosed);
+        _rescanBasePortsScanned = Math.Max(0, PortsScanned - removedPortsOpen - removedPortsClosed);
         _isRescan = true;
 
         IsStatusMessageDisplayed = false;
@@ -1073,26 +1086,46 @@ public class PortScannerViewModel : ViewModelBase
 
             FlushProgress();
 
+            // Canceled / failed rescan: keep the previous results of the hosts (their rows were removed when the
+            // rescan started, only some ports were scanned again)
+            var isRescanDiscarded = _isRescan && (e.IsCanceled || e.Exception != null);
+
+            // Closed ports per host of the shown result (of a rescan: replace the ones of the rescanned hosts)
+            if (sender is PortScanner closedPortsScanner && !isRescanDiscarded)
+            {
+                if (_isRescan)
+                {
+                    foreach (var ipAddress in _rescanIPAddresses)
+                        _portsClosedPerHost.Remove(ipAddress);
+                }
+
+                foreach (var (ipAddress, count) in closedPortsScanner.GetPortsClosedPerHost())
+                    _portsClosedPerHost[ipAddress] = count;
+            }
+
             // Rescan: back to the progress of the last scan (open / closed include the rescan)
             if (_isRescan)
             {
                 _isRescan = false;
 
-                // Canceled / failed rescan: keep the previous results of the hosts (their rows were removed when the
-                // rescan started, only some ports were scanned again)
-                if (e.IsCanceled || e.Exception != null)
+                if (isRescanDiscarded)
                 {
                     ReplaceResults(_rescanIPAddresses, _rescanRemovedRows);
 
                     PortsOpen = _rescanPortsOpen;
                     PortsClosed = _rescanPortsClosed;
+                    PortsScanned = _rescanPortsScanned;
+                }
+                else
+                {
+                    // Ports of the other hosts + ports of the rescan
+                    PortsScanned = _rescanBasePortsScanned + PortsScanned;
                 }
 
                 _rescanIPAddresses = null;
                 _rescanRemovedRows = null;
 
                 PortsToScan = _rescanPortsToScan;
-                PortsScanned = _rescanPortsScanned;
             }
 
             if (e.IsCanceled)
