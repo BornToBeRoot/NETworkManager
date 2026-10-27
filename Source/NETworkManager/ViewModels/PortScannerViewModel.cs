@@ -37,7 +37,8 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     /// <summary>
     /// Maximum effort (changed rows x all rows) to remove / add the rows one by one when the results of hosts are
-    /// replaced (rescan), see <see cref="ReplaceResults"/>. E.g. 1,000 rows of 10,000 or 10 rows of 1,000,000.
+    /// replaced (rescan, see <see cref="ReplaceResults"/>) or buffered results are added (see
+    /// <see cref="FlushResultsBuffer"/>). E.g. 1,000 rows of 10,000 or 10 rows of 1,000,000. Above, with one reset.
     /// </summary>
     private const long MaxRowChangesOneByOne = 10_000_000;
 
@@ -1317,13 +1318,29 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             _resultsBuffer.Clear();
         }
 
-        foreach (var item in itemsToAdd)
+        if (_rescanPortRows != null)
         {
-            if (_rescanPortRows != null)
+            foreach (var item in itemsToAdd)
                 ApplyPortRescanResult(item);
-            else
-                AddResult(item);
+
+            return;
         }
+
+        // Many rows (e.g. 1-65535 with closed ports shown): with one reset instead of one by one - WPF inserts every
+        // added row into its group of the sorted view with a linear search of the group (rows x rows, the window hung
+        // for minutes). A reset sorts and groups all rows once.
+        if ((long)itemsToAdd.Count * (Results.Count + itemsToAdd.Count) > MaxRowChangesOneByOne)
+        {
+            foreach (var item in itemsToAdd)
+                CountOpenPort(item);
+
+            Results.ReplaceAll(Results.Concat(itemsToAdd));
+
+            return;
+        }
+
+        foreach (var item in itemsToAdd)
+            AddResult(item);
     }
 
     private void ProgressChanged(object sender, ProgressChangedArgs e)
