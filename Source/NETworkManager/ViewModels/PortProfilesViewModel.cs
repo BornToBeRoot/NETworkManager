@@ -26,20 +26,13 @@ public class PortProfilesViewModel : ViewModelBase
     /// <param name="cancelHandler">The action to execute when the Cancel command is invoked.</param>
     public PortProfilesViewModel(Action<PortProfilesViewModel> okCommand, Action<PortProfilesViewModel> cancelHandler)
     {
-        // Clear the filter on close so it doesn't leak into other views sharing this collection's default view.
         // Only with a selected profile - also for Enter in the grid (the OK button is disabled without a selection)
-        OKCommand = new RelayCommand(_ =>
-        {
-            PortProfiles.Filter = null;
-            okCommand(this);
-        }, _ => SelectedPortProfiles.Count > 0);
-        CancelCommand = new RelayCommand(_ =>
-        {
-            PortProfiles.Filter = null;
-            cancelHandler(this);
-        });
+        OKCommand = new RelayCommand(_ => okCommand(this), _ => SelectedPortProfiles.Count > 0);
+        CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
-        PortProfiles = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortProfiles);
+        // Own view (not the default view of the collection, which the settings show too) - sort and filter only
+        // apply to this dialog
+        PortProfiles = new CollectionViewSource { Source = SettingsManager.Current.PortScanner_PortProfiles }.View;
         PortProfiles.SortDescriptions.Add(
             new SortDescription(nameof(PortProfileInfo.Name), ListSortDirection.Ascending));
         PortProfiles.Filter = o =>
