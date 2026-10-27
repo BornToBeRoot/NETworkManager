@@ -739,7 +739,7 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
-    private readonly PortScannerPortsSuggestions _portScannerPortsSuggestions = new();
+    private readonly InputSuggestions _portScannerPortsSuggestions = InputSuggestions.ForPortScannerPorts();
 
     /// <summary>
     /// Gets the port profiles and the ports history of the Port Scanner for the ports input (grouped).
@@ -749,7 +749,7 @@ public class ProfileViewModel : ViewModelBase
     /// <summary>
     /// Gets the names of the port profiles for the Tab completion of the ports input of the Port Scanner.
     /// </summary>
-    public IEnumerable<string> PortScanner_PortProfileNames => _portScannerPortsSuggestions.PortProfileNames;
+    public IEnumerable<string> PortScanner_PortProfileNames => _portScannerPortsSuggestions.ProfileNames;
 
     public string PortScanner_Ports
     {

@@ -24,7 +24,7 @@
         <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />
     </Style>
 
-    <!-- Ports input of the Port Scanner (tool, profile): port profiles (name and ports) and history, grouped -->
+    <!-- Input with profiles (name and description, e.g. ports) and history, grouped - see InputSuggestions -->
     <converters:StringIsNotNullOrEmptyToVisibilityCollapsedConverter
         x:Key="ComboBoxStringIsNotNullOrEmptyToVisibilityCollapsedConverter" />
     <DataTemplate x:Key="ComboBoxGroupHeaderTemplate">
@@ -33,13 +33,13 @@
                    Foreground="{DynamicResource MahApps.Brushes.Gray5}"
                    Margin="5,5,5,2" />
     </DataTemplate>
-    <DataTemplate x:Key="PortScannerPortsSuggestionTemplate">
+    <DataTemplate x:Key="InputSuggestionTemplate">
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="{Binding Path=Text}" />
-            <TextBlock Text="{Binding Path=Ports}"
+            <TextBlock Text="{Binding Path=Description}"
                        Foreground="{DynamicResource MahApps.Brushes.Gray5}"
                        Margin="10,0,0,0"
-                       Visibility="{Binding Path=Ports, Converter={StaticResource ComboBoxStringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
+                       Visibility="{Binding Path=Description, Converter={StaticResource ComboBoxStringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

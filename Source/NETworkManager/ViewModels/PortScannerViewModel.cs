@@ -132,7 +132,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }
     }
 
-    private readonly PortScannerPortsSuggestions _portsSuggestions = new();
+    private readonly InputSuggestions _portsSuggestions = InputSuggestions.ForPortScannerPorts();
 
     /// <summary>
     /// Gets the port profiles and the ports history for the ports input (grouped).
@@ -142,7 +142,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <summary>
     /// Gets the names of the port profiles for the Tab completion of the ports input.
     /// </summary>
-    public IEnumerable<string> PortProfileNames => _portsSuggestions.PortProfileNames;
+    public IEnumerable<string> PortProfileNames => _portsSuggestions.ProfileNames;
 
     /// <summary>
     /// Gets or sets a value indicating whether the scan is currently running.
