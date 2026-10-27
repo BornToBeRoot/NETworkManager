@@ -18,6 +18,7 @@
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:PortScannerGroupOpenPortsConverter x:Key="PortScannerGroupOpenPortsConverter" />
         <converters:HostnameHasDomainToBooleanConverter x:Key="HostnameHasDomainToBooleanConverter" />
         <converters:StringIsNotNullOrEmptyToBooleanConverter x:Key="StringIsNotNullOrEmptyToBooleanConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
@@ -587,6 +588,24 @@
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="{Binding Path=(CollectionViewGroup.Name)}"
                                                                Style="{DynamicResource ResourceKey=DefaultTextBlock}" />
+                                                    <TextBlock Text="·"
+                                                               Style="{DynamicResource ResourceKey=DefaultTextBlock}"
+                                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                                               Margin="6,0,6,0" />
+                                                    <!-- Open ports of the host, also while the scan is running -->
+                                                    <TextBlock Style="{DynamicResource ResourceKey=DefaultTextBlock}"
+                                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                                                        <TextBlock.Text>
+                                                            <MultiBinding
+                                                                Converter="{StaticResource PortScannerGroupOpenPortsConverter}">
+                                                                <Binding />
+                                                                <Binding Path="ItemCount" />
+                                                                <Binding Path="Data.OpenPortsPerHost"
+                                                                         Source="{StaticResource BindingProxy}" />
+                                                                <Binding Source="{x:Static localization:Strings.XOpen}" />
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
                                                 </StackPanel>
                                             </Expander.Header>
                                             <ItemsPresenter />

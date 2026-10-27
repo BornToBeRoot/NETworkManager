@@ -183,6 +183,13 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     } = [];
 
     /// <summary>
+    /// Gets the number of open ports per host (IP address) of the shown result, for the group headers. Counted when a
+    /// result is added (see <see cref="AddResult"/>) - counting the rows of a group on every added row would take
+    /// rows x rows with closed ports shown. Changed on the UI thread only, before the row is added.
+    /// </summary>
+    public Dictionary<IPAddress, int> OpenPortsPerHost { get; } = [];
+
+    /// <summary>
     /// Gets the collection view for the scan results.
     /// </summary>
     public ICollectionView ResultsView { get; }
@@ -775,6 +782,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             _resultsBuffer.Clear();
         }
 
+        OpenPortsPerHost.Clear();
         Results.Clear();
         _portsNotOpenPerHost.Clear();
 
@@ -925,8 +933,14 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         var oldRows = Results.Where(x => ipAddresses.Contains(x.IPAddress)).ToList();
 
+        foreach (var ipAddress in ipAddresses)
+            OpenPortsPerHost.Remove(ipAddress);
+
         if ((long)(oldRows.Count + rows.Count) * Results.Count > MaxRowChangesOneByOne)
         {
+            foreach (var row in rows)
+                CountOpenPort(row);
+
             Results.ReplaceAll(Results.Where(x => !ipAddresses.Contains(x.IPAddress)).Concat(rows));
 
             return;
@@ -936,7 +950,29 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             Results.Remove(row);
 
         foreach (var row in rows)
-            Results.Add(row);
+            AddResult(row);
+    }
+
+    /// <summary>
+    /// Adds a result, counted in <see cref="OpenPortsPerHost"/> before it is added (the group header is updated when
+    /// the row is added).
+    /// </summary>
+    /// <param name="result">Result to add.</param>
+    private void AddResult(PortScannerPortInfo result)
+    {
+        CountOpenPort(result);
+
+        Results.Add(result);
+    }
+
+    /// <summary>
+    /// Counts the result in <see cref="OpenPortsPerHost"/> if the port is open.
+    /// </summary>
+    /// <param name="result">Result to count.</param>
+    private void CountOpenPort(PortScannerPortInfo result)
+    {
+        if (result.State == PortState.Open)
+            OpenPortsPerHost[result.IPAddress] = OpenPortsPerHost.GetValueOrDefault(result.IPAddress) + 1;
     }
 
     /// <summary>
@@ -1140,7 +1176,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }
 
         foreach (var item in itemsToAdd)
-            Results.Add(item);
+            AddResult(item);
     }
 
     private void ProgressChanged(object sender, ProgressChangedArgs e)
