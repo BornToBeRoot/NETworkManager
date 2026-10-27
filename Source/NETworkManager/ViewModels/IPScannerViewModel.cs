@@ -58,14 +58,15 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // Options of the last scan, to rescan hosts with the same options (the columns follow them, see ScanOptions)
     private IPScannerOptions _lastScanOptions;
 
-    // Rescan of shown hosts (see RescanSelectedHosts), null if no rescan is running: rows per rescanned IP address.
-    // The scanner creates new results - their values are copied into the existing rows (selection and expanded
-    // details stay), the updates of a new result are applied to the rows it was copied to (_rescanResults).
-    private Dictionary<IPAddress, List<IPScannerHostInfo>> _rescanRows;
-    private readonly Dictionary<IPScannerHostInfo, List<IPScannerHostInfo>> _rescanResults = [];
+    // Rescan of shown hosts (see RescanSelectedHosts), null if no rescan is running: row per rescanned IP address
+    // (every IP address is scanned once, see HostRangeHelper.ResolveAsync). The scanner creates new results - their
+    // values are copied into the existing rows (selection and expanded details stay), the updates of a new result are
+    // applied to the row it was copied to (_rescanResults: result -> row).
+    private Dictionary<IPAddress, IPScannerHostInfo> _rescanRows;
+    private readonly Dictionary<IPScannerHostInfo, IPScannerHostInfo> _rescanResults = [];
 
     // Values of the rescanned rows before the rescan (row -> copy), restored if the rescan is canceled or fails: a
-    // found host is copied into its rows with placeholders for the running probes, which would stay otherwise
+    // found host is copied into its row with placeholders for the running probes, which would stay otherwise
     private Dictionary<IPScannerHostInfo, IPScannerHostInfo> _rescanSnapshots;
 
     // Counters of the last scan, restored after a rescan (the rescan shows its own progress)
@@ -804,8 +805,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
-    /// Rescans the selected hosts with the options of the last scan. The rows are updated in place (all rows with
-    /// the IP address of a selected row); a host that is unreachable now is shown as down.
+    /// Rescans the selected hosts with the options of the last scan. The rows are updated in place; a host that is
+    /// unreachable now is shown as down.
     /// </summary>
     private void RescanSelectedHosts()
     {
@@ -817,13 +818,14 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         if (selectedIPAddresses.Count == 0)
             return;
 
+        // One row per IP address (DistinctBy only so a broken assumption can't throw)
         _rescanRows = Results.Where(x => selectedIPAddresses.Contains(x.IPAddress))
-            .GroupBy(x => x.IPAddress)
-            .ToDictionary(x => x.Key, x => x.ToList());
+            .DistinctBy(x => x.IPAddress)
+            .ToDictionary(x => x.IPAddress);
 
         _rescanResults.Clear();
 
-        _rescanSnapshots = _rescanRows.Values.SelectMany(x => x).ToDictionary(x => x, x => x.Clone());
+        _rescanSnapshots = _rescanRows.Values.ToDictionary(x => x, x => x.Clone());
 
         _rescanHostsToScan = HostsToScan;
         _rescanHostsScanned = HostsScanned;
@@ -1308,8 +1310,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
-    /// Applies a buffered result of a rescan to the existing rows: a found host is copied into the rows of its IP
-    /// address, its updates are applied to these rows.
+    /// Applies a buffered result of a rescan to the existing rows: a found host is copied into the row of its IP
+    /// address, its updates are applied to this row.
     /// </summary>
     /// <param name="host">Result of the rescan.</param>
     /// <param name="update">Update of the result, null if the host was found.</param>
@@ -1317,22 +1319,18 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         if (update == null)
         {
-            if (!_rescanRows.TryGetValue(host.IPAddress, out var rows))
+            if (!_rescanRows.TryGetValue(host.IPAddress, out var row))
                 return;
 
-            foreach (var row in rows)
-                row.CopyFrom(host);
+            row.CopyFrom(host);
 
-            _rescanResults[host] = rows;
+            _rescanResults[host] = row;
 
             return;
         }
 
-        if (!_rescanResults.TryGetValue(update.Host, out var targets))
-            return;
-
-        foreach (var row in targets)
-            update.ApplyTo(row);
+        if (_rescanResults.TryGetValue(update.Host, out var target))
+            update.ApplyTo(target);
     }
 
     /// <summary>
