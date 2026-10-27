@@ -77,6 +77,11 @@ public static partial class ExportManager
             if (info?.PingInfo == null)
                 continue;
 
+            // Values of a probe that is still running (export during a scan, or a scan canceled before the probe
+            // finished) are placeholders - exported as empty values instead of a result
+            var ping = info.IsPingPending ? null : info.PingInfo;
+            var netBIOSInfo = info.IsNetBIOSPending ? null : info.NetBIOSInfo;
+
             var stringBuilderPorts = new StringBuilder();
 
             if (info.Ports != null)
@@ -90,20 +95,20 @@ public static partial class ExportManager
                 $"{info.IsReachable}," +
                 $"{info.PingInfo.IPAddress}," +
                 $"{CsvHelper.QuoteString(info.Hostname)}," +
-                $"{info.PingInfo.Status}," +
-                $"{DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)}," +
-                $"{Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)}," +
-                $"{info.PingInfo.TTL}," +
-                $"{info.PingInfo.Bytes}," +
-                $"{(info.IsAnyPortOpen ? PortState.Open : PortState.Closed)}," +
+                $"{ping?.Status}," +
+                $"{(ping == null ? null : DateTimeHelper.DateTimeToFullDateTimeString(ping.Timestamp))}," +
+                $"{(ping == null ? null : Ping.TimeToString(ping.Status, ping.Time, true))}," +
+                $"{ping?.TTL}," +
+                $"{ping?.Bytes}," +
+                $"{GetPortStatus(info)}," +
                 $"{CsvHelper.QuoteString(stringBuilderPorts.ToString().TrimEnd(';'))}," +
-                $"{info.NetBIOSInfo?.IsReachable}," +
-                $"{info.NetBIOSInfo?.IPAddress}," +
-                $"{CsvHelper.QuoteString(info.NetBIOSInfo?.ComputerName)}," +
-                $"{CsvHelper.QuoteString(info.NetBIOSInfo?.UserName)}," +
-                $"{CsvHelper.QuoteString(info.NetBIOSInfo?.GroupName)}," +
-                $"{info.NetBIOSInfo?.MACAddress}," +
-                $"{CsvHelper.QuoteString(info.NetBIOSInfo?.Vendor)}," +
+                $"{netBIOSInfo?.IsReachable}," +
+                $"{netBIOSInfo?.IPAddress}," +
+                $"{CsvHelper.QuoteString(netBIOSInfo?.ComputerName)}," +
+                $"{CsvHelper.QuoteString(netBIOSInfo?.UserName)}," +
+                $"{CsvHelper.QuoteString(netBIOSInfo?.GroupName)}," +
+                $"{netBIOSInfo?.MACAddress}," +
+                $"{CsvHelper.QuoteString(netBIOSInfo?.Vendor)}," +
                 $"{info.MACAddress}," +
                 $"{CsvHelper.QuoteString(info.Vendor)}," +
                 $"{CsvHelper.QuoteString(info.DNSHostname)}"
@@ -125,19 +130,22 @@ public static partial class ExportManager
                 new XElement(nameof(IPScannerHostInfo) + "s",
                     from info in collection
                     where info?.PingInfo != null
+                    // Placeholders of running probes are exported as empty values (see CreateCsv)
+                    let ping = info.IsPingPending ? null : info.PingInfo
+                    let netBIOSInfo = info.IsNetBIOSPending ? null : info.NetBIOSInfo
                     select
                         new XElement(nameof(IPScannerHostInfo),
                             new XElement(nameof(IPScannerHostInfo.IsReachable), info.IsReachable),
                             new XElement(nameof(PingInfo.IPAddress), info.PingInfo.IPAddress),
                             new XElement(nameof(IPScannerHostInfo.Hostname), info.Hostname),
-                            new XElement("PingStatus", info.PingInfo.Status),
+                            new XElement("PingStatus", ping?.Status),
                             new XElement(nameof(PingInfo.Timestamp),
-                                DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp)),
+                                ping == null ? null : DateTimeHelper.DateTimeToFullDateTimeString(ping.Timestamp)),
                             new XElement(nameof(PingInfo.Time),
-                                Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true)),
-                            new XElement(nameof(PingInfo.TTL), info.PingInfo.TTL),
-                            new XElement(nameof(PingInfo.Bytes), info.PingInfo.Bytes),
-                            new XElement("PortStatus", info.IsAnyPortOpen ? PortState.Open : PortState.Closed),
+                                ping == null ? null : Ping.TimeToString(ping.Status, ping.Time, true)),
+                            new XElement(nameof(PingInfo.TTL), ping?.TTL),
+                            new XElement(nameof(PingInfo.Bytes), ping?.Bytes),
+                            new XElement("PortStatus", GetPortStatus(info)),
                             info.Ports != null
                                 ? from port in info.Ports
                                   select new XElement(nameof(PortInfo),
@@ -147,13 +155,13 @@ public static partial class ExportManager
                                       new XElement(nameof(PortInfo.LookupInfo.Description), port.LookupInfo.Description),
                                       new XElement(nameof(PortInfo.State), port.State))
                                 : Enumerable.Empty<XElement>(),
-                            new XElement("NetBIOSIsReachable", info.NetBIOSInfo?.IsReachable),
-                            new XElement("NetBIOSIPAddress", info.NetBIOSInfo?.IPAddress),
-                            new XElement("NetBIOSComputerName", info.NetBIOSInfo?.ComputerName),
-                            new XElement("NetBIOSUserName", info.NetBIOSInfo?.UserName),
-                            new XElement("NetBIOSGroupName", info.NetBIOSInfo?.GroupName),
-                            new XElement("NetBIOSMACAddress", info.NetBIOSInfo?.MACAddress),
-                            new XElement("NetBIOSVendor", info.NetBIOSInfo?.Vendor),
+                            new XElement("NetBIOSIsReachable", netBIOSInfo?.IsReachable),
+                            new XElement("NetBIOSIPAddress", netBIOSInfo?.IPAddress),
+                            new XElement("NetBIOSComputerName", netBIOSInfo?.ComputerName),
+                            new XElement("NetBIOSUserName", netBIOSInfo?.UserName),
+                            new XElement("NetBIOSGroupName", netBIOSInfo?.GroupName),
+                            new XElement("NetBIOSMACAddress", netBIOSInfo?.MACAddress),
+                            new XElement("NetBIOSVendor", netBIOSInfo?.Vendor),
                             new XElement(nameof(IPScannerHostInfo.MACAddress), info.MACAddress),
                             new XElement(nameof(IPScannerHostInfo.Vendor), info.Vendor),
                             // Added later - last element, so the position of the other elements doesn't change
@@ -179,6 +187,11 @@ public static partial class ExportManager
         for (var i = 0; i < validCollection.Count; i++)
         {
             var info = validCollection[i];
+
+            // Placeholders of running probes are exported as empty values (see CreateCsv)
+            var ping = info.IsPingPending ? null : info.PingInfo;
+            var netBIOSInfo = info.IsNetBIOSPending ? null : info.NetBIOSInfo;
+
             object[] jsonDataPorts;
 
             if (info.Ports != null && info.Ports.Count > 0)
@@ -204,26 +217,40 @@ public static partial class ExportManager
                 info.IsReachable,
                 IPAddress = info.PingInfo.IPAddress.ToString(),
                 info.Hostname,
-                PingStatus = info.PingInfo.Status.ToString(),
-                Timestamp = DateTimeHelper.DateTimeToFullDateTimeString(info.PingInfo.Timestamp),
-                Time = Ping.TimeToString(info.PingInfo.Status, info.PingInfo.Time, true),
-                info.PingInfo.TTL,
-                info.PingInfo.Bytes,
+                PingStatus = ping?.Status.ToString(),
+                Timestamp = ping == null ? null : DateTimeHelper.DateTimeToFullDateTimeString(ping.Timestamp),
+                Time = ping == null ? null : Ping.TimeToString(ping.Status, ping.Time, true),
+                TTL = ping?.TTL,
+                Bytes = ping?.Bytes,
                 info.DNSHostname,
-                PortStatus = info.IsAnyPortOpen ? PortState.Open.ToString() : PortState.Closed.ToString(),
+                PortStatus = GetPortStatus(info)?.ToString(),
                 Ports = jsonDataPorts,
-                NetBIOSIsReachable = info.NetBIOSInfo?.IsReachable,
-                NetBIOSIPAddress = info.NetBIOSInfo?.IPAddress?.ToString(),
-                NetBIOSComputerName = info.NetBIOSInfo?.ComputerName,
-                NetBIOSUserName = info.NetBIOSInfo?.UserName,
-                NetBIOSGroupName = info.NetBIOSInfo?.GroupName,
-                NetBIOSMACAddress = info.NetBIOSInfo?.MACAddress,
-                NetBIOSVendor = info.NetBIOSInfo?.Vendor,
+                NetBIOSIsReachable = netBIOSInfo?.IsReachable,
+                NetBIOSIPAddress = netBIOSInfo?.IPAddress?.ToString(),
+                NetBIOSComputerName = netBIOSInfo?.ComputerName,
+                NetBIOSUserName = netBIOSInfo?.UserName,
+                NetBIOSGroupName = netBIOSInfo?.GroupName,
+                NetBIOSMACAddress = netBIOSInfo?.MACAddress,
+                NetBIOSVendor = netBIOSInfo?.Vendor,
                 info.MACAddress,
                 info.Vendor
             };
         }
 
         File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+    }
+
+    /// <summary>
+    ///     Gets the port status of a host: open if any port is open, otherwise closed - null while the port scan is
+    ///     still running (no result yet).
+    /// </summary>
+    /// <param name="info">Host to get the port status for.</param>
+    /// <returns>Port status or null.</returns>
+    private static PortState? GetPortStatus(IPScannerHostInfo info)
+    {
+        if (info.IsPortScanPending)
+            return null;
+
+        return info.IsAnyPortOpen ? PortState.Open : PortState.Closed;
     }
 }

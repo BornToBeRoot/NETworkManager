@@ -89,7 +89,7 @@ A host is shown (and counted as up) as soon as it answers the first probe: ping 
 
 Only reachable hosts are shown, unless [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) is enabled. A message below the input is shown if no reachable host was found, the scan was canceled, a hostname could not be resolved or an error occurred.
 
-The search box right of the **Result** header filters the results by IP address, hostname, MAC address, vendor and open ports (number or service), also while the scan is running (hosts whose hostname or MAC address arrives later are filtered again). **Export...** > all exports the filtered results; the up / down counters always count all hosts.
+The search box right of the **Result** header filters the results by IP address, hostname, MAC address, vendor and open ports (number or service), also while the scan is running (hosts whose hostname or MAC address arrives later are filtered again). **Export...** > all exports the filtered results; the up / down counters always count all hosts. Results can also be exported while the scan is running; values of probes that are still running (shown as `...`) are exported as empty values.
 
 Expand a row with the button in front of it to see its details, or enable [Expand host view](#expand-host-view) to expand all hosts.
 
