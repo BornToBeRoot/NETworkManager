@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NETworkManager.Models;
+using System;
 
 namespace NETworkManager;
 
@@ -18,11 +19,19 @@ public static class NavigationManager
     public static event EventHandler SettingsRequested;
 
     /// <summary>
-    ///     Opens an application and passes the request (target, profile, options) to it.
+    ///     Opens an application and passes the request (target, profile, options) to it. The target is prepared for
+    ///     the application (see <see cref="ApplicationManager.GetHostForApplication" />), e.g. "gateway." from a PTR
+    ///     record -> "gateway" for Remote Desktop.
     /// </summary>
     /// <param name="request">Request with the application to open.</param>
     public static void Open(ApplicationRequest request)
     {
+        if (request.Target != null)
+            request = request with
+            {
+                Target = ApplicationManager.GetHostForApplication(request.Application, request.Target)
+            };
+
         ApplicationRequested?.Invoke(null, request);
     }
 

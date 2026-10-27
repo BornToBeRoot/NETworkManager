@@ -498,10 +498,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         if (name is not ApplicationName applicationName)
             return;
 
-        NavigationManager.Open(new ApplicationRequest(applicationName)
-        {
-            Target = ApplicationManager.GetHostForApplication(applicationName, GetSelectedHost())
-        });
+        NavigationManager.Open(new ApplicationRequest(applicationName) { Target = GetSelectedHost() });
     }
 
     /// <summary>

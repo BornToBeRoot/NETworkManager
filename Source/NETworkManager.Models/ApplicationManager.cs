@@ -34,13 +34,14 @@ public static class ApplicationManager
     }
 
     /// <summary>
-    ///     Gets the host to open in an application from the hostname or IP address of a result (e.g. IP Scanner): for an
-    ///     application that resolves it via Windows (Remote Desktop, PuTTY, TigerVNC, PowerShell, Web Console) without
-    ///     the trailing dot (see <see cref="DNSClientHelper.SanitizeHostname" />). The other applications resolve it via
-    ///     NETworkManager and keep the dot of a single-label name (see <see cref="DNSClientHelper.TrimTrailingDot" />).
+    ///     Gets the host to open in an application (e.g. the hostname of an IP Scanner result or the target of the run
+    ///     command): for an application that resolves it via Windows (Remote Desktop, PuTTY, TigerVNC, PowerShell)
+    ///     without the trailing dot (see <see cref="DNSClientHelper.SanitizeHostname" />). The other applications resolve
+    ///     it via NETworkManager and keep the dot of a single-label name (see <see cref="DNSClientHelper.TrimTrailingDot" />).
+    ///     Used by <c>NavigationManager.Open</c> for every request.
     /// </summary>
     /// <param name="name">Application to open.</param>
-    /// <param name="host">Hostname or IP address.</param>
+    /// <param name="host">Hostname or IP address (or another target, e.g. a URL or IP range).</param>
     /// <returns>Host for the application.</returns>
     public static string GetHostForApplication(ApplicationName name, string host)
     {

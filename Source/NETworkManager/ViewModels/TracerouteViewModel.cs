@@ -310,10 +310,7 @@ public class TracerouteViewModel : ViewModelBase
             ? SelectedResult.Hostname
             : SelectedResult.IPAddress.ToString();
 
-        NavigationManager.Open(new ApplicationRequest(applicationName)
-        {
-            Target = ApplicationManager.GetHostForApplication(applicationName, host)
-        });
+        NavigationManager.Open(new ApplicationRequest(applicationName) { Target = host });
     }
 
     /// <summary>
