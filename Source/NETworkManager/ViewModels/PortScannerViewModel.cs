@@ -132,13 +132,17 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             OnPropertyChanged();
 
             // The message of the tab is about the ports passed in (e.g. a port profile of the profile was not
-            // found), it no longer applies when they are changed
+            // found), it no longer applies when they are changed. Hidden only if it is still shown - not an error of
+            // a scan that didn't start (e.g. invalid hosts)
             if (_message != null)
             {
-                _message = null;
+                if (StatusMessage == _message)
+                {
+                    IsStatusMessageDisplayed = false;
+                    StatusMessage = string.Empty;
+                }
 
-                IsStatusMessageDisplayed = false;
-                StatusMessage = string.Empty;
+                _message = null;
             }
         }
     }
