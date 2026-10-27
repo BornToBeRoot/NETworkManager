@@ -822,38 +822,83 @@
                                            Style="{StaticResource BoldTextBlock}"
                                            Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
                                 <!-- Hidden while the ping is still running (placeholder values) -->
-                                <Grid Grid.Row="2"
-                                      Visibility="{Binding Path=IsPingPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition MinWidth="120" Width="Auto" />
-                                        <ColumnDefinition Width="10" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" MinHeight="25" />
-                                        <RowDefinition Height="Auto" MinHeight="25" />
-                                        <RowDefinition Height="Auto" MinHeight="25" />
-                                        <RowDefinition Height="Auto" MinHeight="25" />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Static Member=localization:Strings.Timestamp}" />
-                                    <TextBox Grid.Row="0" Grid.Column="2"
-                                             Text="{Binding Path=PingInfo.Timestamp}" />
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Static localization:Strings.Time}" />
-                                    <TextBox Grid.Row="1" Grid.Column="2">
-                                        <TextBox.Text>
-                                            <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
-                                                <Binding Path="PingInfo.Status" />
-                                                <Binding Path="PingInfo.Time" />
-                                            </MultiBinding>
-                                        </TextBox.Text>
-                                    </TextBox>
-                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="{x:Static localization:Strings.TTL}" />
-                                    <TextBox Grid.Row="2" Grid.Column="2"
-                                             Text="{Binding PingInfo.TTL, Converter={StaticResource IntToStringConverter}}" />
-                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="{x:Static localization:Strings.Bytes}" />
-                                    <TextBox Grid.Row="3" Grid.Column="2"
-                                             Text="{Binding PingInfo.Bytes, Converter={StaticResource IntToStringConverter}}" />
-                                </Grid>
+                                <ListView Grid.Row="2"
+                                          Background="Transparent"
+                                          Visibility="{Binding Path=IsPingPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListViewItem}"
+                                               BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                            <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="Background" Value="Transparent" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.Template>
+                                        <ControlTemplate>
+                                            <ItemsPresenter />
+                                        </ControlTemplate>
+                                    </ListView.Template>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static Member=localization:Strings.Timestamp}" />
+                                            <TextBox Grid.Column="2"
+                                                     Text="{Binding Path=PingInfo.Timestamp}" />
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Time}" />
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
+                                                        <Binding Path="PingInfo.Status" />
+                                                        <Binding Path="PingInfo.Time" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.TTL}" />
+                                            <TextBox Grid.Column="2"
+                                                     Text="{Binding PingInfo.TTL, Converter={StaticResource IntToStringConverter}}" />
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Bytes}" />
+                                            <TextBox Grid.Column="2"
+                                                     Text="{Binding PingInfo.Bytes, Converter={StaticResource IntToStringConverter}}" />
+                                        </Grid>
+                                    </ListViewItem>
+                                </ListView>
                             </Grid>
                             <!-- Ports -->
                             <Grid Grid.Column="2">
@@ -878,12 +923,28 @@
                                 </StackPanel>
                                 <Grid Grid.Row="2"
                                       Visibility="{Binding Path=Data.ScanOptions.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                                    <!-- Light-weight (no ListView / ListViewItem per port): many rows can be expanded -->
-                                    <ItemsControl ItemsSource="{Binding Path=Ports}"
-                                                  Visibility="{Binding Path=Ports.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
-                                        <ItemsControl.ItemTemplate>
+                                    <ListView Background="Transparent"
+                                              ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                              ItemsSource="{Binding Path=Ports}"
+                                              Visibility="{Binding Path=Ports.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="{x:Type ListViewItem}"
+                                                   BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                                <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.Template>
+                                            <ControlTemplate>
+                                                <ItemsPresenter />
+                                            </ControlTemplate>
+                                        </ListView.Template>
+                                        <ListView.ItemTemplate>
                                             <DataTemplate>
-                                                <Grid MinHeight="25">
+                                                <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="24" />
                                                         <ColumnDefinition Width="10" />
@@ -908,8 +969,8 @@
                                                     <TextBox Grid.Column="6" Text="{Binding LookupInfo.Description}" />
                                                 </Grid>
                                             </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
                                     <!-- Not while the port scan is still running -->
                                     <Grid Visibility="{Binding Path=IsPortScanPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
                                         <StackPanel VerticalAlignment="Top"
@@ -947,27 +1008,63 @@
                                 <Grid Grid.Row="2"
                                       Visibility="{Binding Path=Data.ScanOptions.NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                     <!-- Hidden while the NetBIOS request is still running (placeholder values) -->
-                                    <Grid Visibility="{Binding Path=IsNetBIOSPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition MinWidth="120" Width="Auto" />
-                                            <ColumnDefinition Width="10" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" MinHeight="25" />
-                                            <RowDefinition Height="Auto" MinHeight="25" />
-                                            <RowDefinition Height="Auto" MinHeight="25" />
-                                        </Grid.RowDefinitions>
-                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Static Member=localization:Strings.ComputerName}" />
-                                        <TextBox Grid.Row="0" Grid.Column="2"
-                                                 Text="{Binding Path=NetBIOSInfo.ComputerName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
-                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{x:Static Member=localization:Strings.GroupDomain}" />
-                                        <TextBox Grid.Row="1" Grid.Column="2"
-                                                 Text="{Binding Path=NetBIOSInfo.GroupName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
-                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{x:Static Member=localization:Strings.Username}" />
-                                        <TextBox Grid.Row="2" Grid.Column="2"
-                                                 Text="{Binding Path=NetBIOSInfo.UserName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
-                                    </Grid>
+                                    <ListView Background="Transparent"
+                                              Visibility="{Binding Path=IsNetBIOSPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="{x:Type ListViewItem}"
+                                                   BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                                <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.Template>
+                                            <ControlTemplate>
+                                                <ItemsPresenter />
+                                            </ControlTemplate>
+                                        </ListView.Template>
+                                        <ListViewItem>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{x:Static Member=localization:Strings.ComputerName}" />
+                                                <TextBox Grid.Column="2"
+                                                         Text="{Binding Path=NetBIOSInfo.ComputerName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
+                                            </Grid>
+                                        </ListViewItem>
+                                        <ListViewItem>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{x:Static Member=localization:Strings.GroupDomain}" />
+                                                <TextBox Grid.Column="2"
+                                                         Text="{Binding Path=NetBIOSInfo.GroupName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
+                                            </Grid>
+                                        </ListViewItem>
+                                        <ListViewItem>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{x:Static Member=localization:Strings.Username}" />
+                                                <TextBox Grid.Column="2"
+                                                         Text="{Binding Path=NetBIOSInfo.UserName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
+                                            </Grid>
+                                        </ListViewItem>
+                                    </ListView>
                                 </Grid>
                             </Grid>
                         </Grid>
