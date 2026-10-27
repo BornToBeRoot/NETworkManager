@@ -34,10 +34,10 @@ public class PortScannerViewModel : ViewModelBase
     private static readonly ILog Log = LogManager.GetLogger(typeof(PortScannerViewModel));
 
     /// <summary>
-    /// Maximum number of rows that are removed / added one by one when the results of hosts are replaced (rescan),
-    /// see <see cref="ReplaceResults"/>.
+    /// Maximum effort (changed rows x all rows) to remove / add the rows one by one when the results of hosts are
+    /// replaced (rescan), see <see cref="ReplaceResults"/>. E.g. 1,000 rows of 10,000 or 10 rows of 1,000,000.
     /// </summary>
-    private const int MaxRowsChangedOneByOne = 1000;
+    private const long MaxRowChangesOneByOne = 10_000_000;
 
     private CancellationTokenSource _cancellationTokenSource;
 
@@ -797,9 +797,9 @@ public class PortScannerViewModel : ViewModelBase
 
     /// <summary>
     /// Replaces the rows of the given hosts. Few rows are removed / added one by one, so the groups of the other hosts
-    /// keep their state (collapsed) and the scroll position stays. Many rows with one reset instead: every single
-    /// change searches the collection and the sorted, grouped view (e.g. a host with 1-65535 and closed ports shown
-    /// would freeze the window for minutes).
+    /// keep their state (collapsed) and the scroll position stays. Many rows (or rows of a large result) with one reset
+    /// instead: every single change searches the whole collection and the sorted, grouped view (e.g. a host with
+    /// 1-65535 and closed ports shown would freeze the window for minutes).
     /// </summary>
     /// <param name="ipAddresses">Hosts whose rows are replaced.</param>
     /// <param name="rows">New rows of the hosts.</param>
@@ -807,7 +807,7 @@ public class PortScannerViewModel : ViewModelBase
     {
         var oldRows = Results.Where(x => ipAddresses.Contains(x.IPAddress)).ToList();
 
-        if (oldRows.Count + rows.Count > MaxRowsChangedOneByOne)
+        if ((long)(oldRows.Count + rows.Count) * Results.Count > MaxRowChangesOneByOne)
         {
             Results.ReplaceAll(Results.Where(x => !ipAddresses.Contains(x.IPAddress)).Concat(rows));
 
