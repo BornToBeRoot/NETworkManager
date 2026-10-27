@@ -266,7 +266,7 @@
                                       VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                                       VirtualizingPanel.IsContainerVirtualizable="True"
                                       VirtualizingPanel.VirtualizationMode="Recycling"
-                                      VirtualizingPanel.ScrollUnit="Item">
+                                      VirtualizingPanel.ScrollUnit="Pixel">
             <controls:MultiSelectDataGrid.Resources>
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
