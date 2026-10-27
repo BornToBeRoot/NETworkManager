@@ -136,7 +136,10 @@ public partial class IPScannerView : IDragablzTabItem
             ? ListSortDirection.Ascending
             : ListSortDirection.Descending;
 
-        // Update the sort direction
+        // Update the sort direction (only one column is sorted - the built-in sort would reset the other columns)
+        foreach (var dataGridColumn in ((DataGrid)sender).Columns)
+            dataGridColumn.SortDirection = null;
+
         e.Column.SortDirection = direction;
 
         // Get the view
