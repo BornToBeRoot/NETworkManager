@@ -20,6 +20,7 @@ Release date: **xx.xx.2026**
 ## Breaking Changes
 
 - Removed the **ThreadPool additional min. threads** setting (Settings > General) and the application-wide `ThreadPool.SetMinThreads` workaround it configured for the IP Scanner and Port Scanner. It's no longer needed now that both scan engines use non-blocking async concurrency instead of blocking calls. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+- **Port Scanner**: the JSON export uses the key `State` for the port state (like CSV and XML) instead of `Status`. Scripts that read `Status` have to be adjusted. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 
 ## What's new?
 
