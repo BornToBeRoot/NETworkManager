@@ -106,7 +106,7 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
     /// "gateway." or a hostname entered with a dot).
     /// </summary>
     private string NotificationHostDisplay =>
-        string.IsNullOrEmpty(Hostname) ? IPAddress.ToString() : Hostname.TrimEnd('.');
+        DNSClientHelper.SanitizeHostname(Hostname) is { Length: > 0 } hostname ? hostname : IPAddress.ToString();
 
     /// <summary>
     /// Gets the hostname of the monitored host.
@@ -803,7 +803,7 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
     {
         // Update title if name was not set in the constructor
         if (string.IsNullOrEmpty(Hostname))
-            Title = $"{e.Hostname.TrimEnd('.')} # {IPAddress}";
+            Title = $"{DNSClientHelper.SanitizeHostname(e.Hostname)} # {IPAddress}";
 
         Hostname = e.Hostname;
     }
