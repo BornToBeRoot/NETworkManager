@@ -3200,6 +3200,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete port profiles.
+        /// </summary>
+        public static string DeletePortProfiles {
+            get {
+                return ResourceManager.GetString("DeletePortProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected port profiles will be deleted permanently..
+        /// </summary>
+        public static string DeletePortProfilesMessage {
+            get {
+                return ResourceManager.GetString("DeletePortProfilesMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete profile.
         /// </summary>
         public static string DeleteProfile {

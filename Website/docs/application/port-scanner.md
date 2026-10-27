@@ -159,7 +159,7 @@ See also the [Port Scanner](./port-scanner) example inputs for more information 
 
 ### Port profiles
 
-List of common TCP ports to scan for. A port profile can be entered by its name in the ports input (case-insensitive, also several and together with ports, e.g. `Webserver; Database; 8080`), so the name must be unique, must not contain `;` and must not be a port or port range (e.g. `80`).
+List of common TCP ports to scan for. A port profile can be entered by its name in the ports input (case-insensitive, also several and together with ports, e.g. `Webserver; Database; 8080`), so the name must be unique, must not contain `;` and must not be a port or port range (e.g. `80`). Several port profiles can be selected and deleted at once (context menu or `Del`).
 
 **Type:** `List<NETworkManager.Models.Network.PortProfileInfo>`
 

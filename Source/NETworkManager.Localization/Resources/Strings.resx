@@ -2877,6 +2877,12 @@ is disabled!</value>
   <data name="DeletePortProfileMessage" xml:space="preserve">
     <value>The selected port profile will be deleted permanently.</value>
   </data>
+  <data name="DeletePortProfiles" xml:space="preserve">
+    <value>Delete port profiles</value>
+  </data>
+  <data name="DeletePortProfilesMessage" xml:space="preserve">
+    <value>The selected port profiles will be deleted permanently.</value>
+  </data>
   <data name="ShowSplashScreenOnStart" xml:space="preserve">
     <value>Show SplashScreen on start</value>
   </data>
