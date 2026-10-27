@@ -32,12 +32,9 @@ public static class DNSClientHelper
     /// <returns>Domain name without the trailing dot, unless it is a single-label name.</returns>
     public static string TrimTrailingDot(string name)
     {
-        if (string.IsNullOrEmpty(name) || !name.EndsWith('.'))
-            return name;
+        var trimmed = SanitizeHostname(name);
 
-        var trimmed = name.TrimEnd('.');
-
-        return trimmed.Contains('.') ? trimmed : name;
+        return trimmed != null && trimmed.Contains('.') ? trimmed : name;
     }
 
     /// <summary>
