@@ -3686,7 +3686,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A DNS server of this profile was not found, the DNS servers saved with the profile are used. DNS servers are saved in the settings - if the profile file was shared from another computer, create the DNS server here or edit the profile..
+        ///   Looks up a localized string similar to A DNS server of this profile was not found, the DNS servers saved with the profile are used. DNS servers are saved in the settings and the profile refers to them by an internal ID - if the profile file was shared from another computer, create the DNS server and then select it in the profile again (edit the profile)..
         /// </summary>
         public static string DNSServerOfProfileNotFoundMessage {
             get {
@@ -9239,7 +9239,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A port profile of this profile was not found, the ports saved with the profile are used. Port profiles are saved in the settings - if the profile file was shared from another computer, create the port profile here or edit the profile..
+        ///   Looks up a localized string similar to A port profile of this profile was not found, the ports saved with the profile are used. Port profiles are saved in the settings and the profile refers to them by an internal ID - if the profile file was shared from another computer, create the port profile and then select it in the profile again (edit the profile)..
         /// </summary>
         public static string PortProfileOfProfileNotFoundMessage {
             get {
