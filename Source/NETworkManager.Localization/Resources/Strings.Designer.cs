@@ -3030,6 +3030,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete custom commands.
+        /// </summary>
+        public static string DeleteCustomCommands {
+            get {
+                return ResourceManager.GetString("DeleteCustomCommands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected custom commands will be deleted permanently..
+        /// </summary>
+        public static string DeleteCustomCommandsMessage {
+            get {
+                return ResourceManager.GetString("DeleteCustomCommandsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete DNS server.
         /// </summary>
         public static string DeleteDNSServer {

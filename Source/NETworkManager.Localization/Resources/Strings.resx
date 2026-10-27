@@ -2274,6 +2274,12 @@ is disabled!</value>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>The selected custom command will be deleted permanently.</value>
   </data>
+  <data name="DeleteCustomCommands" xml:space="preserve">
+    <value>Delete custom commands</value>
+  </data>
+  <data name="DeleteCustomCommandsMessage" xml:space="preserve">
+    <value>The selected custom commands will be deleted permanently.</value>
+  </data>
   <data name="Restart" xml:space="preserve">
     <value>Restart</value>
   </data>

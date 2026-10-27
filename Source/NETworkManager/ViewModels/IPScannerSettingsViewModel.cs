@@ -4,7 +4,9 @@ using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System;
+using System.Collections;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -293,6 +295,22 @@ public class IPScannerSettingsViewModel : ViewModelBase
     } = new();
 
     /// <summary>
+    /// Gets or sets the selected custom commands (several can be deleted at once).
+    /// </summary>
+    public IList SelectedCustomCommands
+    {
+        get;
+        set
+        {
+            if (Equals(value, field))
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = new ArrayList();
+
+    /// <summary>
     /// Gets or sets the maximum number of host threads.
     /// </summary>
     public int MaxHostThreads
@@ -393,14 +411,14 @@ public class IPScannerSettingsViewModel : ViewModelBase
     /// Gets the command to edit a custom command.
     /// </summary>
     public ICommand EditCustomCommandCommand =>
-        new RelayCommand(_ => EditCustomCommandAction(), CustomCommandSelected_CanExecute);
+        new RelayCommand(_ => EditCustomCommandAction(), EditCustomCommand_CanExecute);
 
     /// <summary>
-    /// Checks if a custom command is selected (edit and delete need one, e.g. F2 / Del without a selection).
+    /// Checks if exactly one custom command is selected (e.g. F2 without a selection or with several selected).
     /// </summary>
-    private bool CustomCommandSelected_CanExecute(object parameter)
+    private bool EditCustomCommand_CanExecute(object parameter)
     {
-        return SelectedCustomCommand != null;
+        return SelectedCustomCommand != null && SelectedCustomCommands.Count == 1;
     }
 
     /// <summary>
@@ -412,10 +430,18 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets the command to delete a custom command.
+    /// Gets the command to delete the selected custom commands.
     /// </summary>
     public ICommand DeleteCustomCommandCommand =>
-        new RelayCommand(_ => DeleteCustomCommandAction(), CustomCommandSelected_CanExecute);
+        new RelayCommand(_ => DeleteCustomCommandAction(), DeleteCustomCommand_CanExecute);
+
+    /// <summary>
+    /// Checks if at least one custom command is selected (e.g. Del without a selection).
+    /// </summary>
+    private bool DeleteCustomCommand_CanExecute(object parameter)
+    {
+        return SelectedCustomCommands.Count > 0;
+    }
 
     /// <summary>
     /// Action to delete a custom command.
@@ -494,21 +520,25 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Deletes the selected custom command.
+    /// Deletes the selected custom commands (after a confirmation that lists them).
     /// </summary>
     private async Task DeleteCustomCommand()
     {
+        var customCommands = SelectedCustomCommands.Cast<CustomCommandInfo>().ToList();
+
         var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
-            Strings.DeleteCustomCommand,
-            Strings.DeleteCustomCommandMessage + Environment.NewLine + Environment.NewLine +
-            DialogHelper.FormatItemList([SelectedCustomCommand.Name]),
+            customCommands.Count == 1 ? Strings.DeleteCustomCommand : Strings.DeleteCustomCommands,
+            (customCommands.Count == 1 ? Strings.DeleteCustomCommandMessage : Strings.DeleteCustomCommandsMessage) +
+            Environment.NewLine + Environment.NewLine +
+            DialogHelper.FormatItemList([.. customCommands.Select(x => x.Name)]),
             ChildWindowIcon.Info,
             Strings.Delete);
 
         if (!result)
             return;
 
-        SettingsManager.Current.IPScanner_CustomCommands.Remove(SelectedCustomCommand);
+        foreach (var customCommand in customCommands)
+            SettingsManager.Current.IPScanner_CustomCommands.Remove(customCommand);
     }
 
     #endregion
