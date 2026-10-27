@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using NETworkManager.Models.Lookup;
 using NETworkManager.Utilities;
@@ -49,6 +50,12 @@ public sealed class PortScanner
     ///     Threads adjusted automatically: ports of one host at the same time.
     /// </summary>
     private const int AutoMaxPortThreads = 128;
+
+    /// <summary>
+    ///     Threads adjusted automatically: pings before the scan at the same time (see
+    ///     <see cref="PortScannerOptions.PingHostsBeforeScan" />), like the default host threads of the IP Scanner.
+    /// </summary>
+    private const int AutoMaxPingThreads = 128;
 
     private int _progressValue;
     private readonly InterlockedCounter _portsOpen = new();
@@ -182,23 +189,22 @@ public sealed class PortScanner
                 var portStartScheduler = new StartScheduler(StartScheduler.GetInterval(MaxPortStartInterval,
                     TimeSpan.FromMilliseconds(_options.Timeout * _options.Attempts), portConcurrency), portConcurrency);
 
-                await Parallel.ForEachAsync(hosts, hostParallelOptions, async (host, hostCt) =>
+                // Only hosts that answer a ping are scanned (option). Adjusted automatically, the pings run ahead of
+                // the port scan with their own concurrency - otherwise an unused address would take one of the few
+                // hosts of the port scan (e.g. 4 for 1-1024) until its ping timed out. With the threads of the
+                // settings, every host is pinged in its slot of the port scan, so Max. concurrent host threads also
+                // limits the pings (e.g. to slow down a scan).
+                if (_options.PingHostsBeforeScan && _options.AutoAdjustThreads)
+                    await ScanReachableHostsAsync(hosts, portCount, hostParallelOptions, ScanHostAsync,
+                        cancellationToken).ConfigureAwait(false);
+                else
+                    await Parallel.ForEachAsync(hosts, hostParallelOptions, ScanHostAsync).ConfigureAwait(false);
+
+                async ValueTask ScanHostAsync((IPAddress ipAddress, string hostname) host, CancellationToken hostCt)
                 {
-                    // Only hosts that answer a ping are scanned (option) - the ports of the other hosts are counted
-                    // as scanned, so the progress is complete
-                    if (_options.PingHostsBeforeScan)
-                    {
-                        var pingInfo = await PingProbe.PingAsync(host.ipAddress, _options.Timeout, _options.Attempts,
-                            PingBuffer, hostCt).ConfigureAwait(false);
-
-                        if (pingInfo.Status != IPStatus.Success)
-                        {
-                            _hostsSkipped.Increment();
-                            IncreaseProgress(portCount);
-
-                            return;
-                        }
-                    }
+                    if (_options.PingHostsBeforeScan && !_options.AutoAdjustThreads &&
+                        !await IsReachableAsync(host.ipAddress, portCount, hostCt).ConfigureAwait(false))
+                        return;
 
                     // Resolve Hostname (PTR) while the ports are scanned. Started with the first port probe of the
                     // host, so the lookups of many hosts are spread over time like the probes instead of all at once
@@ -252,7 +258,7 @@ public sealed class PortScanner
 
                         IncreaseProgress();
                     }).ConfigureAwait(false);
-                }).ConfigureAwait(false);
+                }
             }
             catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
             {
@@ -267,6 +273,96 @@ public sealed class PortScanner
                 OnScanComplete(new ScanCompleteArgs(isCanceled, exception));
             }
         });
+    }
+
+    /// <summary>
+    ///     Pings the hosts with <see cref="AutoMaxPingThreads" /> at the same time and scans the hosts that answer (as
+    ///     soon as they answer) with <paramref name="scanHost" />. Returns when all pings and scans are finished, also on
+    ///     cancellation or an error.
+    /// </summary>
+    /// <param name="hosts">Hosts to ping and scan.</param>
+    /// <param name="portCount">Number of ports per host (counted as scanned for a host that doesn't answer).</param>
+    /// <param name="hostParallelOptions">Options for the hosts that are scanned at the same time.</param>
+    /// <param name="scanHost">Scans the ports of a host.</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    private async Task ScanReachableHostsAsync(IEnumerable<(IPAddress ipAddress, string hostname)> hosts,
+        int portCount, ParallelOptions hostParallelOptions,
+        Func<(IPAddress ipAddress, string hostname), CancellationToken, ValueTask> scanHost,
+        CancellationToken cancellationToken)
+    {
+        var reachableHosts = Channel.CreateUnbounded<(IPAddress ipAddress, string hostname)>();
+
+        // Also stops the pings if the port scan fails
+        using var pingCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+
+        var pingTask = Task.Run(async () =>
+        {
+            try
+            {
+                var pingParallelOptions = new ParallelOptions
+                {
+                    CancellationToken = pingCts.Token,
+                    MaxDegreeOfParallelism = AutoMaxPingThreads
+                };
+
+                await Parallel.ForEachAsync(hosts, pingParallelOptions, async (host, ct) =>
+                {
+                    if (await IsReachableAsync(host.ipAddress, portCount, ct).ConfigureAwait(false))
+                        reachableHosts.Writer.TryWrite(host); // Unbounded, always written
+                }).ConfigureAwait(false);
+            }
+            finally
+            {
+                // Also on cancellation or an error (raised below), the port scan ends with the hosts written so far
+                reachableHosts.Writer.TryComplete();
+            }
+        }, CancellationToken.None);
+
+        try
+        {
+            await Parallel.ForEachAsync(reachableHosts.Reader.ReadAllAsync(cancellationToken), hostParallelOptions,
+                scanHost).ConfigureAwait(false);
+        }
+        finally
+        {
+            // Never return while pings are still running (e.g. the port scan failed or was canceled), they would
+            // change the progress after ScanComplete
+            await pingCts.CancelAsync().ConfigureAwait(false);
+
+            try
+            {
+                await pingTask.ConfigureAwait(false);
+            }
+            catch
+            {
+                // Raised below if the port scan was finished
+            }
+        }
+
+        // Error of the pings
+        await pingTask.ConfigureAwait(false);
+    }
+
+    /// <summary>
+    ///     Pings a host before the scan (see <see cref="PortScannerOptions.PingHostsBeforeScan" />). If it doesn't
+    ///     answer, it is counted as skipped and its ports as scanned, so the progress is complete.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="portCount">Number of ports per host.</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    /// <returns>True if the host answered the ping.</returns>
+    private async Task<bool> IsReachableAsync(IPAddress ipAddress, int portCount, CancellationToken cancellationToken)
+    {
+        var pingInfo = await PingProbe.PingAsync(ipAddress, _options.Timeout, _options.Attempts, PingBuffer,
+            cancellationToken).ConfigureAwait(false);
+
+        if (pingInfo.Status == IPStatus.Success)
+            return true;
+
+        _hostsSkipped.Increment();
+        IncreaseProgress(portCount);
+
+        return false;
     }
 
     /// <summary>

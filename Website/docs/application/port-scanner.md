@@ -226,7 +226,7 @@ In a local network (LAN), `1` is enough. On an unreliable network (e.g. Wi-Fi, V
 
 ### Ping hosts before the scan
 
-Pings every host before its ports are scanned (ICMP echo, with the [Timeout](#timeout-ms) and [Attempts](#attempts) of the port scan). Only hosts that answer are scanned, the number of hosts that were not scanned is shown below the input after the scan. Faster for ranges with many unused IP addresses (e.g. a `/24` with `1-1024`), because the ports of unused addresses are not scanned until their timeout.
+Pings every host before its ports are scanned (ICMP echo, with the [Timeout](#timeout-ms) and [Attempts](#attempts) of the port scan). Only hosts that answer are scanned, the number of hosts that were not scanned is shown below the input after the scan. Faster for ranges with many unused IP addresses (e.g. a `/24` with `1-1024`), because the ports of unused addresses are not scanned until their timeout. With [Adjust threads automatically](#adjust-threads-automatically), up to `128` hosts are pinged at the same time and a host is scanned as soon as it answers; otherwise each host is pinged when it is scanned, so [Max. concurrent host threads](#max-concurrent-host-threads) also limits the pings.
 
 **Type:** `Boolean`
 
