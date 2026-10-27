@@ -68,6 +68,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private int _rescanHostsToScan;
     private int _rescanHostsScanned;
 
+    // Hosts of the last scan counted as up or down (a host is up when it was found, down when it was finished),
+    // to recompute the down counter during a rescan
+    private int _rescanHostsCounted;
+
     // Same reasoning as the results buffer above - ProgressChanged fires once per host
     // (unconditionally, unlike HostFound), so it's flushed to the bound property on the same
     // timer instead of updating it directly from the background thread on every event.
@@ -821,6 +825,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         _rescanHostsToScan = HostsToScan;
         _rescanHostsScanned = HostsScanned;
+        _rescanHostsCounted = HostsUp + HostsDown;
 
         IsStatusMessageDisplayed = false;
         IsRunning = true;
@@ -1356,11 +1361,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         HostsScanned = Volatile.Read(ref _latestHostsScanned);
 
         // Rescan: the counters of the scanner only cover the rescanned hosts - count the shown rows instead (every
-        // reachable host is shown), unreachable = all scanned hosts of the last scan minus the reachable ones
+        // reachable host is shown), unreachable = all counted hosts of the last scan minus the reachable ones. Not the
+        // scanned hosts: a found host is counted as up before it is finished, so after a canceled scan there can be
+        // more reachable rows than scanned hosts.
         if (_rescanRows != null)
         {
             HostsUp = Results.Count(x => x.IsReachable);
-            HostsDown = _rescanHostsScanned - HostsUp;
+            HostsDown = Math.Max(0, _rescanHostsCounted - HostsUp);
 
             return;
         }
