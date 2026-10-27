@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using NETworkManager.Utilities;
 
@@ -10,7 +9,7 @@ public static class PortProfile
     /// <summary>
     ///     Separator of the entries of a ports input (e.g. "Webserver; 8080").
     /// </summary>
-    private const char EntrySeparator = ';';
+    private const char EntrySeparator = NamedReferenceInput.EntrySeparator;
 
     /// <summary>
     ///     Finds a port profile by its name (case-insensitive, leading / trailing spaces are ignored).
@@ -20,12 +19,7 @@ public static class PortProfile
     /// <returns>Port profile, or null if there is none with the name.</returns>
     public static PortProfileInfo FindByName(IEnumerable<PortProfileInfo> portProfiles, string name)
     {
-        var trimmedName = name?.Trim();
-
-        return string.IsNullOrEmpty(trimmedName)
-            ? null
-            : portProfiles.FirstOrDefault(x =>
-                string.Equals(x.Name?.Trim(), trimmedName, StringComparison.OrdinalIgnoreCase));
+        return NamedReferenceInput.FindByName(portProfiles, name);
     }
 
     /// <summary>
@@ -89,27 +83,11 @@ public static class PortProfile
     /// <returns>Input with references, null if it contains no port profile.</returns>
     public static string EncodeReferences(string input, IEnumerable<PortProfileInfo> portProfiles)
     {
-        if (string.IsNullOrWhiteSpace(input))
-            return null;
+        var portProfileList = portProfiles.ToList();
 
-        var hasReference = false;
-        List<string> entries = [];
-
-        foreach (var entry in input.Split(EntrySeparator))
-        {
-            var portProfile = PortRangeHelper.IsValidPortOrPortRange(entry) ? null : FindByName(portProfiles, entry);
-
-            if (portProfile == null || portProfile.Id == Guid.Empty)
-            {
-                entries.Add(entry.Trim());
-                continue;
-            }
-
-            entries.Add(portProfile.Id.ToString("B"));
-            hasReference = true;
-        }
-
-        return hasReference ? string.Join("; ", entries) : null;
+        // A port or port range is never a port profile (see TryResolvePorts)
+        return NamedReferenceInput.EncodeReferences(input,
+            entry => PortRangeHelper.IsValidPortOrPortRange(entry) ? null : FindByName(portProfileList, entry));
     }
 
     /// <summary>
@@ -123,32 +101,7 @@ public static class PortProfile
     public static bool TryDecodeReferences(string inputWithReferences, IEnumerable<PortProfileInfo> portProfiles,
         out string input)
     {
-        input = null;
-
-        if (string.IsNullOrWhiteSpace(inputWithReferences))
-            return false;
-
-        List<string> entries = [];
-
-        foreach (var entry in inputWithReferences.Split(EntrySeparator))
-        {
-            if (!Guid.TryParseExact(entry.Trim(), "B", out var id))
-            {
-                entries.Add(entry.Trim());
-                continue;
-            }
-
-            var portProfile = portProfiles.FirstOrDefault(x => x.Id == id);
-
-            if (portProfile == null)
-                return false;
-
-            entries.Add(portProfile.Name);
-        }
-
-        input = string.Join("; ", entries);
-
-        return true;
+        return NamedReferenceInput.TryDecodeReferences(inputWithReferences, portProfiles, out input);
     }
 
     public static List<PortProfileInfo> GetDefaultList()

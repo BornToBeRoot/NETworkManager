@@ -2,7 +2,7 @@
 
 namespace NETworkManager.Models.Network;
 
-public class PortProfileInfo
+public class PortProfileInfo : INamedReference
 {
     public PortProfileInfo()
     {

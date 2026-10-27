@@ -14,7 +14,7 @@ public static class DNSServer
     /// <summary>
     ///     Separator of the entries of a DNS server input (e.g. "Google Public DNS; 9.9.9.9").
     /// </summary>
-    private const char EntrySeparator = ';';
+    private const char EntrySeparator = NamedReferenceInput.EntrySeparator;
 
     /// <summary>
     ///     Default port of a DNS server entered without a port.
@@ -30,12 +30,7 @@ public static class DNSServer
     public static DNSServerConnectionInfoProfile FindByName(IEnumerable<DNSServerConnectionInfoProfile> profiles,
         string name)
     {
-        var trimmedName = name?.Trim();
-
-        return string.IsNullOrEmpty(trimmedName)
-            ? null
-            : profiles.FirstOrDefault(x =>
-                string.Equals(x.Name?.Trim(), trimmedName, StringComparison.OrdinalIgnoreCase));
+        return NamedReferenceInput.FindByName(profiles, name);
     }
 
     /// <summary>
@@ -137,28 +132,11 @@ public static class DNSServer
     /// <returns>Input with references, null if it contains no DNS server profile with an ID.</returns>
     public static string EncodeReferences(string input, IEnumerable<DNSServerConnectionInfoProfile> profiles)
     {
-        if (string.IsNullOrWhiteSpace(input))
-            return null;
-
         var profileList = profiles.ToList();
-        var hasReference = false;
-        List<string> entries = [];
 
-        foreach (var entry in input.Split(EntrySeparator))
-        {
-            var profile = FindByName(profileList, entry);
-
-            if (profile == null || profile.UseWindowsDNSServer || profile.Id == Guid.Empty)
-            {
-                entries.Add(entry.Trim());
-                continue;
-            }
-
-            entries.Add(profile.Id.ToString("B"));
-            hasReference = true;
-        }
-
-        return hasReference ? string.Join("; ", entries) : null;
+        // The Windows DNS profile is kept by name
+        return NamedReferenceInput.EncodeReferences(input,
+            entry => FindByName(profileList, entry) is { UseWindowsDNSServer: false } profile ? profile : null);
     }
 
     /// <summary>
@@ -172,33 +150,7 @@ public static class DNSServer
     public static bool TryDecodeReferences(string inputWithReferences,
         IEnumerable<DNSServerConnectionInfoProfile> profiles, out string input)
     {
-        input = null;
-
-        if (string.IsNullOrWhiteSpace(inputWithReferences))
-            return false;
-
-        var profileList = profiles.ToList();
-        List<string> entries = [];
-
-        foreach (var entry in inputWithReferences.Split(EntrySeparator))
-        {
-            if (!Guid.TryParseExact(entry.Trim(), "B", out var id))
-            {
-                entries.Add(entry.Trim());
-                continue;
-            }
-
-            var profile = profileList.FirstOrDefault(x => x.Id == id);
-
-            if (profile == null)
-                return false;
-
-            entries.Add(profile.Name);
-        }
-
-        input = string.Join("; ", entries);
-
-        return true;
+        return NamedReferenceInput.TryDecodeReferences(inputWithReferences, profiles, out input);
     }
 
     /// <summary>

@@ -6,7 +6,7 @@ namespace NETworkManager.Models.Network;
 /// <summary>
 ///     Class is used to store informations about a DNS server profile.
 /// </summary>
-public class DNSServerConnectionInfoProfile : ServerConnectionInfoProfile
+public class DNSServerConnectionInfoProfile : ServerConnectionInfoProfile, INamedReference
 {
     /// <summary>
     ///     Create an instance of <see cref="DNSServerConnectionInfoProfile" />. This will use the
