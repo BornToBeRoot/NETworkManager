@@ -331,7 +331,8 @@ public sealed class IPScanner(IPScannerOptions options)
 
                     OnHostFound(new IPScannerHostFoundArgs(hostInfo));
 
-                    // An unreachable host never needs a new snapshot of the neighbor table
+                    // An unreachable host doesn't need a new snapshot of the neighbor table - the table is only read
+                    // if it was not read yet (e.g. a host that blocks ICMP still has an ARP entry from the ping)
                     enrichTask = EnrichAsync(ipAddress, hostInfo, DateTime.MinValue, networkInterfaces,
                         cancellationToken);
                 }
@@ -459,7 +460,7 @@ public sealed class IPScanner(IPScannerOptions options)
         var macAddress = string.Empty;
 
         // Get info from neighbor table. Only hosts in a local subnet are in it (for any other
-        // host it contains the router), an unreachable host never needs a new snapshot.
+        // host it contains the router), an unreachable host only reads it if it was not read yet.
         if (IsInLocalSubnet(ipAddress, networkInterfaces))
             macAddress = await GetMACAddressFromNeighborTableAsync(ipAddress, discoveredAt, cancellationToken)
                 .ConfigureAwait(false);
@@ -496,7 +497,10 @@ public sealed class IPScanner(IPScannerOptions options)
     ///     that finish at the same time share one read.
     /// </summary>
     /// <param name="ipAddress">IP address of the host (in a local subnet, see <see cref="IsInLocalSubnet" />).</param>
-    /// <param name="discoveredAt">Time the host answered, <see cref="DateTime.MinValue" /> to use the cache only.</param>
+    /// <param name="discoveredAt">
+    ///     Time the host answered, <see cref="DateTime.MinValue" /> to use the cache - or to read the table if it was not
+    ///     read yet.
+    /// </param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     /// <returns>MAC address or an empty string.</returns>
     private async Task<string> GetMACAddressFromNeighborTableAsync(IPAddress ipAddress, DateTime discoveredAt,
@@ -512,9 +516,8 @@ public sealed class IPScanner(IPScannerOptions options)
             if (_neighborTable.TryGetValue(ipAddress, out var macAddress))
                 return macAddress;
 
-            // Already read after the host answered -> no entry. An unreachable host (MinValue) uses the cache only,
-            // also if the table was not read yet (MinValue > MinValue is false)
-            if (discoveredAt == DateTime.MinValue || _neighborTableTimestamp > discoveredAt)
+            // Already read after the host answered -> no entry
+            if (_neighborTableTimestamp > discoveredAt)
                 return string.Empty;
 
             // Timestamp before reading the table, so entries created while reading are covered by the next read
