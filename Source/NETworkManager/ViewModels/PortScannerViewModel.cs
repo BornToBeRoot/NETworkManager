@@ -844,8 +844,10 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         // Add host(s) to the history
         ListHelper.Modify(SettingsManager.Current.PortScanner_HostHistory, Host,
             SettingsManager.Current.General_HistoryListEntries);
-        ListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory, Ports,
-            SettingsManager.Current.General_HistoryListEntries);
+        // A single port profile name is already in the list, only other inputs are added to the history
+        if (PortProfile.FindByName(SettingsManager.Current.PortScanner_PortProfiles, Ports) == null)
+            ListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory, Ports,
+                SettingsManager.Current.General_HistoryListEntries);
 
         ScanOptions = CreateScanOptions();
 

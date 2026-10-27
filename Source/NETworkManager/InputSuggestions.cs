@@ -81,6 +81,22 @@ public sealed class InputSuggestions
     }
 
     /// <summary>
+    ///     Creates the list for the DNS server of DNS Lookup: the DNS servers (Windows DNS first, then sorted by name,
+    ///     with their servers) and the DNS server history.
+    /// </summary>
+    public static InputSuggestions ForDNSLookupDNSServers()
+    {
+        return new InputSuggestions(SettingsManager.Current.DNSLookup_DNSServers,
+            () => SettingsManager.Current.DNSLookup_DNSServers
+                .OrderByDescending(x => x.UseWindowsDNSServer)
+                .ThenBy(x => x.Name, StringComparer.OrdinalIgnoreCase)
+                .Select(x => (x.Name, x.UseWindowsDNSServer
+                    ? null
+                    : string.Join("; ", x.Servers.Select(server => server.Port == 53 ? server.Server : server.ToString())))),
+            Strings.DNSServers, SettingsManager.Current.DNSLookup_DNSServerHistory);
+    }
+
+    /// <summary>
     ///     Gets the view of the entries, grouped (profiles, history).
     /// </summary>
     public ICollectionView View { get; }

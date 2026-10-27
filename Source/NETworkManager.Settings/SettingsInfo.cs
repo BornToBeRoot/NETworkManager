@@ -1985,6 +1985,20 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = [];
 
+    public ObservableCollection<string> DNSLookup_DNSServerHistory
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            UpdateCollectionChanged(field, value);
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
+
     public ObservableCollection<DNSServerConnectionInfoProfile> DNSLookup_DNSServers
     {
         get;
@@ -4239,6 +4253,7 @@ public class SettingsInfo : INotifyPropertyChanged
         // DNS Lookup
         DNSLookup_HostHistory.CollectionChanged += CollectionChanged;
         DNSLookup_DNSServers.CollectionChanged += CollectionChanged;
+        DNSLookup_DNSServerHistory.CollectionChanged += CollectionChanged;
 
         // Remote Desktop
         RemoteDesktop_HostHistory.CollectionChanged += CollectionChanged;

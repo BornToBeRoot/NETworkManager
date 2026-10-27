@@ -62,14 +62,21 @@ public class DNSLookupViewModel : ViewModelBase
     /// </summary>
     public ICollectionView HostHistoryView { get; }
 
-    /// <summary>
-    /// Gets the collection view of DNS servers.
-    /// </summary>
-    public ICollectionView DNSServers { get; }
+    private readonly InputSuggestions _dnsServerSuggestions = InputSuggestions.ForDNSLookupDNSServers();
 
     /// <summary>
-    /// Gets or sets the selected DNS server.
-    /// This can either be an ip/host:port or a profile name.
+    /// Gets the DNS servers and the DNS server history for the DNS server input (grouped).
+    /// </summary>
+    public ICollectionView DNSServers => _dnsServerSuggestions.View;
+
+    /// <summary>
+    /// Gets the names of the DNS servers for the Tab completion of the DNS server input.
+    /// </summary>
+    public IEnumerable<string> DNSServerNames => _dnsServerSuggestions.ProfileNames;
+
+    /// <summary>
+    /// Gets or sets the DNS server input: names of DNS servers (profiles) and / or DNS servers (ip/host:port),
+    /// separated by ";" (see <see cref="Models.Network.DNSServer.ResolveServers"/>).
     /// </summary>
     public string DNSServer
     {
@@ -79,25 +86,8 @@ public class DNSLookupViewModel : ViewModelBase
             if (field == value)
                 return;
 
-            // Try finding matching dns server profile by name, otherwise set to null (de-select)
-            SelectedDNSServer = SettingsManager.Current.DNSLookup_DNSServers
-                .FirstOrDefault(x => x.Name == value);
-
             if (!_isLoading)
                 SettingsManager.Current.DNSLookup_SelectedDNSServer_v2 = value;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public DNSServerConnectionInfoProfile SelectedDNSServer
-    {
-        get;
-        set
-        {
-            if (field == value)
-                return;
 
             field = value;
             OnPropertyChanged();
@@ -265,12 +255,6 @@ public class DNSLookupViewModel : ViewModelBase
 
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
 
-        DNSServers = new CollectionViewSource { Source = SettingsManager.Current.DNSLookup_DNSServers }.View;
-        DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.UseWindowsDNSServer),
-            ListSortDirection.Descending));
-        DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name),
-            ListSortDirection.Ascending));
-
         DNSServer = string.IsNullOrEmpty(SettingsManager.Current.DNSLookup_SelectedDNSServer_v2)
             ? SettingsManager.Current.DNSLookup_DNSServers.FirstOrDefault()?.Name
             : SettingsManager.Current.DNSLookup_SelectedDNSServer_v2;
@@ -391,6 +375,11 @@ public class DNSLookupViewModel : ViewModelBase
 
         ListHelper.Modify(SettingsManager.Current.DNSLookup_HostHistory, Host,
             SettingsManager.Current.General_HistoryListEntries);
+
+        // A single DNS server name is already in the list, only other inputs are added to the history
+        if (Models.Network.DNSServer.FindByName(SettingsManager.Current.DNSLookup_DNSServers, DNSServer) == null)
+            ListHelper.Modify(SettingsManager.Current.DNSLookup_DNSServerHistory, DNSServer.Trim(),
+                SettingsManager.Current.General_HistoryListEntries);
 
         DNSLookupSettings dnsSettings = new()
         {
