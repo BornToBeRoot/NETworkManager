@@ -127,6 +127,7 @@ Release date: **xx.xx.2026**
 
 **DNS Lookup**
 
+- Several DNS servers can be entered, also names of configured DNS servers together with custom DNS servers (e.g. `Google Public DNS; Cloudflare; 9.9.9.9`), every DNS server is queried once; `[Windows DNS]` in a list adds the DNS servers of Windows. The name of a DNS server must not contain `;` (replaced by `,` when updating). Also with the run command (`dns borntoberoot.net "Google Public DNS";cloudflare`). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - IP addresses opened from another feature (e.g. **IP Scanner** > **DNS lookup** > **IP address**), from a profile or with the run command are looked up with `PTR` instead of the selected record type. [#3644](https://github.com/BornToBeRoot/NETworkManager/pull/3644)
 
 **Hosts File Editor**
@@ -246,6 +247,7 @@ Release date: **xx.xx.2026**
 
 **DNS Lookup**
 
+- Fixed a DNS server opened with the run command in another case than configured (e.g. `cloudflare` for `Cloudflare`) being looked up as hostname instead of using the configured DNS server. Names of DNS servers are case-insensitive now. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed **Add DNS suffix (primary) to hostname** silently appending no suffix at all on machines without a Windows primary DNS suffix configured (e.g. not domain-joined), even though a usable suffix was available via the active network adapter's connection-specific DNS suffix (shown under **DNS Suffix Search List** in `ipconfig /all`). It now falls back to that adapter's suffix in this case. [#3591](https://github.com/BornToBeRoot/NETworkManager/pull/3591)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the DNS server profiles in the settings. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 

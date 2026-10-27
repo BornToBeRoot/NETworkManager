@@ -52,6 +52,8 @@
                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                            <!-- The name can be entered in a list separated by ";" (e.g. DNS servers of DNS Lookup) -->
+                            <validators:NoSemicolonValidator ValidatesOnTargetUpdated="True" />
                             <validators:IsNameUnique ValidatesOnTargetUpdated="True">
                                 <validators:IsNameUnique.Wrapper>
                                     <validators:IsNameUniqueDependencyObjectWrapper

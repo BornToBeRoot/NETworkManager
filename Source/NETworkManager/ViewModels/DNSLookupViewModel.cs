@@ -410,32 +410,15 @@ public class DNSLookupViewModel : ViewModelBase
             dnsSettings.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix?.TrimStart('.');
         }
 
-        // Try to find DNS server profile
-        var dnsServerProfile = SettingsManager.Current.DNSLookup_DNSServers
-            .FirstOrDefault(x => x.Name == DNSServer);
+        // DNS server profiles (by name, case-insensitive) and DNS servers, also several (e.g. "Google Public DNS;
+        // 9.9.9.9")
+        var dnsServersToResolve = Models.Network.DNSServer.ResolveServers(DNSServer,
+            SettingsManager.Current.DNSLookup_DNSServers, out var useWindowsDNSServer, out var invalidEntries);
 
-        DNSLookup dnsLookup = null;
-        List<ServerConnectionInfo> dnsServersToResolve = [];
+        foreach (var invalidEntry in invalidEntries)
+            AppendStatusMessage(Strings.DNSServer + ": " + string.Format(Strings.CouldNotParseX, invalidEntry));
 
-        // Use DNS server profile if found
-        if (dnsServerProfile != null)
-        {
-            if (dnsServerProfile.UseWindowsDNSServer)
-                dnsLookup = new DNSLookup(dnsSettings);
-            else
-                dnsServersToResolve = dnsServerProfile.Servers;
-        }
-        // Parse DNS server input
-        else
-        {
-            foreach (var dnsServerInput in DNSServer.Split(';'))
-            {
-                if (ServerConnectionInfo.TryParse(dnsServerInput, out var serverInfo, 53, TransportProtocol.Udp))
-                    dnsServersToResolve.Add(serverInfo);
-                else
-                    AppendStatusMessage(Strings.DNSServer + ": " + string.Format(Strings.CouldNotParseX, dnsServerInput));
-            }
-        }
+        var dnsLookup = useWindowsDNSServer ? new DNSLookup(dnsSettings) : null;
 
         // Resolve DNS server hostnames (if any) - not required when using Windows DNS servers
         if (dnsLookup == null)

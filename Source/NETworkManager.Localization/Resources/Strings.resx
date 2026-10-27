@@ -5116,4 +5116,10 @@ Do you want to start the scan?</value>
   <data name="XHostsDidNotAnswerThePingAndWereNotScanned" xml:space="preserve">
     <value>{0} host(s) did not answer the ping and were not scanned.</value>
   </data>
+  <data name="EnterValidDNSServersOrDNSServerProfiles" xml:space="preserve">
+    <value>Enter valid DNS servers (IP address or hostname, optional port) and/or names of DNS servers!</value>
+  </data>
+  <data name="ErrorMessage_NameMustNotContainSemicolon" xml:space="preserve">
+    <value>The name must not contain ";".</value>
+  </data>
 </root>

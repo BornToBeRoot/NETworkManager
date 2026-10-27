@@ -4293,6 +4293,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter valid DNS servers (IP address or hostname, optional port) and/or names of DNS servers!.
+        /// </summary>
+        public static string EnterValidDNSServersOrDNSServerProfiles {
+            get {
+                return ResourceManager.GetString("EnterValidDNSServersOrDNSServerProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a valid domain (e.g., &quot;example.com&quot;)!.
         /// </summary>
         public static string EnterValidDomain {
@@ -4622,6 +4631,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ErrorMessage_NameIsAlreadyUsed {
             get {
                 return ResourceManager.GetString("ErrorMessage_NameIsAlreadyUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name must not contain &quot;;&quot;..
+        /// </summary>
+        public static string ErrorMessage_NameMustNotContainSemicolon {
+            get {
+                return ResourceManager.GetString("ErrorMessage_NameMustNotContainSemicolon", resourceCulture);
             }
         }
         

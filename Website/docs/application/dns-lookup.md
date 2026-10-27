@@ -43,6 +43,7 @@ DNS (Domain Name System) is a hierarchical naming system for computers, services
 | `Cloudflare` (profile) | Uses Cloudflare's public DNS servers from a predefined profile.            |
 | `1.1.1.1:53` (input)   | Uses the custom DNS server `1.1.1.1` on port `53` from the input directly. |
 | `ns3.inwx.eu` (input)  | Uses the custom DNS server `ns3.inwx.eu` from the input directly.          |
+| `Google Public DNS; Cloudflare; 9.9.9.9` | Uses the DNS servers of both profiles and `9.9.9.9`.         |
 
 :::note
 
@@ -52,7 +53,7 @@ Example: `server-01.borntoberoot.net; 10.0.0.1`
 
 :::
 
-The DNS server can be selected from a list of configured servers or you can enter a custom DNS server in the format `<hostname>|<ipaddress>:<port>` (`<port>` is optional, to use a custom port with IPv6 enclose the address in square brackets: `[<ipv6address>]:53`).
+The DNS server can be selected from a list of configured servers or you can enter a custom DNS server in the format `<hostname>|<ipaddress>:<port>` (`<port>` is optional, to use a custom port with IPv6 enclose the address in square brackets: `[<ipv6address>]:53`). Names of configured DNS servers (case-insensitive) and custom DNS servers can be combined with a semicolon (e.g. `Google Public DNS; Cloudflare; 9.9.9.9`), every DNS server is queried once. `[Windows DNS]` together with other DNS servers adds the DNS servers configured in Windows.
 
 ### Context menu
 

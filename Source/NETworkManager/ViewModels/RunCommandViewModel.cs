@@ -1143,13 +1143,14 @@ public class RunCommandViewModel : ViewModelBase
 
     /// <summary>
     ///     DNS servers configured in the DNS lookup (e.g. "Cloudflare") that contain the typed word, if no DNS server was
-    ///     entered yet.
+    ///     entered yet. Several DNS servers can be entered (e.g. "\"Google Public DNS\";cloudflare"), the entry after
+    ///     the last ";" is completed.
     /// </summary>
     private IEnumerable<RunCommandSuggestion> GetDNSServerSuggestions()
     {
         return GetArgumentValueSuggestions(RunCommandArgument.DNSServer,
             RunCommandManager.GetDNSServers().Select(x => (x, Strings.DNSServer)), RunCommandSuggestionKind.DNSServer,
-            Strings.DNSServers);
+            Strings.DNSServers, isList: true);
     }
 
     /// <summary>

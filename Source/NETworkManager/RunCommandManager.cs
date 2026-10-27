@@ -358,24 +358,17 @@ public static class RunCommandManager
     }
 
     /// <summary>
-    ///     Validates the DNS server argument: the name of a configured DNS server, or custom DNS server(s) in the format
-    ///     of the DNS lookup (IP address or host with a domain, optional port). A single word that is neither (e.g. a
-    ///     mistyped type like "aaa") is an unknown argument instead of a DNS server.
+    ///     Validates the DNS server argument: names of configured DNS servers (case-insensitive) and / or custom DNS
+    ///     servers in the format of the DNS lookup (IP address or host with a domain, optional port), separated by ";"
+    ///     (e.g. "google;cloudflare;9.9.9.9"). A single word that is neither (e.g. a mistyped type like "aaa") is an
+    ///     unknown argument instead of a DNS server.
     /// </summary>
     private static string ValidateDNSServer(string dnsServer)
     {
-        if (GetDNSServers().Any(x => string.Equals(x, dnsServer, StringComparison.OrdinalIgnoreCase)))
-            return null;
+        var invalidEntry = DNSServer.GetInvalidEntries(dnsServer, SettingsManager.Current.DNSLookup_DNSServers,
+            hostnameNeedsDomain: true).FirstOrDefault();
 
-        foreach (var server in dnsServer.Split(';',
-                     StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
-        {
-            if (!ServerConnectionInfo.TryParse(server, out var serverInfo, 53, TransportProtocol.Udp) ||
-                !IPAddress.TryParse(serverInfo.Server, out _) && !serverInfo.Server.Contains('.'))
-                return string.Format(Strings.UnknownArgumentX, server);
-        }
-
-        return null;
+        return invalidEntry == null ? null : string.Format(Strings.UnknownArgumentX, invalidEntry);
     }
 
     /// <summary>

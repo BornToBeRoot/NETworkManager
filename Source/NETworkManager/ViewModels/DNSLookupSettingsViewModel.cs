@@ -59,8 +59,8 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     /// </summary>
     private List<string> ServerInfoProfileNames =>
     [
-        .. SettingsManager.Current.DNSLookup_DNSServers
-            .Where(x => !x.UseWindowsDNSServer).Select(x => x.Name)
+        // Also the Windows DNS server - names are used in the DNS server input, they must be unique
+        .. SettingsManager.Current.DNSLookup_DNSServers.Select(x => x.Name)
     ];
 
     /// <summary>

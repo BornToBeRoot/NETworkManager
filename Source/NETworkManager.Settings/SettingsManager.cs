@@ -792,6 +792,14 @@ public static class SettingsManager
             Current.PortScanner_MaxPortThreads = GlobalStaticConfiguration.PortScanner_MaxPortThreads;
         }
 
+        // DNS Lookup - DNS servers can be entered by name in a list (e.g. "Google Public DNS; Cloudflare"), where ";"
+        // separates the entries: replace it in the names
+        foreach (var dnsServer in Current.DNSLookup_DNSServers.Where(x => x.Name?.Contains(';') == true))
+        {
+            Log.Info($"Replace \";\" in the name of the DNS server \"{dnsServer.Name}\"...");
+            dnsServer.Name = dnsServer.Name.Replace(';', ',');
+        }
+
         // Port Scanner - port profiles have an internal ID (profiles reference them by it)
         foreach (var portProfile in Current.PortScanner_PortProfiles.Where(x => x.Id == Guid.Empty))
         {
