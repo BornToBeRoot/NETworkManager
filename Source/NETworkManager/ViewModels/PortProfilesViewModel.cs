@@ -27,11 +27,12 @@ public class PortProfilesViewModel : ViewModelBase
     public PortProfilesViewModel(Action<PortProfilesViewModel> okCommand, Action<PortProfilesViewModel> cancelHandler)
     {
         // Clear the filter on close so it doesn't leak into other views sharing this collection's default view.
+        // Only with a selected profile - also for Enter in the grid (the OK button is disabled without a selection)
         OKCommand = new RelayCommand(_ =>
         {
             PortProfiles.Filter = null;
             okCommand(this);
-        });
+        }, _ => SelectedPortProfiles.Count > 0);
         CancelCommand = new RelayCommand(_ =>
         {
             PortProfiles.Filter = null;
@@ -56,9 +57,7 @@ public class PortProfilesViewModel : ViewModelBase
                    info.Ports.IndexOf(search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
-        SelectedPortProfiles = new ArrayList {
-            PortProfiles.Cast<PortProfileInfo>().FirstOrDefault()
-        };
+        SelectedPortProfiles = CreateFirstProfileSelection();
     }
 
     #endregion
@@ -90,10 +89,7 @@ public class PortProfilesViewModel : ViewModelBase
 
             PortProfiles.Refresh();
 
-            SelectedPortProfiles = new ArrayList
-            {
-                PortProfiles.Cast<PortProfileInfo>().FirstOrDefault()
-            };
+            SelectedPortProfiles = CreateFirstProfileSelection();
 
             OnPropertyChanged();
         }
@@ -129,7 +125,19 @@ public class PortProfilesViewModel : ViewModelBase
     /// <returns>A collection of selected <see cref="PortProfileInfo"/>.</returns>
     public IEnumerable<PortProfileInfo> GetSelectedPortProfiles()
     {
-        return [.. SelectedPortProfiles.Cast<PortProfileInfo>()];
+        return [.. SelectedPortProfiles.OfType<PortProfileInfo>()];
+    }
+
+    /// <summary>
+    /// Creates the selection with the first shown profile - empty if no profile is shown (no profiles or no match for
+    /// the search), never a <see langword="null" /> entry.
+    /// </summary>
+    /// <returns>Selection.</returns>
+    private ArrayList CreateFirstProfileSelection()
+    {
+        var firstProfile = PortProfiles.Cast<PortProfileInfo>().FirstOrDefault();
+
+        return firstProfile != null ? new ArrayList { firstProfile } : new ArrayList();
     }
     #endregion
 }
