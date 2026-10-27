@@ -144,7 +144,7 @@ public static class DNSServer
     {
         return
         [
-            new(), // Windows DNS server
+            new() { Id = Guid.NewGuid() }, // Windows DNS server
             new("Cloudflare",
             [
                 new("1.1.1.1", 53, TransportProtocol.Udp),

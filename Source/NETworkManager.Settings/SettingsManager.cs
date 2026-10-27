@@ -800,6 +800,13 @@ public static class SettingsManager
             dnsServer.Name = dnsServer.Name.Replace(';', ',');
         }
 
+        // DNS Lookup - DNS servers have an internal ID (profiles reference them by it)
+        foreach (var dnsServer in Current.DNSLookup_DNSServers.Where(x => x.Id == Guid.Empty))
+        {
+            Log.Info($"Add an ID to the DNS server \"{dnsServer.Name}\"...");
+            dnsServer.Id = Guid.NewGuid();
+        }
+
         // Port Scanner - port profiles have an internal ID (profiles reference them by it)
         foreach (var portProfile in Current.PortScanner_PortProfiles.Where(x => x.Id == Guid.Empty))
         {
