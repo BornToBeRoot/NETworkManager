@@ -33,6 +33,12 @@ public class PortScannerViewModel : ViewModelBase
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(PortScannerViewModel));
 
+    /// <summary>
+    /// Maximum number of rows that are removed / added one by one when the results of hosts are replaced (rescan),
+    /// see <see cref="ReplaceResults"/>.
+    /// </summary>
+    private const int MaxRowsChangedOneByOne = 1000;
+
     private CancellationTokenSource _cancellationTokenSource;
 
     private readonly Guid _tabId;
@@ -743,9 +749,7 @@ public class PortScannerViewModel : ViewModelBase
         _rescanPortsOpen = PortsOpen;
         _rescanPortsClosed = PortsClosed;
 
-        // One reset instead of removing the rows one by one - every removal searches the collection and the sorted,
-        // grouped view (e.g. a host with 1-65535 and closed ports shown would freeze the window for minutes)
-        Results.ReplaceAll(Results.Where(x => !rescannedIPAddresses.Contains(x.IPAddress)));
+        ReplaceResults(rescannedIPAddresses, []);
 
         // Every host was scanned with all ports: the other hosts keep their counters
         var rescanPortCount = ipAddresses.Count * _lastPorts.Length;
@@ -776,6 +780,32 @@ public class PortScannerViewModel : ViewModelBase
         _cancellationTokenSource = new CancellationTokenSource();
 
         StartScanner([.. ipAddresses.Select(x => (x, string.Empty))], _lastPorts);
+    }
+
+    /// <summary>
+    /// Replaces the rows of the given hosts. Few rows are removed / added one by one, so the groups of the other hosts
+    /// keep their state (collapsed) and the scroll position stays. Many rows with one reset instead: every single
+    /// change searches the collection and the sorted, grouped view (e.g. a host with 1-65535 and closed ports shown
+    /// would freeze the window for minutes).
+    /// </summary>
+    /// <param name="ipAddresses">Hosts whose rows are replaced.</param>
+    /// <param name="rows">New rows of the hosts.</param>
+    private void ReplaceResults(HashSet<IPAddress> ipAddresses, IReadOnlyCollection<PortScannerPortInfo> rows)
+    {
+        var oldRows = Results.Where(x => ipAddresses.Contains(x.IPAddress)).ToList();
+
+        if (oldRows.Count + rows.Count > MaxRowsChangedOneByOne)
+        {
+            Results.ReplaceAll(Results.Where(x => !ipAddresses.Contains(x.IPAddress)).Concat(rows));
+
+            return;
+        }
+
+        foreach (var row in oldRows)
+            Results.Remove(row);
+
+        foreach (var row in rows)
+            Results.Add(row);
     }
 
     /// <summary>
@@ -1052,8 +1082,7 @@ public class PortScannerViewModel : ViewModelBase
                 // rescan started, only some ports were scanned again)
                 if (e.IsCanceled || e.Exception != null)
                 {
-                    Results.ReplaceAll(Results.Where(x => !_rescanIPAddresses.Contains(x.IPAddress))
-                        .Concat(_rescanRemovedRows));
+                    ReplaceResults(_rescanIPAddresses, _rescanRemovedRows);
 
                     PortsOpen = _rescanPortsOpen;
                     PortsClosed = _rescanPortsClosed;
