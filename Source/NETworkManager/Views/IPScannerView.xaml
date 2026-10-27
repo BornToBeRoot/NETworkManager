@@ -539,6 +539,7 @@
                         </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Ports}"
                                   Command="{Binding CopySelectedPortsCommand}"
+                                  Visibility="{Binding Path=Data.ScanOptions.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.Timestamp}"
                                   Command="{Binding CopyDataToClipboardCommand}"
