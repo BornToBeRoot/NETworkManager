@@ -13,7 +13,6 @@ using NETworkManager.Views;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
@@ -144,7 +143,7 @@ public class PortScannerViewModel : ViewModelBase
     /// <summary>
     /// Gets or sets the collection of scan results.
     /// </summary>
-    public ObservableCollection<PortScannerPortInfo> Results
+    public ObservableRangeCollection<PortScannerPortInfo> Results
     {
         get;
         set
@@ -737,8 +736,9 @@ public class PortScannerViewModel : ViewModelBase
 
         var rescannedIPAddresses = ipAddresses.ToHashSet();
 
-        foreach (var row in Results.Where(x => rescannedIPAddresses.Contains(x.IPAddress)).ToList())
-            Results.Remove(row);
+        // One reset instead of removing the rows one by one - every removal searches the collection and the sorted,
+        // grouped view (e.g. a host with 1-65535 and closed ports shown would freeze the window for minutes)
+        Results.ReplaceAll(Results.Where(x => !rescannedIPAddresses.Contains(x.IPAddress)));
 
         // Every host was scanned with all ports: the other hosts keep their counters
         var rescanPortCount = ipAddresses.Count * _lastPorts.Length;
