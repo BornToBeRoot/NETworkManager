@@ -205,7 +205,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
     {
         _isLoading = true;
 
-        // Own view (not the default view of the collection, which the port profiles dialog shows too)
+        // Own view (not the default view of the collection), sort and selection only apply to the settings
         PortProfiles = new CollectionViewSource { Source = SettingsManager.Current.PortScanner_PortProfiles }.View;
         PortProfiles.SortDescriptions.Add(
             new SortDescription(nameof(PortProfileInfo.Name), ListSortDirection.Ascending));
