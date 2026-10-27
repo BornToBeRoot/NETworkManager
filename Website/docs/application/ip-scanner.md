@@ -74,7 +74,7 @@ Right-clicking a result allows forwarding device information to another tool (e.
 | **Wake on LAN**                                                                   | Sends a magic packet to the MAC address of the host with [Wake on LAN](./wake-on-lan) (only with a MAC address) |
 | **Custom commands**                                                               | Executes a [custom command](#custom-commands) for the host                                                    |
 | **Add profile...**                                                                | Creates a new profile with the host (IP address), the hostname as name and the MAC address for Wake on LAN    |
-| **Copy**                                                                          | Copies the selected information to the clipboard                                                              |
+| **Copy**                                                                          | Copies the selected information to the clipboard (ping and port values only when the probe is finished)      |
 | **Export...**                                                                     | Exports the selected or all results to a file                                                                 |
 
 A NetBIOS name (shown as hostname if there is no DNS hostname) is not passed to other tools, because it may not be resolvable via DNS - the IP address is used instead. **DNS lookup...** / **RDAP...** > **Hostname** are only available with a DNS hostname. In [custom commands](#custom-commands), `{{Hostname}}` is the shown hostname (DNS or NetBIOS).
