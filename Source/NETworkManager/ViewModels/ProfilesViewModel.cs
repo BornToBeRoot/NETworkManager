@@ -1,6 +1,7 @@
 ﻿using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using NETworkManager.Utilities.WPF;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +11,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
@@ -28,15 +28,14 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
 
         ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
 
-        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
-        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+        _searchDelay = new SearchDelay(GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan, ApplySearch);
     }
 
     #endregion
 
     #region Variables
 
-    private readonly DispatcherTimer _searchDispatcherTimer = new();
+    private readonly SearchDelay _searchDelay;
     private bool _searchDisabled;
 
     private bool _isViewActive = true;
@@ -150,8 +149,7 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
             if (!_searchDisabled)
             {
                 IsSearching = true;
-                _searchDispatcherTimer.Stop();
-                _searchDispatcherTimer.Start();
+                _searchDelay.Restart();
             }
 
             OnPropertyChanged();
@@ -442,24 +440,17 @@ public class ProfilesViewModel : ViewModelBase, IProfileManager
         RefreshProfiles();
     }
 
-    private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
-    {
-        ApplySearch();
-    }
-
     /// <summary>
     /// Gets the command to filter right away (Enter in the search box, see
     /// <see cref="NETworkManager.Utilities.WPF.SearchTextBoxHelper"/>).
     /// </summary>
-    public ICommand ApplySearchCommand => new RelayCommand(_ => ApplySearch());
+    public ICommand ApplySearchCommand => new RelayCommand(_ => _searchDelay.Apply());
 
     /// <summary>
     /// Filters with the current <see cref="Search"/> right away.
     /// </summary>
     private void ApplySearch()
     {
-        _searchDispatcherTimer.Stop();
-
         RefreshProfiles();
 
         IsSearching = false;

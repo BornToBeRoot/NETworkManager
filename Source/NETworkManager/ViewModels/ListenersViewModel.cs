@@ -6,6 +6,7 @@ using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using NETworkManager.Utilities.WPF;
 using NETworkManager.Views;
 using System;
 using System.Collections;
@@ -33,8 +34,7 @@ public class ListenersViewModel : ViewModelBase
     /// </summary>
     public ListenersViewModel()
     {
-        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
-        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+        _searchDelay = new SearchDelay(GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan, ApplySearch);
 
         _isLoading = true;
 
@@ -114,7 +114,7 @@ public class ListenersViewModel : ViewModelBase
     /// Delays filtering while the user is typing (see <see cref="Search"/>), so a large list is not filtered on
     /// every key press.
     /// </summary>
-    private readonly DispatcherTimer _searchDispatcherTimer = new();
+    private readonly SearchDelay _searchDelay;
 
     /// <summary>
     /// Gets or sets the search text.
@@ -129,9 +129,8 @@ public class ListenersViewModel : ViewModelBase
 
             field = value;
 
-            // Filter after a short delay while typing (see _searchDispatcherTimer)
-            _searchDispatcherTimer.Stop();
-            _searchDispatcherTimer.Start();
+            // Filter after a short delay while typing (see _searchDelay)
+            _searchDelay.Restart();
 
             OnPropertyChanged();
         }
@@ -438,26 +437,16 @@ public class ListenersViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Filters once the user stopped typing (see <see cref="Search"/>).
-    /// </summary>
-    private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
-    {
-        ApplySearch();
-    }
-
-    /// <summary>
     /// Gets the command to filter right away (Enter in the search box, see
     /// <see cref="NETworkManager.Utilities.WPF.SearchTextBoxHelper"/>).
     /// </summary>
-    public ICommand ApplySearchCommand => new RelayCommand(_ => ApplySearch());
+    public ICommand ApplySearchCommand => new RelayCommand(_ => _searchDelay.Apply());
 
     /// <summary>
     /// Filters with the current <see cref="Search"/> right away.
     /// </summary>
     private void ApplySearch()
     {
-        _searchDispatcherTimer.Stop();
-
         ResultsView.Refresh();
     }
 

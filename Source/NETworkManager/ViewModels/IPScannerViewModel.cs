@@ -10,6 +10,7 @@ using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using NETworkManager.Utilities.WPF;
 using NETworkManager.Views;
 using System;
 using System.Collections;
@@ -173,11 +174,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// Delays filtering the results while the user is typing (see <see cref="Search"/>), so a large result is not
     /// filtered on every key press.
     /// </summary>
-    private readonly DispatcherTimer _searchDispatcherTimer = new();
+    private readonly SearchDelay _searchDelay;
 
     /// <summary>
     /// Gets or sets the search text for filtering the results (IP address, hostname, MAC address, vendor, ports).
-    /// The results are filtered after a short delay (see <see cref="_searchDispatcherTimer"/>).
+    /// The results are filtered after a short delay (see <see cref="_searchDelay"/>).
     /// </summary>
     public string Search
     {
@@ -189,8 +190,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             field = value;
 
-            _searchDispatcherTimer.Stop();
-            _searchDispatcherTimer.Start();
+            _searchDelay.Restart();
 
             OnPropertyChanged();
         }
@@ -437,8 +437,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Vendor));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Ports));
 
-        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
-        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+        _searchDelay = new SearchDelay(GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan, ApplySearch);
     }
 
     /// <summary>
@@ -1160,26 +1159,16 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     #region Events
 
     /// <summary>
-    /// Filters the results once the user stopped typing (see <see cref="Search"/>).
-    /// </summary>
-    private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
-    {
-        ApplySearch();
-    }
-
-    /// <summary>
     /// Gets the command to filter the results right away (Enter in the search box, see
     /// <see cref="NETworkManager.Utilities.WPF.SearchTextBoxHelper"/>).
     /// </summary>
-    public ICommand ApplySearchCommand => new RelayCommand(_ => ApplySearch());
+    public ICommand ApplySearchCommand => new RelayCommand(_ => _searchDelay.Apply());
 
     /// <summary>
     /// Filters the results with the current <see cref="Search"/> right away (e.g. Enter in the search box).
     /// </summary>
     private void ApplySearch()
     {
-        _searchDispatcherTimer.Stop();
-
         // Live filtering only while searching - without a search every host is shown anyway, but it would still
         // listen to the filtered properties of every row and filter a row again on every update
         var liveShaping = (ICollectionViewLiveShaping)ResultsView;

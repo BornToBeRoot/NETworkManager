@@ -3,6 +3,7 @@ using NETworkManager.Models;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using NETworkManager.Utilities.WPF;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +12,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
@@ -24,7 +24,7 @@ public abstract class ProfileHostViewModelBase : ViewModelBase, IProfileHostView
 {
     #region Variables
 
-    private readonly DispatcherTimer _searchDispatcherTimer = new();
+    private readonly SearchDelay _searchDelay;
     private bool _searchDisabled;
     private bool _isViewActive = true;
 
@@ -95,8 +95,7 @@ public abstract class ProfileHostViewModelBase : ViewModelBase, IProfileHostView
             if (!_searchDisabled)
             {
                 IsSearching = true;
-                _searchDispatcherTimer.Stop();
-                _searchDispatcherTimer.Start();
+                _searchDelay.Restart();
             }
 
             OnPropertyChanged();
@@ -200,6 +199,15 @@ public abstract class ProfileHostViewModelBase : ViewModelBase, IProfileHostView
     #region Constructor
 
     /// <summary>
+    ///     Initializes the search delay, before the constructor of the derived class (which may already set
+    ///     <see cref="Search"/>).
+    /// </summary>
+    protected ProfileHostViewModelBase()
+    {
+        _searchDelay = new SearchDelay(GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan, ApplySearch);
+    }
+
+    /// <summary>
     ///     Initializes the shared profile-panel state. Must be called by derived constructors after their own
     ///     tool-specific initialization (and while <c>_isLoading</c>-equivalent guards, if any, are still active).
     /// </summary>
@@ -217,9 +225,6 @@ public abstract class ProfileHostViewModelBase : ViewModelBase, IProfileHostView
 
         ProfileManager.OnProfilesUpdated += ProfileManager_OnProfilesUpdated;
         GroupExpanderStateStore.GroupExpandedChanged += GroupExpanderStateStore_GroupExpandedChanged;
-
-        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
-        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
     }
 
     #endregion
@@ -505,10 +510,11 @@ public abstract class ProfileHostViewModelBase : ViewModelBase, IProfileHostView
         SettingsManager.Current.SettingsChanged = true;
     }
 
-    private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
+    /// <summary>
+    /// Filters the profiles with the current <see cref="Search"/>.
+    /// </summary>
+    private void ApplySearch()
     {
-        _searchDispatcherTimer.Stop();
-
         RefreshProfiles();
 
         IsSearching = false;
