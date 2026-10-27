@@ -36,6 +36,9 @@ public static class WebConsoleUrlHelper
     /// <returns>URL.</returns>
     public static string CreateUrl(string host, IEnumerable<int> openPorts)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(host);
+        ArgumentNullException.ThrowIfNull(openPorts);
+
         var ports = openPorts.ToHashSet();
 
         var port = WebPorts.FirstOrDefault(ports.Contains);

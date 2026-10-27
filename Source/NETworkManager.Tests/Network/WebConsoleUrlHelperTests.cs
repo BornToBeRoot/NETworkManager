@@ -28,6 +28,7 @@ public class WebConsoleUrlHelperTests
     public void ThrowsWithoutHost(string host)
     {
         Assert.ThrowsAny<ArgumentException>(() => WebConsoleUrlHelper.CreateUrl(host, 80));
+        Assert.ThrowsAny<ArgumentException>(() => WebConsoleUrlHelper.CreateUrl(host, [80]));
     }
 
     [Theory]
