@@ -223,6 +223,9 @@ public static class SettingsManager
                 // Reset change tracking
                 Current.SettingsChanged = false;
 
+                // After the reset, so lowered values are saved
+                ApplyLimits();
+
                 return;
             }
             catch (Exception ex)
@@ -246,6 +249,8 @@ public static class SettingsManager
                 Current = DeserializeFromXmlFile(legacyFilePath);
 
                 Current.SettingsChanged = false;
+
+                ApplyLimits();
 
                 // Save in new JSON format
                 Save();
@@ -331,6 +336,34 @@ public static class SettingsManager
         // Reset change tracking
         Current.SettingsChanged = false;
     }
+    /// <summary>
+    ///     Lowers values above a technical limit (e.g. edited in the settings file or from an older version that allowed
+    ///     them), on every load - not only on an upgrade, which runs only once per version.
+    /// </summary>
+    private static void ApplyLimits()
+    {
+        // ICMP buffer - .NET's Ping throws for more than 65500 bytes, older versions allowed up to 65535
+        const int maxICMPBuffer = 65500;
+
+        if (Current.IPScanner_ICMPBuffer > maxICMPBuffer)
+        {
+            Log.Info($"Update \"IPScanner_ICMPBuffer\" from {Current.IPScanner_ICMPBuffer} to {maxICMPBuffer}...");
+            Current.IPScanner_ICMPBuffer = maxICMPBuffer;
+        }
+
+        if (Current.PingMonitor_Buffer > maxICMPBuffer)
+        {
+            Log.Info($"Update \"PingMonitor_Buffer\" from {Current.PingMonitor_Buffer} to {maxICMPBuffer}...");
+            Current.PingMonitor_Buffer = maxICMPBuffer;
+        }
+
+        if (Current.Traceroute_Buffer > maxICMPBuffer)
+        {
+            Log.Info($"Update \"Traceroute_Buffer\" from {Current.Traceroute_Buffer} to {maxICMPBuffer}...");
+            Current.Traceroute_Buffer = maxICMPBuffer;
+        }
+    }
+
     #endregion
 
     #region Backup
@@ -860,25 +893,6 @@ public static class SettingsManager
         {
             Log.Info($"Update \"IPScanner_PortScanPorts\" to \"{GlobalStaticConfiguration.IPScanner_PortScanPorts}\"...");
             Current.IPScanner_PortScanPorts = GlobalStaticConfiguration.IPScanner_PortScanPorts;
-        }
-
-        // ICMP buffer - .NET's Ping throws for more than 65500 bytes, the settings allowed up to 65535
-        if (Current.IPScanner_ICMPBuffer > 65500)
-        {
-            Log.Info($"Update \"IPScanner_ICMPBuffer\" from {Current.IPScanner_ICMPBuffer} to 65500...");
-            Current.IPScanner_ICMPBuffer = 65500;
-        }
-
-        if (Current.PingMonitor_Buffer > 65500)
-        {
-            Log.Info($"Update \"PingMonitor_Buffer\" from {Current.PingMonitor_Buffer} to 65500...");
-            Current.PingMonitor_Buffer = 65500;
-        }
-
-        if (Current.Traceroute_Buffer > 65500)
-        {
-            Log.Info($"Update \"Traceroute_Buffer\" from {Current.Traceroute_Buffer} to 65500...");
-            Current.Traceroute_Buffer = 65500;
         }
 
         // Add new Port Scanner port profiles
