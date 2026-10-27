@@ -67,7 +67,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // Ports of the last scan as entered (e.g. "22; 80; 443"), for a profile created from a result
     private string _lastPortsInput;
 
-    // Message of the tab, shown until the first scan has started (see constructor)
+    // Message of the tab, shown until the first scan has started or the ports are changed (see constructor)
     private string _message;
 
     // Rescan of shown hosts (see RescanSelectedHosts): their rows are removed and added again by the rescan. The
@@ -129,6 +129,16 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             field = value;
             OnPropertyChanged();
+
+            // The message of the tab is about the ports passed in (e.g. a port profile of the profile was not
+            // found), it no longer applies when they are changed
+            if (_message != null)
+            {
+                _message = null;
+
+                IsStatusMessageDisplayed = false;
+                StatusMessage = string.Empty;
+            }
         }
     }
 
@@ -434,6 +444,13 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         _firstLoad = start;
 
+        ConfigurationManager.Current.PortScannerTabCount++;
+
+        _tabId = tabId;
+        Host = host;
+        Ports = port;
+
+        // After the ports, changing them removes the message (see Ports)
         if (!string.IsNullOrEmpty(message))
         {
             _message = message;
@@ -441,12 +458,6 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             StatusMessage = message;
             IsStatusMessageDisplayed = true;
         }
-
-        ConfigurationManager.Current.PortScannerTabCount++;
-
-        _tabId = tabId;
-        Host = host;
-        Ports = port;
 
         // Set collection view
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_HostHistory);
