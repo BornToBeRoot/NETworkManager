@@ -243,6 +243,39 @@ public class RunCommandParserTests
         Assert.Equal(RunCommandParseError.None, result.Error);
     }
 
+    [Theory]
+    [InlineData("portscan 10.8.0.1 \"DNS (via TCP)\";Webs")]
+    [InlineData("portscan 10.8.0.1 \"DNS (via TCP)\" ; Webs")]
+    public void ListWithAQuotedEntry(string input)
+    {
+        // A value in quotes is an entry of the list, not a word on its own
+        var result = Parse(input);
+
+        Assert.Equal("DNS (via TCP);Webs", result.Argument);
+        Assert.Equal("DNS (via TCP);Webs", result.CurrentWord);
+        Assert.Equal("\"DNS (via TCP)\";Webs", result.CurrentToken);
+        Assert.Equal("portscan 10.8.0.1 ", result.InputBeforeCurrentWord);
+        Assert.Equal(RunCommandParseError.None, result.Error);
+    }
+
+    [Fact]
+    public void ListWithAQuotedEntryAndType()
+    {
+        var result = Parse("dns borntoberoot.net \"Google Public DNS\";1.1.1.1 aaaa");
+
+        Assert.Equal("Google Public DNS;1.1.1.1", result.Argument);
+        Assert.Equal("aaaa", result.Type);
+    }
+
+    [Fact]
+    public void ListInAnOpenQuote()
+    {
+        var result = Parse("portscan 10.8.0.1 \"DNS (via TCP); Webs");
+
+        Assert.Equal("DNS (via TCP); Webs", result.CurrentWord);
+        Assert.Equal("\"DNS (via TCP); Webs", result.CurrentToken);
+    }
+
     [Fact]
     public void TargetThatLooksLikeAType()
     {

@@ -48,6 +48,12 @@ public sealed class RunCommandParseResult
     public string CurrentWord { get; init; } = string.Empty;
 
     /// <summary>
+    ///     Word that is being typed as entered, with its quotes (e.g. <c>"DNS (via TCP)";Webs</c> for the
+    ///     <see cref="CurrentWord" /> <c>DNS (via TCP);Webs</c>), used to complete an entry of a list.
+    /// </summary>
+    public string CurrentToken { get; init; } = string.Empty;
+
+    /// <summary>
     ///     Input without the word that is being typed (e.g. "dns borntoberoot.net " for "dns borntoberoot.net aa"),
     ///     used to complete a suggestion.
     /// </summary>

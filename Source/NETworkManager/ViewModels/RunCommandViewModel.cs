@@ -1162,7 +1162,7 @@ public class RunCommandViewModel : ViewModelBase
     /// <param name="group">Group of the suggestions.</param>
     /// <param name="isList">
     ///     The argument can be a list separated by ";" (e.g. "webserver;database;22"): the entry after the last ";" is
-    ///     completed. Names with spaces only as the first entry (a value in quotes can't be part of a list).
+    ///     completed, the entries before are kept as entered (with their quotes, e.g. <c>"DNS (via TCP)";web</c>).
     /// </param>
     private IEnumerable<RunCommandSuggestion> GetArgumentValueSuggestions(RunCommandArgument argument,
         IEnumerable<(string Name, string Description)> values, RunCommandSuggestionKind kind, string group,
@@ -1172,13 +1172,20 @@ public class RunCommandViewModel : ViewModelBase
             _result.Argument != null && !string.Equals(_result.Argument, _result.CurrentWord))
             return [];
 
-        // Entries before the one that is being typed (e.g. "webserver;" of "webserver;dat")
-        var previousEntries = isList ? _result.CurrentWord[..(_result.CurrentWord.LastIndexOf(';') + 1)] : string.Empty;
-        var entry = _result.CurrentWord[previousEntries.Length..];
+        // Entries before the one that is being typed, as entered (e.g. "webserver;" of "webserver;dat")
+        var separator = isList ? _result.CurrentToken.LastIndexOf(';') : -1;
+        var previousEntries = _result.CurrentToken[..(separator + 1)];
+
+        // Typed in the open quote of the previous entry (e.g. "DNS (via TCP); web) - close it before the ";"
+        if (previousEntries.Count(x => x == '"') % 2 == 1)
+            previousEntries = previousEntries[..^1].TrimEnd() + "\";";
+
+        var entry = separator < 0
+            ? _result.CurrentWord
+            : _result.CurrentToken[(separator + 1)..].Replace("\"", string.Empty).Trim();
 
         return values
-            .Where(x => x.Name.Contains(entry, StringComparison.OrdinalIgnoreCase) &&
-                        (previousEntries.Length == 0 || !x.Name.Contains(' ')))
+            .Where(x => x.Name.Contains(entry, StringComparison.OrdinalIgnoreCase))
             .Select(x => new RunCommandSuggestion
             {
                 Kind = kind,
