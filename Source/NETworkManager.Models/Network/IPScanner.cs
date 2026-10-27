@@ -209,7 +209,8 @@ public sealed class IPScanner(IPScannerOptions options)
         // all ports are finished
         var portAnswered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
 
-        var pingTask = PingAsync(ipAddress, cancellationToken);
+        var pingTask = PingProbe.PingAsync(ipAddress, options.ICMPTimeout, options.ICMPAttempts,
+            options.ICMPBuffer, cancellationToken);
 
         var portScanTask = options.PortScanEnabled
             ? PortScanAsync(ipAddress, portScanParallelOptions, () => portAnswered.TrySetResult(), cancellationToken)
@@ -560,66 +561,6 @@ public sealed class IPScanner(IPScannerOptions options)
 
         return networkInterfaces.Any(networkInterface => networkInterface.IPv6Address.Any(x =>
             x.GetAddressBytes().AsSpan(0, 8).SequenceEqual(prefix)));
-    }
-
-    private async Task<PingInfo> PingAsync(IPAddress ipAddress, CancellationToken cancellationToken)
-    {
-        using var ping = new System.Net.NetworkInformation.Ping();
-
-        PingInfo pingInfo = null;
-
-        for (var i = 0; i < options.ICMPAttempts; i++)
-        {
-            // Get timestamp
-            var timestamp = DateTime.Now;
-
-            try
-            {
-                // Note: the CancellationToken-accepting overload requires a TimeSpan timeout,
-                // unlike the legacy int-based overloads used elsewhere in .NET's Ping API.
-                var pingReply = await ping.SendPingAsync(ipAddress, TimeSpan.FromMilliseconds(options.ICMPTimeout),
-                    options.ICMPBuffer, cancellationToken: cancellationToken).ConfigureAwait(false);
-
-                // Success
-                if (pingReply is { Status: IPStatus.Success })
-                {
-                    switch (ipAddress.AddressFamily)
-                    {
-                        case AddressFamily.InterNetwork:
-                            return new PingInfo(
-                                                         timestamp,
-                                                         pingReply.Address,
-                                                         pingReply.Buffer.Length,
-                                                         pingReply.RoundtripTime,
-                                                         pingReply.Options!.Ttl,
-                                                         pingReply.Status);
-                        case AddressFamily.InterNetworkV6:
-                            return new PingInfo(
-                                                     timestamp,
-                                                     pingReply.Address,
-                                                     pingReply.Buffer.Length,
-                                                     pingReply.RoundtripTime,
-                                                     pingReply.Status);
-                    }
-                }
-
-                // Failed
-                pingInfo = new PingInfo(timestamp, ipAddress, pingReply.Status);
-
-                // Only try again if the request timed out (e.g. a lost packet). Other states like
-                // "destination host unreachable" are a definitive answer.
-                if (pingReply.Status != IPStatus.TimedOut)
-                    break;
-            }
-            catch (PingException)
-            {
-                // Ping failed with unknown status
-                return new PingInfo(timestamp, ipAddress, IPStatus.Unknown);
-            }
-        }
-
-        // Result of the last attempt (falls back to unknown status if there was no attempt)
-        return pingInfo ?? new PingInfo(DateTime.Now, ipAddress, IPStatus.Unknown);
     }
 
     /// <summary>
