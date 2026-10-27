@@ -171,7 +171,7 @@ List of common TCP ports to scan for.
 
 Right-click on a selected port profile to `edit` or `delete` it.
 
-You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected port profile.
+You can also use the Hotkeys `F2` (`edit`) or `Del` (`delete`) on a selected port profile, or double-click it to edit it.
 
 :::
 

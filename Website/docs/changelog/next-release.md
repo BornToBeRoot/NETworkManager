@@ -291,6 +291,7 @@ Release date: **xx.xx.2026**
 - Fixed `Enter` in the search box of the port profiles dialog closing the dialog with **OK**. It only filters the port profiles now. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the port profiles (dialog, settings). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 - Fixed the ports of different hosts with the same hostname (DNS `PTR`, e.g. a generic name of a provider or a server with two IP addresses) being shown in one group. The results are grouped per IP address, the group header shows the hostname and the IP address. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- Fixed **Edit** (`F2`, double-click) and **Delete** (`Del`) of a port profile in the settings being available without a selected profile (edit created a new profile). The delete confirmation shows the name of the profile. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 
 **IP Geolocation**
 

@@ -4,6 +4,7 @@ using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,7 +42,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
             field = value;
             OnPropertyChanged();
         }
-    } = new();
+    }
 
     /// <summary>
     /// Gets or sets a value indicating whether to show all results (open and closed ports).
@@ -200,14 +201,23 @@ public class PortScannerSettingsViewModel : ViewModelBase
         _ = AddPortProfile();
     }
 
-    public ICommand EditPortProfileCommand => new RelayCommand(_ => EditPortProfileAction());
+    public ICommand EditPortProfileCommand => new RelayCommand(_ => EditPortProfileAction(), PortProfileSelected_CanExecute);
+
+    /// <summary>
+    /// Checks if a port profile is selected (edit and delete need one, e.g. F2 / Del without a selection).
+    /// </summary>
+    private bool PortProfileSelected_CanExecute(object parameter)
+    {
+        return SelectedPortProfile != null;
+    }
 
     private void EditPortProfileAction()
     {
         _ = EditPortProfile();
     }
 
-    public ICommand DeletePortProfileCommand => new RelayCommand(_ => DeletePortProfileAction());
+    public ICommand DeletePortProfileCommand =>
+        new RelayCommand(_ => DeletePortProfileAction(), PortProfileSelected_CanExecute);
 
     private void DeletePortProfileAction()
     {
@@ -275,7 +285,8 @@ public class PortScannerSettingsViewModel : ViewModelBase
     {
         var result = await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
             Strings.DeletePortProfile,
-            Strings.DeletePortProfileMessage,
+            Strings.DeletePortProfileMessage + Environment.NewLine + Environment.NewLine +
+            DialogHelper.FormatItemList([SelectedPortProfile.Name]),
             ChildWindowIcon.Info,
             Strings.Delete);
 
