@@ -147,8 +147,8 @@ Reference code as `path:line`. Rate each finding (High / Medium / Low) in the fi
 prioritize. Proposed fixes describe the smallest change that follows the existing patterns.
 
 For larger missing features, add an issue draft at the end that follows the repository's feature request
-template (`.github/ISSUE_TEMPLATE/Feature_request.md`): a short title, "Describe your feature request",
-the motivation, a proposed behaviour (UI + logic), and which existing feature it could be modelled on.
+form (`.github/ISSUE_TEMPLATE/feature_request.yml`): a short title, the affected feature, "Problem / motivation",
+"Proposed solution" (UI + logic), and "Alternatives / workarounds" incl. which existing feature it could be modelled on.
 
 ### 7. After the report
 

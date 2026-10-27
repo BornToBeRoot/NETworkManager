@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 Documentation
+    url: https://borntoberoot.net/NETworkManager/docs/introduction
+    about: Features, settings, FAQ and how to use NETworkManager.
+  - name: 💬 Discussions
+    url: https://github.com/BornToBeRoot/NETworkManager/discussions
+    about: Share ideas, show what you built or talk with the community.
+  - name: 🌍 Translations
+    url: https://app.transifex.com/BornToBeRoot/NETworkManager/dashboard/
+    about: Translations are managed on Transifex - help translate NETworkManager there.
+  - name: 🔒 Security vulnerability
+    url: https://github.com/BornToBeRoot/NETworkManager/security/advisories/new
+    about: Please report security vulnerabilities privately, not as a public issue.

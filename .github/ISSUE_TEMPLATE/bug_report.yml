@@ -1,0 +1,149 @@
+name: 🐛 Bug report
+description: Something doesn't work as expected, or the application crashes.
+labels: [":mag: needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! 🙏
+
+        Please check the [existing issues](https://github.com/BornToBeRoot/NETworkManager/issues?q=is%3Aissue) first and whether the bug still happens with the [latest version](https://github.com/BornToBeRoot/NETworkManager/releases) (or pre-release).
+
+        > [!IMPORTANT]
+        > **Security vulnerabilities** must not be reported here - please use a [private security advisory](https://github.com/BornToBeRoot/NETworkManager/security/advisories/new).
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected feature
+      description: Where does the bug happen?
+      options:
+        - General (start, settings, profiles, update, ...)
+        - Run command
+        - Dashboard
+        - Network Interface
+        - WiFi
+        - IP Scanner
+        - Port Scanner
+        - Ping Monitor
+        - Traceroute
+        - DNS Lookup
+        - Remote Desktop
+        - PowerShell
+        - PuTTY
+        - TigerVNC
+        - Web Console
+        - SNMP
+        - SNTP Lookup
+        - Hosts File Editor
+        - Firewall
+        - Discovery Protocol
+        - Wake on LAN
+        - RDAP
+        - Whois
+        - IP Geolocation
+        - Subnet Calculator
+        - Bit Calculator
+        - Lookup
+        - Connections
+        - Listeners
+        - Neighbor Table
+        - Documentation / website
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the bug and what you expected to happen instead.
+      placeholder: When I scan a range, hosts are shown as down, but I expected them to be up because ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: How can the bug be reproduced? Include the input and settings you used (without sensitive data).
+      placeholder: |
+        1. Open the IP Scanner
+        2. Enter `10.0.0.0/24` and click **Scan**
+        3. ...
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: NETworkManager version
+      description: Shown in **Settings > About**.
+      placeholder: e.g. 2026.7.7.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: installation
+    attributes:
+      label: Installation
+      options:
+        - Setup (MSI)
+        - Portable
+        - Archive
+        - WinGet
+        - Chocolatey
+        - Built from source
+    validations:
+      required: true
+
+  - type: dropdown
+    id: architecture
+    attributes:
+      label: Architecture
+      options:
+        - x64
+        - ARM64
+    validations:
+      required: true
+
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      description: Run `winver` to see the version and build.
+      placeholder: e.g. Windows 11 24H2 (Build 26100.4061)
+    validations:
+      required: true
+
+  - type: input
+    id: dotnet
+    attributes:
+      label: .NET Desktop Runtime version
+      description: Only needed if the application doesn't start - run `dotnet --list-runtimes`.
+      placeholder: e.g. Microsoft.WindowsDesktop.App 10.0.0
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error message / log
+      description: |
+        The error message shown by NETworkManager, or the relevant part of the log file `%LocalAppData%\NETworkManager\NETworkManager.log`.
+        If the application crashes, also the error in the Event Viewer (**Windows Logs > Application**).
+      render: text
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots / additional information
+      description: Drag & drop screenshots or files here, or add anything else that helps to understand the bug.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have searched the existing issues and this bug hasn't been reported yet.
+          required: true
+        - label: I have removed sensitive data (e.g. passwords, IP addresses, hostnames) from logs and screenshots.
+          required: true
