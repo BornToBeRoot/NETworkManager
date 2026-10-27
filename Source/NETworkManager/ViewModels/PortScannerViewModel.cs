@@ -578,7 +578,10 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         if (name is not ApplicationName applicationName)
             return;
 
-        NavigationManager.Open(new ApplicationRequest(applicationName) { Target = GetSelectedHost() });
+        NavigationManager.Open(new ApplicationRequest(applicationName)
+        {
+            Target = ApplicationManager.GetHostForApplication(applicationName, GetSelectedHost())
+        });
     }
 
     /// <summary>
@@ -646,7 +649,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             // Only displayed - also trim the dot a single-label name still has (e.g. "gateway.")
             Name = string.IsNullOrEmpty(SelectedResult.Hostname)
                 ? SelectedResult.IPAddress.ToString()
-                : SelectedResult.Hostname.TrimEnd('.'),
+                : DNSClientHelper.SanitizeHostname(SelectedResult.Hostname),
             Host = SelectedResult.IPAddress.ToString(),
 
             // Additional data

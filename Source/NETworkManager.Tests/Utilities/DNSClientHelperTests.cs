@@ -30,6 +30,18 @@ public class DNSClientHelperTests
         Assert.Equal(name, DNSClientHelper.TrimTrailingDot(name));
     }
 
+    [Theory]
+    [InlineData("gateway.", "gateway")]
+    [InlineData("server.example.com.", "server.example.com")]
+    [InlineData("gateway", "gateway")]
+    [InlineData(".", ".")]
+    [InlineData("", "")]
+    [InlineData(null, null)]
+    public void SanitizesHostname(string hostname, string expected)
+    {
+        Assert.Equal(expected, DNSClientHelper.SanitizeHostname(hostname));
+    }
+
     [Fact]
     public void TrimmedNameIsNotBareHostname()
     {

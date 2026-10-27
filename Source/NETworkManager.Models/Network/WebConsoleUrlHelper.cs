@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -50,6 +52,8 @@ public static class WebConsoleUrlHelper
     /// <returns>URL.</returns>
     public static string CreateUrl(string host, int port)
     {
+        ArgumentException.ThrowIfNullOrWhiteSpace(host);
+
         var scheme = port is 443 or 8443 ? "https" : "http";
 
         // The zone id of an IPv6 address has to be encoded ("%" -> "%25", RFC 6874)
@@ -60,9 +64,8 @@ public static class WebConsoleUrlHelper
         }
         else
         {
-            // Trim the dot a single-label name still has (e.g. "gateway."), so Windows resolves it like a name typed
-            // by the user (DNS suffix search, LLMNR / NetBIOS) and the name matches the certificate (https)
-            host = host.TrimEnd('.');
+            // The browser resolves it via Windows (e.g. "gateway." -> "gateway")
+            host = DNSClientHelper.SanitizeHostname(host);
         }
 
         return port is 80 or 443 ? $"{scheme}://{host}/" : $"{scheme}://{host}:{port}/";

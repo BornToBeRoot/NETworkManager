@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models.Network;
+﻿using System;
+using NETworkManager.Models.Network;
 using Xunit;
 
 namespace NETworkManager.Tests.Network;
@@ -17,6 +18,15 @@ public class WebConsoleUrlHelperTests
     public void CreatesUrlForPort(string host, int port, string expected)
     {
         Assert.Equal(expected, WebConsoleUrlHelper.CreateUrl(host, port));
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData(" ")]
+    public void ThrowsWithoutHost(string host)
+    {
+        Assert.ThrowsAny<ArgumentException>(() => WebConsoleUrlHelper.CreateUrl(host, 80));
     }
 
     [Theory]

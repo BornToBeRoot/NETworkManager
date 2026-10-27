@@ -25,7 +25,8 @@ public static class DNSClientHelper
     ///     Removes the trailing dot of a fully qualified domain name (e.g. "server.example.com." ->
     ///     "server.example.com"). A single-label name (e.g. "gateway.") keeps it: without the dot it would be
     ///     a bare hostname (see <see cref="IsBareHostname" />) and the DNS suffix would be appended when it is
-    ///     resolved again (e.g. when opened in another tool).
+    ///     resolved again by NETworkManager (e.g. when opened in Ping or Traceroute). For an application that
+    ///     resolves it via Windows, see <see cref="SanitizeHostname" />.
     /// </summary>
     /// <param name="name">Domain name, e.g. from a PTR record.</param>
     /// <returns>Domain name without the trailing dot, unless it is a single-label name.</returns>
@@ -37,6 +38,24 @@ public static class DNSClientHelper
         var trimmed = name.TrimEnd('.');
 
         return trimmed.Contains('.') ? trimmed : name;
+    }
+
+    /// <summary>
+    ///     Prepares a hostname (e.g. from a PTR record) for an application that resolves it via Windows (e.g.
+    ///     Remote Desktop, PuTTY, the browser of the Web Console or a custom command): also removes the trailing dot of
+    ///     a single-label name (e.g. "gateway." -> "gateway"), so Windows resolves it like a name typed by the user
+    ///     (DNS suffix search, LLMNR / NetBIOS) and it matches the name of a certificate (https).
+    /// </summary>
+    /// <param name="hostname">Hostname.</param>
+    /// <returns>Hostname without the trailing dot, the hostname itself if it is null, empty or only dots.</returns>
+    public static string SanitizeHostname(string hostname)
+    {
+        if (string.IsNullOrEmpty(hostname))
+            return hostname;
+
+        var trimmed = hostname.TrimEnd('.');
+
+        return trimmed.Length > 0 ? trimmed : hostname;
     }
 
     /// <summary>

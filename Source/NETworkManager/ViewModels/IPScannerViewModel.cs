@@ -498,7 +498,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         if (name is not ApplicationName applicationName)
             return;
 
-        NavigationManager.Open(new ApplicationRequest(applicationName) { Target = GetSelectedHost() });
+        NavigationManager.Open(new ApplicationRequest(applicationName)
+        {
+            Target = ApplicationManager.GetHostForApplication(applicationName, GetSelectedHost())
+        });
     }
 
     /// <summary>
@@ -603,7 +606,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             // Only displayed - also trim the dot a single-label name still has (e.g. "gateway.")
             Name = string.IsNullOrEmpty(SelectedResult.Hostname)
                 ? SelectedResult.PingInfo.IPAddress.ToString()
-                : SelectedResult.Hostname.TrimEnd('.'),
+                : DNSClientHelper.SanitizeHostname(SelectedResult.Hostname),
             Host = SelectedResult.PingInfo.IPAddress.ToString(),
 
             // Additional data
@@ -1028,9 +1031,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 return;
             }
 
-            // Replace vars. Also trim the dot a single-label name still has (e.g. "gateway."), so Windows resolves
-            // it like a name typed by the user (DNS suffix search, LLMNR / NetBIOS)
-            var hostname = SelectedResult.Hostname?.TrimEnd('.') ?? "";
+            // Replace vars. The command resolves the hostname via Windows (e.g. "gateway." -> "gateway")
+            var hostname = DNSClientHelper.SanitizeHostname(SelectedResult.Hostname) ?? "";
 
             // The hostname comes from the network (PTR record or NetBIOS name) and could contain characters
             // like "&" that would run additional commands (e.g. "cmd.exe /c ... {{Hostname}}") - only use valid ones

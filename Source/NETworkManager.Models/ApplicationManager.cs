@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.IconPacks;
+using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,23 @@ public static class ApplicationManager
 #pragma warning disable CS0618
         return [.. GetNames().Where(x => x != ApplicationName.None && x != ApplicationName.AWSSessionManager && x != ApplicationName.ARPTable).Select(name => new ApplicationInfo(name, true, name == ApplicationName.Dashboard))];
 #pragma warning restore CS0618
+    }
+
+    /// <summary>
+    ///     Gets the host to open in an application from the hostname or IP address of a result (e.g. IP Scanner): for an
+    ///     application that resolves it via Windows (Remote Desktop, PuTTY, TigerVNC, PowerShell, Web Console) without
+    ///     the trailing dot (see <see cref="DNSClientHelper.SanitizeHostname" />). The other applications resolve it via
+    ///     NETworkManager and keep the dot of a single-label name (see <see cref="DNSClientHelper.TrimTrailingDot" />).
+    /// </summary>
+    /// <param name="name">Application to open.</param>
+    /// <param name="host">Hostname or IP address.</param>
+    /// <returns>Host for the application.</returns>
+    public static string GetHostForApplication(ApplicationName name, string host)
+    {
+        return name is ApplicationName.RemoteDesktop or ApplicationName.PuTTY or ApplicationName.TigerVNC
+            or ApplicationName.PowerShell or ApplicationName.WebConsole
+            ? DNSClientHelper.SanitizeHostname(host)
+            : host;
     }
 
     /// <summary>
