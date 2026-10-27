@@ -7,6 +7,7 @@ using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
+using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
@@ -28,7 +29,7 @@ namespace NETworkManager.ViewModels;
 /// <summary>
 /// ViewModel for the Port Scanner feature.
 /// </summary>
-public class PortScannerViewModel : ViewModelBase
+public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 {
     #region Variables
     private static readonly ILog Log = LogManager.GetLogger(typeof(PortScannerViewModel));
@@ -62,6 +63,9 @@ public class PortScannerViewModel : ViewModelBase
 
     // Ports of the last scan, to rescan hosts with the same ports (and ScanOptions)
     private int[] _lastPorts;
+
+    // Ports of the last scan as entered (e.g. "22; 80; 443"), for a profile created from a result
+    private string _lastPortsInput;
 
     // Rescan of shown hosts (see RescanSelectedHosts): their rows are removed and added again by the rescan. The
     // counters are the ones of the other hosts (base) plus the ones of the rescan; the progress of the last scan is
@@ -605,6 +609,31 @@ public class PortScannerViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets the command to add the host of the selected result as a profile (with the ports of the shown scan).
+    /// </summary>
+    public ICommand AddProfileSelectedHostCommand => new RelayCommand(_ => AddProfileSelectedHostAction());
+
+    private async void AddProfileSelectedHostAction()
+    {
+        ProfileInfo profileInfo = new()
+        {
+            // Only displayed - also trim the dot a single-label name still has (e.g. "gateway.")
+            Name = string.IsNullOrEmpty(SelectedResult.Hostname)
+                ? SelectedResult.IPAddress.ToString()
+                : SelectedResult.Hostname.TrimEnd('.'),
+            Host = SelectedResult.IPAddress.ToString(),
+
+            // Additional data
+            PortScanner_Ports = _lastPortsInput
+        };
+
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+        await ProfileDialogManager.ShowAddProfileDialog(window, this, profileInfo, null,
+            ApplicationName.PortScanner);
+    }
+
+    /// <summary>
     /// Gets the command to open the selected open web port in the Web Console.
     /// </summary>
     public ICommand OpenWebConsoleCommand => new RelayCommand(_ => OpenWebConsoleAction());
@@ -815,6 +844,7 @@ public class PortScannerViewModel : ViewModelBase
         ScanOptions = CreateScanOptions();
 
         _lastPorts = ports;
+        _lastPortsInput = Ports;
 
         StartScanner(hosts.hosts, ports);
     }

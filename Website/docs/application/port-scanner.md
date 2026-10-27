@@ -73,6 +73,7 @@ A scan of more than `65,536` ports (hosts × ports, e.g. 64 hosts with `1-1024`)
 | **Remote Desktop** / **PowerShell** / **PuTTY** / **TigerVNC** | Opens the host (hostname if resolved, otherwise the IP address) in the tool (with its default port) |
 | **Web Console** | Opens the open web port (`80`, `443`, `8080`, `8443`) in the [Web Console](./web-console) (https for 443 / 8443) |
 | **SNMP** | Opens the host (hostname if resolved, otherwise the IP address) in [SNMP](./snmp) |
+| **Add profile...** | Creates a new profile with the host (IP address), the hostname as name and the ports of the shown scan for the Port Scanner |
 | **Copy**        | Copies the selected information to the clipboard                                                               |
 | **Export...**   | Exports the selected or all results to a file                                                                  |
 

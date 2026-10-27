@@ -448,6 +448,17 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
+                    <MenuItem Header="{x:Static localization:Strings.AddProfileDots}"
+                              Command="{Binding AddProfileSelectedHostCommand}">
+                        <MenuItem.Icon>
+                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
                     <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
                               Style="{StaticResource ResourceKey=CopyMenuItem}">
                         <MenuItem Header="{x:Static Member=localization:Strings.IPAddress}"
