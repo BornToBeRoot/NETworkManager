@@ -11,6 +11,7 @@
                                xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
                                xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
                                xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
+                               xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                                xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                                xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
                                xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
@@ -1723,6 +1724,7 @@
                                           ItemsSource="{Binding PortScanner_PortsSuggestions}"
                                           TextSearch.TextPath="Text"
                                           ItemTemplate="{StaticResource PortScannerPortsSuggestionTemplate}"
+                                          controls:ComboBoxListCompletionBehavior.Items="{Binding PortScanner_PortProfileNames}"
                                           mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}"
                                           Style="{StaticResource HistoryComboBox}">
                                     <ComboBox.GroupStyle>

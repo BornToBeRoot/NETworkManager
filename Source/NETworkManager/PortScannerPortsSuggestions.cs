@@ -55,6 +55,12 @@ public sealed class PortScannerPortsSuggestions
     /// </summary>
     public ICollectionView View { get; }
 
+    /// <summary>
+    ///     Gets the names of the port profiles, for the Tab completion of an entry (see
+    ///     <see cref="ComboBoxListCompletionBehavior" />).
+    /// </summary>
+    public ObservableRangeCollection<string> PortProfileNames { get; } = [];
+
     private void OnSourceChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
         Refresh();
@@ -62,6 +68,8 @@ public sealed class PortScannerPortsSuggestions
 
     private void Refresh()
     {
+        PortProfileNames.ReplaceAll(SettingsManager.Current.PortScanner_PortProfiles.Select(x => x.Name));
+
         _suggestions.ReplaceAll(SettingsManager.Current.PortScanner_PortProfiles
             .OrderBy(x => x.Name, StringComparer.OrdinalIgnoreCase)
             .Select(x => new PortScannerPortsSuggestion(x.Name, x.Ports, Strings.PortProfiles))

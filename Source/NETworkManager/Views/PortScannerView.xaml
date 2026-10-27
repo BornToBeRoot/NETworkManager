@@ -83,6 +83,7 @@
                           ItemsSource="{Binding PortsSuggestions}"
                           TextSearch.TextPath="Text"
                           ItemTemplate="{StaticResource PortScannerPortsSuggestionTemplate}"
+                          controls:ComboBoxListCompletionBehavior.Items="{Binding PortProfileNames}"
                           mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}"
                           IsReadOnly="{Binding Path=IsRunning}"
                           controls:ComboBoxPasteBehavior.ConvertMultilineToSemicolon="True"

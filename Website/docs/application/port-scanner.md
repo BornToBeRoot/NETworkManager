@@ -59,7 +59,7 @@ A scan of more than `65,536` ports (hosts × ports, e.g. 64 hosts with `1-1024`)
 
 ### Ports
 
-The **Ports** input lists the [port profiles](#port-profiles) (with their ports) and the recently scanned ports (history). Select an entry, or type ports, port ranges and names of port profiles separated by `;` (e.g. `Webserver; Database; 8080`). Port profiles are replaced by their ports when the scan starts.
+The **Ports** input lists the [port profiles](#port-profiles) (with their ports) and the recently scanned ports (history). Select an entry, or type ports, port ranges and names of port profiles separated by `;` (e.g. `Webserver; Database; 8080`). Port profiles are replaced by their ports when the scan starts. `Tab` completes the name of a port profile that is being typed (e.g. `webserver; dat` → `webserver; Database`), `Tab` again shows the next matching port profile.
 
 ### Context menu
 
@@ -89,6 +89,7 @@ The search box right of the **Result** header filters the results by IP address,
 | Key      | Action                                                        |
 | -------- | ------------------------------------------------------------- |
 | `Enter`  | Start the scan (in the search box: filter the results)        |
+| `Tab`    | In the ports input: complete the name of a port profile       |
 | `Esc`    | Cancel the running scan                                       |
 | `Ctrl+T` | Open a new tab                                                |
 
