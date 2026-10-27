@@ -79,7 +79,7 @@ public static class ProfileDialogManager
 
             // DNS Lookup
             DNSLookup_Enabled = instance.DNSLookup_Enabled,
-            DNSLookup_InheritHost = instance.Traceroute_InheritHost,
+            DNSLookup_InheritHost = instance.DNSLookup_InheritHost,
             DNSLookup_Host = instance.DNSLookup_InheritHost ? instance.Host?.Trim() : instance.DNSLookup_Host?.Trim(),
 
             // Remote Desktop
