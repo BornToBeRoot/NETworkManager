@@ -342,7 +342,7 @@
                                               VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                                               VirtualizingPanel.IsContainerVirtualizable="True"
                                               VirtualizingPanel.VirtualizationMode="Recycling"
-                                              VirtualizingPanel.ScrollUnit="Item">
+                                              VirtualizingPanel.ScrollUnit="Pixel">
                     <DataGrid.Resources>
                         <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.Delete}"

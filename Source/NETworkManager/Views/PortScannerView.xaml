@@ -271,7 +271,7 @@
                                       VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                                       VirtualizingPanel.IsContainerVirtualizable="True"
                                       VirtualizingPanel.VirtualizationMode="Recycling"
-                                      VirtualizingPanel.ScrollUnit="Item"
+                                      VirtualizingPanel.ScrollUnit="Pixel"
                                       wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <controls:MultiSelectDataGrid.Resources>
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />

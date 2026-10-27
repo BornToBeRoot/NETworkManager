@@ -257,7 +257,7 @@
                          VirtualizingPanel.IsVirtualizingWhenGrouping="True"
                          VirtualizingPanel.IsContainerVirtualizable="True"
                          VirtualizingPanel.VirtualizationMode="Recycling"
-                         VirtualizingPanel.ScrollUnit="Item">
+                         VirtualizingPanel.ScrollUnit="Pixel">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel IsItemsHost="True" />
