@@ -714,6 +714,17 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     #region Methods
 
+    /// <summary>
+    /// Shows a message below the input, after the message that is already shown (e.g. the message of the tab or
+    /// hostnames that could not be resolved). The messages are cleared when a scan starts.
+    /// </summary>
+    /// <param name="message">Message to show.</param>
+    private void AddStatusMessage(string message)
+    {
+        StatusMessage = IsStatusMessageDisplayed ? StatusMessage + Environment.NewLine + message : message;
+        IsStatusMessageDisplayed = true;
+    }
+
     private async Task Start()
     {
         // Port profiles in the input (e.g. "Webserver; 8080") are replaced by their ports. The input is validated, but
@@ -848,11 +859,8 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Show error message if (some) hostnames could not be resolved
         if (hosts.hostnamesNotResolved.Count > 0)
-        {
-            StatusMessage =
-                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
-            IsStatusMessageDisplayed = true;
-        }
+            AddStatusMessage(
+                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}");
 
         PortsToScan = ports.Length * hosts.hosts.Count;
 
@@ -1296,36 +1304,26 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 PortsToScan = _rescanPortsToScan;
             }
 
+            // Keep a message from the preparation (e.g. the message of the tab or hostnames that could not be resolved)
             if (e.IsCanceled)
             {
-                StatusMessage = Strings.CanceledByUserMessage;
-                IsStatusMessageDisplayed = true;
+                AddStatusMessage(Strings.CanceledByUserMessage);
             }
             else if (e.Exception != null)
             {
                 Log.Error("Error while scanning", e.Exception);
 
-                StatusMessage = e.Exception.Message;
-                IsStatusMessageDisplayed = true;
+                AddStatusMessage(e.Exception.Message);
             }
             else if (Results.Count == 0)
             {
-                // Keep a message from the preparation (e.g. hostnames that could not be resolved)
-                StatusMessage = IsStatusMessageDisplayed
-                    ? StatusMessage + Environment.NewLine + Strings.NoOpenPortsFound
-                    : Strings.NoOpenPortsFound;
-                IsStatusMessageDisplayed = true;
+                AddStatusMessage(Strings.NoOpenPortsFound);
             }
 
             // Hosts that were not scanned because they didn't answer the ping before the scan (option)
             if (!e.IsCanceled && e.Exception == null && sender is PortScanner { HostsSkipped: > 0 } pingScanner)
-            {
-                var message = string.Format(Strings.XHostsDidNotAnswerThePingAndWereNotScanned,
-                    pingScanner.HostsSkipped);
-
-                StatusMessage = IsStatusMessageDisplayed ? StatusMessage + Environment.NewLine + message : message;
-                IsStatusMessageDisplayed = true;
-            }
+                AddStatusMessage(string.Format(Strings.XHostsDidNotAnswerThePingAndWereNotScanned,
+                    pingScanner.HostsSkipped));
 
             PreparingScan = false;
             IsCanceling = false;
