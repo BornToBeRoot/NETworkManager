@@ -792,6 +792,13 @@ public static class SettingsManager
             Current.PortScanner_MaxPortThreads = GlobalStaticConfiguration.PortScanner_MaxPortThreads;
         }
 
+        // Port Scanner - port profiles have an internal ID (profiles reference them by it)
+        foreach (var portProfile in Current.PortScanner_PortProfiles.Where(x => x.Id == Guid.Empty))
+        {
+            Log.Info($"Add an ID to the port profile \"{portProfile.Name}\"...");
+            portProfile.Id = Guid.NewGuid();
+        }
+
         // Port Scanner - port profiles can be entered by name in the ports input (e.g. "Webserver; 8080"), where ";"
         // separates the entries: replace it in the names
         foreach (var portProfile in Current.PortScanner_PortProfiles.Where(x => x.Name?.Contains(';') == true))

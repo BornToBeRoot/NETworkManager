@@ -295,20 +295,27 @@ public class PortScannerSettingsViewModel : ViewModelBase
     {
         var childWindow = new PortProfileChildWindow();
 
+        var portProfile = SelectedPortProfile;
+
         var childWindowViewModel = new PortProfileViewModel(async instance =>
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
-            SettingsManager.Current.PortScanner_PortProfiles.Remove(SelectedPortProfile);
-            SettingsManager.Current.PortScanner_PortProfiles.Add(new PortProfileInfo(instance.Name,
-                instance.Ports));
+            // Same ID, profiles that reference the port profile still find it (also with a new name)
+            var editedPortProfile = new PortProfileInfo(instance.Name, instance.Ports);
+
+            if (portProfile.Id != Guid.Empty)
+                editedPortProfile.Id = portProfile.Id;
+
+            SettingsManager.Current.PortScanner_PortProfiles.Remove(portProfile);
+            SettingsManager.Current.PortScanner_PortProfiles.Add(editedPortProfile);
         }, async _ =>
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
         }, true,
-            SelectedPortProfile);
+            portProfile);
 
         childWindow.Title = Strings.EditPortProfile;
 
