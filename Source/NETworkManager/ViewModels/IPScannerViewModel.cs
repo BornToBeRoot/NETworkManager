@@ -917,24 +917,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <returns>Options for the rescan.</returns>
     private static IPScannerOptions CreateRescanOptions(IPScannerOptions options)
     {
-        return new IPScannerOptions
-        {
-            MaxHostThreads = options.MaxHostThreads,
-            MaxPortThreads = options.MaxPortThreads,
-            ICMPAttempts = options.ICMPAttempts,
-            ICMPTimeout = options.ICMPTimeout,
-            ICMPBuffer = options.ICMPBuffer,
-            ResolveHostname = options.ResolveHostname,
-            PortScanEnabled = options.PortScanEnabled,
-            PortScanPorts = options.PortScanPorts,
-            PortScanTimeout = options.PortScanTimeout,
-            PortScanAttempts = options.PortScanAttempts,
-            NetBIOSEnabled = options.NetBIOSEnabled,
-            NetBIOSTimeout = options.NetBIOSTimeout,
-            ResolveMACAddress = options.ResolveMACAddress,
-            ShowAllResults = options.ShowAllResults,
-            ReportAllHosts = true
-        };
+        return options with { ReportAllHosts = true };
     }
 
     /// <summary>

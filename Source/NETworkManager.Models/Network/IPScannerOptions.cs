@@ -1,9 +1,10 @@
 ﻿namespace NETworkManager.Models.Network;
 
 /// <summary>
-///     Class contains the options for the IP scanner.
+///     Class contains the options for the IP scanner. A record, so a copy with other values can be created with
+///     <c>with</c> (e.g. for a rescan).
 /// </summary>
-public class IPScannerOptions
+public record IPScannerOptions
 {
     /// <summary>
     ///     Max concurrent threads for the host scan.
