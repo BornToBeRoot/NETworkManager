@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -123,6 +124,14 @@ public static class DataGridHelper
         private bool _isUpdating;
         private bool _isUpdateQueued;
 
+        // Width set before the last one and when, to detect switching between two widths (see Update)
+        private double _secondLastSetWidth = double.NaN;
+        private long _secondLastSetTimestamp;
+        private bool _isSizeChanged;
+
+        // Switching back to the second last width within this time is a loop, not a change of the user
+        private static readonly TimeSpan OscillationTime = TimeSpan.FromMilliseconds(500);
+
         public void OnLoaded(object sender, RoutedEventArgs e) => Attach();
 
         public void OnUnloaded(object sender, RoutedEventArgs e) => Detach();
@@ -167,7 +176,12 @@ public static class DataGridHelper
             _scrollViewer = null;
         }
 
-        private void OnSizeChanged(object sender, SizeChangedEventArgs e) => QueueUpdate();
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            _isSizeChanged = true;
+
+            QueueUpdate();
+        }
 
         private void OnScrollChanged(object sender, ScrollChangedEventArgs e)
         {
@@ -207,6 +221,9 @@ public static class DataGridHelper
 
         private void Update()
         {
+            var isSizeChanged = _isSizeChanged;
+            _isSizeChanged = false;
+
             if (!dataGrid.IsLoaded)
                 return;
 
@@ -230,6 +247,7 @@ public static class DataGridHelper
 
                     _fillColumn = fillColumn;
                     _lastSetWidth = double.NaN;
+                    _secondLastSetWidth = double.NaN;
 
                     if (_fillColumn == null)
                         return;
@@ -255,10 +273,20 @@ public static class DataGridHelper
 
                 width = Math.Min(Math.Max(width, _fillColumn.MinWidth), _fillColumn.MaxWidth);
 
+                // Back to the wider width of two updates ago right away, without a size change of the grid: the
+                // widths switch in a loop (e.g. a horizontal scrollbar makes the vertical one appear, the narrower
+                // column removes both, the wider column shows the horizontal scrollbar again ...) - each update is
+                // queued before input, the window would hang. Keep the narrower width (no horizontal scrollbar).
+                if (!isSizeChanged && width > _lastSetWidth && Math.Abs(width - _secondLastSetWidth) < 0.5 &&
+                    Stopwatch.GetElapsedTime(_secondLastSetTimestamp) < OscillationTime)
+                    width = _lastSetWidth;
+
                 if (!double.IsNaN(_lastSetWidth) && Math.Abs(width - _lastSetWidth) < 0.5 &&
                     Math.Abs(_fillColumn.ActualWidth - width) < 0.5)
                     return;
 
+                _secondLastSetWidth = _lastSetWidth;
+                _secondLastSetTimestamp = Stopwatch.GetTimestamp();
                 _lastSetWidth = width;
                 _fillColumn.Width = new DataGridLength(width);
             }
