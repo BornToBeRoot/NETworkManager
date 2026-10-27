@@ -9,7 +9,6 @@
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:mahappsControls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
-             xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
@@ -632,37 +631,37 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Rectangle Width="16" Height="16"
-                                       Style="{Binding (network:PortScannerPortInfo.State), Converter={StaticResource PortOpenStyleConverter}}" />
+                                       Style="{Binding State, Converter={StaticResource PortOpenStyleConverter}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}"
-                                    Binding="{Binding (network:PortScannerPortInfo.IPAddress), Converter={StaticResource IPAddressToStringConverter}}"
+                                    Binding="{Binding IPAddress, Converter={StaticResource IPAddressToStringConverter}}"
                                     SortMemberPath="IPAddress"
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}"
-                                    Binding="{Binding (network:PortScannerPortInfo.Hostname), Converter={StaticResource StringNullOrEmptyToStringConverter}}"
+                                    Binding="{Binding Hostname, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
                                     SortMemberPath="Hostname"
                                     Visibility="{Binding Path=Data.ScanOptions.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Port}"
-                                    Binding="{Binding (network:PortScannerPortInfo.Port)}"
+                                    Binding="{Binding Port}"
                                     SortMemberPath="Port"
                                     MinWidth="80" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Status}"
-                                    Binding="{Binding (network:PortScannerPortInfo.State), Converter={StaticResource PortStateToStringConverter}}"
+                                    Binding="{Binding State, Converter={StaticResource PortStateToStringConverter}}"
                                     SortMemberPath="State"
                                     MinWidth="100" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}"
-                                    Binding="{Binding (network:PortScannerPortInfo.LookupInfo).Protocol}"
+                                    Binding="{Binding LookupInfo.Protocol}"
                                     SortMemberPath="LookupInfo.Protocol"
                                     MinWidth="100" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Service}"
-                                    Binding="{Binding (network:PortScannerPortInfo.LookupInfo).Service}"
+                                    Binding="{Binding LookupInfo.Service}"
                                     SortMemberPath="LookupInfo.Service"
                                     MinWidth="100" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Description}"
-                                    Binding="{Binding (network:PortScannerPortInfo.LookupInfo).Description}"
+                                    Binding="{Binding LookupInfo.Description}"
                                     SortMemberPath="LookupInfo.Description"
                                     MinWidth="200" />
             </controls:MultiSelectDataGrid.Columns>
