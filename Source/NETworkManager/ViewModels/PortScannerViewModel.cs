@@ -596,91 +596,138 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void RescanHostAction(object parameter)
     {
-        if (parameter is CollectionViewGroup { Items.Count: > 0 } group &&
-            group.Items[0] is PortScannerPortInfo info)
-            RescanHosts([info.IPAddress]);
+        if (parameter is CollectionViewGroup && GetHostRow(parameter) is { } row)
+            RescanHosts([row.IPAddress]);
     }
 
     /// <summary>
-    /// Gets the command to open the host of the selected result in another application.
+    /// Gets the row of the host a command is for: the first row of a group (parameter of the context menu of a group
+    /// header, one host per group), otherwise the selected result (context menu of a row).
+    /// </summary>
+    /// <param name="parameter">Command parameter, a <see cref="CollectionViewGroup"/> for a group header.</param>
+    /// <returns>Row with the IP address and hostname of the host.</returns>
+    private PortScannerPortInfo GetHostRow(object parameter)
+    {
+        return parameter is CollectionViewGroup { Items.Count: > 0 } group &&
+               group.Items[0] is PortScannerPortInfo row
+            ? row
+            : SelectedResult;
+    }
+
+    /// <summary>
+    /// Gets the command to open a host in another application. Parameter: the application (host of the selected
+    /// result), or the application and the group of a group header (see <see cref="GetHostRow"/>).
     /// </summary>
     public ICommand RedirectDataToApplicationCommand => new RelayCommand(RedirectDataToApplicationAction);
 
-    private void RedirectDataToApplicationAction(object name)
+    private void RedirectDataToApplicationAction(object parameter)
     {
+        var (name, hostParameter) = parameter is object[] { Length: 2 } values
+            ? (values[0], values[1])
+            : (parameter, null);
+
         if (name is not ApplicationName applicationName)
             return;
 
-        NavigationManager.Open(new ApplicationRequest(applicationName) { Target = GetSelectedHost() });
+        NavigationManager.Open(new ApplicationRequest(applicationName) { Target = GetHost(GetHostRow(hostParameter)) });
     }
 
     /// <summary>
-    /// Gets the host of the selected result for other tools: the hostname (always a DNS hostname from the PTR
-    /// record), otherwise the IP address.
+    /// Gets the host of a result for other tools: the hostname (always a DNS hostname from the PTR record), otherwise
+    /// the IP address.
     /// </summary>
+    /// <param name="row">Result of the host.</param>
     /// <returns>Hostname or IP address.</returns>
-    private string GetSelectedHost()
+    private static string GetHost(PortScannerPortInfo row)
     {
-        return !string.IsNullOrEmpty(SelectedResult.Hostname)
-            ? SelectedResult.Hostname
-            : SelectedResult.IPAddress.ToString();
+        return !string.IsNullOrEmpty(row.Hostname) ? row.Hostname : row.IPAddress.ToString();
     }
 
     /// <summary>
-    /// Gets the command to perform a DNS lookup for the IP address of the selected result.
+    /// Gets the command to perform a DNS lookup for the IP address of a host (see <see cref="GetHostRow"/>).
     /// </summary>
-    public ICommand PerformDNSLookupIPAddressCommand => new RelayCommand(_ => PerformDNSLookupIPAddressAction());
+    public ICommand PerformDNSLookupIPAddressCommand =>
+        new RelayCommand(parameter => PerformDNSLookupIPAddressAction(GetHostRow(parameter)));
 
-    private void PerformDNSLookupIPAddressAction()
+    private static void PerformDNSLookupIPAddressAction(PortScannerPortInfo row)
     {
-        NavigationManager.Open(new DNSLookupRequest { Target = SelectedResult.IPAddress.ToString() });
+        NavigationManager.Open(new DNSLookupRequest { Target = row.IPAddress.ToString() });
     }
 
     /// <summary>
-    /// Gets the command to perform a DNS lookup for the hostname of the selected result.
+    /// Gets the command to perform a DNS lookup for the hostname of a host (see <see cref="GetHostRow"/>).
     /// </summary>
-    public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(_ => PerformDNSLookupHostnameAction());
+    public ICommand PerformDNSLookupHostnameCommand =>
+        new RelayCommand(parameter => PerformDNSLookupHostnameAction(GetHostRow(parameter)));
 
-    private void PerformDNSLookupHostnameAction()
+    private static void PerformDNSLookupHostnameAction(PortScannerPortInfo row)
     {
-        NavigationManager.Open(new DNSLookupRequest { Target = SelectedResult.Hostname });
+        NavigationManager.Open(new DNSLookupRequest { Target = row.Hostname });
     }
 
     /// <summary>
-    /// Gets the command to query the registration data of the IP address of the selected result via RDAP.
+    /// Gets the command to query the registration data of the IP address of a host via RDAP (see
+    /// <see cref="GetHostRow"/>).
     /// </summary>
-    public ICommand PerformRDAPQueryIPAddressCommand => new RelayCommand(_ => PerformRDAPQueryIPAddressAction());
+    public ICommand PerformRDAPQueryIPAddressCommand =>
+        new RelayCommand(parameter => PerformRDAPQueryIPAddressAction(GetHostRow(parameter)));
 
-    private void PerformRDAPQueryIPAddressAction()
+    private static void PerformRDAPQueryIPAddressAction(PortScannerPortInfo row)
     {
-        NavigationManager.Open(new RDAPRequest { Target = SelectedResult.IPAddress.ToString() });
+        NavigationManager.Open(new RDAPRequest { Target = row.IPAddress.ToString() });
     }
 
     /// <summary>
-    /// Gets the command to query the registration data of the hostname (its registered domain) of the selected
-    /// result via RDAP.
+    /// Gets the command to query the registration data of the hostname (its registered domain) of a host via RDAP
+    /// (see <see cref="GetHostRow"/>).
     /// </summary>
-    public ICommand PerformRDAPQueryHostnameCommand => new RelayCommand(_ => PerformRDAPQueryHostnameAction());
+    public ICommand PerformRDAPQueryHostnameCommand =>
+        new RelayCommand(parameter => PerformRDAPQueryHostnameAction(GetHostRow(parameter)));
 
-    private void PerformRDAPQueryHostnameAction()
+    private static void PerformRDAPQueryHostnameAction(PortScannerPortInfo row)
     {
-        NavigationManager.Open(new RDAPRequest { Target = SelectedResult.Hostname });
+        NavigationManager.Open(new RDAPRequest { Target = row.Hostname });
     }
 
     /// <summary>
-    /// Gets the command to add the host of the selected result as a profile (with the ports of the shown scan).
+    /// Gets the command to copy the open ports of the host of a group header (e.g. "22; 80; 443", sorted). Parameter:
+    /// the <see cref="CollectionViewGroup"/>. Not available if the host has no open port.
     /// </summary>
-    public ICommand AddProfileSelectedHostCommand => new RelayCommand(_ => AddProfileSelectedHostAction());
+    public ICommand CopyOpenPortsCommand => new RelayCommand(CopyOpenPortsAction, CopyOpenPorts_CanExecute);
 
-    private async void AddProfileSelectedHostAction()
+    private static IEnumerable<int> GetOpenPorts(object parameter)
+    {
+        return parameter is CollectionViewGroup group
+            ? group.Items.OfType<PortScannerPortInfo>().Where(x => x.State == PortState.Open).Select(x => x.Port)
+                .Distinct().Order()
+            : [];
+    }
+
+    private static bool CopyOpenPorts_CanExecute(object parameter)
+    {
+        return GetOpenPorts(parameter).Any();
+    }
+
+    private static void CopyOpenPortsAction(object parameter)
+    {
+        ClipboardHelper.SetClipboard(string.Join("; ", GetOpenPorts(parameter)));
+    }
+
+    /// <summary>
+    /// Gets the command to add a host as a profile (with the ports of the shown scan), see <see cref="GetHostRow"/>.
+    /// </summary>
+    public ICommand AddProfileSelectedHostCommand =>
+        new RelayCommand(parameter => AddProfileSelectedHostAction(GetHostRow(parameter)));
+
+    private async void AddProfileSelectedHostAction(PortScannerPortInfo row)
     {
         // Only displayed - also trim the dot a single-label name still has (e.g. "gateway.")
-        var hostname = DNSClientHelper.SanitizeHostname(SelectedResult.Hostname);
+        var hostname = DNSClientHelper.SanitizeHostname(row.Hostname);
 
         ProfileInfo profileInfo = new()
         {
-            Name = string.IsNullOrEmpty(hostname) ? SelectedResult.IPAddress.ToString() : hostname,
-            Host = SelectedResult.IPAddress.ToString(),
+            Name = string.IsNullOrEmpty(hostname) ? row.IPAddress.ToString() : hostname,
+            Host = row.IPAddress.ToString(),
 
             // Additional data
             PortScanner_Ports = _lastPortsInput
@@ -704,7 +751,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         NavigationManager.Open(new ApplicationRequest(ApplicationName.WebConsole)
         {
-            Target = WebConsoleUrlHelper.CreateUrl(GetSelectedHost(), SelectedResult.Port)
+            Target = WebConsoleUrlHelper.CreateUrl(GetHost(SelectedResult), SelectedResult.Port)
         });
     }
 

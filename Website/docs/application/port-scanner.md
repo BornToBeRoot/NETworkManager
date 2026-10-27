@@ -78,7 +78,14 @@ The **Ports** input lists the recently scanned ports (history) and the [port pro
 
 If multiple results are selected, **Rescan**, **Copy** > **IP address** / **Hostname** / **Port** / **IP address:Port** (one value per line, in the order shown, without duplicates; IPv6 as `[address]:port`) and **Export...** are available.
 
-Right-click the header of a host (group) for **Rescan host**: scans the host again with all ports and settings of the shown scan and replaces its results (e.g. to find ports that are open now). A canceled rescan keeps the previous results.
+Right-click the header of a host (group) for the actions of the host:
+
+| Action          | Description                                                                                                    |
+| --------------- | -------------------------------------------------------------------------------------------------------------- |
+| **Rescan host** | Scans the host again with all ports and settings of the shown scan and replaces its results (e.g. to find ports that are open now). A canceled rescan keeps the previous results. Not available while a scan is running |
+| **Ping Monitor** / **Traceroute** / **DNS lookup...** / **RDAP...** / **Remote Desktop** / **PowerShell** / **PuTTY** / **TigerVNC** / **SNMP** | Opens the host like the context menu of a result |
+| **Add profile...** | Creates a new profile with the host and the ports of the shown scan |
+| **Copy** > **IP address** / **Hostname** / **Open ports** | Copies the IP address, the hostname or the open ports of the host (e.g. `22; 80; 443`) |
 
 ### Result
 

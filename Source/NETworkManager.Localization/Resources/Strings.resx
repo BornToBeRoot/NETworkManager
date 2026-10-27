@@ -1056,6 +1056,9 @@ Create one...</value>
   <data name="Open" xml:space="preserve">
     <value>Open</value>
   </data>
+  <data name="OpenPorts" xml:space="preserve">
+    <value>Open ports</value>
+  </data>
   <data name="OpenLicense" xml:space="preserve">
     <value>Open license</value>
   </data>

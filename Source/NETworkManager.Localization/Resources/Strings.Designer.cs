@@ -8780,6 +8780,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open ports.
+        /// </summary>
+        public static string OpenPorts {
+            get {
+                return ResourceManager.GetString("OpenPorts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open project.
         /// </summary>
         public static string OpenProject {

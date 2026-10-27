@@ -17,6 +17,7 @@
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <converters:MultiValueToArrayConverter x:Key="MultiValueToArrayConverter" />
         <converters:PortScannerGroupOpenPortsConverter x:Key="PortScannerGroupOpenPortsConverter" />
         <converters:HostnameHasDomainToBooleanConverter x:Key="HostnameHasDomainToBooleanConverter" />
         <converters:StringIsNotNullOrEmptyToBooleanConverter x:Key="StringIsNotNullOrEmptyToBooleanConverter" />
@@ -587,6 +588,212 @@
                                                                 </Rectangle.OpacityMask>
                                                             </Rectangle>
                                                         </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <Separator />
+                                                    <MenuItem Header="{x:Static localization:Strings.PingMonitor}"
+                                                              Command="{Binding Path=Data.RedirectDataToApplicationCommand, Source={StaticResource BindingProxy}}">
+                                                        <MenuItem.CommandParameter>
+                                                            <MultiBinding Converter="{StaticResource MultiValueToArrayConverter}">
+                                                                <Binding Source="{x:Static models:ApplicationName.PingMonitor}" />
+                                                                <Binding />
+                                                            </MultiBinding>
+                                                        </MenuItem.CommandParameter>
+                                                        <MenuItem.Icon>
+                                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                                <Rectangle.OpacityMask>
+                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=RadarScreen}" />
+                                                                </Rectangle.OpacityMask>
+                                                            </Rectangle>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Header="{x:Static localization:Strings.Traceroute}"
+                                                              Command="{Binding Path=Data.RedirectDataToApplicationCommand, Source={StaticResource BindingProxy}}">
+                                                        <MenuItem.CommandParameter>
+                                                            <MultiBinding Converter="{StaticResource MultiValueToArrayConverter}">
+                                                                <Binding Source="{x:Static models:ApplicationName.Traceroute}" />
+                                                                <Binding />
+                                                            </MultiBinding>
+                                                        </MenuItem.CommandParameter>
+                                                        <MenuItem.Icon>
+                                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                                <Rectangle.OpacityMask>
+                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=TransitConnection}" />
+                                                                </Rectangle.OpacityMask>
+                                                            </Rectangle>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Header="{x:Static localization:Strings.DNSLookupDots}">
+                                                        <MenuItem.Icon>
+                                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                                <Rectangle.OpacityMask>
+                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
+                                                                </Rectangle.OpacityMask>
+                                                            </Rectangle>
+                                                        </MenuItem.Icon>
+                                                        <MenuItem Header="{x:Static localization:Strings.IPAddress}"
+                                                                  Command="{Binding Path=Data.PerformDNSLookupIPAddressCommand, Source={StaticResource BindingProxy}}"
+                                                                  CommandParameter="{Binding}">
+                                                            <MenuItem.Icon>
+                                                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                                    <Rectangle.OpacityMask>
+                                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
+                                                                    </Rectangle.OpacityMask>
+                                                                </Rectangle>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Header="{x:Static localization:Strings.Hostname}"
+                                                                  Command="{Binding Path=Data.PerformDNSLookupHostnameCommand, Source={StaticResource BindingProxy}}"
+                                                                  CommandParameter="{Binding}"
+                                                                  IsEnabled="{Binding Path=Items[0].Hostname, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
+                                                            <MenuItem.Icon>
+                                                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                                    <Rectangle.OpacityMask>
+                                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=SearchWeb}" />
+                                                                    </Rectangle.OpacityMask>
+                                                                </Rectangle>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                    </MenuItem>
+                                                    <MenuItem Header="{x:Static localization:Strings.RDAPDots}">
+                                                        <MenuItem.Icon>
+                                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                                <Rectangle.OpacityMask>
+                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
+                                                                </Rectangle.OpacityMask>
+                                                            </Rectangle>
+                                                        </MenuItem.Icon>
+                                                        <MenuItem Header="{x:Static localization:Strings.IPAddress}"
+                                                                  Command="{Binding Path=Data.PerformRDAPQueryIPAddressCommand, Source={StaticResource BindingProxy}}"
+                                                                  CommandParameter="{Binding}">
+                                                            <MenuItem.Icon>
+                                                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                                    <Rectangle.OpacityMask>
+                                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
+                                                                    </Rectangle.OpacityMask>
+                                                                </Rectangle>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Header="{x:Static localization:Strings.Hostname}"
+                                                                  Command="{Binding Path=Data.PerformRDAPQueryHostnameCommand, Source={StaticResource BindingProxy}}"
+                                                                  CommandParameter="{Binding}"
+                                                                  IsEnabled="{Binding Path=Items[0].Hostname, Converter={StaticResource HostnameHasDomainToBooleanConverter}}">
+                                                            <MenuItem.Icon>
+                                                                <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                                    <Rectangle.OpacityMask>
+                                                                        <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CardAccountDetailsOutline}" />
+                                                                    </Rectangle.OpacityMask>
+                                                                </Rectangle>
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                    </MenuItem>
+                                                    <MenuItem Header="{x:Static localization:Strings.RemoteDesktop}"
+                                                              Command="{Binding Path=Data.RedirectDataToApplicationCommand, Source={StaticResource BindingProxy}}">
+                                                        <MenuItem.CommandParameter>
+                                                            <MultiBinding Converter="{StaticResource MultiValueToArrayConverter}">
+                                                                <Binding Source="{x:Static models:ApplicationName.RemoteDesktop}" />
+                                                                <Binding />
+                                                            </MultiBinding>
+                                                        </MenuItem.CommandParameter>
+                                                        <MenuItem.Icon>
+                                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                                <Rectangle.OpacityMask>
+                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=RemoteDesktop}" />
+                                                                </Rectangle.OpacityMask>
+                                                            </Rectangle>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Header="{x:Static localization:Strings.PowerShell}"
+                                                              Command="{Binding Path=Data.RedirectDataToApplicationCommand, Source={StaticResource BindingProxy}}">
+                                                        <MenuItem.CommandParameter>
+                                                            <MultiBinding Converter="{StaticResource MultiValueToArrayConverter}">
+                                                                <Binding Source="{x:Static models:ApplicationName.PowerShell}" />
+                                                                <Binding />
+                                                            </MultiBinding>
+                                                        </MenuItem.CommandParameter>
+                                                        <MenuItem.Icon>
+                                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                                <Rectangle.OpacityMask>
+                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Powershell}" />
+                                                                </Rectangle.OpacityMask>
+                                                            </Rectangle>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Header="{x:Static localization:Strings.PuTTY}"
+                                                              Command="{Binding Path=Data.RedirectDataToApplicationCommand, Source={StaticResource BindingProxy}}">
+                                                        <MenuItem.CommandParameter>
+                                                            <MultiBinding Converter="{StaticResource MultiValueToArrayConverter}">
+                                                                <Binding Source="{x:Static models:ApplicationName.PuTTY}" />
+                                                                <Binding />
+                                                            </MultiBinding>
+                                                        </MenuItem.CommandParameter>
+                                                        <MenuItem.Icon>
+                                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                                <Rectangle.OpacityMask>
+                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:FontAwesome Kind=TerminalSolid}" />
+                                                                </Rectangle.OpacityMask>
+                                                            </Rectangle>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Header="{x:Static localization:Strings.TigerVNC}"
+                                                              Command="{Binding Path=Data.RedirectDataToApplicationCommand, Source={StaticResource BindingProxy}}">
+                                                        <MenuItem.CommandParameter>
+                                                            <MultiBinding Converter="{StaticResource MultiValueToArrayConverter}">
+                                                                <Binding Source="{x:Static models:ApplicationName.TigerVNC}" />
+                                                                <Binding />
+                                                            </MultiBinding>
+                                                        </MenuItem.CommandParameter>
+                                                        <MenuItem.Icon>
+                                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                                <Rectangle.OpacityMask>
+                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=EyeOutline}" />
+                                                                </Rectangle.OpacityMask>
+                                                            </Rectangle>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <MenuItem Header="{x:Static localization:Strings.SNMP}"
+                                                              Command="{Binding Path=Data.RedirectDataToApplicationCommand, Source={StaticResource BindingProxy}}">
+                                                        <MenuItem.CommandParameter>
+                                                            <MultiBinding Converter="{StaticResource MultiValueToArrayConverter}">
+                                                                <Binding Source="{x:Static models:ApplicationName.SNMP}" />
+                                                                <Binding />
+                                                            </MultiBinding>
+                                                        </MenuItem.CommandParameter>
+                                                        <MenuItem.Icon>
+                                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                                <Rectangle.OpacityMask>
+                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Switch}" />
+                                                                </Rectangle.OpacityMask>
+                                                            </Rectangle>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <Separator />
+                                                    <MenuItem Header="{x:Static localization:Strings.AddProfileDots}"
+                                                              Command="{Binding Path=Data.AddProfileSelectedHostCommand, Source={StaticResource BindingProxy}}"
+                                                              CommandParameter="{Binding}">
+                                                        <MenuItem.Icon>
+                                                            <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
+                                                                <Rectangle.OpacityMask>
+                                                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                                                </Rectangle.OpacityMask>
+                                                            </Rectangle>
+                                                        </MenuItem.Icon>
+                                                    </MenuItem>
+                                                    <Separator />
+                                                    <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
+                                                              Style="{StaticResource ResourceKey=CopyMenuItem}">
+                                                        <MenuItem Header="{x:Static Member=localization:Strings.IPAddress}"
+                                                                  Command="{Binding Path=Data.CopyDataToClipboardCommand, Source={StaticResource BindingProxy}}"
+                                                                  CommandParameter="{Binding Path=Items[0].IPAddress, Converter={StaticResource IPAddressToStringConverter}}"
+                                                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                                        <MenuItem Header="{x:Static Member=localization:Strings.Hostname}"
+                                                                  Command="{Binding Path=Data.CopyDataToClipboardCommand, Source={StaticResource BindingProxy}}"
+                                                                  CommandParameter="{Binding Path=Items[0].Hostname, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
+                                                                  Visibility="{Binding Path=Data.ScanOptions.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                                        <MenuItem Header="{x:Static Member=localization:Strings.OpenPorts}"
+                                                                  Command="{Binding Path=Data.CopyOpenPortsCommand, Source={StaticResource BindingProxy}}"
+                                                                  CommandParameter="{Binding}"
+                                                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     </MenuItem>
                                                 </ContextMenu>
                                             </Expander.ContextMenu>
