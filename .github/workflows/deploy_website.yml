@@ -20,7 +20,7 @@ jobs:
     permissions:
       contents: write
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || 'deploy' }}
     defaults:
       run:
         working-directory: Website
@@ -55,7 +55,7 @@ jobs:
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
-        if: github.ref == 'refs/heads/main'
+        if: github.event_name == 'release' || (github.event_name != 'pull_request' && github.ref == 'refs/heads/main')
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./Website/build

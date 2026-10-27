@@ -4957,88 +4957,88 @@ Per i dettagli consulta l'informativa sulla privacy di Cloudflare.</value>
     <value>Elenco dei suffissi pubblici (ad es. 'co.uk') da publicsuffix.org (MPL-2.0), che viene usato per ottenere il dominio registrato di un nome host per le query RDAP.</value>
   </data>
   <data name="ProfileXNotFound" xml:space="preserve">
-    <value>Profile "{0}" not found!</value>
+    <value>Profilo '{0}' non trovato!</value>
   </data>
   <data name="SeveralProfilesAreNamedXSelectOne" xml:space="preserve">
-    <value>Several profiles are named "{0}", select one!</value>
+    <value>Differenti profili hanno il nome '{0}', selezionane uno!</value>
   </data>
   <data name="EnterACommand" xml:space="preserve">
-    <value>Enter a command!</value>
+    <value>Inserisci un comando!</value>
   </data>
   <data name="UnknownCommandX" xml:space="preserve">
-    <value>Unknown command "{0}"!</value>
+    <value>Comando '{0}' sconosciuto!</value>
   </data>
   <data name="CommandXDoesNotAcceptArguments" xml:space="preserve">
-    <value>The command "{0}" does not accept arguments!</value>
+    <value>Il comando '{0}' non accetta argomenti!</value>
   </data>
   <data name="CommandXDoesNotSupportProfiles" xml:space="preserve">
-    <value>The command "{0}" does not support profiles!</value>
+    <value>il comando '{0}' non supporta i profili!</value>
   </data>
   <data name="EnterTheNameOfAProfileAfterAt" xml:space="preserve">
-    <value>Enter the name of a profile after "@"!</value>
+    <value>Inserisci il nome di un  profilo dopo '@'!</value>
   </data>
   <data name="UnknownArgumentX" xml:space="preserve">
-    <value>Unknown argument "{0}"!</value>
+    <value>Argomento '{0}' sconosciuto!</value>
   </data>
   <data name="RunCommand" xml:space="preserve">
-    <value>Run command</value>
+    <value>Esegui comando</value>
   </data>
   <data name="Recent" xml:space="preserve">
-    <value>Recent</value>
+    <value>Recente</value>
   </data>
   <data name="EnterSubnetmaskOrCIDRBetweenXAndY" xml:space="preserve">
-    <value>Enter a subnet mask or CIDR between /{0} and /{1}!</value>
+    <value>Inserisci una maschera sottorete o CIDR tra /{0} e /{1}!</value>
   </data>
   <data name="BringWindowToForegroundAndOpenRunCommand" xml:space="preserve">
-    <value>Bring window to foreground and open the run command</value>
+    <value>Porta la finestra in primo piano e apri il comando esegui</value>
   </data>
   <data name="Commands" xml:space="preserve">
-    <value>Commands</value>
+    <value>Comandi</value>
   </data>
   <data name="Clipboard" xml:space="preserve">
-    <value>Clipboard</value>
+    <value>Appunti</value>
   </data>
   <data name="Examples" xml:space="preserve">
-    <value>Examples</value>
+    <value>Esempi</value>
   </data>
   <data name="Select" xml:space="preserve">
-    <value>Select</value>
+    <value>Seleziona</value>
   </data>
   <data name="Complete" xml:space="preserve">
-    <value>Complete</value>
+    <value>Completo</value>
   </data>
   <data name="Run" xml:space="preserve">
-    <value>Run</value>
+    <value>Esegui</value>
   </data>
   <data name="RunAndKeepOpen" xml:space="preserve">
-    <value>Run and keep open</value>
+    <value>Esegui e mantieni aperto</value>
   </data>
   <data name="FillInWithoutStarting" xml:space="preserve">
-    <value>Fill in without starting</value>
+    <value>Compila senza avviare</value>
   </data>
   <data name="RemoveFromHistory" xml:space="preserve">
-    <value>Remove from history</value>
+    <value>Rimuovi dfalla cronologia</value>
   </data>
   <data name="SuggestTheClipboardAsTarget" xml:space="preserve">
-    <value>Suggest the clipboard content (e.g. an IP address) as target</value>
+    <value>Suggerisci come destinazione il contenuto degli appunti (ad esempio un indirizzo IP)</value>
   </data>
   <data name="ShowKeyHints" xml:space="preserve">
-    <value>Show key hints</value>
+    <value>Visualizza suggerimenti chiave</value>
   </data>
   <data name="CtrlShiftP" xml:space="preserve">
-    <value>Ctrl+Shift+P</value>
+    <value>Ctrl+Maiusc+P</value>
   </data>
   <data name="CtrlEnter" xml:space="preserve">
-    <value>Ctrl+Enter</value>
+    <value>Ctrl+Invio</value>
   </data>
   <data name="ShiftEnter" xml:space="preserve">
-    <value>Shift+Enter</value>
+    <value>Maiusc+Invio</value>
   </data>
   <data name="ShiftDel" xml:space="preserve">
-    <value>Shift+Del</value>
+    <value>Maiusc+Canc</value>
   </data>
   <data name="KeyEnter" xml:space="preserve">
-    <value>Enter</value>
+    <value>Invio</value>
   </data>
   <data name="KeyTab" xml:space="preserve">
     <value>Tab</value>
@@ -5047,127 +5047,127 @@ Per i dettagli consulta l'informativa sulla privacy di Cloudflare.</value>
     <value>Esc</value>
   </data>
   <data name="RunCommandWatermark1" xml:space="preserve">
-    <value>It's always DNS. Until it's not.</value>
+    <value>È sempre DNS. Finche 'non lo e'.</value>
   </data>
   <data name="RunCommandWatermark2" xml:space="preserve">
-    <value>Got an IP address? Drop it here...</value>
+    <value>Hai un indirizzo IP? Inseriscilo qui...</value>
   </data>
   <data name="RunCommandWatermark3" xml:space="preserve">
-    <value>Your whole network, one command away...</value>
+    <value>Tutta la rete, a un comando di distanza...</value>
   </data>
   <data name="RunCommandWatermark4" xml:space="preserve">
-    <value>Every tool, one line away...</value>
+    <value>Ogni strumento, una linea di distanza...</value>
   </data>
   <data name="RunCommandWatermark5" xml:space="preserve">
-    <value>Something down? Let's investigate...</value>
+    <value>C'e ' qualcosa che non va? Verifica...</value>
   </data>
   <data name="RunCommandWatermark6" xml:space="preserve">
-    <value>Is it DNS? It's always DNS...</value>
+    <value>È un DNS? È sempre DNS...</value>
   </data>
   <data name="RunCommandWatermark7" xml:space="preserve">
-    <value>Have you tried pinging it?</value>
+    <value>Hai provato a fare il ping?</value>
   </data>
   <data name="RunCommandWatermark8" xml:space="preserve">
-    <value>Packets in, answers out...</value>
+    <value>Pacchetti in ingresso, risposte in uscita...</value>
   </data>
   <data name="RunCommandWatermark9" xml:space="preserve">
-    <value>Ready when your network isn't...</value>
+    <value>Pronto quando la rete non lo è...</value>
   </data>
   <data name="RunCommandWatermark10" xml:space="preserve">
-    <value>Before you reboot it, ping it...</value>
+    <value>Prima di riavviarlo, esegui il ping...</value>
   </data>
   <data name="RunCommandWatermark11" xml:space="preserve">
-    <value>Ping it, trace it, fix it...</value>
+    <value>Fai il ping, traccialo, sistemalo...</value>
   </data>
   <data name="RunCommandWatermark12" xml:space="preserve">
-    <value>Is it up? Let's find out...</value>
+    <value>È collegato? Scopriamolo...</value>
   </data>
   <data name="RunCommandWatermark13" xml:space="preserve">
-    <value>Need to connect? Just type the host...</value>
+    <value>Hai bisogno di connetterti? Basta digitare l'host...</value>
   </data>
   <data name="RunCommandWatermark14" xml:space="preserve">
-    <value>It's not the network. Probably...</value>
+    <value>Non è una rete. Probabilmente...</value>
   </data>
   <data name="RunCommandWatermark15" xml:space="preserve">
-    <value>Blame the firewall later, ping first...</value>
+    <value>Prova il firewall più tardi, prima fai il ping...</value>
   </data>
   <data name="RunCommandWatermark16" xml:space="preserve">
-    <value>Works on my machine? Let's check yours...</value>
+    <value>Funziona nel computer? Controlliamo il tuo...</value>
   </data>
   <data name="RunCommandWatermark17" xml:space="preserve">
-    <value>Somewhere between here and there, a packet got lost...</value>
+    <value>Da qualche parte tra qua e là, un pacchetto si è perso...</value>
   </data>
   <data name="RunCommandWatermark18" xml:space="preserve">
-    <value>Ping first, panic later...</value>
+    <value>Prima fai il ping, il panico dopo...</value>
   </data>
   <data name="PortProfile" xml:space="preserve">
-    <value>Port profile</value>
+    <value>Profilo porta</value>
   </data>
   <data name="ScanManyIPAddressesMessage" xml:space="preserve">
-    <value>{0} IP addresses will be scanned. This can take a long time and needs a lot of memory.
+    <value>Verranno scansionati {0} indirizzi IP. Questo può richiedere molto tempo e ha bisogno di molta memoria.
 
-Do you want to start the scan?</value>
+Vuoi avviare la scansione?</value>
   </data>
   <data name="ScanTooManyIPAddressesMessage" xml:space="preserve">
-    <value>{0} IP addresses cannot be scanned at once (maximum {1}). Split the input into smaller ranges.</value>
+    <value>{0} indirizzi IP non possono essere scasionati insieme (massimo {1}). Dividi lil valore in intervalli più piccoli.</value>
   </data>
   <data name="ScanManyPortsMessage" xml:space="preserve">
-    <value>{0} ports will be scanned ({1} hosts × {2} ports). This can take a long time and needs a lot of memory.
+    <value>Verrano scansionate {0} porte ({1} host × {2} porte). Questo può richiedere molto tempo e richiede molta memoria.
 
-Do you want to start the scan?</value>
+Vuoi avviare la scansione?</value>
   </data>
   <data name="ScanTooManyPortsMessage" xml:space="preserve">
-    <value>{0} ports cannot be scanned at once ({1} hosts × {2} ports, maximum {3}). Split the input into fewer hosts or ports.</value>
+    <value>{0} porte non possono essere scansionate insieme ({1} host × {2} porte, massimo {3}). Modifica il valore con meno host o porte.</value>
   </data>
   <data name="RunCommandWatermark19" xml:space="preserve">
-    <value>Can you reach it, or just ping it?</value>
+    <value>Si può raggiungere, o semplicemente lo stai pingando?</value>
   </data>
   <data name="RunCommandWatermark20" xml:space="preserve">
-    <value>The network is down. Your coffee isn't.</value>
+    <value>La rete è offline. Il tuo caffè no.</value>
   </data>
   <data name="RunCommandWatermark21" xml:space="preserve">
-    <value>Every timeout has a story.</value>
+    <value>Ogni timeout ha una storia.</value>
   </data>
   <data name="RunCommandWatermark22" xml:space="preserve">
-    <value>Your network tools, at your fingertips.</value>
+    <value>Gli strumenti di rete, a portata di mano.</value>
   </data>
   <data name="RunCommandWatermark23" xml:space="preserve">
-    <value>No route to sanity.</value>
+    <value>Nessuna route da sistemare.</value>
   </data>
   <data name="RunCommandWatermark24" xml:space="preserve">
-    <value>The firewall says no.</value>
+    <value>Il firewall dice di no.</value>
   </data>
   <data name="RunCommandWatermark25" xml:space="preserve">
-    <value>One command closer to "it's working".</value>
+    <value>Un comando più vicino a "sta funzionando".</value>
   </data>
   <data name="RunCommandWatermark26" xml:space="preserve">
-    <value>Commands are faster than mouse adventures.</value>
+    <value>I comandi sono più veloci delle avventure del mouse.</value>
   </data>
   <data name="RunCommandWatermark27" xml:space="preserve">
-    <value>Packets don't lie. Monitoring sometimes does.</value>
+    <value>I pacchetti non mentono. Il monitoraggio a volte lo fa.</value>
   </data>
   <data name="RunCommandWatermark28" xml:space="preserve">
-    <value>First, establish whether it's actually broken.</value>
+    <value>In primo luogo, stabilisci se è effettivamente rotto.</value>
   </data>
   <data name="RunCommandWatermark29" xml:space="preserve">
-    <value>It's not a bug. It's packet loss.</value>
+    <value>Non è un bug. È una perdita di pacchetti.</value>
   </data>
   <data name="RunCommandWatermark30" xml:space="preserve">
-    <value>There is no cloud. Just someone else's network.</value>
+    <value>Non è un cloud. Solo la rete di qualcun altro.</value>
   </data>
   <data name="RunCommandWatermark31" xml:space="preserve">
-    <value>It's a feature. Probably.</value>
+    <value>È una caratteristica. Probabilmente.</value>
   </data>
   <data name="RunCommandWatermark32" xml:space="preserve">
-    <value>Trust, but verify with ping.</value>
+    <value>Fidati, ma verifica con il ping.</value>
   </data>
   <data name="RunCommandWatermark33" xml:space="preserve">
-    <value>The packets know what they did.</value>
+    <value>I pacchetti sanno cosa hanno fatto.</value>
   </data>
   <data name="RunCommandWatermark34" xml:space="preserve">
-    <value>Have you checked the obvious?</value>
+    <value>Hai controllato l'ovvio?</value>
   </data>
   <data name="RunCommandWatermark35" xml:space="preserve">
-    <value>If it resolves, it exists. If it doesn't, clear the cache.</value>
+    <value>Se si risolve, esiste. In caso contrario, svuota la cache.</value>
   </data>
 </root>
