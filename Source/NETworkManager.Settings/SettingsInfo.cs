@@ -1541,6 +1541,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.PortScanner_Attempts;
 
+    public bool PortScanner_PingHostsBeforeScan
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PortScanner_PingHostsBeforeScan;
+
     public bool PortScanner_AutoAdjustThreads
     {
         get;

@@ -223,6 +223,20 @@ In a local network (LAN), `1` is enough. On an unreliable network (e.g. Wi-Fi, V
 
 :::
 
+### Ping hosts before the scan
+
+Pings every host before its ports are scanned (ICMP echo, with the [Timeout](#timeout-ms) and [Attempts](#attempts) of the port scan). Only hosts that answer are scanned, the number of hosts that were not scanned is shown below the input after the scan. Faster for ranges with many unused IP addresses (e.g. a `/24` with `1-1024`), because the ports of unused addresses are not scanned until their timeout.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+:::warning
+
+Hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned, even if they have open ports.
+
+:::
+
 ### Resolve hostname
 
 Resolve the hostname for given IP addresses.

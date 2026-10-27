@@ -5904,6 +5904,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only hosts that answer a ping (ICMP echo, with the timeout and attempts above) are scanned. Faster for ranges with many unused IP addresses. Hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned..
+        /// </summary>
+        public static string HelpMessage_PingHostsBeforeScan {
+            get {
+                return ResourceManager.GetString("HelpMessage_PingHostsBeforeScan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Host threads × port threads can be at most 8,192 connections at the same time (every connection uses a local port, this is half of them). Many connections at the same time may be blocked by a firewall or overload small routers..
         /// </summary>
         public static string HelpMessage_PortScannerMaxThreads {
@@ -9028,6 +9037,15 @@ namespace NETworkManager.Localization.Resources {
         public static string PingDetails {
             get {
                 return ResourceManager.GetString("PingDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping hosts before the scan.
+        /// </summary>
+        public static string PingHostsBeforeScan {
+            get {
+                return ResourceManager.GetString("PingHostsBeforeScan", resourceCulture);
             }
         }
         
@@ -14746,6 +14764,15 @@ namespace NETworkManager.Localization.Resources {
         public static string XDown {
             get {
                 return ResourceManager.GetString("XDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} host(s) did not answer the ping and were not scanned..
+        /// </summary>
+        public static string XHostsDidNotAnswerThePingAndWereNotScanned {
+            get {
+                return ResourceManager.GetString("XHostsDidNotAnswerThePingAndWereNotScanned", resourceCulture);
             }
         }
         

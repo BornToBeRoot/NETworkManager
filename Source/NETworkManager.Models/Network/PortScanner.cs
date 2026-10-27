@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
 using NETworkManager.Models.Lookup;
@@ -53,6 +54,13 @@ public sealed class PortScanner
     private readonly InterlockedCounter _portsOpen = new();
     private readonly InterlockedCounter _portsClosed = new();
     private readonly InterlockedCounter _portsTimedOut = new();
+    private readonly InterlockedCounter _hostsSkipped = new();
+
+    /// <summary>
+    ///     Data of the ping before the scan (see <see cref="PortScannerOptions.PingHostsBeforeScan" />), like the
+    ///     default buffer of the IP Scanner.
+    /// </summary>
+    private static readonly byte[] PingBuffer = new byte[32];
 
     // Closed and timed out ports per host, see GetClosedAndTimedOutPortsPerHost
     private readonly ConcurrentDictionary<IPAddress, (InterlockedCounter closed, InterlockedCounter timedOut)>
@@ -83,6 +91,13 @@ public sealed class PortScanner
     ///     while the scan is running.
     /// </summary>
     public int PortsTimedOut => _portsTimedOut.Value;
+
+    /// <summary>
+    ///     Gets the number of hosts that were not scanned because they didn't answer the ping before the scan (see
+    ///     <see cref="PortScannerOptions.PingHostsBeforeScan" />). Thread-safe; may be read from any thread while the
+    ///     scan is running.
+    /// </summary>
+    public int HostsSkipped => _hostsSkipped.Value;
 
     /// <summary>
     ///     Gets the number of closed and timed out ports per host scanned so far, only hosts with such a port. These
@@ -169,6 +184,22 @@ public sealed class PortScanner
 
                 await Parallel.ForEachAsync(hosts, hostParallelOptions, async (host, hostCt) =>
                 {
+                    // Only hosts that answer a ping are scanned (option) - the ports of the other hosts are counted
+                    // as scanned, so the progress is complete
+                    if (_options.PingHostsBeforeScan)
+                    {
+                        var pingInfo = await PingProbe.PingAsync(host.ipAddress, _options.Timeout, _options.Attempts,
+                            PingBuffer, hostCt).ConfigureAwait(false);
+
+                        if (pingInfo.Status != IPStatus.Success)
+                        {
+                            _hostsSkipped.Increment();
+                            IncreaseProgress(portCount);
+
+                            return;
+                        }
+                    }
+
                     // Resolve Hostname (PTR) while the ports are scanned. Started with the first port probe of the
                     // host, so the lookups of many hosts are spread over time like the probes instead of all at once
                     var hostnameTask = new Lazy<Task<string>>(() => _options.ResolveHostname
@@ -257,10 +288,10 @@ public sealed class PortScanner
         return (Math.Clamp(AutoMaxConnections / portsAtOnce, 1, AutoMaxHostThreads), AutoMaxPortThreads);
     }
 
-    private void IncreaseProgress()
+    private void IncreaseProgress(int count = 1)
     {
-        // Increase the progress                        
-        Interlocked.Increment(ref _progressValue);
+        // Increase the progress
+        Interlocked.Add(ref _progressValue, count);
         OnProgressChanged();
     }
 

@@ -166,6 +166,7 @@ public static class GlobalStaticConfiguration
     public static int PortScanner_MaxConnections => 8192;
     public static int PortScanner_Timeout => 2000;
     public static int PortScanner_Attempts => 1;
+    public static bool PortScanner_PingHostsBeforeScan => false;
     public static ExportFileType PortScanner_ExportFileType => ExportFileType.Csv;
     // Larger scans (hosts x ports) need a confirmation, even larger ones are refused
     public static long PortScanner_ConfirmPortCount => 65536;

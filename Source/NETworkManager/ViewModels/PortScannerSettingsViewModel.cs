@@ -121,6 +121,25 @@ public class PortScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets whether every host is pinged before its ports are scanned (hosts without answer are skipped).
+    /// </summary>
+    public bool PingHostsBeforeScan
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PortScanner_PingHostsBeforeScan = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets whether the number of hosts and ports scanned at the same time is adjusted to the scan (instead of
     /// <see cref="MaxHostThreads"/> and <see cref="MaxPortThreads"/>).
     /// </summary>
@@ -222,6 +241,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
         ShowAllResults = SettingsManager.Current.PortScanner_ShowAllResults;
         Timeout = SettingsManager.Current.PortScanner_Timeout;
         Attempts = SettingsManager.Current.PortScanner_Attempts;
+        PingHostsBeforeScan = SettingsManager.Current.PortScanner_PingHostsBeforeScan;
         ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname;
         AutoAdjustThreads = SettingsManager.Current.PortScanner_AutoAdjustThreads;
         MaxHostThreads = SettingsManager.Current.PortScanner_MaxHostThreads;

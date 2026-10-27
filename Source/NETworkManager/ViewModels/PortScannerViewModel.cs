@@ -1007,6 +1007,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             MaxPortThreads = SettingsManager.Current.PortScanner_MaxPortThreads,
             Timeout = SettingsManager.Current.PortScanner_Timeout,
             Attempts = SettingsManager.Current.PortScanner_Attempts,
+            PingHostsBeforeScan = SettingsManager.Current.PortScanner_PingHostsBeforeScan,
             ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname,
             ShowAllResults = SettingsManager.Current.PortScanner_ShowAllResults
         };
@@ -1297,6 +1298,16 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 StatusMessage = IsStatusMessageDisplayed
                     ? StatusMessage + Environment.NewLine + Strings.NoOpenPortsFound
                     : Strings.NoOpenPortsFound;
+                IsStatusMessageDisplayed = true;
+            }
+
+            // Hosts that were not scanned because they didn't answer the ping before the scan (option)
+            if (!e.IsCanceled && e.Exception == null && sender is PortScanner { HostsSkipped: > 0 } pingScanner)
+            {
+                var message = string.Format(Strings.XHostsDidNotAnswerThePingAndWereNotScanned,
+                    pingScanner.HostsSkipped);
+
+                StatusMessage = IsStatusMessageDisplayed ? StatusMessage + Environment.NewLine + message : message;
                 IsStatusMessageDisplayed = true;
             }
 

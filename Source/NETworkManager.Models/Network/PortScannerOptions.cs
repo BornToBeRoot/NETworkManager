@@ -32,6 +32,12 @@ public class PortScannerOptions
     public required int Attempts { get; init; }
 
     /// <summary>
+    ///     Ping every host before its ports are scanned (with <see cref="Timeout" /> and <see cref="Attempts" />), a host
+    ///     that doesn't answer is not scanned.
+    /// </summary>
+    public required bool PingHostsBeforeScan { get; init; }
+
+    /// <summary>
     ///     Resolve the hostname for an IP address.
     /// </summary>
     public required bool ResolveHostname { get; init; }

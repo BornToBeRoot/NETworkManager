@@ -5107,4 +5107,13 @@ Do you want to start the scan?</value>
   <data name="PortProfileOfProfileNotFoundMessage" xml:space="preserve">
     <value>A port profile of this profile was not found, the ports saved with the profile are used. Port profiles are saved in the settings - if the profile file was shared from another computer, create the port profile here or edit the profile.</value>
   </data>
+  <data name="PingHostsBeforeScan" xml:space="preserve">
+    <value>Ping hosts before the scan</value>
+  </data>
+  <data name="HelpMessage_PingHostsBeforeScan" xml:space="preserve">
+    <value>Only hosts that answer a ping (ICMP echo, with the timeout and attempts above) are scanned. Faster for ranges with many unused IP addresses. Hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned.</value>
+  </data>
+  <data name="XHostsDidNotAnswerThePingAndWereNotScanned" xml:space="preserve">
+    <value>{0} host(s) did not answer the ping and were not scanned.</value>
+  </data>
 </root>
