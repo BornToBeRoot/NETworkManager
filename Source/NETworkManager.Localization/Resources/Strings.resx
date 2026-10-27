@@ -5089,4 +5089,7 @@ Do you want to start the scan?</value>
   <data name="XUp" xml:space="preserve">
     <value>{0} Up</value>
   </data>
+  <data name="HelpMessage_ScanForNetBIOS" xml:space="preserve">
+    <value>Only IPv4 addresses are scanned for NetBIOS, NetBIOS doesn't exist over IPv6.</value>
+  </data>
 </root>

@@ -242,11 +242,17 @@ In a local network (LAN), `1` is enough. On an unreliable network (e.g. Wi-Fi, V
 
 ### Scan for NetBIOS
 
-Scan each IP address for NetBIOS information. Only IPv4 addresses are scanned, NetBIOS doesn't exist over IPv6.
+Scan each IP address for NetBIOS information.
 
 **Type:** `Boolean`
 
 **Default:** `Enabled`
+
+:::note
+
+Only IPv4 addresses are scanned for NetBIOS, NetBIOS doesn't exist over IPv6.
+
+:::
 
 ### Timeout (ms)
 
