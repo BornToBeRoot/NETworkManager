@@ -52,21 +52,18 @@ public static class WebConsoleUrlHelper
     /// <returns>URL.</returns>
     public static string CreateUrl(string host, int port)
     {
+        // The browser resolves a hostname via Windows (e.g. "gateway." -> "gateway")
+        if (!IPAddress.TryParse(host, out var ipAddress))
+            host = DNSClientHelper.SanitizeHostname(host);
+
+        // Also a hostname of only dots
         ArgumentException.ThrowIfNullOrWhiteSpace(host);
 
         var scheme = port is 443 or 8443 ? "https" : "http";
 
         // The zone id of an IPv6 address has to be encoded ("%" -> "%25", RFC 6874)
-        if (IPAddress.TryParse(host, out var ipAddress))
-        {
-            if (ipAddress.AddressFamily == AddressFamily.InterNetworkV6)
-                host = $"[{ipAddress.ToString().Replace("%", "%25")}]";
-        }
-        else
-        {
-            // The browser resolves it via Windows (e.g. "gateway." -> "gateway")
-            host = DNSClientHelper.SanitizeHostname(host);
-        }
+        if (ipAddress?.AddressFamily == AddressFamily.InterNetworkV6)
+            host = $"[{ipAddress.ToString().Replace("%", "%25")}]";
 
         return port is 80 or 443 ? $"{scheme}://{host}/" : $"{scheme}://{host}:{port}/";
     }

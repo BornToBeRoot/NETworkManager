@@ -47,15 +47,10 @@ public static class DNSClientHelper
     ///     (DNS suffix search, LLMNR / NetBIOS) and it matches the name of a certificate (https).
     /// </summary>
     /// <param name="hostname">Hostname.</param>
-    /// <returns>Hostname without the trailing dot, the hostname itself if it is null, empty or only dots.</returns>
+    /// <returns>Hostname without the trailing dot (empty if it is only dots), null if it is null.</returns>
     public static string SanitizeHostname(string hostname)
     {
-        if (string.IsNullOrEmpty(hostname))
-            return hostname;
-
-        var trimmed = hostname.TrimEnd('.');
-
-        return trimmed.Length > 0 ? trimmed : hostname;
+        return hostname?.TrimEnd('.');
     }
 
     /// <summary>

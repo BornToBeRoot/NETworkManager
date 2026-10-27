@@ -34,7 +34,7 @@ public class DNSClientHelperTests
     [InlineData("gateway.", "gateway")]
     [InlineData("server.example.com.", "server.example.com")]
     [InlineData("gateway", "gateway")]
-    [InlineData(".", ".")]
+    [InlineData(".", "")]
     [InlineData("", "")]
     [InlineData(null, null)]
     public void SanitizesHostname(string hostname, string expected)

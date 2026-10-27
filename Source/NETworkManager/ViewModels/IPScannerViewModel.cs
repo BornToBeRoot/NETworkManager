@@ -598,12 +598,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private async void AddProfileSelectedHostAction()
     {
+        // Only displayed - also trim the dot a single-label name still has (e.g. "gateway.")
+        var hostname = DNSClientHelper.SanitizeHostname(SelectedResult.Hostname);
+
         ProfileInfo profileInfo = new()
         {
-            // Only displayed - also trim the dot a single-label name still has (e.g. "gateway.")
-            Name = string.IsNullOrEmpty(SelectedResult.Hostname)
-                ? SelectedResult.PingInfo.IPAddress.ToString()
-                : DNSClientHelper.SanitizeHostname(SelectedResult.Hostname),
+            Name = string.IsNullOrEmpty(hostname) ? SelectedResult.PingInfo.IPAddress.ToString() : hostname,
             Host = SelectedResult.PingInfo.IPAddress.ToString(),
 
             // Additional data
