@@ -539,6 +539,72 @@ public class PortScannerViewModel : ViewModelBase
     public ICommand RescanSelectedHostsCommand => new RelayCommand(_ => RescanSelectedHosts());
 
     /// <summary>
+    /// Gets the command to open the host of the selected result in another application.
+    /// </summary>
+    public ICommand RedirectDataToApplicationCommand => new RelayCommand(RedirectDataToApplicationAction);
+
+    private void RedirectDataToApplicationAction(object name)
+    {
+        if (name is not ApplicationName applicationName)
+            return;
+
+        NavigationManager.Open(new ApplicationRequest(applicationName) { Target = GetSelectedHost() });
+    }
+
+    /// <summary>
+    /// Gets the host of the selected result for other tools: the hostname (always a DNS hostname from the PTR
+    /// record), otherwise the IP address.
+    /// </summary>
+    /// <returns>Hostname or IP address.</returns>
+    private string GetSelectedHost()
+    {
+        return !string.IsNullOrEmpty(SelectedResult.Hostname)
+            ? SelectedResult.Hostname
+            : SelectedResult.IPAddress.ToString();
+    }
+
+    /// <summary>
+    /// Gets the command to perform a DNS lookup for the IP address of the selected result.
+    /// </summary>
+    public ICommand PerformDNSLookupIPAddressCommand => new RelayCommand(_ => PerformDNSLookupIPAddressAction());
+
+    private void PerformDNSLookupIPAddressAction()
+    {
+        NavigationManager.Open(new DNSLookupRequest { Target = SelectedResult.IPAddress.ToString() });
+    }
+
+    /// <summary>
+    /// Gets the command to perform a DNS lookup for the hostname of the selected result.
+    /// </summary>
+    public ICommand PerformDNSLookupHostnameCommand => new RelayCommand(_ => PerformDNSLookupHostnameAction());
+
+    private void PerformDNSLookupHostnameAction()
+    {
+        NavigationManager.Open(new DNSLookupRequest { Target = SelectedResult.Hostname });
+    }
+
+    /// <summary>
+    /// Gets the command to query the registration data of the IP address of the selected result via RDAP.
+    /// </summary>
+    public ICommand PerformRDAPQueryIPAddressCommand => new RelayCommand(_ => PerformRDAPQueryIPAddressAction());
+
+    private void PerformRDAPQueryIPAddressAction()
+    {
+        NavigationManager.Open(new RDAPRequest { Target = SelectedResult.IPAddress.ToString() });
+    }
+
+    /// <summary>
+    /// Gets the command to query the registration data of the hostname (its registered domain) of the selected
+    /// result via RDAP.
+    /// </summary>
+    public ICommand PerformRDAPQueryHostnameCommand => new RelayCommand(_ => PerformRDAPQueryHostnameAction());
+
+    private void PerformRDAPQueryHostnameAction()
+    {
+        NavigationManager.Open(new RDAPRequest { Target = SelectedResult.Hostname });
+    }
+
+    /// <summary>
     /// Gets the command to open the selected open web port in the Web Console.
     /// </summary>
     public ICommand OpenWebConsoleCommand => new RelayCommand(_ => OpenWebConsoleAction());
@@ -548,14 +614,9 @@ public class PortScannerViewModel : ViewModelBase
         if (!IsWebConsoleAvailable)
             return;
 
-        // The hostname of the Port Scanner is always a DNS hostname (PTR)
-        var host = !string.IsNullOrEmpty(SelectedResult.Hostname)
-            ? SelectedResult.Hostname
-            : SelectedResult.IPAddress.ToString();
-
         NavigationManager.Open(new ApplicationRequest(ApplicationName.WebConsole)
         {
-            Target = WebConsoleUrlHelper.CreateUrl(host, SelectedResult.Port)
+            Target = WebConsoleUrlHelper.CreateUrl(GetSelectedHost(), SelectedResult.Port)
         });
     }
 

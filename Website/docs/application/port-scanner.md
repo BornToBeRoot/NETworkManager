@@ -67,7 +67,12 @@ A scan of more than `65,536` ports (hosts × ports, e.g. 64 hosts with `1-1024`)
 | Action          | Description                                                                                                    |
 | --------------- | -------------------------------------------------------------------------------------------------------------- |
 | **Rescan**      | Scans the selected host(s) again with the ports and settings of the shown scan and replaces their results. A canceled rescan keeps the previous results. Not available while a scan is running |
+| **Ping Monitor** / **Traceroute** | Opens the host (hostname if resolved, otherwise the IP address) in the tool |
+| **DNS lookup...** > **IP address** / **Hostname** | Looks up the IP address (`PTR`) or the hostname in [DNS Lookup](./dns-lookup) |
+| **RDAP...** > **IP address** / **Hostname** | Queries the registration data of the IP address or the registered domain of the hostname in [RDAP](./rdap) |
+| **Remote Desktop** / **PowerShell** / **PuTTY** / **TigerVNC** | Opens the host (hostname if resolved, otherwise the IP address) in the tool (with its default port) |
 | **Web Console** | Opens the open web port (`80`, `443`, `8080`, `8443`) in the [Web Console](./web-console) (https for 443 / 8443) |
+| **SNMP** | Opens the host (hostname if resolved, otherwise the IP address) in [SNMP](./snmp) |
 | **Copy**        | Copies the selected information to the clipboard                                                               |
 | **Export...**   | Exports the selected or all results to a file                                                                  |
 
