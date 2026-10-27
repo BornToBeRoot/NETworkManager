@@ -428,9 +428,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         };
 
         // Hostname, MAC address, vendor and ports arrive after the host was added - filter it again when they
-        // change (without live filtering a host found before its hostname arrived would stay hidden)
+        // change (without live filtering a host found before its hostname arrived would stay hidden). Only enabled
+        // while searching, see ApplySearch.
         var liveShaping = (ICollectionViewLiveShaping)ResultsView;
-        liveShaping.IsLiveFiltering = true;
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Hostname));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MACAddress));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Vendor));
@@ -1194,6 +1194,14 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private void ApplySearch()
     {
         _searchDispatcherTimer.Stop();
+
+        // Live filtering only while searching - without a search every host is shown anyway, but it would still
+        // listen to the filtered properties of every row and filter a row again on every update
+        var liveShaping = (ICollectionViewLiveShaping)ResultsView;
+        var isSearching = !string.IsNullOrEmpty(Search);
+
+        if (liveShaping.IsLiveFiltering != isSearching)
+            liveShaping.IsLiveFiltering = isSearching;
 
         ResultsView.Refresh();
     }
