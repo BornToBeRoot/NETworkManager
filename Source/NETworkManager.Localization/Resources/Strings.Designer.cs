@@ -14732,6 +14732,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} Timed out.
+        /// </summary>
+        public static string XTimedOut {
+            get {
+                return ResourceManager.GetString("XTimedOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} Up.
         /// </summary>
         public static string XUp {

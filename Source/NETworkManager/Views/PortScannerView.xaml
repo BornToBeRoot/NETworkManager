@@ -251,6 +251,16 @@
                         <Binding Path="PortsClosed" StringFormat="{x:Static localization:Strings.XClosed}" />
                     </TextBlock.Text>
                 </TextBlock>
+                <TextBlock Text="·"
+                           Style="{StaticResource DefaultTextBlock}"
+                           Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                           Margin="6,0,6,0" />
+                <TextBlock Style="{StaticResource DefaultTextBlock}"
+                           Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                    <TextBlock.Text>
+                        <Binding Path="PortsTimedOut" StringFormat="{x:Static localization:Strings.XTimedOut}" />
+                    </TextBlock.Text>
+                </TextBlock>
             </StackPanel>
             <TextBox Width="250"
                      Margin="20,0,0,0"

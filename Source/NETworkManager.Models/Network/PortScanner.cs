@@ -42,7 +42,11 @@ public sealed class PortScanner
     private int _progressValue;
     private readonly InterlockedCounter _portsOpen = new();
     private readonly InterlockedCounter _portsClosed = new();
-    private readonly ConcurrentDictionary<IPAddress, InterlockedCounter> _portsClosedPerHost = new();
+    private readonly InterlockedCounter _portsTimedOut = new();
+
+    // Closed and timed out ports per host, see GetClosedAndTimedOutPortsPerHost
+    private readonly ConcurrentDictionary<IPAddress, (InterlockedCounter closed, InterlockedCounter timedOut)>
+        _portsPerHost = new();
 
     private readonly PortScannerOptions _options;
 
@@ -59,20 +63,26 @@ public sealed class PortScanner
     public int PortsOpen => _portsOpen.Value;
 
     /// <summary>
-    ///     Gets the number of ports found to be closed (or timed out) so far. Thread-safe; may be
+    ///     Gets the number of ports found to be closed (the host refused the connection) so far. Thread-safe; may be
     ///     read from any thread while the scan is running.
     /// </summary>
     public int PortsClosed => _portsClosed.Value;
 
     /// <summary>
-    ///     Gets the number of closed (or timed out) ports per host scanned so far, only hosts with a closed port. Closed
+    ///     Gets the number of ports without an answer (timed out) so far. Thread-safe; may be read from any thread
+    ///     while the scan is running.
+    /// </summary>
+    public int PortsTimedOut => _portsTimedOut.Value;
+
+    /// <summary>
+    ///     Gets the number of closed and timed out ports per host scanned so far, only hosts with such a port. These
     ///     ports are only raised in <see cref="PortScanned" /> if they are shown - e.g. a rescan of some hosts needs
     ///     them to keep the counters of the other hosts.
     /// </summary>
-    /// <returns>Number of closed ports per IP address.</returns>
-    public Dictionary<IPAddress, int> GetPortsClosedPerHost()
+    /// <returns>Number of closed and timed out ports per IP address.</returns>
+    public Dictionary<IPAddress, (int closed, int timedOut)> GetClosedAndTimedOutPortsPerHost()
     {
-        return _portsClosedPerHost.ToDictionary(x => x.Key, x => x.Value.Value);
+        return _portsPerHost.ToDictionary(x => x.Key, x => (x.Value.closed.Value, x.Value.timedOut.Value));
     }
 
     #endregion
@@ -168,7 +178,7 @@ public sealed class PortScanner
                         // long before the first port is finished
                         var hostname = await hostnameTask.ConfigureAwait(false);
 
-                        // Count open/closed ports unconditionally, since ShowAllResults (below)
+                        // Count open/closed/timed out ports unconditionally, since ShowAllResults (below)
                         // may prevent closed ports from ever reaching PortScanned
                         if (portState == PortState.Open)
                         {
@@ -176,9 +186,19 @@ public sealed class PortScanner
                         }
                         else
                         {
-                            _portsClosed.Increment();
-                            _portsClosedPerHost.GetOrAdd(host.ipAddress, static _ => new InterlockedCounter())
-                                .Increment();
+                            var portsOfHost = _portsPerHost.GetOrAdd(host.ipAddress,
+                                static _ => (new InterlockedCounter(), new InterlockedCounter()));
+
+                            if (portState == PortState.Closed)
+                            {
+                                _portsClosed.Increment();
+                                portsOfHost.closed.Increment();
+                            }
+                            else
+                            {
+                                _portsTimedOut.Increment();
+                                portsOfHost.timedOut.Increment();
+                            }
                         }
 
                         if (_options.ShowAllResults || portState == PortState.Open)

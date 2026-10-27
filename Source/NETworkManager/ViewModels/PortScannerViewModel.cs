@@ -58,6 +58,7 @@ public class PortScannerViewModel : ViewModelBase
     private int _latestPortsScanned;
     private int _latestPortsOpen;
     private int _latestPortsClosed;
+    private int _latestPortsTimedOut;
 
     // Ports of the last scan, to rescan hosts with the same ports (and ScanOptions)
     private int[] _lastPorts;
@@ -68,6 +69,7 @@ public class PortScannerViewModel : ViewModelBase
     private bool _isRescan;
     private int _rescanBasePortsOpen;
     private int _rescanBasePortsClosed;
+    private int _rescanBasePortsTimedOut;
     private int _rescanPortsToScan;
     private int _rescanPortsScanned;
 
@@ -76,14 +78,15 @@ public class PortScannerViewModel : ViewModelBase
     private List<PortScannerPortInfo> _rescanRemovedRows;
     private int _rescanPortsOpen;
     private int _rescanPortsClosed;
+    private int _rescanPortsTimedOut;
 
     // Ports of the last scan without the rescanned hosts, the ports of the rescan are added when it is finished
     private int _rescanBasePortsScanned;
 
-    // Closed (or timed out) ports per host of the shown result. Closed ports are not shown unless enabled - a rescan
-    // needs them to keep the counters of the other hosts (also if the last scan was canceled before all ports of a
-    // host were scanned)
-    private readonly Dictionary<IPAddress, int> _portsClosedPerHost = [];
+    // Closed and timed out ports per host of the shown result. They are not shown unless enabled - a rescan needs them
+    // to keep the counters of the other hosts (also if the last scan was canceled before all ports of a host were
+    // scanned)
+    private readonly Dictionary<IPAddress, (int closed, int timedOut)> _portsNotOpenPerHost = [];
 
     /// <summary>
     /// Gets or sets the host to scan.
@@ -268,9 +271,25 @@ public class PortScannerViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets the number of ports found to be closed so far.
+    /// Gets or sets the number of ports found to be closed (the host refused the connection) so far.
     /// </summary>
     public int PortsClosed
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the number of ports without an answer (timed out) so far.
+    /// </summary>
+    public int PortsTimedOut
     {
         get;
         set
@@ -667,7 +686,7 @@ public class PortScannerViewModel : ViewModelBase
         }
 
         Results.Clear();
-        _portsClosedPerHost.Clear();
+        _portsNotOpenPerHost.Clear();
 
         // No results are shown until the scan's options are known - follow the current settings
         ScanOptions = CreateScanOptions();
@@ -679,9 +698,11 @@ public class PortScannerViewModel : ViewModelBase
         PortsScanned = 0;
         PortsOpen = 0;
         PortsClosed = 0;
+        PortsTimedOut = 0;
         Volatile.Write(ref _latestPortsScanned, 0);
         Volatile.Write(ref _latestPortsOpen, 0);
         Volatile.Write(ref _latestPortsClosed, 0);
+        Volatile.Write(ref _latestPortsTimedOut, 0);
 
         DragablzTabItem.SetTabHeader(_tabId, Host);
 
@@ -757,20 +778,25 @@ public class PortScannerViewModel : ViewModelBase
         _rescanRemovedRows = [.. Results.Where(x => rescannedIPAddresses.Contains(x.IPAddress))];
         _rescanPortsOpen = PortsOpen;
         _rescanPortsClosed = PortsClosed;
+        _rescanPortsTimedOut = PortsTimedOut;
 
         ReplaceResults(rescannedIPAddresses, []);
 
         var rescanPortCount = ipAddresses.Count * _lastPorts.Length;
 
-        // The other hosts keep their counters: without the open (all shown) and closed ports of the rescanned hosts
+        // The other hosts keep their counters: without the open (all shown), closed and timed out ports of the
+        // rescanned hosts
         var removedPortsOpen = _rescanRemovedRows.Count(x => x.State == PortState.Open);
-        var removedPortsClosed = ipAddresses.Sum(x => _portsClosedPerHost.GetValueOrDefault(x));
+        var removedPortsClosed = ipAddresses.Sum(x => _portsNotOpenPerHost.GetValueOrDefault(x).closed);
+        var removedPortsTimedOut = ipAddresses.Sum(x => _portsNotOpenPerHost.GetValueOrDefault(x).timedOut);
 
         _rescanPortsToScan = PortsToScan;
         _rescanPortsScanned = PortsScanned;
         _rescanBasePortsOpen = Math.Max(0, PortsOpen - removedPortsOpen);
         _rescanBasePortsClosed = Math.Max(0, PortsClosed - removedPortsClosed);
-        _rescanBasePortsScanned = Math.Max(0, PortsScanned - removedPortsOpen - removedPortsClosed);
+        _rescanBasePortsTimedOut = Math.Max(0, PortsTimedOut - removedPortsTimedOut);
+        _rescanBasePortsScanned = Math.Max(0,
+            PortsScanned - removedPortsOpen - removedPortsClosed - removedPortsTimedOut);
         _isRescan = true;
 
         IsStatusMessageDisplayed = false;
@@ -788,6 +814,7 @@ public class PortScannerViewModel : ViewModelBase
         Volatile.Write(ref _latestPortsScanned, 0);
         Volatile.Write(ref _latestPortsOpen, _rescanBasePortsOpen);
         Volatile.Write(ref _latestPortsClosed, _rescanBasePortsClosed);
+        Volatile.Write(ref _latestPortsTimedOut, _rescanBasePortsTimedOut);
 
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
@@ -1045,11 +1072,13 @@ public class PortScannerViewModel : ViewModelBase
 
         Volatile.Write(ref _latestPortsOpen, (isRescan ? _rescanBasePortsOpen : 0) + portScanner.PortsOpen);
         Volatile.Write(ref _latestPortsClosed, (isRescan ? _rescanBasePortsClosed : 0) + portScanner.PortsClosed);
+        Volatile.Write(ref _latestPortsTimedOut,
+            (isRescan ? _rescanBasePortsTimedOut : 0) + portScanner.PortsTimedOut);
     }
 
     /// <summary>
     /// Pushes the latest buffered progress value into <see cref="PortsScanned"/>,
-    /// <see cref="PortsOpen"/> and <see cref="PortsClosed"/>. Always called on the UI thread -
+    /// <see cref="PortsOpen"/>, <see cref="PortsClosed"/> and <see cref="PortsTimedOut"/>. Always called on the UI thread -
     /// same calling contexts as <see cref="FlushResultsBuffer"/>.
     /// </summary>
     private void FlushProgress()
@@ -1057,6 +1086,7 @@ public class PortScannerViewModel : ViewModelBase
         PortsScanned = Volatile.Read(ref _latestPortsScanned);
         PortsOpen = Volatile.Read(ref _latestPortsOpen);
         PortsClosed = Volatile.Read(ref _latestPortsClosed);
+        PortsTimedOut = Volatile.Read(ref _latestPortsTimedOut);
     }
 
     /// <summary>
@@ -1090,20 +1120,21 @@ public class PortScannerViewModel : ViewModelBase
             // rescan started, only some ports were scanned again)
             var isRescanDiscarded = _isRescan && (e.IsCanceled || e.Exception != null);
 
-            // Closed ports per host of the shown result (of a rescan: replace the ones of the rescanned hosts)
-            if (sender is PortScanner closedPortsScanner && !isRescanDiscarded)
+            // Closed and timed out ports per host of the shown result (of a rescan: replace the ones of the rescanned
+            // hosts)
+            if (sender is PortScanner finishedPortScanner && !isRescanDiscarded)
             {
                 if (_isRescan)
                 {
                     foreach (var ipAddress in _rescanIPAddresses)
-                        _portsClosedPerHost.Remove(ipAddress);
+                        _portsNotOpenPerHost.Remove(ipAddress);
                 }
 
-                foreach (var (ipAddress, count) in closedPortsScanner.GetPortsClosedPerHost())
-                    _portsClosedPerHost[ipAddress] = count;
+                foreach (var (ipAddress, count) in finishedPortScanner.GetClosedAndTimedOutPortsPerHost())
+                    _portsNotOpenPerHost[ipAddress] = count;
             }
 
-            // Rescan: back to the progress of the last scan (open / closed include the rescan)
+            // Rescan: back to the progress of the last scan (open / closed / timed out include the rescan)
             if (_isRescan)
             {
                 _isRescan = false;
@@ -1114,6 +1145,7 @@ public class PortScannerViewModel : ViewModelBase
 
                     PortsOpen = _rescanPortsOpen;
                     PortsClosed = _rescanPortsClosed;
+                    PortsTimedOut = _rescanPortsTimedOut;
                     PortsScanned = _rescanPortsScanned;
                 }
                 else
