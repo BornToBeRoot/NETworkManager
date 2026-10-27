@@ -788,6 +788,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         HostsToScan = hosts.hosts.Count;
 
+        // No host left (e.g. only hostnames that could not be resolved): don't start the scan, only the message above
+        if (HostsToScan == 0)
+        {
+            ScanComplete(this, new ScanCompleteArgs(false));
+            return;
+        }
+
         PreparingScan = false;
 
         // Add host(s) to the history
@@ -1418,7 +1425,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 StatusMessage = e.Exception.Message;
                 IsStatusMessageDisplayed = true;
             }
-            else if (Results.Count == 0)
+            else if (Results.Count == 0 && HostsToScan > 0)
             {
                 // Keep a message from the preparation (e.g. hostnames that could not be resolved)
                 StatusMessage = IsStatusMessageDisplayed

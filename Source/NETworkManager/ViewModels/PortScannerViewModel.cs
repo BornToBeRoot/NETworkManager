@@ -861,6 +861,13 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         PortsToScan = ports.Length * hosts.hosts.Count;
 
+        // No host left (e.g. only hostnames that could not be resolved): don't start the scan, only the message above
+        if (PortsToScan == 0)
+        {
+            ScanComplete(this, new ScanCompleteArgs(false));
+            return;
+        }
+
         PreparingScan = false;
 
         // Add host(s) to the history
@@ -1312,7 +1319,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
                 AddStatusMessage(e.Exception.Message);
             }
-            else if (Results.Count == 0)
+            else if (Results.Count == 0 && PortsToScan > 0)
             {
                 AddStatusMessage(Strings.NoOpenPortsFound);
             }
