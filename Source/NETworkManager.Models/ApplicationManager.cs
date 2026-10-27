@@ -45,8 +45,9 @@ public static class ApplicationManager
     /// <returns>Host for the application.</returns>
     public static string GetHostForApplication(ApplicationName name, string host)
     {
+        // Not the Web Console: its target is a URL, created by WebConsoleUrlHelper (which also removes the dot)
         return name is ApplicationName.RemoteDesktop or ApplicationName.PuTTY or ApplicationName.TigerVNC
-            or ApplicationName.PowerShell or ApplicationName.WebConsole
+            or ApplicationName.PowerShell
             ? DNSClientHelper.SanitizeHostname(host)
             : host;
     }

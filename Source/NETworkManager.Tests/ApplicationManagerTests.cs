@@ -10,7 +10,6 @@ public class ApplicationManagerTests
     [InlineData(ApplicationName.PuTTY)]
     [InlineData(ApplicationName.TigerVNC)]
     [InlineData(ApplicationName.PowerShell)]
-    [InlineData(ApplicationName.WebConsole)]
     public void HostForApplicationResolvedViaWindowsWithoutTrailingDot(ApplicationName name)
     {
         Assert.Equal("gateway", ApplicationManager.GetHostForApplication(name, "gateway."));
