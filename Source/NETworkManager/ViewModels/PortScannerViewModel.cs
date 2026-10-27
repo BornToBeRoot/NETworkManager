@@ -130,9 +130,9 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
-    /// Gets the collection view for the ports history.
+    /// Gets the port profiles and the ports history for the ports input (grouped).
     /// </summary>
-    public ICollectionView PortsHistoryView { get; }
+    public ICollectionView PortsSuggestions { get; } = new PortScannerPortsSuggestions().View;
 
     /// <summary>
     /// Gets or sets a value indicating whether the scan is currently running.
@@ -429,7 +429,6 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Set collection view
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_HostHistory);
-        PortsHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.PortScanner_PortHistory);
 
         // Columns etc. until the first scan
         ScanOptions = CreateScanOptions();
@@ -511,21 +510,6 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     #endregion
 
     #region ICommands & Actions
-
-    public ICommand OpenPortProfileSelectionCommand =>
-        new RelayCommand(_ => OpenPortProfileSelectionAction(), OpenPortProfileSelection_CanExecute);
-
-    private bool OpenPortProfileSelection_CanExecute(object parameter)
-    {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
-    }
-
-    private void OpenPortProfileSelectionAction()
-    {
-        _ = OpenPortProfileSelection();
-    }
 
     public ICommand ScanCommand => new RelayCommand(_ => ScanAction(), Scan_CanExecute);
 
@@ -691,33 +675,6 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     #endregion
 
     #region Methods
-
-    private async Task OpenPortProfileSelection()
-    {
-        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
-
-        var childWindow = new PortProfilesChildWindow(window);
-
-        var childWindowViewModel = new PortProfilesViewModel(async instance =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-
-            Ports = string.Join("; ", instance.GetSelectedPortProfiles().Select(x => x.Ports));
-        }, async _ =>
-        {
-            childWindow.IsOpen = false;
-            ConfigurationManager.Current.IsChildWindowOpen = false;
-        });
-
-        childWindow.Title = Strings.SelectPortProfile;
-
-        childWindow.DataContext = childWindowViewModel;
-
-        ConfigurationManager.Current.IsChildWindowOpen = true;
-
-        await window.ShowChildWindowAsync(childWindow);
-    }
 
     private async Task Start()
     {

@@ -57,11 +57,9 @@ A scan of more than `65,536` ports (hosts × ports, e.g. 64 hosts with `1-1024`)
 
 :::
 
-### Toolbar
+### Ports
 
-| Button                  | Description                                                                     |
-| ----------------------- | ------------------------------------------------------------------------------- |
-| **Select port profile** | Opens a dialog to select a pre-defined port profile to populate the ports field |
+The **Ports** input lists the [port profiles](#port-profiles) (with their ports) and the recently scanned ports (history). Select an entry, or type ports, port ranges and names of port profiles separated by `;` (e.g. `Webserver; Database; 8080`). Port profiles are replaced by their ports when the scan starts.
 
 ### Context menu
 
