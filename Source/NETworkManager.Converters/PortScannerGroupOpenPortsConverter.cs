@@ -16,7 +16,8 @@ namespace NETworkManager.Converters;
 /// Bound as a <see cref="MultiBinding"/> with the <see cref="CollectionViewGroup"/> as the first value, its
 /// <see cref="CollectionViewGroup.ItemCount"/> as the second and the open ports per IP address (counted by the view
 /// model when a row is added) as the third. The second value isn't used directly, it only forces re-evaluation when a
-/// port is added to (or removed from) the group while the scan is running. The rows of the group are not counted
+/// port is added to (or removed from) the group while the scan is running; an optional fifth value (a version number)
+/// does the same when a rescanned port changes in place. The rows of the group are not counted
 /// here: that would take rows x rows for a large group (e.g. 1-65535 with closed ports shown).
 /// </remarks>
 public sealed class PortScannerGroupOpenPortsConverter : IMultiValueConverter

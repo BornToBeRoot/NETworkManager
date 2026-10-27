@@ -71,7 +71,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // Message of the tab, shown until the first scan has started or the ports are changed (see constructor)
     private string _message;
 
-    // Rescan of shown hosts (see RescanSelectedHosts): their rows are removed and added again by the rescan. The
+    // Rescan of shown hosts (see RescanHosts): their rows are removed and added again by the rescan. The
     // counters are the ones of the other hosts (base) plus the ones of the rescan; the progress of the last scan is
     // restored afterwards.
     private bool _isRescan;
@@ -90,6 +90,11 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     // Ports of the last scan without the rescanned hosts, the ports of the rescan are added when it is finished
     private int _rescanBasePortsScanned;
+
+    // Rescan of the selected ports (see RescanSelectedPorts): their rows by IP address and port, updated in place
+    // (not removed / added), and their states before the rescan
+    private Dictionary<(IPAddress ipAddress, int port), PortScannerPortInfo> _rescanPortRows;
+    private Dictionary<PortScannerPortInfo, PortState> _rescanPortPreviousStates;
 
     // Closed and timed out ports per host of the shown result. They are not shown unless enabled - a rescan needs them
     // to keep the counters of the other hosts (also if the last scan was canceled before all ports of a host were
@@ -213,6 +218,20 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// rows x rows with closed ports shown. Changed on the UI thread only, before the row is added.
     /// </summary>
     public Dictionary<IPAddress, int> OpenPortsPerHost { get; } = [];
+
+    /// <summary>
+    /// Gets a number that changes when <see cref="OpenPortsPerHost"/> changes without a row being added or removed
+    /// (a port rescanned in place), so the group headers are updated.
+    /// </summary>
+    public int OpenPortsPerHostVersion
+    {
+        get;
+        private set
+        {
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 
     /// <summary>
     /// Gets the collection view for the scan results.
@@ -564,9 +583,22 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
-    /// Gets the command to rescan the selected hosts (with the ports and options of the last scan).
+    /// Gets the command to rescan the selected ports (rows), updated in place.
     /// </summary>
-    public ICommand RescanSelectedHostsCommand => new RelayCommand(_ => RescanSelectedHosts());
+    public ICommand RescanSelectedPortsCommand => new RelayCommand(_ => RescanSelectedPorts());
+
+    /// <summary>
+    /// Gets the command to rescan the host of a group (with the ports and options of the last scan). The parameter is
+    /// the group (<see cref="CollectionViewGroup"/>) of the host.
+    /// </summary>
+    public ICommand RescanHostCommand => new RelayCommand(RescanHostAction);
+
+    private void RescanHostAction(object parameter)
+    {
+        if (parameter is CollectionViewGroup { Items.Count: > 0 } group &&
+            group.Items[0] is PortScannerPortInfo info)
+            RescanHosts([info.IPAddress]);
+    }
 
     /// <summary>
     /// Gets the command to open the host of the selected result in another application.
@@ -883,21 +915,17 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _lastPorts = ports;
         _lastPortsInput = Ports;
 
-        StartScanner(hosts.hosts, ports);
+        StartScanner(ScanOptions, (portScanner, ct) => portScanner.ScanAsync(hosts.hosts, ports, ct));
     }
 
     /// <summary>
-    /// Rescans the selected hosts with the ports and options of the last scan. Their rows are replaced by the
-    /// results of the rescan (a port may be open / closed now).
+    /// Rescans hosts with the ports and options of the last scan. Their rows are replaced by the results of the
+    /// rescan (a port may be open / closed now).
     /// </summary>
-    private void RescanSelectedHosts()
+    /// <param name="ipAddresses">Hosts to rescan.</param>
+    private void RescanHosts(List<IPAddress> ipAddresses)
     {
-        if (IsRunning || _lastPorts == null)
-            return;
-
-        var ipAddresses = GetSelectedResultsInGridOrder().Select(x => x.IPAddress).Distinct().ToList();
-
-        if (ipAddresses.Count == 0)
+        if (IsRunning || _lastPorts == null || ipAddresses.Count == 0)
             return;
 
         var rescannedIPAddresses = ipAddresses.ToHashSet();
@@ -947,7 +975,101 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
 
-        StartScanner([.. ipAddresses.Select(x => (x, string.Empty))], _lastPorts);
+        StartScanner(ScanOptions,
+            (portScanner, ct) => portScanner.ScanAsync([.. ipAddresses.Select(x => (x, string.Empty))], _lastPorts, ct));
+    }
+
+    /// <summary>
+    /// Rescans the selected ports (rows). The rows are updated in place - selection, collapsed groups and the scroll
+    /// position stay. Every port is reported (also if closed ports are not shown), a port that is closed now keeps its
+    /// row with the new state (like a host that is down now in the IP Scanner). Without a ping before the scan and
+    /// without resolving the hostname (the rows keep theirs).
+    /// </summary>
+    private void RescanSelectedPorts()
+    {
+        if (IsRunning || _lastPorts == null)
+            return;
+
+        var rows = GetSelectedResultsInGridOrder();
+
+        if (rows.Count == 0)
+            return;
+
+        _rescanPortRows = rows.DistinctBy(x => (x.IPAddress, x.Port)).ToDictionary(x => (x.IPAddress, x.Port));
+        _rescanPortPreviousStates = rows.ToDictionary(x => x, x => x.State);
+
+        // The other ports keep their counters, the rescanned ones are added by the scanner
+        _rescanPortsToScan = PortsToScan;
+        _rescanPortsScanned = PortsScanned;
+        _rescanBasePortsOpen = Math.Max(0, PortsOpen - rows.Count(x => x.State == PortState.Open));
+        _rescanBasePortsClosed = Math.Max(0, PortsClosed - rows.Count(x => x.State == PortState.Closed));
+        _rescanBasePortsTimedOut = Math.Max(0, PortsTimedOut - rows.Count(x => x.State == PortState.TimedOut));
+        _isRescan = true;
+
+        IsStatusMessageDisplayed = false;
+        IsRunning = true;
+
+        _resultsFlushTimer?.Stop();
+
+        lock (_resultsBufferLock)
+        {
+            _resultsBuffer.Clear();
+        }
+
+        PortsToScan = rows.Count;
+        PortsScanned = 0;
+        Volatile.Write(ref _latestPortsScanned, 0);
+        Volatile.Write(ref _latestPortsOpen, _rescanBasePortsOpen);
+        Volatile.Write(ref _latestPortsClosed, _rescanBasePortsClosed);
+        Volatile.Write(ref _latestPortsTimedOut, _rescanBasePortsTimedOut);
+
+        _cancellationTokenSource?.Dispose();
+        _cancellationTokenSource = new CancellationTokenSource();
+
+        StartScanner(ScanOptions with { ShowAllResults = true, PingHostsBeforeScan = false, ResolveHostname = false },
+            (portScanner, ct) => portScanner.ScanPortsAsync([.. rows.Select(x => (x.IPAddress, x.Port))], ct));
+    }
+
+    /// <summary>
+    /// Changes the number of closed or timed out ports of a host (see <see cref="_portsNotOpenPerHost"/>), e.g. for a
+    /// port rescanned in place.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="state">State of the port, only closed and timed out are counted.</param>
+    /// <param name="change">+1 or -1.</param>
+    private void UpdatePortsNotOpenPerHost(IPAddress ipAddress, PortState state, int change)
+    {
+        if (state is not (PortState.Closed or PortState.TimedOut))
+            return;
+
+        var (closed, timedOut) = _portsNotOpenPerHost.GetValueOrDefault(ipAddress);
+
+        if (state == PortState.Closed)
+            closed = Math.Max(0, closed + change);
+        else
+            timedOut = Math.Max(0, timedOut + change);
+
+        _portsNotOpenPerHost[ipAddress] = (closed, timedOut);
+    }
+
+    /// <summary>
+    /// Applies a result of a port rescan to the row of the port (see <see cref="RescanSelectedPorts"/>).
+    /// </summary>
+    /// <param name="result">Result of the rescan.</param>
+    private void ApplyPortRescanResult(PortScannerPortInfo result)
+    {
+        if (!_rescanPortRows.TryGetValue((result.IPAddress, result.Port), out var row) || row.State == result.State)
+            return;
+
+        if (row.State == PortState.Open || result.State == PortState.Open)
+        {
+            OpenPortsPerHost[row.IPAddress] = Math.Max(0,
+                OpenPortsPerHost.GetValueOrDefault(row.IPAddress) + (result.State == PortState.Open ? 1 : -1));
+
+            OpenPortsPerHostVersion++;
+        }
+
+        row.State = result.State;
     }
 
     /// <summary>
@@ -1008,11 +1130,11 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// Creates the scanner (with <see cref="ScanOptions"/>), subscribes to its events, starts the flush timer and
     /// the scan.
     /// </summary>
-    /// <param name="hosts">Hosts to scan.</param>
-    /// <param name="ports">Ports to scan.</param>
-    private void StartScanner(List<(IPAddress ipAddress, string hostname)> hosts, int[] ports)
+    /// <param name="options">Options of the scanner.</param>
+    /// <param name="scan">Starts the scan (e.g. <see cref="PortScanner.ScanAsync"/>) with the token of the scan.</param>
+    private void StartScanner(PortScannerOptions options, Action<PortScanner, CancellationToken> scan)
     {
-        var portScanner = new PortScanner(ScanOptions);
+        var portScanner = new PortScanner(options);
 
         portScanner.PortScanned += PortScanned;
         portScanner.ScanComplete += ScanComplete;
@@ -1029,7 +1151,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         };
         _resultsFlushTimer.Start();
 
-        portScanner.ScanAsync(hosts, ports, _cancellationTokenSource.Token);
+        scan(portScanner, _cancellationTokenSource.Token);
     }
 
     /// <summary>
@@ -1196,7 +1318,12 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }
 
         foreach (var item in itemsToAdd)
-            AddResult(item);
+        {
+            if (_rescanPortRows != null)
+                ApplyPortRescanResult(item);
+            else
+                AddResult(item);
+        }
     }
 
     private void ProgressChanged(object sender, ProgressChangedArgs e)
@@ -1266,11 +1393,22 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             // Canceled / failed rescan: keep the previous results of the hosts (their rows were removed when the
             // rescan started, only some ports were scanned again)
-            var isRescanDiscarded = _isRescan && (e.IsCanceled || e.Exception != null);
+            var isPortRescan = _rescanPortRows != null;
+            var isRescanDiscarded = _isRescan && !isPortRescan && (e.IsCanceled || e.Exception != null);
 
             // Closed and timed out ports per host of the shown result (of a rescan: replace the ones of the rescanned
             // hosts)
-            if (sender is PortScanner finishedPortScanner && !isRescanDiscarded)
+            if (isPortRescan)
+            {
+                // Rows updated in place: their previous state out, the current one in (not rescanned ports after a
+                // cancel keep theirs)
+                foreach (var (row, previousState) in _rescanPortPreviousStates)
+                {
+                    UpdatePortsNotOpenPerHost(row.IPAddress, previousState, -1);
+                    UpdatePortsNotOpenPerHost(row.IPAddress, row.State, 1);
+                }
+            }
+            else if (sender is PortScanner finishedPortScanner && !isRescanDiscarded)
             {
                 if (_isRescan)
                 {
@@ -1287,7 +1425,21 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             {
                 _isRescan = false;
 
-                if (isRescanDiscarded)
+                if (isPortRescan)
+                {
+                    // Counters from the rows - also correct if the rescan was canceled (ports not rescanned keep
+                    // their state); the ports were already scanned by the last scan
+                    var rows = _rescanPortPreviousStates.Keys;
+
+                    PortsOpen = _rescanBasePortsOpen + rows.Count(x => x.State == PortState.Open);
+                    PortsClosed = _rescanBasePortsClosed + rows.Count(x => x.State == PortState.Closed);
+                    PortsTimedOut = _rescanBasePortsTimedOut + rows.Count(x => x.State == PortState.TimedOut);
+                    PortsScanned = _rescanPortsScanned;
+
+                    _rescanPortRows = null;
+                    _rescanPortPreviousStates = null;
+                }
+                else if (isRescanDiscarded)
                 {
                     ReplaceResults(_rescanIPAddresses, _rescanRemovedRows);
 

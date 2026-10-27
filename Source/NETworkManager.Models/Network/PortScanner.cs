@@ -150,8 +150,45 @@ public sealed class PortScanner
 
     #region Methods
 
+    /// <summary>
+    ///     Scans the ports of the hosts. Results are raised in <see cref="PortScanned" />, the end in
+    ///     <see cref="ScanComplete" />.
+    /// </summary>
+    /// <param name="hosts">Hosts to scan.</param>
+    /// <param name="ports">Ports to scan on every host.</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     public void ScanAsync(IEnumerable<(IPAddress ipAddress, string hostname)> hosts, IEnumerable<int> ports,
         CancellationToken cancellationToken)
+    {
+        var portList = ports as IReadOnlyCollection<int> ?? [.. ports];
+
+        Scan(hosts, _ => portList, portList.Count, cancellationToken);
+    }
+
+    /// <summary>
+    ///     Scans single ports of hosts (e.g. a rescan of selected ports), every host only with its ports.
+    /// </summary>
+    /// <param name="hostPorts">IP address and port of every port to scan.</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    public void ScanPortsAsync(IEnumerable<(IPAddress ipAddress, int port)> hostPorts,
+        CancellationToken cancellationToken)
+    {
+        var portsPerHost = hostPorts.GroupBy(x => x.ipAddress).ToDictionary(x => x.Key,
+            x => (IReadOnlyCollection<int>)[.. x.Select(y => y.port).Distinct()]);
+
+        Scan([.. portsPerHost.Keys.Select(x => (x, string.Empty))], x => portsPerHost[x],
+            portsPerHost.Count == 0 ? 0 : portsPerHost.Values.Max(x => x.Count), cancellationToken);
+    }
+
+    /// <summary>
+    ///     Scans the hosts, each with its ports.
+    /// </summary>
+    /// <param name="hosts">Hosts to scan.</param>
+    /// <param name="getPorts">Gets the ports of a host.</param>
+    /// <param name="maxPortCount">Most ports of a host (threads and the spread of the start).</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    private void Scan(IEnumerable<(IPAddress ipAddress, string hostname)> hosts,
+        Func<IPAddress, IReadOnlyCollection<int>> getPorts, int maxPortCount, CancellationToken cancellationToken)
     {
         _progressValue = 0;
 
@@ -164,7 +201,7 @@ public sealed class PortScanner
 
             try
             {
-                var portCount = ports.Count();
+                var portCount = maxPortCount;
                 var (maxHostThreads, maxPortThreads) = GetThreads(portCount);
 
                 var hostParallelOptions = new ParallelOptions
@@ -198,14 +235,17 @@ public sealed class PortScanner
                 var pingInSlot = _options.PingHostsBeforeScan && !pingAhead;
 
                 if (pingAhead)
-                    await ScanReachableHostsAsync(hosts, portCount, hostParallelOptions, ScanHostAsync)
+                    await ScanReachableHostsAsync(hosts, getPorts, hostParallelOptions, ScanHostAsync)
                         .ConfigureAwait(false);
                 else
                     await Parallel.ForEachAsync(hosts, hostParallelOptions, ScanHostAsync).ConfigureAwait(false);
 
                 async ValueTask ScanHostAsync((IPAddress ipAddress, string hostname) host, CancellationToken hostCt)
                 {
-                    if (pingInSlot && !await IsReachableAsync(host.ipAddress, portCount, hostCt).ConfigureAwait(false))
+                    var ports = getPorts(host.ipAddress);
+
+                    if (pingInSlot &&
+                        !await IsReachableAsync(host.ipAddress, ports.Count, hostCt).ConfigureAwait(false))
                         return;
 
                     // Resolve Hostname (PTR) while the ports are scanned. Started with the first port probe of the
@@ -283,13 +323,13 @@ public sealed class PortScanner
     ///     cancellation or an error.
     /// </summary>
     /// <param name="hosts">Hosts to ping and scan.</param>
-    /// <param name="portCount">Number of ports per host (counted as scanned for a host that doesn't answer).</param>
+    /// <param name="getPorts">Gets the ports of a host (counted as scanned for a host that doesn't answer).</param>
     /// <param name="hostParallelOptions">
     ///     Options for the hosts that are scanned at the same time, with the token to monitor for cancellation requests.
     /// </param>
     /// <param name="scanHost">Scans the ports of a host.</param>
     private async Task ScanReachableHostsAsync(IEnumerable<(IPAddress ipAddress, string hostname)> hosts,
-        int portCount, ParallelOptions hostParallelOptions,
+        Func<IPAddress, IReadOnlyCollection<int>> getPorts, ParallelOptions hostParallelOptions,
         Func<(IPAddress ipAddress, string hostname), CancellationToken, ValueTask> scanHost)
     {
         var reachableHosts = Channel.CreateUnbounded<(IPAddress ipAddress, string hostname)>();
@@ -336,7 +376,8 @@ public sealed class PortScanner
 
                 await Parallel.ForEachAsync(hosts, pingParallelOptions, async (host, ct) =>
                 {
-                    if (await IsReachableAsync(host.ipAddress, portCount, ct).ConfigureAwait(false))
+                    if (await IsReachableAsync(host.ipAddress, getPorts(host.ipAddress).Count, ct)
+                            .ConfigureAwait(false))
                         reachableHosts.Writer.TryWrite(host); // Unbounded, always written
                 }).ConfigureAwait(false);
             }

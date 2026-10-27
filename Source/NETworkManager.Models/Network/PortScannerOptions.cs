@@ -3,7 +3,7 @@
 /// <summary>
 ///     Class contains the options for the port scanner.
 /// </summary>
-public class PortScannerOptions
+public record PortScannerOptions
 {
     /// <summary>
     ///     Adjust the number of hosts and ports scanned at the same time to the scan (see

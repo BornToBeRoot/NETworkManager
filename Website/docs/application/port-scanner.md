@@ -65,7 +65,7 @@ The **Ports** input lists the recently scanned ports (history) and the [port pro
 
 | Action          | Description                                                                                                    |
 | --------------- | -------------------------------------------------------------------------------------------------------------- |
-| **Rescan**      | Scans the selected host(s) again with the ports and settings of the shown scan and replaces their results. A canceled rescan keeps the previous results. Not available while a scan is running |
+| **Rescan**      | Scans the selected port(s) again with the settings of the shown scan and updates their state in place. Every rescanned port is shown with its new state, also if it is closed now and closed ports are not shown (until the next scan). Not available while a scan is running |
 | **Ping Monitor** / **Traceroute** | Opens the host (hostname if resolved, otherwise the IP address) in the tool |
 | **DNS lookup...** > **IP address** / **Hostname** | Looks up the IP address (`PTR`) or the hostname in [DNS Lookup](./dns-lookup) |
 | **RDAP...** > **IP address** / **Hostname** | Queries the registration data of the IP address or the registered domain of the hostname in [RDAP](./rdap) |
@@ -77,6 +77,8 @@ The **Ports** input lists the recently scanned ports (history) and the [port pro
 | **Export...**   | Exports the selected or all results to a file                                                                  |
 
 If multiple results are selected, **Rescan**, **Copy** > **IP address** / **Hostname** / **Port** / **IP address:Port** (one value per line, in the order shown, without duplicates; IPv6 as `[address]:port`) and **Export...** are available.
+
+Right-click the header of a host (group) for **Rescan host**: scans the host again with all ports and settings of the shown scan and replaces its results (e.g. to find ports that are open now). A canceled rescan keeps the previous results.
 
 ### Result
 

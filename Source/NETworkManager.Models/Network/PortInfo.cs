@@ -1,11 +1,12 @@
 ﻿using NETworkManager.Models.Lookup;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
 /// <summary>
 ///     Class representing a port info.
 /// </summary>
-public class PortInfo
+public class PortInfo : PropertyChangedBase
 {
     /// <summary>
     ///     Create an instance of <see cref="PortInfo" /> with parameters.
@@ -31,7 +32,18 @@ public class PortInfo
     public PortLookupInfo LookupInfo { get; set; }
 
     /// <summary>
-    ///     State of the port.
+    ///     State of the port. Observable, a rescan of the port updates it in place (Port Scanner).
     /// </summary>
-    public PortState State { get; set; }
+    public PortState State
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 }

@@ -5080,6 +5080,9 @@ Do you want to start the scan?</value>
   <data name="Rescan" xml:space="preserve">
     <value>Rescan</value>
   </data>
+  <data name="RescanHost" xml:space="preserve">
+    <value>Rescan host</value>
+  </data>
   <data name="XClosed" xml:space="preserve">
     <value>{0} Closed</value>
   </data>
