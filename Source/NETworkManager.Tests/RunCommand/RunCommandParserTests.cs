@@ -267,6 +267,33 @@ public class RunCommandParserTests
         Assert.Equal("aaaa", result.Type);
     }
 
+    [Theory]
+    [InlineData("dns borntoberoot.net \"Google Public DNS\";cloudflare;9.9.9.9 aaaa")]
+    [InlineData("dns borntoberoot.net \"Google Public DNS\"; cloudflare; 9.9.9.9 aaaa")]
+    [InlineData("dns borntoberoot.net aaaa \"Google Public DNS\" ; cloudflare;9.9.9.9")]
+    public void DNSServerListWithNamesAndType(string input)
+    {
+        // Several DNS servers: names (one in quotes) and an IP address, the type before or after them
+        var result = Parse(input);
+
+        Assert.Equal("borntoberoot.net", result.Target);
+        Assert.Equal("Google Public DNS;cloudflare;9.9.9.9", result.Argument);
+        Assert.Equal("aaaa", result.Type);
+        Assert.Equal(RunCommandParseError.None, result.Error);
+    }
+
+    [Fact]
+    public void DNSServerListThatIsBeingTyped()
+    {
+        // Completion of the entry after the last ";", the entries before as typed
+        var result = Parse("dns borntoberoot.net \"Google Public DNS\";clo");
+
+        Assert.Equal(RunCommandPosition.Argument, result.Position);
+        Assert.Equal("Google Public DNS;clo", result.CurrentWord);
+        Assert.Equal("\"Google Public DNS\";clo", result.CurrentToken);
+        Assert.Equal("dns borntoberoot.net ", result.InputBeforeCurrentWord);
+    }
+
     [Fact]
     public void ListInAnOpenQuote()
     {
