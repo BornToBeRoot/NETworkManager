@@ -395,6 +395,14 @@ public class IPScannerSettingsViewModel : ViewModelBase
     #region ICommand & Actions
 
     /// <summary>
+    /// Gets the command to restore the default ports of the port scan (e.g. overwritten by accident). Disabled while
+    /// the default ports are set.
+    /// </summary>
+    public ICommand RestoreDefaultPortScanPortsCommand => new RelayCommand(
+        _ => PortScanPorts = GlobalStaticConfiguration.IPScanner_PortScanPorts,
+        _ => PortScanPorts != GlobalStaticConfiguration.IPScanner_PortScanPorts);
+
+    /// <summary>
     /// Gets the command to add a custom command.
     /// </summary>
     public ICommand AddCustomCommandCommand => new RelayCommand(_ => AddCustomCommandAction());

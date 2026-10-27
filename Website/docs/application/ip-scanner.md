@@ -200,7 +200,7 @@ Scan each IP address for open TCP ports.
 
 ### Ports
 
-List of TCP ports to scan for each IP address.
+List of TCP ports to scan for each IP address. The button next to the input restores the default ports.
 
 **Type:** `String`
 
