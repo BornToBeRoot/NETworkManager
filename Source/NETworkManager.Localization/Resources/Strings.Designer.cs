@@ -781,6 +781,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adjust threads automatically.
+        /// </summary>
+        public static string AdjustThreadsAutomatically {
+            get {
+                return ResourceManager.GetString("AdjustThreadsAutomatically", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Admin (console) session.
         /// </summary>
         public static string AdminConsoleSession {
@@ -5672,6 +5681,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adjusts the number of hosts and ports scanned at the same time to the scan: up to 512 connections at the same time, at most 128 hosts and 128 ports per host (e.g. 4 hosts with 1-1024, 128 hosts with one port). Disable it to set the threads yourself, e.g. to slow down a scan..
+        /// </summary>
+        public static string HelpMessage_AdjustThreadsAutomatically {
+            get {
+                return ResourceManager.GetString("HelpMessage_AdjustThreadsAutomatically", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to If you enable this option, the default PowerShell console settings in the registry under HKCU:\Console are overridden so that the PowerShell console window matches the application theme. This is a global system setting that may affect the appearance of the normal PowerShell window.
         ///
         ///Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
@@ -5864,6 +5882,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_PasswordNotDisplayedCanBeOverwritten {
             get {
                 return ResourceManager.GetString("HelpMessage_PasswordNotDisplayedCanBeOverwritten", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Host threads × port threads can be at most 8,192 connections at the same time (every connection uses a local port, this is half of them). Many connections at the same time may be blocked by a firewall or overload small routers..
+        /// </summary>
+        public static string HelpMessage_PortScannerMaxThreads {
+            get {
+                return ResourceManager.GetString("HelpMessage_PortScannerMaxThreads", resourceCulture);
             }
         }
         

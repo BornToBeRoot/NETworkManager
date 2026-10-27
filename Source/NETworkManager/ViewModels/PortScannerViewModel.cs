@@ -884,6 +884,7 @@ public class PortScannerViewModel : ViewModelBase
     {
         return new PortScannerOptions
         {
+            AutoAdjustThreads = SettingsManager.Current.PortScanner_AutoAdjustThreads,
             MaxHostThreads = SettingsManager.Current.PortScanner_MaxHostThreads,
             MaxPortThreads = SettingsManager.Current.PortScanner_MaxPortThreads,
             Timeout = SettingsManager.Current.PortScanner_Timeout,

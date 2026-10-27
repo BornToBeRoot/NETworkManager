@@ -6,12 +6,18 @@
 public class PortScannerOptions
 {
     /// <summary>
-    ///     Max concurrent threads for the host scan.
+    ///     Adjust the number of hosts and ports scanned at the same time to the scan (see
+    ///     <see cref="PortScanner" />) instead of using <see cref="MaxHostThreads" /> and <see cref="MaxPortThreads" />.
+    /// </summary>
+    public required bool AutoAdjustThreads { get; init; }
+
+    /// <summary>
+    ///     Max concurrent threads for the host scan (if the threads are not adjusted automatically).
     /// </summary>
     public required int MaxHostThreads { get; init; }
 
     /// <summary>
-    ///     Max concurrent threads for the port scan of each host.
+    ///     Max concurrent threads for the port scan of each host (if the threads are not adjusted automatically).
     /// </summary>
     public required int MaxPortThreads { get; init; }
 

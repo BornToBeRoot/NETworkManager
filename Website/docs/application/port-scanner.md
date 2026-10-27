@@ -219,25 +219,37 @@ Resolve the hostname for given IP addresses.
 
 **Default:** `Enabled`
 
+### Adjust threads automatically
+
+Adjusts the number of hosts and ports that are scanned at the same time to the scan: up to `512` connections at the same time, at most `128` hosts and `128` ports per host. For example, `1-1024` scans 4 hosts with 128 ports at the same time, a single port (e.g. `3389` on a `/24`) 128 hosts. [Max. concurrent host threads](#max-concurrent-host-threads) and [Max. concurrent port threads](#max-concurrent-port-threads) are only used if this option is disabled, e.g. to slow down a scan.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+:::note
+
+When updating from an older version, this option is disabled if the threads were changed, so the changed values still apply.
+
+:::
+
 ### Max. concurrent host threads
 
-Number of hosts that are scanned at the same time. A thread is not an operating system thread, but one host whose ports are scanned concurrently.
+Maximum number of hosts that are scanned at the same time, if [Adjust threads automatically](#adjust-threads-automatically) is disabled. A thread is not an operating system thread, but one host whose ports are scanned concurrently.
 
-If the hosts have fewer ports than [Max. concurrent port threads](#max-concurrent-port-threads) (e.g. one port on a `/24`), more hosts are scanned at the same time (up to `128`), so that the same number of connections is used (host threads × port threads, with the default settings 4 × 128 = 512). Example: a `/24` with one port takes about as long as two timeouts instead of 64.
-
-**Type:** `Integer` [Min `1`, Max `10`]
+**Type:** `Integer` [Min `1`, Max `256`]
 
 **Default:** `4`
 
 :::warning
 
-The scan opens up to host threads × [Max. concurrent port threads](#max-concurrent-port-threads) TCP connections at the same time (with the default settings up to 4 × 128 = 512). Too many simultaneous requests may be detected as a port scan and blocked or rate-limited by a firewall (local, on the network or on the scanned host) and can overload small routers. If ports are missing in the result (shown as timed out) or the network becomes slow during the scan, reduce the number of threads. This will increase the scan time.
+The scan opens up to host threads × [Max. concurrent port threads](#max-concurrent-port-threads) TCP connections at the same time (with the default settings up to 4 × 128 = 512), at most `8,192` (every connection uses a local port, this is half of them) - the maximum of one setting depends on the other (e.g. 256 host threads allow 32 port threads). Too many simultaneous requests may be detected as a port scan and blocked or rate-limited by a firewall (local, on the network or on the scanned host) and can overload small routers. If ports are missing in the result (shown as timed out) or the network becomes slow during the scan, reduce the number of threads. This will increase the scan time.
 
 :::
 
 ### Max. concurrent port threads
 
-Maximum number of ports that are scanned at the same time for each host.
+Maximum number of ports that are scanned at the same time for each host, if [Adjust threads automatically](#adjust-threads-automatically) is disabled.
 
 **Type:** `Integer` [Min `1`, Max `512`]
 

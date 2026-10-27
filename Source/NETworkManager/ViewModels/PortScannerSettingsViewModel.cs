@@ -121,6 +121,26 @@ public class PortScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets whether the number of hosts and ports scanned at the same time is adjusted to the scan (instead of
+    /// <see cref="MaxHostThreads"/> and <see cref="MaxPortThreads"/>).
+    /// </summary>
+    public bool AutoAdjustThreads
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PortScanner_AutoAdjustThreads = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets the maximum number of threads for scanning hosts.
     /// </summary>
     public int MaxHostThreads
@@ -136,8 +156,16 @@ public class PortScannerSettingsViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(MaxPortThreadsMaximum));
         }
     }
+
+    /// <summary>
+    /// Gets the maximum of <see cref="MaxHostThreads"/>: 256, but host threads x port threads at most
+    /// <see cref="GlobalStaticConfiguration.PortScanner_MaxConnections"/> (each connection uses a local port).
+    /// </summary>
+    public int MaxHostThreadsMaximum =>
+        Math.Min(256, GlobalStaticConfiguration.PortScanner_MaxConnections / Math.Max(1, MaxPortThreads));
 
     /// <summary>
     /// Gets or sets the maximum number of threads for scanning ports.
@@ -155,8 +183,16 @@ public class PortScannerSettingsViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(MaxHostThreadsMaximum));
         }
     }
+
+    /// <summary>
+    /// Gets the maximum of <see cref="MaxPortThreads"/>: 512, but host threads x port threads at most
+    /// <see cref="GlobalStaticConfiguration.PortScanner_MaxConnections"/> (each connection uses a local port).
+    /// </summary>
+    public int MaxPortThreadsMaximum =>
+        Math.Min(512, GlobalStaticConfiguration.PortScanner_MaxConnections / Math.Max(1, MaxHostThreads));
 
     #endregion
 
@@ -187,6 +223,7 @@ public class PortScannerSettingsViewModel : ViewModelBase
         Timeout = SettingsManager.Current.PortScanner_Timeout;
         Attempts = SettingsManager.Current.PortScanner_Attempts;
         ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname;
+        AutoAdjustThreads = SettingsManager.Current.PortScanner_AutoAdjustThreads;
         MaxHostThreads = SettingsManager.Current.PortScanner_MaxHostThreads;
         MaxPortThreads = SettingsManager.Current.PortScanner_MaxPortThreads;
     }

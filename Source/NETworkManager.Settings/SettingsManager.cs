@@ -792,6 +792,16 @@ public static class SettingsManager
             Current.PortScanner_MaxPortThreads = GlobalStaticConfiguration.PortScanner_MaxPortThreads;
         }
 
+        // Port Scanner - new setting "Adjust threads automatically" (default on). Customized threads (not the
+        // defaults after the update above) are kept: automatic off, so they still apply.
+        if (Current.PortScanner_AutoAdjustThreads &&
+            (Current.PortScanner_MaxHostThreads != GlobalStaticConfiguration.PortScanner_MaxHostThreads ||
+             Current.PortScanner_MaxPortThreads != GlobalStaticConfiguration.PortScanner_MaxPortThreads))
+        {
+            Log.Info("Disable \"PortScanner_AutoAdjustThreads\", the threads were customized...");
+            Current.PortScanner_AutoAdjustThreads = false;
+        }
+
         if (Current.IPScanner_ICMPTimeout == 4000)
         {
             Log.Info($"Update \"IPScanner_ICMPTimeout\" from 4000 to {GlobalStaticConfiguration.IPScanner_ICMPTimeout}...");

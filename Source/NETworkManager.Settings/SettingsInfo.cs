@@ -1541,6 +1541,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.PortScanner_Attempts;
 
+    public bool PortScanner_AutoAdjustThreads
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PortScanner_AutoAdjustThreads;
+
     public int PortScanner_MaxHostThreads
     {
         get;

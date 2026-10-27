@@ -5095,4 +5095,13 @@ Do you want to start the scan?</value>
   <data name="HelpMessage_ScanForNetBIOS" xml:space="preserve">
     <value>Only IPv4 addresses are scanned for NetBIOS, NetBIOS doesn't exist over IPv6.</value>
   </data>
+  <data name="AdjustThreadsAutomatically" xml:space="preserve">
+    <value>Adjust threads automatically</value>
+  </data>
+  <data name="HelpMessage_AdjustThreadsAutomatically" xml:space="preserve">
+    <value>Adjusts the number of hosts and ports scanned at the same time to the scan: up to 512 connections at the same time, at most 128 hosts and 128 ports per host (e.g. 4 hosts with 1-1024, 128 hosts with one port). Disable it to set the threads yourself, e.g. to slow down a scan.</value>
+  </data>
+  <data name="HelpMessage_PortScannerMaxThreads" xml:space="preserve">
+    <value>Host threads × port threads can be at most 8,192 connections at the same time (every connection uses a local port, this is half of them). Many connections at the same time may be blocked by a firewall or overload small routers.</value>
+  </data>
 </root>

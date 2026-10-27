@@ -157,8 +157,13 @@ public static class GlobalStaticConfiguration
     public static long IPScanner_MaxHostCount => 16777216;
 
     // Application: Port Scanner 
+    public static bool PortScanner_AutoAdjustThreads => true;
     public static int PortScanner_MaxHostThreads => 4;
     public static int PortScanner_MaxPortThreads => 128;
+
+    // Max. connections at the same time if the threads are set manually (host threads x port threads): half of the
+    // local (ephemeral) ports of Windows (16,384), like the maximum of the IP Scanner (256 x 32)
+    public static int PortScanner_MaxConnections => 8192;
     public static int PortScanner_Timeout => 2000;
     public static int PortScanner_Attempts => 1;
     public static ExportFileType PortScanner_ExportFileType => ExportFileType.Csv;

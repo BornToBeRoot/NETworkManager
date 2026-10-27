@@ -33,11 +33,21 @@ public sealed class PortScanner
     private static readonly TimeSpan MaxPortStartInterval = TimeSpan.FromMilliseconds(1);
 
     /// <summary>
-    ///     Maximum number of hosts scanned at the same time if hosts have fewer ports than port threads (see
-    ///     <see cref="GetMaxHostThreads" />) - also the number of concurrent DNS (PTR) lookups, like the default of the
-    ///     IP Scanner.
+    ///     Threads adjusted automatically (see <see cref="GetThreads" />): connections at the same time (the old
+    ///     defaults 4 hosts x 128 ports).
     /// </summary>
-    private const int MaxHostThreadsForFewPorts = 128;
+    private const int AutoMaxConnections = 512;
+
+    /// <summary>
+    ///     Threads adjusted automatically: hosts at the same time - also the number of concurrent DNS (PTR) lookups,
+    ///     like the default of the IP Scanner.
+    /// </summary>
+    private const int AutoMaxHostThreads = 128;
+
+    /// <summary>
+    ///     Threads adjusted automatically: ports of one host at the same time.
+    /// </summary>
+    private const int AutoMaxPortThreads = 128;
 
     private int _progressValue;
     private readonly InterlockedCounter _portsOpen = new();
@@ -133,7 +143,7 @@ public sealed class PortScanner
             try
             {
                 var portCount = ports.Count();
-                var maxHostThreads = GetMaxHostThreads(portCount);
+                var (maxHostThreads, maxPortThreads) = GetThreads(portCount);
 
                 var hostParallelOptions = new ParallelOptions
                 {
@@ -144,7 +154,7 @@ public sealed class PortScanner
                 var portParallelOptions = new ParallelOptions
                 {
                     CancellationToken = cancellationToken,
-                    MaxDegreeOfParallelism = _options.MaxPortThreads
+                    MaxDegreeOfParallelism = maxPortThreads
                 };
 
                 // Spread the start of the port probes over time instead of starting all at once
@@ -152,17 +162,18 @@ public sealed class PortScanner
                     ? Math.Min(hostCount, maxHostThreads)
                     : maxHostThreads;
 
-                var portConcurrency = hostConcurrency * Math.Min(portCount, _options.MaxPortThreads);
+                var portConcurrency = hostConcurrency * Math.Min(portCount, maxPortThreads);
 
                 var portStartScheduler = new StartScheduler(StartScheduler.GetInterval(MaxPortStartInterval,
                     TimeSpan.FromMilliseconds(_options.Timeout * _options.Attempts), portConcurrency), portConcurrency);
 
                 await Parallel.ForEachAsync(hosts, hostParallelOptions, async (host, hostCt) =>
                 {
-                    // Resolve Hostname (PTR) while the ports are scanned
-                    var hostnameTask = _options.ResolveHostname
+                    // Resolve Hostname (PTR) while the ports are scanned. Started with the first port probe of the
+                    // host, so the lookups of many hosts are spread over time like the probes instead of all at once
+                    var hostnameTask = new Lazy<Task<string>>(() => _options.ResolveHostname
                         ? DNSClient.GetInstance().ResolvePtrOrEmptyAsync(host.ipAddress, hostCt)
-                        : Task.FromResult(string.Empty);
+                        : Task.FromResult(string.Empty));
 
                     // Check each port
                     await Parallel.ForEachAsync(ports, portParallelOptions, async (port, portCt) =>
@@ -170,13 +181,15 @@ public sealed class PortScanner
                         // Spread the start of the port probes over time instead of starting all at once
                         await portStartScheduler.WaitAsync(portCt).ConfigureAwait(false);
 
+                        _ = hostnameTask.Value;
+
                         var portState = await PortProbe.ProbeAsync(host.ipAddress, port, _options.Timeout,
                                 _options.Attempts, portCt)
                             .ConfigureAwait(false);
 
                         // Every result needs the hostname (results are grouped by it) - usually resolved
                         // long before the first port is finished
-                        var hostname = await hostnameTask.ConfigureAwait(false);
+                        var hostname = await hostnameTask.Value.ConfigureAwait(false);
 
                         // Count open/closed/timed out ports unconditionally, since ShowAllResults (below)
                         // may prevent closed ports from ever reaching PortScanned
@@ -226,19 +239,22 @@ public sealed class PortScanner
     }
 
     /// <summary>
-    ///     Gets the number of hosts scanned at the same time. A host with fewer ports than port threads leaves port
-    ///     threads unused (e.g. one port on a /24: 4 hosts = 4 connections at a time) - then more hosts are scanned at the
-    ///     same time, within the same number of connections (host threads x port threads), at most
-    ///     <see cref="MaxHostThreadsForFewPorts" /> (never less than the host threads).
+    ///     Gets the number of hosts and the number of ports per host scanned at the same time: the settings, or -
+    ///     adjusted automatically - <see cref="AutoMaxConnections" /> connections spread over as many hosts as needed
+    ///     (at most <see cref="AutoMaxHostThreads" />) with up to <see cref="AutoMaxPortThreads" /> ports each. E.g.
+    ///     4 hosts x 128 ports for 1-1024, 128 hosts x 1 port for one port (with the fixed 4 host threads only 4
+    ///     connections at a time).
     /// </summary>
     /// <param name="portCount">Number of ports per host.</param>
-    /// <returns>Number of hosts scanned at the same time.</returns>
-    private int GetMaxHostThreads(int portCount)
+    /// <returns>Hosts and ports per host at the same time.</returns>
+    private (int hostThreads, int portThreads) GetThreads(int portCount)
     {
-        var portsAtOnce = Math.Max(1, Math.Min(portCount, _options.MaxPortThreads));
+        if (!_options.AutoAdjustThreads)
+            return (_options.MaxHostThreads, _options.MaxPortThreads);
 
-        return Math.Max(_options.MaxHostThreads,
-            Math.Min(MaxHostThreadsForFewPorts, _options.MaxHostThreads * _options.MaxPortThreads / portsAtOnce));
+        var portsAtOnce = Math.Max(1, Math.Min(portCount, AutoMaxPortThreads));
+
+        return (Math.Clamp(AutoMaxConnections / portsAtOnce, 1, AutoMaxHostThreads), AutoMaxPortThreads);
     }
 
     private void IncreaseProgress()
