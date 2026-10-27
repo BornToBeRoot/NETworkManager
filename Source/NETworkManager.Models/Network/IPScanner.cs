@@ -498,14 +498,14 @@ public sealed class IPScanner(IPScannerOptions options)
     private async Task<string> GetMACAddressFromNeighborTableAsync(IPAddress ipAddress, DateTime discoveredAt,
         CancellationToken cancellationToken)
     {
-        var key = IPAddressHelper.WithoutScopeId(ipAddress);
-
         // Hosts wait without blocking a thread while another host reads the table
         await _neighborTableSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
 
         try
         {
-            if (_neighborTable.TryGetValue(key, out var macAddress))
+            // With the scope id if it was entered (e.g. "fe80::1%3" and "fe80::1%7" are two hosts on different
+            // interfaces), see NeighborTable.GetMACAddressMap
+            if (_neighborTable.TryGetValue(ipAddress, out var macAddress))
                 return macAddress;
 
             // Already read after the host answered -> no entry
@@ -516,7 +516,7 @@ public sealed class IPScanner(IPScannerOptions options)
             _neighborTableTimestamp = DateTime.UtcNow;
             _neighborTable = NeighborTable.GetMACAddressMap();
 
-            return _neighborTable.GetValueOrDefault(key, string.Empty);
+            return _neighborTable.GetValueOrDefault(ipAddress, string.Empty);
         }
         finally
         {
