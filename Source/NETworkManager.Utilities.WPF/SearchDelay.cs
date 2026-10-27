@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace NETworkManager.Utilities.WPF;
@@ -25,7 +26,15 @@ public sealed class SearchDelay
 
         _timer = new DispatcherTimer { Interval = interval };
         _timer.Tick += (_, _) => Apply();
+
+        ApplyCommand = new RelayCommand(_ => Apply());
     }
+
+    /// <summary>
+    ///     Gets the command to apply the search right away (see <see cref="Apply" />), e.g. bound to Enter in the search
+    ///     box.
+    /// </summary>
+    public ICommand ApplyCommand { get; }
 
     /// <summary>
     ///     Starts the delay again (the search text was changed).

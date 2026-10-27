@@ -283,9 +283,9 @@ public static class DataGridHelper
 
         private static ScrollViewer FindScrollViewer(DependencyObject parent)
         {
-            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            for (var i = 0; i < System.Windows.Media.VisualTreeHelper.GetChildrenCount(parent); i++)
             {
-                var child = VisualTreeHelper.GetChild(parent, i);
+                var child = System.Windows.Media.VisualTreeHelper.GetChild(parent, i);
 
                 if (child is ScrollViewer scrollViewer)
                     return scrollViewer;

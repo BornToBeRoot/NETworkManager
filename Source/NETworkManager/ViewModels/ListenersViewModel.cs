@@ -440,7 +440,7 @@ public class ListenersViewModel : ViewModelBase
     /// Gets the command to filter right away (Enter in the search box, see
     /// <see cref="NETworkManager.Utilities.WPF.SearchTextBoxHelper"/>).
     /// </summary>
-    public ICommand ApplySearchCommand => new RelayCommand(_ => _searchDelay.Apply());
+    public ICommand ApplySearchCommand => _searchDelay.ApplyCommand;
 
     /// <summary>
     /// Filters with the current <see cref="Search"/> right away.
