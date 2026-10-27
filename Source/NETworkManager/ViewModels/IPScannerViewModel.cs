@@ -64,6 +64,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private Dictionary<IPAddress, List<IPScannerHostInfo>> _rescanRows;
     private readonly Dictionary<IPScannerHostInfo, List<IPScannerHostInfo>> _rescanResults = [];
 
+    // Values of the rescanned rows before the rescan (row -> copy), restored if the rescan is canceled or fails: a
+    // found host is copied into its rows with placeholders for the running probes, which would stay otherwise
+    private Dictionary<IPScannerHostInfo, IPScannerHostInfo> _rescanSnapshots;
+
     // Counters of the last scan, restored after a rescan (the rescan shows its own progress)
     private int _rescanHostsToScan;
     private int _rescanHostsScanned;
@@ -823,6 +827,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         _rescanResults.Clear();
 
+        _rescanSnapshots = _rescanRows.Values.SelectMany(x => x).ToDictionary(x => x, x => x.Clone());
+
         _rescanHostsToScan = HostsToScan;
         _rescanHostsScanned = HostsScanned;
         _rescanHostsCounted = HostsUp + HostsDown;
@@ -1395,6 +1401,14 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             if (sender is IPScanner finishedScanner)
                 StoreProgress(finishedScanner);
 
+            // Canceled / failed rescan: keep the previous results of the rows (before the counters are computed
+            // from them)
+            if (_rescanRows != null && (e.IsCanceled || e.Exception != null))
+            {
+                foreach (var (row, snapshot) in _rescanSnapshots)
+                    row.CopyFrom(snapshot);
+            }
+
             FlushProgress();
 
             // Rescan: back to the progress of the last scan
@@ -1402,6 +1416,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             {
                 _rescanRows = null;
                 _rescanResults.Clear();
+                _rescanSnapshots = null;
 
                 HostsToScan = _rescanHostsToScan;
                 HostsScanned = _rescanHostsScanned;

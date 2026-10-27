@@ -65,6 +65,12 @@ public class PortScannerViewModel : ViewModelBase
     private int _rescanPortsToScan;
     private int _rescanPortsScanned;
 
+    // Rows and counters of the rescanned hosts before the rescan, restored if the rescan is canceled or fails
+    private HashSet<IPAddress> _rescanIPAddresses;
+    private List<PortScannerPortInfo> _rescanRemovedRows;
+    private int _rescanPortsOpen;
+    private int _rescanPortsClosed;
+
     /// <summary>
     /// Gets or sets the host to scan.
     /// </summary>
@@ -736,6 +742,11 @@ public class PortScannerViewModel : ViewModelBase
 
         var rescannedIPAddresses = ipAddresses.ToHashSet();
 
+        _rescanIPAddresses = rescannedIPAddresses;
+        _rescanRemovedRows = [.. Results.Where(x => rescannedIPAddresses.Contains(x.IPAddress))];
+        _rescanPortsOpen = PortsOpen;
+        _rescanPortsClosed = PortsClosed;
+
         // One reset instead of removing the rows one by one - every removal searches the collection and the sorted,
         // grouped view (e.g. a host with 1-65535 and closed ports shown would freeze the window for minutes)
         Results.ReplaceAll(Results.Where(x => !rescannedIPAddresses.Contains(x.IPAddress)));
@@ -1040,6 +1051,20 @@ public class PortScannerViewModel : ViewModelBase
             if (_isRescan)
             {
                 _isRescan = false;
+
+                // Canceled / failed rescan: keep the previous results of the hosts (their rows were removed when the
+                // rescan started, only some ports were scanned again)
+                if (e.IsCanceled || e.Exception != null)
+                {
+                    Results.ReplaceAll(Results.Where(x => !_rescanIPAddresses.Contains(x.IPAddress))
+                        .Concat(_rescanRemovedRows));
+
+                    PortsOpen = _rescanPortsOpen;
+                    PortsClosed = _rescanPortsClosed;
+                }
+
+                _rescanIPAddresses = null;
+                _rescanRemovedRows = null;
 
                 PortsToScan = _rescanPortsToScan;
                 PortsScanned = _rescanPortsScanned;
