@@ -472,7 +472,8 @@ public sealed class IPScanner(IPScannerOptions options)
                 p.IPv6Address.Concat(p.IPv6AddressLinkLocal)
                     .Any(x => IPAddressHelper.WithoutScopeId(x).Equals(ipAddressWithoutScopeId)));
 
-            if (networkInterfaceInfo != null)
+            // Only a MAC address (6 bytes) - e.g. a tunnel adapter has none or a link-layer address of another length
+            if (networkInterfaceInfo?.PhysicalAddress?.GetAddressBytes().Length == 6)
                 macAddress = networkInterfaceInfo.PhysicalAddress.ToString();
         }
 

@@ -315,7 +315,8 @@ Import-Module NetTCPIP -ErrorAction Stop").Invoke();
     /// Returns a snapshot of the neighbor cache (IPv4 and IPv6) as map from IP address to MAC address
     /// (e.g. "001122AABBCC"). IPv6 addresses are stored with their scope id (e.g. "fe80::1%3", for an address entered
     /// with one) and without it (see <see cref="IPAddressHelper.WithoutScopeId"/>, for an address entered without one -
-    /// if the address is on several interfaces, the last entry wins), entries without a MAC address are skipped.
+    /// if the address is on several interfaces, the last entry wins). Entries without a MAC address, or with a link-layer
+    /// address that is not a 6 byte MAC address (e.g. the IPv4 address of a tunnel interface), are skipped.
     /// Reading the table once and looking up many addresses is much cheaper than reading it per address.
     /// </summary>
     public static Dictionary<IPAddress, string> GetMACAddressMap()
@@ -324,10 +325,10 @@ Import-Module NetTCPIP -ErrorAction Stop").Invoke();
 
         foreach (var entry in GetTable())
         {
-            var macAddress = entry.MACAddress.ToString();
-
-            if (string.IsNullOrEmpty(macAddress))
+            if (entry.MACAddress.GetAddressBytes().Length != 6)
                 continue;
+
+            var macAddress = entry.MACAddress.ToString();
 
             map[entry.IPAddress] = macAddress;
             map[IPAddressHelper.WithoutScopeId(entry.IPAddress)] = macAddress;
