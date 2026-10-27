@@ -3650,6 +3650,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A DNS server of this profile was not found, the DNS servers saved with the profile are used. DNS servers are saved in the settings - if the profile file was shared from another computer, create the DNS server here or edit the profile..
+        /// </summary>
+        public static string DNSServerOfProfileNotFoundMessage {
+            get {
+                return ResourceManager.GetString("DNSServerOfProfileNotFoundMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DNS server(s).
         /// </summary>
         public static string DNSServers {

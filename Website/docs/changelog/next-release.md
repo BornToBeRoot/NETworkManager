@@ -127,6 +127,7 @@ Release date: **xx.xx.2026**
 
 **DNS Lookup**
 
+- Profiles: new option **DNS server** to use a DNS server of the profile instead of the one selected in the DNS lookup, with the same list and `Tab` completion. Configured DNS servers are referenced by the profile (changes apply, also after a rename), their IP addresses are saved as well and used, with a note, if the DNS server can't be found (e.g. a profile file shared from another computer). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Several DNS servers can be entered, also names of configured DNS servers together with custom DNS servers (e.g. `Google Public DNS; Cloudflare; 9.9.9.9`), every DNS server is queried once; `[Windows DNS]` in a list adds the DNS servers of Windows. The list of the **DNS server** input shows the configured DNS servers (with their IP addresses) and the history, `Tab` completes the name of a DNS server that is being typed (e.g. `google; cl` → `google; Cloudflare`). The name of a DNS server must not contain `;` (replaced by `,` when updating). Also with the run command (`dns borntoberoot.net "Google Public DNS";cloudflare`). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - IP addresses opened from another feature (e.g. **IP Scanner** > **DNS lookup** > **IP address**), from a profile or with the run command are looked up with `PTR` instead of the selected record type. [#3644](https://github.com/BornToBeRoot/NETworkManager/pull/3644)
 

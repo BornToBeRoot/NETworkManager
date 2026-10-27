@@ -5122,4 +5122,7 @@ Do you want to start the scan?</value>
   <data name="ErrorMessage_NameMustNotContainSemicolon" xml:space="preserve">
     <value>The name must not contain ";".</value>
   </data>
+  <data name="DNSServerOfProfileNotFoundMessage" xml:space="preserve">
+    <value>A DNS server of this profile was not found, the DNS servers saved with the profile are used. DNS servers are saved in the settings - if the profile file was shared from another computer, create the DNS server here or edit the profile.</value>
+  </data>
 </root>

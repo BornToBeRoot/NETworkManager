@@ -91,6 +91,25 @@ Hostname or IP address (or any other resource record) to query.
 - `server-01.borntoberoot.net` (`A` record)
 - `1.1.1.1` (`PTR` record)
 
+### DNS server
+
+Use this DNS server instead of the DNS server selected in the DNS lookup: names of [DNS servers](#dns-server-1) and / or custom DNS servers, separated by `;` (selectable in the list, `Tab` completes a name).
+
+**Type:** `String`
+
+**Default:** `Disabled` / `Empty`
+
+**Example:**
+
+- `Cloudflare`
+- `Google Public DNS; 9.9.9.9`
+
+:::note
+
+A configured DNS server is referenced by the profile, so changes to it apply to the profile, also if it is renamed. Its IP addresses are saved with the profile as well: if the DNS server can't be found (it was deleted, or the profile file is shared from another computer - DNS servers are saved in the settings of each computer), the saved IP addresses are used and a note is shown. `[Windows DNS]` always uses the DNS servers of the computer.
+
+:::
+
 ## Settings
 
 ### DNS server

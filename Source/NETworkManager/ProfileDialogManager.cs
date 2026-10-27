@@ -81,6 +81,13 @@ public static class ProfileDialogManager
             DNSLookup_Enabled = instance.DNSLookup_Enabled,
             DNSLookup_InheritHost = instance.DNSLookup_InheritHost,
             DNSLookup_Host = instance.DNSLookup_InheritHost ? instance.Host?.Trim() : instance.DNSLookup_Host?.Trim(),
+            DNSLookup_OverrideDNSServer = instance.DNSLookup_OverrideDNSServer,
+            // DNS servers by name are referenced by their ID (found after a rename), their servers are saved as well
+            // (used if a DNS server can't be found, e.g. a profile file from another computer)
+            DNSLookup_DNSServer = DNSServer.ReplaceProfilesByServers(instance.DNSLookup_DNSServer?.Trim(),
+                SettingsManager.Current.DNSLookup_DNSServers),
+            DNSLookup_DNSServerInput = DNSServer.EncodeReferences(instance.DNSLookup_DNSServer,
+                SettingsManager.Current.DNSLookup_DNSServers),
 
             // Remote Desktop
             RemoteDesktop_Enabled = instance.RemoteDesktop_Enabled,

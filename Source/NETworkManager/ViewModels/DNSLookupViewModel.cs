@@ -41,6 +41,9 @@ public class DNSLookupViewModel : ViewModelBase
     /// </summary>
     private readonly bool _isLoading;
 
+    // Message of the tab, shown until the first lookup has started (see constructor)
+    private string _message;
+
     /// <summary>
     /// Gets or sets the host to lookup.
     /// </summary>
@@ -241,10 +244,20 @@ public class DNSLookupViewModel : ViewModelBase
     /// <param name="dnsServer">DNS server(s) to use (not saved as default). If null, the last selected one is used.</param>
     /// <param name="queryType">Query type (not saved as default). If null, the last selected one is used.</param>
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    /// <param name="message">
+    ///     Message shown below the input, also with the first lookup (e.g. a DNS server of the profile was not found).
+    /// </param>
     public DNSLookupViewModel(Guid tabId, string host, string dnsServer = null, QueryType? queryType = null,
-        bool start = true)
+        bool start = true, string message = null)
     {
         _firstLoad = start;
+
+        if (!string.IsNullOrEmpty(message))
+        {
+            _message = message;
+
+            AppendStatusMessage(message);
+        }
 
         _isLoading = true;
 
@@ -366,6 +379,14 @@ public class DNSLookupViewModel : ViewModelBase
     {
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
+
+        // Message of the tab (see constructor): still shown with the first lookup
+        if (_message != null)
+        {
+            AppendStatusMessage(_message);
+
+            _message = null;
+        }
 
         IsRunning = true;
 

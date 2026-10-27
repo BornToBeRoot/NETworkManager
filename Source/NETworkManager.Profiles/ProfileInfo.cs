@@ -79,6 +79,9 @@ public class ProfileInfo
         DNSLookup_Enabled = profile.DNSLookup_Enabled;
         DNSLookup_InheritHost = profile.DNSLookup_InheritHost;
         DNSLookup_Host = profile.DNSLookup_Host;
+        DNSLookup_OverrideDNSServer = profile.DNSLookup_OverrideDNSServer;
+        DNSLookup_DNSServer = profile.DNSLookup_DNSServer;
+        DNSLookup_DNSServerInput = profile.DNSLookup_DNSServerInput;
 
         // Remote Desktop
         RemoteDesktop_Enabled = profile.RemoteDesktop_Enabled;
@@ -337,6 +340,26 @@ public class ProfileInfo
     public bool DNSLookup_Enabled { get; set; }
     public bool DNSLookup_InheritHost { get; set; } = true;
     public string DNSLookup_Host { get; set; }
+
+    /// <summary>
+    ///     Use the DNS server of the profile instead of the DNS server selected in DNS Lookup.
+    /// </summary>
+    public bool DNSLookup_OverrideDNSServer { get; set; }
+
+    /// <summary>
+    ///     DNS server of the profile (names of DNS servers and / or DNS servers). If DNS servers were entered by name,
+    ///     their servers at the time the profile was saved - used if a DNS server of
+    ///     <see cref="DNSLookup_DNSServerInput" /> can't be found (e.g. a profile file from another computer, DNS servers
+    ///     are saved in the settings).
+    /// </summary>
+    public string DNSLookup_DNSServer { get; set; }
+
+    /// <summary>
+    ///     DNS server as entered, if it contains DNS servers by name: they are referenced by their ID (e.g. "{8f1c...};
+    ///     9.9.9.9", see <c>DNSServer.EncodeReferences</c>), so they are also found after a rename. Null if no DNS
+    ///     server was entered by name.
+    /// </summary>
+    public string DNSLookup_DNSServerInput { get; set; }
 
     public bool RemoteDesktop_Enabled { get; set; }
     public bool RemoteDesktop_InheritHost { get; set; } = true;

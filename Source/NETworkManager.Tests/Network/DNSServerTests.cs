@@ -43,6 +43,40 @@ public class DNSServerTests
         Assert.Equal(["not valid!"], invalidEntries);
     }
 
+    [Fact]
+    public void EncodeAndDecodeReferences()
+    {
+        var cloudflare = Profiles.First(x => x.Name == "Cloudflare");
+
+        var input = DNSServer.EncodeReferences("[Windows DNS]; cloudflare; 9.9.9.9", Profiles);
+
+        Assert.Equal($"[Windows DNS]; {cloudflare.Id:B}; 9.9.9.9", input);
+        Assert.True(DNSServer.TryDecodeReferences(input, Profiles, out var decoded));
+        Assert.Equal("[Windows DNS]; Cloudflare; 9.9.9.9", decoded);
+    }
+
+    [Theory]
+    [InlineData("9.9.9.9")]
+    [InlineData("[Windows DNS]")]
+    public void EncodeReferences_NullWithoutProfileReference(string input)
+    {
+        Assert.Null(DNSServer.EncodeReferences(input, Profiles));
+    }
+
+    [Fact]
+    public void DecodeReferences_FalseIfProfileIsMissing()
+    {
+        Assert.False(DNSServer.TryDecodeReferences($"{System.Guid.NewGuid():B}", Profiles, out var decoded));
+        Assert.Null(decoded);
+    }
+
+    [Fact]
+    public void ReplaceProfilesByServers()
+    {
+        Assert.Equal("[Windows DNS]; 1.1.1.1:53; 1.0.0.1:53; 9.9.9.9",
+            DNSServer.ReplaceProfilesByServers("[Windows DNS]; Cloudflare; 9.9.9.9", Profiles));
+    }
+
     [Theory]
     [InlineData("Cloudflare", false, 0)]
     [InlineData("google public dns;9.9.9.9", true, 0)]

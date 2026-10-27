@@ -128,6 +128,105 @@ public static class DNSServer
     }
 
     /// <summary>
+    ///     Replaces the names of DNS server profiles in a DNS server input by references to their ID (e.g. "Cloudflare;
+    ///     9.9.9.9" -> "{8f1c...}; 9.9.9.9"), so a profile still finds the DNS server profile after it was renamed. The
+    ///     Windows DNS profile is kept by name (it exists on every computer, with another ID), other entries are kept.
+    /// </summary>
+    /// <param name="input">DNS server input (see <see cref="ResolveServers" />).</param>
+    /// <param name="profiles">DNS server profiles.</param>
+    /// <returns>Input with references, null if it contains no DNS server profile with an ID.</returns>
+    public static string EncodeReferences(string input, IEnumerable<DNSServerConnectionInfoProfile> profiles)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+            return null;
+
+        var profileList = profiles.ToList();
+        var hasReference = false;
+        List<string> entries = [];
+
+        foreach (var entry in input.Split(EntrySeparator))
+        {
+            var profile = FindByName(profileList, entry);
+
+            if (profile == null || profile.UseWindowsDNSServer || profile.Id == Guid.Empty)
+            {
+                entries.Add(entry.Trim());
+                continue;
+            }
+
+            entries.Add(profile.Id.ToString("B"));
+            hasReference = true;
+        }
+
+        return hasReference ? string.Join("; ", entries) : null;
+    }
+
+    /// <summary>
+    ///     Replaces the references in a DNS server input (see <see cref="EncodeReferences" />) by the current names of
+    ///     the DNS server profiles (e.g. "{8f1c...}; 9.9.9.9" -> "Cloudflare; 9.9.9.9").
+    /// </summary>
+    /// <param name="inputWithReferences">DNS server input with references.</param>
+    /// <param name="profiles">DNS server profiles.</param>
+    /// <param name="input">DNS server input with the names, null if a DNS server profile was not found.</param>
+    /// <returns>True if every referenced DNS server profile was found.</returns>
+    public static bool TryDecodeReferences(string inputWithReferences,
+        IEnumerable<DNSServerConnectionInfoProfile> profiles, out string input)
+    {
+        input = null;
+
+        if (string.IsNullOrWhiteSpace(inputWithReferences))
+            return false;
+
+        var profileList = profiles.ToList();
+        List<string> entries = [];
+
+        foreach (var entry in inputWithReferences.Split(EntrySeparator))
+        {
+            if (!Guid.TryParseExact(entry.Trim(), "B", out var id))
+            {
+                entries.Add(entry.Trim());
+                continue;
+            }
+
+            var profile = profileList.FirstOrDefault(x => x.Id == id);
+
+            if (profile == null)
+                return false;
+
+            entries.Add(profile.Name);
+        }
+
+        input = string.Join("; ", entries);
+
+        return true;
+    }
+
+    /// <summary>
+    ///     Replaces the names of DNS server profiles in a DNS server input by their servers (e.g. "Cloudflare; 9.9.9.9"
+    ///     -> "1.1.1.1:53; 1.0.0.1:53; 9.9.9.9"), so the input still works without the DNS server profiles (e.g. on another
+    ///     computer). The Windows DNS profile and other entries are kept.
+    /// </summary>
+    /// <param name="input">DNS server input.</param>
+    /// <param name="profiles">DNS server profiles.</param>
+    /// <returns>Input with servers instead of DNS server profiles.</returns>
+    public static string ReplaceProfilesByServers(string input, IEnumerable<DNSServerConnectionInfoProfile> profiles)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+            return input;
+
+        var profileList = profiles.ToList();
+
+        return string.Join("; ", input.Split(EntrySeparator).Select(entry =>
+        {
+            var profile = FindByName(profileList, entry);
+
+            return profile == null || profile.UseWindowsDNSServer
+                ? entry.Trim()
+                : string.Join("; ", profile.Servers.Select(x => x.ToString()));
+        }));
+    }
+
+    /// <summary>
     ///     Parses a DNS server entry (IP address or hostname, optional port).
     /// </summary>
     private static bool TryParseServer(string entry, bool hostnameNeedsDomain, out ServerConnectionInfo server)
