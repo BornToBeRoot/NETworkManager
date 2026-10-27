@@ -32,6 +32,13 @@ public sealed class PortScanner
     /// </summary>
     private static readonly TimeSpan MaxPortStartInterval = TimeSpan.FromMilliseconds(1);
 
+    /// <summary>
+    ///     Maximum number of hosts scanned at the same time if hosts have fewer ports than port threads (see
+    ///     <see cref="GetMaxHostThreads" />) - also the number of concurrent DNS (PTR) lookups, like the default of the
+    ///     IP Scanner.
+    /// </summary>
+    private const int MaxHostThreadsForFewPorts = 128;
+
     private int _progressValue;
     private readonly InterlockedCounter _portsOpen = new();
     private readonly InterlockedCounter _portsClosed = new();
@@ -115,10 +122,13 @@ public sealed class PortScanner
 
             try
             {
+                var portCount = ports.Count();
+                var maxHostThreads = GetMaxHostThreads(portCount);
+
                 var hostParallelOptions = new ParallelOptions
                 {
                     CancellationToken = cancellationToken,
-                    MaxDegreeOfParallelism = _options.MaxHostThreads
+                    MaxDegreeOfParallelism = maxHostThreads
                 };
 
                 var portParallelOptions = new ParallelOptions
@@ -129,12 +139,10 @@ public sealed class PortScanner
 
                 // Spread the start of the port probes over time instead of starting all at once
                 var hostConcurrency = hosts.TryGetNonEnumeratedCount(out var hostCount)
-                    ? Math.Min(hostCount, _options.MaxHostThreads)
-                    : _options.MaxHostThreads;
+                    ? Math.Min(hostCount, maxHostThreads)
+                    : maxHostThreads;
 
-                var portConcurrency = hostConcurrency * (ports.TryGetNonEnumeratedCount(out var portCount)
-                    ? Math.Min(portCount, _options.MaxPortThreads)
-                    : _options.MaxPortThreads);
+                var portConcurrency = hostConcurrency * Math.Min(portCount, _options.MaxPortThreads);
 
                 var portStartScheduler = new StartScheduler(StartScheduler.GetInterval(MaxPortStartInterval,
                     TimeSpan.FromMilliseconds(_options.Timeout * _options.Attempts), portConcurrency), portConcurrency);
@@ -195,6 +203,22 @@ public sealed class PortScanner
                 OnScanComplete(new ScanCompleteArgs(isCanceled, exception));
             }
         });
+    }
+
+    /// <summary>
+    ///     Gets the number of hosts scanned at the same time. A host with fewer ports than port threads leaves port
+    ///     threads unused (e.g. one port on a /24: 4 hosts = 4 connections at a time) - then more hosts are scanned at the
+    ///     same time, within the same number of connections (host threads x port threads), at most
+    ///     <see cref="MaxHostThreadsForFewPorts" /> (never less than the host threads).
+    /// </summary>
+    /// <param name="portCount">Number of ports per host.</param>
+    /// <returns>Number of hosts scanned at the same time.</returns>
+    private int GetMaxHostThreads(int portCount)
+    {
+        var portsAtOnce = Math.Max(1, Math.Min(portCount, _options.MaxPortThreads));
+
+        return Math.Max(_options.MaxHostThreads,
+            Math.Min(MaxHostThreadsForFewPorts, _options.MaxHostThreads * _options.MaxPortThreads / portsAtOnce));
     }
 
     private void IncreaseProgress()

@@ -221,7 +221,9 @@ Resolve the hostname for given IP addresses.
 
 ### Max. concurrent host threads
 
-Maximum number of hosts that are scanned at the same time. A thread is not an operating system thread, but one host whose ports are scanned concurrently.
+Number of hosts that are scanned at the same time. A thread is not an operating system thread, but one host whose ports are scanned concurrently.
+
+If the hosts have fewer ports than [Max. concurrent port threads](#max-concurrent-port-threads) (e.g. one port on a `/24`), more hosts are scanned at the same time (up to `128`), so that the same number of connections is used (host threads × port threads, with the default settings 4 × 128 = 512). Example: a `/24` with one port takes about as long as two timeouts instead of 64.
 
 **Type:** `Integer` [Min `1`, Max `10`]
 
@@ -229,7 +231,7 @@ Maximum number of hosts that are scanned at the same time. A thread is not an op
 
 :::warning
 
-Every host opens up to [Max. concurrent port threads](#max-concurrent-port-threads) TCP connections at the same time (with the default settings up to 4 × 128 = 512). Too many simultaneous requests may be detected as a port scan and blocked or rate-limited by a firewall (local, on the network or on the scanned host) and can overload small routers. If ports are missing in the result (shown as timed out) or the network becomes slow during the scan, reduce the number of threads. This will increase the scan time.
+The scan opens up to host threads × [Max. concurrent port threads](#max-concurrent-port-threads) TCP connections at the same time (with the default settings up to 4 × 128 = 512). Too many simultaneous requests may be detected as a port scan and blocked or rate-limited by a firewall (local, on the network or on the scanned host) and can overload small routers. If ports are missing in the result (shown as timed out) or the network becomes slow during the scan, reduce the number of threads. This will increase the scan time.
 
 :::
 
