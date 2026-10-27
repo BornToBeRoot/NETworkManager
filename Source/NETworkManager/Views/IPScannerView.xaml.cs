@@ -165,16 +165,31 @@ public partial class IPScannerView : IDragablzTabItem
                 0 => direction == ListSortDirection.Ascending
                     ? IPAddressHelper.CompareIPAddresses(first.PingInfo.IPAddress, second.PingInfo.IPAddress)
                     : IPAddressHelper.CompareIPAddresses(second.PingInfo.IPAddress, first.PingInfo.IPAddress),
-                // MAC address
-                1 => direction == ListSortDirection.Ascending
-                    ? MACAddressHelper.CompareMACAddresses(first.MACAddress, second.MACAddress)
-                    : MACAddressHelper.CompareMACAddresses(second.MACAddress, first.MACAddress),
+                // MAC address - hosts without a MAC address always last
+                1 => CompareMACAddressNoMACLast(first, second),
                 // Ping time - hosts without a ping reply always last (their time is 0)
                 2 => direction == ListSortDirection.Ascending
                     ? GetPingTime(first).CompareTo(GetPingTime(second))
                     : CompareDescendingNoReplyLast(first, second),
                 _ => 0
             };
+        }
+
+        /// <summary>
+        ///     Compares the MAC address in the sort direction, hosts without a MAC address (not resolved, routed host,
+        ///     or still resolving) last. An empty MAC address can't be converted to bytes.
+        /// </summary>
+        private int CompareMACAddressNoMACLast(IPScannerHostInfo first, IPScannerHostInfo second)
+        {
+            var x = first.MACAddress;
+            var y = second.MACAddress;
+
+            if (string.IsNullOrEmpty(x) || string.IsNullOrEmpty(y))
+                return string.IsNullOrEmpty(x).CompareTo(string.IsNullOrEmpty(y));
+
+            return direction == ListSortDirection.Ascending
+                ? MACAddressHelper.CompareMACAddresses(x, y)
+                : MACAddressHelper.CompareMACAddresses(y, x);
         }
 
         /// <summary>
