@@ -93,7 +93,7 @@ The search box right of the **Result** header filters the results by IP address,
 
 Expand a row with the button in front of it to see its details, or enable [Expand host view](#expand-host-view) to expand all hosts.
 
-The **Time** column shows the round trip time of the ping reply (`-/-` without a reply); sorted by time, hosts without a reply are always at the end. Sorted by **MAC address**, hosts without a MAC address are always at the end.
+The **Time** column shows the round trip time of the ping reply (`-/-` without a reply); sorted by time, hosts without a reply are always at the end. Sorted by **MAC address**, hosts without a MAC address are always at the end. Hosts with the same time or MAC address (or none) are sorted by IP address.
 
 The columns (e.g. **Hostname**, **Port status**, **MAC address**) and the row details are shown according to the settings the scan was started with. Settings changed afterwards apply to the next scan.
 

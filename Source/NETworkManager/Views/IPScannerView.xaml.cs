@@ -162,7 +162,7 @@ public partial class IPScannerView : IDragablzTabItem
                 return 0;
 
             // Compare the data
-            return comparer switch
+            var result = comparer switch
             {
                 // IP address
                 0 => direction == ListSortDirection.Ascending
@@ -176,6 +176,12 @@ public partial class IPScannerView : IDragablzTabItem
                     : CompareDescendingNoReplyLast(first, second),
                 _ => 0
             };
+
+            // Same MAC address / time (e.g. all hosts without a MAC address or ping reply): by IP address - the sort is
+            // not stable, the order of these hosts would be random otherwise
+            return result != 0 || comparer == 0
+                ? result
+                : IPAddressHelper.CompareIPAddresses(first.PingInfo.IPAddress, second.PingInfo.IPAddress);
         }
 
         /// <summary>
