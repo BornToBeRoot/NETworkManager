@@ -142,12 +142,13 @@ public sealed class IPScanner(IPScannerOptions options)
                 };
 
                 // Spread the start of the hosts over time instead of starting all at once - based on the time
-                // an unreachable host takes (the slowest of ping attempts, port scan and NetBIOS)
-                var hostDuration = Math.Max(options.ICMPAttempts * options.ICMPTimeout,
+                // an unreachable host takes (the slowest of ping attempts, port scan and NetBIOS). In long, the port
+                // scan can exceed int (e.g. 15000 ms x 10 attempts x 65535 ports with one port thread)
+                var hostDuration = Math.Max((long)options.ICMPAttempts * options.ICMPTimeout,
                     Math.Max(
                         options.PortScanEnabled
-                            ? options.PortScanTimeout * options.PortScanAttempts *
-                              (int)Math.Ceiling(options.PortScanPorts.Length / (double)options.MaxPortThreads)
+                            ? (long)options.PortScanTimeout * options.PortScanAttempts *
+                              (long)Math.Ceiling(options.PortScanPorts.Length / (double)options.MaxPortThreads)
                             : 0,
                         options.NetBIOSEnabled ? options.NetBIOSTimeout : 0));
 
