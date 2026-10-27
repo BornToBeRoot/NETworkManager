@@ -721,6 +721,17 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private async Task Start()
     {
+        // Port profiles in the input (e.g. "Webserver; 8080") are replaced by their ports. The input is validated, but
+        // a port profile may have been renamed or deleted since.
+        if (!PortProfile.TryResolvePorts(Ports, SettingsManager.Current.PortScanner_PortProfiles,
+                out var resolvedPorts))
+        {
+            StatusMessage = Strings.EnterValidPortsOrPortProfiles;
+            IsStatusMessageDisplayed = true;
+
+            return;
+        }
+
         // Every port is kept in memory - ask before a large scan and refuse a too large one
         // (e.g. 10.0.0.0/8 with 1-65535) instead of running out of memory
         long hostCount;
@@ -729,7 +740,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         try
         {
             hostCount = HostRangeHelper.GetHostCount(HostRangeHelper.CreateListFromInput(Host));
-            portsPerHost = PortRangeHelper.ConvertPortRangeToIntArray(Ports).Length;
+            portsPerHost = PortRangeHelper.ConvertPortRangeToIntArray(resolvedPorts).Length;
         }
         catch (Exception ex)
         {
@@ -818,7 +829,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 SettingsManager.Current.Network_ResolveHostnamePreferIPv4, keepAllHostnames: false,
                 _cancellationTokenSource.Token);
 
-            ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
+            ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(resolvedPorts);
         }
         catch (OperationCanceledException)
         {

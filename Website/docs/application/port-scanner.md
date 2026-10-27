@@ -43,6 +43,7 @@ TCP (Transmission Control Protocol) is a connection-oriented transport-layer pro
 | --------------------- | -------------------------------------------------- |
 | `1-1024`              | All ports in a given range (`1`, `2`, ..., `1024`) |
 | `80; 443; 8080; 8443` | Multiple ports like (`80`, `443`, `8080`, `8443`)  |
+| `Webserver; 8080`     | Ports of a [port profile](#port-profiles) (`80`, `443`) and other ports (`8080`) |
 
 :::note
 
@@ -152,7 +153,7 @@ See also the [Port Scanner](./port-scanner) example inputs for more information 
 
 ### Port profiles
 
-List of common TCP ports to scan for.
+List of common TCP ports to scan for. A port profile can be entered by its name in the ports input (case-insensitive, also several and together with ports, e.g. `Webserver; Database; 8080`), so the name must be unique, must not contain `;` and must not be a port or port range (e.g. `80`).
 
 **Type:** `List<NETworkManager.Models.Network.PortProfileInfo>`
 

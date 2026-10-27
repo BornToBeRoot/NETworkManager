@@ -792,6 +792,14 @@ public static class SettingsManager
             Current.PortScanner_MaxPortThreads = GlobalStaticConfiguration.PortScanner_MaxPortThreads;
         }
 
+        // Port Scanner - port profiles can be entered by name in the ports input (e.g. "Webserver; 8080"), where ";"
+        // separates the entries: replace it in the names
+        foreach (var portProfile in Current.PortScanner_PortProfiles.Where(x => x.Name?.Contains(';') == true))
+        {
+            Log.Info($"Replace \";\" in the name of the port profile \"{portProfile.Name}\"...");
+            portProfile.Name = portProfile.Name.Replace(';', ',');
+        }
+
         // Port Scanner - new setting "Adjust threads automatically" (default on). Customized threads (not the
         // defaults after the update above) are kept: automatic off, so they still apply.
         if (Current.PortScanner_AutoAdjustThreads &&

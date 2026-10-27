@@ -5104,4 +5104,10 @@ Do you want to start the scan?</value>
   <data name="HelpMessage_PortScannerMaxThreads" xml:space="preserve">
     <value>Host threads × port threads can be at most 8,192 connections at the same time (every connection uses a local port, this is half of them). Many connections at the same time may be blocked by a firewall or overload small routers.</value>
   </data>
+  <data name="EnterValidPortsOrPortProfiles" xml:space="preserve">
+    <value>Enter valid ports, port ranges (1 - 65535) and/or port profiles!</value>
+  </data>
+  <data name="ErrorMessage_PortProfileNameInvalid" xml:space="preserve">
+    <value>The name must not contain ";" and must not be a port or port range.</value>
+  </data>
 </root>

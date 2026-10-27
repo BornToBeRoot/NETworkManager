@@ -1131,13 +1131,14 @@ public class RunCommandViewModel : ViewModelBase
 
     /// <summary>
     ///     Port profiles of the Port Scanner (e.g. "Webserver") that contain the typed word, if no ports were entered
-    ///     yet.
+    ///     yet. The ports can be a list of ports and port profiles (e.g. "webserver;database;22"), the last entry is
+    ///     completed.
     /// </summary>
     private IEnumerable<RunCommandSuggestion> GetPortProfileSuggestions()
     {
         return GetArgumentValueSuggestions(RunCommandArgument.Ports,
             RunCommandManager.GetPortProfiles().Select(x => (x.Name, x.Ports)), RunCommandSuggestionKind.PortProfile,
-            Strings.PortProfiles);
+            Strings.PortProfiles, isList: true);
     }
 
     /// <summary>
@@ -1159,24 +1160,34 @@ public class RunCommandViewModel : ViewModelBase
     /// <param name="values">Names and descriptions of the values.</param>
     /// <param name="kind">Kind of the suggestions.</param>
     /// <param name="group">Group of the suggestions.</param>
+    /// <param name="isList">
+    ///     The argument can be a list separated by ";" (e.g. "webserver;database;22"): the entry after the last ";" is
+    ///     completed. Names with spaces only as the first entry (a value in quotes can't be part of a list).
+    /// </param>
     private IEnumerable<RunCommandSuggestion> GetArgumentValueSuggestions(RunCommandArgument argument,
-        IEnumerable<(string Name, string Description)> values, RunCommandSuggestionKind kind, string group)
+        IEnumerable<(string Name, string Description)> values, RunCommandSuggestionKind kind, string group,
+        bool isList = false)
     {
         if (_result.Command.Argument != argument ||
             _result.Argument != null && !string.Equals(_result.Argument, _result.CurrentWord))
             return [];
 
+        // Entries before the one that is being typed (e.g. "webserver;" of "webserver;dat")
+        var previousEntries = isList ? _result.CurrentWord[..(_result.CurrentWord.LastIndexOf(';') + 1)] : string.Empty;
+        var entry = _result.CurrentWord[previousEntries.Length..];
+
         return values
-            .Where(x => x.Name.Contains(_result.CurrentWord, StringComparison.OrdinalIgnoreCase))
+            .Where(x => x.Name.Contains(entry, StringComparison.OrdinalIgnoreCase) &&
+                        (previousEntries.Length == 0 || !x.Name.Contains(' ')))
             .Select(x => new RunCommandSuggestion
             {
                 Kind = kind,
                 Application = _result.Command.Application,
                 Title = x.Name,
                 Description = x.Description,
-                CompletionText =
-                    _result.InputBeforeCurrentWord + (x.Name.Contains(' ') ? $"\"{x.Name}\"" : x.Name) + " ",
-                Highlight = _result.CurrentWord,
+                CompletionText = _result.InputBeforeCurrentWord + previousEntries +
+                                 (x.Name.Contains(' ') ? $"\"{x.Name}\"" : x.Name) + " ",
+                Highlight = entry,
                 Group = group
             });
     }

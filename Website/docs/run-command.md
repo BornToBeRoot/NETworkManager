@@ -29,7 +29,7 @@ The input is validated like the input field of the feature (e.g. a valid host or
 | Command            | Aliases            | Arguments                           | Example                                  |
 | ------------------ | ------------------ | ----------------------------------- | ---------------------------------------- |
 | `ipscanner`        | `ipscan`           | `<range>`                           | `ipscan 10.0.0.0/24`                     |
-| `portscanner`      | `portscan`         | `<hosts> <ports\|port profile>`     | `portscan 10.0.0.1 22; 80; 443`          |
+| `portscanner`      | `portscan`         | `<hosts> <ports\|port profiles>`    | `portscan 10.0.0.1 webserver;22`         |
 | `pingmonitor`      | `ping`             | `<hosts>`                           | `ping 10.0.0.1; 10.0.0.2`                |
 | `traceroute`       | `trace`, `tracert` | `<host>`                            | `trace borntoberoot.net`                 |
 | `dnslookup`        | `dns`, `nslookup`  | `<hosts> [server] [type]`           | `dns borntoberoot.net 1.1.1.1 aaaa`      |
@@ -56,7 +56,7 @@ All features that accept a target also accept a profile (`@profile`), except the
 - **RDAP:** The type is `domain`, `nameserver`, `tld`, `ip`, `asn` or `entity`. Without a type, it is detected from the query (see [RDAP](./application/rdap.md#example-inputs)).
 - **Subnet Calculator:** A subnet (e.g. `subnet 10.0.0.0/24`) is calculated in **Calculator**. With a new subnet mask or CIDR (e.g. `/26`, `26` or `255.255.255.192`), it is split in **Subnetting**; the new mask must be between the CIDR of the subnet and `/32` (IPv4) or `/128` (IPv6). With a second subnet (e.g. `subnet 10.0.0.0/24 10.0.1.0/24`), the **Wide Subnet** is calculated (IPv4 only).
 - **Lookup:** The first word after the command is the lookup: `oui` (MAC addresses or vendors, e.g. `lookup oui 00:11:22`) or `port` (ports, port ranges or services, e.g. `lookup port 22; 80-90/tcp; ssh`). The rest of the input is the query, so vendors can contain spaces without quotes (e.g. `lookup oui Cisco Systems`). Without a query (e.g. `lookup port`), the lookup is only shown.
-- **Port Scanner:** The ports are required (a new tab has none): ports and port ranges (e.g. `22; 80; 443`, `1-1024`) or the name of a port profile of the Port Scanner (case-insensitive, e.g. `portscan 10.0.0.1 webserver`; a name with spaces in quotes). The port profiles are suggested after the host.
+- **Port Scanner:** The ports are required (a new tab has none): ports and port ranges (e.g. `22; 80; 443`, `1-1024`) and / or names of port profiles of the Port Scanner (case-insensitive, e.g. `portscan 10.0.0.1 webserver` or `portscan 10.0.0.1 webserver;database;22`; a single name with spaces in quotes). The port profiles are suggested after the host, also after a `;`.
 - **SNMP:** Opens a tab with the host; the query is started in the feature (as before), also with `Enter`.
 - **Wake on LAN:** The magic packet is sent to the broadcast address (or the one last used in the feature). If there is no valid broadcast address yet, the MAC address is only filled in. A profile sends the magic packet with its settings.
 

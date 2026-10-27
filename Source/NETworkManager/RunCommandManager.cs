@@ -121,14 +121,6 @@ public static class RunCommandManager
     }
 
     /// <summary>
-    ///     Gets the port profile with the name (case-insensitive), or null if there is none.
-    /// </summary>
-    private static PortProfileInfo GetPortProfile(string name)
-    {
-        return GetPortProfiles().FirstOrDefault(x => string.Equals(x.Name, name, StringComparison.OrdinalIgnoreCase));
-    }
-
-    /// <summary>
     ///     Gets the translated name of the application (or settings) of a command.
     /// </summary>
     /// <param name="command">Command.</param>
@@ -337,7 +329,7 @@ public static class RunCommandManager
         {
             ValidationRule argumentValidator = result.Command.Argument switch
             {
-                RunCommandArgument.Ports => new PortRangeValidator(),
+                RunCommandArgument.Ports => new PortsOrPortProfilesValidator(),
                 RunCommandArgument.Broadcast => new IPv4AddressValidator(),
                 _ => null
             };
@@ -345,8 +337,6 @@ public static class RunCommandManager
             error = result.Command.Argument switch
             {
                 RunCommandArgument.DNSServer => ValidateDNSServer(result.Argument),
-                // A port profile (e.g. "Webserver") or ports
-                RunCommandArgument.Ports when GetPortProfile(result.Argument) != null => null,
                 RunCommandArgument.Subnet => ValidateSubnetArgument(result.Target, result.Argument),
                 _ => Validate(argumentValidator, result.Argument)
             };
@@ -437,11 +427,11 @@ public static class RunCommandManager
                 // Without a type, the DNS lookup uses PTR for IP addresses and its selected type for hosts.
                 QueryType = result.Type != null ? Enum.Parse<QueryType>(result.Type, true) : null
             },
-            // A port profile is used with its ports.
+            // Ports and / or port profiles (e.g. "webserver;8080"), resolved by the Port Scanner (shown as entered).
             ApplicationName.PortScanner => new PortScannerRequest
             {
                 Target = result.Target,
-                Ports = GetPortProfile(result.Argument)?.Ports ?? result.Argument
+                Ports = result.Argument
             },
             ApplicationName.WakeOnLAN => new WakeOnLANRequest { Target = result.Target, Broadcast = result.Argument },
             ApplicationName.RDAP => new RDAPRequest { Target = result.Target, QueryType = GetRDAPQueryType(result.Type) },

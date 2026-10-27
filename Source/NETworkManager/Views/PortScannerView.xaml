@@ -91,7 +91,7 @@
                         <Binding Path="Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                <validators:PortRangeValidator ValidatesOnTargetUpdated="True" />
+                                <validators:PortsOrPortProfilesValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>

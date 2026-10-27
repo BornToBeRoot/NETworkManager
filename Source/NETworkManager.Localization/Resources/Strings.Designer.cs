@@ -4500,6 +4500,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter valid ports, port ranges (1 - 65535) and/or port profiles!.
+        /// </summary>
+        public static string EnterValidPortsOrPortProfiles {
+            get {
+                return ResourceManager.GetString("EnterValidPortsOrPortProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter a valid domain, IP address, AS number or entity handle!.
         /// </summary>
         public static string EnterValidRDAPQuery {
@@ -4613,6 +4622,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ErrorMessage_NameIsAlreadyUsed {
             get {
                 return ResourceManager.GetString("ErrorMessage_NameIsAlreadyUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name must not contain &quot;;&quot; and must not be a port or port range..
+        /// </summary>
+        public static string ErrorMessage_PortProfileNameInvalid {
+            get {
+                return ResourceManager.GetString("ErrorMessage_PortProfileNameInvalid", resourceCulture);
             }
         }
         
