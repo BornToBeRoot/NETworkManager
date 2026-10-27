@@ -198,10 +198,16 @@ public static class HostRangeHelper
     /// </summary>
     /// <param name="hosts">Inputs like "10.0.0.1", "example.com", "10.0.0.0/24" (see <see cref="CreateListFromInput" />).</param>
     /// <param name="dnsResolveHostnamePreferIPv4">Prefer the A record over the AAAA record for hostnames.</param>
+    /// <param name="keepAllHostnames">
+    ///     Keep one entry per hostname for an IP address entered with different hostnames (e.g. the Ping Monitor shows
+    ///     the hostname of the input). Otherwise every IP address is returned once, with the first hostname (e.g. the
+    ///     IP Scanner and the Port Scanner resolve the hostname themselves, a second entry would be scanned again).
+    /// </param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     /// <returns>Sorted, distinct list of hosts and the hostnames that could not be resolved.</returns>
     public static async Task<(List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved)>
-        ResolveAsync(IEnumerable<string> hosts, bool dnsResolveHostnamePreferIPv4, CancellationToken cancellationToken)
+        ResolveAsync(IEnumerable<string> hosts, bool dnsResolveHostnamePreferIPv4, bool keepAllHostnames,
+            CancellationToken cancellationToken)
     {
         var inputs = hosts.ToList();
 
@@ -300,20 +306,20 @@ public static class HostRangeHelper
             }
         }).ConfigureAwait(false);
 
-        return (SortAndRemoveDuplicates(hostsPerInput),
+        return (SortAndRemoveDuplicates(hostsPerInput, keepAllHostnames),
             [.. hostnameNotResolvedPerInput.Where(x => x != null)]);
     }
 
     /// <summary>
     ///     Merges the hosts of all inputs into one list sorted by IP address, with every IP address only once
     ///     (e.g. overlapping ranges). If the same IP address was entered with different hostnames (e.g. two names of
-    ///     one server), every hostname is kept once; an entry without hostname is only kept if there is no entry
-    ///     with a hostname. Entries with the same IP address keep the input order (stable sort), so the result is
+    ///     one server), every hostname is kept once with <paramref name="keepAllHostnames" />, otherwise only the
+    ///     first one; an entry without hostname is only kept if there is no entry with a hostname. Entries with the same IP address keep the input order (stable sort), so the result is
     ///     the same on every run. IPv6 addresses with a different scope id (e.g. "fe80::1%3" and "fe80::1%7",
     ///     two devices on different interfaces) are different hosts.
     /// </summary>
     private static List<(IPAddress ipAddress, string hostname)> SortAndRemoveDuplicates(
-        List<(IPAddress ipAddress, string hostname)>[] hostsPerInput)
+        List<(IPAddress ipAddress, string hostname)>[] hostsPerInput, bool keepAllHostnames)
     {
         var hosts = hostsPerInput.Length == 1 ? hostsPerInput[0] : [.. hostsPerInput.SelectMany(x => x)];
 
@@ -353,7 +359,7 @@ public static class HostRangeHelper
                 .ToList();
 
             if (entriesWithHostname.Count > 0)
-                distinctHosts.AddRange(entriesWithHostname);
+                distinctHosts.AddRange(keepAllHostnames ? entriesWithHostname : [entriesWithHostname[0]]);
             else
                 distinctHosts.Add(sortedHosts[start]);
 

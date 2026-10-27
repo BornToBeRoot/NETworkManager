@@ -681,12 +681,8 @@ public class PortScannerViewModel : ViewModelBase
         try
         {
             hosts = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(Host),
-                SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
-
-            // The scanner doesn't use the hostname of the input (it resolves the hostname via PTR) - an IP address
-            // entered with different hostnames (e.g. two names of one server) would be scanned once per hostname,
-            // with the same result
-            hosts.hosts = [.. hosts.hosts.DistinctBy(x => x.ipAddress)];
+                SettingsManager.Current.Network_ResolveHostnamePreferIPv4, keepAllHostnames: false,
+                _cancellationTokenSource.Token);
 
             ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(Ports);
         }
