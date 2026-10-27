@@ -43,7 +43,7 @@ public static class WebConsoleUrlHelper
 
     /// <summary>
     ///     Creates the URL for a host and a web port: https for 443 / 8443, otherwise http; default ports (80 / 443)
-    ///     are left out, IPv6 addresses in brackets.
+    ///     are left out, IPv6 addresses in brackets, the trailing dot of a hostname is removed.
     /// </summary>
     /// <param name="host">Hostname or IP address.</param>
     /// <param name="port">Port number.</param>
@@ -53,8 +53,17 @@ public static class WebConsoleUrlHelper
         var scheme = port is 443 or 8443 ? "https" : "http";
 
         // The zone id of an IPv6 address has to be encoded ("%" -> "%25", RFC 6874)
-        if (IPAddress.TryParse(host, out var ipAddress) && ipAddress.AddressFamily == AddressFamily.InterNetworkV6)
-            host = $"[{ipAddress.ToString().Replace("%", "%25")}]";
+        if (IPAddress.TryParse(host, out var ipAddress))
+        {
+            if (ipAddress.AddressFamily == AddressFamily.InterNetworkV6)
+                host = $"[{ipAddress.ToString().Replace("%", "%25")}]";
+        }
+        else
+        {
+            // Trim the dot a single-label name still has (e.g. "gateway."), so Windows resolves it like a name typed
+            // by the user (DNS suffix search, LLMNR / NetBIOS) and the name matches the certificate (https)
+            host = host.TrimEnd('.');
+        }
 
         return port is 80 or 443 ? $"{scheme}://{host}/" : $"{scheme}://{host}:{port}/";
     }

@@ -12,6 +12,8 @@ public class WebConsoleUrlHelperTests
     [InlineData("10.0.0.1", 8443, "https://10.0.0.1:8443/")]
     [InlineData("2001:db8::1", 443, "https://[2001:db8::1]/")]
     [InlineData("fe80::1%12", 8080, "http://[fe80::1%2512]:8080/")]
+    [InlineData("gateway.", 80, "http://gateway/")]
+    [InlineData("gateway.", 8443, "https://gateway:8443/")]
     public void CreatesUrlForPort(string host, int port, string expected)
     {
         Assert.Equal(expected, WebConsoleUrlHelper.CreateUrl(host, port));
