@@ -901,7 +901,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads,
             ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
             ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout,
-            ICMPBuffer = new byte[SettingsManager.Current.IPScanner_ICMPBuffer],
+            // Limits of the input (a value edited in the settings file would throw or make every ping fail)
+            ICMPBuffer = new byte[Math.Clamp(SettingsManager.Current.IPScanner_ICMPBuffer, 1,
+                GlobalStaticConfiguration.ICMPBufferMaximum)],
             ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname,
             PortScanEnabled = SettingsManager.Current.IPScanner_PortScanEnabled,
             PortScanPorts = ports,

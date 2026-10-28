@@ -43,6 +43,9 @@ public static class GlobalStaticConfiguration
     // known constant) that are expected to be "close enough" rather than bit-for-bit equal.
     public static double FloatPointFix => 1.0;
 
+    // ICMP config: maximum buffer of a ping (.NET's Ping throws for more than 65500 bytes)
+    public static int ICMPBufferMaximum => 65500;
+
     // Profile config
     public static bool Profile_TagsMatchAny => true;
     public static bool Profile_ExpandProfileView => true;
