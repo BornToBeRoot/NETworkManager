@@ -154,6 +154,48 @@ public static class DNSServer
     }
 
     /// <summary>
+    ///     Converts a DNS server input (e.g. of a profile or group) to the values that are saved: the servers (DNS
+    ///     server profiles replaced by their servers, see <see cref="ReplaceProfilesByServers" />, used if a DNS server
+    ///     profile can't be found later, e.g. a profile file from another computer) and the input with references (see
+    ///     <see cref="EncodeReferences" />).
+    /// </summary>
+    /// <param name="input">DNS server input.</param>
+    /// <param name="profiles">DNS server profiles.</param>
+    /// <returns>Servers and DNS server input with references (null if it contains no DNS server profile).</returns>
+    public static (string DNSServer, string DNSServerInput) Encode(string input,
+        IEnumerable<DNSServerConnectionInfoProfile> profiles)
+    {
+        var profileList = profiles.ToList();
+
+        return (ReplaceProfilesByServers(input?.Trim(), profileList), EncodeReferences(input, profileList));
+    }
+
+    /// <summary>
+    ///     Converts the saved values (see <see cref="Encode" />) back to the DNS server input: the DNS server profiles
+    ///     with their current name (also after a rename), or the saved servers if a DNS server profile can't be found.
+    /// </summary>
+    /// <param name="dnsServer">Saved servers.</param>
+    /// <param name="dnsServerInput">Saved DNS server input with references.</param>
+    /// <param name="profiles">DNS server profiles.</param>
+    /// <param name="dnsServerNotFound">True if a DNS server profile can't be found.</param>
+    /// <returns>DNS server input.</returns>
+    public static string Decode(string dnsServer, string dnsServerInput,
+        IEnumerable<DNSServerConnectionInfoProfile> profiles, out bool dnsServerNotFound)
+    {
+        dnsServerNotFound = false;
+
+        if (string.IsNullOrEmpty(dnsServerInput))
+            return dnsServer;
+
+        if (TryDecodeReferences(dnsServerInput, profiles, out var input))
+            return input;
+
+        dnsServerNotFound = true;
+
+        return dnsServer;
+    }
+
+    /// <summary>
     ///     Replaces the names of DNS server profiles in a DNS server input by their servers (e.g. "Cloudflare; 9.9.9.9"
     ///     -> "1.1.1.1:53; 1.0.0.1:53; 9.9.9.9"), so the input still works without the DNS server profiles (e.g. on another
     ///     computer). The Windows DNS profile and other entries are kept.

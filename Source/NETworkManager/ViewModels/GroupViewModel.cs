@@ -1677,21 +1677,13 @@ public class GroupViewModel : ViewModelBase
 
         // Port Scanner
         PortScanner_OverridePorts = groupInfo.PortScanner_OverridePorts;
-        // Port profiles with their current name (also after a rename). A port profile that can't be found (deleted, or
-        // a profile file from another computer): the ports saved with the group.
-        PortScanner_Ports = PortProfile.TryDecodeReferences(groupInfo.PortScanner_PortsInput,
-            SettingsManager.Current.PortScanner_PortProfiles, out var portScannerPortsInput)
-            ? portScannerPortsInput
-            : groupInfo.PortScanner_Ports;
+        PortScanner_Ports = PortProfile.Decode(groupInfo.PortScanner_Ports, groupInfo.PortScanner_PortsInput,
+            SettingsManager.Current.PortScanner_PortProfiles, out _);
 
         // DNS Lookup
         DNSLookup_OverrideDNSServer = groupInfo.DNSLookup_OverrideDNSServer;
-        // DNS servers with their current name (also after a rename). A DNS server that can't be found (deleted, or a
-        // profile file from another computer): the servers saved with the group.
-        DNSLookup_DNSServer = DNSServer.TryDecodeReferences(groupInfo.DNSLookup_DNSServerInput,
-            SettingsManager.Current.DNSLookup_DNSServers, out var dnsLookupDNSServerInput)
-            ? dnsLookupDNSServerInput
-            : groupInfo.DNSLookup_DNSServer;
+        DNSLookup_DNSServer = DNSServer.Decode(groupInfo.DNSLookup_DNSServer, groupInfo.DNSLookup_DNSServerInput,
+            SettingsManager.Current.DNSLookup_DNSServers, out _);
 
         // Remote Desktop
         RemoteDesktop_UseCredentials = groupInfo.RemoteDesktop_UseCredentials;

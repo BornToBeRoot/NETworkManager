@@ -25,17 +25,7 @@ public static class PortScanner
                 ? (group.PortScanner_Ports, group.PortScanner_PortsInput)
                 : (string.Empty, null);
 
-        portProfileNotFound = false;
-
-        if (string.IsNullOrEmpty(portsInput))
-            return ports;
-
-        if (PortProfile.TryDecodeReferences(portsInput, SettingsManager.Current.PortScanner_PortProfiles,
-                out var decodedPorts))
-            return decodedPorts;
-
-        portProfileNotFound = true;
-
-        return ports;
+        return PortProfile.Decode(ports, portsInput, SettingsManager.Current.PortScanner_PortProfiles,
+            out portProfileNotFound);
     }
 }

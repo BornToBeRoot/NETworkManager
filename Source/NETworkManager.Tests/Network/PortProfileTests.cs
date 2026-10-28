@@ -89,4 +89,49 @@ public class PortProfileTests
     {
         Assert.Equal(isValid, PortProfile.IsValidName(name));
     }
+
+    [Fact]
+    public void Encode_PortsAndReferences()
+    {
+        var (ports, portsInput) = PortProfile.Encode("Webserver; 8080", PortProfiles);
+
+        Assert.Equal("80; 443; 8080", ports);
+        Assert.Equal($"{PortProfiles[0].Id:B}; 8080", portsInput);
+    }
+
+    [Fact]
+    public void Encode_WithoutPortProfile()
+    {
+        var (ports, portsInput) = PortProfile.Encode(" 22; 80 ", PortProfiles);
+
+        Assert.Equal("22; 80", ports);
+        Assert.Null(portsInput);
+    }
+
+    [Fact]
+    public void Decode_CurrentNameAfterRename()
+    {
+        var portProfile = new PortProfileInfo("Web", "80");
+        var (ports, portsInput) = PortProfile.Encode("Web; 22", [portProfile]);
+
+        portProfile.Name = "Web (renamed)";
+
+        Assert.Equal("Web (renamed); 22", PortProfile.Decode(ports, portsInput, [portProfile], out var notFound));
+        Assert.False(notFound);
+    }
+
+    [Fact]
+    public void Decode_SavedPortsWithoutReferences()
+    {
+        Assert.Equal("22; 80", PortProfile.Decode("22; 80", null, PortProfiles, out var notFound));
+        Assert.False(notFound);
+    }
+
+    [Fact]
+    public void Decode_SavedPortsIfPortProfileIsMissing()
+    {
+        Assert.Equal("80; 22", PortProfile.Decode("80; 22", $"{Guid.NewGuid():B}; 22", PortProfiles,
+            out var notFound));
+        Assert.True(notFound);
+    }
 }

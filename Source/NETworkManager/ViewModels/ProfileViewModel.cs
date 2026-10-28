@@ -91,12 +91,8 @@ public class ProfileViewModel : ViewModelBase
         PortScanner_InheritHost = profileInfo.PortScanner_InheritHost;
         PortScanner_Host = profileInfo.PortScanner_Host;
         PortScanner_OverridePorts = profileInfo.PortScanner_OverridePorts;
-        // Port profiles with their current name (also after a rename). A port profile that can't be found (deleted, or
-        // a profile file from another computer): the ports saved with the profile.
-        PortScanner_Ports = PortProfile.TryDecodeReferences(profileInfo.PortScanner_PortsInput,
-            SettingsManager.Current.PortScanner_PortProfiles, out var portScannerPortsInput)
-            ? portScannerPortsInput
-            : profileInfo.PortScanner_Ports;
+        PortScanner_Ports = PortProfile.Decode(profileInfo.PortScanner_Ports, profileInfo.PortScanner_PortsInput,
+            SettingsManager.Current.PortScanner_PortProfiles, out _);
 
         // Ping Monitor
         PingMonitor_Enabled = editMode == ProfileEditMode.Add
@@ -120,12 +116,8 @@ public class ProfileViewModel : ViewModelBase
         DNSLookup_Host = profileInfo.DNSLookup_Host;
         DNSLookup_OverrideDNSServer = profileInfo.DNSLookup_OverrideDNSServer;
 
-        // DNS servers with their current name (also after a rename). A DNS server that can't be found (deleted, or a
-        // profile file from another computer): the servers saved with the profile.
-        DNSLookup_DNSServer = Models.Network.DNSServer.TryDecodeReferences(profileInfo.DNSLookup_DNSServerInput,
-            SettingsManager.Current.DNSLookup_DNSServers, out var dnsLookupDNSServerInput)
-            ? dnsLookupDNSServerInput
-            : profileInfo.DNSLookup_DNSServer;
+        DNSLookup_DNSServer = Models.Network.DNSServer.Decode(profileInfo.DNSLookup_DNSServer,
+            profileInfo.DNSLookup_DNSServerInput, SettingsManager.Current.DNSLookup_DNSServers, out _);
         DNSLookup_OverrideQueryType = profileInfo.DNSLookup_OverrideQueryType;
         DNSLookup_QueryTypes = [.. DNSLookup.QueryTypes.OrderBy(x => x.ToString())];
         DNSLookup_QueryType = DNSLookup_QueryTypes.Contains(profileInfo.DNSLookup_QueryType)

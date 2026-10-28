@@ -71,6 +71,27 @@ public class DNSServerTests
     }
 
     [Fact]
+    public void EncodeAndDecode()
+    {
+        var cloudflare = Profiles.First(x => x.Name == "Cloudflare");
+
+        var (dnsServer, dnsServerInput) = DNSServer.Encode("Cloudflare; 9.9.9.9", Profiles);
+
+        Assert.Equal("1.1.1.1:53; 1.0.0.1:53; 9.9.9.9", dnsServer);
+        Assert.Equal($"{cloudflare.Id:B}; 9.9.9.9", dnsServerInput);
+        Assert.Equal("Cloudflare; 9.9.9.9", DNSServer.Decode(dnsServer, dnsServerInput, Profiles, out var notFound));
+        Assert.False(notFound);
+    }
+
+    [Fact]
+    public void Decode_SavedServersIfProfileIsMissing()
+    {
+        Assert.Equal("1.1.1.1:53", DNSServer.Decode("1.1.1.1:53", $"{System.Guid.NewGuid():B}", Profiles,
+            out var notFound));
+        Assert.True(notFound);
+    }
+
+    [Fact]
     public void ReplaceProfilesByServers()
     {
         Assert.Equal("[Windows DNS]; 1.1.1.1:53; 1.0.0.1:53; 9.9.9.9",

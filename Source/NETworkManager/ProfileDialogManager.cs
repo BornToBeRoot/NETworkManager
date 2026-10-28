@@ -24,6 +24,13 @@ public static class ProfileDialogManager
 
     private static ProfileInfo ParseProfileInfo(ProfileViewModel instance)
     {
+        // Port profiles and DNS servers by name are referenced by their ID (found after a rename), their ports / servers
+        // are saved as well (used if one can't be found, e.g. a profile file from another computer)
+        var (portScannerPorts, portScannerPortsInput) = PortProfile.Encode(instance.PortScanner_Ports,
+            SettingsManager.Current.PortScanner_PortProfiles);
+        var (dnsLookupDNSServer, dnsLookupDNSServerInput) = DNSServer.Encode(instance.DNSLookup_DNSServer,
+            SettingsManager.Current.DNSLookup_DNSServers);
+
         return new ProfileInfo
         {
             Name = instance.Name.Trim(),
@@ -56,14 +63,8 @@ public static class ProfileDialogManager
                 ? instance.Host?.Trim()
                 : instance.PortScanner_Host?.Trim(),
             PortScanner_OverridePorts = instance.PortScanner_OverridePorts,
-            // Port profiles are referenced by their ID (found after a rename), their ports are saved as well (used if
-            // a port profile can't be found, e.g. a profile file from another computer)
-            PortScanner_Ports = PortProfile.TryResolvePorts(instance.PortScanner_Ports,
-                SettingsManager.Current.PortScanner_PortProfiles, out var portScannerPorts)
-                ? portScannerPorts
-                : instance.PortScanner_Ports?.Trim(),
-            PortScanner_PortsInput = PortProfile.EncodeReferences(instance.PortScanner_Ports,
-                SettingsManager.Current.PortScanner_PortProfiles),
+            PortScanner_Ports = portScannerPorts,
+            PortScanner_PortsInput = portScannerPortsInput,
 
             // Ping Monitor
             PingMonitor_Enabled = instance.PingMonitor_Enabled,
@@ -83,12 +84,8 @@ public static class ProfileDialogManager
             DNSLookup_InheritHost = instance.DNSLookup_InheritHost,
             DNSLookup_Host = instance.DNSLookup_InheritHost ? instance.Host?.Trim() : instance.DNSLookup_Host?.Trim(),
             DNSLookup_OverrideDNSServer = instance.DNSLookup_OverrideDNSServer,
-            // DNS servers by name are referenced by their ID (found after a rename), their servers are saved as well
-            // (used if a DNS server can't be found, e.g. a profile file from another computer)
-            DNSLookup_DNSServer = DNSServer.ReplaceProfilesByServers(instance.DNSLookup_DNSServer?.Trim(),
-                SettingsManager.Current.DNSLookup_DNSServers),
-            DNSLookup_DNSServerInput = DNSServer.EncodeReferences(instance.DNSLookup_DNSServer,
-                SettingsManager.Current.DNSLookup_DNSServers),
+            DNSLookup_DNSServer = dnsLookupDNSServer,
+            DNSLookup_DNSServerInput = dnsLookupDNSServerInput,
             DNSLookup_OverrideQueryType = instance.DNSLookup_OverrideQueryType,
             DNSLookup_QueryType = instance.DNSLookup_QueryType,
 
@@ -318,6 +315,13 @@ public static class ProfileDialogManager
                     profile.Group = name;
         //else
         //    Debug.WriteLine("Cannot update group in profiles");
+
+        // Like the profile (see ParseProfileInfo)
+        var (portScannerPorts, portScannerPortsInput) = PortProfile.Encode(instance.PortScanner_Ports,
+            SettingsManager.Current.PortScanner_PortProfiles);
+        var (dnsLookupDNSServer, dnsLookupDNSServerInput) = DNSServer.Encode(instance.DNSLookup_DNSServer,
+            SettingsManager.Current.DNSLookup_DNSServers);
+
         return new GroupInfo
         {
             Name = name,
@@ -325,21 +329,15 @@ public static class ProfileDialogManager
 
             Profiles = profiles,
 
-            // Port Scanner - like the profile (see ParseProfileInfo)
+            // Port Scanner
             PortScanner_OverridePorts = instance.PortScanner_OverridePorts,
-            PortScanner_Ports = PortProfile.TryResolvePorts(instance.PortScanner_Ports,
-                SettingsManager.Current.PortScanner_PortProfiles, out var portScannerPorts)
-                ? portScannerPorts
-                : instance.PortScanner_Ports?.Trim(),
-            PortScanner_PortsInput = PortProfile.EncodeReferences(instance.PortScanner_Ports,
-                SettingsManager.Current.PortScanner_PortProfiles),
+            PortScanner_Ports = portScannerPorts,
+            PortScanner_PortsInput = portScannerPortsInput,
 
-            // DNS Lookup - like the profile (see ParseProfileInfo)
+            // DNS Lookup
             DNSLookup_OverrideDNSServer = instance.DNSLookup_OverrideDNSServer,
-            DNSLookup_DNSServer = DNSServer.ReplaceProfilesByServers(instance.DNSLookup_DNSServer?.Trim(),
-                SettingsManager.Current.DNSLookup_DNSServers),
-            DNSLookup_DNSServerInput = DNSServer.EncodeReferences(instance.DNSLookup_DNSServer,
-                SettingsManager.Current.DNSLookup_DNSServers),
+            DNSLookup_DNSServer = dnsLookupDNSServer,
+            DNSLookup_DNSServerInput = dnsLookupDNSServerInput,
 
             // Remote Desktop
             RemoteDesktop_UseCredentials = instance.RemoteDesktop_UseCredentials,

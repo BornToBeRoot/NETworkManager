@@ -28,21 +28,15 @@ public static class DNSLookup
                 ? (group.DNSLookup_DNSServer, group.DNSLookup_DNSServerInput)
                 : (null, null);
 
-        dnsServerNotFound = false;
-
         if (string.IsNullOrWhiteSpace(dnsServer))
+        {
+            dnsServerNotFound = false;
+
             return null;
+        }
 
-        if (string.IsNullOrEmpty(dnsServerInput))
-            return dnsServer;
-
-        if (DNSServer.TryDecodeReferences(dnsServerInput, SettingsManager.Current.DNSLookup_DNSServers,
-                out var decodedDNSServer))
-            return decodedDNSServer;
-
-        dnsServerNotFound = true;
-
-        return dnsServer;
+        return DNSServer.Decode(dnsServer, dnsServerInput, SettingsManager.Current.DNSLookup_DNSServers,
+            out dnsServerNotFound);
     }
 
     /// <summary>
