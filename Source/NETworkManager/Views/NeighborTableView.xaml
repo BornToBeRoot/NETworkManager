@@ -23,6 +23,7 @@
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:PhysicalAddressToStringConverter x:Key="PhysicalAddressToStringConverter" />
         <converters:NeighborStateToStringConverter x:Key="NeighborStateToStringConverter" />
+        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Key="F5" Command="{Binding RefreshCommand}" />
@@ -114,7 +115,7 @@
                                               Sorting="DataGrid_OnSorting"
                                               wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                     <controls:MultiSelectDataGrid.Resources>
-                        <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                        <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.DeleteEntry}"
                                       Command="{Binding DeleteEntryCommand}"
                                       wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NeighborTableAdminMessage}"
@@ -163,7 +164,7 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                         </ContextMenu>
-                        <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                        <ContextMenu x:Key="MultiRowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.ExportDots}"
                                       Command="{Binding ExportCommand}">
                                 <MenuItem.Icon>
