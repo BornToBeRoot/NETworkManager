@@ -856,7 +856,9 @@ public static class SettingsManager
             Current.PortScanner_Timeout = GlobalStaticConfiguration.PortScanner_Timeout;
         }
 
-        if (Current.IPScanner_PortScanPorts == "22; 53; 80; 139; 389; 636; 443; 445; 3389")
+        // Old defaults (until 2026.7.7.0 and of the pre-releases since 2026.9.7.0)
+        if (Current.IPScanner_PortScanPorts is "22; 53; 80; 139; 389; 636; 443; 445; 3389"
+            or "22; 53; 80; 135; 139; 389; 636; 443; 445; 3389; 9100")
         {
             Log.Info($"Update \"IPScanner_PortScanPorts\" to \"{GlobalStaticConfiguration.IPScanner_PortScanPorts}\"...");
             Current.IPScanner_PortScanPorts = GlobalStaticConfiguration.IPScanner_PortScanPorts;

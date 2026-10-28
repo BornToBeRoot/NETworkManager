@@ -142,7 +142,7 @@ public static class GlobalStaticConfiguration
     public static int IPScanner_ICMPBuffer => 32;
     public static bool IPScanner_ResolveHostname => true;
     public static bool IPScanner_PortScanEnabled => true;
-    public static string IPScanner_PortScanPorts => "22; 53; 80; 135; 139; 389; 636; 443; 445; 3389; 9100";
+    public static string IPScanner_PortScanPorts => "22; 53; 80; 135; 139; 389; 443; 445; 554; 631; 636; 3389; 8080; 8443; 9100; 62078";
     public static int IPScanner_PortScanTimeout => 2000;
     public static int IPScanner_PortScanAttempts => 1;
     public static int IPScanner_MaxHostThreads => 128;

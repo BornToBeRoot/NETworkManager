@@ -204,7 +204,7 @@ List of TCP ports to scan for each IP address. The button next to the input rest
 
 **Type:** `String`
 
-**Default:** `22; 53; 80; 135; 139; 389; 636; 443; 445; 3389; 9100`
+**Default:** `22; 53; 80; 135; 139; 389; 443; 445; 554; 631; 636; 3389; 8080; 8443; 9100; 62078`
 
 :::note
 
