@@ -44,11 +44,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="0" Width="Auto" Height="48" HorizontalAlignment="Center"
-                               VerticalAlignment="Center">
-                            <Image.Source>
-                                <BitmapImage UriSource="{Binding FlagUri}" />
-                            </Image.Source>
-                        </Image>
+                               VerticalAlignment="Center" Source="{Binding FlagUri}" />
                         <Grid Grid.Column="1" Margin="10,5,0,5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
