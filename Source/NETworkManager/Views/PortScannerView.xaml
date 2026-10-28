@@ -275,10 +275,10 @@
                                       wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <controls:MultiSelectDataGrid.Resources>
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-                <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.Rescan}"
                               Command="{Binding Path=RescanSelectedPortsCommand}"
-                              IsEnabled="{Binding Path=Data.IsRunning, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseConverter}}">
+                              IsEnabled="{Binding Path=IsRunning, Converter={StaticResource BooleanReverseConverter}}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -330,7 +330,7 @@
                         </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Hostname}"
                                   Command="{Binding PerformDNSLookupHostnameCommand}"
-                                  IsEnabled="{Binding Path=Data.SelectedResult.Hostname, Source={StaticResource BindingProxy}, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
+                                  IsEnabled="{Binding Path=SelectedResult.Hostname, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -360,7 +360,7 @@
                         </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Hostname}"
                                   Command="{Binding PerformRDAPQueryHostnameCommand}"
-                                  IsEnabled="{Binding Path=Data.SelectedResult.Hostname, Source={StaticResource BindingProxy}, Converter={StaticResource HostnameHasDomainToBooleanConverter}}">
+                                  IsEnabled="{Binding Path=SelectedResult.Hostname, Converter={StaticResource HostnameHasDomainToBooleanConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -457,7 +457,7 @@
                         <MenuItem Header="{x:Static Member=localization:Strings.Hostname}"
                                   Command="{Binding Path=CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.Hostname, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
-                                  Visibility="{Binding Path=Data.ScanOptions.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static Member=localization:Strings.Port}"
                                   Command="{Binding Path=CopyDataToClipboardCommand}"
@@ -490,10 +490,10 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
-                <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                <ContextMenu x:Key="MultiRowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.Rescan}"
                               Command="{Binding Path=RescanSelectedPortsCommand}"
-                              IsEnabled="{Binding Path=Data.IsRunning, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseConverter}}">
+                              IsEnabled="{Binding Path=IsRunning, Converter={StaticResource BooleanReverseConverter}}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -518,7 +518,7 @@
                         <MenuItem Header="{x:Static Member=localization:Strings.Hostname}"
                                   Command="{Binding Path=CopySelectedResultsCommand}"
                                   CommandParameter="Hostname"
-                                  Visibility="{Binding Path=Data.ScanOptions.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static Member=localization:Strings.Port}"
                                   Command="{Binding Path=CopySelectedResultsCommand}"

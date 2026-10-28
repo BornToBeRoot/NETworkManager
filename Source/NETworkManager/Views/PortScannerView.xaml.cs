@@ -46,12 +46,6 @@ public partial class PortScannerView : IDragablzTabItem
         _viewModel.OnClose();
     }
 
-    private void ContextMenu_Opened(object sender, RoutedEventArgs e)
-    {
-        if (sender is ContextMenu menu)
-            menu.DataContext = _viewModel;
-    }
-
     private void DataGrid_OnSorting(object sender, DataGridSortingEventArgs e)
     {
         // IPAddress doesn't implement IComparable - the built-in sort would throw as soon as
