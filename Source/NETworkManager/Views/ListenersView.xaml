@@ -19,6 +19,7 @@
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:TimeUnitToStringConverter x:Key="TimeUnitToStringConverter" />
+        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
         <TabItem Header="{x:Static localization:Strings.Listeners}">
@@ -104,7 +105,7 @@
                                               Sorting="DataGrid_OnSorting"
                                               wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                     <controls:MultiSelectDataGrid.Resources>
-                        <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                        <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.CopyDots}"
                                       Style="{StaticResource ResourceKey=CopyMenuItem}">
                                 <MenuItem Header="{x:Static Member=localization:Strings.Protocol}"
@@ -131,7 +132,7 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                         </ContextMenu>
-                        <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                        <ContextMenu x:Key="MultiRowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.ExportDots}"
                                       Command="{Binding ExportCommand}">
                                 <MenuItem.Icon>
