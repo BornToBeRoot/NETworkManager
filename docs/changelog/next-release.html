@@ -11,7 +11,7 @@
 
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"NETworkManager","applicationCategory":"NetworkApplication","operatingSystem":"Windows 10, Windows 11, Windows Server","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"A powerful open-source tool for managing networks and troubleshooting network problems. Features IP Scanner, Port Scanner, Ping Monitor, Traceroute, DNS Lookup, Remote Desktop, PowerShell, PuTTY (SSH), and more.","url":"https://borntoberoot.net/NETworkManager","downloadUrl":"https://borntoberoot.net/NETworkManager/download","author":{"@type":"Person","name":"BornToBeRoot","url":"https://github.com/BornToBeRoot"},"license":"https://github.com/BornToBeRoot/NETworkManager/blob/main/LICENSE"}</script><link rel="stylesheet" href="/NETworkManager/assets/css/styles.9d036de8.css">
-<script src="/NETworkManager/assets/js/runtime~main.d2fd284b.js" defer="defer"></script>
+<script src="/NETworkManager/assets/js/runtime~main.1110d503.js" defer="defer"></script>
 <script src="/NETworkManager/assets/js/main.c55285d1.js" defer="defer"></script>
 </head>
 <body>
@@ -372,9 +372,14 @@ Release date: <strong>xx.xx.2026</strong></p>
 <ul>
 <li class="">Fixed columns that couldn&#x27;t be made wider than the window (by dragging or double-clicking the gripper) in the OUI and port lookup. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. <a href="https://github.com/BornToBeRoot/NETworkManager/issues/3557" target="_blank" rel="noopener noreferrer" class="">#3557</a></li>
 </ul>
+<p><strong>Web Console</strong></p>
+<ul>
+<li class="">Fixed no message being shown after <strong>Delete browsing data</strong> in the settings (whether the browsing data was deleted or an error occurred), and an error (e.g. the WebView2 runtime is not installed) not being handled.</li>
+</ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="dependencies-refactoring--documentation">Dependencies, Refactoring &amp; Documentation<a href="#dependencies-refactoring--documentation" class="hash-link" aria-label="Direct link to Dependencies, Refactoring &amp; Documentation" title="Direct link to Dependencies, Refactoring &amp; Documentation" translate="no">​</a></h2>
 <ul>
 <li class="">Code cleanup &amp; refactoring</li>
+<li class="">Context menus of lists (results, profiles, settings) get the view model in XAML instead of when they are opened. Their items, and menu items that are created outside of a menu (e.g. the extra items of the profile context menu), no longer cause XAML binding errors every time a list is filled, which hid real binding errors.</li>
 <li class="">Converted the <strong>IP Scanner</strong> and <strong>Port Scanner</strong> engines from <code>Parallel.ForEach</code> with blocking calls to genuinely asynchronous <code>Parallel.ForEachAsync</code>, removing the risk of exhausting the application&#x27;s ThreadPool at high concurrency settings. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3564" target="_blank" rel="noopener noreferrer" class="">#3564</a></li>
 <li class="">The TCP port probe (<strong>IP Scanner</strong>, <strong>Port Scanner</strong>) and the NetBIOS request (<strong>IP Scanner</strong>) report a refused connection, a timeout or no answer as result instead of throwing an exception for each of them (thousands per scan). Faster, and the application no longer lags while scanning with a debugger attached. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3653" target="_blank" rel="noopener noreferrer" class="">#3653</a></li>
 <li class="">Refactored the <strong>Network Connection</strong> widget&#x27;s check logic to reduce duplicated code and share the local IP address detection between the Computer and Router checks instead of detecting it twice. <a href="https://github.com/BornToBeRoot/NETworkManager/pull/3553" target="_blank" rel="noopener noreferrer" class="">#3553</a></li>
