@@ -604,12 +604,14 @@
                     </ListBox>
                 </ScrollViewer>
             </Border>
+            <!-- The tab of the view selected in the list (by its name, see the Tag of the tabs) -->
             <TabControl Grid.Column="1" Margin="10"
-                        SelectedIndex="{Binding ElementName=ListBoxViews, Path=SelectedIndex}">
+                        SelectedValuePath="Tag"
+                        SelectedValue="{Binding ElementName=ListBoxViews, Path=SelectedItem.(profiles:GroupViewInfo.Name), Mode=OneWay}">
                 <TabControl.Resources>
                     <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource ProfileTabItem}" />
                 </TabControl.Resources>
-                <TabItem Header="{x:Static localization:Strings.General}">
+                <TabItem Header="{x:Static localization:Strings.General}" Tag="{x:Static profiles:GroupViewName.General}">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                         <StackPanel>
                             <Grid>
@@ -666,7 +668,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="{x:Static localization:Strings.PortScanner}">
+                <TabItem Header="{x:Static localization:Strings.PortScanner}" Tag="{x:Static profiles:GroupViewName.PortScanner}">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                         <StackPanel Margin="0,0,0,20">
                             <Grid>
@@ -719,7 +721,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="{x:Static localization:Strings.DNSLookup}">
+                <TabItem Header="{x:Static localization:Strings.DNSLookup}" Tag="{x:Static profiles:GroupViewName.DNSLookup}">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                         <StackPanel Margin="0,0,0,20">
                             <Grid>
@@ -774,7 +776,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="{x:Static localization:Strings.RemoteDesktop}">
+                <TabItem Header="{x:Static localization:Strings.RemoteDesktop}" Tag="{x:Static profiles:GroupViewName.RemoteDesktop}">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                         <StackPanel>
                             <Grid>
@@ -1525,7 +1527,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="{x:Static localization:Strings.PowerShell}">
+                <TabItem Header="{x:Static localization:Strings.PowerShell}" Tag="{x:Static profiles:GroupViewName.PowerShell}">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                         <StackPanel Margin="0,0,0,20">
                             <Grid>
@@ -1628,7 +1630,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="{x:Static localization:Strings.PuTTY}">
+                <TabItem Header="{x:Static localization:Strings.PuTTY}" Tag="{x:Static profiles:GroupViewName.PuTTY}">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                         <StackPanel>
                             <Grid>
@@ -1834,7 +1836,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="{x:Static localization:Strings.TigerVNC}">
+                <TabItem Header="{x:Static localization:Strings.TigerVNC}" Tag="{x:Static profiles:GroupViewName.TigerVNC}">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                         <StackPanel Margin="0,0,0,20">
                             <Grid>
@@ -1880,7 +1882,7 @@
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="{x:Static localization:Strings.SNMP}">
+                <TabItem Header="{x:Static localization:Strings.SNMP}" Tag="{x:Static profiles:GroupViewName.SNMP}">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                         <StackPanel Margin="0,0,0,20">
                             <Grid>
