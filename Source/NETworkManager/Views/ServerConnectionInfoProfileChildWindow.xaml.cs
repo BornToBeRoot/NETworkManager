@@ -35,12 +35,6 @@ public partial class ServerConnectionInfoProfileChildWindow
         }));
     }
 
-    private void ContextMenu_Opened(object sender, RoutedEventArgs e)
-    {
-        if (sender is ContextMenu menu)
-            menu.DataContext = (ServerConnectionInfoProfileViewModel)DataContext;
-    }
-
     /// <summary>
     ///     Pressing enter in the server or port textbox adds the server (like clicking the Add button)
     ///     instead of triggering the window's default button (Save), as long as a server is entered.
