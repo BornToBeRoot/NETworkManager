@@ -40,12 +40,6 @@ public partial class SNMPView : IDragablzTabItem
         _viewModel.OnClose();
     }
 
-    private void ContextMenu_Opened(object sender, RoutedEventArgs e)
-    {
-        if (sender is ContextMenu menu)
-            menu.DataContext = _viewModel;
-    }
-
     private void DataGrid_OnSorting(object sender, DataGridSortingEventArgs e)
     {
         var column = e.Column;
