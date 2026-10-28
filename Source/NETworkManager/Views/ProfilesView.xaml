@@ -19,6 +19,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
+        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <Grid>
         <Grid Grid.Column="0" Grid.Row="0"
@@ -66,7 +67,7 @@
                               SelectedItem="{Binding SelectedGroup}"
                               wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                         <DataGrid.Resources>
-                            <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                            <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                                 <MenuItem Header="{x:Static localization:Strings.EditDots}"
                                           Command="{Binding EditGroupCommand}">
                                     <MenuItem.Icon>
@@ -344,7 +345,7 @@
                                               VirtualizingPanel.VirtualizationMode="Recycling"
                                               VirtualizingPanel.ScrollUnit="Pixel">
                     <DataGrid.Resources>
-                        <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                        <ContextMenu x:Key="MultiRowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.Delete}"
                                       Command="{Binding DeleteProfileCommand}">
                                 <MenuItem.Icon>
@@ -356,7 +357,7 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                         </ContextMenu>
-                        <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                        <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.EditDots}"
                                       Command="{Binding EditProfileCommand}">
                                 <MenuItem.Icon>
