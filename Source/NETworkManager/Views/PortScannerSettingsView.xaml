@@ -14,6 +14,7 @@
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerSettingsViewModel}">
     <UserControl.Resources>
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
+        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="{x:Static localization:Strings.PortScanner}" Style="{StaticResource HeaderTextBlock}" />
@@ -25,7 +26,7 @@
                                       Height="200" Margin="0,0,0,10"
                                       wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <DataGrid.Resources>
-                <ContextMenu x:Key="MultiRowContextMenu" Opened="RowContextMenu_OnOpened" MinWidth="150">
+                <ContextMenu x:Key="MultiRowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.Delete}"
                               Command="{Binding DeletePortProfileCommand}">
                         <MenuItem.Icon>
@@ -37,7 +38,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
-                <ContextMenu x:Key="RowContextMenu" Opened="RowContextMenu_OnOpened" MinWidth="150">
+                <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.EditDots}"
                               Command="{Binding EditPortProfileCommand}">
                         <MenuItem.Icon>
