@@ -28,6 +28,7 @@
         <converters:StringIsNotNullOrEmptyToBooleanConverter x:Key="StringIsNotNullOrEmptyToBooleanConverter" />
         <converters:HostnameHasDomainToBooleanConverter x:Key="HostnameHasDomainToBooleanConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
+        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <!--
     No outer Margin here on purpose (unlike most other views): the map at the bottom of Row 3
@@ -171,7 +172,7 @@
                                       SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <controls:MultiSelectDataGrid.Resources>
-                <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.IPScanner}"
                               Command="{Binding RedirectDataToApplicationCommand}"
                               CommandParameter="{x:Static Member=models:ApplicationName.IPScanner}">
@@ -458,7 +459,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
-                <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                <ContextMenu x:Key="MultiRowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16"
