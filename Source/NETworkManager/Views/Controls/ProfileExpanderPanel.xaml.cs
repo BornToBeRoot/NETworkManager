@@ -38,14 +38,6 @@ public partial class ProfileExpanderPanel
         set => SetValue(ProfileContextMenuExtraItemsProperty, value);
     }
 
-    private void ContextMenu_Opened(object sender, RoutedEventArgs e)
-    {
-        // The context menu is a separate visual root (popup) and does not inherit the DataContext of the
-        // ListBoxItem it was opened from - fix it up here so its command bindings resolve against the
-        // tool's view model, same as the panel's own DataContext.
-        if (sender is ContextMenu menu)
-            menu.DataContext = DataContext;
-    }
 
     public static readonly DependencyProperty RunProfileCommandProperty = DependencyProperty.Register(
         nameof(RunProfileCommand), typeof(ICommand), typeof(ProfileExpanderPanel));

@@ -365,14 +365,12 @@
                                BasedOn="{StaticResource ResourceKey=MahApps.Styles.ListBoxItem}">
                             <Setter Property="ContextMenu">
                                 <Setter.Value>
+                                    <!-- The tool's view model (like the panel's own DataContext), not the profile of the
+                                         ListBoxItem the menu would inherit - also before it is opened -->
                                     <ContextMenu MinWidth="150"
+                                                 Style="{StaticResource DefaultContextMenu}"
+                                                 DataContext="{Binding Path=Data, Source={StaticResource BindingProxy}}"
                                                  IsOpen="{Binding Path=Data.ProfileContextMenuIsOpen, Source={StaticResource PanelProxy}, Mode=TwoWay}">
-                                        <ContextMenu.Style>
-                                            <Style TargetType="{x:Type TypeName=ContextMenu}"
-                                                   BasedOn="{StaticResource DefaultContextMenu}">
-                                                <EventSetter Event="Opened" Handler="ContextMenu_Opened" />
-                                            </Style>
-                                        </ContextMenu.Style>
                                         <ContextMenu.ItemsSource>
                                             <CompositeCollection>
                                                 <CollectionContainer
