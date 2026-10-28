@@ -269,10 +269,10 @@
                                       VirtualizingPanel.ScrollUnit="Pixel">
             <controls:MultiSelectDataGrid.Resources>
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-                <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.Rescan}"
                               Command="{Binding RescanSelectedHostsCommand}"
-                              IsEnabled="{Binding Path=Data.IsRunning, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseConverter}}">
+                              IsEnabled="{Binding Path=IsRunning, Converter={StaticResource BooleanReverseConverter}}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -335,7 +335,7 @@
                         </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Hostname}"
                                   Command="{Binding PerformDNSLookupHostnameCommand}"
-                                  IsEnabled="{Binding Path=Data.SelectedResult.DNSHostname, Source={StaticResource BindingProxy}, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
+                                  IsEnabled="{Binding Path=SelectedResult.DNSHostname, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -365,7 +365,7 @@
                         </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Hostname}"
                                   Command="{Binding PerformRDAPQueryHostnameCommand}"
-                                  IsEnabled="{Binding Path=Data.SelectedResult.DNSHostname, Source={StaticResource BindingProxy}, Converter={StaticResource HostnameHasDomainToBooleanConverter}}">
+                                  IsEnabled="{Binding Path=SelectedResult.DNSHostname, Converter={StaticResource HostnameHasDomainToBooleanConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                     <Rectangle.OpacityMask>
@@ -442,7 +442,7 @@
                     </MenuItem>
                     <MenuItem Header="{x:Static localization:Strings.WakeOnLAN}"
                               Command="{Binding WakeOnLANCommand}"
-                              IsEnabled="{Binding Path=Data.SelectedResult.MACAddress, Source={StaticResource BindingProxy}, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
+                              IsEnabled="{Binding Path=SelectedResult.MACAddress, Converter={StaticResource StringIsNotNullOrEmptyToBooleanConverter}}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -495,10 +495,8 @@
                                   Style="{StaticResource ResourceKey=CopyMenuItem}">
                             <MenuItem.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
-                                    <Binding Source="{StaticResource BindingProxy}"
-                                             Path="Data.ScanOptions.ResolveHostname" />
-                                    <Binding Source="{StaticResource BindingProxy}"
-                                             Path="Data.ScanOptions.NetBIOSEnabled" />
+                                    <Binding Path="ScanOptions.ResolveHostname" />
+                                    <Binding Path="ScanOptions.NetBIOSEnabled" />
                                 </MultiBinding>
                             </MenuItem.Visibility>
                         </MenuItem>
@@ -506,7 +504,7 @@
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.IsAnyPortOpen, Converter={StaticResource PortOpenToStringConverter}}"
                                   IsEnabled="{Binding Path=SelectedResult.IsPortScanPending, Converter={StaticResource BooleanReverseConverter}}"
-                                  Visibility="{Binding Path=Data.ScanOptions.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.PortScanEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.PingStatus}"
                                   Command="{Binding CopyDataToClipboardCommand}"
@@ -519,10 +517,8 @@
                                   Style="{StaticResource ResourceKey=CopyMenuItem}">
                             <MenuItem.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
-                                    <Binding Source="{StaticResource BindingProxy}"
-                                             Path="Data.ScanOptions.ResolveMACAddress" />
-                                    <Binding Source="{StaticResource BindingProxy}"
-                                             Path="Data.ScanOptions.NetBIOSEnabled" />
+                                    <Binding Path="ScanOptions.ResolveMACAddress" />
+                                    <Binding Path="ScanOptions.NetBIOSEnabled" />
                                 </MultiBinding>
                             </MenuItem.Visibility>
                         </MenuItem>
@@ -532,17 +528,15 @@
                                   Style="{StaticResource ResourceKey=CopyMenuItem}">
                             <MenuItem.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
-                                    <Binding Source="{StaticResource BindingProxy}"
-                                             Path="Data.ScanOptions.ResolveMACAddress" />
-                                    <Binding Source="{StaticResource BindingProxy}"
-                                             Path="Data.ScanOptions.NetBIOSEnabled" />
+                                    <Binding Path="ScanOptions.ResolveMACAddress" />
+                                    <Binding Path="ScanOptions.NetBIOSEnabled" />
                                 </MultiBinding>
                             </MenuItem.Visibility>
                         </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Ports}"
                                   Command="{Binding CopySelectedPortsCommand}"
                                   IsEnabled="{Binding Path=SelectedResult.IsPortScanPending, Converter={StaticResource BooleanReverseConverter}}"
-                                  Visibility="{Binding Path=Data.ScanOptions.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.PortScanEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.Timestamp}"
                                   Command="{Binding CopyDataToClipboardCommand}"
@@ -575,10 +569,10 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
-                <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                <ContextMenu x:Key="MultiRowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static localization:Strings.Rescan}"
                               Command="{Binding RescanSelectedHostsCommand}"
-                              IsEnabled="{Binding Path=Data.IsRunning, Source={StaticResource BindingProxy}, Converter={StaticResource BooleanReverseConverter}}">
+                              IsEnabled="{Binding Path=IsRunning, Converter={StaticResource BooleanReverseConverter}}">
                         <MenuItem.Icon>
                             <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
                                 <Rectangle.OpacityMask>
@@ -606,10 +600,8 @@
                                   Style="{StaticResource ResourceKey=CopyMenuItem}">
                             <MenuItem.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
-                                    <Binding Source="{StaticResource BindingProxy}"
-                                             Path="Data.ScanOptions.ResolveHostname" />
-                                    <Binding Source="{StaticResource BindingProxy}"
-                                             Path="Data.ScanOptions.NetBIOSEnabled" />
+                                    <Binding Path="ScanOptions.ResolveHostname" />
+                                    <Binding Path="ScanOptions.NetBIOSEnabled" />
                                 </MultiBinding>
                             </MenuItem.Visibility>
                         </MenuItem>
@@ -619,10 +611,8 @@
                                   Style="{StaticResource ResourceKey=CopyMenuItem}">
                             <MenuItem.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
-                                    <Binding Source="{StaticResource BindingProxy}"
-                                             Path="Data.ScanOptions.ResolveMACAddress" />
-                                    <Binding Source="{StaticResource BindingProxy}"
-                                             Path="Data.ScanOptions.NetBIOSEnabled" />
+                                    <Binding Path="ScanOptions.ResolveMACAddress" />
+                                    <Binding Path="ScanOptions.NetBIOSEnabled" />
                                 </MultiBinding>
                             </MenuItem.Visibility>
                         </MenuItem>

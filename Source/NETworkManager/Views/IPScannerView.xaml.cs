@@ -53,9 +53,6 @@ public partial class IPScannerView : IDragablzTabItem
         if (sender is not ContextMenu menu)
             return;
 
-        // Set DataContext to ViewModel
-        menu.DataContext = _viewModel;
-
         // Append custom commands
         var index = menu.Items.Count - 1;
 
