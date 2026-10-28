@@ -26,12 +26,6 @@ public partial class SettingsProfilesView
             _viewModel.CloseAction = window.Close;
     }
 
-    private void ContextMenu_Opened(object sender, RoutedEventArgs e)
-    {
-        if (sender is ContextMenu menu)
-            menu.DataContext = _viewModel;
-    }
-
     private void DataGridRow_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         if (_viewModel.EditProfileFileCommand.CanExecute(null))

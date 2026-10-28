@@ -192,7 +192,7 @@
                   SelectedItem="{Binding SelectedProfileFile}" Height="200" Margin="0,0,0,10">
             <DataGrid.Resources>
                 <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-                <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.EditDots}"
                               Command="{Binding EditProfileFileCommand}">
                         <MenuItem.Icon>
@@ -215,7 +215,7 @@
                         </MenuItem.Icon>
                         <MenuItem Header="{x:Static Member=localization:Strings.EnableEncryptionDots}"
                                   Command="{Binding EnableEncryptionCommand}"
-                                  Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource ResourceKey=BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                                  Visibility="{Binding SelectedProfileFile.IsEncrypted, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16"
                                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
@@ -227,7 +227,7 @@
                         </MenuItem>
                         <MenuItem Header="{x:Static Member=localization:Strings.ChangeMasterPasswordDots}"
                                   Command="{Binding ChangeMasterPasswordCommand}"
-                                  Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource ResourceKey=BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                  Visibility="{Binding SelectedProfileFile.IsEncrypted, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16"
                                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
@@ -239,7 +239,7 @@
                         </MenuItem>
                         <MenuItem Header="{x:Static Member=localization:Strings.DisableEncryptionDots}"
                                   Command="{Binding DisableEncryptionCommand}"
-                                  Visibility="{Binding Data.SelectedProfileFile.IsEncrypted, Source={StaticResource ResourceKey=BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                  Visibility="{Binding SelectedProfileFile.IsEncrypted, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                             <MenuItem.Icon>
                                 <Rectangle Width="16" Height="16"
                                            Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
