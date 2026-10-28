@@ -12,6 +12,7 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
     <UserControl.Resources>
+        <converters:VisualToVisualBrushConverter x:Key="VisualToVisualBrushConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:SettingsGroupToTranslatedStringConverter x:Key="SettingsGroupToTranslatedStringConverter" />
         <converters:SettingsNameToTranslatedStringConverter x:Key="SettingsNameToTranslatedStringConverter" />
@@ -73,10 +74,8 @@
                                                     <ColumnDefinition Width="Auto" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
-                                                <Rectangle Grid.Column="0" Width="20" Height="20" Margin="10,0">
-                                                    <Rectangle.OpacityMask>
-                                                        <VisualBrush Stretch="Uniform" Visual="{Binding Icon}" />
-                                                    </Rectangle.OpacityMask>
+                                                <Rectangle Grid.Column="0" Width="20" Height="20" Margin="10,0"
+                                                           OpacityMask="{Binding Icon, Converter={StaticResource VisualToVisualBrushConverter}}">
                                                     <Rectangle.Style>
                                                         <Style TargetType="{x:Type Rectangle}">
                                                             <Setter Property="Fill"

@@ -27,10 +27,10 @@
                  d:DataContext="{d:DesignInstance networkManager:MainWindow}">
     <!-- MetroDialogStyles.xaml must be adjusted if MinWidth/MinHeight is changed -->
     <mah:MetroWindow.Resources>
+        <converters:ApplicationNameToIconBrushConverter x:Key="ApplicationNameToIconBrushConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter"></converters:BooleanReverseConverter>
         <converters:ApplicationNameToTranslatedStringConverter x:Key="ApplicationNameToTranslatedStringConverter" />
-        <converters:ApplicationNameToIconConverter x:Key="ApplicationNameToIconConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <!-- ReSharper disable once Xaml.RedundantResource - Used in TrayIcon -->
@@ -696,11 +696,8 @@
                                                 </Style>
                                             </Rectangle.Style>
                                         </Rectangle>
-                                        <Rectangle Grid.Column="0" Width="24" Height="24" Margin="0,0,-2,0">
-                                            <Rectangle.OpacityMask>
-                                                <VisualBrush Stretch="Uniform"
-                                                             Visual="{Binding Name, Converter={StaticResource ApplicationNameToIconConverter}}" />
-                                            </Rectangle.OpacityMask>
+                                        <Rectangle Grid.Column="0" Width="24" Height="24" Margin="0,0,-2,0"
+                                                   OpacityMask="{Binding Name, Converter={StaticResource ApplicationNameToIconBrushConverter}}">
                                             <Rectangle.Style>
                                                 <Style TargetType="{x:Type Rectangle}">
                                                     <Setter Property="Fill"
