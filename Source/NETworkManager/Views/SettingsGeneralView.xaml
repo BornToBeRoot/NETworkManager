@@ -29,7 +29,7 @@
                  dd:DragDrop.IsDragSource="True"
                  dd:DragDrop.IsDropTarget="True">
             <ListBox.ContextMenu>
-                <ContextMenu Opened="ContextMenu_Opened">
+                <ContextMenu>
                     <MenuItem Header="{x:Static localization:Strings.SetDefault}"
                               Command="{Binding Path=SetDefaultApplicationCommand}">
                         <MenuItem.Style>
