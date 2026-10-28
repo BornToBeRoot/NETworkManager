@@ -3,17 +3,12 @@ using Dragablz;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
-using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
@@ -163,7 +158,7 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
     public void AddTab(string host = null, string dnsServer = null, QueryType? queryType = null, bool start = true,
         string message = null)
     {
-        if (queryType == null && IsIPAddresses(host))
+        if (queryType == null && IPAddressHelper.AreIPAddresses(host))
             queryType = QueryType.PTR;
 
         var tabId = Guid.NewGuid();
@@ -175,45 +170,18 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
     }
 
     /// <summary>
-    /// Checks if the host(s) are only IP addresses (shortened IPv4 forms like "10" are host names).
-    /// </summary>
-    private static bool IsIPAddresses(string hosts)
-    {
-        return !string.IsNullOrWhiteSpace(hosts) && hosts.Split(';').Select(x => x.Trim()).All(x =>
-            RegexHelper.IPv4AddressRegex().IsMatch(x) ||
-            x.Contains(':') && IPAddress.TryParse(x, out var ipAddress) &&
-            ipAddress.AddressFamily == AddressFamily.InterNetworkV6);
-    }
-
-    /// <summary>
     /// Adds a new tab for the host of the specified profile.
     /// </summary>
     /// <param name="profile">The profile to lookup.</param>
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
     public void AddTab(ProfileInfo profile, bool start = true)
     {
-        // DNS server of DNS Lookup (last selected)
-        if (!profile.DNSLookup_OverrideDNSServer || string.IsNullOrWhiteSpace(profile.DNSLookup_DNSServer))
-        {
-            AddTab(profile.DNSLookup_Host, start: start);
-            return;
-        }
+        // DNS servers of the profile or its group (null: the selected DNS server). A DNS server that can't be found:
+        // the saved servers, with a note.
+        var dnsServer = NETworkManager.Profiles.Application.DNSLookup.GetDNSServer(profile, out var dnsServerNotFound);
 
-        // DNS servers by name with their current name (also after a rename)
-        if (!string.IsNullOrEmpty(profile.DNSLookup_DNSServerInput) &&
-            DNSServer.TryDecodeReferences(profile.DNSLookup_DNSServerInput,
-                SettingsManager.Current.DNSLookup_DNSServers, out var dnsServer))
-        {
-            AddTab(profile.DNSLookup_Host, dnsServer, start: start);
-            return;
-        }
-
-        // No DNS server by name, or one can't be found (deleted, or a profile file shared from another computer - DNS
-        // servers are saved in the settings): the servers saved with the profile, with a note if one wasn't found
-        AddTab(profile.DNSLookup_Host, profile.DNSLookup_DNSServer, start: start,
-            message: string.IsNullOrEmpty(profile.DNSLookup_DNSServerInput)
-                ? null
-                : Strings.DNSServerOfProfileNotFoundMessage);
+        AddTab(profile.DNSLookup_Host, dnsServer, NETworkManager.Profiles.Application.DNSLookup.GetQueryType(profile),
+            start, dnsServerNotFound ? Strings.DNSServerOfProfileNotFoundMessage : null);
     }
 
     #endregion

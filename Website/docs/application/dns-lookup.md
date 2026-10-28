@@ -53,6 +53,12 @@ Example: `server-01.borntoberoot.net; 10.0.0.1`
 
 :::
 
+:::note
+
+`PTR` can only be looked up for IP addresses. Hostnames are skipped with a message.
+
+:::
+
 The DNS server can be selected from a list of configured servers or you can enter a custom DNS server in the format `<hostname>|<ipaddress>:<port>` (`<port>` is optional, to use a custom port with IPv6 enclose the address in square brackets: `[<ipv6address>]:53`). Names of configured DNS servers (case-insensitive) and custom DNS servers can be combined with a semicolon (e.g. `Google Public DNS; Cloudflare; 9.9.9.9`), every DNS server is queried once. `[Windows DNS]` together with other DNS servers adds the DNS servers configured in Windows. The list shows the recently used DNS servers (history, a single configured DNS server is not added) and the configured DNS servers (name, with the IP addresses below). `Tab` completes the name of a configured DNS server that is being typed (e.g. `google; cl` → `google; Cloudflare`), `Tab` again shows the next match.
 
 ### Context menu
@@ -93,7 +99,7 @@ Hostname or IP address (or any other resource record) to query.
 
 ### DNS server
 
-Use this DNS server instead of the DNS server selected in the DNS lookup: names of [DNS servers](#dns-server-1) and / or custom DNS servers, separated by `;` (selectable in the list, `Tab` completes a name).
+Use this DNS server instead of the [DNS server of the group](#dns-server-1) or, if not set there, the DNS server selected in the DNS lookup: names of [DNS servers](#dns-server-2) and / or custom DNS servers, separated by `;` (selectable in the list, `Tab` completes a name).
 
 **Type:** `String`
 
@@ -109,6 +115,35 @@ Use this DNS server instead of the DNS server selected in the DNS lookup: names 
 A configured DNS server is referenced by the profile, so changes to it apply to the profile, also if it is renamed. Its IP addresses are saved with the profile as well: if the DNS server can't be found (it was deleted, or the profile file is shared from another computer - DNS servers are saved in the settings of each computer), the saved IP addresses are used and a note is shown. `[Windows DNS]` always uses the DNS servers of the computer.
 
 :::
+
+### Type
+
+Record type to query instead of the automatic type: `PTR` for IP addresses, otherwise `A`.
+
+**Type:** `QueryType`
+
+**Default:** `Disabled` / `A`
+
+:::note
+
+`PTR` can only be looked up for IP addresses: if the [Host](#host) contains a hostname, the profile can't be saved.
+
+:::
+
+## Group
+
+### DNS server
+
+DNS server for the profiles of the group that don't set their own [DNS server](#dns-server), like the DNS server of a profile. If neither the profile nor the group has a DNS server, the DNS server selected in the DNS lookup is used.
+
+**Type:** `String`
+
+**Default:** `Disabled` / `Empty`
+
+**Example:**
+
+- `Cloudflare`
+- `10.1.0.53; 10.1.0.54`
 
 ## Settings
 

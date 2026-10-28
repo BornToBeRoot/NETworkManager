@@ -43,6 +43,9 @@ public static class GlobalStaticConfiguration
     // known constant) that are expected to be "close enough" rather than bit-for-bit equal.
     public static double FloatPointFix => 1.0;
 
+    // ICMP config: maximum buffer of a ping (.NET's Ping throws for more than 65500 bytes)
+    public static int ICMPBufferMaximum => 65500;
+
     // Profile config
     public static bool Profile_TagsMatchAny => true;
     public static bool Profile_ExpandProfileView => true;
@@ -142,7 +145,7 @@ public static class GlobalStaticConfiguration
     public static int IPScanner_ICMPBuffer => 32;
     public static bool IPScanner_ResolveHostname => true;
     public static bool IPScanner_PortScanEnabled => true;
-    public static string IPScanner_PortScanPorts => "22; 53; 80; 135; 139; 389; 636; 443; 445; 3389; 9100";
+    public static string IPScanner_PortScanPorts => "21; 22; 23; 53; 80; 135; 139; 389; 443; 445; 554; 631; 636; 3389; 5900; 5985; 7000; 8009; 8080; 8443; 9100; 62078";
     public static int IPScanner_PortScanTimeout => 2000;
     public static int IPScanner_PortScanAttempts => 1;
     public static int IPScanner_MaxHostThreads => 128;
@@ -167,6 +170,9 @@ public static class GlobalStaticConfiguration
     public static int PortScanner_Timeout => 2000;
     public static int PortScanner_Attempts => 1;
     public static bool PortScanner_PingHostsBeforeScan => false;
+    public static int PortScanner_ICMPAttempts => 2;
+    public static int PortScanner_ICMPTimeout => 2000;
+    public static int PortScanner_ICMPBuffer => 32;
     public static ExportFileType PortScanner_ExportFileType => ExportFileType.Csv;
     // Larger scans (hosts x ports) need a confirmation, even larger ones are refused
     public static long PortScanner_ConfirmPortCount => 65536;

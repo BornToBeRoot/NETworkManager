@@ -856,29 +856,31 @@ public static class SettingsManager
             Current.PortScanner_Timeout = GlobalStaticConfiguration.PortScanner_Timeout;
         }
 
-        if (Current.IPScanner_PortScanPorts == "22; 53; 80; 139; 389; 636; 443; 445; 3389")
+        // Old defaults (until 2026.7.7.0 and of the pre-releases since 2026.9.7.0)
+        if (Current.IPScanner_PortScanPorts is "22; 53; 80; 139; 389; 636; 443; 445; 3389"
+            or "22; 53; 80; 135; 139; 389; 636; 443; 445; 3389; 9100")
         {
             Log.Info($"Update \"IPScanner_PortScanPorts\" to \"{GlobalStaticConfiguration.IPScanner_PortScanPorts}\"...");
             Current.IPScanner_PortScanPorts = GlobalStaticConfiguration.IPScanner_PortScanPorts;
         }
 
         // ICMP buffer - .NET's Ping throws for more than 65500 bytes, the settings allowed up to 65535
-        if (Current.IPScanner_ICMPBuffer > 65500)
+        if (Current.IPScanner_ICMPBuffer > GlobalStaticConfiguration.ICMPBufferMaximum)
         {
-            Log.Info($"Update \"IPScanner_ICMPBuffer\" from {Current.IPScanner_ICMPBuffer} to 65500...");
-            Current.IPScanner_ICMPBuffer = 65500;
+            Log.Info($"Update \"IPScanner_ICMPBuffer\" from {Current.IPScanner_ICMPBuffer} to {GlobalStaticConfiguration.ICMPBufferMaximum}...");
+            Current.IPScanner_ICMPBuffer = GlobalStaticConfiguration.ICMPBufferMaximum;
         }
 
-        if (Current.PingMonitor_Buffer > 65500)
+        if (Current.PingMonitor_Buffer > GlobalStaticConfiguration.ICMPBufferMaximum)
         {
-            Log.Info($"Update \"PingMonitor_Buffer\" from {Current.PingMonitor_Buffer} to 65500...");
-            Current.PingMonitor_Buffer = 65500;
+            Log.Info($"Update \"PingMonitor_Buffer\" from {Current.PingMonitor_Buffer} to {GlobalStaticConfiguration.ICMPBufferMaximum}...");
+            Current.PingMonitor_Buffer = GlobalStaticConfiguration.ICMPBufferMaximum;
         }
 
-        if (Current.Traceroute_Buffer > 65500)
+        if (Current.Traceroute_Buffer > GlobalStaticConfiguration.ICMPBufferMaximum)
         {
-            Log.Info($"Update \"Traceroute_Buffer\" from {Current.Traceroute_Buffer} to 65500...");
-            Current.Traceroute_Buffer = 65500;
+            Log.Info($"Update \"Traceroute_Buffer\" from {Current.Traceroute_Buffer} to {GlobalStaticConfiguration.ICMPBufferMaximum}...");
+            Current.Traceroute_Buffer = GlobalStaticConfiguration.ICMPBufferMaximum;
         }
 
         // Add new Port Scanner port profiles

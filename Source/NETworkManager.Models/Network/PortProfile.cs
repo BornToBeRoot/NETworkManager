@@ -104,6 +104,47 @@ public static class PortProfile
         return NamedReferenceInput.TryDecodeReferences(inputWithReferences, portProfiles, out input);
     }
 
+    /// <summary>
+    ///     Converts a ports input (e.g. of a profile or group) to the values that are saved: the ports (port profiles
+    ///     replaced by their ports, used if a port profile can't be found later, e.g. a profile file from another
+    ///     computer) and the input with references to the port profiles (see <see cref="EncodeReferences" />).
+    /// </summary>
+    /// <param name="input">Ports input.</param>
+    /// <param name="portProfiles">Port profiles.</param>
+    /// <returns>Ports and ports input with references (null if it contains no port profile).</returns>
+    public static (string Ports, string PortsInput) Encode(string input, IEnumerable<PortProfileInfo> portProfiles)
+    {
+        var portProfileList = portProfiles.ToList();
+
+        return (TryResolvePorts(input, portProfileList, out var ports) ? ports : input?.Trim(),
+            EncodeReferences(input, portProfileList));
+    }
+
+    /// <summary>
+    ///     Converts the saved values (see <see cref="Encode" />) back to the ports input: the port profiles with their
+    ///     current name (also after a rename), or the saved ports if a port profile can't be found.
+    /// </summary>
+    /// <param name="ports">Saved ports.</param>
+    /// <param name="portsInput">Saved ports input with references.</param>
+    /// <param name="portProfiles">Port profiles.</param>
+    /// <param name="portProfileNotFound">True if a port profile can't be found.</param>
+    /// <returns>Ports input.</returns>
+    public static string Decode(string ports, string portsInput, IEnumerable<PortProfileInfo> portProfiles,
+        out bool portProfileNotFound)
+    {
+        portProfileNotFound = false;
+
+        if (string.IsNullOrEmpty(portsInput))
+            return ports;
+
+        if (TryDecodeReferences(portsInput, portProfiles, out var input))
+            return input;
+
+        portProfileNotFound = true;
+
+        return ports;
+    }
+
     public static List<PortProfileInfo> GetDefaultList()
     {
         return new List<PortProfileInfo>

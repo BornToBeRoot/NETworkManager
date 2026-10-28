@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 
@@ -6,6 +7,34 @@ namespace NETworkManager.Utilities;
 
 public static class IPAddressHelper
 {
+    /// <summary>
+    ///     Checks if a host is an IP address: an IPv4 address in the full form (shortened forms like "10" are host
+    ///     names) or an IPv6 address.
+    /// </summary>
+    /// <param name="host">Host to check.</param>
+    /// <returns>True if the host is an IP address.</returns>
+    public static bool IsIPAddress(string host)
+    {
+        return !string.IsNullOrWhiteSpace(host) &&
+               (RegexHelper.IPv4AddressRegex().IsMatch(host.Trim()) ||
+                host.Contains(':') && IPAddress.TryParse(host.Trim(), out var ipAddress) &&
+                ipAddress.AddressFamily == AddressFamily.InterNetworkV6);
+    }
+
+    /// <summary>
+    ///     Checks if all hosts (separated by ";", empty entries like a trailing ";" are ignored) are IP addresses (see
+    ///     <see cref="IsIPAddress" />).
+    /// </summary>
+    /// <param name="hosts">Hosts to check.</param>
+    /// <returns>True if there is at least one host and all hosts are IP addresses.</returns>
+    public static bool AreIPAddresses(string hosts)
+    {
+        var entries = (hosts ?? string.Empty).Split(';', StringSplitOptions.RemoveEmptyEntries |
+                                                         StringSplitOptions.TrimEntries);
+
+        return entries.Length > 0 && entries.All(IsIPAddress);
+    }
+
     /// <summary>
     ///     Test if an IP address is a private address.
     /// </summary>

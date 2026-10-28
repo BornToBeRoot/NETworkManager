@@ -140,7 +140,7 @@ See also the [Port Scanner](./port-scanner) example inputs for more information 
 
 ### Ports
 
-TCP ports to scan each host for: ports, port ranges and names of [port profiles](#port-profiles) (selectable in the list).
+TCP ports to scan each host for: ports, port ranges and names of [port profiles](#port-profiles) (selectable in the list). Only used if the checkbox is enabled (then the ports are required), otherwise the [ports of the group](#ports-2) are used (if set there).
 
 **Type:** `String`
 
@@ -163,6 +163,21 @@ A port profile is referenced by the profile, so changes to the port profile appl
 See also the [Port Scanner](./port-scanner) example inputs for more information about the supported port formats.
 
 :::
+
+## Group
+
+### Ports
+
+TCP ports to scan for the profiles of the group that don't set their own [ports](#ports-1) (required if the checkbox is enabled), like the ports of a profile: ports, port ranges and names of [port profiles](#port-profiles). If neither the profile nor the group has ports, the ports input is empty and the scan is not started.
+
+**Type:** `String`
+
+**Default:** `Empty`
+
+**Example:**
+
+- `22; 3389; 5985`
+- `Webserver; 8080`
 
 ## Settings
 
@@ -235,7 +250,7 @@ In a local network (LAN), `1` is enough. On an unreliable network (e.g. Wi-Fi, V
 
 ### Ping hosts before the scan
 
-Pings every host before its ports are scanned (ICMP echo, with the [Timeout](#timeout-ms) and [Attempts](#attempts) of the port scan). Only hosts that answer are scanned, the number of hosts that were not scanned is shown below the input after the scan. Faster for ranges with many unused IP addresses (e.g. a `/24` with `1-1024`), because the ports of unused addresses are not scanned until their timeout. With [Adjust threads automatically](#adjust-threads-automatically), up to `128` hosts are pinged at the same time and a host is scanned as soon as it answers; otherwise each host is pinged when it is scanned, so [Max. concurrent host threads](#max-concurrent-host-threads) also limits the pings.
+Pings every host before its ports are scanned (ICMP echo, with the [Attempts](#attempts-1), [Timeout](#timeout-ms-1) and [Buffer](#buffer) below). Only hosts that answer are scanned, the number of hosts that were not scanned is shown below the input after the scan. Faster for ranges with many unused IP addresses (e.g. a `/24` with `1-1024`), because the ports of unused addresses are not scanned until their timeout. With [Adjust threads automatically](#adjust-threads-automatically), up to `128` hosts are pinged at the same time and a host is scanned as soon as it answers; otherwise each host is pinged when it is scanned, so [Max. concurrent host threads](#max-concurrent-host-threads) also limits the pings.
 
 **Type:** `Boolean`
 
@@ -246,6 +261,30 @@ Pings every host before its ports are scanned (ICMP echo, with the [Timeout](#ti
 Hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned, even if they have open ports.
 
 :::
+
+### Attempts
+
+Maximum number of ICMP requests sent to each host before the scan (only with [Ping hosts before the scan](#ping-hosts-before-the-scan)). Another request is only sent if the previous one has timed out (e.g. a lost packet), other replies like "destination host unreachable" are final.
+
+**Type:** `Integer` [Min `1`, Max `10`]
+
+**Default:** `2`
+
+### Timeout (ms)
+
+Timeout in milliseconds for each ICMP request before the scan (only with [Ping hosts before the scan](#ping-hosts-before-the-scan)), after which the packet is considered lost. A host that doesn't answer is skipped after about attempts × timeout.
+
+**Type:** `Integer` [Min `100`, Max `15000`]
+
+**Default:** `2000`
+
+### Buffer
+
+Size of the buffer for each ICMP request before the scan in bytes (only with [Ping hosts before the scan](#ping-hosts-before-the-scan)).
+
+**Type:** `Integer` [Min `1`, Max `65500`]
+
+**Default:** `32`
 
 ### Resolve hostname
 

@@ -1014,6 +1014,7 @@ public static class ProfileManager
             if (profileFileData != null)
             {
                 LoadedProfileFileData = profileFileData;
+                UpgradeLoadedProfileFileData();
                 return;
             }
         }
@@ -1031,8 +1032,11 @@ public static class ProfileManager
         // Create ProfileFileData wrapper for legacy format
         LoadedProfileFileData = new ProfileFileData
         {
+            Version = 1,
             GroupsSerializable = groupsSerializable
         };
+
+        UpgradeLoadedProfileFileData();
 
         Log.Info("Successfully loaded profile file in legacy format. It will be migrated to new format on next save.");
     }
@@ -1053,8 +1057,33 @@ public static class ProfileManager
 
         LoadedProfileFileData = new ProfileFileData
         {
+            Version = 1,
             GroupsSerializable = groupsSerializable
         };
+
+        UpgradeLoadedProfileFileData();
+    }
+
+    /// <summary>
+    ///     Migrates the loaded profile data from an older schema version to
+    ///     <see cref="ProfileFileData.CurrentVersion" />. The file is updated the next time it is saved.
+    /// </summary>
+    private static void UpgradeLoadedProfileFileData()
+    {
+        if (LoadedProfileFileData.Version >= ProfileFileData.CurrentVersion)
+            return;
+
+        Log.Info($"Upgrade profile file data from version {LoadedProfileFileData.Version} to {ProfileFileData.CurrentVersion}...");
+
+        // Version 2: Port Scanner ports can be inherited from the group - profiles keep their own ports
+        if (LoadedProfileFileData.Version < 2)
+        {
+            foreach (var profile in LoadedProfileFileData.Groups.SelectMany(x => x.Profiles)
+                         .Where(x => !string.IsNullOrEmpty(x.PortScanner_Ports)))
+                profile.PortScanner_OverridePorts = true;
+        }
+
+        LoadedProfileFileData.Version = ProfileFileData.CurrentVersion;
     }
 
     /// <summary>

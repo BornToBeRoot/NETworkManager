@@ -420,7 +420,9 @@ public class TracerouteViewModel : ViewModelBase
         {
             var traceroute = new Traceroute(new TracerouteOptions(
                 SettingsManager.Current.Traceroute_Timeout,
-                new byte[SettingsManager.Current.Traceroute_Buffer],
+                // Limits of the input (a value edited in the settings file would throw or make every ping fail)
+                new byte[Math.Clamp(SettingsManager.Current.Traceroute_Buffer, 1,
+                    GlobalStaticConfiguration.ICMPBufferMaximum)],
                 SettingsManager.Current.Traceroute_MaximumHops,
                 true,
                 SettingsManager.Current.Traceroute_ResolveHostname,

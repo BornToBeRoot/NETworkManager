@@ -3,6 +3,7 @@ using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
@@ -104,6 +105,90 @@ public class GroupViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    #endregion
+
+    #region Port Scanner
+
+    public bool PortScanner_OverridePorts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private readonly InputSuggestions _portScannerPortsSuggestions = InputSuggestions.ForPortScannerPorts();
+
+    /// <summary>
+    /// Gets the port profiles and the ports history of the Port Scanner for the ports input (grouped).
+    /// </summary>
+    public ICollectionView PortScanner_PortsSuggestions => _portScannerPortsSuggestions.View;
+
+    /// <summary>
+    /// Gets the names of the port profiles for the Tab completion of the ports input of the Port Scanner.
+    /// </summary>
+    public IEnumerable<string> PortScanner_PortProfileNames => _portScannerPortsSuggestions.ProfileNames;
+
+    public string PortScanner_Ports
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    #endregion
+
+    #region DNS Lookup
+
+    public bool DNSLookup_OverrideDNSServer
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string DNSLookup_DNSServer
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private readonly InputSuggestions _dnsLookupDNSServerSuggestions = InputSuggestions.ForDNSLookupDNSServers();
+
+    /// <summary>
+    /// Gets the DNS servers and the DNS server history of DNS Lookup for the DNS server input (grouped).
+    /// </summary>
+    public ICollectionView DNSLookup_DNSServerSuggestions => _dnsLookupDNSServerSuggestions.View;
+
+    /// <summary>
+    /// Gets the names of the DNS servers for the Tab completion of the DNS server input of DNS Lookup.
+    /// </summary>
+    public IEnumerable<string> DNSLookup_DNSServerNames => _dnsLookupDNSServerSuggestions.ProfileNames;
 
     #endregion
 
@@ -1589,6 +1674,16 @@ public class GroupViewModel : ViewModelBase
         // General
         Name = groupInfo.Name;
         Description = groupInfo.Description;
+
+        // Port Scanner
+        PortScanner_OverridePorts = groupInfo.PortScanner_OverridePorts;
+        PortScanner_Ports = PortProfile.Decode(groupInfo.PortScanner_Ports, groupInfo.PortScanner_PortsInput,
+            SettingsManager.Current.PortScanner_PortProfiles, out _);
+
+        // DNS Lookup
+        DNSLookup_OverrideDNSServer = groupInfo.DNSLookup_OverrideDNSServer;
+        DNSLookup_DNSServer = DNSServer.Decode(groupInfo.DNSLookup_DNSServer, groupInfo.DNSLookup_DNSServerInput,
+            SettingsManager.Current.DNSLookup_DNSServers, out _);
 
         // Remote Desktop
         RemoteDesktop_UseCredentials = groupInfo.RemoteDesktop_UseCredentials;

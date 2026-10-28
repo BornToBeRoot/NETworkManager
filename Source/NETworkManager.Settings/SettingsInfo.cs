@@ -1554,6 +1554,45 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.PortScanner_PingHostsBeforeScan;
 
+    public int PortScanner_ICMPAttempts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PortScanner_ICMPAttempts;
+
+    public int PortScanner_ICMPTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PortScanner_ICMPTimeout;
+
+    public int PortScanner_ICMPBuffer
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PortScanner_ICMPBuffer;
+
     public bool PortScanner_AutoAdjustThreads
     {
         get;

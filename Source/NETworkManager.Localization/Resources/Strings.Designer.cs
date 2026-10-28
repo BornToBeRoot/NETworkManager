@@ -952,6 +952,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Firewall.
+        /// </summary>
+        public static string ApplicationName_Firewall {
+            get {
+                return ResourceManager.GetString("ApplicationName_Firewall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hosts File Editor.
         /// </summary>
         public static string ApplicationName_HostsFileEditor {
@@ -3686,7 +3695,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A DNS server of this profile was not found, the DNS servers saved with the profile are used. DNS servers are saved in the settings and the profile refers to them by an internal ID - if the profile file was shared from another computer, create the DNS server and then select it in the profile again (edit the profile)..
+        ///   Looks up a localized string similar to A DNS server of this profile or its group was not found, the DNS servers saved with the profile or group are used. DNS servers are saved in the settings and the profile or group refers to them by an internal ID - if the profile file was shared from another computer, create the DNS server and then select it in the profile or group again (edit it)..
         /// </summary>
         public static string DNSServerOfProfileNotFoundMessage {
             get {
@@ -4694,6 +4703,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ErrorMessage_PortProfileNameInvalid {
             get {
                 return ResourceManager.GetString("ErrorMessage_PortProfileNameInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PTR records can only be looked up for IP addresses..
+        /// </summary>
+        public static string ErrorMessage_PTRRequiresIPAddresses {
+            get {
+                return ResourceManager.GetString("ErrorMessage_PTRRequiresIPAddresses", resourceCulture);
             }
         }
         
@@ -5967,7 +5985,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only hosts that answer a ping (ICMP echo, with the timeout and attempts above) are scanned. Faster for ranges with many unused IP addresses. Hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned..
+        ///   Looks up a localized string similar to Only hosts that answer a ping (ICMP echo, with the attempts, timeout and buffer below) are scanned. Faster for ranges with many unused IP addresses. Hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned..
         /// </summary>
         public static string HelpMessage_PingHostsBeforeScan {
             get {
@@ -9239,7 +9257,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A port profile of this profile was not found, the ports saved with the profile are used. Port profiles are saved in the settings and the profile refers to them by an internal ID - if the profile file was shared from another computer, create the port profile and then select it in the profile again (edit the profile)..
+        ///   Looks up a localized string similar to A port profile of this profile or its group was not found, the ports saved with the profile or group are used. Port profiles are saved in the settings and the profile or group refers to them by an internal ID - if the profile file was shared from another computer, create the port profile and then select it in the profile or group again (edit it)..
         /// </summary>
         public static string PortProfileOfProfileNotFoundMessage {
             get {
@@ -9650,6 +9668,15 @@ namespace NETworkManager.Localization.Resources {
         public static string PTRRecord {
             get {
                 return ResourceManager.GetString("PTRRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PTR records can only be looked up for IP addresses, &quot;{0}&quot; is skipped..
+        /// </summary>
+        public static string PTRRequiresIPAddressX {
+            get {
+                return ResourceManager.GetString("PTRRequiresIPAddressX", resourceCulture);
             }
         }
         

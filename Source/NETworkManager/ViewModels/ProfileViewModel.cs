@@ -1,3 +1,4 @@
+using DnsClient;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -89,12 +90,9 @@ public class ProfileViewModel : ViewModelBase
             : profileInfo.PortScanner_Enabled;
         PortScanner_InheritHost = profileInfo.PortScanner_InheritHost;
         PortScanner_Host = profileInfo.PortScanner_Host;
-        // Port profiles with their current name (also after a rename). A port profile that can't be found (deleted, or
-        // a profile file from another computer): the ports saved with the profile.
-        PortScanner_Ports = PortProfile.TryDecodeReferences(profileInfo.PortScanner_PortsInput,
-            SettingsManager.Current.PortScanner_PortProfiles, out var portScannerPortsInput)
-            ? portScannerPortsInput
-            : profileInfo.PortScanner_Ports;
+        PortScanner_OverridePorts = profileInfo.PortScanner_OverridePorts;
+        PortScanner_Ports = PortProfile.Decode(profileInfo.PortScanner_Ports, profileInfo.PortScanner_PortsInput,
+            SettingsManager.Current.PortScanner_PortProfiles, out _);
 
         // Ping Monitor
         PingMonitor_Enabled = editMode == ProfileEditMode.Add
@@ -118,12 +116,13 @@ public class ProfileViewModel : ViewModelBase
         DNSLookup_Host = profileInfo.DNSLookup_Host;
         DNSLookup_OverrideDNSServer = profileInfo.DNSLookup_OverrideDNSServer;
 
-        // DNS servers with their current name (also after a rename). A DNS server that can't be found (deleted, or a
-        // profile file from another computer): the servers saved with the profile.
-        DNSLookup_DNSServer = Models.Network.DNSServer.TryDecodeReferences(profileInfo.DNSLookup_DNSServerInput,
-            SettingsManager.Current.DNSLookup_DNSServers, out var dnsLookupDNSServerInput)
-            ? dnsLookupDNSServerInput
-            : profileInfo.DNSLookup_DNSServer;
+        DNSLookup_DNSServer = Models.Network.DNSServer.Decode(profileInfo.DNSLookup_DNSServer,
+            profileInfo.DNSLookup_DNSServerInput, SettingsManager.Current.DNSLookup_DNSServers, out _);
+        DNSLookup_OverrideQueryType = profileInfo.DNSLookup_OverrideQueryType;
+        DNSLookup_QueryTypes = [.. DNSLookup.QueryTypes.OrderBy(x => x.ToString())];
+        DNSLookup_QueryType = DNSLookup_QueryTypes.Contains(profileInfo.DNSLookup_QueryType)
+            ? profileInfo.DNSLookup_QueryType
+            : QueryType.A;
 
         // Remote Desktop
         RemoteDesktop_Enabled = editMode == ProfileEditMode.Add
@@ -436,6 +435,8 @@ public class ProfileViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+
+            ValidateDNSLookupQueryType();
         }
     }
 
@@ -747,6 +748,19 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
+    public bool PortScanner_OverridePorts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     private readonly InputSuggestions _portScannerPortsSuggestions = InputSuggestions.ForPortScannerPorts();
 
     /// <summary>
@@ -888,6 +902,8 @@ public class ProfileViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+
+            ValidateDNSLookupQueryType();
         }
     }
 
@@ -901,6 +917,8 @@ public class ProfileViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+
+            ValidateDNSLookupQueryType();
         }
     }
 
@@ -941,6 +959,64 @@ public class ProfileViewModel : ViewModelBase
     /// Gets the names of the DNS servers for the Tab completion of the DNS server input of DNS Lookup.
     /// </summary>
     public IEnumerable<string> DNSLookup_DNSServerNames => _dnsLookupDNSServerSuggestions.ProfileNames;
+
+    public bool DNSLookup_OverrideQueryType
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+
+            ValidateDNSLookupQueryType();
+        }
+    }
+
+    public List<QueryType> DNSLookup_QueryTypes { get; }
+
+    public QueryType DNSLookup_QueryType
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+
+            ValidateDNSLookupQueryType();
+        }
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether the query type fits the host: PTR can only be looked up for IP addresses.
+    /// </summary>
+    public bool DNSLookup_QueryTypeIsValid
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = true;
+
+    /// <summary>
+    /// Checks if the query type of the profile fits the host (own or inherited), see
+    /// <see cref="DNSLookup_QueryTypeIsValid"/>.
+    /// </summary>
+    private void ValidateDNSLookupQueryType()
+    {
+        DNSLookup_QueryTypeIsValid = !DNSLookup_OverrideQueryType || DNSLookup_QueryType != QueryType.PTR ||
+                                     IPAddressHelper.AreIPAddresses(DNSLookup_InheritHost ? Host : DNSLookup_Host);
+    }
 
     #endregion
 

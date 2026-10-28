@@ -63,12 +63,6 @@ public sealed class PortScanner
     private readonly InterlockedCounter _portsTimedOut = new();
     private readonly InterlockedCounter _hostsSkipped = new();
 
-    /// <summary>
-    ///     Data of the ping before the scan (see <see cref="PortScannerOptions.PingHostsBeforeScan" />), like the
-    ///     default buffer of the IP Scanner.
-    /// </summary>
-    private static readonly byte[] PingBuffer = new byte[32];
-
     // Closed and timed out ports per host, see GetClosedAndTimedOutPortsPerHost
     private readonly ConcurrentDictionary<IPAddress, (InterlockedCounter closed, InterlockedCounter timedOut)>
         _portsPerHost = new();
@@ -399,8 +393,8 @@ public sealed class PortScanner
     /// <returns>True if the host answered the ping.</returns>
     private async Task<bool> IsReachableAsync(IPAddress ipAddress, int portCount, CancellationToken cancellationToken)
     {
-        var pingInfo = await PingProbe.PingAsync(ipAddress, _options.Timeout, _options.Attempts, PingBuffer,
-            cancellationToken).ConfigureAwait(false);
+        var pingInfo = await PingProbe.PingAsync(ipAddress, _options.ICMPTimeout, _options.ICMPAttempts,
+            _options.ICMPBuffer, cancellationToken).ConfigureAwait(false);
 
         if (pingInfo.Status == IPStatus.Success)
             return true;

@@ -41,6 +41,16 @@ public class GroupInfo
         // Profiles
         Profiles = group.Profiles;
 
+        // Port Scanner
+        PortScanner_OverridePorts = group.PortScanner_OverridePorts;
+        PortScanner_Ports = group.PortScanner_Ports;
+        PortScanner_PortsInput = group.PortScanner_PortsInput;
+
+        // DNS Lookup
+        DNSLookup_OverrideDNSServer = group.DNSLookup_OverrideDNSServer;
+        DNSLookup_DNSServer = group.DNSLookup_DNSServer;
+        DNSLookup_DNSServerInput = group.DNSLookup_DNSServerInput;
+
         // Remote Desktop
         RemoteDesktop_UseCredentials = group.RemoteDesktop_UseCredentials;
         RemoteDesktop_Username = group.RemoteDesktop_Username;
@@ -174,6 +184,32 @@ public class GroupInfo
     [XmlIgnore] public bool IsDynamic { get; set; }
 
     [XmlIgnore] public List<ProfileInfo> Profiles { get; set; }
+
+    public bool PortScanner_OverridePorts { get; set; }
+
+    /// <summary>
+    ///     Ports to scan (ports and port ranges) for the profiles of the group, see
+    ///     <see cref="ProfileInfo.PortScanner_Ports" />.
+    /// </summary>
+    public string PortScanner_Ports { get; set; }
+
+    /// <summary>
+    ///     Ports as entered, if they contain port profiles, see <see cref="ProfileInfo.PortScanner_PortsInput" />.
+    /// </summary>
+    public string PortScanner_PortsInput { get; set; }
+
+    public bool DNSLookup_OverrideDNSServer { get; set; }
+
+    /// <summary>
+    ///     DNS servers for the profiles of the group, see <see cref="ProfileInfo.DNSLookup_DNSServer" />.
+    /// </summary>
+    public string DNSLookup_DNSServer { get; set; }
+
+    /// <summary>
+    ///     DNS servers as entered, if they contain DNS servers by name, see
+    ///     <see cref="ProfileInfo.DNSLookup_DNSServerInput" />.
+    /// </summary>
+    public string DNSLookup_DNSServerInput { get; set; }
 
     public bool RemoteDesktop_UseCredentials { get; set; }
     public string RemoteDesktop_Username { get; set; }

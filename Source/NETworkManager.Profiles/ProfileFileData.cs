@@ -41,7 +41,19 @@ public class ProfileFileData : INotifyPropertyChanged
     public bool ProfilesChanged { get; set; }
 
     /// <summary>
-    ///     Schema version for handling future migrations.
+    ///     Current schema version of the profile file (see <see cref="Version" />). Version history:
+    ///     <list type="bullet">
+    ///         <item>1: Initial version.</item>
+    ///         <item>
+    ///             2: Port Scanner ports can be inherited from the group, a profile only uses its own ports if
+    ///             <see cref="ProfileInfo.PortScanner_OverridePorts" /> is set.
+    ///         </item>
+    ///     </list>
+    /// </summary>
+    public const int CurrentVersion = 2;
+
+    /// <summary>
+    ///     Schema version for handling migrations (see <see cref="CurrentVersion" />).
     /// </summary>
     public int Version
     {
@@ -54,7 +66,7 @@ public class ProfileFileData : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = 1;
+    } = CurrentVersion;
 
     /// <summary>
     ///     Date of the last backup (used for daily backup tracking).
@@ -131,6 +143,9 @@ public class ProfileFileData : INotifyPropertyChanged
             {
                 Profiles = [.. (gs.Profiles ?? []).Select(ps => new ProfileInfo(ps)
                 {
+                    // A profile is saved in its group: repairs profiles of a group that was renamed only by case
+                    // (e.g. "servers" -> "Servers"), which kept the old name and couldn't find their group
+                    Group = gs.Name,
                     TagsCollection = (ps.TagsCollection == null || ps.TagsCollection.Count == 0) && !string.IsNullOrEmpty(ps.Tags)
                         ? new Controls.ObservableSetCollection<string>(ps.Tags.Split([';'], StringSplitOptions.RemoveEmptyEntries))
                         : ps.TagsCollection,

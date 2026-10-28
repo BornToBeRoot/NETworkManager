@@ -13,6 +13,8 @@ public static class GroupViewManager
         new GroupViewInfo(GroupViewName.General, new PackIconModern { Kind = PackIconModernKind.Box }),
 
         // Applications
+        new GroupViewInfo(GroupViewName.PortScanner, ApplicationManager.GetIcon(ApplicationName.PortScanner)),
+        new GroupViewInfo(GroupViewName.DNSLookup, ApplicationManager.GetIcon(ApplicationName.DNSLookup)),
         new GroupViewInfo(GroupViewName.RemoteDesktop, ApplicationManager.GetIcon(ApplicationName.RemoteDesktop)),
         new GroupViewInfo(GroupViewName.PowerShell, ApplicationManager.GetIcon(ApplicationName.PowerShell)),
         new GroupViewInfo(GroupViewName.PuTTY, ApplicationManager.GetIcon(ApplicationName.PuTTY)),
