@@ -33,6 +33,7 @@
             x:Key="WiFiChannelCenterFrequencyToFrequencyStringConverter" />
         <converters:WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter
             x:Key="WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter" />
+        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <Grid>
         <Grid>
@@ -292,7 +293,7 @@
                                                                    SelectedItemsList="{Binding Path=SelectedNetworks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                                    wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                                         <controls2:MultiSelectDataGrid.Resources>
-                                            <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened"
+                                            <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}"
                                                          MinWidth="150">
                                                 <MenuItem Header="{x:Static Member=localization:Strings.ConnectDots}"
                                                           Command="{Binding ConnectCommand}"
@@ -402,7 +403,7 @@
                                                     </MenuItem.Icon>
                                                 </MenuItem>
                                             </ContextMenu>
-                                            <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened"
+                                            <ContextMenu x:Key="MultiRowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}"
                                                          MinWidth="150">
                                                 <MenuItem Header="{x:Static Member=localization:Strings.ExportDots}"
                                                           Command="{Binding Path=ExportCommand}">

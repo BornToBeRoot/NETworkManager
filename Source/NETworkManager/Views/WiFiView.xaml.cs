@@ -29,12 +29,6 @@ public partial class WiFiView
         _viewModel.OnViewVisible();
     }
 
-    private void ContextMenu_Opened(object sender, RoutedEventArgs e)
-    {
-        if (sender is ContextMenu menu)
-            menu.DataContext = _viewModel;
-    }
-
     /// <summary>
     ///     Restores the previously selected channel chart tab. The content is rebuilt when switching
     ///     between the outer tabs, so the selection is restored from the view when the control loads.
