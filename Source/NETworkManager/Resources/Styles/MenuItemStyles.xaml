@@ -2,10 +2,23 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks">
     <!--
+    MahApps binds HorizontalContentAlignment / VerticalContentAlignment of a MenuItem to its parent ItemsControl
+    (RelativeSource FindAncestor). A MenuItem created outside of a menu (e.g. in a CompositeCollection or an x:Array
+    resource with extra items of the profile context menu) has no parent yet, the binding fails and is logged as XAML
+    binding error. Context menus use Left / Center (MahApps.Styles.ContextMenu), so the values are set directly.
+    -->
+    <Style x:Key="DefaultMenuItem" TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}">
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource DefaultMenuItem}" />
+
+    <!--
     Set x:Shared="False" to avoid that only the MenuItem has an icon. 
     See: https://stackoverflow.com/questions/6177550/menuitem-style-with-icon-creates-only-one-icon
     -->
-    <Style x:Key="CopyMenuItem" TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}"
+    <Style x:Key="CopyMenuItem" TargetType="{x:Type MenuItem}" BasedOn="{StaticResource DefaultMenuItem}"
            x:Shared="False">
         <Setter Property="Icon">
             <Setter.Value>

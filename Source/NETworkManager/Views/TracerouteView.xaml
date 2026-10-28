@@ -256,7 +256,7 @@
                                   Command="{Binding Path=PerformRDAPQueryCommand}"
                                   CommandParameter="{Binding SelectedResult.IPAddress}">
                             <MenuItem.Style>
-                                <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}">
+                                <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource DefaultMenuItem}">
                                     <Style.Triggers>
                                         <!-- Timed out hops have no IP address -->
                                         <DataTrigger Binding="{Binding SelectedResult.IPAddress}" Value="{x:Null}">

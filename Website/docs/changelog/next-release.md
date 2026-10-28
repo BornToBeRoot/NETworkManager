@@ -365,7 +365,7 @@ Release date: **xx.xx.2026**
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring
-- Context menus of lists (results, profiles, settings) get the view model in XAML instead of when they are opened. Their items no longer cause XAML binding errors every time a list is filled, which hid real binding errors.
+- Context menus of lists (results, profiles, settings) get the view model in XAML instead of when they are opened. Their items, and menu items that are created outside of a menu (e.g. the extra items of the profile context menu), no longer cause XAML binding errors every time a list is filled, which hid real binding errors.
 - Converted the **IP Scanner** and **Port Scanner** engines from `Parallel.ForEach` with blocking calls to genuinely asynchronous `Parallel.ForEachAsync`, removing the risk of exhausting the application's ThreadPool at high concurrency settings. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
 - The TCP port probe (**IP Scanner**, **Port Scanner**) and the NetBIOS request (**IP Scanner**) report a refused connection, a timeout or no answer as result instead of throwing an exception for each of them (thousands per scan). Faster, and the application no longer lags while scanning with a debugger attached. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Refactored the **Network Connection** widget's check logic to reduce duplicated code and share the local IP address detection between the Computer and Router checks instead of detecting it twice. [#3553](https://github.com/BornToBeRoot/NETworkManager/pull/3553)

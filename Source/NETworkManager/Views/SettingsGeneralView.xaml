@@ -33,7 +33,7 @@
                     <MenuItem Header="{x:Static localization:Strings.SetDefault}"
                               Command="{Binding Path=SetDefaultApplicationCommand}">
                         <MenuItem.Style>
-                            <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}">
+                            <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource DefaultMenuItem}">
                                 <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
                                     <MultiDataTrigger>
@@ -63,7 +63,7 @@
                     <MenuItem Header="{x:Static localization:Strings.Show}"
                               Command="{Binding Path=ShowApplicationCommand}">
                         <MenuItem.Style>
-                            <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}">
+                            <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource DefaultMenuItem}">
                                 <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
                                     <MultiDataTrigger>
@@ -93,7 +93,7 @@
                     <MenuItem Header="{x:Static localization:Strings.Hide}"
                               Command="{Binding Path=HideApplicationCommand}">
                         <MenuItem.Style>
-                            <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}">
+                            <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource DefaultMenuItem}">
                                 <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
                                     <MultiDataTrigger>

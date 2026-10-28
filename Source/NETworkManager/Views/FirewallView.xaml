@@ -104,7 +104,7 @@
                         </controls:MultiSelectDataGrid.InputBindings>
                         <controls:MultiSelectDataGrid.Resources>
                             <!-- Enable, disable and delete are blocked if a selected rule is managed by a policy (see FirewallViewModel.IsAnySelectedRuleManagedByPolicy) -->
-                            <Style x:Key="ManagedByPolicyMenuItem" TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}">
+                            <Style x:Key="ManagedByPolicyMenuItem" TargetType="{x:Type MenuItem}" BasedOn="{StaticResource DefaultMenuItem}">
                                 <Style.Resources>
                                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource WrapToolTip}" />
                                 </Style.Resources>
@@ -152,7 +152,7 @@
                                         <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource WrapToolTip}" />
                                     </MenuItem.Resources>
                                     <MenuItem.Style>
-                                        <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}">
+                                        <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource DefaultMenuItem}">
                                             <Style.Triggers>
                                                 <!-- Rules with unsupported values or not managed by NETworkManager can't be edited (see FirewallViewModel.EditRuleCommand) -->
                                                 <DataTrigger Binding="{Binding Path=SelectedResult.HasUnsupportedValues}" Value="True">
@@ -186,7 +186,7 @@
                                         <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource WrapToolTip}" />
                                     </MenuItem.Resources>
                                     <MenuItem.Style>
-                                        <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MahApps.Styles.MenuItem}">
+                                        <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource DefaultMenuItem}">
                                             <Style.Triggers>
                                                 <!-- Rules with unsupported values can't be copied (see FirewallViewModel.CopyAsRuleCommand) -->
                                                 <DataTrigger Binding="{Binding Path=SelectedResult.HasUnsupportedValues}" Value="True">
