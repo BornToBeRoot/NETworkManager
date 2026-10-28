@@ -9239,7 +9239,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A port profile of this profile was not found, the ports saved with the profile are used. Port profiles are saved in the settings and the profile refers to them by an internal ID - if the profile file was shared from another computer, create the port profile and then select it in the profile again (edit the profile)..
+        ///   Looks up a localized string similar to A port profile of this profile or its group was not found, the ports saved with the profile or group are used. Port profiles are saved in the settings and the profile or group refers to them by an internal ID - if the profile file was shared from another computer, create the port profile and then select it in the profile or group again (edit it)..
         /// </summary>
         public static string PortProfileOfProfileNotFoundMessage {
             get {

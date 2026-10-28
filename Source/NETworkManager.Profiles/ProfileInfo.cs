@@ -62,6 +62,7 @@ public class ProfileInfo
         PortScanner_Enabled = profile.PortScanner_Enabled;
         PortScanner_InheritHost = profile.PortScanner_InheritHost;
         PortScanner_Host = profile.PortScanner_Host;
+        PortScanner_OverridePorts = profile.PortScanner_OverridePorts;
         PortScanner_Ports = profile.PortScanner_Ports;
         PortScanner_PortsInput = profile.PortScanner_PortsInput;
 
@@ -314,6 +315,11 @@ public class ProfileInfo
     public bool PortScanner_Enabled { get; set; }
     public bool PortScanner_InheritHost { get; set; } = true;
     public string PortScanner_Host { get; set; }
+
+    /// <summary>
+    ///     Use <see cref="PortScanner_Ports" /> of the profile instead of the ports of the group.
+    /// </summary>
+    public bool PortScanner_OverridePorts { get; set; }
 
     /// <summary>
     ///     Ports to scan (ports and port ranges). If port profiles were entered, their ports at the time the profile was

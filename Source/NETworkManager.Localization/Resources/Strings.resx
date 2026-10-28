@@ -5123,7 +5123,7 @@ Do you want to start the scan?</value>
     <value>The name must not contain ";" and must not be a port or port range.</value>
   </data>
   <data name="PortProfileOfProfileNotFoundMessage" xml:space="preserve">
-    <value>A port profile of this profile was not found, the ports saved with the profile are used. Port profiles are saved in the settings and the profile refers to them by an internal ID - if the profile file was shared from another computer, create the port profile and then select it in the profile again (edit the profile).</value>
+    <value>A port profile of this profile or its group was not found, the ports saved with the profile or group are used. Port profiles are saved in the settings and the profile or group refers to them by an internal ID - if the profile file was shared from another computer, create the port profile and then select it in the profile or group again (edit it).</value>
   </data>
   <data name="PingHostsBeforeScan" xml:space="preserve">
     <value>Ping hosts before the scan</value>

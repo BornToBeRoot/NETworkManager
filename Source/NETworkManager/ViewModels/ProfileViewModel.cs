@@ -89,6 +89,7 @@ public class ProfileViewModel : ViewModelBase
             : profileInfo.PortScanner_Enabled;
         PortScanner_InheritHost = profileInfo.PortScanner_InheritHost;
         PortScanner_Host = profileInfo.PortScanner_Host;
+        PortScanner_OverridePorts = profileInfo.PortScanner_OverridePorts;
         // Port profiles with their current name (also after a rename). A port profile that can't be found (deleted, or
         // a profile file from another computer): the ports saved with the profile.
         PortScanner_Ports = PortProfile.TryDecodeReferences(profileInfo.PortScanner_PortsInput,
@@ -735,6 +736,19 @@ public class ProfileViewModel : ViewModelBase
     }
 
     public string PortScanner_Host
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool PortScanner_OverridePorts
     {
         get;
         set

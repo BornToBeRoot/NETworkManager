@@ -737,6 +737,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             Host = row.IPAddress.ToString(),
 
             // Additional data
+            PortScanner_OverridePorts = true,
             PortScanner_Ports = _lastPortsInput
         };
 

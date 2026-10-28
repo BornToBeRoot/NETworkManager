@@ -3,6 +3,7 @@
 public enum GroupViewName
 {
     General,
+    PortScanner,
     RemoteDesktop,
     PowerShell,
     PuTTY,

@@ -55,6 +55,7 @@ public static class ProfileDialogManager
             PortScanner_Host = instance.PortScanner_InheritHost
                 ? instance.Host?.Trim()
                 : instance.PortScanner_Host?.Trim(),
+            PortScanner_OverridePorts = instance.PortScanner_OverridePorts,
             // Port profiles are referenced by their ID (found after a rename), their ports are saved as well (used if
             // a port profile can't be found, e.g. a profile file from another computer)
             PortScanner_Ports = PortProfile.TryResolvePorts(instance.PortScanner_Ports,
@@ -320,6 +321,15 @@ public static class ProfileDialogManager
             Description = instance.Description?.Trim(),
 
             Profiles = profiles,
+
+            // Port Scanner - like the profile (see ParseProfileInfo)
+            PortScanner_OverridePorts = instance.PortScanner_OverridePorts,
+            PortScanner_Ports = PortProfile.TryResolvePorts(instance.PortScanner_Ports,
+                SettingsManager.Current.PortScanner_PortProfiles, out var portScannerPorts)
+                ? portScannerPorts
+                : instance.PortScanner_Ports?.Trim(),
+            PortScanner_PortsInput = PortProfile.EncodeReferences(instance.PortScanner_Ports,
+                SettingsManager.Current.PortScanner_PortProfiles),
 
             // Remote Desktop
             RemoteDesktop_UseCredentials = instance.RemoteDesktop_UseCredentials,

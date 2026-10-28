@@ -3,6 +3,7 @@ using NETworkManager.Models.PowerShell;
 using NETworkManager.Models.PuTTY;
 using NETworkManager.Models.RemoteDesktop;
 using NETworkManager.Profiles;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
@@ -93,6 +94,48 @@ public class GroupViewModel : ViewModelBase
     /// Gets or sets the description of the group.
     /// </summary>
     public string Description
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    #endregion
+
+    #region Port Scanner
+
+    public bool PortScanner_OverridePorts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private readonly InputSuggestions _portScannerPortsSuggestions = InputSuggestions.ForPortScannerPorts();
+
+    /// <summary>
+    /// Gets the port profiles and the ports history of the Port Scanner for the ports input (grouped).
+    /// </summary>
+    public ICollectionView PortScanner_PortsSuggestions => _portScannerPortsSuggestions.View;
+
+    /// <summary>
+    /// Gets the names of the port profiles for the Tab completion of the ports input of the Port Scanner.
+    /// </summary>
+    public IEnumerable<string> PortScanner_PortProfileNames => _portScannerPortsSuggestions.ProfileNames;
+
+    public string PortScanner_Ports
     {
         get;
         set
@@ -1589,6 +1632,15 @@ public class GroupViewModel : ViewModelBase
         // General
         Name = groupInfo.Name;
         Description = groupInfo.Description;
+
+        // Port Scanner
+        PortScanner_OverridePorts = groupInfo.PortScanner_OverridePorts;
+        // Port profiles with their current name (also after a rename). A port profile that can't be found (deleted, or
+        // a profile file from another computer): the ports saved with the group.
+        PortScanner_Ports = PortProfile.TryDecodeReferences(groupInfo.PortScanner_PortsInput,
+            SettingsManager.Current.PortScanner_PortProfiles, out var portScannerPortsInput)
+            ? portScannerPortsInput
+            : groupInfo.PortScanner_Ports;
 
         // Remote Desktop
         RemoteDesktop_UseCredentials = groupInfo.RemoteDesktop_UseCredentials;

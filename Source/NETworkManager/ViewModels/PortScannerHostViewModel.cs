@@ -2,9 +2,7 @@ using Dragablz;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
-using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System;
@@ -152,23 +150,11 @@ public class PortScannerHostViewModel : ProfileHostViewModelBase
 
     public void AddTab(ProfileInfo profile, bool start = true)
     {
-        // Port profiles with their current name and ports. A port profile that can't be found (deleted, or a profile
-        // file shared from another computer - port profiles are saved in the settings): the ports saved with the
-        // profile, with a note.
-        if (string.IsNullOrEmpty(profile.PortScanner_PortsInput))
-        {
-            AddTab(profile.PortScanner_Host, profile.PortScanner_Ports, start);
-        }
-        else if (PortProfile.TryDecodeReferences(profile.PortScanner_PortsInput,
-                     SettingsManager.Current.PortScanner_PortProfiles, out var ports))
-        {
-            AddTab(profile.PortScanner_Host, ports, start);
-        }
-        else
-        {
-            AddTab(profile.PortScanner_Host, profile.PortScanner_Ports, start,
-                Strings.PortProfileOfProfileNotFoundMessage);
-        }
+        // Ports of the profile or its group. A port profile that can't be found: the saved ports, with a note.
+        var ports = NETworkManager.Profiles.Application.PortScanner.GetPorts(profile, out var portProfileNotFound);
+
+        AddTab(profile.PortScanner_Host, ports, start,
+            portProfileNotFound ? Strings.PortProfileOfProfileNotFoundMessage : null);
     }
 
     #endregion

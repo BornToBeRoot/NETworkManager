@@ -11,6 +11,7 @@
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:validators="clr-namespace:NETworkManager.Validators;assembly=NETworkManager.Validators"
+             xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
@@ -143,6 +144,23 @@
                                                             <Condition
                                                                 Binding="{Binding Data.NameIsValid, Source={StaticResource BindingProxy}}"
                                                                 Value="False" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- Port Scanner -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding (profiles:GroupViewInfo.Name)}"
+                                                                Value="{x:Static profiles:GroupViewName.PortScanner}" />
+                                                            <Condition
+                                                                Binding="{Binding Data.PortScanner_OverridePorts, Source={StaticResource BindingProxy}}"
+                                                                Value="True" />
+                                                            <Condition
+                                                                Binding="{Binding ElementName=ComboBoxPortScannerPorts, Path=(Validation.HasError)}"
+                                                                Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
                                                             <Setter Property="Visibility" Value="Visible" />
@@ -627,6 +645,59 @@
                                          Height="150"
                                          Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          mah:TextBoxHelper.Watermark="{x:Static Member=localization:Strings.ExampleGroupDescription}" />
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="{x:Static localization:Strings.PortScanner}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel Margin="0,0,0,20">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"
+                                           Text="{x:Static localization:Strings.OverrideDefaultSettings}"
+                                           Style="{StaticResource HeaderTextBlock}" Margin="0" />
+                                <Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4"
+                                           Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
+                                <CheckBox Grid.Column="0" Grid.Row="4" Content="{x:Static localization:Strings.Ports}"
+                                          IsChecked="{Binding PortScanner_OverridePorts}"
+                                          Style="{StaticResource DefaultCheckBox}" />
+                                <!-- Port profiles (name and ports) and history, like the ports input of the Port Scanner -->
+                                <ComboBox x:Name="ComboBoxPortScannerPorts" Grid.Column="2" Grid.Row="4"
+                                          IsEnabled="{Binding PortScanner_OverridePorts}"
+                                          ItemsSource="{Binding PortScanner_PortsSuggestions}"
+                                          TextSearch.TextPath="Text"
+                                          ItemTemplate="{StaticResource InputSuggestionTemplate}"
+                                          controls:ComboBoxListCompletionBehavior.Items="{Binding PortScanner_PortProfileNames}"
+                                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}"
+                                          Style="{StaticResource HistoryComboBox}">
+                                    <ComboBox.GroupStyle>
+                                        <GroupStyle HeaderTemplate="{StaticResource ComboBoxGroupHeaderTemplate}" />
+                                    </ComboBox.GroupStyle>
+                                    <ComboBox.Text>
+                                        <Binding Path="PortScanner_Ports" Mode="TwoWay"
+                                                 UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validators:PortsOrPortProfilesValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </ComboBox.Text>
+                                </ComboBox>
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>
@@ -2219,6 +2290,18 @@
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding NameIsValid}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- Port Scanner -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding PortScanner_OverridePorts}" Value="True" />
+                                    <Condition
+                                        Binding="{Binding ElementName=ComboBoxPortScannerPorts, Path=(Validation.HasError)}"
+                                        Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />

@@ -140,7 +140,7 @@ See also the [Port Scanner](./port-scanner) example inputs for more information 
 
 ### Ports
 
-TCP ports to scan each host for: ports, port ranges and names of [port profiles](#port-profiles) (selectable in the list).
+TCP ports to scan each host for: ports, port ranges and names of [port profiles](#port-profiles) (selectable in the list). Only used if the checkbox is enabled (then the ports are required), otherwise the [ports of the group](#ports-2) are used (if set there).
 
 **Type:** `String`
 
@@ -163,6 +163,21 @@ A port profile is referenced by the profile, so changes to the port profile appl
 See also the [Port Scanner](./port-scanner) example inputs for more information about the supported port formats.
 
 :::
+
+## Group
+
+### Ports
+
+TCP ports to scan for the profiles of the group that don't set their own [ports](#ports-1) (required if the checkbox is enabled), like the ports of a profile: ports, port ranges and names of [port profiles](#port-profiles). If neither the profile nor the group has ports, the ports input is empty and the scan is not started.
+
+**Type:** `String`
+
+**Default:** `Empty`
+
+**Example:**
+
+- `22; 3389; 5985`
+- `Webserver; 8080`
 
 ## Settings
 
