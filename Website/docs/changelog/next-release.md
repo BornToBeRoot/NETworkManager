@@ -362,6 +362,10 @@ Release date: **xx.xx.2026**
 
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the OUI and port lookup. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
+**Web Console**
+
+- Fixed no message being shown after **Delete browsing data** in the settings (whether the browsing data was deleted or an error occurred), and an error (e.g. the WebView2 runtime is not installed) not being handled.
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring

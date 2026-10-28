@@ -1,9 +1,11 @@
-﻿using MahApps.Metro.SimpleChildWindow;
+﻿using log4net;
+using MahApps.Metro.SimpleChildWindow;
 using Microsoft.Web.WebView2.Core;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -15,7 +17,41 @@ public class WebConsoleSettingsViewModel : ViewModelBase
 {
     #region Variables
 
+    private static readonly ILog Log = LogManager.GetLogger(typeof(WebConsoleSettingsViewModel));
+
     private readonly bool _isLoading;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the result of deleting the browsing data is displayed.
+    /// </summary>
+    public bool IsDeleteBrowsingDataStatusMessageDisplayed
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the result of deleting the browsing data.
+    /// </summary>
+    public string DeleteBrowsingDataStatusMessage
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 
     public bool ShowAddressBar
     {
@@ -111,17 +147,33 @@ public class WebConsoleSettingsViewModel : ViewModelBase
         if (!result)
             return;
 
-        // Create a temporary WebView2 instance to clear browsing data
-        var webView2Environment =
-            await CoreWebView2Environment.CreateAsync(null, GlobalStaticConfiguration.WebConsole_Cache);
+        IsDeleteBrowsingDataStatusMessageDisplayed = false;
 
-        var windowHwnd = new WindowInteropHelper(Application.Current.MainWindow).Handle;
+        try
+        {
+            // Create a temporary WebView2 instance to clear browsing data
+            var webView2Environment =
+                await CoreWebView2Environment.CreateAsync(null, GlobalStaticConfiguration.WebConsole_Cache);
 
-        var webView2Controller = await webView2Environment.CreateCoreWebView2ControllerAsync(windowHwnd);
+            var windowHwnd = new WindowInteropHelper(Application.Current.MainWindow).Handle;
 
-        await webView2Controller.CoreWebView2.Profile.ClearBrowsingDataAsync();
+            var webView2Controller = await webView2Environment.CreateCoreWebView2ControllerAsync(windowHwnd);
 
-        webView2Controller.Close();
+            await webView2Controller.CoreWebView2.Profile.ClearBrowsingDataAsync();
+
+            webView2Controller.Close();
+
+            DeleteBrowsingDataStatusMessage = Strings.BrowsingDataSuccessfullyDeletedMessage;
+        }
+        catch (Exception ex)
+        {
+            // E.g. the WebView2 runtime is not installed
+            Log.Error("Error while deleting the browsing data of the WebView2 profile.", ex);
+
+            DeleteBrowsingDataStatusMessage = Strings.BrowsingDataErrorMessage;
+        }
+
+        IsDeleteBrowsingDataStatusMessageDisplayed = true;
     }
 
     #endregion
