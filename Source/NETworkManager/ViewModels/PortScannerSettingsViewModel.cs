@@ -157,6 +157,63 @@ public class PortScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets the number of ICMP attempts of the ping before the scan.
+    /// </summary>
+    public int ICMPAttempts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PortScanner_ICMPAttempts = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the ICMP timeout in milliseconds of the ping before the scan.
+    /// </summary>
+    public int ICMPTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PortScanner_ICMPTimeout = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the ICMP buffer size of the ping before the scan.
+    /// </summary>
+    public int ICMPBuffer
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PortScanner_ICMPBuffer = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets whether the number of hosts and ports scanned at the same time is adjusted to the scan (instead of
     /// <see cref="MaxHostThreads"/> and <see cref="MaxPortThreads"/>).
     /// </summary>
@@ -259,6 +316,9 @@ public class PortScannerSettingsViewModel : ViewModelBase
         Timeout = SettingsManager.Current.PortScanner_Timeout;
         Attempts = SettingsManager.Current.PortScanner_Attempts;
         PingHostsBeforeScan = SettingsManager.Current.PortScanner_PingHostsBeforeScan;
+        ICMPAttempts = SettingsManager.Current.PortScanner_ICMPAttempts;
+        ICMPTimeout = SettingsManager.Current.PortScanner_ICMPTimeout;
+        ICMPBuffer = SettingsManager.Current.PortScanner_ICMPBuffer;
         ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname;
         AutoAdjustThreads = SettingsManager.Current.PortScanner_AutoAdjustThreads;
         MaxHostThreads = SettingsManager.Current.PortScanner_MaxHostThreads;

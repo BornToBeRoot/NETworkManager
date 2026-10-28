@@ -1283,6 +1283,11 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             Timeout = SettingsManager.Current.PortScanner_Timeout,
             Attempts = SettingsManager.Current.PortScanner_Attempts,
             PingHostsBeforeScan = SettingsManager.Current.PortScanner_PingHostsBeforeScan,
+            ICMPAttempts = SettingsManager.Current.PortScanner_ICMPAttempts,
+            ICMPTimeout = SettingsManager.Current.PortScanner_ICMPTimeout,
+            // Limits of the input - a value edited in the settings file would throw (negative) or make every ping fail
+            // (.NET's Ping throws for more than 65500 bytes)
+            ICMPBuffer = new byte[Math.Clamp(SettingsManager.Current.PortScanner_ICMPBuffer, 1, 65500)],
             ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname,
             ShowAllResults = SettingsManager.Current.PortScanner_ShowAllResults
         };

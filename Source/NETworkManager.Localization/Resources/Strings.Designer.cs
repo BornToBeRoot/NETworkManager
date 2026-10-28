@@ -5967,7 +5967,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Only hosts that answer a ping (ICMP echo, with the timeout and attempts above) are scanned. Faster for ranges with many unused IP addresses. Hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned..
+        ///   Looks up a localized string similar to Only hosts that answer a ping (ICMP echo, with the attempts, timeout and buffer below) are scanned. Faster for ranges with many unused IP addresses. Hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned..
         /// </summary>
         public static string HelpMessage_PingHostsBeforeScan {
             get {

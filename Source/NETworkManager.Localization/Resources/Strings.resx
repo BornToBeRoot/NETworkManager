@@ -5129,7 +5129,7 @@ Do you want to start the scan?</value>
     <value>Ping hosts before the scan</value>
   </data>
   <data name="HelpMessage_PingHostsBeforeScan" xml:space="preserve">
-    <value>Only hosts that answer a ping (ICMP echo, with the timeout and attempts above) are scanned. Faster for ranges with many unused IP addresses. Hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned.</value>
+    <value>Only hosts that answer a ping (ICMP echo, with the attempts, timeout and buffer below) are scanned. Faster for ranges with many unused IP addresses. Hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned.</value>
   </data>
   <data name="XHostsDidNotAnswerThePingAndWereNotScanned" xml:space="preserve">
     <value>{0} host(s) did not answer the ping and were not scanned.</value>

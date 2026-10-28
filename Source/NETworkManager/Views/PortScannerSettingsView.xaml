@@ -118,7 +118,7 @@
                    Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding Attempts}" Maximum="10" Minimum="1" Interval="1" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.Ping}" Style="{StaticResource HeaderTextBlock}" />
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <mah:ToggleSwitch Header="{x:Static localization:Strings.PingHostsBeforeScan}"
                               IsOn="{Binding PingHostsBeforeScan}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top"
@@ -128,6 +128,21 @@
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>
             </Rectangle>
+        </StackPanel>
+        <!-- Only used if the hosts are pinged before the scan -->
+        <StackPanel IsEnabled="{Binding PingHostsBeforeScan}">
+            <TextBlock Text="{x:Static localization:Strings.Attempts}" Style="{StaticResource DefaultTextBlock}"
+                       Margin="0,0,0,10" />
+            <mah:NumericUpDown Value="{Binding ICMPAttempts}" Maximum="10" Minimum="1" Interval="1"
+                               Margin="0,0,0,10" />
+            <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{StaticResource DefaultTextBlock}"
+                       Margin="0,0,0,10" />
+            <mah:NumericUpDown Value="{Binding ICMPTimeout}" Maximum="15000" Minimum="100" Interval="100"
+                               Margin="0,0,0,10" />
+            <TextBlock Text="{x:Static localization:Strings.Buffer}" Style="{StaticResource DefaultTextBlock}"
+                       Margin="0,0,0,10" />
+            <mah:NumericUpDown Value="{Binding ICMPBuffer}" Minimum="1" Maximum="65500" Interval="1"
+                               Margin="0,0,0,20" />
         </StackPanel>
         <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}" IsOn="{Binding ResolveHostname}"
