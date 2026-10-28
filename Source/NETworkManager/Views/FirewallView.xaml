@@ -115,7 +115,7 @@
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
-                            <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                            <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" Opened="ContextMenu_Opened" MinWidth="150">
                                 <MenuItem Header="{x:Static localization:Strings.EnableRule}"
                                           Command="{Binding Path=EnableRuleCommand}"
                                           Style="{StaticResource ManagedByPolicyMenuItem}"
@@ -294,7 +294,7 @@
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </ContextMenu>
-                            <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                            <ContextMenu x:Key="MultiRowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" Opened="ContextMenu_Opened" MinWidth="150">
                                 <MenuItem Header="{x:Static localization:Strings.Enable}"
                                           Command="{Binding Path=EnableRuleCommand}"
                                           Style="{StaticResource ManagedByPolicyMenuItem}"
