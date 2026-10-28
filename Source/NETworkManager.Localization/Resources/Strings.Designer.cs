@@ -3695,7 +3695,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A DNS server of this profile was not found, the DNS servers saved with the profile are used. DNS servers are saved in the settings and the profile refers to them by an internal ID - if the profile file was shared from another computer, create the DNS server and then select it in the profile again (edit the profile)..
+        ///   Looks up a localized string similar to A DNS server of this profile or its group was not found, the DNS servers saved with the profile or group are used. DNS servers are saved in the settings and the profile or group refers to them by an internal ID - if the profile file was shared from another computer, create the DNS server and then select it in the profile or group again (edit it)..
         /// </summary>
         public static string DNSServerOfProfileNotFoundMessage {
             get {
@@ -4703,6 +4703,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ErrorMessage_PortProfileNameInvalid {
             get {
                 return ResourceManager.GetString("ErrorMessage_PortProfileNameInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PTR records can only be looked up for IP addresses..
+        /// </summary>
+        public static string ErrorMessage_PTRRequiresIPAddresses {
+            get {
+                return ResourceManager.GetString("ErrorMessage_PTRRequiresIPAddresses", resourceCulture);
             }
         }
         

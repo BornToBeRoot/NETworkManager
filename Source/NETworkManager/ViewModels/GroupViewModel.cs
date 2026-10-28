@@ -150,6 +150,48 @@ public class GroupViewModel : ViewModelBase
 
     #endregion
 
+    #region DNS Lookup
+
+    public bool DNSLookup_OverrideDNSServer
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string DNSLookup_DNSServer
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private readonly InputSuggestions _dnsLookupDNSServerSuggestions = InputSuggestions.ForDNSLookupDNSServers();
+
+    /// <summary>
+    /// Gets the DNS servers and the DNS server history of DNS Lookup for the DNS server input (grouped).
+    /// </summary>
+    public ICollectionView DNSLookup_DNSServerSuggestions => _dnsLookupDNSServerSuggestions.View;
+
+    /// <summary>
+    /// Gets the names of the DNS servers for the Tab completion of the DNS server input of DNS Lookup.
+    /// </summary>
+    public IEnumerable<string> DNSLookup_DNSServerNames => _dnsLookupDNSServerSuggestions.ProfileNames;
+
+    #endregion
+
     #region Remote Desktop
 
     /// <summary>
@@ -1641,6 +1683,15 @@ public class GroupViewModel : ViewModelBase
             SettingsManager.Current.PortScanner_PortProfiles, out var portScannerPortsInput)
             ? portScannerPortsInput
             : groupInfo.PortScanner_Ports;
+
+        // DNS Lookup
+        DNSLookup_OverrideDNSServer = groupInfo.DNSLookup_OverrideDNSServer;
+        // DNS servers with their current name (also after a rename). A DNS server that can't be found (deleted, or a
+        // profile file from another computer): the servers saved with the group.
+        DNSLookup_DNSServer = DNSServer.TryDecodeReferences(groupInfo.DNSLookup_DNSServerInput,
+            SettingsManager.Current.DNSLookup_DNSServers, out var dnsLookupDNSServerInput)
+            ? dnsLookupDNSServerInput
+            : groupInfo.DNSLookup_DNSServer;
 
         // Remote Desktop
         RemoteDesktop_UseCredentials = groupInfo.RemoteDesktop_UseCredentials;

@@ -410,6 +410,22 @@
                                                             <Setter Property="Visibility" Value="Visible" />
                                                         </MultiDataTrigger.Setters>
                                                     </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding (profiles:ProfileViewInfo.Name)}"
+                                                                Value="{x:Static profiles:ProfileName.DNSLookup}" />
+                                                            <Condition
+                                                                Binding="{Binding Data.DNSLookup_Enabled, Source={StaticResource BindingProxy}}"
+                                                                Value="True" />
+                                                            <Condition
+                                                                Binding="{Binding Data.DNSLookup_QueryTypeIsValid, Source={StaticResource BindingProxy}}"
+                                                                Value="False" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
                                                     <!-- Remote Desktop -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
@@ -1913,6 +1929,12 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
@@ -1956,13 +1978,18 @@
                                         </Style>
                                     </TextBox.Style>
                                 </TextBox>
-                                <!-- DNS server of the profile instead of the one selected in DNS Lookup: DNS servers (by
-                                     name) and history, like the DNS server input of DNS Lookup -->
-                                <CheckBox Grid.Column="0" Grid.Row="4"
+                                <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="4"
+                                           Text="{x:Static localization:Strings.OverrideDefaultSettings}"
+                                           Style="{StaticResource HeaderTextBlock}" Margin="0,10,0,0" />
+                                <Separator Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="4"
+                                           Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
+                                <!-- DNS server of the profile instead of the one of the group or selected in DNS Lookup:
+                                     DNS servers (by name) and history, like the DNS server input of DNS Lookup -->
+                                <CheckBox Grid.Column="0" Grid.Row="8"
                                           Content="{x:Static localization:Strings.DNSServer}"
                                           IsChecked="{Binding DNSLookup_OverrideDNSServer}"
                                           Style="{StaticResource DefaultCheckBox}" />
-                                <ComboBox x:Name="ComboBoxDNSLookupDNSServer" Grid.Column="2" Grid.Row="4"
+                                <ComboBox x:Name="ComboBoxDNSLookupDNSServer" Grid.Column="2" Grid.Row="8"
                                           IsEnabled="{Binding DNSLookup_OverrideDNSServer}"
                                           ItemsSource="{Binding DNSLookup_DNSServerSuggestions}"
                                           TextSearch.TextPath="Text"
@@ -1982,6 +2009,24 @@
                                         </Binding>
                                     </ComboBox.Text>
                                 </ComboBox>
+                                <!-- Type of the profile instead of the automatic one (PTR for IP addresses, otherwise A) -->
+                                <CheckBox Grid.Column="0" Grid.Row="10"
+                                          Content="{x:Static localization:Strings.Type}"
+                                          IsChecked="{Binding DNSLookup_OverrideQueryType}"
+                                          Style="{StaticResource DefaultCheckBox}" />
+                                <ComboBox Grid.Column="2" Grid.Row="10"
+                                          IsEnabled="{Binding DNSLookup_OverrideQueryType}"
+                                          ItemsSource="{Binding DNSLookup_QueryTypes}"
+                                          SelectedItem="{Binding DNSLookup_QueryType}" />
+                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="10"
+                                           ToolTip="{x:Static localization:Strings.ErrorMessage_PTRRequiresIPAddresses}"
+                                           Style="{StaticResource ErrorImageRectangle}"
+                                           Visibility="{Binding DNSLookup_QueryTypeIsValid, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
+                                           Margin="10,0,0,0">
+                                    <Rectangle.Resources>
+                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource ErrorToolTip}" />
+                                    </Rectangle.Resources>
+                                </Rectangle>
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>
@@ -4447,6 +4492,15 @@
                                     <Condition
                                         Binding="{Binding ElementName=ComboBoxDNSLookupDNSServer, Path=(Validation.HasError)}"
                                         Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding DNSLookup_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding DNSLookup_QueryTypeIsValid}" Value="False" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />

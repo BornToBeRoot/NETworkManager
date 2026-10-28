@@ -1,3 +1,4 @@
+using DnsClient;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -125,6 +126,11 @@ public class ProfileViewModel : ViewModelBase
             SettingsManager.Current.DNSLookup_DNSServers, out var dnsLookupDNSServerInput)
             ? dnsLookupDNSServerInput
             : profileInfo.DNSLookup_DNSServer;
+        DNSLookup_OverrideQueryType = profileInfo.DNSLookup_OverrideQueryType;
+        DNSLookup_QueryTypes = [.. DNSLookup.QueryTypes.OrderBy(x => x.ToString())];
+        DNSLookup_QueryType = DNSLookup_QueryTypes.Contains(profileInfo.DNSLookup_QueryType)
+            ? profileInfo.DNSLookup_QueryType
+            : QueryType.A;
 
         // Remote Desktop
         RemoteDesktop_Enabled = editMode == ProfileEditMode.Add
@@ -437,6 +443,8 @@ public class ProfileViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+
+            ValidateDNSLookupQueryType();
         }
     }
 
@@ -902,6 +910,8 @@ public class ProfileViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+
+            ValidateDNSLookupQueryType();
         }
     }
 
@@ -915,6 +925,8 @@ public class ProfileViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+
+            ValidateDNSLookupQueryType();
         }
     }
 
@@ -955,6 +967,64 @@ public class ProfileViewModel : ViewModelBase
     /// Gets the names of the DNS servers for the Tab completion of the DNS server input of DNS Lookup.
     /// </summary>
     public IEnumerable<string> DNSLookup_DNSServerNames => _dnsLookupDNSServerSuggestions.ProfileNames;
+
+    public bool DNSLookup_OverrideQueryType
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+
+            ValidateDNSLookupQueryType();
+        }
+    }
+
+    public List<QueryType> DNSLookup_QueryTypes { get; }
+
+    public QueryType DNSLookup_QueryType
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+
+            ValidateDNSLookupQueryType();
+        }
+    }
+
+    /// <summary>
+    /// Gets a value indicating whether the query type fits the host: PTR can only be looked up for IP addresses.
+    /// </summary>
+    public bool DNSLookup_QueryTypeIsValid
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = true;
+
+    /// <summary>
+    /// Checks if the query type of the profile fits the host (own or inherited), see
+    /// <see cref="DNSLookup_QueryTypeIsValid"/>.
+    /// </summary>
+    private void ValidateDNSLookupQueryType()
+    {
+        DNSLookup_QueryTypeIsValid = !DNSLookup_OverrideQueryType || DNSLookup_QueryType != QueryType.PTR ||
+                                     IPAddressHelper.AreIPAddresses(DNSLookup_InheritHost ? Host : DNSLookup_Host);
+    }
 
     #endregion
 

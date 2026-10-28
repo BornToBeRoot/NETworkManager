@@ -99,7 +99,7 @@ Hostname or IP address (or any other resource record) to query.
 
 ### DNS server
 
-Use this DNS server instead of the DNS server selected in the DNS lookup: names of [DNS servers](#dns-server-1) and / or custom DNS servers, separated by `;` (selectable in the list, `Tab` completes a name).
+Use this DNS server instead of the [DNS server of the group](#dns-server-1) or, if not set there, the DNS server selected in the DNS lookup: names of [DNS servers](#dns-server-2) and / or custom DNS servers, separated by `;` (selectable in the list, `Tab` completes a name).
 
 **Type:** `String`
 
@@ -115,6 +115,35 @@ Use this DNS server instead of the DNS server selected in the DNS lookup: names 
 A configured DNS server is referenced by the profile, so changes to it apply to the profile, also if it is renamed. Its IP addresses are saved with the profile as well: if the DNS server can't be found (it was deleted, or the profile file is shared from another computer - DNS servers are saved in the settings of each computer), the saved IP addresses are used and a note is shown. `[Windows DNS]` always uses the DNS servers of the computer.
 
 :::
+
+### Type
+
+Record type to query instead of the automatic type: `PTR` for IP addresses, otherwise `A`.
+
+**Type:** `QueryType`
+
+**Default:** `Disabled` / `A`
+
+:::note
+
+`PTR` can only be looked up for IP addresses: if the [Host](#host) contains a hostname, the profile can't be saved.
+
+:::
+
+## Group
+
+### DNS server
+
+DNS server for the profiles of the group that don't set their own [DNS server](#dns-server), like the DNS server of a profile. If neither the profile nor the group has a DNS server, the DNS server selected in the DNS lookup is used.
+
+**Type:** `String`
+
+**Default:** `Disabled` / `Empty`
+
+**Example:**
+
+- `Cloudflare`
+- `10.1.0.53; 10.1.0.54`
 
 ## Settings
 

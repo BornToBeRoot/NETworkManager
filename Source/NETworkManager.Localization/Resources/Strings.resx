@@ -5141,12 +5141,15 @@ Do you want to start the scan?</value>
     <value>The name must not contain ";".</value>
   </data>
   <data name="DNSServerOfProfileNotFoundMessage" xml:space="preserve">
-    <value>A DNS server of this profile was not found, the DNS servers saved with the profile are used. DNS servers are saved in the settings and the profile refers to them by an internal ID - if the profile file was shared from another computer, create the DNS server and then select it in the profile again (edit the profile).</value>
+    <value>A DNS server of this profile or its group was not found, the DNS servers saved with the profile or group are used. DNS servers are saved in the settings and the profile or group refers to them by an internal ID - if the profile file was shared from another computer, create the DNS server and then select it in the profile or group again (edit it).</value>
   </data>
   <data name="ApplicationName_Firewall" xml:space="preserve">
     <value>Firewall</value>
   </data>
   <data name="PTRRequiresIPAddressX" xml:space="preserve">
     <value>PTR records can only be looked up for IP addresses, "{0}" is skipped.</value>
+  </data>
+  <data name="ErrorMessage_PTRRequiresIPAddresses" xml:space="preserve">
+    <value>PTR records can only be looked up for IP addresses.</value>
   </data>
 </root>

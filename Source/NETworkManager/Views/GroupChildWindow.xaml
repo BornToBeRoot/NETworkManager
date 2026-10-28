@@ -166,6 +166,23 @@
                                                             <Setter Property="Visibility" Value="Visible" />
                                                         </MultiDataTrigger.Setters>
                                                     </MultiDataTrigger>
+                                                    <!-- DNS Lookup -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding (profiles:GroupViewInfo.Name)}"
+                                                                Value="{x:Static profiles:GroupViewName.DNSLookup}" />
+                                                            <Condition
+                                                                Binding="{Binding Data.DNSLookup_OverrideDNSServer, Source={StaticResource BindingProxy}}"
+                                                                Value="True" />
+                                                            <Condition
+                                                                Binding="{Binding ElementName=ComboBoxDNSLookupDNSServer, Path=(Validation.HasError)}"
+                                                                Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
                                                     <!-- Remote Desktop -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
@@ -694,6 +711,61 @@
                                                  UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
                                                 <validators:PortsOrPortProfilesValidator ValidatesOnTargetUpdated="True" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </ComboBox.Text>
+                                </ComboBox>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="{x:Static localization:Strings.DNSLookup}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel Margin="0,0,0,20">
+                            <Grid>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
+                                </Grid.Resources>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4"
+                                           Text="{x:Static localization:Strings.OverrideDefaultSettings}"
+                                           Style="{StaticResource HeaderTextBlock}" Margin="0" />
+                                <Separator Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4"
+                                           Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
+                                <!-- DNS server of the group instead of the one selected in DNS Lookup: DNS servers (by
+                                     name) and history, like the DNS server input of DNS Lookup -->
+                                <CheckBox Grid.Column="0" Grid.Row="4"
+                                          Content="{x:Static localization:Strings.DNSServer}"
+                                          IsChecked="{Binding DNSLookup_OverrideDNSServer}"
+                                          Style="{StaticResource DefaultCheckBox}" />
+                                <ComboBox x:Name="ComboBoxDNSLookupDNSServer" Grid.Column="2" Grid.Row="4"
+                                          IsEnabled="{Binding DNSLookup_OverrideDNSServer}"
+                                          ItemsSource="{Binding DNSLookup_DNSServerSuggestions}"
+                                          TextSearch.TextPath="Text"
+                                          ItemTemplate="{StaticResource InputSuggestionTemplate}"
+                                          controls:ComboBoxListCompletionBehavior.Items="{Binding DNSLookup_DNSServerNames}"
+                                          Style="{StaticResource HistoryComboBox}">
+                                    <ComboBox.GroupStyle>
+                                        <GroupStyle HeaderTemplate="{StaticResource ComboBoxGroupHeaderTemplate}" />
+                                    </ComboBox.GroupStyle>
+                                    <ComboBox.Text>
+                                        <Binding Path="DNSLookup_DNSServer" Mode="TwoWay"
+                                                 UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                                <validators:DNSServersValidator ValidatesOnTargetUpdated="True" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </ComboBox.Text>
@@ -2301,6 +2373,18 @@
                                     <Condition Binding="{Binding PortScanner_OverridePorts}" Value="True" />
                                     <Condition
                                         Binding="{Binding ElementName=ComboBoxPortScannerPorts, Path=(Validation.HasError)}"
+                                        Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <!-- DNS Lookup -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding DNSLookup_OverrideDNSServer}" Value="True" />
+                                    <Condition
+                                        Binding="{Binding ElementName=ComboBoxDNSLookupDNSServer, Path=(Validation.HasError)}"
                                         Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>

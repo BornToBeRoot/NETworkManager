@@ -3,9 +3,7 @@ using Dragablz;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
-using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
-using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System;
@@ -178,28 +176,12 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
     public void AddTab(ProfileInfo profile, bool start = true)
     {
-        // DNS server of DNS Lookup (last selected)
-        if (!profile.DNSLookup_OverrideDNSServer || string.IsNullOrWhiteSpace(profile.DNSLookup_DNSServer))
-        {
-            AddTab(profile.DNSLookup_Host, start: start);
-            return;
-        }
+        // DNS servers of the profile or its group (null: the selected DNS server). A DNS server that can't be found:
+        // the saved servers, with a note.
+        var dnsServer = NETworkManager.Profiles.Application.DNSLookup.GetDNSServer(profile, out var dnsServerNotFound);
 
-        // DNS servers by name with their current name (also after a rename)
-        if (!string.IsNullOrEmpty(profile.DNSLookup_DNSServerInput) &&
-            DNSServer.TryDecodeReferences(profile.DNSLookup_DNSServerInput,
-                SettingsManager.Current.DNSLookup_DNSServers, out var dnsServer))
-        {
-            AddTab(profile.DNSLookup_Host, dnsServer, start: start);
-            return;
-        }
-
-        // No DNS server by name, or one can't be found (deleted, or a profile file shared from another computer - DNS
-        // servers are saved in the settings): the servers saved with the profile, with a note if one wasn't found
-        AddTab(profile.DNSLookup_Host, profile.DNSLookup_DNSServer, start: start,
-            message: string.IsNullOrEmpty(profile.DNSLookup_DNSServerInput)
-                ? null
-                : Strings.DNSServerOfProfileNotFoundMessage);
+        AddTab(profile.DNSLookup_Host, dnsServer, NETworkManager.Profiles.Application.DNSLookup.GetQueryType(profile),
+            start, dnsServerNotFound ? Strings.DNSServerOfProfileNotFoundMessage : null);
     }
 
     #endregion

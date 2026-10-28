@@ -1,4 +1,5 @@
 ﻿//using System.Collections.Generic;
+using DnsClient;
 using NETworkManager.Controls;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
@@ -83,6 +84,8 @@ public class ProfileInfo
         DNSLookup_OverrideDNSServer = profile.DNSLookup_OverrideDNSServer;
         DNSLookup_DNSServer = profile.DNSLookup_DNSServer;
         DNSLookup_DNSServerInput = profile.DNSLookup_DNSServerInput;
+        DNSLookup_OverrideQueryType = profile.DNSLookup_OverrideQueryType;
+        DNSLookup_QueryType = profile.DNSLookup_QueryType;
 
         // Remote Desktop
         RemoteDesktop_Enabled = profile.RemoteDesktop_Enabled;
@@ -366,6 +369,13 @@ public class ProfileInfo
     ///     server was entered by name.
     /// </summary>
     public string DNSLookup_DNSServerInput { get; set; }
+
+    /// <summary>
+    ///     Use <see cref="DNSLookup_QueryType" /> instead of the automatic type (PTR for IP addresses, otherwise A).
+    /// </summary>
+    public bool DNSLookup_OverrideQueryType { get; set; }
+
+    public QueryType DNSLookup_QueryType { get; set; } = QueryType.A;
 
     public bool RemoteDesktop_Enabled { get; set; }
     public bool RemoteDesktop_InheritHost { get; set; } = true;

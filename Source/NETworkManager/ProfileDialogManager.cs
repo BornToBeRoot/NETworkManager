@@ -89,6 +89,8 @@ public static class ProfileDialogManager
                 SettingsManager.Current.DNSLookup_DNSServers),
             DNSLookup_DNSServerInput = DNSServer.EncodeReferences(instance.DNSLookup_DNSServer,
                 SettingsManager.Current.DNSLookup_DNSServers),
+            DNSLookup_OverrideQueryType = instance.DNSLookup_OverrideQueryType,
+            DNSLookup_QueryType = instance.DNSLookup_QueryType,
 
             // Remote Desktop
             RemoteDesktop_Enabled = instance.RemoteDesktop_Enabled,
@@ -330,6 +332,13 @@ public static class ProfileDialogManager
                 : instance.PortScanner_Ports?.Trim(),
             PortScanner_PortsInput = PortProfile.EncodeReferences(instance.PortScanner_Ports,
                 SettingsManager.Current.PortScanner_PortProfiles),
+
+            // DNS Lookup - like the profile (see ParseProfileInfo)
+            DNSLookup_OverrideDNSServer = instance.DNSLookup_OverrideDNSServer,
+            DNSLookup_DNSServer = DNSServer.ReplaceProfilesByServers(instance.DNSLookup_DNSServer?.Trim(),
+                SettingsManager.Current.DNSLookup_DNSServers),
+            DNSLookup_DNSServerInput = DNSServer.EncodeReferences(instance.DNSLookup_DNSServer,
+                SettingsManager.Current.DNSLookup_DNSServers),
 
             // Remote Desktop
             RemoteDesktop_UseCredentials = instance.RemoteDesktop_UseCredentials,
