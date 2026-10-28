@@ -18,6 +18,7 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
+        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Key="F5" Command="{Binding Path=RefreshCommand}" />
@@ -87,7 +88,7 @@
                                               SelectedItem="{Binding SelectedResult}"
                                               SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <controls:MultiSelectDataGrid.Resources>
-                        <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                        <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static Member=localization:Strings.EnableEntry}"
                                       Command="{Binding Path=EnableEntryCommand}"
                                       wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.HostsFileEditorAdminMessage}"
@@ -189,7 +190,7 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                         </ContextMenu>
-                        <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                        <ContextMenu x:Key="MultiRowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static Member=localization:Strings.Enable}"
                                       Command="{Binding Path=EnableEntryCommand}"
                                       wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.HostsFileEditorAdminMessage}"
