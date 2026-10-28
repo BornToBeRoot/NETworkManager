@@ -841,7 +841,7 @@
     <value>複製...</value>
   </data>
   <data name="CouldNotResolveHostnameFor" xml:space="preserve">
-    <value>無法解析主機名稱："{0}"</value>
+    <value>無法解析主機名稱：「{0}」</value>
   </data>
   <data name="Credential" xml:space="preserve">
     <value>認證</value>
@@ -1385,16 +1385,16 @@
 [3] 未設定任何身份驗證要求。</value>
   </data>
   <data name="HelpMessage_Tags" xml:space="preserve">
-    <value>標籤可協助您依主題／專案組織設定檔。多個標籤以分號 ";" 分隔。使用 'tag=xxx' 進行搜尋。</value>
+    <value>標籤可協助您依主題／專案組織設定檔。多個標籤以分號「;」 分隔。使用 'tag=xxx' 進行搜尋。</value>
   </data>
   <data name="TimeUnit_Hour" xml:space="preserve">
-    <value>小時(H)</value>
+    <value>小時</value>
   </data>
   <data name="LocationOfTheImport" xml:space="preserve">
     <value>匯出檔案的位置...</value>
   </data>
   <data name="TimeUnit_Minute" xml:space="preserve">
-    <value>分鐘(M)</value>
+    <value>分鐘</value>
   </data>
   <data name="MoveAndRestart" xml:space="preserve">
     <value>移動 &amp; 重新啟動</value>
@@ -1445,7 +1445,7 @@
     <value>搜尋...</value>
   </data>
   <data name="TimeUnit_Second" xml:space="preserve">
-    <value>秒(S)</value>
+    <value>秒</value>
   </data>
   <data name="Send" xml:space="preserve">
     <value>發送</value>
@@ -1538,7 +1538,7 @@
     <value>輸入有效的傳輸速率！</value>
   </data>
   <data name="EnterValidHosts" xml:space="preserve">
-    <value>輸入有效的主機 (多主機不能以 ";" 結尾)！</value>
+    <value>輸入有效的主機（多主機不能以「;」結）！</value>
   </data>
   <data name="EnterValidIPAddress" xml:space="preserve">
     <value>輸入有效的 IP 位址！</value>
@@ -2149,7 +2149,7 @@
     <value>無法從「{0}」解析出公共 IP 位址！請嘗試其他服務或使用預設設定…</value>
   </data>
   <data name="CouldNotConnectToXXXMessage" xml:space="preserve">
-    <value>無法連線到 "{0}"！</value>
+    <value>無法連線到「{0}」！</value>
   </data>
   <data name="IPv4ProtocolAvailable" xml:space="preserve">
     <value>IPv4 通訊協定可用</value>
@@ -2464,7 +2464,7 @@
     <value>繼續</value>
   </data>
   <data name="CouldNotResolveIPAddressFor" xml:space="preserve">
-    <value>無法解析 ip 位址："{0}"</value>
+    <value>無法解析 ip 位址：「{0}」</value>
   </data>
   <data name="PingMonitorNotification" xml:space="preserve">
     <value>通知</value>
@@ -2500,13 +2500,13 @@
     <value>應用程式將重新啟動...</value>
   </data>
   <data name="ClouldNotExportFileSeeErrorMessageXX" xml:space="preserve">
-    <value>不能匯出檔案！參閱錯誤訊息："{0}"</value>
+    <value>不能匯出檔案！參閱錯誤訊息：「{0}」</value>
   </data>
   <data name="FileExportedToXX" xml:space="preserve">
-    <value>檔案已匯出到 "{0}"！</value>
+    <value>檔案已匯出到「{0}」！</value>
   </data>
   <data name="ClouldNotImportFileSeeErrorMessageXX" xml:space="preserve">
-    <value>不能匯入檔案！參閱錯誤訊息："{0}"</value>
+    <value>不能匯入檔案！參閱錯誤訊息：「{0}」</value>
   </data>
   <data name="LocationCannotBeChangedInThePortableVersion" xml:space="preserve">
     <value>可攜版中無法變更位置！</value>
@@ -3300,7 +3300,7 @@
     <value>新增一個分頁以執行 SNTP 查詢……</value>
   </data>
   <data name="SNTPServers" xml:space="preserve">
-    <value>SNTP 伺服器(s)</value>
+    <value>SNTP 伺服器</value>
   </data>
   <data name="HelpMessage_CustomPublicIPv6AddressAPI" xml:space="preserve">
     <value>可透過 HTTP/HTTPS 訪問、且回傳 IPv6 位址「如 xxxx:xx:xxx::xx」的網路服務 URL。</value>
@@ -3348,7 +3348,7 @@
     <value>輸入有效的主機名稱（例如 server-01 或 example.com），或是有效的 IP 位址（例如 192.168.178.1）。</value>
   </data>
   <data name="Servers" xml:space="preserve">
-    <value>伺服器（數）</value>
+    <value>伺服器</value>
   </data>
   <data name="EnterMasterPasswordToUnlockProfile" xml:space="preserve">
     <value>輸入主密碼以解鎖設定檔：</value>
@@ -4249,10 +4249,10 @@
     <value>跳過已匯入的項目</value>
   </data>
   <data name="ImportResultsHeader" xml:space="preserve">
-    <value>{0}· {1}結果(s)</value>
+    <value>{0}· {1}結果</value>
   </data>
   <data name="ProfileImportSummary" xml:space="preserve">
-    <value>{0}已匯入設定檔(s)。
+    <value>{0}已匯入設定檔。
 {1}跳過重複項目。
 {2}因缺少主機而跳過。</value>
   </data>
@@ -4749,13 +4749,13 @@ Cloudflare 可能會記錄您的 IP 位址與網路資訊。詳情請參閱 Clou
     <value>無法連線至 RDAP 伺服器：{0}</value>
   </data>
   <data name="RDAPNoServerForX" xml:space="preserve">
-    <value>目前無已知的 "{0}" RDAP 伺服器。該註冊局可能僅提供 Whois。</value>
+    <value>目前無已知的「{0}」RDAP 伺服器。該註冊局可能僅提供 Whois。</value>
   </data>
   <data name="RDAPNoServerForEntityX" xml:space="preserve">
-    <value>目前無已知的 "{0}" RDAP 伺服器。實體處理程序僅能在結尾帶有已知服務供應商標籤（例如 "-RIPE" 或 "-ARIN"）時才能解析。</value>
+    <value>目前無已知的「{0}」RDAP 伺服器。實體處理程序僅能在結尾帶有已知服務供應商標籤（例如 "-RIPE" 或 "-ARIN"）時才能解析。</value>
   </data>
   <data name="RDAPNotFoundX" xml:space="preserve">
-    <value>找不到 "{0}" 的資料。</value>
+    <value>找不到「{0}」的資料。</value>
   </data>
   <data name="RDAPNotImplemented" xml:space="preserve">
     <value>伺服器不支援此查詢。</value>
@@ -5132,7 +5132,7 @@ Cloudflare 可能會記錄您的 IP 位址與網路資訊。詳情請參閱 Clou
     <value>僅對有回應 Ping（ICMP 回應，採用上述逾時與次數設定）的主機進行掃描。此方式能加快包含大量閒置 IP 的範圍掃描速度。若主機封鎖了 ICMP（例如：開啟防火牆的 Windows 系統），則不會被掃描到。</value>
   </data>
   <data name="XHostsDidNotAnswerThePingAndWereNotScanned" xml:space="preserve">
-    <value>有{0}個主機(s)未回應 ping，未進行掃量。</value>
+    <value>有{0}個主機未回應 ping，未進行掃量。</value>
   </data>
   <data name="EnterValidDNSServersOrDNSServerProfiles" xml:space="preserve">
     <value>請輸入有效的 DNS 伺服器（IP 位址或主機名稱，可選填連接埠）及/或其名稱！</value>
