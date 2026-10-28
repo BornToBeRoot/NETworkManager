@@ -63,6 +63,7 @@ public class ProfileInfo
         PortScanner_InheritHost = profile.PortScanner_InheritHost;
         PortScanner_Host = profile.PortScanner_Host;
         PortScanner_Ports = profile.PortScanner_Ports;
+        PortScanner_PortsInput = profile.PortScanner_PortsInput;
 
         // Ping Monitor
         PingMonitor_Enabled = profile.PingMonitor_Enabled;
@@ -78,6 +79,9 @@ public class ProfileInfo
         DNSLookup_Enabled = profile.DNSLookup_Enabled;
         DNSLookup_InheritHost = profile.DNSLookup_InheritHost;
         DNSLookup_Host = profile.DNSLookup_Host;
+        DNSLookup_OverrideDNSServer = profile.DNSLookup_OverrideDNSServer;
+        DNSLookup_DNSServer = profile.DNSLookup_DNSServer;
+        DNSLookup_DNSServerInput = profile.DNSLookup_DNSServerInput;
 
         // Remote Desktop
         RemoteDesktop_Enabled = profile.RemoteDesktop_Enabled;
@@ -310,7 +314,20 @@ public class ProfileInfo
     public bool PortScanner_Enabled { get; set; }
     public bool PortScanner_InheritHost { get; set; } = true;
     public string PortScanner_Host { get; set; }
+
+    /// <summary>
+    ///     Ports to scan (ports and port ranges). If port profiles were entered, their ports at the time the profile was
+    ///     saved - used if a port profile of <see cref="PortScanner_PortsInput" /> can't be found (e.g. a profile file
+    ///     from another computer, port profiles are saved in the settings).
+    /// </summary>
     public string PortScanner_Ports { get; set; }
+
+    /// <summary>
+    ///     Ports as entered, if they contain port profiles: port profiles are referenced by their ID (e.g.
+    ///     "{8f1c...}; 8080", see <c>PortProfile.EncodeReferences</c>), so they are also found after a rename. Null if no
+    ///     port profile was entered.
+    /// </summary>
+    public string PortScanner_PortsInput { get; set; }
 
     public bool PingMonitor_Enabled { get; set; }
     public bool PingMonitor_InheritHost { get; set; } = true;
@@ -323,6 +340,26 @@ public class ProfileInfo
     public bool DNSLookup_Enabled { get; set; }
     public bool DNSLookup_InheritHost { get; set; } = true;
     public string DNSLookup_Host { get; set; }
+
+    /// <summary>
+    ///     Use the DNS server of the profile instead of the DNS server selected in DNS Lookup.
+    /// </summary>
+    public bool DNSLookup_OverrideDNSServer { get; set; }
+
+    /// <summary>
+    ///     DNS server of the profile (names of DNS servers and / or DNS servers). If DNS servers were entered by name,
+    ///     their servers at the time the profile was saved - used if a DNS server of
+    ///     <see cref="DNSLookup_DNSServerInput" /> can't be found (e.g. a profile file from another computer, DNS servers
+    ///     are saved in the settings).
+    /// </summary>
+    public string DNSLookup_DNSServer { get; set; }
+
+    /// <summary>
+    ///     DNS server as entered, if it contains DNS servers by name: they are referenced by their ID (e.g. "{8f1c...};
+    ///     9.9.9.9", see <c>DNSServer.EncodeReferences</c>), so they are also found after a rename. Null if no DNS
+    ///     server was entered by name.
+    /// </summary>
+    public string DNSLookup_DNSServerInput { get; set; }
 
     public bool RemoteDesktop_Enabled { get; set; }
     public bool RemoteDesktop_InheritHost { get; set; } = true;

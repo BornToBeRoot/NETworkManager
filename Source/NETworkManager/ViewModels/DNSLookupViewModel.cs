@@ -41,6 +41,9 @@ public class DNSLookupViewModel : ViewModelBase
     /// </summary>
     private readonly bool _isLoading;
 
+    // Message of the tab, shown until the first lookup has started (see constructor)
+    private string _message;
+
     /// <summary>
     /// Gets or sets the host to lookup.
     /// </summary>
@@ -62,14 +65,21 @@ public class DNSLookupViewModel : ViewModelBase
     /// </summary>
     public ICollectionView HostHistoryView { get; }
 
-    /// <summary>
-    /// Gets the collection view of DNS servers.
-    /// </summary>
-    public ICollectionView DNSServers { get; }
+    private readonly InputSuggestions _dnsServerSuggestions = InputSuggestions.ForDNSLookupDNSServers();
 
     /// <summary>
-    /// Gets or sets the selected DNS server.
-    /// This can either be an ip/host:port or a profile name.
+    /// Gets the DNS servers and the DNS server history for the DNS server input (grouped).
+    /// </summary>
+    public ICollectionView DNSServers => _dnsServerSuggestions.View;
+
+    /// <summary>
+    /// Gets the names of the DNS servers for the Tab completion of the DNS server input.
+    /// </summary>
+    public IEnumerable<string> DNSServerNames => _dnsServerSuggestions.ProfileNames;
+
+    /// <summary>
+    /// Gets or sets the DNS server input: names of DNS servers (profiles) and / or DNS servers (ip/host:port),
+    /// separated by ";" (see <see cref="Models.Network.DNSServer.ResolveServers"/>).
     /// </summary>
     public string DNSServer
     {
@@ -79,25 +89,8 @@ public class DNSLookupViewModel : ViewModelBase
             if (field == value)
                 return;
 
-            // Try finding matching dns server profile by name, otherwise set to null (de-select)
-            SelectedDNSServer = SettingsManager.Current.DNSLookup_DNSServers
-                .FirstOrDefault(x => x.Name == value);
-
             if (!_isLoading)
                 SettingsManager.Current.DNSLookup_SelectedDNSServer_v2 = value;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public DNSServerConnectionInfoProfile SelectedDNSServer
-    {
-        get;
-        set
-        {
-            if (field == value)
-                return;
 
             field = value;
             OnPropertyChanged();
@@ -251,10 +244,20 @@ public class DNSLookupViewModel : ViewModelBase
     /// <param name="dnsServer">DNS server(s) to use (not saved as default). If null, the last selected one is used.</param>
     /// <param name="queryType">Query type (not saved as default). If null, the last selected one is used.</param>
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    /// <param name="message">
+    ///     Message shown below the input, also with the first lookup (e.g. a DNS server of the profile was not found).
+    /// </param>
     public DNSLookupViewModel(Guid tabId, string host, string dnsServer = null, QueryType? queryType = null,
-        bool start = true)
+        bool start = true, string message = null)
     {
         _firstLoad = start;
+
+        if (!string.IsNullOrEmpty(message))
+        {
+            _message = message;
+
+            AppendStatusMessage(message);
+        }
 
         _isLoading = true;
 
@@ -264,12 +267,6 @@ public class DNSLookupViewModel : ViewModelBase
         Host = host;
 
         HostHistoryView = CollectionViewSource.GetDefaultView(SettingsManager.Current.DNSLookup_HostHistory);
-
-        DNSServers = new CollectionViewSource { Source = SettingsManager.Current.DNSLookup_DNSServers }.View;
-        DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.UseWindowsDNSServer),
-            ListSortDirection.Descending));
-        DNSServers.SortDescriptions.Add(new SortDescription(nameof(DNSServerConnectionInfoProfile.Name),
-            ListSortDirection.Ascending));
 
         DNSServer = string.IsNullOrEmpty(SettingsManager.Current.DNSLookup_SelectedDNSServer_v2)
             ? SettingsManager.Current.DNSLookup_DNSServers.FirstOrDefault()?.Name
@@ -383,6 +380,14 @@ public class DNSLookupViewModel : ViewModelBase
         IsStatusMessageDisplayed = false;
         StatusMessage = string.Empty;
 
+        // Message of the tab (see constructor): still shown with the first lookup
+        if (_message != null)
+        {
+            AppendStatusMessage(_message);
+
+            _message = null;
+        }
+
         IsRunning = true;
 
         Results.Clear();
@@ -391,6 +396,11 @@ public class DNSLookupViewModel : ViewModelBase
 
         ListHelper.Modify(SettingsManager.Current.DNSLookup_HostHistory, Host,
             SettingsManager.Current.General_HistoryListEntries);
+
+        // A single DNS server name is already in the list, only other inputs are added to the history
+        if (Models.Network.DNSServer.FindByName(SettingsManager.Current.DNSLookup_DNSServers, DNSServer) == null)
+            ListHelper.Modify(SettingsManager.Current.DNSLookup_DNSServerHistory, DNSServer.Trim(),
+                SettingsManager.Current.General_HistoryListEntries);
 
         DNSLookupSettings dnsSettings = new()
         {
@@ -410,32 +420,15 @@ public class DNSLookupViewModel : ViewModelBase
             dnsSettings.CustomDNSSuffix = SettingsManager.Current.DNSLookup_CustomDNSSuffix?.TrimStart('.');
         }
 
-        // Try to find DNS server profile
-        var dnsServerProfile = SettingsManager.Current.DNSLookup_DNSServers
-            .FirstOrDefault(x => x.Name == DNSServer);
+        // DNS server profiles (by name, case-insensitive) and DNS servers, also several (e.g. "Google Public DNS;
+        // 9.9.9.9")
+        var dnsServersToResolve = Models.Network.DNSServer.ResolveServers(DNSServer,
+            SettingsManager.Current.DNSLookup_DNSServers, out var useWindowsDNSServer, out var invalidEntries);
 
-        DNSLookup dnsLookup = null;
-        List<ServerConnectionInfo> dnsServersToResolve = [];
+        foreach (var invalidEntry in invalidEntries)
+            AppendStatusMessage(Strings.DNSServer + ": " + string.Format(Strings.CouldNotParseX, invalidEntry));
 
-        // Use DNS server profile if found
-        if (dnsServerProfile != null)
-        {
-            if (dnsServerProfile.UseWindowsDNSServer)
-                dnsLookup = new DNSLookup(dnsSettings);
-            else
-                dnsServersToResolve = dnsServerProfile.Servers;
-        }
-        // Parse DNS server input
-        else
-        {
-            foreach (var dnsServerInput in DNSServer.Split(';'))
-            {
-                if (ServerConnectionInfo.TryParse(dnsServerInput, out var serverInfo, 53, TransportProtocol.Udp))
-                    dnsServersToResolve.Add(serverInfo);
-                else
-                    AppendStatusMessage(Strings.DNSServer + ": " + string.Format(Strings.CouldNotParseX, dnsServerInput));
-            }
-        }
+        var dnsLookup = useWindowsDNSServer ? new DNSLookup(dnsSettings) : null;
 
         // Resolve DNS server hostnames (if any) - not required when using Windows DNS servers
         if (dnsLookup == null)

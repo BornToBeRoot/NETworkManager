@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using log4net;
 
@@ -220,7 +221,7 @@ public class DNSClient : SingletonBase<DNSClient>
     ///     Resolve a PTR for an IP address.
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
-    /// <returns>PTR domain name.</returns>
+    /// <returns>PTR domain name without the trailing dot (e.g. "server.example.com"), see <see cref="DNSClientHelper.TrimTrailingDot" />.</returns>
     public async Task<DNSClientResultString> ResolvePtrAsync(IPAddress ipAddress)
     {
         if (!_isConfigured)
@@ -246,8 +247,11 @@ public class DNSClient : SingletonBase<DNSClient>
             // Validate result because of https://github.com/BornToBeRoot/NETworkManager/issues/1934
             var record = result.Answers.PtrRecords().FirstOrDefault();
 
+            // The PTR domain name is fully qualified (trailing dot) - trimmed once here for every tool (grid,
+            // export, copy and when opened in another tool), except for single-label names
             return record != null
-                ? new DNSClientResultString(record.PtrDomainName, $"{result.NameServer}")
+                ? new DNSClientResultString(DNSClientHelper.TrimTrailingDot(record.PtrDomainName.Value),
+                    $"{result.NameServer}")
                 : new DNSClientResultString(true,
                     $"PTR for \"{ipAddress}\" could not be resolved and the DNS server did not return an error. Try to check your DNS server with: dig @{result.NameServer.Address} -x {ipAddress}",
                     $"{result.NameServer}")
@@ -262,6 +266,19 @@ public class DNSClient : SingletonBase<DNSClient>
             Log.Error($"Error while resolving PTR record (IP address is \"{ipAddress}\".", ex);
             return new DNSClientResultString(true, ex.Message);
         }
+    }
+
+    /// <summary>
+    ///     Resolve the hostname (PTR) of an IP address, e.g. for a scan where an error is not shown.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests (stops waiting for the answer).</param>
+    /// <returns>Hostname (see <see cref="ResolvePtrAsync" />) or an empty string if there is none or an error occurred.</returns>
+    public async Task<string> ResolvePtrOrEmptyAsync(IPAddress ipAddress, CancellationToken cancellationToken)
+    {
+        var dnsResult = await ResolvePtrAsync(ipAddress).WaitAsync(cancellationToken).ConfigureAwait(false);
+
+        return dnsResult.HasError ? string.Empty : dnsResult.Value;
     }
 
     /// <summary>

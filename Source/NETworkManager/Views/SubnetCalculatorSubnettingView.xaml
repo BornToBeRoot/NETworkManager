@@ -145,7 +145,7 @@
                                       Visibility="{Binding IsResultVisible, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                                       SelectedItem="{Binding SelectedResult}"
                                       SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
+                                      wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <controls:MultiSelectDataGrid.Resources>
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
@@ -247,8 +247,7 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Hosts}"
                                     Binding="{Binding (network:IPNetworkInfo.Usable), Converter={StaticResource BigIntegerToStringConverter}}"
                                     SortMemberPath="Usable"
-                                    MinWidth="80"
-                                    Width="*" />
+                                    MinWidth="80" />
             </controls:MultiSelectDataGrid.Columns>
         </controls:MultiSelectDataGrid>
         <TextBlock Grid.Column="0" Grid.Row="3"

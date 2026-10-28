@@ -12,11 +12,11 @@ public partial class DNSLookupView : IDragablzTabItem
     private readonly DNSLookupViewModel _viewModel;
 
     public DNSLookupView(Guid tabId, string host = null, string dnsServer = null, QueryType? queryType = null,
-        bool start = true)
+        bool start = true, string message = null)
     {
         InitializeComponent();
 
-        _viewModel = new DNSLookupViewModel(tabId, host, dnsServer, queryType, start);
+        _viewModel = new DNSLookupViewModel(tabId, host, dnsServer, queryType, start, message);
 
         DataContext = _viewModel;
 

@@ -1,0 +1,90 @@
+name: 💡 Feature request
+description: Suggest a new feature or an improvement of an existing one.
+labels: [":rocket: feature-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping to make NETworkManager better! 🚀
+
+        Please check the [existing issues](https://github.com/BornToBeRoot/NETworkManager/issues?q=is%3Aissue) first - maybe your idea was already suggested. If so, give it a 👍 instead of creating a new issue.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Feature
+      description: Which feature is it about?
+      options:
+        - New feature / tool
+        - General (start, settings, profiles, update, ...)
+        - Run command
+        - Dashboard
+        - Network Interface
+        - WiFi
+        - IP Scanner
+        - Port Scanner
+        - Ping Monitor
+        - Traceroute
+        - DNS Lookup
+        - Remote Desktop
+        - PowerShell
+        - PuTTY
+        - TigerVNC
+        - Web Console
+        - SNMP
+        - SNTP Lookup
+        - Hosts File Editor
+        - Firewall
+        - Discovery Protocol
+        - Wake on LAN
+        - RDAP
+        - Whois
+        - IP Geolocation
+        - Subnet Calculator
+        - Bit Calculator
+        - Lookup
+        - Connections
+        - Listeners
+        - Neighbor Table
+        - Documentation / website
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What do you want to achieve, or what is missing or annoying today?
+      placeholder: I often need to ... but currently I have to ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How should it work? Describe the behavior and the UI (e.g. button, setting, context menu entry).
+      placeholder: Add a ... to the ... that ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives / workarounds
+      description: Other solutions you have considered, or how other tools solve it.
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional information
+      description: Screenshots, mockups, links or anything else that helps.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I have searched the existing issues and this feature hasn't been requested yet.
+          required: true

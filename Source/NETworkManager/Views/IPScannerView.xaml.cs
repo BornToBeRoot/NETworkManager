@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Net.NetworkInformation;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -120,6 +121,9 @@ public partial class IPScannerView : IDragablzTabItem
             case nameof(IPScannerHostInfo.MACAddress):
                 selectedComparer = 1;
                 break;
+            case $"{nameof(PingInfo)}.{nameof(PingInfo.Time)}":
+                selectedComparer = 2;
+                break;
             default:
                 return;
         }
@@ -132,7 +136,10 @@ public partial class IPScannerView : IDragablzTabItem
             ? ListSortDirection.Ascending
             : ListSortDirection.Descending;
 
-        // Update the sort direction
+        // Update the sort direction (only one column is sorted - the built-in sort would reset the other columns)
+        foreach (var dataGridColumn in ((DataGrid)sender).Columns)
+            dataGridColumn.SortDirection = null;
+
         e.Column.SortDirection = direction;
 
         // Get the view
@@ -155,18 +162,68 @@ public partial class IPScannerView : IDragablzTabItem
                 return 0;
 
             // Compare the data
-            return comparer switch
+            var result = comparer switch
             {
                 // IP address
                 0 => direction == ListSortDirection.Ascending
                     ? IPAddressHelper.CompareIPAddresses(first.PingInfo.IPAddress, second.PingInfo.IPAddress)
                     : IPAddressHelper.CompareIPAddresses(second.PingInfo.IPAddress, first.PingInfo.IPAddress),
-                // MAC address
-                1 => direction == ListSortDirection.Ascending
-                    ? MACAddressHelper.CompareMACAddresses(first.MACAddress, second.MACAddress)
-                    : MACAddressHelper.CompareMACAddresses(second.MACAddress, first.MACAddress),
+                // MAC address - hosts without a MAC address always last
+                1 => CompareMACAddressNoMACLast(first, second),
+                // Ping time - hosts without a ping reply always last (their time is 0)
+                2 => direction == ListSortDirection.Ascending
+                    ? GetPingTime(first).CompareTo(GetPingTime(second))
+                    : CompareDescendingNoReplyLast(first, second),
                 _ => 0
             };
+
+            // Same MAC address / time (e.g. all hosts without a MAC address or ping reply): by IP address - the sort is
+            // not stable, the order of these hosts would be random otherwise
+            return result != 0 || comparer == 0
+                ? result
+                : IPAddressHelper.CompareIPAddresses(first.PingInfo.IPAddress, second.PingInfo.IPAddress);
+        }
+
+        /// <summary>
+        ///     Compares the MAC address in the sort direction, hosts without a MAC address (not resolved, routed host,
+        ///     or still resolving) last. An empty MAC address can't be converted to bytes.
+        /// </summary>
+        private int CompareMACAddressNoMACLast(IPScannerHostInfo first, IPScannerHostInfo second)
+        {
+            var x = first.MACAddress;
+            var y = second.MACAddress;
+
+            if (string.IsNullOrEmpty(x) || string.IsNullOrEmpty(y))
+                return string.IsNullOrEmpty(x).CompareTo(string.IsNullOrEmpty(y));
+
+            return direction == ListSortDirection.Ascending
+                ? MACAddressHelper.CompareMACAddresses(x, y)
+                : MACAddressHelper.CompareMACAddresses(y, x);
+        }
+
+        /// <summary>
+        ///     Gets the ping time for sorting, <see cref="long.MaxValue" /> without a ping reply (or while the ping is
+        ///     still running).
+        /// </summary>
+        private static long GetPingTime(IPScannerHostInfo info)
+        {
+            return !info.IsPingPending && info.PingInfo.Status == IPStatus.Success
+                ? info.PingInfo.Time
+                : long.MaxValue;
+        }
+
+        /// <summary>
+        ///     Compares the ping time descending, hosts without a ping reply still last.
+        /// </summary>
+        private static int CompareDescendingNoReplyLast(IPScannerHostInfo first, IPScannerHostInfo second)
+        {
+            var x = GetPingTime(first);
+            var y = GetPingTime(second);
+
+            if (x == long.MaxValue || y == long.MaxValue)
+                return x.CompareTo(y);
+
+            return y.CompareTo(x);
         }
     }
 }

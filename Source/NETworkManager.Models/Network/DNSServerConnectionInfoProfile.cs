@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NETworkManager.Models.Network;
 
 /// <summary>
 ///     Class is used to store informations about a DNS server profile.
 /// </summary>
-public class DNSServerConnectionInfoProfile : ServerConnectionInfoProfile
+public class DNSServerConnectionInfoProfile : ServerConnectionInfoProfile, INamedReference
 {
     /// <summary>
     ///     Create an instance of <see cref="DNSServerConnectionInfoProfile" />. This will use the
@@ -24,8 +25,15 @@ public class DNSServerConnectionInfoProfile : ServerConnectionInfoProfile
     /// <param name="servers">List of servers as <see cref="ServerConnectionInfo" />.</param>
     public DNSServerConnectionInfoProfile(string name, List<ServerConnectionInfo> servers) : base(name, servers)
     {
-
+        Id = Guid.NewGuid();
     }
+
+    /// <summary>
+    ///     Internal ID of the DNS server profile - profiles reference a DNS server profile by it, so a renamed DNS
+    ///     server profile is still found. Kept when the DNS server profile is edited. The Windows DNS profile is
+    ///     referenced by its name (it exists on every computer, with another ID).
+    /// </summary>
+    public Guid Id { get; set; }
 
     /// <summary>
     ///     Use the DNS server from Windows.

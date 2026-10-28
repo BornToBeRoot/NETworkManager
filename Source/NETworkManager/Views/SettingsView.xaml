@@ -8,6 +8,7 @@
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}">
     <UserControl.Resources>
@@ -33,6 +34,7 @@
                             <TextBox x:Name="TextBoxSearch" Grid.Row="0" VerticalAlignment="Center"
                                      HorizontalAlignment="Stretch" Margin="10"
                                      Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
+                                     wpfHelpers:SearchTextBoxHelper.HandleEnter="True"
                                      Style="{StaticResource SearchTextBox}" />
                             <ScrollViewer Grid.Row="1"
                                           ManipulationBoundaryFeedback="ScrollViewer_ManipulationBoundaryFeedback"

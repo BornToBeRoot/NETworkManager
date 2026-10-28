@@ -3,55 +3,47 @@
 /// <summary>
 ///     Class contains the options for the port scanner.
 /// </summary>
-public class PortScannerOptions
+public record PortScannerOptions
 {
     /// <summary>
-    ///     Create an instance of <see cref="PortScannerOptions" /> with parameters.
+    ///     Adjust the number of hosts and ports scanned at the same time to the scan (see
+    ///     <see cref="PortScanner" />) instead of using <see cref="MaxHostThreads" /> and <see cref="MaxPortThreads" />.
     /// </summary>
-    /// <param name="maxHostThreads">Max cuncurrent threads for the host scan.</param>
-    /// <param name="maxPortThreads">Max cuncurrent threads for the port scan of each host.</param>
-    /// <param name="timeout">Timeout in ms after which the port is considered closed.</param>
-    /// <param name="attempts">Number of attempts to connect to a port if there was no answer.</param>
-    /// <param name="resolveHostname">Resolve the hostname for an IP address.</param>
-    /// <param name="showAllResults">Include closed ports in the result.</param>
-    public PortScannerOptions(int maxHostThreads, int maxPortThreads, int timeout, int attempts,
-        bool resolveHostname, bool showAllResults)
-    {
-        MaxHostThreads = maxHostThreads;
-        MaxPortThreads = maxPortThreads;
-        Timeout = timeout;
-        Attempts = attempts;
-        ResolveHostname = resolveHostname;
-        ShowAllResults = showAllResults;
-    }
+    public required bool AutoAdjustThreads { get; init; }
 
     /// <summary>
-    ///     Max cuncurrent threads for the host scan.
+    ///     Max concurrent threads for the host scan (if the threads are not adjusted automatically).
     /// </summary>
-    public int MaxHostThreads { get; set; }
+    public required int MaxHostThreads { get; init; }
 
     /// <summary>
-    ///     Max cuncurrent threads for the port scan of each host.
+    ///     Max concurrent threads for the port scan of each host (if the threads are not adjusted automatically).
     /// </summary>
-    public int MaxPortThreads { get; set; }
+    public required int MaxPortThreads { get; init; }
 
     /// <summary>
     ///     Timeout in ms after which the port is considered closed.
     /// </summary>
-    public int Timeout { get; set; }
+    public required int Timeout { get; init; }
 
     /// <summary>
     ///     Number of attempts to connect to a port if there was no answer (timed out).
     /// </summary>
-    public int Attempts { get; set; }
+    public required int Attempts { get; init; }
+
+    /// <summary>
+    ///     Ping every host before its ports are scanned (with <see cref="Timeout" /> and <see cref="Attempts" />), a host
+    ///     that doesn't answer is not scanned.
+    /// </summary>
+    public required bool PingHostsBeforeScan { get; init; }
 
     /// <summary>
     ///     Resolve the hostname for an IP address.
     /// </summary>
-    public bool ResolveHostname { get; set; }
+    public required bool ResolveHostname { get; init; }
 
     /// <summary>
     ///     Include closed ports in the result.
     /// </summary>
-    public bool ShowAllResults { get; set; }
+    public required bool ShowAllResults { get; init; }
 }

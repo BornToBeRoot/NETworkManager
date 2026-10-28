@@ -22,6 +22,35 @@ public static class DNSClientHelper
     }
 
     /// <summary>
+    ///     Removes the trailing dot of a fully qualified domain name (e.g. "server.example.com." ->
+    ///     "server.example.com"). A single-label name (e.g. "gateway.") keeps it: without the dot it would be
+    ///     a bare hostname (see <see cref="IsBareHostname" />) and the DNS suffix would be appended when it is
+    ///     resolved again by NETworkManager (e.g. when opened in Ping or Traceroute). For an application that
+    ///     resolves it via Windows, see <see cref="SanitizeHostname" />.
+    /// </summary>
+    /// <param name="name">Domain name, e.g. from a PTR record.</param>
+    /// <returns>Domain name without the trailing dot, unless it is a single-label name.</returns>
+    public static string TrimTrailingDot(string name)
+    {
+        var trimmed = SanitizeHostname(name);
+
+        return trimmed != null && trimmed.Contains('.') ? trimmed : name;
+    }
+
+    /// <summary>
+    ///     Prepares a hostname (e.g. from a PTR record) for an application that resolves it via Windows (e.g.
+    ///     Remote Desktop, PuTTY, the browser of the Web Console or a custom command): also removes the trailing dot of
+    ///     a single-label name (e.g. "gateway." -> "gateway"), so Windows resolves it like a name typed by the user
+    ///     (DNS suffix search, LLMNR / NetBIOS) and it matches the name of a certificate (https).
+    /// </summary>
+    /// <param name="hostname">Hostname.</param>
+    /// <returns>Hostname without the trailing dot (empty if it is only dots), null if it is null.</returns>
+    public static string SanitizeHostname(string hostname)
+    {
+        return hostname?.TrimEnd('.');
+    }
+
+    /// <summary>
     ///     Detect the DNS suffix to use for suffix-appending. Prefers the Windows "Primary DNS Suffix"
     ///     (<see cref="IPGlobalProperties.DomainName" />), falling back to the connection-specific suffix
     ///     of an active network adapter if no primary suffix is configured (e.g. machine is not domain-joined

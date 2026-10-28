@@ -69,15 +69,23 @@
                 </ComboBox>
                 <TextBlock Grid.Column="4" Grid.Row="0" Text="{x:Static localization:Strings.DNSServer}"
                            Style="{DynamicResource DefaultTextBlock}" VerticalAlignment="Center" />
-                <ComboBox x:Name="ComboBoxDNSServers" 
-                          Grid.Column="6" Grid.Row="0"                          
-                          ItemsSource="{Binding DNSServers}"                          
-                          SelectedItem="{Binding SelectedDNSServer}"                          
-                          IsEditable="True">
+                <!-- DNS servers (name and servers) and history, like the ports of the Port Scanner -->
+                <ComboBox x:Name="ComboBoxDNSServers"
+                          Grid.Column="6" Grid.Row="0"
+                          ItemsSource="{Binding DNSServers}"
+                          TextSearch.TextPath="Text"
+                          ItemTemplate="{StaticResource InputSuggestionTemplate}"
+                          controls:ComboBoxListCompletionBehavior.Items="{Binding DNSServerNames}"
+                          controls:ComboBoxPasteBehavior.ConvertMultilineToSemicolon="True"
+                          Style="{StaticResource HistoryComboBox}">
+                    <ComboBox.GroupStyle>
+                        <GroupStyle HeaderTemplate="{StaticResource ComboBoxGroupHeaderTemplate}" />
+                    </ComboBox.GroupStyle>
                     <ComboBox.Text>
                         <Binding Path="DNSServer" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
+                                <validators:DNSServersValidator ValidatesOnTargetUpdated="True" />
                             </Binding.ValidationRules>
                         </Binding>
                     </ComboBox.Text>
@@ -153,7 +161,7 @@
                                       ItemsSource="{Binding ResultsView}"
                                       SelectedItem="{Binding SelectedResult}"
                                       SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
+                                      wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <controls:MultiSelectDataGrid.Resources>
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
@@ -257,8 +265,7 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Result}"
                                     Binding="{Binding Path=(network:DNSLookupRecordInfo.Result)}"
                                     SortMemberPath="Result"
-                                    MinWidth="200"
-                                    Width="*">
+                                    MinWidth="200">
                     <DataGridTextColumn.ElementStyle>
                         <Style>
                             <Setter Property="TextBlock.TextWrapping" Value="Wrap" />

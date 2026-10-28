@@ -27,6 +27,24 @@ public static class PortRangeHelper
         return IsValidPort(startPort) && IsValidPort(endPort) && startPort < endPort;
     }
 
+    /// <summary>
+    ///     Checks if the value is a port (e.g. "80") or a port range (e.g. "1-1024"), spaces are ignored.
+    /// </summary>
+    /// <param name="value">Value to check.</param>
+    /// <returns>True if it is a valid port or port range.</returns>
+    public static bool IsValidPortOrPortRange(string value)
+    {
+        var parts = value.Replace(" ", "").Split('-');
+
+        return parts.Length switch
+        {
+            1 => int.TryParse(parts[0], out var port) && IsValidPort(port),
+            2 => int.TryParse(parts[0], out var startPort) && int.TryParse(parts[1], out var endPort) &&
+                 IsValidPortRange(startPort, endPort),
+            _ => false
+        };
+    }
+
     public static Task<int[]> ConvertPortRangeToIntArrayAsync(string portRange)
     {
         return Task.Run(() => ConvertPortRangeToIntArray(portRange));

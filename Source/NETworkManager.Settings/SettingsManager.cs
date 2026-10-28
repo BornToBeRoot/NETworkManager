@@ -792,6 +792,46 @@ public static class SettingsManager
             Current.PortScanner_MaxPortThreads = GlobalStaticConfiguration.PortScanner_MaxPortThreads;
         }
 
+        // DNS Lookup - DNS servers can be entered by name in a list (e.g. "Google Public DNS; Cloudflare"), where ";"
+        // separates the entries: replace it in the names
+        foreach (var dnsServer in Current.DNSLookup_DNSServers.Where(x => x.Name?.Contains(';') == true))
+        {
+            Log.Info($"Replace \";\" in the name of the DNS server \"{dnsServer.Name}\"...");
+            dnsServer.Name = dnsServer.Name.Replace(';', ',');
+        }
+
+        // DNS Lookup - DNS servers have an internal ID (profiles reference them by it)
+        foreach (var dnsServer in Current.DNSLookup_DNSServers.Where(x => x.Id == Guid.Empty))
+        {
+            Log.Info($"Add an ID to the DNS server \"{dnsServer.Name}\"...");
+            dnsServer.Id = Guid.NewGuid();
+        }
+
+        // Port Scanner - port profiles have an internal ID (profiles reference them by it)
+        foreach (var portProfile in Current.PortScanner_PortProfiles.Where(x => x.Id == Guid.Empty))
+        {
+            Log.Info($"Add an ID to the port profile \"{portProfile.Name}\"...");
+            portProfile.Id = Guid.NewGuid();
+        }
+
+        // Port Scanner - port profiles can be entered by name in the ports input (e.g. "Webserver; 8080"), where ";"
+        // separates the entries: replace it in the names
+        foreach (var portProfile in Current.PortScanner_PortProfiles.Where(x => x.Name?.Contains(';') == true))
+        {
+            Log.Info($"Replace \";\" in the name of the port profile \"{portProfile.Name}\"...");
+            portProfile.Name = portProfile.Name.Replace(';', ',');
+        }
+
+        // Port Scanner - new setting "Adjust threads automatically" (default on). Customized threads (not the
+        // defaults after the update above) are kept: automatic off, so they still apply.
+        if (Current.PortScanner_AutoAdjustThreads &&
+            (Current.PortScanner_MaxHostThreads != GlobalStaticConfiguration.PortScanner_MaxHostThreads ||
+             Current.PortScanner_MaxPortThreads != GlobalStaticConfiguration.PortScanner_MaxPortThreads))
+        {
+            Log.Info("Disable \"PortScanner_AutoAdjustThreads\", the threads were customized...");
+            Current.PortScanner_AutoAdjustThreads = false;
+        }
+
         if (Current.IPScanner_ICMPTimeout == 4000)
         {
             Log.Info($"Update \"IPScanner_ICMPTimeout\" from 4000 to {GlobalStaticConfiguration.IPScanner_ICMPTimeout}...");

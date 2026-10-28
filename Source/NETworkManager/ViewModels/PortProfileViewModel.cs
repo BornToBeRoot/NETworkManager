@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using NETworkManager.Models.Network;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
@@ -34,6 +37,10 @@ public class PortProfileViewModel : ViewModelBase
 
         _info = info ?? new PortProfileInfo();
 
+        // Names of the other port profiles - a name is used in the ports input of the Port Scanner, it must be unique
+        UsedNames = [.. SettingsManager.Current.PortScanner_PortProfiles.Where(x => !ReferenceEquals(x, info))
+            .Select(x => x.Name)];
+
         Name = _info.Name;
 
         // List to string
@@ -44,6 +51,11 @@ public class PortProfileViewModel : ViewModelBase
 
         _isLoading = false;
     }
+
+    /// <summary>
+    /// Gets the names of the other port profiles (the name must be unique).
+    /// </summary>
+    public List<string> UsedNames { get; }
 
     /// <summary>
     /// Gets the command to save the profile.

@@ -245,7 +245,8 @@
                 <StackPanel
                     Visibility="{Binding Events.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
                     <TextBlock Text="{x:Static localization:Strings.Events}" Style="{StaticResource RDAPSectionTextBlock}" />
-                    <DataGrid ItemsSource="{Binding Events}" Style="{StaticResource RDAPDataGrid}">
+                    <DataGrid ItemsSource="{Binding Events}" Style="{StaticResource RDAPDataGrid}"
+                              wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                         <DataGrid.RowStyle>
                             <Style TargetType="{x:Type DataGridRow}"
                                    BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
@@ -265,7 +266,7 @@
                             <DataGridTextColumn Header="{x:Static localization:Strings.Date}"
                                                 Binding="{Binding Date}" MinWidth="200" />
                             <DataGridTextColumn Header="{x:Static localization:Strings.Actor}"
-                                                Binding="{Binding Actor}" MinWidth="150" Width="*" />
+                                                Binding="{Binding Actor}" MinWidth="150" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
@@ -274,7 +275,8 @@
                     Visibility="{Binding Nameservers.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
                     <TextBlock Text="{x:Static localization:Strings.Nameservers}"
                                Style="{StaticResource RDAPSectionTextBlock}" />
-                    <DataGrid ItemsSource="{Binding Nameservers}" Style="{StaticResource RDAPDataGrid}">
+                    <DataGrid ItemsSource="{Binding Nameservers}" Style="{StaticResource RDAPDataGrid}"
+                              wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                         <DataGrid.RowStyle>
                             <Style TargetType="{x:Type DataGridRow}"
                                    BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
@@ -292,7 +294,7 @@
                             <DataGridTextColumn Header="{x:Static localization:Strings.Name}"
                                                 Binding="{Binding Name}" MinWidth="250" />
                             <DataGridTextColumn Header="{x:Static localization:Strings.IPAddresses}"
-                                                Binding="{Binding IPAddresses}" MinWidth="200" Width="*"
+                                                Binding="{Binding IPAddresses}" MinWidth="200"
                                                 ElementStyle="{StaticResource RDAPWrapColumnStyle}" />
                         </DataGrid.Columns>
                     </DataGrid>
@@ -301,7 +303,8 @@
                 <StackPanel
                     Visibility="{Binding DSData.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
                     <TextBlock Text="{x:Static localization:Strings.DNSSEC}" Style="{StaticResource RDAPSectionTextBlock}" />
-                    <DataGrid ItemsSource="{Binding DSData}" Style="{StaticResource RDAPDataGrid}">
+                    <DataGrid ItemsSource="{Binding DSData}" Style="{StaticResource RDAPDataGrid}"
+                              wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                         <DataGrid.RowStyle>
                             <Style TargetType="{x:Type DataGridRow}"
                                    BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
@@ -323,7 +326,7 @@
                             <DataGridTextColumn Header="{x:Static localization:Strings.DigestType}"
                                                 Binding="{Binding DigestType}" MinWidth="80" />
                             <DataGridTextColumn Header="{x:Static localization:Strings.Digest}"
-                                                Binding="{Binding Digest}" MinWidth="200" Width="*"
+                                                Binding="{Binding Digest}" MinWidth="200"
                                                 ElementStyle="{StaticResource RDAPWrapColumnStyle}" />
                         </DataGrid.Columns>
                     </DataGrid>
@@ -332,7 +335,8 @@
                 <StackPanel
                     Visibility="{Binding Networks.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
                     <TextBlock Text="{x:Static localization:Strings.Networks}" Style="{StaticResource RDAPSectionTextBlock}" />
-                    <DataGrid ItemsSource="{Binding Networks}" Style="{StaticResource RDAPDataGrid}">
+                    <DataGrid ItemsSource="{Binding Networks}" Style="{StaticResource RDAPDataGrid}"
+                              wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                         <DataGrid.RowStyle>
                             <Style TargetType="{x:Type DataGridRow}"
                                    BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
@@ -352,8 +356,9 @@
                             <DataGridTextColumn Header="{x:Static localization:Strings.Name}"
                                                 Binding="{Binding Name}" MinWidth="150" />
                             <DataGridTextColumn Header="{x:Static localization:Strings.Range}"
-                                                Binding="{Binding Range}" MinWidth="200" Width="*"
-                                                ElementStyle="{StaticResource RDAPWrapColumnStyle}" />
+                                                Binding="{Binding Range}" MinWidth="200"
+                                                ElementStyle="{StaticResource RDAPWrapColumnStyle}"
+                                                wpfHelpers:DataGridHelper.IsFillColumn="True" />
                             <DataGridTextColumn Header="{x:Static localization:Strings.Country}"
                                                 Binding="{Binding Country}" MinWidth="80" />
                         </DataGrid.Columns>
@@ -363,7 +368,8 @@
                 <StackPanel
                     Visibility="{Binding Autnums.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
                     <TextBlock Text="{x:Static localization:Strings.ASNumbers}" Style="{StaticResource RDAPSectionTextBlock}" />
-                    <DataGrid ItemsSource="{Binding Autnums}" Style="{StaticResource RDAPDataGrid}">
+                    <DataGrid ItemsSource="{Binding Autnums}" Style="{StaticResource RDAPDataGrid}"
+                              wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                         <DataGrid.RowStyle>
                             <Style TargetType="{x:Type DataGridRow}"
                                    BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
@@ -383,8 +389,9 @@
                             <DataGridTextColumn Header="{x:Static localization:Strings.Name}"
                                                 Binding="{Binding Name}" MinWidth="150" />
                             <DataGridTextColumn Header="{x:Static localization:Strings.Range}"
-                                                Binding="{Binding Range}" MinWidth="200" Width="*"
-                                                ElementStyle="{StaticResource RDAPWrapColumnStyle}" />
+                                                Binding="{Binding Range}" MinWidth="200"
+                                                ElementStyle="{StaticResource RDAPWrapColumnStyle}"
+                                                wpfHelpers:DataGridHelper.IsFillColumn="True" />
                             <DataGridTextColumn Header="{x:Static localization:Strings.Country}"
                                                 Binding="{Binding Country}" MinWidth="80" />
                         </DataGrid.Columns>
@@ -394,7 +401,8 @@
                 <StackPanel
                     Visibility="{Binding Contacts.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
                     <TextBlock Text="{x:Static localization:Strings.Contacts}" Style="{StaticResource RDAPSectionTextBlock}" />
-                    <DataGrid ItemsSource="{Binding Contacts}" Style="{StaticResource RDAPDataGrid}">
+                    <DataGrid ItemsSource="{Binding Contacts}" Style="{StaticResource RDAPDataGrid}"
+                              wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                         <DataGrid.RowStyle>
                             <Style TargetType="{x:Type DataGridRow}"
                                    BasedOn="{StaticResource MahApps.Styles.DataGridRow}">
@@ -422,7 +430,7 @@
                             <DataGridTextColumn Header="{x:Static localization:Strings.Phone}"
                                                 Binding="{Binding Phone}" MinWidth="120" />
                             <DataGridTextColumn Header="{x:Static localization:Strings.Address}"
-                                                Binding="{Binding Address}" MinWidth="200" Width="*"
+                                                Binding="{Binding Address}" MinWidth="200"
                                                 ElementStyle="{StaticResource RDAPWrapColumnStyle}" />
                         </DataGrid.Columns>
                     </DataGrid>

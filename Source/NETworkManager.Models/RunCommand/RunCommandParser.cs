@@ -17,10 +17,10 @@ public static partial class RunCommandParser
     private static partial Regex ListSeparatorOrQuoteRegex();
 
     /// <summary>
-    ///     A word: a value in quotes (can contain spaces, the closing quote can be missing while typing) or a value
-    ///     without spaces.
+    ///     A word: parts in quotes (can contain spaces, the closing quote can be missing while typing) and parts without
+    ///     spaces, e.g. a list with a value in quotes <c>"DNS (via TCP)";Webserver</c>.
     /// </summary>
-    [GeneratedRegex("\"[^\"]*(?:\"|$)|[^\\s\"]+")]
+    [GeneratedRegex("(?:\"[^\"]*(?:\"|$)|[^\\s\"])+")]
     private static partial Regex WordRegex();
 
     /// <summary>
@@ -207,6 +207,7 @@ public static partial class RunCommandParser
             Type = type,
             Position = isTypingTarget ? RunCommandPosition.Target : RunCommandPosition.Argument,
             CurrentWord = currentWord,
+            CurrentToken = endsWithWhitespace ? string.Empty : tokens[^1],
             InputBeforeCurrentWord = string.Join(" ", tokens[..^(endsWithWhitespace ? 0 : 1)]) + " ",
             Error = unknownArgument == null ? RunCommandParseError.None : RunCommandParseError.UnknownArgument,
             ErrorValue = unknownArgument
@@ -214,15 +215,18 @@ public static partial class RunCommandParser
     }
 
     /// <summary>
-    ///     Removes the quotes of a value (e.g. "Google Public DNS").
+    ///     Removes the quotes of a value (e.g. "Google Public DNS", or "DNS (via TCP)";Webserver in a list).
     /// </summary>
     private static string Unquote(string word)
     {
-        return word.StartsWith('"') ? word.Trim('"') : word;
+        return word.Replace("\"", string.Empty);
     }
 
+    /// <summary>
+    ///     Checks if the word ends in a quote that is not closed (while typing, e.g. "Google ).
+    /// </summary>
     private static bool IsOpenQuote(string token)
     {
-        return token.StartsWith('"') && (token.Length == 1 || !token.EndsWith('"'));
+        return token.Count(x => x == '"') % 2 == 1;
     }
 }

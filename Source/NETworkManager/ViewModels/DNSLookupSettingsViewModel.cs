@@ -59,8 +59,8 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     /// </summary>
     private List<string> ServerInfoProfileNames =>
     [
-        .. SettingsManager.Current.DNSLookup_DNSServers
-            .Where(x => !x.UseWindowsDNSServer).Select(x => x.Name)
+        // Also the Windows DNS server - names are used in the DNS server input, they must be unique
+        .. SettingsManager.Current.DNSLookup_DNSServers.Select(x => x.Name)
     ];
 
     /// <summary>
@@ -370,21 +370,28 @@ public class DNSLookupSettingsViewModel : ViewModelBase
     {
         var childWindow = new ServerConnectionInfoProfileChildWindow();
 
+        var dnsServer = SelectedDNSServer;
+
         var childWindowViewModel = new ServerConnectionInfoProfileViewModel(instance =>
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
-            SettingsManager.Current.DNSLookup_DNSServers.Remove(SelectedDNSServer);
-            SettingsManager.Current.DNSLookup_DNSServers.Add(
-                    new DNSServerConnectionInfoProfile(instance.Name, [.. instance.Servers]));
+            // Same ID, profiles that reference the DNS server still find it (also with a new name)
+            var editedDNSServer = new DNSServerConnectionInfoProfile(instance.Name, [.. instance.Servers]);
+
+            if (dnsServer.Id != Guid.Empty)
+                editedDNSServer.Id = dnsServer.Id;
+
+            SettingsManager.Current.DNSLookup_DNSServers.Remove(dnsServer);
+            SettingsManager.Current.DNSLookup_DNSServers.Add(editedDNSServer);
         }, _ =>
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
         },
             (ServerInfoProfileNames, true, false),
-            _profileDialogDefaultValues, SelectedDNSServer);
+            _profileDialogDefaultValues, dnsServer);
 
         childWindow.Title = Strings.EditDNSServer;
 

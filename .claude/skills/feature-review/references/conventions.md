@@ -102,6 +102,17 @@ Reference: `HostsFileEditorView.xaml`, `FirewallView.xaml`.
   Other users: `RunCommandViewModel.Suggestions`. Not yet used (same `Clear()` + `ForEach(Results.Add)` pattern on every
   refresh / auto refresh): `ConnectionsViewModel`, `ListenersViewModel`, `NeighborTableViewModel`,
   `HostsFileEditorViewModel` — report as a performance finding when reviewing them.
+- Column widths: no star (`Width="*"`) columns in a `DataGrid` — with a visible star column WPF only lets a column
+  grow by taking the width from the columns to its right, so columns can't be made wider than the window (#3557).
+  Use `wpfHelpers:DataGridHelper.FillRemainingWidth="True"` on the grid: the last visible column (or the one marked with
+  `wpfHelpers:DataGridHelper.IsFillColumn="True"`) fills the remaining width with a pixel width, every column can be
+  resized freely and the grid scrolls horizontally. Give the fill column a `MinWidth`.
+- Bindings on items that implement `INotifyPropertyChanged` (e.g. `IPScannerHostInfo`, view models via `BindingProxy`)
+  use **plain paths** (`IsPingPending`, `PingInfo.Status`, `Data.ScanOptions.ResolveHostname`), not the typed form
+  `(network:Type.Property)`. WPF registers a `PropertyChanged` listener with the property name the path parser stored;
+  for a typed part that name stays `null` if the owner type can't be resolved early (templates, child bindings of a
+  `MultiBinding`) → `ArgumentNullException` (`Parameter 'key'`) in `PropertyChangedEventManager.AddListener` as soon as
+  the item is shown. The typed form is only safe on plain (non-notifying) items.
 - Don't use a `Reset` for results that are *appended* while a scan runs (IP Scanner, Port Scanner, Traceroute): with a
   sorted view every `Reset` re-sorts the whole list and the grid loses its selection / scroll position. Those tools buffer
   results and flush them with a `DispatcherTimer` (reference: `IPScannerViewModel.FlushResultsBuffer`).
@@ -130,6 +141,12 @@ Reference: `HostsFileEditorView.xaml`, `FirewallView.xaml`.
 
 - Tool view: `Grid Margin="10"`, 10px spacer rows/columns. Header row: `HeaderTextBlock` left, refresh
   (`CleanButton` with `ReloadAnimationHelper.IsReloading`) and search (`SearchTextBox`, width 250) right.
+- Search box (`SearchTextBox`): filters while typing. Lists that can be large or slow to filter use a delay
+  (`DispatcherTimer` with `GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan`, reference: `FirewallViewModel`),
+  short fixed lists filter on every key press. `Enter` only filters: `wpfHelpers:SearchTextBoxHelper.EnterCommand`
+  (delayed search, e.g. `ApplySearchCommand` = stop the timer + `Refresh()`) or `SearchTextBoxHelper.HandleEnter="True"`
+  (immediate search), so `Enter` never triggers the default button of the view / dialog / window. Exception: the
+  profile panel search runs the selected profile on `Enter` (`ProfileExpanderPanel`).
 - Bottom row: secondary actions left (e.g. Open hosts file, Windows Firewall settings), primary action right
   (e.g. Add entry...), `ImageWithTextButton`.
 - Dialog: two-column grid (`1*`, 10, `2*`), 10px spacing between rows, OK (`HighlightedButton`, `IsDefault`)

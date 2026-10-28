@@ -13,4 +13,7 @@
     <ItemGroup>
         <Compile Include="..\GlobalAssemblyInfo.cs" Link="Properties\GlobalAssemblyInfo.cs"/>
     </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\NETworkManager.Utilities\NETworkManager.Utilities.csproj" />
+    </ItemGroup>
 </Project>

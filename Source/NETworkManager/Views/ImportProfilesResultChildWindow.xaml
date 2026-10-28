@@ -7,6 +7,7 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
@@ -45,6 +46,7 @@
                          VerticalAlignment="Top"
                          Width="250"
                          Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
+                         wpfHelpers:SearchTextBoxHelper.EnterCommand="{Binding ApplySearchCommand}"
                          Style="{StaticResource ResourceKey=SearchTextBox}" />
             </Grid>
      
@@ -62,7 +64,8 @@
                           CanUserResizeRows="False"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                           Style="{StaticResource ResourceKey=DefaultDataGrid}"
-                          PreviewKeyDown="DataGrid_OnPreviewKeyDown">
+                          PreviewKeyDown="DataGrid_OnPreviewKeyDown"
+                          wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                     <DataGrid.RowStyle>
                         <Style TargetType="{x:Type TypeName=DataGridRow}" BasedOn="{StaticResource ResourceKey=MahApps.Styles.DataGridRow}">
                             <Style.Triggers>
@@ -92,9 +95,11 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Width="*"
+                        <DataGridTemplateColumn
                                                Header="{x:Static Member=localization:Strings.Host}"
-                                               IsReadOnly="True">
+                                               IsReadOnly="True"
+                                               MinWidth="150"
+                                               wpfHelpers:DataGridHelper.IsFillColumn="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate DataType="{x:Type TypeName=viewModels:ImportCandidateItem}">
                                     <TextBlock Text="{Binding Path=Host}" />

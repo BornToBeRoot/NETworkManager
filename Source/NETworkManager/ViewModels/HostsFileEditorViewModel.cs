@@ -7,6 +7,7 @@ using NETworkManager.Models.Export;
 using NETworkManager.Models.HostsFileEditor;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using NETworkManager.Utilities.WPF;
 using NETworkManager.Views;
 using System;
 using System.Collections;
@@ -18,6 +19,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace NETworkManager.ViewModels;
 
@@ -36,6 +38,12 @@ public class HostsFileEditorViewModel : ViewModelBase
     private readonly bool _isLoading;
 
     /// <summary>
+    /// Delays filtering while the user is typing (see <see cref="Search"/>), so a large list is not filtered on
+    /// every key press.
+    /// </summary>
+    private readonly SearchDelay _searchDelay;
+
+    /// <summary>
     /// Gets or sets the search text.
     /// </summary>
     public string Search
@@ -48,7 +56,8 @@ public class HostsFileEditorViewModel : ViewModelBase
 
             field = value;
 
-            ResultsView.Refresh();
+            // Filter after a short delay while typing (see _searchDelay)
+            _searchDelay.Restart();
 
             OnPropertyChanged();
         }
@@ -190,6 +199,8 @@ public class HostsFileEditorViewModel : ViewModelBase
     /// </summary>
     public HostsFileEditorViewModel()
     {
+        _searchDelay = new SearchDelay(GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan, ApplySearch);
+
         _isLoading = true;
 
         // Result view + search
@@ -755,6 +766,20 @@ public class HostsFileEditorViewModel : ViewModelBase
     /// </summary>
     public void OnViewHide()
     {
+    }
+
+    /// <summary>
+    /// Gets the command to filter right away (Enter in the search box, see
+    /// <see cref="NETworkManager.Utilities.WPF.SearchTextBoxHelper"/>).
+    /// </summary>
+    public ICommand ApplySearchCommand => _searchDelay.ApplyCommand;
+
+    /// <summary>
+    /// Filters with the current <see cref="Search"/> right away.
+    /// </summary>
+    private void ApplySearch()
+    {
+        ResultsView.Refresh();
     }
 
     #endregion

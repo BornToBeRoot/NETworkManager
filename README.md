@@ -46,10 +46,10 @@
     <a href="https://app.transifex.com/BornToBeRoot/NETworkManager/dashboard/" target="_blank">
       <img alt="Transifex" src="https://img.shields.io/badge/🌍_Help_Translate-28a745?style=for-the-badge" />
     </a>
-    <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Feature-Request&template=Feature_request.md" target="_blank">
+    <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?template=feature_request.yml" target="_blank">
       <img alt="Feature Request" src="https://img.shields.io/badge/💡_Request_Feature-28a745?style=for-the-badge&logo=github" />
     </a>
-    <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?labels=Issue&template=Bug_report.md" target="_blank">
+    <a href="https://github.com/BornToBeRoot/NETworkManager/issues/new?template=bug_report.yml" target="_blank">
       <img alt="Bug Report" src="https://img.shields.io/badge/🐛_Report_Bug-red?style=for-the-badge&logo=github" />
     </a>
   </p>

@@ -10,6 +10,7 @@ using NETworkManager.Models.Export;
 using NETworkManager.Models.Firewall;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using NETworkManager.Utilities.WPF;
 using NETworkManager.Views;
 using System;
 using System.Collections;
@@ -108,11 +109,11 @@ public class FirewallViewModel : ViewModelBase
     /// Delays filtering the rules while the user is typing (see <see cref="RulesSearch"/>),
     /// so the view (can be 1000+ rules if all rules are shown) is not filtered on every key press.
     /// </summary>
-    private readonly DispatcherTimer _searchDispatcherTimer = new();
+    private readonly SearchDelay _searchDelay;
 
     /// <summary>
     /// Gets or sets the search text for filtering rules.
-    /// The rules are filtered after a short delay (see <see cref="_searchDispatcherTimer"/>).
+    /// The rules are filtered after a short delay (see <see cref="_searchDelay"/>).
     /// </summary>
     public string RulesSearch
     {
@@ -124,8 +125,7 @@ public class FirewallViewModel : ViewModelBase
 
             field = value;
 
-            _searchDispatcherTimer.Stop();
-            _searchDispatcherTimer.Start();
+            _searchDelay.Restart();
 
             OnPropertyChanged();
         }
@@ -272,8 +272,7 @@ public class FirewallViewModel : ViewModelBase
                    Matches(rule.Description);
         };
 
-        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
-        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+        _searchDelay = new SearchDelay(GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan, ApplySearch);
 
         // Load firewall rules
         _ = Refresh(true);
@@ -913,12 +912,16 @@ public class FirewallViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Filters the rules once the user stopped typing (see <see cref="RulesSearch"/>).
+    /// Gets the command to filter right away (Enter in the search box, see
+    /// <see cref="NETworkManager.Utilities.WPF.SearchTextBoxHelper"/>).
     /// </summary>
-    private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
-    {
-        _searchDispatcherTimer.Stop();
+    public ICommand ApplySearchCommand => _searchDelay.ApplyCommand;
 
+    /// <summary>
+    /// Filters with the current <see cref="RulesSearch"/> right away.
+    /// </summary>
+    private void ApplySearch()
+    {
         ResultsView.Refresh();
     }
 

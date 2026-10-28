@@ -28,4 +28,19 @@ public class PortRangeHelperTests
     {
         Assert.Equal(isValid, PortRangeHelper.IsValidPortRange(startPort, endPort));
     }
+
+    [Theory]
+    [InlineData("80", true)]
+    [InlineData(" 80 ", true)]
+    [InlineData("1-1024", true)]
+    [InlineData("1 - 1024", true)]
+    [InlineData("0", false)]
+    [InlineData("1024-1", false)]
+    [InlineData("1-2-3", false)]
+    [InlineData("", false)]
+    [InlineData("Webserver", false)]
+    public void IsValidPortOrPortRange(string value, bool isValid)
+    {
+        Assert.Equal(isValid, PortRangeHelper.IsValidPortOrPortRange(value));
+    }
 }

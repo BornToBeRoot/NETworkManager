@@ -34,7 +34,9 @@ public class PortScannerPortInfo : PortInfo
     public string Hostname { get; set; }
 
     /// <summary>
-    ///     Hostname (if available) or IP address of the host.
+    ///     Hostname and IP address of the host (e.g. "server.example.com (10.0.0.1)"), only the IP address if there is
+    ///     no hostname. The results are grouped by it - one group per IP address, also if several hosts have the same
+    ///     hostname (e.g. a generic PTR record of a provider).
     /// </summary>
-    public string HostAsString => string.IsNullOrEmpty(Hostname) ? IPAddress.ToString() : Hostname;
+    public string HostAsString => string.IsNullOrEmpty(Hostname) ? IPAddress.ToString() : $"{Hostname} ({IPAddress})";
 }

@@ -3,7 +3,9 @@ using Dragablz;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
+using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System;
@@ -158,7 +160,8 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
     ///     hosts.
     /// </param>
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
-    public void AddTab(string host = null, string dnsServer = null, QueryType? queryType = null, bool start = true)
+    public void AddTab(string host = null, string dnsServer = null, QueryType? queryType = null, bool start = true,
+        string message = null)
     {
         if (queryType == null && IsIPAddresses(host))
             queryType = QueryType.PTR;
@@ -166,7 +169,7 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
         var tabId = Guid.NewGuid();
 
         TabItems.Add(new DragablzTabItem(host ?? Strings.NewTab,
-            new DNSLookupView(tabId, host, dnsServer, queryType, start), tabId));
+            new DNSLookupView(tabId, host, dnsServer, queryType, start, message), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
@@ -189,7 +192,28 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
     public void AddTab(ProfileInfo profile, bool start = true)
     {
-        AddTab(profile.DNSLookup_Host, start: start);
+        // DNS server of DNS Lookup (last selected)
+        if (!profile.DNSLookup_OverrideDNSServer || string.IsNullOrWhiteSpace(profile.DNSLookup_DNSServer))
+        {
+            AddTab(profile.DNSLookup_Host, start: start);
+            return;
+        }
+
+        // DNS servers by name with their current name (also after a rename)
+        if (!string.IsNullOrEmpty(profile.DNSLookup_DNSServerInput) &&
+            DNSServer.TryDecodeReferences(profile.DNSLookup_DNSServerInput,
+                SettingsManager.Current.DNSLookup_DNSServers, out var dnsServer))
+        {
+            AddTab(profile.DNSLookup_Host, dnsServer, start: start);
+            return;
+        }
+
+        // No DNS server by name, or one can't be found (deleted, or a profile file shared from another computer - DNS
+        // servers are saved in the settings): the servers saved with the profile, with a note if one wasn't found
+        AddTab(profile.DNSLookup_Host, profile.DNSLookup_DNSServer, start: start,
+            message: string.IsNullOrEmpty(profile.DNSLookup_DNSServerInput)
+                ? null
+                : Strings.DNSServerOfProfileNotFoundMessage);
     }
 
     #endregion

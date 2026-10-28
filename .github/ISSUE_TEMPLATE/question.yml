@@ -1,0 +1,29 @@
+name: ❓ Question
+description: Ask a question about NETworkManager or how to use a feature.
+labels: [":question: question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a question? Maybe the [documentation](https://borntoberoot.net/NETworkManager/docs/introduction) or the [FAQ](https://borntoberoot.net/NETworkManager/docs/category/faq) already has the answer. For ideas and general discussions, you can also use the [discussions](https://github.com/BornToBeRoot/NETworkManager/discussions).
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What would you like to know?
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: What are you trying to achieve, and what have you tried? Screenshots are welcome.
+
+  - type: input
+    id: version
+    attributes:
+      label: NETworkManager version
+      description: Shown in **Settings > About** (if the question is about the application).
+      placeholder: e.g. 2026.7.7.0

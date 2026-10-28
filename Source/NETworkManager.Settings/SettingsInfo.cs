@@ -1207,6 +1207,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     }
 
+    public bool IPScanner_ExpandHostView
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_ExpandHostView;
+
     public int IPScanner_ICMPTimeout
     {
         get;
@@ -1527,6 +1540,32 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.PortScanner_Attempts;
+
+    public bool PortScanner_PingHostsBeforeScan
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PortScanner_PingHostsBeforeScan;
+
+    public bool PortScanner_AutoAdjustThreads
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PortScanner_AutoAdjustThreads;
 
     public int PortScanner_MaxHostThreads
     {
@@ -1933,6 +1972,20 @@ public class SettingsInfo : INotifyPropertyChanged
     #region DNS Lookup
 
     public ObservableCollection<string> DNSLookup_HostHistory
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            UpdateCollectionChanged(field, value);
+            field = value;
+            OnPropertyChanged();
+        }
+    } = [];
+
+    public ObservableCollection<string> DNSLookup_DNSServerHistory
     {
         get;
         set
@@ -4200,6 +4253,7 @@ public class SettingsInfo : INotifyPropertyChanged
         // DNS Lookup
         DNSLookup_HostHistory.CollectionChanged += CollectionChanged;
         DNSLookup_DNSServers.CollectionChanged += CollectionChanged;
+        DNSLookup_DNSServerHistory.CollectionChanged += CollectionChanged;
 
         // Remote Desktop
         RemoteDesktop_HostHistory.CollectionChanged += CollectionChanged;

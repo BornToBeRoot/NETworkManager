@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
@@ -24,25 +25,28 @@
          Grid.Column="0" Grid.Row="0"
          VerticalAlignment="Center"
          Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
+         wpfHelpers:SearchTextBoxHelper.HandleEnter="True"
          Style="{StaticResource ResourceKey=SearchTextBox}" />
         <Grid Grid.Column="0" Grid.Row="2">
             <DataGrid x:Name="DataGridProfiles"
               ItemsSource="{Binding Path=OIDProfiles}"
               SelectedItem="{Binding Path=SelectedOIDProfile}"
-              SelectionMode="Single">
+              SelectionMode="Single"
+              wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{x:Static Member=localization:Strings.Name}"
                                 Binding="{Binding Path=(network:SNMPOIDProfileInfo.Name)}"
                                 SortMemberPath="Name"
-                                Width="1*" />
+                                MinWidth="150" />
                     <DataGridTextColumn Header="{x:Static Member=localization:Strings.OID}"
                                 Binding="{Binding Path=(network:SNMPOIDProfileInfo.OID)}"
                                 SortMemberPath="OID"
-                                Width="2*" />
+                                MinWidth="150"
+                                wpfHelpers:DataGridHelper.IsFillColumn="True" />
                     <DataGridTextColumn Header="{x:Static Member=localization:Strings.Mode}"
                                 Binding="{Binding (network:SNMPOIDProfileInfo.Mode)}"
                                 SortMemberPath="Mode"
-                                Width="1*" />
+                                MinWidth="150" />
                 </DataGrid.Columns>                
                 <DataGrid.InputBindings>
                     <KeyBinding Command="{Binding Path=OKCommand}" Key="Return" />

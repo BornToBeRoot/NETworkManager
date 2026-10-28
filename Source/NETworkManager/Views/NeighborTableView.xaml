@@ -102,6 +102,7 @@
                         </Button>
                         <TextBox Width="250"
                                  Text="{Binding Path=Search, UpdateSourceTrigger=PropertyChanged}"
+                                 wpfHelpers:SearchTextBoxHelper.EnterCommand="{Binding ApplySearchCommand}"
                                  Style="{StaticResource ResourceKey=SearchTextBox}" />
                     </StackPanel>
                 </Grid>
@@ -111,7 +112,7 @@
                                               SelectedItem="{Binding SelectedResult}"
                                               SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               Sorting="DataGrid_OnSorting"
-                                              wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
+                                              wpfHelpers:DataGridHelper.FillRemainingWidth="True">
                     <controls:MultiSelectDataGrid.Resources>
                         <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                             <MenuItem Header="{x:Static localization:Strings.DeleteEntry}"
@@ -207,8 +208,7 @@
                         <DataGridTextColumn Header="{x:Static localization:Strings.Multicast}"
                                             Binding="{Binding (network:NeighborInfo.IsMulticast), Converter={StaticResource BooleanToStringConverter}}"
                                             SortMemberPath="IsMulticast"
-                                            MinWidth="100" 
-                                            Width="*" />
+                                            MinWidth="100" />
                     </controls:MultiSelectDataGrid.Columns>
                 </controls:MultiSelectDataGrid>
                 <Grid Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">

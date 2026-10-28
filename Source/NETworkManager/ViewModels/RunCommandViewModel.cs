@@ -1131,24 +1131,26 @@ public class RunCommandViewModel : ViewModelBase
 
     /// <summary>
     ///     Port profiles of the Port Scanner (e.g. "Webserver") that contain the typed word, if no ports were entered
-    ///     yet.
+    ///     yet. The ports can be a list of ports and port profiles (e.g. "webserver;database;22"), the last entry is
+    ///     completed.
     /// </summary>
     private IEnumerable<RunCommandSuggestion> GetPortProfileSuggestions()
     {
         return GetArgumentValueSuggestions(RunCommandArgument.Ports,
             RunCommandManager.GetPortProfiles().Select(x => (x.Name, x.Ports)), RunCommandSuggestionKind.PortProfile,
-            Strings.PortProfiles);
+            Strings.PortProfiles, isList: true);
     }
 
     /// <summary>
     ///     DNS servers configured in the DNS lookup (e.g. "Cloudflare") that contain the typed word, if no DNS server was
-    ///     entered yet.
+    ///     entered yet. Several DNS servers can be entered (e.g. "\"Google Public DNS\";cloudflare"), the entry after
+    ///     the last ";" is completed.
     /// </summary>
     private IEnumerable<RunCommandSuggestion> GetDNSServerSuggestions()
     {
         return GetArgumentValueSuggestions(RunCommandArgument.DNSServer,
             RunCommandManager.GetDNSServers().Select(x => (x, Strings.DNSServer)), RunCommandSuggestionKind.DNSServer,
-            Strings.DNSServers);
+            Strings.DNSServers, isList: true);
     }
 
     /// <summary>
@@ -1159,24 +1161,41 @@ public class RunCommandViewModel : ViewModelBase
     /// <param name="values">Names and descriptions of the values.</param>
     /// <param name="kind">Kind of the suggestions.</param>
     /// <param name="group">Group of the suggestions.</param>
+    /// <param name="isList">
+    ///     The argument can be a list separated by ";" (e.g. "webserver;database;22"): the entry after the last ";" is
+    ///     completed, the entries before are kept as entered (with their quotes, e.g. <c>"DNS (via TCP)";web</c>).
+    /// </param>
     private IEnumerable<RunCommandSuggestion> GetArgumentValueSuggestions(RunCommandArgument argument,
-        IEnumerable<(string Name, string Description)> values, RunCommandSuggestionKind kind, string group)
+        IEnumerable<(string Name, string Description)> values, RunCommandSuggestionKind kind, string group,
+        bool isList = false)
     {
         if (_result.Command.Argument != argument ||
             _result.Argument != null && !string.Equals(_result.Argument, _result.CurrentWord))
             return [];
 
+        // Entries before the one that is being typed, as entered (e.g. "webserver;" of "webserver;dat")
+        var separator = isList ? _result.CurrentToken.LastIndexOf(';') : -1;
+        var previousEntries = _result.CurrentToken[..(separator + 1)];
+
+        // Typed in the open quote of the previous entry (e.g. "DNS (via TCP); web) - close it before the ";"
+        if (previousEntries.Count(x => x == '"') % 2 == 1)
+            previousEntries = previousEntries[..^1].TrimEnd() + "\";";
+
+        var entry = separator < 0
+            ? _result.CurrentWord
+            : _result.CurrentToken[(separator + 1)..].Replace("\"", string.Empty).Trim();
+
         return values
-            .Where(x => x.Name.Contains(_result.CurrentWord, StringComparison.OrdinalIgnoreCase))
+            .Where(x => x.Name.Contains(entry, StringComparison.OrdinalIgnoreCase))
             .Select(x => new RunCommandSuggestion
             {
                 Kind = kind,
                 Application = _result.Command.Application,
                 Title = x.Name,
                 Description = x.Description,
-                CompletionText =
-                    _result.InputBeforeCurrentWord + (x.Name.Contains(' ') ? $"\"{x.Name}\"" : x.Name) + " ",
-                Highlight = _result.CurrentWord,
+                CompletionText = _result.InputBeforeCurrentWord + previousEntries +
+                                 (x.Name.Contains(' ') ? $"\"{x.Name}\"" : x.Name) + " ",
+                Highlight = entry,
                 Group = group
             });
     }

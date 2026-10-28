@@ -39,7 +39,7 @@ Multiple inputs can be combined with a semicolon (`;`). A column pasted from Exc
 
 Example: `10.0.0.0/24; 10.0.[10-20].1; 10.0.0.100-199`
 
-IP addresses that are part of multiple inputs (e.g. `10.0.0.1; 10.0.0.0/24`) are scanned only once. If an IP address is also entered as hostname, the hostname is kept; an IP address entered with different hostnames (e.g. two names of one server) is scanned once per hostname. The network and broadcast address of a subnet are scanned as well.
+IP addresses that are part of multiple inputs (e.g. `10.0.0.1; 10.0.0.0/24`) or entered with different hostnames (e.g. two names of one server) are scanned only once. The hostname is resolved via DNS (`PTR`) or NetBIOS, not taken from the input. The network and broadcast address of a subnet are scanned as well.
 
 A scan of more than `65,536` IP addresses (e.g. a `/15`) must be confirmed, more than `16,777,216` IP addresses (a `/8`) cannot be scanned at once.
 
@@ -65,30 +65,45 @@ Right-clicking a result allows forwarding device information to another tool (e.
 
 | Action                                                                            | Description                                                                                                   |
 | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| **Port Scanner** / **Ping Monitor** / **Traceroute**                              | Opens the host (hostname if resolved, otherwise the IP address) in the tool                                  |
-| **DNS lookup...** > **IP address** / **Hostname**                                 | Looks up the IP address (`PTR`) or the hostname in [DNS Lookup](./dns-lookup)                                 |
-| **RDAP...** > **IP address** / **Hostname**                                       | Queries the registration data of the IP address or the registered domain of the hostname in [RDAP](./rdap)    |
-| **Remote Desktop** / **PowerShell** / **PuTTY** / **TigerVNC** / **SNMP**         | Opens the host (hostname if resolved, otherwise the IP address) in the tool                                  |
+| **Rescan**                                                                        | Scans the selected host(s) again with the settings of the shown scan and updates their rows (a host that is unreachable now is shown as down). A canceled rescan keeps the previous results. Not available while a scan is running |
+| **Port Scanner** / **Ping Monitor** / **Traceroute**                              | Opens the host (DNS hostname if resolved, otherwise the IP address) in the tool                              |
+| **DNS lookup...** > **IP address** / **Hostname**                                 | Looks up the IP address (`PTR`) or the DNS hostname in [DNS Lookup](./dns-lookup)                             |
+| **RDAP...** > **IP address** / **Hostname**                                       | Queries the registration data of the IP address or the registered domain of the DNS hostname in [RDAP](./rdap) |
+| **Remote Desktop** / **PowerShell** / **PuTTY** / **TigerVNC** / **SNMP**         | Opens the host (DNS hostname if resolved, otherwise the IP address) in the tool                              |
+| **Web Console**                                                                   | Opens the host in the [Web Console](./web-console): https if port `443` is open, otherwise http on `80`, `8443` (https) or `8080`, http if none of them is open (or the port scan is disabled) |
+| **Wake on LAN**                                                                   | Sends a magic packet to the MAC address of the host with [Wake on LAN](./wake-on-lan) (only with a MAC address) |
 | **Custom commands**                                                               | Executes a [custom command](#custom-commands) for the host                                                    |
 | **Add profile...**                                                                | Creates a new profile with the host (IP address), the hostname as name and the MAC address for Wake on LAN    |
-| **Copy**                                                                          | Copies the selected information to the clipboard                                                              |
+| **Copy**                                                                          | Copies the selected information to the clipboard (ping and port values only when the probe is finished)      |
 | **Export...**                                                                     | Exports the selected or all results to a file                                                                 |
 
-If multiple results are selected, only **Export...** is available.
+A NetBIOS name (shown as hostname if there is no DNS hostname) is not passed to other tools, because it may not be resolvable via DNS - the IP address is used instead. **DNS lookup...** / **RDAP...** > **Hostname** are only available with a DNS hostname. In [custom commands](#custom-commands), `{{Hostname}}` is the shown hostname (DNS or NetBIOS).
+
+If multiple results are selected, **Rescan**, **Copy** > **IP address** / **Hostname** / **MAC address** (one value per line, in the order shown, without duplicates) and **Export...** are available.
 
 ### Result
 
 The number of reachable (up) and unreachable (down) IP addresses is shown next to the **Result** header. Expand a row to see the ping details, the scanned ports and the NetBIOS information (computer name, domain/workgroup, user and MAC address) of the host.
 
+A host is shown (and counted as up) as soon as it answers the first probe: ping reply, open or refused port or NetBIOS answer. Values of probes that are still running are shown as `...`; the results of the other probes, the hostname (DNS) and the MAC address / vendor are filled in when they arrive. Unreachable hosts are added when all probes are finished. A column you sorted by is not sorted again for values that arrive later, click the header again. The scan is finished when all hosts and all lookups are finished.
+
 Only reachable hosts are shown, unless [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) is enabled. A message below the input is shown if no reachable host was found, the scan was canceled, a hostname could not be resolved or an error occurred.
+
+The search box right of the **Result** header filters the results by IP address, hostname, MAC address, vendor and open ports (number or service), also while the scan is running (hosts whose hostname or MAC address arrives later are filtered again). **Export...** > all exports the filtered results; the up / down counters always count all hosts. Results can also be exported while the scan is running; values of probes that are still running (shown as `...`) are exported as empty values.
+
+Expand a row with the button in front of it to see its details, or enable [Expand host view](#expand-host-view) to expand all hosts.
+
+The **Time** column shows the round trip time of the ping reply (`-/-` without a reply); sorted by time, hosts without a reply are always at the end. Sorted by **MAC address**, hosts without a MAC address are always at the end. Hosts with the same time or MAC address (or none) are sorted by IP address.
+
+The columns (e.g. **Hostname**, **Port status**, **MAC address**) and the row details are shown according to the settings the scan was started with. Settings changed afterwards apply to the next scan.
 
 ### Keyboard shortcuts
 
-| Key      | Action                         |
-| -------- | ------------------------------ |
-| `Enter`  | Start the scan                 |
-| `Esc`    | Cancel the running scan        |
-| `Ctrl+T` | Open a new tab                 |
+| Key      | Action                                                        |
+| -------- | ------------------------------------------------------------- |
+| `Enter`  | Start the scan (in the search box: filter the results)        |
+| `Esc`    | Cancel the running scan                                       |
+| `Ctrl+T` | Open a new tab                                                |
 
 ## Profile
 
@@ -130,6 +145,14 @@ See also the [IP Scanner](./ip-scanner) example inputs for more information abou
 ### Show unreachable IP addresses and ports
 
 Show the scan result for all IP addresses and ports including the ones that are not active.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+### Expand host view
+
+Show the details (ping, ports, NetBIOS) of every host in the result, also of hosts that are added while the scan is running. A host that was expanded or collapsed with the button in front of the row keeps its state. Applies immediately.
 
 **Type:** `Boolean`
 
@@ -177,7 +200,7 @@ Scan each IP address for open TCP ports.
 
 ### Ports
 
-List of TCP ports to scan for each IP address.
+List of TCP ports to scan for each IP address. The button next to the input restores the default ports.
 
 **Type:** `String`
 
@@ -225,6 +248,12 @@ Scan each IP address for NetBIOS information.
 
 **Default:** `Enabled`
 
+:::note
+
+Only IPv4 addresses are scanned for NetBIOS, NetBIOS doesn't exist over IPv6.
+
+:::
+
 ### Timeout (ms)
 
 Timeout in milliseconds after which a NetBIOS request is considered lost.
@@ -255,18 +284,24 @@ Custom commands that can be executed with a right click on the selected result.
 
 **Default:**
 
-| Name                  | File path      | Arguments                                        |
-| --------------------- | -------------- | ------------------------------------------------- |
-| Edge                  | `cmd.exe`      | `/c start microsoft-edge:http://{{IPAddress}}/`  |
-| Edge (https)          | `cmd.exe`      | `/c start microsoft-edge:https://{{IPAddress}}/` |
-| Windows Explorer (c$) | `explorer.exe` | `\\{{IPAddress}}\c$`                             |
+| Name                      | File path      | Arguments                                        |
+| ------------------------- | -------------- | ------------------------------------------------ |
+| Edge                      | `cmd.exe`      | `/c start microsoft-edge:http://{{IPAddress}}/`  |
+| Edge (https)              | `cmd.exe`      | `/c start microsoft-edge:https://{{IPAddress}}/` |
+| Windows Explorer (c$)     | `explorer.exe` | `\\{{IPAddress}}\c$`                             |
+| Windows Explorer (shares) | `explorer.exe` | `\\{{IPAddress}}`                                |
+| Computer Management       | `mmc.exe`      | `compmgmt.msc /computer:\\{{IPAddress}}`         |
+| Event Viewer              | `eventvwr.exe` | `\\{{IPAddress}}`                                |
+| System Information        | `msinfo32.exe` | `/computer {{IPAddress}}`                        |
+
+Computer Management, Event Viewer and System Information need administrative rights on the remote computer.
 
 In the arguments you can use the following placeholders:
 
-| Placeholder      | Description |
-| ---------------- | ------------ |
-| `{{IPAddress}}`  | IP address  |
-| `{{Hostname}}`   | Hostname    |
+| Placeholder      | Description                                          |
+| ---------------- | ---------------------------------------------------- |
+| `{{IPAddress}}`  | IP address                                           |
+| `{{Hostname}}`   | Hostname (DNS hostname, otherwise the NetBIOS name)  |
 
 :::note
 

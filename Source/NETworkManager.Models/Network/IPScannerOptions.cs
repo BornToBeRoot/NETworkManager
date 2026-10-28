@@ -1,114 +1,84 @@
 ﻿namespace NETworkManager.Models.Network;
 
 /// <summary>
-///     Class contains the options for the traceroute.
+///     Class contains the options for the IP scanner. A record, so a copy with other values can be created with
+///     <c>with</c> (e.g. for a rescan).
 /// </summary>
-public class IPScannerOptions
+public record IPScannerOptions
 {
-    /// <summary>
-    ///     Create an instance of <see cref="IPScannerOptions" /> with parameters.
-    /// </summary>
-    /// <param name="maxHostThreads">Max concurrent threads for the host scan.</param>
-    /// <param name="maxPortThreads">Max concurrent threads for the port scan of each host.</param>
-    /// <param name="icmpAttempts">Number of attempts to ping a host.</param>
-    /// <param name="icmpTimeout">Timeout in milliseconds after which a ping is considered lost.</param>
-    /// <param name="icmpBuffer">Size of the buffer used in the ping in bytes.</param>
-    /// <param name="portScanEnabled">Scan the ports of the host.</param>
-    /// <param name="portScanPorts">List of ports to scan.</param>
-    /// <param name="portScanTimeout">Timeout in milliseconds after which a port is considered closed.</param>
-    /// <param name="portScanAttempts">Number of attempts to connect to a port if there was no answer.</param>
-    /// <param name="resolveHostname">Resolve the hostname for an IP address.</param>
-    /// <param name="netBIOSEnabled">Resolve the NetBIOS name for an IP address.</param>
-    /// <param name="netBIOSTimeout">Timeout in milliseconds after which a NetBIOS request is considered lost.</param>
-    /// <param name="resolveMACAddress">Resolve the MAC address for the host from ARP.</param>
-    /// <param name="showAllResults">Include unreachable IP addresses in the result.</param>
-    public IPScannerOptions(int maxHostThreads, int maxPortThreads, int icmpAttempts, int icmpTimeout,
-        byte[] icmpBuffer, bool resolveHostname, bool portScanEnabled, int[] portScanPorts, int portScanTimeout,
-        int portScanAttempts, bool netBIOSEnabled, int netBIOSTimeout, bool resolveMACAddress, bool showAllResults)
-    {
-        MaxHostThreads = maxHostThreads;
-        MaxPortThreads = maxPortThreads;
-        ICMPAttempts = icmpAttempts;
-        ICMPTimeout = icmpTimeout;
-        ICMPBuffer = icmpBuffer;
-        ResolveHostname = resolveHostname;
-        PortScanEnabled = portScanEnabled;
-        PortScanPorts = portScanPorts;
-        PortScanTimeout = portScanTimeout;
-        PortScanAttempts = portScanAttempts;
-        NetBIOSEnabled = netBIOSEnabled;
-        NetBIOSTimeout = netBIOSTimeout;
-        ResolveMACAddress = resolveMACAddress;
-        ShowAllResults = showAllResults;
-    }
-
     /// <summary>
     ///     Max concurrent threads for the host scan.
     /// </summary>
-    public int MaxHostThreads { get; }
+    public required int MaxHostThreads { get; init; }
 
     /// <summary>
     ///     Max concurrent threads for the port scan of each host.
     /// </summary>
-    public int MaxPortThreads { get; }
+    public required int MaxPortThreads { get; init; }
 
     /// <summary>
     ///     Number of attempts to ping a host.
     /// </summary>
-    public int ICMPAttempts { get; }
+    public required int ICMPAttempts { get; init; }
 
     /// <summary>
     ///     Timeout in milliseconds after which a ping is considered lost.
     /// </summary>
-    public int ICMPTimeout { get; }
+    public required int ICMPTimeout { get; init; }
 
     /// <summary>
     ///     Size of the buffer used in the ping in bytes.
     /// </summary>
-    public byte[] ICMPBuffer { get; }
+    public required byte[] ICMPBuffer { get; init; }
 
     /// <summary>
     ///     Resolve the hostname for an IP address.
     /// </summary>
-    public bool ResolveHostname { get; }
+    public required bool ResolveHostname { get; init; }
 
     /// <summary>
     ///     Scan the ports of the host.
     /// </summary>
-    public bool PortScanEnabled { get; }
+    public required bool PortScanEnabled { get; init; }
 
     /// <summary>
     ///     Ports to scan.
     /// </summary>
-    public int[] PortScanPorts { get; }
+    public required int[] PortScanPorts { get; init; }
 
     /// <summary>
     ///     Timeout in milliseconds after which a port is considered closed.
     /// </summary>
-    public int PortScanTimeout { get; }
+    public required int PortScanTimeout { get; init; }
 
     /// <summary>
     ///     Number of attempts to connect to a port if there was no answer (timed out).
     /// </summary>
-    public int PortScanAttempts { get; }
+    public required int PortScanAttempts { get; init; }
 
     /// <summary>
     ///     Resolve the NetBIOS name for an IP address.
     /// </summary>
-    public bool NetBIOSEnabled { get; }
+    public required bool NetBIOSEnabled { get; init; }
 
     /// <summary>
     ///     Timeout in milliseconds after which a NetBIOS request is considered lost.
     /// </summary>
-    public int NetBIOSTimeout { get; }
+    public required int NetBIOSTimeout { get; init; }
 
     /// <summary>
     ///     Resolve the MAC address for the host from ARP.
     /// </summary>
-    public bool ResolveMACAddress { get; }
+    public required bool ResolveMACAddress { get; init; }
 
     /// <summary>
     ///     Include unreachable IP addresses in the result.
     /// </summary>
-    public bool ShowAllResults { get; }
+    public required bool ShowAllResults { get; init; }
+
+    /// <summary>
+    ///     Raise every host in <see cref="IPScanner.HostFound" />, also unreachable ones (e.g. for a rescan of shown
+    ///     hosts), without showing all ports like <see cref="ShowAllResults" />.
+    /// </summary>
+    public required bool ReportAllHosts { get; init; }
 }

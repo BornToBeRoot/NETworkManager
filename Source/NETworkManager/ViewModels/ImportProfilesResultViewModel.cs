@@ -5,13 +5,13 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Threading;
 using log4net;
 using NETworkManager.Localization;
 using NETworkManager.Models.RDAP;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using NETworkManager.Utilities.WPF;
 
 namespace NETworkManager.ViewModels;
 
@@ -20,7 +20,7 @@ public sealed class ImportProfilesResultViewModel : ViewModelBase
     private static readonly ILog Log = LogManager.GetLogger(typeof(ImportProfilesResultViewModel));
 
     private readonly Action<int, int, int> _completedCallback;
-    private readonly DispatcherTimer _searchDispatcherTimer = new();
+    private readonly SearchDelay _searchDelay;
 
     public ImportProfilesResultViewModel(IReadOnlyList<ProfileImportCandidate> candidates, ProfileImportSource importSource, string targetGroup, Action backCallback, Action cancelCallback, Action<int, int, int> completedCallback)
     {
@@ -50,8 +50,7 @@ public sealed class ImportProfilesResultViewModel : ViewModelBase
         CandidatesView = CollectionViewSource.GetDefaultView(Candidates);
         CandidatesView.Filter = FilterCandidate;
 
-        _searchDispatcherTimer.Interval = GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan;
-        _searchDispatcherTimer.Tick += SearchDispatcherTimer_Tick;
+        _searchDelay = new SearchDelay(GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan, ApplySearch);
 
         ApplicationOptions = BuildApplicationOptions();
         foreach (var tool in ApplicationOptions)
@@ -78,8 +77,7 @@ public sealed class ImportProfilesResultViewModel : ViewModelBase
             field = value;
 
             IsSearching = true;
-            _searchDispatcherTimer.Stop();
-            _searchDispatcherTimer.Start();
+            _searchDelay.Restart();
 
             OnPropertyChanged();
         }
@@ -308,9 +306,17 @@ public sealed class ImportProfilesResultViewModel : ViewModelBase
             HasAnyEnabledApplication = ApplicationOptions.Any(t => t.IsEnabled);
     }
 
-    private void SearchDispatcherTimer_Tick(object sender, EventArgs e)
+    /// <summary>
+    /// Gets the command to filter right away (Enter in the search box, see
+    /// <see cref="NETworkManager.Utilities.WPF.SearchTextBoxHelper"/>).
+    /// </summary>
+    public ICommand ApplySearchCommand => _searchDelay.ApplyCommand;
+
+    /// <summary>
+    /// Filters with the current <see cref="Search"/> right away.
+    /// </summary>
+    private void ApplySearch()
     {
-        _searchDispatcherTimer.Stop();
         CandidatesView.Refresh();
         IsSearching = false;
     }

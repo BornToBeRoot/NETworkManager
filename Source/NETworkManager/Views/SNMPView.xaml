@@ -623,7 +623,7 @@
                                       SelectedItem="{Binding SelectedResult}"
                                       Sorting="DataGrid_OnSorting"
                                       SelectedItemsList="{Binding SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      wpfHelpers:DataGridHelper.RefreshStarColumnsOnFirstRow="True">
+                                      wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <controls:MultiSelectDataGrid.Resources>
                 <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
@@ -692,8 +692,7 @@
                 <DataGridTextColumn Header="{x:Static localization:Strings.Data}"
                                     Binding="{Binding (network:SNMPInfo.Data)}"
                                     SortMemberPath="Data"
-                                    MinWidth="300"
-                                    Width="*">
+                                    MinWidth="300">
                     <DataGridTextColumn.ElementStyle>
                         <Style>
                             <Setter Property="TextBlock.TextWrapping" Value="Wrap" />

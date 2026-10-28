@@ -13,6 +13,7 @@ using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using NETworkManager.Utilities.WPF;
 using NETworkManager.Views;
 using SkiaSharp;
 using System;
@@ -183,6 +184,12 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Delays filtering while the user is typing (see <see cref="Search"/>), so a large list is not filtered on
+    /// every key press.
+    /// </summary>
+    private readonly SearchDelay _searchDelay;
+
     public string Search
     {
         get;
@@ -193,7 +200,8 @@ public class WiFiViewModel : ViewModelBase
 
             field = value;
 
-            NetworksView.Refresh();
+            // Filter after a short delay while typing (see _searchDelay)
+            _searchDelay.Restart();
 
             OnPropertyChanged();
         }
@@ -478,6 +486,8 @@ public class WiFiViewModel : ViewModelBase
 
     public WiFiViewModel()
     {
+        _searchDelay = new SearchDelay(GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan, ApplySearch);
+
         _isLoading = true;
 
         // Set up the channel charts (axes, sections, paints) unconditionally so the chart bindings
@@ -1343,6 +1353,20 @@ public class WiFiViewModel : ViewModelBase
     {
         _hideConnectionStatusMessageTimer.Stop();
         IsConnectionStatusMessageDisplayed = false;
+    }
+
+    /// <summary>
+    /// Gets the command to filter right away (Enter in the search box, see
+    /// <see cref="NETworkManager.Utilities.WPF.SearchTextBoxHelper"/>).
+    /// </summary>
+    public ICommand ApplySearchCommand => _searchDelay.ApplyCommand;
+
+    /// <summary>
+    /// Filters with the current <see cref="Search"/> right away.
+    /// </summary>
+    private void ApplySearch()
+    {
+        NetworksView.Refresh();
     }
 
     #endregion

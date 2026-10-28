@@ -89,7 +89,12 @@ public class ProfileViewModel : ViewModelBase
             : profileInfo.PortScanner_Enabled;
         PortScanner_InheritHost = profileInfo.PortScanner_InheritHost;
         PortScanner_Host = profileInfo.PortScanner_Host;
-        PortScanner_Ports = profileInfo.PortScanner_Ports;
+        // Port profiles with their current name (also after a rename). A port profile that can't be found (deleted, or
+        // a profile file from another computer): the ports saved with the profile.
+        PortScanner_Ports = PortProfile.TryDecodeReferences(profileInfo.PortScanner_PortsInput,
+            SettingsManager.Current.PortScanner_PortProfiles, out var portScannerPortsInput)
+            ? portScannerPortsInput
+            : profileInfo.PortScanner_Ports;
 
         // Ping Monitor
         PingMonitor_Enabled = editMode == ProfileEditMode.Add
@@ -111,6 +116,14 @@ public class ProfileViewModel : ViewModelBase
             : profileInfo.DNSLookup_Enabled;
         DNSLookup_InheritHost = profileInfo.DNSLookup_InheritHost;
         DNSLookup_Host = profileInfo.DNSLookup_Host;
+        DNSLookup_OverrideDNSServer = profileInfo.DNSLookup_OverrideDNSServer;
+
+        // DNS servers with their current name (also after a rename). A DNS server that can't be found (deleted, or a
+        // profile file from another computer): the servers saved with the profile.
+        DNSLookup_DNSServer = Models.Network.DNSServer.TryDecodeReferences(profileInfo.DNSLookup_DNSServerInput,
+            SettingsManager.Current.DNSLookup_DNSServers, out var dnsLookupDNSServerInput)
+            ? dnsLookupDNSServerInput
+            : profileInfo.DNSLookup_DNSServer;
 
         // Remote Desktop
         RemoteDesktop_Enabled = editMode == ProfileEditMode.Add
@@ -734,6 +747,18 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
+    private readonly InputSuggestions _portScannerPortsSuggestions = InputSuggestions.ForPortScannerPorts();
+
+    /// <summary>
+    /// Gets the port profiles and the ports history of the Port Scanner for the ports input (grouped).
+    /// </summary>
+    public ICollectionView PortScanner_PortsSuggestions => _portScannerPortsSuggestions.View;
+
+    /// <summary>
+    /// Gets the names of the port profiles for the Tab completion of the ports input of the Port Scanner.
+    /// </summary>
+    public IEnumerable<string> PortScanner_PortProfileNames => _portScannerPortsSuggestions.ProfileNames;
+
     public string PortScanner_Ports
     {
         get;
@@ -878,6 +903,44 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    public bool DNSLookup_OverrideDNSServer
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string DNSLookup_DNSServer
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private readonly InputSuggestions _dnsLookupDNSServerSuggestions = InputSuggestions.ForDNSLookupDNSServers();
+
+    /// <summary>
+    /// Gets the DNS servers and the DNS server history of DNS Lookup for the DNS server input (grouped).
+    /// </summary>
+    public ICollectionView DNSLookup_DNSServerSuggestions => _dnsLookupDNSServerSuggestions.View;
+
+    /// <summary>
+    /// Gets the names of the DNS servers for the Tab completion of the DNS server input of DNS Lookup.
+    /// </summary>
+    public IEnumerable<string> DNSLookup_DNSServerNames => _dnsLookupDNSServerSuggestions.ProfileNames;
 
     #endregion
 

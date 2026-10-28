@@ -240,7 +240,7 @@
                                                                                         Path="DataContext.HostsChangeVersion"
                                                                                         RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}" />
                                                                                     <Binding
-                                                                                        Source="{x:Static Member=localization:Strings.Up}" />
+                                                                                        Source="{x:Static Member=localization:Strings.XUp}" />
                                                                                 </MultiBinding>
                                                                             </TextBlock.Text>
                                                                         </TextBlock>
@@ -260,7 +260,7 @@
                                                                                         Path="DataContext.HostsChangeVersion"
                                                                                         RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}" />
                                                                                     <Binding
-                                                                                        Source="{x:Static Member=localization:Strings.Down}" />
+                                                                                        Source="{x:Static Member=localization:Strings.XDown}" />
                                                                                 </MultiBinding>
                                                                             </TextBlock.Text>
                                                                         </TextBlock>
@@ -281,7 +281,7 @@
                                                                                         Path="DataContext.HostsChangeVersion"
                                                                                         RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=ItemsControl}}" />
                                                                                     <Binding
-                                                                                        Source="{x:Static Member=localization:Strings.Paused}" />
+                                                                                        Source="{x:Static Member=localization:Strings.XPaused}" />
                                                                                 </MultiBinding>
                                                                             </TextBlock.Text>
                                                                             <TextBlock.Visibility>

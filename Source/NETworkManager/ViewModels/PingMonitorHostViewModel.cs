@@ -324,7 +324,8 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
         try
         {
             hosts = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(Host),
-                SettingsManager.Current.Network_ResolveHostnamePreferIPv4, _cancellationTokenSource.Token);
+                SettingsManager.Current.Network_ResolveHostnamePreferIPv4, keepAllHostnames: true,
+                _cancellationTokenSource.Token);
         }
         catch (OperationCanceledException)
         {

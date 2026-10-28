@@ -100,7 +100,7 @@ public static partial class ExportManager
                 Protocol = collection[i].LookupInfo.Protocol.ToString(),
                 collection[i].LookupInfo.Service,
                 collection[i].LookupInfo.Description,
-                Status = collection[i].State.ToString()
+                State = collection[i].State.ToString()
             };
 
         File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
