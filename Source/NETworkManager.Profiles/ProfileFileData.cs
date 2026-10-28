@@ -143,6 +143,9 @@ public class ProfileFileData : INotifyPropertyChanged
             {
                 Profiles = [.. (gs.Profiles ?? []).Select(ps => new ProfileInfo(ps)
                 {
+                    // A profile is saved in its group: repairs profiles of a group that was renamed only by case
+                    // (e.g. "servers" -> "Servers"), which kept the old name and couldn't find their group
+                    Group = gs.Name,
                     TagsCollection = (ps.TagsCollection == null || ps.TagsCollection.Count == 0) && !string.IsNullOrEmpty(ps.Tags)
                         ? new Controls.ObservableSetCollection<string>(ps.Tags.Split([';'], StringSplitOptions.RemoveEmptyEntries))
                         : ps.TagsCollection,

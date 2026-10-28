@@ -309,10 +309,11 @@ public static class ProfileDialogManager
 
         var name = instance.Name.Trim();
 
-        // Update group in profiles
+        // Update group in profiles - also if only the case changed (e.g. "servers" -> "Servers"), groups are looked up
+        // case-sensitive (see ProfileManager.GetGroupByName)
         if (profiles.Count > 0)
             if (!string.IsNullOrEmpty(instance.Group.Name) &&
-                !string.Equals(instance.Group.Name, name, StringComparison.OrdinalIgnoreCase))
+                !string.Equals(instance.Group.Name, name, StringComparison.Ordinal))
                 foreach (var profile in profiles)
                     profile.Group = name;
         //else
