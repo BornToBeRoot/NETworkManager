@@ -22,7 +22,7 @@
                                Loaded="ChildWindow_OnLoaded"
                                mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:RunCommandViewModel}">
     <simpleChildWindow:ChildWindow.Resources>
-        <converters:ApplicationNameToIconConverter x:Key="ApplicationNameToIconConverter" />
+        <converters:ApplicationNameToIconBrushConverter x:Key="ApplicationNameToIconBrushConverter" />
         <converters:StringIsNotNullOrEmptyToVisibilityCollapsedConverter
             x:Key="StringIsNotNullOrEmptyToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
@@ -88,12 +88,7 @@
                     <Rectangle.Style>
                         <Style TargetType="{x:Type Rectangle}">
                             <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                            <Setter Property="OpacityMask">
-                                <Setter.Value>
-                                    <VisualBrush Stretch="Uniform"
-                                                 Visual="{Binding CommandApplication, Converter={StaticResource ApplicationNameToIconConverter}}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="OpacityMask" Value="{Binding CommandApplication, Converter={StaticResource ApplicationNameToIconBrushConverter}}" />
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding CommandApplication}"
                                              Value="{x:Static models:ApplicationName.None}">
@@ -264,12 +259,7 @@
                             <Rectangle.Style>
                                 <Style TargetType="{x:Type Rectangle}">
                                     <!-- Application icon (command, target, example, history) -->
-                                    <Setter Property="OpacityMask">
-                                        <Setter.Value>
-                                            <VisualBrush Stretch="Uniform"
-                                                         Visual="{Binding Application, Converter={StaticResource ApplicationNameToIconConverter}}" />
-                                        </Setter.Value>
-                                    </Setter>
+                                    <Setter Property="OpacityMask" Value="{Binding Application, Converter={StaticResource ApplicationNameToIconBrushConverter}}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Application}"
                                                      Value="{x:Static models:ApplicationName.None}">
