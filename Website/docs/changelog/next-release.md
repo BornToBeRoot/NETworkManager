@@ -192,6 +192,7 @@ Release date: **xx.xx.2026**
 
 **Firewall**
 
+- Fixed the name of the feature not being translatable in the list of features, the settings and the run command (missing translation key).
 - Fixed `F5` not refreshing the rule list, although it is documented as shortcut. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
 - Fixed an empty rule list with "Reloaded at ..." being shown if the rules could not be loaded (e.g. the Windows Firewall service is not running). An error is shown now, and a message if the rules could only be loaded partially. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
 - Fixed the Firewall not working until the application was restarted if loading the PowerShell module `NetSecurity` failed once. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)

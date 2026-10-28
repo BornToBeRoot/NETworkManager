@@ -952,6 +952,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Firewall.
+        /// </summary>
+        public static string ApplicationName_Firewall {
+            get {
+                return ResourceManager.GetString("ApplicationName_Firewall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hosts File Editor.
         /// </summary>
         public static string ApplicationName_HostsFileEditor {

@@ -5143,4 +5143,7 @@ Do you want to start the scan?</value>
   <data name="DNSServerOfProfileNotFoundMessage" xml:space="preserve">
     <value>A DNS server of this profile was not found, the DNS servers saved with the profile are used. DNS servers are saved in the settings and the profile refers to them by an internal ID - if the profile file was shared from another computer, create the DNS server and then select it in the profile again (edit the profile).</value>
   </data>
+  <data name="ApplicationName_Firewall" xml:space="preserve">
+    <value>Firewall</value>
+  </data>
 </root>
