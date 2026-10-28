@@ -1068,7 +1068,7 @@ Controlla i parametri!</value>
     <value>Apri</value>
   </data>
   <data name="OpenPorts" xml:space="preserve">
-    <value>Open ports</value>
+    <value>Apri porte</value>
   </data>
   <data name="OpenLicense" xml:space="preserve">
     <value>Apri licenza</value>
@@ -2299,10 +2299,10 @@ Prova un altro servizio o usa quello predefinito...</value>
     <value>Il comando personalizzato selezionato verrà eliminato definitivamente.</value>
   </data>
   <data name="DeleteCustomCommands" xml:space="preserve">
-    <value>Delete custom commands</value>
+    <value>Elimina comandi personalizzati</value>
   </data>
   <data name="DeleteCustomCommandsMessage" xml:space="preserve">
-    <value>The selected custom commands will be deleted permanently.</value>
+    <value>I comandi personalizzati selezionati verranno eliminati definitivamente.</value>
   </data>
   <data name="Restart" xml:space="preserve">
     <value>Riavvia</value>
@@ -2904,10 +2904,10 @@ Vedi messaggio errore: "{0}"</value>
     <value>Il seguente profilo porte verrà permanentemente eliminato!</value>
   </data>
   <data name="DeletePortProfiles" xml:space="preserve">
-    <value>Delete port profiles</value>
+    <value>Elimina profili porte</value>
   </data>
   <data name="DeletePortProfilesMessage" xml:space="preserve">
-    <value>The selected port profiles will be deleted permanently.</value>
+    <value>I profili porte selezionati verranno eliminati in modo permanente.</value>
   </data>
   <data name="ShowSplashScreenOnStart" xml:space="preserve">
     <value>All'avvio visualizza schermata benvenuto</value>
@@ -5180,66 +5180,66 @@ Vuoi avviare la scansione?</value>
     <value>Se si risolve, esiste. In caso contrario, svuota la cache.</value>
   </data>
   <data name="Rescan" xml:space="preserve">
-    <value>Rescan</value>
+    <value>Riscansione</value>
   </data>
   <data name="RescanHost" xml:space="preserve">
-    <value>Rescan host</value>
+    <value>Riscansiona host</value>
   </data>
   <data name="XClosed" xml:space="preserve">
-    <value>{0} Closed</value>
+    <value>{0} chiuso</value>
   </data>
   <data name="XDown" xml:space="preserve">
-    <value>{0} Down</value>
+    <value>{0} offline</value>
   </data>
   <data name="XOpen" xml:space="preserve">
-    <value>{0} Open</value>
+    <value>{0} aperta</value>
   </data>
   <data name="XPaused" xml:space="preserve">
-    <value>{0} Paused</value>
+    <value>{0} in pausa</value>
   </data>
   <data name="XUp" xml:space="preserve">
-    <value>{0} Up</value>
+    <value>{0} online</value>
   </data>
   <data name="XTimedOut" xml:space="preserve">
-    <value>{0} Timed out</value>
+    <value>{0} Timeout</value>
   </data>
   <data name="HelpMessage_ScanForNetBIOS" xml:space="preserve">
-    <value>Only IPv4 addresses are scanned for NetBIOS, NetBIOS doesn't exist over IPv6.</value>
+    <value>Vengono scansionati solo gli indirizzi IPv4 per NetBIOS, in IPv6 NetBIOS non esiste.</value>
   </data>
   <data name="AdjustThreadsAutomatically" xml:space="preserve">
-    <value>Adjust threads automatically</value>
+    <value>Regola thread automaticamente</value>
   </data>
   <data name="HelpMessage_AdjustThreadsAutomatically" xml:space="preserve">
-    <value>Adjusts the number of hosts and ports scanned at the same time to the scan: up to 512 connections at the same time, at most 128 hosts and 128 ports per host (e.g. 4 hosts with 1-1024, 128 hosts with one port). Disable it to set the threads yourself, e.g. to slow down a scan.</value>
+    <value>Adatta alla scansione il numero di host e porte scansionate contemporaneamente: fino a 512 connessioni contemporaneamente, al massimo 128 host e 128 porte per host (ad esempio 4 host con 1-1024, 128 host con una porta). Disabilitalo per impostare manualmente i thread, ad es. per rallentare una scansione.</value>
   </data>
   <data name="HelpMessage_PortScannerMaxThreads" xml:space="preserve">
-    <value>Host threads × port threads can be at most 8,192 connections at the same time (every connection uses a local port, this is half of them). Many connections at the same time may be blocked by a firewall or overload small routers.</value>
+    <value>I thread host x i thread porta possono avere al massimo 8.192 connessioni contemporanee (ogni connessione usa una porta locale, questa è la metà di esse). Molte connessioni contemporanee potrebbero essere bloccate da un firewall o sovraccaricare piccoli router.</value>
   </data>
   <data name="EnterValidPortsOrPortProfiles" xml:space="preserve">
-    <value>Enter valid ports, port ranges (1 - 65535) and/or port profiles!</value>
+    <value>Inserisci porte, intervalli di porte (1 - 65535) e/o profili porte validi!</value>
   </data>
   <data name="ErrorMessage_PortProfileNameInvalid" xml:space="preserve">
-    <value>The name must not contain ";" and must not be a port or port range.</value>
+    <value>Il nome non deve contenere ";" e non deve essere una porta o un intervallo di porte.</value>
   </data>
   <data name="PortProfileOfProfileNotFoundMessage" xml:space="preserve">
-    <value>A port profile of this profile was not found, the ports saved with the profile are used. Port profiles are saved in the settings and the profile refers to them by an internal ID - if the profile file was shared from another computer, create the port profile and then select it in the profile again (edit the profile).</value>
+    <value>Per questo profilo non è stato trovato un profilo porte, verranno usate le porte salvate con il profilo. I profili porte vengono salvati nelle impostazioni e il profilo fa riferimento ad essi tramite un ID interno: se il file del profilo è stato condiviso da un altro computer, crea il profilo porte e quindi selezionalo nuovamente nel profilo (modifica il profilo).</value>
   </data>
   <data name="PingHostsBeforeScan" xml:space="preserve">
-    <value>Ping hosts before the scan</value>
+    <value>Prima della scansione esegui il ping degli host</value>
   </data>
   <data name="HelpMessage_PingHostsBeforeScan" xml:space="preserve">
-    <value>Only hosts that answer a ping (ICMP echo, with the timeout and attempts above) are scanned. Faster for ranges with many unused IP addresses. Hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned.</value>
+    <value>Vengono scansionati solo gli host che rispondono a un ping (eco ICMP, con timeout e tentativi sopra). Più veloce per intervalli con molti indirizzi IP non usati. Non vengono scansionati gli host che bloccano ICMP (ad esempio Windows con il firewall abilitato).</value>
   </data>
   <data name="XHostsDidNotAnswerThePingAndWereNotScanned" xml:space="preserve">
-    <value>{0} host(s) did not answer the ping and were not scanned.</value>
+    <value>{0} host non hanno risposto al ping e non sono stati scansionati.</value>
   </data>
   <data name="EnterValidDNSServersOrDNSServerProfiles" xml:space="preserve">
-    <value>Enter valid DNS servers (IP address or hostname, optional port) and/or names of DNS servers!</value>
+    <value>Inserisci valori di server DNS validi (indirizzo IP o nome host, porta opzionale) e/o nomi di server DNS!</value>
   </data>
   <data name="ErrorMessage_NameMustNotContainSemicolon" xml:space="preserve">
-    <value>The name must not contain ";".</value>
+    <value>Il nome non deve contenere ";".</value>
   </data>
   <data name="DNSServerOfProfileNotFoundMessage" xml:space="preserve">
-    <value>A DNS server of this profile was not found, the DNS servers saved with the profile are used. DNS servers are saved in the settings and the profile refers to them by an internal ID - if the profile file was shared from another computer, create the DNS server and then select it in the profile again (edit the profile).</value>
+    <value>Per questo profilo non è stato trovato un server DNS, verranno usati i server DNS salvati con il profilo. I server DNS vengono salvati nelle impostazioni e il profilo fa riferimento ad essi tramite un ID interno: se il file del profilo è stato condiviso da un altro computer, crea il server DNS e quindi selezionalo nuovamente nel profilo (modifica il profilo).</value>
   </data>
 </root>
