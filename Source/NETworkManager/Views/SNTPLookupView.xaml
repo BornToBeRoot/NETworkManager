@@ -18,6 +18,7 @@
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
         <converters:DoubleToMillisecondsStringConverter x:Key="IntToMillisecondsStringConverter" />
         <converters:IntToSecondsStringConverter x:Key="IntToSecondsStringConverter" />
+        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -122,7 +123,7 @@
                                       SelectedItemsList="{Binding Path=SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       wpfHelpers:DataGridHelper.FillRemainingWidth="True">
             <controls:MultiSelectDataGrid.Resources>
-                <ContextMenu x:Key="RowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                <ContextMenu x:Key="RowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
                               Style="{StaticResource ResourceKey=CopyMenuItem}">
                         <MenuItem Header="{x:Static Member=localization:Strings.Server}"
@@ -166,7 +167,7 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </ContextMenu>
-                <ContextMenu x:Key="MultiRowContextMenu" Opened="ContextMenu_Opened" MinWidth="150">
+                <ContextMenu x:Key="MultiRowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}" MinWidth="150">
                     <MenuItem Header="{x:Static Member=localization:Strings.ExportDots}"
                               Command="{Binding Path=ExportCommand}">
                         <MenuItem.Icon>
