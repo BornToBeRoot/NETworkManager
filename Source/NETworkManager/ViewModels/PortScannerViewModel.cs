@@ -36,9 +36,16 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private static readonly ILog Log = LogManager.GetLogger(typeof(PortScannerViewModel));
 
     /// <summary>
-    /// Maximum effort (changed rows x all rows) to remove / add the rows one by one when the results of hosts are
-    /// replaced (rescan, see <see cref="ReplaceResults"/>) or buffered results are added (see
-    /// <see cref="FlushResultsBuffer"/>). E.g. 1,000 rows of 10,000 or 10 rows of 1,000,000. Above, with one reset.
+    /// Maximum effort to remove / add rows one by one when the results of hosts are replaced (rescan, see
+    /// <see cref="ReplaceResults"/>) or buffered results are added (see <see cref="FlushResultsBuffer"/>). Above, the
+    /// results are replaced with one reset (sorts and groups all rows once, but collapsed groups and the scroll
+    /// position are lost).
+    /// <para>
+    /// The effort is a product (changed rows x all rows), not a row count: WPF inserts / removes every single row in
+    /// its group of the sorted view with a linear search. Even one host with 1-65535 (max. 65,535 rows) exceeds it,
+    /// e.g. adding 500 rows to 20,000 rows (10.25M) is done with a reset, 100 rows to 60,000 (6M) one by one. With
+    /// multiple hosts, the results can have millions of rows (e.g. a /24 with 1-65535 and closed ports shown).
+    /// </para>
     /// </summary>
     private const long MaxRowChangesOneByOne = 10_000_000;
 
