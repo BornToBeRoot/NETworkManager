@@ -344,6 +344,7 @@ Release date: **xx.xx.2026**
 
 - Fixed `Enter` in the search box of the import result importing the profiles (default button). It filters the found profiles right away now, instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the groups (Settings > Profiles) and the import result. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+- Fixed the names of the features in the group dialog shown without spaces (e.g. `RemoteDesktop` instead of **Remote Desktop**).
 
 **SNMP**
 

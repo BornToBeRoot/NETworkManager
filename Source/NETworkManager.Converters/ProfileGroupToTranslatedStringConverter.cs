@@ -23,7 +23,8 @@ public sealed class ProfileGroupToTranslatedStringConverter : IValueConverter
     {
         return value is not GroupViewName name
             ? "-/-"
-            : ResourceTranslator.Translate(ResourceIdentifier.ProfileGroup, name);
+            : ResourceTranslator.Translate(new[] { ResourceIdentifier.ProfileGroup, ResourceIdentifier.ApplicationName },
+                name);
     }
 
     /// <summary>
