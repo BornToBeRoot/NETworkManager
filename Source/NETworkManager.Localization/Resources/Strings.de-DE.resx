@@ -1056,6 +1056,9 @@ Erstelle eins...</value>
   <data name="Open" xml:space="preserve">
     <value>Offen</value>
   </data>
+  <data name="OpenPorts" xml:space="preserve">
+    <value>Open ports</value>
+  </data>
   <data name="OpenLicense" xml:space="preserve">
     <value>Lizenz öffnen</value>
   </data>
@@ -2274,6 +2277,12 @@ ist deaktiviert!</value>
   <data name="DeleteCustomCommandMessage" xml:space="preserve">
     <value>Der ausgewählte benutzerdefinierte Befehl wird unwiederbringlich gelöscht.</value>
   </data>
+  <data name="DeleteCustomCommands" xml:space="preserve">
+    <value>Delete custom commands</value>
+  </data>
+  <data name="DeleteCustomCommandsMessage" xml:space="preserve">
+    <value>The selected custom commands will be deleted permanently.</value>
+  </data>
   <data name="Restart" xml:space="preserve">
     <value>Neustart</value>
   </data>
@@ -2871,11 +2880,11 @@ ist deaktiviert!</value>
   <data name="DeletePortProfileMessage" xml:space="preserve">
     <value>Das ausgewählte Port-Profil wird unwiederbringlich gelöscht.</value>
   </data>
-  <data name="SelectPortProfile" xml:space="preserve">
-    <value>Port-Profil anzeigen</value>
+  <data name="DeletePortProfiles" xml:space="preserve">
+    <value>Delete port profiles</value>
   </data>
-  <data name="OpenPortProfilesDots" xml:space="preserve">
-    <value>Port-Profil öffnen...</value>
+  <data name="DeletePortProfilesMessage" xml:space="preserve">
+    <value>The selected port profiles will be deleted permanently.</value>
   </data>
   <data name="ShowSplashScreenOnStart" xml:space="preserve">
     <value>Zeige SplashScreen beim Starten</value>
@@ -5070,5 +5079,68 @@ Scan starten?</value>
   </data>
   <data name="RunCommandWatermark35" xml:space="preserve">
     <value>Wenn es aufgelöst wird, existiert es. Sonst: Cache leeren.</value>
+  </data>
+  <data name="Rescan" xml:space="preserve">
+    <value>Rescan</value>
+  </data>
+  <data name="RescanHost" xml:space="preserve">
+    <value>Rescan host</value>
+  </data>
+  <data name="XClosed" xml:space="preserve">
+    <value>{0} Closed</value>
+  </data>
+  <data name="XDown" xml:space="preserve">
+    <value>{0} Down</value>
+  </data>
+  <data name="XOpen" xml:space="preserve">
+    <value>{0} Open</value>
+  </data>
+  <data name="XPaused" xml:space="preserve">
+    <value>{0} Paused</value>
+  </data>
+  <data name="XUp" xml:space="preserve">
+    <value>{0} Up</value>
+  </data>
+  <data name="XTimedOut" xml:space="preserve">
+    <value>{0} Timed out</value>
+  </data>
+  <data name="HelpMessage_ScanForNetBIOS" xml:space="preserve">
+    <value>Only IPv4 addresses are scanned for NetBIOS, NetBIOS doesn't exist over IPv6.</value>
+  </data>
+  <data name="AdjustThreadsAutomatically" xml:space="preserve">
+    <value>Adjust threads automatically</value>
+  </data>
+  <data name="HelpMessage_AdjustThreadsAutomatically" xml:space="preserve">
+    <value>Adjusts the number of hosts and ports scanned at the same time to the scan: up to 512 connections at the same time, at most 128 hosts and 128 ports per host (e.g. 4 hosts with 1-1024, 128 hosts with one port). Disable it to set the threads yourself, e.g. to slow down a scan.</value>
+  </data>
+  <data name="HelpMessage_PortScannerMaxThreads" xml:space="preserve">
+    <value>Host threads × port threads can be at most 8,192 connections at the same time (every connection uses a local port, this is half of them). Many connections at the same time may be blocked by a firewall or overload small routers.</value>
+  </data>
+  <data name="EnterValidPortsOrPortProfiles" xml:space="preserve">
+    <value>Enter valid ports, port ranges (1 - 65535) and/or port profiles!</value>
+  </data>
+  <data name="ErrorMessage_PortProfileNameInvalid" xml:space="preserve">
+    <value>The name must not contain ";" and must not be a port or port range.</value>
+  </data>
+  <data name="PortProfileOfProfileNotFoundMessage" xml:space="preserve">
+    <value>A port profile of this profile was not found, the ports saved with the profile are used. Port profiles are saved in the settings and the profile refers to them by an internal ID - if the profile file was shared from another computer, create the port profile and then select it in the profile again (edit the profile).</value>
+  </data>
+  <data name="PingHostsBeforeScan" xml:space="preserve">
+    <value>Ping hosts before the scan</value>
+  </data>
+  <data name="HelpMessage_PingHostsBeforeScan" xml:space="preserve">
+    <value>Only hosts that answer a ping (ICMP echo, with the timeout and attempts above) are scanned. Faster for ranges with many unused IP addresses. Hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned.</value>
+  </data>
+  <data name="XHostsDidNotAnswerThePingAndWereNotScanned" xml:space="preserve">
+    <value>{0} host(s) did not answer the ping and were not scanned.</value>
+  </data>
+  <data name="EnterValidDNSServersOrDNSServerProfiles" xml:space="preserve">
+    <value>Enter valid DNS servers (IP address or hostname, optional port) and/or names of DNS servers!</value>
+  </data>
+  <data name="ErrorMessage_NameMustNotContainSemicolon" xml:space="preserve">
+    <value>The name must not contain ";".</value>
+  </data>
+  <data name="DNSServerOfProfileNotFoundMessage" xml:space="preserve">
+    <value>A DNS server of this profile was not found, the DNS servers saved with the profile are used. DNS servers are saved in the settings and the profile refers to them by an internal ID - if the profile file was shared from another computer, create the DNS server and then select it in the profile again (edit the profile).</value>
   </data>
 </root>
