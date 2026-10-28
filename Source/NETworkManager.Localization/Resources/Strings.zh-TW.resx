@@ -166,7 +166,7 @@
     <value>永久性</value>
   </data>
   <data name="Authentication" xml:space="preserve">
-    <value>身份驗證</value>
+    <value>驗證</value>
   </data>
   <data name="Autostart" xml:space="preserve">
     <value>自動啟動</value>
@@ -289,7 +289,7 @@
     <value>授權</value>
   </data>
   <data name="LocalDevicesAndResources" xml:space="preserve">
-    <value>本機裝置與資源</value>
+    <value>本地裝置與資源</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>位置</value>
@@ -4323,31 +4323,31 @@
     <value>防火牆規則</value>
   </data>
   <data name="HelpMessage_FirewallShowAllRules" xml:space="preserve">
-    <value>Show all active Windows Firewall rules (e.g. Windows built-in rules, rules created by other applications or from Group Policy) instead of only the rules managed by NETworkManager. Rules not managed by NETworkManager can be enabled, disabled, deleted or copied, but not edited. Rules from a policy (e.g. Group Policy or MDM) can only be copied.</value>
+    <value>顯示所有啟用的防火牆規則（包括 Windows 內建規則、其他應用程式建立的規則，以及由群組政策管理的規則），而非僅限於由 NetworkManager 管理的規則。非由 NetworkManager 管理的規則可進行啟用、停用、刪除或複製，但無法編輯。來自特定策略（如：群組政策或 MDM）的規則僅能複製。</value>
   </data>
   <data name="FirewallRuleUnsupportedValuesMessage" xml:space="preserve">
-    <value>This rule uses values that are not supported by NETworkManager (e.g. port keywords like RPC, a combination of interface types, a protocol like IGMP or the program System). Editing or copying the rule is not supported (yet), because these values would be lost and the new rule could apply to more traffic (e.g. to all ports).</value>
+    <value>此規則包含 Net_Manager 不支援的數值（例如：RPC 等連接埠關鍵字、多種介型組合、IGMP 等協定，或是 System 程式）。不支持對該規則進行編輯或複製（尚未），因為這些數值在轉換時會遺失，且新產生的規則可能會套用到過多的流量（例如：套用於所有連接埠）。</value>
   </data>
   <data name="FirewallRuleManagedByGroupPolicyMessage" xml:space="preserve">
     <value>由群組策略管理。此規則無法在本地更改，但可以複製。</value>
   </data>
   <data name="FirewallRuleManagedByMDMMessage" xml:space="preserve">
-    <value>Managed by Mobile Device Management (MDM), e.g. Microsoft Intune. The rule can't be changed locally, but it can be copied.</value>
+    <value>由行動裝置管理 (MDM) 管理，例如 Microsoft Intune。此規則無法在本地更改，但可以複製。</value>
   </data>
   <data name="FirewallRuleManagedByOtherMessage" xml:space="preserve">
-    <value>Created by Windows at runtime (e.g. dynamic or hardcoded rule). The rule can't be changed locally, but it can be copied.</value>
+    <value>由 Windows 在執行時建立（例如：動態或硬編碼規則）。此規則無法在本地更改，但可以複製。</value>
   </data>
   <data name="FirewallRulesManagedByPolicyMessage" xml:space="preserve">
-    <value>At least one of the selected rules is managed by a policy (e.g. Group Policy or MDM) or created by Windows at runtime and can't be changed locally.</value>
+    <value>至少有一條所選規則是由策略（如：群組政策或 MDM）管理，或是由 Windows 在執行時產生；這些規則無法在本地更改，但可以複製。</value>
   </data>
   <data name="FirewallRulesNoLongerExistMessage" xml:space="preserve">
-    <value>One or more of the selected firewall rules no longer exist (e.g. deleted in the Windows Firewall management console). Nothing was changed.</value>
+    <value>有部分所選的防火牆規則已不存在（例如：在 Windows 防火牆管理主控台中被刪除）。目前尚未改變任何內容。</value>
   </data>
   <data name="LoadingFirewallRulesDots" xml:space="preserve">
     <value>正在載入防火牆規則...</value>
   </data>
   <data name="NoFirewallRulesFoundMessage" xml:space="preserve">
-    <value>No firewall rules found. Use "Add rule..." to create a rule or enable "Show all rules" in the settings to show all Windows Firewall rules.</value>
+    <value>找不到任何防火牆規則。可點選「新增規則...」來建立新規則，或在設定中開啟「顯示所有規則」以查看完整的 Windows 防火牆規則。</value>
   </data>
   <data name="IcmpTypes" xml:space="preserve">
     <value>ICMP 類型</value>
@@ -4362,11 +4362,11 @@
     <value>應用程式套件</value>
   </data>
   <data name="CopyFirewallRuleHiddenPropertiesMessage" xml:space="preserve">
-    <value>The rule "{0}" uses the following properties, which are not supported by NETworkManager and are not copied:
+    <value>規則「{0}」使用了下列屬性，這些屬性並不被 NETworkManager 支援且不會被複製：
 
 {1}
 
-The new rule may apply to more traffic than the original rule (e.g. to all services of a program instead of a single one). Please review the new rule carefully before saving it.</value>
+新產生的規則可能涵蓋比原始規則更多的流量（例如：從單一服務擴充到該程式的所有服務）。在儲存之前，請仔細檢查新的規則。</value>
   </data>
   <data name="ShowAllRules" xml:space="preserve">
     <value>顯示所有規則</value>
@@ -4375,7 +4375,7 @@ The new rule may apply to more traffic than the original rule (e.g. to all servi
     <value>由 NetworkManager 管理。</value>
   </data>
   <data name="FirewallRuleNotManagedMessage" xml:space="preserve">
-    <value>Not managed by NETworkManager (e.g. a Windows built-in rule or a rule created by another application). The rule can be enabled, disabled, deleted or copied, but editing is not supported (yet).</value>
+    <value>非由 Net_Manager 管理的規則（例如：Windows 內建規則或由其他應用程式建立的規則）。這些規則可進行啟用、停用、刪除或複製，但不支援編輯（尚未）。</value>
   </data>
   <data name="EnableRulesX" xml:space="preserve">
     <value>啟用規則 ({0})</value>
@@ -4384,12 +4384,12 @@ The new rule may apply to more traffic than the original rule (e.g. to all servi
     <value>停用規則 ({0})</value>
   </data>
   <data name="FirewallRulesNotManagedWarningMessage" xml:space="preserve">
-    <value>The following rules are not managed by NETworkManager (e.g. Windows built-in rules or rules created by other applications). Changing them may affect the network functionality of Windows or other applications:
+    <value>下列規則並非由 NETworkManager 管理（例如：Windows 內建規則或由其他應用程式建立的規則）。更改這些規則可能會影響 Windows 或其他應用程式的網路功能：
 
 {0}</value>
   </data>
   <data name="EditFirewallRuleNotManagedMessage" xml:space="preserve">
-    <value>Editing rules that are not managed by NETworkManager is not supported (yet), because they may use properties that can't be shown in the dialog (e.g. rule group, service or ICMP types). Use "Copy as..." to create a managed copy of the rule.</value>
+    <value>不支援編輯非由 NETworkManager 管理的規則（暫時），因為這些規則可能包含在對話框中無法顯示的屬性（例如：規則群組、服務或 ICMP 類型）。使用「複製為...」建立該規則的管理副本。</value>
   </data>
   <data name="WindowsFirewallSettings" xml:space="preserve">
     <value>Windows 防火牆設定</value>
@@ -4425,7 +4425,7 @@ The new rule may apply to more traffic than the original rule (e.g. to all servi
     <value>無法載入防火牆規則。{0}</value>
   </data>
   <data name="FirewallRulesLoadedWithErrorsMessage" xml:space="preserve">
-    <value>Reloaded at {0}, but not all firewall rules or their properties could be loaded, so the list may be incomplete (see log file for details). {1}</value>
+    <value>於 {0} 重新載入，但部分防火牆規則或屬性可能尚未載入完成，清單內容可能不完整（詳情請參閱日誌檔案）。{1}</value>
   </data>
   <data name="DeleteFirewallRuleMessage" xml:space="preserve">
     <value>所選的防火牆規則已被永久刪除：
@@ -4532,7 +4532,7 @@ The new rule may apply to more traffic than the original rule (e.g. to all servi
     <value>遠端 IP 位址</value>
   </data>
   <data name="EnterValidFirewallLocalAddress" xml:space="preserve">
-    <value>Enter a valid IP address, subnet (e.g. 10.0.0.0/8), range (e.g. 10.0.0.1-10.0.0.10), or the keyword Any. Other keywords (e.g. LocalSubnet) are only valid for remote addresses.</value>
+    <value>請輸入有效的 IP 位址、子網範圍（例如：10.0.0.0/8）、區段範圍（例如：10.0.0.1-10.0.0.10）或關鍵字 Any。其他關鍵字（如：LocalSubnet）僅適用於遠端位址。</value>
   </data>
   <data name="EnterValidFirewallAddress" xml:space="preserve">
     <value>請輸入有效的 IP 位址、子網路（例如 10.0.0.0/8）、範圍（例如 10.0.0.1-10.0.0.10）或關鍵字（Any, LocalSubnet, DNS, DHCP, WINS, DefaultGateway, Internet, Intranet, IntranetRemoteAccess, PlayToDevice, CaptivePortal）。</value>
@@ -4829,7 +4829,7 @@ Cloudflare 可能會記錄您的 IP 位址與網路資訊。詳情請參閱 Clou
     <value>複製規則</value>
   </data>
   <data name="DeleteFirewallRulesMessage" xml:space="preserve">
-    <value>The selected firewall rules are permanently deleted:
+    <value>所選的防火牆規則已被永久刪除：
 
 {0}</value>
   </data>
@@ -4843,16 +4843,16 @@ Cloudflare 可能會記錄您的 IP 位址與網路資訊。詳情請參閱 Clou
     <value>自動</value>
   </data>
   <data name="EnterValidRDAPQuery" xml:space="preserve">
-    <value>Enter a valid domain, IP address, AS number or entity handle!</value>
+    <value>請輸入有效的網域、IP 位址、AS 編號或實體識別碼！</value>
   </data>
   <data name="RDAPTimeoutAfterXSeconds" xml:space="preserve">
-    <value>The RDAP server did not respond within {0} seconds.</value>
+    <value>RDAP 伺服器在{0}秒內未回應。</value>
   </data>
   <data name="RDAPQueryType_Nameserver" xml:space="preserve">
     <value>名稱伺服器</value>
   </data>
   <data name="EnterValidNameserver" xml:space="preserve">
-    <value>Enter a valid nameserver (e.g., "ns1.example.com")!</value>
+    <value>請輸入有效的名稱伺服器（例如："ns1.example.com"）。</value>
   </data>
   <data name="ASNumbers" xml:space="preserve">
     <value>AS 編號</value>
@@ -4861,10 +4861,10 @@ Cloudflare 可能會記錄您的 IP 位址與網路資訊。詳情請參閱 Clou
     <value>RDAP...</value>
   </data>
   <data name="RDAPXIsNotARegisteredDomainShowingY" xml:space="preserve">
-    <value>"{0}" is not a registered domain, showing the registration data of "{1}".</value>
+    <value>「{0}」並非已註冊網域，正在顯示「{1}」的註冊資料。</value>
   </data>
   <data name="Resource_PublicSuffixList_Description" xml:space="preserve">
-    <value>List of public suffixes (e.g. "co.uk") from publicsuffix.org (MPL-2.0), which is used to get the registered domain of a hostname for RDAP queries.</value>
+    <value>來自 publicsuffix.org (MPL-2.0) 的公共後綴列表（例如 "co.uk"），用於在進行 RDAP 查詢時取得主機名稱的註冊網域。</value>
   </data>
   <data name="ProfileXNotFound" xml:space="preserve">
     <value>找不到設定「{0}」！</value>
@@ -4897,10 +4897,10 @@ Cloudflare 可能會記錄您的 IP 位址與網路資訊。詳情請參閱 Clou
     <value>最近</value>
   </data>
   <data name="EnterSubnetmaskOrCIDRBetweenXAndY" xml:space="preserve">
-    <value>Enter a subnet mask or CIDR between /{0} and /{1}!</value>
+    <value>請輸入子網路遮罩或介於 /{0}與 /{1}之間的 CIDR！</value>
   </data>
   <data name="BringWindowToForegroundAndOpenRunCommand" xml:space="preserve">
-    <value>Bring window to foreground and open the run command</value>
+    <value>將視窗帶到前景並開啟執行指令。</value>
   </data>
   <data name="Commands" xml:space="preserve">
     <value>命令</value>
@@ -5014,20 +5014,20 @@ Cloudflare 可能會記錄您的 IP 位址與網路資訊。詳情請參閱 Clou
     <value>連接埠設定檔</value>
   </data>
   <data name="ScanManyIPAddressesMessage" xml:space="preserve">
-    <value>{0} IP addresses will be scanned. This can take a long time and needs a lot of memory.
+    <value>將掃描{0} 個 IP 位址。此過程可能耗時較久且佔用大量記憶體。
 
-Do you want to start the scan?</value>
+您要開始掃描嗎？</value>
   </data>
   <data name="ScanTooManyIPAddressesMessage" xml:space="preserve">
-    <value>{0} IP addresses cannot be scanned at once (maximum {1}). Split the input into smaller ranges.</value>
+    <value>無法同時掃描 {0} 個 IP 位址（上限為 {1}）。請將輸入內容拆分為較小的範圍。</value>
   </data>
   <data name="ScanManyPortsMessage" xml:space="preserve">
-    <value>{0} ports will be scanned ({1} hosts × {2} ports). This can take a long time and needs a lot of memory.
+    <value>將掃描 {0} 個連接埠（{1}主機 × {2}連接埠）。此過程可能耗時較久且佔用大量記憶體。
 
-Do you want to start the scan?</value>
+您要開始掃描嗎？</value>
   </data>
   <data name="ScanTooManyPortsMessage" xml:space="preserve">
-    <value>{0} ports cannot be scanned at once ({1} hosts × {2} ports, maximum {3}). Split the input into fewer hosts or ports.</value>
+    <value>無法同時掃描{0}個連接埠（{1}主機 × {2}連接埠，上限為{3}）。請將輸入內容縮減為較少的主機或連接埠。</value>
   </data>
   <data name="RunCommandWatermark19" xml:space="preserve">
     <value>你是真的連上它，還是只能 ping 一下？</value>
@@ -5063,28 +5063,28 @@ Do you want to start the scan?</value>
     <value>不是 Bug。是封包遺失。</value>
   </data>
   <data name="RunCommandWatermark30" xml:space="preserve">
-    <value>There is no cloud. Just someone else's network.</value>
+    <value>沒有雲端。只有別人的網路。</value>
   </data>
   <data name="RunCommandWatermark31" xml:space="preserve">
-    <value>It's a feature. Probably.</value>
+    <value>這是一個功能。大概是。</value>
   </data>
   <data name="RunCommandWatermark32" xml:space="preserve">
-    <value>Trust, but verify with ping.</value>
+    <value>信任，但用 ping 來驗證。</value>
   </data>
   <data name="RunCommandWatermark33" xml:space="preserve">
-    <value>The packets know what they did.</value>
+    <value>封包知曉它們所做的一切。</value>
   </data>
   <data name="RunCommandWatermark34" xml:space="preserve">
-    <value>Have you checked the obvious?</value>
+    <value>你確認過基本的嗎？</value>
   </data>
   <data name="RunCommandWatermark35" xml:space="preserve">
-    <value>If it resolves, it exists. If it doesn't, clear the cache.</value>
+    <value>若能解析，則表示存在。若不能，請清除快取。</value>
   </data>
   <data name="Rescan" xml:space="preserve">
-    <value>Rescan</value>
+    <value>重新掃描</value>
   </data>
   <data name="RescanHost" xml:space="preserve">
-    <value>Rescan host</value>
+    <value>重新掃描主機</value>
   </data>
   <data name="XClosed" xml:space="preserve">
     <value>{0}已關閉</value>
@@ -5114,33 +5114,33 @@ Do you want to start the scan?</value>
     <value>同時掃描的主機數量與連接埠數將會自動調整：同步連線數最高可達 512 個，每台主機最多支援 128 個連接埠（例如：4 台主機各對應 1-1024 連接埠、或 128 台主機各對應一個連接埠）。若要手動設定執行緒數量，例如為了減緩掃描速度，可將此功能關閉。</value>
   </data>
   <data name="HelpMessage_PortScannerMaxThreads" xml:space="preserve">
-    <value>Host threads × port threads can be at most 8,192 connections at the same time (every connection uses a local port, this is half of them). Many connections at the same time may be blocked by a firewall or overload small routers.</value>
+    <value>「主機執行緒」乘以「連接埠執行緒」所產生的同時連線數最高可達 8,192 個（每個連線都會佔用一個本地連接埠，這僅是總量的一半）。過多的同步連線可能會被防火牆阻擋，或導致小型路由器超載。</value>
   </data>
   <data name="EnterValidPortsOrPortProfiles" xml:space="preserve">
-    <value>Enter valid ports, port ranges (1 - 65535) and/or port profiles!</value>
+    <value>請輸入有效的連接埠、連接埠範圍 (1 - 65535) 及/或連接埠設定檔！</value>
   </data>
   <data name="ErrorMessage_PortProfileNameInvalid" xml:space="preserve">
-    <value>The name must not contain ";" and must not be a port or port range.</value>
+    <value>名稱不可包含「;」，且不能是連接埠或連接埠範圍。</value>
   </data>
   <data name="PortProfileOfProfileNotFoundMessage" xml:space="preserve">
-    <value>A port profile of this profile was not found, the ports saved with the profile are used. Port profiles are saved in the settings and the profile refers to them by an internal ID - if the profile file was shared from another computer, create the port profile and then select it in the profile again (edit the profile).</value>
+    <value>找不到此設定檔對應的連接埠配置；系統將使用與該設定檔關聯的連線。連接埠配置儲存在設定中，並由設定檔透過內部 ID 來參照。若從其他電腦傳輸了該設定檔，請先建立對應的連接埠配置，再於該設定檔中重新選取（編輯該設定）。</value>
   </data>
   <data name="PingHostsBeforeScan" xml:space="preserve">
-    <value>Ping hosts before the scan</value>
+    <value>在掃描前先進行 Ping</value>
   </data>
   <data name="HelpMessage_PingHostsBeforeScan" xml:space="preserve">
-    <value>Only hosts that answer a ping (ICMP echo, with the timeout and attempts above) are scanned. Faster for ranges with many unused IP addresses. Hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned.</value>
+    <value>僅對有回應 Ping（ICMP 回應，採用上述逾時與次數設定）的主機進行掃描。此方式能加快包含大量閒置 IP 的範圍掃描速度。若主機封鎖了 ICMP（例如：開啟防火牆的 Windows 系統），則不會被掃描到。</value>
   </data>
   <data name="XHostsDidNotAnswerThePingAndWereNotScanned" xml:space="preserve">
-    <value>{0} host(s) did not answer the ping and were not scanned.</value>
+    <value>有{0}個主機(s)未回應 ping，未進行掃量。</value>
   </data>
   <data name="EnterValidDNSServersOrDNSServerProfiles" xml:space="preserve">
-    <value>Enter valid DNS servers (IP address or hostname, optional port) and/or names of DNS servers!</value>
+    <value>請輸入有效的 DNS 伺服器（IP 位址或主機名稱，可選填連接埠）及/或其名稱！</value>
   </data>
   <data name="ErrorMessage_NameMustNotContainSemicolon" xml:space="preserve">
-    <value>The name must not contain ";".</value>
+    <value>名稱不可包含「;」。</value>
   </data>
   <data name="DNSServerOfProfileNotFoundMessage" xml:space="preserve">
-    <value>A DNS server of this profile was not found, the DNS servers saved with the profile are used. DNS servers are saved in the settings and the profile refers to them by an internal ID - if the profile file was shared from another computer, create the DNS server and then select it in the profile again (edit the profile).</value>
+    <value>找不到此設定檔對應的 DNS 伺服器，將使用與該設定檔關聯的 DNS 伺服器。DNS 伺服器儲存在設定中，並由設定檔透過內部 ID 來參照。若從其他電腦傳送了該設定檔，請先建立 DNS 伺服器，再於該設定中重新選取（編輯該設定）。</value>
   </data>
 </root>
