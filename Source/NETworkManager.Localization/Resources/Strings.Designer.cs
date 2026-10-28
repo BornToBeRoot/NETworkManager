@@ -9663,6 +9663,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PTR records can only be looked up for IP addresses, &quot;{0}&quot; is skipped..
+        /// </summary>
+        public static string PTRRequiresIPAddressX {
+            get {
+                return ResourceManager.GetString("PTRRequiresIPAddressX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Public.
         /// </summary>
         public static string Public {

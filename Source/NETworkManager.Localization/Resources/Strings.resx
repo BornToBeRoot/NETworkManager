@@ -5146,4 +5146,7 @@ Do you want to start the scan?</value>
   <data name="ApplicationName_Firewall" xml:space="preserve">
     <value>Firewall</value>
   </data>
+  <data name="PTRRequiresIPAddressX" xml:space="preserve">
+    <value>PTR records can only be looked up for IP addresses, "{0}" is skipped.</value>
+  </data>
 </root>

@@ -53,6 +53,12 @@ Example: `server-01.borntoberoot.net; 10.0.0.1`
 
 :::
 
+:::note
+
+`PTR` can only be looked up for IP addresses. Hostnames are skipped with a message.
+
+:::
+
 The DNS server can be selected from a list of configured servers or you can enter a custom DNS server in the format `<hostname>|<ipaddress>:<port>` (`<port>` is optional, to use a custom port with IPv6 enclose the address in square brackets: `[<ipv6address>]:53`). Names of configured DNS servers (case-insensitive) and custom DNS servers can be combined with a semicolon (e.g. `Google Public DNS; Cloudflare; 9.9.9.9`), every DNS server is queried once. `[Windows DNS]` together with other DNS servers adds the DNS servers configured in Windows. The list shows the recently used DNS servers (history, a single configured DNS server is not added) and the configured DNS servers (name, with the IP addresses below). `Tab` completes the name of a configured DNS server that is being typed (e.g. `google; cl` → `google; Cloudflare`), `Tab` again shows the next match.
 
 ### Context menu

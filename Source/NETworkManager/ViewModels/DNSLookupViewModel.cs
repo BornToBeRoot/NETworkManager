@@ -394,6 +394,27 @@ public class DNSLookupViewModel : ViewModelBase
 
         DragablzTabItem.SetTabHeader(_tabId, Host);
 
+        List<string> hosts = [.. Host.Split(';').Select(x => x.Trim())];
+
+        // PTR needs IP addresses (e.g. from a profile or the run command): hostnames are skipped with a message
+        // instead of the error of the lookup ("An invalid IP address was specified"). Checked before the DNS servers
+        // are resolved and the history is changed, so nothing is done if no host is left. Every address the lookup
+        // can parse is valid (also shortened IPv4 forms like "127.1").
+        if (QueryType == QueryType.PTR)
+        {
+            foreach (var host in hosts.Where(x => x.Length > 0 && !IPAddress.TryParse(x, out _)))
+                AppendStatusMessage(string.Format(Strings.PTRRequiresIPAddressX, host));
+
+            hosts = [.. hosts.Where(x => IPAddress.TryParse(x, out _))];
+
+            if (hosts.Count == 0)
+            {
+                IsRunning = false;
+
+                return;
+            }
+        }
+
         ListHelper.Modify(SettingsManager.Current.DNSLookup_HostHistory, Host,
             SettingsManager.Current.General_HistoryListEntries);
 
@@ -484,7 +505,7 @@ public class DNSLookupViewModel : ViewModelBase
         dnsLookup.LookupError += DNSLookup_LookupError;
         dnsLookup.LookupComplete += DNSLookup_LookupComplete;
 
-        dnsLookup.ResolveAsync([.. Host.Split(';').Select(x => x.Trim())]);
+        dnsLookup.ResolveAsync(hosts);
     }
 
     /// <summary>

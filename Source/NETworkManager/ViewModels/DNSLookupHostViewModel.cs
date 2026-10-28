@@ -11,9 +11,6 @@ using NETworkManager.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
@@ -163,7 +160,7 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
     public void AddTab(string host = null, string dnsServer = null, QueryType? queryType = null, bool start = true,
         string message = null)
     {
-        if (queryType == null && IsIPAddresses(host))
+        if (queryType == null && IPAddressHelper.AreIPAddresses(host))
             queryType = QueryType.PTR;
 
         var tabId = Guid.NewGuid();
@@ -172,17 +169,6 @@ public class DNSLookupHostViewModel : ProfileHostViewModelBase
             new DNSLookupView(tabId, host, dnsServer, queryType, start, message), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
-    }
-
-    /// <summary>
-    /// Checks if the host(s) are only IP addresses (shortened IPv4 forms like "10" are host names).
-    /// </summary>
-    private static bool IsIPAddresses(string hosts)
-    {
-        return !string.IsNullOrWhiteSpace(hosts) && hosts.Split(';').Select(x => x.Trim()).All(x =>
-            RegexHelper.IPv4AddressRegex().IsMatch(x) ||
-            x.Contains(':') && IPAddress.TryParse(x, out var ipAddress) &&
-            ipAddress.AddressFamily == AddressFamily.InterNetworkV6);
     }
 
     /// <summary>
