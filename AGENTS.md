@@ -207,6 +207,8 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
   - Builds and deploys Docusaurus website to GitHub Pages
   - Triggers on changes to `Website/` directory (push to `main` and PRs) and on published releases
   - Uses Node.js 22 with yarn for build
+  - Uses Docusaurus Faster (`@docusaurus/faster`, Rspack / SWC) for faster builds; all `@docusaurus/*` packages must have
+    the same version (Dependabot updates them as a group)
   - Build and deploy are separate jobs, only the deploy job (`main` / release) has write access
 
 - **Label / Milestone** (`.github/workflows/label.yml`, `.github/workflows/milestone.yml`):

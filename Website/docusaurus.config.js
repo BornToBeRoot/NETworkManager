@@ -8,6 +8,14 @@ import { themes as prismThemes } from "prism-react-renderer";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
+  future: {
+    // Required by the SSG worker threads of Docusaurus Faster.
+    v4: {
+      removeLegacyPostBuildHeadAttribute: true,
+    },
+    // Rspack, SWC and Lightning CSS instead of Webpack, Babel and Terser - builds about 3x faster.
+    faster: true,
+  },
   title: "NETworkManager",
   tagline:
     "A powerful open-source tool for managing networks and troubleshooting network problems!",
