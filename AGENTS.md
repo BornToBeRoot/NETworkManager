@@ -69,7 +69,7 @@ REPOSITORY_ROOT/
 - **.NET 10.0** (SDK version pinned in `Source/global.json`, updated by Dependabot)
 - **WPF** (Windows Presentation Foundation) for UI
 - **Windows Forms** integration for specific controls
-- **Target framework**: `net10.0-windows10.0.22621.0`, runtime identifiers `win-x64` and `win-arm64`
+- **Target framework**: `net10.0-windows` with `TargetPlatformVersion` `10.0.22621.0` (Windows SDK version, not in the TFM - otherwise Dependabot can't update the NuGet packages), runtime identifiers `win-x64` and `win-arm64`
 - **Supported OS**: Windows 10 / Windows Server (22H2 or later) and Windows 11
 
 **UI Framework & Design**:
@@ -381,7 +381,7 @@ dotnet build .\Source\NETworkManager.sln --configuration Release
 dotnet clean .\Source\NETworkManager.sln
 
 # Run application
-.\Source\NETworkManager\bin\Release\net10.0-windows10.0.22621.0\win-x64\NETworkManager.exe
+.\Source\NETworkManager\bin\Release\net10.0-windows\win-x64\NETworkManager.exe
 ```
 
 ### Website Development
