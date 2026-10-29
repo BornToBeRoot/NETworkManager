@@ -1,6 +1,8 @@
 image: Visual Studio 2022
 configuration: Release
 platform: x64
+# Branches with an open PR are built as PR (merge commit) only - Mergify waits for that status.
+skip_branch_with_pr: true
 install:
   - git submodule update --init
   - ps: |
