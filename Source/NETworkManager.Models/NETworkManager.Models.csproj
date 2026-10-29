@@ -45,7 +45,7 @@
         <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4258.31" />
         <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.1" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-        <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.6.7" />
+        <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.6.9" />
         <!-- Microsoft.PowerShell.SDK pulls in 10.0.10 of these packages, which has known vulnerabilities (NuGet audit
              NU1902 / NU1903). The application uses the copies of the Windows Desktop runtime anyway, but referencing the
              patched versions keeps the dependency graph clean. Can be removed once the PowerShell SDK references them. -->

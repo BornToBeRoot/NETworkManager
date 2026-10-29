@@ -58,6 +58,7 @@
         <PackageReference Include="MahApps.Metro.IconPacks.MaterialLight" Version="6.2.1" />
         <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="6.2.1" />
         <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="6.2.1" />
+        <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.6.9" />
         
     </ItemGroup>
     <ItemGroup>
