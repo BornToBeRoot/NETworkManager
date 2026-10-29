@@ -1286,9 +1286,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             PingHostsBeforeScan = SettingsManager.Current.PortScanner_PingHostsBeforeScan,
             ICMPAttempts = SettingsManager.Current.PortScanner_ICMPAttempts,
             ICMPTimeout = SettingsManager.Current.PortScanner_ICMPTimeout,
-            // Limits of the input (a value edited in the settings file would throw or make every ping fail)
-            ICMPBufferSize = Math.Clamp(SettingsManager.Current.PortScanner_ICMPBuffer, 1,
-                GlobalStaticConfiguration.ICMPBufferMaximum),
+            ICMPBufferSize = GlobalStaticConfiguration.LimitICMPBuffer(SettingsManager.Current.PortScanner_ICMPBuffer),
             ResolveHostname = SettingsManager.Current.PortScanner_ResolveHostname,
             ShowAllResults = SettingsManager.Current.PortScanner_ShowAllResults
         };
