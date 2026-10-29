@@ -23,7 +23,8 @@ install:
       $IsSquashMerge = (git log -1 --format=%s HEAD) -match '\(#\d+\)$'
 
       if ($env:APPVEYOR_REPO_TAG -ne "true" -and ($IsPullRequest -or $IsSquashMerge)) {
-        $ChangedFiles = git diff --name-only HEAD~1 HEAD 2>$null
+        # --no-renames: a moved file is listed with its old and new path (a file moved out of Source/ is build relevant)
+        $ChangedFiles = git diff --name-only --no-renames HEAD~1 HEAD 2>$null
 
         if ($LASTEXITCODE -eq 0 -and $ChangedFiles) {
           $BuildRelevantFiles = $ChangedFiles | Where-Object { $_ -notmatch '^(Website/|\.github/|\.claude/|Images/|Chocolatey/|WinGet/|Tests/Environments/|LICENSE$)|\.md$' }
