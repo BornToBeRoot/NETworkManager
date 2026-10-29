@@ -5222,13 +5222,13 @@ Vuoi avviare la scansione?</value>
     <value>Il nome non deve contenere ";" e non deve essere una porta o un intervallo di porte.</value>
   </data>
   <data name="PortProfileOfProfileNotFoundMessage" xml:space="preserve">
-    <value>A port profile of this profile or its group was not found, the ports saved with the profile or group are used. Port profiles are saved in the settings and the profile or group refers to them by an internal ID - if the profile file was shared from another computer, create the port profile and then select it in the profile or group again (edit it).</value>
+    <value>Non è stato trovato un profilo porta di questo profilo o del suo gruppo, verranno usate le porte salvate con il profilo o il gruppo. I profili delle porte vengono salvati nelle impostazioni e il profilo o il gruppo fa riferimento ad essi tramite un ID interno: se il file del profilo è stato condiviso da un altro computer, crea il profilo porta e quindi selezionalo nuovamente nel profilo o nel gruppo (modificalo).</value>
   </data>
   <data name="PingHostsBeforeScan" xml:space="preserve">
     <value>Prima della scansione esegui il ping degli host</value>
   </data>
   <data name="HelpMessage_PingHostsBeforeScan" xml:space="preserve">
-    <value>Only hosts that answer a ping (ICMP echo, with the attempts, timeout and buffer below) are scanned. Faster for ranges with many unused IP addresses. Hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned.</value>
+    <value>Vengono scansionati solo gli host che rispondono a un ping (eco ICMP, con i tentativi, timeout e buffer di seguito). Più veloce per intervalli con molti indirizzi IP non usati. Non vengono scansionati gli host che bloccano ICMP (ad esempio Windows con il firewall abilitato).</value>
   </data>
   <data name="XHostsDidNotAnswerThePingAndWereNotScanned" xml:space="preserve">
     <value>{0} host non hanno risposto al ping e non sono stati scansionati.</value>
@@ -5240,15 +5240,15 @@ Vuoi avviare la scansione?</value>
     <value>Il nome non deve contenere ";".</value>
   </data>
   <data name="DNSServerOfProfileNotFoundMessage" xml:space="preserve">
-    <value>A DNS server of this profile or its group was not found, the DNS servers saved with the profile or group are used. DNS servers are saved in the settings and the profile or group refers to them by an internal ID - if the profile file was shared from another computer, create the DNS server and then select it in the profile or group again (edit it).</value>
+    <value>Non è stato trovato un server DNS di questo profilo o del suo gruppo, verranno usati i server DNS salvati con il profilo o il gruppo. I server DNS vengono salvati nelle impostazioni e il profilo o gruppo fa riferimento ad essi tramite un ID interno: se il file del profilo è stato condiviso da un altro computer, crea il server DNS e quindi selezionalo nuovamente nel profilo o gruppo (modificalo).</value>
   </data>
   <data name="ApplicationName_Firewall" xml:space="preserve">
     <value>Firewall</value>
   </data>
   <data name="PTRRequiresIPAddressX" xml:space="preserve">
-    <value>PTR records can only be looked up for IP addresses, "{0}" is skipped.</value>
+    <value>I record PTR possono essere cercati solo per indirizzi IP, "{0}" è stato ignorato.</value>
   </data>
   <data name="ErrorMessage_PTRRequiresIPAddresses" xml:space="preserve">
-    <value>PTR records can only be looked up for IP addresses.</value>
+    <value>I record PTR possono essere cercati solo per indirizzi IP.</value>
   </data>
 </root>
