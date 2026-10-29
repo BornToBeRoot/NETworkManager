@@ -1,6 +1,10 @@
 image: Visual Studio 2022
+# Also exported as CONFIGURATION / PLATFORM environment variables, which MSBuild reads as properties.
 configuration: Release
 platform: x64
+environment:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
 # Branches with an open PR are built as PR (merge commit) only - Mergify waits for that status.
 skip_branch_with_pr: true
 install:
@@ -27,11 +31,18 @@ install:
       }
   - git submodule update --init
   - ps: |
-      Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
-
       # Read the required SDK version from global.json instead of hardcoding it, so Dependabot's
       # weekly SDK bumps there don't silently drift out of sync with what CI installs.
       $DotnetVersion = (Get-Content "$($env:APPVEYOR_BUILD_FOLDER)\Source\global.json" -Raw | ConvertFrom-Json).sdk.version
+
+      # Skip the download if the build image already has this SDK.
+      if (dotnet --list-sdks | Where-Object { $_ -like "$DotnetVersion *" }) {
+        Write-Host ".NET SDK $DotnetVersion (from Source\global.json) is already installed"
+        return
+      }
+
+      Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
+
       Write-Host "Installing .NET SDK $DotnetVersion (from Source\global.json)"
       & $env:temp\dotnet-install.ps1 -Architecture x64 -Version $DotnetVersion -InstallDir "$env:ProgramFiles\dotnet"
 before_build:
