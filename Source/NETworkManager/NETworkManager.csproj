@@ -64,7 +64,7 @@
         <PackageReference Include="AirspaceFixer" Version="1.0.6" />
         <PackageReference Include="DnsClient" Version="1.8.0" />
         <PackageReference Include="gong-wpf-dragdrop" Version="4.0.0" />
-        <PackageReference Include="IPNetwork2" Version="4.3.0" />
+        <PackageReference Include="IPNetwork2" Version="5.0.1" />
         <PackageReference Include="Lextm.SharpSnmpLib" Version="12.5.7" />
         <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.5" />
         <PackageReference Include="log4net" Version="3.5.0" />
