@@ -84,7 +84,13 @@ before_build:
 build_script:
   - ps: |
       # Build the wixproj directly, not the .sln - `dotnet build` rejects -p:RuntimeIdentifier
-      # at the solution level (NETSDK1134).
+      # at the solution level (NETSDK1134). PRs only build the application (the setup is built on branches and tags).
+      $Project = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.Setup\NETworkManager.Setup.wixproj"
+
+      if ($env:APPVEYOR_PULL_REQUEST_NUMBER) {
+        $Project = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager\NETworkManager.csproj"
+      }
+
       $Architectures = @(
         @{ RuntimeIdentifier = "win-x64";   Platform = "x64" }
       )
@@ -97,7 +103,7 @@ build_script:
       foreach ($Architecture in $Architectures) {
         Write-Host "Building $($Architecture.RuntimeIdentifier)..."
 
-        dotnet build "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.Setup\NETworkManager.Setup.wixproj" `
+        dotnet build "$Project" `
           --configuration Release --no-restore `
           -p:Platform=$($Architecture.Platform) -p:RuntimeIdentifier=$($Architecture.RuntimeIdentifier) -p:PlatformTarget=$($Architecture.Platform)
 
