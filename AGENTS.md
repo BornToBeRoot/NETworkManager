@@ -217,11 +217,6 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 - **Transifex Integration** (`.github/transifex.yml`):
   - Automated translation synchronization
   - Syncs RESX files between GitHub and Transifex
-  
-- **Stale Bot** (`.github/stale.yml`):
-  - Marks issues inactive for 30 days as stale
-  - Closes stale issues after 7 days
-  - Excludes bugs, feature requests, documentation and code-cleanup issues
 
 ## Contributing Areas
 
@@ -357,7 +352,6 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 - **`.github/dependabot.yml`**: Dependabot configuration
 - **`.github/mergify.yml`**: Mergify auto-merge configuration
 - **`.github/transifex.yml`**: Transifex translation sync configuration
-- **`.github/stale.yml`**: Stale issue bot configuration
 - **`.gitmodules`**: Git submodule configuration (Dragablz)
 - **`Website/docusaurus.config.js`**: Documentation site configuration
 - **`Website/docs/changelog/next-release.md`**: Changelog of the upcoming release
