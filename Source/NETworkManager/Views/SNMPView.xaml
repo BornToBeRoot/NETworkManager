@@ -102,9 +102,6 @@
                       x:Name="ComboBoxOid"
                       ItemsSource="{Binding OidHistoryView}"
                       IsReadOnly="{Binding IsRunning}">
-                <ComboBox.Resources>
-                    <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-                </ComboBox.Resources>
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource HistoryComboBox}">
                         <Setter Property="mah:TextBoxHelper.Watermark"
