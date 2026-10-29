@@ -140,6 +140,15 @@ after_build:
       # Create artifacts archive for signing
       Compress-Archive -Path "$ArtifactsPath\*" -DestinationPath "$($ArtifactsPath).zip"
 
+test_script:
+  - ps: |
+      # global.json selects Microsoft.Testing.Platform, which needs --project instead of a positional path.
+      dotnet test --project "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.Tests\NETworkManager.Tests.csproj" --configuration Release --no-restore
+
+      if ($LASTEXITCODE -ne 0) {
+        throw "dotnet test failed with exit code $LASTEXITCODE"
+      }
+
 artifacts:
   - path: 'Artifacts.zip'
 deploy:
