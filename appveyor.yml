@@ -163,8 +163,11 @@ after_build:
 
 test_script:
   - ps: |
-      # global.json selects Microsoft.Testing.Platform, which needs --project instead of a positional path.
-      dotnet test --project "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.Tests\NETworkManager.Tests.csproj" --configuration Release --no-restore
+      # Run from Source - dotnet test only picks up Source\global.json (Microsoft.Testing.Platform, which needs --project
+      # instead of a positional path) from the working directory. Otherwise it falls back to VSTest (MSB1001: Unknown switch).
+      Set-Location "$($env:APPVEYOR_BUILD_FOLDER)\Source"
+
+      dotnet test --project "NETworkManager.Tests\NETworkManager.Tests.csproj" --configuration Release --no-restore
 
       if ($LASTEXITCODE -ne 0) {
         throw "dotnet test failed with exit code $LASTEXITCODE"
