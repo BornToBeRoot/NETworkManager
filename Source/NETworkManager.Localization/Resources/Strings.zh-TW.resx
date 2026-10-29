@@ -5123,13 +5123,13 @@ Cloudflare 可能會記錄您的 IP 位址與網路資訊。詳情請參閱 Clou
     <value>名稱不可包含「;」，且不能是連接埠或連接埠範圍。</value>
   </data>
   <data name="PortProfileOfProfileNotFoundMessage" xml:space="preserve">
-    <value>A port profile of this profile or its group was not found, the ports saved with the profile or group are used. Port profiles are saved in the settings and the profile or group refers to them by an internal ID - if the profile file was shared from another computer, create the port profile and then select it in the profile or group again (edit it).</value>
+    <value>找不到此設定檔或其群組對應的連接埠配置，系統將使用與該設定檔或群組關聯的連接埠。連接埠配置儲存在設定中，且設定檔或群組是透過內部 ID 來參照這些配置。若從其他電腦分享了設定檔，請先建立對應的連接埠配置，再重新於該設定檔或群組中選取（編輯）。</value>
   </data>
   <data name="PingHostsBeforeScan" xml:space="preserve">
     <value>在掃描前先進行 Ping</value>
   </data>
   <data name="HelpMessage_PingHostsBeforeScan" xml:space="preserve">
-    <value>Only hosts that answer a ping (ICMP echo, with the attempts, timeout and buffer below) are scanned. Faster for ranges with many unused IP addresses. Hosts that block ICMP (e.g. Windows with the firewall enabled) are not scanned.</value>
+    <value>僅掃描有回應 Ping（ICMP 回應，採用下方所示的嘗試次數、逾時時間與緩衝區設定）的主機。此方法能加快包含大量閒置 IP 位址的範圍掃描速度。若主機封鎖了 ICMP（例如：開啟防火牆的 Windows 系統），則將不會被掃描。</value>
   </data>
   <data name="XHostsDidNotAnswerThePingAndWereNotScanned" xml:space="preserve">
     <value>有{0}個主機未回應 ping，未進行掃量。</value>
@@ -5141,15 +5141,15 @@ Cloudflare 可能會記錄您的 IP 位址與網路資訊。詳情請參閱 Clou
     <value>名稱不可包含「;」。</value>
   </data>
   <data name="DNSServerOfProfileNotFoundMessage" xml:space="preserve">
-    <value>A DNS server of this profile or its group was not found, the DNS servers saved with the profile or group are used. DNS servers are saved in the settings and the profile or group refers to them by an internal ID - if the profile file was shared from another computer, create the DNS server and then select it in the profile or group again (edit it).</value>
+    <value>找不到此設定檔或其群組對應的 DNS 伺服器，系統將使用與該設定檔或群組關聯的 DNS 伺服器。DNS 伺服器儲存在設定中，且設定檔或群組是透過內部 ID 來參照這些伺服器。若從其他電腦分享了設定檔，請先建立對應的 DNS 伺服器，再重新於該設定檔或群組中選取（編輯）。</value>
   </data>
   <data name="ApplicationName_Firewall" xml:space="preserve">
-    <value>Firewall</value>
+    <value>防火牆</value>
   </data>
   <data name="PTRRequiresIPAddressX" xml:space="preserve">
-    <value>PTR records can only be looked up for IP addresses, "{0}" is skipped.</value>
+    <value>PTR 記錄僅可針對 IP 位址進行查詢，「{0}」已被跳過。</value>
   </data>
   <data name="ErrorMessage_PTRRequiresIPAddresses" xml:space="preserve">
-    <value>PTR records can only be looked up for IP addresses.</value>
+    <value>PTR 記錄僅可針對 IP 位址進行查詢。</value>
   </data>
 </root>
