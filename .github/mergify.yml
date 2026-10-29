@@ -7,6 +7,8 @@ pull_request_rules:
         - author=dependabot[bot]
         - author=transifex-integration[bot]
         - author=imgbot[bot]
+      # Major updates can break at runtime even if the build succeeds - they are merged manually after testing
+      - dependabot-update-type!=version-update:semver-major
       - check-success=continuous-integration/appveyor/pr
       # Website changes (e.g. Dependabot npm updates) also need a successful website build
       - or:
