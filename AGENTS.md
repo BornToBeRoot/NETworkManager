@@ -220,6 +220,7 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 - **Mergify** (`.github/mergify.yml`):
   - Auto-merges PRs with `LGTM` label after AppVeyor CI passes
   - Auto-merges Dependabot, Transifex, and ImgBot PRs after CI success
+  - PRs that change `Website/` (or the website workflow) also need a successful `Build Website` check
   
 - **Transifex Integration** (`.github/transifex.yml`):
   - Automated translation synchronization

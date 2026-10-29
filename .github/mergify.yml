@@ -8,6 +8,10 @@ pull_request_rules:
         - author=transifex-integration[bot]
         - author=imgbot[bot]
       - check-success=continuous-integration/appveyor/pr
+      # Website changes (e.g. Dependabot npm updates) also need a successful website build
+      - or:
+        - -files~=^(Website/|\.github/workflows/deploy_website\.yml$)
+        - check-success=Build Website
     actions:
       merge:
         method: squash
