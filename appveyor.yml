@@ -16,8 +16,13 @@ install:
       # Skip the build if only docs / website / repository files changed. Exit-AppveyorBuild ends the build
       # successfully, so a green status is still reported (Mergify waits for it). Tag (release) builds are never
       # skipped. PR builds check out the merge commit (HEAD~1 = target branch), so this is the full PR diff.
+      # Branch builds only see the last commit of a push, so they are only skipped for squash merges of a PR
+      # (subject ends with "(#1234)") - the PR build already checked the full diff. Direct pushes are always built.
       # If git diff fails, the build runs normally.
-      if ($env:APPVEYOR_REPO_TAG -ne "true") {
+      $IsPullRequest = [bool]$env:APPVEYOR_PULL_REQUEST_NUMBER
+      $IsSquashMerge = (git log -1 --format=%s HEAD) -match '\(#\d+\)$'
+
+      if ($env:APPVEYOR_REPO_TAG -ne "true" -and ($IsPullRequest -or $IsSquashMerge)) {
         $ChangedFiles = git diff --name-only HEAD~1 HEAD 2>$null
 
         if ($LASTEXITCODE -eq 0 -and $ChangedFiles) {

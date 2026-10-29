@@ -192,7 +192,8 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 - Branches with an open PR are only built as PR (`skip_branch_with_pr`)
 - Ends successfully without building if only docs / website / repository files changed (`Website/`, `.github/`,
   `.claude/`, `Images/`, `Chocolatey/`, `WinGet/`, `Tests/Environments/`, `*.md`, `LICENSE`), so Mergify still gets a
-  green status. Tags are always built
+  green status. Tags are always built. Branch builds (e.g. `main`) only see the last commit, so they are only skipped
+  for squash merges of a PR (subject ends with `(#1234)`); direct pushes are always built
 - Version format: `yyyy.M.d.0` (date-based)
 - Artifacts are signed via [SignPath.io](https://signpath.io/)
 - Released to GitHub Releases
