@@ -23,6 +23,7 @@
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:StringNullOrEmptyToBoolConverter x:Key="StringNullOrEmptyToBoolConverter" />
+        <converters:ProfileToPortScannerPortsConverter x:Key="ProfileToPortScannerPortsConverter" />
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
         <DataTemplate x:Key="PortScannerProfileItemTemplate" DataType="{x:Type profiles:ProfileInfo}">
             <Grid Background="Transparent">
@@ -33,7 +34,8 @@
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0}:{1}">
                                         <Binding Path="PortScanner_Host" />
-                                        <Binding Path="PortScanner_Ports" />
+                                        <!-- Own ports, otherwise the ports of the group (port profiles with their current name) -->
+                                        <Binding Converter="{StaticResource ProfileToPortScannerPortsConverter}" />
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
