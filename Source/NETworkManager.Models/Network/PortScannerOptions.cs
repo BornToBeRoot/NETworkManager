@@ -33,7 +33,7 @@ public record PortScannerOptions
 
     /// <summary>
     ///     Ping every host before its ports are scanned (with <see cref="ICMPAttempts" />, <see cref="ICMPTimeout" /> and
-    ///     <see cref="ICMPBuffer" />), a host that doesn't answer is not scanned.
+    ///     <see cref="ICMPBufferSize" />), a host that doesn't answer is not scanned.
     /// </summary>
     public required bool PingHostsBeforeScan { get; init; }
 
@@ -49,9 +49,10 @@ public record PortScannerOptions
     public required int ICMPTimeout { get; init; }
 
     /// <summary>
-    ///     Data sent with the ping before the scan (see <see cref="PingHostsBeforeScan" />).
+    ///     Size in bytes of the data sent with the ping before the scan (see <see cref="PingHostsBeforeScan" />). A size,
+    ///     not the buffer, so options with the same values are equal (records compare arrays by reference).
     /// </summary>
-    public required byte[] ICMPBuffer { get; init; }
+    public required int ICMPBufferSize { get; init; }
 
     /// <summary>
     ///     Resolve the hostname for an IP address.
