@@ -31,3 +31,14 @@ updates:
       patterns:
         - "react"
         - "react-dom"
+    # All @docusaurus/* packages must have the same version (otherwise the website build fails)
+    docusaurus:
+      patterns:
+        - "@docusaurus/*"
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: weekly
+  target-branch: main
+  commit-message:
+    prefix: "Dependency (dependabot/github-actions):"

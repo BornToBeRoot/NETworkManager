@@ -1,14 +1,58 @@
 image: Visual Studio 2022
+# Also exported as CONFIGURATION / PLATFORM environment variables, which MSBuild reads as properties.
 configuration: Release
 platform: x64
+environment:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_GENERATE_ASPNET_CERTIFICATE: false
+# Shallow clone - the history isn't needed (the version is date based). Must stay > 1, the docs-only check below
+# compares HEAD with HEAD~1.
+clone_depth: 50
+# Branches with an open PR are built as PR (merge commit) only - Mergify waits for that status.
+skip_branch_with_pr: true
 install:
+  - ps: |
+      # Skip the build if only docs / website / repository files changed. Exit-AppveyorBuild ends the build
+      # successfully, so a green status is still reported (Mergify waits for it). Tag (release) builds are never
+      # skipped. PR builds check out the merge commit (HEAD~1 = target branch), so this is the full PR diff.
+      # Branch builds only see the last commit of a push, so they are only skipped for squash merges of a PR
+      # (subject ends with "(#1234)") - the PR build already checked the full diff. Direct pushes are always built.
+      # If git diff fails, the build runs normally.
+      $IsPullRequest = [bool]$env:APPVEYOR_PULL_REQUEST_NUMBER
+      $IsSquashMerge = (git log -1 --format=%s HEAD) -match '\(#\d+\)$'
+
+      if ($env:APPVEYOR_REPO_TAG -ne "true" -and ($IsPullRequest -or $IsSquashMerge)) {
+        # --no-renames: a moved file is listed with its old and new path (a file moved out of Source/ is build relevant)
+        $ChangedFiles = git diff --name-only --no-renames HEAD~1 HEAD 2>$null
+
+        if ($LASTEXITCODE -eq 0 -and $ChangedFiles) {
+          $BuildRelevantFiles = $ChangedFiles | Where-Object { $_ -notmatch '^(Website/|\.github/|\.claude/|Images/|Chocolatey/|WinGet/|Tests/Environments/|LICENSE$)|\.md$' }
+
+          if (-not $BuildRelevantFiles) {
+            Write-Host "Only docs / website / repository files changed - skipping build."
+            Exit-AppveyorBuild
+            return
+          }
+
+          Write-Host "Build relevant changes:"
+          $BuildRelevantFiles | ForEach-Object { Write-Host "  $_" }
+        }
+      }
   - git submodule update --init
   - ps: |
-      Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
-
       # Read the required SDK version from global.json instead of hardcoding it, so Dependabot's
       # weekly SDK bumps there don't silently drift out of sync with what CI installs.
       $DotnetVersion = (Get-Content "$($env:APPVEYOR_BUILD_FOLDER)\Source\global.json" -Raw | ConvertFrom-Json).sdk.version
+
+      # Skip the download if the build image already has this SDK.
+      if (dotnet --list-sdks | Where-Object { $_ -like "$DotnetVersion *" }) {
+        Write-Host ".NET SDK $DotnetVersion (from Source\global.json) is already installed"
+        return
+      }
+
+      Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
+
       Write-Host "Installing .NET SDK $DotnetVersion (from Source\global.json)"
       & $env:temp\dotnet-install.ps1 -Architecture x64 -Version $DotnetVersion -InstallDir "$env:ProgramFiles\dotnet"
 before_build:
@@ -47,16 +91,34 @@ before_build:
 build_script:
   - ps: |
       # Build the wixproj directly, not the .sln - `dotnet build` rejects -p:RuntimeIdentifier
-      # at the solution level (NETSDK1134).
+      # at the solution level (NETSDK1134). PRs only build the application, unless they change the setup (e.g. WiX
+      # updates via Dependabot) - the setup is always built on branches and tags.
+      $Project = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.Setup\NETworkManager.Setup.wixproj"
+
+      if ($env:APPVEYOR_PULL_REQUEST_NUMBER) {
+        # PR builds check out the merge commit (HEAD~1 = target branch), so this is the full PR diff
+        $ChangedFiles = git diff --name-only --no-renames HEAD~1 HEAD 2>$null
+
+        if ($LASTEXITCODE -eq 0 -and -not ($ChangedFiles | Where-Object { $_ -like "Source/NETworkManager.Setup/*" })) {
+          $Project = "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager\NETworkManager.csproj"
+        }
+      }
+
+      Write-Host "Building $Project"
+
       $Architectures = @(
-        @{ RuntimeIdentifier = "win-x64";   Platform = "x64" },
-        @{ RuntimeIdentifier = "win-arm64"; Platform = "ARM64" }
+        @{ RuntimeIdentifier = "win-x64";   Platform = "x64" }
       )
+
+      # Only tags (release) are built for ARM64 - branches and PRs are built for x64 to keep them fast.
+      if ($env:APPVEYOR_REPO_TAG -eq "true") {
+        $Architectures += @{ RuntimeIdentifier = "win-arm64"; Platform = "ARM64" }
+      }
 
       foreach ($Architecture in $Architectures) {
         Write-Host "Building $($Architecture.RuntimeIdentifier)..."
 
-        dotnet build "$($env:APPVEYOR_BUILD_FOLDER)\Source\NETworkManager.Setup\NETworkManager.Setup.wixproj" `
+        dotnet build "$Project" `
           --configuration Release --no-restore `
           -p:Platform=$($Architecture.Platform) -p:RuntimeIdentifier=$($Architecture.RuntimeIdentifier) -p:PlatformTarget=$($Architecture.Platform)
 
@@ -112,6 +174,18 @@ after_build:
 
       # Create artifacts archive for signing
       Compress-Archive -Path "$ArtifactsPath\*" -DestinationPath "$($ArtifactsPath).zip"
+
+test_script:
+  - ps: |
+      # Run from Source - dotnet test only picks up Source\global.json (Microsoft.Testing.Platform, which needs --project
+      # instead of a positional path) from the working directory. Otherwise it falls back to VSTest (MSB1001: Unknown switch).
+      Set-Location "$($env:APPVEYOR_BUILD_FOLDER)\Source"
+
+      dotnet test --project "NETworkManager.Tests\NETworkManager.Tests.csproj" --configuration Release --no-restore
+
+      if ($LASTEXITCODE -ne 0) {
+        throw "dotnet test failed with exit code $LASTEXITCODE"
+      }
 
 artifacts:
   - path: 'Artifacts.zip'

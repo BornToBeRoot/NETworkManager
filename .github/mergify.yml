@@ -1,29 +1,19 @@
-pull_request_rules:  
-  - name: automatic merge for pull request based on label and ci success
+pull_request_rules:
+  - name: automatic merge for LGTM label and bot pull requests based on ci success
     conditions:
-      - label~=LGTM$
+      - base=main
+      - or:
+        - label~=LGTM$
+        - author=dependabot[bot]
+        - author=transifex-integration[bot]
+        - author=imgbot[bot]
+      # Major updates can break at runtime even if the build succeeds - they are merged manually after testing
+      - dependabot-update-type!=version-update:semver-major
       - check-success=continuous-integration/appveyor/pr
-    actions:
-      merge:
-        method: squash
-  - name: automatic merge for Dependabot pull requests based on ci success
-    conditions:
-      - author=dependabot[bot]
-      - check-success=continuous-integration/appveyor/pr
-    actions:
-      merge:
-        method: squash
-  - name: automatic merge for Transifex pull requests based on ci success
-    conditions:
-      - author=transifex-integration[bot]
-      - check-success=continuous-integration/appveyor/pr
-    actions:
-      merge:
-        method: squash
-  - name: automatic merge for ImgBot pull requests based on ci success
-    conditions:
-      - author=imgbot[bot]
-      - check-success=continuous-integration/appveyor/pr
+      # Website changes (e.g. Dependabot npm updates) also need a successful website build
+      - or:
+        - -files~=^(Website/|\.github/workflows/deploy_website\.yml$)
+        - check-success=Build Website
     actions:
       merge:
         method: squash

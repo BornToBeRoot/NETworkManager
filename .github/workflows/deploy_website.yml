@@ -12,37 +12,34 @@ on:
       - '.github/workflows/deploy_website.yml'
       - 'Website/**'
   pull_request:
+    paths:
+      - '.github/workflows/deploy_website.yml'
+      - 'Website/**'
+
+# Runs that deploy (main, release, manual) run one after the other incl. the build, so the last triggered run also
+# deploys last (e.g. a release build isn't overwritten by an older main build). Outdated PR runs are cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || 'deploy' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  build-and-deploy-website:
-    name: "Build and Deploy Website"
+  build-website:
+    name: "Build Website"
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || 'deploy' }}
+      contents: read
     defaults:
       run:
         working-directory: Website
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
-        
-      - name: Get yarn cache
-        id: yarn-cache
-        run: echo "YARN_CACHE_DIR=$(yarn cache dir)" >> "${GITHUB_OUTPUT}"
-
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.yarn-cache.outputs.YARN_CACHE_DIR }}
-          key: ${{ runner.os }}-Website-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-Website-
+          cache: yarn
+          cache-dependency-path: Website/yarn.lock
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -53,9 +50,33 @@ jobs:
           # Used by scripts/fetch-release-data.mjs to raise the GitHub API rate limit.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload website
+        uses: actions/upload-artifact@v7
         if: github.event_name == 'release' || (github.event_name != 'pull_request' && github.ref == 'refs/heads/main')
         with:
+          name: website
+          path: Website/build
+          # Keep .well-known/ and .nojekyll (hidden files are skipped by default).
+          include-hidden-files: true
+          retention-days: 1
+
+  # Separate job, so only the deployment gets write access (not the build with its npm dependencies).
+  deploy-website:
+    name: "Deploy Website"
+    needs: build-website
+    if: github.event_name == 'release' || (github.event_name != 'pull_request' && github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download website
+        uses: actions/download-artifact@v8
+        with:
+          name: website
+          path: build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./Website/build
+          publish_dir: ./build

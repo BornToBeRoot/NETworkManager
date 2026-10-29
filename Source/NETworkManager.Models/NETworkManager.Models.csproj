@@ -46,6 +46,11 @@
         <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.1" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
         <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.6.7" />
+        <!-- Microsoft.PowerShell.SDK pulls in 10.0.10 of these packages, which has known vulnerabilities (NuGet audit
+             NU1902 / NU1903). The application uses the copies of the Windows Desktop runtime anyway, but referencing the
+             patched versions keeps the dependency graph clean. Can be removed once the PowerShell SDK references them. -->
+        <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
+        <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.14" />
 		
     </ItemGroup>
 
