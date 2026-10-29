@@ -420,7 +420,7 @@ public class TracerouteViewModel : ViewModelBase
         {
             var traceroute = new Traceroute(new TracerouteOptions(
                 SettingsManager.Current.Traceroute_Timeout,
-                new byte[GlobalStaticConfiguration.LimitICMPBuffer(SettingsManager.Current.Traceroute_Buffer)],
+                GlobalStaticConfiguration.LimitICMPBuffer(SettingsManager.Current.Traceroute_Buffer),
                 SettingsManager.Current.Traceroute_MaximumHops,
                 true,
                 SettingsManager.Current.Traceroute_ResolveHostname,

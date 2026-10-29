@@ -571,7 +571,7 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
         var ping = new Ping
         {
             Timeout = SettingsManager.Current.PingMonitor_Timeout,
-            Buffer = new byte[GlobalStaticConfiguration.LimitICMPBuffer(SettingsManager.Current.PingMonitor_Buffer)],
+            BufferSize = GlobalStaticConfiguration.LimitICMPBuffer(SettingsManager.Current.PingMonitor_Buffer),
             TTL = SettingsManager.Current.PingMonitor_TTL,
             DontFragment = SettingsManager.Current.PingMonitor_DontFragment,
             WaitTime = SettingsManager.Current.PingMonitor_WaitTime

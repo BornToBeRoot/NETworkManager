@@ -25,9 +25,9 @@ public sealed class Ping
     public int Timeout = 4000;
 
     /// <summary>
-    ///     The buffer to send with the ping request. Default is 32 bytes.
+    ///     The size in bytes of the buffer to send with the ping request. Default is 32 bytes.
     /// </summary>
-    public byte[] Buffer = new byte[32];
+    public int BufferSize = 32;
 
     /// <summary>
     ///     The Time to Live (TTL) value for the ping request. Default is 64.
@@ -122,6 +122,8 @@ public sealed class Ping
 
             var errorCount = 0;
 
+            var buffer = new byte[BufferSize];
+
             var options = new PingOptions
             {
                 Ttl = TTL,
@@ -138,7 +140,7 @@ public sealed class Ping
                         var timestamp = DateTime.Now;
 
                         // Send ping
-                        var pingReply = ping.Send(ipAddress, Timeout, Buffer, options);
+                        var pingReply = ping.Send(ipAddress, Timeout, buffer, options);
 
                         // Reset the error count (if no exception was thrown)
                         errorCount = 0;
