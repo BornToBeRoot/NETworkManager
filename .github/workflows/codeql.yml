@@ -36,6 +36,13 @@ jobs:
       with:
         submodules: 'true'
 
+    # The C# autobuild needs the SDK from Source/global.json (the runner image may only have an older one)
+    - name: Setup .NET
+      if: matrix.language == 'csharp'
+      uses: actions/setup-dotnet@v6
+      with:
+        global-json-file: Source/global.json
+
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v4
       with:
