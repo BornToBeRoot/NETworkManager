@@ -92,7 +92,8 @@ REPOSITORY_ROOT/
 - **DnsClient** - DNS lookups
 - **IPNetwork2** - Network and subnet calculations
 - **PSDiscoveryProtocol** - LLDP/CDP network discovery (PowerShell module embedded)
-- **AirspaceFixer** - WPF/WinForms interop fixes
+- **AirspaceFixer** - WPF/WinForms interop fixes (code embedded as `AirspacePanel` in `NETworkManager.Controls`,
+  based on AirspaceFixer and its fork AirspaceFixerDotNet)
 - **log4net** - Logging framework
 - **LiveChartsCore.SkiaSharpView.WPF** - Charts and graphs
 - **Microsoft.Web.WebView2** - WebView2 control for web content

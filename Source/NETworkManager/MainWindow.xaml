@@ -10,7 +10,7 @@
                  xmlns:shell="clr-namespace:ControlzEx.Windows.Shell;assembly=ControlzEx"
                  xmlns:controls="clr-namespace:NETworkManager.Controls"
                  xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
-                 xmlns:asf="clr-namespace:AirspaceFixer;assembly=AirspaceFixer"
+                 xmlns:networkManagerControls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                  xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
                  xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
                  xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"                 
@@ -973,10 +973,10 @@
                     </interactivity:Interaction.Triggers>
                 </Grid>
             </Border>
-            <asf:AirspacePanel Grid.Column="1" Grid.Row="0"
-                               FixAirspace="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=FixAirspace}">
+            <networkManagerControls:AirspacePanel Grid.Column="1" Grid.Row="0"
+                                                  FixAirspace="{Binding Source={x:Static settings:ConfigurationManager.Current}, Path=FixAirspace}">
                 <ContentControl x:Name="ContentControlApplication" />
-            </asf:AirspacePanel>
+            </networkManagerControls:AirspacePanel>
         </Grid>
         <Grid>
             <Grid.Style>
