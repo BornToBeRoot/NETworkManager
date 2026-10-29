@@ -7,6 +7,9 @@ updates:
   target-branch: main
   commit-message:
     prefix: "Dependency (dependabot/nuget):"
+  # Only our own label instead of Dependabot's default labels (dependencies + ecosystem, e.g. .NET / javascript)
+  labels:
+    - ":heavy_check_mark: dependencies"
 - package-ecosystem: "dotnet-sdk"
   directory: "/Source"
   ignore:
@@ -18,6 +21,8 @@ updates:
   target-branch: main
   commit-message:
     prefix: "Dependency (dependabot/dotnet-sdk):"
+  labels:
+    - ":heavy_check_mark: dependencies"
 - package-ecosystem: "npm"
   directory: "/Website"
   schedule:
@@ -25,6 +30,8 @@ updates:
   target-branch: main
   commit-message:
     prefix: "Dependency (dependabot/npm):"
+  labels:
+    - ":heavy_check_mark: dependencies"
   groups:
     # react and react-dom must have the exact same version (otherwise the website build fails)
     react:
@@ -42,3 +49,5 @@ updates:
   target-branch: main
   commit-message:
     prefix: "Dependency (dependabot/github-actions):"
+  labels:
+    - ":heavy_check_mark: dependencies"

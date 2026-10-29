@@ -4,11 +4,12 @@ on:
   pull_request_target:
     types: [opened, reopened]
 
+# Dependabot sets the label itself (labels in .github/dependabot.yml)
 jobs:
   assign-dependencies-label:
     name: Assign dependencies label
     runs-on: ubuntu-latest
-    if: contains(fromJSON('["dependabot[bot]", "transifex-integration[bot]", "imgbot[bot]"]'), github.event.pull_request.user.login)
+    if: contains(fromJSON('["transifex-integration[bot]", "imgbot[bot]"]'), github.event.pull_request.user.login)
     permissions:
       issues: write
       pull-requests: write
