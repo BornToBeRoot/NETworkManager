@@ -149,6 +149,8 @@ public class WebConsoleSettingsViewModel : ViewModelBase
 
         IsDeleteBrowsingDataStatusMessageDisplayed = false;
 
+        CoreWebView2Controller webView2Controller = null;
+
         try
         {
             // Create a temporary WebView2 instance to clear browsing data
@@ -157,11 +159,9 @@ public class WebConsoleSettingsViewModel : ViewModelBase
 
             var windowHwnd = new WindowInteropHelper(Application.Current.MainWindow).Handle;
 
-            var webView2Controller = await webView2Environment.CreateCoreWebView2ControllerAsync(windowHwnd);
+            webView2Controller = await webView2Environment.CreateCoreWebView2ControllerAsync(windowHwnd);
 
             await webView2Controller.CoreWebView2.Profile.ClearBrowsingDataAsync();
-
-            webView2Controller.Close();
 
             DeleteBrowsingDataStatusMessage = Strings.BrowsingDataSuccessfullyDeletedMessage;
         }
@@ -171,6 +171,11 @@ public class WebConsoleSettingsViewModel : ViewModelBase
             Log.Error("Error while deleting the browsing data of the WebView2 profile.", ex);
 
             DeleteBrowsingDataStatusMessage = Strings.BrowsingDataErrorMessage;
+        }
+        finally
+        {
+            // Also on an error, otherwise the cache folder stays locked until the application is closed
+            webView2Controller?.Close();
         }
 
         IsDeleteBrowsingDataStatusMessageDisplayed = true;

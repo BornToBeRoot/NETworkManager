@@ -49,9 +49,6 @@
             <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0"
                    IsReadOnly="{Binding IsNameReadOnly}"
                    mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGroupServers}">
-                <TextBox.Resources>
-                    <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-                </TextBox.Resources>
                 <TextBox.Text>
                     <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -116,9 +113,6 @@
             <TextBox x:Name="TextBoxServer" Grid.Column="0" Grid.Row="0"
                    mah:TextBoxHelper.Watermark="{Binding ServerWatermark}"
                    PreviewKeyDown="TextBoxServerOrPort_PreviewKeyDown">
-                <TextBox.Resources>
-                    <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
-                </TextBox.Resources>
                 <TextBox.Text>
                     <Binding Path="Server" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

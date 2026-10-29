@@ -84,7 +84,19 @@ Reference: `HostsFileEditorView.xaml`, `FirewallView.xaml`.
   `SelectedResults` is changed in place (no change notification): selection-dependent properties are raised
   in `OnContextMenuOpened()` called from the view's `ContextMenu_Opened`.
 - Two context menus: `RowContextMenu` (one row) and `MultiRowContextMenu` (several rows), switched by a
-  `DataTrigger` on `SelectedItems.Count`. `Opened="ContextMenu_Opened"` sets the menu's `DataContext`.
+  `DataTrigger` on `SelectedItems.Count`.
+- A context menu is not part of the visual tree and doesn't inherit the `DataContext`: the menu gets
+  `DataContext="{Binding Data, Source={StaticResource BindingProxy}}"` in XAML, with
+  `<wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />` in the view's own resources, declared before
+  the menus. The bindings inside the menu are plain bindings (`{Binding EditEntryCommand}`). Don't set the
+  `DataContext` in `ContextMenu_Opened` (until the menu is opened, its bindings fail and are logged as XAML binding
+  errors). `Opened` is only for extra work, e.g. `OnContextMenuOpened()` or the custom commands of the IP Scanner.
+- No bindings that have no element to resolve against: no `VisualBrush` / `BitmapImage` with a binding in a style
+  setter or as a freezable resource. Bind the property of the element with a converter instead
+  (`VisualToVisualBrushConverter`, `ApplicationNameToIconBrushConverter`, `Image Source="{Binding Uri}"`). A static
+  `VisualBrush` (`Visual="{iconPacks:Material Kind=...}"`) is fine. `MenuItem`s created outside a menu (e.g. extra
+  items in an `x:Array`) are fine: the implicit `DefaultMenuItem` style sets the content alignment directly instead
+  of the MahApps binding to the parent. New `MenuItem` styles are `BasedOn="{StaticResource DefaultMenuItem}"`.
 - Order: Enable / Disable (only the applicable one) → Edit... → Copy as... → Delete → separator → Copy
   (submenu, `CopyMenuItem` style) → Export...
 - Icons (16×16 `Rectangle`, `MahApps.Brushes.Gray3`, `VisualBrush`): Enable `Material ToggleSwitchOutline`,

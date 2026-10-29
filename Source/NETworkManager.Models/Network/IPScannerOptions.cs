@@ -27,9 +27,10 @@ public record IPScannerOptions
     public required int ICMPTimeout { get; init; }
 
     /// <summary>
-    ///     Size of the buffer used in the ping in bytes.
+    ///     Size of the buffer used in the ping in bytes. A size, not the buffer, so options with the same values are
+    ///     equal (records compare arrays by reference).
     /// </summary>
-    public required byte[] ICMPBuffer { get; init; }
+    public required int ICMPBufferSize { get; init; }
 
     /// <summary>
     ///     Resolve the hostname for an IP address.

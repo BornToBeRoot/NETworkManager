@@ -46,6 +46,14 @@ public static class GlobalStaticConfiguration
     // ICMP config: maximum buffer of a ping (.NET's Ping throws for more than 65500 bytes)
     public static int ICMPBufferMaximum => 65500;
 
+    /// <summary>
+    ///     Limits the buffer size of a ping from the settings to the limits of the input (1 to
+    ///     <see cref="ICMPBufferMaximum" />). A value edited in the settings file would throw or make every ping fail.
+    /// </summary>
+    /// <param name="size">Buffer size in bytes from the settings.</param>
+    /// <returns>Buffer size in bytes within the limits.</returns>
+    public static int LimitICMPBuffer(int size) => Math.Clamp(size, 1, ICMPBufferMaximum);
+
     // Profile config
     public static bool Profile_TagsMatchAny => true;
     public static bool Profile_ExpandProfileView => true;

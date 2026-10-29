@@ -53,7 +53,7 @@ public partial class FirewallView
     }
 
     /// <summary>
-    /// Set data context for menus.
+    /// Updates the selection dependent menu items when a context menu is opened.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>

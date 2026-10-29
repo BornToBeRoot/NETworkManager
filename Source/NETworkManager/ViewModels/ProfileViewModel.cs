@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Security;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -1010,12 +1011,21 @@ public class ProfileViewModel : ViewModelBase
 
     /// <summary>
     /// Checks if the query type of the profile fits the host (own or inherited), see
-    /// <see cref="DNSLookup_QueryTypeIsValid"/>.
+    /// <see cref="DNSLookup_QueryTypeIsValid"/>. Every address the lookup can parse is valid (also shortened IPv4
+    /// forms like "127.1"), like in the DNS Lookup.
     /// </summary>
     private void ValidateDNSLookupQueryType()
     {
-        DNSLookup_QueryTypeIsValid = !DNSLookup_OverrideQueryType || DNSLookup_QueryType != QueryType.PTR ||
-                                     IPAddressHelper.AreIPAddresses(DNSLookup_InheritHost ? Host : DNSLookup_Host);
+        if (!DNSLookup_OverrideQueryType || DNSLookup_QueryType != QueryType.PTR)
+        {
+            DNSLookup_QueryTypeIsValid = true;
+            return;
+        }
+
+        var hosts = ((DNSLookup_InheritHost ? Host : DNSLookup_Host) ?? string.Empty).Split(';',
+            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        DNSLookup_QueryTypeIsValid = hosts.Length > 0 && hosts.All(x => IPAddress.TryParse(x, out _));
     }
 
     #endregion

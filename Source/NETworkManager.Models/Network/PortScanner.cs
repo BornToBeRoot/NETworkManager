@@ -19,6 +19,7 @@ public sealed class PortScanner
     public PortScanner(PortScannerOptions options)
     {
         _options = options;
+        _icmpBuffer = new byte[options.ICMPBufferSize];
     }
 
     #endregion
@@ -68,6 +69,9 @@ public sealed class PortScanner
         _portsPerHost = new();
 
     private readonly PortScannerOptions _options;
+
+    // Data sent with the ping before the scan, created once (see PortScannerOptions.ICMPBufferSize)
+    private readonly byte[] _icmpBuffer;
 
     /// <summary>
     ///     Gets the number of ports scanned so far. Thread-safe; may be read from any thread while the scan is
@@ -394,7 +398,7 @@ public sealed class PortScanner
     private async Task<bool> IsReachableAsync(IPAddress ipAddress, int portCount, CancellationToken cancellationToken)
     {
         var pingInfo = await PingProbe.PingAsync(ipAddress, _options.ICMPTimeout, _options.ICMPAttempts,
-            _options.ICMPBuffer, cancellationToken).ConfigureAwait(false);
+            _icmpBuffer, cancellationToken).ConfigureAwait(false);
 
         if (pingInfo.Status == IPStatus.Success)
             return true;

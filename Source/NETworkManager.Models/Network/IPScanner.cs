@@ -28,6 +28,9 @@ public sealed class IPScanner(IPScannerOptions options)
     /// </summary>
     private static readonly TimeSpan MaxHostStartInterval = TimeSpan.FromMilliseconds(10);
 
+    // Data sent with the ping, created once (see IPScannerOptions.ICMPBufferSize)
+    private readonly byte[] _icmpBuffer = new byte[options.ICMPBufferSize];
+
     private int _progressValue;
     private readonly InterlockedCounter _hostsUp = new();
     private readonly InterlockedCounter _hostsDown = new();
@@ -211,7 +214,7 @@ public sealed class IPScanner(IPScannerOptions options)
         var portAnswered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
 
         var pingTask = PingProbe.PingAsync(ipAddress, options.ICMPTimeout, options.ICMPAttempts,
-            options.ICMPBuffer, cancellationToken);
+            _icmpBuffer, cancellationToken);
 
         var portScanTask = options.PortScanEnabled
             ? PortScanAsync(ipAddress, portScanParallelOptions, () => portAnswered.TrySetResult(), cancellationToken)

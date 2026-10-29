@@ -9,16 +9,16 @@ public class TracerouteOptions
     ///     Create an instance of <see cref="TracerouteOptions" /> with parameters.
     /// </summary>
     /// <param name="timeout">Timeout in milliseconds after which a ping is considered lost.</param>
-    /// <param name="buffer">Size of the buffer used in the ping in bytes.</param>
+    /// <param name="bufferSize">Size of the buffer used in the ping in bytes.</param>
     /// <param name="maximumHops">Maximum number of hops between the local and remote computer.</param>
     /// <param name="dontFragment">Do not fragment the ping packet.</param>
     /// <param name="resolveHostname">Resolve the hostname for an IP address.</param>
     /// <param name="checkIPApiIPGeolocation">Check IP geolocation via ip-api.com.</param>
-    public TracerouteOptions(int timeout, byte[] buffer, int maximumHops, bool dontFragment, bool resolveHostname,
+    public TracerouteOptions(int timeout, int bufferSize, int maximumHops, bool dontFragment, bool resolveHostname,
         bool checkIPApiIPGeolocation)
     {
         Timeout = timeout;
-        Buffer = buffer;
+        BufferSize = bufferSize;
         MaximumHops = maximumHops;
         DontFragment = dontFragment;
         ResolveHostname = resolveHostname;
@@ -33,7 +33,7 @@ public class TracerouteOptions
     /// <summary>
     ///     Size of the buffer used in the ping in bytes.
     /// </summary>
-    public byte[] Buffer { get; }
+    public int BufferSize { get; }
 
     /// <summary>
     ///     Maximum number of hops between the local and remote computer.

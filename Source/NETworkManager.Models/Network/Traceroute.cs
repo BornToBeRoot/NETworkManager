@@ -17,6 +17,9 @@ public sealed class Traceroute
 
     private readonly TracerouteOptions _options;
 
+    // Data sent with the ping, created once (see TracerouteOptions.BufferSize)
+    private readonly byte[] _buffer;
+
     #endregion
 
     #region Constructor
@@ -24,6 +27,7 @@ public sealed class Traceroute
     public Traceroute(TracerouteOptions options)
     {
         _options = options;
+        _buffer = new byte[options.BufferSize];
     }
 
     #endregion
@@ -55,7 +59,7 @@ public sealed class Traceroute
                             {
                                 stopwatch.Start();
 
-                                pingReply = ping.Send(ipAddress, _options.Timeout, _options.Buffer,
+                                pingReply = ping.Send(ipAddress, _options.Timeout, _buffer,
                                     new PingOptions { Ttl = i1, DontFragment = _options.DontFragment });
 
                                 stopwatch.Stop();
