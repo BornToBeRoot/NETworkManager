@@ -1,1 +1,0 @@
-"use strict";(globalThis.webpackChunknetworkmanager=globalThis.webpackChunknetworkmanager||[]).push([[5632],{237(a){a.exports=JSON.parse('{"metadata":{"permalink":"/NETworkManager/blog/page/2","page":2,"postsPerPage":10,"totalPages":2,"totalCount":11,"previousPage":"/NETworkManager/blog","blogDescription":"Blog","blogTitle":"Blog"}}')}}]);
