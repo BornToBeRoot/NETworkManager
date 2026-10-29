@@ -4,7 +4,11 @@
         <OutputType>Library</OutputType>
         <RootNamespace>NETworkManager.Models</RootNamespace>
         <AssemblyName>NETworkManager.Models</AssemblyName>
-        <TargetFramework>net10.0-windows10.0.22621.0</TargetFramework>        
+        <!-- Windows SDK version as TargetPlatformVersion instead of in the TFM (net10.0-windows10.0.22621.0), otherwise
+             Dependabot can't update the NuGet packages (https://github.com/dependabot/dependabot-core/issues/13278) -->
+        <TargetFramework>net10.0-windows</TargetFramework>
+        <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+        <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
         <SelfContained>false</SelfContained>
         <CsWinRTWindowsMetadata>sdk</CsWinRTWindowsMetadata>
         <UseWPF>true</UseWPF>
