@@ -75,7 +75,7 @@
         <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="6.2.1" />
         <PackageReference Include="MahApps.Metro.IconPacks.Octicons" Version="6.2.1" />
         <PackageReference Include="MahApps.Metro.SimpleChildWindow" Version="2.2.1" />
-        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4258.31" />
+        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4314.35" />
         <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.1" />        
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.161" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
