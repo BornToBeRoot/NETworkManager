@@ -4,6 +4,27 @@ platform: x64
 # Branches with an open PR are built as PR (merge commit) only - Mergify waits for that status.
 skip_branch_with_pr: true
 install:
+  - ps: |
+      # Skip the build if only docs / website / repository files changed. Exit-AppveyorBuild ends the build
+      # successfully, so a green status is still reported (Mergify waits for it). Tag (release) builds are never
+      # skipped. PR builds check out the merge commit (HEAD~1 = target branch), so this is the full PR diff.
+      # If git diff fails, the build runs normally.
+      if ($env:APPVEYOR_REPO_TAG -ne "true") {
+        $ChangedFiles = git diff --name-only HEAD~1 HEAD 2>$null
+
+        if ($LASTEXITCODE -eq 0 -and $ChangedFiles) {
+          $BuildRelevantFiles = $ChangedFiles | Where-Object { $_ -notmatch '^(Website/|\.github/|\.claude/|Images/|Chocolatey/|WinGet/|Tests/Environments/|LICENSE$)|\.md$' }
+
+          if (-not $BuildRelevantFiles) {
+            Write-Host "Only docs / website / repository files changed - skipping build."
+            Exit-AppveyorBuild
+            return
+          }
+
+          Write-Host "Build relevant changes:"
+          $BuildRelevantFiles | ForEach-Object { Write-Host "  $_" }
+        }
+      }
   - git submodule update --init
   - ps: |
       Invoke-WebRequest -Uri 'https://dot.net/v1/dotnet-install.ps1' -UseBasicParsing -OutFile "$env:temp\dotnet-install.ps1"
