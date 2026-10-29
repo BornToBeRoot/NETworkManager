@@ -14,7 +14,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Assign milestone
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             const milestones = await github.rest.issues.listMilestones({
