@@ -183,9 +183,15 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 
 **Primary Build System**: AppVeyor (configuration in `appveyor.yml`)
 - Builds on the Visual Studio 2022 image
-- Installs the .NET SDK version from `Source/global.json`
+- Installs the .NET SDK version from `Source/global.json` (skipped if the image already has it)
 - Restores NuGet packages
-- Builds the Release configuration for x64 and ARM64 (setup, portable and archive per architecture)
+- Builds the Release configuration: x64 for branches and PRs, x64 and ARM64 for tags (setup, portable and archive per
+  architecture, only for tags)
+- Runs the unit tests (`Source/NETworkManager.Tests`, `dotnet test --project`)
+- Branches with an open PR are only built as PR (`skip_branch_with_pr`)
+- Ends successfully without building if only docs / website / repository files changed (`Website/`, `.github/`,
+  `.claude/`, `Images/`, `Chocolatey/`, `WinGet/`, `Tests/Environments/`, `*.md`, `LICENSE`), so Mergify still gets a
+  green status. Tags are always built
 - Version format: `yyyy.M.d.0` (date-based)
 - Artifacts are signed via [SignPath.io](https://signpath.io/)
 - Released to GitHub Releases
@@ -193,13 +199,14 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 **GitHub Actions Workflows**:
 - **CodeQL Analysis** (`.github/workflows/codeql.yml`):
   - Automated security scanning
-  - Analyzes C# and JavaScript/TypeScript code
+  - Analyzes C# (autobuild on Windows), JavaScript/TypeScript and GitHub Actions workflows (Linux)
   - Runs weekly and on-demand via workflow_dispatch
   
 - **Website Deployment** (`.github/workflows/deploy_website.yml`):
   - Builds and deploys Docusaurus website to GitHub Pages
-  - Triggers on changes to `Website/` directory
+  - Triggers on changes to `Website/` directory (push to `main` and PRs) and on published releases
   - Uses Node.js 22 with yarn for build
+  - Build and deploy are separate jobs, only the deploy job (`main` / release) has write access
 
 - **Label / Milestone** (`.github/workflows/label.yml`, `.github/workflows/milestone.yml`):
   - Label PRs from Dependabot, Transifex and ImgBot as dependencies
@@ -207,7 +214,7 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 
 **Automation & Bots**:
 - **Dependabot** (`.github/dependabot.yml`):
-  - Weekly updates for NuGet packages, .NET SDK, and npm packages
+  - Weekly updates for NuGet packages, .NET SDK, npm packages and GitHub Actions
   - Automatic PR creation for dependency updates
   
 - **Mergify** (`.github/mergify.yml`):
@@ -302,6 +309,7 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 ## Testing Strategy
 
 - **Manual Testing**: Primary testing approach (test environments in `Tests/Environments/`)
+- **Unit Tests**: xUnit tests in `Source/NETworkManager.Tests`, run by AppVeyor CI
 - **Build Verification**: AppVeyor CI ensures builds succeed
 - **Windows only**: The application only builds and runs on Windows (WPF, Windows SDK, CsWinRT). Changes made
   on other platforms can't be compiled and must be verified on Windows
