@@ -5,6 +5,7 @@ platform: x64
 environment:
   DOTNET_NOLOGO: true
   DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_GENERATE_ASPNET_CERTIFICATE: false
 # Shallow clone - the history isn't needed (the version is date based). Must stay > 1, the docs-only check below
 # compares HEAD with HEAD~1.
 clone_depth: 50
