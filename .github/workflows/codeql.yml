@@ -2,26 +2,33 @@ name: "CodeQL"
 
 on:
   workflow_dispatch:
-  #push:
-  #  branches: [ "main", "stable-*" ]
-  #pull_request:
-  #  branches: [ "main", "stable-*" ]
   schedule:
     - cron: '38 21 * * 6'
 
 jobs:
   analyze:
-    name: Analyze    
-    runs-on: ${{ 'windows-latest' }}
-    timeout-minutes: ${{ 360 }}
+    name: Analyze (${{ matrix.language }})
+    runs-on: ${{ matrix.runs-on }}
+    timeout-minutes: 120
     permissions:
-      # required for all workflows
+      contents: read
       security-events: write
 
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'csharp', 'javascript-typescript' ]        
+        include:
+          # C# is built (WPF, Windows only) for the most precise results.
+          - language: csharp
+            build-mode: autobuild
+            runs-on: windows-latest
+          - language: javascript-typescript
+            build-mode: none
+            runs-on: ubuntu-latest
+          # GitHub Actions workflows (e.g. pull_request_target, permissions).
+          - language: actions
+            build-mode: none
+            runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
@@ -29,17 +36,13 @@ jobs:
       with:
         submodules: 'true'
 
-    # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v4
       with:
         languages: ${{ matrix.language }}
-        
-    # Autobuild attempts to build any compiled languages (C/C++, C#, Go, Java, or Swift).
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v4
+        build-mode: ${{ matrix.build-mode }}
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4
       with:
-        category: "/language:${{matrix.language}}"
+        category: "/language:${{ matrix.language }}"
