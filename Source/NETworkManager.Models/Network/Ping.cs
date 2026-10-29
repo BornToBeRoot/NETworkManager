@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using NETworkManager.Utilities;
@@ -152,15 +151,8 @@ public sealed class Ping
                         }
                         else
                         {
-                            if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-                                OnPingReceived(new PingReceivedArgs(
-                                    new PingInfo(timestamp, pingReply.Address, hostname,
-                                        pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Options!.Ttl,
-                                        pingReply.Status)));
-                            else
-                                OnPingReceived(new PingReceivedArgs(
-                                    new PingInfo(timestamp, pingReply.Address, hostname,
-                                        pingReply.Buffer.Length, pingReply.RoundtripTime, pingReply.Status)));
+                            OnPingReceived(new PingReceivedArgs(
+                                PingInfo.FromSuccessfulReply(timestamp, pingReply, hostname)));
                         }
                     }
                     catch (PingException ex)

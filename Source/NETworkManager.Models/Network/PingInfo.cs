@@ -123,6 +123,22 @@ public class PingInfo
     }
 
     /// <summary>
+    ///     Creates a <see cref="PingInfo" /> from a successful ping reply. The TTL is only available for IPv4.
+    /// </summary>
+    /// <param name="timestamp">Timestamp when the ping was sent.</param>
+    /// <param name="pingReply">Successful reply of the ping.</param>
+    /// <param name="hostname">Hostname of the host.</param>
+    /// <returns>Information of the ping.</returns>
+    internal static PingInfo FromSuccessfulReply(DateTime timestamp, PingReply pingReply, string hostname = null)
+    {
+        return pingReply.Address.AddressFamily == AddressFamily.InterNetwork
+            ? new PingInfo(timestamp, pingReply.Address, hostname, pingReply.Buffer.Length, pingReply.RoundtripTime,
+                pingReply.Options!.Ttl, pingReply.Status)
+            : new PingInfo(timestamp, pingReply.Address, hostname, pingReply.Buffer.Length, pingReply.RoundtripTime,
+                pingReply.Status);
+    }
+
+    /// <summary>
     ///     Timestamp when the ping was sent.
     /// </summary>
     public DateTime Timestamp { get; set; }
