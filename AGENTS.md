@@ -213,13 +213,14 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
   - Build and deploy are separate jobs, only the deploy job (`main` / release) has write access
 
 - **Label / Milestone** (`.github/workflows/label.yml`, `.github/workflows/milestone.yml`):
-  - Label PRs from Dependabot, Transifex and ImgBot as dependencies
+  - Label PRs from Transifex and ImgBot as dependencies (Dependabot sets the label itself)
   - Assign the next-release milestone to PRs from bots and the maintainer
 
 **Automation & Bots**:
 - **Dependabot** (`.github/dependabot.yml`):
   - Weekly updates for NuGet packages, .NET SDK, npm packages and GitHub Actions
-  - Automatic PR creation for dependency updates
+  - Automatic PR creation for dependency updates, labeled `:heavy_check_mark: dependencies` (instead of Dependabot's
+    default labels)
   
 - **Mergify** (`.github/mergify.yml`):
   - Auto-merges PRs with `LGTM` label after AppVeyor CI passes
