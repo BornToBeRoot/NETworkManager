@@ -72,9 +72,13 @@ build_script:
       # Build the wixproj directly, not the .sln - `dotnet build` rejects -p:RuntimeIdentifier
       # at the solution level (NETSDK1134).
       $Architectures = @(
-        @{ RuntimeIdentifier = "win-x64";   Platform = "x64" },
-        @{ RuntimeIdentifier = "win-arm64"; Platform = "ARM64" }
+        @{ RuntimeIdentifier = "win-x64";   Platform = "x64" }
       )
+
+      # Only tags (release) are built for ARM64 - branches and PRs are built for x64 to keep them fast.
+      if ($env:APPVEYOR_REPO_TAG -eq "true") {
+        $Architectures += @{ RuntimeIdentifier = "win-arm64"; Platform = "ARM64" }
+      }
 
       foreach ($Architecture in $Architectures) {
         Write-Host "Building $($Architecture.RuntimeIdentifier)..."
