@@ -10,9 +10,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type controls:AirspacePanel}">
+                    <!-- ClipToBounds: The screenshot keeps its size if the window is made smaller while it is shown -->
                     <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                          VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                          VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                          ClipToBounds="True">
+                        <!-- Size is set in code (size of the content when the screenshot was taken), not stretched -->
                         <Image x:Name="PART_AirspaceScreenshot"
+                               HorizontalAlignment="Left" VerticalAlignment="Top"
+                               Stretch="Fill"
                                Visibility="Hidden" />
                         <ContentControl x:Name="PART_AirspaceContent"
                                         Content="{TemplateBinding Content}" />

@@ -92,6 +92,10 @@ public class AirspacePanel : ContentControl
             if (screenshot == null)
                 return;
 
+            // Show the screenshot in the size of the content when it was taken (top left aligned in the template), so
+            // it is not stretched / scaled if the window is resized while it is shown
+            _airspaceScreenshot.Width = _airspaceContent.ActualWidth;
+            _airspaceScreenshot.Height = _airspaceContent.ActualHeight;
             _airspaceScreenshot.Source = screenshot;
             _airspaceContent.Visibility = Visibility.Hidden;
             _airspaceScreenshot.Visibility = Visibility.Visible;
@@ -102,6 +106,8 @@ public class AirspacePanel : ContentControl
             _airspaceContent.Visibility = Visibility.Visible;
             _airspaceScreenshot.Visibility = Visibility.Hidden;
             _airspaceScreenshot.Source = null;
+            _airspaceScreenshot.ClearValue(WidthProperty);
+            _airspaceScreenshot.ClearValue(HeightProperty);
         }
     }
 
