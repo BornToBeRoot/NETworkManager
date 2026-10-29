@@ -186,8 +186,8 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
 - Installs the .NET SDK version from `Source/global.json` (skipped if the image already has it)
 - Restores NuGet packages
 - Builds the Release configuration: x64 for branches and PRs, x64 and ARM64 for tags (setup, portable and archive per
-  architecture, only for tags). PRs only build the application (`NETworkManager.csproj`), branches and tags the setup
-  (`NETworkManager.Setup.wixproj`)
+  architecture, only for tags). PRs only build the application (`NETworkManager.csproj`) unless they change
+  `Source/NETworkManager.Setup/`, branches and tags the setup (`NETworkManager.Setup.wixproj`)
 - Runs the unit tests (`Source/NETworkManager.Tests`, `dotnet test --project`)
 - Branches with an open PR are only built as PR (`skip_branch_with_pr`)
 - Ends successfully without building if only docs / website / repository files changed (`Website/`, `.github/`,
