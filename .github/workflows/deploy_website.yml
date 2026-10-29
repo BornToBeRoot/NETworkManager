@@ -16,16 +16,18 @@ on:
       - '.github/workflows/deploy_website.yml'
       - 'Website/**'
 
+# Runs that deploy (main, release, manual) run one after the other incl. the build, so the last triggered run also
+# deploys last (e.g. a release build isn't overwritten by an older main build). Outdated PR runs are cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || 'deploy' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   build-website:
     name: "Build Website"
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    concurrency:
-      # Cancel outdated PR builds, but never a build that is deployed.
-      group: ${{ github.workflow }}-build-${{ github.ref }}
-      cancel-in-progress: ${{ github.event_name == 'pull_request' }}
     defaults:
       run:
         working-directory: Website
@@ -66,8 +68,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    concurrency:
-      group: ${{ github.workflow }}-deploy
     steps:
       - name: Download website
         uses: actions/download-artifact@v8
