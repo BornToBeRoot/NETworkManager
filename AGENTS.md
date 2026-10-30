@@ -190,7 +190,7 @@ The website is deployed to GitHub Pages at: https://borntoberoot.net/NETworkMana
   architecture, only for tags). PRs only build the application (`NETworkManager.csproj`) unless they change
   `Source/NETworkManager.Setup/`, branches and tags the setup (`NETworkManager.Setup.wixproj`)
 - Runs the unit tests (`Source/NETworkManager.Tests`, `dotnet test --project`)
-- Branches with an open PR are only built as PR (`skip_branch_with_pr`)
+- Branch builds only for `main` and release tags (`branches: only`), other branches are only built as PR
 - Ends successfully without building if only docs / website / repository files changed (`Website/`, `.github/`,
   `.claude/`, `Images/`, `Chocolatey/`, `WinGet/`, `Tests/Environments/`, `*.md`, `LICENSE`), so Mergify still gets a
   green status. Tags are always built. Branch builds (e.g. `main`) only see the last commit, so they are only skipped

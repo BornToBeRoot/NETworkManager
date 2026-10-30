@@ -9,8 +9,13 @@ environment:
 # Shallow clone - the history isn't needed (the version is date based). Must stay > 1, the docs-only check below
 # compares HEAD with HEAD~1.
 clone_depth: 50
-# Branches with an open PR are built as PR (merge commit) only - Mergify waits for that status.
-skip_branch_with_pr: true
+# Branch builds only for main and release tags (e.g. 2026.10.24.0 - the filter also applies to tag names). Other
+# branches are only built as PR (merge commit), Mergify waits for that status. skip_branch_with_pr is not enough, the
+# first push of a branch (e.g. by Dependabot) is built before the PR exists. PRs to main are not affected by "only".
+branches:
+  only:
+    - main
+    - /^\d+\.\d+\.\d+/
 install:
   - ps: |
       # Skip the build if only docs / website / repository files changed. Exit-AppveyorBuild ends the build
