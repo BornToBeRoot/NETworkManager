@@ -38,6 +38,11 @@ public record IPScannerOptions
     public required int ICMPBufferSize { get; init; }
 
     /// <summary>
+    ///     Guess the operating system from the TTL of the ping reply (only shown in the result, no extra traffic).
+    /// </summary>
+    public required bool OSGuessEnabled { get; init; }
+
+    /// <summary>
     ///     Resolve the hostname for an IP address.
     /// </summary>
     public required bool ResolveHostname { get; init; }

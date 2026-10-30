@@ -1272,6 +1272,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_ICMPBuffer;
 
+    public bool IPScanner_OSGuessEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_OSGuessEnabled;
+
     public ObservableCollection<string> IPScanner_HostHistory
     {
         get;

@@ -98,7 +98,7 @@ The probes a host answered are shown in the tooltip of its status icon (e.g. `Up
 
 Only reachable hosts are shown, unless [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) is enabled. A message below the input is shown if no reachable host was found, the scan was canceled, a hostname could not be resolved or an error occurred.
 
-The search box right of the **Result** header filters the results by IP address, hostname, MAC address, vendor and open ports (number or service), also while the scan is running (hosts whose hostname or MAC address arrives later are filtered again). **Export...** > all exports the filtered results; the up / down counters always count all hosts. Results can also be exported while the scan is running; values of probes that are still running (shown as `...`) are exported as empty values.
+The search box right of the **Result** header filters the results by IP address, hostname, MAC address, vendor, OS (guess) and open ports (number or service), also while the scan is running (hosts whose hostname or MAC address arrives later are filtered again). **Export...** > all exports the filtered results; the up / down counters always count all hosts. Results can also be exported while the scan is running; values of probes that are still running (shown as `...`) are exported as empty values.
 
 Expand a row with the button in front of it to see its details, or enable [Expand host view](#expand-host-view) to expand all hosts.
 
@@ -204,6 +204,26 @@ Size of the buffer for each ICMP request in bytes.
 **Type:** `Integer` [Min `1`, Max `65500`]
 
 **Default:** `32`
+
+### Guess the operating system from the TTL
+
+Shows the operating system guessed from the TTL of the ping reply in the **OS (guess)** column: every operating system starts with a typical TTL and every router on the way reduces it by one. The guess is the smallest typical TTL that is not lower than the received TTL, the tooltip shows the number of hops (e.g. TTL `126` → `Windows`, 2 hops). No additional packets are sent.
+
+| Initial TTL | OS (guess)       | Examples                                     |
+| ----------- | ---------------- | -------------------------------------------- |
+| `64`        | `Linux / Unix`   | Linux, macOS, Android, iOS, many IoT devices |
+| `128`       | `Windows`        | Windows                                      |
+| `255`       | `Network device` | Routers, switches, printers, Solaris         |
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+:::note
+
+It's a hint, not a detection: the TTL can be changed on the host (e.g. some devices use `64` or `128`), NAT and VPN can change it. Only available for hosts that answered the ping and only for IPv4 (the ping reply of IPv6 has no TTL). The export contains it as `OSGuess` (`LinuxUnix`, `Windows`, `NetworkDevice`).
+
+:::
 
 ### Resolve hostname
 

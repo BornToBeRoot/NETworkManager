@@ -255,6 +255,25 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the operating system is guessed from the TTL of the ping reply.
+    /// </summary>
+    public bool OSGuessEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_OSGuessEnabled = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets a value indicating whether NetBIOS is enabled.
     /// </summary>
     public bool NetBIOSEnabled
@@ -417,6 +436,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
         ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts;
         ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout;
         ICMPBuffer = SettingsManager.Current.IPScanner_ICMPBuffer;
+        OSGuessEnabled = SettingsManager.Current.IPScanner_OSGuessEnabled;
         ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname;
         PortScanEnabled = SettingsManager.Current.IPScanner_PortScanEnabled;
         PortScanPorts = SettingsManager.Current.IPScanner_PortScanPorts;

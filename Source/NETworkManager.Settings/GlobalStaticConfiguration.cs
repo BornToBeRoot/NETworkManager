@@ -152,6 +152,7 @@ public static class GlobalStaticConfiguration
     public static int IPScanner_ICMPAttempts => 2;
     public static int IPScanner_ICMPTimeout => 2000;
     public static int IPScanner_ICMPBuffer => 32;
+    public static bool IPScanner_OSGuessEnabled => true;
     public static bool IPScanner_ResolveHostname => true;
     public static bool IPScanner_PortScanEnabled => true;
     public static string IPScanner_PortScanPorts => "21; 22; 23; 53; 80; 135; 139; 389; 443; 445; 554; 631; 636; 3389; 5900; 5985; 7000; 8009; 8080; 8443; 9100; 62078";

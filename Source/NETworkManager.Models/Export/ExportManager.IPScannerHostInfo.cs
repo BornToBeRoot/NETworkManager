@@ -75,7 +75,8 @@ public static partial class ExportManager
             $"{nameof(IPScannerHostInfo.Vendor)}," +
             // Added later - last column, so the position of the other columns doesn't change
             $"{nameof(IPScannerHostInfo.DNSHostname)}," +
-            $"{nameof(IPScannerHostInfo.DetectedBy)}"
+            $"{nameof(IPScannerHostInfo.DetectedBy)}," +
+            $"{nameof(IPScannerHostInfo.OSGuess)}"
         );
 
         foreach (var info in collection)
@@ -119,7 +120,8 @@ public static partial class ExportManager
                 $"{info.MACAddress}," +
                 $"{CsvHelper.QuoteString(info.Vendor)}," +
                 $"{CsvHelper.QuoteString(info.DNSHostname)}," +
-                $"{CsvHelper.QuoteString(GetDetectedBy(info))}"
+                $"{CsvHelper.QuoteString(GetDetectedBy(info))}," +
+                $"{GetOSGuess(info, options)}"
             );
         }
 
@@ -176,7 +178,8 @@ public static partial class ExportManager
                             new XElement(nameof(IPScannerHostInfo.Vendor), info.Vendor),
                             // Added later - last element, so the position of the other elements doesn't change
                             new XElement(nameof(IPScannerHostInfo.DNSHostname), info.DNSHostname),
-                            new XElement(nameof(IPScannerHostInfo.DetectedBy), GetDetectedBy(info))
+                            new XElement(nameof(IPScannerHostInfo.DetectedBy), GetDetectedBy(info)),
+                            new XElement(nameof(IPScannerHostInfo.OSGuess), GetOSGuess(info, options))
                         )
                 )
             )
@@ -247,7 +250,8 @@ public static partial class ExportManager
                 NetBIOSVendor = netBIOSInfo?.Vendor,
                 info.MACAddress,
                 info.Vendor,
-                DetectedBy = GetDetectedBy(info)
+                DetectedBy = GetDetectedBy(info),
+                OSGuess = GetOSGuess(info, options)
             };
         }
 
@@ -262,6 +266,19 @@ public static partial class ExportManager
     private static string GetDetectedBy(IPScannerHostInfo info)
     {
         return info.DetectedBy == IPScannerDetectionMethod.None ? null : info.DetectedBy.ToString();
+    }
+
+    /// <summary>
+    ///     Gets the operating system guessed from the TTL (e.g. "Windows"), null if there is no guess or it was disabled.
+    /// </summary>
+    /// <param name="info">Host to get the guess for.</param>
+    /// <param name="options">Options of the scan the host is from.</param>
+    /// <returns>Guessed operating system or null.</returns>
+    private static string GetOSGuess(IPScannerHostInfo info, IPScannerResultOptions options)
+    {
+        return options.ICMPEnabled && options.OSGuessEnabled && info.OSGuess != IPScannerOSGuess.None
+            ? info.OSGuess.ToString()
+            : null;
     }
 
     /// <summary>

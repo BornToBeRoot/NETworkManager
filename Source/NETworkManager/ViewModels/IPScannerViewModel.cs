@@ -2,6 +2,7 @@
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
+using NETworkManager.Converters;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -453,6 +454,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                    Matches(info.Hostname) ||
                    Matches(info.MACAddress) ||
                    Matches(info.Vendor) ||
+                   (ScanOptions.OSGuessEnabled &&
+                    Matches(IPScannerOSGuessToStringConverter.ToLocalizedString(info.OSGuess))) ||
                    info.Ports.Any(x => Matches(x.Port.ToString()) || Matches(x.LookupInfo.Service));
         };
 
@@ -464,6 +467,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MACAddress));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Vendor));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Ports));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.OSGuess));
 
         _searchDelay = new SearchDelay(GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan, ApplySearch);
     }
@@ -964,6 +968,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads,
             MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads,
             ICMPEnabled = SettingsManager.Current.IPScanner_ICMPEnabled,
+            OSGuessEnabled = SettingsManager.Current.IPScanner_OSGuessEnabled,
             ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
             ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout,
             ICMPBufferSize = GlobalStaticConfiguration.LimitICMPBuffer(SettingsManager.Current.IPScanner_ICMPBuffer),
@@ -1000,6 +1005,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         return new IPScannerResultOptions(
             SettingsManager.Current.IPScanner_ICMPEnabled,
+            SettingsManager.Current.IPScanner_OSGuessEnabled,
             SettingsManager.Current.IPScanner_ResolveHostname,
             SettingsManager.Current.IPScanner_PortScanEnabled,
             SettingsManager.Current.IPScanner_NetBIOSEnabled,

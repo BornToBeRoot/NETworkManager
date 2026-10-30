@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System.Net.NetworkInformation;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
@@ -85,7 +86,27 @@ public class IPScannerHostInfo : PropertyChangedBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(OSGuess));
+            OnPropertyChanged(nameof(OSGuessHops));
         }
+    }
+
+    /// <summary>
+    ///     Operating system guessed from the TTL of the ping reply (see <see cref="IPScannerOSGuessHelper" />),
+    ///     <see cref="IPScannerOSGuess.None" /> without a ping reply (or TTL, e.g. IPv6).
+    /// </summary>
+    public IPScannerOSGuess OSGuess => GetOSGuess().osGuess;
+
+    /// <summary>
+    ///     Number of hops to the host based on the TTL of the ping reply (see <see cref="OSGuess" />).
+    /// </summary>
+    public int OSGuessHops => GetOSGuess().hops;
+
+    private (IPScannerOSGuess osGuess, int initialTTL, int hops) GetOSGuess()
+    {
+        return !IsPingPending && PingInfo?.Status == IPStatus.Success
+            ? IPScannerOSGuessHelper.GetFromTTL(PingInfo.TTL)
+            : (IPScannerOSGuess.None, 0, 0);
     }
 
     /// <summary>
@@ -176,6 +197,8 @@ public class IPScannerHostInfo : PropertyChangedBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(OSGuess));
+            OnPropertyChanged(nameof(OSGuessHops));
         }
     }
 

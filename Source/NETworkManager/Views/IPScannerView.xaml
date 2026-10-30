@@ -21,10 +21,12 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleansAndToVisibilityCollapsedConverter x:Key="BooleansAndToVisibilityCollapsedConverter" />
         <converters:BooleansOrToVisibilityCollapsedConverter x:Key="BooleansOrToVisibilityCollapsedConverter" />
         <converters:HostReachableToStringConverter x:Key="HostReachableToStringConverter" />
         <converters:HostUpStyleConverter x:Key="HostUpStyleConverter" />
         <converters:IPScannerDetectionMethodToStringConverter x:Key="IPScannerDetectionMethodToStringConverter" />
+        <converters:IPScannerOSGuessToStringConverter x:Key="IPScannerOSGuessToStringConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
@@ -586,6 +588,23 @@
                                   IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
                                   Visibility="{Binding Path=ScanOptions.ICMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static localization:Strings.OSGuess}"
+                                  Command="{Binding CopyDataToClipboardCommand}"
+                                  IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}">
+                            <MenuItem.CommandParameter>
+                                <MultiBinding Converter="{StaticResource IPScannerOSGuessToStringConverter}">
+                                    <Binding Path="SelectedResult.OSGuess" />
+                                    <Binding Path="SelectedResult.OSGuessHops" />
+                                </MultiBinding>
+                            </MenuItem.CommandParameter>
+                            <MenuItem.Visibility>
+                                <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                    <Binding Path="ScanOptions.ICMPEnabled" />
+                                    <Binding Path="ScanOptions.OSGuessEnabled" />
+                                </MultiBinding>
+                            </MenuItem.Visibility>
+                        </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Bytes}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.Bytes}"
@@ -756,6 +775,37 @@
                             <Binding Path="IsPingPending" />
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="{x:Static localization:Strings.OSGuess}"
+                                    SortMemberPath="OSGuess"
+                                    MinWidth="120">
+                    <DataGridTextColumn.Visibility>
+                        <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.ScanOptions.ICMPEnabled" />
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.ScanOptions.OSGuessEnabled" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Visibility>
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource IPScannerOSGuessToStringConverter}">
+                            <Binding Path="OSGuess" />
+                            <Binding Path="OSGuessHops" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="ToolTip">
+                                <Setter.Value>
+                                    <MultiBinding Converter="{StaticResource IPScannerOSGuessToStringConverter}"
+                                                  ConverterParameter="ToolTip">
+                                        <Binding Path="OSGuess" />
+                                        <Binding Path="OSGuessHops" />
+                                    </MultiBinding>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.PortStatus}"
                                     SortMemberPath="IsAnyPortOpen"

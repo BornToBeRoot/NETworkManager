@@ -5,12 +5,14 @@
 ///     <see cref="IPScannerOptions" />, without the ports and the ICMP buffer of the scan.
 /// </summary>
 /// <param name="ICMPEnabled">The hosts were pinged.</param>
+/// <param name="OSGuessEnabled">The operating system was guessed from the TTL of the ping reply.</param>
 /// <param name="ResolveHostname">The hostname was resolved via DNS.</param>
 /// <param name="PortScanEnabled">The ports of the hosts were scanned.</param>
 /// <param name="NetBIOSEnabled">The NetBIOS information was requested.</param>
 /// <param name="ResolveMACAddress">The MAC address and vendor were resolved.</param>
 public sealed record IPScannerResultOptions(
     bool ICMPEnabled,
+    bool OSGuessEnabled,
     bool ResolveHostname,
     bool PortScanEnabled,
     bool NetBIOSEnabled,
@@ -21,7 +23,7 @@ public sealed record IPScannerResultOptions(
     /// </summary>
     /// <param name="options">Options of the scan.</param>
     public IPScannerResultOptions(IPScannerOptions options)
-        : this(options.ICMPEnabled, options.ResolveHostname, options.PortScanEnabled, options.NetBIOSEnabled, options.ResolveMACAddress)
+        : this(options.ICMPEnabled, options.OSGuessEnabled, options.ResolveHostname, options.PortScanEnabled, options.NetBIOSEnabled, options.ResolveMACAddress)
     {
     }
 }

@@ -5191,4 +5191,25 @@ Do you want to start the scan?</value>
   <data name="AllLocalSubnets" xml:space="preserve">
     <value>All local subnets</value>
   </data>
+  <data name="GuessTheOperatingSystemFromTheTTL" xml:space="preserve">
+    <value>Guess the operating system from the TTL</value>
+  </data>
+  <data name="HelpMessage_GuessTheOperatingSystemFromTheTTL" xml:space="preserve">
+    <value>Guess the operating system from the TTL of the ping reply: every operating system starts with a typical TTL, 64 (Linux, Unix, macOS, Android, iOS), 128 (Windows) or 255 (network devices like routers, switches and printers), and every router on the way reduces it by one. No additional packets are sent. It's a hint, not a detection: the TTL can be changed on the host, NAT and VPN can change it. Not available for IPv6 (the ping reply has no TTL).</value>
+  </data>
+  <data name="OSGuess" xml:space="preserve">
+    <value>OS (guess)</value>
+  </data>
+  <data name="LinuxUnix" xml:space="preserve">
+    <value>Linux / Unix</value>
+  </data>
+  <data name="NetworkDevice" xml:space="preserve">
+    <value>Network device</value>
+  </data>
+  <data name="Windows" xml:space="preserve">
+    <value>Windows</value>
+  </data>
+  <data name="OSGuessBasedOnTheTTLXHops" xml:space="preserve">
+    <value>Based on the TTL of the ping reply ({0} hops)</value>
+  </data>
 </root>

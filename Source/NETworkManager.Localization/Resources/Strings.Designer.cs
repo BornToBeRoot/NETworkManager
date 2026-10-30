@@ -5798,6 +5798,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Guess the operating system from the TTL.
+        /// </summary>
+        public static string GuessTheOperatingSystemFromTheTTL {
+            get {
+                return ResourceManager.GetString("GuessTheOperatingSystemFromTheTTL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Handle.
         /// </summary>
         public static string Handle {
@@ -5981,6 +5990,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_FirewallShowAllRules {
             get {
                 return ResourceManager.GetString("HelpMessage_FirewallShowAllRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guess the operating system from the TTL of the ping reply: every operating system starts with a typical TTL, 64 (Linux, Unix, macOS, Android, iOS), 128 (Windows) or 255 (network devices like routers, switches and printers), and every router on the way reduces it by one. No additional packets are sent. It's a hint, not a detection: the TTL can be changed on the host, NAT and VPN can change it. Not available for IPv6 (the ping reply has no TTL)..
+        /// </summary>
+        public static string HelpMessage_GuessTheOperatingSystemFromTheTTL {
+            get {
+                return ResourceManager.GetString("HelpMessage_GuessTheOperatingSystemFromTheTTL", resourceCulture);
             }
         }
         
@@ -7438,6 +7456,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Linux / Unix.
+        /// </summary>
+        public static string LinuxUnix {
+            get {
+                return ResourceManager.GetString("LinuxUnix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Listeners.
         /// </summary>
         public static string Listeners {
@@ -8212,6 +8239,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network device.
+        /// </summary>
+        public static string NetworkDevice {
+            get {
+                return ResourceManager.GetString("NetworkDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Network Interface.
         /// </summary>
         public static string NetworkInterface {
@@ -8947,6 +8983,24 @@ namespace NETworkManager.Localization.Resources {
         public static string Organization {
             get {
                 return ResourceManager.GetString("Organization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OS (guess).
+        /// </summary>
+        public static string OSGuess {
+            get {
+                return ResourceManager.GetString("OSGuess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Based on the TTL of the ping reply ({0} hops).
+        /// </summary>
+        public static string OSGuessBasedOnTheTTLXHops {
+            get {
+                return ResourceManager.GetString("OSGuessBasedOnTheTTLXHops", resourceCulture);
             }
         }
         
@@ -14908,6 +14962,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Window {
             get {
                 return ResourceManager.GetString("Window", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows.
+        /// </summary>
+        public static string Windows {
+            get {
+                return ResourceManager.GetString("Windows", resourceCulture);
             }
         }
         
