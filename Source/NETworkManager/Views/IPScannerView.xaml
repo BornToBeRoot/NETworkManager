@@ -537,6 +537,12 @@
                                 </MultiBinding>
                             </MenuItem.Visibility>
                         </MenuItem>
+                        <MenuItem Header="{x:Static localization:Strings.MDNSHostname}"
+                                  Command="{Binding CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.MDNSHostname}"
+                                  IsEnabled="{Binding Path=SelectedResult.IsMDNSPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.MDNSEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.PortStatus}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.IsAnyPortOpen, Converter={StaticResource PortOpenToStringConverter}}"
@@ -619,6 +625,48 @@
                                   IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
                                   Visibility="{Binding Path=ScanOptions.ICMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <!-- Values of the optional requests, if enabled for the shown scan -->
+                        <MenuItem Header="{x:Static localization:Strings.Web}">
+                            <MenuItem.Visibility>
+                                <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                    <Binding Path="ScanOptions.PortScanEnabled" />
+                                    <Binding Path="ScanOptions.WebPageEnabled" />
+                                </MultiBinding>
+                            </MenuItem.Visibility>
+                            <MenuItem Header="{x:Static localization:Strings.Title}"
+                                      Command="{Binding CopyDataToClipboardCommand}"
+                                      CommandParameter="{Binding Path=SelectedResult.WebTitle}"
+                                      IsEnabled="{Binding Path=SelectedResult.IsWebPagePending, Converter={StaticResource BooleanReverseConverter}}"
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                            <MenuItem Header="{x:Static localization:Strings.URL}"
+                                      Command="{Binding CopyDataToClipboardCommand}"
+                                      CommandParameter="{Binding Path=SelectedResult.WebURL}"
+                                      IsEnabled="{Binding Path=SelectedResult.IsWebPagePending, Converter={StaticResource BooleanReverseConverter}}"
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                            <MenuItem Header="{x:Static localization:Strings.Server}"
+                                      Command="{Binding CopyDataToClipboardCommand}"
+                                      CommandParameter="{Binding Path=SelectedResult.WebServer}"
+                                      IsEnabled="{Binding Path=SelectedResult.IsWebPagePending, Converter={StaticResource BooleanReverseConverter}}"
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        </MenuItem>
+                        <MenuItem Header="{x:Static localization:Strings.SNMP}"
+                                  Visibility="{Binding Path=ScanOptions.SNMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                            <MenuItem Header="{x:Static localization:Strings.Name}"
+                                      Command="{Binding CopyDataToClipboardCommand}"
+                                      CommandParameter="{Binding Path=SelectedResult.SNMPName}"
+                                      IsEnabled="{Binding Path=SelectedResult.IsSNMPPending, Converter={StaticResource BooleanReverseConverter}}"
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                            <MenuItem Header="{x:Static localization:Strings.Description}"
+                                      Command="{Binding CopyDataToClipboardCommand}"
+                                      CommandParameter="{Binding Path=SelectedResult.SNMPDescription}"
+                                      IsEnabled="{Binding Path=SelectedResult.IsSNMPPending, Converter={StaticResource BooleanReverseConverter}}"
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                            <MenuItem Header="{x:Static localization:Strings.SNMPLocation}"
+                                      Command="{Binding CopyDataToClipboardCommand}"
+                                      CommandParameter="{Binding Path=SelectedResult.SNMPLocation}"
+                                      IsEnabled="{Binding Path=SelectedResult.IsSNMPPending, Converter={StaticResource BooleanReverseConverter}}"
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        </MenuItem>
                     </MenuItem>
                     <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                         <MenuItem.Icon>

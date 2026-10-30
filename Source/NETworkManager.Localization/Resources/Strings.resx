@@ -5301,4 +5301,7 @@ Do you want to start the scan?</value>
   <data name="AllIPAddressesAreExcludedMessage" xml:space="preserve">
     <value>All IP addresses are excluded (inputs starting with !), there is nothing to scan.</value>
   </data>
+  <data name="MDNSHostname" xml:space="preserve">
+    <value>mDNS hostname</value>
+  </data>
 </root>

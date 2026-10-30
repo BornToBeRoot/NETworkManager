@@ -7924,6 +7924,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to mDNS hostname.
+        /// </summary>
+        public static string MDNSHostname {
+            get {
+                return ResourceManager.GetString("MDNSHostname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Measured time.
         /// </summary>
         public static string MeasuredTime {
