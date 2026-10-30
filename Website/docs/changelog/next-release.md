@@ -237,6 +237,7 @@ Release date: **xx.xx.2026**
 
 **Neighbor Table**
 
+- Fixed the **State** of the entries being shifted by one (e.g. `Reachable` entries were shown as `Stale`, `Permanent` entries as `Reachable`, `Unreachable` entries as `0`) since the table is read with the Windows API (2026.7.7). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed adding and deleting entries not working until the application was restarted if loading the PowerShell module `NetTCPIP` failed once. [cc05937](https://github.com/BornToBeRoot/NETworkManager/commit/cc05937a7de2bf1247621845f47077f3796b9bb2)
 - Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
