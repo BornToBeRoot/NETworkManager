@@ -155,6 +155,7 @@ public class IPScannerHostInfo : PropertyChangedBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(IsHostnamePending));
             OnPropertyChanged(nameof(Hostname));
         }
     } = string.Empty;
@@ -172,6 +173,7 @@ public class IPScannerHostInfo : PropertyChangedBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(IsHostnamePending));
             OnPropertyChanged(nameof(Hostname));
         }
     } = string.Empty;
@@ -275,6 +277,8 @@ public class IPScannerHostInfo : PropertyChangedBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(IsHostnamePending));
+            OnPropertyChanged(nameof(IsMACAddressPending));
         }
     }
 
@@ -292,6 +296,7 @@ public class IPScannerHostInfo : PropertyChangedBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(IsMACAddressPending));
             OnPropertyChanged(nameof(MACAddress));
             OnPropertyChanged(nameof(Vendor));
         }
@@ -327,6 +332,21 @@ public class IPScannerHostInfo : PropertyChangedBase
     public string Vendor => !string.IsNullOrEmpty(NeighborMACAddress)
         ? NeighborVendor
         : NetBIOSInfo?.Vendor ?? string.Empty;
+
+    /// <summary>
+    ///     Indicates whether <see cref="Hostname" /> may still change: the DNS hostname is resolved, or there is none
+    ///     (yet) and the mDNS hostname or - without both - the NetBIOS name is still requested.
+    /// </summary>
+    public bool IsHostnamePending => IsDNSPending ||
+                                     (string.IsNullOrEmpty(DNSHostname) &&
+                                      (IsMDNSPending || (string.IsNullOrEmpty(MDNSHostname) && IsNetBIOSPending)));
+
+    /// <summary>
+    ///     Indicates whether <see cref="MACAddress" /> and <see cref="Vendor" /> may still change: the MAC address is
+    ///     resolved from the neighbor table, or there is none and the NetBIOS answer (fallback) is still requested.
+    /// </summary>
+    public bool IsMACAddressPending => IsNeighborMACAddressPending ||
+                                       (string.IsNullOrEmpty(NeighborMACAddress) && IsNetBIOSPending);
 
     /// <summary>
     ///     Title of the web page of the host, see <see cref="HttpTitleResolver" />. Empty if it has none or it was not
@@ -477,14 +497,15 @@ public class IPScannerHostInfo : PropertyChangedBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(IsHostnamePending));
         }
     }
 
     /// <summary>
-    ///     Indicates whether the MAC address is still resolved (<see cref="NeighborMACAddress" /> and
-    ///     <see cref="NeighborVendor" /> are placeholders).
+    ///     Indicates whether the MAC address is still resolved from the neighbor table (<see cref="NeighborMACAddress" />
+    ///     and <see cref="NeighborVendor" /> are placeholders).
     /// </summary>
-    public bool IsMACAddressPending
+    public bool IsNeighborMACAddressPending
     {
         get;
         internal set
@@ -494,6 +515,7 @@ public class IPScannerHostInfo : PropertyChangedBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(IsMACAddressPending));
         }
     }
 
@@ -510,6 +532,7 @@ public class IPScannerHostInfo : PropertyChangedBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(IsHostnamePending));
         }
     }
 
@@ -575,7 +598,7 @@ public class IPScannerHostInfo : PropertyChangedBase
         SNMPDescription = source.SNMPDescription;
         SNMPLocation = source.SNMPLocation;
         IsDNSPending = source.IsDNSPending;
-        IsMACAddressPending = source.IsMACAddressPending;
+        IsNeighborMACAddressPending = source.IsNeighborMACAddressPending;
         IsMDNSPending = source.IsMDNSPending;
         IsHttpTitlePending = source.IsHttpTitlePending;
         IsSNMPPending = source.IsSNMPPending;
@@ -608,7 +631,7 @@ public class IPScannerHostInfo : PropertyChangedBase
             SNMPDescription = SNMPDescription,
             SNMPLocation = SNMPLocation,
             IsDNSPending = IsDNSPending,
-            IsMACAddressPending = IsMACAddressPending,
+            IsNeighborMACAddressPending = IsNeighborMACAddressPending,
             IsMDNSPending = IsMDNSPending,
             IsHttpTitlePending = IsHttpTitlePending,
             IsSNMPPending = IsSNMPPending,

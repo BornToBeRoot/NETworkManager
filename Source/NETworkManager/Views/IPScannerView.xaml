@@ -536,7 +536,7 @@
                         <MenuItem Header="{x:Static localization:Strings.Hostname}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.Hostname}"
-                                  IsEnabled="{Binding Path=SelectedResult.IsDNSPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  IsEnabled="{Binding Path=SelectedResult.IsHostnamePending, Converter={StaticResource BooleanReverseConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}">
                             <MenuItem.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
@@ -824,7 +824,7 @@
                                     MinWidth="150">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource PendingToStringConverter}">
-                            <Binding Path="IsDNSPending" />
+                            <Binding Path="IsHostnamePending" />
                             <Binding Path="Hostname" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
                         </MultiBinding>
                     </DataGridTextColumn.Binding>

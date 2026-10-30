@@ -528,7 +528,7 @@ public sealed class IPScanner(IPScannerOptions options)
             // Lookups of every shown host and requests to reachable hosts, started after the host was found (see
             // EnrichAsync, ScanHostAsync)
             IsDNSPending = options.ResolveHostname,
-            IsMACAddressPending = options.ResolveMACAddress,
+            IsNeighborMACAddressPending = options.ResolveMACAddress,
             IsMDNSPending = isReachable && options.MDNSEnabled,
             IsSNMPPending = !isSNMPFinished,
             SNMPName = snmpInfo?.Name ?? string.Empty,
@@ -591,7 +591,7 @@ public sealed class IPScanner(IPScannerOptions options)
             {
                 x.NeighborMACAddress = macAddress;
                 x.NeighborVendor = vendor;
-                x.IsMACAddressPending = false;
+                x.IsNeighborMACAddressPending = false;
             }));
         }
 
