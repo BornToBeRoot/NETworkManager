@@ -1554,6 +1554,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                     row.CopyFrom(snapshot);
             }
 
+            // Canceled / failed: results of running lookups never arrive - no "..." for them (and Copy works)
+            if (e.IsCanceled || e.Exception != null)
+            {
+                foreach (var host in Results)
+                    host.EndPendingLookups();
+            }
+
             FlushProgress();
 
             // Rescan: back to the progress of the last scan

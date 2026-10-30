@@ -338,16 +338,41 @@ public class IPScannerHostInfo : PropertyChangedBase
     ///     Indicates whether <see cref="Hostname" /> may still change: the DNS hostname is resolved, or there is none
     ///     (yet) and the mDNS hostname or - without both - the NetBIOS name is still requested.
     /// </summary>
-    public bool IsHostnamePending => IsDNSPending ||
-                                     (string.IsNullOrEmpty(DNSHostname) &&
-                                      (IsMDNSPending || (string.IsNullOrEmpty(MDNSHostname) && IsNetBIOSPending)));
+    public bool IsHostnamePending => !_areLookupsEnded &&
+                                     (IsDNSPending ||
+                                      (string.IsNullOrEmpty(DNSHostname) &&
+                                       (IsMDNSPending || (string.IsNullOrEmpty(MDNSHostname) && IsNetBIOSPending))));
 
     /// <summary>
     ///     Indicates whether <see cref="MACAddress" /> and <see cref="Vendor" /> may still change: the MAC address is
     ///     resolved from the neighbor table, or there is none and the NetBIOS answer (fallback) is still requested.
     /// </summary>
-    public bool IsMACAddressPending => IsNeighborMACAddressPending ||
-                                       (string.IsNullOrEmpty(NeighborMACAddress) && IsNetBIOSPending);
+    public bool IsMACAddressPending => !_areLookupsEnded &&
+                                       (IsNeighborMACAddressPending ||
+                                        (string.IsNullOrEmpty(NeighborMACAddress) && IsNetBIOSPending));
+
+    // Set by EndPendingLookups: the scan was canceled / failed, nothing arrives any more
+    private bool _areLookupsEnded;
+
+    /// <summary>
+    ///     Ends the lookups that are still running when the scan was canceled or failed (their results never arrive):
+    ///     DNS hostname, MAC address, mDNS hostname and web page show no value instead of "...", and
+    ///     <see cref="Hostname" /> / <see cref="MACAddress" /> no longer wait for NetBIOS. The probes that decide if
+    ///     the host is up (ping, ports, NetBIOS, SNMP) stay pending ("..." = not finished). Call it on the thread that
+    ///     owns the host (UI thread).
+    /// </summary>
+    public void EndPendingLookups()
+    {
+        IsDNSPending = false;
+        IsNeighborMACAddressPending = false;
+        IsMDNSPending = false;
+        IsWebPagePending = false;
+
+        _areLookupsEnded = true;
+
+        OnPropertyChanged(nameof(IsHostnamePending));
+        OnPropertyChanged(nameof(IsMACAddressPending));
+    }
 
     /// <summary>
     ///     Title of the web page of the host, see <see cref="WebPageResolver" />. Empty if it has none or it was not
@@ -657,6 +682,11 @@ public class IPScannerHostInfo : PropertyChangedBase
         IsNeighborMACAddressPending = source.IsNeighborMACAddressPending;
         IsMDNSPending = source.IsMDNSPending;
         IsWebPagePending = source.IsWebPagePending;
+
+        // A rescan restarts the lookups (or a canceled one restores the ended state)
+        _areLookupsEnded = source._areLookupsEnded;
+        OnPropertyChanged(nameof(IsHostnamePending));
+        OnPropertyChanged(nameof(IsMACAddressPending));
         IsSNMPPending = source.IsSNMPPending;
         NeighborMACAddress = source.NeighborMACAddress;
         NeighborVendor = source.NeighborVendor;
@@ -695,7 +725,8 @@ public class IPScannerHostInfo : PropertyChangedBase
             IsWebPagePending = IsWebPagePending,
             IsSNMPPending = IsSNMPPending,
             NeighborMACAddress = NeighborMACAddress,
-            NeighborVendor = NeighborVendor
+            NeighborVendor = NeighborVendor,
+            _areLookupsEnded = _areLookupsEnded
         };
     }
 }
