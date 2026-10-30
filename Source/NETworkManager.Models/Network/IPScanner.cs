@@ -49,9 +49,12 @@ public sealed class IPScanner(IPScannerOptions options)
     private const int MaxConcurrentNeighborVerifications = 4;
 
     // Snapshot of the neighbor table (IP address -> entry), see GetNeighborEntryAsync. Replaced, never changed.
+    // Snapshot and the time it was read (before reading) in one object, so they are always read together without a
+    // lock. Only a read of the table takes the semaphore.
+    private sealed record NeighborTableSnapshot(Dictionary<IPAddress, NeighborInfo> Entries, DateTime Timestamp);
+
     private readonly SemaphoreSlim _neighborTableSemaphore = new(1, 1);
-    private Dictionary<IPAddress, NeighborInfo> _neighborTable = [];
-    private DateTime _neighborTableTimestamp = DateTime.MinValue;
+    private volatile NeighborTableSnapshot _neighborTable = new([], DateTime.MinValue);
 
     private readonly SemaphoreSlim _neighborVerificationSemaphore =
         new(MaxConcurrentNeighborVerifications, MaxConcurrentNeighborVerifications);
@@ -728,37 +731,59 @@ public sealed class IPScanner(IPScannerOptions options)
     private async Task<NeighborInfo> GetNeighborEntryAsync(IPAddress ipAddress, DateTime discoveredAt,
         bool requireReachable, CancellationToken cancellationToken)
     {
+        // Cached snapshot, no lock needed: an entry, or no newer entry since the snapshot was read after the host
+        // answered. With the scope id if it was entered (e.g. "fe80::1%3" and "fe80::1%7" are two hosts on different
+        // interfaces), see NeighborTable.GetNeighborMap.
+        if (TryGetCachedNeighborEntry(_neighborTable, ipAddress, discoveredAt, requireReachable, out var entry))
+            return entry;
+
+        // Hosts that finish in the meantime share the next read - wait without holding the lock, so lookups that are
+        // answered from the cache never wait for it
+        var wait = _neighborTable.Timestamp + MinNeighborTableReadInterval - DateTime.UtcNow;
+
+        if (wait > TimeSpan.Zero)
+            await Task.Delay(wait, cancellationToken).ConfigureAwait(false);
+
         // Hosts wait without blocking a thread while another host reads the table
         await _neighborTableSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
 
         try
         {
-            // With the scope id if it was entered (e.g. "fe80::1%3" and "fe80::1%7" are two hosts on different
-            // interfaces), see NeighborTable.GetNeighborMap
-            if (_neighborTable.TryGetValue(ipAddress, out var entry) &&
-                (!requireReachable || entry.State == NeighborState.Reachable))
+            // Read by another host in the meantime
+            if (TryGetCachedNeighborEntry(_neighborTable, ipAddress, discoveredAt, requireReachable, out entry))
                 return entry;
-
-            // Already read after the host answered -> no (newer) entry
-            if (_neighborTableTimestamp > discoveredAt)
-                return entry;
-
-            // Hosts that finish in the meantime share the next read
-            var wait = _neighborTableTimestamp + MinNeighborTableReadInterval - DateTime.UtcNow;
-
-            if (wait > TimeSpan.Zero)
-                await Task.Delay(wait, cancellationToken).ConfigureAwait(false);
 
             // Timestamp before reading the table, so entries created while reading are covered by the next read
-            _neighborTableTimestamp = DateTime.UtcNow;
-            _neighborTable = NeighborTable.GetNeighborMap();
+            var timestamp = DateTime.UtcNow;
 
-            return _neighborTable.GetValueOrDefault(ipAddress);
+            _neighborTable = new NeighborTableSnapshot(NeighborTable.GetNeighborMap(), timestamp);
+
+            return _neighborTable.Entries.GetValueOrDefault(ipAddress);
         }
         finally
         {
             _neighborTableSemaphore.Release();
         }
+    }
+
+    /// <summary>
+    ///     Looks up an entry in a snapshot of the neighbor table, see <see cref="GetNeighborEntryAsync" />.
+    /// </summary>
+    /// <param name="snapshot">Snapshot of the neighbor table.</param>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="discoveredAt">Time the host answered (or its probes were finished).</param>
+    /// <param name="requireReachable">Only a <see cref="NeighborState.Reachable" /> entry is a hit.</param>
+    /// <param name="entry">Entry of the host (also a not reachable one), null if there is none.</param>
+    /// <returns>True if the snapshot answers the lookup (no need to read the table again).</returns>
+    private static bool TryGetCachedNeighborEntry(NeighborTableSnapshot snapshot, IPAddress ipAddress,
+        DateTime discoveredAt, bool requireReachable, out NeighborInfo entry)
+    {
+        if (snapshot.Entries.TryGetValue(ipAddress, out entry) &&
+            (!requireReachable || entry.State == NeighborState.Reachable))
+            return true;
+
+        // Already read after the host answered -> no (newer) entry
+        return snapshot.Timestamp > discoveredAt;
     }
 
     /// <summary>
@@ -786,7 +811,7 @@ public sealed class IPScanner(IPScannerOptions options)
         var isGateway = gateways.Contains(ipAddressWithoutScopeId);
 
         // MAC addresses of the gateways from the current snapshot (replaced, never changed - no lock needed)
-        var neighborTable = _neighborTable;
+        var neighborTable = _neighborTable.Entries;
 
         var gatewayMACAddresses = gateways
             .Select(x => neighborTable.GetValueOrDefault(x)?.MACAddress.ToString())
