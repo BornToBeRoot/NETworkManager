@@ -5218,9 +5218,6 @@ Do you want to start the scan?</value>
   <data name="MDNS" xml:space="preserve">
     <value>mDNS</value>
   </data>
-  <data name="MDNSHostname" xml:space="preserve">
-    <value>mDNS hostname</value>
-  </data>
   <data name="ResolveMDNSHostname" xml:space="preserve">
     <value>Resolve mDNS hostname</value>
   </data>
@@ -5239,12 +5236,6 @@ Do you want to start the scan?</value>
   <data name="SNMPName" xml:space="preserve">
     <value>SNMP name</value>
   </data>
-  <data name="SNMPDescription" xml:space="preserve">
-    <value>SNMP description</value>
-  </data>
-  <data name="SNMPLocation" xml:space="preserve">
-    <value>SNMP location</value>
-  </data>
   <data name="ReadTheSNMPSystemInformation" xml:space="preserve">
     <value>Read the SNMP system information</value>
   </data>
@@ -5256,5 +5247,20 @@ Do you want to start the scan?</value>
   </data>
   <data name="HelpMessage_ResolveMACAddressAndVendor" xml:space="preserve">
     <value>Show the MAC address and vendor of every found host: read from the neighbor table (ARP / NDP) for hosts in a local subnet, otherwise from the NetBIOS answer (if NetBIOS is enabled). Doesn't find hosts - a host that doesn't answer the ping, a port or NetBIOS is only found with "Find hosts in the local subnet".</value>
+  </data>
+  <data name="StatusCode" xml:space="preserve">
+    <value>Status code</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Web" xml:space="preserve">
+    <value>Web</value>
+  </data>
+  <data name="Hostnames" xml:space="preserve">
+    <value>Hostnames</value>
+  </data>
+  <data name="XPoweredBy" xml:space="preserve">
+    <value>X-Powered-By</value>
   </data>
 </root>

@@ -6393,6 +6393,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hostnames.
+        /// </summary>
+        public static string Hostnames {
+            get {
+                return ResourceManager.GetString("Hostnames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hosts.
         /// </summary>
         public static string Hosts {
@@ -7875,15 +7884,6 @@ namespace NETworkManager.Localization.Resources {
         public static string MDNS {
             get {
                 return ResourceManager.GetString("MDNS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to mDNS hostname.
-        /// </summary>
-        public static string MDNSHostname {
-            get {
-                return ResourceManager.GetString("MDNSHostname", resourceCulture);
             }
         }
         
@@ -13150,15 +13150,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SNMP description.
-        /// </summary>
-        public static string SNMPDescription {
-            get {
-                return ResourceManager.GetString("SNMPDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Authentication failed. Please check the community string!.
         /// </summary>
         public static string SNMPErrorCode_AuthorizationError {
@@ -13326,15 +13317,6 @@ namespace NETworkManager.Localization.Resources {
         public static string SNMPErrorCode_WrongValue {
             get {
                 return ResourceManager.GetString("SNMPErrorCode_WrongValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SNMP location.
-        /// </summary>
-        public static string SNMPLocation {
-            get {
-                return ResourceManager.GetString("SNMPLocation", resourceCulture);
             }
         }
         
@@ -13606,6 +13588,15 @@ namespace NETworkManager.Localization.Resources {
         public static string StatusChange {
             get {
                 return ResourceManager.GetString("StatusChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status code.
+        /// </summary>
+        public static string StatusCode {
+            get {
+                return ResourceManager.GetString("StatusCode", resourceCulture);
             }
         }
         
@@ -14249,6 +14240,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total bytes received.
         /// </summary>
         public static string TotalBytesReceived {
@@ -14881,6 +14881,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Web.
+        /// </summary>
+        public static string Web {
+            get {
+                return ResourceManager.GetString("Web", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Web Console.
         /// </summary>
         public static string WebConsole {
@@ -15214,6 +15223,15 @@ namespace NETworkManager.Localization.Resources {
         public static string XPaused {
             get {
                 return ResourceManager.GetString("XPaused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X-Powered-By.
+        /// </summary>
+        public static string XPoweredBy {
+            get {
+                return ResourceManager.GetString("XPoweredBy", resourceCulture);
             }
         }
         

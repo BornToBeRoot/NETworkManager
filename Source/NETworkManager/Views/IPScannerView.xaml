@@ -827,17 +827,6 @@
                         </MultiBinding>
                     </DataGridTextColumn.Visibility>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.MDNSHostname}"
-                                    SortMemberPath="MDNSHostname"
-                                    Visibility="{Binding Path=Data.ScanOptions.MDNSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                    MinWidth="150">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
-                            <Binding Path="IsMDNSPending" />
-                            <Binding Path="MDNSHostname" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.PingStatus}"
                                     SortMemberPath="PingInfo.Status"
                                     Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
@@ -943,39 +932,6 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.SNMPDescription}"
-                                    SortMemberPath="SNMPDescription"
-                                    Visibility="{Binding Path=Data.ScanOptions.SNMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                    MinWidth="150">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
-                            <Binding Path="IsSNMPPending" />
-                            <Binding Path="SNMPDescription" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                    <!-- Long descriptions (e.g. model and firmware) in the tooltip -->
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="ToolTip" Value="{Binding SNMPDescription}" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding SNMPDescription}" Value="">
-                                    <Setter Property="ToolTip" Value="{x:Null}" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.SNMPLocation}"
-                                    SortMemberPath="SNMPLocation"
-                                    Visibility="{Binding Path=Data.ScanOptions.SNMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                    MinWidth="150">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
-                            <Binding Path="IsSNMPPending" />
-                            <Binding Path="SNMPLocation" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.NetBIOSReachable}"
                                     SortMemberPath="NetBIOSInfo.IsReachable"
                                     Visibility="{Binding Path=Data.ScanOptions.NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
@@ -1043,7 +999,9 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*" />
@@ -1362,6 +1320,340 @@
                                         </ListViewItem>
                                     </ListView>
                                 </Grid>
+                            </Grid>
+                            <!-- Space to the sections of the optional requests, only if one of them is shown -->
+                            <Rectangle Grid.Row="3" Grid.Column="0" Height="20">
+                                <Rectangle.Visibility>
+                                    <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
+                                        <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.MDNSEnabled" />
+                                        <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.HttpTitleEnabled" />
+                                        <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.SNMPEnabled" />
+                                    </MultiBinding>
+                                </Rectangle.Visibility>
+                            </Rectangle>
+                            <!-- Hostnames of all sources (shown with mDNS, the column shows the first one) -->
+                            <Grid Grid.Row="4" Grid.Column="0"
+                                  Visibility="{Binding Path=Data.ScanOptions.MDNSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0"
+                                           Text="{x:Static localization:Strings.Hostnames}"
+                                           Style="{StaticResource BoldTextBlock}"
+                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <ListView Grid.Row="2" Background="Transparent">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListViewItem}"
+                                               BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                            <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="Background" Value="Transparent" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.Template>
+                                        <ControlTemplate>
+                                            <ItemsPresenter />
+                                        </ControlTemplate>
+                                    </ListView.Template>
+                                    <ListViewItem
+                                                  Visibility="{Binding Path=Data.ScanOptions.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.DNS}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsDNSPending" Mode="OneWay" />
+                                                        <Binding Path="DNSHostname" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.MDNS}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsMDNSPending" Mode="OneWay" />
+                                                        <Binding Path="MDNSHostname" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem
+                                                  Visibility="{Binding Path=Data.ScanOptions.NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.NetBIOS}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsNetBIOSPending" Mode="OneWay" />
+                                                        <Binding Path="NetBIOSInfo.ComputerName" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                </ListView>
+                            </Grid>
+                            <!-- Web page (the column shows the title or the Server header) -->
+                            <Grid Grid.Row="4" Grid.Column="2"
+                                  Visibility="{Binding Path=Data.ScanOptions.HttpTitleEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0"
+                                           Text="{x:Static localization:Strings.Web}"
+                                           Style="{StaticResource BoldTextBlock}"
+                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <ListView Grid.Row="2" Background="Transparent">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListViewItem}"
+                                               BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                            <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="Background" Value="Transparent" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.Template>
+                                        <ControlTemplate>
+                                            <ItemsPresenter />
+                                        </ControlTemplate>
+                                    </ListView.Template>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.URL}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsHttpTitlePending" Mode="OneWay" />
+                                                        <Binding Path="WebURL" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.StatusCode}" />
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsHttpTitlePending" Mode="OneWay" />
+                                                        <Binding Path="WebStatusCode" Mode="OneWay"
+                                                                 Converter="{StaticResource IntToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Title}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2"
+                                                     TextWrapping="Wrap">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsHttpTitlePending" Mode="OneWay" />
+                                                        <Binding Path="WebTitle" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Server}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsHttpTitlePending" Mode="OneWay" />
+                                                        <Binding Path="WebServer" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.XPoweredBy}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsHttpTitlePending" Mode="OneWay" />
+                                                        <Binding Path="WebPoweredBy" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                </ListView>
+                            </Grid>
+                            <!-- SNMP system information (the column shows the name) -->
+                            <Grid Grid.Row="4" Grid.Column="4"
+                                  Visibility="{Binding Path=Data.ScanOptions.SNMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0"
+                                           Text="{x:Static localization:Strings.SNMP}"
+                                           Style="{StaticResource BoldTextBlock}"
+                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <ListView Grid.Row="2" Background="Transparent">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListViewItem}"
+                                               BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                            <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="Background" Value="Transparent" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.Template>
+                                        <ControlTemplate>
+                                            <ItemsPresenter />
+                                        </ControlTemplate>
+                                    </ListView.Template>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Name}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsSNMPPending" Mode="OneWay" />
+                                                        <Binding Path="SNMPName" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Description}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2"
+                                                     TextWrapping="Wrap">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsSNMPPending" Mode="OneWay" />
+                                                        <Binding Path="SNMPDescription" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Location}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsSNMPPending" Mode="OneWay" />
+                                                        <Binding Path="SNMPLocation" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                </ListView>
                             </Grid>
                         </Grid>
                     </Border>

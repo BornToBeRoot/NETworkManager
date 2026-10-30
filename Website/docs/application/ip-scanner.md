@@ -90,7 +90,15 @@ If multiple results are selected, **Rescan**, **Copy** > **IP address** / **Host
 
 ### Result
 
-The number of reachable (up) and unreachable (down) IP addresses is shown next to the **Result** header. Expand a row to see the ping details, the scanned ports and the NetBIOS information (computer name, domain/workgroup, user and MAC address) of the host.
+The number of reachable (up) and unreachable (down) IP addresses is shown next to the **Result** header. Expand a row to see the ping details, the scanned ports and the NetBIOS information (computer name, domain/workgroup, user and MAC address) of the host. The columns show a short summary of the optional requests, the row details all values:
+
+| Setting | Column | Row details |
+| --- | --- | --- |
+| [Resolve mDNS hostname](#resolve-mdns-hostname) | **Hostname** (DNS, mDNS or NetBIOS name) | **Hostnames**: DNS, mDNS and NetBIOS name |
+| [Read the title of web pages](#read-the-title-of-web-pages) | **Web title** (title, `Server` header if the page has no title) | **Web**: URL, status code, title, `Server` and `X-Powered-By` header |
+| [Read the SNMP system information](#read-the-snmp-system-information) | **SNMP name** | **SNMP**: name, description and location |
+
+The sections are only shown if the setting was enabled for the shown scan.
 
 A host is shown (and counted as up) as soon as it answers the first probe: ping reply, open or refused port or NetBIOS answer. Values of probes and lookups that are still running are shown as `...` (ping, ports, NetBIOS, hostname (DNS), MAC address / vendor, mDNS hostname, web title and SNMP), `-/-` means there is no result; the values are filled in when they arrive. The title of the web page is shown as `...` until the port scan is finished (it needs the open ports). Unreachable hosts are added when all probes are finished. A column you sorted by is not sorted again for values that arrive later, click the header again. The scan is finished when all hosts and all lookups are finished.
 
@@ -352,7 +360,7 @@ The MAC address is resolved via ARP (IPv4) or NDP (IPv6) from the neighbor cache
 
 ### Resolve mDNS hostname
 
-Resolve the mDNS hostname (e.g. `macbook.local`) of every reachable host: a reverse lookup (`PTR`) is sent to UDP port `5353` of the host. Answered by Apple devices, Linux (Avahi), Android, printers and many IoT devices that have no DNS (`PTR`) record. The name is shown in the **mDNS hostname** column and used as **Hostname** if there is no DNS hostname (order: DNS, mDNS, NetBIOS). Like a NetBIOS name, it is not passed to other tools (the IP address is used instead).
+Resolve the mDNS hostname (e.g. `macbook.local`) of every reachable host: a reverse lookup (`PTR`) is sent to UDP port `5353` of the host. Answered by Apple devices, Linux (Avahi), Android, printers and many IoT devices that have no DNS (`PTR`) record. The name is shown in the row details (**Hostnames**) and used as **Hostname** if there is no DNS hostname (order: DNS, mDNS, NetBIOS). Like a NetBIOS name, it is not passed to other tools (the IP address is used instead).
 
 **Type:** `Boolean`
 
@@ -406,7 +414,7 @@ Timeout in milliseconds of a web request (per port, scheme and redirect).
 
 ### Read the SNMP system information
 
-Read the name, description and location (`sysName`, `sysDescr`, `sysLocation`) of every reachable host with an SNMP `GET` request to UDP port `161` and show them in the **SNMP name**, **SNMP description** (full text in the tooltip) and **SNMP location** columns, e.g. to identify switches, printers and access points.
+Read the name, description and location (`sysName`, `sysDescr`, `sysLocation`) of every reachable host with an SNMP `GET` request to UDP port `161` and show them in the row details (**SNMP**), the name also in the **SNMP name** column, e.g. to identify switches, printers and access points.
 
 **Type:** `Boolean`
 
