@@ -375,6 +375,22 @@ public class IPScannerHostInfo : PropertyChangedBase
         .FirstOrDefault(x => !string.IsNullOrEmpty(x)) ?? string.Empty;
 
     /// <summary>
+    ///     TLS certificate of the web page, null for http or if none answered (yet).
+    /// </summary>
+    public WebCertificateInfo WebCertificate
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     ///     Realm of the login prompt of the web page (<c>WWW-Authenticate</c> header), empty if there is none.
     /// </summary>
     public string WebRealm
@@ -632,6 +648,7 @@ public class IPScannerHostInfo : PropertyChangedBase
         WebServer = source.WebServer;
         WebPoweredBy = source.WebPoweredBy;
         WebRealm = source.WebRealm;
+        WebCertificate = source.WebCertificate;
         WebRedirectURL = source.WebRedirectURL;
         SNMPName = source.SNMPName;
         SNMPDescription = source.SNMPDescription;
@@ -667,6 +684,7 @@ public class IPScannerHostInfo : PropertyChangedBase
             WebServer = WebServer,
             WebPoweredBy = WebPoweredBy,
             WebRealm = WebRealm,
+            WebCertificate = WebCertificate,
             WebRedirectURL = WebRedirectURL,
             SNMPName = SNMPName,
             SNMPDescription = SNMPDescription,

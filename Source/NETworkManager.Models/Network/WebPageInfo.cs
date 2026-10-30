@@ -14,6 +14,7 @@
 /// <param name="RedirectURL">
 ///     Target of a redirect to another host (e.g. "https://unifi.local:8443/"), empty if there is none.
 /// </param>
+/// <param name="Certificate">TLS certificate of the web server, null for http.</param>
 public sealed record WebPageInfo(
     string URL,
     int StatusCode,
@@ -21,4 +22,5 @@ public sealed record WebPageInfo(
     string Server,
     string PoweredBy,
     string Realm,
-    string RedirectURL);
+    string RedirectURL,
+    WebCertificateInfo Certificate);

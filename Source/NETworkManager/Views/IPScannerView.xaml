@@ -28,6 +28,7 @@
         <converters:IPScannerDetectionMethodToStringConverter x:Key="IPScannerDetectionMethodToStringConverter" />
         <converters:IPScannerStatusToolTipConverter x:Key="IPScannerStatusToolTipConverter" />
         <converters:SuccessStyleConverter x:Key="SuccessStyleConverter" />
+        <converters:WebCertificateToStringConverter x:Key="WebCertificateToStringConverter" />
         <converters:IPScannerHostRoleToStringConverter x:Key="IPScannerHostRoleToStringConverter" />
         <converters:IPScannerOSGuessToStringConverter x:Key="IPScannerOSGuessToStringConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
@@ -1673,6 +1674,66 @@
                                                         <Binding Path="IsWebPagePending" Mode="OneWay" />
                                                         <Binding Path="WebRedirectURL" Mode="OneWay"
                                                                  Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Certificate}" />
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
+                                                        <Binding Path="WebCertificate" Mode="OneWay"
+                                                                 Converter="{StaticResource WebCertificateToStringConverter}" ConverterParameter="Subject" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Issuer}" />
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
+                                                        <Binding Path="WebCertificate" Mode="OneWay"
+                                                                 Converter="{StaticResource WebCertificateToStringConverter}" ConverterParameter="Issuer" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.ValidUntil}" />
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
+                                                        <Binding Path="WebCertificate" Mode="OneWay"
+                                                                 Converter="{StaticResource WebCertificateToStringConverter}" ConverterParameter="NotAfter" />
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>

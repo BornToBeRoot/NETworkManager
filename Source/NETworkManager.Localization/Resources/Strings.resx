@@ -5283,4 +5283,19 @@ Do you want to start the scan?</value>
   <data name="RedirectTo" xml:space="preserve">
     <value>Redirect to</value>
   </data>
+  <data name="Certificate" xml:space="preserve">
+    <value>Certificate</value>
+  </data>
+  <data name="Issuer" xml:space="preserve">
+    <value>Issuer</value>
+  </data>
+  <data name="ValidUntil" xml:space="preserve">
+    <value>Valid until</value>
+  </data>
+  <data name="SelfSigned" xml:space="preserve">
+    <value>Self-signed</value>
+  </data>
+  <data name="XExpired" xml:space="preserve">
+    <value>{0} (expired)</value>
+  </data>
 </root>

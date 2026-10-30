@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -33,18 +32,27 @@ public static partial class WebPageResolver
     /// </summary>
     private const int MaxRedirects = 3;
 
-    private static readonly HttpClient Client = new(new SocketsHttpHandler
+    /// <summary>
+    ///     Key of the TLS certificate of the web server in the options of a request, set by the certificate callback of
+    ///     the handler (it gets the request, unlike the callback of the <c>SslStream</c>).
+    /// </summary>
+    private static readonly HttpRequestOptionsKey<WebCertificateInfo> CertificateKey =
+        new("NETworkManager.Certificate");
+
+    private static readonly HttpClient Client = new(new HttpClientHandler
     {
         AllowAutoRedirect = false,
         UseCookies = false,
         UseProxy = false,
         Credentials = null,
         AutomaticDecompression = DecompressionMethods.All,
-        PooledConnectionLifetime = TimeSpan.FromSeconds(30),
-        SslOptions = new SslClientAuthenticationOptions
+        // Devices use self-signed certificates - accepted (nothing is sent), the certificate is read
+        ServerCertificateCustomValidationCallback = (request, certificate, _, _) =>
         {
-            // Devices use self-signed certificates - only the title is read
-            RemoteCertificateValidationCallback = (_, _, _, _) => true
+            if (certificate != null)
+                request.Options.Set(CertificateKey, WebCertificateInfo.FromCertificate(certificate));
+
+            return true;
         }
     })
     {
@@ -115,6 +123,9 @@ public static partial class WebPageResolver
     {
         var uri = new Uri(url);
 
+        // Certificate of the last https response (e.g. after a redirect from http to https)
+        WebCertificateInfo certificate = null;
+
         try
         {
             for (var redirects = 0; ; redirects++)
@@ -123,8 +134,15 @@ public static partial class WebPageResolver
                 using var linkedCts =
                     CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token);
 
-                using var response = await Client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead,
+                // A new connection per request (no pooled one), so the certificate callback runs for every request
+                using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+                request.Headers.ConnectionClose = true;
+
+                using var response = await Client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead,
                     linkedCts.Token).ConfigureAwait(false);
+
+                if (request.Options.TryGetValue(CertificateKey, out var requestCertificate))
+                    certificate = requestCertificate;
 
                 var statusCode = (int)response.StatusCode;
                 var server = CleanHeaderValue(response.Headers.Server.ToString());
@@ -152,14 +170,14 @@ public static partial class WebPageResolver
 
                     // Redirect to another host - only the headers and the target
                     return new WebPageInfo(url, statusCode, string.Empty, server, poweredBy, realm,
-                        CleanHeaderValue(location.ToString()));
+                        CleanHeaderValue(location.ToString()), certificate);
                 }
 
                 var content = await ReadContentAsync(response, linkedCts.Token).ConfigureAwait(false);
 
                 var title = ParseTitle(Decode(content, response.Content.Headers.ContentType?.CharSet));
 
-                return new WebPageInfo(url, statusCode, title, server, poweredBy, realm, string.Empty);
+                return new WebPageInfo(url, statusCode, title, server, poweredBy, realm, string.Empty, certificate);
             }
         }
         catch (Exception) when (!cancellationToken.IsCancellationRequested)

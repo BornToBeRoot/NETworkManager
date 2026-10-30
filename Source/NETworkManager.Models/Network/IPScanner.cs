@@ -645,6 +645,7 @@ public sealed class IPScanner(IPScannerOptions options)
             x.WebPoweredBy = webPageInfo?.PoweredBy ?? string.Empty;
             x.WebRealm = webPageInfo?.Realm ?? string.Empty;
             x.WebRedirectURL = webPageInfo?.RedirectURL ?? string.Empty;
+            x.WebCertificate = webPageInfo?.Certificate;
             x.IsWebPagePending = false;
         }));
     }

@@ -88,7 +88,11 @@ public static partial class ExportManager
             $"{nameof(IPScannerHostInfo.WebServer)}," +
             $"{nameof(IPScannerHostInfo.WebPoweredBy)}," +
             $"{nameof(IPScannerHostInfo.WebRealm)}," +
-            $"{nameof(IPScannerHostInfo.WebRedirectURL)}"
+            $"{nameof(IPScannerHostInfo.WebRedirectURL)}," +
+            "WebCertificateSubject," +
+            "WebCertificateIssuer," +
+            "WebCertificateNotAfter," +
+            "WebCertificateSelfSigned"
         );
 
         foreach (var info in collection)
@@ -145,7 +149,11 @@ public static partial class ExportManager
                 $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebServer : null)}," +
                 $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebPoweredBy : null)}," +
                 $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebRealm : null)}," +
-                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebRedirectURL : null)}"
+                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebRedirectURL : null)}," +
+                $"{CsvHelper.QuoteString(GetWebCertificate(info, options)?.Subject)}," +
+                $"{CsvHelper.QuoteString(GetWebCertificate(info, options)?.Issuer)}," +
+                $"{GetWebCertificateNotAfter(info, options)}," +
+                $"{GetWebCertificate(info, options)?.IsSelfSigned}"
             );
         }
 
@@ -223,7 +231,11 @@ public static partial class ExportManager
                             new XElement(nameof(IPScannerHostInfo.WebRealm),
                                 options.WebPageEnabled ? info.WebRealm : null),
                             new XElement(nameof(IPScannerHostInfo.WebRedirectURL),
-                                options.WebPageEnabled ? info.WebRedirectURL : null)
+                                options.WebPageEnabled ? info.WebRedirectURL : null),
+                            new XElement("WebCertificateSubject", GetWebCertificate(info, options)?.Subject),
+                            new XElement("WebCertificateIssuer", GetWebCertificate(info, options)?.Issuer),
+                            new XElement("WebCertificateNotAfter", GetWebCertificateNotAfter(info, options)),
+                            new XElement("WebCertificateSelfSigned", GetWebCertificate(info, options)?.IsSelfSigned)
                         )
                 )
             )
@@ -307,7 +319,11 @@ public static partial class ExportManager
                 WebServer = options.WebPageEnabled ? info.WebServer : null,
                 WebPoweredBy = options.WebPageEnabled ? info.WebPoweredBy : null,
                 WebRealm = options.WebPageEnabled ? info.WebRealm : null,
-                WebRedirectURL = options.WebPageEnabled ? info.WebRedirectURL : null
+                WebRedirectURL = options.WebPageEnabled ? info.WebRedirectURL : null,
+                WebCertificateSubject = GetWebCertificate(info, options)?.Subject,
+                WebCertificateIssuer = GetWebCertificate(info, options)?.Issuer,
+                WebCertificateNotAfter = GetWebCertificateNotAfter(info, options),
+                WebCertificateSelfSigned = GetWebCertificate(info, options)?.IsSelfSigned
             };
         }
 
@@ -333,6 +349,34 @@ public static partial class ExportManager
     private static int? GetWebStatusCode(IPScannerHostInfo info, IPScannerResultOptions options)
     {
         return options.WebPageEnabled && info.WebStatusCode > 0 ? info.WebStatusCode : null;
+    }
+
+    /// <summary>
+    ///     Gets the TLS certificate of the web page of a host, null for http, if none answered or the web page was not
+    ///     read.
+    /// </summary>
+    /// <param name="info">Host to get the certificate for.</param>
+    /// <param name="options">Options of the scan the host is from.</param>
+    /// <returns>Certificate or null.</returns>
+    private static WebCertificateInfo GetWebCertificate(IPScannerHostInfo info, IPScannerResultOptions options)
+    {
+        return options.WebPageEnabled ? info.WebCertificate : null;
+    }
+
+    /// <summary>
+    ///     Gets the end of the validity of the TLS certificate of the web page of a host (local time, like the other
+    ///     timestamps), null if there is none (see <see cref="GetWebCertificate" />).
+    /// </summary>
+    /// <param name="info">Host to get the end of the validity for.</param>
+    /// <param name="options">Options of the scan the host is from.</param>
+    /// <returns>End of the validity or null.</returns>
+    private static string GetWebCertificateNotAfter(IPScannerHostInfo info, IPScannerResultOptions options)
+    {
+        var certificate = GetWebCertificate(info, options);
+
+        return certificate == null
+            ? null
+            : DateTimeHelper.DateTimeToFullDateTimeString(certificate.NotAfter.ToLocalTime());
     }
 
     /// <summary>

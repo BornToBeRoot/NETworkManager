@@ -1717,6 +1717,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Certificate.
+        /// </summary>
+        public static string Certificate {
+            get {
+                return ResourceManager.GetString("Certificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change.
         /// </summary>
         public static string Change {
@@ -7083,6 +7092,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ISP {
             get {
                 return ResourceManager.GetString("ISP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Issuer.
+        /// </summary>
+        public static string Issuer {
+            get {
+                return ResourceManager.GetString("Issuer", resourceCulture);
             }
         }
         
@@ -12669,6 +12687,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Self-signed.
+        /// </summary>
+        public static string SelfSigned {
+            get {
+                return ResourceManager.GetString("SelfSigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send.
         /// </summary>
         public static string Send {
@@ -14780,6 +14807,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Valid until.
+        /// </summary>
+        public static string ValidUntil {
+            get {
+                return ResourceManager.GetString("ValidUntil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value.
         /// </summary>
         public static string Value {
@@ -15250,6 +15286,15 @@ namespace NETworkManager.Localization.Resources {
         public static string XDown {
             get {
                 return ResourceManager.GetString("XDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} (expired).
+        /// </summary>
+        public static string XExpired {
+            get {
+                return ResourceManager.GetString("XExpired", resourceCulture);
             }
         }
         
