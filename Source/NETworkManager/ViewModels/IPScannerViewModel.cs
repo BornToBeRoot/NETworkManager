@@ -770,9 +770,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// </summary>
     private async Task Start()
     {
-        // A host is only found if it answers a probe - without ping, port scan and NetBIOS every host is unreachable
+        // A host is only found if it answers a probe - without ping, port scan, NetBIOS and SNMP every host is
+        // unreachable (ARP / NDP alone isn't enough: the neighbor entry is only created by the packets of the probes)
         if (!SettingsManager.Current.IPScanner_ICMPEnabled && !SettingsManager.Current.IPScanner_PortScanEnabled &&
-            !SettingsManager.Current.IPScanner_NetBIOSEnabled)
+            !SettingsManager.Current.IPScanner_NetBIOSEnabled && !SettingsManager.Current.IPScanner_SNMPEnabled)
         {
             StatusMessage = Strings.EnableAtLeastOneProbeToFindHostsMessage;
             IsStatusMessageDisplayed = true;

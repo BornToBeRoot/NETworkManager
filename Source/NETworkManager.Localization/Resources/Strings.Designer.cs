@@ -4101,7 +4101,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable at least one of ping, port scan or NetBIOS in the settings. A host is only found if it answers one of them..
+        ///   Looks up a localized string similar to Enable at least one of ping, port scan, NetBIOS or SNMP in the settings. A host is only found if it answers one of them..
         /// </summary>
         public static string EnableAtLeastOneProbeToFindHostsMessage {
             get {

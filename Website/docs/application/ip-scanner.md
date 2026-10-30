@@ -189,7 +189,7 @@ Send a ping (ICMP echo request) to every IP address. Disable it if ICMP is block
 
 :::note
 
-A host is only found if it answers a probe: at least one of **Ping hosts**, [Scan ports](#scan-ports) or [Scan for NetBIOS](#scan-for-netbios) must be enabled, otherwise the scan doesn't start.
+A host is only found if it answers a probe: at least one of **Ping hosts**, [Scan ports](#scan-ports), [Scan for NetBIOS](#scan-for-netbios) or [Read the SNMP system information](#read-the-snmp-system-information) must be enabled, otherwise the scan doesn't start. [Find hosts in the local subnet](#find-hosts-in-the-local-subnet) alone is not enough, it uses the neighbor entries created by the packets of these probes.
 
 :::
 

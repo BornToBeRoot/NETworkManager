@@ -5168,7 +5168,7 @@ Do you want to start the scan?</value>
     <value>Ping is disabled!</value>
   </data>
   <data name="EnableAtLeastOneProbeToFindHostsMessage" xml:space="preserve">
-    <value>Enable at least one of ping, port scan or NetBIOS in the settings. A host is only found if it answers one of them.</value>
+    <value>Enable at least one of ping, port scan, NetBIOS or SNMP in the settings. A host is only found if it answers one of them.</value>
   </data>
   <data name="ARPNDP" xml:space="preserve">
     <value>ARP / NDP</value>
