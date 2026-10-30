@@ -63,6 +63,10 @@ public sealed class IPScanner(IPScannerOptions options)
     // hosts are scanned and only read afterwards
     private Dictionary<IPAddress, IPScannerHostRole> _hostRoles = [];
 
+    // Default gateways of the operational network interfaces (from _hostRoles, without scope id), for the proxy ARP
+    // check of the neighbor check
+    private List<IPAddress> _gateways = [];
+
     /// <summary>
     ///     Gets the number of hosts finished so far (all probes and lookups). Thread-safe; may be read from
     ///     any thread while the scan is running.
@@ -157,6 +161,8 @@ public sealed class IPScanner(IPScannerOptions options)
                 var networkInterfaces = NetworkInterface.GetNetworkInterfaces();
 
                 _hostRoles = IPScannerHostRoleHelper.GetRoles(networkInterfaces);
+                _gateways = [.. _hostRoles.Where(x => x.Value.HasFlag(IPScannerHostRole.DefaultGateway))
+                    .Select(x => x.Key)];
 
                 var hostParallelOptions = new ParallelOptions
                 {
@@ -421,8 +427,7 @@ public sealed class IPScanner(IPScannerOptions options)
             // No probe answered: a host in a local subnet may still have answered the ARP request / neighbor
             // solicitation of the probes (e.g. a firewall that drops everything else)
             if (hostInfo == null && isNeighborCheckEnabled &&
-                await IsNeighborAsync(ipAddress, wasNeighborReachableBefore, networkInterfaces, cancellationToken)
-                    .ConfigureAwait(false))
+                await IsNeighborAsync(ipAddress, wasNeighborReachableBefore, cancellationToken).ConfigureAwait(false))
             {
                 detectedBy = IPScannerDetectionMethod.ARP;
                 hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo, snmpInfo,
@@ -795,25 +800,22 @@ public sealed class IPScanner(IPScannerOptions options)
     /// </summary>
     /// <param name="ipAddress">IP address of the host (in a local subnet, see <see cref="IsInLocalSubnet" />).</param>
     /// <param name="wasReachableBefore">The entry was already reachable before the probes were sent.</param>
-    /// <param name="networkInterfaces">Local network interfaces (for the default gateways).</param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     /// <returns>True if the host is reachable.</returns>
     private async Task<bool> IsNeighborAsync(IPAddress ipAddress, bool wasReachableBefore,
-        List<NetworkInterfaceInfo> networkInterfaces, CancellationToken cancellationToken)
+        CancellationToken cancellationToken)
     {
         var entry = await GetNeighborEntryAsync(ipAddress, DateTime.UtcNow, true, cancellationToken)
             .ConfigureAwait(false);
 
-        var gateways = networkInterfaces.SelectMany(x => x.IPv4Gateway.Concat(x.IPv6Gateway))
-            .Select(IPAddressHelper.WithoutScopeId).ToList();
-
-        var ipAddressWithoutScopeId = IPAddressHelper.WithoutScopeId(ipAddress);
-        var isGateway = gateways.Contains(ipAddressWithoutScopeId);
+        // Gateways (computed once per scan, like the roles of the hosts)
+        var isGateway = IPScannerHostRoleHelper.GetRole(_hostRoles, ipAddress)
+            .HasFlag(IPScannerHostRole.DefaultGateway);
 
         // MAC addresses of the gateways from the current snapshot (replaced, never changed - no lock needed)
         var neighborTable = _neighborTable.Entries;
 
-        var gatewayMACAddresses = gateways
+        var gatewayMACAddresses = _gateways
             .Select(x => neighborTable.GetValueOrDefault(x)?.MACAddress.ToString())
             .Where(x => !string.IsNullOrEmpty(x))
             .ToList();
