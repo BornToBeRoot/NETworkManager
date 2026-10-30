@@ -47,13 +47,17 @@ A scan of more than `65,536` IP addresses (e.g. a `/15`) must be confirmed, more
 
 ### Toolbar
 
-| Button                  | Description                                                                                                            |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| **Detect local subnet** | Populates the host field with the IP address and subnet mask of the current network interface to scan the local subnet |
+| Button                                            | Description                                                                                                            |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **Detect local subnet**                           | Populates the host field with the IP address and subnet mask of the current network interface to scan the local subnet |
+| **Subnet of network interface** > _Subnet (Name)_ | Populates the host field with the IPv4 subnet of a network interface (e.g. `192.168.1.0/24`), e.g. if there are multiple network interfaces (LAN, Wi-Fi, VPN, Hyper-V) |
+| **All local subnets**                             | Populates the host field with the IPv4 subnets of all network interfaces (without the link-local subnet `169.254.0.0/16`) |
+
+The button opens a menu with these entries. The subnets of the network interfaces are read when the menu is opened; only connected network interfaces with an IPv4 address and subnet mask are listed (no single addresses like `/32`), the link-local subnet (`169.254.0.0/16`, no DHCP server answered) at the end.
 
 :::note
 
-The local IP address (and subnet mask) is determined by trying to route to a public IP address. If this fails (e.g.
+The local IP address (and subnet mask) of **Detect local subnet** is determined by trying to route to a public IP address. If this fails (e.g.
 no network connection), NETworkManager iterates over active network adapters and selects the first valid IPv4 address,
 with link-local addresses (`169.254.x.x`) given lower priority.
 

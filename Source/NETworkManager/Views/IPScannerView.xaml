@@ -82,11 +82,16 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <Button Grid.Column="4"
-                        Command="{Binding Path=DetectSubnetCommand}"
-                        ToolTip="{x:Static Member=localization:Strings.DetectLocalIPAddressAndSubnetmask}">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type TypeName=Button}" BasedOn="{StaticResource ResourceKey=ImageButton}">
+                <!-- Detect the local subnet (route to the internet), or select the subnet of a network interface -->
+                <mah:DropDownButton Grid.Column="4"
+                                    ToolTip="{x:Static Member=localization:Strings.DetectLocalIPAddressAndSubnetmask}"
+                                    IsExpanded="{Binding Path=IsLocalSubnetMenuOpen, Mode=OneWayToSource}">
+                    <mah:DropDownButton.Resources>
+                        <!-- The items of the submenu don't inherit the DataContext -->
+                        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                    </mah:DropDownButton.Resources>
+                    <mah:DropDownButton.Style>
+                        <Style TargetType="{x:Type mah:DropDownButton}" BasedOn="{StaticResource ImageDropDrownButton}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=IsRunning}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
@@ -96,13 +101,36 @@
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </Button.Resources>
-                    <Rectangle Width="20" Height="20" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                </Button>
+                    </mah:DropDownButton.Style>
+                    <mah:DropDownButton.Content>
+                        <!-- Space to the border and to the arrow of the drop-down -->
+                        <Rectangle Width="20" Height="20" Margin="10,0,10,0"
+                                   Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </mah:DropDownButton.Content>
+                    <mah:DropDownButton.Items>
+                        <MenuItem Header="{x:Static localization:Strings.DetectLocalSubnet}"
+                                  Command="{Binding Path=DetectSubnetCommand}" />
+                        <MenuItem Header="{x:Static localization:Strings.SubnetOfNetworkInterface}"
+                                  ItemsSource="{Binding Path=LocalSubnets}"
+                                  DisplayMemberPath="DisplayName"
+                                  Visibility="{Binding Path=LocalSubnets.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
+                            <MenuItem.ItemContainerStyle>
+                                <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource DefaultMenuItem}">
+                                    <Setter Property="Command"
+                                            Value="{Binding Path=Data.UseLocalSubnetCommand, Source={StaticResource BindingProxy}}" />
+                                    <Setter Property="CommandParameter" Value="{Binding}" />
+                                </Style>
+                            </MenuItem.ItemContainerStyle>
+                        </MenuItem>
+                        <MenuItem Header="{x:Static localization:Strings.AllLocalSubnets}"
+                                  Command="{Binding Path=UseAllLocalSubnetsCommand}"
+                                  Visibility="{Binding Path=LocalSubnets.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}" />
+                    </mah:DropDownButton.Items>
+                </mah:DropDownButton>
                 <Button Grid.Column="6" Grid.Row="0"
                         Command="{Binding ScanCommand}"
                         IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}"

@@ -835,6 +835,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All local subnets.
+        /// </summary>
+        public static string AllLocalSubnets {
+            get {
+                return ResourceManager.GetString("AllLocalSubnets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allow.
         /// </summary>
         public static string Allow {
@@ -3430,6 +3439,15 @@ namespace NETworkManager.Localization.Resources {
         public static string DetectLocalIPAddressAndSubnetmask {
             get {
                 return ResourceManager.GetString("DetectLocalIPAddressAndSubnetmask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detect local subnet.
+        /// </summary>
+        public static string DetectLocalSubnet {
+            get {
+                return ResourceManager.GetString("DetectLocalSubnet", resourceCulture);
             }
         }
         
@@ -13498,6 +13516,15 @@ namespace NETworkManager.Localization.Resources {
         public static string SubnetMask {
             get {
                 return ResourceManager.GetString("SubnetMask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subnet of network interface.
+        /// </summary>
+        public static string SubnetOfNetworkInterface {
+            get {
+                return ResourceManager.GetString("SubnetOfNetworkInterface", resourceCulture);
             }
         }
         

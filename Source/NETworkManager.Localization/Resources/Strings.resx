@@ -5182,4 +5182,13 @@ Do you want to start the scan?</value>
   <data name="HelpMessage_FindHostsInTheLocalSubnet" xml:space="preserve">
     <value>Find hosts in a local subnet that don't answer the ping, a port or NetBIOS (e.g. a firewall drops everything) by their entry in the neighbor table (ARP / NDP). To reach a host in a local subnet, Windows has to resolve its MAC address first, and a host answers this request even if its firewall drops everything else. No additional packets are sent, except to check an entry from earlier traffic again. Hosts behind a router can't be found this way.</value>
   </data>
+  <data name="DetectLocalSubnet" xml:space="preserve">
+    <value>Detect local subnet</value>
+  </data>
+  <data name="SubnetOfNetworkInterface" xml:space="preserve">
+    <value>Subnet of network interface</value>
+  </data>
+  <data name="AllLocalSubnets" xml:space="preserve">
+    <value>All local subnets</value>
+  </data>
 </root>

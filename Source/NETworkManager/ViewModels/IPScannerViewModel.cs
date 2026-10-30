@@ -122,6 +122,34 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }
     }
 
+    /// <summary>
+    /// Gets the IPv4 subnets of the local network interfaces, loaded when the menu of the subnet detection is opened.
+    /// </summary>
+    public ObservableCollection<LocalSubnetInfo> LocalSubnets { get; } = [];
+
+    // Incremented per load of LocalSubnets, so the result of an older load (menu opened twice) is ignored
+    private int _localSubnetsLoadId;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the menu of the subnet detection is open. Opening it loads the subnets
+    /// of the local network interfaces (<see cref="LocalSubnets"/>).
+    /// </summary>
+    public bool IsLocalSubnetMenuOpen
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+
+            if (value)
+                _ = LoadLocalSubnets();
+        }
+    }
+
 
     /// <summary>
     /// Gets or sets a value indicating whether the scan is currently running.
@@ -486,6 +514,32 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private void DetectSubnetAction()
     {
         _ = DetectSubnet();
+    }
+
+    /// <summary>
+    /// Gets the command to scan the subnet of a local network interface (<see cref="LocalSubnetInfo"/>).
+    /// </summary>
+    public ICommand UseLocalSubnetCommand => new RelayCommand(UseLocalSubnetAction);
+
+    private void UseLocalSubnetAction(object parameter)
+    {
+        if (parameter is not LocalSubnetInfo subnet)
+            return;
+
+        SetHostFromSubnetDetection(subnet.Subnet);
+    }
+
+    /// <summary>
+    /// Gets the command to scan the subnets of all local network interfaces (without the link-local subnet).
+    /// </summary>
+    public ICommand UseAllLocalSubnetsCommand => new RelayCommand(_ => UseAllLocalSubnetsAction());
+
+    private void UseAllLocalSubnetsAction()
+    {
+        var subnets = LocalSubnets.Where(x => !x.IsLinkLocal).Select(x => x.Subnet).Distinct().ToList();
+
+        if (subnets.Count > 0)
+            SetHostFromSubnetDetection(string.Join("; ", subnets));
     }
 
     /// <summary>
@@ -959,6 +1013,44 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         IsCanceling = true;
         _cancellationTokenSource.Cancel();
+    }
+
+    /// <summary>
+    /// Loads the subnets of the local network interfaces into <see cref="LocalSubnets"/>.
+    /// </summary>
+    private async Task LoadLocalSubnets()
+    {
+        var loadId = ++_localSubnetsLoadId;
+
+        try
+        {
+            var subnets = NetworkInterface.GetLocalSubnets(await NetworkInterface.GetNetworkInterfacesAsync());
+
+            // Menu opened again in the meantime - the newer load updates the list
+            if (loadId != _localSubnetsLoadId)
+                return;
+
+            LocalSubnets.Clear();
+
+            foreach (var subnet in subnets)
+                LocalSubnets.Add(subnet);
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while loading the subnets of the local network interfaces", ex);
+        }
+    }
+
+    /// <summary>
+    /// Sets the host to a detected / selected subnet.
+    /// </summary>
+    /// <param name="subnet">Subnet(s) to scan.</param>
+    private void SetHostFromSubnetDetection(string subnet)
+    {
+        Host = subnet;
+
+        // Fix: If the user clears the TextBox and then clicks again on the button, the TextBox remains empty...
+        OnPropertyChanged(nameof(Host));
     }
 
     /// <summary>
