@@ -5152,9 +5152,6 @@ Do you want to start the scan?</value>
   <data name="ErrorMessage_PTRRequiresIPAddresses" xml:space="preserve">
     <value>PTR records can only be looked up for IP addresses.</value>
   </data>
-  <data name="DetectedBy" xml:space="preserve">
-    <value>Detected by</value>
-  </data>
   <data name="UpDetectedByX" xml:space="preserve">
     <value>Up (detected by {0})</value>
   </data>
@@ -5262,5 +5259,18 @@ Do you want to start the scan?</value>
   </data>
   <data name="XPoweredBy" xml:space="preserve">
     <value>X-Powered-By</value>
+  </data>
+  <data name="SNMPLocation" xml:space="preserve">
+    <value>Location</value>
+    <comment>Physical location of a device (SNMP sysLocation, e.g. "Server room"), not the location of a file or folder.</comment>
+  </data>
+  <data name="HostnameResolutionIsDisabled" xml:space="preserve">
+    <value>Hostname resolution is disabled!</value>
+  </data>
+  <data name="ReadingWebPagesIsDisabled" xml:space="preserve">
+    <value>Reading web pages is disabled!</value>
+  </data>
+  <data name="SNMPIsDisabled" xml:space="preserve">
+    <value>SNMP is disabled!</value>
   </data>
 </root>

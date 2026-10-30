@@ -18,10 +18,7 @@ public sealed class IPScannerDetectionMethodToStringConverter : IValueConverter
     /// </summary>
     /// <param name="value">Probes the host answered as <see cref="IPScannerDetectionMethod" />.</param>
     /// <param name="targetType"></param>
-    /// <param name="parameter">
-    ///     "Status" to get the status of the host ("Up (detected by Ping, TCP)" / "Down"), "List" to get the
-    ///     translated probes as list (e.g. for labels).
-    /// </param>
+    /// <param name="parameter">"Status" to get the status of the host ("Up (detected by Ping, TCP)" / "Down").</param>
     /// <param name="culture"></param>
     /// <returns>Translated, comma-separated probes, "-/-" if the host didn't answer any probe.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -30,14 +27,12 @@ public sealed class IPScannerDetectionMethodToStringConverter : IValueConverter
 
         var names = GetNames(detectedBy);
 
-        return parameter as string switch
-        {
-            "List" => names,
-            "Status" => detectedBy == IPScannerDetectionMethod.None
+        if (parameter as string == "Status")
+            return detectedBy == IPScannerDetectionMethod.None
                 ? Strings.Down
-                : string.Format(Strings.UpDetectedByX, string.Join(", ", names)),
-            _ => detectedBy == IPScannerDetectionMethod.None ? "-/-" : string.Join(", ", names)
-        };
+                : string.Format(Strings.UpDetectedByX, string.Join(", ", names));
+
+        return detectedBy == IPScannerDetectionMethod.None ? "-/-" : string.Join(", ", names);
     }
 
     /// <summary>

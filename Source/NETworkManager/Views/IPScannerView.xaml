@@ -26,6 +26,7 @@
         <converters:HostReachableToStringConverter x:Key="HostReachableToStringConverter" />
         <converters:HostUpStyleConverter x:Key="HostUpStyleConverter" />
         <converters:IPScannerDetectionMethodToStringConverter x:Key="IPScannerDetectionMethodToStringConverter" />
+        <converters:IPScannerDetectionMethodToUpDownConverter x:Key="IPScannerDetectionMethodToUpDownConverter" />
         <converters:IPScannerHostRoleToStringConverter x:Key="IPScannerHostRoleToStringConverter" />
         <converters:IPScannerOSGuessToStringConverter x:Key="IPScannerOSGuessToStringConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
@@ -39,6 +40,17 @@
         <converters:StringIsNotNullOrEmptyToBooleanConverter x:Key="StringIsNotNullOrEmptyToBooleanConverter" />
         <converters:HostnameHasDomainToBooleanConverter x:Key="HostnameHasDomainToBooleanConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
+        <!-- Up / down label in the header of a probe in the row details, like the "ICMP" label of the Ping Monitor -->
+        <Style x:Key="ProbeAnswerLabel" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource AccentTextBlock}">
+            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+            <Setter Property="Padding" Value="5,2" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Style.Triggers>
+                <Trigger Property="Text" Value="{x:Static localization:Strings.Down}">
+                    <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -996,17 +1008,18 @@
                             </Style>
                         </Border.Style>
                         <Grid Margin="20">
+                            <!-- Ping / hostnames | ports | web | NetBIOS / SNMP -->
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="20" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="10" />
                                 <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="10" />
                                 <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
@@ -1018,51 +1031,31 @@
                                     <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
                                 </Style>
                             </Grid.Resources>
-                            <!-- Probes the host answered (only reachable hosts) -->
-                            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
-                                  Visibility="{Binding Path=IsReachable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0"
-                                           Text="{x:Static localization:Strings.DetectedBy}"
-                                           Style="{StaticResource BoldTextBlock}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}"
-                                           VerticalAlignment="Center" />
-                                <!-- One label per probe, like the "ICMP" label of the Ping Monitor -->
-                                <ItemsControl Grid.Column="2"
-                                              ItemsSource="{Binding Path=DetectedBy, Converter={StaticResource IPScannerDetectionMethodToStringConverter}, ConverterParameter=List}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding}"
-                                                       Background="{DynamicResource MahApps.Brushes.Gray8}"
-                                                       Padding="5" Margin="0,0,5,0"
-                                                       Style="{StaticResource AccentTextBlock}"
-                                                       VerticalAlignment="Center" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </Grid>
-                            <Rectangle Grid.Row="1" Grid.Column="0" Height="10"
-                                       Visibility="{Binding Path=IsReachable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                             <!-- Ping -->
-                            <Grid Grid.Row="2" Grid.Column="0">
+                            <Grid Grid.Row="0" Grid.Column="0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0"
-                                           Text="{x:Static localization:Strings.PingDetails}"
-                                           Style="{StaticResource BoldTextBlock}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <!-- Same height in all sections (with or without label) -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
+                                    <TextBlock Text="{x:Static localization:Strings.PingDetails}"
+                                               Style="{StaticResource BoldTextBlock}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                               VerticalAlignment="Center" />
+                                    <!-- Up / down: the host answered the probe (not while it is running) -->
+                                    <TextBlock Margin="10,0,0,0"
+                                               Style="{StaticResource ProbeAnswerLabel}"
+                                               Text="{Binding Path=DetectedBy, Converter={StaticResource IPScannerDetectionMethodToUpDownConverter}, ConverterParameter=ICMP}">
+                                        <TextBlock.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                                <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.ICMPEnabled" />
+                                                <Binding Path="IsPingPending" Converter="{StaticResource BooleanReverseConverter}" />
+                                            </MultiBinding>
+                                        </TextBlock.Visibility>
+                                    </TextBlock>
+                                </StackPanel>
                                 <StackPanel Grid.Row="2"
                                             VerticalAlignment="Top"
                                             Orientation="Horizontal"
@@ -1155,16 +1148,30 @@
                                 </Grid>
                             </Grid>
                             <!-- Ports -->
-                            <Grid Grid.Row="2" Grid.Column="2">
+                            <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0"
-                                           Text="{x:Static localization:Strings.Ports}"
-                                           Style="{StaticResource BoldTextBlock}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <!-- Same height in all sections (with or without label) -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
+                                    <TextBlock Text="{x:Static localization:Strings.Ports}"
+                                               Style="{StaticResource BoldTextBlock}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                               VerticalAlignment="Center" />
+                                    <!-- Up / down: the host answered the probe (not while it is running) -->
+                                    <TextBlock Margin="10,0,0,0"
+                                               Style="{StaticResource ProbeAnswerLabel}"
+                                               Text="{Binding Path=DetectedBy, Converter={StaticResource IPScannerDetectionMethodToUpDownConverter}, ConverterParameter=TCP}">
+                                        <TextBlock.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                                <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.PortScanEnabled" />
+                                                <Binding Path="IsPortScanPending" Converter="{StaticResource BooleanReverseConverter}" />
+                                            </MultiBinding>
+                                        </TextBlock.Visibility>
+                                    </TextBlock>
+                                </StackPanel>
                                 <StackPanel Grid.Row="2"
                                             VerticalAlignment="Top"
                                             Orientation="Horizontal"
@@ -1239,16 +1246,30 @@
                                 </Grid>
                             </Grid>
                             <!-- NetBIOS -->
-                            <Grid Grid.Row="2" Grid.Column="4">
+                            <Grid Grid.Row="0" Grid.Column="6">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0"
-                                           Text="{x:Static localization:Strings.NetBIOS}"
-                                           Style="{StaticResource BoldTextBlock}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <!-- Same height in all sections (with or without label) -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
+                                    <TextBlock Text="{x:Static localization:Strings.NetBIOS}"
+                                               Style="{StaticResource BoldTextBlock}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                               VerticalAlignment="Center" />
+                                    <!-- Up / down: the host answered the probe (not while it is running) -->
+                                    <TextBlock Margin="10,0,0,0"
+                                               Style="{StaticResource ProbeAnswerLabel}"
+                                               Text="{Binding Path=DetectedBy, Converter={StaticResource IPScannerDetectionMethodToUpDownConverter}, ConverterParameter=NetBIOS}">
+                                        <TextBlock.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                                <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.NetBIOSEnabled" />
+                                                <Binding Path="IsNetBIOSPending" Converter="{StaticResource BooleanReverseConverter}" />
+                                            </MultiBinding>
+                                        </TextBlock.Visibility>
+                                    </TextBlock>
+                                </StackPanel>
                                 <StackPanel Grid.Row="2"
                                             VerticalAlignment="Top"
                                             Orientation="Horizontal"
@@ -1321,29 +1342,45 @@
                                     </ListView>
                                 </Grid>
                             </Grid>
-                            <!-- Space to the sections of the optional requests, only if one of them is shown -->
-                            <Rectangle Grid.Row="3" Grid.Column="0" Height="20">
-                                <Rectangle.Visibility>
-                                    <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
-                                        <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.MDNSEnabled" />
-                                        <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.HttpTitleEnabled" />
-                                        <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.SNMPEnabled" />
-                                    </MultiBinding>
-                                </Rectangle.Visibility>
-                            </Rectangle>
-                            <!-- Hostnames of all sources (shown with mDNS, the column shows the first one) -->
-                            <Grid Grid.Row="4" Grid.Column="0"
-                                  Visibility="{Binding Path=Data.ScanOptions.MDNSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                            <!-- Hostnames of the sources (the column shows the first one: DNS, mDNS, NetBIOS) -->
+                            <Grid Grid.Row="2" Grid.Column="0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0"
-                                           Text="{x:Static localization:Strings.Hostnames}"
-                                           Style="{StaticResource BoldTextBlock}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
-                                <ListView Grid.Row="2" Background="Transparent">
+                                <!-- Same height in all sections (with or without label) -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
+                                    <TextBlock Text="{x:Static localization:Strings.Hostnames}"
+                                               Style="{StaticResource BoldTextBlock}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="2"
+                                            VerticalAlignment="Top"
+                                            Orientation="Horizontal">
+                                    <StackPanel.Style>
+                                        <Style TargetType="{x:Type StackPanel}">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=Data.ScanOptions.ResolveHostname, Source={StaticResource BindingProxy}}" Value="False" />
+                                                        <Condition Binding="{Binding Path=Data.ScanOptions.MDNSEnabled, Source={StaticResource BindingProxy}}" Value="False" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
+                                    <Rectangle Width="16" Height="16"
+                                               Style="{StaticResource InfoImageRectangle}" />
+                                    <TextBlock Text="{x:Static localization:Strings.HostnameResolutionIsDisabled}"
+                                               Style="{StaticResource InfoTextBlock}"
+                                               Margin="10,0,0,0" />
+                                </StackPanel>
+                                <ListView Grid.Row="2" Background="Transparent"
+                                          >
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="{x:Type ListViewItem}"
                                                BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
@@ -1381,7 +1418,8 @@
                                             </TextBox>
                                         </Grid>
                                     </ListViewItem>
-                                    <ListViewItem>
+                                    <ListViewItem
+                                                  Visibility="{Binding Path=Data.ScanOptions.MDNSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition MinWidth="120" Width="Auto" />
@@ -1402,43 +1440,34 @@
                                             </TextBox>
                                         </Grid>
                                     </ListViewItem>
-                                    <ListViewItem
-                                                  Visibility="{Binding Path=Data.ScanOptions.NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.NetBIOS}" />
-                                            <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox Grid.Column="2">
-                                                <TextBox.Text>
-                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsNetBIOSPending" Mode="OneWay" />
-                                                        <Binding Path="NetBIOSInfo.ComputerName" Mode="OneWay"
-                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
-                                                    </MultiBinding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </Grid>
-                                    </ListViewItem>
                                 </ListView>
                             </Grid>
                             <!-- Web page (the column shows the title or the Server header) -->
-                            <Grid Grid.Row="4" Grid.Column="2"
-                                  Visibility="{Binding Path=Data.ScanOptions.HttpTitleEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                            <Grid Grid.Row="0" Grid.Column="4" Grid.RowSpan="3">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0"
-                                           Text="{x:Static localization:Strings.Web}"
-                                           Style="{StaticResource BoldTextBlock}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
-                                <ListView Grid.Row="2" Background="Transparent">
+                                <!-- Same height in all sections (with or without label) -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
+                                    <TextBlock Text="{x:Static localization:Strings.Web}"
+                                               Style="{StaticResource BoldTextBlock}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="2"
+                                            VerticalAlignment="Top"
+                                            Orientation="Horizontal"
+                                            Visibility="{Binding Path=Data.ScanOptions.HttpTitleEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                                    <Rectangle Width="16" Height="16"
+                                               Style="{StaticResource InfoImageRectangle}" />
+                                    <TextBlock Text="{x:Static localization:Strings.ReadingWebPagesIsDisabled}"
+                                               Style="{StaticResource InfoTextBlock}"
+                                               Margin="10,0,0,0" />
+                                </StackPanel>
+                                <ListView Grid.Row="2" Background="Transparent"
+                                          Visibility="{Binding Path=Data.ScanOptions.HttpTitleEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="{x:Type ListViewItem}"
                                                BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
@@ -1562,18 +1591,42 @@
                                 </ListView>
                             </Grid>
                             <!-- SNMP system information (the column shows the name) -->
-                            <Grid Grid.Row="4" Grid.Column="4"
-                                  Visibility="{Binding Path=Data.ScanOptions.SNMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                            <Grid Grid.Row="2" Grid.Column="6">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0"
-                                           Text="{x:Static localization:Strings.SNMP}"
-                                           Style="{StaticResource BoldTextBlock}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
-                                <ListView Grid.Row="2" Background="Transparent">
+                                <!-- Same height in all sections (with or without label) -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
+                                    <TextBlock Text="{x:Static localization:Strings.SNMP}"
+                                               Style="{StaticResource BoldTextBlock}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                               VerticalAlignment="Center" />
+                                    <!-- Up / down: the host answered the probe (not while it is running) -->
+                                    <TextBlock Margin="10,0,0,0"
+                                               Style="{StaticResource ProbeAnswerLabel}"
+                                               Text="{Binding Path=DetectedBy, Converter={StaticResource IPScannerDetectionMethodToUpDownConverter}, ConverterParameter=SNMP}">
+                                        <TextBlock.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                                <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.SNMPEnabled" />
+                                                <Binding Path="IsSNMPPending" Converter="{StaticResource BooleanReverseConverter}" />
+                                            </MultiBinding>
+                                        </TextBlock.Visibility>
+                                    </TextBlock>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2"
+                                            VerticalAlignment="Top"
+                                            Orientation="Horizontal"
+                                            Visibility="{Binding Path=Data.ScanOptions.SNMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                                    <Rectangle Width="16" Height="16"
+                                               Style="{StaticResource InfoImageRectangle}" />
+                                    <TextBlock Text="{x:Static localization:Strings.SNMPIsDisabled}"
+                                               Style="{StaticResource InfoTextBlock}"
+                                               Margin="10,0,0,0" />
+                                </StackPanel>
+                                <ListView Grid.Row="2" Background="Transparent"
+                                          Visibility="{Binding Path=Data.ScanOptions.SNMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="{x:Type ListViewItem}"
                                                BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
@@ -1640,7 +1693,7 @@
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.Location}" />
+                                                       Text="{x:Static localization:Strings.SNMPLocation}" />
                                             <!-- OneWay: the values can't be set from the view -->
                                             <TextBox Grid.Column="2">
                                                 <TextBox.Text>

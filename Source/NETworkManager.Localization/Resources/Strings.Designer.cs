@@ -3416,15 +3416,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Detected by.
-        /// </summary>
-        public static string DetectedBy {
-            get {
-                return ResourceManager.GetString("DetectedBy", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Detecting  network....
         /// </summary>
         public static string DetectingNetworkDots {
@@ -6389,6 +6380,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HostnameOrIPAddress {
             get {
                 return ResourceManager.GetString("HostnameOrIPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hostname resolution is disabled!.
+        /// </summary>
+        public static string HostnameResolutionIsDisabled {
+            get {
+                return ResourceManager.GetString("HostnameResolutionIsDisabled", resourceCulture);
             }
         }
         
@@ -10294,6 +10294,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reading web pages is disabled!.
+        /// </summary>
+        public static string ReadingWebPagesIsDisabled {
+            get {
+                return ResourceManager.GetString("ReadingWebPagesIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Read the SNMP system information.
         /// </summary>
         public static string ReadTheSNMPSystemInformation {
@@ -13317,6 +13326,24 @@ namespace NETworkManager.Localization.Resources {
         public static string SNMPErrorCode_WrongValue {
             get {
                 return ResourceManager.GetString("SNMPErrorCode_WrongValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SNMP is disabled!.
+        /// </summary>
+        public static string SNMPIsDisabled {
+            get {
+                return ResourceManager.GetString("SNMPIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string SNMPLocation {
+            get {
+                return ResourceManager.GetString("SNMPLocation", resourceCulture);
             }
         }
         
