@@ -889,6 +889,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Answered.
+        /// </summary>
+        public static string Answered {
+            get {
+                return ResourceManager.GetString("Answered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Answers.
         /// </summary>
         public static string Answers {
@@ -8487,6 +8496,15 @@ namespace NETworkManager.Localization.Resources {
         public static string NoADNSRecordsResolvedForXXXMessage {
             get {
                 return ResourceManager.GetString("NoADNSRecordsResolvedForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No answer.
+        /// </summary>
+        public static string NoAnswer {
+            get {
+                return ResourceManager.GetString("NoAnswer", resourceCulture);
             }
         }
         

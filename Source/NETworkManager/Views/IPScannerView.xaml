@@ -26,7 +26,8 @@
         <converters:HostReachableToStringConverter x:Key="HostReachableToStringConverter" />
         <converters:HostUpStyleConverter x:Key="HostUpStyleConverter" />
         <converters:IPScannerDetectionMethodToStringConverter x:Key="IPScannerDetectionMethodToStringConverter" />
-        <converters:IPScannerDetectionMethodToUpDownConverter x:Key="IPScannerDetectionMethodToUpDownConverter" />
+        <converters:IPScannerStatusToolTipConverter x:Key="IPScannerStatusToolTipConverter" />
+        <converters:SuccessStyleConverter x:Key="SuccessStyleConverter" />
         <converters:IPScannerHostRoleToStringConverter x:Key="IPScannerHostRoleToStringConverter" />
         <converters:IPScannerOSGuessToStringConverter x:Key="IPScannerOSGuessToStringConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
@@ -40,17 +41,6 @@
         <converters:StringIsNotNullOrEmptyToBooleanConverter x:Key="StringIsNotNullOrEmptyToBooleanConverter" />
         <converters:HostnameHasDomainToBooleanConverter x:Key="HostnameHasDomainToBooleanConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
-        <!-- Up / down label in the header of a probe in the row details, like the "ICMP" label of the Ping Monitor -->
-        <Style x:Key="ProbeAnswerLabel" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource AccentTextBlock}">
-            <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
-            <Setter Property="Padding" Value="5,2" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Style.Triggers>
-                <Trigger Property="Text" Value="{x:Static localization:Strings.Down}">
-                    <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -839,17 +829,24 @@
                         </MultiBinding>
                     </DataGridTextColumn.Visibility>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.PingStatus}"
-                                    SortMemberPath="PingInfo.Status"
-                                    Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                    MinWidth="150">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
-                            <Binding Path="IsPingPending" />
-                            <Binding Path="PingInfo.Status" Converter="{StaticResource ResourceKey=IPStatusToStringConverter}" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
+                <!-- Status icon ("..." while running), details in the tooltip -->
+                <DataGridTemplateColumn Header="{x:Static localization:Strings.PingStatus}"
+                                        SortMemberPath="PingInfo.Status"
+                                        Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                        MinWidth="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock Text="..." VerticalAlignment="Center"
+                                           Visibility="{Binding IsPingPending, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <Rectangle Width="16" Height="16" HorizontalAlignment="Left"
+                                           Style="{Binding DetectedBy, ConverterParameter=ICMP, Converter={StaticResource SuccessStyleConverter}}"
+                                           ToolTip="{Binding PingInfo, Converter={StaticResource IPScannerStatusToolTipConverter}}"
+                                           Visibility="{Binding IsPingPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Time}"
                                     SortMemberPath="PingInfo.Time"
                                     Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
@@ -893,17 +890,24 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.PortStatus}"
-                                    SortMemberPath="IsAnyPortOpen"
-                                    Visibility="{Binding Path=Data.ScanOptions.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                    MinWidth="150">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
-                            <Binding Path="IsPortScanPending" />
-                            <Binding Path="IsAnyPortOpen" Converter="{StaticResource ResourceKey=PortOpenToStringConverter}" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
+                <!-- Status icon ("..." while running), details in the tooltip -->
+                <DataGridTemplateColumn Header="{x:Static localization:Strings.PortStatus}"
+                                        SortMemberPath="IsAnyPortOpen"
+                                        Visibility="{Binding Path=Data.ScanOptions.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                        MinWidth="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock Text="..." VerticalAlignment="Center"
+                                           Visibility="{Binding IsPortScanPending, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <Rectangle Width="16" Height="16" HorizontalAlignment="Left"
+                                           Style="{Binding IsAnyPortOpen, Converter={StaticResource SuccessStyleConverter}}"
+                                           ToolTip="{Binding Ports, Converter={StaticResource IPScannerStatusToolTipConverter}}"
+                                           Visibility="{Binding IsPortScanPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.WebTitle}"
                                     SortMemberPath="WebSummary"
                                     MinWidth="150">
@@ -944,17 +948,24 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.NetBIOSReachable}"
-                                    SortMemberPath="NetBIOSInfo.IsReachable"
-                                    Visibility="{Binding Path=Data.ScanOptions.NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                    MinWidth="150">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
-                            <Binding Path="IsNetBIOSPending" />
-                            <Binding Path="NetBIOSInfo.IsReachable" Converter="{StaticResource ResourceKey=BooleanToStringConverter}" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
+                <!-- Status icon ("..." while running), details in the tooltip -->
+                <DataGridTemplateColumn Header="{x:Static localization:Strings.NetBIOSReachable}"
+                                        SortMemberPath="NetBIOSInfo.IsReachable"
+                                        Visibility="{Binding Path=Data.ScanOptions.NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                        MinWidth="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock Text="..." VerticalAlignment="Center"
+                                           Visibility="{Binding IsNetBIOSPending, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <Rectangle Width="16" Height="16" HorizontalAlignment="Left"
+                                           Style="{Binding NetBIOSInfo.IsReachable, Converter={StaticResource SuccessStyleConverter}}"
+                                           ToolTip="{Binding NetBIOSInfo, Converter={StaticResource IPScannerStatusToolTipConverter}}"
+                                           Visibility="{Binding IsNetBIOSPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}"
                                     SortMemberPath="MACAddress"
                                     MinWidth="150">
@@ -1038,23 +1049,23 @@
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <!-- Same height in all sections (with or without label) -->
+                                <!-- Same height in all sections (with or without status icon) -->
                                 <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
                                     <TextBlock Text="{x:Static localization:Strings.PingDetails}"
                                                Style="{StaticResource BoldTextBlock}"
                                                Foreground="{DynamicResource MahApps.Brushes.Gray5}"
                                                VerticalAlignment="Center" />
-                                    <!-- Up / down: the host answered the probe (not while it is running) -->
-                                    <TextBlock Margin="10,0,0,0"
-                                               Style="{StaticResource ProbeAnswerLabel}"
-                                               Text="{Binding Path=DetectedBy, Converter={StaticResource IPScannerDetectionMethodToUpDownConverter}, ConverterParameter=ICMP}">
-                                        <TextBlock.Visibility>
+                                    <!-- Status icon: the host answered the probe (not while it is running) -->
+                                    <Rectangle Width="16" Height="16" Margin="10,0,0,0" VerticalAlignment="Center"
+                                               Style="{Binding Path=DetectedBy, Converter={StaticResource SuccessStyleConverter}, ConverterParameter=ICMP}"
+                                               ToolTip="{Binding Path=DetectedBy, Converter={StaticResource IPScannerStatusToolTipConverter}, ConverterParameter=ICMP}">
+                                        <Rectangle.Visibility>
                                             <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
                                                 <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.ICMPEnabled" />
                                                 <Binding Path="IsPingPending" Converter="{StaticResource BooleanReverseConverter}" />
                                             </MultiBinding>
-                                        </TextBlock.Visibility>
-                                    </TextBlock>
+                                        </Rectangle.Visibility>
+                                    </Rectangle>
                                 </StackPanel>
                                 <StackPanel Grid.Row="2"
                                             VerticalAlignment="Top"
@@ -1154,23 +1165,23 @@
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <!-- Same height in all sections (with or without label) -->
+                                <!-- Same height in all sections (with or without status icon) -->
                                 <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
                                     <TextBlock Text="{x:Static localization:Strings.Ports}"
                                                Style="{StaticResource BoldTextBlock}"
                                                Foreground="{DynamicResource MahApps.Brushes.Gray5}"
                                                VerticalAlignment="Center" />
-                                    <!-- Up / down: the host answered the probe (not while it is running) -->
-                                    <TextBlock Margin="10,0,0,0"
-                                               Style="{StaticResource ProbeAnswerLabel}"
-                                               Text="{Binding Path=DetectedBy, Converter={StaticResource IPScannerDetectionMethodToUpDownConverter}, ConverterParameter=TCP}">
-                                        <TextBlock.Visibility>
+                                    <!-- Status icon: the host answered the probe (not while it is running) -->
+                                    <Rectangle Width="16" Height="16" Margin="10,0,0,0" VerticalAlignment="Center"
+                                               Style="{Binding Path=DetectedBy, Converter={StaticResource SuccessStyleConverter}, ConverterParameter=TCP}"
+                                               ToolTip="{Binding Path=DetectedBy, Converter={StaticResource IPScannerStatusToolTipConverter}, ConverterParameter=TCP}">
+                                        <Rectangle.Visibility>
                                             <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
                                                 <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.PortScanEnabled" />
                                                 <Binding Path="IsPortScanPending" Converter="{StaticResource BooleanReverseConverter}" />
                                             </MultiBinding>
-                                        </TextBlock.Visibility>
-                                    </TextBlock>
+                                        </Rectangle.Visibility>
+                                    </Rectangle>
                                 </StackPanel>
                                 <StackPanel Grid.Row="2"
                                             VerticalAlignment="Top"
@@ -1252,23 +1263,23 @@
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <!-- Same height in all sections (with or without label) -->
+                                <!-- Same height in all sections (with or without status icon) -->
                                 <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
                                     <TextBlock Text="{x:Static localization:Strings.NetBIOS}"
                                                Style="{StaticResource BoldTextBlock}"
                                                Foreground="{DynamicResource MahApps.Brushes.Gray5}"
                                                VerticalAlignment="Center" />
-                                    <!-- Up / down: the host answered the probe (not while it is running) -->
-                                    <TextBlock Margin="10,0,0,0"
-                                               Style="{StaticResource ProbeAnswerLabel}"
-                                               Text="{Binding Path=DetectedBy, Converter={StaticResource IPScannerDetectionMethodToUpDownConverter}, ConverterParameter=NetBIOS}">
-                                        <TextBlock.Visibility>
+                                    <!-- Status icon: the host answered the probe (not while it is running) -->
+                                    <Rectangle Width="16" Height="16" Margin="10,0,0,0" VerticalAlignment="Center"
+                                               Style="{Binding Path=DetectedBy, Converter={StaticResource SuccessStyleConverter}, ConverterParameter=NetBIOS}"
+                                               ToolTip="{Binding Path=DetectedBy, Converter={StaticResource IPScannerStatusToolTipConverter}, ConverterParameter=NetBIOS}">
+                                        <Rectangle.Visibility>
                                             <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
                                                 <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.NetBIOSEnabled" />
                                                 <Binding Path="IsNetBIOSPending" Converter="{StaticResource BooleanReverseConverter}" />
                                             </MultiBinding>
-                                        </TextBlock.Visibility>
-                                    </TextBlock>
+                                        </Rectangle.Visibility>
+                                    </Rectangle>
                                 </StackPanel>
                                 <StackPanel Grid.Row="2"
                                             VerticalAlignment="Top"
@@ -1349,7 +1360,7 @@
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <!-- Same height in all sections (with or without label) -->
+                                <!-- Same height in all sections (with or without status icon) -->
                                 <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
                                     <TextBlock Text="{x:Static localization:Strings.Hostnames}"
                                                Style="{StaticResource BoldTextBlock}"
@@ -1449,7 +1460,7 @@
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <!-- Same height in all sections (with or without label) -->
+                                <!-- Same height in all sections (with or without status icon) -->
                                 <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
                                     <TextBlock Text="{x:Static localization:Strings.Web}"
                                                Style="{StaticResource BoldTextBlock}"
@@ -1597,23 +1608,23 @@
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <!-- Same height in all sections (with or without label) -->
+                                <!-- Same height in all sections (with or without status icon) -->
                                 <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
                                     <TextBlock Text="{x:Static localization:Strings.SNMP}"
                                                Style="{StaticResource BoldTextBlock}"
                                                Foreground="{DynamicResource MahApps.Brushes.Gray5}"
                                                VerticalAlignment="Center" />
-                                    <!-- Up / down: the host answered the probe (not while it is running) -->
-                                    <TextBlock Margin="10,0,0,0"
-                                               Style="{StaticResource ProbeAnswerLabel}"
-                                               Text="{Binding Path=DetectedBy, Converter={StaticResource IPScannerDetectionMethodToUpDownConverter}, ConverterParameter=SNMP}">
-                                        <TextBlock.Visibility>
+                                    <!-- Status icon: the host answered the probe (not while it is running) -->
+                                    <Rectangle Width="16" Height="16" Margin="10,0,0,0" VerticalAlignment="Center"
+                                               Style="{Binding Path=DetectedBy, Converter={StaticResource SuccessStyleConverter}, ConverterParameter=SNMP}"
+                                               ToolTip="{Binding Path=DetectedBy, Converter={StaticResource IPScannerStatusToolTipConverter}, ConverterParameter=SNMP}">
+                                        <Rectangle.Visibility>
                                             <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
                                                 <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.SNMPEnabled" />
                                                 <Binding Path="IsSNMPPending" Converter="{StaticResource BooleanReverseConverter}" />
                                             </MultiBinding>
-                                        </TextBlock.Visibility>
-                                    </TextBlock>
+                                        </Rectangle.Visibility>
+                                    </Rectangle>
                                 </StackPanel>
                                 <StackPanel Grid.Row="2"
                                             VerticalAlignment="Top"

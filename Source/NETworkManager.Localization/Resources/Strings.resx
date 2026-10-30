@@ -5273,4 +5273,10 @@ Do you want to start the scan?</value>
   <data name="SNMPIsDisabled" xml:space="preserve">
     <value>SNMP is disabled!</value>
   </data>
+  <data name="Answered" xml:space="preserve">
+    <value>Answered</value>
+  </data>
+  <data name="NoAnswer" xml:space="preserve">
+    <value>No answer</value>
+  </data>
 </root>
