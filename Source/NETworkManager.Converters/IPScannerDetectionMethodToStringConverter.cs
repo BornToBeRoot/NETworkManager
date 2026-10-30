@@ -1,0 +1,59 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Windows.Data;
+using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Network;
+
+namespace NETworkManager.Converters;
+
+/// <summary>
+///     Convert the <see cref="IPScannerDetectionMethod" /> of a host to a translated <see cref="string" />
+///     (e.g. "Ping, TCP").
+/// </summary>
+public sealed class IPScannerDetectionMethodToStringConverter : IValueConverter
+{
+    /// <summary>
+    ///     Convert the <see cref="IPScannerDetectionMethod" /> of a host to a translated <see cref="string" />.
+    /// </summary>
+    /// <param name="value">Probes the host answered as <see cref="IPScannerDetectionMethod" />.</param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter">"Status" to get the status of the host ("Up (detected by Ping, TCP)" / "Down").</param>
+    /// <param name="culture"></param>
+    /// <returns>Translated, comma-separated probes, "-/-" if the host didn't answer any probe.</returns>
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        var isStatus = parameter as string == "Status";
+
+        if (value is not IPScannerDetectionMethod detectedBy || detectedBy == IPScannerDetectionMethod.None)
+            return isStatus ? Strings.Down : "-/-";
+
+        var names = new List<string>(3);
+
+        if (detectedBy.HasFlag(IPScannerDetectionMethod.ICMP))
+            names.Add(Strings.Ping);
+
+        if (detectedBy.HasFlag(IPScannerDetectionMethod.TCP))
+            names.Add(Strings.TCP);
+
+        if (detectedBy.HasFlag(IPScannerDetectionMethod.NetBIOS))
+            names.Add(Strings.NetBIOS);
+
+        var text = string.Join(", ", names);
+
+        return isStatus ? string.Format(Strings.UpDetectedByX, text) : text;
+    }
+
+    /// <summary>
+    ///     !!! Method not implemented !!!
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="targetType"></param>
+    /// <param name="parameter"></param>
+    /// <param name="culture"></param>
+    /// <returns></returns>
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}

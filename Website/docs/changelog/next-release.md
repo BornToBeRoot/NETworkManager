@@ -87,6 +87,7 @@ Release date: **xx.xx.2026**
 - Closed ports are reported immediately. Windows repeated the connection request after the host refused it and reported a closed port only after about 2 seconds. The connection request is sent once. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - New **Attempts** setting for the port scan (default `1`): another connection request is sent if there was no answer, e.g. on an unreliable network (Wi-Fi, VPN) or for hosts on the internet. Open and closed ports are not repeated. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Added **RDAP...** to the context menu to query the registration data of the IP address or hostname of a host in the [**RDAP**](../application/rdap.md) tool. [#3642](https://github.com/BornToBeRoot/NETworkManager/pull/3642)
+- The probes a host answered (**Ping**, **TCP**, **NetBIOS**) are shown in the tooltip of the status icon and as **Detected by** in the row details, e.g. to see why a host is up. The export contains them as `DetectedBy` (last column / element). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Port Scanner**
 

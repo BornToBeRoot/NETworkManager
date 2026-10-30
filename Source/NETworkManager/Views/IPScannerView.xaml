@@ -24,6 +24,7 @@
         <converters:BooleansOrToVisibilityCollapsedConverter x:Key="BooleansOrToVisibilityCollapsedConverter" />
         <converters:HostReachableToStringConverter x:Key="HostReachableToStringConverter" />
         <converters:HostUpStyleConverter x:Key="HostUpStyleConverter" />
+        <converters:IPScannerDetectionMethodToStringConverter x:Key="IPScannerDetectionMethodToStringConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
@@ -678,7 +679,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Rectangle Width="24" Height="24"
-                                       Style="{Binding IsReachable, Converter={StaticResource HostUpStyleConverter}}" />
+                                       Style="{Binding IsReachable, Converter={StaticResource HostUpStyleConverter}}"
+                                       ToolTip="{Binding DetectedBy, Converter={StaticResource IPScannerDetectionMethodToStringConverter}, ConverterParameter=Status}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -785,6 +787,11 @@
                             </Style>
                         </Border.Style>
                         <Grid Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="10" />
@@ -800,8 +807,26 @@
                                     <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
                                 </Style>
                             </Grid.Resources>
+                            <!-- Probes the host answered (only reachable hosts) -->
+                            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
+                                  Visibility="{Binding Path=IsReachable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0"
+                                           Text="{x:Static localization:Strings.DetectedBy}"
+                                           Style="{StaticResource BoldTextBlock}"
+                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <!-- OneWay: TextBox.Text binds TwoWay by default, DetectedBy can't be set from the view -->
+                                <TextBox Grid.Column="2"
+                                         Text="{Binding Path=DetectedBy, Mode=OneWay, Converter={StaticResource IPScannerDetectionMethodToStringConverter}}" />
+                            </Grid>
+                            <Rectangle Grid.Row="1" Grid.Column="0" Height="10"
+                                       Visibility="{Binding Path=IsReachable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                             <!-- Ping -->
-                            <Grid Grid.Column="0">
+                            <Grid Grid.Row="2" Grid.Column="0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
@@ -891,7 +916,7 @@
                                 </ListView>
                             </Grid>
                             <!-- Ports -->
-                            <Grid Grid.Column="2">
+                            <Grid Grid.Row="2" Grid.Column="2">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
@@ -975,7 +1000,7 @@
                                 </Grid>
                             </Grid>
                             <!-- NetBIOS -->
-                            <Grid Grid.Column="4">
+                            <Grid Grid.Row="2" Grid.Column="4">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />

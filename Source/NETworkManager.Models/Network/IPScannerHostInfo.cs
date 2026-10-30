@@ -56,6 +56,23 @@ public class IPScannerHostInfo : PropertyChangedBase
     }
 
     /// <summary>
+    ///     Probes the host answered so far, i.e. how it was detected as reachable.
+    ///     <see cref="IPScannerDetectionMethod.None" /> if it is unreachable.
+    /// </summary>
+    public IPScannerDetectionMethod DetectedBy
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     ///     Information about the ping to the host.
     /// </summary>
     public PingInfo PingInfo
@@ -253,6 +270,7 @@ public class IPScannerHostInfo : PropertyChangedBase
     public void CopyFrom(IPScannerHostInfo source)
     {
         IsReachable = source.IsReachable;
+        DetectedBy = source.DetectedBy;
         PingInfo = source.PingInfo;
         IsAnyPortOpen = source.IsAnyPortOpen;
         Ports = source.Ports;
@@ -274,6 +292,7 @@ public class IPScannerHostInfo : PropertyChangedBase
     {
         return new IPScannerHostInfo(IPAddress, IsReachable, PingInfo, IsAnyPortOpen, Ports, NetBIOSInfo)
         {
+            DetectedBy = DetectedBy,
             IsPingPending = IsPingPending,
             IsPortScanPending = IsPortScanPending,
             IsNetBIOSPending = IsNetBIOSPending,

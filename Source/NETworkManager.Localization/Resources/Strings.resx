@@ -5152,4 +5152,13 @@ Do you want to start the scan?</value>
   <data name="ErrorMessage_PTRRequiresIPAddresses" xml:space="preserve">
     <value>PTR records can only be looked up for IP addresses.</value>
   </data>
+  <data name="DetectedBy" xml:space="preserve">
+    <value>Detected by</value>
+  </data>
+  <data name="UpDetectedByX" xml:space="preserve">
+    <value>Up (detected by {0})</value>
+  </data>
+  <data name="TCP" xml:space="preserve">
+    <value>TCP</value>
+  </data>
 </root>

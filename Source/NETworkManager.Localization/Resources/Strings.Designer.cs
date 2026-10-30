@@ -3398,6 +3398,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detected by.
+        /// </summary>
+        public static string DetectedBy {
+            get {
+                return ResourceManager.GetString("DetectedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detecting  network....
         /// </summary>
         public static string DetectingNetworkDots {
@@ -13511,6 +13520,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TCP.
+        /// </summary>
+        public static string TCP {
+            get {
+                return ResourceManager.GetString("TCP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TCP/IP stack is available. &quot;{0}&quot; is reachable via ICMP!.
         /// </summary>
         public static string TCPIPStackIsAvailableMessage {
@@ -14173,6 +14191,15 @@ namespace NETworkManager.Localization.Resources {
         public static string UpdateNow {
             get {
                 return ResourceManager.GetString("UpdateNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up (detected by {0}).
+        /// </summary>
+        public static string UpDetectedByX {
+            get {
+                return ResourceManager.GetString("UpDetectedByX", resourceCulture);
             }
         }
         

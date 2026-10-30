@@ -232,6 +232,9 @@ public sealed class IPScanner(IPScannerOptions options)
         List<PortInfo> ports = null;
         NetBIOSInfo netBIOSInfo = null;
 
+        // Probes that answered so far
+        var detectedBy = IPScannerDetectionMethod.None;
+
         IPScannerHostInfo hostInfo = null;
 
         try
@@ -249,6 +252,7 @@ public sealed class IPScanner(IPScannerOptions options)
                 cancellationToken.ThrowIfCancellationRequested();
 
                 bool isAnswer;
+                IPScannerDetectionMethod method;
                 Action<IPScannerHostInfo> update = null;
 
                 if (completed == pingTask)
@@ -256,6 +260,7 @@ public sealed class IPScanner(IPScannerOptions options)
                     var value = pingInfo = pingTask.Result;
 
                     isAnswer = value.Status == IPStatus.Success; // ICMP response
+                    method = IPScannerDetectionMethod.ICMP;
                     update = x =>
                     {
                         x.PingInfo = value;
@@ -271,6 +276,7 @@ public sealed class IPScanner(IPScannerOptions options)
 
                     // Any port is open or the connection was refused (TCP reset)
                     isAnswer = ports.Any(x => x.State is PortState.Open or PortState.Closed);
+                    method = IPScannerDetectionMethod.TCP;
 
                     var shownPorts = GetShownPorts(ports);
                     var isAnyPortOpen = ports.Any(x => x.State == PortState.Open);
@@ -287,6 +293,7 @@ public sealed class IPScanner(IPScannerOptions options)
                     var value = netBIOSInfo = netBIOSTask.Result;
 
                     isAnswer = value.IsReachable; // NetBIOS response
+                    method = IPScannerDetectionMethod.NetBIOS;
                     update = x =>
                     {
                         x.NetBIOSInfo = value;
@@ -297,10 +304,22 @@ public sealed class IPScanner(IPScannerOptions options)
                 {
                     // A port answered - its result follows with the port scan
                     isAnswer = true;
+                    method = IPScannerDetectionMethod.TCP;
                 }
+
+                if (isAnswer)
+                    detectedBy |= method;
 
                 if (hostInfo != null)
                 {
+                    // Another probe answered after the host was found
+                    if (isAnswer)
+                    {
+                        var detectedByValue = detectedBy;
+
+                        update += x => x.DetectedBy = detectedByValue;
+                    }
+
                     if (update != null)
                         OnHostUpdated(new IPScannerHostUpdatedArgs(hostInfo, update));
 
@@ -312,7 +331,7 @@ public sealed class IPScanner(IPScannerOptions options)
 
                 // First answer: the host is up. Before it could answer, the local system had to resolve its MAC
                 // address, so it is in the neighbor table (ARP/NDP) from now on.
-                hostInfo = CreateHostInfo(ipAddress, true, pingInfo, ports, netBIOSInfo);
+                hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo);
 
                 _hostsUp.Increment();
 
@@ -330,7 +349,7 @@ public sealed class IPScanner(IPScannerOptions options)
 
                 if (options.ShowAllResults || options.ReportAllHosts)
                 {
-                    hostInfo = CreateHostInfo(ipAddress, false, pingInfo, ports, netBIOSInfo);
+                    hostInfo = CreateHostInfo(ipAddress, IPScannerDetectionMethod.None, pingInfo, ports, netBIOSInfo);
 
                     OnHostFound(new IPScannerHostFoundArgs(hostInfo));
 
@@ -384,22 +403,24 @@ public sealed class IPScanner(IPScannerOptions options)
     ///     (marked as pending).
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
-    /// <param name="isReachable">Indicates whether the host answered a probe.</param>
+    /// <param name="detectedBy">Probes the host answered so far, <see cref="IPScannerDetectionMethod.None" /> if it is
+    /// unreachable.</param>
     /// <param name="pingInfo">Result of the ping, null if it is still running.</param>
     /// <param name="ports">All probed ports, null if the port scan is still running.</param>
     /// <param name="netBIOSInfo">Result of the NetBIOS request, null if it is still running.</param>
     /// <returns>Result of the host.</returns>
-    private IPScannerHostInfo CreateHostInfo(IPAddress ipAddress, bool isReachable, PingInfo pingInfo,
-        List<PortInfo> ports, NetBIOSInfo netBIOSInfo)
+    private IPScannerHostInfo CreateHostInfo(IPAddress ipAddress, IPScannerDetectionMethod detectedBy,
+        PingInfo pingInfo, List<PortInfo> ports, NetBIOSInfo netBIOSInfo)
     {
         return new IPScannerHostInfo(
             ipAddress,
-            isReachable,
+            detectedBy != IPScannerDetectionMethod.None,
             pingInfo ?? new PingInfo(DateTime.Now, ipAddress, IPStatus.Unknown),
             ports?.Any(x => x.State == PortState.Open) ?? false,
             ports != null ? GetShownPorts(ports) : [],
             netBIOSInfo ?? new NetBIOSInfo(ipAddress))
         {
+            DetectedBy = detectedBy,
             IsPingPending = pingInfo == null,
             IsPortScanPending = ports == null,
             IsNetBIOSPending = netBIOSInfo == null

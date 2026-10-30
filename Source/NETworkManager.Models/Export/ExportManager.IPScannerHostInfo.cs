@@ -68,7 +68,8 @@ public static partial class ExportManager
             $"{nameof(IPScannerHostInfo.MACAddress)}," +
             $"{nameof(IPScannerHostInfo.Vendor)}," +
             // Added later - last column, so the position of the other columns doesn't change
-            $"{nameof(IPScannerHostInfo.DNSHostname)}"
+            $"{nameof(IPScannerHostInfo.DNSHostname)}," +
+            $"{nameof(IPScannerHostInfo.DetectedBy)}"
         );
 
         foreach (var info in collection)
@@ -111,7 +112,8 @@ public static partial class ExportManager
                 $"{CsvHelper.QuoteString(netBIOSInfo?.Vendor)}," +
                 $"{info.MACAddress}," +
                 $"{CsvHelper.QuoteString(info.Vendor)}," +
-                $"{CsvHelper.QuoteString(info.DNSHostname)}"
+                $"{CsvHelper.QuoteString(info.DNSHostname)}," +
+                $"{CsvHelper.QuoteString(GetDetectedBy(info))}"
             );
         }
 
@@ -165,7 +167,8 @@ public static partial class ExportManager
                             new XElement(nameof(IPScannerHostInfo.MACAddress), info.MACAddress),
                             new XElement(nameof(IPScannerHostInfo.Vendor), info.Vendor),
                             // Added later - last element, so the position of the other elements doesn't change
-                            new XElement(nameof(IPScannerHostInfo.DNSHostname), info.DNSHostname)
+                            new XElement(nameof(IPScannerHostInfo.DNSHostname), info.DNSHostname),
+                            new XElement(nameof(IPScannerHostInfo.DetectedBy), GetDetectedBy(info))
                         )
                 )
             )
@@ -233,11 +236,22 @@ public static partial class ExportManager
                 NetBIOSMACAddress = netBIOSInfo?.MACAddress,
                 NetBIOSVendor = netBIOSInfo?.Vendor,
                 info.MACAddress,
-                info.Vendor
+                info.Vendor,
+                DetectedBy = GetDetectedBy(info)
             };
         }
 
         File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+    }
+
+    /// <summary>
+    ///     Gets the probes a host answered (e.g. "ICMP, TCP"), null if it is unreachable.
+    /// </summary>
+    /// <param name="info">Host to get the probes for.</param>
+    /// <returns>Probes or null.</returns>
+    private static string GetDetectedBy(IPScannerHostInfo info)
+    {
+        return info.DetectedBy == IPScannerDetectionMethod.None ? null : info.DetectedBy.ToString();
     }
 
     /// <summary>
