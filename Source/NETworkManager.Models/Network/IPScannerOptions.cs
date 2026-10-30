@@ -99,6 +99,17 @@ public record IPScannerOptions
     public required int MDNSTimeout { get; init; }
 
     /// <summary>
+    ///     Read the title of the web page of reachable hosts with an open web port, see
+    ///     <see cref="HttpTitleResolver" />.
+    /// </summary>
+    public required bool HttpTitleEnabled { get; init; }
+
+    /// <summary>
+    ///     Timeout in milliseconds of a web request.
+    /// </summary>
+    public required int HttpTitleTimeout { get; init; }
+
+    /// <summary>
     ///     Include unreachable IP addresses in the result.
     /// </summary>
     public required bool ShowAllResults { get; init; }

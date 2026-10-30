@@ -6177,6 +6177,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Read the title of the web page (GET /) of every reachable host with an open web port (443, 80, 8443, 8080 - the port scan must be enabled and the ports must be in the list). The first port that answers is used, redirects on the same host are followed. No cookies or credentials are sent, certificate errors are accepted. The request appears in the log of the web server. If the page has no title, the Server header is shown..
+        /// </summary>
+        public static string HelpMessage_ReadTheTitleOfWebPages {
+            get {
+                return ResourceManager.GetString("HelpMessage_ReadTheTitleOfWebPages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resolve the mDNS hostname (e.g. macbook.local) of every reachable host with a reverse lookup sent to UDP port 5353 of the host. Answered by Apple devices, Linux (Avahi), Android, printers and many IoT devices, usually only in the local subnet. Used as hostname if there is no DNS hostname..
         /// </summary>
         public static string HelpMessage_ResolveMDNSHostname {
@@ -10263,6 +10272,15 @@ namespace NETworkManager.Localization.Resources {
         public static string RDAPXIsNotARegisteredDomainShowingY {
             get {
                 return ResourceManager.GetString("RDAPXIsNotARegisteredDomainShowingY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read the title of web pages.
+        /// </summary>
+        public static string ReadTheTitleOfWebPages {
+            get {
+                return ResourceManager.GetString("ReadTheTitleOfWebPages", resourceCulture);
             }
         }
         
@@ -14814,6 +14832,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Website {
             get {
                 return ResourceManager.GetString("Website", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Web title.
+        /// </summary>
+        public static string WebTitle {
+            get {
+                return ResourceManager.GetString("WebTitle", resourceCulture);
             }
         }
         

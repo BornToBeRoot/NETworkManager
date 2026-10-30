@@ -369,6 +369,44 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the title of web pages is read.
+    /// </summary>
+    public bool HttpTitleEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_HttpTitleEnabled = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the timeout of a web request in milliseconds.
+    /// </summary>
+    public int HttpTitleTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_HttpTitleTimeout = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets the collection view of custom commands.
     /// </summary>
     public ICollectionView CustomCommands { get; }
@@ -486,6 +524,8 @@ public class IPScannerSettingsViewModel : ViewModelBase
         ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
         MDNSEnabled = SettingsManager.Current.IPScanner_MDNSEnabled;
         MDNSTimeout = SettingsManager.Current.IPScanner_MDNSTimeout;
+        HttpTitleEnabled = SettingsManager.Current.IPScanner_HttpTitleEnabled;
+        HttpTitleTimeout = SettingsManager.Current.IPScanner_HttpTitleTimeout;
         MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads;
         MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads;
     }

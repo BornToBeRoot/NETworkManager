@@ -1442,6 +1442,32 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_MDNSTimeout;
 
+    public bool IPScanner_HttpTitleEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_HttpTitleEnabled;
+
+    public int IPScanner_HttpTitleTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_HttpTitleTimeout;
+
     public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
     {
         get;

@@ -78,7 +78,9 @@ public static partial class ExportManager
             $"{nameof(IPScannerHostInfo.DetectedBy)}," +
             $"{nameof(IPScannerHostInfo.OSGuess)}," +
             $"{nameof(IPScannerHostInfo.Role)}," +
-            $"{nameof(IPScannerHostInfo.MDNSHostname)}"
+            $"{nameof(IPScannerHostInfo.MDNSHostname)}," +
+            $"{nameof(IPScannerHostInfo.WebTitle)}," +
+            $"{nameof(IPScannerHostInfo.WebURL)}"
         );
 
         foreach (var info in collection)
@@ -125,7 +127,9 @@ public static partial class ExportManager
                 $"{CsvHelper.QuoteString(GetDetectedBy(info))}," +
                 $"{GetOSGuess(info, options)}," +
                 $"{CsvHelper.QuoteString(GetRole(info))}," +
-                $"{CsvHelper.QuoteString(options.MDNSEnabled ? info.MDNSHostname : null)}"
+                $"{CsvHelper.QuoteString(options.MDNSEnabled ? info.MDNSHostname : null)}," +
+                $"{CsvHelper.QuoteString(options.HttpTitleEnabled ? info.WebTitle : null)}," +
+                $"{CsvHelper.QuoteString(options.HttpTitleEnabled ? info.WebURL : null)}"
             );
         }
 
@@ -186,7 +190,10 @@ public static partial class ExportManager
                             new XElement(nameof(IPScannerHostInfo.OSGuess), GetOSGuess(info, options)),
                             new XElement(nameof(IPScannerHostInfo.Role), GetRole(info)),
                             new XElement(nameof(IPScannerHostInfo.MDNSHostname),
-                                options.MDNSEnabled ? info.MDNSHostname : null)
+                                options.MDNSEnabled ? info.MDNSHostname : null),
+                            new XElement(nameof(IPScannerHostInfo.WebTitle),
+                                options.HttpTitleEnabled ? info.WebTitle : null),
+                            new XElement(nameof(IPScannerHostInfo.WebURL), options.HttpTitleEnabled ? info.WebURL : null)
                         )
                 )
             )
@@ -260,7 +267,9 @@ public static partial class ExportManager
                 DetectedBy = GetDetectedBy(info),
                 OSGuess = GetOSGuess(info, options),
                 Role = GetRole(info),
-                MDNSHostname = options.MDNSEnabled ? info.MDNSHostname : null
+                MDNSHostname = options.MDNSEnabled ? info.MDNSHostname : null,
+                WebTitle = options.HttpTitleEnabled ? info.WebTitle : null,
+                WebURL = options.HttpTitleEnabled ? info.WebURL : null
             };
         }
 

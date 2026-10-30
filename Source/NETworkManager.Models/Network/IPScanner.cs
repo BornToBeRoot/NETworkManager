@@ -387,6 +387,16 @@ public sealed class IPScanner(IPScannerOptions options)
                 enrichTask = EnrichAsync(ipAddress, hostInfo, DateTime.UtcNow, networkInterfaces, cancellationToken);
             }
 
+            // Title of the web page - needs the open ports, so after the port scan
+            if (options.HttpTitleEnabled && detectedBy != IPScannerDetectionMethod.None && ports != null)
+            {
+                var openPorts = ports.Where(x => x.State == PortState.Open).Select(x => x.Port).ToList();
+
+                if (WebConsoleUrlHelper.GetOpenWebPorts(openPorts).Count > 0)
+                    enrichTask = Task.WhenAll(enrichTask,
+                        UpdateHttpTitleAsync(ipAddress, hostInfo, openPorts, cancellationToken));
+            }
+
             if (hostInfo == null)
             {
                 // Count unreachable hosts unconditionally, since ShowAllResults may prevent them from ever
@@ -529,6 +539,27 @@ public sealed class IPScanner(IPScannerOptions options)
             options.ResolveHostname ? UpdateHostnameAsync() : Task.CompletedTask,
             options.ResolveMACAddress ? UpdateMACAddressAsync() : Task.CompletedTask,
             options.MDNSEnabled && isReachable ? UpdateMDNSHostnameAsync() : Task.CompletedTask).ConfigureAwait(false);
+    }
+
+    /// <summary>
+    ///     Reads the title of the web page of a host and raises it as <see cref="HostUpdated" />.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="host">Result of the host, already raised in <see cref="HostFound" />.</param>
+    /// <param name="openPorts">Open ports of the host.</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    private async Task UpdateHttpTitleAsync(IPAddress ipAddress, IPScannerHostInfo host, List<int> openPorts,
+        CancellationToken cancellationToken)
+    {
+        var httpTitleInfo = await HttpTitleResolver.ResolveAsync(ipAddress, openPorts, options.HttpTitleTimeout,
+            cancellationToken).ConfigureAwait(false);
+
+        if (httpTitleInfo != null)
+            OnHostUpdated(new IPScannerHostUpdatedArgs(host, x =>
+            {
+                x.WebTitle = httpTitleInfo.Title;
+                x.WebURL = httpTitleInfo.URL;
+            }));
     }
 
     /// <summary>

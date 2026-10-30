@@ -329,6 +329,39 @@ public class IPScannerHostInfo : PropertyChangedBase
         : NetBIOSInfo?.Vendor ?? string.Empty;
 
     /// <summary>
+    ///     Title of the web page of the host (or its <c>Server</c> header), see <see cref="HttpTitleResolver" />. Empty if
+    ///     not read (yet).
+    /// </summary>
+    public string WebTitle
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = string.Empty;
+
+    /// <summary>
+    ///     URL of the web page that answered (e.g. "https://192.168.1.1/"), empty if none answered (yet).
+    /// </summary>
+    public string WebURL
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = string.Empty;
+
+    /// <summary>
     ///     Takes over all values of another result of the same host (e.g. a rescan), so the shown row keeps its
     ///     identity (selection, expanded details). Call it on the thread that owns the host (UI thread).
     /// </summary>
@@ -347,6 +380,8 @@ public class IPScannerHostInfo : PropertyChangedBase
         IsNetBIOSPending = source.IsNetBIOSPending;
         DNSHostname = source.DNSHostname;
         MDNSHostname = source.MDNSHostname;
+        WebTitle = source.WebTitle;
+        WebURL = source.WebURL;
         NeighborMACAddress = source.NeighborMACAddress;
         NeighborVendor = source.NeighborVendor;
     }
@@ -367,6 +402,8 @@ public class IPScannerHostInfo : PropertyChangedBase
             IsNetBIOSPending = IsNetBIOSPending,
             DNSHostname = DNSHostname,
             MDNSHostname = MDNSHostname,
+            WebTitle = WebTitle,
+            WebURL = WebURL,
             NeighborMACAddress = NeighborMACAddress,
             NeighborVendor = NeighborVendor
         };

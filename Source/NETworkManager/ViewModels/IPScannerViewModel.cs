@@ -453,6 +453,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return Matches(info.PingInfo.IPAddress.ToString()) ||
                    Matches(info.Hostname) ||
                    Matches(info.MDNSHostname) ||
+                   Matches(info.WebTitle) ||
                    Matches(info.MACAddress) ||
                    Matches(info.Vendor) ||
                    (ScanOptions.OSGuessEnabled &&
@@ -467,6 +468,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         var liveShaping = (ICollectionViewLiveShaping)ResultsView;
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Hostname));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MDNSHostname));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebTitle));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MACAddress));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Vendor));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Ports));
@@ -581,6 +583,17 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void OpenWebConsoleAction()
     {
+        // The port of the web page whose title was read
+        if (Uri.TryCreate(SelectedResult.WebURL, UriKind.Absolute, out var webURL))
+        {
+            NavigationManager.Open(new ApplicationRequest(ApplicationName.WebConsole)
+            {
+                Target = WebConsoleUrlHelper.CreateUrl(GetSelectedHost(), webURL.Port)
+            });
+
+            return;
+        }
+
         // Ports may still be scanned - then http on the default port
         var openPorts = SelectedResult.IsPortScanPending
             ? []
@@ -986,6 +999,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
             MDNSEnabled = SettingsManager.Current.IPScanner_MDNSEnabled,
             MDNSTimeout = SettingsManager.Current.IPScanner_MDNSTimeout,
+            HttpTitleEnabled = SettingsManager.Current.IPScanner_HttpTitleEnabled,
+            HttpTitleTimeout = SettingsManager.Current.IPScanner_HttpTitleTimeout,
             ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults,
             ReportAllHosts = false
         };
@@ -1015,7 +1030,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             SettingsManager.Current.IPScanner_PortScanEnabled,
             SettingsManager.Current.IPScanner_NetBIOSEnabled,
             SettingsManager.Current.IPScanner_ResolveMACAddress,
-            SettingsManager.Current.IPScanner_MDNSEnabled);
+            SettingsManager.Current.IPScanner_MDNSEnabled,
+            SettingsManager.Current.IPScanner_HttpTitleEnabled);
     }
 
     /// <summary>

@@ -28,6 +28,20 @@ public static class WebConsoleUrlHelper
     }
 
     /// <summary>
+    ///     Gets the open web ports of a host in the order of preference (443, 80, 8443, 8080).
+    /// </summary>
+    /// <param name="openPorts">Open ports of the host.</param>
+    /// <returns>Open web ports.</returns>
+    public static List<int> GetOpenWebPorts(IEnumerable<int> openPorts)
+    {
+        ArgumentNullException.ThrowIfNull(openPorts);
+
+        var ports = openPorts.ToHashSet();
+
+        return [.. WebPorts.Where(ports.Contains)];
+    }
+
+    /// <summary>
     ///     Creates the URL for a host: the preferred open web port (443, 80, 8443, 8080), <c>http://host/</c> if
     ///     none of them is open.
     /// </summary>

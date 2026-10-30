@@ -889,6 +889,30 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
+                <DataGridTextColumn Header="{x:Static localization:Strings.WebTitle}"
+                                    Binding="{Binding WebTitle, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
+                                    SortMemberPath="WebTitle"
+                                    MinWidth="150">
+                    <DataGridTextColumn.Visibility>
+                        <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.ScanOptions.PortScanEnabled" />
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.ScanOptions.HttpTitleEnabled" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Visibility>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="ToolTip" Value="{Binding WebURL}" />
+                            <Style.Triggers>
+                                <!-- No empty tooltip -->
+                                <DataTrigger Binding="{Binding WebURL}" Value="">
+                                    <Setter Property="ToolTip" Value="{x:Null}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.NetBIOSReachable}"
                                     SortMemberPath="NetBIOSInfo.IsReachable"
                                     Visibility="{Binding Path=Data.ScanOptions.NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
