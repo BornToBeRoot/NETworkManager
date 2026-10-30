@@ -1,0 +1,29 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls">
+    <!--
+        Based on AirspaceFixer (https://github.com/chris84948/AirspaceFixer) and its fork AirspaceFixerDotNet
+        (https://github.com/ellipticbit/AirspaceFixerDotNet), MIT License.
+        Copyright (c) 2017 chris84948, Copyright (c) 2024 EllipticBit, LLC - see NETworkManager.Controls/AirspacePanel.cs
+    -->
+    <Style TargetType="{x:Type controls:AirspacePanel}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:AirspacePanel}">
+                    <!-- ClipToBounds: The screenshot keeps its size if the window is made smaller while it is shown -->
+                    <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                          VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                          ClipToBounds="True">
+                        <!-- Size is set in code (size of the content when the screenshot was taken), not stretched -->
+                        <Image x:Name="PART_AirspaceScreenshot"
+                               HorizontalAlignment="Left" VerticalAlignment="Top"
+                               Stretch="Fill"
+                               Visibility="Hidden" />
+                        <ContentControl x:Name="PART_AirspaceContent"
+                                        Content="{TemplateBinding Content}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
