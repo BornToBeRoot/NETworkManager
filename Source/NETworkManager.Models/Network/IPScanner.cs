@@ -807,10 +807,13 @@ public sealed class IPScanner(IPScannerOptions options)
 
         try
         {
-            // Address of the entry (IPv6 link-local: with the scope id of its interface). A canceled scan doesn't wait
-            // for the resolution (the thread is released when Windows returns).
+            // Address of the entry (IPv6 link-local: with the scope id of its interface). Also a canceled scan waits
+            // for the resolution (max. ~3 s) - nothing may still run (and change the neighbor table) when the scan
+            // is complete.
             var macAddress = await Task.Run(() => NeighborTable.ResolveEntry(entry.IPAddress, entry.InterfaceIndex),
-                CancellationToken.None).WaitAsync(cancellationToken).ConfigureAwait(false);
+                CancellationToken.None).ConfigureAwait(false);
+
+            cancellationToken.ThrowIfCancellationRequested();
 
             return !string.IsNullOrEmpty(macAddress) &&
                    (isGateway || !IPScannerNeighborCheck.IsProxyARPAnswer(macAddress, gatewayMACAddresses));
