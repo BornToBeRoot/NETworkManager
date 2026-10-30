@@ -6177,7 +6177,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Read the name, description and location (sysName, sysDescr, sysLocation) of every reachable host with an SNMP v1 / v2c request to UDP port 161. A host with another community usually doesn&apos;t answer (timeout). Many intrusion detection systems report requests with common communities..
+        ///   Looks up a localized string similar to Read the name, description and location (sysName, sysDescr, sysLocation) of every IP address with an SNMP v1 / v2c request to UDP port 161, sent with the other probes. A host that answers is shown as up (detected by SNMP), also if it doesn&apos;t answer the ping, a port or NetBIOS. A host with another community usually doesn&apos;t answer (timeout). Many intrusion detection systems report requests with common communities..
         /// </summary>
         public static string HelpMessage_ReadTheSNMPSystemInformation {
             get {

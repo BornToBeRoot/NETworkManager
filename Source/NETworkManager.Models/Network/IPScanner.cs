@@ -177,7 +177,8 @@ public sealed class IPScanner(IPScannerOptions options)
                             ? (long)options.PortScanTimeout * options.PortScanAttempts *
                               (long)Math.Ceiling(options.PortScanPorts.Length / (double)options.MaxPortThreads)
                             : 0,
-                        options.NetBIOSEnabled ? options.NetBIOSTimeout : 0));
+                        Math.Max(options.NetBIOSEnabled ? options.NetBIOSTimeout : 0,
+                            options.SNMPEnabled ? options.SNMPTimeout : 0)));
 
                 var hostConcurrency = hosts.TryGetNonEnumeratedCount(out var hostCount)
                     ? Math.Min(hostCount, options.MaxHostThreads)
@@ -252,12 +253,22 @@ public sealed class IPScanner(IPScannerOptions options)
             ? NetBIOSResolver.ResolveAsync(ipAddress, options.NetBIOSTimeout, cancellationToken)
             : Task.FromResult(new NetBIOSInfo(ipAddress));
 
+        // A host that answers the SNMP request is up as well (null if it didn't answer)
+        var snmpTask = options.SNMPEnabled
+            ? SNMPSystemInfoResolver.ResolveAsync(ipAddress, options.SNMPVersion, options.SNMPCommunity,
+                options.SNMPTimeout, cancellationToken)
+            : null;
+
         var enrichTask = Task.CompletedTask;
 
         // Results of the finished probes, null while a probe is running
         PingInfo pingInfo = null;
         List<PortInfo> ports = null;
         NetBIOSInfo netBIOSInfo = null;
+
+        // Result of the SNMP request (null if the host didn't answer), see isSNMPFinished
+        SNMPSystemInfo snmpInfo = null;
+        var isSNMPFinished = snmpTask == null;
 
         // Probes that answered so far
         var detectedBy = IPScannerDetectionMethod.None;
@@ -273,6 +284,9 @@ public sealed class IPScanner(IPScannerOptions options)
 
             if (pingTask != null)
                 pending.Add(pingTask);
+
+            if (snmpTask != null)
+                pending.Add(snmpTask);
 
             while (pending.Count > 0)
             {
@@ -333,6 +347,21 @@ public sealed class IPScanner(IPScannerOptions options)
                         x.IsNetBIOSPending = false;
                     };
                 }
+                else if (completed == snmpTask)
+                {
+                    var value = snmpInfo = snmpTask.Result;
+                    isSNMPFinished = true;
+
+                    isAnswer = value != null; // SNMP response
+                    method = IPScannerDetectionMethod.SNMP;
+                    update = x =>
+                    {
+                        x.SNMPName = value?.Name ?? string.Empty;
+                        x.SNMPDescription = value?.Description ?? string.Empty;
+                        x.SNMPLocation = value?.Location ?? string.Empty;
+                        x.IsSNMPPending = false;
+                    };
+                }
                 else
                 {
                     // A port answered - its result follows with the port scan
@@ -364,7 +393,8 @@ public sealed class IPScanner(IPScannerOptions options)
 
                 // First answer: the host is up. Before it could answer, the local system had to resolve its MAC
                 // address, so it is in the neighbor table (ARP/NDP) from now on.
-                hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo);
+                hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo, snmpInfo,
+                    isSNMPFinished);
                 isHttpTitlePending = hostInfo.IsHttpTitlePending;
 
                 _hostsUp.Increment();
@@ -381,7 +411,8 @@ public sealed class IPScanner(IPScannerOptions options)
                 await IsNeighborAsync(ipAddress, networkInterfaces, cancellationToken).ConfigureAwait(false))
             {
                 detectedBy = IPScannerDetectionMethod.ARP;
-                hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo);
+                hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo, snmpInfo,
+                    isSNMPFinished);
                 isHttpTitlePending = hostInfo.IsHttpTitlePending;
 
                 _hostsUp.Increment();
@@ -413,7 +444,8 @@ public sealed class IPScanner(IPScannerOptions options)
 
                 if (options.ShowAllResults || options.ReportAllHosts)
                 {
-                    hostInfo = CreateHostInfo(ipAddress, IPScannerDetectionMethod.None, pingInfo, ports, netBIOSInfo);
+                    hostInfo = CreateHostInfo(ipAddress, IPScannerDetectionMethod.None, pingInfo, ports,
+                        netBIOSInfo, snmpInfo, isSNMPFinished);
 
                     OnHostFound(new IPScannerHostFoundArgs(hostInfo));
 
@@ -429,8 +461,8 @@ public sealed class IPScanner(IPScannerOptions options)
         finally
         {
             // Never return while a probe or lookup is still running (e.g. another probe was canceled or failed)
-            await WaitIgnoringErrorsAsync(pingTask ?? Task.CompletedTask, portScanTask, netBIOSTask, enrichTask)
-                .ConfigureAwait(false);
+            await WaitIgnoringErrorsAsync(pingTask ?? Task.CompletedTask, portScanTask, netBIOSTask,
+                snmpTask ?? Task.CompletedTask, enrichTask).ConfigureAwait(false);
         }
     }
 
@@ -473,9 +505,12 @@ public sealed class IPScanner(IPScannerOptions options)
     /// <param name="pingInfo">Result of the ping, null if it is still running or disabled.</param>
     /// <param name="ports">All probed ports, null if the port scan is still running.</param>
     /// <param name="netBIOSInfo">Result of the NetBIOS request, null if it is still running.</param>
+    /// <param name="snmpInfo">Result of the SNMP request, null if it is still running or the host didn't answer.</param>
+    /// <param name="isSNMPFinished">The SNMP request is finished (or disabled).</param>
     /// <returns>Result of the host.</returns>
     private IPScannerHostInfo CreateHostInfo(IPAddress ipAddress, IPScannerDetectionMethod detectedBy,
-        PingInfo pingInfo, List<PortInfo> ports, NetBIOSInfo netBIOSInfo)
+        PingInfo pingInfo, List<PortInfo> ports, NetBIOSInfo netBIOSInfo, SNMPSystemInfo snmpInfo,
+        bool isSNMPFinished)
     {
         var isReachable = detectedBy != IPScannerDetectionMethod.None;
 
@@ -495,7 +530,10 @@ public sealed class IPScanner(IPScannerOptions options)
             IsDNSPending = options.ResolveHostname,
             IsMACAddressPending = options.ResolveMACAddress,
             IsMDNSPending = isReachable && options.MDNSEnabled,
-            IsSNMPPending = isReachable && options.SNMPEnabled,
+            IsSNMPPending = !isSNMPFinished,
+            SNMPName = snmpInfo?.Name ?? string.Empty,
+            SNMPDescription = snmpInfo?.Description ?? string.Empty,
+            SNMPLocation = snmpInfo?.Location ?? string.Empty,
             IsHttpTitlePending = isReachable && options.HttpTitleEnabled &&
                                  (ports == null ? options.PortScanEnabled : GetWebPorts(ports).Count > 0),
             IsPortScanPending = ports == null,
@@ -504,8 +542,8 @@ public sealed class IPScanner(IPScannerOptions options)
     }
 
     /// <summary>
-    ///     Enriches a found host with the DNS hostname (PTR), MAC address and vendor, the mDNS hostname and the SNMP
-    ///     system information (only reachable hosts). Each result is raised as <see cref="HostUpdated" /> as soon as it arrives; the task
+    ///     Enriches a found host with the DNS hostname (PTR), MAC address and vendor and the mDNS hostname (only
+    ///     reachable hosts). Each result is raised as <see cref="HostUpdated" /> as soon as it arrives; the task
     ///     completes only when all lookups are finished, so the host (and the scan) is never finished while a lookup is
     ///     still running.
     /// </summary>
@@ -543,21 +581,6 @@ public sealed class IPScanner(IPScannerOptions options)
             }));
         }
 
-        async Task UpdateSNMPSystemInfoAsync()
-        {
-            var snmpSystemInfo = await SNMPSystemInfoResolver.ResolveAsync(ipAddress, options.SNMPVersion,
-                options.SNMPCommunity, options.SNMPTimeout, cancellationToken).ConfigureAwait(false);
-
-            // Also without an answer, so the placeholders are replaced
-            OnHostUpdated(new IPScannerHostUpdatedArgs(host, x =>
-            {
-                x.SNMPName = snmpSystemInfo?.Name ?? string.Empty;
-                x.SNMPDescription = snmpSystemInfo?.Description ?? string.Empty;
-                x.SNMPLocation = snmpSystemInfo?.Location ?? string.Empty;
-                x.IsSNMPPending = false;
-            }));
-        }
-
         async Task UpdateMACAddressAsync()
         {
             var (macAddress, vendor) = await ResolveMACAddressAsync(ipAddress, discoveredAt, networkInterfaces,
@@ -580,8 +603,7 @@ public sealed class IPScanner(IPScannerOptions options)
         await Task.WhenAll(
             options.ResolveHostname ? UpdateHostnameAsync() : Task.CompletedTask,
             options.ResolveMACAddress ? UpdateMACAddressAsync() : Task.CompletedTask,
-            options.MDNSEnabled && isReachable ? UpdateMDNSHostnameAsync() : Task.CompletedTask,
-            options.SNMPEnabled && isReachable ? UpdateSNMPSystemInfoAsync() : Task.CompletedTask).ConfigureAwait(false);
+            options.MDNSEnabled && isReachable ? UpdateMDNSHostnameAsync() : Task.CompletedTask).ConfigureAwait(false);
     }
 
     /// <summary>

@@ -32,5 +32,10 @@ public enum IPScannerDetectionMethod
     ///     The host answered the ARP request (IPv4) / neighbor solicitation (IPv6) of the probes, see
     ///     <see cref="IPScannerNeighborCheck" />.
     /// </summary>
-    ARP = 8
+    ARP = 8,
+
+    /// <summary>
+    ///     The host answered the SNMP request (UDP 161).
+    /// </summary>
+    SNMP = 16
 }

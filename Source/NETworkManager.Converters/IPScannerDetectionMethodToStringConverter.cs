@@ -47,7 +47,7 @@ public sealed class IPScannerDetectionMethodToStringConverter : IValueConverter
     /// <returns>Translated names, empty if the host didn't answer any probe.</returns>
     private static List<string> GetNames(IPScannerDetectionMethod detectedBy)
     {
-        var names = new List<string>(4);
+        var names = new List<string>(5);
 
         if (detectedBy.HasFlag(IPScannerDetectionMethod.ICMP))
             names.Add(Strings.Ping);
@@ -57,6 +57,9 @@ public sealed class IPScannerDetectionMethodToStringConverter : IValueConverter
 
         if (detectedBy.HasFlag(IPScannerDetectionMethod.NetBIOS))
             names.Add(Strings.NetBIOS);
+
+        if (detectedBy.HasFlag(IPScannerDetectionMethod.SNMP))
+            names.Add(Strings.SNMP);
 
         if (detectedBy.HasFlag(IPScannerDetectionMethod.ARP))
             names.Add(Strings.ARPNDP);

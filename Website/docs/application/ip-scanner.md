@@ -104,7 +104,7 @@ A host is shown (and counted as up) as soon as it answers the first probe: ping 
 
 An icon after the status icon marks the hosts that have a role for this computer: **This computer** (own IP address), **Default-Gateway**, **DNS server** and **DHCP server** of a connected network interface. The tooltip lists all roles of the host (e.g. a router that is default gateway, DNS and DHCP server). The search box also finds them by role, the export contains them as `Role` (e.g. `DefaultGateway, DNSServer, DHCPServer`).
 
-The probes a host answered are shown in the tooltip of its status icon (e.g. `Up (detected by Ping, TCP)`) and as **Detected by** in the row details (one label per probe): **Ping** (ICMP echo reply), **TCP** (a [port](#ports) is open or refused the connection) and **NetBIOS** (answer to the [NetBIOS](#scan-for-netbios) request) and **ARP / NDP** (a host in a local subnet that didn't answer any of them, see [Find hosts in the local subnet](#find-hosts-in-the-local-subnet)). Probes that answer after the host is shown are added. The export contains them as `DetectedBy` (e.g. `ICMP, TCP` or `ARP`, empty for unreachable hosts).
+The probes a host answered are shown in the tooltip of its status icon (e.g. `Up (detected by Ping, TCP)`) and as **Detected by** in the row details (one label per probe): **Ping** (ICMP echo reply), **TCP** (a [port](#ports) is open or refused the connection) and **NetBIOS** (answer to the [NetBIOS](#scan-for-netbios) request), **SNMP** (answer to the [SNMP](#read-the-snmp-system-information) request) and **ARP / NDP** (a host in a local subnet that didn't answer any of them, see [Find hosts in the local subnet](#find-hosts-in-the-local-subnet)). Probes that answer after the host is shown are added. The export contains them as `DetectedBy` (e.g. `ICMP, TCP` or `ARP`, empty for unreachable hosts).
 
 Only reachable hosts are shown, unless [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) is enabled. A message below the input is shown if no reachable host was found, the scan was canceled, a hostname could not be resolved or an error occurred.
 
@@ -414,7 +414,7 @@ Timeout in milliseconds of a web request (per port, scheme and redirect).
 
 ### Read the SNMP system information
 
-Read the name, description and location (`sysName`, `sysDescr`, `sysLocation`) of every reachable host with an SNMP `GET` request to UDP port `161` and show them in the row details (**SNMP**), the name also in the **SNMP name** column, e.g. to identify switches, printers and access points.
+Read the name, description and location (`sysName`, `sysDescr`, `sysLocation`) of every IP address with an SNMP `GET` request to UDP port `161`, sent together with the ping, the port scan and the NetBIOS request. A host that answers is shown as up (**Detected by** `SNMP`), also if it doesn't answer any other probe (e.g. a switch or printer that blocks ICMP). The values are shown in the row details (**SNMP**), the name also in the **SNMP name** column, e.g. to identify switches, printers and access points.
 
 **Type:** `Boolean`
 
@@ -422,7 +422,7 @@ Read the name, description and location (`sysName`, `sysDescr`, `sysLocation`) o
 
 :::note
 
-A host with another community usually doesn't answer at all (no value after the timeout). Many intrusion detection systems report requests with common communities like `public`. SNMP v3 is not supported (it needs credentials), use the [SNMP](./snmp) tool for it.
+A host with another community usually doesn't answer at all (no value after the timeout); an answer with an error (e.g. `noSuchName` of SNMP v1) still counts as up. The request is sent to every IP address of the range, also unused ones. Many intrusion detection systems report requests with common communities like `public`. SNMP v3 is not supported (it needs credentials), use the [SNMP](./snmp) tool for it.
 
 :::
 

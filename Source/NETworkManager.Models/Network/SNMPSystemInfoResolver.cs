@@ -87,7 +87,10 @@ public static class SNMPSystemInfoResolver
     /// </summary>
     /// <param name="response">SNMP message of the answer.</param>
     /// <param name="requestId">ID of the request.</param>
-    /// <returns>System information, null if the answer is invalid, for another request or an error.</returns>
+    /// <returns>
+    ///     System information (empty values if the host answered with an error, e.g. noSuchName of v1 - it is reachable),
+    ///     null if the answer is invalid or for another request.
+    /// </returns>
     public static SNMPSystemInfo ParseResponse(byte[] response, int requestId)
     {
         ISnmpMessage message;
@@ -101,9 +104,11 @@ public static class SNMPSystemInfoResolver
             return null;
         }
 
-        if (message is not ResponseMessage || message.RequestId() != requestId ||
-            message.Pdu().ErrorStatus.ToInt32() != 0)
+        if (message is not ResponseMessage || message.RequestId() != requestId)
             return null;
+
+        if (message.Pdu().ErrorStatus.ToInt32() != 0)
+            return new SNMPSystemInfo(string.Empty, string.Empty, string.Empty);
 
         var values = message.Variables().ToDictionary(x => x.Id.ToString(), x => GetValue(x.Data));
 

@@ -5240,7 +5240,7 @@ Do you want to start the scan?</value>
     <value>Read the SNMP system information</value>
   </data>
   <data name="HelpMessage_ReadTheSNMPSystemInformation" xml:space="preserve">
-    <value>Read the name, description and location (sysName, sysDescr, sysLocation) of every reachable host with an SNMP v1 / v2c request to UDP port 161. A host with another community usually doesn't answer (timeout). Many intrusion detection systems report requests with common communities.</value>
+    <value>Read the name, description and location (sysName, sysDescr, sysLocation) of every IP address with an SNMP v1 / v2c request to UDP port 161, sent with the other probes. A host that answers is shown as up (detected by SNMP), also if it doesn't answer the ping, a port or NetBIOS. A host with another community usually doesn't answer (timeout). Many intrusion detection systems report requests with common communities.</value>
   </data>
   <data name="WarnMessage_SNMPCommunity" xml:space="preserve">
     <value>The community is saved as plain text in the settings file (not encrypted). Use a read-only community (e.g. public), not one with write access.</value>

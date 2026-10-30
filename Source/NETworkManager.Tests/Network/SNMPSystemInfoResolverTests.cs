@@ -70,12 +70,14 @@ public class SNMPSystemInfoResolverTests
     }
 
     [Fact]
-    public void ParseResponse_Error_Null()
+    public void ParseResponse_Error_EmptyValues()
     {
+        // The host answered (it is reachable), but without values
         var response = CreateResponse(RequestId, ErrorCode.NoSuchName,
             (SNMPSystemInfoResolver.SysNameOID, new Null()));
 
-        Assert.Null(SNMPSystemInfoResolver.ParseResponse(response, RequestId));
+        Assert.Equal(new SNMPSystemInfo(string.Empty, string.Empty, string.Empty),
+            SNMPSystemInfoResolver.ParseResponse(response, RequestId));
     }
 
     [Theory]
