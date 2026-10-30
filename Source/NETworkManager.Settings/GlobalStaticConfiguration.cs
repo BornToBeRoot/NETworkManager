@@ -161,6 +161,7 @@ public static class GlobalStaticConfiguration
     public static int IPScanner_MaxPortThreads => 16;
     public static bool IPScanner_NetBIOSEnabled => true;
     public static int IPScanner_NetBIOSTimeout => 2000;
+    public static bool IPScanner_ARPEnabled => true;
     public static bool IPScanner_ResolveMACAddress => true;
     public static bool IPScanner_ExpandHostView => false;
     public static ExportFileType IPScanner_ExportFileType => ExportFileType.Csv;

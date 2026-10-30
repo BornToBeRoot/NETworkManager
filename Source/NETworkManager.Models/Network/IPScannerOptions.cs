@@ -73,6 +73,12 @@ public record IPScannerOptions
     public required int NetBIOSTimeout { get; init; }
 
     /// <summary>
+    ///     Find hosts in a local subnet that didn't answer any probe by their neighbor entry (ARP / NDP), see
+    ///     <see cref="IPScannerNeighborCheck" />.
+    /// </summary>
+    public required bool ARPEnabled { get; init; }
+
+    /// <summary>
     ///     Resolve the MAC address for the host from ARP.
     /// </summary>
     public required bool ResolveMACAddress { get; init; }

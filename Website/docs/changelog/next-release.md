@@ -89,6 +89,7 @@ Release date: **xx.xx.2026**
 - Added **RDAP...** to the context menu to query the registration data of the IP address or hostname of a host in the [**RDAP**](../application/rdap.md) tool. [#3642](https://github.com/BornToBeRoot/NETworkManager/pull/3642)
 - The probes a host answered (**Ping**, **TCP**, **NetBIOS**) are shown in the tooltip of the status icon and as **Detected by** in the row details, e.g. to see why a host is up. The export contains them as `DetectedBy` (last column / element). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - New **Ping hosts** setting (default on) to scan without ping, e.g. if ICMP is blocked or rate limited in the network: hosts are found by their ports or NetBIOS answer, and the scan is faster because an unreachable host doesn't wait for the ping attempts. At least one of ping, port scan or NetBIOS must be enabled. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- New **Find hosts in the local subnet** setting (default on): hosts in a local subnet that don't answer the ping, a port or NetBIOS (e.g. a Windows client in a public network, a phone or an IoT device with a firewall that drops everything) are found by their ARP / NDP entry, which Windows creates when the probes resolve the MAC address of the host. No additional packets are sent, except to check an entry from earlier traffic again. Answers with the MAC address of the default gateway (proxy ARP) are ignored. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Port Scanner**
 

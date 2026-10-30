@@ -26,5 +26,11 @@ public enum IPScannerDetectionMethod
     /// <summary>
     ///     The host answered the NetBIOS request.
     /// </summary>
-    NetBIOS = 4
+    NetBIOS = 4,
+
+    /// <summary>
+    ///     The host answered the ARP request (IPv4) / neighbor solicitation (IPv6) of the probes, see
+    ///     <see cref="IPScannerNeighborCheck" />.
+    /// </summary>
+    ARP = 8
 }

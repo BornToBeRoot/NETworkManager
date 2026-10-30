@@ -236,6 +236,25 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether hosts in a local subnet are found by their neighbor entry (ARP / NDP).
+    /// </summary>
+    public bool ARPEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_ARPEnabled = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets a value indicating whether NetBIOS is enabled.
     /// </summary>
     public bool NetBIOSEnabled
@@ -405,6 +424,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
         PortScanAttempts = SettingsManager.Current.IPScanner_PortScanAttempts;
         NetBIOSEnabled = SettingsManager.Current.IPScanner_NetBIOSEnabled;
         NetBIOSTimeout = SettingsManager.Current.IPScanner_NetBIOSTimeout;
+        ARPEnabled = SettingsManager.Current.IPScanner_ARPEnabled;
         ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
         MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads;
         MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads;

@@ -28,7 +28,7 @@ public sealed class IPScannerDetectionMethodToStringConverter : IValueConverter
         if (value is not IPScannerDetectionMethod detectedBy || detectedBy == IPScannerDetectionMethod.None)
             return isStatus ? Strings.Down : "-/-";
 
-        var names = new List<string>(3);
+        var names = new List<string>(4);
 
         if (detectedBy.HasFlag(IPScannerDetectionMethod.ICMP))
             names.Add(Strings.Ping);
@@ -38,6 +38,9 @@ public sealed class IPScannerDetectionMethodToStringConverter : IValueConverter
 
         if (detectedBy.HasFlag(IPScannerDetectionMethod.NetBIOS))
             names.Add(Strings.NetBIOS);
+
+        if (detectedBy.HasFlag(IPScannerDetectionMethod.ARP))
+            names.Add(Strings.ARPNDP);
 
         var text = string.Join(", ", names);
 

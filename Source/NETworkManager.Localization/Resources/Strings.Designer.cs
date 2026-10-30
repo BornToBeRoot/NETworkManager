@@ -1276,6 +1276,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ARP / NDP.
+        /// </summary>
+        public static string ARPNDP {
+            get {
+                return ResourceManager.GetString("ARPNDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ASN.
         /// </summary>
         public static string ASN {
@@ -5130,6 +5139,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find hosts in the local subnet.
+        /// </summary>
+        public static string FindHostsInTheLocalSubnet {
+            get {
+                return ResourceManager.GetString("FindHostsInTheLocalSubnet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Firewall.
         /// </summary>
         public static string Firewall {
@@ -5927,6 +5945,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_ExperimentalFeatures {
             get {
                 return ResourceManager.GetString("HelpMessage_ExperimentalFeatures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find hosts in a local subnet that don't answer the ping, a port or NetBIOS (e.g. a firewall drops everything) by their entry in the neighbor table (ARP / NDP). To reach a host in a local subnet, Windows has to resolve its MAC address first, and a host answers this request even if its firewall drops everything else. No additional packets are sent, except to check an entry from earlier traffic again. Hosts behind a router can't be found this way..
+        /// </summary>
+        public static string HelpMessage_FindHostsInTheLocalSubnet {
+            get {
+                return ResourceManager.GetString("HelpMessage_FindHostsInTheLocalSubnet", resourceCulture);
             }
         }
         

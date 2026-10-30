@@ -920,6 +920,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             PortScanAttempts = SettingsManager.Current.IPScanner_PortScanAttempts,
             NetBIOSEnabled = SettingsManager.Current.IPScanner_NetBIOSEnabled,
             NetBIOSTimeout = SettingsManager.Current.IPScanner_NetBIOSTimeout,
+            ARPEnabled = SettingsManager.Current.IPScanner_ARPEnabled,
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
             ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults,
             ReportAllHosts = false

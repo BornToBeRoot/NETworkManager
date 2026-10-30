@@ -5173,4 +5173,13 @@ Do you want to start the scan?</value>
   <data name="EnableAtLeastOneProbeToFindHostsMessage" xml:space="preserve">
     <value>Enable at least one of ping, port scan or NetBIOS in the settings. A host is only found if it answers one of them.</value>
   </data>
+  <data name="ARPNDP" xml:space="preserve">
+    <value>ARP / NDP</value>
+  </data>
+  <data name="FindHostsInTheLocalSubnet" xml:space="preserve">
+    <value>Find hosts in the local subnet</value>
+  </data>
+  <data name="HelpMessage_FindHostsInTheLocalSubnet" xml:space="preserve">
+    <value>Find hosts in a local subnet that don't answer the ping, a port or NetBIOS (e.g. a firewall drops everything) by their entry in the neighbor table (ARP / NDP). To reach a host in a local subnet, Windows has to resolve its MAC address first, and a host answers this request even if its firewall drops everything else. No additional packets are sent, except to check an entry from earlier traffic again. Hosts behind a router can't be found this way.</value>
+  </data>
 </root>

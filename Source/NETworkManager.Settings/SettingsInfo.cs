@@ -1351,6 +1351,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_PortScanAttempts;
 
+    public bool IPScanner_ARPEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_ARPEnabled;
+
     public bool IPScanner_NetBIOSEnabled
     {
         get;

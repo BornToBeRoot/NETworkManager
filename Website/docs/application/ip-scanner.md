@@ -15,7 +15,7 @@ keywords:
 
 # IP Scanner
 
-With the **IP Scanner** you can scan for active devices based on the hostname or in IP ranges that are reachable via ICMP, answer on a common TCP port (open, or closed with a TCP reset) or reply to a NetBIOS request.
+With the **IP Scanner** you can scan for active devices based on the hostname or in IP ranges that are reachable via ICMP, answer on a common TCP port (open, or closed with a TCP reset) or reply to a NetBIOS request. Hosts in a local subnet that drop all of them (e.g. a firewall) are found by their ARP / NDP entry.
 
 ![IP Scanner](../img/ip-scanner.png)
 
@@ -87,7 +87,7 @@ The number of reachable (up) and unreachable (down) IP addresses is shown next t
 
 A host is shown (and counted as up) as soon as it answers the first probe: ping reply, open or refused port or NetBIOS answer. Values of probes that are still running are shown as `...`; the results of the other probes, the hostname (DNS) and the MAC address / vendor are filled in when they arrive. Unreachable hosts are added when all probes are finished. A column you sorted by is not sorted again for values that arrive later, click the header again. The scan is finished when all hosts and all lookups are finished.
 
-The probes a host answered are shown in the tooltip of its status icon (e.g. `Up (detected by Ping, TCP)`) and as **Detected by** in the row details: **Ping** (ICMP echo reply), **TCP** (a [port](#ports) is open or refused the connection) and **NetBIOS** (answer to the [NetBIOS](#scan-for-netbios) request). Probes that answer after the host is shown are added. The export contains them as `DetectedBy` (e.g. `ICMP, TCP`, empty for unreachable hosts).
+The probes a host answered are shown in the tooltip of its status icon (e.g. `Up (detected by Ping, TCP)`) and as **Detected by** in the row details: **Ping** (ICMP echo reply), **TCP** (a [port](#ports) is open or refused the connection) and **NetBIOS** (answer to the [NetBIOS](#scan-for-netbios) request) and **ARP / NDP** (a host in a local subnet that didn't answer any of them, see [Find hosts in the local subnet](#find-hosts-in-the-local-subnet)). Probes that answer after the host is shown are added. The export contains them as `DetectedBy` (e.g. `ICMP, TCP` or `ARP`, empty for unreachable hosts).
 
 Only reachable hosts are shown, unless [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) is enabled. A message below the input is shown if no reachable host was found, the scan was canceled, a hostname could not be resolved or an error occurred.
 
@@ -277,6 +277,20 @@ Timeout in milliseconds after which a NetBIOS request is considered lost.
 **Type:** `Integer` [Min `100`, Max `15000`]
 
 **Default:** `2000`
+
+### Find hosts in the local subnet
+
+Find hosts in a local subnet that don't answer the ping, a port or NetBIOS by their entry in the neighbor table (ARP for IPv4, NDP for IPv6). To send a packet to a host in a local subnet, Windows has to resolve its MAC address first - and a host answers this request even if its firewall drops everything else (e.g. a Windows client in a public network, a phone, an IoT device). After the probes of a host are finished, its entry is read from the neighbor table: a host whose entry was confirmed (`Reachable`) is shown as up (**Detected by** `ARP / NDP`) with its MAC address. No additional packets are sent, except for an entry from earlier traffic that was not confirmed again yet (`Stale`): it is resolved again (ARP request / neighbor solicitation) to check if the host is still there.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+:::note
+
+Only hosts in a subnet of a local network interface can be found this way, hosts behind a router are never in the neighbor table. An answer with the MAC address of the default gateway (proxy ARP, e.g. a router that answers for every address of the subnet) is ignored. A host that left the network a few seconds before the scan may still be shown as up: Windows keeps a confirmed entry for about 15 to 45 seconds.
+
+:::
 
 ### Resolve MAC address and vendor
 
