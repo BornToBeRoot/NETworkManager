@@ -22,7 +22,7 @@ public class IPScannerNeighborCheckTests
     [Fact]
     public void Check_NoEntry_IsUnreachable()
     {
-        Assert.Equal(IPScannerNeighborCheckResult.Unreachable, IPScannerNeighborCheck.Check(null, false, GatewayMACs));
+        Assert.Equal(IPScannerNeighborCheckResult.Unreachable, IPScannerNeighborCheck.Check(null, false, false, GatewayMACs));
     }
 
     [Theory]
@@ -35,7 +35,7 @@ public class IPScannerNeighborCheckTests
     [InlineData(NeighborState.Unreachable, IPScannerNeighborCheckResult.Unreachable)]
     public void Check_State(NeighborState state, IPScannerNeighborCheckResult expected)
     {
-        Assert.Equal(expected, IPScannerNeighborCheck.Check(CreateEntry(state), false, GatewayMACs));
+        Assert.Equal(expected, IPScannerNeighborCheck.Check(CreateEntry(state), false, false, GatewayMACs));
     }
 
     [Theory]
@@ -44,21 +44,29 @@ public class IPScannerNeighborCheckTests
     public void Check_MACOfGateway_IsProxyARP(NeighborState state)
     {
         Assert.Equal(IPScannerNeighborCheckResult.Unreachable,
-            IPScannerNeighborCheck.Check(CreateEntry(state, GatewayMAC), false, GatewayMACs));
+            IPScannerNeighborCheck.Check(CreateEntry(state, GatewayMAC), false, false, GatewayMACs));
     }
 
     [Fact]
     public void Check_GatewayItself_IsReachable()
     {
         Assert.Equal(IPScannerNeighborCheckResult.Reachable,
-            IPScannerNeighborCheck.Check(CreateEntry(NeighborState.Reachable, GatewayMAC), true, GatewayMACs));
+            IPScannerNeighborCheck.Check(CreateEntry(NeighborState.Reachable, GatewayMAC), false, true, GatewayMACs));
+    }
+
+    [Fact]
+    public void Check_ReachableBeforeTheProbes_IsVerified()
+    {
+        // The probes didn't resolve it again - may be from earlier traffic of a host that is gone now
+        Assert.Equal(IPScannerNeighborCheckResult.Verify,
+            IPScannerNeighborCheck.Check(CreateEntry(NeighborState.Reachable), true, false, GatewayMACs));
     }
 
     [Fact]
     public void Check_NoGateway_IsReachable()
     {
         Assert.Equal(IPScannerNeighborCheckResult.Reachable,
-            IPScannerNeighborCheck.Check(CreateEntry(NeighborState.Reachable), false, []));
+            IPScannerNeighborCheck.Check(CreateEntry(NeighborState.Reachable), false, false, []));
     }
 
     [Theory]

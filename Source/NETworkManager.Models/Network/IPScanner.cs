@@ -234,6 +234,16 @@ public sealed class IPScanner(IPScannerOptions options)
     private async Task ScanHostAsync(IPAddress ipAddress, ParallelOptions portScanParallelOptions,
         List<NetworkInterfaceInfo> networkInterfaces, CancellationToken cancellationToken)
     {
+        // Neighbor entry before the probes are sent (from the cached snapshot, read before this host started): a
+        // Reachable entry is not resolved again by the probes, so after them it doesn't prove an answer (see
+        // IPScannerNeighborCheck.Check)
+        var isNeighborCheckEnabled = options.ARPEnabled && IsInLocalSubnet(ipAddress, networkInterfaces);
+
+        var wasNeighborReachableBefore = isNeighborCheckEnabled &&
+                                         (await GetNeighborEntryAsync(ipAddress, DateTime.MinValue, false,
+                                             cancellationToken).ConfigureAwait(false))?.State ==
+                                         NeighborState.Reachable;
+
         // Completed by the port scan when the first port answers (open or refused), so the host is found before
         // all ports are finished
         var portAnswered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -407,8 +417,9 @@ public sealed class IPScanner(IPScannerOptions options)
 
             // No probe answered: a host in a local subnet may still have answered the ARP request / neighbor
             // solicitation of the probes (e.g. a firewall that drops everything else)
-            if (hostInfo == null && options.ARPEnabled && IsInLocalSubnet(ipAddress, networkInterfaces) &&
-                await IsNeighborAsync(ipAddress, networkInterfaces, cancellationToken).ConfigureAwait(false))
+            if (hostInfo == null && isNeighborCheckEnabled &&
+                await IsNeighborAsync(ipAddress, wasNeighborReachableBefore, networkInterfaces, cancellationToken)
+                    .ConfigureAwait(false))
             {
                 detectedBy = IPScannerDetectionMethod.ARP;
                 hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo, snmpInfo,
@@ -758,11 +769,12 @@ public sealed class IPScanner(IPScannerOptions options)
     ///     <see cref="MaxConcurrentNeighborVerifications" /> at the same time).
     /// </summary>
     /// <param name="ipAddress">IP address of the host (in a local subnet, see <see cref="IsInLocalSubnet" />).</param>
+    /// <param name="wasReachableBefore">The entry was already reachable before the probes were sent.</param>
     /// <param name="networkInterfaces">Local network interfaces (for the default gateways).</param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     /// <returns>True if the host is reachable.</returns>
-    private async Task<bool> IsNeighborAsync(IPAddress ipAddress, List<NetworkInterfaceInfo> networkInterfaces,
-        CancellationToken cancellationToken)
+    private async Task<bool> IsNeighborAsync(IPAddress ipAddress, bool wasReachableBefore,
+        List<NetworkInterfaceInfo> networkInterfaces, CancellationToken cancellationToken)
     {
         var entry = await GetNeighborEntryAsync(ipAddress, DateTime.UtcNow, true, cancellationToken)
             .ConfigureAwait(false);
@@ -781,7 +793,7 @@ public sealed class IPScanner(IPScannerOptions options)
             .Where(x => !string.IsNullOrEmpty(x))
             .ToList();
 
-        switch (IPScannerNeighborCheck.Check(entry, isGateway, gatewayMACAddresses))
+        switch (IPScannerNeighborCheck.Check(entry, wasReachableBefore, isGateway, gatewayMACAddresses))
         {
             case IPScannerNeighborCheckResult.Reachable:
                 return true;

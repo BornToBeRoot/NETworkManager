@@ -17,10 +17,15 @@ public static class IPScannerNeighborCheck
     /// <param name="entry">
     ///     Neighbor entry of the host (read after its probes were finished), null if there is none.
     /// </param>
+    /// <param name="wasReachableBefore">
+    ///     The entry was already <see cref="NeighborState.Reachable" /> before the probes were sent - Windows doesn't
+    ///     resolve it again for the probes while it is (about 15 to 45 seconds), so it may be from earlier traffic of a
+    ///     host that is gone now.
+    /// </param>
     /// <param name="isGateway">The host is a default gateway of a local network interface.</param>
     /// <param name="gatewayMACAddresses">MAC addresses of the default gateways (e.g. "001122AABBCC").</param>
     /// <returns>What the entry says about the host.</returns>
-    public static IPScannerNeighborCheckResult Check(NeighborInfo entry, bool isGateway,
+    public static IPScannerNeighborCheckResult Check(NeighborInfo entry, bool wasReachableBefore, bool isGateway,
         IReadOnlyCollection<string> gatewayMACAddresses)
     {
         // No entry (the neighbor table only contains entries with a MAC address): the host didn't answer the ARP
@@ -35,8 +40,10 @@ public static class IPScannerNeighborCheck
 
         return entry.State switch
         {
-            // Confirmed recently, i.e. when the probes resolved it
-            NeighborState.Reachable => IPScannerNeighborCheckResult.Reachable,
+            // Confirmed when the probes resolved it - or still from before the probes (verify it)
+            NeighborState.Reachable => wasReachableBefore
+                ? IPScannerNeighborCheckResult.Verify
+                : IPScannerNeighborCheckResult.Reachable,
             // Entry from earlier traffic, not verified again yet (Delay / Probe: the verification is still running)
             NeighborState.Stale or NeighborState.Delay or NeighborState.Probe => IPScannerNeighborCheckResult.Verify,
             // Static entry (says nothing about the host), or the neighbor didn't answer

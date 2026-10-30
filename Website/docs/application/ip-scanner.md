@@ -334,7 +334,7 @@ Example: a Windows client with the firewall on is only found with **Find hosts i
 
 :::
 
-Find hosts in a local subnet that don't answer the ping, a port or NetBIOS by their entry in the neighbor table (ARP for IPv4, NDP for IPv6). To send a packet to a host in a local subnet, Windows has to resolve its MAC address first - and a host answers this request even if its firewall drops everything else (e.g. a Windows client in a public network, a phone, an IoT device). After the probes of a host are finished, its entry is read from the neighbor table: a host whose entry was confirmed (`Reachable`) is shown as up (**Detected by** `ARP / NDP`). No additional packets are sent, except for an entry from earlier traffic that was not confirmed again yet (`Stale`): it is resolved again (ARP request / neighbor solicitation) to check if the host is still there.
+Find hosts in a local subnet that don't answer the ping, a port or NetBIOS by their entry in the neighbor table (ARP for IPv4, NDP for IPv6). To send a packet to a host in a local subnet, Windows has to resolve its MAC address first - and a host answers this request even if its firewall drops everything else (e.g. a Windows client in a public network, a phone, an IoT device). After the probes of a host are finished, its entry is read from the neighbor table: a host whose entry was confirmed (`Reachable`) is shown as up (**Detected by** `ARP / NDP`). No additional packets are sent, except for an entry from earlier traffic: an entry that was not confirmed again yet (`Stale`), or that was already `Reachable` before the probes were sent (Windows doesn't resolve it again for them), is resolved again (ARP request / neighbor solicitation) to check if the host is still there.
 
 **Type:** `Boolean`
 
@@ -342,7 +342,7 @@ Find hosts in a local subnet that don't answer the ping, a port or NetBIOS by th
 
 :::note
 
-Only hosts in a subnet of a local network interface can be found this way, hosts behind a router are never in the neighbor table. An answer with the MAC address of the default gateway (proxy ARP, e.g. a router that answers for every address of the subnet) is ignored. A host that left the network a few seconds before the scan may still be shown as up: Windows keeps a confirmed entry for about 15 to 45 seconds.
+Only hosts in a subnet of a local network interface can be found this way, hosts behind a router are never in the neighbor table. An answer with the MAC address of the default gateway (proxy ARP, e.g. a router that answers for every address of the subnet) is ignored. A host that leaves the network while its probes are running may still be shown as up.
 
 :::
 
