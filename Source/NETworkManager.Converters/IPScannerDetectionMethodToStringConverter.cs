@@ -18,16 +18,35 @@ public sealed class IPScannerDetectionMethodToStringConverter : IValueConverter
     /// </summary>
     /// <param name="value">Probes the host answered as <see cref="IPScannerDetectionMethod" />.</param>
     /// <param name="targetType"></param>
-    /// <param name="parameter">"Status" to get the status of the host ("Up (detected by Ping, TCP)" / "Down").</param>
+    /// <param name="parameter">
+    ///     "Status" to get the status of the host ("Up (detected by Ping, TCP)" / "Down"), "List" to get the
+    ///     translated probes as list (e.g. for labels).
+    /// </param>
     /// <param name="culture"></param>
     /// <returns>Translated, comma-separated probes, "-/-" if the host didn't answer any probe.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var isStatus = parameter as string == "Status";
+        var detectedBy = value is IPScannerDetectionMethod method ? method : IPScannerDetectionMethod.None;
 
-        if (value is not IPScannerDetectionMethod detectedBy || detectedBy == IPScannerDetectionMethod.None)
-            return isStatus ? Strings.Down : "-/-";
+        var names = GetNames(detectedBy);
 
+        return parameter as string switch
+        {
+            "List" => names,
+            "Status" => detectedBy == IPScannerDetectionMethod.None
+                ? Strings.Down
+                : string.Format(Strings.UpDetectedByX, string.Join(", ", names)),
+            _ => detectedBy == IPScannerDetectionMethod.None ? "-/-" : string.Join(", ", names)
+        };
+    }
+
+    /// <summary>
+    ///     Gets the translated names of the probes a host answered.
+    /// </summary>
+    /// <param name="detectedBy">Probes the host answered.</param>
+    /// <returns>Translated names, empty if the host didn't answer any probe.</returns>
+    private static List<string> GetNames(IPScannerDetectionMethod detectedBy)
+    {
         var names = new List<string>(4);
 
         if (detectedBy.HasFlag(IPScannerDetectionMethod.ICMP))
@@ -42,9 +61,7 @@ public sealed class IPScannerDetectionMethodToStringConverter : IValueConverter
         if (detectedBy.HasFlag(IPScannerDetectionMethod.ARP))
             names.Add(Strings.ARPNDP);
 
-        var text = string.Join(", ", names);
-
-        return isStatus ? string.Format(Strings.UpDetectedByX, text) : text;
+        return names;
     }
 
     /// <summary>

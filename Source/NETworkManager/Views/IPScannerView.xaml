@@ -1025,10 +1025,26 @@
                                 <TextBlock Grid.Column="0"
                                            Text="{x:Static localization:Strings.DetectedBy}"
                                            Style="{StaticResource BoldTextBlock}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
-                                <!-- OneWay: TextBox.Text binds TwoWay by default, DetectedBy can't be set from the view -->
-                                <TextBox Grid.Column="2"
-                                         Text="{Binding Path=DetectedBy, Mode=OneWay, Converter={StaticResource IPScannerDetectionMethodToStringConverter}}" />
+                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                           VerticalAlignment="Center" />
+                                <!-- One label per probe, like the "ICMP" label of the Ping Monitor -->
+                                <ItemsControl Grid.Column="2"
+                                              ItemsSource="{Binding Path=DetectedBy, Converter={StaticResource IPScannerDetectionMethodToStringConverter}, ConverterParameter=List}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}"
+                                                       Background="{DynamicResource MahApps.Brushes.Gray8}"
+                                                       Padding="5" Margin="0,0,5,0"
+                                                       Style="{StaticResource AccentTextBlock}"
+                                                       VerticalAlignment="Center" />
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </Grid>
                             <Rectangle Grid.Row="1" Grid.Column="0" Height="10"
                                        Visibility="{Binding Path=IsReachable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
