@@ -55,6 +55,18 @@ public class WebPageResolverTests
     }
 
     [Theory]
+    [InlineData(443, "https", 2000, 2000)]
+    [InlineData(8443, "https", 2000, 2000)]
+    [InlineData(9443, "https", 2000, 1000)]
+    [InlineData(9443, "https", 500, 500)]
+    [InlineData(9443, "http", 2000, 2000)]
+    [InlineData(80, "http", 3000, 3000)]
+    public void GetTimeout(int port, string scheme, int timeout, int expected)
+    {
+        Assert.Equal(expected, WebPageResolver.GetTimeout(port, scheme, timeout));
+    }
+
+    [Theory]
     [InlineData(80, new[] { "http" })]
     [InlineData(8080, new[] { "http" })]
     [InlineData(443, new[] { "https", "http" })]

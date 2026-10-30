@@ -33,6 +33,13 @@ public static partial class WebPageResolver
     private const int MaxRedirects = 3;
 
     /// <summary>
+    ///     Maximum timeout in milliseconds of the https attempt on a port where https is only guessed (not 443 /
+    ///     8443) and http is tried next: a plain http server that doesn't close the connection on the TLS handshake
+    ///     (e.g. some embedded devices) would otherwise cost the whole timeout before http is tried.
+    /// </summary>
+    private const int MaxGuessedHttpsTimeout = 1000;
+
+    /// <summary>
     ///     Key of the TLS certificate of the web server in the options of a request, set by the certificate callback of
     ///     the handler (it gets the request, unlike the callback of the <c>SslStream</c>).
     /// </summary>
@@ -90,7 +97,8 @@ public static partial class WebPageResolver
             {
                 var url = WebConsoleUrlHelper.CreateUrl(ipAddress.ToString(), port, scheme);
 
-                var info = await GetWebPageAsync(url, timeout, cancellationToken).ConfigureAwait(false);
+                var info = await GetWebPageAsync(url, GetTimeout(port, scheme, timeout), cancellationToken)
+                    .ConfigureAwait(false);
 
                 if (info != null)
                     return info;
@@ -98,6 +106,20 @@ public static partial class WebPageResolver
         }
 
         return null;
+    }
+
+    /// <summary>
+    ///     Gets the timeout of a request: the timeout of the settings, at most
+    ///     <see cref="MaxGuessedHttpsTimeout" /> for https on a port where https is only guessed (not 443 / 8443, http
+    ///     is tried next).
+    /// </summary>
+    /// <param name="port">Port number.</param>
+    /// <param name="scheme">"http" or "https".</param>
+    /// <param name="timeout">Timeout in milliseconds of the settings.</param>
+    /// <returns>Timeout in milliseconds.</returns>
+    public static int GetTimeout(int port, string scheme, int timeout)
+    {
+        return scheme == "https" && port is not (443 or 8443) ? Math.Min(timeout, MaxGuessedHttpsTimeout) : timeout;
     }
 
     /// <summary>
