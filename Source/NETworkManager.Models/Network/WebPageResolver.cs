@@ -121,13 +121,14 @@ public static partial class WebPageResolver
     private static async Task<WebPageInfo> GetWebPageAsync(string url, int timeout,
         CancellationToken cancellationToken)
     {
-        var uri = new Uri(url);
-
         // Certificate of the last https response (e.g. after a redirect from http to https)
         WebCertificateInfo certificate = null;
 
         try
         {
+            // In the try: an URL that can't be parsed only means no web page for this host, not the end of the scan
+            var uri = new Uri(url);
+
             for (var redirects = 0; ; redirects++)
             {
                 using var timeoutCts = new CancellationTokenSource(timeout);
