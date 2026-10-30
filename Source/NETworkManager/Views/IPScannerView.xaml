@@ -913,6 +913,33 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
+                <DataGridTextColumn Header="{x:Static localization:Strings.SNMPName}"
+                                    Binding="{Binding SNMPName, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
+                                    SortMemberPath="SNMPName"
+                                    Visibility="{Binding Path=Data.ScanOptions.SNMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                    MinWidth="150" />
+                <DataGridTextColumn Header="{x:Static localization:Strings.SNMPDescription}"
+                                    Binding="{Binding SNMPDescription, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
+                                    SortMemberPath="SNMPDescription"
+                                    Visibility="{Binding Path=Data.ScanOptions.SNMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                    MinWidth="150">
+                    <!-- Long descriptions (e.g. model and firmware) in the tooltip -->
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="ToolTip" Value="{Binding SNMPDescription}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SNMPDescription}" Value="">
+                                    <Setter Property="ToolTip" Value="{x:Null}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="{x:Static localization:Strings.SNMPLocation}"
+                                    Binding="{Binding SNMPLocation, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
+                                    SortMemberPath="SNMPLocation"
+                                    Visibility="{Binding Path=Data.ScanOptions.SNMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                    MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.NetBIOSReachable}"
                                     SortMemberPath="NetBIOSInfo.IsReachable"
                                     Visibility="{Binding Path=Data.ScanOptions.NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"

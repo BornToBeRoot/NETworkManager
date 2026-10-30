@@ -5856,7 +5856,7 @@ namespace NETworkManager.Localization.Resources {
         ///
         ///Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
         ///
-        ///Click in the upper right corner on the help / documentation button ( [rest of string was truncated]&quot;;.
+        ///Click in the upper right corner on the help / documentation button (left [rest of string was truncated]&quot;;.
         /// </summary>
         public static string HelpMessage_ApplyThemeToPowerShellConsole {
             get {
@@ -5976,7 +5976,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Find hosts in a local subnet that don't answer the ping, a port or NetBIOS (e.g. a firewall drops everything) by their entry in the neighbor table (ARP / NDP). To reach a host in a local subnet, Windows has to resolve its MAC address first, and a host answers this request even if its firewall drops everything else. No additional packets are sent, except to check an entry from earlier traffic again. Hosts behind a router can't be found this way..
+        ///   Looks up a localized string similar to Find hosts in a local subnet that don&apos;t answer the ping, a port or NetBIOS (e.g. a firewall drops everything) by their entry in the neighbor table (ARP / NDP). To reach a host in a local subnet, Windows has to resolve its MAC address first, and a host answers this request even if its firewall drops everything else. No additional packets are sent, except to check an entry from earlier traffic again. Hosts behind a router can&apos;t be found this way..
         /// </summary>
         public static string HelpMessage_FindHostsInTheLocalSubnet {
             get {
@@ -5994,7 +5994,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Guess the operating system from the TTL of the ping reply: every operating system starts with a typical TTL, 64 (Linux, Unix, macOS, Android, iOS), 128 (Windows) or 255 (network devices like routers, switches and printers), and every router on the way reduces it by one. No additional packets are sent. It's a hint, not a detection: the TTL can be changed on the host, NAT and VPN can change it. Not available for IPv6 (the ping reply has no TTL)..
+        ///   Looks up a localized string similar to Guess the operating system from the TTL of the ping reply: every operating system starts with a typical TTL, 64 (Linux, Unix, macOS, Android, iOS), 128 (Windows) or 255 (network devices like routers, switches and printers), and every router on the way reduces it by one. No additional packets are sent. It&apos;s a hint, not a detection: the TTL can be changed on the host, NAT and VPN can change it. Not available for IPv6 (the ping reply has no TTL)..
         /// </summary>
         public static string HelpMessage_GuessTheOperatingSystemFromTheTTL {
             get {
@@ -6173,6 +6173,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_RDPAuthenticationLevel {
             get {
                 return ResourceManager.GetString("HelpMessage_RDPAuthenticationLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read the name, description and location (sysName, sysDescr, sysLocation) of every reachable host with an SNMP v1 / v2c request to UDP port 161. A host with another community usually doesn&apos;t answer (timeout). Many intrusion detection systems report requests with common communities..
+        /// </summary>
+        public static string HelpMessage_ReadTheSNMPSystemInformation {
+            get {
+                return ResourceManager.GetString("HelpMessage_ReadTheSNMPSystemInformation", resourceCulture);
             }
         }
         
@@ -9655,7 +9664,7 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
         ///
-        ///First make a backup copy of your profile files be [rest of string was truncated]&quot;;.
+        ///First make a backup copy of your profile files befo [rest of string was truncated]&quot;;.
         /// </summary>
         public static string ProfileEncryptionDisclaimer {
             get {
@@ -10272,6 +10281,15 @@ namespace NETworkManager.Localization.Resources {
         public static string RDAPXIsNotARegisteredDomainShowingY {
             get {
                 return ResourceManager.GetString("RDAPXIsNotARegisteredDomainShowingY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read the SNMP system information.
+        /// </summary>
+        public static string ReadTheSNMPSystemInformation {
+            get {
+                return ResourceManager.GetString("ReadTheSNMPSystemInformation", resourceCulture);
             }
         }
         
@@ -13123,6 +13141,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SNMP description.
+        /// </summary>
+        public static string SNMPDescription {
+            get {
+                return ResourceManager.GetString("SNMPDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Authentication failed. Please check the community string!.
         /// </summary>
         public static string SNMPErrorCode_AuthorizationError {
@@ -13290,6 +13317,24 @@ namespace NETworkManager.Localization.Resources {
         public static string SNMPErrorCode_WrongValue {
             get {
                 return ResourceManager.GetString("SNMPErrorCode_WrongValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SNMP location.
+        /// </summary>
+        public static string SNMPLocation {
+            get {
+                return ResourceManager.GetString("SNMPLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SNMP name.
+        /// </summary>
+        public static string SNMPName {
+            get {
+                return ResourceManager.GetString("SNMPName", resourceCulture);
             }
         }
         
@@ -14814,6 +14859,15 @@ namespace NETworkManager.Localization.Resources {
         public static string WarnMessage_MultipleInstances {
             get {
                 return ResourceManager.GetString("WarnMessage_MultipleInstances", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The community is saved as plain text in the settings file (not encrypted). Use a read-only community (e.g. public), not one with write access..
+        /// </summary>
+        public static string WarnMessage_SNMPCommunity {
+            get {
+                return ResourceManager.GetString("WarnMessage_SNMPCommunity", resourceCulture);
             }
         }
         

@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
@@ -407,6 +408,87 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the SNMP system information is read.
+    /// </summary>
+    public bool SNMPEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_SNMPEnabled = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the SNMP versions that can be used to read the system information (v1, v2c - v3 needs credentials).
+    /// </summary>
+    public SNMPVersion[] SNMPVersions { get; } = [SNMPVersion.V1, SNMPVersion.V2C];
+
+    /// <summary>
+    /// Gets or sets the SNMP version (v1 or v2c).
+    /// </summary>
+    public SNMPVersion SNMPVersion
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_SNMPVersion = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the SNMP community (saved as plain text).
+    /// </summary>
+    public string SNMPCommunity
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_SNMPCommunity = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the SNMP timeout in milliseconds.
+    /// </summary>
+    public int SNMPTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_SNMPTimeout = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets the collection view of custom commands.
     /// </summary>
     public ICollectionView CustomCommands { get; }
@@ -526,6 +608,10 @@ public class IPScannerSettingsViewModel : ViewModelBase
         MDNSTimeout = SettingsManager.Current.IPScanner_MDNSTimeout;
         HttpTitleEnabled = SettingsManager.Current.IPScanner_HttpTitleEnabled;
         HttpTitleTimeout = SettingsManager.Current.IPScanner_HttpTitleTimeout;
+        SNMPEnabled = SettingsManager.Current.IPScanner_SNMPEnabled;
+        SNMPVersion = SettingsManager.Current.IPScanner_SNMPVersion;
+        SNMPCommunity = SettingsManager.Current.IPScanner_SNMPCommunity;
+        SNMPTimeout = SettingsManager.Current.IPScanner_SNMPTimeout;
         MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads;
         MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads;
     }

@@ -168,6 +168,10 @@ public static class GlobalStaticConfiguration
     public static int IPScanner_MDNSTimeout => 2000;
     public static bool IPScanner_HttpTitleEnabled => false;
     public static int IPScanner_HttpTitleTimeout => 2000;
+    public static bool IPScanner_SNMPEnabled => false;
+    public static SNMPVersion IPScanner_SNMPVersion => SNMPVersion.V2C;
+    public static string IPScanner_SNMPCommunity => "public";
+    public static int IPScanner_SNMPTimeout => 2000;
     public static bool IPScanner_ExpandHostView => false;
     public static ExportFileType IPScanner_ExportFileType => ExportFileType.Csv;
     // Larger scans need a confirmation, even larger ones are refused (every IP address / port is kept in memory)

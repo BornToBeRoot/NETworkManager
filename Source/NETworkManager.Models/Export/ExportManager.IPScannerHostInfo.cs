@@ -80,7 +80,10 @@ public static partial class ExportManager
             $"{nameof(IPScannerHostInfo.Role)}," +
             $"{nameof(IPScannerHostInfo.MDNSHostname)}," +
             $"{nameof(IPScannerHostInfo.WebTitle)}," +
-            $"{nameof(IPScannerHostInfo.WebURL)}"
+            $"{nameof(IPScannerHostInfo.WebURL)}," +
+            $"{nameof(IPScannerHostInfo.SNMPName)}," +
+            $"{nameof(IPScannerHostInfo.SNMPDescription)}," +
+            $"{nameof(IPScannerHostInfo.SNMPLocation)}"
         );
 
         foreach (var info in collection)
@@ -129,7 +132,10 @@ public static partial class ExportManager
                 $"{CsvHelper.QuoteString(GetRole(info))}," +
                 $"{CsvHelper.QuoteString(options.MDNSEnabled ? info.MDNSHostname : null)}," +
                 $"{CsvHelper.QuoteString(options.HttpTitleEnabled ? info.WebTitle : null)}," +
-                $"{CsvHelper.QuoteString(options.HttpTitleEnabled ? info.WebURL : null)}"
+                $"{CsvHelper.QuoteString(options.HttpTitleEnabled ? info.WebURL : null)}," +
+                $"{CsvHelper.QuoteString(options.SNMPEnabled ? info.SNMPName : null)}," +
+                $"{CsvHelper.QuoteString(options.SNMPEnabled ? info.SNMPDescription : null)}," +
+                $"{CsvHelper.QuoteString(options.SNMPEnabled ? info.SNMPLocation : null)}"
             );
         }
 
@@ -193,7 +199,12 @@ public static partial class ExportManager
                                 options.MDNSEnabled ? info.MDNSHostname : null),
                             new XElement(nameof(IPScannerHostInfo.WebTitle),
                                 options.HttpTitleEnabled ? info.WebTitle : null),
-                            new XElement(nameof(IPScannerHostInfo.WebURL), options.HttpTitleEnabled ? info.WebURL : null)
+                            new XElement(nameof(IPScannerHostInfo.WebURL), options.HttpTitleEnabled ? info.WebURL : null),
+                            new XElement(nameof(IPScannerHostInfo.SNMPName), options.SNMPEnabled ? info.SNMPName : null),
+                            new XElement(nameof(IPScannerHostInfo.SNMPDescription),
+                                options.SNMPEnabled ? info.SNMPDescription : null),
+                            new XElement(nameof(IPScannerHostInfo.SNMPLocation),
+                                options.SNMPEnabled ? info.SNMPLocation : null)
                         )
                 )
             )
@@ -269,7 +280,10 @@ public static partial class ExportManager
                 Role = GetRole(info),
                 MDNSHostname = options.MDNSEnabled ? info.MDNSHostname : null,
                 WebTitle = options.HttpTitleEnabled ? info.WebTitle : null,
-                WebURL = options.HttpTitleEnabled ? info.WebURL : null
+                WebURL = options.HttpTitleEnabled ? info.WebURL : null,
+                SNMPName = options.SNMPEnabled ? info.SNMPName : null,
+                SNMPDescription = options.SNMPEnabled ? info.SNMPDescription : null,
+                SNMPLocation = options.SNMPEnabled ? info.SNMPLocation : null
             };
         }
 

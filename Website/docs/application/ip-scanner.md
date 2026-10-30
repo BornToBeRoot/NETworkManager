@@ -100,7 +100,7 @@ The probes a host answered are shown in the tooltip of its status icon (e.g. `Up
 
 Only reachable hosts are shown, unless [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) is enabled. A message below the input is shown if no reachable host was found, the scan was canceled, a hostname could not be resolved or an error occurred.
 
-The search box right of the **Result** header filters the results by IP address, hostname, MAC address, vendor, OS (guess), mDNS hostname, web title and open ports (number or service), also while the scan is running (hosts whose hostname or MAC address arrives later are filtered again). **Export...** > all exports the filtered results; the up / down counters always count all hosts. Results can also be exported while the scan is running; values of probes that are still running (shown as `...`) are exported as empty values.
+The search box right of the **Result** header filters the results by IP address, hostname, MAC address, vendor, OS (guess), mDNS hostname, web title, SNMP name / description / location and open ports (number or service), also while the scan is running (hosts whose hostname or MAC address arrives later are filtered again). **Export...** > all exports the filtered results; the up / down counters always count all hosts. Results can also be exported while the scan is running; values of probes that are still running (shown as `...`) are exported as empty values.
 
 Expand a row with the button in front of it to see its details, or enable [Expand host view](#expand-host-view) to expand all hosts.
 
@@ -374,6 +374,55 @@ Needs the [port scan](#scan-ports) with the web ports in the [Ports](#ports) lis
 ### Timeout (ms)
 
 Timeout in milliseconds of a web request (per port and redirect).
+
+**Type:** `Integer` [Min `100`, Max `15000`]
+
+**Default:** `2000`
+
+### Read the SNMP system information
+
+Read the name, description and location (`sysName`, `sysDescr`, `sysLocation`) of every reachable host with an SNMP `GET` request to UDP port `161` and show them in the **SNMP name**, **SNMP description** (full text in the tooltip) and **SNMP location** columns, e.g. to identify switches, printers and access points.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+:::note
+
+A host with another community usually doesn't answer at all (no value after the timeout). Many intrusion detection systems report requests with common communities like `public`. SNMP v3 is not supported (it needs credentials), use the [SNMP](./snmp) tool for it.
+
+:::
+
+### Version
+
+SNMP version of the request.
+
+**Type:** `NETworkManager.Models.Network.SNMPVersion`
+
+**Default:** `V2C`
+
+**Possible values:**
+
+- `V1`
+- `V2C`
+
+### Community
+
+Community of the request.
+
+**Type:** `String`
+
+**Default:** `public`
+
+:::warning
+
+The community is saved as plain text in the settings file (not encrypted). Use a read-only community (e.g. `public`), not one with write access.
+
+:::
+
+### Timeout (ms)
+
+Timeout in milliseconds after which an SNMP request is considered lost.
 
 **Type:** `Integer` [Min `100`, Max `15000`]
 

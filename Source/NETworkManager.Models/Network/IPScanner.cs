@@ -486,8 +486,8 @@ public sealed class IPScanner(IPScannerOptions options)
     }
 
     /// <summary>
-    ///     Enriches a found host with the DNS hostname (PTR), MAC address and vendor and the mDNS hostname (only
-    ///     reachable hosts). Each result is raised as <see cref="HostUpdated" /> as soon as it arrives; the task
+    ///     Enriches a found host with the DNS hostname (PTR), MAC address and vendor, the mDNS hostname and the SNMP
+    ///     system information (only reachable hosts). Each result is raised as <see cref="HostUpdated" /> as soon as it arrives; the task
     ///     completes only when all lookups are finished, so the host (and the scan) is never finished while a lookup is
     ///     still running.
     /// </summary>
@@ -517,6 +517,20 @@ public sealed class IPScanner(IPScannerOptions options)
                 OnHostUpdated(new IPScannerHostUpdatedArgs(host, x => x.MDNSHostname = mdnsHostname));
         }
 
+        async Task UpdateSNMPSystemInfoAsync()
+        {
+            var snmpSystemInfo = await SNMPSystemInfoResolver.ResolveAsync(ipAddress, options.SNMPVersion,
+                options.SNMPCommunity, options.SNMPTimeout, cancellationToken).ConfigureAwait(false);
+
+            if (snmpSystemInfo != null)
+                OnHostUpdated(new IPScannerHostUpdatedArgs(host, x =>
+                {
+                    x.SNMPName = snmpSystemInfo.Name;
+                    x.SNMPDescription = snmpSystemInfo.Description;
+                    x.SNMPLocation = snmpSystemInfo.Location;
+                }));
+        }
+
         async Task UpdateMACAddressAsync()
         {
             var (macAddress, vendor) = await ResolveMACAddressAsync(ipAddress, discoveredAt, networkInterfaces,
@@ -538,7 +552,8 @@ public sealed class IPScanner(IPScannerOptions options)
         await Task.WhenAll(
             options.ResolveHostname ? UpdateHostnameAsync() : Task.CompletedTask,
             options.ResolveMACAddress ? UpdateMACAddressAsync() : Task.CompletedTask,
-            options.MDNSEnabled && isReachable ? UpdateMDNSHostnameAsync() : Task.CompletedTask).ConfigureAwait(false);
+            options.MDNSEnabled && isReachable ? UpdateMDNSHostnameAsync() : Task.CompletedTask,
+            options.SNMPEnabled && isReachable ? UpdateSNMPSystemInfoAsync() : Task.CompletedTask).ConfigureAwait(false);
     }
 
     /// <summary>

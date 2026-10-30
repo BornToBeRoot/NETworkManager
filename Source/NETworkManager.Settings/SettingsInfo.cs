@@ -1468,6 +1468,58 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_HttpTitleTimeout;
 
+    public bool IPScanner_SNMPEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_SNMPEnabled;
+
+    public SNMPVersion IPScanner_SNMPVersion
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_SNMPVersion;
+
+    public string IPScanner_SNMPCommunity
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_SNMPCommunity;
+
+    public int IPScanner_SNMPTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_SNMPTimeout;
+
     public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
     {
         get;

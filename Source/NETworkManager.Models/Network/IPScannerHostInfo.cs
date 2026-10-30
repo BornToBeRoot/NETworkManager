@@ -362,6 +362,54 @@ public class IPScannerHostInfo : PropertyChangedBase
     } = string.Empty;
 
     /// <summary>
+    ///     Name of the host read via SNMP (sysName), empty if not read (yet).
+    /// </summary>
+    public string SNMPName
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = string.Empty;
+
+    /// <summary>
+    ///     Description of the host read via SNMP (sysDescr), empty if not read (yet).
+    /// </summary>
+    public string SNMPDescription
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = string.Empty;
+
+    /// <summary>
+    ///     Location of the host read via SNMP (sysLocation), empty if not read (yet).
+    /// </summary>
+    public string SNMPLocation
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = string.Empty;
+
+    /// <summary>
     ///     Takes over all values of another result of the same host (e.g. a rescan), so the shown row keeps its
     ///     identity (selection, expanded details). Call it on the thread that owns the host (UI thread).
     /// </summary>
@@ -382,6 +430,9 @@ public class IPScannerHostInfo : PropertyChangedBase
         MDNSHostname = source.MDNSHostname;
         WebTitle = source.WebTitle;
         WebURL = source.WebURL;
+        SNMPName = source.SNMPName;
+        SNMPDescription = source.SNMPDescription;
+        SNMPLocation = source.SNMPLocation;
         NeighborMACAddress = source.NeighborMACAddress;
         NeighborVendor = source.NeighborVendor;
     }
@@ -404,6 +455,9 @@ public class IPScannerHostInfo : PropertyChangedBase
             MDNSHostname = MDNSHostname,
             WebTitle = WebTitle,
             WebURL = WebURL,
+            SNMPName = SNMPName,
+            SNMPDescription = SNMPDescription,
+            SNMPLocation = SNMPLocation,
             NeighborMACAddress = NeighborMACAddress,
             NeighborVendor = NeighborVendor
         };

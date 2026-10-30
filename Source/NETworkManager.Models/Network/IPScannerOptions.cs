@@ -110,6 +110,26 @@ public record IPScannerOptions
     public required int HttpTitleTimeout { get; init; }
 
     /// <summary>
+    ///     Read the SNMP system information of reachable hosts, see <see cref="SNMPSystemInfoResolver" />.
+    /// </summary>
+    public required bool SNMPEnabled { get; init; }
+
+    /// <summary>
+    ///     SNMP version (<see cref="SNMPVersion.V1" /> or <see cref="SNMPVersion.V2C" />).
+    /// </summary>
+    public required SNMPVersion SNMPVersion { get; init; }
+
+    /// <summary>
+    ///     SNMP community.
+    /// </summary>
+    public required string SNMPCommunity { get; init; }
+
+    /// <summary>
+    ///     Timeout in milliseconds after which an SNMP request is considered lost.
+    /// </summary>
+    public required int SNMPTimeout { get; init; }
+
+    /// <summary>
     ///     Include unreachable IP addresses in the result.
     /// </summary>
     public required bool ShowAllResults { get; init; }

@@ -5236,4 +5236,22 @@ Do you want to start the scan?</value>
   <data name="HelpMessage_ReadTheTitleOfWebPages" xml:space="preserve">
     <value>Read the title of the web page (GET /) of every reachable host with an open web port (443, 80, 8443, 8080 - the port scan must be enabled and the ports must be in the list). The first port that answers is used, redirects on the same host are followed. No cookies or credentials are sent, certificate errors are accepted. The request appears in the log of the web server. If the page has no title, the Server header is shown.</value>
   </data>
+  <data name="SNMPName" xml:space="preserve">
+    <value>SNMP name</value>
+  </data>
+  <data name="SNMPDescription" xml:space="preserve">
+    <value>SNMP description</value>
+  </data>
+  <data name="SNMPLocation" xml:space="preserve">
+    <value>SNMP location</value>
+  </data>
+  <data name="ReadTheSNMPSystemInformation" xml:space="preserve">
+    <value>Read the SNMP system information</value>
+  </data>
+  <data name="HelpMessage_ReadTheSNMPSystemInformation" xml:space="preserve">
+    <value>Read the name, description and location (sysName, sysDescr, sysLocation) of every reachable host with an SNMP v1 / v2c request to UDP port 161. A host with another community usually doesn't answer (timeout). Many intrusion detection systems report requests with common communities.</value>
+  </data>
+  <data name="WarnMessage_SNMPCommunity" xml:space="preserve">
+    <value>The community is saved as plain text in the settings file (not encrypted). Use a read-only community (e.g. public), not one with write access.</value>
+  </data>
 </root>

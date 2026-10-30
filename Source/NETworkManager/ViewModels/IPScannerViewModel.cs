@@ -454,6 +454,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                    Matches(info.Hostname) ||
                    Matches(info.MDNSHostname) ||
                    Matches(info.WebTitle) ||
+                   Matches(info.SNMPName) ||
+                   Matches(info.SNMPDescription) ||
+                   Matches(info.SNMPLocation) ||
                    Matches(info.MACAddress) ||
                    Matches(info.Vendor) ||
                    (ScanOptions.OSGuessEnabled &&
@@ -469,6 +472,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Hostname));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MDNSHostname));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebTitle));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPName));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPDescription));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPLocation));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MACAddress));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Vendor));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Ports));
@@ -1001,6 +1007,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             MDNSTimeout = SettingsManager.Current.IPScanner_MDNSTimeout,
             HttpTitleEnabled = SettingsManager.Current.IPScanner_HttpTitleEnabled,
             HttpTitleTimeout = SettingsManager.Current.IPScanner_HttpTitleTimeout,
+            SNMPEnabled = SettingsManager.Current.IPScanner_SNMPEnabled,
+            SNMPVersion = SettingsManager.Current.IPScanner_SNMPVersion,
+            SNMPCommunity = SettingsManager.Current.IPScanner_SNMPCommunity,
+            SNMPTimeout = SettingsManager.Current.IPScanner_SNMPTimeout,
             ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults,
             ReportAllHosts = false
         };
@@ -1031,7 +1041,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             SettingsManager.Current.IPScanner_NetBIOSEnabled,
             SettingsManager.Current.IPScanner_ResolveMACAddress,
             SettingsManager.Current.IPScanner_MDNSEnabled,
-            SettingsManager.Current.IPScanner_HttpTitleEnabled);
+            SettingsManager.Current.IPScanner_HttpTitleEnabled,
+            SettingsManager.Current.IPScanner_SNMPEnabled);
     }
 
     /// <summary>
