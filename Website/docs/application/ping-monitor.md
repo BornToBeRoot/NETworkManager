@@ -29,10 +29,13 @@ ICMP (Internet Control Message Protocol) is a network-layer protocol used to sen
 | `borntoberoot.net`               | Single IP address resolved from a host (`10.0.0.1`)                                        |
 | `borntoberoot.net/24`            | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)          |
 | `borntoberoot.net/255.255.255.0` | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)          |
+| `!10.0.0.1`                      | Excludes an IP address (also a range, subnet or host, e.g. `!10.0.0.0/28`) from the other inputs|
 
 :::note
 
 Multiple inputs can be combined with a semicolon (`;`). A column pasted from Excel (one entry per line) is converted to the semicolon-separated form automatically.
+
+An input starting with `!` excludes its IP addresses from the other inputs, e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254` (all formats of the table above, a hostname is resolved first). At least one input without `!` is required.
 
 Example: `10.0.0.0/24; 10.0.[10-20].1; 10.0.0.100-199`
 
