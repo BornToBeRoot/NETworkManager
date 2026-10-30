@@ -5180,7 +5180,7 @@ Do you want to start the scan?</value>
     <value>Find hosts in the local subnet</value>
   </data>
   <data name="HelpMessage_FindHostsInTheLocalSubnet" xml:space="preserve">
-    <value>Find hosts in a local subnet that don't answer the ping, a port or NetBIOS (e.g. a firewall drops everything) by their entry in the neighbor table (ARP / NDP). To reach a host in a local subnet, Windows has to resolve its MAC address first, and a host answers this request even if its firewall drops everything else. No additional packets are sent, except to check an entry from earlier traffic again. Hosts behind a router can't be found this way.</value>
+    <value>Find hosts in a local subnet that don't answer the ping, a port or NetBIOS (e.g. a firewall drops everything) by their entry in the neighbor table (ARP / NDP). To reach a host in a local subnet, Windows has to resolve its MAC address first, and a host answers this request even if its firewall drops everything else. No additional packets are sent, except to check an entry from earlier traffic again. Hosts behind a router can't be found this way. Only decides if a host is up - the MAC address and vendor are shown with "Resolve MAC address and vendor".</value>
   </data>
   <data name="DetectLocalSubnet" xml:space="preserve">
     <value>Detect local subnet</value>
@@ -5253,5 +5253,8 @@ Do you want to start the scan?</value>
   </data>
   <data name="WarnMessage_SNMPCommunity" xml:space="preserve">
     <value>The community is saved as plain text in the settings file (not encrypted). Use a read-only community (e.g. public), not one with write access.</value>
+  </data>
+  <data name="HelpMessage_ResolveMACAddressAndVendor" xml:space="preserve">
+    <value>Show the MAC address and vendor of every found host: read from the neighbor table (ARP / NDP) for hosts in a local subnet, otherwise from the NetBIOS answer (if NetBIOS is enabled). Doesn't find hosts - a host that doesn't answer the ping, a port or NetBIOS is only found with "Find hosts in the local subnet".</value>
   </data>
 </root>

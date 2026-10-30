@@ -5976,7 +5976,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Find hosts in a local subnet that don&apos;t answer the ping, a port or NetBIOS (e.g. a firewall drops everything) by their entry in the neighbor table (ARP / NDP). To reach a host in a local subnet, Windows has to resolve its MAC address first, and a host answers this request even if its firewall drops everything else. No additional packets are sent, except to check an entry from earlier traffic again. Hosts behind a router can&apos;t be found this way..
+        ///   Looks up a localized string similar to Find hosts in a local subnet that don&apos;t answer the ping, a port or NetBIOS (e.g. a firewall drops everything) by their entry in the neighbor table (ARP / NDP). To reach a host in a local subnet, Windows has to resolve its MAC address first, and a host answers this request even if its firewall drops everything else. No additional packets are sent, except to check an entry from earlier traffic again. Hosts behind a router can&apos;t be found this way. Only decides if a host is up - the MAC address and vendor are s [rest of string was truncated]&quot;;.
         /// </summary>
         public static string HelpMessage_FindHostsInTheLocalSubnet {
             get {
@@ -6191,6 +6191,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_ReadTheTitleOfWebPages {
             get {
                 return ResourceManager.GetString("HelpMessage_ReadTheTitleOfWebPages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show the MAC address and vendor of every found host: read from the neighbor table (ARP / NDP) for hosts in a local subnet, otherwise from the NetBIOS answer (if NetBIOS is enabled). Doesn&apos;t find hosts - a host that doesn&apos;t answer the ping, a port or NetBIOS is only found with &quot;Find hosts in the local subnet&quot;..
+        /// </summary>
+        public static string HelpMessage_ResolveMACAddressAndVendor {
+            get {
+                return ResourceManager.GetString("HelpMessage_ResolveMACAddressAndVendor", resourceCulture);
             }
         }
         

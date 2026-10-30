@@ -120,8 +120,9 @@
                    Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding NetBIOSTimeout}" Maximum="15000" Minimum="100" Interval="100"
                            Margin="0,0,0,20" />
+        <!-- Both read the neighbor table: find hosts (up / down) and show the MAC address of found hosts -->
         <TextBlock Text="{x:Static localization:Strings.ARPNDP}" Style="{StaticResource HeaderTextBlock}" />
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <mah:ToggleSwitch Header="{x:Static localization:Strings.FindHostsInTheLocalSubnet}"
                               IsOn="{Binding ARPEnabled}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top"
@@ -132,9 +133,17 @@
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <TextBlock Text="{x:Static localization:Strings.MACAddress}" Style="{StaticResource HeaderTextBlock}" />
-        <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveMACAddressAndVendor}"
-                          IsOn="{Binding ResolveMACAddress}" Margin="0,0,0,20" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveMACAddressAndVendor}"
+                              IsOn="{Binding ResolveMACAddress}" />
+            <Rectangle Width="24" Height="24" VerticalAlignment="Top"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_ResolveMACAddressAndVendor}"
+                       Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
         <TextBlock Text="{x:Static localization:Strings.MDNS}" Style="{StaticResource HeaderTextBlock}" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveMDNSHostname}" IsOn="{Binding MDNSEnabled}" />

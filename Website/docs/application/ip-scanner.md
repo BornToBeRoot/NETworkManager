@@ -309,7 +309,22 @@ Timeout in milliseconds after which a NetBIOS request is considered lost.
 
 ### Find hosts in the local subnet
 
-Find hosts in a local subnet that don't answer the ping, a port or NetBIOS by their entry in the neighbor table (ARP for IPv4, NDP for IPv6). To send a packet to a host in a local subnet, Windows has to resolve its MAC address first - and a host answers this request even if its firewall drops everything else (e.g. a Windows client in a public network, a phone, an IoT device). After the probes of a host are finished, its entry is read from the neighbor table: a host whose entry was confirmed (`Reachable`) is shown as up (**Detected by** `ARP / NDP`) with its MAC address. No additional packets are sent, except for an entry from earlier traffic that was not confirmed again yet (`Stale`): it is resolved again (ARP request / neighbor solicitation) to check if the host is still there.
+:::info
+
+**Find hosts in the local subnet** and [Resolve MAC address and vendor](#resolve-mac-address-and-vendor) both read the neighbor table of Windows (ARP for IPv4, NDP for IPv6), but for different purposes. They can be enabled independently (section **ARP / NDP** in the settings).
+
+| | Find hosts in the local subnet | Resolve MAC address and vendor |
+| --- | --- | --- |
+| Purpose | Decides **if a host is up** | Shows **information** about a host that was found |
+| Hosts | Hosts in a local subnet that didn't answer the ping, a port or NetBIOS | Every found host |
+| Uses | The **state** of the entry (`Reachable` = up, `Stale` is checked again) | The **MAC address** of the entry (NetBIOS answer as fallback) and the vendor of it |
+| Result | Host shown as up, **Detected by** `ARP / NDP` | **MAC address** and **Vendor** columns |
+
+Example: a Windows client with the firewall on is only found with **Find hosts in the local subnet**; its MAC address is only shown if **Resolve MAC address and vendor** is enabled as well.
+
+:::
+
+Find hosts in a local subnet that don't answer the ping, a port or NetBIOS by their entry in the neighbor table (ARP for IPv4, NDP for IPv6). To send a packet to a host in a local subnet, Windows has to resolve its MAC address first - and a host answers this request even if its firewall drops everything else (e.g. a Windows client in a public network, a phone, an IoT device). After the probes of a host are finished, its entry is read from the neighbor table: a host whose entry was confirmed (`Reachable`) is shown as up (**Detected by** `ARP / NDP`). No additional packets are sent, except for an entry from earlier traffic that was not confirmed again yet (`Stale`): it is resolved again (ARP request / neighbor solicitation) to check if the host is still there.
 
 **Type:** `Boolean`
 
@@ -323,7 +338,7 @@ Only hosts in a subnet of a local network interface can be found this way, hosts
 
 ### Resolve MAC address and vendor
 
-Resolve the MAC address and vendor for each IP address.
+Show the MAC address and vendor of every found host in the **MAC address** and **Vendor** columns. It doesn't find hosts - a host that doesn't answer the ping, a port or NetBIOS is only found with [Find hosts in the local subnet](#find-hosts-in-the-local-subnet).
 
 **Type:** `Boolean`
 
