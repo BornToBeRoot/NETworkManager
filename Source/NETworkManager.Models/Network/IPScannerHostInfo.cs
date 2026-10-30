@@ -133,11 +133,31 @@ public class IPScannerHostInfo : PropertyChangedBase
     }
 
     /// <summary>
-    ///     Hostname of the host: DNS hostname, fallback to the NetBIOS computer name.
+    ///     Hostname of the host: DNS hostname, fallback to the mDNS hostname and the NetBIOS computer name.
     /// </summary>
     public string Hostname => !string.IsNullOrEmpty(DNSHostname)
         ? DNSHostname
-        : NetBIOSInfo?.ComputerName ?? string.Empty;
+        : !string.IsNullOrEmpty(MDNSHostname)
+            ? MDNSHostname
+            : NetBIOSInfo?.ComputerName ?? string.Empty;
+
+    /// <summary>
+    ///     mDNS hostname of the host (e.g. "macbook.local", see <see cref="MDNSResolver" />), empty if not resolved
+    ///     (yet).
+    /// </summary>
+    public string MDNSHostname
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(Hostname));
+        }
+    } = string.Empty;
 
     /// <summary>
     ///     DNS hostname of the host (PTR record), empty if not resolved (yet).
@@ -326,6 +346,7 @@ public class IPScannerHostInfo : PropertyChangedBase
         IsPortScanPending = source.IsPortScanPending;
         IsNetBIOSPending = source.IsNetBIOSPending;
         DNSHostname = source.DNSHostname;
+        MDNSHostname = source.MDNSHostname;
         NeighborMACAddress = source.NeighborMACAddress;
         NeighborVendor = source.NeighborVendor;
     }
@@ -345,6 +366,7 @@ public class IPScannerHostInfo : PropertyChangedBase
             IsPortScanPending = IsPortScanPending,
             IsNetBIOSPending = IsNetBIOSPending,
             DNSHostname = DNSHostname,
+            MDNSHostname = MDNSHostname,
             NeighborMACAddress = NeighborMACAddress,
             NeighborVendor = NeighborVendor
         };

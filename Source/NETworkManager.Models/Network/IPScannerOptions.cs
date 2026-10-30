@@ -89,6 +89,16 @@ public record IPScannerOptions
     public required bool ResolveMACAddress { get; init; }
 
     /// <summary>
+    ///     Resolve the mDNS hostname of reachable hosts, see <see cref="MDNSResolver" />.
+    /// </summary>
+    public required bool MDNSEnabled { get; init; }
+
+    /// <summary>
+    ///     Timeout in milliseconds after which an mDNS request is considered lost.
+    /// </summary>
+    public required int MDNSTimeout { get; init; }
+
+    /// <summary>
     ///     Include unreachable IP addresses in the result.
     /// </summary>
     public required bool ShowAllResults { get; init; }

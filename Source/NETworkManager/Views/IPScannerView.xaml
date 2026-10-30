@@ -529,6 +529,7 @@
                                 <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
                                     <Binding Path="ScanOptions.ResolveHostname" />
                                     <Binding Path="ScanOptions.NetBIOSEnabled" />
+                                    <Binding Path="ScanOptions.MDNSEnabled" />
                                 </MultiBinding>
                             </MenuItem.Visibility>
                         </MenuItem>
@@ -656,6 +657,7 @@
                                 <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
                                     <Binding Path="ScanOptions.ResolveHostname" />
                                     <Binding Path="ScanOptions.NetBIOSEnabled" />
+                                    <Binding Path="ScanOptions.MDNSEnabled" />
                                 </MultiBinding>
                             </MenuItem.Visibility>
                         </MenuItem>
@@ -812,9 +814,16 @@
                                      Path="Data.ScanOptions.ResolveHostname" />
                             <Binding Source="{StaticResource BindingProxy}"
                                      Path="Data.ScanOptions.NetBIOSEnabled" />
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.ScanOptions.MDNSEnabled" />
                         </MultiBinding>
                     </DataGridTextColumn.Visibility>
                 </DataGridTextColumn>
+                <DataGridTextColumn Header="{x:Static localization:Strings.MDNSHostname}"
+                                    Binding="{Binding MDNSHostname, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
+                                    SortMemberPath="MDNSHostname"
+                                    Visibility="{Binding Path=Data.ScanOptions.MDNSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                    MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.PingStatus}"
                                     SortMemberPath="PingInfo.Status"
                                     Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"

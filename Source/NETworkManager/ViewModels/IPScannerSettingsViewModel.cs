@@ -331,6 +331,44 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the mDNS hostname is resolved.
+    /// </summary>
+    public bool MDNSEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_MDNSEnabled = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the mDNS timeout in milliseconds.
+    /// </summary>
+    public int MDNSTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_MDNSTimeout = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets the collection view of custom commands.
     /// </summary>
     public ICollectionView CustomCommands { get; }
@@ -446,6 +484,8 @@ public class IPScannerSettingsViewModel : ViewModelBase
         NetBIOSTimeout = SettingsManager.Current.IPScanner_NetBIOSTimeout;
         ARPEnabled = SettingsManager.Current.IPScanner_ARPEnabled;
         ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
+        MDNSEnabled = SettingsManager.Current.IPScanner_MDNSEnabled;
+        MDNSTimeout = SettingsManager.Current.IPScanner_MDNSTimeout;
         MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads;
         MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads;
     }

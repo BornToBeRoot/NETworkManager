@@ -452,6 +452,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             return Matches(info.PingInfo.IPAddress.ToString()) ||
                    Matches(info.Hostname) ||
+                   Matches(info.MDNSHostname) ||
                    Matches(info.MACAddress) ||
                    Matches(info.Vendor) ||
                    (ScanOptions.OSGuessEnabled &&
@@ -465,6 +466,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         // while searching, see ApplySearch.
         var liveShaping = (ICollectionViewLiveShaping)ResultsView;
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Hostname));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MDNSHostname));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MACAddress));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Vendor));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Ports));
@@ -982,6 +984,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             NetBIOSTimeout = SettingsManager.Current.IPScanner_NetBIOSTimeout,
             ARPEnabled = SettingsManager.Current.IPScanner_ARPEnabled,
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
+            MDNSEnabled = SettingsManager.Current.IPScanner_MDNSEnabled,
+            MDNSTimeout = SettingsManager.Current.IPScanner_MDNSTimeout,
             ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults,
             ReportAllHosts = false
         };
@@ -1010,7 +1014,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             SettingsManager.Current.IPScanner_ResolveHostname,
             SettingsManager.Current.IPScanner_PortScanEnabled,
             SettingsManager.Current.IPScanner_NetBIOSEnabled,
-            SettingsManager.Current.IPScanner_ResolveMACAddress);
+            SettingsManager.Current.IPScanner_ResolveMACAddress,
+            SettingsManager.Current.IPScanner_MDNSEnabled);
     }
 
     /// <summary>

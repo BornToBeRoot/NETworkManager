@@ -5215,4 +5215,16 @@ Do you want to start the scan?</value>
   <data name="ThisComputer" xml:space="preserve">
     <value>This computer</value>
   </data>
+  <data name="MDNS" xml:space="preserve">
+    <value>mDNS</value>
+  </data>
+  <data name="MDNSHostname" xml:space="preserve">
+    <value>mDNS hostname</value>
+  </data>
+  <data name="ResolveMDNSHostname" xml:space="preserve">
+    <value>Resolve mDNS hostname</value>
+  </data>
+  <data name="HelpMessage_ResolveMDNSHostname" xml:space="preserve">
+    <value>Resolve the mDNS hostname (e.g. macbook.local) of every reachable host with a reverse lookup sent to UDP port 5353 of the host. Answered by Apple devices, Linux (Avahi), Android, printers and many IoT devices, usually only in the local subnet. Used as hostname if there is no DNS hostname.</value>
+  </data>
 </root>

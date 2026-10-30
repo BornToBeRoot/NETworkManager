@@ -6177,6 +6177,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resolve the mDNS hostname (e.g. macbook.local) of every reachable host with a reverse lookup sent to UDP port 5353 of the host. Answered by Apple devices, Linux (Avahi), Android, printers and many IoT devices, usually only in the local subnet. Used as hostname if there is no DNS hostname..
+        /// </summary>
+        public static string HelpMessage_ResolveMDNSHostname {
+            get {
+                return ResourceManager.GetString("HelpMessage_ResolveMDNSHostname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Displays a dialog to save credentials after a successful sign-in..
         /// </summary>
         public static string HelpMessage_SaveCredentials {
@@ -7830,6 +7839,24 @@ namespace NETworkManager.Localization.Resources {
         public static string MaxPortThreads {
             get {
                 return ResourceManager.GetString("MaxPortThreads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mDNS.
+        /// </summary>
+        public static string MDNS {
+            get {
+                return ResourceManager.GetString("MDNS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mDNS hostname.
+        /// </summary>
+        public static string MDNSHostname {
+            get {
+                return ResourceManager.GetString("MDNSHostname", resourceCulture);
             }
         }
         
@@ -11604,6 +11631,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ResolveMACAddressIsDisabled {
             get {
                 return ResourceManager.GetString("ResolveMACAddressIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resolve mDNS hostname.
+        /// </summary>
+        public static string ResolveMDNSHostname {
+            get {
+                return ResourceManager.GetString("ResolveMDNSHostname", resourceCulture);
             }
         }
         

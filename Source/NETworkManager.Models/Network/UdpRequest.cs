@@ -18,8 +18,8 @@ public static class UdpRequest
     private const int ResponseBufferSize = 8192;
 
     /// <summary>
-    ///     Sends <paramref name="request" /> to <paramref name="port" /> of the host and returns the first datagram the
-    ///     host answers with. Datagrams from other addresses (e.g. a stray or spoofed one) are ignored.
+    ///     Sends <paramref name="request" /> to <paramref name="port" /> of the host and returns the first datagram
+    ///     the host answers with. Datagrams from other addresses (e.g. a stray or spoofed one) are ignored.
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="port">UDP port of the host.</param>

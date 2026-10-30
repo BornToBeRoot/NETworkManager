@@ -476,9 +476,10 @@ public sealed class IPScanner(IPScannerOptions options)
     }
 
     /// <summary>
-    ///     Enriches a found host with the DNS hostname (PTR), MAC address and vendor. Each result is raised as
-    ///     <see cref="HostUpdated" /> as soon as it arrives; the task completes only when all lookups are finished, so
-    ///     the host (and the scan) is never finished while a lookup is still running.
+    ///     Enriches a found host with the DNS hostname (PTR), MAC address and vendor and the mDNS hostname (only
+    ///     reachable hosts). Each result is raised as <see cref="HostUpdated" /> as soon as it arrives; the task
+    ///     completes only when all lookups are finished, so the host (and the scan) is never finished while a lookup is
+    ///     still running.
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="host">Result of the host, already raised in <see cref="HostFound" />.</param>
@@ -497,6 +498,15 @@ public sealed class IPScanner(IPScannerOptions options)
                 OnHostUpdated(new IPScannerHostUpdatedArgs(host, x => x.DNSHostname = dnsHostname));
         }
 
+        async Task UpdateMDNSHostnameAsync()
+        {
+            var mdnsHostname = await MDNSResolver.ResolveAsync(ipAddress, options.MDNSTimeout, cancellationToken)
+                .ConfigureAwait(false);
+
+            if (!string.IsNullOrEmpty(mdnsHostname))
+                OnHostUpdated(new IPScannerHostUpdatedArgs(host, x => x.MDNSHostname = mdnsHostname));
+        }
+
         async Task UpdateMACAddressAsync()
         {
             var (macAddress, vendor) = await ResolveMACAddressAsync(ipAddress, discoveredAt, networkInterfaces,
@@ -510,11 +520,15 @@ public sealed class IPScanner(IPScannerOptions options)
                 }));
         }
 
-        // DNS and MAC address lookup don't depend on each other - run them concurrently, the host is finished
-        // after the slower one instead of after both
+        // Requests sent to the host (e.g. mDNS) only for reachable hosts
+        var isReachable = discoveredAt != DateTime.MinValue;
+
+        // The lookups don't depend on each other - run them concurrently, the host is finished after the slowest one
+        // instead of after all of them
         await Task.WhenAll(
             options.ResolveHostname ? UpdateHostnameAsync() : Task.CompletedTask,
-            options.ResolveMACAddress ? UpdateMACAddressAsync() : Task.CompletedTask).ConfigureAwait(false);
+            options.ResolveMACAddress ? UpdateMACAddressAsync() : Task.CompletedTask,
+            options.MDNSEnabled && isReachable ? UpdateMDNSHostnameAsync() : Task.CompletedTask).ConfigureAwait(false);
     }
 
     /// <summary>

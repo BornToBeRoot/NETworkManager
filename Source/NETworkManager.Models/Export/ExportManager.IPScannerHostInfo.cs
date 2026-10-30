@@ -77,7 +77,8 @@ public static partial class ExportManager
             $"{nameof(IPScannerHostInfo.DNSHostname)}," +
             $"{nameof(IPScannerHostInfo.DetectedBy)}," +
             $"{nameof(IPScannerHostInfo.OSGuess)}," +
-            $"{nameof(IPScannerHostInfo.Role)}"
+            $"{nameof(IPScannerHostInfo.Role)}," +
+            $"{nameof(IPScannerHostInfo.MDNSHostname)}"
         );
 
         foreach (var info in collection)
@@ -123,7 +124,8 @@ public static partial class ExportManager
                 $"{CsvHelper.QuoteString(info.DNSHostname)}," +
                 $"{CsvHelper.QuoteString(GetDetectedBy(info))}," +
                 $"{GetOSGuess(info, options)}," +
-                $"{CsvHelper.QuoteString(GetRole(info))}"
+                $"{CsvHelper.QuoteString(GetRole(info))}," +
+                $"{CsvHelper.QuoteString(options.MDNSEnabled ? info.MDNSHostname : null)}"
             );
         }
 
@@ -182,7 +184,9 @@ public static partial class ExportManager
                             new XElement(nameof(IPScannerHostInfo.DNSHostname), info.DNSHostname),
                             new XElement(nameof(IPScannerHostInfo.DetectedBy), GetDetectedBy(info)),
                             new XElement(nameof(IPScannerHostInfo.OSGuess), GetOSGuess(info, options)),
-                            new XElement(nameof(IPScannerHostInfo.Role), GetRole(info))
+                            new XElement(nameof(IPScannerHostInfo.Role), GetRole(info)),
+                            new XElement(nameof(IPScannerHostInfo.MDNSHostname),
+                                options.MDNSEnabled ? info.MDNSHostname : null)
                         )
                 )
             )
@@ -255,7 +259,8 @@ public static partial class ExportManager
                 info.Vendor,
                 DetectedBy = GetDetectedBy(info),
                 OSGuess = GetOSGuess(info, options),
-                Role = GetRole(info)
+                Role = GetRole(info),
+                MDNSHostname = options.MDNSEnabled ? info.MDNSHostname : null
             };
         }
 

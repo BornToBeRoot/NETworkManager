@@ -10,20 +10,23 @@
 /// <param name="PortScanEnabled">The ports of the hosts were scanned.</param>
 /// <param name="NetBIOSEnabled">The NetBIOS information was requested.</param>
 /// <param name="ResolveMACAddress">The MAC address and vendor were resolved.</param>
+/// <param name="MDNSEnabled">The mDNS hostname was resolved.</param>
 public sealed record IPScannerResultOptions(
     bool ICMPEnabled,
     bool OSGuessEnabled,
     bool ResolveHostname,
     bool PortScanEnabled,
     bool NetBIOSEnabled,
-    bool ResolveMACAddress)
+    bool ResolveMACAddress,
+    bool MDNSEnabled)
 {
     /// <summary>
     ///     Creates the result options from the options of a scan.
     /// </summary>
     /// <param name="options">Options of the scan.</param>
     public IPScannerResultOptions(IPScannerOptions options)
-        : this(options.ICMPEnabled, options.OSGuessEnabled, options.ResolveHostname, options.PortScanEnabled, options.NetBIOSEnabled, options.ResolveMACAddress)
+        : this(options.ICMPEnabled, options.OSGuessEnabled, options.ResolveHostname, options.PortScanEnabled, options.NetBIOSEnabled, options.ResolveMACAddress,
+            options.MDNSEnabled)
     {
     }
 }

@@ -84,7 +84,7 @@ Right-clicking a result allows forwarding device information to another tool (e.
 | **Copy**                                                                          | Copies the selected information to the clipboard (ping and port values only when the probe is finished)      |
 | **Export...**                                                                     | Exports the selected or all results to a file                                                                 |
 
-A NetBIOS name (shown as hostname if there is no DNS hostname) is not passed to other tools, because it may not be resolvable via DNS - the IP address is used instead. **DNS lookup...** / **RDAP...** > **Hostname** are only available with a DNS hostname. In [custom commands](#custom-commands), `{{Hostname}}` is the shown hostname (DNS or NetBIOS).
+A NetBIOS or mDNS name (shown as hostname if there is no DNS hostname) is not passed to other tools, because it may not be resolvable via DNS - the IP address is used instead. **DNS lookup...** / **RDAP...** > **Hostname** are only available with a DNS hostname. In [custom commands](#custom-commands), `{{Hostname}}` is the shown hostname (DNS, mDNS or NetBIOS).
 
 If multiple results are selected, **Rescan**, **Copy** > **IP address** / **Hostname** / **MAC address** (one value per line, in the order shown, without duplicates) and **Export...** are available.
 
@@ -334,6 +334,28 @@ Resolve the MAC address and vendor for each IP address.
 The MAC address is resolved via ARP (IPv4) or NDP (IPv6) from the neighbor cache. If no entry is found there, NetBIOS is used as a fallback. Because ARP and NDP are link-layer protocols, the device must be in the same subnet as the local machine.
 
 :::
+
+### Resolve mDNS hostname
+
+Resolve the mDNS hostname (e.g. `macbook.local`) of every reachable host: a reverse lookup (`PTR`) is sent to UDP port `5353` of the host. Answered by Apple devices, Linux (Avahi), Android, printers and many IoT devices that have no DNS (`PTR`) record. The name is shown in the **mDNS hostname** column and used as **Hostname** if there is no DNS hostname (order: DNS, mDNS, NetBIOS). Like a NetBIOS name, it is not passed to other tools (the IP address is used instead).
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+:::note
+
+Most devices only answer requests from the local subnet. Unreachable hosts are not queried.
+
+:::
+
+### Timeout (ms)
+
+Timeout in milliseconds after which an mDNS request is considered lost.
+
+**Type:** `Integer` [Min `100`, Max `15000`]
+
+**Default:** `2000`
 
 ### Custom commands
 

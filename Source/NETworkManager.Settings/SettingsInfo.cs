@@ -1416,6 +1416,32 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_ResolveMACAddress;
 
+    public bool IPScanner_MDNSEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_MDNSEnabled;
+
+    public int IPScanner_MDNSTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_MDNSTimeout;
+
     public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
     {
         get;
