@@ -359,7 +359,7 @@ Timeout in milliseconds after which an mDNS request is considered lost.
 
 ### Read the title of web pages
 
-Read the title of the web page (`GET /`) of every reachable host with an open web port and show it in the **Web title** column (the URL in the tooltip). The ports are tried in the order `443`, `80`, `8443`, `8080` (https on `443` / `8443`), the first one that answers is used; redirects on the same host (e.g. http to https, `/` to `/login.html`) are followed. If the page has no title, the `Server` header is shown. **Web Console** in the context menu opens the port that answered.
+Read the title of the web page (`GET /`) of every reachable host with an open port of the [Ports](#ports-1) below and show it in the **Web title** column (the URL in the tooltip). The ports are tried in the order of the list, the first one that answers is used: http on `80` and `8080`, https and then http on any other port. Redirects on the same host (e.g. http to https, `/` to `/login.html`) are followed. If the page has no title, the `Server` header is shown. **Web Console** in the context menu opens the port (and scheme) that answered.
 
 **Type:** `Boolean`
 
@@ -367,13 +367,23 @@ Read the title of the web page (`GET /`) of every reachable host with an open we
 
 :::note
 
-Needs the [port scan](#scan-ports) with the web ports in the [Ports](#ports) list. No cookies or credentials are sent, no proxy is used and certificate errors are accepted (only the title is read). The request appears in the log of the web server. At most 64 KB of the page are read.
+Only ports that are open in the [port scan](#scan-ports) are requested - the ports must also be in its [Ports](#ports) list. No cookies or credentials are sent, no proxy is used and certificate errors are accepted (only the title is read). The request appears in the log of the web server. At most 64 KB of the page are read.
 
 :::
 
+### Ports
+
+Ports whose web page title is read, in the order they are tried (only ports that are open). Ports and port ranges are separated by a semicolon. The button next to the field restores the default.
+
+**Type:** `String`
+
+**Default:** `443; 80; 8443; 8080`
+
+**Example:** `443; 80; 8443; 8080; 5000-5001; 9443`
+
 ### Timeout (ms)
 
-Timeout in milliseconds of a web request (per port and redirect).
+Timeout in milliseconds of a web request (per port, scheme and redirect).
 
 **Type:** `Integer` [Min `100`, Max `15000`]
 

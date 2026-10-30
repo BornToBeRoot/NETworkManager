@@ -105,6 +105,11 @@ public record IPScannerOptions
     public required bool HttpTitleEnabled { get; init; }
 
     /// <summary>
+    ///     Ports whose web page title is read, in this order (only open ports, the first that answers is used).
+    /// </summary>
+    public required int[] HttpTitlePorts { get; init; }
+
+    /// <summary>
     ///     Timeout in milliseconds of a web request.
     /// </summary>
     public required int HttpTitleTimeout { get; init; }

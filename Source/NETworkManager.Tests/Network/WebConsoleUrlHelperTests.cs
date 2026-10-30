@@ -55,11 +55,13 @@ public class WebConsoleUrlHelperTests
     }
 
     [Theory]
-    [InlineData(new[] { 22, 8080, 80, 443 }, new[] { 443, 80, 8080 })]
-    [InlineData(new[] { 8443 }, new[] { 8443 })]
-    [InlineData(new[] { 22, 3389 }, new int[0])]
-    public void GetOpenWebPorts(int[] openPorts, int[] expected)
+    [InlineData("10.0.0.1", 443, "https", "https://10.0.0.1/")]
+    [InlineData("10.0.0.1", 443, "http", "http://10.0.0.1:443/")]
+    [InlineData("10.0.0.1", 80, "https", "https://10.0.0.1:80/")]
+    [InlineData("10.0.0.1", 9443, "https", "https://10.0.0.1:9443/")]
+    [InlineData("2001:db8::1", 8081, "http", "http://[2001:db8::1]:8081/")]
+    public void CreateUrl_Scheme(string host, int port, string scheme, string expected)
     {
-        Assert.Equal(expected, WebConsoleUrlHelper.GetOpenWebPorts(openPorts));
+        Assert.Equal(expected, WebConsoleUrlHelper.CreateUrl(host, port, scheme));
     }
 }

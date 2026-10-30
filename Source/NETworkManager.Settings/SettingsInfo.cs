@@ -1455,6 +1455,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_HttpTitleEnabled;
 
+    public string IPScanner_HttpTitlePorts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_HttpTitlePorts;
+
     public int IPScanner_HttpTitleTimeout
     {
         get;

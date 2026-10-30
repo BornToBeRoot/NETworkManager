@@ -28,20 +28,6 @@ public static class WebConsoleUrlHelper
     }
 
     /// <summary>
-    ///     Gets the open web ports of a host in the order of preference (443, 80, 8443, 8080).
-    /// </summary>
-    /// <param name="openPorts">Open ports of the host.</param>
-    /// <returns>Open web ports.</returns>
-    public static List<int> GetOpenWebPorts(IEnumerable<int> openPorts)
-    {
-        ArgumentNullException.ThrowIfNull(openPorts);
-
-        var ports = openPorts.ToHashSet();
-
-        return [.. WebPorts.Where(ports.Contains)];
-    }
-
-    /// <summary>
     ///     Creates the URL for a host: the preferred open web port (443, 80, 8443, 8080), <c>http://host/</c> if
     ///     none of them is open.
     /// </summary>
@@ -69,6 +55,19 @@ public static class WebConsoleUrlHelper
     /// <returns>URL.</returns>
     public static string CreateUrl(string host, int port)
     {
+        return CreateUrl(host, port, port is 443 or 8443 ? "https" : "http");
+    }
+
+    /// <summary>
+    ///     Creates the URL for a host, a port and a scheme (e.g. of a web page that answered): the default port of the
+    ///     scheme (80 / 443) is left out, IPv6 addresses in brackets, the trailing dot of a hostname is removed.
+    /// </summary>
+    /// <param name="host">Hostname or IP address.</param>
+    /// <param name="port">Port number.</param>
+    /// <param name="scheme">"http" or "https".</param>
+    /// <returns>URL.</returns>
+    public static string CreateUrl(string host, int port, string scheme)
+    {
         // The browser resolves a hostname via Windows (e.g. "gateway." -> "gateway")
         if (!IPAddress.TryParse(host, out var ipAddress))
             host = DNSClientHelper.SanitizeHostname(host);
@@ -76,12 +75,12 @@ public static class WebConsoleUrlHelper
         // Also a hostname of only dots
         ArgumentException.ThrowIfNullOrWhiteSpace(host);
 
-        var scheme = port is 443 or 8443 ? "https" : "http";
-
         // The zone id of an IPv6 address has to be encoded ("%" -> "%25", RFC 6874)
         if (ipAddress?.AddressFamily == AddressFamily.InterNetworkV6)
             host = $"[{ipAddress.ToString().Replace("%", "%25")}]";
 
-        return port is 80 or 443 ? $"{scheme}://{host}/" : $"{scheme}://{host}:{port}/";
+        var isDefaultPort = (scheme == "http" && port == 80) || (scheme == "https" && port == 443);
+
+        return isDefaultPort ? $"{scheme}://{host}/" : $"{scheme}://{host}:{port}/";
     }
 }

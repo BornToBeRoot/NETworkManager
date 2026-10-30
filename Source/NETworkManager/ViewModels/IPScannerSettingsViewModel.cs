@@ -389,6 +389,25 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets the ports whose web page title is read (in this order, only open ports).
+    /// </summary>
+    public string HttpTitlePorts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_HttpTitlePorts = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets the timeout of a web request in milliseconds.
     /// </summary>
     public int HttpTitleTimeout
@@ -607,6 +626,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
         MDNSEnabled = SettingsManager.Current.IPScanner_MDNSEnabled;
         MDNSTimeout = SettingsManager.Current.IPScanner_MDNSTimeout;
         HttpTitleEnabled = SettingsManager.Current.IPScanner_HttpTitleEnabled;
+        HttpTitlePorts = SettingsManager.Current.IPScanner_HttpTitlePorts;
         HttpTitleTimeout = SettingsManager.Current.IPScanner_HttpTitleTimeout;
         SNMPEnabled = SettingsManager.Current.IPScanner_SNMPEnabled;
         SNMPVersion = SettingsManager.Current.IPScanner_SNMPVersion;
@@ -627,6 +647,14 @@ public class IPScannerSettingsViewModel : ViewModelBase
     public ICommand RestoreDefaultPortScanPortsCommand => new RelayCommand(
         _ => PortScanPorts = GlobalStaticConfiguration.IPScanner_PortScanPorts,
         _ => PortScanPorts != GlobalStaticConfiguration.IPScanner_PortScanPorts);
+
+    /// <summary>
+    /// Gets the command to restore the default ports whose web page title is read. Disabled while the default ports are
+    /// set.
+    /// </summary>
+    public ICommand RestoreDefaultHttpTitlePortsCommand => new RelayCommand(
+        _ => HttpTitlePorts = GlobalStaticConfiguration.IPScanner_HttpTitlePorts,
+        _ => HttpTitlePorts != GlobalStaticConfiguration.IPScanner_HttpTitlePorts);
 
     /// <summary>
     /// Gets the command to add a custom command.

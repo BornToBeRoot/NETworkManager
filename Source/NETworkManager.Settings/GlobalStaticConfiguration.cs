@@ -167,6 +167,7 @@ public static class GlobalStaticConfiguration
     public static bool IPScanner_MDNSEnabled => false;
     public static int IPScanner_MDNSTimeout => 2000;
     public static bool IPScanner_HttpTitleEnabled => false;
+    public static string IPScanner_HttpTitlePorts => "443; 80; 8443; 8080";
     public static int IPScanner_HttpTitleTimeout => 2000;
     public static bool IPScanner_SNMPEnabled => false;
     public static SNMPVersion IPScanner_SNMPVersion => SNMPVersion.V2C;

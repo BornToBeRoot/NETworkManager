@@ -6186,7 +6186,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Read the title of the web page (GET /) of every reachable host with an open web port (443, 80, 8443, 8080 - the port scan must be enabled and the ports must be in the list). The first port that answers is used, redirects on the same host are followed. No cookies or credentials are sent, certificate errors are accepted. The request appears in the log of the web server. If the page has no title, the Server header is shown..
+        ///   Looks up a localized string similar to Read the title of the web page (GET /) of every reachable host with an open port of the list below, in this order (the port scan must be enabled and the ports must also be in its list). The first port that answers is used (http on 80 and 8080, https and then http on other ports), redirects on the same host are followed. No cookies or credentials are sent, certificate errors are accepted. The request appears in the log of the web server. If the page has no title, the Server header is shown..
         /// </summary>
         public static string HelpMessage_ReadTheTitleOfWebPages {
             get {

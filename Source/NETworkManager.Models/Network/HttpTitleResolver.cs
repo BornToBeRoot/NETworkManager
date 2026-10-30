@@ -63,27 +63,41 @@ public static partial class HttpTitleResolver
     private static partial Regex WhitespaceRegex();
 
     /// <summary>
-    ///     Reads the title of the web page of a host from the first open web port that answers (443, 80, 8443, 8080).
+    ///     Reads the title of the web page of a host from the first port that answers.
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
-    /// <param name="openPorts">Open ports of the host (from the port scan).</param>
+    /// <param name="ports">Open ports of the host to request, in the order to try them.</param>
     /// <param name="timeout">Timeout in milliseconds per request.</param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
-    /// <returns>URL and title, null if no web port is open or none answered.</returns>
-    public static async Task<HttpTitleInfo> ResolveAsync(IPAddress ipAddress, IEnumerable<int> openPorts,
+    /// <returns>URL and title, null if no port answered.</returns>
+    public static async Task<HttpTitleInfo> ResolveAsync(IPAddress ipAddress, IEnumerable<int> ports,
         int timeout, CancellationToken cancellationToken)
     {
-        foreach (var port in WebConsoleUrlHelper.GetOpenWebPorts(openPorts))
+        foreach (var port in ports)
         {
-            var url = WebConsoleUrlHelper.CreateUrl(ipAddress.ToString(), port);
+            foreach (var scheme in GetSchemes(port))
+            {
+                var url = WebConsoleUrlHelper.CreateUrl(ipAddress.ToString(), port, scheme);
 
-            var title = await GetTitleAsync(new Uri(url), timeout, cancellationToken).ConfigureAwait(false);
+                var title = await GetTitleAsync(new Uri(url), timeout, cancellationToken).ConfigureAwait(false);
 
-            if (title != null)
-                return new HttpTitleInfo(url, title);
+                if (title != null)
+                    return new HttpTitleInfo(url, title);
+            }
         }
 
         return null;
+    }
+
+    /// <summary>
+    ///     Gets the schemes to try for a port: http for 80 / 8080, https and then http for any other port (a TLS
+    ///     handshake with a plain http server fails right away).
+    /// </summary>
+    /// <param name="port">Port number.</param>
+    /// <returns>Schemes in the order to try them.</returns>
+    public static string[] GetSchemes(int port)
+    {
+        return port is 80 or 8080 ? ["http"] : ["https", "http"];
     }
 
     /// <summary>

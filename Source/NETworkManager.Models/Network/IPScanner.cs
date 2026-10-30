@@ -390,11 +390,14 @@ public sealed class IPScanner(IPScannerOptions options)
             // Title of the web page - needs the open ports, so after the port scan
             if (options.HttpTitleEnabled && detectedBy != IPScannerDetectionMethod.None && ports != null)
             {
-                var openPorts = ports.Where(x => x.State == PortState.Open).Select(x => x.Port).ToList();
+                var openPorts = ports.Where(x => x.State == PortState.Open).Select(x => x.Port).ToHashSet();
 
-                if (WebConsoleUrlHelper.GetOpenWebPorts(openPorts).Count > 0)
+                // Configured ports that are open, in the configured order
+                var webPorts = options.HttpTitlePorts.Where(openPorts.Contains).ToList();
+
+                if (webPorts.Count > 0)
                     enrichTask = Task.WhenAll(enrichTask,
-                        UpdateHttpTitleAsync(ipAddress, hostInfo, openPorts, cancellationToken));
+                        UpdateHttpTitleAsync(ipAddress, hostInfo, webPorts, cancellationToken));
             }
 
             if (hostInfo == null)
@@ -561,12 +564,12 @@ public sealed class IPScanner(IPScannerOptions options)
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="host">Result of the host, already raised in <see cref="HostFound" />.</param>
-    /// <param name="openPorts">Open ports of the host.</param>
+    /// <param name="webPorts">Open ports to request, in the order to try them.</param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
-    private async Task UpdateHttpTitleAsync(IPAddress ipAddress, IPScannerHostInfo host, List<int> openPorts,
+    private async Task UpdateHttpTitleAsync(IPAddress ipAddress, IPScannerHostInfo host, List<int> webPorts,
         CancellationToken cancellationToken)
     {
-        var httpTitleInfo = await HttpTitleResolver.ResolveAsync(ipAddress, openPorts, options.HttpTitleTimeout,
+        var httpTitleInfo = await HttpTitleResolver.ResolveAsync(ipAddress, webPorts, options.HttpTitleTimeout,
             cancellationToken).ConfigureAwait(false);
 
         if (httpTitleInfo != null)

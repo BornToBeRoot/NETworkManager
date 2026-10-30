@@ -30,6 +30,16 @@ public class HttpTitleResolverTests
         Assert.Equal(new string('a', 200) + "...", title);
     }
 
+    [Theory]
+    [InlineData(80, new[] { "http" })]
+    [InlineData(8080, new[] { "http" })]
+    [InlineData(443, new[] { "https", "http" })]
+    [InlineData(9000, new[] { "https", "http" })]
+    public void GetSchemes(int port, string[] expected)
+    {
+        Assert.Equal(expected, HttpTitleResolver.GetSchemes(port));
+    }
+
     [Fact]
     public void Decode_DefaultUTF8()
     {

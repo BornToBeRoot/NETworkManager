@@ -589,12 +589,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void OpenWebConsoleAction()
     {
-        // The port of the web page whose title was read
+        // The port and scheme of the web page whose title was read
         if (Uri.TryCreate(SelectedResult.WebURL, UriKind.Absolute, out var webURL))
         {
             NavigationManager.Open(new ApplicationRequest(ApplicationName.WebConsole)
             {
-                Target = WebConsoleUrlHelper.CreateUrl(GetSelectedHost(), webURL.Port)
+                Target = WebConsoleUrlHelper.CreateUrl(GetSelectedHost(), webURL.Port, webURL.Scheme)
             });
 
             return;
@@ -847,6 +847,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         // handled here - otherwise the scan would never end (IsRunning stays true).
         (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved) hosts;
         int[] ports;
+        int[] httpTitlePorts;
 
         try
         {
@@ -856,6 +857,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(
                 SettingsManager.Current.IPScanner_PortScanPorts);
+
+            httpTitlePorts = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(
+                SettingsManager.Current.IPScanner_HttpTitlePorts);
         }
         catch (OperationCanceledException)
         {
@@ -891,7 +895,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory, Host,
             SettingsManager.Current.General_HistoryListEntries);
 
-        var scanOptions = CreateScanOptions(ports);
+        var scanOptions = CreateScanOptions(ports, httpTitlePorts);
 
         ScanOptions = new IPScannerResultOptions(scanOptions);
 
@@ -982,8 +986,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// Creates the scan options from the current settings.
     /// </summary>
     /// <param name="ports">Ports to scan.</param>
+    /// <param name="httpTitlePorts">Ports whose web page title is read (if open).</param>
     /// <returns>Options for the <see cref="IPScanner"/>.</returns>
-    private static IPScannerOptions CreateScanOptions(int[] ports)
+    private static IPScannerOptions CreateScanOptions(int[] ports, int[] httpTitlePorts)
     {
         return new IPScannerOptions
         {
@@ -1006,6 +1011,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             MDNSEnabled = SettingsManager.Current.IPScanner_MDNSEnabled,
             MDNSTimeout = SettingsManager.Current.IPScanner_MDNSTimeout,
             HttpTitleEnabled = SettingsManager.Current.IPScanner_HttpTitleEnabled,
+            HttpTitlePorts = httpTitlePorts,
             HttpTitleTimeout = SettingsManager.Current.IPScanner_HttpTitleTimeout,
             SNMPEnabled = SettingsManager.Current.IPScanner_SNMPEnabled,
             SNMPVersion = SettingsManager.Current.IPScanner_SNMPVersion,
