@@ -18,19 +18,23 @@ public static partial class ExportManager
     /// <param name="filePath">Path to the export file.</param>
     /// <param name="fileType">Allowed <see cref="ExportFileType" /> are CSV, XML or JSON.</param>
     /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}" /> to export.</param>
+    /// <param name="options">
+    ///     Options of the scan the hosts are from. Values of disabled probes are exported as empty values instead of
+    ///     their placeholders (e.g. port status "Closed" if the port scan was disabled).
+    /// </param>
     public static void Export(string filePath, ExportFileType fileType,
-        IReadOnlyList<IPScannerHostInfo> collection)
+        IReadOnlyList<IPScannerHostInfo> collection, IPScannerResultOptions options)
     {
         switch (fileType)
         {
             case ExportFileType.Csv:
-                CreateCsv(collection, filePath);
+                CreateCsv(collection, options, filePath);
                 break;
             case ExportFileType.Xml:
-                CreateXml(collection, filePath);
+                CreateXml(collection, options, filePath);
                 break;
             case ExportFileType.Json:
-                CreateJson(collection, filePath);
+                CreateJson(collection, options, filePath);
                 break;
             case ExportFileType.Txt:
             default:
@@ -42,8 +46,10 @@ public static partial class ExportManager
     ///     Creates a CSV file from the given <see cref="IPScannerHostInfo" /> collection.
     /// </summary>
     /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}" /> to export.</param>
+    /// <param name="options">Options of the scan the hosts are from.</param>
     /// <param name="filePath">Path to the export file.</param>
-    private static void CreateCsv(IEnumerable<IPScannerHostInfo> collection, string filePath)
+    private static void CreateCsv(IEnumerable<IPScannerHostInfo> collection, IPScannerResultOptions options,
+        string filePath)
     {
         var stringBuilder = new StringBuilder();
 
@@ -79,13 +85,13 @@ public static partial class ExportManager
                 continue;
 
             // Values of a probe that is still running (export during a scan, or a scan canceled before the probe
-            // finished) are placeholders - exported as empty values instead of a result
+            // finished) or disabled are placeholders - exported as empty values instead of a result
             var ping = info.IsPingPending ? null : info.PingInfo;
-            var netBIOSInfo = info.IsNetBIOSPending ? null : info.NetBIOSInfo;
+            var netBIOSInfo = GetNetBIOSInfo(info, options);
 
             var stringBuilderPorts = new StringBuilder();
 
-            if (info.Ports != null)
+            if (info.Ports != null && options.PortScanEnabled)
             {
                 foreach (var port in info.Ports)
                     stringBuilderPorts.Append(
@@ -101,7 +107,7 @@ public static partial class ExportManager
                 $"{(ping == null ? null : Ping.TimeToString(ping.Status, ping.Time, true))}," +
                 $"{ping?.TTL}," +
                 $"{ping?.Bytes}," +
-                $"{GetPortStatus(info)}," +
+                $"{GetPortStatus(info, options)}," +
                 $"{CsvHelper.QuoteString(stringBuilderPorts.ToString().TrimEnd(';'))}," +
                 $"{netBIOSInfo?.IsReachable}," +
                 $"{netBIOSInfo?.IPAddress}," +
@@ -124,17 +130,19 @@ public static partial class ExportManager
     ///     Creates a XML file from the given <see cref="IPScannerHostInfo" /> collection.
     /// </summary>
     /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}" /> to export.</param>
+    /// <param name="options">Options of the scan the hosts are from.</param>
     /// <param name="filePath">Path to the export file.</param>
-    private static void CreateXml(IEnumerable<IPScannerHostInfo> collection, string filePath)
+    private static void CreateXml(IEnumerable<IPScannerHostInfo> collection, IPScannerResultOptions options,
+        string filePath)
     {
         var document = new XDocument(DefaultXDeclaration,
             new XElement(ApplicationName.IPScanner.ToString(),
                 new XElement(nameof(IPScannerHostInfo) + "s",
                     from info in collection
                     where info?.PingInfo != null
-                    // Placeholders of running probes are exported as empty values (see CreateCsv)
+                    // Placeholders of running / disabled probes are exported as empty values (see CreateCsv)
                     let ping = info.IsPingPending ? null : info.PingInfo
-                    let netBIOSInfo = info.IsNetBIOSPending ? null : info.NetBIOSInfo
+                    let netBIOSInfo = GetNetBIOSInfo(info, options)
                     select
                         new XElement(nameof(IPScannerHostInfo),
                             new XElement(nameof(IPScannerHostInfo.IsReachable), info.IsReachable),
@@ -147,8 +155,8 @@ public static partial class ExportManager
                                 ping == null ? null : Ping.TimeToString(ping.Status, ping.Time, true)),
                             new XElement(nameof(PingInfo.TTL), ping?.TTL),
                             new XElement(nameof(PingInfo.Bytes), ping?.Bytes),
-                            new XElement("PortStatus", GetPortStatus(info)),
-                            info.Ports != null
+                            new XElement("PortStatus", GetPortStatus(info, options)),
+                            info.Ports != null && options.PortScanEnabled
                                 ? from port in info.Ports
                                   select new XElement(nameof(PortInfo),
                                       new XElement(nameof(PortInfo.Port), port.Port),
@@ -181,8 +189,10 @@ public static partial class ExportManager
     ///     Creates a JSON file from the given <see cref="IPScannerHostInfo" /> collection.
     /// </summary>
     /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}" /> to export.</param>
+    /// <param name="options">Options of the scan the hosts are from.</param>
     /// <param name="filePath">Path to the export file.</param>
-    private static void CreateJson(IReadOnlyList<IPScannerHostInfo> collection, string filePath)
+    private static void CreateJson(IReadOnlyList<IPScannerHostInfo> collection, IPScannerResultOptions options,
+        string filePath)
     {
         var validCollection = collection.Where(info => info?.PingInfo != null).ToList();
         var jsonData = new object[validCollection.Count];
@@ -191,13 +201,13 @@ public static partial class ExportManager
         {
             var info = validCollection[i];
 
-            // Placeholders of running probes are exported as empty values (see CreateCsv)
+            // Placeholders of running / disabled probes are exported as empty values (see CreateCsv)
             var ping = info.IsPingPending ? null : info.PingInfo;
-            var netBIOSInfo = info.IsNetBIOSPending ? null : info.NetBIOSInfo;
+            var netBIOSInfo = GetNetBIOSInfo(info, options);
 
             object[] jsonDataPorts;
 
-            if (info.Ports != null && info.Ports.Count > 0)
+            if (info.Ports != null && info.Ports.Count > 0 && options.PortScanEnabled)
             {
                 jsonDataPorts = new object[info.Ports.Count];
                 for (var j = 0; j < info.Ports.Count; j++)
@@ -226,7 +236,7 @@ public static partial class ExportManager
                 TTL = ping?.TTL,
                 Bytes = ping?.Bytes,
                 info.DNSHostname,
-                PortStatus = GetPortStatus(info)?.ToString(),
+                PortStatus = GetPortStatus(info, options)?.ToString(),
                 Ports = jsonDataPorts,
                 NetBIOSIsReachable = netBIOSInfo?.IsReachable,
                 NetBIOSIPAddress = netBIOSInfo?.IPAddress?.ToString(),
@@ -255,14 +265,27 @@ public static partial class ExportManager
     }
 
     /// <summary>
+    ///     Gets the NetBIOS information of a host - null while the NetBIOS request is still running or if it was
+    ///     disabled (placeholder).
+    /// </summary>
+    /// <param name="info">Host to get the NetBIOS information for.</param>
+    /// <param name="options">Options of the scan the host is from.</param>
+    /// <returns>NetBIOS information or null.</returns>
+    private static NetBIOSInfo GetNetBIOSInfo(IPScannerHostInfo info, IPScannerResultOptions options)
+    {
+        return info.IsNetBIOSPending || !options.NetBIOSEnabled ? null : info.NetBIOSInfo;
+    }
+
+    /// <summary>
     ///     Gets the port status of a host: open if any port is open, otherwise closed - null while the port scan is
-    ///     still running (no result yet).
+    ///     still running (no result yet) or if it was disabled.
     /// </summary>
     /// <param name="info">Host to get the port status for.</param>
+    /// <param name="options">Options of the scan the host is from.</param>
     /// <returns>Port status or null.</returns>
-    private static PortState? GetPortStatus(IPScannerHostInfo info)
+    private static PortState? GetPortStatus(IPScannerHostInfo info, IPScannerResultOptions options)
     {
-        if (info.IsPortScanPending)
+        if (info.IsPortScanPending || !options.PortScanEnabled)
             return null;
 
         return info.IsAnyPortOpen ? PortState.Open : PortState.Closed;

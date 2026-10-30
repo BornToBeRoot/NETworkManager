@@ -293,6 +293,7 @@ Release date: **xx.xx.2026**
 - Fixed **Copy** > **Ports** being shown in the context menu with the port scan disabled (it copied nothing). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed IPv6 hosts waiting for the NetBIOS timeout (NetBIOS doesn't exist over IPv6). NetBIOS is only requested from IPv4 addresses. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed columns that couldn't be made wider (by dragging or double-clicking the gripper) if the window was not wide enough, e.g. to see a long hostname. The last column still fills the remaining width, other columns can now grow beyond the window with a horizontal scrollbar. This also applies to the custom commands in the settings. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+- Fixed the export containing values of disabled probes, e.g. `PortStatus` `Closed` if **Scan ports** was disabled or `NetBIOSIsReachable` `False` if **Scan for NetBIOS** was disabled. They are exported as empty values now. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Port Scanner**
 

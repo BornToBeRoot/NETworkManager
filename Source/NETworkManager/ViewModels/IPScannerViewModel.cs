@@ -1110,7 +1110,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                         : GetSelectedResultsInGridOrder())
                     .Select(x => x.Clone()).ToList();
 
-                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
+                // Options of the shown scan (values of disabled probes are exported as empty values)
+                var options = ScanOptions;
+
+                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results, options));
             }
             catch (Exception ex)
             {
