@@ -262,6 +262,9 @@ public sealed class IPScanner(IPScannerOptions options)
         // Probes that answered so far
         var detectedBy = IPScannerDetectionMethod.None;
 
+        // The title of the web page is read for the found host (when the port scan is finished)
+        var isHttpTitlePending = false;
+
         IPScannerHostInfo hostInfo = null;
 
         try
@@ -362,6 +365,7 @@ public sealed class IPScanner(IPScannerOptions options)
                 // First answer: the host is up. Before it could answer, the local system had to resolve its MAC
                 // address, so it is in the neighbor table (ARP/NDP) from now on.
                 hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo);
+                isHttpTitlePending = hostInfo.IsHttpTitlePending;
 
                 _hostsUp.Increment();
 
@@ -378,6 +382,7 @@ public sealed class IPScanner(IPScannerOptions options)
             {
                 detectedBy = IPScannerDetectionMethod.ARP;
                 hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo);
+                isHttpTitlePending = hostInfo.IsHttpTitlePending;
 
                 _hostsUp.Increment();
 
@@ -387,17 +392,17 @@ public sealed class IPScanner(IPScannerOptions options)
                 enrichTask = EnrichAsync(ipAddress, hostInfo, DateTime.UtcNow, networkInterfaces, cancellationToken);
             }
 
-            // Title of the web page - needs the open ports, so after the port scan
-            if (options.HttpTitleEnabled && detectedBy != IPScannerDetectionMethod.None && ports != null)
+            // Title of the web page - needs the open ports, so after the port scan. Without an open web port, the
+            // placeholder of a host found while the port scan was running is replaced.
+            if (isHttpTitlePending)
             {
-                var openPorts = ports.Where(x => x.State == PortState.Open).Select(x => x.Port).ToHashSet();
-
-                // Configured ports that are open, in the configured order
-                var webPorts = options.HttpTitlePorts.Where(openPorts.Contains).ToList();
+                var webPorts = GetWebPorts(ports);
 
                 if (webPorts.Count > 0)
                     enrichTask = Task.WhenAll(enrichTask,
                         UpdateHttpTitleAsync(ipAddress, hostInfo, webPorts, cancellationToken));
+                else
+                    OnHostUpdated(new IPScannerHostUpdatedArgs(hostInfo, x => x.IsHttpTitlePending = false));
             }
 
             if (hostInfo == null)
@@ -472,9 +477,11 @@ public sealed class IPScanner(IPScannerOptions options)
     private IPScannerHostInfo CreateHostInfo(IPAddress ipAddress, IPScannerDetectionMethod detectedBy,
         PingInfo pingInfo, List<PortInfo> ports, NetBIOSInfo netBIOSInfo)
     {
+        var isReachable = detectedBy != IPScannerDetectionMethod.None;
+
         return new IPScannerHostInfo(
             ipAddress,
-            detectedBy != IPScannerDetectionMethod.None,
+            isReachable,
             pingInfo ?? new PingInfo(DateTime.Now, ipAddress, IPStatus.Unknown),
             ports?.Any(x => x.State == PortState.Open) ?? false,
             ports != null ? GetShownPorts(ports) : [],
@@ -483,6 +490,14 @@ public sealed class IPScanner(IPScannerOptions options)
             DetectedBy = detectedBy,
             Role = IPScannerHostRoleHelper.GetRole(_hostRoles, ipAddress),
             IsPingPending = pingInfo == null && options.ICMPEnabled,
+            // Lookups of every shown host and requests to reachable hosts, started after the host was found (see
+            // EnrichAsync, ScanHostAsync)
+            IsDNSPending = options.ResolveHostname,
+            IsMACAddressPending = options.ResolveMACAddress,
+            IsMDNSPending = isReachable && options.MDNSEnabled,
+            IsSNMPPending = isReachable && options.SNMPEnabled,
+            IsHttpTitlePending = isReachable && options.HttpTitleEnabled &&
+                                 (ports == null ? options.PortScanEnabled : GetWebPorts(ports).Count > 0),
             IsPortScanPending = ports == null,
             IsNetBIOSPending = netBIOSInfo == null
         };
@@ -507,8 +522,12 @@ public sealed class IPScanner(IPScannerOptions options)
             var dnsHostname = await DNSClient.GetInstance().ResolvePtrOrEmptyAsync(ipAddress, cancellationToken)
                 .ConfigureAwait(false);
 
-            if (!string.IsNullOrEmpty(dnsHostname))
-                OnHostUpdated(new IPScannerHostUpdatedArgs(host, x => x.DNSHostname = dnsHostname));
+            // Also without a hostname, so the placeholder is replaced
+            OnHostUpdated(new IPScannerHostUpdatedArgs(host, x =>
+            {
+                x.DNSHostname = dnsHostname ?? string.Empty;
+                x.IsDNSPending = false;
+            }));
         }
 
         async Task UpdateMDNSHostnameAsync()
@@ -516,8 +535,12 @@ public sealed class IPScanner(IPScannerOptions options)
             var mdnsHostname = await MDNSResolver.ResolveAsync(ipAddress, options.MDNSTimeout, cancellationToken)
                 .ConfigureAwait(false);
 
-            if (!string.IsNullOrEmpty(mdnsHostname))
-                OnHostUpdated(new IPScannerHostUpdatedArgs(host, x => x.MDNSHostname = mdnsHostname));
+            // Also without an answer, so the placeholder is replaced
+            OnHostUpdated(new IPScannerHostUpdatedArgs(host, x =>
+            {
+                x.MDNSHostname = mdnsHostname;
+                x.IsMDNSPending = false;
+            }));
         }
 
         async Task UpdateSNMPSystemInfoAsync()
@@ -525,13 +548,14 @@ public sealed class IPScanner(IPScannerOptions options)
             var snmpSystemInfo = await SNMPSystemInfoResolver.ResolveAsync(ipAddress, options.SNMPVersion,
                 options.SNMPCommunity, options.SNMPTimeout, cancellationToken).ConfigureAwait(false);
 
-            if (snmpSystemInfo != null)
-                OnHostUpdated(new IPScannerHostUpdatedArgs(host, x =>
-                {
-                    x.SNMPName = snmpSystemInfo.Name;
-                    x.SNMPDescription = snmpSystemInfo.Description;
-                    x.SNMPLocation = snmpSystemInfo.Location;
-                }));
+            // Also without an answer, so the placeholders are replaced
+            OnHostUpdated(new IPScannerHostUpdatedArgs(host, x =>
+            {
+                x.SNMPName = snmpSystemInfo?.Name ?? string.Empty;
+                x.SNMPDescription = snmpSystemInfo?.Description ?? string.Empty;
+                x.SNMPLocation = snmpSystemInfo?.Location ?? string.Empty;
+                x.IsSNMPPending = false;
+            }));
         }
 
         async Task UpdateMACAddressAsync()
@@ -539,12 +563,13 @@ public sealed class IPScanner(IPScannerOptions options)
             var (macAddress, vendor) = await ResolveMACAddressAsync(ipAddress, discoveredAt, networkInterfaces,
                 cancellationToken).ConfigureAwait(false);
 
-            if (!string.IsNullOrEmpty(macAddress))
-                OnHostUpdated(new IPScannerHostUpdatedArgs(host, x =>
-                {
-                    x.NeighborMACAddress = macAddress;
-                    x.NeighborVendor = vendor;
-                }));
+            // Also without a MAC address, so the placeholder is replaced
+            OnHostUpdated(new IPScannerHostUpdatedArgs(host, x =>
+            {
+                x.NeighborMACAddress = macAddress;
+                x.NeighborVendor = vendor;
+                x.IsMACAddressPending = false;
+            }));
         }
 
         // Requests sent to the host (e.g. mDNS) only for reachable hosts
@@ -560,6 +585,22 @@ public sealed class IPScanner(IPScannerOptions options)
     }
 
     /// <summary>
+    ///     Gets the ports whose web page title is read (see <see cref="IPScannerOptions.HttpTitlePorts" />) that are
+    ///     open, in the configured order.
+    /// </summary>
+    /// <param name="ports">All probed ports, null if the port scan is disabled.</param>
+    /// <returns>Open web ports.</returns>
+    private List<int> GetWebPorts(List<PortInfo> ports)
+    {
+        if (ports == null)
+            return [];
+
+        var openPorts = ports.Where(x => x.State == PortState.Open).Select(x => x.Port).ToHashSet();
+
+        return [.. options.HttpTitlePorts.Where(openPorts.Contains)];
+    }
+
+    /// <summary>
     ///     Reads the title of the web page of a host and raises it as <see cref="HostUpdated" />.
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
@@ -572,12 +613,13 @@ public sealed class IPScanner(IPScannerOptions options)
         var httpTitleInfo = await HttpTitleResolver.ResolveAsync(ipAddress, webPorts, options.HttpTitleTimeout,
             cancellationToken).ConfigureAwait(false);
 
-        if (httpTitleInfo != null)
-            OnHostUpdated(new IPScannerHostUpdatedArgs(host, x =>
-            {
-                x.WebTitle = httpTitleInfo.Title;
-                x.WebURL = httpTitleInfo.URL;
-            }));
+        // Also without an answer, so the placeholder is replaced
+        OnHostUpdated(new IPScannerHostUpdatedArgs(host, x =>
+        {
+            x.WebTitle = httpTitleInfo?.Title ?? string.Empty;
+            x.WebURL = httpTitleInfo?.URL ?? string.Empty;
+            x.IsHttpTitlePending = false;
+        }));
     }
 
     /// <summary>
