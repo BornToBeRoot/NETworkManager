@@ -618,6 +618,9 @@ public sealed class IPScanner(IPScannerOptions options)
         {
             x.WebTitle = httpTitleInfo?.Title ?? string.Empty;
             x.WebURL = httpTitleInfo?.URL ?? string.Empty;
+            x.WebStatusCode = httpTitleInfo?.StatusCode ?? 0;
+            x.WebServer = httpTitleInfo?.Server ?? string.Empty;
+            x.WebPoweredBy = httpTitleInfo?.PoweredBy ?? string.Empty;
             x.IsHttpTitlePending = false;
         }));
     }

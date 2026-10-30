@@ -329,10 +329,65 @@ public class IPScannerHostInfo : PropertyChangedBase
         : NetBIOSInfo?.Vendor ?? string.Empty;
 
     /// <summary>
-    ///     Title of the web page of the host (or its <c>Server</c> header), see <see cref="HttpTitleResolver" />. Empty if
-    ///     not read (yet).
+    ///     Title of the web page of the host, see <see cref="HttpTitleResolver" />. Empty if it has none or it was not
+    ///     read (yet).
     /// </summary>
     public string WebTitle
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(WebSummary));
+        }
+    } = string.Empty;
+
+    /// <summary>
+    ///     Short summary of the web page for the result: the title, the <c>Server</c> header if the page has no title.
+    /// </summary>
+    public string WebSummary => !string.IsNullOrEmpty(WebTitle) ? WebTitle : WebServer;
+
+    /// <summary>
+    ///     HTTP status code of the web page (e.g. 200), 0 if none answered (yet).
+    /// </summary>
+    public int WebStatusCode
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Value of the <c>Server</c> header of the web page, empty if there is none.
+    /// </summary>
+    public string WebServer
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(WebSummary));
+        }
+    } = string.Empty;
+
+    /// <summary>
+    ///     Value of the <c>X-Powered-By</c> header of the web page, empty if there is none.
+    /// </summary>
+    public string WebPoweredBy
     {
         get;
         internal set
@@ -513,6 +568,9 @@ public class IPScannerHostInfo : PropertyChangedBase
         MDNSHostname = source.MDNSHostname;
         WebTitle = source.WebTitle;
         WebURL = source.WebURL;
+        WebStatusCode = source.WebStatusCode;
+        WebServer = source.WebServer;
+        WebPoweredBy = source.WebPoweredBy;
         SNMPName = source.SNMPName;
         SNMPDescription = source.SNMPDescription;
         SNMPLocation = source.SNMPLocation;
@@ -543,6 +601,9 @@ public class IPScannerHostInfo : PropertyChangedBase
             MDNSHostname = MDNSHostname,
             WebTitle = WebTitle,
             WebURL = WebURL,
+            WebStatusCode = WebStatusCode,
+            WebServer = WebServer,
+            WebPoweredBy = WebPoweredBy,
             SNMPName = SNMPName,
             SNMPDescription = SNMPDescription,
             SNMPLocation = SNMPLocation,

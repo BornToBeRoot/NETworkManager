@@ -31,6 +31,17 @@ public class HttpTitleResolverTests
     }
 
     [Theory]
+    [InlineData("nginx/1.24.0", "nginx/1.24.0")]
+    [InlineData("  lighttpd   1.4 ", "lighttpd 1.4")]
+    [InlineData("PHP/8.2\r\nX-Injected: 1", "PHP/8.2X-Injected: 1")]
+    [InlineData("", "")]
+    [InlineData(null, "")]
+    public void CleanHeaderValue(string value, string expected)
+    {
+        Assert.Equal(expected, HttpTitleResolver.CleanHeaderValue(value));
+    }
+
+    [Theory]
     [InlineData(80, new[] { "http" })]
     [InlineData(8080, new[] { "http" })]
     [InlineData(443, new[] { "https", "http" })]

@@ -454,6 +454,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                    Matches(info.Hostname) ||
                    Matches(info.MDNSHostname) ||
                    Matches(info.WebTitle) ||
+                   Matches(info.WebServer) ||
+                   Matches(info.WebPoweredBy) ||
                    Matches(info.SNMPName) ||
                    Matches(info.SNMPDescription) ||
                    Matches(info.SNMPLocation) ||
@@ -472,6 +474,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Hostname));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MDNSHostname));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebTitle));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebServer));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebPoweredBy));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPName));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPDescription));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPLocation));

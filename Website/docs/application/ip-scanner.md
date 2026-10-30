@@ -374,7 +374,7 @@ Timeout in milliseconds after which an mDNS request is considered lost.
 
 ### Read the title of web pages
 
-Read the title of the web page (`GET /`) of every reachable host with an open port of the [Ports](#ports-1) below and show it in the **Web title** column (the URL in the tooltip). The ports are tried in the order of the list, the first one that answers is used: http on `80` and `8080`, https and then http on any other port. Redirects on the same host (e.g. http to https, `/` to `/login.html`) are followed. If the page has no title, the `Server` header is shown. **Web Console** in the context menu opens the port (and scheme) that answered.
+Read the title of the web page (`GET /`) of every reachable host with an open port of the [Ports](#ports-1) below and show it in the **Web title** column (the URL in the tooltip). The ports are tried in the order of the list, the first one that answers is used: http on `80` and `8080`, https and then http on any other port. Redirects on the same host (e.g. http to https, `/` to `/login.html`) are followed. If the page has no title, the `Server` header is shown. The HTTP status code and the `Server` and `X-Powered-By` headers (e.g. `nginx`, `PHP/8.2`) are read as well; they are in the search and the export (`WebStatusCode`, `WebServer`, `WebPoweredBy`). **Web Console** in the context menu opens the port (and scheme) that answered.
 
 **Type:** `Boolean`
 

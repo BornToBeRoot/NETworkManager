@@ -79,10 +79,10 @@ public static partial class HttpTitleResolver
             {
                 var url = WebConsoleUrlHelper.CreateUrl(ipAddress.ToString(), port, scheme);
 
-                var title = await GetTitleAsync(new Uri(url), timeout, cancellationToken).ConfigureAwait(false);
+                var info = await GetWebPageAsync(url, timeout, cancellationToken).ConfigureAwait(false);
 
-                if (title != null)
-                    return new HttpTitleInfo(url, title);
+                if (info != null)
+                    return info;
             }
         }
 
@@ -101,14 +101,17 @@ public static partial class HttpTitleResolver
     }
 
     /// <summary>
-    ///     Requests the web page and reads its title, follows redirects on the same host.
+    ///     Requests the web page and reads its title and headers, follows redirects on the same host.
     /// </summary>
-    /// <param name="uri">URL of the web page.</param>
+    /// <param name="url">URL of the web page.</param>
     /// <param name="timeout">Timeout in milliseconds per request.</param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
-    /// <returns>Title (or <c>Server</c> header, may be empty), null if the host didn't answer.</returns>
-    private static async Task<string> GetTitleAsync(Uri uri, int timeout, CancellationToken cancellationToken)
+    /// <returns>Web page (title, status code, headers), null if the host didn't answer.</returns>
+    private static async Task<HttpTitleInfo> GetWebPageAsync(string url, int timeout,
+        CancellationToken cancellationToken)
     {
+        var uri = new Uri(url);
+
         try
         {
             for (var redirects = 0; ; redirects++)
@@ -120,7 +123,11 @@ public static partial class HttpTitleResolver
                 using var response = await Client.GetAsync(uri, HttpCompletionOption.ResponseHeadersRead,
                     linkedCts.Token).ConfigureAwait(false);
 
-                var server = response.Headers.Server.ToString();
+                var statusCode = (int)response.StatusCode;
+                var server = CleanHeaderValue(response.Headers.Server.ToString());
+                var poweredBy = CleanHeaderValue(response.Headers.TryGetValues("X-Powered-By", out var values)
+                    ? string.Join(", ", values)
+                    : string.Empty);
 
                 // Redirect on the same host (e.g. http -> https, / -> /login.html)
                 if ((int)response.StatusCode is >= 300 and < 400 && response.Headers.Location != null &&
@@ -137,14 +144,15 @@ public static partial class HttpTitleResolver
                         continue;
                     }
 
-                    return server;
+                    // Redirect to another host - only the headers
+                    return new HttpTitleInfo(url, statusCode, string.Empty, server, poweredBy);
                 }
 
                 var content = await ReadContentAsync(response, linkedCts.Token).ConfigureAwait(false);
 
                 var title = ParseTitle(Decode(content, response.Content.Headers.ContentType?.CharSet));
 
-                return string.IsNullOrEmpty(title) ? server : title;
+                return new HttpTitleInfo(url, statusCode, title, server, poweredBy);
             }
         }
         catch (Exception) when (!cancellationToken.IsCancellationRequested)
@@ -152,6 +160,20 @@ public static partial class HttpTitleResolver
             // Connection refused / reset, TLS error, timeout, invalid response, ...
             return null;
         }
+    }
+
+    /// <summary>
+    ///     Cleans a header value received from the host for display: control characters removed, whitespace collapsed,
+    ///     at most <see cref="MaxTitleLength" /> characters.
+    /// </summary>
+    /// <param name="value">Header value.</param>
+    /// <returns>Cleaned value.</returns>
+    public static string CleanHeaderValue(string value)
+    {
+        var withoutControlCharacters = new string([.. (value ?? string.Empty).Where(x => !char.IsControl(x))]);
+        var cleaned = WhitespaceRegex().Replace(withoutControlCharacters, " ").Trim();
+
+        return cleaned.Length > MaxTitleLength ? cleaned[..MaxTitleLength] + "..." : cleaned;
     }
 
     /// <summary>

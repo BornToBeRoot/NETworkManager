@@ -904,12 +904,12 @@
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.WebTitle}"
-                                    SortMemberPath="WebTitle"
+                                    SortMemberPath="WebSummary"
                                     MinWidth="150">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource PendingToStringConverter}">
                             <Binding Path="IsHttpTitlePending" />
-                            <Binding Path="WebTitle" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                            <Binding Path="WebSummary" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                     <DataGridTextColumn.Visibility>

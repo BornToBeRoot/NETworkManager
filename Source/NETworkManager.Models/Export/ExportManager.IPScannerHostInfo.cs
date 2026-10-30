@@ -83,7 +83,10 @@ public static partial class ExportManager
             $"{nameof(IPScannerHostInfo.WebURL)}," +
             $"{nameof(IPScannerHostInfo.SNMPName)}," +
             $"{nameof(IPScannerHostInfo.SNMPDescription)}," +
-            $"{nameof(IPScannerHostInfo.SNMPLocation)}"
+            $"{nameof(IPScannerHostInfo.SNMPLocation)}," +
+            $"{nameof(IPScannerHostInfo.WebStatusCode)}," +
+            $"{nameof(IPScannerHostInfo.WebServer)}," +
+            $"{nameof(IPScannerHostInfo.WebPoweredBy)}"
         );
 
         foreach (var info in collection)
@@ -135,7 +138,10 @@ public static partial class ExportManager
                 $"{CsvHelper.QuoteString(options.HttpTitleEnabled ? info.WebURL : null)}," +
                 $"{CsvHelper.QuoteString(options.SNMPEnabled ? info.SNMPName : null)}," +
                 $"{CsvHelper.QuoteString(options.SNMPEnabled ? info.SNMPDescription : null)}," +
-                $"{CsvHelper.QuoteString(options.SNMPEnabled ? info.SNMPLocation : null)}"
+                $"{CsvHelper.QuoteString(options.SNMPEnabled ? info.SNMPLocation : null)}," +
+                $"{GetWebStatusCode(info, options)}," +
+                $"{CsvHelper.QuoteString(options.HttpTitleEnabled ? info.WebServer : null)}," +
+                $"{CsvHelper.QuoteString(options.HttpTitleEnabled ? info.WebPoweredBy : null)}"
             );
         }
 
@@ -204,7 +210,12 @@ public static partial class ExportManager
                             new XElement(nameof(IPScannerHostInfo.SNMPDescription),
                                 options.SNMPEnabled ? info.SNMPDescription : null),
                             new XElement(nameof(IPScannerHostInfo.SNMPLocation),
-                                options.SNMPEnabled ? info.SNMPLocation : null)
+                                options.SNMPEnabled ? info.SNMPLocation : null),
+                            new XElement(nameof(IPScannerHostInfo.WebStatusCode), GetWebStatusCode(info, options)),
+                            new XElement(nameof(IPScannerHostInfo.WebServer),
+                                options.HttpTitleEnabled ? info.WebServer : null),
+                            new XElement(nameof(IPScannerHostInfo.WebPoweredBy),
+                                options.HttpTitleEnabled ? info.WebPoweredBy : null)
                         )
                 )
             )
@@ -283,7 +294,10 @@ public static partial class ExportManager
                 WebURL = options.HttpTitleEnabled ? info.WebURL : null,
                 SNMPName = options.SNMPEnabled ? info.SNMPName : null,
                 SNMPDescription = options.SNMPEnabled ? info.SNMPDescription : null,
-                SNMPLocation = options.SNMPEnabled ? info.SNMPLocation : null
+                SNMPLocation = options.SNMPEnabled ? info.SNMPLocation : null,
+                WebStatusCode = GetWebStatusCode(info, options),
+                WebServer = options.HttpTitleEnabled ? info.WebServer : null,
+                WebPoweredBy = options.HttpTitleEnabled ? info.WebPoweredBy : null
             };
         }
 
@@ -298,6 +312,17 @@ public static partial class ExportManager
     private static string GetDetectedBy(IPScannerHostInfo info)
     {
         return info.DetectedBy == IPScannerDetectionMethod.None ? null : info.DetectedBy.ToString();
+    }
+
+    /// <summary>
+    ///     Gets the HTTP status code of the web page of a host, null if none answered or the web page was not read.
+    /// </summary>
+    /// <param name="info">Host to get the status code for.</param>
+    /// <param name="options">Options of the scan the host is from.</param>
+    /// <returns>Status code or null.</returns>
+    private static int? GetWebStatusCode(IPScannerHostInfo info, IPScannerResultOptions options)
+    {
+        return options.HttpTitleEnabled && info.WebStatusCode > 0 ? info.WebStatusCode : null;
     }
 
     /// <summary>
