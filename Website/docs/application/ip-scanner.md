@@ -15,7 +15,7 @@ keywords:
 
 # IP Scanner
 
-With the **IP Scanner** you can scan for active devices based on the hostname or in IP ranges that are reachable via ICMP, answer on a common TCP port (open, or closed with a TCP reset) or reply to a NetBIOS request. Hosts in a local subnet that drop all of them (e.g. a firewall) are found by their ARP / NDP entry.
+With the **IP Scanner** you can scan IP ranges, subnets and hostnames for active devices: a host is found if it answers the ping, a TCP port (open, or closed with a TCP reset), NetBIOS or SNMP; hosts in a local subnet that drop all of them (e.g. a firewall) are found by their ARP / NDP entry, see [How hosts are found](#how-hosts-are-found). For every host, the hostname (DNS, mDNS or NetBIOS), the MAC address and vendor and the open ports are shown, optionally also a guess of the operating system, the web page and the SNMP system information.
 
 ![IP Scanner](../img/ip-scanner.png)
 
@@ -42,7 +42,7 @@ An input starting with `!` excludes its IP addresses from the other inputs, e.g.
 
 Example: `10.0.0.0/24; 10.0.[10-20].1; 10.0.0.100-199`
 
-IP addresses that are part of multiple inputs (e.g. `10.0.0.1; 10.0.0.0/24`) or entered with different hostnames (e.g. two names of one server) are scanned only once. The hostname is resolved via DNS (`PTR`) or NetBIOS, not taken from the input. The network and broadcast address of a subnet are scanned as well.
+IP addresses that are part of multiple inputs (e.g. `10.0.0.1; 10.0.0.0/24`) or entered with different hostnames (e.g. two names of one server) are scanned only once. The hostname is resolved via DNS (`PTR`), mDNS or NetBIOS, not taken from the input. The network and broadcast address of a subnet are scanned as well.
 
 A scan of more than `65,536` IP addresses (e.g. a `/15`) must be confirmed, more than `16,777,216` IP addresses (a `/8`) cannot be scanned at once.
 
@@ -88,35 +88,71 @@ A NetBIOS or mDNS name (shown as hostname if there is no DNS hostname) is not pa
 
 If multiple results are selected, **Rescan**, **Copy** > **IP address** / **Hostname** / **MAC address** (one value per line, in the order shown, without duplicates) and **Export...** are available.
 
+### How hosts are found
+
+The probes of a host run at the same time. A host is shown (and counted as up) as soon as it answers the first one, probes that answer later are added.
+
+| Probe     | Answer                                                                                     | Setting                                                                 |
+| --------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| Ping      | ICMP echo reply                                                                            | [Ping hosts](#ping-hosts)                                               |
+| TCP       | A [port](#ports) is open or refused the connection (TCP reset)                             | [Scan ports](#scan-ports)                                               |
+| NetBIOS   | Answer to the NetBIOS request (UDP `137`, IPv4 only)                                       | [Scan for NetBIOS](#scan-for-netbios)                                   |
+| SNMP      | Answer to the SNMP request (UDP `161`)                                                     | [Read the SNMP system information](#read-the-snmp-system-information)   |
+| ARP / NDP | Neighbor entry of a host in a local subnet that didn't answer any of the probes above      | [Find hosts in the local subnet](#find-hosts-in-the-local-subnet)       |
+
+The probes a host answered are shown in the tooltip of its status icon (e.g. `Up (detected by Ping, TCP)`) and as status icons in the headers of the [row details](#row-details). The export contains them as `DetectedBy` (e.g. `ICMP, TCP` or `ARP`).
+
+Only reachable hosts are shown, unless [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) is enabled; unreachable hosts are added when all their probes are finished.
+
 ### Result
 
-The number of reachable (up) and unreachable (down) IP addresses is shown next to the **Result** header. Expand a row to see the ping details, the scanned ports and the NetBIOS information (computer name, domain/workgroup, user and MAC address) of the host. The columns show a short summary of the optional requests, the row details all values:
+The number of reachable (up) and unreachable (down) IP addresses is shown next to the **Result** header. A message below the input is shown if no reachable host was found, the scan was canceled, a hostname could not be resolved or an error occurred.
 
-| Setting | Column | Row details |
-| --- | --- | --- |
-| [Resolve mDNS hostname](#resolve-mdns-hostname) | **Hostname** (DNS, mDNS or NetBIOS name) | **Hostnames**: DNS, mDNS and NetBIOS name |
-| [Read web pages](#read-web-pages) | **Web** (title, `Server` header if the page has no title) | **Web**: URL, status code, title, `Server` and `X-Powered-By` header, realm, redirect target, certificate (subject, issuer, valid until) |
-| [Read the SNMP system information](#read-the-snmp-system-information) | **SNMP name** | **SNMP**: name, description and location |
+The columns are shown according to the settings the scan was started with, settings changed afterwards apply to the next scan:
 
-The row details have two rows: **Ping details**, **Ports**, **Web** and **NetBIOS** at the top, **Hostnames** below the ping details and **SNMP** below NetBIOS (ports and web use the full height). A section of a disabled setting shows a note (e.g. `SNMP is disabled!`). The headers of the probes that can find a host (**Ping details**, **Ports**, **NetBIOS**, **SNMP**) show a status icon: a green check if the host answered the probe, a red cross if not (not while the probe is running); the tooltip shows `Answered` / `No answer`.
+| Column                         | Content                                                                                                                                                                  |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| _Status_                       | Up / down, the tooltip shows the probes that answered                                                                                                                    |
+| _Role_                         | Icon if the host has a role for this computer: **This computer**, **Default-Gateway**, **DNS server** or **DHCP server** of a connected network interface (all roles in the tooltip) |
+| **IP address**                 | Scanned IP address                                                                                                                                                       |
+| **Hostname**                   | DNS hostname (`PTR`), otherwise the mDNS hostname, otherwise the NetBIOS name                                                                                           |
+| **Ping status**                | Status icon, the tooltip shows status, time and TTL (e.g. `Success (2 ms, TTL 64)`)                                                                                      |
+| **Time**                       | Round trip time of the ping reply                                                                                                                                        |
+| **OS (guess)**                 | Operating system guessed from the TTL of the ping reply, see [Guess the operating system from the TTL](#guess-the-operating-system-from-the-ttl)                       |
+| **Port status**                | Status icon (a port is open), the tooltip shows the open ports with their service (e.g. `Open: 22 (ssh), 443 (https)`, the first 10)                                    |
+| **Web**                        | Title of the web page, otherwise the realm of a login prompt, the `Server` header or the target of a redirect; the URL in the tooltip, see [Read web pages](#read-web-pages) |
+| **SNMP name**                  | `sysName`, see [Read the SNMP system information](#read-the-snmp-system-information)                                                                                    |
+| **NetBIOS reachable**          | Status icon, the tooltip shows the computer name and the workgroup / domain (e.g. `Yes (PC01, WORKGROUP)`)                                                               |
+| **MAC address** / **Vendor**   | From the neighbor table (ARP / NDP), the NetBIOS answer as fallback                                                                                                      |
 
-The **Ping status**, **Port status** and **NetBIOS reachable** columns show the same status icons (`...` while the probe is running), the tooltip shows the details: the ping status with time and TTL (e.g. `Success (2 ms, TTL 64)`), the open ports with their service (e.g. `Open: 22 (ssh), 443 (https)`, the first 10) and the NetBIOS computer name and workgroup / domain (e.g. `Yes (PC01, WORKGROUP)`). Sorting by these columns and **Copy** use the status as before.
+Values arrive one after another while the scan is running:
 
-A host is shown (and counted as up) as soon as it answers the first probe: ping reply, open or refused port or NetBIOS answer. Values of probes and lookups that are still running are shown as `...` (ping, ports, NetBIOS, hostname (DNS), MAC address / vendor, mDNS hostname, web title and SNMP), `-/-` means there is no result; the values are filled in when they arrive. The title of the web page is shown as `...` until the port scan is finished (it needs the open ports). **Hostname** and **MAC address** / **Vendor** are shown as `...` until no source can change them any more: the hostname until DNS, mDNS (without DNS hostname) and NetBIOS (without both) are finished, the MAC address until the neighbor table and NetBIOS (without entry in the neighbor table) are finished. If the scan is canceled, the lookups that were still running (hostname, MAC address, mDNS, web page) show `-/-`; ping, ports, NetBIOS and SNMP that didn't finish stay `...`. Unreachable hosts are added when all probes are finished. A column you sorted by is not sorted again for values that arrive later, click the header again. The scan is finished when all hosts and all lookups are finished.
+- `...`: the probe or lookup is still running. **Hostname** and **MAC address** / **Vendor** stay `...` until no source can change them any more (e.g. the NetBIOS name as fallback), **Web** until the port scan is finished (it needs the open ports).
+- `-/-`: finished, no result.
+- After **Cancel**, the lookups that were still running (hostname, MAC address, mDNS, web page) show `-/-`; ping, ports, NetBIOS and SNMP that didn't finish stay `...`.
 
-An icon after the status icon marks the hosts that have a role for this computer: **This computer** (own IP address), **Default-Gateway**, **DNS server** and **DHCP server** of a connected network interface. The tooltip lists all roles of the host (e.g. a router that is default gateway, DNS and DHCP server). The search box also finds them by role, the export contains them as `Role` (e.g. `DefaultGateway, DNSServer, DHCPServer`).
+A column you sorted by is not sorted again for values that arrive later, click the header again. Sorted by **Time** or **MAC address**, hosts without a value are always at the end; hosts with the same value are sorted by IP address.
 
-The probes a host answered are shown in the tooltip of its status icon (e.g. `Up (detected by Ping, TCP)`) and with the status icons in the headers of the row details: **Ping** (ICMP echo reply), **TCP** (a [port](#ports) is open or refused the connection) and **NetBIOS** (answer to the [NetBIOS](#scan-for-netbios) request), **SNMP** (answer to the [SNMP](#read-the-snmp-system-information) request) and **ARP / NDP** (a host in a local subnet that didn't answer any of them, see [Find hosts in the local subnet](#find-hosts-in-the-local-subnet)). Probes that answer after the host is shown are added. The export contains them as `DetectedBy` (e.g. `ICMP, TCP` or `ARP`, empty for unreachable hosts).
+The search box right of the **Result** header filters the results by IP address, hostname (DNS, mDNS, NetBIOS), MAC address, vendor, role, OS (guess), web page (title, headers, realm, redirect target, certificate), SNMP values and open ports (number or service), also while the scan is running. **Export...** > all exports the filtered results; the up / down counters always count all hosts. Results can also be exported while the scan is running, values that are still `...` are exported as empty values.
 
-Only reachable hosts are shown, unless [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) is enabled. A message below the input is shown if no reachable host was found, the scan was canceled, a hostname could not be resolved or an error occurred.
+### Row details
 
-The search box right of the **Result** header filters the results by IP address, hostname, MAC address, vendor, OS (guess), mDNS hostname, web title, SNMP name / description / location and open ports (number or service), also while the scan is running (hosts whose hostname or MAC address arrives later are filtered again). **Export...** > all exports the filtered results; the up / down counters always count all hosts. Results can also be exported while the scan is running; values of probes that are still running (shown as `...`) are exported as empty values.
+Expand a row with the button in front of it to see all values of the host, or enable [Expand host view](#expand-host-view) to expand all hosts:
 
-Expand a row with the button in front of it to see its details, or enable [Expand host view](#expand-host-view) to expand all hosts.
+| Ping details | Ports | Web | NetBIOS |
+| ------------ | ----- | --- | ------- |
+| **Hostnames** | (ports) | (web) | **SNMP** |
 
-The **Time** column shows the round trip time of the ping reply (`-/-` without a reply); sorted by time, hosts without a reply are always at the end. Sorted by **MAC address**, hosts without a MAC address are always at the end. Hosts with the same time or MAC address (or none) are sorted by IP address.
+| Section          | Content                                                                                                                                       |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ping details** | Timestamp, time, TTL and bytes of the ping reply                                                                                              |
+| **Ports**        | Open ports (all scanned ports with **Show unreachable IP addresses and ports**) with protocol, service and description                        |
+| **Web**          | URL, status code, title, `Server` and `X-Powered-By` header, realm of a login prompt, redirect target and TLS certificate (subject, issuer, valid until) |
+| **NetBIOS**      | Computer name, domain / workgroup and user                                                                                                    |
+| **Hostnames**    | DNS and mDNS hostname                                                                                                                         |
+| **SNMP**         | Name, description and location                                                                                                                |
 
-The columns (e.g. **Hostname**, **Port status**, **MAC address**) and the row details are shown according to the settings the scan was started with. Settings changed afterwards apply to the next scan.
+The headers of the probes that can find a host (**Ping details**, **Ports**, **NetBIOS**, **SNMP**) show a status icon: a green check if the host answered the probe, a red cross if not (not while the probe is running). A section of a disabled setting shows a note (e.g. `SNMP is disabled!`).
 
 ### Keyboard shortcuts
 
@@ -173,7 +209,7 @@ Show the scan result for all IP addresses and ports including the ones that are 
 
 ### Expand host view
 
-Show the details (ping, ports, NetBIOS) of every host in the result, also of hosts that are added while the scan is running. A host that was expanded or collapsed with the button in front of the row keeps its state. Applies immediately.
+Show the [row details](#row-details) of every host in the result, also of hosts that are added while the scan is running. A host that was expanded or collapsed with the button in front of the row keeps its state. Applies immediately.
 
 **Type:** `Boolean`
 
