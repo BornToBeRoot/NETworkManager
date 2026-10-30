@@ -456,6 +456,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                    Matches(info.WebTitle) ||
                    Matches(info.WebServer) ||
                    Matches(info.WebPoweredBy) ||
+                   Matches(info.WebRealm) ||
+                   Matches(info.WebRedirectURL) ||
                    Matches(info.SNMPName) ||
                    Matches(info.SNMPDescription) ||
                    Matches(info.SNMPLocation) ||
@@ -476,6 +478,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebTitle));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebServer));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebPoweredBy));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebRealm));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebRedirectURL));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPName));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPDescription));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPLocation));

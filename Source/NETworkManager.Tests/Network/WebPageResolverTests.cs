@@ -42,6 +42,19 @@ public class WebPageResolverTests
     }
 
     [Theory]
+    [InlineData(new[] { "Basic realm=\"RT-AC68U\"" }, "RT-AC68U")]
+    [InlineData(new[] { "Digest realm=\"IP Camera\", nonce=\"abc\", qop=\"auth\"" }, "IP Camera")]
+    [InlineData(new[] { "Basic Realm=NAS" }, "NAS")]
+    [InlineData(new[] { "Negotiate", "Basic realm=\"Printer\"" }, "Printer")]
+    [InlineData(new[] { "Basic realm=\"\"" }, "")]
+    [InlineData(new[] { "Bearer" }, "")]
+    [InlineData(new string[0], "")]
+    public void ParseRealm(string[] headerValues, string expected)
+    {
+        Assert.Equal(expected, WebPageResolver.ParseRealm(headerValues));
+    }
+
+    [Theory]
     [InlineData(80, new[] { "http" })]
     [InlineData(8080, new[] { "http" })]
     [InlineData(443, new[] { "https", "http" })]

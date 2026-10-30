@@ -5276,4 +5276,11 @@ Do you want to start the scan?</value>
   <data name="HelpMessage_ReadWebPages" xml:space="preserve">
     <value>Read the web page (GET /) of every reachable host with an open port of the list below, in this order (the port scan must be enabled and the ports must also be in its list): status code, title and the Server and X-Powered-By headers. The first port that answers is used (http on 80 and 8080, https and then http on other ports), redirects on the same host are followed. No cookies or credentials are sent, certificate errors are accepted. The request appears in the log of the web server.</value>
   </data>
+  <data name="Realm" xml:space="preserve">
+    <value>Realm</value>
+    <comment>Realm of an HTTP login prompt (WWW-Authenticate header), e.g. the name of a router.</comment>
+  </data>
+  <data name="RedirectTo" xml:space="preserve">
+    <value>Redirect to</value>
+  </data>
 </root>

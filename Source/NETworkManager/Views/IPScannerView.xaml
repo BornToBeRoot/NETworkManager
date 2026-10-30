@@ -1636,6 +1636,48 @@
                                             </TextBox>
                                         </Grid>
                                     </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Realm}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
+                                                        <Binding Path="WebRealm" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.RedirectTo}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
+                                                        <Binding Path="WebRedirectURL" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
                                 </ListView>
                             </Grid>
                             <!-- SNMP system information (the column shows the name) -->

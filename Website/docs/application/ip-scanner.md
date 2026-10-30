@@ -95,7 +95,7 @@ The number of reachable (up) and unreachable (down) IP addresses is shown next t
 | Setting | Column | Row details |
 | --- | --- | --- |
 | [Resolve mDNS hostname](#resolve-mdns-hostname) | **Hostname** (DNS, mDNS or NetBIOS name) | **Hostnames**: DNS, mDNS and NetBIOS name |
-| [Read web pages](#read-web-pages) | **Web** (title, `Server` header if the page has no title) | **Web**: URL, status code, title, `Server` and `X-Powered-By` header |
+| [Read web pages](#read-web-pages) | **Web** (title, `Server` header if the page has no title) | **Web**: URL, status code, title, `Server` and `X-Powered-By` header, realm, redirect target |
 | [Read the SNMP system information](#read-the-snmp-system-information) | **SNMP name** | **SNMP**: name, description and location |
 
 The row details have two rows: **Ping details**, **Ports**, **Web** and **NetBIOS** at the top, **Hostnames** below the ping details and **SNMP** below NetBIOS (ports and web use the full height). A section of a disabled setting shows a note (e.g. `SNMP is disabled!`). The headers of the probes that can find a host (**Ping details**, **Ports**, **NetBIOS**, **SNMP**) show a status icon: a green check if the host answered the probe, a red cross if not (not while the probe is running); the tooltip shows `Answered` / `No answer`.
@@ -384,7 +384,7 @@ Timeout in milliseconds after which an mDNS request is considered lost.
 
 ### Read web pages
 
-Read the web page (`GET /`) of every reachable host with an open port of the [Ports](#ports-1) below: status code, title and the `Server` and `X-Powered-By` headers. The title is shown in the **Web** column (the URL in the tooltip), all values in the **Web** section of the row details. The ports are tried in the order of the list, the first one that answers is used: http on `80` and `8080`, https and then http on any other port. Redirects on the same host (e.g. http to https, `/` to `/login.html`) are followed. If the page has no title, the column shows the `Server` header (e.g. `nginx`). The values are in the search and the export (`WebStatusCode`, `WebServer`, `WebPoweredBy`). **Web Console** in the context menu opens the port (and scheme) that answered.
+Read the web page (`GET /`) of every reachable host with an open port of the [Ports](#ports-1) below: status code, title, the `Server` and `X-Powered-By` headers, the realm of a login prompt (`WWW-Authenticate` header of a `401` response, e.g. `RT-AC68U` - routers, cameras and printers often name their model there) and the target of a redirect to another host (e.g. `https://unifi.local:8443/`). The title is shown in the **Web** column (the URL in the tooltip), all values in the **Web** section of the row details. The ports are tried in the order of the list, the first one that answers is used: http on `80` and `8080`, https and then http on any other port. Redirects on the same host (e.g. http to https, `/` to `/login.html`) are followed. If the page has no title, the column shows the realm, the `Server` header (e.g. `nginx`) or the redirect target. The values are in the search and the export (`WebStatusCode`, `WebServer`, `WebPoweredBy`, `WebRealm`, `WebRedirectURL`). **Web Console** in the context menu opens the port (and scheme) that answered.
 
 **Type:** `Boolean`
 

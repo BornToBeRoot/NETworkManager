@@ -10339,6 +10339,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Realm.
+        /// </summary>
+        public static string Realm {
+            get {
+                return ResourceManager.GetString("Realm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Received.
         /// </summary>
         public static string Received {
@@ -10452,6 +10461,15 @@ namespace NETworkManager.Localization.Resources {
         public static string RedirectSmartcards {
             get {
                 return ResourceManager.GetString("RedirectSmartcards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redirect to.
+        /// </summary>
+        public static string RedirectTo {
+            get {
+                return ResourceManager.GetString("RedirectTo", resourceCulture);
             }
         }
         

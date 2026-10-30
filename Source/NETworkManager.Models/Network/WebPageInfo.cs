@@ -8,4 +8,17 @@
 /// <param name="Title">Title of the web page, empty if it has none (e.g. a redirect to another host).</param>
 /// <param name="Server">Value of the <c>Server</c> header (e.g. "nginx"), empty if there is none.</param>
 /// <param name="PoweredBy">Value of the <c>X-Powered-By</c> header (e.g. "PHP/8.2"), empty if there is none.</param>
-public sealed record WebPageInfo(string URL, int StatusCode, string Title, string Server, string PoweredBy);
+/// <param name="Realm">
+///     Realm of the <c>WWW-Authenticate</c> header (login prompt, e.g. "RT-AC68U"), empty if there is none.
+/// </param>
+/// <param name="RedirectURL">
+///     Target of a redirect to another host (e.g. "https://unifi.local:8443/"), empty if there is none.
+/// </param>
+public sealed record WebPageInfo(
+    string URL,
+    int StatusCode,
+    string Title,
+    string Server,
+    string PoweredBy,
+    string Realm,
+    string RedirectURL);

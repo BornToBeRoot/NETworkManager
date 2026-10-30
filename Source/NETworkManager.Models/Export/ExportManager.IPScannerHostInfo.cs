@@ -86,7 +86,9 @@ public static partial class ExportManager
             $"{nameof(IPScannerHostInfo.SNMPLocation)}," +
             $"{nameof(IPScannerHostInfo.WebStatusCode)}," +
             $"{nameof(IPScannerHostInfo.WebServer)}," +
-            $"{nameof(IPScannerHostInfo.WebPoweredBy)}"
+            $"{nameof(IPScannerHostInfo.WebPoweredBy)}," +
+            $"{nameof(IPScannerHostInfo.WebRealm)}," +
+            $"{nameof(IPScannerHostInfo.WebRedirectURL)}"
         );
 
         foreach (var info in collection)
@@ -141,7 +143,9 @@ public static partial class ExportManager
                 $"{CsvHelper.QuoteString(options.SNMPEnabled ? info.SNMPLocation : null)}," +
                 $"{GetWebStatusCode(info, options)}," +
                 $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebServer : null)}," +
-                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebPoweredBy : null)}"
+                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebPoweredBy : null)}," +
+                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebRealm : null)}," +
+                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebRedirectURL : null)}"
             );
         }
 
@@ -215,7 +219,11 @@ public static partial class ExportManager
                             new XElement(nameof(IPScannerHostInfo.WebServer),
                                 options.WebPageEnabled ? info.WebServer : null),
                             new XElement(nameof(IPScannerHostInfo.WebPoweredBy),
-                                options.WebPageEnabled ? info.WebPoweredBy : null)
+                                options.WebPageEnabled ? info.WebPoweredBy : null),
+                            new XElement(nameof(IPScannerHostInfo.WebRealm),
+                                options.WebPageEnabled ? info.WebRealm : null),
+                            new XElement(nameof(IPScannerHostInfo.WebRedirectURL),
+                                options.WebPageEnabled ? info.WebRedirectURL : null)
                         )
                 )
             )
@@ -297,7 +305,9 @@ public static partial class ExportManager
                 SNMPLocation = options.SNMPEnabled ? info.SNMPLocation : null,
                 WebStatusCode = GetWebStatusCode(info, options),
                 WebServer = options.WebPageEnabled ? info.WebServer : null,
-                WebPoweredBy = options.WebPageEnabled ? info.WebPoweredBy : null
+                WebPoweredBy = options.WebPageEnabled ? info.WebPoweredBy : null,
+                WebRealm = options.WebPageEnabled ? info.WebRealm : null,
+                WebRedirectURL = options.WebPageEnabled ? info.WebRedirectURL : null
             };
         }
 

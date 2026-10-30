@@ -62,6 +62,9 @@ public static partial class WebPageResolver
     [GeneratedRegex(@"\s+")]
     private static partial Regex WhitespaceRegex();
 
+    [GeneratedRegex(@"realm\s*=\s*(?:""(?<quoted>[^""]*)""|(?<token>[^\s,]+))", RegexOptions.IgnoreCase)]
+    private static partial Regex RealmRegex();
+
     /// <summary>
     ///     Reads the title of the web page of a host from the first port that answers.
     /// </summary>
@@ -129,6 +132,9 @@ public static partial class WebPageResolver
                     ? string.Join(", ", values)
                     : string.Empty);
 
+                // Login prompt (401) of routers, cameras, printers - the realm often names the model
+                var realm = ParseRealm(response.Headers.WwwAuthenticate.Select(x => x.ToString()));
+
                 // Redirect on the same host (e.g. http -> https, / -> /login.html)
                 if ((int)response.StatusCode is >= 300 and < 400 && response.Headers.Location != null &&
                     redirects < MaxRedirects)
@@ -144,15 +150,16 @@ public static partial class WebPageResolver
                         continue;
                     }
 
-                    // Redirect to another host - only the headers
-                    return new WebPageInfo(url, statusCode, string.Empty, server, poweredBy);
+                    // Redirect to another host - only the headers and the target
+                    return new WebPageInfo(url, statusCode, string.Empty, server, poweredBy, realm,
+                        CleanHeaderValue(location.ToString()));
                 }
 
                 var content = await ReadContentAsync(response, linkedCts.Token).ConfigureAwait(false);
 
                 var title = ParseTitle(Decode(content, response.Content.Headers.ContentType?.CharSet));
 
-                return new WebPageInfo(url, statusCode, title, server, poweredBy);
+                return new WebPageInfo(url, statusCode, title, server, poweredBy, realm, string.Empty);
             }
         }
         catch (Exception) when (!cancellationToken.IsCancellationRequested)
@@ -160,6 +167,32 @@ public static partial class WebPageResolver
             // Connection refused / reset, TLS error, timeout, invalid response, ...
             return null;
         }
+    }
+
+    /// <summary>
+    ///     Gets the realm of the <c>WWW-Authenticate</c> header(s) of a response (e.g. <c>Basic realm="RT-AC68U"</c>,
+    ///     <c>Digest realm="IP Camera", nonce="..."</c>).
+    /// </summary>
+    /// <param name="headerValues">Values of the <c>WWW-Authenticate</c> header(s).</param>
+    /// <returns>First realm (cleaned, see <see cref="CleanHeaderValue" />), empty if there is none.</returns>
+    public static string ParseRealm(IEnumerable<string> headerValues)
+    {
+        foreach (var headerValue in headerValues ?? [])
+        {
+            var match = RealmRegex().Match(headerValue ?? string.Empty);
+
+            if (!match.Success)
+                continue;
+
+            var realm = CleanHeaderValue(match.Groups["quoted"].Success
+                ? match.Groups["quoted"].Value
+                : match.Groups["token"].Value);
+
+            if (!string.IsNullOrEmpty(realm))
+                return realm;
+        }
+
+        return string.Empty;
     }
 
     /// <summary>

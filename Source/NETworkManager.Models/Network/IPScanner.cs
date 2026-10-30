@@ -643,6 +643,8 @@ public sealed class IPScanner(IPScannerOptions options)
             x.WebStatusCode = webPageInfo?.StatusCode ?? 0;
             x.WebServer = webPageInfo?.Server ?? string.Empty;
             x.WebPoweredBy = webPageInfo?.PoweredBy ?? string.Empty;
+            x.WebRealm = webPageInfo?.Realm ?? string.Empty;
+            x.WebRedirectURL = webPageInfo?.RedirectURL ?? string.Empty;
             x.IsWebPagePending = false;
         }));
     }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using NETworkManager.Utilities;
@@ -367,9 +368,45 @@ public class IPScannerHostInfo : PropertyChangedBase
     } = string.Empty;
 
     /// <summary>
-    ///     Short summary of the web page for the result: the title, the <c>Server</c> header if the page has no title.
+    ///     Short summary of the web page for the result: the title, otherwise the realm of the login prompt, the
+    ///     <c>Server</c> header or the target of a redirect to another host.
     /// </summary>
-    public string WebSummary => !string.IsNullOrEmpty(WebTitle) ? WebTitle : WebServer;
+    public string WebSummary => new[] { WebTitle, WebRealm, WebServer, WebRedirectURL }
+        .FirstOrDefault(x => !string.IsNullOrEmpty(x)) ?? string.Empty;
+
+    /// <summary>
+    ///     Realm of the login prompt of the web page (<c>WWW-Authenticate</c> header), empty if there is none.
+    /// </summary>
+    public string WebRealm
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(WebSummary));
+        }
+    } = string.Empty;
+
+    /// <summary>
+    ///     Target of a redirect of the web page to another host, empty if there is none.
+    /// </summary>
+    public string WebRedirectURL
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(WebSummary));
+        }
+    } = string.Empty;
 
     /// <summary>
     ///     HTTP status code of the web page (e.g. 200), 0 if none answered (yet).
@@ -594,6 +631,8 @@ public class IPScannerHostInfo : PropertyChangedBase
         WebStatusCode = source.WebStatusCode;
         WebServer = source.WebServer;
         WebPoweredBy = source.WebPoweredBy;
+        WebRealm = source.WebRealm;
+        WebRedirectURL = source.WebRedirectURL;
         SNMPName = source.SNMPName;
         SNMPDescription = source.SNMPDescription;
         SNMPLocation = source.SNMPLocation;
@@ -627,6 +666,8 @@ public class IPScannerHostInfo : PropertyChangedBase
             WebStatusCode = WebStatusCode,
             WebServer = WebServer,
             WebPoweredBy = WebPoweredBy,
+            WebRealm = WebRealm,
+            WebRedirectURL = WebRedirectURL,
             SNMPName = SNMPName,
             SNMPDescription = SNMPDescription,
             SNMPLocation = SNMPLocation,
