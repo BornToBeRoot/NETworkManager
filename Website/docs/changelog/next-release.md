@@ -88,6 +88,7 @@ Release date: **xx.xx.2026**
 - New **Attempts** setting for the port scan (default `1`): another connection request is sent if there was no answer, e.g. on an unreliable network (Wi-Fi, VPN) or for hosts on the internet. Open and closed ports are not repeated. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Added **RDAP...** to the context menu to query the registration data of the IP address or hostname of a host in the [**RDAP**](../application/rdap.md) tool. [#3642](https://github.com/BornToBeRoot/NETworkManager/pull/3642)
 - The probes a host answered (**Ping**, **TCP**, **NetBIOS**) are shown in the tooltip of the status icon and as **Detected by** in the row details, e.g. to see why a host is up. The export contains them as `DetectedBy` (last column / element). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- New **Ping hosts** setting (default on) to scan without ping, e.g. if ICMP is blocked or rate limited in the network: hosts are found by their ports or NetBIOS answer, and the scan is faster because an unreachable host doesn't wait for the ping attempts. At least one of ping, port scan or NetBIOS must be enabled. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Port Scanner**
 

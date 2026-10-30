@@ -147,7 +147,8 @@ public sealed class IPScanner(IPScannerOptions options)
                 // Spread the start of the hosts over time instead of starting all at once - based on the time
                 // an unreachable host takes (the slowest of ping attempts, port scan and NetBIOS). In long, the port
                 // scan can exceed int (e.g. 15000 ms x 10 attempts x 65535 ports with one port thread)
-                var hostDuration = Math.Max((long)options.ICMPAttempts * options.ICMPTimeout,
+                var hostDuration = Math.Max(
+                    options.ICMPEnabled ? (long)options.ICMPAttempts * options.ICMPTimeout : 0,
                     Math.Max(
                         options.PortScanEnabled
                             ? (long)options.PortScanTimeout * options.PortScanAttempts *
@@ -213,8 +214,11 @@ public sealed class IPScanner(IPScannerOptions options)
         // all ports are finished
         var portAnswered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
 
-        var pingTask = PingProbe.PingAsync(ipAddress, options.ICMPTimeout, options.ICMPAttempts,
-            _icmpBuffer, cancellationToken);
+        // Without ping, the host gets the placeholder of the ping (see CreateHostInfo)
+        var pingTask = options.ICMPEnabled
+            ? PingProbe.PingAsync(ipAddress, options.ICMPTimeout, options.ICMPAttempts, _icmpBuffer,
+                cancellationToken)
+            : null;
 
         var portScanTask = options.PortScanEnabled
             ? PortScanAsync(ipAddress, portScanParallelOptions, () => portAnswered.TrySetResult(), cancellationToken)
@@ -239,7 +243,10 @@ public sealed class IPScanner(IPScannerOptions options)
 
         try
         {
-            List<Task> pending = [pingTask, portScanTask, netBIOSTask, portAnswered.Task];
+            List<Task> pending = [portScanTask, netBIOSTask, portAnswered.Task];
+
+            if (pingTask != null)
+                pending.Add(pingTask);
 
             while (pending.Count > 0)
             {
@@ -365,7 +372,8 @@ public sealed class IPScanner(IPScannerOptions options)
         finally
         {
             // Never return while a probe or lookup is still running (e.g. another probe was canceled or failed)
-            await WaitIgnoringErrorsAsync(pingTask, portScanTask, netBIOSTask, enrichTask).ConfigureAwait(false);
+            await WaitIgnoringErrorsAsync(pingTask ?? Task.CompletedTask, portScanTask, netBIOSTask, enrichTask)
+                .ConfigureAwait(false);
         }
     }
 
@@ -400,12 +408,12 @@ public sealed class IPScanner(IPScannerOptions options)
 
     /// <summary>
     ///     Creates the result of a host with the results of the finished probes and placeholders for the running ones
-    ///     (marked as pending).
+    ///     (marked as pending) and the disabled ones.
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="detectedBy">Probes the host answered so far, <see cref="IPScannerDetectionMethod.None" /> if it is
     /// unreachable.</param>
-    /// <param name="pingInfo">Result of the ping, null if it is still running.</param>
+    /// <param name="pingInfo">Result of the ping, null if it is still running or disabled.</param>
     /// <param name="ports">All probed ports, null if the port scan is still running.</param>
     /// <param name="netBIOSInfo">Result of the NetBIOS request, null if it is still running.</param>
     /// <returns>Result of the host.</returns>
@@ -421,7 +429,7 @@ public sealed class IPScanner(IPScannerOptions options)
             netBIOSInfo ?? new NetBIOSInfo(ipAddress))
         {
             DetectedBy = detectedBy,
-            IsPingPending = pingInfo == null,
+            IsPingPending = pingInfo == null && options.ICMPEnabled,
             IsPortScanPending = ports == null,
             IsNetBIOSPending = netBIOSInfo == null
         };

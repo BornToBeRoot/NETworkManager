@@ -148,6 +148,7 @@ public static class GlobalStaticConfiguration
     public static ExportFileType WiFi_ExportFileType => ExportFileType.Csv;
 
     // Application: IP Scanner    
+    public static bool IPScanner_ICMPEnabled => true;
     public static int IPScanner_ICMPAttempts => 2;
     public static int IPScanner_ICMPTimeout => 2000;
     public static int IPScanner_ICMPBuffer => 32;

@@ -65,6 +65,25 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the hosts are pinged.
+    /// </summary>
+    public bool ICMPEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_ICMPEnabled = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets the number of ICMP attempts.
     /// </summary>
     public int ICMPAttempts
@@ -375,6 +394,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     {
         ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults;
         ExpandHostView = SettingsManager.Current.IPScanner_ExpandHostView;
+        ICMPEnabled = SettingsManager.Current.IPScanner_ICMPEnabled;
         ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts;
         ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout;
         ICMPBuffer = SettingsManager.Current.IPScanner_ICMPBuffer;

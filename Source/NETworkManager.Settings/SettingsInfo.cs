@@ -1220,6 +1220,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_ExpandHostView;
 
+    public bool IPScanner_ICMPEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_ICMPEnabled;
+
     public int IPScanner_ICMPTimeout
     {
         get;

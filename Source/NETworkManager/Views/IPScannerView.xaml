@@ -511,6 +511,7 @@
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.Status, Converter={StaticResource IPStatusToStringConverter}}"
                                   IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.ICMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.MACAddress}"
                                   Command="{Binding CopyDataToClipboardCommand}"
@@ -543,21 +544,25 @@
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.Timestamp}"
                                   IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.ICMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.Time}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.Time}"
                                   IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.ICMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.TTL}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.TTL}"
                                   IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.ICMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.Bytes}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.Bytes}"
                                   IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.ICMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                     </MenuItem>
                     <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
@@ -703,6 +708,7 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.PingStatus}"
                                     SortMemberPath="PingInfo.Status"
+                                    Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="150">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource PendingToStringConverter}">
@@ -713,6 +719,7 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Time}"
                                     SortMemberPath="PingInfo.Time"
+                                    Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="100">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
@@ -836,84 +843,96 @@
                                            Text="{x:Static localization:Strings.PingDetails}"
                                            Style="{StaticResource BoldTextBlock}"
                                            Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
-                                <!-- Hidden while the ping is still running (placeholder values) -->
-                                <ListView Grid.Row="2"
-                                          Background="Transparent"
-                                          Visibility="{Binding Path=IsPingPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="{x:Type ListViewItem}"
-                                               BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
-                                            <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="Background" Value="Transparent" />
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
-                                    <ListView.Template>
-                                        <ControlTemplate>
-                                            <ItemsPresenter />
-                                        </ControlTemplate>
-                                    </ListView.Template>
-                                    <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static Member=localization:Strings.Timestamp}" />
-                                            <TextBox Grid.Column="2"
-                                                     Text="{Binding Path=PingInfo.Timestamp}" />
-                                        </Grid>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.Time}" />
-                                            <TextBox Grid.Column="2">
-                                                <TextBox.Text>
-                                                    <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
-                                                        <Binding Path="PingInfo.Status" />
-                                                        <Binding Path="PingInfo.Time" />
-                                                    </MultiBinding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </Grid>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.TTL}" />
-                                            <TextBox Grid.Column="2"
-                                                     Text="{Binding PingInfo.TTL, Converter={StaticResource IntToStringConverter}}" />
-                                        </Grid>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.Bytes}" />
-                                            <TextBox Grid.Column="2"
-                                                     Text="{Binding PingInfo.Bytes, Converter={StaticResource IntToStringConverter}}" />
-                                        </Grid>
-                                    </ListViewItem>
-                                </ListView>
+                                <StackPanel Grid.Row="2"
+                                            VerticalAlignment="Top"
+                                            Orientation="Horizontal"
+                                            Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                                    <Rectangle Width="16" Height="16"
+                                               Style="{StaticResource InfoImageRectangle}" />
+                                    <TextBlock Text="{x:Static localization:Strings.PingIsDisabled}"
+                                               Style="{StaticResource InfoTextBlock}"
+                                               Margin="10,0,0,0" />
+                                </StackPanel>
+                                <Grid Grid.Row="2"
+                                      Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                    <!-- Hidden while the ping is still running (placeholder values) -->
+                                    <ListView Background="Transparent"
+                                              Visibility="{Binding Path=IsPingPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="{x:Type ListViewItem}"
+                                                   BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                                <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.Template>
+                                            <ControlTemplate>
+                                                <ItemsPresenter />
+                                            </ControlTemplate>
+                                        </ListView.Template>
+                                        <ListViewItem>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{x:Static Member=localization:Strings.Timestamp}" />
+                                                <TextBox Grid.Column="2"
+                                                         Text="{Binding Path=PingInfo.Timestamp}" />
+                                            </Grid>
+                                        </ListViewItem>
+                                        <ListViewItem>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{x:Static localization:Strings.Time}" />
+                                                <TextBox Grid.Column="2">
+                                                    <TextBox.Text>
+                                                        <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
+                                                            <Binding Path="PingInfo.Status" />
+                                                            <Binding Path="PingInfo.Time" />
+                                                        </MultiBinding>
+                                                    </TextBox.Text>
+                                                </TextBox>
+                                            </Grid>
+                                        </ListViewItem>
+                                        <ListViewItem>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{x:Static localization:Strings.TTL}" />
+                                                <TextBox Grid.Column="2"
+                                                         Text="{Binding PingInfo.TTL, Converter={StaticResource IntToStringConverter}}" />
+                                            </Grid>
+                                        </ListViewItem>
+                                        <ListViewItem>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{x:Static localization:Strings.Bytes}" />
+                                                <TextBox Grid.Column="2"
+                                                         Text="{Binding PingInfo.Bytes, Converter={StaticResource IntToStringConverter}}" />
+                                            </Grid>
+                                        </ListViewItem>
+                                    </ListView>
+                                </Grid>
                             </Grid>
                             <!-- Ports -->
                             <Grid Grid.Row="2" Grid.Column="2">

@@ -86,7 +86,7 @@ public static partial class ExportManager
 
             // Values of a probe that is still running (export during a scan, or a scan canceled before the probe
             // finished) or disabled are placeholders - exported as empty values instead of a result
-            var ping = info.IsPingPending ? null : info.PingInfo;
+            var ping = GetPingInfo(info, options);
             var netBIOSInfo = GetNetBIOSInfo(info, options);
 
             var stringBuilderPorts = new StringBuilder();
@@ -141,7 +141,7 @@ public static partial class ExportManager
                     from info in collection
                     where info?.PingInfo != null
                     // Placeholders of running / disabled probes are exported as empty values (see CreateCsv)
-                    let ping = info.IsPingPending ? null : info.PingInfo
+                    let ping = GetPingInfo(info, options)
                     let netBIOSInfo = GetNetBIOSInfo(info, options)
                     select
                         new XElement(nameof(IPScannerHostInfo),
@@ -202,7 +202,7 @@ public static partial class ExportManager
             var info = validCollection[i];
 
             // Placeholders of running / disabled probes are exported as empty values (see CreateCsv)
-            var ping = info.IsPingPending ? null : info.PingInfo;
+            var ping = GetPingInfo(info, options);
             var netBIOSInfo = GetNetBIOSInfo(info, options);
 
             object[] jsonDataPorts;
@@ -262,6 +262,18 @@ public static partial class ExportManager
     private static string GetDetectedBy(IPScannerHostInfo info)
     {
         return info.DetectedBy == IPScannerDetectionMethod.None ? null : info.DetectedBy.ToString();
+    }
+
+    /// <summary>
+    ///     Gets the result of the ping to a host - null while the ping is still running or if it was disabled
+    ///     (placeholder).
+    /// </summary>
+    /// <param name="info">Host to get the ping result for.</param>
+    /// <param name="options">Options of the scan the host is from.</param>
+    /// <returns>Result of the ping or null.</returns>
+    private static PingInfo GetPingInfo(IPScannerHostInfo info, IPScannerResultOptions options)
+    {
+        return info.IsPingPending || !options.ICMPEnabled ? null : info.PingInfo;
     }
 
     /// <summary>

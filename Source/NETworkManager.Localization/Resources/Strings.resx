@@ -5161,4 +5161,16 @@ Do you want to start the scan?</value>
   <data name="TCP" xml:space="preserve">
     <value>TCP</value>
   </data>
+  <data name="PingHosts" xml:space="preserve">
+    <value>Ping hosts</value>
+  </data>
+  <data name="HelpMessage_PingHosts" xml:space="preserve">
+    <value>Send a ping (ICMP echo request) to every host. Disable it if ICMP is blocked or rate limited in the network, the scan is faster then. Hosts that only answer the ping are not found without it.</value>
+  </data>
+  <data name="PingIsDisabled" xml:space="preserve">
+    <value>Ping is disabled!</value>
+  </data>
+  <data name="EnableAtLeastOneProbeToFindHostsMessage" xml:space="preserve">
+    <value>Enable at least one of ping, port scan or NetBIOS in the settings. A host is only found if it answers one of them.</value>
+  </data>
 </root>

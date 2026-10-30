@@ -4065,6 +4065,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable at least one of ping, port scan or NetBIOS in the settings. A host is only found if it answers one of them..
+        /// </summary>
+        public static string EnableAtLeastOneProbeToFindHostsMessage {
+            get {
+                return ResourceManager.GetString("EnableAtLeastOneProbeToFindHostsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable Credential Security Support Provider.
         /// </summary>
         public static string EnableCredentialSecuritySupportProvider {
@@ -5990,6 +5999,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_PasswordNotDisplayedCanBeOverwritten {
             get {
                 return ResourceManager.GetString("HelpMessage_PasswordNotDisplayedCanBeOverwritten", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send a ping (ICMP echo request) to every host. Disable it if ICMP is blocked or rate limited in the network, the scan is faster then. Hosts that only answer the ping are not found without it..
+        /// </summary>
+        public static string HelpMessage_PingHosts {
+            get {
+                return ResourceManager.GetString("HelpMessage_PingHosts", resourceCulture);
             }
         }
         
@@ -9140,11 +9158,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ping hosts.
+        /// </summary>
+        public static string PingHosts {
+            get {
+                return ResourceManager.GetString("PingHosts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ping hosts before the scan.
         /// </summary>
         public static string PingHostsBeforeScan {
             get {
                 return ResourceManager.GetString("PingHostsBeforeScan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping is disabled!.
+        /// </summary>
+        public static string PingIsDisabled {
+            get {
+                return ResourceManager.GetString("PingIsDisabled", resourceCulture);
             }
         }
         

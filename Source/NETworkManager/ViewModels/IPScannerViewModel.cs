@@ -679,6 +679,16 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// </summary>
     private async Task Start()
     {
+        // A host is only found if it answers a probe - without ping, port scan and NetBIOS every host is unreachable
+        if (!SettingsManager.Current.IPScanner_ICMPEnabled && !SettingsManager.Current.IPScanner_PortScanEnabled &&
+            !SettingsManager.Current.IPScanner_NetBIOSEnabled)
+        {
+            StatusMessage = Strings.EnableAtLeastOneProbeToFindHostsMessage;
+            IsStatusMessageDisplayed = true;
+
+            return;
+        }
+
         // Every IP address is kept in memory - ask before a large scan and refuse a too large one
         // (e.g. 10.0.0.0/1) instead of running out of memory
         long hostCount;
@@ -899,6 +909,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         {
             MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads,
             MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads,
+            ICMPEnabled = SettingsManager.Current.IPScanner_ICMPEnabled,
             ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
             ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout,
             ICMPBufferSize = GlobalStaticConfiguration.LimitICMPBuffer(SettingsManager.Current.IPScanner_ICMPBuffer),
@@ -933,6 +944,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private static IPScannerResultOptions CreateResultOptions()
     {
         return new IPScannerResultOptions(
+            SettingsManager.Current.IPScanner_ICMPEnabled,
             SettingsManager.Current.IPScanner_ResolveHostname,
             SettingsManager.Current.IPScanner_PortScanEnabled,
             SettingsManager.Current.IPScanner_NetBIOSEnabled,

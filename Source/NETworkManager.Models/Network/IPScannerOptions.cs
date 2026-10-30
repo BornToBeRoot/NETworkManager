@@ -17,6 +17,11 @@ public record IPScannerOptions
     public required int MaxPortThreads { get; init; }
 
     /// <summary>
+    ///     Ping the host.
+    /// </summary>
+    public required bool ICMPEnabled { get; init; }
+
+    /// <summary>
     ///     Number of attempts to ping a host.
     /// </summary>
     public required int ICMPAttempts { get; init; }

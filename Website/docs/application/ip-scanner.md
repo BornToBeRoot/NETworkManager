@@ -160,6 +160,20 @@ Show the details (ping, ports, NetBIOS) of every host in the result, also of hos
 
 **Default:** `Disabled`
 
+### Ping hosts
+
+Send a ping (ICMP echo request) to every IP address. Disable it if ICMP is blocked or rate limited in the network (e.g. by an IDS): without ping, an unreachable host is finished after the port scan / NetBIOS timeout instead of after all ping attempts, so the scan is faster. Hosts that only answer the ping are not found then. The **Ping status** and **Time** columns and the ping details are hidden for a scan without ping.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+:::note
+
+A host is only found if it answers a probe: at least one of **Ping hosts**, [Scan ports](#scan-ports) or [Scan for NetBIOS](#scan-for-netbios) must be enabled, otherwise the scan doesn't start.
+
+:::
+
 ### Attempts
 
 Maximum number of ICMP requests sent to each IP address. Another request is only sent if the previous one has timed out (e.g. a lost packet), other replies like "destination host unreachable" are final.
