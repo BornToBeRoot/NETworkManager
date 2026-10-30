@@ -5212,4 +5212,7 @@ Do you want to start the scan?</value>
   <data name="OSGuessBasedOnTheTTLXHops" xml:space="preserve">
     <value>Based on the TTL of the ping reply ({0} hops)</value>
   </data>
+  <data name="ThisComputer" xml:space="preserve">
+    <value>This computer</value>
+  </data>
 </root>

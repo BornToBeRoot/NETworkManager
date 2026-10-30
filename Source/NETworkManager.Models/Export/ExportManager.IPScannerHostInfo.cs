@@ -76,7 +76,8 @@ public static partial class ExportManager
             // Added later - last column, so the position of the other columns doesn't change
             $"{nameof(IPScannerHostInfo.DNSHostname)}," +
             $"{nameof(IPScannerHostInfo.DetectedBy)}," +
-            $"{nameof(IPScannerHostInfo.OSGuess)}"
+            $"{nameof(IPScannerHostInfo.OSGuess)}," +
+            $"{nameof(IPScannerHostInfo.Role)}"
         );
 
         foreach (var info in collection)
@@ -121,7 +122,8 @@ public static partial class ExportManager
                 $"{CsvHelper.QuoteString(info.Vendor)}," +
                 $"{CsvHelper.QuoteString(info.DNSHostname)}," +
                 $"{CsvHelper.QuoteString(GetDetectedBy(info))}," +
-                $"{GetOSGuess(info, options)}"
+                $"{GetOSGuess(info, options)}," +
+                $"{CsvHelper.QuoteString(GetRole(info))}"
             );
         }
 
@@ -179,7 +181,8 @@ public static partial class ExportManager
                             // Added later - last element, so the position of the other elements doesn't change
                             new XElement(nameof(IPScannerHostInfo.DNSHostname), info.DNSHostname),
                             new XElement(nameof(IPScannerHostInfo.DetectedBy), GetDetectedBy(info)),
-                            new XElement(nameof(IPScannerHostInfo.OSGuess), GetOSGuess(info, options))
+                            new XElement(nameof(IPScannerHostInfo.OSGuess), GetOSGuess(info, options)),
+                            new XElement(nameof(IPScannerHostInfo.Role), GetRole(info))
                         )
                 )
             )
@@ -251,7 +254,8 @@ public static partial class ExportManager
                 info.MACAddress,
                 info.Vendor,
                 DetectedBy = GetDetectedBy(info),
-                OSGuess = GetOSGuess(info, options)
+                OSGuess = GetOSGuess(info, options),
+                Role = GetRole(info)
             };
         }
 
@@ -266,6 +270,16 @@ public static partial class ExportManager
     private static string GetDetectedBy(IPScannerHostInfo info)
     {
         return info.DetectedBy == IPScannerDetectionMethod.None ? null : info.DetectedBy.ToString();
+    }
+
+    /// <summary>
+    ///     Gets the roles of a host for the local computer (e.g. "DefaultGateway, DNSServer"), null if it has none.
+    /// </summary>
+    /// <param name="info">Host to get the roles for.</param>
+    /// <returns>Roles or null.</returns>
+    private static string GetRole(IPScannerHostInfo info)
+    {
+        return info.Role == IPScannerHostRole.None ? null : info.Role.ToString();
     }
 
     /// <summary>

@@ -26,6 +26,7 @@
         <converters:HostReachableToStringConverter x:Key="HostReachableToStringConverter" />
         <converters:HostUpStyleConverter x:Key="HostUpStyleConverter" />
         <converters:IPScannerDetectionMethodToStringConverter x:Key="IPScannerDetectionMethodToStringConverter" />
+        <converters:IPScannerHostRoleToStringConverter x:Key="IPScannerHostRoleToStringConverter" />
         <converters:IPScannerOSGuessToStringConverter x:Key="IPScannerOSGuessToStringConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
@@ -733,6 +734,67 @@
                             <Rectangle Width="24" Height="24"
                                        Style="{Binding IsReachable, Converter={StaticResource HostUpStyleConverter}}"
                                        ToolTip="{Binding DetectedBy, Converter={StaticResource IPScannerDetectionMethodToStringConverter}, ConverterParameter=Status}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!-- Role of the host for the local computer (e.g. default gateway), all roles in the tooltip -->
+                <DataGridTemplateColumn Header=""
+                                        SortMemberPath="Role"
+                                        CanUserResize="False"
+                                        MinWidth="26">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="20" Height="20"
+                                       Fill="{DynamicResource MahApps.Brushes.Gray3}"
+                                       ToolTip="{Binding Role, Converter={StaticResource IPScannerHostRoleToStringConverter}}">
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PrimaryRole}"
+                                                     Value="{x:Static network:IPScannerHostRole.LocalComputer}">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Setter Property="OpacityMask">
+                                                <Setter.Value>
+                                                    <VisualBrush Stretch="Uniform"
+                                                                 Visual="{iconPacks:Material Kind=Monitor}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding PrimaryRole}"
+                                                     Value="{x:Static network:IPScannerHostRole.DefaultGateway}">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Setter Property="OpacityMask">
+                                                <Setter.Value>
+                                                    <VisualBrush Stretch="Uniform"
+                                                                 Visual="{iconPacks:Material Kind=RouterNetwork}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding PrimaryRole}"
+                                                     Value="{x:Static network:IPScannerHostRole.DNSServer}">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Setter Property="OpacityMask">
+                                                <Setter.Value>
+                                                    <VisualBrush Stretch="Uniform"
+                                                                 Visual="{iconPacks:Material Kind=Dns}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding PrimaryRole}"
+                                                     Value="{x:Static network:IPScannerHostRole.DHCPServer}">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Setter Property="OpacityMask">
+                                                <Setter.Value>
+                                                    <VisualBrush Stretch="Uniform"
+                                                                 Visual="{iconPacks:Material Kind=IpNetwork}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

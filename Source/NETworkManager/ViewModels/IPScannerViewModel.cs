@@ -456,6 +456,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                    Matches(info.Vendor) ||
                    (ScanOptions.OSGuessEnabled &&
                     Matches(IPScannerOSGuessToStringConverter.ToLocalizedString(info.OSGuess))) ||
+                   Matches(IPScannerHostRoleToStringConverter.ToLocalizedString(info.Role)) ||
                    info.Ports.Any(x => Matches(x.Port.ToString()) || Matches(x.LookupInfo.Service));
         };
 

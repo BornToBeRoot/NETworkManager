@@ -13943,6 +13943,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This computer.
+        /// </summary>
+        public static string ThisComputer {
+            get {
+                return ResourceManager.GetString("ThisComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This will reset all settings!.
         /// </summary>
         public static string ThisWillResetAllSettings {

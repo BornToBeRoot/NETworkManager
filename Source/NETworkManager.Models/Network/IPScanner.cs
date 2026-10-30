@@ -56,6 +56,10 @@ public sealed class IPScanner(IPScannerOptions options)
     private readonly SemaphoreSlim _neighborVerificationSemaphore =
         new(MaxConcurrentNeighborVerifications, MaxConcurrentNeighborVerifications);
 
+    // Roles of the hosts for the local computer (own IP addresses, gateways, DNS / DHCP servers), set before the
+    // hosts are scanned and only read afterwards
+    private Dictionary<IPAddress, IPScannerHostRole> _hostRoles = [];
+
     /// <summary>
     ///     Gets the number of hosts finished so far (all probes and lookups). Thread-safe; may be read from
     ///     any thread while the scan is running.
@@ -145,11 +149,11 @@ public sealed class IPScanner(IPScannerOptions options)
 
             try
             {
-                // Get all network interfaces (for the MAC address lookup and the neighbor check of hosts in a local
-                // subnet)
-                var networkInterfaces = options.ResolveMACAddress || options.ARPEnabled
-                    ? NetworkInterface.GetNetworkInterfaces()
-                    : [];
+                // Get all network interfaces (for the roles of the hosts, the MAC address lookup and the neighbor
+                // check of hosts in a local subnet)
+                var networkInterfaces = NetworkInterface.GetNetworkInterfaces();
+
+                _hostRoles = IPScannerHostRoleHelper.GetRoles(networkInterfaces);
 
                 var hostParallelOptions = new ParallelOptions
                 {
@@ -464,6 +468,7 @@ public sealed class IPScanner(IPScannerOptions options)
             netBIOSInfo ?? new NetBIOSInfo(ipAddress))
         {
             DetectedBy = detectedBy,
+            Role = IPScannerHostRoleHelper.GetRole(_hostRoles, ipAddress),
             IsPingPending = pingInfo == null && options.ICMPEnabled,
             IsPortScanPending = ports == null,
             IsNetBIOSPending = netBIOSInfo == null

@@ -74,6 +74,29 @@ public class IPScannerHostInfo : PropertyChangedBase
     }
 
     /// <summary>
+    ///     Roles of the host for the local computer (e.g. its default gateway), see
+    ///     <see cref="IPScannerHostRoleHelper" />.
+    /// </summary>
+    public IPScannerHostRole Role
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(PrimaryRole));
+        }
+    }
+
+    /// <summary>
+    ///     Most important role of the host (for its icon), see <see cref="IPScannerHostRoleHelper.GetPrimaryRole" />.
+    /// </summary>
+    public IPScannerHostRole PrimaryRole => IPScannerHostRoleHelper.GetPrimaryRole(Role);
+
+    /// <summary>
     ///     Information about the ping to the host.
     /// </summary>
     public PingInfo PingInfo
@@ -294,6 +317,7 @@ public class IPScannerHostInfo : PropertyChangedBase
     {
         IsReachable = source.IsReachable;
         DetectedBy = source.DetectedBy;
+        Role = source.Role;
         PingInfo = source.PingInfo;
         IsAnyPortOpen = source.IsAnyPortOpen;
         Ports = source.Ports;
@@ -316,6 +340,7 @@ public class IPScannerHostInfo : PropertyChangedBase
         return new IPScannerHostInfo(IPAddress, IsReachable, PingInfo, IsAnyPortOpen, Ports, NetBIOSInfo)
         {
             DetectedBy = DetectedBy,
+            Role = Role,
             IsPingPending = IsPingPending,
             IsPortScanPending = IsPortScanPending,
             IsNetBIOSPending = IsNetBIOSPending,
