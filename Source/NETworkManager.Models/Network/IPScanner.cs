@@ -297,6 +297,21 @@ public sealed class IPScanner(IPScannerOptions options)
 
         IPScannerHostInfo hostInfo = null;
 
+        // The host answered (the first probe, or its neighbor entry): it is up - raise it as found with the results so
+        // far and start the lookups (DNS, MAC address, mDNS)
+        void RaiseHostFound()
+        {
+            hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo, snmpInfo, isSNMPFinished);
+            isWebPagePending = hostInfo.IsWebPagePending;
+
+            _hostsUp.Increment();
+
+            OnHostFound(new IPScannerHostFoundArgs(hostInfo));
+            OnProgressChanged();
+
+            enrichTask = EnrichAsync(ipAddress, hostInfo, DateTime.UtcNow, networkInterfaces, cancellationToken);
+        }
+
         try
         {
             List<Task> pending = [portScanTask, netBIOSTask, portAnswered.Task];
@@ -412,16 +427,7 @@ public sealed class IPScanner(IPScannerOptions options)
 
                 // First answer: the host is up. Before it could answer, the local system had to resolve its MAC
                 // address, so it is in the neighbor table (ARP/NDP) from now on.
-                hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo, snmpInfo,
-                    isSNMPFinished);
-                isWebPagePending = hostInfo.IsWebPagePending;
-
-                _hostsUp.Increment();
-
-                OnHostFound(new IPScannerHostFoundArgs(hostInfo));
-                OnProgressChanged();
-
-                enrichTask = EnrichAsync(ipAddress, hostInfo, DateTime.UtcNow, networkInterfaces, cancellationToken);
+                RaiseHostFound();
             }
 
             // No probe answered: a host in a local subnet may still have answered the ARP request / neighbor
@@ -430,16 +436,7 @@ public sealed class IPScanner(IPScannerOptions options)
                 await IsNeighborAsync(ipAddress, wasNeighborReachableBefore, cancellationToken).ConfigureAwait(false))
             {
                 detectedBy = IPScannerDetectionMethod.ARP;
-                hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo, snmpInfo,
-                    isSNMPFinished);
-                isWebPagePending = hostInfo.IsWebPagePending;
-
-                _hostsUp.Increment();
-
-                OnHostFound(new IPScannerHostFoundArgs(hostInfo));
-                OnProgressChanged();
-
-                enrichTask = EnrichAsync(ipAddress, hostInfo, DateTime.UtcNow, networkInterfaces, cancellationToken);
+                RaiseHostFound();
             }
 
             // Title of the web page - needs the open ports, so after the port scan. Without an open web port, the
