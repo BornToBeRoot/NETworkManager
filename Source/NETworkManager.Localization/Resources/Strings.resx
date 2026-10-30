@@ -5298,4 +5298,7 @@ Do you want to start the scan?</value>
   <data name="XExpired" xml:space="preserve">
     <value>{0} (expired)</value>
   </data>
+  <data name="AllIPAddressesAreExcludedMessage" xml:space="preserve">
+    <value>All IP addresses are excluded (inputs starting with !), there is nothing to scan.</value>
+  </data>
 </root>

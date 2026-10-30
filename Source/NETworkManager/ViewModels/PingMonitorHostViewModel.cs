@@ -342,6 +342,18 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
             IsStatusMessageDisplayed = true;
         }
 
+        // The input has an inclusion (validated) - without unresolved hostnames, the exclusions removed every host:
+        // nothing to add, the input is kept to correct it
+        if (hosts.hosts.Count == 0 && hosts.hostnamesNotResolved.Count == 0)
+        {
+            StatusMessage = Strings.AllIPAddressesAreExcludedMessage;
+            IsStatusMessageDisplayed = true;
+
+            IsRunning = false;
+
+            return;
+        }
+
         // Add host(s) to history
         ListHelper.Modify(SettingsManager.Current.PingMonitor_HostHistory, Host,
             SettingsManager.Current.General_HistoryListEntries);

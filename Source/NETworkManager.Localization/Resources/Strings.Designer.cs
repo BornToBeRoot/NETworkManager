@@ -835,6 +835,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All IP addresses are excluded (inputs starting with !), there is nothing to scan..
+        /// </summary>
+        public static string AllIPAddressesAreExcludedMessage {
+            get {
+                return ResourceManager.GetString("AllIPAddressesAreExcludedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All local subnets.
         /// </summary>
         public static string AllLocalSubnets {

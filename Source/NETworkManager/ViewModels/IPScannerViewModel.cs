@@ -892,6 +892,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             IsStatusMessageDisplayed = true;
         }
 
+        // The input has an inclusion (validated) - without unresolved hostnames, the exclusions removed every host
+        if (hosts.hosts.Count == 0 && hosts.hostnamesNotResolved.Count == 0)
+        {
+            StatusMessage = Strings.AllIPAddressesAreExcludedMessage;
+            IsStatusMessageDisplayed = true;
+        }
+
         HostsToScan = hosts.hosts.Count;
 
         // No host left (e.g. only hostnames that could not be resolved): don't start the scan, only the message above
