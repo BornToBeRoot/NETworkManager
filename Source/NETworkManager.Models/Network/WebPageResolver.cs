@@ -16,7 +16,7 @@ namespace NETworkManager.Models.Network;
 ///     proxy; certificate errors are accepted (only the title is read, nothing is sent). The request appears in the
 ///     log of the web server.
 /// </summary>
-public static partial class HttpTitleResolver
+public static partial class WebPageResolver
 {
     /// <summary>
     ///     Maximum number of bytes read from the web page.
@@ -70,7 +70,7 @@ public static partial class HttpTitleResolver
     /// <param name="timeout">Timeout in milliseconds per request.</param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     /// <returns>URL and title, null if no port answered.</returns>
-    public static async Task<HttpTitleInfo> ResolveAsync(IPAddress ipAddress, IEnumerable<int> ports,
+    public static async Task<WebPageInfo> ResolveAsync(IPAddress ipAddress, IEnumerable<int> ports,
         int timeout, CancellationToken cancellationToken)
     {
         foreach (var port in ports)
@@ -107,7 +107,7 @@ public static partial class HttpTitleResolver
     /// <param name="timeout">Timeout in milliseconds per request.</param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     /// <returns>Web page (title, status code, headers), null if the host didn't answer.</returns>
-    private static async Task<HttpTitleInfo> GetWebPageAsync(string url, int timeout,
+    private static async Task<WebPageInfo> GetWebPageAsync(string url, int timeout,
         CancellationToken cancellationToken)
     {
         var uri = new Uri(url);
@@ -145,14 +145,14 @@ public static partial class HttpTitleResolver
                     }
 
                     // Redirect to another host - only the headers
-                    return new HttpTitleInfo(url, statusCode, string.Empty, server, poweredBy);
+                    return new WebPageInfo(url, statusCode, string.Empty, server, poweredBy);
                 }
 
                 var content = await ReadContentAsync(response, linkedCts.Token).ConfigureAwait(false);
 
                 var title = ParseTitle(Decode(content, response.Content.Headers.ContentType?.CharSet));
 
-                return new HttpTitleInfo(url, statusCode, title, server, poweredBy);
+                return new WebPageInfo(url, statusCode, title, server, poweredBy);
             }
         }
         catch (Exception) when (!cancellationToken.IsCancellationRequested)

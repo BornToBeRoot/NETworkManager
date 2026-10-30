@@ -134,14 +134,14 @@ public static partial class ExportManager
                 $"{GetOSGuess(info, options)}," +
                 $"{CsvHelper.QuoteString(GetRole(info))}," +
                 $"{CsvHelper.QuoteString(options.MDNSEnabled ? info.MDNSHostname : null)}," +
-                $"{CsvHelper.QuoteString(options.HttpTitleEnabled ? info.WebTitle : null)}," +
-                $"{CsvHelper.QuoteString(options.HttpTitleEnabled ? info.WebURL : null)}," +
+                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebTitle : null)}," +
+                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebURL : null)}," +
                 $"{CsvHelper.QuoteString(options.SNMPEnabled ? info.SNMPName : null)}," +
                 $"{CsvHelper.QuoteString(options.SNMPEnabled ? info.SNMPDescription : null)}," +
                 $"{CsvHelper.QuoteString(options.SNMPEnabled ? info.SNMPLocation : null)}," +
                 $"{GetWebStatusCode(info, options)}," +
-                $"{CsvHelper.QuoteString(options.HttpTitleEnabled ? info.WebServer : null)}," +
-                $"{CsvHelper.QuoteString(options.HttpTitleEnabled ? info.WebPoweredBy : null)}"
+                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebServer : null)}," +
+                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebPoweredBy : null)}"
             );
         }
 
@@ -204,8 +204,8 @@ public static partial class ExportManager
                             new XElement(nameof(IPScannerHostInfo.MDNSHostname),
                                 options.MDNSEnabled ? info.MDNSHostname : null),
                             new XElement(nameof(IPScannerHostInfo.WebTitle),
-                                options.HttpTitleEnabled ? info.WebTitle : null),
-                            new XElement(nameof(IPScannerHostInfo.WebURL), options.HttpTitleEnabled ? info.WebURL : null),
+                                options.WebPageEnabled ? info.WebTitle : null),
+                            new XElement(nameof(IPScannerHostInfo.WebURL), options.WebPageEnabled ? info.WebURL : null),
                             new XElement(nameof(IPScannerHostInfo.SNMPName), options.SNMPEnabled ? info.SNMPName : null),
                             new XElement(nameof(IPScannerHostInfo.SNMPDescription),
                                 options.SNMPEnabled ? info.SNMPDescription : null),
@@ -213,9 +213,9 @@ public static partial class ExportManager
                                 options.SNMPEnabled ? info.SNMPLocation : null),
                             new XElement(nameof(IPScannerHostInfo.WebStatusCode), GetWebStatusCode(info, options)),
                             new XElement(nameof(IPScannerHostInfo.WebServer),
-                                options.HttpTitleEnabled ? info.WebServer : null),
+                                options.WebPageEnabled ? info.WebServer : null),
                             new XElement(nameof(IPScannerHostInfo.WebPoweredBy),
-                                options.HttpTitleEnabled ? info.WebPoweredBy : null)
+                                options.WebPageEnabled ? info.WebPoweredBy : null)
                         )
                 )
             )
@@ -290,14 +290,14 @@ public static partial class ExportManager
                 OSGuess = GetOSGuess(info, options),
                 Role = GetRole(info),
                 MDNSHostname = options.MDNSEnabled ? info.MDNSHostname : null,
-                WebTitle = options.HttpTitleEnabled ? info.WebTitle : null,
-                WebURL = options.HttpTitleEnabled ? info.WebURL : null,
+                WebTitle = options.WebPageEnabled ? info.WebTitle : null,
+                WebURL = options.WebPageEnabled ? info.WebURL : null,
                 SNMPName = options.SNMPEnabled ? info.SNMPName : null,
                 SNMPDescription = options.SNMPEnabled ? info.SNMPDescription : null,
                 SNMPLocation = options.SNMPEnabled ? info.SNMPLocation : null,
                 WebStatusCode = GetWebStatusCode(info, options),
-                WebServer = options.HttpTitleEnabled ? info.WebServer : null,
-                WebPoweredBy = options.HttpTitleEnabled ? info.WebPoweredBy : null
+                WebServer = options.WebPageEnabled ? info.WebServer : null,
+                WebPoweredBy = options.WebPageEnabled ? info.WebPoweredBy : null
             };
         }
 
@@ -322,7 +322,7 @@ public static partial class ExportManager
     /// <returns>Status code or null.</returns>
     private static int? GetWebStatusCode(IPScannerHostInfo info, IPScannerResultOptions options)
     {
-        return options.HttpTitleEnabled && info.WebStatusCode > 0 ? info.WebStatusCode : null;
+        return options.WebPageEnabled && info.WebStatusCode > 0 ? info.WebStatusCode : null;
     }
 
     /// <summary>

@@ -945,12 +945,12 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.WebTitle}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.Web}"
                                     SortMemberPath="WebSummary"
                                     MinWidth="150">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource PendingToStringConverter}">
-                            <Binding Path="IsHttpTitlePending" />
+                            <Binding Path="IsWebPagePending" />
                             <Binding Path="WebSummary" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
@@ -959,7 +959,7 @@
                             <Binding Source="{StaticResource BindingProxy}"
                                      Path="Data.ScanOptions.PortScanEnabled" />
                             <Binding Source="{StaticResource BindingProxy}"
-                                     Path="Data.ScanOptions.HttpTitleEnabled" />
+                                     Path="Data.ScanOptions.WebPageEnabled" />
                         </MultiBinding>
                     </DataGridTextColumn.Visibility>
                     <DataGridTextColumn.ElementStyle>
@@ -1507,7 +1507,7 @@
                                 <StackPanel Grid.Row="2"
                                             VerticalAlignment="Top"
                                             Orientation="Horizontal"
-                                            Visibility="{Binding Path=Data.ScanOptions.HttpTitleEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                                            Visibility="{Binding Path=Data.ScanOptions.WebPageEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
                                     <Rectangle Width="16" Height="16"
                                                Style="{StaticResource InfoImageRectangle}" />
                                     <TextBlock Text="{x:Static localization:Strings.ReadingWebPagesIsDisabled}"
@@ -1515,7 +1515,7 @@
                                                Margin="10,0,0,0" />
                                 </StackPanel>
                                 <ListView Grid.Row="2" Background="Transparent"
-                                          Visibility="{Binding Path=Data.ScanOptions.HttpTitleEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                          Visibility="{Binding Path=Data.ScanOptions.WebPageEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                     <ListView.ItemContainerStyle>
                                         <Style TargetType="{x:Type ListViewItem}"
                                                BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
@@ -1544,7 +1544,7 @@
                                             <TextBox Grid.Column="2">
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsHttpTitlePending" Mode="OneWay" />
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
                                                         <Binding Path="WebURL" Mode="OneWay"
                                                                  Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
                                                     </MultiBinding>
@@ -1564,7 +1564,7 @@
                                             <TextBox Grid.Column="2">
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsHttpTitlePending" Mode="OneWay" />
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
                                                         <Binding Path="WebStatusCode" Mode="OneWay"
                                                                  Converter="{StaticResource IntToStringConverter}" />
                                                     </MultiBinding>
@@ -1586,7 +1586,7 @@
                                                      TextWrapping="Wrap">
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsHttpTitlePending" Mode="OneWay" />
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
                                                         <Binding Path="WebTitle" Mode="OneWay"
                                                                  Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
                                                     </MultiBinding>
@@ -1607,7 +1607,7 @@
                                             <TextBox Grid.Column="2">
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsHttpTitlePending" Mode="OneWay" />
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
                                                         <Binding Path="WebServer" Mode="OneWay"
                                                                  Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
                                                     </MultiBinding>
@@ -1628,7 +1628,7 @@
                                             <TextBox Grid.Column="2">
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsHttpTitlePending" Mode="OneWay" />
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
                                                         <Binding Path="WebPoweredBy" Mode="OneWay"
                                                                  Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
                                                     </MultiBinding>

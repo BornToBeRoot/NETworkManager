@@ -4,7 +4,7 @@ using Xunit;
 
 namespace NETworkManager.Tests.Network;
 
-public class HttpTitleResolverTests
+public class WebPageResolverTests
 {
     [Theory]
     [InlineData("<html><head><title>Router Login</title></head></html>", "Router Login")]
@@ -19,13 +19,13 @@ public class HttpTitleResolverTests
     [InlineData(null, "")]
     public void ParseTitle(string html, string expected)
     {
-        Assert.Equal(expected, HttpTitleResolver.ParseTitle(html));
+        Assert.Equal(expected, WebPageResolver.ParseTitle(html));
     }
 
     [Fact]
     public void ParseTitle_TooLong_Shortened()
     {
-        var title = HttpTitleResolver.ParseTitle($"<title>{new string('a', 500)}</title>");
+        var title = WebPageResolver.ParseTitle($"<title>{new string('a', 500)}</title>");
 
         Assert.Equal(new string('a', 200) + "...", title);
     }
@@ -38,7 +38,7 @@ public class HttpTitleResolverTests
     [InlineData(null, "")]
     public void CleanHeaderValue(string value, string expected)
     {
-        Assert.Equal(expected, HttpTitleResolver.CleanHeaderValue(value));
+        Assert.Equal(expected, WebPageResolver.CleanHeaderValue(value));
     }
 
     [Theory]
@@ -48,21 +48,21 @@ public class HttpTitleResolverTests
     [InlineData(9000, new[] { "https", "http" })]
     public void GetSchemes(int port, string[] expected)
     {
-        Assert.Equal(expected, HttpTitleResolver.GetSchemes(port));
+        Assert.Equal(expected, WebPageResolver.GetSchemes(port));
     }
 
     [Fact]
     public void Decode_DefaultUTF8()
     {
         Assert.Equal("<title>Grüße</title>",
-            HttpTitleResolver.Decode(Encoding.UTF8.GetBytes("<title>Grüße</title>"), null));
+            WebPageResolver.Decode(Encoding.UTF8.GetBytes("<title>Grüße</title>"), null));
     }
 
     [Fact]
     public void Decode_CharsetOfHeader()
     {
         Assert.Equal("<title>Grüße</title>",
-            HttpTitleResolver.Decode(Encoding.Latin1.GetBytes("<title>Grüße</title>"), "iso-8859-1"));
+            WebPageResolver.Decode(Encoding.Latin1.GetBytes("<title>Grüße</title>"), "iso-8859-1"));
     }
 
     [Fact]
@@ -70,13 +70,13 @@ public class HttpTitleResolverTests
     {
         const string html = "<meta charset=\"ISO-8859-1\"><title>Grüße</title>";
 
-        Assert.Equal(html, HttpTitleResolver.Decode(Encoding.Latin1.GetBytes(html), null));
+        Assert.Equal(html, WebPageResolver.Decode(Encoding.Latin1.GetBytes(html), null));
     }
 
     [Fact]
     public void Decode_UnknownCharset_UTF8()
     {
         Assert.Equal("<title>Test</title>",
-            HttpTitleResolver.Decode(Encoding.UTF8.GetBytes("<title>Test</title>"), "unknown-charset"));
+            WebPageResolver.Decode(Encoding.UTF8.GetBytes("<title>Test</title>"), "unknown-charset"));
     }
 }

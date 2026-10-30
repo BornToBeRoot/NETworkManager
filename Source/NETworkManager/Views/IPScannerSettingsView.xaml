@@ -159,27 +159,27 @@
                    Margin="0,0,0,10" />
         <mah:NumericUpDown Value="{Binding MDNSTimeout}" Maximum="15000" Minimum="100" Interval="100"
                            IsEnabled="{Binding MDNSEnabled}" Margin="0,0,0,20" />
-        <TextBlock Text="{x:Static localization:Strings.WebTitle}" Style="{StaticResource HeaderTextBlock}" />
+        <TextBlock Text="{x:Static localization:Strings.Web}" Style="{StaticResource HeaderTextBlock}" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <mah:ToggleSwitch Header="{x:Static localization:Strings.ReadTheTitleOfWebPages}"
-                              IsOn="{Binding HttpTitleEnabled}" />
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.ReadWebPages}"
+                              IsOn="{Binding WebPageEnabled}" />
             <Rectangle Width="24" Height="24" VerticalAlignment="Top"
-                       ToolTip="{x:Static localization:Strings.HelpMessage_ReadTheTitleOfWebPages}"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_ReadWebPages}"
                        Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
                 <Rectangle.Resources>
                     <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
                 </Rectangle.Resources>
             </Rectangle>
         </StackPanel>
-        <StackPanel IsEnabled="{Binding HttpTitleEnabled}">
+        <StackPanel IsEnabled="{Binding WebPageEnabled}">
             <TextBlock Text="{x:Static localization:Strings.Ports}" Style="{StaticResource DefaultTextBlock}"
                        Margin="0,0,0,10" />
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <TextBox x:Name="TextBoxHttpTitlePorts"
+                <TextBox x:Name="TextBoxWebPagePorts"
                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleWebserverPorts}"
                          Width="250">
                     <TextBox.Text>
-                        <Binding Path="HttpTitlePorts" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                        <Binding Path="WebPagePorts" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
                                 <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
                                 <validators:PortRangeValidator ValidatesOnTargetUpdated="True" />
@@ -187,7 +187,7 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <Button Command="{Binding RestoreDefaultHttpTitlePortsCommand}"
+                <Button Command="{Binding RestoreDefaultWebPagePortsCommand}"
                         ToolTip="{x:Static localization:Strings.RestoreDefaults}"
                         VerticalAlignment="Top"
                         Margin="10,0,0,0">
@@ -197,9 +197,9 @@
                             <Setter Property="MinHeight" Value="0" />
                             <Setter Property="MinWidth" Value="0" />
                             <Setter Property="Width"
-                                    Value="{Binding ElementName=TextBoxHttpTitlePorts, Path=ActualHeight}" />
+                                    Value="{Binding ElementName=TextBoxWebPagePorts, Path=ActualHeight}" />
                             <Setter Property="Height"
-                                    Value="{Binding ElementName=TextBoxHttpTitlePorts, Path=ActualHeight}" />
+                                    Value="{Binding ElementName=TextBoxWebPagePorts, Path=ActualHeight}" />
                         </Style>
                     </Button.Resources>
                     <Rectangle Width="16" Height="16" Fill="{DynamicResource MahApps.Brushes.Gray3}">
@@ -211,7 +211,7 @@
             </StackPanel>
             <TextBlock Text="{x:Static localization:Strings.TimeoutMS}" Style="{StaticResource DefaultTextBlock}"
                        Margin="0,0,0,10" />
-            <mah:NumericUpDown Value="{Binding HttpTitleTimeout}" Maximum="15000" Minimum="100" Interval="100"
+            <mah:NumericUpDown Value="{Binding WebPageTimeout}" Maximum="15000" Minimum="100" Interval="100"
                                Margin="0,0,0,20" />
         </StackPanel>
         <TextBlock Text="{x:Static localization:Strings.SNMP}" Style="{StaticResource HeaderTextBlock}" />

@@ -274,7 +274,7 @@ public sealed class IPScanner(IPScannerOptions options)
         var detectedBy = IPScannerDetectionMethod.None;
 
         // The title of the web page is read for the found host (when the port scan is finished)
-        var isHttpTitlePending = false;
+        var isWebPagePending = false;
 
         IPScannerHostInfo hostInfo = null;
 
@@ -395,7 +395,7 @@ public sealed class IPScanner(IPScannerOptions options)
                 // address, so it is in the neighbor table (ARP/NDP) from now on.
                 hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo, snmpInfo,
                     isSNMPFinished);
-                isHttpTitlePending = hostInfo.IsHttpTitlePending;
+                isWebPagePending = hostInfo.IsWebPagePending;
 
                 _hostsUp.Increment();
 
@@ -413,7 +413,7 @@ public sealed class IPScanner(IPScannerOptions options)
                 detectedBy = IPScannerDetectionMethod.ARP;
                 hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo, snmpInfo,
                     isSNMPFinished);
-                isHttpTitlePending = hostInfo.IsHttpTitlePending;
+                isWebPagePending = hostInfo.IsWebPagePending;
 
                 _hostsUp.Increment();
 
@@ -425,15 +425,15 @@ public sealed class IPScanner(IPScannerOptions options)
 
             // Title of the web page - needs the open ports, so after the port scan. Without an open web port, the
             // placeholder of a host found while the port scan was running is replaced.
-            if (isHttpTitlePending)
+            if (isWebPagePending)
             {
                 var webPorts = GetWebPorts(ports);
 
                 if (webPorts.Count > 0)
                     enrichTask = Task.WhenAll(enrichTask,
-                        UpdateHttpTitleAsync(ipAddress, hostInfo, webPorts, cancellationToken));
+                        UpdateWebPageAsync(ipAddress, hostInfo, webPorts, cancellationToken));
                 else
-                    OnHostUpdated(new IPScannerHostUpdatedArgs(hostInfo, x => x.IsHttpTitlePending = false));
+                    OnHostUpdated(new IPScannerHostUpdatedArgs(hostInfo, x => x.IsWebPagePending = false));
             }
 
             if (hostInfo == null)
@@ -534,7 +534,7 @@ public sealed class IPScanner(IPScannerOptions options)
             SNMPName = snmpInfo?.Name ?? string.Empty,
             SNMPDescription = snmpInfo?.Description ?? string.Empty,
             SNMPLocation = snmpInfo?.Location ?? string.Empty,
-            IsHttpTitlePending = isReachable && options.HttpTitleEnabled &&
+            IsWebPagePending = isReachable && options.WebPageEnabled &&
                                  (ports == null ? options.PortScanEnabled : GetWebPorts(ports).Count > 0),
             IsPortScanPending = ports == null,
             IsNetBIOSPending = netBIOSInfo == null
@@ -607,7 +607,7 @@ public sealed class IPScanner(IPScannerOptions options)
     }
 
     /// <summary>
-    ///     Gets the ports whose web page title is read (see <see cref="IPScannerOptions.HttpTitlePorts" />) that are
+    ///     Gets the ports whose web page title is read (see <see cref="IPScannerOptions.WebPagePorts" />) that are
     ///     open, in the configured order.
     /// </summary>
     /// <param name="ports">All probed ports, null if the port scan is disabled.</param>
@@ -619,7 +619,7 @@ public sealed class IPScanner(IPScannerOptions options)
 
         var openPorts = ports.Where(x => x.State == PortState.Open).Select(x => x.Port).ToHashSet();
 
-        return [.. options.HttpTitlePorts.Where(openPorts.Contains)];
+        return [.. options.WebPagePorts.Where(openPorts.Contains)];
     }
 
     /// <summary>
@@ -629,21 +629,21 @@ public sealed class IPScanner(IPScannerOptions options)
     /// <param name="host">Result of the host, already raised in <see cref="HostFound" />.</param>
     /// <param name="webPorts">Open ports to request, in the order to try them.</param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
-    private async Task UpdateHttpTitleAsync(IPAddress ipAddress, IPScannerHostInfo host, List<int> webPorts,
+    private async Task UpdateWebPageAsync(IPAddress ipAddress, IPScannerHostInfo host, List<int> webPorts,
         CancellationToken cancellationToken)
     {
-        var httpTitleInfo = await HttpTitleResolver.ResolveAsync(ipAddress, webPorts, options.HttpTitleTimeout,
+        var webPageInfo = await WebPageResolver.ResolveAsync(ipAddress, webPorts, options.WebPageTimeout,
             cancellationToken).ConfigureAwait(false);
 
         // Also without an answer, so the placeholder is replaced
         OnHostUpdated(new IPScannerHostUpdatedArgs(host, x =>
         {
-            x.WebTitle = httpTitleInfo?.Title ?? string.Empty;
-            x.WebURL = httpTitleInfo?.URL ?? string.Empty;
-            x.WebStatusCode = httpTitleInfo?.StatusCode ?? 0;
-            x.WebServer = httpTitleInfo?.Server ?? string.Empty;
-            x.WebPoweredBy = httpTitleInfo?.PoweredBy ?? string.Empty;
-            x.IsHttpTitlePending = false;
+            x.WebTitle = webPageInfo?.Title ?? string.Empty;
+            x.WebURL = webPageInfo?.URL ?? string.Empty;
+            x.WebStatusCode = webPageInfo?.StatusCode ?? 0;
+            x.WebServer = webPageInfo?.Server ?? string.Empty;
+            x.WebPoweredBy = webPageInfo?.PoweredBy ?? string.Empty;
+            x.IsWebPagePending = false;
         }));
     }
 

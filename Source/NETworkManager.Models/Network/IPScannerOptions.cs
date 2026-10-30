@@ -100,19 +100,19 @@ public record IPScannerOptions
 
     /// <summary>
     ///     Read the title of the web page of reachable hosts with an open web port, see
-    ///     <see cref="HttpTitleResolver" />.
+    ///     <see cref="WebPageResolver" />.
     /// </summary>
-    public required bool HttpTitleEnabled { get; init; }
+    public required bool WebPageEnabled { get; init; }
 
     /// <summary>
     ///     Ports whose web page title is read, in this order (only open ports, the first that answers is used).
     /// </summary>
-    public required int[] HttpTitlePorts { get; init; }
+    public required int[] WebPagePorts { get; init; }
 
     /// <summary>
     ///     Timeout in milliseconds of a web request.
     /// </summary>
-    public required int HttpTitleTimeout { get; init; }
+    public required int WebPageTimeout { get; init; }
 
     /// <summary>
     ///     Read the SNMP system information of reachable hosts, see <see cref="SNMPSystemInfoResolver" />.

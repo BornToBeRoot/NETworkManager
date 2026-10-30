@@ -6186,11 +6186,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Read the title of the web page (GET /) of every reachable host with an open port of the list below, in this order (the port scan must be enabled and the ports must also be in its list). The first port that answers is used (http on 80 and 8080, https and then http on other ports), redirects on the same host are followed. No cookies or credentials are sent, certificate errors are accepted. The request appears in the log of the web server. If the page has no title, the Server header is shown..
+        ///   Looks up a localized string similar to Read the web page (GET /) of every reachable host with an open port of the list below, in this order (the port scan must be enabled and the ports must also be in its list): status code, title and the Server and X-Powered-By headers. The first port that answers is used (http on 80 and 8080, https and then http on other ports), redirects on the same host are followed. No cookies or credentials are sent, certificate errors are accepted. The request appears in the log of the web server..
         /// </summary>
-        public static string HelpMessage_ReadTheTitleOfWebPages {
+        public static string HelpMessage_ReadWebPages {
             get {
-                return ResourceManager.GetString("HelpMessage_ReadTheTitleOfWebPages", resourceCulture);
+                return ResourceManager.GetString("HelpMessage_ReadWebPages", resourceCulture);
             }
         }
         
@@ -10330,11 +10330,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Read the title of web pages.
+        ///   Looks up a localized string similar to Read web pages.
         /// </summary>
-        public static string ReadTheTitleOfWebPages {
+        public static string ReadWebPages {
             get {
-                return ResourceManager.GetString("ReadTheTitleOfWebPages", resourceCulture);
+                return ResourceManager.GetString("ReadWebPages", resourceCulture);
             }
         }
         
@@ -14949,15 +14949,6 @@ namespace NETworkManager.Localization.Resources {
         public static string Website {
             get {
                 return ResourceManager.GetString("Website", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Web title.
-        /// </summary>
-        public static string WebTitle {
-            get {
-                return ResourceManager.GetString("WebTitle", resourceCulture);
             }
         }
         

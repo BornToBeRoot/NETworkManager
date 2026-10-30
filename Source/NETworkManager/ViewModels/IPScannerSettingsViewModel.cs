@@ -372,7 +372,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     /// <summary>
     /// Gets or sets a value indicating whether the title of web pages is read.
     /// </summary>
-    public bool HttpTitleEnabled
+    public bool WebPageEnabled
     {
         get;
         set
@@ -381,7 +381,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.IPScanner_HttpTitleEnabled = value;
+                SettingsManager.Current.IPScanner_WebPageEnabled = value;
 
             field = value;
             OnPropertyChanged();
@@ -391,7 +391,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     /// <summary>
     /// Gets or sets the ports whose web page title is read (in this order, only open ports).
     /// </summary>
-    public string HttpTitlePorts
+    public string WebPagePorts
     {
         get;
         set
@@ -400,7 +400,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.IPScanner_HttpTitlePorts = value;
+                SettingsManager.Current.IPScanner_WebPagePorts = value;
 
             field = value;
             OnPropertyChanged();
@@ -410,7 +410,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
     /// <summary>
     /// Gets or sets the timeout of a web request in milliseconds.
     /// </summary>
-    public int HttpTitleTimeout
+    public int WebPageTimeout
     {
         get;
         set
@@ -419,7 +419,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
                 return;
 
             if (!_isLoading)
-                SettingsManager.Current.IPScanner_HttpTitleTimeout = value;
+                SettingsManager.Current.IPScanner_WebPageTimeout = value;
 
             field = value;
             OnPropertyChanged();
@@ -625,9 +625,9 @@ public class IPScannerSettingsViewModel : ViewModelBase
         ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
         MDNSEnabled = SettingsManager.Current.IPScanner_MDNSEnabled;
         MDNSTimeout = SettingsManager.Current.IPScanner_MDNSTimeout;
-        HttpTitleEnabled = SettingsManager.Current.IPScanner_HttpTitleEnabled;
-        HttpTitlePorts = SettingsManager.Current.IPScanner_HttpTitlePorts;
-        HttpTitleTimeout = SettingsManager.Current.IPScanner_HttpTitleTimeout;
+        WebPageEnabled = SettingsManager.Current.IPScanner_WebPageEnabled;
+        WebPagePorts = SettingsManager.Current.IPScanner_WebPagePorts;
+        WebPageTimeout = SettingsManager.Current.IPScanner_WebPageTimeout;
         SNMPEnabled = SettingsManager.Current.IPScanner_SNMPEnabled;
         SNMPVersion = SettingsManager.Current.IPScanner_SNMPVersion;
         SNMPCommunity = SettingsManager.Current.IPScanner_SNMPCommunity;
@@ -652,9 +652,9 @@ public class IPScannerSettingsViewModel : ViewModelBase
     /// Gets the command to restore the default ports whose web page title is read. Disabled while the default ports are
     /// set.
     /// </summary>
-    public ICommand RestoreDefaultHttpTitlePortsCommand => new RelayCommand(
-        _ => HttpTitlePorts = GlobalStaticConfiguration.IPScanner_HttpTitlePorts,
-        _ => HttpTitlePorts != GlobalStaticConfiguration.IPScanner_HttpTitlePorts);
+    public ICommand RestoreDefaultWebPagePortsCommand => new RelayCommand(
+        _ => WebPagePorts = GlobalStaticConfiguration.IPScanner_WebPagePorts,
+        _ => WebPagePorts != GlobalStaticConfiguration.IPScanner_WebPagePorts);
 
     /// <summary>
     /// Gets the command to add a custom command.

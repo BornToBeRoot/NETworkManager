@@ -11,7 +11,7 @@
 /// <param name="NetBIOSEnabled">The NetBIOS information was requested.</param>
 /// <param name="ResolveMACAddress">The MAC address and vendor were resolved.</param>
 /// <param name="MDNSEnabled">The mDNS hostname was resolved.</param>
-/// <param name="HttpTitleEnabled">The title of the web pages was read.</param>
+/// <param name="WebPageEnabled">The title of the web pages was read.</param>
 /// <param name="SNMPEnabled">The SNMP system information was read.</param>
 public sealed record IPScannerResultOptions(
     bool ICMPEnabled,
@@ -21,7 +21,7 @@ public sealed record IPScannerResultOptions(
     bool NetBIOSEnabled,
     bool ResolveMACAddress,
     bool MDNSEnabled,
-    bool HttpTitleEnabled,
+    bool WebPageEnabled,
     bool SNMPEnabled)
 {
     /// <summary>
@@ -30,7 +30,7 @@ public sealed record IPScannerResultOptions(
     /// <param name="options">Options of the scan.</param>
     public IPScannerResultOptions(IPScannerOptions options)
         : this(options.ICMPEnabled, options.OSGuessEnabled, options.ResolveHostname, options.PortScanEnabled, options.NetBIOSEnabled, options.ResolveMACAddress,
-            options.MDNSEnabled, options.HttpTitleEnabled, options.SNMPEnabled)
+            options.MDNSEnabled, options.WebPageEnabled, options.SNMPEnabled)
     {
     }
 }

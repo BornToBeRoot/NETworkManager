@@ -1442,7 +1442,7 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_MDNSTimeout;
 
-    public bool IPScanner_HttpTitleEnabled
+    public bool IPScanner_WebPageEnabled
     {
         get;
         set
@@ -1453,9 +1453,9 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.IPScanner_HttpTitleEnabled;
+    } = GlobalStaticConfiguration.IPScanner_WebPageEnabled;
 
-    public string IPScanner_HttpTitlePorts
+    public string IPScanner_WebPagePorts
     {
         get;
         set
@@ -1466,9 +1466,9 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.IPScanner_HttpTitlePorts;
+    } = GlobalStaticConfiguration.IPScanner_WebPagePorts;
 
-    public int IPScanner_HttpTitleTimeout
+    public int IPScanner_WebPageTimeout
     {
         get;
         set
@@ -1479,7 +1479,7 @@ public class SettingsInfo : INotifyPropertyChanged
             field = value;
             OnPropertyChanged();
         }
-    } = GlobalStaticConfiguration.IPScanner_HttpTitleTimeout;
+    } = GlobalStaticConfiguration.IPScanner_WebPageTimeout;
 
     public bool IPScanner_SNMPEnabled
     {

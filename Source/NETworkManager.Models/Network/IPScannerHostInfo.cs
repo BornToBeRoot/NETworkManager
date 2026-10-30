@@ -349,7 +349,7 @@ public class IPScannerHostInfo : PropertyChangedBase
                                        (string.IsNullOrEmpty(NeighborMACAddress) && IsNetBIOSPending);
 
     /// <summary>
-    ///     Title of the web page of the host, see <see cref="HttpTitleResolver" />. Empty if it has none or it was not
+    ///     Title of the web page of the host, see <see cref="WebPageResolver" />. Empty if it has none or it was not
     ///     read (yet).
     /// </summary>
     public string WebTitle
@@ -540,7 +540,7 @@ public class IPScannerHostInfo : PropertyChangedBase
     ///     Indicates whether the title of the web page is still read, or the port scan it needs is still running
     ///     (<see cref="WebTitle" /> is a placeholder).
     /// </summary>
-    public bool IsHttpTitlePending
+    public bool IsWebPagePending
     {
         get;
         internal set
@@ -600,7 +600,7 @@ public class IPScannerHostInfo : PropertyChangedBase
         IsDNSPending = source.IsDNSPending;
         IsNeighborMACAddressPending = source.IsNeighborMACAddressPending;
         IsMDNSPending = source.IsMDNSPending;
-        IsHttpTitlePending = source.IsHttpTitlePending;
+        IsWebPagePending = source.IsWebPagePending;
         IsSNMPPending = source.IsSNMPPending;
         NeighborMACAddress = source.NeighborMACAddress;
         NeighborVendor = source.NeighborVendor;
@@ -633,7 +633,7 @@ public class IPScannerHostInfo : PropertyChangedBase
             IsDNSPending = IsDNSPending,
             IsNeighborMACAddressPending = IsNeighborMACAddressPending,
             IsMDNSPending = IsMDNSPending,
-            IsHttpTitlePending = IsHttpTitlePending,
+            IsWebPagePending = IsWebPagePending,
             IsSNMPPending = IsSNMPPending,
             NeighborMACAddress = NeighborMACAddress,
             NeighborVendor = NeighborVendor

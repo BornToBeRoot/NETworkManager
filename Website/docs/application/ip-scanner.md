@@ -77,7 +77,7 @@ Right-clicking a result allows forwarding device information to another tool (e.
 | **DNS lookup...** > **IP address** / **Hostname**                                 | Looks up the IP address (`PTR`) or the DNS hostname in [DNS Lookup](./dns-lookup)                             |
 | **RDAP...** > **IP address** / **Hostname**                                       | Queries the registration data of the IP address or the registered domain of the DNS hostname in [RDAP](./rdap) |
 | **Remote Desktop** / **PowerShell** / **PuTTY** / **TigerVNC** / **SNMP**         | Opens the host (DNS hostname if resolved, otherwise the IP address) in the tool                              |
-| **Web Console**                                                                   | Opens the host in the [Web Console](./web-console): the port of the web page whose title was read (see [Read the title of web pages](#read-the-title-of-web-pages)), otherwise https if port `443` is open, http on `80`, `8443` (https) or `8080`, http if none of them is open (or the port scan is disabled) |
+| **Web Console**                                                                   | Opens the host in the [Web Console](./web-console): the port of the web page that was read (see [Read web pages](#read-web-pages)), otherwise https if port `443` is open, http on `80`, `8443` (https) or `8080`, http if none of them is open (or the port scan is disabled) |
 | **Wake on LAN**                                                                   | Sends a magic packet to the MAC address of the host with [Wake on LAN](./wake-on-lan) (only with a MAC address) |
 | **Custom commands**                                                               | Executes a [custom command](#custom-commands) for the host                                                    |
 | **Add profile...**                                                                | Creates a new profile with the host (IP address), the hostname as name and the MAC address for Wake on LAN    |
@@ -95,7 +95,7 @@ The number of reachable (up) and unreachable (down) IP addresses is shown next t
 | Setting | Column | Row details |
 | --- | --- | --- |
 | [Resolve mDNS hostname](#resolve-mdns-hostname) | **Hostname** (DNS, mDNS or NetBIOS name) | **Hostnames**: DNS, mDNS and NetBIOS name |
-| [Read the title of web pages](#read-the-title-of-web-pages) | **Web title** (title, `Server` header if the page has no title) | **Web**: URL, status code, title, `Server` and `X-Powered-By` header |
+| [Read web pages](#read-web-pages) | **Web** (title, `Server` header if the page has no title) | **Web**: URL, status code, title, `Server` and `X-Powered-By` header |
 | [Read the SNMP system information](#read-the-snmp-system-information) | **SNMP name** | **SNMP**: name, description and location |
 
 The row details have two rows: **Ping details**, **Ports**, **Web** and **NetBIOS** at the top, **Hostnames** below the ping details and **SNMP** below NetBIOS (ports and web use the full height). A section of a disabled setting shows a note (e.g. `SNMP is disabled!`). The headers of the probes that can find a host (**Ping details**, **Ports**, **NetBIOS**, **SNMP**) show a status icon: a green check if the host answered the probe, a red cross if not (not while the probe is running); the tooltip shows `Answered` / `No answer`.
@@ -382,9 +382,9 @@ Timeout in milliseconds after which an mDNS request is considered lost.
 
 **Default:** `2000`
 
-### Read the title of web pages
+### Read web pages
 
-Read the title of the web page (`GET /`) of every reachable host with an open port of the [Ports](#ports-1) below and show it in the **Web title** column (the URL in the tooltip). The ports are tried in the order of the list, the first one that answers is used: http on `80` and `8080`, https and then http on any other port. Redirects on the same host (e.g. http to https, `/` to `/login.html`) are followed. If the page has no title, the `Server` header is shown. The HTTP status code and the `Server` and `X-Powered-By` headers (e.g. `nginx`, `PHP/8.2`) are read as well; they are in the search and the export (`WebStatusCode`, `WebServer`, `WebPoweredBy`). **Web Console** in the context menu opens the port (and scheme) that answered.
+Read the web page (`GET /`) of every reachable host with an open port of the [Ports](#ports-1) below: status code, title and the `Server` and `X-Powered-By` headers. The title is shown in the **Web** column (the URL in the tooltip), all values in the **Web** section of the row details. The ports are tried in the order of the list, the first one that answers is used: http on `80` and `8080`, https and then http on any other port. Redirects on the same host (e.g. http to https, `/` to `/login.html`) are followed. If the page has no title, the column shows the `Server` header (e.g. `nginx`). The values are in the search and the export (`WebStatusCode`, `WebServer`, `WebPoweredBy`). **Web Console** in the context menu opens the port (and scheme) that answered.
 
 **Type:** `Boolean`
 
