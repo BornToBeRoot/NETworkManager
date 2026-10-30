@@ -14,7 +14,10 @@ public sealed class IPScannerOSGuessToStringConverter : IMultiValueConverter
     /// <summary>
     ///     Convert the <see cref="IPScannerOSGuess" /> and the hops of a host to a translated <see cref="string" />.
     /// </summary>
-    /// <param name="values"><see cref="IPScannerOSGuess" /> and the hops (<see cref="int" />).</param>
+    /// <param name="values">
+    ///     <see cref="IPScannerOSGuess" />, the hops (<see cref="int" />) and optionally whether the ping is still
+    ///     running (<see cref="bool" />, "..." then).
+    /// </param>
     /// <param name="targetType"></param>
     /// <param name="parameter">"ToolTip" to get the tooltip ("Based on the TTL of the ping reply (2 hops)").</param>
     /// <param name="culture"></param>
@@ -22,9 +25,10 @@ public sealed class IPScannerOSGuessToStringConverter : IMultiValueConverter
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         var osGuess = values.Length > 0 && values[0] is IPScannerOSGuess value ? value : IPScannerOSGuess.None;
+        var isPending = values.Length > 2 && values[2] is true;
 
         if (parameter as string != "ToolTip")
-            return osGuess == IPScannerOSGuess.None ? "-/-" : ToLocalizedString(osGuess);
+            return isPending ? "..." : osGuess == IPScannerOSGuess.None ? "-/-" : ToLocalizedString(osGuess);
 
         if (osGuess == IPScannerOSGuess.None)
             return null;

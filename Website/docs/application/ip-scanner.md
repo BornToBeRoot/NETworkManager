@@ -219,13 +219,13 @@ Size of the buffer for each ICMP request in bytes.
 
 ### Guess the operating system from the TTL
 
-Shows the operating system guessed from the TTL of the ping reply in the **OS (guess)** column: every operating system starts with a typical TTL and every router on the way reduces it by one. The guess is the smallest typical TTL that is not lower than the received TTL, the tooltip shows the number of hops (e.g. TTL `126` → `Windows`, 2 hops). No additional packets are sent.
+Shows the operating system guessed from the TTL of the ping reply in the **OS (guess)** column (icon and text, `...` while the ping is running): every operating system starts with a typical TTL and every router on the way reduces it by one. The guess is the smallest typical TTL that is not lower than the received TTL, the tooltip shows the number of hops (e.g. TTL `126` → `Windows`, 2 hops). No additional packets are sent.
 
-| Initial TTL | OS (guess)       | Examples                                     |
-| ----------- | ---------------- | -------------------------------------------- |
-| `64`        | `Linux / Unix`   | Linux, macOS, Android, iOS, many IoT devices |
-| `128`       | `Windows`        | Windows                                      |
-| `255`       | `Network device` | Routers, switches, printers, Solaris         |
+| Initial TTL | OS (guess)       | Icon          | Examples                                     |
+| ----------- | ---------------- | ------------- | -------------------------------------------- |
+| `64`        | `Linux / Unix`   | Terminal      | Linux, macOS, Android, iOS, many IoT devices |
+| `128`       | `Windows`        | Windows logo  | Windows                                      |
+| `255`       | `Network device` | Switch        | Routers, switches, printers, Solaris         |
 
 **Type:** `Boolean`
 
