@@ -1060,16 +1060,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <returns>Options for <see cref="ScanOptions"/>.</returns>
     private static IPScannerResultOptions CreateResultOptions()
     {
-        return new IPScannerResultOptions(
-            SettingsManager.Current.IPScanner_ICMPEnabled,
-            SettingsManager.Current.IPScanner_OSGuessEnabled,
-            SettingsManager.Current.IPScanner_ResolveHostname,
-            SettingsManager.Current.IPScanner_PortScanEnabled,
-            SettingsManager.Current.IPScanner_NetBIOSEnabled,
-            SettingsManager.Current.IPScanner_ResolveMACAddress,
-            SettingsManager.Current.IPScanner_MDNSEnabled,
-            SettingsManager.Current.IPScanner_WebPageEnabled,
-            SettingsManager.Current.IPScanner_SNMPEnabled);
+        // Same mapping of the settings as for a scan (the ports don't matter for the result options)
+        return new IPScannerResultOptions(CreateScanOptions([], []));
     }
 
     /// <summary>
