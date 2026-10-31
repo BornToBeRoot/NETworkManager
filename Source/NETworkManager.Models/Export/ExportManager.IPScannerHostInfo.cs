@@ -73,7 +73,7 @@ public static partial class ExportManager
             $"NetBIOSVendor," +
             $"{nameof(IPScannerHostInfo.MACAddress)}," +
             $"{nameof(IPScannerHostInfo.Vendor)}," +
-            // Added later - last column, so the position of the other columns doesn't change
+            // Added later - after the released columns, so their position doesn't change
             $"{nameof(IPScannerHostInfo.DNSHostname)}," +
             $"{nameof(IPScannerHostInfo.DetectedBy)}," +
             $"{nameof(IPScannerHostInfo.OSGuess)}," +
@@ -208,7 +208,7 @@ public static partial class ExportManager
                             new XElement("NetBIOSVendor", netBIOSInfo?.Vendor),
                             new XElement(nameof(IPScannerHostInfo.MACAddress), info.MACAddress),
                             new XElement(nameof(IPScannerHostInfo.Vendor), info.Vendor),
-                            // Added later - last element, so the position of the other elements doesn't change
+                            // Added later - after the released elements, so their position doesn't change
                             new XElement(nameof(IPScannerHostInfo.DNSHostname), info.DNSHostname),
                             new XElement(nameof(IPScannerHostInfo.DetectedBy), GetDetectedBy(info)),
                             new XElement(nameof(IPScannerHostInfo.OSGuess), GetOSGuess(info, options)),
