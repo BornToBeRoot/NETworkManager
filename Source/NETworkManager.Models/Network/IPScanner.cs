@@ -7,6 +7,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using log4net;
 using NETworkManager.Models.Lookup;
 using NETworkManager.Utilities;
 
@@ -19,6 +20,8 @@ namespace NETworkManager.Models.Network;
 public sealed class IPScanner(IPScannerOptions options)
 {
     #region Variables
+
+    private static readonly ILog Log = LogManager.GetLogger(typeof(IPScanner));
 
     /// <summary>
     ///     Time between the start of two hosts during the ramp-up, see <see cref="StartScheduler" />. With the
@@ -55,6 +58,9 @@ public sealed class IPScanner(IPScannerOptions options)
 
     private readonly SemaphoreSlim _neighborTableSemaphore = new(1, 1);
     private volatile NeighborTableSnapshot _neighborTable = new([], DateTime.MinValue);
+
+    // The neighbor table could not be read (logged once per scan), only changed while holding the semaphore
+    private bool _neighborTableReadFailed;
 
     private readonly SemaphoreSlim _neighborVerificationSemaphore =
         new(MaxConcurrentNeighborVerifications, MaxConcurrentNeighborVerifications);
@@ -758,7 +764,27 @@ public sealed class IPScanner(IPScannerOptions options)
             // Timestamp before reading the table, so entries created while reading are covered by the next read
             var timestamp = DateTime.UtcNow;
 
-            _neighborTable = new NeighborTableSnapshot(NeighborTable.GetNeighborMap(), timestamp);
+            Dictionary<IPAddress, NeighborInfo> entries;
+
+            try
+            {
+                entries = NeighborTable.GetNeighborMap();
+            }
+            catch (Exception ex)
+            {
+                // E.g. an error of the IP helper API: no entry instead of ending the scan (hosts are only found by their
+                // probes and get no MAC address from the table), read again on the next miss
+                if (!_neighborTableReadFailed)
+                {
+                    _neighborTableReadFailed = true;
+
+                    Log.Error("GetNeighborEntryAsync - Could not read the neighbor table (ARP / NDP).", ex);
+                }
+
+                entries = [];
+            }
+
+            _neighborTable = new NeighborTableSnapshot(entries, timestamp);
 
             return _neighborTable.Entries.GetValueOrDefault(ipAddress);
         }
