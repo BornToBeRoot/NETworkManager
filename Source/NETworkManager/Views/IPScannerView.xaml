@@ -1127,6 +1127,53 @@
                                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource TextBlockAsTextBox}">
                                     <Setter Property="ContextMenu" Value="{StaticResource CopyContextMenu}" />
                                 </Style>
+                                <!-- List of a section: no selection or hover, no border -->
+                                <Style x:Key="HostDetailsListView" TargetType="{x:Type ListView}"
+                                       BasedOn="{StaticResource MahApps.Styles.ListView}">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="ItemContainerStyle">
+                                        <Setter.Value>
+                                            <Style TargetType="{x:Type ListViewItem}"
+                                                   BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                                <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Style>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListView}">
+                                                <ItemsPresenter />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                                <!-- Line of a section: label (header) and value (content, e.g. a TextBox) -->
+                                <Style x:Key="HostDetailsRow" TargetType="{x:Type HeaderedContentControl}">
+                                    <Setter Property="Focusable" Value="False" />
+                                    <Setter Property="IsTabStop" Value="False" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type HeaderedContentControl}">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                        <ColumnDefinition Width="10" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <!-- Style of the labels above (implicit styles don't apply in a template) -->
+                                                    <TextBlock Grid.Column="0"
+                                                               Style="{StaticResource {x:Type TextBlock}}"
+                                                               Text="{Binding Header, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                    <ContentPresenter Grid.Column="2" />
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
                             </Grid.Resources>
                             <!-- Ping -->
                             <Grid Grid.Row="0" Grid.Column="0">
@@ -1166,46 +1213,16 @@
                                 <Grid Grid.Row="2"
                                       Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                     <!-- Hidden while the ping is still running (placeholder values) -->
-                                    <ListView Background="Transparent"
+                                    <ListView Style="{StaticResource HostDetailsListView}"
                                               Visibility="{Binding Path=IsPingPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-                                        <ListView.ItemContainerStyle>
-                                            <Style TargetType="{x:Type ListViewItem}"
-                                                   BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
-                                                <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
-                                                <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
-                                                <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
-                                                <Setter Property="Background" Value="Transparent" />
-                                            </Style>
-                                        </ListView.ItemContainerStyle>
-                                        <ListView.Template>
-                                            <ControlTemplate>
-                                                <ItemsPresenter />
-                                            </ControlTemplate>
-                                        </ListView.Template>
                                         <ListViewItem>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                    <ColumnDefinition Width="10" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0"
-                                                           Text="{x:Static Member=localization:Strings.Timestamp}" />
-                                                <TextBox Grid.Column="2"
-                                                         Text="{Binding Path=PingInfo.Timestamp}" />
-                                            </Grid>
+                                            <HeaderedContentControl Header="{x:Static Member=localization:Strings.Timestamp}" Style="{StaticResource HostDetailsRow}">
+                                                <TextBox Text="{Binding Path=PingInfo.Timestamp}" />
+                                            </HeaderedContentControl>
                                         </ListViewItem>
                                         <ListViewItem>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                    <ColumnDefinition Width="10" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0"
-                                                           Text="{x:Static localization:Strings.Time}" />
-                                                <TextBox Grid.Column="2">
+                                            <HeaderedContentControl Header="{x:Static localization:Strings.Time}" Style="{StaticResource HostDetailsRow}">
+                                                <TextBox>
                                                     <TextBox.Text>
                                                         <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
                                                             <Binding Path="PingInfo.Status" />
@@ -1213,33 +1230,17 @@
                                                         </MultiBinding>
                                                     </TextBox.Text>
                                                 </TextBox>
-                                            </Grid>
+                                            </HeaderedContentControl>
                                         </ListViewItem>
                                         <ListViewItem>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                    <ColumnDefinition Width="10" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0"
-                                                           Text="{x:Static localization:Strings.TTL}" />
-                                                <TextBox Grid.Column="2"
-                                                         Text="{Binding PingInfo.TTL, Converter={StaticResource IntToStringConverter}}" />
-                                            </Grid>
+                                            <HeaderedContentControl Header="{x:Static localization:Strings.TTL}" Style="{StaticResource HostDetailsRow}">
+                                                <TextBox Text="{Binding PingInfo.TTL, Converter={StaticResource IntToStringConverter}}" />
+                                            </HeaderedContentControl>
                                         </ListViewItem>
                                         <ListViewItem>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                    <ColumnDefinition Width="10" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0"
-                                                           Text="{x:Static localization:Strings.Bytes}" />
-                                                <TextBox Grid.Column="2"
-                                                         Text="{Binding PingInfo.Bytes, Converter={StaticResource IntToStringConverter}}" />
-                                            </Grid>
+                                            <HeaderedContentControl Header="{x:Static localization:Strings.Bytes}" Style="{StaticResource HostDetailsRow}">
+                                                <TextBox Text="{Binding PingInfo.Bytes, Converter={StaticResource IntToStringConverter}}" />
+                                            </HeaderedContentControl>
                                         </ListViewItem>
                                     </ListView>
                                 </Grid>
@@ -1281,25 +1282,10 @@
                                 </StackPanel>
                                 <Grid Grid.Row="2"
                                       Visibility="{Binding Path=Data.ScanOptions.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                                    <ListView Background="Transparent"
+                                    <ListView Style="{StaticResource HostDetailsListView}"
                                               ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                               ItemsSource="{Binding Path=Ports}"
                                               Visibility="{Binding Path=Ports.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
-                                        <ListView.ItemContainerStyle>
-                                            <Style TargetType="{x:Type ListViewItem}"
-                                                   BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
-                                                <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
-                                                <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
-                                                <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
-                                                <Setter Property="Background" Value="Transparent" />
-                                            </Style>
-                                        </ListView.ItemContainerStyle>
-                                        <ListView.Template>
-                                            <ControlTemplate>
-                                                <ItemsPresenter />
-                                            </ControlTemplate>
-                                        </ListView.Template>
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid>
@@ -1380,61 +1366,22 @@
                                 <Grid Grid.Row="2"
                                       Visibility="{Binding Path=Data.ScanOptions.NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
                                     <!-- Hidden while the NetBIOS request is still running (placeholder values) -->
-                                    <ListView Background="Transparent"
+                                    <ListView Style="{StaticResource HostDetailsListView}"
                                               Visibility="{Binding Path=IsNetBIOSPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-                                        <ListView.ItemContainerStyle>
-                                            <Style TargetType="{x:Type ListViewItem}"
-                                                   BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
-                                                <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
-                                                <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
-                                                <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
-                                                <Setter Property="Background" Value="Transparent" />
-                                            </Style>
-                                        </ListView.ItemContainerStyle>
-                                        <ListView.Template>
-                                            <ControlTemplate>
-                                                <ItemsPresenter />
-                                            </ControlTemplate>
-                                        </ListView.Template>
                                         <ListViewItem>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                    <ColumnDefinition Width="10" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0"
-                                                           Text="{x:Static Member=localization:Strings.ComputerName}" />
-                                                <TextBox Grid.Column="2"
-                                                         Text="{Binding Path=NetBIOSInfo.ComputerName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
-                                            </Grid>
+                                            <HeaderedContentControl Header="{x:Static Member=localization:Strings.ComputerName}" Style="{StaticResource HostDetailsRow}">
+                                                <TextBox Text="{Binding Path=NetBIOSInfo.ComputerName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
+                                            </HeaderedContentControl>
                                         </ListViewItem>
                                         <ListViewItem>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                    <ColumnDefinition Width="10" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0"
-                                                           Text="{x:Static Member=localization:Strings.GroupDomain}" />
-                                                <TextBox Grid.Column="2"
-                                                         Text="{Binding Path=NetBIOSInfo.GroupName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
-                                            </Grid>
+                                            <HeaderedContentControl Header="{x:Static Member=localization:Strings.GroupDomain}" Style="{StaticResource HostDetailsRow}">
+                                                <TextBox Text="{Binding Path=NetBIOSInfo.GroupName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
+                                            </HeaderedContentControl>
                                         </ListViewItem>
                                         <ListViewItem>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                    <ColumnDefinition Width="10" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0"
-                                                           Text="{x:Static Member=localization:Strings.Username}" />
-                                                <TextBox Grid.Column="2"
-                                                         Text="{Binding Path=NetBIOSInfo.UserName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
-                                            </Grid>
+                                            <HeaderedContentControl Header="{x:Static Member=localization:Strings.Username}" Style="{StaticResource HostDetailsRow}">
+                                                <TextBox Text="{Binding Path=NetBIOSInfo.UserName, Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}" />
+                                            </HeaderedContentControl>
                                         </ListViewItem>
                                     </ListView>
                                 </Grid>
@@ -1476,35 +1423,12 @@
                                                Style="{StaticResource InfoTextBlock}"
                                                Margin="10,0,0,0" />
                                 </StackPanel>
-                                <ListView Grid.Row="2" Background="Transparent"
-                                          >
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="{x:Type ListViewItem}"
-                                               BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
-                                            <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="Background" Value="Transparent" />
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
-                                    <ListView.Template>
-                                        <ControlTemplate>
-                                            <ItemsPresenter />
-                                        </ControlTemplate>
-                                    </ListView.Template>
+                                <ListView Grid.Row="2" Style="{StaticResource HostDetailsListView}">
                                     <ListViewItem
                                                   Visibility="{Binding Path=Data.ScanOptions.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.DNS}" />
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.DNS}" Style="{StaticResource HostDetailsRow}">
                                             <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox Grid.Column="2">
+                                            <TextBox>
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
                                                         <Binding Path="IsDNSPending" Mode="OneWay" />
@@ -1513,20 +1437,13 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                        </Grid>
+                                        </HeaderedContentControl>
                                     </ListViewItem>
                                     <ListViewItem
                                                   Visibility="{Binding Path=Data.ScanOptions.MDNSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.MDNS}" />
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.MDNS}" Style="{StaticResource HostDetailsRow}">
                                             <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox Grid.Column="2">
+                                            <TextBox>
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
                                                         <Binding Path="IsMDNSPending" Mode="OneWay" />
@@ -1535,7 +1452,7 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                        </Grid>
+                                        </HeaderedContentControl>
                                     </ListViewItem>
                                 </ListView>
                             </Grid>
@@ -1563,34 +1480,12 @@
                                                Style="{StaticResource InfoTextBlock}"
                                                Margin="10,0,0,0" />
                                 </StackPanel>
-                                <ListView Grid.Row="2" Background="Transparent"
+                                <ListView Grid.Row="2" Style="{StaticResource HostDetailsListView}"
                                           Visibility="{Binding Path=Data.ScanOptions.WebPageEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="{x:Type ListViewItem}"
-                                               BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
-                                            <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="Background" Value="Transparent" />
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
-                                    <ListView.Template>
-                                        <ControlTemplate>
-                                            <ItemsPresenter />
-                                        </ControlTemplate>
-                                    </ListView.Template>
                                     <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.URL}" />
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.URL}" Style="{StaticResource HostDetailsRow}">
                                             <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox Grid.Column="2">
+                                            <TextBox>
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
                                                         <Binding Path="IsWebPagePending" Mode="OneWay" />
@@ -1599,18 +1494,11 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                        </Grid>
+                                        </HeaderedContentControl>
                                     </ListViewItem>
                                     <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.StatusCode}" />
-                                            <TextBox Grid.Column="2">
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.StatusCode}" Style="{StaticResource HostDetailsRow}">
+                                            <TextBox>
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
                                                         <Binding Path="IsWebPagePending" Mode="OneWay" />
@@ -1619,20 +1507,12 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                        </Grid>
+                                        </HeaderedContentControl>
                                     </ListViewItem>
                                     <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.Title}" />
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.Title}" Style="{StaticResource HostDetailsRow}">
                                             <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox Grid.Column="2"
-                                                     TextWrapping="Wrap">
+                                            <TextBox TextWrapping="Wrap">
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
                                                         <Binding Path="IsWebPagePending" Mode="OneWay" />
@@ -1641,19 +1521,12 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                        </Grid>
+                                        </HeaderedContentControl>
                                     </ListViewItem>
                                     <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.Server}" />
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.Server}" Style="{StaticResource HostDetailsRow}">
                                             <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox Grid.Column="2">
+                                            <TextBox>
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
                                                         <Binding Path="IsWebPagePending" Mode="OneWay" />
@@ -1662,19 +1535,12 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                        </Grid>
+                                        </HeaderedContentControl>
                                     </ListViewItem>
                                     <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.XPoweredBy}" />
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.XPoweredBy}" Style="{StaticResource HostDetailsRow}">
                                             <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox Grid.Column="2">
+                                            <TextBox>
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
                                                         <Binding Path="IsWebPagePending" Mode="OneWay" />
@@ -1683,19 +1549,12 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                        </Grid>
+                                        </HeaderedContentControl>
                                     </ListViewItem>
                                     <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.Realm}" />
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.Realm}" Style="{StaticResource HostDetailsRow}">
                                             <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox Grid.Column="2">
+                                            <TextBox>
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
                                                         <Binding Path="IsWebPagePending" Mode="OneWay" />
@@ -1704,19 +1563,12 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                        </Grid>
+                                        </HeaderedContentControl>
                                     </ListViewItem>
                                     <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.RedirectTo}" />
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.RedirectTo}" Style="{StaticResource HostDetailsRow}">
                                             <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox Grid.Column="2">
+                                            <TextBox>
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
                                                         <Binding Path="IsWebPagePending" Mode="OneWay" />
@@ -1725,18 +1577,11 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                        </Grid>
+                                        </HeaderedContentControl>
                                     </ListViewItem>
                                     <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.Certificate}" />
-                                            <TextBox Grid.Column="2">
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.Certificate}" Style="{StaticResource HostDetailsRow}">
+                                            <TextBox>
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
                                                         <Binding Path="IsWebPagePending" Mode="OneWay" />
@@ -1745,18 +1590,11 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                        </Grid>
+                                        </HeaderedContentControl>
                                     </ListViewItem>
                                     <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.Issuer}" />
-                                            <TextBox Grid.Column="2">
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.Issuer}" Style="{StaticResource HostDetailsRow}">
+                                            <TextBox>
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
                                                         <Binding Path="IsWebPagePending" Mode="OneWay" />
@@ -1765,18 +1603,11 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                        </Grid>
+                                        </HeaderedContentControl>
                                     </ListViewItem>
                                     <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.ValidUntil}" />
-                                            <TextBox Grid.Column="2">
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.ValidUntil}" Style="{StaticResource HostDetailsRow}">
+                                            <TextBox>
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
                                                         <Binding Path="IsWebPagePending" Mode="OneWay" />
@@ -1785,7 +1616,7 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                        </Grid>
+                                        </HeaderedContentControl>
                                     </ListViewItem>
                                 </ListView>
                             </Grid>
@@ -1824,34 +1655,12 @@
                                                Style="{StaticResource InfoTextBlock}"
                                                Margin="10,0,0,0" />
                                 </StackPanel>
-                                <ListView Grid.Row="2" Background="Transparent"
+                                <ListView Grid.Row="2" Style="{StaticResource HostDetailsListView}"
                                           Visibility="{Binding Path=Data.ScanOptions.SNMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="{x:Type ListViewItem}"
-                                               BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
-                                            <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="Background" Value="Transparent" />
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
-                                    <ListView.Template>
-                                        <ControlTemplate>
-                                            <ItemsPresenter />
-                                        </ControlTemplate>
-                                    </ListView.Template>
                                     <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.Name}" />
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.Name}" Style="{StaticResource HostDetailsRow}">
                                             <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox Grid.Column="2">
+                                            <TextBox>
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
                                                         <Binding Path="IsSNMPPending" Mode="OneWay" />
@@ -1860,20 +1669,12 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                        </Grid>
+                                        </HeaderedContentControl>
                                     </ListViewItem>
                                     <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.Description}" />
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.Description}" Style="{StaticResource HostDetailsRow}">
                                             <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox Grid.Column="2"
-                                                     TextWrapping="Wrap">
+                                            <TextBox TextWrapping="Wrap">
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
                                                         <Binding Path="IsSNMPPending" Mode="OneWay" />
@@ -1882,19 +1683,12 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                        </Grid>
+                                        </HeaderedContentControl>
                                     </ListViewItem>
                                     <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.SNMPLocation}" />
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.SNMPLocation}" Style="{StaticResource HostDetailsRow}">
                                             <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox Grid.Column="2">
+                                            <TextBox>
                                                 <TextBox.Text>
                                                     <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
                                                         <Binding Path="IsSNMPPending" Mode="OneWay" />
@@ -1903,7 +1697,7 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
-                                        </Grid>
+                                        </HeaderedContentControl>
                                     </ListViewItem>
                                 </ListView>
                             </Grid>
