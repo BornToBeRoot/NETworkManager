@@ -66,6 +66,10 @@ with link-local addresses (`169.254.x.x`) given lower priority.
 
 :::
 
+The **Options** button next to **Scan** opens a menu to turn the most used [settings](#settings) on or off without opening the settings: [Ping hosts](#ping-hosts), [Resolve hostname](#resolve-hostname), [Scan ports](#scan-ports), [Scan for NetBIOS](#scan-for-netbios), [Find hosts in the local subnet](#find-hosts-in-the-local-subnet), [Resolve MAC address and vendor](#resolve-mac-address-and-vendor), [Resolve mDNS hostname](#resolve-mdns-hostname), [Read web pages](#read-web-pages) (only with the port scan), [Read the SNMP system information](#read-the-snmp-system-information), [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) and [Expand host view](#expand-host-view). **Open settings...** opens the IP Scanner settings. The menu stays open to change several options and is disabled while a scan is running.
+
+The menu changes the settings: they apply to all tabs and are shown in the settings. Changes apply to the next scan (**Expand host view** immediately), like a change in the settings.
+
 ### Context menu
 
 Right-clicking a result allows forwarding device information to another tool (e.g. [Port Scanner](./port-scanner), Remote Desktop), querying the registration data of its IP address or hostname via [RDAP](./rdap), creating a new profile, or executing a [custom command](#custom-commands).

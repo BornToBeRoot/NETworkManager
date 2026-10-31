@@ -14,6 +14,7 @@
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
+             xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:IPScannerViewModel}">
     <UserControl.Resources>
@@ -63,6 +64,8 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="10" />
@@ -137,7 +140,71 @@
                                   Visibility="{Binding Path=LocalSubnets.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}" />
                     </mah:DropDownButton.Items>
                 </mah:DropDownButton>
-                <Button Grid.Column="6" Grid.Row="0"
+                <!-- Quick access to the scan options: bound to the (global) settings, so the settings page and
+                     the other tabs show the same values. Applies to the next scan (like the settings page). -->
+                <mah:DropDownButton Grid.Column="6"
+                                    ToolTip="{x:Static Member=localization:Strings.Options}">
+                    <mah:DropDownButton.Style>
+                        <Style TargetType="{x:Type mah:DropDownButton}" BasedOn="{StaticResource ImageDropDrownButton}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=IsRunning}" Value="True">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </mah:DropDownButton.Style>
+                    <mah:DropDownButton.Content>
+                        <Rectangle Width="20" Height="20" Margin="10,0,10,0"
+                                   Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Tune}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </mah:DropDownButton.Content>
+                    <mah:DropDownButton.Items>
+                        <!-- Same order as the settings page; the menu stays open to change several options -->
+                        <MenuItem Header="{x:Static localization:Strings.PingHosts}"
+                                  IsCheckable="True" StaysOpenOnClick="True"
+                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_ICMPEnabled, Mode=TwoWay}" />
+                        <MenuItem Header="{x:Static localization:Strings.ResolveHostname}"
+                                  IsCheckable="True" StaysOpenOnClick="True"
+                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_ResolveHostname, Mode=TwoWay}" />
+                        <MenuItem Header="{x:Static localization:Strings.ScanPorts}"
+                                  IsCheckable="True" StaysOpenOnClick="True"
+                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_PortScanEnabled, Mode=TwoWay}" />
+                        <MenuItem Header="{x:Static localization:Strings.ScanForNetBIOS}"
+                                  IsCheckable="True" StaysOpenOnClick="True"
+                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_NetBIOSEnabled, Mode=TwoWay}" />
+                        <MenuItem Header="{x:Static localization:Strings.FindHostsInTheLocalSubnet}"
+                                  IsCheckable="True" StaysOpenOnClick="True"
+                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_ARPEnabled, Mode=TwoWay}" />
+                        <MenuItem Header="{x:Static localization:Strings.ResolveMACAddressAndVendor}"
+                                  IsCheckable="True" StaysOpenOnClick="True"
+                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_ResolveMACAddress, Mode=TwoWay}" />
+                        <MenuItem Header="{x:Static localization:Strings.ResolveMDNSHostname}"
+                                  IsCheckable="True" StaysOpenOnClick="True"
+                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_MDNSEnabled, Mode=TwoWay}" />
+                        <!-- Only open ports of the port scan are requested (like the settings page) -->
+                        <MenuItem Header="{x:Static localization:Strings.ReadWebPages}"
+                                  IsCheckable="True" StaysOpenOnClick="True"
+                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_WebPageEnabled, Mode=TwoWay}"
+                                  IsEnabled="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_PortScanEnabled}" />
+                        <MenuItem Header="{x:Static localization:Strings.ReadTheSNMPSystemInformation}"
+                                  IsCheckable="True" StaysOpenOnClick="True"
+                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_SNMPEnabled, Mode=TwoWay}" />
+                        <Separator />
+                        <MenuItem Header="{x:Static localization:Strings.ShowUnreachableIPAddressesAndPorts}"
+                                  IsCheckable="True" StaysOpenOnClick="True"
+                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_ShowAllResults, Mode=TwoWay}" />
+                        <MenuItem Header="{x:Static localization:Strings.ExpandHostView}"
+                                  IsCheckable="True" StaysOpenOnClick="True"
+                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_ExpandHostView, Mode=TwoWay}" />
+                        <Separator />
+                        <MenuItem Header="{x:Static localization:Strings.OpenSettingsDots}"
+                                  Command="{Binding Path=OpenSettingsCommand}" />
+                    </mah:DropDownButton.Items>
+                </mah:DropDownButton>
+                <Button Grid.Column="8" Grid.Row="0"
                         Command="{Binding ScanCommand}"
                         IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}"
                         IsCancel="{Binding IsRunning}">

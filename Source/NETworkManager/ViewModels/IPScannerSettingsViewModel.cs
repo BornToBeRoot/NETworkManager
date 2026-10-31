@@ -600,6 +600,20 @@ public class IPScannerSettingsViewModel : ViewModelBase
         LoadSettings();
 
         _isLoading = false;
+
+        // The scan options can also be changed in the tool (options menu next to the scan button). The view (and
+        // this view model) is created once and kept, so it follows the settings.
+        SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
+    }
+
+    /// <summary>
+    /// Shows a setting of the IP Scanner that was changed outside of the settings page. Setting a property to its
+    /// current value does nothing, so a change made on this page isn't written again.
+    /// </summary>
+    private void SettingsManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName?.StartsWith("IPScanner_", StringComparison.Ordinal) == true)
+            LoadSettings();
     }
 
     /// <summary>

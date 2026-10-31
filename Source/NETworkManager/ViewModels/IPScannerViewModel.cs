@@ -569,6 +569,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Gets the command to open the IP Scanner settings (from the scan options menu).
+    /// </summary>
+    public ICommand OpenSettingsCommand => new RelayCommand(_ => NavigationManager.OpenSettings());
+
+    /// <summary>
     /// Gets the command to redirect the selected host to another application.
     /// </summary>
     public ICommand RedirectDataToApplicationCommand => new RelayCommand(RedirectDataToApplicationAction);
