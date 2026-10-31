@@ -100,6 +100,27 @@ public class WebPageResolverTests
     }
 
     [Fact]
+    public void Decode_CodePageCharset()
+    {
+        // "Büro-Drucker €" in windows-1252 (not built into .NET, registered by WebPageResolver)
+        byte[] content =
+            [.. Encoding.ASCII.GetBytes("<title>B"), 0xFC, .. Encoding.ASCII.GetBytes("ro-Drucker "), 0x80,
+             .. Encoding.ASCII.GetBytes("</title>")];
+
+        Assert.Equal("<title>Büro-Drucker €</title>", WebPageResolver.Decode(content, "windows-1252"));
+    }
+
+    [Fact]
+    public void Decode_CodePageCharsetOfMetaTag()
+    {
+        byte[] content =
+            [.. Encoding.ASCII.GetBytes("<meta charset=\"windows-1252\"><title>B"), 0xFC,
+             .. Encoding.ASCII.GetBytes("ro</title>")];
+
+        Assert.Equal("<meta charset=\"windows-1252\"><title>Büro</title>", WebPageResolver.Decode(content, null));
+    }
+
+    [Fact]
     public void Decode_UnknownCharset_UTF8()
     {
         Assert.Equal("<title>Test</title>",

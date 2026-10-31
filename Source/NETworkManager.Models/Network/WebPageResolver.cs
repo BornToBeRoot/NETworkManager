@@ -68,6 +68,15 @@ public static partial class WebPageResolver
         DefaultRequestHeaders = { { "User-Agent", "NETworkManager" } }
     };
 
+    /// <summary>
+    ///     Registers the code page encodings (e.g. <c>windows-1252</c>, <c>iso-8859-2</c>, <c>shift_jis</c>) for
+    ///     <see cref="Decode" /> - .NET only knows UTF-8 / UTF-16 / UTF-32, ASCII and ISO-8859-1 without them.
+    /// </summary>
+    static WebPageResolver()
+    {
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+    }
+
     [GeneratedRegex(@"<title[^>]*>(.*?)</title\s*>", RegexOptions.IgnoreCase | RegexOptions.Singleline)]
     private static partial Regex TitleRegex();
 
