@@ -886,20 +886,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Show error message if (some) hostnames could not be resolved
         if (hosts.hostnamesNotResolved.Count > 0)
-        {
-            StatusMessage =
-                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
-            IsStatusMessageDisplayed = true;
-        }
+            AddStatusMessage(
+                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}");
 
         // The exclusions removed every host (also if hostnames could not be resolved, keep their message)
         if (hosts.hosts.Count == 0 && hosts.excludedCount > 0)
-        {
-            StatusMessage = IsStatusMessageDisplayed
-                ? StatusMessage + Environment.NewLine + Strings.AllIPAddressesAreExcludedMessage
-                : Strings.AllIPAddressesAreExcludedMessage;
-            IsStatusMessageDisplayed = true;
-        }
+            AddStatusMessage(Strings.AllIPAddressesAreExcludedMessage);
 
         HostsToScan = hosts.hosts.Count;
 
@@ -1062,6 +1054,17 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         // Same mapping of the settings as for a scan (the ports don't matter for the result options)
         return new IPScannerResultOptions(CreateScanOptions([], []));
+    }
+
+    /// <summary>
+    /// Shows a message below the input, after the message that is already shown (e.g. hostnames that could not be
+    /// resolved). The messages are cleared when a scan starts.
+    /// </summary>
+    /// <param name="message">Message to show.</param>
+    private void AddStatusMessage(string message)
+    {
+        StatusMessage = IsStatusMessageDisplayed ? StatusMessage + Environment.NewLine + message : message;
+        IsStatusMessageDisplayed = true;
     }
 
     /// <summary>
@@ -1601,10 +1604,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             else if (Results.Count == 0 && HostsToScan > 0)
             {
                 // Keep a message from the preparation (e.g. hostnames that could not be resolved)
-                StatusMessage = IsStatusMessageDisplayed
-                    ? StatusMessage + Environment.NewLine + Strings.NoReachableHostsFound
-                    : Strings.NoReachableHostsFound;
-                IsStatusMessageDisplayed = true;
+                AddStatusMessage(Strings.NoReachableHostsFound);
             }
 
             PreparingScan = false;
