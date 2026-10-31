@@ -53,4 +53,15 @@ public class WebConsoleUrlHelperTests
     {
         Assert.Equal(expected, WebConsoleUrlHelper.IsWebPort(port));
     }
+
+    [Theory]
+    [InlineData("10.0.0.1", 443, "https", "https://10.0.0.1/")]
+    [InlineData("10.0.0.1", 443, "http", "http://10.0.0.1:443/")]
+    [InlineData("10.0.0.1", 80, "https", "https://10.0.0.1:80/")]
+    [InlineData("10.0.0.1", 9443, "https", "https://10.0.0.1:9443/")]
+    [InlineData("2001:db8::1", 8081, "http", "http://[2001:db8::1]:8081/")]
+    public void CreateUrl_Scheme(string host, int port, string scheme, string expected)
+    {
+        Assert.Equal(expected, WebConsoleUrlHelper.CreateUrl(host, port, scheme));
+    }
 }

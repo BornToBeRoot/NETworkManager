@@ -22,6 +22,21 @@ public static class HostRangeHelper
     private const int CancellationCheckInterval = 65536;
 
     /// <summary>
+    ///     Prefix of an input that excludes IP addresses from the other inputs (e.g. "10.0.0.0/24; !10.0.0.1").
+    /// </summary>
+    public const char ExclusionPrefix = '!';
+
+    /// <summary>
+    ///     Checks if an input excludes IP addresses (e.g. "!10.0.0.1"), see <see cref="ExclusionPrefix" />.
+    /// </summary>
+    /// <param name="host">Input like "10.0.0.1" or "!10.0.0.1" (see <see cref="CreateListFromInput" />).</param>
+    /// <returns>True if the input is an exclusion.</returns>
+    public static bool IsExclusion(string host)
+    {
+        return host.StartsWith(ExclusionPrefix);
+    }
+
+    /// <summary>
     ///     Create a list of hosts from a string input like "10.0.0.1; example.com; 10.0.0.0/24".
     ///     Inputs can also be separated by newlines (e.g. pasted from Excel, one host/range per line).
     /// </summary>
@@ -120,8 +135,8 @@ public static class HostRangeHelper
 
     /// <summary>
     ///     Gets the number of IP addresses of the inputs without expanding the ranges or resolving the hostnames
-    ///     (a hostname counts as 1, overlapping inputs are counted multiple times). Used to warn about (or refuse)
-    ///     very large scans before any memory is allocated.
+    ///     (a hostname counts as 1, overlapping inputs are counted multiple times, exclusions are ignored). Used to warn
+    ///     about (or refuse) very large scans before any memory is allocated.
     /// </summary>
     /// <param name="hosts">Inputs like "10.0.0.1", "example.com", "10.0.0.0/24" (see <see cref="CreateListFromInput" />).</param>
     /// <returns>Number of IP addresses.</returns>
@@ -131,6 +146,10 @@ public static class HostRangeHelper
 
         foreach (var host in hosts)
         {
+            // Every address of the other inputs is expanded before the exclusions are applied
+            if (IsExclusion(host))
+                continue;
+
             switch (host)
             {
                 // 192.168.0.1
@@ -194,22 +213,33 @@ public static class HostRangeHelper
     /// <summary>
     ///     Resolves the inputs (IP addresses, ranges, subnets, hostnames) into a list of hosts. The list is sorted
     ///     by IP address and contains every IP address only once (e.g. overlapping ranges), see
-    ///     <see cref="SortAndRemoveDuplicates" />.
+    ///     <see cref="SortAndRemoveDuplicates" />. IP addresses of an exclusion (e.g. "!10.0.0.1", "!10.0.0.0/28",
+    ///     "!server.example.com", see <see cref="ExclusionPrefix" />) are removed - exclusions are not expanded, so a
+    ///     large excluded range doesn't need any memory.
     /// </summary>
     /// <param name="hosts">Inputs like "10.0.0.1", "example.com", "10.0.0.0/24" (see <see cref="CreateListFromInput" />).</param>
-    /// <param name="dnsResolveHostnamePreferIPv4">Prefer the A record over the AAAA record for hostnames.</param>
+    /// <param name="dnsResolveHostnamePreferIPv4">
+    ///     Prefer the A record over the AAAA record for hostnames (an excluded hostname excludes all its addresses).
+    /// </param>
     /// <param name="keepAllHostnames">
     ///     Keep one entry per hostname for an IP address entered with different hostnames (e.g. the Ping Monitor shows
     ///     the hostname of the input). Otherwise every IP address is returned once, with the first hostname (e.g. the
     ///     IP Scanner and the Port Scanner resolve the hostname themselves, a second entry would be scanned again).
     /// </param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
-    /// <returns>Sorted, distinct list of hosts and the hostnames that could not be resolved.</returns>
-    public static async Task<(List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved)>
+    /// <returns>
+    ///     Sorted, distinct list of hosts, the hostnames that could not be resolved and the number of hosts removed by
+    ///     the exclusions (e.g. to show that every IP address is excluded, also if a hostname could not be resolved).
+    /// </returns>
+    public static async Task<(List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved,
+            int excludedCount)>
         ResolveAsync(IEnumerable<string> hosts, bool dnsResolveHostnamePreferIPv4, bool keepAllHostnames,
             CancellationToken cancellationToken)
     {
-        var inputs = hosts.ToList();
+        var allInputs = hosts.ToList();
+
+        var inputs = allInputs.Where(x => !IsExclusion(x)).ToList();
+        var exclusionInputs = allInputs.Where(IsExclusion).Select(x => x[1..]).ToList();
 
         // Results per input (index = position in the input) to keep the input order
         var hostsPerInput = new List<(IPAddress ipAddress, string hostname)>[inputs.Count];
@@ -306,8 +336,162 @@ public static class HostRangeHelper
             }
         }).ConfigureAwait(false);
 
-        return (SortAndRemoveDuplicates(hostsPerInput, keepAllHostnames),
-            [.. hostnameNotResolvedPerInput.Where(x => x != null)]);
+        // Exclusions as checks (index = position in the input), null if the hostname could not be resolved
+        var exclusions = new Func<IPAddress, bool>[exclusionInputs.Count];
+        var exclusionHostnameNotResolved = new string[exclusionInputs.Count];
+
+        await Parallel.ForEachAsync(Enumerable.Range(0, exclusionInputs.Count),
+            new ParallelOptions { CancellationToken = cancellationToken },
+            async (index, ct) =>
+            {
+                exclusions[index] = await CreateExclusionAsync(exclusionInputs[index], ct).ConfigureAwait(false);
+
+                if (exclusions[index] == null)
+                    exclusionHostnameNotResolved[index] = exclusionInputs[index].Split('/')[0];
+            }).ConfigureAwait(false);
+
+        var result = SortAndRemoveDuplicates(hostsPerInput, keepAllHostnames);
+
+        var activeExclusions = exclusions.Where(x => x != null).ToList();
+
+        var excludedCount = 0;
+
+        if (activeExclusions.Count > 0)
+        {
+            var count = result.Count;
+
+            result = [.. result.Where(host => !activeExclusions.Any(isExcluded => isExcluded(host.ipAddress)))];
+
+            excludedCount = count - result.Count;
+        }
+
+        return (result,
+            [.. hostnameNotResolvedPerInput.Concat(exclusionHostnameNotResolved).Where(x => x != null)],
+            excludedCount);
+    }
+
+    /// <summary>
+    ///     Creates the check of an exclusion (input without <see cref="ExclusionPrefix" />): IP address, subnet, range or
+    ///     hostname. A hostname excludes all its IPv4 and IPv6 addresses (A and AAAA records) - an inclusion resolves
+    ///     only one of them (depending on the IPv4 / IPv6 preference), the exclusion must match it in any case. An IPv6
+    ///     address without scope id also excludes the address with any scope id (e.g. "fe80::1" excludes "fe80::1%3").
+    /// </summary>
+    /// <param name="host">Input like "10.0.0.1", "10.0.0.0/28", "10.0.0.200-254" or "server.example.com".</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    /// <returns>Check if an IP address is excluded, null if the hostname could not be resolved.</returns>
+    private static async Task<Func<IPAddress, bool>> CreateExclusionAsync(string host,
+        CancellationToken cancellationToken)
+    {
+        switch (host)
+        {
+            // 192.168.0.1 or 2001:db8:85a3::8a2e:370:7334
+            case var _ when RegexHelper.IPv4AddressRegex().IsMatch(host):
+            case var _ when Regex.IsMatch(host, RegexHelper.IPv6AddressRegex):
+                return CreateIPAddressExclusion(IPAddress.Parse(host));
+
+            // 192.168.0.0/24 or 192.168.0.0/255.255.255.0
+            case var _ when RegexHelper.IPv4AddressCidrRegex().IsMatch(host):
+            case var _ when RegexHelper.IPv4AddressSubnetmaskRegex().IsMatch(host):
+                return CreateIPv4RangeExclusion(IPNetwork2.Parse(host));
+
+            // 192.168.0.1-100
+            case var _ when RegexHelper.IPv4AddressShortRangeRegex().IsMatch(host):
+                var shortRange = host.Split('-');
+                var shortBase = shortRange[0][..shortRange[0].LastIndexOf('.')];
+
+                return CreateIPv4RangeExclusion(IPAddress.Parse(shortRange[0]),
+                    IPAddress.Parse($"{shortBase}.{shortRange[1]}"));
+
+            // 192.168.0.0 - 192.168.0.100
+            case var _ when RegexHelper.IPv4AddressRangeRegex().IsMatch(host):
+                var range = host.Split('-');
+
+                return CreateIPv4RangeExclusion(IPAddress.Parse(range[0]), IPAddress.Parse(range[1]));
+
+            // 192.168.[50-100].1
+            case var _ when RegexHelper.IPv4AddressSpecialRangeRegex().IsMatch(host):
+                var octets = GetIPv4SpecialRangeOctets(host).Select(x => x.ToHashSet()).ToArray();
+
+                return ipAddress =>
+                {
+                    if (ipAddress.AddressFamily != AddressFamily.InterNetwork)
+                        return false;
+
+                    var bytes = ipAddress.GetAddressBytes();
+
+                    return octets[0].Contains(bytes[0]) && octets[1].Contains(bytes[1]) &&
+                           octets[2].Contains(bytes[2]) && octets[3].Contains(bytes[3]);
+                };
+
+            // example.com (all IPv4 and IPv6 addresses)
+            case var _ when RegexHelper.HostnameOrDomainRegex().IsMatch(host):
+                var ipAddresses = await DNSClient.GetInstance().ResolveAllAAndAaaaAsync(host)
+                    .WaitAsync(cancellationToken).ConfigureAwait(false);
+
+                if (ipAddresses.Count == 0)
+                    return null;
+
+                var ipAddressExclusions = ipAddresses.Select(CreateIPAddressExclusion).ToList();
+
+                return ipAddress => ipAddressExclusions.Any(isExcluded => isExcluded(ipAddress));
+
+            // example.com/24 or example.com/255.255.255.128 (only IPv4, like the inputs)
+            case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainWithCidrRegex):
+            case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainWithSubnetmaskRegex):
+                var hostAndSubnet = host.Split('/');
+
+                var dnsResultWithSubnet = await DNSClientHelper.ResolveAorAaaaAsync(hostAndSubnet[0], true)
+                    .WaitAsync(cancellationToken).ConfigureAwait(false);
+
+                if (dnsResultWithSubnet.HasError ||
+                    dnsResultWithSubnet.Value.AddressFamily != AddressFamily.InterNetwork)
+                    return null;
+
+                return CreateIPv4RangeExclusion(IPNetwork2.Parse($"{dnsResultWithSubnet.Value}/{hostAndSubnet[1]}"));
+
+            // Not a valid input (rejected by the validation of the input) - excludes nothing
+            default:
+                return _ => false;
+        }
+    }
+
+    /// <summary>
+    ///     Creates the check of an excluded IP address. An IPv6 address without scope id also excludes the address
+    ///     with any scope id.
+    /// </summary>
+    private static Func<IPAddress, bool> CreateIPAddressExclusion(IPAddress excludedIPAddress)
+    {
+        if (excludedIPAddress.AddressFamily == AddressFamily.InterNetworkV6 && excludedIPAddress.ScopeId == 0)
+            return ipAddress => IPAddressHelper.WithoutScopeId(ipAddress).Equals(excludedIPAddress);
+
+        return ipAddress => ipAddress.Equals(excludedIPAddress);
+    }
+
+    /// <summary>
+    ///     Creates the check of an excluded IPv4 subnet (incl. network and broadcast address).
+    /// </summary>
+    private static Func<IPAddress, bool> CreateIPv4RangeExclusion(IPNetwork2 network)
+    {
+        return CreateIPv4RangeExclusion(network.Network, network.Broadcast);
+    }
+
+    /// <summary>
+    ///     Creates the check of an excluded IPv4 range [<paramref name="start" />, <paramref name="end" />].
+    /// </summary>
+    private static Func<IPAddress, bool> CreateIPv4RangeExclusion(IPAddress start, IPAddress end)
+    {
+        var from = IPv4Address.ToUInt32(start);
+        var to = IPv4Address.ToUInt32(end);
+
+        return ipAddress =>
+        {
+            if (ipAddress.AddressFamily != AddressFamily.InterNetwork)
+                return false;
+
+            var value = IPv4Address.ToUInt32(ipAddress);
+
+            return value >= from && value <= to;
+        };
     }
 
     /// <summary>

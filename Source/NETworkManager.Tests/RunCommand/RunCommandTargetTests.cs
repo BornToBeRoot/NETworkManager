@@ -17,6 +17,10 @@ public class RunCommandTargetTests
     [InlineData("10.0.0.1-10.0.0.100", RunCommandTargetKind.IPRange)]
     [InlineData("10.0.0.1-100", RunCommandTargetKind.IPRange)]
     [InlineData("10.0.[0-1].1", RunCommandTargetKind.IPRange)]
+    // Exclusions (e.g. "!10.0.0.1") make a list a range for the scanners
+    [InlineData("10.0.0.0/24;!10.0.0.1", RunCommandTargetKind.IPRange)]
+    [InlineData("10.0.0.1;10.0.0.2;!10.0.0.2", RunCommandTargetKind.IPRange)]
+    [InlineData("server.borntoberoot.net;!10.0.0.1", RunCommandTargetKind.IPRange)]
     [InlineData("10.0.0.0/24", RunCommandTargetKind.Subnet)]
     [InlineData("10.0.0.0/255.255.255.0", RunCommandTargetKind.Subnet)]
     [InlineData("2001:db8::/32", RunCommandTargetKind.Subnet)]
@@ -68,6 +72,11 @@ public class RunCommandTargetTests
     // Only host names without a domain can be any words (e.g. copied text)
     [InlineData("server01;server02")]
     [InlineData("foo;")]
+    [InlineData("foo;!bar")]
+    // Only exclusions, an invalid exclusion
+    [InlineData("!10.0.0.1")]
+    [InlineData("!10.0.0.1;!10.0.0.2")]
+    [InlineData("10.0.0.0/24;!server_01")]
     // Ports only from 1 to 65535
     [InlineData("0")]
     [InlineData("99999")]

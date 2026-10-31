@@ -17,6 +17,11 @@ public record IPScannerOptions
     public required int MaxPortThreads { get; init; }
 
     /// <summary>
+    ///     Ping the host.
+    /// </summary>
+    public required bool ICMPEnabled { get; init; }
+
+    /// <summary>
     ///     Number of attempts to ping a host.
     /// </summary>
     public required int ICMPAttempts { get; init; }
@@ -31,6 +36,11 @@ public record IPScannerOptions
     ///     equal (records compare arrays by reference).
     /// </summary>
     public required int ICMPBufferSize { get; init; }
+
+    /// <summary>
+    ///     Guess the operating system from the TTL of the ping reply (only shown in the result, no extra traffic).
+    /// </summary>
+    public required bool OSGuessEnabled { get; init; }
 
     /// <summary>
     ///     Resolve the hostname for an IP address.
@@ -68,9 +78,61 @@ public record IPScannerOptions
     public required int NetBIOSTimeout { get; init; }
 
     /// <summary>
+    ///     Find hosts in a local subnet that didn't answer any probe by their neighbor entry (ARP / NDP), see
+    ///     <see cref="IPScannerNeighborCheck" />.
+    /// </summary>
+    public required bool ARPEnabled { get; init; }
+
+    /// <summary>
     ///     Resolve the MAC address for the host from ARP.
     /// </summary>
     public required bool ResolveMACAddress { get; init; }
+
+    /// <summary>
+    ///     Resolve the mDNS hostname of reachable hosts, see <see cref="MDNSResolver" />.
+    /// </summary>
+    public required bool MDNSEnabled { get; init; }
+
+    /// <summary>
+    ///     Timeout in milliseconds after which an mDNS request is considered lost.
+    /// </summary>
+    public required int MDNSTimeout { get; init; }
+
+    /// <summary>
+    ///     Read the title of the web page of reachable hosts with an open web port, see
+    ///     <see cref="WebPageResolver" />.
+    /// </summary>
+    public required bool WebPageEnabled { get; init; }
+
+    /// <summary>
+    ///     Ports whose web page title is read, in this order (only open ports, the first that answers is used).
+    /// </summary>
+    public required int[] WebPagePorts { get; init; }
+
+    /// <summary>
+    ///     Timeout in milliseconds of a web request.
+    /// </summary>
+    public required int WebPageTimeout { get; init; }
+
+    /// <summary>
+    ///     Read the SNMP system information of reachable hosts, see <see cref="SNMPSystemInfoResolver" />.
+    /// </summary>
+    public required bool SNMPEnabled { get; init; }
+
+    /// <summary>
+    ///     SNMP version (<see cref="SNMPVersion.V1" /> or <see cref="SNMPVersion.V2C" />).
+    /// </summary>
+    public required SNMPVersion SNMPVersion { get; init; }
+
+    /// <summary>
+    ///     SNMP community.
+    /// </summary>
+    public required string SNMPCommunity { get; init; }
+
+    /// <summary>
+    ///     Timeout in milliseconds after which an SNMP request is considered lost.
+    /// </summary>
+    public required int SNMPTimeout { get; init; }
 
     /// <summary>
     ///     Include unreachable IP addresses in the result.

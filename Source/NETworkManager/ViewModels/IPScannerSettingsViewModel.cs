@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
@@ -58,6 +59,25 @@ public class IPScannerSettingsViewModel : ViewModelBase
 
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_ExpandHostView = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the hosts are pinged.
+    /// </summary>
+    public bool ICMPEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_ICMPEnabled = value;
 
             field = value;
             OnPropertyChanged();
@@ -217,6 +237,44 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether hosts in a local subnet are found by their neighbor entry (ARP / NDP).
+    /// </summary>
+    public bool ARPEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_ARPEnabled = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the operating system is guessed from the TTL of the ping reply.
+    /// </summary>
+    public bool OSGuessEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_OSGuessEnabled = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets a value indicating whether NetBIOS is enabled.
     /// </summary>
     public bool NetBIOSEnabled
@@ -267,6 +325,182 @@ public class IPScannerSettingsViewModel : ViewModelBase
 
             if (!_isLoading)
                 SettingsManager.Current.IPScanner_ResolveMACAddress = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the mDNS hostname is resolved.
+    /// </summary>
+    public bool MDNSEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_MDNSEnabled = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the mDNS timeout in milliseconds.
+    /// </summary>
+    public int MDNSTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_MDNSTimeout = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the title of web pages is read.
+    /// </summary>
+    public bool WebPageEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_WebPageEnabled = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the ports whose web page title is read (in this order, only open ports).
+    /// </summary>
+    public string WebPagePorts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_WebPagePorts = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the timeout of a web request in milliseconds.
+    /// </summary>
+    public int WebPageTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_WebPageTimeout = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the SNMP system information is read.
+    /// </summary>
+    public bool SNMPEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_SNMPEnabled = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the SNMP versions that can be used to read the system information (v1, v2c - v3 needs credentials).
+    /// </summary>
+    public SNMPVersion[] SNMPVersions { get; } = [SNMPVersion.V1, SNMPVersion.V2C];
+
+    /// <summary>
+    /// Gets or sets the SNMP version (v1 or v2c).
+    /// </summary>
+    public SNMPVersion SNMPVersion
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_SNMPVersion = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the SNMP community (saved as plain text).
+    /// </summary>
+    public string SNMPCommunity
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_SNMPCommunity = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the SNMP timeout in milliseconds.
+    /// </summary>
+    public int SNMPTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_SNMPTimeout = value;
 
             field = value;
             OnPropertyChanged();
@@ -375,9 +609,11 @@ public class IPScannerSettingsViewModel : ViewModelBase
     {
         ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults;
         ExpandHostView = SettingsManager.Current.IPScanner_ExpandHostView;
+        ICMPEnabled = SettingsManager.Current.IPScanner_ICMPEnabled;
         ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts;
         ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout;
         ICMPBuffer = SettingsManager.Current.IPScanner_ICMPBuffer;
+        OSGuessEnabled = SettingsManager.Current.IPScanner_OSGuessEnabled;
         ResolveHostname = SettingsManager.Current.IPScanner_ResolveHostname;
         PortScanEnabled = SettingsManager.Current.IPScanner_PortScanEnabled;
         PortScanPorts = SettingsManager.Current.IPScanner_PortScanPorts;
@@ -385,7 +621,17 @@ public class IPScannerSettingsViewModel : ViewModelBase
         PortScanAttempts = SettingsManager.Current.IPScanner_PortScanAttempts;
         NetBIOSEnabled = SettingsManager.Current.IPScanner_NetBIOSEnabled;
         NetBIOSTimeout = SettingsManager.Current.IPScanner_NetBIOSTimeout;
+        ARPEnabled = SettingsManager.Current.IPScanner_ARPEnabled;
         ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress;
+        MDNSEnabled = SettingsManager.Current.IPScanner_MDNSEnabled;
+        MDNSTimeout = SettingsManager.Current.IPScanner_MDNSTimeout;
+        WebPageEnabled = SettingsManager.Current.IPScanner_WebPageEnabled;
+        WebPagePorts = SettingsManager.Current.IPScanner_WebPagePorts;
+        WebPageTimeout = SettingsManager.Current.IPScanner_WebPageTimeout;
+        SNMPEnabled = SettingsManager.Current.IPScanner_SNMPEnabled;
+        SNMPVersion = SettingsManager.Current.IPScanner_SNMPVersion;
+        SNMPCommunity = SettingsManager.Current.IPScanner_SNMPCommunity;
+        SNMPTimeout = SettingsManager.Current.IPScanner_SNMPTimeout;
         MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads;
         MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads;
     }
@@ -401,6 +647,14 @@ public class IPScannerSettingsViewModel : ViewModelBase
     public ICommand RestoreDefaultPortScanPortsCommand => new RelayCommand(
         _ => PortScanPorts = GlobalStaticConfiguration.IPScanner_PortScanPorts,
         _ => PortScanPorts != GlobalStaticConfiguration.IPScanner_PortScanPorts);
+
+    /// <summary>
+    /// Gets the command to restore the default ports whose web page title is read. Disabled while the default ports are
+    /// set.
+    /// </summary>
+    public ICommand RestoreDefaultWebPagePortsCommand => new RelayCommand(
+        _ => WebPagePorts = GlobalStaticConfiguration.IPScanner_WebPagePorts,
+        _ => WebPagePorts != GlobalStaticConfiguration.IPScanner_WebPagePorts);
 
     /// <summary>
     /// Gets the command to add a custom command.

@@ -16,13 +16,22 @@ public class MultipleHostsRangeValidator : ValidationRule
     {
         var isValid = true;
 
+        // At least one input that is not an exclusion (e.g. not only "!10.0.0.1")
+        var hasInclusion = false;
+
         if (value == null)
             return new ValidationResult(false, Strings.EnterValidIPScanRange);
 
-        foreach (var ipHostOrRange in ((string)value)
+        foreach (var input in ((string)value)
             .Replace(" ", "")
             .Split([';', '\r', '\n'], StringSplitOptions.RemoveEmptyEntries))
         {
+            // Exclusion (e.g. "!10.0.0.1"), validated like the other inputs
+            var ipHostOrRange = HostRangeHelper.IsExclusion(input) ? input[1..] : input;
+
+            if (!HostRangeHelper.IsExclusion(input))
+                hasInclusion = true;
+
             // 192.168.0.1
             if (RegexHelper.IPv4AddressRegex().IsMatch(ipHostOrRange))
                 continue;
@@ -104,7 +113,7 @@ public class MultipleHostsRangeValidator : ValidationRule
             isValid = false;
         }
 
-        return isValid
+        return isValid && hasInclusion
             ? ValidationResult.ValidResult
             : new ValidationResult(false, Strings.EnterValidIPScanRange);
     }

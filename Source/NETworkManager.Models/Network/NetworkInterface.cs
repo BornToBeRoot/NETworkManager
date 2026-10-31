@@ -233,6 +233,49 @@ public sealed class NetworkInterface
     }
 
     /// <summary>
+    /// Gets the IPv4 subnets of the operational network interfaces (e.g. to scan the subnet of a specific network
+    /// interface), in the order of the network interfaces with the link-local subnet (169.254.0.0/16, no DHCP server
+    /// answered) at the end. Addresses without subnet mask and single addresses (/32, e.g. some VPN adapters) are
+    /// skipped, every subnet is listed once per network interface.
+    /// </summary>
+    /// <param name="networkInterfaces">Network interfaces, see <see cref="GetNetworkInterfaces"/>.</param>
+    /// <returns>Subnets with the network address in CIDR notation (e.g. "192.168.1.0/24").</returns>
+    public static List<LocalSubnetInfo> GetLocalSubnets(IEnumerable<NetworkInterfaceInfo> networkInterfaces)
+    {
+        List<LocalSubnetInfo> subnets = [];
+
+        foreach (var networkInterface in networkInterfaces.Where(x => x.IsOperational))
+        {
+            foreach (var (ipAddress, subnetmask) in networkInterface.IPv4Address ?? [])
+            {
+                if (subnetmask == null)
+                    continue;
+
+                var cidr = Subnetmask.ConvertSubnetmaskToCidr(subnetmask);
+
+                if (cidr is 0 or 32)
+                    continue;
+
+                // Network address = IP address AND subnet mask
+                var ipAddressBytes = ipAddress.GetAddressBytes();
+                var subnetmaskBytes = subnetmask.GetAddressBytes();
+
+                for (var i = 0; i < ipAddressBytes.Length; i++)
+                    ipAddressBytes[i] &= subnetmaskBytes[i];
+
+                var subnet = new LocalSubnetInfo(networkInterface.Name, $"{new IPAddress(ipAddressBytes)}/{cidr}",
+                    ipAddressBytes[0] == 169 && ipAddressBytes[1] == 254);
+
+                if (!subnets.Contains(subnet))
+                    subnets.Add(subnet);
+            }
+        }
+
+        // Stable sort: the order of the network interfaces is kept
+        return [.. subnets.OrderBy(x => x.IsLinkLocal)];
+    }
+
+    /// <summary>
     /// Asynchronously determines the local IP address that would be used to route traffic to the specified remote IP
     /// address.
     /// </summary>

@@ -2,6 +2,7 @@
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
+using NETworkManager.Converters;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -119,6 +120,34 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             field = value;
             OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the IPv4 subnets of the local network interfaces, loaded when the menu of the subnet detection is opened.
+    /// </summary>
+    public ObservableCollection<LocalSubnetInfo> LocalSubnets { get; } = [];
+
+    // Incremented per load of LocalSubnets, so the result of an older load (menu opened twice) is ignored
+    private int _localSubnetsLoadId;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the menu of the subnet detection is open. Opening it loads the subnets
+    /// of the local network interfaces (<see cref="LocalSubnets"/>).
+    /// </summary>
+    public bool IsLocalSubnetMenuOpen
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+
+            if (value)
+                _ = LoadLocalSubnets();
         }
     }
 
@@ -423,8 +452,22 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             return Matches(info.PingInfo.IPAddress.ToString()) ||
                    Matches(info.Hostname) ||
+                   Matches(info.MDNSHostname) ||
+                   Matches(info.WebTitle) ||
+                   Matches(info.WebServer) ||
+                   Matches(info.WebPoweredBy) ||
+                   Matches(info.WebRealm) ||
+                   Matches(info.WebRedirectURL) ||
+                   Matches(info.WebCertificate?.Subject) ||
+                   Matches(info.WebCertificate?.Issuer) ||
+                   Matches(info.SNMPName) ||
+                   Matches(info.SNMPDescription) ||
+                   Matches(info.SNMPLocation) ||
                    Matches(info.MACAddress) ||
                    Matches(info.Vendor) ||
+                   (ScanOptions.OSGuessEnabled &&
+                    Matches(IPScannerOSGuessToStringConverter.ToLocalizedString(info.OSGuess))) ||
+                   Matches(IPScannerHostRoleToStringConverter.ToLocalizedString(info.Role)) ||
                    info.Ports.Any(x => Matches(x.Port.ToString()) || Matches(x.LookupInfo.Service));
         };
 
@@ -433,9 +476,20 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         // while searching, see ApplySearch.
         var liveShaping = (ICollectionViewLiveShaping)ResultsView;
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Hostname));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MDNSHostname));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebTitle));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebServer));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebPoweredBy));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebRealm));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebRedirectURL));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebCertificate));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPName));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPDescription));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPLocation));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MACAddress));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Vendor));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Ports));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.OSGuess));
 
         _searchDelay = new SearchDelay(GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan, ApplySearch);
     }
@@ -489,6 +543,32 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Gets the command to scan the subnet of a local network interface (<see cref="LocalSubnetInfo"/>).
+    /// </summary>
+    public ICommand UseLocalSubnetCommand => new RelayCommand(UseLocalSubnetAction);
+
+    private void UseLocalSubnetAction(object parameter)
+    {
+        if (parameter is not LocalSubnetInfo subnet)
+            return;
+
+        SetHostFromSubnetDetection(subnet.Subnet);
+    }
+
+    /// <summary>
+    /// Gets the command to scan the subnets of all local network interfaces (without the link-local subnet).
+    /// </summary>
+    public ICommand UseAllLocalSubnetsCommand => new RelayCommand(_ => UseAllLocalSubnetsAction());
+
+    private void UseAllLocalSubnetsAction()
+    {
+        var subnets = LocalSubnets.Where(x => !x.IsLinkLocal).Select(x => x.Subnet).Distinct().ToList();
+
+        if (subnets.Count > 0)
+            SetHostFromSubnetDetection(string.Join("; ", subnets));
+    }
+
+    /// <summary>
     /// Gets the command to redirect the selected host to another application.
     /// </summary>
     public ICommand RedirectDataToApplicationCommand => new RelayCommand(RedirectDataToApplicationAction);
@@ -520,6 +600,17 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void OpenWebConsoleAction()
     {
+        // The port and scheme of the web page whose title was read
+        if (Uri.TryCreate(SelectedResult.WebURL, UriKind.Absolute, out var webURL))
+        {
+            NavigationManager.Open(new ApplicationRequest(ApplicationName.WebConsole)
+            {
+                Target = WebConsoleUrlHelper.CreateUrl(GetSelectedHost(), webURL.Port, webURL.Scheme)
+            });
+
+            return;
+        }
+
         // Ports may still be scanned - then http on the default port
         var openPorts = SelectedResult.IsPortScanPending
             ? []
@@ -679,6 +770,17 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// </summary>
     private async Task Start()
     {
+        // A host is only found if it answers a probe - without ping, port scan, NetBIOS and SNMP every host is
+        // unreachable (ARP / NDP alone isn't enough: the neighbor entry is only created by the packets of the probes)
+        if (!SettingsManager.Current.IPScanner_ICMPEnabled && !SettingsManager.Current.IPScanner_PortScanEnabled &&
+            !SettingsManager.Current.IPScanner_NetBIOSEnabled && !SettingsManager.Current.IPScanner_SNMPEnabled)
+        {
+            StatusMessage = Strings.EnableAtLeastOneProbeToFindHostsMessage;
+            IsStatusMessageDisplayed = true;
+
+            return;
+        }
+
         // Every IP address is kept in memory - ask before a large scan and refuse a too large one
         // (e.g. 10.0.0.0/1) instead of running out of memory
         long hostCount;
@@ -755,8 +857,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Resolve hostnames and convert the ports. Start() is fire-and-forget, so every exception has to be
         // handled here - otherwise the scan would never end (IsRunning stays true).
-        (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved) hosts;
+        (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved, int excludedCount) hosts;
         int[] ports;
+        int[] webPagePorts;
 
         try
         {
@@ -766,6 +869,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(
                 SettingsManager.Current.IPScanner_PortScanPorts);
+
+            webPagePorts = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(
+                SettingsManager.Current.IPScanner_WebPagePorts);
         }
         catch (OperationCanceledException)
         {
@@ -786,6 +892,15 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             IsStatusMessageDisplayed = true;
         }
 
+        // The exclusions removed every host (also if hostnames could not be resolved, keep their message)
+        if (hosts.hosts.Count == 0 && hosts.excludedCount > 0)
+        {
+            StatusMessage = IsStatusMessageDisplayed
+                ? StatusMessage + Environment.NewLine + Strings.AllIPAddressesAreExcludedMessage
+                : Strings.AllIPAddressesAreExcludedMessage;
+            IsStatusMessageDisplayed = true;
+        }
+
         HostsToScan = hosts.hosts.Count;
 
         // No host left (e.g. only hostnames that could not be resolved): don't start the scan, only the message above
@@ -801,7 +916,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory, Host,
             SettingsManager.Current.General_HistoryListEntries);
 
-        var scanOptions = CreateScanOptions(ports);
+        var scanOptions = CreateScanOptions(ports, webPagePorts);
 
         ScanOptions = new IPScannerResultOptions(scanOptions);
 
@@ -892,13 +1007,16 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// Creates the scan options from the current settings.
     /// </summary>
     /// <param name="ports">Ports to scan.</param>
+    /// <param name="webPagePorts">Ports whose web page title is read (if open).</param>
     /// <returns>Options for the <see cref="IPScanner"/>.</returns>
-    private static IPScannerOptions CreateScanOptions(int[] ports)
+    private static IPScannerOptions CreateScanOptions(int[] ports, int[] webPagePorts)
     {
         return new IPScannerOptions
         {
             MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads,
             MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads,
+            ICMPEnabled = SettingsManager.Current.IPScanner_ICMPEnabled,
+            OSGuessEnabled = SettingsManager.Current.IPScanner_OSGuessEnabled,
             ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
             ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout,
             ICMPBufferSize = GlobalStaticConfiguration.LimitICMPBuffer(SettingsManager.Current.IPScanner_ICMPBuffer),
@@ -909,7 +1027,17 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             PortScanAttempts = SettingsManager.Current.IPScanner_PortScanAttempts,
             NetBIOSEnabled = SettingsManager.Current.IPScanner_NetBIOSEnabled,
             NetBIOSTimeout = SettingsManager.Current.IPScanner_NetBIOSTimeout,
+            ARPEnabled = SettingsManager.Current.IPScanner_ARPEnabled,
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
+            MDNSEnabled = SettingsManager.Current.IPScanner_MDNSEnabled,
+            MDNSTimeout = SettingsManager.Current.IPScanner_MDNSTimeout,
+            WebPageEnabled = SettingsManager.Current.IPScanner_WebPageEnabled,
+            WebPagePorts = webPagePorts,
+            WebPageTimeout = SettingsManager.Current.IPScanner_WebPageTimeout,
+            SNMPEnabled = SettingsManager.Current.IPScanner_SNMPEnabled,
+            SNMPVersion = SettingsManager.Current.IPScanner_SNMPVersion,
+            SNMPCommunity = SettingsManager.Current.IPScanner_SNMPCommunity,
+            SNMPTimeout = SettingsManager.Current.IPScanner_SNMPTimeout,
             ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults,
             ReportAllHosts = false
         };
@@ -933,10 +1061,15 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private static IPScannerResultOptions CreateResultOptions()
     {
         return new IPScannerResultOptions(
+            SettingsManager.Current.IPScanner_ICMPEnabled,
+            SettingsManager.Current.IPScanner_OSGuessEnabled,
             SettingsManager.Current.IPScanner_ResolveHostname,
             SettingsManager.Current.IPScanner_PortScanEnabled,
             SettingsManager.Current.IPScanner_NetBIOSEnabled,
-            SettingsManager.Current.IPScanner_ResolveMACAddress);
+            SettingsManager.Current.IPScanner_ResolveMACAddress,
+            SettingsManager.Current.IPScanner_MDNSEnabled,
+            SettingsManager.Current.IPScanner_WebPageEnabled,
+            SettingsManager.Current.IPScanner_SNMPEnabled);
     }
 
     /// <summary>
@@ -946,6 +1079,44 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         IsCanceling = true;
         _cancellationTokenSource.Cancel();
+    }
+
+    /// <summary>
+    /// Loads the subnets of the local network interfaces into <see cref="LocalSubnets"/>.
+    /// </summary>
+    private async Task LoadLocalSubnets()
+    {
+        var loadId = ++_localSubnetsLoadId;
+
+        try
+        {
+            var subnets = NetworkInterface.GetLocalSubnets(await NetworkInterface.GetNetworkInterfacesAsync());
+
+            // Menu opened again in the meantime - the newer load updates the list
+            if (loadId != _localSubnetsLoadId)
+                return;
+
+            LocalSubnets.Clear();
+
+            foreach (var subnet in subnets)
+                LocalSubnets.Add(subnet);
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while loading the subnets of the local network interfaces", ex);
+        }
+    }
+
+    /// <summary>
+    /// Sets the host to a detected / selected subnet.
+    /// </summary>
+    /// <param name="subnet">Subnet(s) to scan.</param>
+    private void SetHostFromSubnetDetection(string subnet)
+    {
+        Host = subnet;
+
+        // Fix: If the user clears the TextBox and then clicks again on the button, the TextBox remains empty...
+        OnPropertyChanged(nameof(Host));
     }
 
     /// <summary>
@@ -1110,7 +1281,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                         : GetSelectedResultsInGridOrder())
                     .Select(x => x.Clone()).ToList();
 
-                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
+                // Options of the shown scan (values of disabled probes are exported as empty values)
+                var options = ScanOptions;
+
+                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results, options));
             }
             catch (Exception ex)
             {
@@ -1387,6 +1561,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             {
                 foreach (var (row, snapshot) in _rescanSnapshots)
                     row.CopyFrom(snapshot);
+            }
+
+            // Canceled / failed: results of running lookups never arrive - no "..." for them (and Copy works)
+            if (e.IsCanceled || e.Exception != null)
+            {
+                foreach (var host in Results)
+                    host.EndPendingLookups();
             }
 
             FlushProgress();

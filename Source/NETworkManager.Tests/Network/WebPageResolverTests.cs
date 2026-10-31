@@ -1,0 +1,129 @@
+﻿using System.Text;
+using NETworkManager.Models.Network;
+using Xunit;
+
+namespace NETworkManager.Tests.Network;
+
+public class WebPageResolverTests
+{
+    [Theory]
+    [InlineData("<html><head><title>Router Login</title></head></html>", "Router Login")]
+    [InlineData("<TITLE>Upper case</TITLE>", "Upper case")]
+    [InlineData("<title id=\"t\">With attribute</title>", "With attribute")]
+    [InlineData("<title>\r\n   Multi\r\n   line  \r\n</title>", "Multi line")]
+    [InlineData("<title>Tom &amp; Jerry &#8211; &quot;NAS&quot;</title>", "Tom & Jerry – \"NAS\"")]
+    [InlineData("<title>First</title><title>Second</title>", "First")]
+    [InlineData("<html><body>No title</body></html>", "")]
+    [InlineData("<title>Not closed", "")]
+    [InlineData("", "")]
+    [InlineData(null, "")]
+    public void ParseTitle(string html, string expected)
+    {
+        Assert.Equal(expected, WebPageResolver.ParseTitle(html));
+    }
+
+    [Fact]
+    public void ParseTitle_TooLong_Shortened()
+    {
+        var title = WebPageResolver.ParseTitle($"<title>{new string('a', 500)}</title>");
+
+        Assert.Equal(new string('a', 200) + "...", title);
+    }
+
+    [Theory]
+    [InlineData("nginx/1.24.0", "nginx/1.24.0")]
+    [InlineData("  lighttpd   1.4 ", "lighttpd 1.4")]
+    [InlineData("PHP/8.2\r\nX-Injected: 1", "PHP/8.2X-Injected: 1")]
+    [InlineData("", "")]
+    [InlineData(null, "")]
+    public void CleanHeaderValue(string value, string expected)
+    {
+        Assert.Equal(expected, WebPageResolver.CleanHeaderValue(value));
+    }
+
+    [Theory]
+    [InlineData(new[] { "Basic realm=\"RT-AC68U\"" }, "RT-AC68U")]
+    [InlineData(new[] { "Digest realm=\"IP Camera\", nonce=\"abc\", qop=\"auth\"" }, "IP Camera")]
+    [InlineData(new[] { "Basic Realm=NAS" }, "NAS")]
+    [InlineData(new[] { "Negotiate", "Basic realm=\"Printer\"" }, "Printer")]
+    [InlineData(new[] { "Basic realm=\"\"" }, "")]
+    [InlineData(new[] { "Bearer" }, "")]
+    [InlineData(new string[0], "")]
+    public void ParseRealm(string[] headerValues, string expected)
+    {
+        Assert.Equal(expected, WebPageResolver.ParseRealm(headerValues));
+    }
+
+    [Theory]
+    [InlineData(443, "https", 2000, 2000)]
+    [InlineData(8443, "https", 2000, 2000)]
+    [InlineData(9443, "https", 2000, 1000)]
+    [InlineData(9443, "https", 500, 500)]
+    [InlineData(9443, "http", 2000, 2000)]
+    [InlineData(80, "http", 3000, 3000)]
+    public void GetTimeout(int port, string scheme, int timeout, int expected)
+    {
+        Assert.Equal(expected, WebPageResolver.GetTimeout(port, scheme, timeout));
+    }
+
+    [Theory]
+    [InlineData(80, new[] { "http" })]
+    [InlineData(8080, new[] { "http" })]
+    [InlineData(443, new[] { "https" })]
+    [InlineData(8443, new[] { "https" })]
+    [InlineData(9000, new[] { "https", "http" })]
+    public void GetSchemes(int port, string[] expected)
+    {
+        Assert.Equal(expected, WebPageResolver.GetSchemes(port));
+    }
+
+    [Fact]
+    public void Decode_DefaultUTF8()
+    {
+        Assert.Equal("<title>Grüße</title>",
+            WebPageResolver.Decode(Encoding.UTF8.GetBytes("<title>Grüße</title>"), null));
+    }
+
+    [Fact]
+    public void Decode_CharsetOfHeader()
+    {
+        Assert.Equal("<title>Grüße</title>",
+            WebPageResolver.Decode(Encoding.Latin1.GetBytes("<title>Grüße</title>"), "iso-8859-1"));
+    }
+
+    [Fact]
+    public void Decode_CharsetOfMetaTag()
+    {
+        const string html = "<meta charset=\"ISO-8859-1\"><title>Grüße</title>";
+
+        Assert.Equal(html, WebPageResolver.Decode(Encoding.Latin1.GetBytes(html), null));
+    }
+
+    [Fact]
+    public void Decode_CodePageCharset()
+    {
+        // "Büro-Drucker €" in windows-1252 (not built into .NET, registered by WebPageResolver)
+        byte[] content =
+            [.. Encoding.ASCII.GetBytes("<title>B"), 0xFC, .. Encoding.ASCII.GetBytes("ro-Drucker "), 0x80,
+             .. Encoding.ASCII.GetBytes("</title>")];
+
+        Assert.Equal("<title>Büro-Drucker €</title>", WebPageResolver.Decode(content, "windows-1252"));
+    }
+
+    [Fact]
+    public void Decode_CodePageCharsetOfMetaTag()
+    {
+        byte[] content =
+            [.. Encoding.ASCII.GetBytes("<meta charset=\"windows-1252\"><title>B"), 0xFC,
+             .. Encoding.ASCII.GetBytes("ro</title>")];
+
+        Assert.Equal("<meta charset=\"windows-1252\"><title>Büro</title>", WebPageResolver.Decode(content, null));
+    }
+
+    [Fact]
+    public void Decode_UnknownCharset_UTF8()
+    {
+        Assert.Equal("<title>Test</title>",
+            WebPageResolver.Decode(Encoding.UTF8.GetBytes("<title>Test</title>"), "unknown-charset"));
+    }
+}

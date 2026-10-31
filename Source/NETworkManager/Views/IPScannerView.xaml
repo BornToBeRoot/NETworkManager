@@ -21,9 +21,16 @@
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToStringConverter x:Key="BooleanToStringConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleansAndToVisibilityCollapsedConverter x:Key="BooleansAndToVisibilityCollapsedConverter" />
         <converters:BooleansOrToVisibilityCollapsedConverter x:Key="BooleansOrToVisibilityCollapsedConverter" />
         <converters:HostReachableToStringConverter x:Key="HostReachableToStringConverter" />
         <converters:HostUpStyleConverter x:Key="HostUpStyleConverter" />
+        <converters:IPScannerDetectionMethodToStringConverter x:Key="IPScannerDetectionMethodToStringConverter" />
+        <converters:IPScannerStatusToolTipConverter x:Key="IPScannerStatusToolTipConverter" />
+        <converters:SuccessStyleConverter x:Key="SuccessStyleConverter" />
+        <converters:WebCertificateToStringConverter x:Key="WebCertificateToStringConverter" />
+        <converters:IPScannerHostRoleToStringConverter x:Key="IPScannerHostRoleToStringConverter" />
+        <converters:IPScannerOSGuessToStringConverter x:Key="IPScannerOSGuessToStringConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
@@ -81,11 +88,16 @@
                         </Binding>
                     </ComboBox.Text>
                 </ComboBox>
-                <Button Grid.Column="4"
-                        Command="{Binding Path=DetectSubnetCommand}"
-                        ToolTip="{x:Static Member=localization:Strings.DetectLocalIPAddressAndSubnetmask}">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type TypeName=Button}" BasedOn="{StaticResource ResourceKey=ImageButton}">
+                <!-- Detect the local subnet (route to the internet), or select the subnet of a network interface -->
+                <mah:DropDownButton Grid.Column="4"
+                                    ToolTip="{x:Static Member=localization:Strings.DetectLocalIPAddressAndSubnetmask}"
+                                    IsExpanded="{Binding Path=IsLocalSubnetMenuOpen, Mode=OneWayToSource}">
+                    <mah:DropDownButton.Resources>
+                        <!-- The items of the submenu don't inherit the DataContext -->
+                        <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+                    </mah:DropDownButton.Resources>
+                    <mah:DropDownButton.Style>
+                        <Style TargetType="{x:Type mah:DropDownButton}" BasedOn="{StaticResource ImageDropDrownButton}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Path=IsRunning}" Value="True">
                                     <Setter Property="IsEnabled" Value="False" />
@@ -95,13 +107,36 @@
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
-                    </Button.Resources>
-                    <Rectangle Width="20" Height="20" Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                </Button>
+                    </mah:DropDownButton.Style>
+                    <mah:DropDownButton.Content>
+                        <!-- Space to the border and to the arrow of the drop-down -->
+                        <Rectangle Width="20" Height="20" Margin="10,0,10,0"
+                                   Fill="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:Modern Kind=Network}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </mah:DropDownButton.Content>
+                    <mah:DropDownButton.Items>
+                        <MenuItem Header="{x:Static localization:Strings.DetectLocalSubnet}"
+                                  Command="{Binding Path=DetectSubnetCommand}" />
+                        <MenuItem Header="{x:Static localization:Strings.SubnetOfNetworkInterface}"
+                                  ItemsSource="{Binding Path=LocalSubnets}"
+                                  DisplayMemberPath="DisplayName"
+                                  Visibility="{Binding Path=LocalSubnets.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
+                            <MenuItem.ItemContainerStyle>
+                                <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource DefaultMenuItem}">
+                                    <Setter Property="Command"
+                                            Value="{Binding Path=Data.UseLocalSubnetCommand, Source={StaticResource BindingProxy}}" />
+                                    <Setter Property="CommandParameter" Value="{Binding}" />
+                                </Style>
+                            </MenuItem.ItemContainerStyle>
+                        </MenuItem>
+                        <MenuItem Header="{x:Static localization:Strings.AllLocalSubnets}"
+                                  Command="{Binding Path=UseAllLocalSubnetsCommand}"
+                                  Visibility="{Binding Path=LocalSubnets.Count, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}" />
+                    </mah:DropDownButton.Items>
+                </mah:DropDownButton>
                 <Button Grid.Column="6" Grid.Row="0"
                         Command="{Binding ScanCommand}"
                         IsDefault="{Binding IsRunning, Converter={StaticResource BooleanReverseConverter}}"
@@ -492,14 +527,22 @@
                         <MenuItem Header="{x:Static localization:Strings.Hostname}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.Hostname}"
+                                  IsEnabled="{Binding Path=SelectedResult.IsHostnamePending, Converter={StaticResource BooleanReverseConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}">
                             <MenuItem.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
                                     <Binding Path="ScanOptions.ResolveHostname" />
                                     <Binding Path="ScanOptions.NetBIOSEnabled" />
+                                    <Binding Path="ScanOptions.MDNSEnabled" />
                                 </MultiBinding>
                             </MenuItem.Visibility>
                         </MenuItem>
+                        <MenuItem Header="{x:Static localization:Strings.MDNSHostname}"
+                                  Command="{Binding CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.MDNSHostname}"
+                                  IsEnabled="{Binding Path=SelectedResult.IsMDNSPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.MDNSEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.PortStatus}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.IsAnyPortOpen, Converter={StaticResource PortOpenToStringConverter}}"
@@ -510,10 +553,12 @@
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.Status, Converter={StaticResource IPStatusToStringConverter}}"
                                   IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.ICMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.MACAddress}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.MACAddress}"
+                                  IsEnabled="{Binding Path=SelectedResult.IsMACAddressPending, Converter={StaticResource BooleanReverseConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}">
                             <MenuItem.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
@@ -525,6 +570,7 @@
                         <MenuItem Header="{x:Static localization:Strings.Vendor}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.Vendor}"
+                                  IsEnabled="{Binding Path=SelectedResult.IsMACAddressPending, Converter={StaticResource BooleanReverseConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}">
                             <MenuItem.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
@@ -542,22 +588,85 @@
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.Timestamp}"
                                   IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.ICMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.Time}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.Time}"
                                   IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.ICMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.TTL}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.TTL}"
                                   IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.ICMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <MenuItem Header="{x:Static localization:Strings.OSGuess}"
+                                  Command="{Binding CopyDataToClipboardCommand}"
+                                  IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}">
+                            <MenuItem.CommandParameter>
+                                <MultiBinding Converter="{StaticResource IPScannerOSGuessToStringConverter}">
+                                    <Binding Path="SelectedResult.OSGuess" />
+                                    <Binding Path="SelectedResult.OSGuessHops" />
+                                </MultiBinding>
+                            </MenuItem.CommandParameter>
+                            <MenuItem.Visibility>
+                                <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                    <Binding Path="ScanOptions.ICMPEnabled" />
+                                    <Binding Path="ScanOptions.OSGuessEnabled" />
+                                </MultiBinding>
+                            </MenuItem.Visibility>
+                        </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Bytes}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.Bytes}"
                                   IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.ICMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <!-- Values of the optional requests, if enabled for the shown scan -->
+                        <MenuItem Header="{x:Static localization:Strings.Web}">
+                            <MenuItem.Visibility>
+                                <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                    <Binding Path="ScanOptions.PortScanEnabled" />
+                                    <Binding Path="ScanOptions.WebPageEnabled" />
+                                </MultiBinding>
+                            </MenuItem.Visibility>
+                            <MenuItem Header="{x:Static localization:Strings.Title}"
+                                      Command="{Binding CopyDataToClipboardCommand}"
+                                      CommandParameter="{Binding Path=SelectedResult.WebTitle}"
+                                      IsEnabled="{Binding Path=SelectedResult.IsWebPagePending, Converter={StaticResource BooleanReverseConverter}}"
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                            <MenuItem Header="{x:Static localization:Strings.URL}"
+                                      Command="{Binding CopyDataToClipboardCommand}"
+                                      CommandParameter="{Binding Path=SelectedResult.WebURL}"
+                                      IsEnabled="{Binding Path=SelectedResult.IsWebPagePending, Converter={StaticResource BooleanReverseConverter}}"
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                            <MenuItem Header="{x:Static localization:Strings.Server}"
+                                      Command="{Binding CopyDataToClipboardCommand}"
+                                      CommandParameter="{Binding Path=SelectedResult.WebServer}"
+                                      IsEnabled="{Binding Path=SelectedResult.IsWebPagePending, Converter={StaticResource BooleanReverseConverter}}"
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        </MenuItem>
+                        <MenuItem Header="{x:Static localization:Strings.SNMP}"
+                                  Visibility="{Binding Path=ScanOptions.SNMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                            <MenuItem Header="{x:Static localization:Strings.Name}"
+                                      Command="{Binding CopyDataToClipboardCommand}"
+                                      CommandParameter="{Binding Path=SelectedResult.SNMPName}"
+                                      IsEnabled="{Binding Path=SelectedResult.IsSNMPPending, Converter={StaticResource BooleanReverseConverter}}"
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                            <MenuItem Header="{x:Static localization:Strings.Description}"
+                                      Command="{Binding CopyDataToClipboardCommand}"
+                                      CommandParameter="{Binding Path=SelectedResult.SNMPDescription}"
+                                      IsEnabled="{Binding Path=SelectedResult.IsSNMPPending, Converter={StaticResource BooleanReverseConverter}}"
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                            <MenuItem Header="{x:Static localization:Strings.SNMPLocation}"
+                                      Command="{Binding CopyDataToClipboardCommand}"
+                                      CommandParameter="{Binding Path=SelectedResult.SNMPLocation}"
+                                      IsEnabled="{Binding Path=SelectedResult.IsSNMPPending, Converter={StaticResource BooleanReverseConverter}}"
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        </MenuItem>
                     </MenuItem>
                     <MenuItem Header="{x:Static localization:Strings.ExportDots}" Command="{Binding ExportCommand}">
                         <MenuItem.Icon>
@@ -602,6 +711,7 @@
                                 <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
                                     <Binding Path="ScanOptions.ResolveHostname" />
                                     <Binding Path="ScanOptions.NetBIOSEnabled" />
+                                    <Binding Path="ScanOptions.MDNSEnabled" />
                                 </MultiBinding>
                             </MenuItem.Visibility>
                         </MenuItem>
@@ -678,7 +788,69 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Rectangle Width="24" Height="24"
-                                       Style="{Binding IsReachable, Converter={StaticResource HostUpStyleConverter}}" />
+                                       Style="{Binding IsReachable, Converter={StaticResource HostUpStyleConverter}}"
+                                       ToolTip="{Binding DetectedBy, Converter={StaticResource IPScannerDetectionMethodToStringConverter}, ConverterParameter=Status}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!-- Role of the host for the local computer (e.g. default gateway), all roles in the tooltip -->
+                <DataGridTemplateColumn Header=""
+                                        SortMemberPath="Role"
+                                        CanUserResize="False"
+                                        MinWidth="26">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="20" Height="20"
+                                       Fill="{DynamicResource MahApps.Brushes.Gray3}"
+                                       ToolTip="{Binding Role, Converter={StaticResource IPScannerHostRoleToStringConverter}}">
+                                <Rectangle.Style>
+                                    <Style TargetType="{x:Type Rectangle}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PrimaryRole}"
+                                                     Value="{x:Static network:IPScannerHostRole.LocalComputer}">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Setter Property="OpacityMask">
+                                                <Setter.Value>
+                                                    <VisualBrush Stretch="Uniform"
+                                                                 Visual="{iconPacks:Material Kind=Monitor}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding PrimaryRole}"
+                                                     Value="{x:Static network:IPScannerHostRole.DefaultGateway}">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Setter Property="OpacityMask">
+                                                <Setter.Value>
+                                                    <VisualBrush Stretch="Uniform"
+                                                                 Visual="{iconPacks:Material Kind=RouterNetwork}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding PrimaryRole}"
+                                                     Value="{x:Static network:IPScannerHostRole.DNSServer}">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Setter Property="OpacityMask">
+                                                <Setter.Value>
+                                                    <VisualBrush Stretch="Uniform"
+                                                                 Visual="{iconPacks:Material Kind=Dns}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding PrimaryRole}"
+                                                     Value="{x:Static network:IPScannerHostRole.DHCPServer}">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Setter Property="OpacityMask">
+                                                <Setter.Value>
+                                                    <VisualBrush Stretch="Uniform"
+                                                                 Visual="{iconPacks:Material Kind=IpNetwork}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -687,30 +859,46 @@
                                     SortMemberPath="PingInfo.IPAddress"
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}"
-                                    Binding="{Binding Hostname, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
                                     SortMemberPath="Hostname"
                                     MinWidth="150">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
+                            <Binding Path="IsHostnamePending" />
+                            <Binding Path="Hostname" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
                     <DataGridTextColumn.Visibility>
                         <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
                             <Binding Source="{StaticResource BindingProxy}"
                                      Path="Data.ScanOptions.ResolveHostname" />
                             <Binding Source="{StaticResource BindingProxy}"
                                      Path="Data.ScanOptions.NetBIOSEnabled" />
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.ScanOptions.MDNSEnabled" />
                         </MultiBinding>
                     </DataGridTextColumn.Visibility>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.PingStatus}"
-                                    SortMemberPath="PingInfo.Status"
-                                    MinWidth="150">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
-                            <Binding Path="IsPingPending" />
-                            <Binding Path="PingInfo.Status" Converter="{StaticResource ResourceKey=IPStatusToStringConverter}" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
+                <!-- Status icon ("..." while running), details in the tooltip -->
+                <DataGridTemplateColumn Header="{x:Static localization:Strings.PingStatus}"
+                                        SortMemberPath="PingInfo.Status"
+                                        Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                        MinWidth="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock Text="..." VerticalAlignment="Center"
+                                           Visibility="{Binding IsPingPending, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <Rectangle Width="16" Height="16" HorizontalAlignment="Left"
+                                           Style="{Binding DetectedBy, ConverterParameter=ICMP, Converter={StaticResource SuccessStyleConverter}}"
+                                           ToolTip="{Binding PingInfo, Converter={StaticResource IPScannerStatusToolTipConverter}}"
+                                           Visibility="{Binding IsPingPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Time}"
                                     SortMemberPath="PingInfo.Time"
+                                    Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="100">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
@@ -720,32 +908,159 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.PortStatus}"
-                                    SortMemberPath="IsAnyPortOpen"
-                                    Visibility="{Binding Path=Data.ScanOptions.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                <!-- Icon + text ("..." while the ping is running), hops in the tooltip -->
+                <DataGridTemplateColumn Header="{x:Static localization:Strings.OSGuess}"
+                                        SortMemberPath="OSGuess"
+                                        MinWidth="150">
+                    <DataGridTemplateColumn.Visibility>
+                        <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.ScanOptions.ICMPEnabled" />
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.ScanOptions.OSGuessEnabled" />
+                        </MultiBinding>
+                    </DataGridTemplateColumn.Visibility>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Background="Transparent">
+                                <StackPanel.ToolTip>
+                                    <MultiBinding Converter="{StaticResource IPScannerOSGuessToStringConverter}"
+                                                  ConverterParameter="ToolTip">
+                                        <Binding Path="OSGuess" />
+                                        <Binding Path="OSGuessHops" />
+                                    </MultiBinding>
+                                </StackPanel.ToolTip>
+                                <Rectangle x:Name="OSGuessIcon" Width="16" Height="16" Margin="0,0,5,0"
+                                           Fill="{DynamicResource MahApps.Brushes.Gray3}"
+                                           Visibility="Collapsed" />
+                                <TextBlock VerticalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource IPScannerOSGuessToStringConverter}">
+                                            <Binding Path="OSGuess" />
+                                            <Binding Path="OSGuessHops" />
+                                            <Binding Path="IsPingPending" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding OSGuess}"
+                                             Value="{x:Static network:IPScannerOSGuess.Windows}">
+                                    <Setter TargetName="OSGuessIcon" Property="Visibility" Value="Visible" />
+                                    <Setter TargetName="OSGuessIcon" Property="OpacityMask">
+                                        <Setter.Value>
+                                            <VisualBrush Stretch="Uniform"
+                                                         Visual="{iconPacks:Material Kind=MicrosoftWindows}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding OSGuess}"
+                                             Value="{x:Static network:IPScannerOSGuess.LinuxUnix}">
+                                    <Setter TargetName="OSGuessIcon" Property="Visibility" Value="Visible" />
+                                    <Setter TargetName="OSGuessIcon" Property="OpacityMask">
+                                        <Setter.Value>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Console}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding OSGuess}"
+                                             Value="{x:Static network:IPScannerOSGuess.NetworkDevice}">
+                                    <Setter TargetName="OSGuessIcon" Property="Visibility" Value="Visible" />
+                                    <Setter TargetName="OSGuessIcon" Property="OpacityMask">
+                                        <Setter.Value>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Switch}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!-- Status icon ("..." while running), details in the tooltip -->
+                <DataGridTemplateColumn Header="{x:Static localization:Strings.PortStatus}"
+                                        SortMemberPath="IsAnyPortOpen"
+                                        Visibility="{Binding Path=Data.ScanOptions.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                        MinWidth="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock Text="..." VerticalAlignment="Center"
+                                           Visibility="{Binding IsPortScanPending, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <Rectangle Width="16" Height="16" HorizontalAlignment="Left"
+                                           Style="{Binding IsAnyPortOpen, Converter={StaticResource SuccessStyleConverter}}"
+                                           ToolTip="{Binding Ports, Converter={StaticResource IPScannerStatusToolTipConverter}}"
+                                           Visibility="{Binding IsPortScanPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="{x:Static localization:Strings.Web}"
+                                    SortMemberPath="WebSummary"
                                     MinWidth="150">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource PendingToStringConverter}">
-                            <Binding Path="IsPortScanPending" />
-                            <Binding Path="IsAnyPortOpen" Converter="{StaticResource ResourceKey=PortOpenToStringConverter}" />
+                            <Binding Path="IsWebPagePending" />
+                            <Binding Path="WebSummary" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
+                    <DataGridTextColumn.Visibility>
+                        <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.ScanOptions.PortScanEnabled" />
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.ScanOptions.WebPageEnabled" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Visibility>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="ToolTip" Value="{Binding WebURL}" />
+                            <Style.Triggers>
+                                <!-- No empty tooltip -->
+                                <DataTrigger Binding="{Binding WebURL}" Value="">
+                                    <Setter Property="ToolTip" Value="{x:Null}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.NetBIOSReachable}"
-                                    SortMemberPath="NetBIOSInfo.IsReachable"
-                                    Visibility="{Binding Path=Data.ScanOptions.NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.SNMPName}"
+                                    SortMemberPath="SNMPName"
+                                    Visibility="{Binding Path=Data.ScanOptions.SNMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="150">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource PendingToStringConverter}">
-                            <Binding Path="IsNetBIOSPending" />
-                            <Binding Path="NetBIOSInfo.IsReachable" Converter="{StaticResource ResourceKey=BooleanToStringConverter}" />
+                            <Binding Path="IsSNMPPending" />
+                            <Binding Path="SNMPName" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
+                <!-- Status icon ("..." while running), details in the tooltip -->
+                <DataGridTemplateColumn Header="{x:Static localization:Strings.NetBIOSReachable}"
+                                        SortMemberPath="NetBIOSInfo.IsReachable"
+                                        Visibility="{Binding Path=Data.ScanOptions.NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                        MinWidth="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock Text="..." VerticalAlignment="Center"
+                                           Visibility="{Binding IsNetBIOSPending, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                                <Rectangle Width="16" Height="16" HorizontalAlignment="Left"
+                                           Style="{Binding NetBIOSInfo.IsReachable, Converter={StaticResource SuccessStyleConverter}}"
+                                           ToolTip="{Binding NetBIOSInfo, Converter={StaticResource IPScannerStatusToolTipConverter}}"
+                                           Visibility="{Binding IsNetBIOSPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}"
-                                    Binding="{Binding MACAddress, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
                                     SortMemberPath="MACAddress"
                                     MinWidth="150">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
+                            <Binding Path="IsMACAddressPending" />
+                            <Binding Path="MACAddress" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
                     <DataGridTextColumn.Visibility>
                         <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
                             <Binding Source="{StaticResource BindingProxy}"
@@ -756,9 +1071,14 @@
                     </DataGridTextColumn.Visibility>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Vendor}"
-                                    Binding="{Binding Vendor, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
                                     SortMemberPath="Vendor"
                                     MinWidth="200">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
+                            <Binding Path="IsMACAddressPending" />
+                            <Binding Path="Vendor" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
                     <DataGridTextColumn.Visibility>
                         <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
                             <Binding Source="{StaticResource BindingProxy}"
@@ -785,10 +1105,18 @@
                             </Style>
                         </Border.Style>
                         <Grid Margin="20">
+                            <!-- Ping / hostnames | ports | web | NetBIOS / SNMP -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="10" />
                                 <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="10" />
                                 <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
@@ -801,106 +1129,146 @@
                                 </Style>
                             </Grid.Resources>
                             <!-- Ping -->
-                            <Grid Grid.Column="0">
+                            <Grid Grid.Row="0" Grid.Column="0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0"
-                                           Text="{x:Static localization:Strings.PingDetails}"
-                                           Style="{StaticResource BoldTextBlock}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
-                                <!-- Hidden while the ping is still running (placeholder values) -->
-                                <ListView Grid.Row="2"
-                                          Background="Transparent"
-                                          Visibility="{Binding Path=IsPingPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
-                                    <ListView.ItemContainerStyle>
-                                        <Style TargetType="{x:Type ListViewItem}"
-                                               BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
-                                            <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
-                                            <Setter Property="Background" Value="Transparent" />
-                                        </Style>
-                                    </ListView.ItemContainerStyle>
-                                    <ListView.Template>
-                                        <ControlTemplate>
-                                            <ItemsPresenter />
-                                        </ControlTemplate>
-                                    </ListView.Template>
-                                    <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static Member=localization:Strings.Timestamp}" />
-                                            <TextBox Grid.Column="2"
-                                                     Text="{Binding Path=PingInfo.Timestamp}" />
-                                        </Grid>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.Time}" />
-                                            <TextBox Grid.Column="2">
-                                                <TextBox.Text>
-                                                    <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
-                                                        <Binding Path="PingInfo.Status" />
-                                                        <Binding Path="PingInfo.Time" />
-                                                    </MultiBinding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </Grid>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.TTL}" />
-                                            <TextBox Grid.Column="2"
-                                                     Text="{Binding PingInfo.TTL, Converter={StaticResource IntToStringConverter}}" />
-                                        </Grid>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition MinWidth="120" Width="Auto" />
-                                                <ColumnDefinition Width="10" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0"
-                                                       Text="{x:Static localization:Strings.Bytes}" />
-                                            <TextBox Grid.Column="2"
-                                                     Text="{Binding PingInfo.Bytes, Converter={StaticResource IntToStringConverter}}" />
-                                        </Grid>
-                                    </ListViewItem>
-                                </ListView>
+                                <!-- Same height in all sections (with or without status icon) -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
+                                    <TextBlock Text="{x:Static localization:Strings.PingDetails}"
+                                               Style="{StaticResource BoldTextBlock}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                               VerticalAlignment="Center" />
+                                    <!-- Status icon: the host answered the probe (not while it is running) -->
+                                    <Rectangle Width="16" Height="16" Margin="10,0,0,0" VerticalAlignment="Center"
+                                               Style="{Binding Path=DetectedBy, Converter={StaticResource SuccessStyleConverter}, ConverterParameter=ICMP}"
+                                               ToolTip="{Binding Path=DetectedBy, Converter={StaticResource IPScannerStatusToolTipConverter}, ConverterParameter=ICMP}">
+                                        <Rectangle.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                                <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.ICMPEnabled" />
+                                                <Binding Path="IsPingPending" Converter="{StaticResource BooleanReverseConverter}" />
+                                            </MultiBinding>
+                                        </Rectangle.Visibility>
+                                    </Rectangle>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2"
+                                            VerticalAlignment="Top"
+                                            Orientation="Horizontal"
+                                            Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                                    <Rectangle Width="16" Height="16"
+                                               Style="{StaticResource InfoImageRectangle}" />
+                                    <TextBlock Text="{x:Static localization:Strings.PingIsDisabled}"
+                                               Style="{StaticResource InfoTextBlock}"
+                                               Margin="10,0,0,0" />
+                                </StackPanel>
+                                <Grid Grid.Row="2"
+                                      Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                    <!-- Hidden while the ping is still running (placeholder values) -->
+                                    <ListView Background="Transparent"
+                                              Visibility="{Binding Path=IsPingPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}">
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="{x:Type ListViewItem}"
+                                                   BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                                <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                                <Setter Property="Background" Value="Transparent" />
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                        <ListView.Template>
+                                            <ControlTemplate>
+                                                <ItemsPresenter />
+                                            </ControlTemplate>
+                                        </ListView.Template>
+                                        <ListViewItem>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{x:Static Member=localization:Strings.Timestamp}" />
+                                                <TextBox Grid.Column="2"
+                                                         Text="{Binding Path=PingInfo.Timestamp}" />
+                                            </Grid>
+                                        </ListViewItem>
+                                        <ListViewItem>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{x:Static localization:Strings.Time}" />
+                                                <TextBox Grid.Column="2">
+                                                    <TextBox.Text>
+                                                        <MultiBinding Converter="{StaticResource PingTimeToStringConverter}">
+                                                            <Binding Path="PingInfo.Status" />
+                                                            <Binding Path="PingInfo.Time" />
+                                                        </MultiBinding>
+                                                    </TextBox.Text>
+                                                </TextBox>
+                                            </Grid>
+                                        </ListViewItem>
+                                        <ListViewItem>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{x:Static localization:Strings.TTL}" />
+                                                <TextBox Grid.Column="2"
+                                                         Text="{Binding PingInfo.TTL, Converter={StaticResource IntToStringConverter}}" />
+                                            </Grid>
+                                        </ListViewItem>
+                                        <ListViewItem>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{x:Static localization:Strings.Bytes}" />
+                                                <TextBox Grid.Column="2"
+                                                         Text="{Binding PingInfo.Bytes, Converter={StaticResource IntToStringConverter}}" />
+                                            </Grid>
+                                        </ListViewItem>
+                                    </ListView>
+                                </Grid>
                             </Grid>
                             <!-- Ports -->
-                            <Grid Grid.Column="2">
+                            <Grid Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0"
-                                           Text="{x:Static localization:Strings.Ports}"
-                                           Style="{StaticResource BoldTextBlock}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <!-- Same height in all sections (with or without status icon) -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
+                                    <TextBlock Text="{x:Static localization:Strings.Ports}"
+                                               Style="{StaticResource BoldTextBlock}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                               VerticalAlignment="Center" />
+                                    <!-- Status icon: the host answered the probe (not while it is running) -->
+                                    <Rectangle Width="16" Height="16" Margin="10,0,0,0" VerticalAlignment="Center"
+                                               Style="{Binding Path=DetectedBy, Converter={StaticResource SuccessStyleConverter}, ConverterParameter=TCP}"
+                                               ToolTip="{Binding Path=DetectedBy, Converter={StaticResource IPScannerStatusToolTipConverter}, ConverterParameter=TCP}">
+                                        <Rectangle.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                                <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.PortScanEnabled" />
+                                                <Binding Path="IsPortScanPending" Converter="{StaticResource BooleanReverseConverter}" />
+                                            </MultiBinding>
+                                        </Rectangle.Visibility>
+                                    </Rectangle>
+                                </StackPanel>
                                 <StackPanel Grid.Row="2"
                                             VerticalAlignment="Top"
                                             Orientation="Horizontal"
@@ -975,16 +1343,30 @@
                                 </Grid>
                             </Grid>
                             <!-- NetBIOS -->
-                            <Grid Grid.Column="4">
+                            <Grid Grid.Row="0" Grid.Column="6">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0"
-                                           Text="{x:Static localization:Strings.NetBIOS}"
-                                           Style="{StaticResource BoldTextBlock}"
-                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
+                                <!-- Same height in all sections (with or without status icon) -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
+                                    <TextBlock Text="{x:Static localization:Strings.NetBIOS}"
+                                               Style="{StaticResource BoldTextBlock}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                               VerticalAlignment="Center" />
+                                    <!-- Status icon: the host answered the probe (not while it is running) -->
+                                    <Rectangle Width="16" Height="16" Margin="10,0,0,0" VerticalAlignment="Center"
+                                               Style="{Binding Path=DetectedBy, Converter={StaticResource SuccessStyleConverter}, ConverterParameter=NetBIOS}"
+                                               ToolTip="{Binding Path=DetectedBy, Converter={StaticResource IPScannerStatusToolTipConverter}, ConverterParameter=NetBIOS}">
+                                        <Rectangle.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                                <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.NetBIOSEnabled" />
+                                                <Binding Path="IsNetBIOSPending" Converter="{StaticResource BooleanReverseConverter}" />
+                                            </MultiBinding>
+                                        </Rectangle.Visibility>
+                                    </Rectangle>
+                                </StackPanel>
                                 <StackPanel Grid.Row="2"
                                             VerticalAlignment="Top"
                                             Orientation="Horizontal"
@@ -1056,6 +1438,474 @@
                                         </ListViewItem>
                                     </ListView>
                                 </Grid>
+                            </Grid>
+                            <!-- Hostnames of the sources (the column shows the first one: DNS, mDNS, NetBIOS) -->
+                            <Grid Grid.Row="2" Grid.Column="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <!-- Same height in all sections (with or without status icon) -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
+                                    <TextBlock Text="{x:Static localization:Strings.Hostnames}"
+                                               Style="{StaticResource BoldTextBlock}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="2"
+                                            VerticalAlignment="Top"
+                                            Orientation="Horizontal">
+                                    <StackPanel.Style>
+                                        <Style TargetType="{x:Type StackPanel}">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=Data.ScanOptions.ResolveHostname, Source={StaticResource BindingProxy}}" Value="False" />
+                                                        <Condition Binding="{Binding Path=Data.ScanOptions.MDNSEnabled, Source={StaticResource BindingProxy}}" Value="False" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
+                                    <Rectangle Width="16" Height="16"
+                                               Style="{StaticResource InfoImageRectangle}" />
+                                    <TextBlock Text="{x:Static localization:Strings.HostnameResolutionIsDisabled}"
+                                               Style="{StaticResource InfoTextBlock}"
+                                               Margin="10,0,0,0" />
+                                </StackPanel>
+                                <ListView Grid.Row="2" Background="Transparent"
+                                          >
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListViewItem}"
+                                               BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                            <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="Background" Value="Transparent" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.Template>
+                                        <ControlTemplate>
+                                            <ItemsPresenter />
+                                        </ControlTemplate>
+                                    </ListView.Template>
+                                    <ListViewItem
+                                                  Visibility="{Binding Path=Data.ScanOptions.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.DNS}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsDNSPending" Mode="OneWay" />
+                                                        <Binding Path="DNSHostname" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem
+                                                  Visibility="{Binding Path=Data.ScanOptions.MDNSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.MDNS}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsMDNSPending" Mode="OneWay" />
+                                                        <Binding Path="MDNSHostname" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                </ListView>
+                            </Grid>
+                            <!-- Web page (the column shows the title or the Server header) -->
+                            <Grid Grid.Row="0" Grid.Column="4" Grid.RowSpan="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <!-- Same height in all sections (with or without status icon) -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
+                                    <TextBlock Text="{x:Static localization:Strings.Web}"
+                                               Style="{StaticResource BoldTextBlock}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="2"
+                                            VerticalAlignment="Top"
+                                            Orientation="Horizontal"
+                                            Visibility="{Binding Path=Data.ScanOptions.WebPageEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                                    <Rectangle Width="16" Height="16"
+                                               Style="{StaticResource InfoImageRectangle}" />
+                                    <TextBlock Text="{x:Static localization:Strings.ReadingWebPagesIsDisabled}"
+                                               Style="{StaticResource InfoTextBlock}"
+                                               Margin="10,0,0,0" />
+                                </StackPanel>
+                                <ListView Grid.Row="2" Background="Transparent"
+                                          Visibility="{Binding Path=Data.ScanOptions.WebPageEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListViewItem}"
+                                               BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                            <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="Background" Value="Transparent" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.Template>
+                                        <ControlTemplate>
+                                            <ItemsPresenter />
+                                        </ControlTemplate>
+                                    </ListView.Template>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.URL}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
+                                                        <Binding Path="WebURL" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.StatusCode}" />
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
+                                                        <Binding Path="WebStatusCode" Mode="OneWay"
+                                                                 Converter="{StaticResource IntToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Title}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2"
+                                                     TextWrapping="Wrap">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
+                                                        <Binding Path="WebTitle" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Server}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
+                                                        <Binding Path="WebServer" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.XPoweredBy}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
+                                                        <Binding Path="WebPoweredBy" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Realm}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
+                                                        <Binding Path="WebRealm" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.RedirectTo}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
+                                                        <Binding Path="WebRedirectURL" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Certificate}" />
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
+                                                        <Binding Path="WebCertificate" Mode="OneWay"
+                                                                 Converter="{StaticResource WebCertificateToStringConverter}" ConverterParameter="Subject" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Issuer}" />
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
+                                                        <Binding Path="WebCertificate" Mode="OneWay"
+                                                                 Converter="{StaticResource WebCertificateToStringConverter}" ConverterParameter="Issuer" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.ValidUntil}" />
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWebPagePending" Mode="OneWay" />
+                                                        <Binding Path="WebCertificate" Mode="OneWay"
+                                                                 Converter="{StaticResource WebCertificateToStringConverter}" ConverterParameter="NotAfter" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                </ListView>
+                            </Grid>
+                            <!-- SNMP system information (the column shows the name) -->
+                            <Grid Grid.Row="2" Grid.Column="6">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <!-- Same height in all sections (with or without status icon) -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
+                                    <TextBlock Text="{x:Static localization:Strings.SNMP}"
+                                               Style="{StaticResource BoldTextBlock}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                               VerticalAlignment="Center" />
+                                    <!-- Status icon: the host answered the probe (not while it is running) -->
+                                    <Rectangle Width="16" Height="16" Margin="10,0,0,0" VerticalAlignment="Center"
+                                               Style="{Binding Path=DetectedBy, Converter={StaticResource SuccessStyleConverter}, ConverterParameter=SNMP}"
+                                               ToolTip="{Binding Path=DetectedBy, Converter={StaticResource IPScannerStatusToolTipConverter}, ConverterParameter=SNMP}">
+                                        <Rectangle.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                                <Binding Source="{StaticResource BindingProxy}" Path="Data.ScanOptions.SNMPEnabled" />
+                                                <Binding Path="IsSNMPPending" Converter="{StaticResource BooleanReverseConverter}" />
+                                            </MultiBinding>
+                                        </Rectangle.Visibility>
+                                    </Rectangle>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2"
+                                            VerticalAlignment="Top"
+                                            Orientation="Horizontal"
+                                            Visibility="{Binding Path=Data.ScanOptions.SNMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                                    <Rectangle Width="16" Height="16"
+                                               Style="{StaticResource InfoImageRectangle}" />
+                                    <TextBlock Text="{x:Static localization:Strings.SNMPIsDisabled}"
+                                               Style="{StaticResource InfoTextBlock}"
+                                               Margin="10,0,0,0" />
+                                </StackPanel>
+                                <ListView Grid.Row="2" Background="Transparent"
+                                          Visibility="{Binding Path=Data.ScanOptions.SNMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListViewItem}"
+                                               BasedOn="{StaticResource MahApps.Styles.ListViewItem}">
+                                            <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="Transparent" />
+                                            <Setter Property="Background" Value="Transparent" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.Template>
+                                        <ControlTemplate>
+                                            <ItemsPresenter />
+                                        </ControlTemplate>
+                                    </ListView.Template>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Name}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsSNMPPending" Mode="OneWay" />
+                                                        <Binding Path="SNMPName" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.Description}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2"
+                                                     TextWrapping="Wrap">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsSNMPPending" Mode="OneWay" />
+                                                        <Binding Path="SNMPDescription" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition MinWidth="120" Width="Auto" />
+                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{x:Static localization:Strings.SNMPLocation}" />
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox Grid.Column="2">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsSNMPPending" Mode="OneWay" />
+                                                        <Binding Path="SNMPLocation" Mode="OneWay"
+                                                                 Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </Grid>
+                                    </ListViewItem>
+                                </ListView>
                             </Grid>
                         </Grid>
                     </Border>

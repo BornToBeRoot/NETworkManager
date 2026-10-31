@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
+using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.RunCommand;
@@ -53,13 +54,16 @@ public static class RunCommandTarget
         if (RegexHelper.ASNumberWithPrefixRegex().IsMatch(target))
             return RunCommandTargetKind.ASN;
 
-        // Several hosts, IP ranges or subnets
+        // Several hosts, IP ranges or subnets, optionally with exclusions (e.g. "10.0.0.0/24;!10.0.0.1")
         if (target.Contains(';'))
         {
-            var kinds = target.Split(';', StringSplitOptions.RemoveEmptyEntries).Select(GetKind).ToList();
+            var entries = target.Split(';', StringSplitOptions.RemoveEmptyEntries);
 
-            if (kinds.Count == 0 || kinds.Any(x => x is not (RunCommandTargetKind.Host or RunCommandTargetKind.Hostname
-                    or RunCommandTargetKind.IPRange or RunCommandTargetKind.Subnet)))
+            var kinds = entries.Where(x => !HostRangeHelper.IsExclusion(x)).Select(GetKind).ToList();
+            var exclusionKinds = entries.Where(HostRangeHelper.IsExclusion).Select(x => GetKind(x[1..])).ToList();
+
+            if (kinds.Count == 0 || kinds.Concat(exclusionKinds).Any(x => x is not (RunCommandTargetKind.Host
+                    or RunCommandTargetKind.Hostname or RunCommandTargetKind.IPRange or RunCommandTargetKind.Subnet)))
                 return RunCommandTargetKind.None;
 
             // Only host names without a domain (e.g. "foo;" or "a;b" from copied text) can also be any words, like a
@@ -67,8 +71,9 @@ public static class RunCommandTarget
             if (kinds.All(x => x == RunCommandTargetKind.Hostname))
                 return RunCommandTargetKind.None;
 
-            // With an IP range or subnet, it is a range for the scanners (e.g. not for a DNS lookup).
-            return kinds.Any(x => x is RunCommandTargetKind.IPRange or RunCommandTargetKind.Subnet)
+            // With an IP range, subnet or exclusion, it is a range for the scanners (e.g. not for a DNS lookup).
+            return exclusionKinds.Count > 0 ||
+                   kinds.Any(x => x is RunCommandTargetKind.IPRange or RunCommandTargetKind.Subnet)
                 ? RunCommandTargetKind.IPRange
                 : RunCommandTargetKind.Hosts;
         }

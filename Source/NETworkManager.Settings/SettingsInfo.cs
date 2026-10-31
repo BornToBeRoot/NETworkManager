@@ -1220,6 +1220,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_ExpandHostView;
 
+    public bool IPScanner_ICMPEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_ICMPEnabled;
+
     public int IPScanner_ICMPTimeout
     {
         get;
@@ -1258,6 +1271,19 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.IPScanner_ICMPBuffer;
+
+    public bool IPScanner_OSGuessEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_OSGuessEnabled;
 
     public ObservableCollection<string> IPScanner_HostHistory
     {
@@ -1338,6 +1364,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_PortScanAttempts;
 
+    public bool IPScanner_ARPEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_ARPEnabled;
+
     public bool IPScanner_NetBIOSEnabled
     {
         get;
@@ -1376,6 +1415,123 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.IPScanner_ResolveMACAddress;
+
+    public bool IPScanner_MDNSEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_MDNSEnabled;
+
+    public int IPScanner_MDNSTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_MDNSTimeout;
+
+    public bool IPScanner_WebPageEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_WebPageEnabled;
+
+    public string IPScanner_WebPagePorts
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_WebPagePorts;
+
+    public int IPScanner_WebPageTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_WebPageTimeout;
+
+    public bool IPScanner_SNMPEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_SNMPEnabled;
+
+    public SNMPVersion IPScanner_SNMPVersion
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_SNMPVersion;
+
+    public string IPScanner_SNMPCommunity
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_SNMPCommunity;
+
+    public int IPScanner_SNMPTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_SNMPTimeout;
 
     public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
     {

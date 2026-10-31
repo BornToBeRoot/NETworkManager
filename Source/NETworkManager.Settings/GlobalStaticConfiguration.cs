@@ -148,9 +148,11 @@ public static class GlobalStaticConfiguration
     public static ExportFileType WiFi_ExportFileType => ExportFileType.Csv;
 
     // Application: IP Scanner    
+    public static bool IPScanner_ICMPEnabled => true;
     public static int IPScanner_ICMPAttempts => 2;
     public static int IPScanner_ICMPTimeout => 2000;
     public static int IPScanner_ICMPBuffer => 32;
+    public static bool IPScanner_OSGuessEnabled => true;
     public static bool IPScanner_ResolveHostname => true;
     public static bool IPScanner_PortScanEnabled => true;
     public static string IPScanner_PortScanPorts => "21; 22; 23; 53; 80; 135; 139; 389; 443; 445; 554; 631; 636; 3389; 5900; 5985; 7000; 8009; 8080; 8443; 9100; 62078";
@@ -160,7 +162,17 @@ public static class GlobalStaticConfiguration
     public static int IPScanner_MaxPortThreads => 16;
     public static bool IPScanner_NetBIOSEnabled => true;
     public static int IPScanner_NetBIOSTimeout => 2000;
+    public static bool IPScanner_ARPEnabled => true;
     public static bool IPScanner_ResolveMACAddress => true;
+    public static bool IPScanner_MDNSEnabled => false;
+    public static int IPScanner_MDNSTimeout => 2000;
+    public static bool IPScanner_WebPageEnabled => false;
+    public static string IPScanner_WebPagePorts => "443; 80; 8443; 8080";
+    public static int IPScanner_WebPageTimeout => 2000;
+    public static bool IPScanner_SNMPEnabled => false;
+    public static SNMPVersion IPScanner_SNMPVersion => SNMPVersion.V2C;
+    public static string IPScanner_SNMPCommunity => "public";
+    public static int IPScanner_SNMPTimeout => 2000;
     public static bool IPScanner_ExpandHostView => false;
     public static ExportFileType IPScanner_ExportFileType => ExportFileType.Csv;
     // Larger scans need a confirmation, even larger ones are refused (every IP address / port is kept in memory)
