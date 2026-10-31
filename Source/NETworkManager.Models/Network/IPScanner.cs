@@ -688,18 +688,21 @@ public sealed class IPScanner(IPScannerOptions options)
     ///     hosts are in the neighbor table - for a host behind a router, its MAC address can't be resolved via ARP/NDP
     ///     (the table contains the router), so there is no need to look it up (and to read the table again).
     ///     IPv6: link-local addresses, other addresses if they are in the same /64 as a local address (the prefix
-    ///     length is not known, local IPv6 subnets are /64).
+    ///     length is not known, local IPv6 subnets are /64). Only operational network interfaces (an adapter that is
+    ///     down may still have its static IPv4 address, e.g. of a subnet that is reached via VPN).
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="networkInterfaces">Local network interfaces.</param>
     /// <returns>True if the IP address is in a local subnet.</returns>
     private static bool IsInLocalSubnet(IPAddress ipAddress, IEnumerable<NetworkInterfaceInfo> networkInterfaces)
     {
+        var operationalInterfaces = networkInterfaces.Where(x => x.IsOperational);
+
         if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
         {
             var address = IPv4Address.ToUInt32(ipAddress);
 
-            return networkInterfaces.Any(networkInterface => networkInterface.IPv4Address.Any(x =>
+            return operationalInterfaces.Any(networkInterface => networkInterface.IPv4Address.Any(x =>
             {
                 if (x.Item2 == null)
                     return false;
@@ -715,7 +718,7 @@ public sealed class IPScanner(IPScannerOptions options)
 
         var prefix = ipAddress.GetAddressBytes().AsSpan(0, 8).ToArray();
 
-        return networkInterfaces.Any(networkInterface => networkInterface.IPv6Address.Any(x =>
+        return operationalInterfaces.Any(networkInterface => networkInterface.IPv6Address.Any(x =>
             x.GetAddressBytes().AsSpan(0, 8).SequenceEqual(prefix)));
     }
 
