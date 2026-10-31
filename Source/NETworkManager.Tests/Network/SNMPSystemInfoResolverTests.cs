@@ -41,10 +41,10 @@ public class SNMPSystemInfoResolverTests
     {
         var response = CreateResponse(RequestId, ErrorCode.NoError,
             (SNMPSystemInfoResolver.SysNameOID, new OctetString("switch-01")),
-            (SNMPSystemInfoResolver.SysDescrOID, new OctetString("Switch\r\nFirmware 1.2")),
+            (SNMPSystemInfoResolver.SysDescrOID, new OctetString(" Switch\r\n  Firmware 1.2\r\n")),
             (SNMPSystemInfoResolver.SysLocationOID, new OctetString("Server room")));
 
-        Assert.Equal(new SNMPSystemInfo("switch-01", "Switch  Firmware 1.2", "Server room"),
+        Assert.Equal(new SNMPSystemInfo("switch-01", "Switch Firmware 1.2", "Server room"),
             SNMPSystemInfoResolver.ParseResponse(response, RequestId));
     }
 

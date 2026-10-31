@@ -125,7 +125,9 @@ public static class SNMPSystemInfoResolver
         if (data is not OctetString octetString)
             return string.Empty;
 
-        // Control characters (e.g. line breaks in sysDescr) are shown as spaces
-        return new string([.. octetString.ToString().Select(x => char.IsControl(x) ? ' ' : x)]).Trim();
+        // Control characters (e.g. line breaks in sysDescr) are shown as spaces, several spaces as one
+        var value = new string([.. octetString.ToString().Select(x => char.IsControl(x) ? ' ' : x)]);
+
+        return string.Join(' ', value.Split(' ', StringSplitOptions.RemoveEmptyEntries));
     }
 }
