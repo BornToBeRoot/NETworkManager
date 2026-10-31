@@ -51,6 +51,14 @@ public sealed class IPScanner(IPScannerOptions options)
     /// </summary>
     private const int MaxConcurrentNeighborVerifications = 4;
 
+    /// <summary>
+    ///     Maximum age of the neighbor table snapshot that tells if the entry of a host was already
+    ///     <see cref="NeighborState.Reachable" /> before its probes (see
+    ///     <see cref="WasNeighborReachableBeforeAsync" />): the minimum time Windows keeps an entry reachable (reachable
+    ///     time 30 s, randomized to 15 to 45 s).
+    /// </summary>
+    private static readonly TimeSpan MaxNeighborSnapshotAgeBeforeProbes = TimeSpan.FromSeconds(15);
+
     // Snapshot of the neighbor table (IP address -> entry), see GetNeighborEntryAsync. Replaced, never changed.
     // Snapshot and the time it was read (before reading) in one object, so they are always read together without a
     // lock. Only a read of the table takes the semaphore.
@@ -249,15 +257,13 @@ public sealed class IPScanner(IPScannerOptions options)
     private async Task ScanHostAsync(IPAddress ipAddress, ParallelOptions portScanParallelOptions,
         List<NetworkInterfaceInfo> networkInterfaces, CancellationToken cancellationToken)
     {
-        // Neighbor entry before the probes are sent (from the cached snapshot, read before this host started): a
-        // Reachable entry is not resolved again by the probes, so after them it doesn't prove an answer (see
-        // IPScannerNeighborCheck.Check)
+        // Neighbor entry before the probes are sent: a Reachable entry is not resolved again by the probes, so after
+        // them it doesn't prove an answer (see IPScannerNeighborCheck.Check)
         var isNeighborCheckEnabled = options.ARPEnabled && IsInLocalSubnet(ipAddress, networkInterfaces);
 
         var wasNeighborReachableBefore = isNeighborCheckEnabled &&
-                                         (await GetNeighborEntryAsync(ipAddress, DateTime.MinValue, false,
-                                             cancellationToken).ConfigureAwait(false))?.State ==
-                                         NeighborState.Reachable;
+                                         await WasNeighborReachableBeforeAsync(ipAddress, cancellationToken)
+                                             .ConfigureAwait(false);
 
         // Completed by the port scan when the first port answers (open or refused), so the host is found before
         // all ports are finished
@@ -690,7 +696,7 @@ public sealed class IPScanner(IPScannerOptions options)
         // host it contains the router), an unreachable host only reads it if it was not read yet.
         if (IsInLocalSubnet(ipAddress, networkInterfaces))
             macAddress = (await GetNeighborEntryAsync(ipAddress, discoveredAt, false, cancellationToken)
-                .ConfigureAwait(false))?.MACAddress.ToString() ?? string.Empty;
+                .ConfigureAwait(false)).entry?.MACAddress.ToString() ?? string.Empty;
 
         // Check if it is the local mac
         if (string.IsNullOrEmpty(macAddress))
@@ -735,19 +741,21 @@ public sealed class IPScanner(IPScannerOptions options)
     ///     <see cref="NeighborState.Incomplete" /> / <see cref="NeighborState.Stale" /> in an older snapshot).
     /// </param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
-    /// <returns>Neighbor entry or null.</returns>
-    private async Task<NeighborInfo> GetNeighborEntryAsync(IPAddress ipAddress, DateTime discoveredAt,
-        bool requireReachable, CancellationToken cancellationToken)
+    /// <returns>Neighbor entry or null, and the time the snapshot it is from was read.</returns>
+    private async Task<(NeighborInfo entry, DateTime timestamp)> GetNeighborEntryAsync(IPAddress ipAddress,
+        DateTime discoveredAt, bool requireReachable, CancellationToken cancellationToken)
     {
         // Cached snapshot, no lock needed: an entry, or no newer entry since the snapshot was read after the host
         // answered. With the scope id if it was entered (e.g. "fe80::1%3" and "fe80::1%7" are two hosts on different
         // interfaces), see NeighborTable.GetNeighborMap.
-        if (TryGetCachedNeighborEntry(_neighborTable, ipAddress, discoveredAt, requireReachable, out var entry))
-            return entry;
+        var snapshot = _neighborTable;
+
+        if (TryGetCachedNeighborEntry(snapshot, ipAddress, discoveredAt, requireReachable, out var entry))
+            return (entry, snapshot.Timestamp);
 
         // Hosts that finish in the meantime share the next read - wait without holding the lock, so lookups that are
         // answered from the cache never wait for it
-        var wait = _neighborTable.Timestamp + MinNeighborTableReadInterval - DateTime.UtcNow;
+        var wait = snapshot.Timestamp + MinNeighborTableReadInterval - DateTime.UtcNow;
 
         if (wait > TimeSpan.Zero)
             await Task.Delay(wait, cancellationToken).ConfigureAwait(false);
@@ -758,8 +766,10 @@ public sealed class IPScanner(IPScannerOptions options)
         try
         {
             // Read by another host in the meantime
-            if (TryGetCachedNeighborEntry(_neighborTable, ipAddress, discoveredAt, requireReachable, out entry))
-                return entry;
+            snapshot = _neighborTable;
+
+            if (TryGetCachedNeighborEntry(snapshot, ipAddress, discoveredAt, requireReachable, out entry))
+                return (entry, snapshot.Timestamp);
 
             // Timestamp before reading the table, so entries created while reading are covered by the next read
             var timestamp = DateTime.UtcNow;
@@ -786,12 +796,32 @@ public sealed class IPScanner(IPScannerOptions options)
 
             _neighborTable = new NeighborTableSnapshot(entries, timestamp);
 
-            return _neighborTable.Entries.GetValueOrDefault(ipAddress);
+            return (entries.GetValueOrDefault(ipAddress), timestamp);
         }
         finally
         {
             _neighborTableSemaphore.Release();
         }
+    }
+
+    /// <summary>
+    ///     Checks if the neighbor entry of a host was already <see cref="NeighborState.Reachable" /> before its probes
+    ///     are sent (see <see cref="IPScannerNeighborCheck.Check" />), from the cached snapshot. A snapshot older than
+    ///     <see cref="MaxNeighborSnapshotAgeBeforeProbes" /> doesn't tell: the entry (e.g.
+    ///     <see cref="NeighborState.Stale" /> in the snapshot) may have been confirmed by other traffic since and still
+    ///     be Reachable from it, also if the host is gone - it is treated as reachable, so a Reachable entry after the
+    ///     probes is verified.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host (in a local subnet, see <see cref="IsInLocalSubnet" />).</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    /// <returns>True if the entry was reachable before the probes, or if this is not known.</returns>
+    private async Task<bool> WasNeighborReachableBeforeAsync(IPAddress ipAddress, CancellationToken cancellationToken)
+    {
+        var (entry, timestamp) = await GetNeighborEntryAsync(ipAddress, DateTime.MinValue, false, cancellationToken)
+            .ConfigureAwait(false);
+
+        return entry?.State == NeighborState.Reachable ||
+               timestamp < DateTime.UtcNow - MaxNeighborSnapshotAgeBeforeProbes;
     }
 
     /// <summary>
@@ -822,13 +852,16 @@ public sealed class IPScanner(IPScannerOptions options)
     ///     <see cref="MaxConcurrentNeighborVerifications" /> at the same time).
     /// </summary>
     /// <param name="ipAddress">IP address of the host (in a local subnet, see <see cref="IsInLocalSubnet" />).</param>
-    /// <param name="wasReachableBefore">The entry was already reachable before the probes were sent.</param>
+    /// <param name="wasReachableBefore">
+    ///     The entry was already reachable before the probes were sent, or this is not known (see
+    ///     <see cref="WasNeighborReachableBeforeAsync" />).
+    /// </param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     /// <returns>True if the host is reachable.</returns>
     private async Task<bool> IsNeighborAsync(IPAddress ipAddress, bool wasReachableBefore,
         CancellationToken cancellationToken)
     {
-        var entry = await GetNeighborEntryAsync(ipAddress, DateTime.UtcNow, true, cancellationToken)
+        var (entry, _) = await GetNeighborEntryAsync(ipAddress, DateTime.UtcNow, true, cancellationToken)
             .ConfigureAwait(false);
 
         // Gateways (computed once per scan, like the roles of the hosts)
