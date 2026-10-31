@@ -97,16 +97,16 @@ public static partial class ExportManager
             new(nameof(IPScannerHostInfo.OSGuess), GetOSGuess(info, options)),
             new(nameof(IPScannerHostInfo.Role), GetRole(info), true),
             new(nameof(IPScannerHostInfo.MDNSHostname), IfEnabled(options.MDNSEnabled, info.MDNSHostname), true),
-            new(nameof(IPScannerHostInfo.WebTitle), IfEnabled(options.WebPageEnabled, info.WebTitle), true),
-            new(nameof(IPScannerHostInfo.WebURL), IfEnabled(options.WebPageEnabled, info.WebURL), true),
+            new(nameof(IPScannerHostInfo.WebTitle), IfEnabled(IsWebPageRead(options), info.WebTitle), true),
+            new(nameof(IPScannerHostInfo.WebURL), IfEnabled(IsWebPageRead(options), info.WebURL), true),
             new(nameof(IPScannerHostInfo.SNMPName), IfEnabled(options.SNMPEnabled, info.SNMPName), true),
             new(nameof(IPScannerHostInfo.SNMPDescription), IfEnabled(options.SNMPEnabled, info.SNMPDescription), true),
             new(nameof(IPScannerHostInfo.SNMPLocation), IfEnabled(options.SNMPEnabled, info.SNMPLocation), true),
             new(nameof(IPScannerHostInfo.WebStatusCode), GetWebStatusCode(info, options)),
-            new(nameof(IPScannerHostInfo.WebServer), IfEnabled(options.WebPageEnabled, info.WebServer), true),
-            new(nameof(IPScannerHostInfo.WebPoweredBy), IfEnabled(options.WebPageEnabled, info.WebPoweredBy), true),
-            new(nameof(IPScannerHostInfo.WebRealm), IfEnabled(options.WebPageEnabled, info.WebRealm), true),
-            new(nameof(IPScannerHostInfo.WebRedirectURL), IfEnabled(options.WebPageEnabled, info.WebRedirectURL), true),
+            new(nameof(IPScannerHostInfo.WebServer), IfEnabled(IsWebPageRead(options), info.WebServer), true),
+            new(nameof(IPScannerHostInfo.WebPoweredBy), IfEnabled(IsWebPageRead(options), info.WebPoweredBy), true),
+            new(nameof(IPScannerHostInfo.WebRealm), IfEnabled(IsWebPageRead(options), info.WebRealm), true),
+            new(nameof(IPScannerHostInfo.WebRedirectURL), IfEnabled(IsWebPageRead(options), info.WebRedirectURL), true),
             new("WebCertificateSubject", certificate?.Subject, true),
             new("WebCertificateIssuer", certificate?.Issuer, true),
             new("WebCertificateNotAfter", certificate == null
@@ -233,6 +233,16 @@ public static partial class ExportManager
     }
 
     /// <summary>
+    ///     Checks if the web pages were read in the scan: only with the port scan (only open ports are requested).
+    /// </summary>
+    /// <param name="options">Options of the scan the hosts are from.</param>
+    /// <returns>True if the web pages were read.</returns>
+    private static bool IsWebPageRead(IPScannerResultOptions options)
+    {
+        return options.PortScanEnabled && options.WebPageEnabled;
+    }
+
+    /// <summary>
     ///     Gets the HTTP status code of the web page of a host, null if none answered or the web page was not read.
     /// </summary>
     /// <param name="info">Host to get the status code for.</param>
@@ -240,7 +250,7 @@ public static partial class ExportManager
     /// <returns>Status code or null.</returns>
     private static int? GetWebStatusCode(IPScannerHostInfo info, IPScannerResultOptions options)
     {
-        return options.WebPageEnabled && info.WebStatusCode > 0 ? info.WebStatusCode : null;
+        return IsWebPageRead(options) && info.WebStatusCode > 0 ? info.WebStatusCode : null;
     }
 
     /// <summary>
@@ -252,7 +262,7 @@ public static partial class ExportManager
     /// <returns>Certificate or null.</returns>
     private static WebCertificateInfo GetWebCertificate(IPScannerHostInfo info, IPScannerResultOptions options)
     {
-        return options.WebPageEnabled ? info.WebCertificate : null;
+        return IsWebPageRead(options) ? info.WebCertificate : null;
     }
 
     /// <summary>

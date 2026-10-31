@@ -28,11 +28,17 @@ public class ExportManagerIPScannerTests
 
     private static string Export(ExportFileType fileType, params IPScannerHostInfo[] hosts)
     {
+        return Export(fileType, AllEnabled, hosts);
+    }
+
+    private static string Export(ExportFileType fileType, IPScannerResultOptions options,
+        params IPScannerHostInfo[] hosts)
+    {
         var filePath = Path.GetTempFileName();
 
         try
         {
-            ExportManager.Export(filePath, fileType, hosts, AllEnabled);
+            ExportManager.Export(filePath, fileType, hosts, options);
 
             return File.ReadAllText(filePath);
         }
@@ -73,6 +79,18 @@ public class ExportManagerIPScannerTests
 
         // Without ports: no element for the list (one element per port)
         Assert.Equal(CsvHeader.Split(',').Where(x => x != "Ports"), host.Elements().Select(x => x.Name.LocalName));
+    }
+
+    [Fact]
+    public void Json_WebPageWithoutPortScan_Empty()
+    {
+        // Web pages are only read with the port scan - the values are empty (null), like the ones of a disabled probe
+        var options = AllEnabled with { PortScanEnabled = false };
+
+        var host = (JObject)JArray.Parse(Export(ExportFileType.Json, options, CreateHost())).Single();
+
+        Assert.Equal(JTokenType.Null, host["WebTitle"]!.Type);
+        Assert.Equal(JTokenType.Null, host["WebURL"]!.Type);
     }
 
     [Fact]
