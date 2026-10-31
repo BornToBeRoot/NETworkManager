@@ -1470,18 +1470,38 @@
                                                Foreground="{DynamicResource MahApps.Brushes.Gray5}"
                                                VerticalAlignment="Center" />
                                 </StackPanel>
+                                <!-- The web pages are only read with the port scan (only open ports are requested) -->
                                 <StackPanel Grid.Row="2"
                                             VerticalAlignment="Top"
-                                            Orientation="Horizontal"
-                                            Visibility="{Binding Path=Data.ScanOptions.WebPageEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                                            Orientation="Horizontal">
+                                    <StackPanel.Style>
+                                        <Style TargetType="{x:Type StackPanel}">
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding Path=Data.ScanOptions.PortScanEnabled, Source={StaticResource BindingProxy}}" Value="True" />
+                                                        <Condition Binding="{Binding Path=Data.ScanOptions.WebPageEnabled, Source={StaticResource BindingProxy}}" Value="True" />
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
                                     <Rectangle Width="16" Height="16"
                                                Style="{StaticResource InfoImageRectangle}" />
                                     <TextBlock Text="{x:Static localization:Strings.ReadingWebPagesIsDisabled}"
                                                Style="{StaticResource InfoTextBlock}"
                                                Margin="10,0,0,0" />
                                 </StackPanel>
-                                <ListView Grid.Row="2" Style="{StaticResource HostDetailsListView}"
-                                          Visibility="{Binding Path=Data.ScanOptions.WebPageEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                <ListView Grid.Row="2" Style="{StaticResource HostDetailsListView}">
+                                    <ListView.Visibility>
+                                        <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                            <Binding Source="{StaticResource BindingProxy}"
+                                                     Path="Data.ScanOptions.PortScanEnabled" />
+                                            <Binding Source="{StaticResource BindingProxy}"
+                                                     Path="Data.ScanOptions.WebPageEnabled" />
+                                        </MultiBinding>
+                                    </ListView.Visibility>
                                     <ListViewItem>
                                         <HeaderedContentControl Header="{x:Static localization:Strings.URL}" Style="{StaticResource HostDetailsRow}">
                                             <!-- OneWay: the values can't be set from the view -->
