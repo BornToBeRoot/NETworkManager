@@ -46,7 +46,7 @@ public sealed class IPScannerStatusToolTipConverter : IValueConverter
                 var time = Models.Network.Ping.TimeToString(pingInfo.Status, pingInfo.Time);
 
                 // No TTL for IPv6
-                return pingInfo.TTL > 0 ? $"{status} ({time}, TTL {pingInfo.TTL})" : $"{status} ({time})";
+                return pingInfo.TTL > 0 ? $"{status} ({time}, {Strings.TTL} {pingInfo.TTL})" : $"{status} ({time})";
 
             // Open: 22 (ssh), 80 (http) / Closed
             case List<PortInfo> ports:
