@@ -69,7 +69,8 @@ public class WebPageResolverTests
     [Theory]
     [InlineData(80, new[] { "http" })]
     [InlineData(8080, new[] { "http" })]
-    [InlineData(443, new[] { "https", "http" })]
+    [InlineData(443, new[] { "https" })]
+    [InlineData(8443, new[] { "https" })]
     [InlineData(9000, new[] { "https", "http" })]
     public void GetSchemes(int port, string[] expected)
     {

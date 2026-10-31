@@ -123,14 +123,21 @@ public static partial class WebPageResolver
     }
 
     /// <summary>
-    ///     Gets the schemes to try for a port: http for 80 / 8080, https and then http for any other port (a TLS
-    ///     handshake with a plain http server fails right away).
+    ///     Gets the schemes to try for a port: https for 443 / 8443 (if the TLS handshake fails, e.g. a device that
+    ///     only supports TLS 1.0, http would only return the error page of the server for plain http on an https port),
+    ///     http for 80 / 8080, https and then http for any other port (a TLS handshake with a plain http server fails
+    ///     right away).
     /// </summary>
     /// <param name="port">Port number.</param>
     /// <returns>Schemes in the order to try them.</returns>
     public static string[] GetSchemes(int port)
     {
-        return port is 80 or 8080 ? ["http"] : ["https", "http"];
+        return port switch
+        {
+            443 or 8443 => ["https"],
+            80 or 8080 => ["http"],
+            _ => ["https", "http"]
+        };
     }
 
     /// <summary>
