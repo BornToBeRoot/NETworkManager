@@ -292,6 +292,7 @@ public static class HostRangeHelper
     /// <returns>
     ///     Sorted, distinct list of hosts, the hostnames that could not be resolved and the number of hosts removed by
     ///     the exclusions (e.g. to show that every IP address is excluded, also if a hostname could not be resolved).
+    ///     No hosts if the hostname of an exclusion could not be resolved (its IP addresses would be scanned).
     /// </returns>
     public static async Task<(List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved,
             int excludedCount)>
@@ -385,24 +386,28 @@ public static class HostRangeHelper
                     exclusionHostnameNotResolved[index] = exclusionInputs[index].Split('/')[0];
             }).ConfigureAwait(false);
 
-        var result = SortAndRemoveDuplicates(hostsPerInput, keepAllHostnames);
+        var hostnamesNotResolved = hostnameNotResolvedPerInput.Concat(exclusionHostnameNotResolved)
+            .Where(x => x != null).ToList();
 
-        var activeExclusions = exclusions.Where(x => x != null).ToList();
+        // The IP addresses of an exclusion that could not be resolved are not known - nothing is scanned instead of
+        // scanning the hosts that should be excluded (e.g. a printer that must not get any packets)
+        if (exclusions.Any(x => x == null))
+            return ([], hostnamesNotResolved, 0);
+
+        var result = SortAndRemoveDuplicates(hostsPerInput, keepAllHostnames);
 
         var excludedCount = 0;
 
-        if (activeExclusions.Count > 0)
+        if (exclusions.Length > 0)
         {
             var count = result.Count;
 
-            result = [.. result.Where(host => !activeExclusions.Any(isExcluded => isExcluded(host.ipAddress)))];
+            result = [.. result.Where(host => !exclusions.Any(isExcluded => isExcluded(host.ipAddress)))];
 
             excludedCount = count - result.Count;
         }
 
-        return (result,
-            [.. hostnameNotResolvedPerInput.Concat(exclusionHostnameNotResolved).Where(x => x != null)],
-            excludedCount);
+        return (result, hostnamesNotResolved, excludedCount);
     }
 
     /// <summary>
