@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Xml.Linq;
 using NETworkManager.Models.Network;
@@ -43,6 +44,79 @@ public static partial class ExportManager
     }
 
     /// <summary>
+    ///     Value of an exported column (CSV) / element (XML, JSON key), see <see cref="GetFields" />.
+    /// </summary>
+    /// <param name="Name">Name of the column / element.</param>
+    /// <param name="Value">Value (e.g. a bool, an enum or a string), null for an empty value.</param>
+    /// <param name="IsQuoted">The value is quoted in the CSV file (text that may contain a comma).</param>
+    private sealed record ExportField(string Name, object Value, bool IsQuoted = false);
+
+    /// <summary>
+    ///     Gets the exported values of a host - one list for CSV, XML and JSON. The released columns come first, new
+    ///     ones are appended at the end, so the position of a column never changes. Values of a probe that is still
+    ///     running (export during a scan, or a scan canceled before the probe finished) or disabled are placeholders -
+    ///     exported as empty values instead of a result. The ports are a <see cref="List{PortInfo}" /> (joined in the CSV
+    ///     file, one element per port in XML / JSON).
+    /// </summary>
+    /// <param name="info">Host to export.</param>
+    /// <param name="options">Options of the scan the host is from.</param>
+    /// <returns>Values in the order of the columns.</returns>
+    private static List<ExportField> GetFields(IPScannerHostInfo info, IPScannerResultOptions options)
+    {
+        var ping = GetPingInfo(info, options);
+        var netBIOSInfo = GetNetBIOSInfo(info, options);
+        var certificate = GetWebCertificate(info, options);
+
+        string IfEnabled(bool isEnabled, string value) => isEnabled ? value : null;
+
+        return
+        [
+            new(nameof(IPScannerHostInfo.IsReachable), info.IsReachable),
+            new(nameof(PingInfo.IPAddress), info.PingInfo.IPAddress),
+            new(nameof(IPScannerHostInfo.Hostname), info.Hostname, true),
+            new("PingStatus", ping?.Status),
+            new(nameof(PingInfo.Timestamp),
+                ping == null ? null : DateTimeHelper.DateTimeToFullDateTimeString(ping.Timestamp)),
+            new(nameof(PingInfo.Time), ping == null ? null : Ping.TimeToString(ping.Status, ping.Time, true)),
+            new(nameof(PingInfo.TTL), ping?.TTL),
+            new(nameof(PingInfo.Bytes), ping?.Bytes),
+            new("PortStatus", GetPortStatus(info, options)),
+            new(nameof(IPScannerHostInfo.Ports), info.Ports != null && options.PortScanEnabled ? info.Ports : [], true),
+            new("NetBIOSIsReachable", netBIOSInfo?.IsReachable),
+            new("NetBIOSIPAddress", netBIOSInfo?.IPAddress),
+            new("NetBIOSComputerName", netBIOSInfo?.ComputerName, true),
+            new("NetBIOSUserName", netBIOSInfo?.UserName, true),
+            new("NetBIOSGroupName", netBIOSInfo?.GroupName, true),
+            new("NetBIOSMACAddress", netBIOSInfo?.MACAddress),
+            new("NetBIOSVendor", netBIOSInfo?.Vendor, true),
+            new(nameof(IPScannerHostInfo.MACAddress), info.MACAddress),
+            new(nameof(IPScannerHostInfo.Vendor), info.Vendor, true),
+            // Added later - after the released columns, so their position doesn't change
+            new(nameof(IPScannerHostInfo.DNSHostname), info.DNSHostname, true),
+            new(nameof(IPScannerHostInfo.DetectedBy), GetDetectedBy(info), true),
+            new(nameof(IPScannerHostInfo.OSGuess), GetOSGuess(info, options)),
+            new(nameof(IPScannerHostInfo.Role), GetRole(info), true),
+            new(nameof(IPScannerHostInfo.MDNSHostname), IfEnabled(options.MDNSEnabled, info.MDNSHostname), true),
+            new(nameof(IPScannerHostInfo.WebTitle), IfEnabled(options.WebPageEnabled, info.WebTitle), true),
+            new(nameof(IPScannerHostInfo.WebURL), IfEnabled(options.WebPageEnabled, info.WebURL), true),
+            new(nameof(IPScannerHostInfo.SNMPName), IfEnabled(options.SNMPEnabled, info.SNMPName), true),
+            new(nameof(IPScannerHostInfo.SNMPDescription), IfEnabled(options.SNMPEnabled, info.SNMPDescription), true),
+            new(nameof(IPScannerHostInfo.SNMPLocation), IfEnabled(options.SNMPEnabled, info.SNMPLocation), true),
+            new(nameof(IPScannerHostInfo.WebStatusCode), GetWebStatusCode(info, options)),
+            new(nameof(IPScannerHostInfo.WebServer), IfEnabled(options.WebPageEnabled, info.WebServer), true),
+            new(nameof(IPScannerHostInfo.WebPoweredBy), IfEnabled(options.WebPageEnabled, info.WebPoweredBy), true),
+            new(nameof(IPScannerHostInfo.WebRealm), IfEnabled(options.WebPageEnabled, info.WebRealm), true),
+            new(nameof(IPScannerHostInfo.WebRedirectURL), IfEnabled(options.WebPageEnabled, info.WebRedirectURL), true),
+            new("WebCertificateSubject", certificate?.Subject, true),
+            new("WebCertificateIssuer", certificate?.Issuer, true),
+            new("WebCertificateNotAfter", certificate == null
+                ? null
+                : DateTimeHelper.DateTimeToFullDateTimeString(certificate.NotAfter.ToLocalTime())),
+            new("WebCertificateSelfSigned", certificate?.IsSelfSigned)
+        ];
+    }
+
+    /// <summary>
     ///     Creates a CSV file from the given <see cref="IPScannerHostInfo" /> collection.
     /// </summary>
     /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}" /> to export.</param>
@@ -53,47 +127,7 @@ public static partial class ExportManager
     {
         var stringBuilder = new StringBuilder();
 
-        stringBuilder.AppendLine(
-            $"{nameof(IPScannerHostInfo.IsReachable)}," +
-            $"{nameof(PingInfo.IPAddress)}," +
-            $"{nameof(IPScannerHostInfo.Hostname)}," +
-            $"PingStatus," +
-            $"{nameof(PingInfo.Timestamp)}," +
-            $"{nameof(PingInfo.Time)}," +
-            $"{nameof(PingInfo.TTL)}," +
-            $"{nameof(PingInfo.Bytes)}," +
-            $"PortStatus," +
-            $"{nameof(IPScannerHostInfo.Ports)}," +
-            $"NetBIOSIsReachable," +
-            $"NetBIOSIPAddress," +
-            $"NetBIOSComputerName," +
-            $"NetBIOSUserName," +
-            $"NetBIOSGroupName," +
-            $"NetBIOSMACAddress," +
-            $"NetBIOSVendor," +
-            $"{nameof(IPScannerHostInfo.MACAddress)}," +
-            $"{nameof(IPScannerHostInfo.Vendor)}," +
-            // Added later - after the released columns, so their position doesn't change
-            $"{nameof(IPScannerHostInfo.DNSHostname)}," +
-            $"{nameof(IPScannerHostInfo.DetectedBy)}," +
-            $"{nameof(IPScannerHostInfo.OSGuess)}," +
-            $"{nameof(IPScannerHostInfo.Role)}," +
-            $"{nameof(IPScannerHostInfo.MDNSHostname)}," +
-            $"{nameof(IPScannerHostInfo.WebTitle)}," +
-            $"{nameof(IPScannerHostInfo.WebURL)}," +
-            $"{nameof(IPScannerHostInfo.SNMPName)}," +
-            $"{nameof(IPScannerHostInfo.SNMPDescription)}," +
-            $"{nameof(IPScannerHostInfo.SNMPLocation)}," +
-            $"{nameof(IPScannerHostInfo.WebStatusCode)}," +
-            $"{nameof(IPScannerHostInfo.WebServer)}," +
-            $"{nameof(IPScannerHostInfo.WebPoweredBy)}," +
-            $"{nameof(IPScannerHostInfo.WebRealm)}," +
-            $"{nameof(IPScannerHostInfo.WebRedirectURL)}," +
-            "WebCertificateSubject," +
-            "WebCertificateIssuer," +
-            "WebCertificateNotAfter," +
-            "WebCertificateSelfSigned"
-        );
+        stringBuilder.AppendLine(string.Join(",", GetFieldNames()));
 
         foreach (var info in collection)
         {
@@ -101,63 +135,31 @@ public static partial class ExportManager
             if (info?.PingInfo == null)
                 continue;
 
-            // Values of a probe that is still running (export during a scan, or a scan canceled before the probe
-            // finished) or disabled are placeholders - exported as empty values instead of a result
-            var ping = GetPingInfo(info, options);
-            var netBIOSInfo = GetNetBIOSInfo(info, options);
-
-            var stringBuilderPorts = new StringBuilder();
-
-            if (info.Ports != null && options.PortScanEnabled)
+            stringBuilder.AppendLine(string.Join(",", GetFields(info, options).Select(field =>
             {
-                foreach (var port in info.Ports)
-                    stringBuilderPorts.Append(
-                        $"{port.Port}/{port.LookupInfo.Protocol}/{port.LookupInfo.Service}/{port.LookupInfo.Description}/{port.State};");
-            }
+                var value = field.Value is List<PortInfo> ports
+                    ? string.Join(";", ports.Select(port =>
+                        $"{port.Port}/{port.LookupInfo.Protocol}/{port.LookupInfo.Service}/{port.LookupInfo.Description}/{port.State}"))
+                    : $"{field.Value}";
 
-            stringBuilder.AppendLine(
-                $"{info.IsReachable}," +
-                $"{info.PingInfo.IPAddress}," +
-                $"{CsvHelper.QuoteString(info.Hostname)}," +
-                $"{ping?.Status}," +
-                $"{(ping == null ? null : DateTimeHelper.DateTimeToFullDateTimeString(ping.Timestamp))}," +
-                $"{(ping == null ? null : Ping.TimeToString(ping.Status, ping.Time, true))}," +
-                $"{ping?.TTL}," +
-                $"{ping?.Bytes}," +
-                $"{GetPortStatus(info, options)}," +
-                $"{CsvHelper.QuoteString(stringBuilderPorts.ToString().TrimEnd(';'))}," +
-                $"{netBIOSInfo?.IsReachable}," +
-                $"{netBIOSInfo?.IPAddress}," +
-                $"{CsvHelper.QuoteString(netBIOSInfo?.ComputerName)}," +
-                $"{CsvHelper.QuoteString(netBIOSInfo?.UserName)}," +
-                $"{CsvHelper.QuoteString(netBIOSInfo?.GroupName)}," +
-                $"{netBIOSInfo?.MACAddress}," +
-                $"{CsvHelper.QuoteString(netBIOSInfo?.Vendor)}," +
-                $"{info.MACAddress}," +
-                $"{CsvHelper.QuoteString(info.Vendor)}," +
-                $"{CsvHelper.QuoteString(info.DNSHostname)}," +
-                $"{CsvHelper.QuoteString(GetDetectedBy(info))}," +
-                $"{GetOSGuess(info, options)}," +
-                $"{CsvHelper.QuoteString(GetRole(info))}," +
-                $"{CsvHelper.QuoteString(options.MDNSEnabled ? info.MDNSHostname : null)}," +
-                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebTitle : null)}," +
-                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebURL : null)}," +
-                $"{CsvHelper.QuoteString(options.SNMPEnabled ? info.SNMPName : null)}," +
-                $"{CsvHelper.QuoteString(options.SNMPEnabled ? info.SNMPDescription : null)}," +
-                $"{CsvHelper.QuoteString(options.SNMPEnabled ? info.SNMPLocation : null)}," +
-                $"{GetWebStatusCode(info, options)}," +
-                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebServer : null)}," +
-                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebPoweredBy : null)}," +
-                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebRealm : null)}," +
-                $"{CsvHelper.QuoteString(options.WebPageEnabled ? info.WebRedirectURL : null)}," +
-                $"{CsvHelper.QuoteString(GetWebCertificate(info, options)?.Subject)}," +
-                $"{CsvHelper.QuoteString(GetWebCertificate(info, options)?.Issuer)}," +
-                $"{GetWebCertificateNotAfter(info, options)}," +
-                $"{GetWebCertificate(info, options)?.IsSelfSigned}"
-            );
+                return field.IsQuoted ? CsvHelper.QuoteString(value) : value;
+            })));
         }
 
         File.WriteAllText(filePath, stringBuilder.ToString());
+    }
+
+    /// <summary>
+    ///     Gets the names of the exported columns (header of the CSV file, also without hosts) - they don't depend on
+    ///     the values.
+    /// </summary>
+    private static IEnumerable<string> GetFieldNames()
+    {
+        var placeholder = new IPScannerHostInfo(IPAddress.None, false, new PingInfo(), false, [],
+            new NetBIOSInfo(IPAddress.None));
+
+        return GetFields(placeholder, new IPScannerResultOptions(false, false, false, false, false, false, false, false,
+            false)).Select(x => x.Name);
     }
 
     /// <summary>
@@ -174,72 +176,18 @@ public static partial class ExportManager
                 new XElement(nameof(IPScannerHostInfo) + "s",
                     from info in collection
                     where info?.PingInfo != null
-                    // Placeholders of running / disabled probes are exported as empty values (see CreateCsv)
-                    let ping = GetPingInfo(info, options)
-                    let netBIOSInfo = GetNetBIOSInfo(info, options)
-                    select
-                        new XElement(nameof(IPScannerHostInfo),
-                            new XElement(nameof(IPScannerHostInfo.IsReachable), info.IsReachable),
-                            new XElement(nameof(PingInfo.IPAddress), info.PingInfo.IPAddress),
-                            new XElement(nameof(IPScannerHostInfo.Hostname), info.Hostname),
-                            new XElement("PingStatus", ping?.Status),
-                            new XElement(nameof(PingInfo.Timestamp),
-                                ping == null ? null : DateTimeHelper.DateTimeToFullDateTimeString(ping.Timestamp)),
-                            new XElement(nameof(PingInfo.Time),
-                                ping == null ? null : Ping.TimeToString(ping.Status, ping.Time, true)),
-                            new XElement(nameof(PingInfo.TTL), ping?.TTL),
-                            new XElement(nameof(PingInfo.Bytes), ping?.Bytes),
-                            new XElement("PortStatus", GetPortStatus(info, options)),
-                            info.Ports != null && options.PortScanEnabled
-                                ? from port in info.Ports
-                                  select new XElement(nameof(PortInfo),
-                                      new XElement(nameof(PortInfo.Port), port.Port),
-                                      new XElement(nameof(PortInfo.LookupInfo.Protocol), port.LookupInfo.Protocol),
-                                      new XElement(nameof(PortInfo.LookupInfo.Service), port.LookupInfo.Service),
-                                      new XElement(nameof(PortInfo.LookupInfo.Description), port.LookupInfo.Description),
-                                      new XElement(nameof(PortInfo.State), port.State))
-                                : Enumerable.Empty<XElement>(),
-                            new XElement("NetBIOSIsReachable", netBIOSInfo?.IsReachable),
-                            new XElement("NetBIOSIPAddress", netBIOSInfo?.IPAddress),
-                            new XElement("NetBIOSComputerName", netBIOSInfo?.ComputerName),
-                            new XElement("NetBIOSUserName", netBIOSInfo?.UserName),
-                            new XElement("NetBIOSGroupName", netBIOSInfo?.GroupName),
-                            new XElement("NetBIOSMACAddress", netBIOSInfo?.MACAddress),
-                            new XElement("NetBIOSVendor", netBIOSInfo?.Vendor),
-                            new XElement(nameof(IPScannerHostInfo.MACAddress), info.MACAddress),
-                            new XElement(nameof(IPScannerHostInfo.Vendor), info.Vendor),
-                            // Added later - after the released elements, so their position doesn't change
-                            new XElement(nameof(IPScannerHostInfo.DNSHostname), info.DNSHostname),
-                            new XElement(nameof(IPScannerHostInfo.DetectedBy), GetDetectedBy(info)),
-                            new XElement(nameof(IPScannerHostInfo.OSGuess), GetOSGuess(info, options)),
-                            new XElement(nameof(IPScannerHostInfo.Role), GetRole(info)),
-                            new XElement(nameof(IPScannerHostInfo.MDNSHostname),
-                                options.MDNSEnabled ? info.MDNSHostname : null),
-                            new XElement(nameof(IPScannerHostInfo.WebTitle),
-                                options.WebPageEnabled ? info.WebTitle : null),
-                            new XElement(nameof(IPScannerHostInfo.WebURL), options.WebPageEnabled ? info.WebURL : null),
-                            new XElement(nameof(IPScannerHostInfo.SNMPName), options.SNMPEnabled ? info.SNMPName : null),
-                            new XElement(nameof(IPScannerHostInfo.SNMPDescription),
-                                options.SNMPEnabled ? info.SNMPDescription : null),
-                            new XElement(nameof(IPScannerHostInfo.SNMPLocation),
-                                options.SNMPEnabled ? info.SNMPLocation : null),
-                            new XElement(nameof(IPScannerHostInfo.WebStatusCode), GetWebStatusCode(info, options)),
-                            new XElement(nameof(IPScannerHostInfo.WebServer),
-                                options.WebPageEnabled ? info.WebServer : null),
-                            new XElement(nameof(IPScannerHostInfo.WebPoweredBy),
-                                options.WebPageEnabled ? info.WebPoweredBy : null),
-                            new XElement(nameof(IPScannerHostInfo.WebRealm),
-                                options.WebPageEnabled ? info.WebRealm : null),
-                            new XElement(nameof(IPScannerHostInfo.WebRedirectURL),
-                                options.WebPageEnabled ? info.WebRedirectURL : null),
-                            new XElement("WebCertificateSubject", GetWebCertificate(info, options)?.Subject),
-                            new XElement("WebCertificateIssuer", GetWebCertificate(info, options)?.Issuer),
-                            new XElement("WebCertificateNotAfter", GetWebCertificateNotAfter(info, options)),
-                            new XElement("WebCertificateSelfSigned", GetWebCertificate(info, options)?.IsSelfSigned)
-                        )
-                )
-            )
-        );
+                    select new XElement(nameof(IPScannerHostInfo),
+                        from field in GetFields(info, options)
+                        // One element per port, no element for the list
+                        from element in field.Value is List<PortInfo> ports
+                            ? ports.Select(port => new XElement(nameof(PortInfo),
+                                new XElement(nameof(PortInfo.Port), port.Port),
+                                new XElement(nameof(PortInfo.LookupInfo.Protocol), port.LookupInfo.Protocol),
+                                new XElement(nameof(PortInfo.LookupInfo.Service), port.LookupInfo.Service),
+                                new XElement(nameof(PortInfo.LookupInfo.Description), port.LookupInfo.Description),
+                                new XElement(nameof(PortInfo.State), port.State)))
+                            : [new XElement(field.Name, field.Value)]
+                        select element))));
 
         document.Save(filePath);
     }
@@ -253,79 +201,23 @@ public static partial class ExportManager
     private static void CreateJson(IReadOnlyList<IPScannerHostInfo> collection, IPScannerResultOptions options,
         string filePath)
     {
-        var validCollection = collection.Where(info => info?.PingInfo != null).ToList();
-        var jsonData = new object[validCollection.Count];
-
-        for (var i = 0; i < validCollection.Count; i++)
-        {
-            var info = validCollection[i];
-
-            // Placeholders of running / disabled probes are exported as empty values (see CreateCsv)
-            var ping = GetPingInfo(info, options);
-            var netBIOSInfo = GetNetBIOSInfo(info, options);
-
-            object[] jsonDataPorts;
-
-            if (info.Ports != null && info.Ports.Count > 0 && options.PortScanEnabled)
+        var jsonData = collection
+            .Where(info => info?.PingInfo != null)
+            .Select(info => GetFields(info, options).ToDictionary(x => x.Name, x => x.Value switch
             {
-                jsonDataPorts = new object[info.Ports.Count];
-                for (var j = 0; j < info.Ports.Count; j++)
-                    jsonDataPorts[j] = new
-                    {
-                        info.Ports[j].Port,
-                        Protocol = info.Ports[j].LookupInfo.Protocol.ToString(),
-                        info.Ports[j].LookupInfo.Service,
-                        info.Ports[j].LookupInfo.Description,
-                        State = info.Ports[j].State.ToString()
-                    };
-            }
-            else
-            {
-                jsonDataPorts = Array.Empty<object>();
-            }
-
-            jsonData[i] = new
-            {
-                info.IsReachable,
-                IPAddress = info.PingInfo.IPAddress.ToString(),
-                info.Hostname,
-                PingStatus = ping?.Status.ToString(),
-                Timestamp = ping == null ? null : DateTimeHelper.DateTimeToFullDateTimeString(ping.Timestamp),
-                Time = ping == null ? null : Ping.TimeToString(ping.Status, ping.Time, true),
-                TTL = ping?.TTL,
-                Bytes = ping?.Bytes,
-                info.DNSHostname,
-                PortStatus = GetPortStatus(info, options)?.ToString(),
-                Ports = jsonDataPorts,
-                NetBIOSIsReachable = netBIOSInfo?.IsReachable,
-                NetBIOSIPAddress = netBIOSInfo?.IPAddress?.ToString(),
-                NetBIOSComputerName = netBIOSInfo?.ComputerName,
-                NetBIOSUserName = netBIOSInfo?.UserName,
-                NetBIOSGroupName = netBIOSInfo?.GroupName,
-                NetBIOSMACAddress = netBIOSInfo?.MACAddress,
-                NetBIOSVendor = netBIOSInfo?.Vendor,
-                info.MACAddress,
-                info.Vendor,
-                DetectedBy = GetDetectedBy(info),
-                OSGuess = GetOSGuess(info, options),
-                Role = GetRole(info),
-                MDNSHostname = options.MDNSEnabled ? info.MDNSHostname : null,
-                WebTitle = options.WebPageEnabled ? info.WebTitle : null,
-                WebURL = options.WebPageEnabled ? info.WebURL : null,
-                SNMPName = options.SNMPEnabled ? info.SNMPName : null,
-                SNMPDescription = options.SNMPEnabled ? info.SNMPDescription : null,
-                SNMPLocation = options.SNMPEnabled ? info.SNMPLocation : null,
-                WebStatusCode = GetWebStatusCode(info, options),
-                WebServer = options.WebPageEnabled ? info.WebServer : null,
-                WebPoweredBy = options.WebPageEnabled ? info.WebPoweredBy : null,
-                WebRealm = options.WebPageEnabled ? info.WebRealm : null,
-                WebRedirectURL = options.WebPageEnabled ? info.WebRedirectURL : null,
-                WebCertificateSubject = GetWebCertificate(info, options)?.Subject,
-                WebCertificateIssuer = GetWebCertificate(info, options)?.Issuer,
-                WebCertificateNotAfter = GetWebCertificateNotAfter(info, options),
-                WebCertificateSelfSigned = GetWebCertificate(info, options)?.IsSelfSigned
-            };
-        }
+                List<PortInfo> ports => ports.Select(port => new
+                {
+                    port.Port,
+                    Protocol = port.LookupInfo.Protocol.ToString(),
+                    port.LookupInfo.Service,
+                    port.LookupInfo.Description,
+                    State = port.State.ToString()
+                }).ToArray(),
+                // As text, like in the CSV / XML file (not the number of the enum)
+                Enum or IPAddress => x.Value.ToString(),
+                _ => x.Value
+            }))
+            .ToArray();
 
         File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
@@ -361,22 +253,6 @@ public static partial class ExportManager
     private static WebCertificateInfo GetWebCertificate(IPScannerHostInfo info, IPScannerResultOptions options)
     {
         return options.WebPageEnabled ? info.WebCertificate : null;
-    }
-
-    /// <summary>
-    ///     Gets the end of the validity of the TLS certificate of the web page of a host (local time, like the other
-    ///     timestamps), null if there is none (see <see cref="GetWebCertificate" />).
-    /// </summary>
-    /// <param name="info">Host to get the end of the validity for.</param>
-    /// <param name="options">Options of the scan the host is from.</param>
-    /// <returns>End of the validity or null.</returns>
-    private static string GetWebCertificateNotAfter(IPScannerHostInfo info, IPScannerResultOptions options)
-    {
-        var certificate = GetWebCertificate(info, options);
-
-        return certificate == null
-            ? null
-            : DateTimeHelper.DateTimeToFullDateTimeString(certificate.NotAfter.ToLocalTime());
     }
 
     /// <summary>
