@@ -699,34 +699,11 @@ public class IPScannerHostInfo : PropertyChangedBase
     /// <returns>Copy of the host information (without event subscribers).</returns>
     public IPScannerHostInfo Clone()
     {
-        return new IPScannerHostInfo(IPAddress, IsReachable, PingInfo, IsAnyPortOpen, Ports, NetBIOSInfo)
-        {
-            DetectedBy = DetectedBy,
-            Role = Role,
-            IsPingPending = IsPingPending,
-            IsPortScanPending = IsPortScanPending,
-            IsNetBIOSPending = IsNetBIOSPending,
-            DNSHostname = DNSHostname,
-            MDNSHostname = MDNSHostname,
-            WebTitle = WebTitle,
-            WebURL = WebURL,
-            WebStatusCode = WebStatusCode,
-            WebServer = WebServer,
-            WebPoweredBy = WebPoweredBy,
-            WebRealm = WebRealm,
-            WebCertificate = WebCertificate,
-            WebRedirectURL = WebRedirectURL,
-            SNMPName = SNMPName,
-            SNMPDescription = SNMPDescription,
-            SNMPLocation = SNMPLocation,
-            IsDNSPending = IsDNSPending,
-            IsNeighborMACAddressPending = IsNeighborMACAddressPending,
-            IsMDNSPending = IsMDNSPending,
-            IsWebPagePending = IsWebPagePending,
-            IsSNMPPending = IsSNMPPending,
-            NeighborMACAddress = NeighborMACAddress,
-            NeighborVendor = NeighborVendor,
-            _areLookupsEnded = _areLookupsEnded
-        };
+        var clone = new IPScannerHostInfo(IPAddress, IsReachable, PingInfo, IsAnyPortOpen, Ports, NetBIOSInfo);
+
+        // One list of the values (see CopyFrom), the new instance has no event subscribers yet
+        clone.CopyFrom(this);
+
+        return clone;
     }
 }
