@@ -19,6 +19,7 @@ report that too.
 - Settings and profiles
 - Navigation and run command
 - PowerShell and external processes
+- Shared helpers (reuse before writing new code)
 - Strings, docs and changelog
 
 ## View model basics
@@ -220,6 +221,24 @@ Reference: `Source/NETworkManager.Models/Firewall/Firewall.cs`.
   values into a process command line. Values received from the network (DNS PTR, NetBIOS name, SNMP, HTTP) are
   untrusted: with `cmd.exe /c ...` characters like `&` or `|` run other commands. Only insert values that match the
   expected format (IP address, hostname regex).
+
+## Shared helpers (reuse before writing new code)
+
+Duplicated code often re-implements one of these. A refactoring proposal should use them (or extend them) before it
+adds a new helper. Check the class for the exact methods.
+
+- Host and port input: `HostRangeHelper` (Models: `CreateListFromInput`, `GetHostCount`, `ResolveAsync` with `!`
+  exclusions - IP Scanner, Port Scanner, Ping Monitor), `PortRangeHelper` (Utilities), validators in
+  `NETworkManager.Validators` (one per input format, used by tool, profile dialog and run command).
+- Addresses and names: `IPAddressHelper` (compare / sort, private range, scope id), `MACAddressHelper` (format,
+  compare), `DNSClientHelper` / `DNSClient` (resolve A / AAAA / PTR with the app's DNS settings), `RegexHelper`.
+- Lists and texts: `ListHelper.Modify` (history), `PlaceholderHelper` (`{{Name}}` placeholders), `DateTimeHelper`,
+  `ClipboardHelper`, `DialogHelper` (confirmations, `FormatItemList`).
+- WPF: `BindingProxy`, `DataGridHelper`, `SearchTextBoxHelper`, `PermissionToolTipHelper` (Utilities.WPF),
+  `ObservableRangeCollection` (Controls), converters in `NETworkManager.Converters` (e.g. `PendingToStringConverter`),
+  shared styles in `Source/NETworkManager/Resources/Styles/`.
+- PowerShell: `PowerShellHelper.EscapeSingleQuotes`; arrays (`ToPsArray`) and the shared runspace are still private to
+  `Firewall.cs` - a second user of them is a reason to move them to `PowerShellHelper`.
 
 ## Strings, docs and changelog
 
