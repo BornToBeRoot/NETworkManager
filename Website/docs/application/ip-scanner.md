@@ -38,7 +38,7 @@ With the **IP Scanner** you can scan IP ranges, subnets and hostnames for active
 
 Multiple inputs can be combined with a semicolon (`;`). A column pasted from Excel (one entry per line) is converted to the semicolon-separated form automatically.
 
-An input starting with `!` excludes its IP addresses from the other inputs, e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254` (all formats of the table above, a hostname is resolved first). At least one input without `!` is required; if the exclusions remove every IP address, a message is shown instead.
+An input starting with `!` excludes its IP addresses from the other inputs, e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254` (all formats of the table above; a hostname excludes all its IPv4 and IPv6 addresses, independent of the IPv4 preference). At least one input without `!` is required; if the exclusions remove every IP address, a message is shown instead.
 
 Example: `10.0.0.0/24; 10.0.[10-20].1; 10.0.0.100-199`
 

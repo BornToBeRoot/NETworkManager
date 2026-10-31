@@ -218,7 +218,9 @@ public static class HostRangeHelper
     ///     large excluded range doesn't need any memory.
     /// </summary>
     /// <param name="hosts">Inputs like "10.0.0.1", "example.com", "10.0.0.0/24" (see <see cref="CreateListFromInput" />).</param>
-    /// <param name="dnsResolveHostnamePreferIPv4">Prefer the A record over the AAAA record for hostnames.</param>
+    /// <param name="dnsResolveHostnamePreferIPv4">
+    ///     Prefer the A record over the AAAA record for hostnames (an excluded hostname excludes all its addresses).
+    /// </param>
     /// <param name="keepAllHostnames">
     ///     Keep one entry per hostname for an IP address entered with different hostnames (e.g. the Ping Monitor shows
     ///     the hostname of the input). Otherwise every IP address is returned once, with the first hostname (e.g. the
@@ -338,8 +340,7 @@ public static class HostRangeHelper
             new ParallelOptions { CancellationToken = cancellationToken },
             async (index, ct) =>
             {
-                exclusions[index] = await CreateExclusionAsync(exclusionInputs[index], dnsResolveHostnamePreferIPv4,
-                    ct).ConfigureAwait(false);
+                exclusions[index] = await CreateExclusionAsync(exclusionInputs[index], ct).ConfigureAwait(false);
 
                 if (exclusions[index] == null)
                     exclusionHostnameNotResolved[index] = exclusionInputs[index].Split('/')[0];
@@ -358,15 +359,15 @@ public static class HostRangeHelper
 
     /// <summary>
     ///     Creates the check of an exclusion (input without <see cref="ExclusionPrefix" />): IP address, subnet, range or
-    ///     hostname (resolved like the other inputs). An IPv6 address without scope id also excludes the address with
-    ///     any scope id (e.g. "fe80::1" excludes "fe80::1%3").
+    ///     hostname. A hostname excludes all its IPv4 and IPv6 addresses (A and AAAA records) - an inclusion resolves
+    ///     only one of them (depending on the IPv4 / IPv6 preference), the exclusion must match it in any case. An IPv6
+    ///     address without scope id also excludes the address with any scope id (e.g. "fe80::1" excludes "fe80::1%3").
     /// </summary>
     /// <param name="host">Input like "10.0.0.1", "10.0.0.0/28", "10.0.0.200-254" or "server.example.com".</param>
-    /// <param name="dnsResolveHostnamePreferIPv4">Prefer the A record over the AAAA record for hostnames.</param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     /// <returns>Check if an IP address is excluded, null if the hostname could not be resolved.</returns>
     private static async Task<Func<IPAddress, bool>> CreateExclusionAsync(string host,
-        bool dnsResolveHostnamePreferIPv4, CancellationToken cancellationToken)
+        CancellationToken cancellationToken)
     {
         switch (host)
         {
@@ -409,12 +410,17 @@ public static class HostRangeHelper
                            octets[2].Contains(bytes[2]) && octets[3].Contains(bytes[3]);
                 };
 
-            // example.com
+            // example.com (all IPv4 and IPv6 addresses)
             case var _ when RegexHelper.HostnameOrDomainRegex().IsMatch(host):
-                var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(host, dnsResolveHostnamePreferIPv4)
+                var ipAddresses = await DNSClient.GetInstance().ResolveAllAAndAaaaAsync(host)
                     .WaitAsync(cancellationToken).ConfigureAwait(false);
 
-                return dnsResult.HasError ? null : CreateIPAddressExclusion(IPAddress.Parse($"{dnsResult.Value}"));
+                if (ipAddresses.Count == 0)
+                    return null;
+
+                var ipAddressExclusions = ipAddresses.Select(CreateIPAddressExclusion).ToList();
+
+                return ipAddress => ipAddressExclusions.Any(isExcluded => isExcluded(ipAddress));
 
             // example.com/24 or example.com/255.255.255.128 (only IPv4, like the inputs)
             case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainWithCidrRegex):

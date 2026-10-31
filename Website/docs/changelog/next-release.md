@@ -99,7 +99,7 @@ Release date: **xx.xx.2026**
 - The **Ping status**, **Port status** and **NetBIOS reachable** columns show a status icon (green check / red cross, like the action of a rule in the **Firewall**) instead of the text (e.g. `Success` / `Timed out`, `Open` / `Closed`, `Yes` / `No`); the tooltip shows the details: ping status with time and TTL, the open ports with their service and the NetBIOS computer name and workgroup / domain. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - The row details use four columns: **Ping details** / **Hostnames**, **Ports**, **Web** and **NetBIOS** / **SNMP**; a section of a disabled setting shows a note like the ports and NetBIOS. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - The **Detect local subnet** button opens a menu: **Detect local subnet** (as before), **Subnet of network interface** to select the IPv4 subnet of a specific network interface (e.g. LAN, Wi-Fi, VPN, Hyper-V) and **All local subnets** to scan the subnets of all network interfaces. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
-- IP addresses can be excluded from the scan with `!` in the host input (also in profiles and the run command), e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254`. Works with IP addresses, ranges, subnets and hostnames; a message is shown if every IP address is excluded. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- IP addresses can be excluded from the scan with `!` in the host input (also in profiles and the run command), e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254`. Works with IP addresses, ranges, subnets and hostnames (all IPv4 and IPv6 addresses of the hostname); a message is shown if every IP address is excluded. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Port Scanner**
 
@@ -129,7 +129,7 @@ Release date: **xx.xx.2026**
 - Groups: new **Ports** setting (ports, port ranges and port profiles) for the Port Scanner, used by the profiles of the group that don't override them (new **Ports** checkbox in the profile, like the other settings that can be set in the group). Existing profiles with ports keep them (the checkbox is enabled when the profile file is loaded). [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
 - The export runs in the background, so the window stays responsive while a large result is exported, and uses the order shown in the result (sorting, grouping) instead of the order in which the ports were scanned. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Ports are started one after another (every 1 ms, shorter with short timeouts and many threads) instead of all at the same moment. This avoids bursts of hundreds of connection requests within a few milliseconds and makes the progress smoother. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
-- IP addresses can be excluded from the scan with `!` in the host input (also in profiles and the run command), e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254`. Works with IP addresses, ranges, subnets and hostnames; a message is shown if every IP address is excluded. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- IP addresses can be excluded from the scan with `!` in the host input (also in profiles and the run command), e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254`. Works with IP addresses, ranges, subnets and hostnames (all IPv4 and IPv6 addresses of the hostname); a message is shown if every IP address is excluded. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Ping Monitor**
 
@@ -139,7 +139,7 @@ Release date: **xx.xx.2026**
 - Reworked each monitored host's card: the collapsed quick info now shows labeled values (`Received: X · Lost: Y · Packet loss: Z%`) instead of unlabeled numbers, the expanded view shows only the latency chart (with more room, since Hostname/IP address are already visible in the header) and the last status change time moved to a tooltip on the connectivity icon. The **Status change** field was also renamed to **Last status change**. [#3572](https://github.com/BornToBeRoot/NETworkManager/pull/3572)
 - Host input now accepts newline-separated hosts (one per line, e.g. a column pasted from Excel), converted automatically to the semicolon-separated form. [#3568](https://github.com/BornToBeRoot/NETworkManager/pull/3568)
 - Host input now supports shorthand IPv4 ranges like `192.168.0.1-100`, in addition to the existing `192.168.0.0-192.168.0.100` and `192.168.[0-100].1` range formats. [#3568](https://github.com/BornToBeRoot/NETworkManager/pull/3568)
-- IP addresses can be excluded with `!` in the host input (also in profiles and the run command), e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254`. Works with IP addresses, ranges, subnets and hostnames; a message is shown if every IP address is excluded. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- IP addresses can be excluded with `!` in the host input (also in profiles and the run command), e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254`. Works with IP addresses, ranges, subnets and hostnames (all IPv4 and IPv6 addresses of the hostname); a message is shown if every IP address is excluded. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Traceroute**
 
