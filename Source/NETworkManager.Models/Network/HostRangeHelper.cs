@@ -227,8 +227,12 @@ public static class HostRangeHelper
     ///     IP Scanner and the Port Scanner resolve the hostname themselves, a second entry would be scanned again).
     /// </param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
-    /// <returns>Sorted, distinct list of hosts and the hostnames that could not be resolved.</returns>
-    public static async Task<(List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved)>
+    /// <returns>
+    ///     Sorted, distinct list of hosts, the hostnames that could not be resolved and the number of hosts removed by
+    ///     the exclusions (e.g. to show that every IP address is excluded, also if a hostname could not be resolved).
+    /// </returns>
+    public static async Task<(List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved,
+            int excludedCount)>
         ResolveAsync(IEnumerable<string> hosts, bool dnsResolveHostnamePreferIPv4, bool keepAllHostnames,
             CancellationToken cancellationToken)
     {
@@ -350,11 +354,20 @@ public static class HostRangeHelper
 
         var activeExclusions = exclusions.Where(x => x != null).ToList();
 
+        var excludedCount = 0;
+
         if (activeExclusions.Count > 0)
+        {
+            var count = result.Count;
+
             result = [.. result.Where(host => !activeExclusions.Any(isExcluded => isExcluded(host.ipAddress)))];
 
+            excludedCount = count - result.Count;
+        }
+
         return (result,
-            [.. hostnameNotResolvedPerInput.Concat(exclusionHostnameNotResolved).Where(x => x != null)]);
+            [.. hostnameNotResolvedPerInput.Concat(exclusionHostnameNotResolved).Where(x => x != null)],
+            excludedCount);
     }
 
     /// <summary>

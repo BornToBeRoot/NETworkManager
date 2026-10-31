@@ -920,7 +920,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Resolve hostnames and convert the ports. Start() is fire-and-forget, so every exception has to be
         // handled here - otherwise the scan would never end (IsRunning stays true).
-        (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved) hosts;
+        (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved, int excludedCount) hosts;
         int[] ports;
 
         try
@@ -947,8 +947,8 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             AddStatusMessage(
                 $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}");
 
-        // The input has an inclusion (validated) - without unresolved hostnames, the exclusions removed every host
-        if (hosts.hosts.Count == 0 && hosts.hostnamesNotResolved.Count == 0)
+        // The exclusions removed every host (also if hostnames could not be resolved)
+        if (hosts.hosts.Count == 0 && hosts.excludedCount > 0)
             AddStatusMessage(Strings.AllIPAddressesAreExcludedMessage);
 
         PortsToScan = ports.Length * hosts.hosts.Count;

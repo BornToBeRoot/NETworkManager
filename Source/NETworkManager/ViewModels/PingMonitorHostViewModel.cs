@@ -319,7 +319,7 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
         _cancellationTokenSource = new CancellationTokenSource();
 
         // Resolve hostnames
-        (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved) hosts;
+        (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved, int excludedCount) hosts;
 
         try
         {
@@ -342,13 +342,19 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
             IsStatusMessageDisplayed = true;
         }
 
-        // The input has an inclusion (validated) - without unresolved hostnames, the exclusions removed every host:
-        // nothing to add, the input is kept to correct it
-        if (hosts.hosts.Count == 0 && hosts.hostnamesNotResolved.Count == 0)
+        // The exclusions removed every host (also if hostnames could not be resolved, keep their message)
+        if (hosts.hosts.Count == 0 && hosts.excludedCount > 0)
         {
-            StatusMessage = Strings.AllIPAddressesAreExcludedMessage;
+            StatusMessage = IsStatusMessageDisplayed
+                ? StatusMessage + Environment.NewLine + Strings.AllIPAddressesAreExcludedMessage
+                : Strings.AllIPAddressesAreExcludedMessage;
             IsStatusMessageDisplayed = true;
+        }
 
+        // No host left (hostnames that could not be resolved, everything excluded): nothing to add, the input is kept
+        // to correct it
+        if (hosts.hosts.Count == 0)
+        {
             IsRunning = false;
 
             return;

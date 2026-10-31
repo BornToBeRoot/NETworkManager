@@ -10,7 +10,7 @@ public class HostRangeHelperExclusionTests
 {
     private static async Task<string[]> ResolveAsync(string input)
     {
-        var (hosts, _) = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(input), true, false,
+        var (hosts, _, _) = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(input), true, false,
             CancellationToken.None);
 
         return [.. hosts.Select(x => x.ipAddress.ToString())];
@@ -36,6 +36,20 @@ public class HostRangeHelperExclusionTests
     public async Task ResolveAsync_OnlyExclusions_NoHosts()
     {
         Assert.Empty(await ResolveAsync("!10.0.0.1"));
+    }
+
+    [Theory]
+    [InlineData("10.0.0.1; !10.0.0.1", 1)]
+    [InlineData("10.0.0.0/30; !10.0.0.1-2", 2)]
+    [InlineData("10.0.0.1-3; !10.0.0.0/8", 3)]
+    [InlineData("10.0.0.1-3; !192.168.0.1", 0)]
+    [InlineData("10.0.0.1-3", 0)]
+    public async Task ResolveAsync_ExcludedCount(string input, int expected)
+    {
+        var (_, _, excludedCount) = await HostRangeHelper.ResolveAsync(HostRangeHelper.CreateListFromInput(input),
+            true, false, CancellationToken.None);
+
+        Assert.Equal(expected, excludedCount);
     }
 
     [Theory]
