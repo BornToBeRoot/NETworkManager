@@ -159,9 +159,6 @@ public static partial class WebPageResolver
     private static async Task<WebPageInfo> GetWebPageAsync(string url, int timeout,
         CancellationToken cancellationToken)
     {
-        // Certificate of the last https response (e.g. after a redirect from http to https)
-        WebCertificateInfo certificate = null;
-
         try
         {
             // In the try: an URL that can't be parsed only means no web page for this host, not the end of the scan
@@ -180,8 +177,11 @@ public static partial class WebPageResolver
                 using var response = await Client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead,
                     linkedCts.Token).ConfigureAwait(false);
 
-                if (request.Options.TryGetValue(CertificateKey, out var requestCertificate))
-                    certificate = requestCertificate;
+                // Certificate of this response (e.g. after a redirect from http to https), null for http (also after a
+                // redirect from https to http)
+                var certificate = request.Options.TryGetValue(CertificateKey, out var requestCertificate)
+                    ? requestCertificate
+                    : null;
 
                 var statusCode = (int)response.StatusCode;
                 var server = CleanHeaderValue(response.Headers.Server.ToString());
