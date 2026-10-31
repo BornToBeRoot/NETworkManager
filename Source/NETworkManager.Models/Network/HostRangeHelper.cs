@@ -51,6 +51,81 @@ public static class HostRangeHelper
     }
 
     /// <summary>
+    ///     Parses a host input (without <see cref="ExclusionPrefix" />) into its format and values - the only place that
+    ///     knows the formats, used for the hosts to scan, the exclusions, the host count and the validation.
+    /// </summary>
+    /// <param name="host">Input like "10.0.0.1", "10.0.0.0/24", "10.0.0.1-100", "10.0.[0-10].1" or "example.com".</param>
+    /// <returns>Format and values of the input, <see cref="HostRangeInputKind.Invalid" /> if it is not valid (also a
+    /// range whose start is after its end).</returns>
+    public static HostRangeInput Parse(string host)
+    {
+        switch (host)
+        {
+            // 192.168.0.1 or 2001:db8:85a3::8a2e:370:7334
+            case var _ when RegexHelper.IPv4AddressRegex().IsMatch(host):
+            case var _ when Regex.IsMatch(host, RegexHelper.IPv6AddressRegex):
+                // The regex also matches addresses that can't be parsed (e.g. a zone id that is not an interface).
+                // No exception: the validation of the input calls this on every key press.
+                return IPAddress.TryParse(host, out var ipAddress)
+                    ? new HostRangeInput(HostRangeInputKind.IPAddress, IPAddress: ipAddress)
+                    : new HostRangeInput(HostRangeInputKind.Invalid);
+
+            // 192.168.0.0/24 or 192.168.0.0/255.255.255.0
+            case var _ when RegexHelper.IPv4AddressCidrRegex().IsMatch(host):
+            case var _ when RegexHelper.IPv4AddressSubnetmaskRegex().IsMatch(host):
+                var network = IPNetwork2.Parse(host);
+
+                return CreateIPv4Range(network.Network, network.Broadcast);
+
+            // 192.168.0.1-100
+            case var _ when RegexHelper.IPv4AddressShortRangeRegex().IsMatch(host):
+                var shortRange = host.Split('-');
+                var shortBase = shortRange[0][..shortRange[0].LastIndexOf('.')];
+
+                return CreateIPv4Range(IPAddress.Parse(shortRange[0]), IPAddress.Parse($"{shortBase}.{shortRange[1]}"));
+
+            // 192.168.0.0 - 192.168.0.100
+            case var _ when RegexHelper.IPv4AddressRangeRegex().IsMatch(host):
+                var range = host.Split('-');
+
+                return CreateIPv4Range(IPAddress.Parse(range[0]), IPAddress.Parse(range[1]));
+
+            // 192.168.[50-100].1
+            case var _ when RegexHelper.IPv4AddressSpecialRangeRegex().IsMatch(host):
+                var octets = GetIPv4SpecialRangeOctets(host);
+
+                return octets == null
+                    ? new HostRangeInput(HostRangeInputKind.Invalid)
+                    : new HostRangeInput(HostRangeInputKind.IPv4SpecialRange, Octets: octets);
+
+            // example.com
+            case var _ when RegexHelper.HostnameOrDomainRegex().IsMatch(host):
+                return new HostRangeInput(HostRangeInputKind.Hostname, Hostname: host);
+
+            // example.com/24 or example.com/255.255.255.128
+            case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainWithCidrRegex):
+            case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainWithSubnetmaskRegex):
+                var hostAndSubnet = host.Split('/');
+
+                return new HostRangeInput(HostRangeInputKind.HostnameWithSubnet, Hostname: hostAndSubnet[0],
+                    Subnet: hostAndSubnet[1]);
+
+            default:
+                return new HostRangeInput(HostRangeInputKind.Invalid);
+        }
+    }
+
+    /// <summary>
+    ///     Creates the parsed input of an IPv4 range, invalid if the start is after the end.
+    /// </summary>
+    private static HostRangeInput CreateIPv4Range(IPAddress start, IPAddress end)
+    {
+        return IPv4Address.ToUInt32(start) > IPv4Address.ToUInt32(end)
+            ? new HostRangeInput(HostRangeInputKind.Invalid)
+            : new HostRangeInput(HostRangeInputKind.IPv4Range, Start: start, End: end);
+    }
+
+    /// <summary>
     ///     Adds every IPv4 address in the inclusive range [<paramref name="start" />, <paramref name="end" />] to
     ///     <paramref name="hosts" /> (in ascending order). Iterates using the unsigned IPv4 value widened to
     ///     <see cref="long" /> so the inclusive upper bound stays representable even for the last address in the
@@ -78,11 +153,9 @@ public static class HostRangeHelper
     /// <summary>
     ///     Adds every IPv4 address of a special range like "192.168.[50-100,200].1" to <paramref name="hosts" />.
     /// </summary>
-    private static void AddIPv4SpecialRange(string host, List<(IPAddress ipAddress, string hostname)> hosts,
+    private static void AddIPv4SpecialRange(List<List<byte>> octets, List<(IPAddress ipAddress, string hostname)> hosts,
         CancellationToken ct)
     {
-        var octets = GetIPv4SpecialRangeOctets(host);
-
         // Build the new ipv4
         var count = 0;
 
@@ -99,7 +172,8 @@ public static class HostRangeHelper
     }
 
     /// <summary>
-    ///     Gets the numbers of each octet of a special range like "192.168.[50-100,200].1".
+    ///     Gets the numbers of each octet of a special range like "192.168.[50-100,200].1", null if a range of an octet
+    ///     starts after its end (e.g. "[100-50]").
     /// </summary>
     private static List<List<byte>> GetIPv4SpecialRangeOctets(string host)
     {
@@ -116,6 +190,9 @@ public static class HostRangeHelper
                     if (numberOrRange.Contains('-'))
                     {
                         var rangeNumbers = numberOrRange.Split('-');
+
+                        if (int.Parse(rangeNumbers[0]) > int.Parse(rangeNumbers[1]))
+                            return null;
 
                         for (var i = int.Parse(rangeNumbers[0]); i <= int.Parse(rangeNumbers[1]); i++)
                             numbers.Add((byte)i);
@@ -150,48 +227,33 @@ public static class HostRangeHelper
             if (IsExclusion(host))
                 continue;
 
-            switch (host)
+            var input = Parse(host);
+
+            switch (input.Kind)
             {
-                // 192.168.0.1
-                case var _ when RegexHelper.IPv4AddressRegex().IsMatch(host):
+                // 192.168.0.1, 2001:db8::1 or example.com
+                case HostRangeInputKind.IPAddress:
+                case HostRangeInputKind.Hostname:
                     count++;
                     break;
 
-                // 192.168.0.0/24 or 192.168.0.0/255.255.255.0
-                case var _ when RegexHelper.IPv4AddressCidrRegex().IsMatch(host):
-                case var _ when RegexHelper.IPv4AddressSubnetmaskRegex().IsMatch(host):
-                    count += (long)IPNetwork2.Parse(host).Total;
-                    break;
-
-                // 192.168.0.1-100
-                case var _ when RegexHelper.IPv4AddressShortRangeRegex().IsMatch(host):
-                    var shortRange = host.Split('-');
-                    var shortBase = shortRange[0][..shortRange[0].LastIndexOf('.')];
-
-                    count += GetIPv4RangeCount(IPAddress.Parse(shortRange[0]),
-                        IPAddress.Parse($"{shortBase}.{shortRange[1]}"));
-                    break;
-
-                // 192.168.0.0 - 192.168.0.100
-                case var _ when RegexHelper.IPv4AddressRangeRegex().IsMatch(host):
-                    var range = host.Split('-');
-
-                    count += GetIPv4RangeCount(IPAddress.Parse(range[0]), IPAddress.Parse(range[1]));
+                // 192.168.0.0/24, 192.168.0.1-100, 192.168.0.0 - 192.168.0.100
+                case HostRangeInputKind.IPv4Range:
+                    count += GetIPv4RangeCount(input.Start, input.End);
                     break;
 
                 // 192.168.[50-100].1
-                case var _ when RegexHelper.IPv4AddressSpecialRangeRegex().IsMatch(host):
-                    count += GetIPv4SpecialRangeOctets(host).Aggregate(1L, (product, octet) => product * octet.Count);
+                case HostRangeInputKind.IPv4SpecialRange:
+                    count += input.Octets.Aggregate(1L, (product, octet) => product * octet.Count);
                     break;
 
-                // example.com/24 or example.com/255.255.255.128 (IPv6 address and example.com count as 1)
-                case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainWithCidrRegex):
-                case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainWithSubnetmaskRegex):
-                    count += (long)IPNetwork2.Parse($"0.0.0.0/{host.Split('/')[1]}").Total;
+                // example.com/24 or example.com/255.255.255.128
+                case HostRangeInputKind.HostnameWithSubnet:
+                    count += (long)IPNetwork2.Parse($"0.0.0.0/{input.Subnet}").Total;
                     break;
 
-                default:
-                    count++;
+                // Not a valid input (rejected by the validation) - nothing is scanned
+                case HostRangeInputKind.Invalid:
                     break;
             }
         }
@@ -249,87 +311,60 @@ public static class HostRangeHelper
             new ParallelOptions { CancellationToken = cancellationToken },
             async (index, ct) =>
         {
-            var host = inputs[index];
+            var input = Parse(inputs[index]);
             var list = new List<(IPAddress ipAddress, string hostname)>();
 
             hostsPerInput[index] = list;
 
-            switch (host)
+            switch (input.Kind)
             {
-                // 192.168.0.1
-                case var _ when RegexHelper.IPv4AddressRegex().IsMatch(host):
-                // 2001:db8:85a3::8a2e:370:7334
-                case var _ when Regex.IsMatch(host, RegexHelper.IPv6AddressRegex):
-                    list.Add((IPAddress.Parse(host), string.Empty));
+                // 192.168.0.1 or 2001:db8:85a3::8a2e:370:7334
+                case HostRangeInputKind.IPAddress:
+                    list.Add((input.IPAddress, string.Empty));
 
                     break;
 
-                // 192.168.0.0/24
-                case var _ when RegexHelper.IPv4AddressCidrRegex().IsMatch(host):
-                // 192.168.0.0/255.255.255.0
-                case var _ when RegexHelper.IPv4AddressSubnetmaskRegex().IsMatch(host):
-                    var network = IPNetwork2.Parse(host);
-
-                    AddIPv4Range(network.Network, network.Broadcast, list, ct);
-
-                    break;
-
-                // 192.168.0.1-100
-                case var _ when RegexHelper.IPv4AddressShortRangeRegex().IsMatch(host):
-                    var shortRange = host.Split('-');
-                    var shortBase = shortRange[0][..shortRange[0].LastIndexOf('.')];
-
-                    AddIPv4Range(IPAddress.Parse(shortRange[0]),
-                        IPAddress.Parse($"{shortBase}.{shortRange[1]}"), list, ct);
-
-                    break;
-
-                // 192.168.0.0 - 192.168.0.100
-                case var _ when RegexHelper.IPv4AddressRangeRegex().IsMatch(host):
-                    var range = host.Split('-');
-
-                    AddIPv4Range(IPAddress.Parse(range[0]), IPAddress.Parse(range[1]), list, ct);
+                // 192.168.0.0/24, 192.168.0.1-100, 192.168.0.0 - 192.168.0.100
+                case HostRangeInputKind.IPv4Range:
+                    AddIPv4Range(input.Start, input.End, list, ct);
 
                     break;
 
                 // 192.168.[50-100].1
-                case var _ when RegexHelper.IPv4AddressSpecialRangeRegex().IsMatch(host):
-                    AddIPv4SpecialRange(host, list, ct);
+                case HostRangeInputKind.IPv4SpecialRange:
+                    AddIPv4SpecialRange(input.Octets, list, ct);
 
                     break;
 
                 // example.com
-                case var _ when RegexHelper.HostnameOrDomainRegex().IsMatch(host):
-                    var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(host, dnsResolveHostnamePreferIPv4)
+                case HostRangeInputKind.Hostname:
+                    var dnsResult = await DNSClientHelper.ResolveAorAaaaAsync(input.Hostname, dnsResolveHostnamePreferIPv4)
                         .WaitAsync(ct).ConfigureAwait(false);
 
                     if (!dnsResult.HasError)
-                        list.Add((IPAddress.Parse($"{dnsResult.Value}"), host));
+                        list.Add((IPAddress.Parse($"{dnsResult.Value}"), input.Hostname));
                     else
-                        hostnameNotResolvedPerInput[index] = host;
+                        hostnameNotResolvedPerInput[index] = input.Hostname;
 
                     break;
 
                 // example.com/24 or example.com/255.255.255.128
-                case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainWithCidrRegex):
-                case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainWithSubnetmaskRegex):
-                    var hostAndSubnet = host.Split('/');
-
+                case HostRangeInputKind.HostnameWithSubnet:
                     // Only support IPv4
-                    var dnsResultWithSubnet = await DNSClientHelper.ResolveAorAaaaAsync(hostAndSubnet[0], true)
+                    var dnsResultWithSubnet = await DNSClientHelper.ResolveAorAaaaAsync(input.Hostname, true)
                         .WaitAsync(ct).ConfigureAwait(false);
 
                     // Only support IPv4 for ranges for now
                     if (!dnsResultWithSubnet.HasError &&
                         dnsResultWithSubnet.Value.AddressFamily == AddressFamily.InterNetwork)
                     {
-                        network = IPNetwork2.Parse($"{dnsResultWithSubnet.Value}/{hostAndSubnet[1]}");
+                        var network = IPNetwork2.Parse($"{dnsResultWithSubnet.Value}/{input.Subnet}");
 
                         AddIPv4Range(network.Network, network.Broadcast, list, ct);
                     }
                     else
                     {
-                        hostnameNotResolvedPerInput[index] = hostAndSubnet[0];
+                        hostnameNotResolvedPerInput[index] = input.Hostname;
                     }
 
                     break;
@@ -382,35 +417,21 @@ public static class HostRangeHelper
     private static async Task<Func<IPAddress, bool>> CreateExclusionAsync(string host,
         CancellationToken cancellationToken)
     {
-        switch (host)
+        var input = Parse(host);
+
+        switch (input.Kind)
         {
             // 192.168.0.1 or 2001:db8:85a3::8a2e:370:7334
-            case var _ when RegexHelper.IPv4AddressRegex().IsMatch(host):
-            case var _ when Regex.IsMatch(host, RegexHelper.IPv6AddressRegex):
-                return CreateIPAddressExclusion(IPAddress.Parse(host));
+            case HostRangeInputKind.IPAddress:
+                return CreateIPAddressExclusion(input.IPAddress);
 
-            // 192.168.0.0/24 or 192.168.0.0/255.255.255.0
-            case var _ when RegexHelper.IPv4AddressCidrRegex().IsMatch(host):
-            case var _ when RegexHelper.IPv4AddressSubnetmaskRegex().IsMatch(host):
-                return CreateIPv4RangeExclusion(IPNetwork2.Parse(host));
-
-            // 192.168.0.1-100
-            case var _ when RegexHelper.IPv4AddressShortRangeRegex().IsMatch(host):
-                var shortRange = host.Split('-');
-                var shortBase = shortRange[0][..shortRange[0].LastIndexOf('.')];
-
-                return CreateIPv4RangeExclusion(IPAddress.Parse(shortRange[0]),
-                    IPAddress.Parse($"{shortBase}.{shortRange[1]}"));
-
-            // 192.168.0.0 - 192.168.0.100
-            case var _ when RegexHelper.IPv4AddressRangeRegex().IsMatch(host):
-                var range = host.Split('-');
-
-                return CreateIPv4RangeExclusion(IPAddress.Parse(range[0]), IPAddress.Parse(range[1]));
+            // 192.168.0.0/24, 192.168.0.1-100, 192.168.0.0 - 192.168.0.100
+            case HostRangeInputKind.IPv4Range:
+                return CreateIPv4RangeExclusion(input.Start, input.End);
 
             // 192.168.[50-100].1
-            case var _ when RegexHelper.IPv4AddressSpecialRangeRegex().IsMatch(host):
-                var octets = GetIPv4SpecialRangeOctets(host).Select(x => x.ToHashSet()).ToArray();
+            case HostRangeInputKind.IPv4SpecialRange:
+                var octets = input.Octets.Select(x => x.ToHashSet()).ToArray();
 
                 return ipAddress =>
                 {
@@ -424,8 +445,8 @@ public static class HostRangeHelper
                 };
 
             // example.com (all IPv4 and IPv6 addresses)
-            case var _ when RegexHelper.HostnameOrDomainRegex().IsMatch(host):
-                var ipAddresses = await DNSClient.GetInstance().ResolveAllAAndAaaaAsync(host)
+            case HostRangeInputKind.Hostname:
+                var ipAddresses = await DNSClient.GetInstance().ResolveAllAAndAaaaAsync(input.Hostname)
                     .WaitAsync(cancellationToken).ConfigureAwait(false);
 
                 if (ipAddresses.Count == 0)
@@ -436,18 +457,17 @@ public static class HostRangeHelper
                 return ipAddress => ipAddressExclusions.Any(isExcluded => isExcluded(ipAddress));
 
             // example.com/24 or example.com/255.255.255.128 (only IPv4, like the inputs)
-            case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainWithCidrRegex):
-            case var _ when Regex.IsMatch(host, RegexHelper.HostnameOrDomainWithSubnetmaskRegex):
-                var hostAndSubnet = host.Split('/');
-
-                var dnsResultWithSubnet = await DNSClientHelper.ResolveAorAaaaAsync(hostAndSubnet[0], true)
+            case HostRangeInputKind.HostnameWithSubnet:
+                var dnsResultWithSubnet = await DNSClientHelper.ResolveAorAaaaAsync(input.Hostname, true)
                     .WaitAsync(cancellationToken).ConfigureAwait(false);
 
                 if (dnsResultWithSubnet.HasError ||
                     dnsResultWithSubnet.Value.AddressFamily != AddressFamily.InterNetwork)
                     return null;
 
-                return CreateIPv4RangeExclusion(IPNetwork2.Parse($"{dnsResultWithSubnet.Value}/{hostAndSubnet[1]}"));
+                var network = IPNetwork2.Parse($"{dnsResultWithSubnet.Value}/{input.Subnet}");
+
+                return CreateIPv4RangeExclusion(network.Network, network.Broadcast);
 
             // Not a valid input (rejected by the validation of the input) - excludes nothing
             default:
@@ -465,14 +485,6 @@ public static class HostRangeHelper
             return ipAddress => IPAddressHelper.WithoutScopeId(ipAddress).Equals(excludedIPAddress);
 
         return ipAddress => ipAddress.Equals(excludedIPAddress);
-    }
-
-    /// <summary>
-    ///     Creates the check of an excluded IPv4 subnet (incl. network and broadcast address).
-    /// </summary>
-    private static Func<IPAddress, bool> CreateIPv4RangeExclusion(IPNetwork2 network)
-    {
-        return CreateIPv4RangeExclusion(network.Network, network.Broadcast);
     }
 
     /// <summary>

@@ -62,6 +62,59 @@ public class HostRangeHelperExclusionTests
     }
 
     [Theory]
+    [InlineData("10.0.0.1", HostRangeInputKind.IPAddress)]
+    [InlineData("2001:db8::1", HostRangeInputKind.IPAddress)]
+    [InlineData("fe80::1%3", HostRangeInputKind.IPAddress)]
+    [InlineData("10.0.0.0/24", HostRangeInputKind.IPv4Range)]
+    [InlineData("10.0.0.0/255.255.255.0", HostRangeInputKind.IPv4Range)]
+    [InlineData("10.0.0.1-100", HostRangeInputKind.IPv4Range)]
+    [InlineData("10.0.0.1-10.0.0.100", HostRangeInputKind.IPv4Range)]
+    [InlineData("10.0.[0-10,20].1", HostRangeInputKind.IPv4SpecialRange)]
+    [InlineData("server.example.com", HostRangeInputKind.Hostname)]
+    [InlineData("server.example.com/24", HostRangeInputKind.HostnameWithSubnet)]
+    [InlineData("server.example.com/255.255.255.0", HostRangeInputKind.HostnameWithSubnet)]
+    [InlineData("10.0.0.100-1", HostRangeInputKind.Invalid)]
+    [InlineData("10.0.0.100-10.0.0.1", HostRangeInputKind.Invalid)]
+    [InlineData("10.0.[10-0].1", HostRangeInputKind.Invalid)]
+    [InlineData("10.0.[10-0,5].1", HostRangeInputKind.Invalid)]
+    [InlineData("10.0.0.0/33", HostRangeInputKind.Invalid)]
+    [InlineData("-invalid-", HostRangeInputKind.Invalid)]
+    public void Parse_Kind(string input, HostRangeInputKind expected)
+    {
+        Assert.Equal(expected, HostRangeHelper.Parse(input).Kind);
+    }
+
+    [Theory]
+    [InlineData("10.0.0.5/24", "10.0.0.0", "10.0.0.255")]
+    [InlineData("10.0.0.0/255.255.255.252", "10.0.0.0", "10.0.0.3")]
+    [InlineData("10.0.0.1-100", "10.0.0.1", "10.0.0.100")]
+    [InlineData("10.0.0.200-10.0.1.5", "10.0.0.200", "10.0.1.5")]
+    public void Parse_IPv4Range(string input, string start, string end)
+    {
+        var range = HostRangeHelper.Parse(input);
+
+        Assert.Equal(start, range.Start.ToString());
+        Assert.Equal(end, range.End.ToString());
+    }
+
+    [Fact]
+    public void Parse_HostnameWithSubnet()
+    {
+        var input = HostRangeHelper.Parse("server.example.com/24");
+
+        Assert.Equal("server.example.com", input.Hostname);
+        Assert.Equal("24", input.Subnet);
+    }
+
+    [Theory]
+    [InlineData("10.0.0.0/24; 10.0.[1-2].[1-3]; 2001:db8::1; server.example.com/30", 256 + 6 + 1 + 4)]
+    [InlineData("10.0.0.5-1", 0)]
+    public void GetHostCount(string input, long expected)
+    {
+        Assert.Equal(expected, HostRangeHelper.GetHostCount(HostRangeHelper.CreateListFromInput(input)));
+    }
+
+    [Theory]
     [InlineData("!10.0.0.1", true)]
     [InlineData("10.0.0.1", false)]
     public void IsExclusion(string input, bool expected)

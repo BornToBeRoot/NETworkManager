@@ -1,11 +1,7 @@
 ﻿using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
-using NETworkManager.Utilities;
 using System;
-using System.DirectoryServices.ActiveDirectory;
 using System.Globalization;
-using System.Net;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 namespace NETworkManager.Validators;
@@ -27,102 +23,18 @@ public class MultipleHostsRangeValidator : ValidationRule
             .Split([';', '\r', '\n'], StringSplitOptions.RemoveEmptyEntries))
         {
             // Exclusion (e.g. "!10.0.0.1"), validated like the other inputs
-            var ipHostOrRange = HostRangeHelper.IsExclusion(input) ? input[1..] : input;
+            var isExclusion = HostRangeHelper.IsExclusion(input);
 
-            if (!HostRangeHelper.IsExclusion(input))
+            if (!isExclusion)
                 hasInclusion = true;
 
-            // 192.168.0.1
-            if (RegexHelper.IPv4AddressRegex().IsMatch(ipHostOrRange))
-                continue;
-
-            // 192.168.0.0/24
-            if (RegexHelper.IPv4AddressCidrRegex().IsMatch(ipHostOrRange))
-                continue;
-
-            // 192.168.0.0/255.255.255.0
-            if (RegexHelper.IPv4AddressSubnetmaskRegex().IsMatch(ipHostOrRange))
-                continue;
-
-            // 192.168.0.1-100
-            if (RegexHelper.IPv4AddressShortRangeRegex().IsMatch(ipHostOrRange))
-            {
-                var shortRange = ipHostOrRange.Split('-');
-                var shortBase = shortRange[0][..shortRange[0].LastIndexOf('.')];
-
-                if (ToUInt32(shortRange[0]) > ToUInt32($"{shortBase}.{shortRange[1]}"))
-                    isValid = false;
-
-                continue;
-            }
-
-            // 192.168.0.0 - 192.168.0.100
-            if (RegexHelper.IPv4AddressRangeRegex().IsMatch(ipHostOrRange))
-            {
-                var range = ipHostOrRange.Split('-');
-
-                if (ToUInt32(range[0]) > ToUInt32(range[1]))
-                    isValid = false;
-
-                continue;
-            }
-
-            // 192.168.[50-100].1
-            if (RegexHelper.IPv4AddressSpecialRangeRegex().IsMatch(ipHostOrRange))
-            {
-                var octets = ipHostOrRange.Split('.');
-
-                foreach (var octet in octets)
-                {
-                    // Match [50-100]
-                    if (!Regex.IsMatch(octet, RegexHelper.SpecialRangeRegex))
-                        continue;
-
-                    foreach (var numberOrRange in octet.Substring(1, octet.Length - 2).Split(','))
-                    {
-                        if (!numberOrRange.Contains('-'))
-                            continue;
-
-                        // 50-100 --> {50, 100}
-                        var rangeNumber = numberOrRange.Split('-');
-
-                        if (int.Parse(rangeNumber[0]) > int.Parse(rangeNumber[1]))
-                            isValid = false;
-                    }
-                }
-
-                continue;
-            }
-
-            // 2001:db8:85a3::8a2e:370:7334
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.IPv6AddressRegex))
-                continue;
-
-            // server-01.example.com
-            if (RegexHelper.HostnameOrDomainRegex().IsMatch(ipHostOrRange))
-                continue;
-
-            // server-01.example.com/24
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameOrDomainWithCidrRegex))
-                continue;
-
-            // server-01.example.com/255.255.255.0
-            if (Regex.IsMatch(ipHostOrRange, RegexHelper.HostnameOrDomainWithSubnetmaskRegex))
-                continue;
-
-            isValid = false;
+            // Same formats as the scan (also a range whose start is after its end is invalid)
+            if (HostRangeHelper.Parse(isExclusion ? input[1..] : input).Kind == HostRangeInputKind.Invalid)
+                isValid = false;
         }
 
         return isValid && hasInclusion
             ? ValidationResult.ValidResult
             : new ValidationResult(false, Strings.EnterValidIPScanRange);
-    }
-
-    /// <summary>
-    ///     Converts an IPv4 address to its unsigned value, so ranges across 128.0.0.0 compare correctly.
-    /// </summary>
-    private static uint ToUInt32(string ipAddress)
-    {
-        return IPv4Address.ToUInt32(IPAddress.Parse(ipAddress));
     }
 }
