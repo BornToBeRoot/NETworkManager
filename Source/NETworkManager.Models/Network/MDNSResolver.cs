@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -101,7 +102,8 @@ public static class MDNSResolver
     /// <param name="response">DNS message of the answer.</param>
     /// <param name="id">ID of the query.</param>
     /// <returns>
-    ///     Hostname without trailing dot, empty if the answer is invalid or contains no <c>PTR</c> record.
+    ///     Hostname without trailing dot and control characters, empty if the answer is invalid or contains no
+    ///     <c>PTR</c> record.
     /// </returns>
     public static string ParsePTRResponse(byte[] response, ushort id)
     {
@@ -146,7 +148,11 @@ public static class MDNSResolver
             {
                 var dataOffset = offset;
 
-                return ReadName(response, ref dataOffset) ?? string.Empty;
+                // Labels can contain any byte - control characters (e.g. 0x00) are not shown and would make the XML
+                // export fail
+                var name = ReadName(response, ref dataOffset) ?? string.Empty;
+
+                return new string([.. name.Where(x => !char.IsControl(x))]);
             }
 
             offset += dataLength;

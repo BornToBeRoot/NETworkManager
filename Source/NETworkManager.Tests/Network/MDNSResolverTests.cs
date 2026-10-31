@@ -84,6 +84,13 @@ public class MDNSResolverTests
     }
 
     [Fact]
+    public void ParsePTRResponse_ControlCharacters_Removed()
+    {
+        Assert.Equal("macbook.local",
+            MDNSResolver.ParsePTRResponse(CreateResponse(Id, "mac\u0000book\u0001.local\n"), Id));
+    }
+
+    [Fact]
     public void ParsePTRResponse_IdZero_Accepted()
     {
         Assert.Equal("printer.local", MDNSResolver.ParsePTRResponse(CreateResponse(0, "printer.local"), Id));
