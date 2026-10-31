@@ -283,7 +283,7 @@ Resolve the hostname (PTR) for each IP address.
 
 ### Scan ports
 
-Scan each IP address for open TCP ports.
+Scan each IP address for open TCP ports. The [web pages](#read-web-pages) are only read with the port scan; its settings are disabled while the port scan is disabled.
 
 **Type:** `Boolean`
 
@@ -428,7 +428,7 @@ Read the web page (`GET /`) of every reachable host with an open port of the [Po
 
 :::note
 
-Only ports that are open in the [port scan](#scan-ports) are requested - the ports must also be in its [Ports](#ports) list. No cookies or credentials are sent, no proxy is used and certificate errors are accepted (the certificate is only read). Every request uses a new connection (`Connection: close`), so the certificate is also read on a rescan. The request appears in the log of the web server. At most 64 KB of the page are read.
+Only ports that are open in the [port scan](#scan-ports) are requested - the ports must also be in its [Ports](#ports) list. Without the port scan, no web page is read and the setting is disabled. No cookies or credentials are sent, no proxy is used and certificate errors are accepted (the certificate is only read). Every request uses a new connection (`Connection: close`), so the certificate is also read on a rescan. The request appears in the log of the web server. At most 64 KB of the page are read.
 
 :::
 
