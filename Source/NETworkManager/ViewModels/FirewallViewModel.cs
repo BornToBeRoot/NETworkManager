@@ -774,15 +774,20 @@ public class FirewallViewModel : ViewModelBase
         StatusMessage = Strings.RefreshingDots;
         IsStatusMessageDisplayed = true;
 
-        if (!init)
-            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
-
         try
         {
             // Reset right before the setting is read, so only a change during the query triggers another refresh (see finally)
             _refreshPending = false;
 
-            var (rules, errors) = await Firewall.GetRulesAsync(onlyManagedRules: !ShowAllRules);
+            var onlyManagedRules = !ShowAllRules;
+
+            // The first load right away; a refresh takes at least the refresh interval (the refresh button can't be
+            // spammed), loading runs at the same time
+            var (rules, errors) = init
+                ? await Firewall.GetRulesAsync(onlyManagedRules: onlyManagedRules)
+                : await TaskHelper.WithMinimumDurationAsync(
+                    () => Firewall.GetRulesAsync(onlyManagedRules: onlyManagedRules),
+                    GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
             Application.Current.Dispatcher.Invoke(() =>
             {
