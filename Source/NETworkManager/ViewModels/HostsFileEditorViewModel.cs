@@ -710,13 +710,18 @@ public class HostsFileEditorViewModel : ViewModelBase
 
         for (var attempt = 1; attempt <= attempts; attempt++)
         {
-            // Wait for 2.5 seconds on refresh and before another attempt (once, see catch)
-            if (init == false || attempt > 1)
+            // Wait for 2.5 seconds before another attempt (once, see catch)
+            if (attempt > 1)
                 await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
             try
             {
-                var entries = await HostsFileEditor.GetHostsFileEntriesAsync();
+                // The first load right away; a refresh takes at least the refresh interval (the refresh button can't
+                // be spammed), loading runs at the same time
+                var entries = init || attempt > 1
+                    ? await HostsFileEditor.GetHostsFileEntriesAsync()
+                    : await TaskHelper.WithMinimumDurationAsync(() => HostsFileEditor.GetHostsFileEntriesAsync(),
+                        GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
                 Results.Clear();
 

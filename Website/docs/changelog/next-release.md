@@ -159,6 +159,7 @@ Release date: **xx.xx.2026**
 - Multiple entries can now be selected to enable, disable or delete them at once, or to change their comment via **Edit entries...** (`F2`). The edit dialog switches to a bulk mode in which only the comment can be changed. [#3624](https://github.com/BornToBeRoot/NETworkManager/pull/3624)
 - Entries that don't change (e.g. enabling an already enabled entry, or confirming the edit dialog without changes) are no longer rewritten in the `hosts` file, so custom formatting such as tabs or alignment is kept. [#3624](https://github.com/BornToBeRoot/NETworkManager/pull/3624)
 - The search filters after a short delay while typing instead of on every key press (smoother with many entries), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- A manual refresh is faster: the wait of 2.5 seconds (so the refresh button can't be spammed) now runs while loading instead of before it, and the refresh icon spins until loading is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 **Firewall**
 
