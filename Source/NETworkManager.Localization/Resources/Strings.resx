@@ -5395,10 +5395,6 @@ Do you want to start the scan?</value>
   <data name="SMB" xml:space="preserve">
     <value>SMB</value>
   </data>
-  <data name="SMBDialectSigningRequired" xml:space="preserve">
-    <value>{0} (signing required)</value>
-    <comment>SMB version of the connection, {0} is the version (e.g. 3.1.1)</comment>
-  </data>
   <data name="ReadingWindowsHostInformationIsDisabled" xml:space="preserve">
     <value>Reading Windows host information is disabled!</value>
   </data>
@@ -5429,5 +5425,15 @@ Do you want to start the scan?</value>
   <data name="ScanAs" xml:space="preserve">
     <value>Scan as</value>
     <comment>IP Scanner: title of the dialog to scan a profile with other Windows credentials</comment>
+  </data>
+  <data name="SMBSigning" xml:space="preserve">
+    <value>SMB signing</value>
+    <comment>Whether the SMB server of a host requires signed messages</comment>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="NotRequired" xml:space="preserve">
+    <value>Not required</value>
   </data>
 </root>

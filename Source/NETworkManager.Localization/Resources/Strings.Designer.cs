@@ -8816,6 +8816,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not required.
+        /// </summary>
+        public static string NotRequired {
+            get {
+                return ResourceManager.GetString("NotRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not set.
         /// </summary>
         public static string NotSet {
@@ -11788,6 +11797,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Required.
+        /// </summary>
+        public static string Required {
+            get {
+                return ResourceManager.GetString("Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rescan.
         /// </summary>
         public static string Rescan {
@@ -13438,11 +13456,11 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} (signing required).
+        ///   Looks up a localized string similar to SMB signing.
         /// </summary>
-        public static string SMBDialectSigningRequired {
+        public static string SMBSigning {
             get {
-                return ResourceManager.GetString("SMBDialectSigningRequired", resourceCulture);
+                return ResourceManager.GetString("SMBSigning", resourceCulture);
             }
         }
         

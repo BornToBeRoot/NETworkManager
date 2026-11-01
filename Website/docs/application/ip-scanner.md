@@ -180,7 +180,7 @@ Expand a row with the button in front of it to see all values of the host, or en
 | **NetBIOS**      | Computer name, domain / workgroup and user                                                                                                    |
 | **Hostnames**    | DNS and mDNS hostname                                                                                                                         |
 | **SNMP**         | Name, description and location; with SNMP v3 the error if the credentials are wrong (e.g. `Unknown user name.`)                                |
-| **Windows**      | Operating system, edition, version (with patch level if read from the registry), role, computer name, domain, description, time offset, logged-on users (one per line), SMB version (and if signing is required); the error of the NetApi requests (e.g. `Access is denied.`, wrong password) |
+| **Windows**      | Operating system, edition, version (with patch level if read from the registry), role, computer name, domain, description, time offset, logged-on users (one per line), SMB version, SMB signing (`Required` / `Not required`: a setting of the host, not an error - hosts that don't require signing can be targets of relay attacks); the error of the NetApi requests (e.g. `Access is denied.`, wrong password) |
 
 The headers of the probes that can find a host (**Ping details**, **Ports**, **NetBIOS**, **SNMP**) show a status icon: a green check if the host answered the probe, a red cross if not (not while the probe is running). A section of a disabled setting shows a note (e.g. `SNMP is disabled!`).
 

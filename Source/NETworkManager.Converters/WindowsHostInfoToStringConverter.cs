@@ -12,7 +12,7 @@ namespace NETworkManager.Converters;
 ///     result and the row details, "-/-" if there is none. The value is selected with the converter parameter:
 ///     <c>OS</c>, <c>Edition</c>, <c>Version</c>, <c>Role</c>, <c>ComputerName</c>, <c>Domain</c>,
 ///     <c>Description</c>, <c>TimeOffset</c>, <c>Users</c> (one per line, the error if they could not be read),
-///     <c>SMB</c> (dialect and signing), <c>Error</c> (message of the NetApi error).
+///     <c>SMB</c> (dialect), <c>SMBSigning</c> (required / not required), <c>Error</c> (message of the NetApi error).
 /// </summary>
 public sealed class WindowsHostInfoToStringConverter : IValueConverter
 {
@@ -46,11 +46,12 @@ public sealed class WindowsHostInfoToStringConverter : IValueConverter
             "Users" => info.Users != null
                 ? string.Join(Environment.NewLine, info.Users)
                 : GetErrorMessage(info.UsersError),
-            "SMB" => info.SMB == null
+            "SMB" => info.SMB?.Dialect,
+            "SMBSigning" => info.SMB == null
                 ? null
                 : info.SMB.SigningRequired
-                    ? string.Format(Strings.SMBDialectSigningRequired, info.SMB.Dialect)
-                    : info.SMB.Dialect,
+                    ? Strings.Required
+                    : Strings.NotRequired,
             "Error" => GetErrorMessage(info.Error),
             _ => null
         };

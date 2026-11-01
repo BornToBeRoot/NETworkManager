@@ -1934,6 +1934,21 @@
                                             </TextBox>
                                         </HeaderedContentControl>
                                     </ListViewItem>
+                                    <ListViewItem>
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.SMBSigning}" Style="{StaticResource HostDetailsRow}">
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox>
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
+                                                        <Binding Path="Windows" Mode="OneWay"
+                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
+                                                                 ConverterParameter="SMBSigning" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </HeaderedContentControl>
+                                    </ListViewItem>
                                     <!-- NetApi error (e.g. access denied, wrong password), the values without credentials are still shown -->
                                     <ListViewItem Visibility="{Binding Path=HasWindowsError, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                         <HeaderedContentControl Header="{x:Static localization:Strings.Error}" Style="{StaticResource HostDetailsRow}">
