@@ -174,6 +174,9 @@ public static class GlobalStaticConfiguration
     public static string IPScanner_SNMPCommunity => "public";
     public static int IPScanner_SNMPTimeout => 2000;
     public static bool IPScanner_ExpandHostView => false;
+
+    public static AutoRefreshTimeInfo IPScanner_AutoRefreshTime =>
+        AutoRefreshTime.GetScanDefaults.First(x => x.Value == 5 && x.TimeUnit == TimeUnit.Minute);
     public static ExportFileType IPScanner_ExportFileType => ExportFileType.Csv;
     // Larger scans need a confirmation, even larger ones are refused (every IP address / port is kept in memory)
     public static long IPScanner_ConfirmHostCount => 65536;

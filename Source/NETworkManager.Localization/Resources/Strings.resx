@@ -4036,6 +4036,12 @@ Right-click for more options.</value>
   <data name="NextRefreshInX" xml:space="preserve">
     <value>Next refresh in {0}</value>
   </data>
+  <data name="NextScanInX" xml:space="preserve">
+    <value>Next scan in {0}</value>
+  </data>
+  <data name="AutomaticallyScanEvery" xml:space="preserve">
+    <value>Automatically scan every</value>
+  </data>
   <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
     <value>Failed to load hosts file: {0}</value>
   </data>

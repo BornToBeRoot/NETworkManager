@@ -68,6 +68,22 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // Input of the running / last scan (not of a rescan of selected hosts)
     private string _scanInput;
 
+    // Repeat of the scan ("Automatically scan every"): the input of the last completed scan, null if the scan is not
+    // repeated (until the next completed scan: after a manual start, a cancel, an error or a changed input)
+    private string _repeatInput;
+    private readonly AutoRefreshTimer _autoRefreshTimer;
+
+    // Completed by ScanComplete, so the repeat timer waits for the end of the scan it started
+    private TaskCompletionSource _scanCompletion;
+
+    // Repeated scan: the rows of the last scan stay and are updated in place (selection, scroll position and expanded
+    // details stay) - row per IP address, new results are copied into it (_repeatResults: result -> row), new hosts
+    // are added (_repeatAdded). The values before the scan are restored if it is canceled or fails.
+    private Dictionary<IPAddress, IPScannerHostInfo> _repeatRows;
+    private readonly Dictionary<IPScannerHostInfo, IPScannerHostInfo> _repeatResults = [];
+    private readonly List<IPScannerHostInfo> _repeatAdded = [];
+    private Dictionary<IPScannerHostInfo, IPScannerHostInfo> _repeatSnapshots;
+
     // Rescan of shown hosts (see RescanSelectedHosts), null if no rescan is running: row per rescanned IP address
     // (every IP address is scanned once, see HostRangeHelper.ResolveAsync). The scanner creates new results - their
     // values are copied into the existing rows (selection and expanded details stay), the updates of a new result are
@@ -106,6 +122,15 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 return;
 
             field = value;
+
+            // Another input is not repeated (until it was scanned)
+            if (_repeatInput != null &&
+                !string.Equals(value?.Trim(), _repeatInput, StringComparison.OrdinalIgnoreCase))
+            {
+                _repeatInput = null;
+                UpdateRepeat();
+            }
+
             OnPropertyChanged();
         }
     }
@@ -416,6 +441,59 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the scan is repeated automatically after the interval (per tab and not
+    /// saved: a new tab or a profile doesn't start to repeat). Starts with the next completed scan.
+    /// </summary>
+    public bool AutoRefreshEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            UpdateRepeat();
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the intervals to repeat the scan.
+    /// </summary>
+    public ICollectionView AutoRefreshTimes { get; }
+
+    /// <summary>
+    /// Gets or sets the interval to repeat the scan (the pause after a scan, saved for all tabs).
+    /// </summary>
+    public AutoRefreshTimeInfo SelectedAutoRefreshTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+
+            // Not in the list (e.g. a removed interval of an old settings file): the previous interval is kept
+            if (value != null)
+            {
+                SettingsManager.Current.IPScanner_AutoRefreshTime = value;
+                _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(value);
+            }
+
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the timer of the repeated scan, for the countdown in the header (see
+    /// <see cref="AutoRefreshTimer.RemainingTime"/>).
+    /// </summary>
+    public AutoRefreshTimer AutoRefreshTimer => _autoRefreshTimer;
+
+    /// <summary>
     /// Gets or sets a value indicating whether the scan is being prepared.
     /// </summary>
     public bool PreparingScan
@@ -507,6 +585,15 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
     public IPScannerViewModel(Guid tabId, string hostOrIPRange, bool start = true)
     {
+        // Repeat of the scan (before Host is set, see its setter): not while a scan or rescan is running
+        _autoRefreshTimer = new AutoRefreshTimer(RepeatScanAsync, () => !IsRunning);
+
+        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetScanDefaults);
+        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
+            x.Value == SettingsManager.Current.IPScanner_AutoRefreshTime.Value &&
+            x.TimeUnit == SettingsManager.Current.IPScanner_AutoRefreshTime.TimeUnit) ??
+            AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().First();
+
         _firstLoad = start;
 
         ConfigurationManager.Current.IPScannerTabCount++;
@@ -864,7 +951,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <summary>
     /// Starts the IP scan.
     /// </summary>
-    private async Task Start()
+    private async Task Start(bool isRepeat = false)
     {
         // A host is only found if it answers a probe - without ping, port scan, NetBIOS and SNMP every host is
         // unreachable (ARP / NDP alone isn't enough: the neighbor entry is only created by the packets of the probes)
@@ -904,7 +991,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return;
         }
 
-        if (hostCount > GlobalStaticConfiguration.IPScanner_ConfirmHostCount)
+        // Confirmed by the first scan, not asked again when the scan is repeated
+        if (!isRepeat && hostCount > GlobalStaticConfiguration.IPScanner_ConfirmHostCount)
         {
             var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive) ??
                          Application.Current.MainWindow;
@@ -930,15 +1018,31 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             _resultsBuffer.Clear();
         }
 
-        Results.Clear();
+        if (isRepeat)
+        {
+            // The rows of the last scan stay (and its changes until the scan is completed), see ApplyRepeatResult
+            _repeatRows = Results.DistinctBy(x => x.IPAddress).ToDictionary(x => x.IPAddress);
+            _repeatResults.Clear();
+            _repeatAdded.Clear();
+            _repeatSnapshots = _repeatRows.Values.ToDictionary(x => x, x => x.Clone());
+        }
+        else
+        {
+            Results.Clear();
+
+            // Repeated from the end of this scan (see ScanComplete)
+            _repeatInput = null;
+            UpdateRepeat();
+
+            HasComparison = false;
+            HostsNew = 0;
+            HostsGone = 0;
+            HostsMACChanged = 0;
+            LastScanTime = null;
+        }
 
         // Compared with the previous scan of the same input when this scan is completed (see ScanComplete)
         _scanInput = Host?.Trim() ?? string.Empty;
-        HasComparison = false;
-        HostsNew = 0;
-        HostsGone = 0;
-        HostsMACChanged = 0;
-        LastScanTime = null;
 
         // No results are shown until the scan's options are known - follow the current settings
         ScanOptions = CreateResultOptions();
@@ -1009,7 +1113,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         PreparingScan = false;
 
         // Add host(s) to the history
-        ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory, Host,
+        if (!isRepeat)
+            ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory, Host,
             SettingsManager.Current.General_HistoryListEntries);
 
         var scanOptions = CreateScanOptions(ports, webPagePorts);
@@ -1018,7 +1123,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         _lastScanOptions = scanOptions;
 
-        StartScanner(scanOptions, hosts.hosts);
+        // A repeated scan reports every host, so the row of a host that is down now is updated (see ApplyRepeatResult)
+        StartScanner(isRepeat ? scanOptions with { ReportAllHosts = true } : scanOptions, hosts.hosts);
     }
 
     /// <summary>
@@ -1424,6 +1530,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         _closed = true;
 
+        // No repeated scan in the background
+        UpdateRepeat();
+        _scanCompletion?.TrySetResult();
+
         SettingsManager.Current.PropertyChanged -= SettingsManager_PropertyChanged;
 
         // Stop scan
@@ -1553,11 +1663,43 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         {
             if (_rescanRows != null)
                 ApplyRescanResult(host, update);
+            else if (_repeatRows != null)
+                ApplyRepeatResult(host, update);
             else if (update == null)
                 Results.Add(host);
             else
                 update.Apply();
         }
+    }
+
+    /// <summary>
+    /// Applies a result of a repeated scan (see <see cref="Start"/>): the row of the host is updated in place, a host
+    /// without a row is added if it is up (or unreachable hosts are shown). Every host is reported, also if it is down
+    /// now - its row is updated, other down hosts are ignored.
+    /// </summary>
+    /// <param name="host">Result of the scan.</param>
+    /// <param name="update">Update of the result, null if the host was found.</param>
+    private void ApplyRepeatResult(IPScannerHostInfo host, IPScannerHostUpdatedArgs update)
+    {
+        if (update == null)
+        {
+            if (_repeatRows.TryGetValue(host.IPAddress, out var row))
+            {
+                row.CopyFrom(host);
+                _repeatResults[host] = row;
+            }
+            else if (host.IsReachable || _lastScanOptions.ShowAllResults)
+            {
+                Results.Add(host);
+                _repeatResults[host] = host;
+                _repeatAdded.Add(host);
+            }
+
+            return;
+        }
+
+        if (_repeatResults.TryGetValue(update.Host, out var target))
+            update.ApplyTo(target);
     }
 
     /// <summary>
@@ -1665,6 +1807,27 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                     row.CopyFrom(snapshot);
             }
 
+            // Canceled / failed repeated scan: the rows of the last scan with their values (before the counters are
+            // computed from them)
+            var isRepeat = _repeatRows != null;
+
+            if (isRepeat && (e.IsCanceled || e.Exception != null))
+            {
+                foreach (var (row, snapshot) in _repeatSnapshots)
+                    row.CopyFrom(snapshot);
+
+                foreach (var added in _repeatAdded)
+                    Results.Remove(added);
+            }
+
+            if (isRepeat)
+            {
+                _repeatRows = null;
+                _repeatResults.Clear();
+                _repeatAdded.Clear();
+                _repeatSnapshots = null;
+            }
+
             // Canceled / failed: results of running lookups never arrive - no "..." for them (and Copy works)
             if (e.IsCanceled || e.Exception != null)
             {
@@ -1714,9 +1877,18 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 AddStatusMessage(Strings.NoReachableHostsFound);
             }
 
-            // Only a completed scan of the input is compared and becomes the baseline of the next one
-            if (!isRescan && !e.IsCanceled && e.Exception == null && HostsToScan > 0)
-                CompareWithPreviousScan();
+            // Only a completed scan of the input is compared and becomes the baseline of the next one - and is repeated
+            // (not after a cancel or an error, so a failing scan doesn't repeat)
+            if (!isRescan)
+            {
+                var isCompleted = !e.IsCanceled && e.Exception == null && HostsToScan > 0;
+
+                if (isCompleted)
+                    CompareWithPreviousScan();
+
+                _repeatInput = isCompleted ? _scanInput : null;
+                UpdateRepeat();
+            }
 
             PreparingScan = false;
             IsCanceling = false;
@@ -1724,7 +1896,43 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             // E.g. canceled during the preparation, or nothing found
             UpdateScanOptionsIfNoResults();
+
+            // The repeat timer waits for the end of the scan (see RepeatScanAsync)
+            _scanCompletion?.TrySetResult();
+            _scanCompletion = null;
         });
+    }
+
+    /// <summary>
+    /// Starts or stops the timer of the repeated scan: runs while "Automatically scan every" is enabled and the last
+    /// scan of the input was completed.
+    /// </summary>
+    private void UpdateRepeat()
+    {
+        if (_autoRefreshTimer != null)
+            _autoRefreshTimer.IsEnabled = AutoRefreshEnabled && _repeatInput != null && !_closed;
+    }
+
+    /// <summary>
+    /// Repeats the scan (tick of the repeat timer) and waits until it is finished, so the interval starts after it.
+    /// </summary>
+    private async Task RepeatScanAsync()
+    {
+        _scanCompletion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        await Start(isRepeat: true);
+
+        // Not started (e.g. no probe enabled, invalid input - the message is shown): not repeated
+        if (!IsRunning && _scanCompletion != null)
+        {
+            _repeatInput = null;
+            UpdateRepeat();
+
+            _scanCompletion.TrySetResult();
+        }
+
+        if (_scanCompletion != null)
+            await _scanCompletion.Task;
     }
 
     /// <summary>
@@ -1734,6 +1942,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// </summary>
     private void CompareWithPreviousScan()
     {
+        // The changes of the last comparison (rows of a repeated scan)
+        foreach (var host in Results)
+        {
+            host.Change = IPScannerHostChange.None;
+            host.PreviousMACAddress = string.Empty;
+        }
+
         var current = IPScannerScanComparer.CreateBaseline(Results);
 
         if (_baseline != null && string.Equals(_baselineInput, _scanInput, StringComparison.OrdinalIgnoreCase))
@@ -1764,6 +1979,14 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             HostsMACChanged = comparison.Changes.Values.Count(x => x.Change == IPScannerHostChange.MACChanged);
             HostsGone = comparison.Gone.Count;
             HasComparison = true;
+        }
+
+        // A repeated scan updated the rows of hosts that are down now: only shown if they are gone (or unreachable hosts
+        // are shown)
+        if (!_lastScanOptions.ShowAllResults)
+        {
+            foreach (var host in Results.Where(x => !x.IsReachable && x.Change != IPScannerHostChange.Gone).ToList())
+                Results.Remove(host);
         }
 
         _baseline = current;

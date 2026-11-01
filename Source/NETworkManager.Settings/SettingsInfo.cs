@@ -1220,6 +1220,22 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_ExpandHostView;
 
+    /// <summary>
+    ///     Interval of "Automatically scan every" (the checkbox is per tab and not saved, see the view model).
+    /// </summary>
+    public AutoRefreshTimeInfo IPScanner_AutoRefreshTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_AutoRefreshTime;
+
     public bool IPScanner_ICMPEnabled
     {
         get;

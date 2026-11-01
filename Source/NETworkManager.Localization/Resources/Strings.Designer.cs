@@ -1393,6 +1393,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Automatically scan every.
+        /// </summary>
+        public static string AutomaticallyScanEvery {
+            get {
+                return ResourceManager.GetString("AutomaticallyScanEvery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Automatically update every.
         /// </summary>
         public static string AutomaticallyUpdateEvery {
@@ -8550,6 +8559,15 @@ namespace NETworkManager.Localization.Resources {
         public static string NextRefreshInX {
             get {
                 return ResourceManager.GetString("NextRefreshInX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next scan in {0}.
+        /// </summary>
+        public static string NextScanInX {
+            get {
+                return ResourceManager.GetString("NextScanInX", resourceCulture);
             }
         }
         

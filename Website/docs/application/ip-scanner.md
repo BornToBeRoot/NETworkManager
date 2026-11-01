@@ -152,6 +152,14 @@ The **Change** column and the counters next to the **Result** header (e.g. `2 Ne
 
 Only completed scans are compared: a canceled scan or a scan with another input starts over (the next scan of this input is compared with it). **Rescan** of selected hosts updates their rows and keeps the changes, but is not a scan of the input. The last scan is only kept in memory, as long as the tab is open. The change is also in the search and the export (`Change`, `PreviousMACAddress`).
 
+### Repeat the scan
+
+**Automatically scan every** right of the **Result** header repeats the scan after the selected interval (`1 min` to `1 h`, the pause after a scan, so scans don't overlap) - e.g. to watch a network for new devices, see [Changes since the last scan](#changes-since-the-last-scan). The repetition starts with the next completed scan; while it waits, the header shows the countdown (`Next scan in 04:32`, the tooltip shows the last scan).
+
+A repeated scan keeps the rows and updates them in place (selection, scroll position, expanded details and search stay): new hosts are added, hosts that are down now are shown as **Gone**. The input is not asked to be confirmed again (large scans) and is not added to the history again.
+
+The repetition stops when a scan is canceled or fails (e.g. a hostname can't be resolved, no probe enabled), the input is changed or the tab is closed; a manual **Scan** starts the interval again after the scan. The scan is also repeated while another tab or application is shown. The checkbox is per tab and not saved (a new tab doesn't repeat), the interval is saved.
+
 ### Row details
 
 Expand a row with the button in front of it to see all values of the host, or enable [Expand host view](#expand-host-view) to expand all hosts:
