@@ -526,7 +526,7 @@ Timeout in milliseconds after which an SNMP request is considered lost.
 
 ### Show notification popup on changes
 
-Show a notification popup in the bottom-right corner of the primary screen when a [repeated scan](#repeat-the-scan) found changes since the previous scan (see [Changes since the last scan](#changes-since-the-last-scan); only new hosts like a host that is up, a gone host or a changed MAC address like a host that is down). One notification per scan: up to three changes, one per line, otherwise the number of changes. Not for a scan that was started manually.
+Show a notification popup in the bottom-right corner of the primary screen when a [repeated scan](#repeat-the-scan) found changes since the previous scan (see [Changes since the last scan](#changes-since-the-last-scan); only new hosts like a host that is up, a gone host or a changed MAC address like a host that is down). One notification per scan: up to three changes, one per line, otherwise the number of changes. Not for a scan that was started manually. The header shows the tool, the title the scanned input; the status icon is green for only new hosts, red for only gone hosts, half green / half red for both, orange for a changed MAC address. A click opens the tab of the scan.
 
 **Type:** `Boolean`
 

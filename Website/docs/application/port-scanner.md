@@ -313,7 +313,7 @@ Resolve the hostname for given IP addresses.
 
 ### Show notification popup on changes
 
-Show a notification popup in the bottom-right corner of the primary screen when a [repeated scan](#repeat-the-scan) found changes since the previous scan (see [Changes since the last scan](#changes-since-the-last-scan); only ports that are open now like a host that is up, a port that is no longer open like a host that is down). One notification per scan: up to three changes, one per line, otherwise the number of changes. Not for a scan that was started manually.
+Show a notification popup in the bottom-right corner of the primary screen when a [repeated scan](#repeat-the-scan) found changes since the previous scan (see [Changes since the last scan](#changes-since-the-last-scan); only ports that are open now like a host that is up, a port that is no longer open like a host that is down). One notification per scan: up to three changes, one per line, otherwise the number of changes. Not for a scan that was started manually. The header shows the tool, the title the scanned input; the status icon is green for only ports that are open now, red for only ports that are no longer open, half green / half red for both. A click opens the tab of the scan.
 
 **Type:** `Boolean`
 
