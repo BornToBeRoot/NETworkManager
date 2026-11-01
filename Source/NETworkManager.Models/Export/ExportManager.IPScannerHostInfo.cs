@@ -76,6 +76,9 @@ public static partial class ExportManager
         string IfWindows(Func<WindowsHostInfo, string> value) =>
             options.WindowsEnabled ? windows == null ? string.Empty : value(windows) ?? string.Empty : null;
 
+        // Number / bool like WebStatusCode / WebCertificateSelfSigned: null without a value
+        object IfWindowsValue(Func<WindowsHostInfo, object> value) => windows == null ? null : value(windows);
+
         return
         [
             new(nameof(IPScannerHostInfo.IsReachable), info.IsReachable),
@@ -136,13 +139,13 @@ public static partial class ExportManager
             new("WindowsDomain", IfWindows(x => x.Domain), true),
             // Seconds (time of the host minus the local time)
             new("WindowsTimeOffset",
-                IfWindows(x => x.TimeOffset?.TotalSeconds.ToString("0.000", CultureInfo.InvariantCulture))),
+                IfWindowsValue(x => x.TimeOffset is { } offset ? Math.Round(offset.TotalSeconds, 3) : null)),
             new("WindowsUsers", IfWindows(x => x.Users == null ? string.Empty : string.Join("; ", x.Users)), true),
             new("WindowsDescription", IfWindows(x => x.Description), true),
             // Win32 error of the NetApi requests (e.g. 5 = access denied, 1326 = wrong username or password)
-            new("WindowsError", IfWindows(x => x.Error == 0 ? string.Empty : x.Error.ToString())),
+            new("WindowsError", IfWindowsValue(x => x.Error == 0 ? null : x.Error)),
             new("SMBDialect", IfWindows(x => x.SMB?.Dialect)),
-            new("SMBSigningRequired", IfWindows(x => x.SMB?.SigningRequired.ToString())),
+            new("SMBSigningRequired", IfWindowsValue(x => x.SMB?.SigningRequired)),
             new("SMBServerGuid", IfWindows(x => x.SMB?.ServerGuid.ToString()))
         ];
     }
@@ -171,7 +174,8 @@ public static partial class ExportManager
                 var value = field.Value is List<PortInfo> ports
                     ? string.Join(";", ports.Select(port =>
                         $"{port.Port}/{port.LookupInfo.Protocol}/{port.LookupInfo.Service}/{port.LookupInfo.Description}/{port.State}"))
-                    : $"{field.Value}";
+                    // Invariant: a decimal comma would split the column (e.g. WindowsTimeOffset)
+                    : Convert.ToString(field.Value, CultureInfo.InvariantCulture);
 
                 return field.IsQuoted ? CsvHelper.QuoteString(value) : value;
             })));

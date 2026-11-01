@@ -122,9 +122,10 @@ public class ExportManagerIPScannerTests
         Assert.Equal("10.0.26200", (string)host["WindowsVersion"]);
         Assert.Equal("Workstation", (string)host["WindowsRole"]);
         Assert.Equal("corp.example.com", (string)host["WindowsDomain"]);
-        Assert.Equal("-185.500", (string)host["WindowsTimeOffset"]);
+        Assert.Equal(-185.5, (double)host["WindowsTimeOffset"]);
+        Assert.Equal(JTokenType.Boolean, host["SMBSigningRequired"]!.Type);
         Assert.Equal(@"CORP\alice; CORP\bob", (string)host["WindowsUsers"]);
-        Assert.Equal(string.Empty, (string)host["WindowsError"]);
+        Assert.Equal(JTokenType.Null, host["WindowsError"]!.Type);
         Assert.Equal("3.1.1", (string)host["SMBDialect"]);
         Assert.Equal("8c5b6f4e-3d2a-4b1c-9e8f-7a6b5c4d3e2f", (string)host["SMBServerGuid"]);
     }
@@ -143,10 +144,23 @@ public class ExportManagerIPScannerTests
     [Fact]
     public void Csv_WindowsValues_OneValuePerColumn()
     {
-        // The description contains a comma (quoted)
-        var row = Export(ExportFileType.Csv, CreateWindowsHost()).Split(Environment.NewLine)[1];
+        // The description contains a comma (quoted), the time offset has a decimal point in every culture
+        var culture = System.Globalization.CultureInfo.CurrentCulture;
 
-        Assert.Contains("\"Reception, 1st floor\"", row);
+        try
+        {
+            System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("de-DE");
+
+            var row = Export(ExportFileType.Csv, CreateWindowsHost()).Split(Environment.NewLine)[1];
+
+            Assert.Contains("\"Reception, 1st floor\"", row);
+            Assert.Contains(",-185.5,", row);
+            Assert.Equal(CsvHeader.Split(',').Length, row.Replace("\"Reception, 1st floor\"", "x").Split(',').Length);
+        }
+        finally
+        {
+            System.Globalization.CultureInfo.CurrentCulture = culture;
+        }
     }
 
     [Fact]
