@@ -178,6 +178,13 @@
                         <MenuItem Header="{x:Static localization:Strings.ScanPorts}"
                                   IsCheckable="True" StaysOpenOnClick="True"
                                   IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_PortScanEnabled, Mode=TwoWay}" />
+                        <MenuItem Header="{x:Static localization:Strings.ReadWindowsHostInformation}"
+                                  IsCheckable="True" StaysOpenOnClick="True"
+                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_WindowsEnabled, Mode=TwoWay}" />
+                        <!-- The tab uses the Windows credentials of the profile / group it was opened with -->
+                        <MenuItem Header="{Binding WindowsCredentialsInfo}"
+                                  IsEnabled="False"
+                                  Visibility="{Binding WindowsCredentialsInfo, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
                         <MenuItem Header="{x:Static localization:Strings.ScanForNetBIOS}"
                                   IsCheckable="True" StaysOpenOnClick="True"
                                   IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_NetBIOSEnabled, Mode=TwoWay}" />
@@ -202,13 +209,6 @@
                         <MenuItem Header="{Binding SNMPCredentialsInfo}"
                                   IsEnabled="False"
                                   Visibility="{Binding SNMPCredentialsInfo, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
-                        <MenuItem Header="{x:Static localization:Strings.ReadWindowsHostInformation}"
-                                  IsCheckable="True" StaysOpenOnClick="True"
-                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_WindowsEnabled, Mode=TwoWay}" />
-                        <!-- The tab uses the Windows credentials of the profile / group it was opened with -->
-                        <MenuItem Header="{Binding WindowsCredentialsInfo}"
-                                  IsEnabled="False"
-                                  Visibility="{Binding WindowsCredentialsInfo, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
                         <Separator />
                         <MenuItem Header="{x:Static localization:Strings.ShowUnreachableIPAddressesAndPorts}"
                                   IsCheckable="True" StaysOpenOnClick="True"
@@ -771,6 +771,24 @@
                                   Visibility="{Binding Path=ScanOptions.ICMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <!-- Values of the optional requests, if enabled for the shown scan -->
+                        <MenuItem Header="{x:Static localization:Strings.Windows}"
+                                  Visibility="{Binding Path=ScanOptions.WindowsEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                            <MenuItem Header="{x:Static localization:Strings.OperatingSystem}"
+                                      Command="{Binding CopyDataToClipboardCommand}"
+                                      CommandParameter="{Binding Path=SelectedResult.WindowsOS}"
+                                      IsEnabled="{Binding Path=SelectedResult.IsWindowsPending, Converter={StaticResource BooleanReverseConverter}}"
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                            <MenuItem Header="{x:Static localization:Strings.Domain}"
+                                      Command="{Binding CopyDataToClipboardCommand}"
+                                      CommandParameter="{Binding Path=SelectedResult.WindowsDomain}"
+                                      IsEnabled="{Binding Path=SelectedResult.IsWindowsPending, Converter={StaticResource BooleanReverseConverter}}"
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                            <MenuItem Header="{x:Static localization:Strings.LoggedOnUsers}"
+                                      Command="{Binding CopyDataToClipboardCommand}"
+                                      CommandParameter="{Binding Path=SelectedResult.WindowsUsers}"
+                                      IsEnabled="{Binding Path=SelectedResult.IsWindowsPending, Converter={StaticResource BooleanReverseConverter}}"
+                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Web}">
                             <MenuItem.Visibility>
                                 <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
@@ -810,24 +828,6 @@
                                       Command="{Binding CopyDataToClipboardCommand}"
                                       CommandParameter="{Binding Path=SelectedResult.SNMPLocation}"
                                       IsEnabled="{Binding Path=SelectedResult.IsSNMPPending, Converter={StaticResource BooleanReverseConverter}}"
-                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        </MenuItem>
-                        <MenuItem Header="{x:Static localization:Strings.Windows}"
-                                  Visibility="{Binding Path=ScanOptions.WindowsEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                            <MenuItem Header="{x:Static localization:Strings.OperatingSystem}"
-                                      Command="{Binding CopyDataToClipboardCommand}"
-                                      CommandParameter="{Binding Path=SelectedResult.WindowsOS}"
-                                      IsEnabled="{Binding Path=SelectedResult.IsWindowsPending, Converter={StaticResource BooleanReverseConverter}}"
-                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                            <MenuItem Header="{x:Static localization:Strings.Domain}"
-                                      Command="{Binding CopyDataToClipboardCommand}"
-                                      CommandParameter="{Binding Path=SelectedResult.WindowsDomain}"
-                                      IsEnabled="{Binding Path=SelectedResult.IsWindowsPending, Converter={StaticResource BooleanReverseConverter}}"
-                                      Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                            <MenuItem Header="{x:Static localization:Strings.LoggedOnUsers}"
-                                      Command="{Binding CopyDataToClipboardCommand}"
-                                      CommandParameter="{Binding Path=SelectedResult.WindowsUsers}"
-                                      IsEnabled="{Binding Path=SelectedResult.IsWindowsPending, Converter={StaticResource BooleanReverseConverter}}"
                                       Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         </MenuItem>
                     </MenuItem>
@@ -1210,46 +1210,6 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Web}"
-                                    SortMemberPath="WebSummary"
-                                    MinWidth="150">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
-                            <Binding Path="IsWebPagePending" />
-                            <Binding Path="WebSummary" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                    <DataGridTextColumn.Visibility>
-                        <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
-                            <Binding Source="{StaticResource BindingProxy}"
-                                     Path="Data.ScanOptions.PortScanEnabled" />
-                            <Binding Source="{StaticResource BindingProxy}"
-                                     Path="Data.ScanOptions.WebPageEnabled" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Visibility>
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="ToolTip" Value="{Binding WebURL}" />
-                            <Style.Triggers>
-                                <!-- No empty tooltip -->
-                                <DataTrigger Binding="{Binding WebURL}" Value="">
-                                    <Setter Property="ToolTip" Value="{x:Null}" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.SNMPName}"
-                                    SortMemberPath="SNMPName"
-                                    Visibility="{Binding Path=Data.ScanOptions.SNMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                    MinWidth="150">
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
-                            <Binding Path="IsSNMPPending" />
-                            <Binding Path="SNMPName" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
                 <!-- Windows host information: OS (version and edition in the tooltip), domain, time offset, users -->
                 <DataGridTextColumn Header="{x:Static localization:Strings.Windows}"
                                     SortMemberPath="WindowsOS"
@@ -1330,6 +1290,46 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
+                <DataGridTextColumn Header="{x:Static localization:Strings.Web}"
+                                    SortMemberPath="WebSummary"
+                                    MinWidth="150">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
+                            <Binding Path="IsWebPagePending" />
+                            <Binding Path="WebSummary" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                    <DataGridTextColumn.Visibility>
+                        <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.ScanOptions.PortScanEnabled" />
+                            <Binding Source="{StaticResource BindingProxy}"
+                                     Path="Data.ScanOptions.WebPageEnabled" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Visibility>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="ToolTip" Value="{Binding WebURL}" />
+                            <Style.Triggers>
+                                <!-- No empty tooltip -->
+                                <DataTrigger Binding="{Binding WebURL}" Value="">
+                                    <Setter Property="ToolTip" Value="{x:Null}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="{x:Static localization:Strings.SNMPName}"
+                                    SortMemberPath="SNMPName"
+                                    Visibility="{Binding Path=Data.ScanOptions.SNMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                    MinWidth="150">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
+                            <Binding Path="IsSNMPPending" />
+                            <Binding Path="SNMPName" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
                 <!-- Status icon ("..." while running), details in the tooltip -->
                 <DataGridTemplateColumn Header="{x:Static localization:Strings.NetBIOSReachable}"
                                         SortMemberPath="NetBIOSInfo.IsReachable"
@@ -1401,7 +1401,7 @@
                             </Style>
                         </Border.Style>
                         <Grid Margin="20">
-                            <!-- Ping / hostnames | ports | web | NetBIOS / SNMP | Windows -->
+                            <!-- Ping / hostnames | ports | Windows | web | NetBIOS / SNMP -->
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="20" />
@@ -1627,7 +1627,7 @@
                                 </Grid>
                             </Grid>
                             <!-- NetBIOS -->
-                            <Grid Grid.Row="0" Grid.Column="6">
+                            <Grid Grid.Row="0" Grid.Column="8">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
@@ -1754,8 +1754,194 @@
                                     </ListViewItem>
                                 </ListView>
                             </Grid>
-                            <!-- Web page (the column shows the title or the Server header) -->
+                            <!-- Windows host information (SMB / NTLM, NetApi; the columns show OS, domain, time offset and
+                                 users) -->
                             <Grid Grid.Row="0" Grid.Column="4" Grid.RowSpan="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <!-- Same height in all sections (with or without status icon) -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
+                                    <TextBlock Text="{x:Static localization:Strings.Windows}"
+                                               Style="{StaticResource BoldTextBlock}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="2"
+                                            VerticalAlignment="Top"
+                                            Orientation="Horizontal"
+                                            Visibility="{Binding Path=Data.ScanOptions.WindowsEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
+                                    <Rectangle Width="16" Height="16"
+                                               Style="{StaticResource InfoImageRectangle}" />
+                                    <TextBlock Text="{x:Static localization:Strings.ReadingWindowsHostInformationIsDisabled}"
+                                               Style="{StaticResource InfoTextBlock}"
+                                               Margin="10,0,0,0" />
+                                </StackPanel>
+                                <ListView Grid.Row="2" Style="{StaticResource HostDetailsListView}"
+                                          Visibility="{Binding Path=Data.ScanOptions.WindowsEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                    <ListViewItem>
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.OperatingSystem}" Style="{StaticResource HostDetailsRow}">
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox>
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
+                                                        <Binding Path="Windows" Mode="OneWay"
+                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
+                                                                 ConverterParameter="OS" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </HeaderedContentControl>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.Edition}" Style="{StaticResource HostDetailsRow}">
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox>
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
+                                                        <Binding Path="Windows" Mode="OneWay"
+                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
+                                                                 ConverterParameter="Edition" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </HeaderedContentControl>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.Version}" Style="{StaticResource HostDetailsRow}">
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox>
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
+                                                        <Binding Path="Windows" Mode="OneWay"
+                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
+                                                                 ConverterParameter="Version" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </HeaderedContentControl>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.Role}" Style="{StaticResource HostDetailsRow}">
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox>
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
+                                                        <Binding Path="Windows" Mode="OneWay"
+                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
+                                                                 ConverterParameter="Role" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </HeaderedContentControl>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.ComputerName}" Style="{StaticResource HostDetailsRow}">
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox>
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
+                                                        <Binding Path="Windows" Mode="OneWay"
+                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
+                                                                 ConverterParameter="ComputerName" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </HeaderedContentControl>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.Domain}" Style="{StaticResource HostDetailsRow}">
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox>
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
+                                                        <Binding Path="Windows" Mode="OneWay"
+                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
+                                                                 ConverterParameter="Domain" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </HeaderedContentControl>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.Description}" Style="{StaticResource HostDetailsRow}">
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox TextWrapping="Wrap">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
+                                                        <Binding Path="Windows" Mode="OneWay"
+                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
+                                                                 ConverterParameter="Description" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </HeaderedContentControl>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.TimeOffset}" Style="{StaticResource HostDetailsRow}">
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox>
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
+                                                        <Binding Path="Windows" Mode="OneWay"
+                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
+                                                                 ConverterParameter="TimeOffset" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </HeaderedContentControl>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.LoggedOnUsers}" Style="{StaticResource HostDetailsRow}">
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox TextWrapping="Wrap">
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
+                                                        <Binding Path="Windows" Mode="OneWay"
+                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
+                                                                 ConverterParameter="Users" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </HeaderedContentControl>
+                                    </ListViewItem>
+                                    <ListViewItem>
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.SMB}" Style="{StaticResource HostDetailsRow}">
+                                            <!-- OneWay: the values can't be set from the view -->
+                                            <TextBox>
+                                                <TextBox.Text>
+                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
+                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
+                                                        <Binding Path="Windows" Mode="OneWay"
+                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
+                                                                 ConverterParameter="SMB" />
+                                                    </MultiBinding>
+                                                </TextBox.Text>
+                                            </TextBox>
+                                        </HeaderedContentControl>
+                                    </ListViewItem>
+                                    <!-- NetApi error (e.g. access denied, wrong password), the values without credentials are still shown -->
+                                    <ListViewItem Visibility="{Binding Path=HasWindowsError, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.Error}" Style="{StaticResource HostDetailsRow}">
+                                            <TextBox TextWrapping="Wrap"
+                                                     Text="{Binding Path=Windows, Mode=OneWay, Converter={StaticResource WindowsHostInfoToStringConverter}, ConverterParameter=Error}" />
+                                        </HeaderedContentControl>
+                                    </ListViewItem>
+                                </ListView>
+                            </Grid>
+                            <!-- Web page (the column shows the title or the Server header) -->
+                            <Grid Grid.Row="0" Grid.Column="6" Grid.RowSpan="3">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
@@ -1939,7 +2125,7 @@
                                 </ListView>
                             </Grid>
                             <!-- SNMP system information (the column shows the name) -->
-                            <Grid Grid.Row="2" Grid.Column="6">
+                            <Grid Grid.Row="2" Grid.Column="8">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
@@ -2021,192 +2207,6 @@
                                     <ListViewItem Visibility="{Binding Path=HasSNMPError, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                         <HeaderedContentControl Header="{x:Static localization:Strings.Error}" Style="{StaticResource HostDetailsRow}">
                                             <TextBox Text="{Binding Path=SNMPError, Mode=OneWay, Converter={StaticResource SNMPV3ErrorCodeToStringConverter}}" />
-                                        </HeaderedContentControl>
-                                    </ListViewItem>
-                                </ListView>
-                            </Grid>
-                            <!-- Windows host information (SMB / NTLM, NetApi; the columns show OS, domain, time offset and
-                                 users) -->
-                            <Grid Grid.Row="0" Grid.Column="8" Grid.RowSpan="3">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <!-- Same height in all sections (with or without status icon) -->
-                                <StackPanel Grid.Row="0" Orientation="Horizontal" MinHeight="24">
-                                    <TextBlock Text="{x:Static localization:Strings.Windows}"
-                                               Style="{StaticResource BoldTextBlock}"
-                                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
-                                               VerticalAlignment="Center" />
-                                </StackPanel>
-                                <StackPanel Grid.Row="2"
-                                            VerticalAlignment="Top"
-                                            Orientation="Horizontal"
-                                            Visibility="{Binding Path=Data.ScanOptions.WindowsEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanReverseToVisibilityCollapsedConverter}}">
-                                    <Rectangle Width="16" Height="16"
-                                               Style="{StaticResource InfoImageRectangle}" />
-                                    <TextBlock Text="{x:Static localization:Strings.ReadingWindowsHostInformationIsDisabled}"
-                                               Style="{StaticResource InfoTextBlock}"
-                                               Margin="10,0,0,0" />
-                                </StackPanel>
-                                <ListView Grid.Row="2" Style="{StaticResource HostDetailsListView}"
-                                          Visibility="{Binding Path=Data.ScanOptions.WindowsEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
-                                    <ListViewItem>
-                                        <HeaderedContentControl Header="{x:Static localization:Strings.OperatingSystem}" Style="{StaticResource HostDetailsRow}">
-                                            <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox>
-                                                <TextBox.Text>
-                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
-                                                        <Binding Path="Windows" Mode="OneWay"
-                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
-                                                                 ConverterParameter="OS" />
-                                                    </MultiBinding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </HeaderedContentControl>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <HeaderedContentControl Header="{x:Static localization:Strings.Edition}" Style="{StaticResource HostDetailsRow}">
-                                            <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox>
-                                                <TextBox.Text>
-                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
-                                                        <Binding Path="Windows" Mode="OneWay"
-                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
-                                                                 ConverterParameter="Edition" />
-                                                    </MultiBinding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </HeaderedContentControl>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <HeaderedContentControl Header="{x:Static localization:Strings.Version}" Style="{StaticResource HostDetailsRow}">
-                                            <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox>
-                                                <TextBox.Text>
-                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
-                                                        <Binding Path="Windows" Mode="OneWay"
-                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
-                                                                 ConverterParameter="Version" />
-                                                    </MultiBinding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </HeaderedContentControl>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <HeaderedContentControl Header="{x:Static localization:Strings.Role}" Style="{StaticResource HostDetailsRow}">
-                                            <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox>
-                                                <TextBox.Text>
-                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
-                                                        <Binding Path="Windows" Mode="OneWay"
-                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
-                                                                 ConverterParameter="Role" />
-                                                    </MultiBinding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </HeaderedContentControl>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <HeaderedContentControl Header="{x:Static localization:Strings.ComputerName}" Style="{StaticResource HostDetailsRow}">
-                                            <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox>
-                                                <TextBox.Text>
-                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
-                                                        <Binding Path="Windows" Mode="OneWay"
-                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
-                                                                 ConverterParameter="ComputerName" />
-                                                    </MultiBinding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </HeaderedContentControl>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <HeaderedContentControl Header="{x:Static localization:Strings.Domain}" Style="{StaticResource HostDetailsRow}">
-                                            <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox>
-                                                <TextBox.Text>
-                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
-                                                        <Binding Path="Windows" Mode="OneWay"
-                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
-                                                                 ConverterParameter="Domain" />
-                                                    </MultiBinding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </HeaderedContentControl>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <HeaderedContentControl Header="{x:Static localization:Strings.Description}" Style="{StaticResource HostDetailsRow}">
-                                            <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox TextWrapping="Wrap">
-                                                <TextBox.Text>
-                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
-                                                        <Binding Path="Windows" Mode="OneWay"
-                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
-                                                                 ConverterParameter="Description" />
-                                                    </MultiBinding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </HeaderedContentControl>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <HeaderedContentControl Header="{x:Static localization:Strings.TimeOffset}" Style="{StaticResource HostDetailsRow}">
-                                            <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox>
-                                                <TextBox.Text>
-                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
-                                                        <Binding Path="Windows" Mode="OneWay"
-                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
-                                                                 ConverterParameter="TimeOffset" />
-                                                    </MultiBinding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </HeaderedContentControl>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <HeaderedContentControl Header="{x:Static localization:Strings.LoggedOnUsers}" Style="{StaticResource HostDetailsRow}">
-                                            <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox TextWrapping="Wrap">
-                                                <TextBox.Text>
-                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
-                                                        <Binding Path="Windows" Mode="OneWay"
-                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
-                                                                 ConverterParameter="Users" />
-                                                    </MultiBinding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </HeaderedContentControl>
-                                    </ListViewItem>
-                                    <ListViewItem>
-                                        <HeaderedContentControl Header="{x:Static localization:Strings.SMB}" Style="{StaticResource HostDetailsRow}">
-                                            <!-- OneWay: the values can't be set from the view -->
-                                            <TextBox>
-                                                <TextBox.Text>
-                                                    <MultiBinding Converter="{StaticResource PendingToStringConverter}" Mode="OneWay">
-                                                        <Binding Path="IsWindowsPending" Mode="OneWay" />
-                                                        <Binding Path="Windows" Mode="OneWay"
-                                                                 Converter="{StaticResource WindowsHostInfoToStringConverter}"
-                                                                 ConverterParameter="SMB" />
-                                                    </MultiBinding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </HeaderedContentControl>
-                                    </ListViewItem>
-                                    <!-- NetApi error (e.g. access denied, wrong password), the values without credentials are still shown -->
-                                    <ListViewItem Visibility="{Binding Path=HasWindowsError, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                                        <HeaderedContentControl Header="{x:Static localization:Strings.Error}" Style="{StaticResource HostDetailsRow}">
-                                            <TextBox TextWrapping="Wrap"
-                                                     Text="{Binding Path=Windows, Mode=OneWay, Converter={StaticResource WindowsHostInfoToStringConverter}, ConverterParameter=Error}" />
                                         </HeaderedContentControl>
                                     </ListViewItem>
                                 </ListView>

@@ -66,7 +66,7 @@ with link-local addresses (`169.254.x.x`) given lower priority.
 
 :::
 
-The **Options** button next to **Scan** opens a menu to turn the most used [settings](#settings) on or off without opening the settings: [Ping hosts](#ping-hosts), [Resolve hostname](#resolve-hostname), [Scan ports](#scan-ports), [Scan for NetBIOS](#scan-for-netbios), [Find hosts in the local subnet](#find-hosts-in-the-local-subnet), [Resolve MAC address and vendor](#resolve-mac-address-and-vendor), [Resolve mDNS hostname](#resolve-mdns-hostname), [Read web pages](#read-web-pages) (only with the port scan), [Read the SNMP system information](#read-the-snmp-system-information), [Read Windows host information](#read-windows-host-information), [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) and [Expand host view](#expand-host-view). **Open settings...** opens the IP Scanner settings. The menu stays open to change several options and is disabled while a scan is running. A tab opened with a profile whose profile or group overrides the [SNMP version and credentials](#snmp-version-and-credentials) shows it below the SNMP option (e.g. `SNMP version and credentials of "Site A"`), the same for the [Windows credentials](#windows-credentials) below the Windows option (e.g. `Windows credentials of "Site A" (CORP\admin)`).
+The **Options** button next to **Scan** opens a menu to turn the most used [settings](#settings) on or off without opening the settings: [Ping hosts](#ping-hosts), [Resolve hostname](#resolve-hostname), [Scan ports](#scan-ports), [Read Windows host information](#read-windows-host-information), [Scan for NetBIOS](#scan-for-netbios), [Find hosts in the local subnet](#find-hosts-in-the-local-subnet), [Resolve MAC address and vendor](#resolve-mac-address-and-vendor), [Resolve mDNS hostname](#resolve-mdns-hostname), [Read web pages](#read-web-pages) (only with the port scan), [Read the SNMP system information](#read-the-snmp-system-information), [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) and [Expand host view](#expand-host-view). **Open settings...** opens the IP Scanner settings. The menu stays open to change several options and is disabled while a scan is running. A tab opened with a profile whose profile or group overrides the [SNMP version and credentials](#snmp-version-and-credentials) shows it below the SNMP option (e.g. `SNMP version and credentials of "Site A"`), the same for the [Windows credentials](#windows-credentials) below the Windows option (e.g. `Windows credentials of "Site A" (CORP\admin)`).
 
 The menu changes the settings: they apply to all tabs and are shown in the settings. Changes apply to the next scan (**Expand host view** immediately), like a change in the settings.
 
@@ -85,7 +85,7 @@ Right-clicking a result allows forwarding device information to another tool (e.
 | **Wake on LAN**                                                                   | Sends a magic packet to the MAC address of the host with [Wake on LAN](./wake-on-lan) (only with a MAC address) |
 | **Custom commands**                                                               | Executes a [custom command](#custom-commands) for the host                                                    |
 | **Add profile...**                                                                | Creates a new profile with the host (IP address), the hostname as name and the MAC address for Wake on LAN    |
-| **Copy**                                                                          | Copies the selected information to the clipboard (values only when the probe / lookup is finished); with the optional requests also **mDNS hostname**, **Web** > **Title** / **URL** / **Server** and **SNMP** > **Name** / **Description** / **Location** and **Windows** > **Operating system** / **Domain** / **Logged-on users** |
+| **Copy**                                                                          | Copies the selected information to the clipboard (values only when the probe / lookup is finished); with the optional requests also **mDNS hostname**, **Windows** > **Operating system** / **Domain** / **Logged-on users**, **Web** > **Title** / **URL** / **Server** and **SNMP** > **Name** / **Description** / **Location** |
 | **Export...**                                                                     | Exports the selected or all results to a file                                                                 |
 
 A NetBIOS or mDNS name (shown as hostname if there is no DNS hostname) is not passed to other tools, because it may not be resolvable via DNS - the IP address is used instead. **DNS lookup...** / **RDAP...** > **Hostname** are only available with a DNS hostname. In [custom commands](#custom-commands), `{{Hostname}}` is the shown hostname (DNS, mDNS or NetBIOS).
@@ -125,12 +125,12 @@ The columns are shown according to the settings the scan was started with, setti
 | **Time**                       | Round trip time of the ping reply                                                                                                                                        |
 | **OS (guess)**                 | Operating system guessed from the TTL of the ping reply, see [Guess the operating system from the TTL](#guess-the-operating-system-from-the-ttl)                       |
 | **Port status**                | Status icon (a port is open), the tooltip shows the open ports with their service (e.g. `Open: 22 (ssh), 443 (https)`, the first 10)                                    |
-| **Web**                        | Title of the web page, otherwise the realm of a login prompt, the `Server` header or the target of a redirect; the URL in the tooltip, see [Read web pages](#read-web-pages) |
-| **SNMP name**                  | `sysName`, see [Read the SNMP system information](#read-the-snmp-system-information)                                                                                    |
 | **Windows**                    | Windows version (e.g. `Windows 11 25H2`), the version number in the tooltip, see [Read Windows host information](#read-windows-host-information)                       |
 | **Domain**                     | Domain (DNS name) or workgroup of the Windows host                                                                                                                       |
 | **Time offset**                | Time of the host minus the local time (e.g. `+1.2 s`, `-3 min 5 s`), highlighted above 5 minutes (the Kerberos limit, the logon in a domain fails)                     |
 | **Logged-on users**            | Logged-on users (needs admin rights on the host), one per line in the tooltip or why they could not be read (e.g. `Access is denied.`)                                  |
+| **Web**                        | Title of the web page, otherwise the realm of a login prompt, the `Server` header or the target of a redirect; the URL in the tooltip, see [Read web pages](#read-web-pages) |
+| **SNMP name**                  | `sysName`, see [Read the SNMP system information](#read-the-snmp-system-information)                                                                                    |
 | **NetBIOS reachable**          | Status icon, the tooltip shows the computer name and the workgroup / domain (e.g. `Yes (PC01, WORKGROUP)`)                                                               |
 | **MAC address** / **Vendor**   | From the neighbor table (ARP / NDP), the NetBIOS answer as fallback                                                                                                      |
 
@@ -168,9 +168,9 @@ The repetition stops when a scan is canceled, the input is changed (also while a
 
 Expand a row with the button in front of it to see all values of the host, or enable [Expand host view](#expand-host-view) to expand all hosts:
 
-| Ping details | Ports | Web | NetBIOS | Windows |
-| ------------ | ----- | --- | ------- | ------- |
-| **Hostnames** | (ports) | (web) | **SNMP** | (Windows) |
+| Ping details | Ports | Windows | Web | NetBIOS |
+| ------------ | ----- | ------- | --- | ------- |
+| **Hostnames** | (ports) | (Windows) | (web) | **SNMP** |
 
 | Section          | Content                                                                                                                                       |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -428,6 +428,54 @@ In a local network (LAN), `1` is enough. On an unreliable network (e.g. Wi-Fi, V
 
 :::
 
+### Read Windows host information
+
+Read the Windows host information of every reachable host over SMB (TCP port `445`). With [Scan ports](#scan-ports) enabled and port `445` in its [ports](#ports), only hosts with port `445` open are asked, otherwise every found host (a host without SMB is finished after the SMB request).
+
+Two steps, the second only if the host answered the first:
+
+| Step | Credentials | Values |
+| ---- | ----------- | ------ |
+| SMB / NTLM negotiation | None (no logon, no failed logon on the host) | Operating system and build (e.g. `Windows 11 25H2`, `10.0.26200`), computer name, domain, time offset to the local clock, SMB version and signing |
+| NetApi (RPC over SMB) | User running NETworkManager, or the [Windows credentials](#windows-credentials) of the profile / group the tab was opened with | Role (workstation, server, domain controller), description, workgroup; with admin rights on the host also the logged-on users and, if the Remote Registry service runs, the patch level, display version and edition (e.g. `Pro`, `10.0.26200.6584`) |
+
+The NetApi requests connect to the DNS hostname of the host if it is the full DNS name the host sends itself in the NTLM negotiation (Kerberos), otherwise to the IP address (NTLM, e.g. a computer in a workgroup). Errors (e.g. `Access is denied.`, wrong password) are shown in the row details instead of the values.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+:::note
+
+Windows 10 / 11 and Windows Server 2016 and later all report the version `10.0`, the build tells them apart. Some builds are shared by a client and a server version (e.g. `26100`: Windows 11 24H2 / Server 2025), the role decides if it could be read. Hosts that only allow Kerberos (NTLM disabled) don't send the NTLM values; Samba and NAS devices answer with their own values (no Windows version).
+
+:::
+
+:::note
+
+With the [Windows credentials](#windows-credentials) of a profile / group, a wrong password must not lock the account (every host in a domain makes the domain controller count a failed logon). The credentials are checked on one host first, the other hosts wait:
+
+- Accepted (also `Access is denied.`: logged on, but without rights): all hosts are asked.
+- Logon failure on a host in the domain of the credentials (or the third logon failure on hosts of other domains): the credentials are rejected. The other hosts are not tried (`Not tried: ...` in the row details), a message is shown and the tab doesn't use them for the next scans (also not for **Automatically scan every** and **Rescan**) - open a new tab after correcting them.
+
+Computers in a workgroup and local accounts (`.\admin`) are not part of this check: a logon failure there only affects the host (e.g. a Windows PC that is not in the domain shows the error in its row, the other hosts are not affected). The user running NETworkManager is not checked (no stored password).
+
+:::
+
+:::note
+
+The NetApi requests need the firewall rules **File and Printer Sharing (SMB-In)** on the host, the logged-on users admin rights (e.g. a domain admin or the local administrator), the patch level also the **Remote Registry** service (disabled by default on Windows clients).
+
+:::
+
+### Timeout (ms)
+
+Timeout in milliseconds of the SMB request and of the NetApi requests of a host (each). NetApi requests that take longer are shown as timed out; they keep running in the background until Windows ends them (max. 16 at the same time, for all tabs and repeated scans).
+
+**Type:** `Integer` [Min `500`, Max `30000`]
+
+**Default:** `5000`
+
 ### Scan for NetBIOS
 
 Scan each IP address for NetBIOS information.
@@ -559,7 +607,7 @@ Read the name, description and location (`sysName`, `sysDescr`, `sysLocation`) o
 
 A host with another community usually doesn't answer at all (no value after the timeout); an answer with an error (e.g. `noSuchName` of SNMP v1) still counts as up. The request is sent to every IP address of the range, also unused ones. Many intrusion detection systems report requests with common communities like `public`.
 
-SNMP v3 needs credentials, so it is only available with the [SNMP version and credentials](#snmp-version-and-credentials) of a profile or group (not in the settings, the settings file is not encrypted). A discovery request is sent first: every SNMP v3 agent answers it, also without valid credentials, so the host is found anyway. Then the `GET` request with the user; wrong credentials are answered with an error, shown in the row details (**SNMP**) and exported as `SNMPError` (e.g. `UnknownUserName`, `AuthenticationFailed`). Each of the two requests waits up to the [timeout](#timeout-ms-5).
+SNMP v3 needs credentials, so it is only available with the [SNMP version and credentials](#snmp-version-and-credentials) of a profile or group (not in the settings, the settings file is not encrypted). A discovery request is sent first: every SNMP v3 agent answers it, also without valid credentials, so the host is found anyway. Then the `GET` request with the user; wrong credentials are answered with an error, shown in the row details (**SNMP**) and exported as `SNMPError` (e.g. `UnknownUserName`, `AuthenticationFailed`). Each of the two requests waits up to the [timeout](#timeout-ms-6).
 
 :::
 
@@ -597,54 +645,6 @@ Timeout in milliseconds after which an SNMP request is considered lost.
 **Type:** `Integer` [Min `100`, Max `15000`]
 
 **Default:** `2000`
-
-### Read Windows host information
-
-Read the Windows host information of every reachable host over SMB (TCP port `445`). With [Scan ports](#scan-ports) enabled and port `445` in its [ports](#ports), only hosts with port `445` open are asked, otherwise every found host (a host without SMB is finished after the SMB request).
-
-Two steps, the second only if the host answered the first:
-
-| Step | Credentials | Values |
-| ---- | ----------- | ------ |
-| SMB / NTLM negotiation | None (no logon, no failed logon on the host) | Operating system and build (e.g. `Windows 11 25H2`, `10.0.26200`), computer name, domain, time offset to the local clock, SMB version and signing |
-| NetApi (RPC over SMB) | User running NETworkManager, or the [Windows credentials](#windows-credentials) of the profile / group the tab was opened with | Role (workstation, server, domain controller), description, workgroup; with admin rights on the host also the logged-on users and, if the Remote Registry service runs, the patch level, display version and edition (e.g. `Pro`, `10.0.26200.6584`) |
-
-The NetApi requests connect to the DNS hostname of the host if it is the full DNS name the host sends itself in the NTLM negotiation (Kerberos), otherwise to the IP address (NTLM, e.g. a computer in a workgroup). Errors (e.g. `Access is denied.`, wrong password) are shown in the row details instead of the values.
-
-**Type:** `Boolean`
-
-**Default:** `Disabled`
-
-:::note
-
-Windows 10 / 11 and Windows Server 2016 and later all report the version `10.0`, the build tells them apart. Some builds are shared by a client and a server version (e.g. `26100`: Windows 11 24H2 / Server 2025), the role decides if it could be read. Hosts that only allow Kerberos (NTLM disabled) don't send the NTLM values; Samba and NAS devices answer with their own values (no Windows version).
-
-:::
-
-:::note
-
-With the [Windows credentials](#windows-credentials) of a profile / group, a wrong password must not lock the account (every host in a domain makes the domain controller count a failed logon). The credentials are checked on one host first, the other hosts wait:
-
-- Accepted (also `Access is denied.`: logged on, but without rights): all hosts are asked.
-- Logon failure on a host in the domain of the credentials (or the third logon failure on hosts of other domains): the credentials are rejected. The other hosts are not tried (`Not tried: ...` in the row details), a message is shown and the tab doesn't use them for the next scans (also not for **Automatically scan every** and **Rescan**) - open a new tab after correcting them.
-
-Computers in a workgroup and local accounts (`.\admin`) are not part of this check: a logon failure there only affects the host (e.g. a Windows PC that is not in the domain shows the error in its row, the other hosts are not affected). The user running NETworkManager is not checked (no stored password).
-
-:::
-
-:::note
-
-The NetApi requests need the firewall rules **File and Printer Sharing (SMB-In)** on the host, the logged-on users admin rights (e.g. a domain admin or the local administrator), the patch level also the **Remote Registry** service (disabled by default on Windows clients).
-
-:::
-
-### Timeout (ms)
-
-Timeout in milliseconds of the SMB request and of the NetApi requests of a host (each). NetApi requests that take longer are shown as timed out; they keep running in the background until Windows ends them (max. 16 at the same time, for all tabs and repeated scans).
-
-**Type:** `Integer` [Min `500`, Max `30000`]
-
-**Default:** `5000`
 
 ### Show notification popup on changes
 
