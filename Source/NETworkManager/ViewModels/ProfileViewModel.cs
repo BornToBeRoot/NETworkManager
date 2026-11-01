@@ -89,6 +89,9 @@ public class ProfileViewModel : ViewModelBase
             profileInfo.IPScanner_SNMPUsername, profileInfo.IPScanner_SNMPAuthenticationProvider,
             profileInfo.IPScanner_SNMPAuth, profileInfo.IPScanner_SNMPPrivacyProvider, profileInfo.IPScanner_SNMPPriv,
             IsProfileFileEncrypted);
+        IPScanner_WindowsCredentials = new WindowsCredentialsViewModel(profileInfo.IPScanner_UseWindowsCredentials,
+            profileInfo.IPScanner_WindowsUsername, profileInfo.IPScanner_WindowsDomain,
+            profileInfo.IPScanner_WindowsPassword, IsProfileFileEncrypted);
 
         // Port Scanner
         PortScanner_Enabled = editMode == ProfileEditMode.Add
@@ -700,6 +703,12 @@ public class ProfileViewModel : ViewModelBase
     ///     Override of the SNMP version and credentials of the IP Scanner (before the ones of the group).
     /// </summary>
     public SNMPCredentialsViewModel IPScanner_SNMP { get; }
+
+    /// <summary>
+    ///     Windows credentials for the Windows host information of the IP Scanner (before the ones of the group,
+    ///     otherwise the user running the application).
+    /// </summary>
+    public WindowsCredentialsViewModel IPScanner_WindowsCredentials { get; }
 
     #endregion
 

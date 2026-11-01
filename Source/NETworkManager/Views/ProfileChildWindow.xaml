@@ -308,6 +308,22 @@
                                                             <Setter Property="Visibility" Value="Visible" />
                                                         </MultiDataTrigger.Setters>
                                                     </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding (profiles:ProfileViewInfo.Name)}"
+                                                                Value="{x:Static profiles:ProfileName.IPScanner}" />
+                                                            <Condition
+                                                                Binding="{Binding Data.IPScanner_Enabled, Source={StaticResource BindingProxy}}"
+                                                                Value="True" />
+                                                            <Condition
+                                                                Binding="{Binding Data.IPScanner_WindowsCredentials.HasError, Source={StaticResource BindingProxy}}"
+                                                                Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
                                                     <!-- Port Scanner -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
@@ -1551,6 +1567,11 @@
                             <TextBlock Text="{x:Static localization:Strings.SNMP}"
                                        Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
                             <internalControls:SNMPCredentialsControl DataContext="{Binding IPScanner_SNMP}" />
+                            <!-- Windows credentials for the Windows host information instead of the user running the
+                                 application (no Windows credentials in the settings) -->
+                            <TextBlock Text="{x:Static localization:Strings.Windows}"
+                                       Style="{StaticResource CenterTextBlock}" Margin="0,20,0,10" />
+                            <internalControls:WindowsCredentialsControl DataContext="{Binding IPScanner_WindowsCredentials}" />
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
@@ -3823,6 +3844,15 @@
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding IPScanner_Enabled}" Value="True" />
                                     <Condition Binding="{Binding IPScanner_SNMP.HasError}" Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IPScanner_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding IPScanner_WindowsCredentials.HasError}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />

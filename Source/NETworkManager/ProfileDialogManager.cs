@@ -64,6 +64,10 @@ public static class ProfileDialogManager
             IPScanner_SNMPAuth = instance.IPScanner_SNMP.AuthToSave,
             IPScanner_SNMPPrivacyProvider = instance.IPScanner_SNMP.PrivacyProvider,
             IPScanner_SNMPPriv = instance.IPScanner_SNMP.PrivToSave,
+            IPScanner_UseWindowsCredentials = instance.IPScanner_WindowsCredentials.UseCredentials,
+            IPScanner_WindowsUsername = instance.IPScanner_WindowsCredentials.UsernameToSave,
+            IPScanner_WindowsDomain = instance.IPScanner_WindowsCredentials.DomainToSave,
+            IPScanner_WindowsPassword = instance.IPScanner_WindowsCredentials.PasswordToSave,
 
             // Port Scanner
             PortScanner_Enabled = instance.PortScanner_Enabled,
@@ -329,6 +333,10 @@ public static class ProfileDialogManager
             IPScanner_SNMPAuth = instance.IPScanner_SNMP.AuthToSave,
             IPScanner_SNMPPrivacyProvider = instance.IPScanner_SNMP.PrivacyProvider,
             IPScanner_SNMPPriv = instance.IPScanner_SNMP.PrivToSave,
+            IPScanner_UseWindowsCredentials = instance.IPScanner_WindowsCredentials.UseCredentials,
+            IPScanner_WindowsUsername = instance.IPScanner_WindowsCredentials.UsernameToSave,
+            IPScanner_WindowsDomain = instance.IPScanner_WindowsCredentials.DomainToSave,
+            IPScanner_WindowsPassword = instance.IPScanner_WindowsCredentials.PasswordToSave,
 
             // Port Scanner
             PortScanner_OverridePorts = instance.PortScanner_OverridePorts,

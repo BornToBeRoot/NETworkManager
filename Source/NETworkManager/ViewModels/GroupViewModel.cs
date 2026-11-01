@@ -115,6 +115,12 @@ public class GroupViewModel : ViewModelBase
     /// </summary>
     public SNMPCredentialsViewModel IPScanner_SNMP { get; }
 
+    /// <summary>
+    ///     Windows credentials for the Windows host information of the IP Scanner for the profiles of the group
+    ///     (otherwise the user running the application).
+    /// </summary>
+    public WindowsCredentialsViewModel IPScanner_WindowsCredentials { get; }
+
     #endregion
 
     #region Port Scanner
@@ -1448,6 +1454,9 @@ public class GroupViewModel : ViewModelBase
             groupInfo.IPScanner_SNMPCommunity, groupInfo.IPScanner_SNMPSecurity, groupInfo.IPScanner_SNMPUsername,
             groupInfo.IPScanner_SNMPAuthenticationProvider, groupInfo.IPScanner_SNMPAuth,
             groupInfo.IPScanner_SNMPPrivacyProvider, groupInfo.IPScanner_SNMPPriv, IsProfileFileEncrypted);
+        IPScanner_WindowsCredentials = new WindowsCredentialsViewModel(groupInfo.IPScanner_UseWindowsCredentials,
+            groupInfo.IPScanner_WindowsUsername, groupInfo.IPScanner_WindowsDomain,
+            groupInfo.IPScanner_WindowsPassword, IsProfileFileEncrypted);
 
         // Port Scanner
         PortScanner_OverridePorts = groupInfo.PortScanner_OverridePorts;

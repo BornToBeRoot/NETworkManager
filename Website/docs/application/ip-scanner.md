@@ -249,6 +249,28 @@ Passwords are stored in plain text in the profile file unless [Profile file encr
 
 :::
 
+### Windows credentials
+
+**Use credentials** under **Windows** uses the **Username**, **Domain** and **Password** of the profile for [Read Windows host information](#read-windows-host-information) instead of the ones of its [group](#windows-credentials-1) or of the user running NETworkManager. There are no Windows credentials in the settings: a scan without a profile always uses the user running NETworkManager.
+
+The domain is optional: `.` for a local account of the scanned hosts, empty if the username contains it (`CORP\admin` or `admin@corp.example.com`). An empty password box keeps the saved password (`Not changed`).
+
+**Type:** `Boolean` and the values above
+
+**Default:** `Disabled`
+
+:::note
+
+Only for a tab opened with the profile, also if its input is changed later. The credentials are only used for the network logon to the scanned hosts (like `runas /netonly`), not for the application itself.
+
+:::
+
+:::warning
+
+Passwords are stored in plain text in the profile file unless [Profile file encryption](../faq/profile-file-encryption) is enabled.
+
+:::
+
 ## Group
 
 ### SNMP version and credentials
@@ -256,6 +278,14 @@ Passwords are stored in plain text in the profile file unless [Profile file encr
 SNMP version and credentials for the profiles of the group, see the [profile](#snmp-version-and-credentials). A profile that overrides them uses its own.
 
 **Type:** `Boolean` (override) and the values of the [profile](#snmp-version-and-credentials)
+
+**Default:** `Disabled`
+
+### Windows credentials
+
+Windows credentials for the profiles of the group, see the [profile](#windows-credentials). A profile that uses its own credentials uses them instead.
+
+**Type:** `Boolean` and the values of the [profile](#windows-credentials)
 
 **Default:** `Disabled`
 

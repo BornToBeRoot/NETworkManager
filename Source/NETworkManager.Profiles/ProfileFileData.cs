@@ -113,6 +113,9 @@ public class ProfileFileData : INotifyPropertyChanged
                 IPScanner_SNMPPriv = p.IPScanner_SNMPPriv != null
                     ? Utilities.SecureStringHelper.ConvertToString(p.IPScanner_SNMPPriv)
                     : string.Empty,
+                IPScanner_WindowsPassword = p.IPScanner_WindowsPassword != null
+                    ? Utilities.SecureStringHelper.ConvertToString(p.IPScanner_WindowsPassword)
+                    : string.Empty,
                 RemoteDesktop_Password = p.RemoteDesktop_Password != null
                     ? Utilities.SecureStringHelper.ConvertToString(p.RemoteDesktop_Password)
                     : string.Empty,
@@ -137,6 +140,9 @@ public class ProfileFileData : INotifyPropertyChanged
                 : string.Empty,
             IPScanner_SNMPPriv = g.IPScanner_SNMPPriv != null
                 ? Utilities.SecureStringHelper.ConvertToString(g.IPScanner_SNMPPriv)
+                : string.Empty,
+            IPScanner_WindowsPassword = g.IPScanner_WindowsPassword != null
+                ? Utilities.SecureStringHelper.ConvertToString(g.IPScanner_WindowsPassword)
                 : string.Empty,
             RemoteDesktop_Password = g.RemoteDesktop_Password != null
                 ? Utilities.SecureStringHelper.ConvertToString(g.RemoteDesktop_Password)
@@ -176,6 +182,9 @@ public class ProfileFileData : INotifyPropertyChanged
                     IPScanner_SNMPPriv = !string.IsNullOrEmpty(ps.IPScanner_SNMPPriv)
                         ? Utilities.SecureStringHelper.ConvertToSecureString(ps.IPScanner_SNMPPriv)
                         : null,
+                    IPScanner_WindowsPassword = !string.IsNullOrEmpty(ps.IPScanner_WindowsPassword)
+                        ? Utilities.SecureStringHelper.ConvertToSecureString(ps.IPScanner_WindowsPassword)
+                        : null,
                     RemoteDesktop_Password = !string.IsNullOrEmpty(ps.RemoteDesktop_Password)
                         ? Utilities.SecureStringHelper.ConvertToSecureString(ps.RemoteDesktop_Password)
                         : null,
@@ -200,6 +209,9 @@ public class ProfileFileData : INotifyPropertyChanged
                     : null,
                 IPScanner_SNMPPriv = !string.IsNullOrEmpty(gs.IPScanner_SNMPPriv)
                     ? Utilities.SecureStringHelper.ConvertToSecureString(gs.IPScanner_SNMPPriv)
+                    : null,
+                IPScanner_WindowsPassword = !string.IsNullOrEmpty(gs.IPScanner_WindowsPassword)
+                    ? Utilities.SecureStringHelper.ConvertToSecureString(gs.IPScanner_WindowsPassword)
                     : null,
                 RemoteDesktop_Password = !string.IsNullOrEmpty(gs.RemoteDesktop_Password)
                     ? Utilities.SecureStringHelper.ConvertToSecureString(gs.RemoteDesktop_Password)

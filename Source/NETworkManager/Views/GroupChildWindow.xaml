@@ -163,6 +163,19 @@
                                                             <Setter Property="Visibility" Value="Visible" />
                                                         </MultiDataTrigger.Setters>
                                                     </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding (profiles:GroupViewInfo.Name)}"
+                                                                Value="{x:Static profiles:GroupViewName.IPScanner}" />
+                                                            <Condition
+                                                                Binding="{Binding Data.IPScanner_WindowsCredentials.HasError, Source={StaticResource BindingProxy}}"
+                                                                Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
                                                     <!-- Port Scanner -->
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
@@ -548,6 +561,11 @@
                             <TextBlock Text="{x:Static localization:Strings.SNMP}"
                                        Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
                             <internalControls:SNMPCredentialsControl DataContext="{Binding IPScanner_SNMP}" />
+                            <!-- Windows credentials for the Windows host information instead of the user running the
+                                 application (no Windows credentials in the settings) -->
+                            <TextBlock Text="{x:Static localization:Strings.Windows}"
+                                       Style="{StaticResource CenterTextBlock}" Margin="0,20,0,10" />
+                            <internalControls:WindowsCredentialsControl DataContext="{Binding IPScanner_WindowsCredentials}" />
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
@@ -1801,6 +1819,9 @@
                             </MultiDataTrigger>
                             <!-- IP Scanner -->
                             <DataTrigger Binding="{Binding IPScanner_SNMP.HasError}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IPScanner_WindowsCredentials.HasError}" Value="True">
                                 <Setter Property="IsEnabled" Value="False" />
                             </DataTrigger>
                             <!-- Port Scanner -->
