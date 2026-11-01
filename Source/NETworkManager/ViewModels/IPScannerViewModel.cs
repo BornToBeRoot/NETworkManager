@@ -1888,16 +1888,18 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         changes.Sort((x, y) => IPAddressHelper.CompareIPAddresses(x.IPAddress, y.IPAddress));
 
-        var lines = changes.Select(x =>
-            $"{(string.IsNullOrEmpty(x.Hostname) ? x.IPAddress : $"{x.IPAddress} ({x.Hostname})")}: " +
-            IPScannerHostChangeToStringConverter.ToLocalizedString(x.Change)).ToList();
+        // "10.0.0.5 (server) · New" - new = up, gone = down, a changed MAC address = changed
+        var lines = changes.Select(x => new NotificationLine(NotificationLine.FormatHost(x.IPAddress, x.Hostname),
+            IPScannerHostChangeToStringConverter.ToLocalizedString(x.Change), GetNotificationStatus(x.Change))).ToList();
 
-        var summary = string.Join(" · ", new[]
+        var summary = new[]
             {
-                (Count: HostsNew, Format: Strings.XNew), (Count: HostsGone, Format: Strings.XGone),
-                (Count: HostsMACChanged, Format: Strings.XMACChanged)
+                (Count: HostsNew, Format: Strings.XNew, Status: NotificationStatus.Up),
+                (Count: HostsGone, Format: Strings.XGone, Status: NotificationStatus.Down),
+                (Count: HostsMACChanged, Format: Strings.XMACChanged, Status: NotificationStatus.Changed)
             }
-            .Where(x => x.Count > 0).Select(x => string.Format(x.Format, x.Count)));
+            .Where(x => x.Count > 0)
+            .Select(x => new NotificationLine(null, string.Format(x.Format, x.Count), x.Status)).ToList();
 
         // New = up, gone = down, both = up and down, a changed MAC address = changed
         var status = NotificationStatusHelper.FromChanges(HostsNew, HostsGone, HostsMACChanged);
@@ -1909,6 +1911,19 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 Request = new ShowTabRequest(ApplicationName.IPScanner, _tabId)
             },
             showPopup, playSound);
+    }
+
+    /// <summary>
+    /// Gets the status of a change in a notification: new = up, gone = down, a changed MAC address = changed.
+    /// </summary>
+    private static NotificationStatus GetNotificationStatus(IPScannerHostChange change)
+    {
+        return change switch
+        {
+            IPScannerHostChange.New => NotificationStatus.Up,
+            IPScannerHostChange.Gone => NotificationStatus.Down,
+            _ => NotificationStatus.Changed
+        };
     }
 
     /// <summary>

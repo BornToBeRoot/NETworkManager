@@ -80,7 +80,7 @@ Right-click a monitored host (anywhere except the chart) to open the context men
 
 When a monitored host changes its reachability state (up → down or down → up), a small notification popup can appear in the bottom-right corner of the primary screen, optionally accompanied by a system sound.
 
-- The header shows the tool that sent the notification (**Ping Monitor** with its icon) and the time; below it a status icon (green when the host is up, red when it is down), the hostname (or the IP address as a fallback) and the current status (**Host is up** / **Host is down**). The [IP Scanner](./ip-scanner#show-notification-popup-on-changes) and the [Port Scanner](./port-scanner#show-notification-popup-on-changes) use the same notification.
+- The header shows the tool that sent the notification (**Ping Monitor** with its icon) and the time; below it a status icon (green when the host is up, red when it is down), the hostname (or the IP address as a fallback) and a line with the IP address and the status in its color (e.g. `10.0.0.1 · Up` / `10.0.0.1 · Down`; only the status if the title is the IP address). The [IP Scanner](./ip-scanner#show-notification-popup-on-changes) and the [Port Scanner](./port-scanner#show-notification-popup-on-changes) use the same notification.
 - Multiple notifications **stack** upwards, so several hosts changing state at once are all visible.
 - **Click anywhere** on a notification to bring the main window to the front and open the **Ping Monitor**. Use the **×** button to dismiss a single notification without opening the main window.
 - Each notification closes automatically after a configurable [duration](#display-duration-seconds); a thin progress bar at the bottom shows the remaining time.
@@ -198,7 +198,7 @@ Play a system sound when a monitored host changes its reachability state. This i
 
 ### Success threshold
 
-Number of consecutive successful pings required before a **Host is up** notification is shown. Higher values reduce noise from flapping hosts.
+Number of consecutive successful pings required before an **Up** notification is shown. Higher values reduce noise from flapping hosts.
 
 **Type:** `Integer` [Min `1`, Max `10`]
 
@@ -206,7 +206,7 @@ Number of consecutive successful pings required before a **Host is up** notifica
 
 ### Failure threshold
 
-Number of consecutive failed pings (timeouts) required before a **Host is down** notification is shown. Higher values reduce noise from flapping hosts.
+Number of consecutive failed pings (timeouts) required before a **Down** notification is shown. Higher values reduce noise from flapping hosts.
 
 **Type:** `Integer` [Min `1`, Max `10`]
 

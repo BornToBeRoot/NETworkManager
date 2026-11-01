@@ -90,7 +90,8 @@
                     </Rectangle>
                 </Button>
             </Grid>
-            <!-- Content: status icon (see NotificationWindow.GetStatusIcon) + title (the target) + message -->
+            <!-- Content: status icon (see NotificationWindow.GetStatusIcon) + title (the target) + one line per change
+                 ("10.0.0.5 (server) · New", the status in its color) -->
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -113,11 +114,20 @@
                     <TextBlock Text="{Binding NotificationTitle}"
                                Style="{StaticResource DefaultTextBlock}"
                                TextTrimming="CharacterEllipsis" />
-                    <TextBlock Text="{Binding Message}"
-                               Margin="0,5,0,0"
-                               Style="{StaticResource DefaultTextBlock}"
-                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
-                               TextWrapping="Wrap" />
+                    <ItemsControl ItemsSource="{Binding Lines}"
+                                  Margin="0,5,0,0"
+                                  Focusable="False">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type networkManager:NotificationLineItem}">
+                                <TextBlock Style="{StaticResource DefaultTextBlock}"
+                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                           TextWrapping="Wrap">
+                                    <Run Text="{Binding Prefix, Mode=OneWay}" /><Run Text="{Binding Status, Mode=OneWay}"
+                                                                                      Foreground="{Binding StatusBrush, Mode=OneWay}" />
+                                </TextBlock>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
             </Grid>
         </Grid>

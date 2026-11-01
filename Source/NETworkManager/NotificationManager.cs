@@ -63,16 +63,17 @@ public static class NotificationManager
     }
 
     /// <summary>
-    ///     Formats a list of changes for the message of a notification: up to <paramref name="maxLines" /> changes, one
-    ///     per line, otherwise the summary (e.g. "5 New · 2 Gone"), so the popup stays small.
+    ///     Gets the lines of a notification about changes: up to <paramref name="maxLines" /> changes, one per line,
+    ///     otherwise the summary (one line per counter, e.g. "5 New" and "2 Gone"), so the popup stays small.
     /// </summary>
     /// <param name="lines">One line per change.</param>
-    /// <param name="summary">Summary of all changes.</param>
+    /// <param name="summary">Summary of all changes (counters without a value of 0).</param>
     /// <param name="maxLines">Maximum number of lines.</param>
-    /// <returns>Message of the notification.</returns>
-    public static string FormatChanges(IReadOnlyCollection<string> lines, string summary, int maxLines = 3)
+    /// <returns>Lines of the notification.</returns>
+    public static IReadOnlyList<NotificationLine> FormatChanges(IReadOnlyList<NotificationLine> lines,
+        IReadOnlyList<NotificationLine> summary, int maxLines = 3)
     {
-        return lines.Count <= maxLines ? string.Join(Environment.NewLine, lines) : summary;
+        return lines.Count <= maxLines ? lines : summary;
     }
 
     /// <summary>

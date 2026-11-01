@@ -1945,16 +1945,21 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return result != 0 ? result : x.Port.CompareTo(y.Port);
         });
 
-        var lines = changes.Select(x =>
-            $"{x.HostAsString}: {x.Port}" +
-            (string.IsNullOrEmpty(x.LookupInfo.Service) ? string.Empty : $" ({x.LookupInfo.Service})") + " " +
-            PortScannerPortChangeToStringConverter.ToLocalizedString(x.Change)).ToList();
+        // "10.0.0.5 (server) · 22/tcp (ssh) · Now open" - open now = up, no longer open = down
+        var lines = changes.Select(x => new NotificationLine(
+            NotificationLine.JoinText(NotificationLine.FormatHost(x.IPAddress, x.Hostname),
+                $"{x.Port}/{x.LookupInfo.Protocol.ToString().ToLowerInvariant()}" +
+                (string.IsNullOrEmpty(x.LookupInfo.Service) ? string.Empty : $" ({x.LookupInfo.Service})")),
+            PortScannerPortChangeToStringConverter.ToLocalizedString(x.Change),
+            x.Change == PortScannerPortChange.Opened ? NotificationStatus.Up : NotificationStatus.Down)).ToList();
 
-        var summary = string.Join(" · ", new[]
+        var summary = new[]
             {
-                (Count: PortsNowOpen, Format: Strings.XNowOpen), (Count: PortsNoLongerOpen, Format: Strings.XNoLongerOpen)
+                (Count: PortsNowOpen, Format: Strings.XNowOpen, Status: NotificationStatus.Up),
+                (Count: PortsNoLongerOpen, Format: Strings.XNoLongerOpen, Status: NotificationStatus.Down)
             }
-            .Where(x => x.Count > 0).Select(x => string.Format(x.Format, x.Count)));
+            .Where(x => x.Count > 0)
+            .Select(x => new NotificationLine(null, string.Format(x.Format, x.Count), x.Status)).ToList();
 
         // Open now = up, no longer open = down, both = up and down
         var status = NotificationStatusHelper.FromChanges(PortsNowOpen, PortsNoLongerOpen, 0);

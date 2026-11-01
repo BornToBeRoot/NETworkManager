@@ -109,6 +109,12 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
         DNSClientHelper.SanitizeHostname(Hostname) is { Length: > 0 } hostname ? hostname : IPAddress.ToString();
 
     /// <summary>
+    /// IP address in the line of a notification ("10.0.0.1 · Up"), null if the title already is the IP address.
+    /// </summary>
+    private string NotificationIPAddress =>
+        NotificationHostDisplay == IPAddress.ToString() ? null : IPAddress.ToString();
+
+    /// <summary>
     /// Gets the hostname of the monitored host.
     /// </summary>
     public string Hostname
@@ -707,7 +713,8 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
                 IsReachable = true;
 
                 NotificationManager.Show(new NotificationInfo(ApplicationName.PingMonitor, NotificationStatus.Up,
-                        NotificationHostDisplay, Strings.HostIsUp, SettingsManager.Current.PingMonitor_NotificationCloseTime),
+                        NotificationHostDisplay, [new NotificationLine(NotificationIPAddress, Strings.Up, NotificationStatus.Up)],
+                        SettingsManager.Current.PingMonitor_NotificationCloseTime),
                     SettingsManager.Current.PingMonitor_ShowNotificationPopup,
                     SettingsManager.Current.PingMonitor_NotificationSound);
             }
@@ -737,7 +744,8 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
                 IsReachable = false;
 
                 NotificationManager.Show(new NotificationInfo(ApplicationName.PingMonitor, NotificationStatus.Down,
-                        NotificationHostDisplay, Strings.HostIsDown, SettingsManager.Current.PingMonitor_NotificationCloseTime),
+                        NotificationHostDisplay, [new NotificationLine(NotificationIPAddress, Strings.Down, NotificationStatus.Down)],
+                        SettingsManager.Current.PingMonitor_NotificationCloseTime),
                     SettingsManager.Current.PingMonitor_ShowNotificationPopup,
                     SettingsManager.Current.PingMonitor_NotificationSound);
             }

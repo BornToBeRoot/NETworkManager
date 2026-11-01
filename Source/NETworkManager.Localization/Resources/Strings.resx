@@ -2527,12 +2527,6 @@ is disabled!</value>
   <data name="NotificationDurationInSeconds" xml:space="preserve">
     <value>Display duration (seconds)</value>
   </data>
-  <data name="HostIsUp" xml:space="preserve">
-    <value>Host is up</value>
-  </data>
-  <data name="HostIsDown" xml:space="preserve">
-    <value>Host is down</value>
-  </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>The application will be restarted...</value>
   </data>

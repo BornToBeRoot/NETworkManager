@@ -6411,24 +6411,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Host is down.
-        /// </summary>
-        public static string HostIsDown {
-            get {
-                return ResourceManager.GetString("HostIsDown", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Host is up.
-        /// </summary>
-        public static string HostIsUp {
-            get {
-                return ResourceManager.GetString("HostIsUp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Hostkey.
         /// </summary>
         public static string Hostkey {

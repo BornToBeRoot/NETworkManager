@@ -3,7 +3,9 @@ using NETworkManager.Localization;
 using NETworkManager.Models;
 using NETworkManager.Utilities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -51,7 +53,7 @@ public partial class NotificationWindow : INotifyPropertyChanged
     public PackIconMaterialKind IconKind { get; }
     public Brush IconBrush { get; }
     public string NotificationTitle { get; }
-    public string Message { get; }
+    public IReadOnlyList<NotificationLineItem> Lines { get; }
 
     // Timestamp shown in the header — captured when the notification is created, which is the
     // moment the status change occurred.
@@ -94,7 +96,9 @@ public partial class NotificationWindow : INotifyPropertyChanged
 
         (IconKind, IconBrush) = GetStatusIcon(notification.Status);
         NotificationTitle = notification.Title;
-        Message = notification.Message;
+        Lines = [.. notification.Lines.Select(x => new NotificationLineItem(
+            string.IsNullOrEmpty(x.Text) ? string.Empty : x.Text + NotificationLine.Separator, x.Status,
+            GetStatusBrush(x.StatusKind)))];
         Time = DateTime.Now.ToString("HH:mm:ss");
         TimeMax = notification.CloseTimeSeconds;
         TimeRemaining = notification.CloseTimeSeconds;
@@ -142,6 +146,27 @@ public partial class NotificationWindow : INotifyPropertyChanged
     /// <returns>Icon and brush.</returns>
     private static (PackIconMaterialKind kind, Brush brush) GetStatusIcon(NotificationStatus status)
     {
+        var brush = GetStatusBrush(status);
+
+        var kind = status switch
+        {
+            NotificationStatus.Up => PackIconMaterialKind.LanConnect,
+            NotificationStatus.Down => PackIconMaterialKind.LanDisconnect,
+            NotificationStatus.UpAndDown => PackIconMaterialKind.Lan,
+            _ => PackIconMaterialKind.LanPending
+        };
+
+        return (kind, brush);
+    }
+
+    /// <summary>
+    /// Gets the brush of a status (status icon, status text of a line): up green, down red, up and down half green /
+    /// half red (split along the diagonal), changed orange.
+    /// </summary>
+    /// <param name="status">Status.</param>
+    /// <returns>Frozen brush.</returns>
+    private static Brush GetStatusBrush(NotificationStatus status)
+    {
         Brush brush = status switch
         {
             NotificationStatus.Up => new SolidColorBrush(UpColor),
@@ -156,15 +181,7 @@ public partial class NotificationWindow : INotifyPropertyChanged
 
         brush.Freeze();
 
-        var kind = status switch
-        {
-            NotificationStatus.Up => PackIconMaterialKind.LanConnect,
-            NotificationStatus.Down => PackIconMaterialKind.LanDisconnect,
-            NotificationStatus.UpAndDown => PackIconMaterialKind.Lan,
-            _ => PackIconMaterialKind.LanPending
-        };
-
-        return (kind, brush);
+        return brush;
     }
 
     /// <summary>
@@ -251,3 +268,12 @@ public partial class NotificationWindow : INotifyPropertyChanged
 
     #endregion
 }
+
+/// <summary>
+/// A line of the notification as shown: the text with the separator (empty if the line has only a status), the status
+/// and its brush (see <see cref="NotificationLine" />).
+/// </summary>
+/// <param name="Prefix">Text of the line with the separator, e.g. "10.0.0.5 (server) · ".</param>
+/// <param name="Status">Status text, e.g. "New".</param>
+/// <param name="StatusBrush">Brush of the status text.</param>
+public sealed record NotificationLineItem(string Prefix, string Status, Brush StatusBrush);
