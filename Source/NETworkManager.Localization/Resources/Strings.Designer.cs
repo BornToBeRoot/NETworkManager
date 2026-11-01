@@ -13186,6 +13186,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set Windows credentials....
+        /// </summary>
+        public static string SetWindowsCredentialsDots {
+            get {
+                return ResourceManager.GetString("SetWindowsCredentialsDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Several profiles are named &quot;{0}&quot;, select one!.
         /// </summary>
         public static string SeveralProfilesAreNamedXSelectOne {
@@ -15497,15 +15506,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Windows credentials....
-        /// </summary>
-        public static string WindowsCredentialsDots {
-            get {
-                return ResourceManager.GetString("WindowsCredentialsDots", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Windows credentials of this tab ({0}).
         /// </summary>
         public static string WindowsCredentialsOfThisTabX {
@@ -15542,7 +15542,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The logon with the Windows credentials &quot;{0}&quot; failed (wrong username or password?). To protect the account from being locked out, they are not used for the other hosts and the next scans of this tab. Set them again with Windows credentials... in the options, or open a new tab after correcting the profile / group..
+        ///   Looks up a localized string similar to The logon with the Windows credentials &quot;{0}&quot; failed (wrong username or password?). To protect the account from being locked out, they are not used for the other hosts and the next scans of this tab. Set them again with Set Windows credentials... in the options, or open a new tab after correcting the profile / group..
         /// </summary>
         public static string WindowsLogonFailedMessage {
             get {

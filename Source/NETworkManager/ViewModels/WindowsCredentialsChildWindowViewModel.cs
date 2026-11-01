@@ -6,7 +6,7 @@ using NETworkManager.Utilities;
 namespace NETworkManager.ViewModels;
 
 /// <summary>
-///     Windows credentials of an IP Scanner tab ("Windows credentials..." in the options, "Scan as..." of a profile),
+///     Windows credentials of an IP Scanner tab ("Set Windows credentials..." in the options, "Scan as..." of a profile),
 ///     see <see cref="Views.WindowsCredentialsChildWindow" />. Only kept in memory, never saved.
 /// </summary>
 public class WindowsCredentialsChildWindowViewModel : ViewModelBase

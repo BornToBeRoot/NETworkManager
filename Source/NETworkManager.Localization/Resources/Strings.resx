@@ -5399,7 +5399,7 @@ Do you want to start the scan?</value>
     <value>Reading Windows host information is disabled!</value>
   </data>
   <data name="WindowsLogonFailedMessage" xml:space="preserve">
-    <value>The logon with the Windows credentials "{0}" failed (wrong username or password?). To protect the account from being locked out, they are not used for the other hosts and the next scans of this tab. Set them again with Windows credentials... in the options, or open a new tab after correcting the profile / group.</value>
+    <value>The logon with the Windows credentials "{0}" failed (wrong username or password?). To protect the account from being locked out, they are not used for the other hosts and the next scans of this tab. Set them again with Set Windows credentials... in the options, or open a new tab after correcting the profile / group.</value>
     <comment>{0} is the user (e.g. CORP\admin)</comment>
   </data>
   <data name="WindowsLogonSkippedMessage" xml:space="preserve">
@@ -5407,9 +5407,6 @@ Do you want to start the scan?</value>
   </data>
   <data name="WindowsCredentials" xml:space="preserve">
     <value>Windows credentials</value>
-  </data>
-  <data name="WindowsCredentialsDots" xml:space="preserve">
-    <value>Windows credentials...</value>
   </data>
   <data name="ScanAsDots" xml:space="preserve">
     <value>Scan as...</value>
@@ -5439,5 +5436,9 @@ Do you want to start the scan?</value>
   <data name="OS" xml:space="preserve">
     <value>OS</value>
     <comment>Column of the IP Scanner: operating system (Windows version or guess from the TTL)</comment>
+  </data>
+  <data name="SetWindowsCredentialsDots" xml:space="preserve">
+    <value>Set Windows credentials...</value>
+    <comment>IP Scanner: options menu, Windows credentials of the tab (not saved)</comment>
   </data>
 </root>
