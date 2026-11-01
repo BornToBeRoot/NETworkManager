@@ -13,6 +13,7 @@ public static class GroupViewManager
         new GroupViewInfo(GroupViewName.General, new PackIconModern { Kind = PackIconModernKind.Box }),
 
         // Applications
+        new GroupViewInfo(GroupViewName.IPScanner, ApplicationManager.GetIcon(ApplicationName.IPScanner)),
         new GroupViewInfo(GroupViewName.PortScanner, ApplicationManager.GetIcon(ApplicationName.PortScanner)),
         new GroupViewInfo(GroupViewName.DNSLookup, ApplicationManager.GetIcon(ApplicationName.DNSLookup)),
         new GroupViewInfo(GroupViewName.RemoteDesktop, ApplicationManager.GetIcon(ApplicationName.RemoteDesktop)),

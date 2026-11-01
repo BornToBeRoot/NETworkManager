@@ -3,6 +3,7 @@
 public enum GroupViewName
 {
     General,
+    IPScanner,
     PortScanner,
     DNSLookup,
     RemoteDesktop,

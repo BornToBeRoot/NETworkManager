@@ -84,6 +84,11 @@ public class ProfileViewModel : ViewModelBase
             : profileInfo.IPScanner_Enabled;
         IPScanner_InheritHost = profileInfo.IPScanner_InheritHost;
         IPScanner_HostOrIPRange = profileInfo.IPScanner_HostOrIPRange;
+        IPScanner_SNMP = new SNMPCredentialsViewModel(profileInfo.IPScanner_OverrideSNMP,
+            profileInfo.IPScanner_SNMPVersion, profileInfo.IPScanner_SNMPCommunity, profileInfo.IPScanner_SNMPSecurity,
+            profileInfo.IPScanner_SNMPUsername, profileInfo.IPScanner_SNMPAuthenticationProvider,
+            profileInfo.IPScanner_SNMPAuth, profileInfo.IPScanner_SNMPPrivacyProvider, profileInfo.IPScanner_SNMPPriv,
+            IsProfileFileEncrypted);
 
         // Port Scanner
         PortScanner_Enabled = editMode == ProfileEditMode.Add
@@ -704,6 +709,11 @@ public class ProfileViewModel : ViewModelBase
             OnPropertyChanged();
         }
     }
+
+    /// <summary>
+    ///     Override of the SNMP version and credentials of the IP Scanner (before the ones of the group).
+    /// </summary>
+    public SNMPCredentialsViewModel IPScanner_SNMP { get; }
 
     #endregion
 

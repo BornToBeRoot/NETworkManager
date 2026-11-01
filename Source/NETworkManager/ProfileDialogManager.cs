@@ -55,6 +55,15 @@ public static class ProfileDialogManager
             IPScanner_HostOrIPRange = instance.IPScanner_InheritHost
                 ? instance.Host?.Trim()
                 : instance.IPScanner_HostOrIPRange?.Trim(),
+            IPScanner_OverrideSNMP = instance.IPScanner_SNMP.IsOverridden,
+            IPScanner_SNMPVersion = instance.IPScanner_SNMP.Version,
+            IPScanner_SNMPCommunity = instance.IPScanner_SNMP.CommunityToSave,
+            IPScanner_SNMPSecurity = instance.IPScanner_SNMP.Security,
+            IPScanner_SNMPUsername = instance.IPScanner_SNMP.Username?.Trim(),
+            IPScanner_SNMPAuthenticationProvider = instance.IPScanner_SNMP.AuthenticationProvider,
+            IPScanner_SNMPAuth = instance.IPScanner_SNMP.AuthToSave,
+            IPScanner_SNMPPrivacyProvider = instance.IPScanner_SNMP.PrivacyProvider,
+            IPScanner_SNMPPriv = instance.IPScanner_SNMP.PrivToSave,
 
             // Port Scanner
             PortScanner_Enabled = instance.PortScanner_Enabled,
@@ -328,6 +337,17 @@ public static class ProfileDialogManager
             Description = instance.Description?.Trim(),
 
             Profiles = profiles,
+
+            // IP Scanner
+            IPScanner_OverrideSNMP = instance.IPScanner_SNMP.IsOverridden,
+            IPScanner_SNMPVersion = instance.IPScanner_SNMP.Version,
+            IPScanner_SNMPCommunity = instance.IPScanner_SNMP.CommunityToSave,
+            IPScanner_SNMPSecurity = instance.IPScanner_SNMP.Security,
+            IPScanner_SNMPUsername = instance.IPScanner_SNMP.Username?.Trim(),
+            IPScanner_SNMPAuthenticationProvider = instance.IPScanner_SNMP.AuthenticationProvider,
+            IPScanner_SNMPAuth = instance.IPScanner_SNMP.AuthToSave,
+            IPScanner_SNMPPrivacyProvider = instance.IPScanner_SNMP.PrivacyProvider,
+            IPScanner_SNMPPriv = instance.IPScanner_SNMP.PrivToSave,
 
             // Port Scanner
             PortScanner_OverridePorts = instance.PortScanner_OverridePorts,

@@ -14,6 +14,7 @@
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:internalControls="clr-namespace:NETworkManager.Controls"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
@@ -143,6 +144,20 @@
                                                             <Condition
                                                                 Binding="{Binding Data.NameIsValid, Source={StaticResource BindingProxy}}"
                                                                 Value="False" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- IP Scanner -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding (profiles:GroupViewInfo.Name)}"
+                                                                Value="{x:Static profiles:GroupViewName.IPScanner}" />
+                                                            <Condition
+                                                                Binding="{Binding Data.IPScanner_SNMP.HasError, Source={StaticResource BindingProxy}}"
+                                                                Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
                                                             <Setter Property="Visibility" Value="Visible" />
@@ -664,6 +679,20 @@
                                          Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          mah:TextBoxHelper.Watermark="{x:Static Member=localization:Strings.ExampleGroupDescription}" />
                             </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="{x:Static localization:Strings.IPScanner}" Tag="{x:Static profiles:GroupViewName.IPScanner}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel Margin="0,0,0,20">
+                            <!-- SNMP version and credentials of the profiles of the group (a profile can override them)
+                                 instead of the ones of the settings -->
+                            <TextBlock Text="{x:Static localization:Strings.OverrideDefaultSettings}"
+                                       Style="{StaticResource HeaderTextBlock}" Margin="0" />
+                            <Separator Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,10,0,10" />
+                            <TextBlock Text="{x:Static localization:Strings.SNMP}"
+                                       Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+                            <internalControls:SNMPCredentialsControl DataContext="{Binding IPScanner_SNMP}" />
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
@@ -2368,6 +2397,10 @@
                                     <Setter Property="IsEnabled" Value="False" />
                                 </MultiDataTrigger.Setters>
                             </MultiDataTrigger>
+                            <!-- IP Scanner -->
+                            <DataTrigger Binding="{Binding IPScanner_SNMP.HasError}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
                             <!-- Port Scanner -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>

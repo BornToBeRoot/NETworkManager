@@ -108,6 +108,15 @@ public class GroupViewModel : ViewModelBase
 
     #endregion
 
+    #region IP Scanner
+
+    /// <summary>
+    ///     Override of the SNMP version and credentials of the IP Scanner for the profiles of the group.
+    /// </summary>
+    public SNMPCredentialsViewModel IPScanner_SNMP { get; }
+
+    #endregion
+
     #region Port Scanner
 
     public bool PortScanner_OverridePorts
@@ -1674,6 +1683,12 @@ public class GroupViewModel : ViewModelBase
         // General
         Name = groupInfo.Name;
         Description = groupInfo.Description;
+
+        // IP Scanner
+        IPScanner_SNMP = new SNMPCredentialsViewModel(groupInfo.IPScanner_OverrideSNMP, groupInfo.IPScanner_SNMPVersion,
+            groupInfo.IPScanner_SNMPCommunity, groupInfo.IPScanner_SNMPSecurity, groupInfo.IPScanner_SNMPUsername,
+            groupInfo.IPScanner_SNMPAuthenticationProvider, groupInfo.IPScanner_SNMPAuth,
+            groupInfo.IPScanner_SNMPPrivacyProvider, groupInfo.IPScanner_SNMPPriv, IsProfileFileEncrypted);
 
         // Port Scanner
         PortScanner_OverridePorts = groupInfo.PortScanner_OverridePorts;

@@ -14,6 +14,7 @@
                                xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                                xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                                xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+                               xmlns:internalControls="clr-namespace:NETworkManager.Controls"
                                xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
                                xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
                                xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
@@ -285,6 +286,22 @@
                                                                 Value="False" />
                                                             <Condition
                                                                 Binding="{Binding ElementName=TextBoxIPScannerIPRange, Path=(Validation.HasError)}"
+                                                                Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding (profiles:ProfileViewInfo.Name)}"
+                                                                Value="{x:Static profiles:ProfileName.IPScanner}" />
+                                                            <Condition
+                                                                Binding="{Binding Data.IPScanner_Enabled, Source={StaticResource BindingProxy}}"
+                                                                Value="True" />
+                                                            <Condition
+                                                                Binding="{Binding Data.IPScanner_SNMP.HasError, Source={StaticResource BindingProxy}}"
                                                                 Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
@@ -1693,6 +1710,13 @@
                                     </TextBox.Style>
                                 </TextBox>
                             </Grid>
+                            <!-- SNMP version and credentials instead of the ones of the group / the settings -->
+                            <TextBlock Text="{x:Static localization:Strings.OverrideDefaultSettings}"
+                                       Style="{StaticResource HeaderTextBlock}" Margin="0,20,0,0" />
+                            <Separator Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,0,0,10" />
+                            <TextBlock Text="{x:Static localization:Strings.SNMP}"
+                                       Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+                            <internalControls:SNMPCredentialsControl DataContext="{Binding IPScanner_SNMP}" />
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
@@ -4415,6 +4439,15 @@
                                     <Condition
                                         Binding="{Binding ElementName=TextBoxIPScannerIPRange, Path=(Validation.HasError)}"
                                         Value="True" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IPScanner_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding IPScanner_SNMP.HasError}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />
