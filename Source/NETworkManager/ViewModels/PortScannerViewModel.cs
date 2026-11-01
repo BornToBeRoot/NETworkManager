@@ -1956,9 +1956,13 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             }
             .Where(x => x.Count > 0).Select(x => string.Format(x.Format, x.Count)));
 
-        NotificationManager.ShowStatusChange(changes.All(x => x.Change == PortScannerPortChange.Opened),
-            $"{Strings.PortScanner} · {_scanHost}", NotificationManager.FormatChanges(lines, summary), showPopup,
-            playSound, SettingsManager.Current.PortScanner_NotificationCloseTime);
+        // Open now = up, no longer open = down, both = up and down
+        var status = NotificationStatusHelper.FromChanges(PortsNowOpen, PortsNoLongerOpen, 0);
+
+        NotificationManager.Show(new NotificationInfo(ApplicationName.PortScanner, status,
+                $"{Strings.PortScanner} · {_scanHost}", NotificationManager.FormatChanges(lines, summary),
+                SettingsManager.Current.PortScanner_NotificationCloseTime),
+            showPopup, playSound);
     }
 
     /// <summary>

@@ -1899,9 +1899,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             }
             .Where(x => x.Count > 0).Select(x => string.Format(x.Format, x.Count)));
 
-        NotificationManager.ShowStatusChange(changes.All(x => x.Change == IPScannerHostChange.New),
-            $"{Strings.IPScanner} · {_scanInput}", NotificationManager.FormatChanges(lines, summary), showPopup,
-            playSound, SettingsManager.Current.IPScanner_NotificationCloseTime);
+        // New = up, gone = down, both = up and down, a changed MAC address = changed
+        var status = NotificationStatusHelper.FromChanges(HostsNew, HostsGone, HostsMACChanged);
+
+        NotificationManager.Show(new NotificationInfo(ApplicationName.IPScanner, status,
+                $"{Strings.IPScanner} · {_scanInput}", NotificationManager.FormatChanges(lines, summary),
+                SettingsManager.Current.IPScanner_NotificationCloseTime),
+            showPopup, playSound);
     }
 
     /// <summary>

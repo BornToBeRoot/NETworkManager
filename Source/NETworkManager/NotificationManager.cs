@@ -1,4 +1,4 @@
-using MahApps.Metro.IconPacks;
+using NETworkManager.Models;
 using NETworkManager.Settings;
 using System;
 using System.Collections.Generic;
@@ -28,39 +28,38 @@ public static class NotificationManager
     private static DateTime _lastSoundPlayed = DateTime.MinValue;
 
     /// <summary>
-    /// Shows a notification popup in the bottom-right corner of the primary screen.
-    /// Safe to call from any thread.
+    /// Shows a notification of a tool (popup in the bottom-right corner of the primary screen) and / or plays its sound
+    /// (settings of the tool): a gentle info sound if something is up, otherwise a warning sound. Safe to call from any
+    /// thread.
     /// </summary>
-    /// <param name="iconKind">The Material icon shown on the left of the popup.</param>
-    /// <param name="iconColor">The icon fill color (e.g. "Red" or "#badc58").</param>
-    /// <param name="title">The bold header text (e.g. the host title).</param>
-    /// <param name="message">The gray subtext below the header (e.g. "Host is up").</param>
-    /// <param name="closeTimeSeconds">Seconds before the popup closes automatically.</param>
-    public static void Show(PackIconMaterialKind iconKind, string iconColor, string title, string message, int closeTimeSeconds)
-    {
-        ShowWindow(iconKind, iconColor, title, message, closeTimeSeconds);
-    }
-
-    /// <summary>
-    ///     Shows a status change (e.g. a host is up / down in the Ping Monitor, changes of a repeated scan): up with a
-    ///     green connected icon and a gentle info sound, down with a red disconnected icon and a warning sound. Popup
-    ///     and sound are optional (settings of the application).
-    /// </summary>
-    /// <param name="isUp">Up (e.g. new hosts only), otherwise down (e.g. a host is gone).</param>
-    /// <param name="title">The bold header text (e.g. the host title).</param>
-    /// <param name="message">The gray subtext below the header (e.g. "Host is up").</param>
+    /// <param name="notification">The notification.</param>
     /// <param name="showPopup">Show the popup.</param>
     /// <param name="playSound">Play the sound.</param>
-    /// <param name="closeTimeSeconds">Seconds before the popup closes automatically.</param>
-    public static void ShowStatusChange(bool isUp, string title, string message, bool showPopup, bool playSound,
-        int closeTimeSeconds)
+    public static void Show(NotificationInfo notification, bool showPopup, bool playSound)
     {
         if (playSound)
-            PlaySound(isUp ? SystemSounds.Asterisk : SystemSounds.Exclamation);
+            PlaySound(notification.Status == NotificationStatus.Up ? SystemSounds.Asterisk : SystemSounds.Exclamation);
 
-        if (showPopup)
-            Show(isUp ? PackIconMaterialKind.LanConnect : PackIconMaterialKind.LanDisconnect, isUp ? "#badc58" : "Red",
-                title, message, closeTimeSeconds);
+        if (!showPopup)
+            return;
+
+        // A late ping callback during application shutdown may find no Application instance.
+        if (Application.Current is null)
+            return;
+
+        Application.Current.Dispatcher.BeginInvoke(() =>
+        {
+            var window = new NotificationWindow(notification);
+
+            window.Closed += (_, _) =>
+            {
+                ActiveWindows.Remove(window);
+                RepositionAll();
+            };
+
+            ActiveWindows.Add(window);
+            window.Show(); // triggers OnSourceInitialized → window positions itself
+        });
     }
 
     /// <summary>
@@ -74,28 +73,6 @@ public static class NotificationManager
     public static string FormatChanges(IReadOnlyCollection<string> lines, string summary, int maxLines = 3)
     {
         return lines.Count <= maxLines ? string.Join(Environment.NewLine, lines) : summary;
-    }
-
-    private static void ShowWindow(PackIconMaterialKind iconKind, string iconColor, string title, string message,
-        int closeTimeSeconds)
-    {
-        // A late ping callback during application shutdown may find no Application instance.
-        if (Application.Current is null)
-            return;
-
-        Application.Current.Dispatcher.BeginInvoke(() =>
-        {
-            var window = new NotificationWindow(iconKind, iconColor, title, message, closeTimeSeconds);
-
-            window.Closed += (_, _) =>
-            {
-                ActiveWindows.Remove(window);
-                RepositionAll();
-            };
-
-            ActiveWindows.Add(window);
-            window.Show(); // triggers OnSourceInitialized → window positions itself
-        });
     }
 
     /// <summary>

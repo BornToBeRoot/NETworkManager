@@ -7,6 +7,7 @@ using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using log4net;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
@@ -705,10 +706,10 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
                 StatusTime = DateTime.Now;
                 IsReachable = true;
 
-                NotificationManager.ShowStatusChange(true, NotificationHostDisplay, Strings.HostIsUp,
+                NotificationManager.Show(new NotificationInfo(ApplicationName.PingMonitor, NotificationStatus.Up,
+                        NotificationHostDisplay, Strings.HostIsUp, SettingsManager.Current.PingMonitor_NotificationCloseTime),
                     SettingsManager.Current.PingMonitor_ShowNotificationPopup,
-                    SettingsManager.Current.PingMonitor_NotificationSound,
-                    SettingsManager.Current.PingMonitor_NotificationCloseTime);
+                    SettingsManager.Current.PingMonitor_NotificationSound);
             }
 
             Received++;
@@ -735,10 +736,10 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
                 StatusTime = DateTime.Now;
                 IsReachable = false;
 
-                NotificationManager.ShowStatusChange(false, NotificationHostDisplay, Strings.HostIsDown,
+                NotificationManager.Show(new NotificationInfo(ApplicationName.PingMonitor, NotificationStatus.Down,
+                        NotificationHostDisplay, Strings.HostIsDown, SettingsManager.Current.PingMonitor_NotificationCloseTime),
                     SettingsManager.Current.PingMonitor_ShowNotificationPopup,
-                    SettingsManager.Current.PingMonitor_NotificationSound,
-                    SettingsManager.Current.PingMonitor_NotificationCloseTime);
+                    SettingsManager.Current.PingMonitor_NotificationSound);
             }
 
             Lost++;

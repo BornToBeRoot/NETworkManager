@@ -45,7 +45,7 @@
             <!-- Status icon: kind and color bound from constructor parameters -->
             <Rectangle Grid.Column="0" Grid.Row="0"
                        Width="32" Height="32"
-                       Fill="{Binding IconColor}">
+                       Fill="{Binding IconBrush}">
                 <Rectangle.OpacityMask>
                     <VisualBrush Stretch="Uniform">
                         <VisualBrush.Visual>
