@@ -12,7 +12,9 @@ namespace NETworkManager.Models.Network;
 /// <param name="Hostname">Shown hostname (DNS, mDNS or NetBIOS), empty if unknown.</param>
 /// <param name="MACAddress">MAC address, empty if unknown.</param>
 /// <param name="Vendor">Vendor of the MAC address, empty if unknown.</param>
-public sealed record IPScannerBaselineHost(bool IsUp, string Hostname, string MACAddress, string Vendor);
+/// <param name="Role">Roles of the host (e.g. the default gateway), kept by the row of a gone host.</param>
+public sealed record IPScannerBaselineHost(bool IsUp, string Hostname, string MACAddress, string Vendor,
+    IPScannerHostRole Role = IPScannerHostRole.None);
 
 /// <summary>
 ///     Result of <see cref="IPScannerScanComparer.Compare" />.
@@ -40,7 +42,7 @@ public static class IPScannerScanComparer
         foreach (var host in hosts)
         {
             baseline[host.IPAddress] = new IPScannerBaselineHost(host.IsReachable, host.Hostname ?? string.Empty,
-                host.MACAddress ?? string.Empty, host.Vendor ?? string.Empty);
+                host.MACAddress ?? string.Empty, host.Vendor ?? string.Empty, host.Role);
         }
 
         return baseline;

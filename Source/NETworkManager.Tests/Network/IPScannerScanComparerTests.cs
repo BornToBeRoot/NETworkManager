@@ -105,12 +105,14 @@ public class IPScannerScanComparerTests
     [Fact]
     public void GoneRowHasThePreviousValues()
     {
-        var gone = IPScannerHostInfo.CreateGone(A, new IPScannerBaselineHost(true, "nas.local", "00:11", "Synology"));
+        var gone = IPScannerHostInfo.CreateGone(A,
+            new IPScannerBaselineHost(true, "nas.local", "00:11", "Synology", IPScannerHostRole.DefaultGateway));
 
         Assert.False(gone.IsReachable);
         Assert.Equal(IPScannerHostChange.Gone, gone.Change);
         Assert.Equal("nas.local", gone.Hostname);
         Assert.Equal("00:11", gone.MACAddress);
+        Assert.Equal(IPScannerHostRole.DefaultGateway, gone.Role);
         Assert.False(gone.IsHostnamePending);
         Assert.False(gone.IsMACAddressPending);
     }

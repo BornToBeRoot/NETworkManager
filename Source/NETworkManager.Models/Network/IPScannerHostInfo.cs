@@ -685,7 +685,7 @@ public class IPScannerHostInfo : PropertyChangedBase
 
     /// <summary>
     ///     Creates the row of a host that was up in the previous scan and is not up now
-    ///     (<see cref="IPScannerHostChange.Gone" />), with the hostname and MAC address of the previous scan.
+    ///     (<see cref="IPScannerHostChange.Gone" />), with the hostname, MAC address and role of the previous scan.
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="previous">The host in the previous scan.</param>
@@ -699,6 +699,7 @@ public class IPScannerHostInfo : PropertyChangedBase
             DNSHostname = previous.Hostname,
             NeighborMACAddress = previous.MACAddress,
             NeighborVendor = previous.Vendor,
+            Role = previous.Role,
             Change = IPScannerHostChange.Gone
         };
 
