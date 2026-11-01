@@ -96,6 +96,8 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private readonly List<PortScannerPortInfo> _repeatAdded = [];
     private readonly HashSet<(IPAddress IPAddress, int Port)> _repeatReported = [];
     private Dictionary<PortScannerPortInfo, PortState> _repeatSnapshots;
+    private (int toScan, int scanned, int open, int closed, int timedOut) _repeatCounters;
+    private Dictionary<IPAddress, (int closed, int timedOut)> _repeatPortsNotOpenPerHost;
 
     // Message of the tab, shown until the first scan has started or the ports are changed (see constructor)
     private string _message;
@@ -1000,6 +1002,13 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             _resultsBuffer.Clear();
         }
 
+        // A canceled / failed repeated scan restores the counters of the last scan (see ScanComplete)
+        if (isRepeat)
+        {
+            _repeatCounters = (PortsToScan, PortsScanned, PortsOpen, PortsClosed, PortsTimedOut);
+            _repeatPortsNotOpenPerHost = new Dictionary<IPAddress, (int closed, int timedOut)>(_portsNotOpenPerHost);
+        }
+
         // Set from the scanner at the end of the scan (see ScanComplete)
         _portsNotOpenPerHost.Clear();
 
@@ -1744,9 +1753,11 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             // Repeated scan: canceled / failed - the rows of the last scan with their states; completed - a port of a
             // host that was not scanned (e.g. it didn't answer the ping before the scan) didn't answer
+            var isRepeatDiscarded = _repeatRows != null && (e.IsCanceled || e.Exception != null);
+
             if (_repeatRows != null)
             {
-                if (e.IsCanceled || e.Exception != null)
+                if (isRepeatDiscarded)
                 {
                     foreach (var (row, state) in _repeatSnapshots)
                         SetPortState(row, state);
@@ -1756,6 +1767,12 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                         SetPortState(row, PortState.TimedOut);
                         Results.Remove(row);
                     }
+
+                    // The counters of the restored rows (the last scan), not the partial ones of this scan
+                    (PortsToScan, PortsScanned, PortsOpen, PortsClosed, PortsTimedOut) = _repeatCounters;
+
+                    foreach (var (ipAddress, count) in _repeatPortsNotOpenPerHost)
+                        _portsNotOpenPerHost[ipAddress] = count;
                 }
                 else
                 {
@@ -1767,6 +1784,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 _repeatAdded.Clear();
                 _repeatReported.Clear();
                 _repeatSnapshots = null;
+                _repeatPortsNotOpenPerHost = null;
             }
 
             // Canceled / failed rescan: keep the previous results of the hosts (their rows were removed when the
@@ -1786,7 +1804,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                     UpdatePortsNotOpenPerHost(row.IPAddress, row.State, 1);
                 }
             }
-            else if (sender is PortScanner finishedPortScanner && !isRescanDiscarded)
+            else if (sender is PortScanner finishedPortScanner && !isRescanDiscarded && !isRepeatDiscarded)
             {
                 if (_isRescan)
                 {

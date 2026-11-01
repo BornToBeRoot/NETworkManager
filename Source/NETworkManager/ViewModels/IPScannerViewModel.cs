@@ -77,6 +77,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private readonly Dictionary<IPScannerHostInfo, IPScannerHostInfo> _repeatResults = [];
     private readonly List<IPScannerHostInfo> _repeatAdded = [];
     private Dictionary<IPScannerHostInfo, IPScannerHostInfo> _repeatSnapshots;
+    private (int toScan, int scanned, int up, int down) _repeatCounters;
 
     // Rescan of shown hosts (see RescanSelectedHosts), null if no rescan is running: row per rescanned IP address
     // (every IP address is scanned once, see HostRangeHelper.ResolveAsync). The scanner creates new results - their
@@ -961,6 +962,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             _repeatResults.Clear();
             _repeatAdded.Clear();
             _repeatSnapshots = _repeatRows.Values.ToDictionary(x => x, x => x.Clone());
+            _repeatCounters = (HostsToScan, HostsScanned, HostsUp, HostsDown);
         }
         else
         {
@@ -1744,8 +1746,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             // Canceled / failed repeated scan: the rows of the last scan with their values (before the counters are
             // computed from them)
             var isRepeat = _repeatRows != null;
+            var isRepeatDiscarded = isRepeat && (e.IsCanceled || e.Exception != null);
 
-            if (isRepeat && (e.IsCanceled || e.Exception != null))
+            if (isRepeatDiscarded)
             {
                 foreach (var (row, snapshot) in _repeatSnapshots)
                     row.CopyFrom(snapshot);
@@ -1781,6 +1784,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 HostsToScan = _rescanHostsToScan;
                 HostsScanned = _rescanHostsScanned;
             }
+
+            // Canceled / failed repeated scan: the counters of the restored rows (the last scan), not the partial ones
+            if (isRepeatDiscarded)
+                (HostsToScan, HostsScanned, HostsUp, HostsDown) = _repeatCounters;
 
             if (sender is IPScanner ipScanner)
             {
