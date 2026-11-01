@@ -1904,7 +1904,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         NotificationManager.Show(new NotificationInfo(ApplicationName.IPScanner, status,
                 _scanInput, NotificationManager.FormatChanges(lines, summary),
-                SettingsManager.Current.IPScanner_NotificationCloseTime),
+                SettingsManager.Current.IPScanner_NotificationCloseTime)
+            {
+                Request = new ShowTabRequest(ApplicationName.IPScanner, _tabId)
+            },
             showPopup, playSound);
     }
 

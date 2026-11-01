@@ -16,4 +16,11 @@ public sealed record NotificationInfo(
     NotificationStatus Status,
     string Title,
     string Message,
-    int CloseTimeSeconds);
+    int CloseTimeSeconds)
+{
+    /// <summary>
+    ///     Opened when the notification is clicked (e.g. the tab of the scan, see <see cref="ShowTabRequest" />), null
+    ///     to open the tool.
+    /// </summary>
+    public ApplicationRequest Request { get; init; }
+}

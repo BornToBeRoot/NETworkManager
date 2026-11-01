@@ -144,6 +144,23 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     #region Methods
 
     /// <summary>
+    /// Selects a tab (e.g. the tab that sent a notification). Nothing happens if it was closed or moved to another
+    /// window.
+    /// </summary>
+    /// <param name="tabId">Id of the tab.</param>
+    public void SelectTab(Guid tabId)
+    {
+        for (var i = 0; i < TabItems.Count; i++)
+        {
+            if (TabItems[i].Id != tabId)
+                continue;
+
+            SelectedTabIndex = i;
+            return;
+        }
+    }
+
+    /// <summary>
     /// Adds a new tab for the specified host or IP range.
     /// </summary>
     /// <param name="hostOrIPRange">The host or IP range to scan.</param>

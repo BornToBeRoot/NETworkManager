@@ -41,6 +41,9 @@ public partial class NotificationWindow : INotifyPropertyChanged
     // Bound properties — all set once in the constructor, no change notifications needed.
     // Note: the header property is named NotificationTitle (not Title) to avoid clashing with
     // the inherited Window.Title property, which a "{Binding Title}" would otherwise resolve to.
+    // Opened when the notification is clicked (the tool or its tab)
+    private readonly ApplicationRequest _request;
+
     // Header: the tool that sent the notification
     public Brush ApplicationIconBrush { get; }
     public string ApplicationTitle { get; }
@@ -81,6 +84,8 @@ public partial class NotificationWindow : INotifyPropertyChanged
         InitializeComponent();
         DataContext = this;
 
+        _request = notification.Request ?? new ApplicationRequest(notification.Application);
+
         ApplicationIconBrush = new VisualBrush(ApplicationManager.GetIcon(notification.Application))
         {
             Stretch = Stretch.Uniform
@@ -115,6 +120,9 @@ public partial class NotificationWindow : INotifyPropertyChanged
         if (System.Windows.Application.Current.MainWindow is MainWindow mainWindow &&
             mainWindow.ShowWindowCommand.CanExecute(null))
             mainWindow.ShowWindowCommand.Execute(null);
+
+        // The tool (and the tab) that sent the notification
+        NavigationManager.Open(_request);
     }
 
     #endregion

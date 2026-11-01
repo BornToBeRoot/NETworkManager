@@ -14,6 +14,13 @@ public partial class IPScannerHostView : IApplicationRequestHandler
 
     public void Open(ApplicationRequest request)
     {
+        // E.g. a click on a notification of the tab
+        if (request is ShowTabRequest showTabRequest)
+        {
+            _viewModel.SelectTab(showTabRequest.TabId);
+            return;
+        }
+
         if (request.Profile != null)
             _viewModel.AddTab(request.Profile, request.Start);
         else

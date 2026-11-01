@@ -1961,7 +1961,10 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         NotificationManager.Show(new NotificationInfo(ApplicationName.PortScanner, status,
                 _scanHost, NotificationManager.FormatChanges(lines, summary),
-                SettingsManager.Current.PortScanner_NotificationCloseTime),
+                SettingsManager.Current.PortScanner_NotificationCloseTime)
+            {
+                Request = new ShowTabRequest(ApplicationName.PortScanner, _tabId)
+            },
             showPopup, playSound);
     }
 
