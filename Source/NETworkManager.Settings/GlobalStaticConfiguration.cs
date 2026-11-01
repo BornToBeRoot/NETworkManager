@@ -178,7 +178,7 @@ public static class GlobalStaticConfiguration
     public static AutoRefreshTimeInfo IPScanner_AutoRefreshTime =>
         AutoRefreshTime.GetScanDefaults.First(x => x.Value == 5 && x.TimeUnit == TimeUnit.Minute);
 
-    public static bool IPScanner_ShowNotificationPopup => false;
+    public static bool IPScanner_ShowNotificationPopup => true;
     public static bool IPScanner_NotificationSound => false;
     public static int IPScanner_NotificationCloseTime => 10;
     public static ExportFileType IPScanner_ExportFileType => ExportFileType.Csv;
@@ -199,7 +199,7 @@ public static class GlobalStaticConfiguration
     public static AutoRefreshTimeInfo PortScanner_AutoRefreshTime =>
         AutoRefreshTime.GetScanDefaults.First(x => x.Value == 5 && x.TimeUnit == TimeUnit.Minute);
 
-    public static bool PortScanner_ShowNotificationPopup => false;
+    public static bool PortScanner_ShowNotificationPopup => true;
     public static bool PortScanner_NotificationSound => false;
     public static int PortScanner_NotificationCloseTime => 10;
     public static int PortScanner_Attempts => 1;
@@ -224,7 +224,7 @@ public static class GlobalStaticConfiguration
 
     // Application: Ping Monitor (notifications)
     public static bool PingMonitor_ShowNotificationPopup => true;
-    public static bool PingMonitor_NotificationSound => true;
+    public static bool PingMonitor_NotificationSound => false;
     public static int PingMonitor_NotificationSuccessThreshold => 1;
     public static int PingMonitor_NotificationFailureThreshold => 3;
     public static int PingMonitor_NotificationCloseTime => 10;

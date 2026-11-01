@@ -569,7 +569,7 @@ Show a notification popup in the bottom-right corner of the primary screen when 
 
 **Type:** `Boolean`
 
-**Default:** `Disabled`
+**Default:** `Enabled`
 
 ### Play sound on changes
 

@@ -194,7 +194,7 @@ Play a system sound when a monitored host changes its reachability state. This i
 
 **Type:** `Boolean`
 
-**Default:** `Enabled`
+**Default:** `Disabled`
 
 ### Success threshold
 
