@@ -30,13 +30,14 @@ public sealed class IPScanner(IPScannerOptions options)
     private const int SMBPort = 445;
 
     /// <summary>
-    ///     Max. number of hosts whose NetApi requests run at the same time. The calls are blocking and can't be
-    ///     canceled (see <see cref="WindowsNetApiResolver" />): each one has its own thread, a call that exceeds the
-    ///     timeout keeps its slot until Windows returns, so blocked calls never take more threads than this.
+    ///     Max. number of hosts whose NetApi requests run at the same time, in all scans of the application. The calls
+    ///     are blocking and can't be canceled (see <see cref="WindowsNetApiResolver" />): each one has its own thread, a
+    ///     call that exceeds the timeout keeps its slot until Windows returns - also after its scan is completed, so
+    ///     the slots are shared by all scans (tabs, repeated scans), otherwise blocked calls could pile up.
     /// </summary>
     private const int MaxWindowsThreads = 16;
 
-    private readonly SemaphoreSlim _windowsSemaphore = new(MaxWindowsThreads, MaxWindowsThreads);
+    private static readonly SemaphoreSlim WindowsSemaphore = new(MaxWindowsThreads, MaxWindowsThreads);
 
     // Network logon with the Windows credentials of the profile / group (null: the user running the application) and
     // the error if it could not be created (every host gets it instead of using another user)
@@ -816,7 +817,7 @@ public sealed class IPScanner(IPScannerOptions options)
         var timeout = TimeSpan.FromMilliseconds(options.WindowsTimeout);
 
         // All slots are taken by calls that wait for Windows (e.g. hosts that don't answer RPC)
-        if (!await _windowsSemaphore.WaitAsync(timeout, cancellationToken).ConfigureAwait(false))
+        if (!await WindowsSemaphore.WaitAsync(timeout, cancellationToken).ConfigureAwait(false))
             return WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorTimeout);
 
         var logon = _windowsLogon;
@@ -848,7 +849,7 @@ public sealed class IPScanner(IPScannerOptions options)
             }
             finally
             {
-                _windowsSemaphore.Release();
+                WindowsSemaphore.Release();
             }
         }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
 
