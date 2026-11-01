@@ -133,6 +133,7 @@ Release date: **xx.xx.2026**
 - The export runs in the background, so the window stays responsive while a large result is exported, and uses the order shown in the result (sorting, grouping) instead of the order in which the ports were scanned. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Ports are started one after another (every 1 ms, shorter with short timeouts and many threads) instead of all at the same moment. This avoids bursts of hundreds of connection requests within a few milliseconds and makes the progress smoother. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - IP addresses can be excluded from the scan with `!` in the host input (also in profiles and the run command), e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254`. Works with IP addresses, ranges, subnets and hostnames (all IPv4 and IPv6 addresses of the hostname, nothing is scanned if the hostname can't be resolved); a message is shown if every IP address is excluded. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- A scan of the same hosts and ports as the last completed scan in the tab shows what changed in the new **Change** column: **Now open** and **No longer open** (shown with its status, also without **Show closed ports**), counters next to the **Result** header (e.g. `1 Now open · 2 No longer open`) and **Last scan at** with the time. Kept in memory while the tab is open; also in the search and the export (`Change`). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 **Ping Monitor**
 

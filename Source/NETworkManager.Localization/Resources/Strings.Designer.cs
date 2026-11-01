@@ -9518,6 +9518,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No longer open.
+        /// </summary>
+        public static string PortChange_Closed {
+            get {
+                return ResourceManager.GetString("PortChange_Closed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now open.
+        /// </summary>
+        public static string PortChange_Opened {
+            get {
+                return ResourceManager.GetString("PortChange_Opened", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Port description.
         /// </summary>
         public static string PortDescription {
@@ -15394,6 +15412,24 @@ namespace NETworkManager.Localization.Resources {
         public static string XNew {
             get {
                 return ResourceManager.GetString("XNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} No longer open.
+        /// </summary>
+        public static string XNoLongerOpen {
+            get {
+                return ResourceManager.GetString("XNoLongerOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Now open.
+        /// </summary>
+        public static string XNowOpen {
+            get {
+                return ResourceManager.GetString("XNowOpen", resourceCulture);
             }
         }
         

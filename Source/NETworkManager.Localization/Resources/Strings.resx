@@ -1342,6 +1342,18 @@ Profile files are not affected!</value>
   <data name="PreviousMACAddressX" xml:space="preserve">
     <value>Previous MAC address: {0}</value>
   </data>
+  <data name="PortChange_Opened" xml:space="preserve">
+    <value>Now open</value>
+  </data>
+  <data name="PortChange_Closed" xml:space="preserve">
+    <value>No longer open</value>
+  </data>
+  <data name="XNowOpen" xml:space="preserve">
+    <value>{0} Now open</value>
+  </data>
+  <data name="XNoLongerOpen" xml:space="preserve">
+    <value>{0} No longer open</value>
+  </data>
   <data name="ChangeMasterPasswordDots" xml:space="preserve">
     <value>Change Master Password...</value>
   </data>

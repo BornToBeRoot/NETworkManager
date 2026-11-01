@@ -13,6 +13,8 @@
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
+             xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
+             xmlns:internalControls="clr-namespace:NETworkManager.Controls"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:PortScannerViewModel}">
     <UserControl.Resources>
@@ -27,6 +29,7 @@
         <converters:PortStateToStringConverter x:Key="PortStateToStringConverter" />
         <converters:PortOpenStyleConverter x:Key="PortOpenStyleConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
+        <converters:PortScannerPortChangeToStringConverter x:Key="PortScannerPortChangeToStringConverter" />
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -253,7 +256,39 @@
                         <Binding Path="PortsTimedOut" StringFormat="{x:Static localization:Strings.XTimedOut}" />
                     </TextBlock.Text>
                 </TextBlock>
+                <!-- Changes since the previous scan of the same hosts and ports -->
+                <StackPanel Orientation="Horizontal"
+                            Visibility="{Binding HasComparison, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="·"
+                                   Style="{StaticResource DefaultTextBlock}"
+                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                   Margin="6,0,6,0" />
+                        <TextBlock Style="{StaticResource DefaultTextBlock}"
+                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                            <TextBlock.Text>
+                                <Binding Path="PortsNowOpen" StringFormat="{x:Static localization:Strings.XNowOpen}" />
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="·"
+                                   Style="{StaticResource DefaultTextBlock}"
+                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                   Margin="6,0,6,0" />
+                        <TextBlock Style="{StaticResource DefaultTextBlock}"
+                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                            <TextBlock.Text>
+                                <Binding Path="PortsNoLongerOpen" StringFormat="{x:Static localization:Strings.XNoLongerOpen}" />
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
+            <internalControls:RefreshStatusControl LastRefreshTime="{Binding LastScanTime}"
+                                                   LastRefreshFormat="{x:Static localization:Strings.LastScanAtX}"
+                                                   IsRefreshing="{Binding IsRunning}"
+                                                   Margin="20,0,0,0" />
             <TextBox Width="250"
                      Margin="20,0,0,0"
                      Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
@@ -859,6 +894,59 @@
                                     Binding="{Binding State, Converter={StaticResource PortStateToStringConverter}}"
                                     SortMemberPath="State"
                                     MinWidth="100" />
+                <!-- Change since the previous scan of the same hosts and ports, only if the result is compared -->
+                <DataGridTemplateColumn Header="{x:Static localization:Strings.Change}"
+                                        SortMemberPath="Change"
+                                        MinWidth="140"
+                                        Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.HasComparison, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <StackPanel.Style>
+                                    <Style TargetType="{x:Type StackPanel}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Change}"
+                                                         Value="{x:Static network:PortScannerPortChange.None}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <Rectangle Width="16" Height="16" Margin="0,0,5,0">
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Change}"
+                                                             Value="{x:Static network:PortScannerPortChange.Opened}">
+                                                    <Setter Property="Fill" Value="#badc58" />
+                                                    <Setter Property="OpacityMask">
+                                                        <Setter.Value>
+                                                            <VisualBrush Stretch="Uniform"
+                                                                         Visual="{iconPacks:Material Kind=PlusCircle}" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Change}"
+                                                             Value="{x:Static network:PortScannerPortChange.Closed}">
+                                                    <Setter Property="Fill"
+                                                            Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                    <Setter Property="OpacityMask">
+                                                        <Setter.Value>
+                                                            <VisualBrush Stretch="Uniform"
+                                                                         Visual="{iconPacks:Material Kind=MinusCircle}" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                                <TextBlock Text="{Binding Change, Converter={StaticResource PortScannerPortChangeToStringConverter}}"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}"
                                     Binding="{Binding LookupInfo.Protocol}"
                                     SortMemberPath="LookupInfo.Protocol"

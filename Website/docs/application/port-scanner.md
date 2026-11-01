@@ -96,6 +96,12 @@ The results are grouped by host (one group per IP address, the header shows the 
 
 The search box right of the **Result** header filters the results by IP address, hostname, port, protocol, service, description and status, also while the scan is running. **Export...** > all exports the filtered results; the counters always count all ports.
 
+### Changes since the last scan
+
+A scan of the same hosts and ports as the last completed scan in the tab shows what changed since then in the **Change** column: **Now open** (the port is open now, it was not open in the last scan) and **No longer open** (it was open in the last scan, it is closed or timed out now). A port that is no longer open is shown with its status, also if [Show closed ports](#show-closed-ports) is disabled; if its host was not scanned (e.g. it didn't answer the [ping before the scan](#ping-hosts-before-the-scan)), it is shown as timed out. The counters next to the **Result** header (e.g. `1 Now open · 2 No longer open`) and the column are only shown if the result is compared with a previous scan. **Last scan at** shows when the last scan was completed (the tooltip shows the date).
+
+Only completed scans are compared: a canceled scan or a scan with other hosts or ports (also a changed port profile) starts over. **Rescan** updates the rows; a rescanned host loses its changes (its rows are replaced). The last scan is only kept in memory, as long as the tab is open. The change is also in the search and the export (`Change`).
+
 ### Keyboard shortcuts
 
 | Key      | Action                                                        |
