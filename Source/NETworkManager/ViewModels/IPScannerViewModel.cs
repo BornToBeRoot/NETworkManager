@@ -1903,7 +1903,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         var status = NotificationStatusHelper.FromChanges(HostsNew, HostsGone, HostsMACChanged);
 
         NotificationManager.Show(new NotificationInfo(ApplicationName.IPScanner, status,
-                $"{Strings.IPScanner} · {_scanInput}", NotificationManager.FormatChanges(lines, summary),
+                _scanInput, NotificationManager.FormatChanges(lines, summary),
                 SettingsManager.Current.IPScanner_NotificationCloseTime),
             showPopup, playSound);
     }

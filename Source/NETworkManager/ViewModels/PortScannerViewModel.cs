@@ -1960,7 +1960,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         var status = NotificationStatusHelper.FromChanges(PortsNowOpen, PortsNoLongerOpen, 0);
 
         NotificationManager.Show(new NotificationInfo(ApplicationName.PortScanner, status,
-                $"{Strings.PortScanner} · {_scanHost}", NotificationManager.FormatChanges(lines, summary),
+                _scanHost, NotificationManager.FormatChanges(lines, summary),
                 SettingsManager.Current.PortScanner_NotificationCloseTime),
             showPopup, playSound);
     }

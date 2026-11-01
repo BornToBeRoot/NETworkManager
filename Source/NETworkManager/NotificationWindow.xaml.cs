@@ -1,4 +1,5 @@
 using MahApps.Metro.IconPacks;
+using NETworkManager.Localization;
 using NETworkManager.Models;
 using NETworkManager.Utilities;
 using System;
@@ -40,6 +41,10 @@ public partial class NotificationWindow : INotifyPropertyChanged
     // Bound properties — all set once in the constructor, no change notifications needed.
     // Note: the header property is named NotificationTitle (not Title) to avoid clashing with
     // the inherited Window.Title property, which a "{Binding Title}" would otherwise resolve to.
+    // Header: the tool that sent the notification
+    public Brush ApplicationIconBrush { get; }
+    public string ApplicationTitle { get; }
+
     public PackIconMaterialKind IconKind { get; }
     public Brush IconBrush { get; }
     public string NotificationTitle { get; }
@@ -75,6 +80,12 @@ public partial class NotificationWindow : INotifyPropertyChanged
     {
         InitializeComponent();
         DataContext = this;
+
+        ApplicationIconBrush = new VisualBrush(ApplicationManager.GetIcon(notification.Application))
+        {
+            Stretch = Stretch.Uniform
+        };
+        ApplicationTitle = ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, notification.Application);
 
         (IconKind, IconBrush) = GetStatusIcon(notification.Status);
         NotificationTitle = notification.Title;
