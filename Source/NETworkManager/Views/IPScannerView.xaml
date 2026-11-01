@@ -1097,24 +1097,6 @@
                         </MultiBinding>
                     </DataGridTextColumn.Visibility>
                 </DataGridTextColumn>
-                <!-- Status icon ("..." while running), details in the tooltip -->
-                <DataGridTemplateColumn Header="{x:Static localization:Strings.PingStatus}"
-                                        SortMemberPath="PingInfo.Status"
-                                        Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                        MinWidth="100">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <TextBlock Text="..." VerticalAlignment="Center"
-                                           Visibility="{Binding IsPingPending, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                                <Rectangle Width="16" Height="16" HorizontalAlignment="Left"
-                                           Style="{Binding DetectedBy, ConverterParameter=ICMP, Converter={StaticResource SuccessStyleConverter}}"
-                                           ToolTip="{Binding PingInfo, Converter={StaticResource IPScannerStatusToolTipConverter}}"
-                                           Visibility="{Binding IsPingPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
-                            </Grid>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.Time}"
                                     SortMemberPath="PingInfo.Time"
                                     Visibility="{Binding Path=Data.ScanOptions.ICMPEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
@@ -1333,24 +1315,6 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <!-- Status icon ("..." while running), details in the tooltip -->
-                <DataGridTemplateColumn Header="{x:Static localization:Strings.NetBIOSReachable}"
-                                        SortMemberPath="NetBIOSInfo.IsReachable"
-                                        Visibility="{Binding Path=Data.ScanOptions.NetBIOSEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                        MinWidth="100">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <TextBlock Text="..." VerticalAlignment="Center"
-                                           Visibility="{Binding IsNetBIOSPending, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                                <Rectangle Width="16" Height="16" HorizontalAlignment="Left"
-                                           Style="{Binding NetBIOSInfo.IsReachable, Converter={StaticResource SuccessStyleConverter}}"
-                                           ToolTip="{Binding NetBIOSInfo, Converter={StaticResource IPScannerStatusToolTipConverter}}"
-                                           Visibility="{Binding IsNetBIOSPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
-                            </Grid>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}"
                                     SortMemberPath="MACAddress"
                                     MinWidth="150">

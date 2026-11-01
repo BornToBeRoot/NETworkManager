@@ -121,7 +121,6 @@ The columns are shown according to the settings the scan was started with, setti
 | **Since last scan**            | Change since the previous scan, see [Changes since the last scan](#changes-since-the-last-scan) (only if the result is compared with one)
 | **IP address**                 | Scanned IP address                                                                                                                                                       |
 | **Hostname**                   | DNS hostname (`PTR`), otherwise the mDNS hostname, otherwise the NetBIOS name                                                                                           |
-| **Ping status**                | Status icon, the tooltip shows status, time and TTL (e.g. `Success (2 ms, TTL 64)`)                                                                                      |
 | **Time**                       | Round trip time of the ping reply                                                                                                                                        |
 | **OS (guess)**                 | Operating system guessed from the TTL of the ping reply, see [Guess the operating system from the TTL](#guess-the-operating-system-from-the-ttl)                       |
 | **Port status**                | Status icon (a port is open), the tooltip shows the open ports with their service (e.g. `Open: 22 (ssh), 443 (https)`, the first 10)                                    |
@@ -131,7 +130,6 @@ The columns are shown according to the settings the scan was started with, setti
 | **Logged-on users**            | Logged-on users (needs admin rights on the host), one per line in the tooltip or why they could not be read (e.g. `Access is denied.`)                                  |
 | **Web**                        | Title of the web page, otherwise the realm of a login prompt, the `Server` header or the target of a redirect; the URL in the tooltip, see [Read web pages](#read-web-pages) |
 | **SNMP name**                  | `sysName`, see [Read the SNMP system information](#read-the-snmp-system-information)                                                                                    |
-| **NetBIOS reachable**          | Status icon, the tooltip shows the computer name and the workgroup / domain (e.g. `Yes (PC01, WORKGROUP)`)                                                               |
 | **MAC address** / **Vendor**   | From the neighbor table (ARP / NDP), the NetBIOS answer as fallback                                                                                                      |
 
 Values arrive one after another while the scan is running:
@@ -314,7 +312,7 @@ Show the [row details](#row-details) of every host in the result, also of hosts 
 
 ### Ping hosts
 
-Send a ping (ICMP echo request) to every IP address. Disable it if ICMP is blocked or rate limited in the network (e.g. by an IDS): without ping, an unreachable host is finished after the port scan / NetBIOS timeout instead of after all ping attempts, so the scan is faster. Hosts that only answer the ping are not found then. The **Ping status** and **Time** columns and the ping details are hidden for a scan without ping.
+Send a ping (ICMP echo request) to every IP address. Disable it if ICMP is blocked or rate limited in the network (e.g. by an IDS): without ping, an unreachable host is finished after the port scan / NetBIOS timeout instead of after all ping attempts, so the scan is faster. Hosts that only answer the ping are not found then. The **Time** column and the ping details are hidden for a scan without ping.
 
 **Type:** `Boolean`
 
