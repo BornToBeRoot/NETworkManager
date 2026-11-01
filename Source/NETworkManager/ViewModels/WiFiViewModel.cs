@@ -660,12 +660,12 @@ public class WiFiViewModel : ViewModelBase
 
         IsAdaptersLoading = true;
 
-        // Show a loading animation for the user
-        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
-
         try
         {
-            Adapters = await WiFi.GetAdapterAsync();
+            // Takes at least the refresh interval, so the reload animation is visible and the reload can't be spammed -
+            // loading runs at the same time
+            Adapters = await TaskHelper.WithMinimumDurationAsync(() => WiFi.GetAdapterAsync(),
+                GlobalStaticConfiguration.ApplicationUIRefreshInterval);
         }
         catch (Exception ex)
         {
