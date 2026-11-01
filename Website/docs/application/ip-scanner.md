@@ -118,7 +118,7 @@ The columns are shown according to the settings the scan was started with, setti
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | _Status_                       | Up / down, the tooltip shows the probes that answered                                                                                                                    |
 | _Role_                         | Icon if the host has a role for this computer: **This computer**, **Default-Gateway**, **DNS server** or **DHCP server** of a connected network interface (all roles in the tooltip) |
-| **Change**                     | Change since the previous scan, see [Changes since the last scan](#changes-since-the-last-scan) (only if the result is compared with one)
+| **Since last scan**            | Change since the previous scan, see [Changes since the last scan](#changes-since-the-last-scan) (only if the result is compared with one)
 | **IP address**                 | Scanned IP address                                                                                                                                                       |
 | **Hostname**                   | DNS hostname (`PTR`), otherwise the mDNS hostname, otherwise the NetBIOS name                                                                                           |
 | **Ping status**                | Status icon, the tooltip shows status, time and TTL (e.g. `Success (2 ms, TTL 64)`)                                                                                      |
@@ -148,7 +148,7 @@ A scan of the same input as the last completed scan in the tab shows what change
 - **Gone**: the host was up in the last scan, it is not up now. The row is added at the end of the scan (as down, with the hostname and MAC address of the last scan), also if [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) is disabled.
 - **MAC changed**: the host is up with another MAC address than in the last scan (both known), e.g. a replaced device, an IP address conflict or ARP spoofing. The tooltip shows the previous MAC address.
 
-The **Change** column and the counters next to the **Result** header (e.g. `2 New · 1 Gone`) are only shown if the result is compared with a previous scan. **Last scan at** next to the counters shows when the last scan was completed (the tooltip shows the date).
+The **Since last scan** column and the counters next to the **Result** header (e.g. `2 New · 1 Gone`) are only shown if the result is compared with a previous scan. **Last scan at** next to the counters shows when the last scan was completed (the tooltip shows the date).
 
 Only completed scans are compared: a canceled scan or a scan with another input starts over (the next scan of this input is compared with it). **Rescan** of selected hosts updates their rows and their changes against the same previous scan (e.g. a gone host that is up again), but is not a scan of the input. The last scan is only kept in memory, as long as the tab is open. The change is also in the search and the export (`Change`, `PreviousMACAddress`).
 

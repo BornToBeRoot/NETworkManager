@@ -1321,6 +1321,10 @@ Profile files are not affected!</value>
   <data name="Change" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="SinceLastScan" xml:space="preserve">
+    <value>Since last scan</value>
+    <comment>Column header (IP Scanner, Port Scanner): what changed since the last scan, e.g. "New", "Gone".</comment>
+  </data>
   <data name="HostChange_New" xml:space="preserve">
     <value>New</value>
   </data>

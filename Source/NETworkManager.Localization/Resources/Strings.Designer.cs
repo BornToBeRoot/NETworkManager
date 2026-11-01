@@ -13312,6 +13312,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Since last scan.
+        /// </summary>
+        public static string SinceLastScan {
+            get {
+                return ResourceManager.GetString("SinceLastScan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Size.
         /// </summary>
         public static string Size {

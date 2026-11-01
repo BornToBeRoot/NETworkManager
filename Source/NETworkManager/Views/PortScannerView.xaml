@@ -903,55 +903,42 @@
                                     SortMemberPath="State"
                                     MinWidth="100" />
                 <!-- Change since the previous scan of the same hosts and ports, only if the result is compared -->
-                <DataGridTemplateColumn Header="{x:Static localization:Strings.Change}"
+                <!-- Same design as the status of the profile import (icon + text in its color) -->
+                <DataGridTemplateColumn Header="{x:Static localization:Strings.SinceLastScan}"
                                         SortMemberPath="Change"
                                         MinWidth="140"
                                         Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.HasComparison, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                <StackPanel.Style>
-                                    <Style TargetType="{x:Type StackPanel}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Change}"
-                                                         Value="{x:Static network:PortScannerPortChange.None}">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </StackPanel.Style>
-                                <Rectangle Width="16" Height="16" Margin="0,0,5,0">
-                                    <Rectangle.Style>
-                                        <Style TargetType="{x:Type Rectangle}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Change}"
-                                                             Value="{x:Static network:PortScannerPortChange.Opened}">
-                                                    <Setter Property="Fill" Value="#badc58" />
-                                                    <Setter Property="OpacityMask">
-                                                        <Setter.Value>
-                                                            <VisualBrush Stretch="Uniform"
-                                                                         Visual="{iconPacks:Material Kind=PlusCircle}" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding Change}"
-                                                             Value="{x:Static network:PortScannerPortChange.Closed}">
-                                                    <Setter Property="Fill"
-                                                            Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                                    <Setter Property="OpacityMask">
-                                                        <Setter.Value>
-                                                            <VisualBrush Stretch="Uniform"
-                                                                         Visual="{iconPacks:Material Kind=MinusCircle}" />
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Rectangle.Style>
-                                </Rectangle>
-                                <TextBlock Text="{Binding Change, Converter={StaticResource PortScannerPortChangeToStringConverter}}"
+                            <StackPanel x:Name="ChangePanel" Orientation="Horizontal" VerticalAlignment="Center">
+                                <Rectangle x:Name="ChangeIcon" Width="12" Height="12" Margin="0,0,4,0" />
+                                <TextBlock x:Name="ChangeText"
+                                           Text="{Binding Change, Converter={StaticResource PortScannerPortChangeToStringConverter}}"
                                            VerticalAlignment="Center" />
                             </StackPanel>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Change}" Value="{x:Static network:PortScannerPortChange.None}">
+                                    <Setter TargetName="ChangePanel" Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Change}" Value="{x:Static network:PortScannerPortChange.Opened}">
+                                    <Setter TargetName="ChangeIcon" Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                    <Setter TargetName="ChangeIcon" Property="OpacityMask">
+                                        <Setter.Value>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Plus}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="ChangeText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Change}" Value="{x:Static network:PortScannerPortChange.Closed}">
+                                    <Setter TargetName="ChangeIcon" Property="Fill" Value="#b95353" />
+                                    <Setter TargetName="ChangeIcon" Property="OpacityMask">
+                                        <Setter.Value>
+                                            <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Minus}" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="ChangeText" Property="Foreground" Value="#b95353" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
