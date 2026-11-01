@@ -191,6 +191,7 @@ Release date: **xx.xx.2026**
 **Listeners**
 
 - The search filters after a short delay while typing instead of on every key press (smoother with many listeners), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- A manual refresh is faster: the wait of 2.5 seconds (so the refresh button can't be spammed) now runs while loading instead of before it, and the refresh icon spins until loading is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 **Neighbor Table**
 
