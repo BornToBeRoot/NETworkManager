@@ -1321,6 +1321,43 @@ Profildateien sind nicht betroffen!</value>
   <data name="Change" xml:space="preserve">
     <value>Ändern</value>
   </data>
+  <data name="SinceLastScan" xml:space="preserve">
+    <value>Seit dem letzten Scan</value>
+    <comment>Column header (IP Scanner, Port Scanner): what changed since the last scan, e.g. "New", "Gone".</comment>
+  </data>
+  <data name="HostChange_New" xml:space="preserve">
+    <value>Neu</value>
+  </data>
+  <data name="HostChange_Gone" xml:space="preserve">
+    <value>Verschwunden</value>
+  </data>
+  <data name="HostChange_MACChanged" xml:space="preserve">
+    <value>MAC geändert</value>
+  </data>
+  <data name="XNew" xml:space="preserve">
+    <value>{0} Neu</value>
+  </data>
+  <data name="XGone" xml:space="preserve">
+    <value>{0} Verschwunden</value>
+  </data>
+  <data name="XMACChanged" xml:space="preserve">
+    <value>{0} MAC geändert</value>
+  </data>
+  <data name="PreviousMACAddressX" xml:space="preserve">
+    <value>Vorherige MAC-Adresse: {0}</value>
+  </data>
+  <data name="PortChange_Opened" xml:space="preserve">
+    <value>Jetzt offen</value>
+  </data>
+  <data name="PortChange_Closed" xml:space="preserve">
+    <value>Nicht mehr offen</value>
+  </data>
+  <data name="XNowOpen" xml:space="preserve">
+    <value>{0} Jetzt offen</value>
+  </data>
+  <data name="XNoLongerOpen" xml:space="preserve">
+    <value>{0} Nicht mehr offen</value>
+  </data>
   <data name="ChangeMasterPasswordDots" xml:space="preserve">
     <value>Masterpasswort ändern...</value>
   </data>
@@ -2489,12 +2526,6 @@ ist deaktiviert!</value>
   </data>
   <data name="NotificationDurationInSeconds" xml:space="preserve">
     <value>Anzeigedauer (Sekunden)</value>
-  </data>
-  <data name="HostIsUp" xml:space="preserve">
-    <value>Host ist erreichbar</value>
-  </data>
-  <data name="HostIsDown" xml:space="preserve">
-    <value>Host ist nicht erreichbar</value>
   </data>
   <data name="TheApplicationWillBeRestarted" xml:space="preserve">
     <value>Die Anwendung wird neu gestartet...</value>
@@ -4000,6 +4031,24 @@ Rechtsklick für weitere Optionen.</value>
   <data name="ReloadedAtX" xml:space="preserve">
     <value>Aktualisiert um {0}</value>
   </data>
+  <data name="NextRefreshInX" xml:space="preserve">
+    <value>Nächste Aktualisierung in {0}</value>
+  </data>
+  <data name="NextScanInX" xml:space="preserve">
+    <value>Nächster Scan in {0}</value>
+  </data>
+  <data name="AutomaticallyScanEvery" xml:space="preserve">
+    <value>Automatisch scannen alle</value>
+  </data>
+  <data name="ShowNotificationPopupOnChanges" xml:space="preserve">
+    <value>Bei Statusänderung ein Benachrichtigungsfenster anzeigen</value>
+  </data>
+  <data name="PlaySoundOnChanges" xml:space="preserve">
+    <value>Ton bei Statusänderung abspielen</value>
+  </data>
+  <data name="HelpMessage_ScanChangesNotification" xml:space="preserve">
+    <value>Nur wenn der Scan automatisch wiederholt wird („Automatisch scannen alle“): eine Benachrichtigung pro Scan mit den Änderungen seit dem letzten Scan.</value>
+  </data>
   <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
     <value>Hosts-Datei konnte nicht geladen werden: {0}</value>
   </data>
@@ -5151,5 +5200,161 @@ Scan starten?</value>
   </data>
   <data name="ErrorMessage_PTRRequiresIPAddresses" xml:space="preserve">
     <value>PTR-Einträge können nur für IP-Adressen abgefragt werden.</value>
+  </data>
+  <data name="UpDetectedByX" xml:space="preserve">
+    <value>Erreichbar (erkannt über {0})</value>
+  </data>
+  <data name="TCP" xml:space="preserve">
+    <value>TCP</value>
+  </data>
+  <data name="PingHosts" xml:space="preserve">
+    <value>Hosts anpingen</value>
+  </data>
+  <data name="HelpMessage_PingHosts" xml:space="preserve">
+    <value>Sende einen Ping (ICMP-Echo-Anfrage) an jeden Host. Deaktiviere diese Option, wenn ICMP im Netzwerk blockiert oder der Datenverkehr begrenzt ist; der Scan läuft dann schneller. Hosts, die nur auf den Ping antworten, werden ohne diese Option nicht gefunden.</value>
+  </data>
+  <data name="PingIsDisabled" xml:space="preserve">
+    <value>Ping ist deaktiviert!</value>
+  </data>
+  <data name="EnableAtLeastOneProbeToFindHostsMessage" xml:space="preserve">
+    <value>Aktivieren Sie in den Einstellungen mindestens eine der folgenden Optionen: Ping, Port-Scan, NetBIOS oder SNMP. Ein Host wird nur gefunden, wenn er auf eine dieser Anfragen antwortet.</value>
+  </data>
+  <data name="ARPNDP" xml:space="preserve">
+    <value>ARP / NDP</value>
+  </data>
+  <data name="FindHostsInTheLocalSubnet" xml:space="preserve">
+    <value>Hosts im lokalen Subnetz suchen</value>
+  </data>
+  <data name="HelpMessage_FindHostsInTheLocalSubnet" xml:space="preserve">
+    <value>Ermitteln Sie Hosts in einem lokalen Subnetz, die nicht auf Ping, einen Port oder NetBIOS reagieren (z. B. weil eine Firewall alles blockiert), anhand ihres Eintrags in der Neighbour-Tabelle (ARP/NDP). Um einen Host in einem lokalen Subnetz zu erreichen, muss Windows zunächst dessen MAC-Adresse auflösen, und ein Host beantwortet diese Anfrage auch dann, wenn seine Firewall alles andere blockiert. Es werden keine zusätzlichen Pakete gesendet, außer um einen Eintrag aus früherem Datenverkehr erneut zu überprüfen. Hosts hinter einem Router können auf diese Weise nicht gefunden werden. Es wird lediglich festgestellt, ob ein Host erreichbar ist – die MAC-Adresse und der Hersteller werden unter „MAC-Adresse und Hersteller auflösen“ angezeigt.</value>
+  </data>
+  <data name="DetectLocalSubnet" xml:space="preserve">
+    <value>Lokales Subnetz erkennen</value>
+  </data>
+  <data name="SubnetOfNetworkInterface" xml:space="preserve">
+    <value>Subnetz einer Netzwerkschnittstelle</value>
+  </data>
+  <data name="AllLocalSubnets" xml:space="preserve">
+    <value>Alle lokalen Subnetze</value>
+  </data>
+  <data name="GuessTheOperatingSystemFromTheTTL" xml:space="preserve">
+    <value>Errate das Betriebssystem anhand der TTL</value>
+  </data>
+  <data name="HelpMessage_GuessTheOperatingSystemFromTheTTL" xml:space="preserve">
+    <value>Ermitteln Sie das Betriebssystem anhand der TTL der Ping-Antwort: Jedes Betriebssystem beginnt mit einer typischen TTL – 64 (Linux, Unix, macOS, Android, iOS), 128 (Windows) oder 255 (Netzwerkgeräte wie Router, Switches und Drucker) – und jeder Router auf dem Weg verringert diese um eins. Es werden keine zusätzlichen Pakete gesendet. Dies ist ein Hinweis, keine Erkennung: Die TTL kann auf dem Host geändert werden, und auch NAT und VPN können sie verändern. Nicht verfügbar für IPv6 (die Ping-Antwort hat keine TTL).</value>
+  </data>
+  <data name="OSGuess" xml:space="preserve">
+    <value>Betriebssystem (Vermutung)</value>
+  </data>
+  <data name="LinuxUnix" xml:space="preserve">
+    <value>Linux / Unix</value>
+  </data>
+  <data name="NetworkDevice" xml:space="preserve">
+    <value>Netzwerkgerät</value>
+  </data>
+  <data name="Windows" xml:space="preserve">
+    <value>Windows</value>
+  </data>
+  <data name="OSGuessBasedOnTheTTLXHops" xml:space="preserve">
+    <value>Basierend auf der TTL der Ping-Antwort ({0} Hops)</value>
+  </data>
+  <data name="ThisComputer" xml:space="preserve">
+    <value>Dieser Computer</value>
+  </data>
+  <data name="MDNS" xml:space="preserve">
+    <value>mDNS</value>
+  </data>
+  <data name="ResolveMDNSHostname" xml:space="preserve">
+    <value>mDNS-Hostnamen auflösen</value>
+  </data>
+  <data name="HelpMessage_ResolveMDNSHostname" xml:space="preserve">
+    <value>Den mDNS-Hostnamen (z. B. „macbook.local“) jedes erreichbaren Hosts durch eine Rückwärtssuche auflösen, die an den UDP-Port 5353 des Hosts gesendet wird. Diese Anfrage wird von Apple-Geräten, Linux (Avahi), Android, Druckern und vielen IoT-Geräten beantwortet, in der Regel jedoch nur innerhalb des lokalen Subnetzes. Wird als Hostname verwendet, wenn kein DNS-Hostname vorhanden ist.</value>
+  </data>
+  <data name="SNMPName" xml:space="preserve">
+    <value>SNMP-Name</value>
+  </data>
+  <data name="ReadTheSNMPSystemInformation" xml:space="preserve">
+    <value>SNMP-Systeminformationen lesen</value>
+  </data>
+  <data name="HelpMessage_ReadTheSNMPSystemInformation" xml:space="preserve">
+    <value>Lesen Sie den Namen, die Beschreibung und den Standort (sysName, sysDescr, sysLocation) jeder IP-Adresse mit einer SNMP-v1-/v2c-Anfrage an den UDP-Port 161 aus, die zusammen mit den anderen Probes gesendet wird. Ein Host, der antwortet, wird als „up“ (von SNMP erkannt) angezeigt, auch wenn er nicht auf den Ping, einen Port oder NetBIOS antwortet. Ein Host mit einer anderen Community antwortet in der Regel nicht (Timeout). Viele Intrusion-Detection-Systeme melden Anfragen mit gängigen Communities.</value>
+  </data>
+  <data name="WarnMessage_SNMPCommunity" xml:space="preserve">
+    <value>Die Community wird als Klartext in der Einstellungsdatei gespeichert (unverschlüsselt). Verwenden Sie eine schreibgeschützte Community (z. B. „public“) und keine mit Schreibzugriff.</value>
+  </data>
+  <data name="HelpMessage_ResolveMACAddressAndVendor" xml:space="preserve">
+    <value>Zeige die MAC-Adresse und den Hersteller jedes gefundenen Hosts an: für Hosts im lokalen Subnetz aus der Neighbour-Tabelle (ARP/NDP) lesen, andernfalls aus der NetBIOS-Antwort (sofern NetBIOS aktiviert ist). Hosts werden nicht gefunden – ein Host, der nicht auf den Ping antwortet, ein Port oder NetBIOS wird nur mit „Hosts im lokalen Subnetz suchen“ gefunden.</value>
+  </data>
+  <data name="StatusCode" xml:space="preserve">
+    <value>Statuscode</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="Web" xml:space="preserve">
+    <value>Web</value>
+  </data>
+  <data name="Hostnames" xml:space="preserve">
+    <value>Hostnamen</value>
+  </data>
+  <data name="XPoweredBy" xml:space="preserve">
+    <value>X-Powered-By</value>
+  </data>
+  <data name="SNMPLocation" xml:space="preserve">
+    <value>Standort</value>
+    <comment>Physical location of a device (SNMP sysLocation, e.g. "Server room"), not the location of a file or folder.</comment>
+  </data>
+  <data name="HostnameResolutionIsDisabled" xml:space="preserve">
+    <value>Die Hostnamenauflösung ist deaktiviert!</value>
+  </data>
+  <data name="ReadingWebPagesIsDisabled" xml:space="preserve">
+    <value>Das Lesen von Webseiten ist deaktiviert!</value>
+  </data>
+  <data name="SNMPIsDisabled" xml:space="preserve">
+    <value>SNMP ist deaktiviert!</value>
+  </data>
+  <data name="Answered" xml:space="preserve">
+    <value>Beantwortet</value>
+  </data>
+  <data name="NoAnswer" xml:space="preserve">
+    <value>Keine Antwort</value>
+  </data>
+  <data name="ReadWebPages" xml:space="preserve">
+    <value>Webseiten lesen</value>
+  </data>
+  <data name="HelpMessage_ReadWebPages" xml:space="preserve">
+    <value>Lies die Webseite (GET /) jedes erreichbaren Hosts mit einem offenen Port aus der untenstehenden Liste in dieser Reihenfolge aus (der Port-Scan muss aktiviert sein und die Ports müssen ebenfalls in der Liste enthalten sein): Statuscode, Titel sowie die Header „Server“ und „X-Powered-By“. Es wird der erste Port verwendet, der antwortet (HTTP auf 80 und 8080, HTTPS und anschließend HTTP auf anderen Ports); Weiterleitungen auf demselben Host werden verfolgt. Es werden keine Cookies oder Anmeldedaten gesendet; Zertifikatsfehler werden akzeptiert. Die Anfrage erscheint im Protokoll des Webservers.</value>
+  </data>
+  <data name="Realm" xml:space="preserve">
+    <value>Realm</value>
+    <comment>Realm of an HTTP login prompt (WWW-Authenticate header), e.g. the name of a router.</comment>
+  </data>
+  <data name="RedirectTo" xml:space="preserve">
+    <value>Weiterleitung zu</value>
+  </data>
+  <data name="Certificate" xml:space="preserve">
+    <value>Zertifikat</value>
+  </data>
+  <data name="Issuer" xml:space="preserve">
+    <value>Herausgeber</value>
+  </data>
+  <data name="ValidUntil" xml:space="preserve">
+    <value>Gültig bis</value>
+  </data>
+  <data name="SelfSigned" xml:space="preserve">
+    <value>Selbstsigniert</value>
+  </data>
+  <data name="XExpired" xml:space="preserve">
+    <value>{0} (abgelaufen)</value>
+  </data>
+  <data name="AllIPAddressesAreExcludedMessage" xml:space="preserve">
+    <value>Alle IP-Adressen sind ausgeschlossen (Eingaben, die mit „!“ beginnen), es gibt nichts zu scannen.</value>
+  </data>
+  <data name="MDNSHostname" xml:space="preserve">
+    <value>mDNS-Hostname</value>
+  </data>
+  <data name="SNMPVersionAndCredentialsOfX" xml:space="preserve">
+    <value>SNMP-Version und Anmeldedaten von „{0}“</value>
+    <comment>IP Scanner: the tab uses the SNMP version and credentials of a profile or group, {0} is its name.</comment>
   </data>
 </root>
