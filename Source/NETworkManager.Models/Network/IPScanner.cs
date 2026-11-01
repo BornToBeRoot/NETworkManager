@@ -777,9 +777,10 @@ public sealed class IPScanner(IPScannerOptions options)
     }
 
     /// <summary>
-    ///     Gets the name the NetApi requests connect to: the DNS hostname if it belongs to the host (its first label is
-    ///     the computer name of the NTLM challenge - a stale PTR record could name another computer), so Kerberos can
-    ///     be used; otherwise the IP address (NTLM only).
+    ///     Gets the name the NetApi requests connect to: the DNS hostname if it is the DNS name the host itself sends in
+    ///     the NTLM challenge (the full name - a stale PTR record or a computer with the same name in another domain
+    ///     could resolve to another host, which would get the credentials and show its values), so Kerberos can be
+    ///     used; otherwise the IP address (NTLM only), e.g. for a computer in a workgroup (no DNS domain).
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="dnsHostname">DNS hostname (empty if none).</param>
@@ -787,15 +788,14 @@ public sealed class IPScanner(IPScannerOptions options)
     /// <returns>Hostname or IP address.</returns>
     public static string GetWindowsTarget(IPAddress ipAddress, string dnsHostname, NTLMChallengeInfo ntlm)
     {
-        if (string.IsNullOrEmpty(dnsHostname) || ntlm == null)
+        if (string.IsNullOrEmpty(dnsHostname) || string.IsNullOrEmpty(ntlm?.DNSComputerName) ||
+            !ntlm.DNSComputerName.Contains('.'))
             return ipAddress.ToString();
 
-        var label = dnsHostname.Split('.')[0];
+        var hostname = dnsHostname.TrimEnd('.');
 
-        var computerNames = new[] { ntlm.NetBIOSComputerName, ntlm.DNSComputerName.Split('.')[0] };
-
-        return computerNames.Any(x => string.Equals(x, label, StringComparison.OrdinalIgnoreCase))
-            ? dnsHostname.TrimEnd('.')
+        return string.Equals(hostname, ntlm.DNSComputerName.TrimEnd('.'), StringComparison.OrdinalIgnoreCase)
+            ? hostname
             : ipAddress.ToString();
     }
 

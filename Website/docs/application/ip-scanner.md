@@ -609,7 +609,7 @@ Two steps, the second only if the host answered the first:
 | SMB / NTLM negotiation | None (no logon, no failed logon on the host) | Operating system and build (e.g. `Windows 11 25H2`, `10.0.26200`), computer name, domain, time offset to the local clock, SMB version and signing |
 | NetApi (RPC over SMB) | User running NETworkManager, or the [Windows credentials](#windows-credentials) of the profile / group the tab was opened with | Role (workstation, server, domain controller), description, workgroup; with admin rights on the host also the logged-on users and, if the Remote Registry service runs, the patch level, display version and edition (e.g. `Pro`, `10.0.26200.6584`) |
 
-The NetApi requests connect to the DNS hostname of the host if it matches the computer name of the host (Kerberos), otherwise to the IP address (NTLM). Errors (e.g. `Access is denied.`, wrong password) are shown in the row details instead of the values.
+The NetApi requests connect to the DNS hostname of the host if it is the full DNS name the host sends itself in the NTLM negotiation (Kerberos), otherwise to the IP address (NTLM, e.g. a computer in a workgroup). Errors (e.g. `Access is denied.`, wrong password) are shown in the row details instead of the values.
 
 **Type:** `Boolean`
 

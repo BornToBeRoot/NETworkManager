@@ -19,12 +19,23 @@ public class IPScannerWindowsTargetTests
     [Theory]
     [InlineData("client01.corp.example.com", "client01.corp.example.com")]
     [InlineData("CLIENT01.corp.example.com.", "CLIENT01.corp.example.com")] // case, trailing dot
-    [InlineData("client01.other.example.com", "client01.other.example.com")] // other suffix, same computer name
+    [InlineData("client01.other.example.com", "10.0.0.10")] // same computer name in another domain
+    [InlineData("client01", "10.0.0.10")] // short name
     [InlineData("printer.corp.example.com", "10.0.0.10")] // stale PTR record of another computer
     [InlineData("", "10.0.0.10")]
     public void GetWindowsTarget(string dnsHostname, string expected)
     {
         Assert.Equal(expected, IPScanner.GetWindowsTarget(IPAddress, dnsHostname, Challenge));
+    }
+
+    [Fact]
+    public void GetWindowsTarget_Workgroup_IPAddress()
+    {
+        // A computer in a workgroup has no DNS domain: its DNS name is the computer name only
+        var workgroup = new NTLMChallengeInfo(new Version(10, 0, 26200), "PC01", "PC01", "PC01", "PC01", string.Empty,
+            null);
+
+        Assert.Equal("10.0.0.10", IPScanner.GetWindowsTarget(IPAddress, "pc01.fritz.box", workgroup));
     }
 
     [Fact]
