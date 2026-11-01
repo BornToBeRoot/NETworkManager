@@ -5361,7 +5361,7 @@ Do you want to start the scan?</value>
     <value>Read Windows host information</value>
   </data>
   <data name="HelpMessage_ReadWindowsHostInformation" xml:space="preserve">
-    <value>Read the Windows host information of every reachable host over SMB (TCP port 445): with the port scan and port 445 in its list only for hosts with port 445 open, otherwise for every found host. Without credentials (SMB / NTLM negotiation, no logon): operating system and build, computer name, domain and the time offset. With credentials (NetApi): role (workstation, server, domain controller), description and workgroup; logged-on users and the patch level (remote registry) need admin rights on the host. The user running NETworkManager is used, or the Windows credentials of the profile / group the tab was opened with.</value>
+    <value>Read the Windows host information of every reachable host over SMB (TCP port 445): with the port scan and port 445 in its list only for hosts with port 445 open, otherwise for every found host. Without credentials (SMB / NTLM negotiation, no logon): operating system and build, computer name, domain and the time offset. With credentials (NetApi): role (workstation, server, domain controller), description and workgroup; logged-on users and the patch level (remote registry) need admin rights on the host. The user running NETworkManager is used, or the Windows credentials of the profile / group the tab was opened with. Every host that answers on port 445 receives a logon with these credentials (NTLM if it is asked by its IP address) - only scan networks you trust.</value>
   </data>
   <data name="WindowsCredentialsOfX" xml:space="preserve">
     <value>Windows credentials of "{0}" ({1})</value>

@@ -462,6 +462,12 @@ Computers in a workgroup and local accounts (`.\admin`) are not part of this che
 
 :::
 
+:::warning
+
+Every host that answers on port `445` receives a logon with the credentials of the scan (the user running NETworkManager or the Windows credentials of the profile / group / tab) - also a device you don't control. If it is asked by its IP address, the logon uses NTLM: a malicious host could relay it to another server or try to crack the password offline. Only scan networks you trust with privileged accounts, prefer an account with only the rights you need (logged-on users need admin rights on the host) and require SMB signing on your servers. Hosts asked by their DNS name use Kerberos (see above).
+
+:::
+
 :::note
 
 The NetApi requests need the firewall rules **File and Printer Sharing (SMB-In)** on the host, the logged-on users admin rights (e.g. a domain admin or the local administrator), the patch level also the **Remote Registry** service (disabled by default on Windows clients).
