@@ -74,7 +74,8 @@ public class NeighborTableViewModel : ViewModelBase
         _ = Refresh(true);
 
         // Auto refresh
-        _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
+        // No refresh while an entry is added / deleted (the table would be cleared while the user works with it)
+        _autoRefreshTimer = new AutoRefreshTimer(() => Refresh(), () => !IsModifying);
 
         AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
         SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
@@ -97,8 +98,10 @@ public class NeighborTableViewModel : ViewModelBase
 
     private readonly bool _isLoading;
 
-    private readonly DispatcherTimer _autoRefreshTimer = new();
-    private bool _isViewVisible = true;
+    /// <summary>
+    /// Refreshes the view automatically (see <see cref="AutoRefreshEnabled"/>).
+    /// </summary>
+    private readonly AutoRefreshTimer _autoRefreshTimer;
 
     public string Search
     {
@@ -171,15 +174,7 @@ public class NeighborTableViewModel : ViewModelBase
 
             field = value;
 
-            if (value)
-            {
-                _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime);
-                _autoRefreshTimer.Start();
-            }
-            else
-            {
-                _autoRefreshTimer.Stop();
-            }
+            _autoRefreshTimer.IsEnabled = value;
 
             OnPropertyChanged();
         }
@@ -200,11 +195,9 @@ public class NeighborTableViewModel : ViewModelBase
 
             field = value;
 
-            if (AutoRefreshEnabled)
-            {
+            // Not in the list (e.g. a removed interval of an old settings file): the previous interval is kept
+            if (value != null)
                 _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(value);
-                _autoRefreshTimer.Start();
-            }
 
             OnPropertyChanged();
         }
@@ -482,37 +475,17 @@ public class NeighborTableViewModel : ViewModelBase
 
     public void OnViewVisible()
     {
-        _isViewVisible = true;
-
-        if (AutoRefreshEnabled)
-            _autoRefreshTimer.Start();
+        _autoRefreshTimer.Resume();
     }
 
     public void OnViewHide()
     {
-        _isViewVisible = false;
-
-        if (AutoRefreshEnabled)
-            _autoRefreshTimer.Stop();
+        _autoRefreshTimer.Pause();
     }
 
     #endregion
 
     #region Events
-
-    private async void AutoRefreshTimer_Tick(object sender, EventArgs e)
-    {
-        _autoRefreshTimer.Stop();
-
-        // Skip refresh while a modify operation (add/delete) is in progress to avoid
-        // clearing the table while the user is interacting with it.
-        if (!IsModifying)
-            await Refresh();
-
-        // Restart timer, unless auto refresh was disabled or the view was hidden in the meantime
-        if (AutoRefreshEnabled && _isViewVisible)
-            _autoRefreshTimer.Start();
-    }
 
     /// <summary>
     /// Gets the command to filter right away (Enter in the search box, see
