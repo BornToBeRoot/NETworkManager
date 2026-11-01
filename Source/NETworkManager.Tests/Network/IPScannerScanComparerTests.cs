@@ -90,14 +90,15 @@ public class IPScannerScanComparerTests
     }
 
     [Fact]
-    public void BaselineSkipsGoneRowsOfTheLastComparison()
+    public void BaselineHasEveryHostWithItsState()
     {
         var gone = IPScannerHostInfo.CreateGone(A, Up("00:11"));
         var up = new IPScannerHostInfo(B, true, new PingInfo(), false, [], new NetBIOSInfo(B));
 
         var baseline = IPScannerScanComparer.CreateBaseline([gone, up]);
 
-        Assert.Equal([B], baseline.Keys);
+        Assert.Equal([A, B], baseline.Keys);
+        Assert.False(baseline[A].IsUp);
         Assert.True(baseline[B].IsUp);
     }
 

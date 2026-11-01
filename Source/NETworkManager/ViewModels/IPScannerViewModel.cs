@@ -79,6 +79,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private Dictionary<IPAddress, IPScannerHostInfo> _repeatRows;
     private readonly Dictionary<IPScannerHostInfo, IPScannerHostInfo> _repeatResults = [];
     private readonly List<IPScannerHostInfo> _repeatAdded = [];
+    private readonly HashSet<IPAddress> _repeatReported = [];
     private Dictionary<IPScannerHostInfo, IPScannerHostInfo> _repeatSnapshots;
     private (int toScan, int scanned, int up, int down) _repeatCounters;
 
@@ -964,6 +965,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             _repeatRows = Results.DistinctBy(x => x.IPAddress).ToDictionary(x => x.IPAddress);
             _repeatResults.Clear();
             _repeatAdded.Clear();
+            _repeatReported.Clear();
             _repeatSnapshots = _repeatRows.Values.ToDictionary(x => x, x => x.Clone());
             _repeatCounters = (HostsToScan, HostsScanned, HostsUp, HostsDown);
         }
@@ -1623,6 +1625,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         if (update == null)
         {
+            _repeatReported.Add(host.IPAddress);
+
             if (_repeatRows.TryGetValue(host.IPAddress, out var row))
             {
                 row.CopyFrom(host);
@@ -1761,12 +1765,20 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 foreach (var added in _repeatAdded)
                     Results.Remove(added);
             }
+            else if (isRepeat && HostsToScan > 0)
+            {
+                // A row of an IP address that is no longer part of the input (e.g. a hostname resolves to another
+                // address now) was not scanned - it would stay unchanged forever
+                foreach (var row in _repeatRows.Values.Where(x => !_repeatReported.Contains(x.IPAddress)).ToList())
+                    Results.Remove(row);
+            }
 
             if (isRepeat)
             {
                 _repeatRows = null;
                 _repeatResults.Clear();
                 _repeatAdded.Clear();
+                _repeatReported.Clear();
                 _repeatSnapshots = null;
             }
 

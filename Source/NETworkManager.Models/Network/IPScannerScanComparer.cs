@@ -39,10 +39,6 @@ public static class IPScannerScanComparer
 
         foreach (var host in hosts)
         {
-            // A gone host of the last comparison is a placeholder, not a result of the scan
-            if (host.Change == IPScannerHostChange.Gone)
-                continue;
-
             baseline[host.IPAddress] = new IPScannerBaselineHost(host.IsReachable, host.Hostname ?? string.Empty,
                 host.MACAddress ?? string.Empty, host.Vendor ?? string.Empty);
         }
