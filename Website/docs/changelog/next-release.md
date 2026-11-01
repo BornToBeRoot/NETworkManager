@@ -181,6 +181,7 @@ Release date: **xx.xx.2026**
 - Faster loading of the rules managed by NETworkManager if there are many of them (the ports, addresses, programs etc. of all rules are queried at once instead of per rule). [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
 - `Enter` in the search box filters the rules right away instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - A manual refresh is faster: the wait of 2.5 seconds (so the refresh button can't be spammed) now runs while loading instead of before it, and the refresh icon spins until the rules are loaded (also if this takes longer, e.g. with **Show all rules**). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- The time of the last refresh (`Reloaded at 14:32`) is shown in the header instead of a status line below the list (the tooltip shows the date and time). The line below the list only shows errors (e.g. rules loaded with errors, a failed action). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 **Profiles**
 
