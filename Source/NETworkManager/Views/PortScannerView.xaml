@@ -285,10 +285,18 @@
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
+            <!-- "Last scan at", while the scan is repeated the countdown to the next scan -->
             <internalControls:RefreshStatusControl LastRefreshTime="{Binding LastScanTime}"
                                                    LastRefreshFormat="{x:Static localization:Strings.LastScanAtX}"
+                                                   RemainingTime="{Binding AutoRefreshTimer.RemainingTime}"
+                                                   RemainingTimeFormat="{x:Static localization:Strings.NextScanInX}"
                                                    IsRefreshing="{Binding IsRunning}"
                                                    Margin="20,0,0,0" />
+            <internalControls:AutoRefreshControl IsChecked="{Binding AutoRefreshEnabled}"
+                                                 ItemsSource="{Binding AutoRefreshTimes}"
+                                                 SelectedItem="{Binding SelectedAutoRefreshTime}"
+                                                 Text="{x:Static localization:Strings.AutomaticallyScanEvery}"
+                                                 Margin="20,0,0,0" />
             <TextBox Width="250"
                      Margin="20,0,0,0"
                      Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"

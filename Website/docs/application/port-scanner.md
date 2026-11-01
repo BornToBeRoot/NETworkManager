@@ -102,6 +102,14 @@ A scan of the same hosts and ports as the last completed scan in the tab shows w
 
 Only completed scans are compared: a canceled scan or a scan with other hosts or ports (also a changed port profile) starts over. **Rescan** updates the rows; a rescanned host loses its changes (its rows are replaced). The last scan is only kept in memory, as long as the tab is open. The change is also in the search and the export (`Change`).
 
+### Repeat the scan
+
+**Automatically scan every** right of the **Result** header repeats the scan after the selected interval (`1 min` to `1 h`, the pause after a scan, so scans don't overlap) - e.g. to watch whether a service is still running, see [Changes since the last scan](#changes-since-the-last-scan). The repetition starts with the next completed scan; while it waits, the header shows the countdown (`Next scan in 04:32`, the tooltip shows the last scan).
+
+A repeated scan keeps the rows and updates their status in place (selection, scroll position, collapsed hosts and search stay): new open ports are added, ports that are no longer open are shown with their status. The scan is not asked to be confirmed again (many ports) and is not added to the history again.
+
+The repetition stops when a scan is canceled or fails, the hosts or ports are changed or the tab is closed; a manual **Scan** starts the interval again after the scan. The scan is also repeated while another tab or application is shown. The checkbox is per tab and not saved (a new tab doesn't repeat), the interval is saved.
+
 ### Keyboard shortcuts
 
 | Key      | Action                                                        |

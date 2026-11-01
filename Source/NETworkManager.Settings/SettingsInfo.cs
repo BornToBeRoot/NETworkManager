@@ -1700,6 +1700,22 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.PortScanner_Timeout;
 
+    /// <summary>
+    ///     Interval of "Automatically scan every" (the checkbox is per tab and not saved, see the view model).
+    /// </summary>
+    public AutoRefreshTimeInfo PortScanner_AutoRefreshTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PortScanner_AutoRefreshTime;
+
     public int PortScanner_Attempts
     {
         get;

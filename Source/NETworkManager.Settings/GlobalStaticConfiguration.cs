@@ -191,6 +191,9 @@ public static class GlobalStaticConfiguration
     // local (ephemeral) ports of Windows (16,384), like the maximum of the IP Scanner (256 x 32)
     public static int PortScanner_MaxConnections => 8192;
     public static int PortScanner_Timeout => 2000;
+
+    public static AutoRefreshTimeInfo PortScanner_AutoRefreshTime =>
+        AutoRefreshTime.GetScanDefaults.First(x => x.Value == 5 && x.TimeUnit == TimeUnit.Minute);
     public static int PortScanner_Attempts => 1;
     public static bool PortScanner_PingHostsBeforeScan => false;
     public static int PortScanner_ICMPAttempts => 2;
