@@ -4,6 +4,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             xmlns:internalControls="clr-namespace:NETworkManager.Controls"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -12,7 +13,6 @@
              xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:controls="clr-namespace:NETworkManager.Controls"
              xmlns:controls2="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
-             xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:WiFiViewModel}">
@@ -20,7 +20,6 @@
         <KeyBinding Key="F5" Command="{Binding Path=ScanNetworksCommand}" />
     </UserControl.InputBindings>
     <UserControl.Resources>
-        <converters:AutoRefreshTimeToStringConverter x:Key="AutoRefreshTimeToStringConverter" />
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
@@ -219,29 +218,10 @@
                                                     Orientation="Horizontal"
                                                     VerticalAlignment="Center"
                                                     HorizontalAlignment="Right">
-                                            <CheckBox IsChecked="{Binding AutoRefreshEnabled}"
-                                                      Content="{x:Static Member=localization:Strings.AutomaticallyUpdateEvery}"
-                                                      Margin="0,0,10,0">
-                                            </CheckBox>
-                                            <ComboBox ItemsSource="{Binding Path=AutoRefreshTimes}"
-                                                      SelectedItem="{Binding Path=SelectedAutoRefreshTime}"
-                                                      MinWidth="150"
-                                                      Margin="0,0,10,0">
-                                                <ComboBox.ItemTemplate>
-                                                    <DataTemplate
-                                                        DataType="{x:Type TypeName=utilities:AutoRefreshTimeInfo}">
-                                                        <TextBlock>
-                                                            <TextBlock.Text>
-                                                                <MultiBinding StringFormat="{}{0} {1}">
-                                                                    <Binding Path="Value" />
-                                                                    <Binding Path="TimeUnit"
-                                                                             Converter="{StaticResource ResourceKey=AutoRefreshTimeToStringConverter}" />
-                                                                </MultiBinding>
-                                                            </TextBlock.Text>
-                                                        </TextBlock>
-                                                    </DataTemplate>
-                                                </ComboBox.ItemTemplate>
-                                            </ComboBox>
+                                            <internalControls:AutoRefreshControl IsChecked="{Binding AutoRefreshEnabled}"
+                                                                                 ItemsSource="{Binding AutoRefreshTimes}"
+                                                                                 SelectedItem="{Binding SelectedAutoRefreshTime}"
+                                                                                 Margin="0,0,10,0" />
                                             <Button Command="{Binding Path=ScanNetworksCommand}"
                                                     Style="{StaticResource CleanButton}"
                                                     ToolTip="{x:Static localization:Strings.Refresh}"
