@@ -142,7 +142,7 @@ Values arrive one after another while the scan is running:
 
 A column you sorted by is not sorted again for values that arrive later, click the header again. Sorted by **Time** or **MAC address**, hosts without a value are always at the end; hosts with the same value are sorted by IP address.
 
-The search box right of the **Result** header filters the results by IP address, hostname (DNS, mDNS, NetBIOS), MAC address, vendor, role, OS (guess), web page (title, headers, realm, redirect target, certificate), SNMP values, Windows values (version, edition, computer name, domain, description, logged-on users) and open ports (number or service), also while the scan is running. **Export...** > all exports the filtered results; the up / down counters always count all hosts. Results can also be exported while the scan is running, values that are still `...` are exported as empty values.
+The search box right of the **Result** header filters the results by IP address, hostname (DNS, mDNS, NetBIOS), MAC address, vendor, role, OS (guess), web page (title, headers, realm, redirect target, certificate), SNMP values, Windows values (operating system, version number, edition, computer name, domain, description, logged-on users) and open ports (number or service), also while the scan is running. **Export...** > all exports the filtered results; the up / down counters always count all hosts. Results can also be exported while the scan is running, values that are still `...` are exported as empty values.
 
 ### Changes since the last scan
 

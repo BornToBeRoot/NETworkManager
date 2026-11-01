@@ -629,6 +629,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                    Matches(info.WindowsUsers) ||
                    Matches(info.Windows?.ComputerName) ||
                    Matches(info.Windows?.Edition) ||
+                   Matches(info.Windows?.Version?.ToString()) ||
                    Matches(info.Windows?.Description) ||
                    Matches(info.MACAddress) ||
                    Matches(info.Vendor) ||
