@@ -1066,8 +1066,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         _lastScanOptions = scanOptions;
 
-        // A repeated scan reports every host, so the row of a host that is down now is updated (see ApplyRepeatResult)
-        StartScanner(isRepeat ? scanOptions with { ReportAllHosts = true } : scanOptions, hosts.hosts);
+        // A repeated scan reports the hosts with a row also if they are down now, so their row is updated (see
+        // ApplyRepeatResult) - not every unreachable host (e.g. a /16)
+        StartScanner(isRepeat ? scanOptions with { ReportHosts = _repeatRows.Keys.ToHashSet() } : scanOptions,
+            hosts.hosts);
     }
 
     /// <summary>
@@ -1616,8 +1618,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     /// <summary>
     /// Applies a result of a repeated scan (see <see cref="Start"/>): the row of the host is updated in place, a host
-    /// without a row is added if it is up (or unreachable hosts are shown). Every host is reported, also if it is down
-    /// now - its row is updated, other down hosts are ignored.
+    /// without a row is added if it is up (or unreachable hosts are shown). The hosts with a row are reported also if
+    /// they are down now (IPScannerOptions.ReportHosts), so their row is updated.
     /// </summary>
     /// <param name="host">Result of the scan.</param>
     /// <param name="update">Update of the result, null if the host was found.</param>

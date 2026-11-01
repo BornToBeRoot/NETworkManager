@@ -431,7 +431,8 @@ public sealed class IPScanner(IPScannerOptions options)
                 // reaching HostFound
                 _hostsDown.Increment();
 
-                if (options.ShowAllResults || options.ReportAllHosts)
+                if (options.ShowAllResults || options.ReportAllHosts ||
+                    options.ReportHosts?.Contains(ipAddress) == true)
                 {
                     hostInfo = CreateHostInfo(ipAddress, IPScannerDetectionMethod.None, pingInfo, ports,
                         netBIOSInfo, snmpInfo, isSNMPFinished);

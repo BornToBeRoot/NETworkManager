@@ -144,4 +144,11 @@ public record IPScannerOptions
     ///     hosts), without showing all ports like <see cref="ShowAllResults" />.
     /// </summary>
     public required bool ReportAllHosts { get; init; }
+
+    /// <summary>
+    ///     Hosts that are raised in <see cref="IPScanner.HostFound" /> also if they are unreachable (e.g. the shown rows
+    ///     of a repeated scan, so a host that is down now updates its row) - unlike <see cref="ReportAllHosts" />, the
+    ///     other unreachable hosts are not created and looked up. Null for none.
+    /// </summary>
+    public System.Collections.Generic.IReadOnlySet<System.Net.IPAddress> ReportHosts { get; init; }
 }
