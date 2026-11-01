@@ -398,6 +398,10 @@ Release date: **xx.xx.2026**
 
 - Fixed no message being shown after **Delete browsing data** in the settings (whether the browsing data was deleted or an error occurred), and an error (e.g. the WebView2 runtime is not installed) not being handled.
 
+**Hosts File Editor**
+
+- Fixed the retry of a locked hosts file waiting 5 seconds between the attempts instead of the 2 seconds in the message, and 2.5 seconds after the last attempt. It waits 2.5 seconds between the attempts now (the message says so), not after the last one. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+
 ## Dependencies, Refactoring & Documentation
 
 - Code cleanup & refactoring

@@ -705,11 +705,13 @@ public class HostsFileEditorViewModel : ViewModelBase
         StatusMessage = Strings.RefreshingDots;
         IsStatusMessageDisplayed = true;
 
-        // Retry 3 times if the hosts file is locked
-        for (var i = 1; i < 4; i++)
+        // Try 3 times if the hosts file is locked (e.g. by an antivirus or another editor)
+        const int attempts = 3;
+
+        for (var attempt = 1; attempt <= attempts; attempt++)
         {
-            // Wait for 2.5 seconds on refresh
-            if (init == false || i > 1)
+            // Wait for 2.5 seconds on refresh and before another attempt (once, see catch)
+            if (init == false || attempt > 1)
                 await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
             try
@@ -731,13 +733,12 @@ public class HostsFileEditorViewModel : ViewModelBase
 
                 StatusMessage = string.Format(Strings.FailedToLoadHostsFileMessage, ex.Message);
 
-                if (i < 3)
+                // The wait is at the start of the next attempt; not after the last one
+                if (attempt < attempts)
                     StatusMessage += Environment.NewLine + string.Format(Strings.RetryingInXSecondsDots,
-                        GlobalStaticConfiguration.ApplicationUIRefreshInterval / 1000);
+                        (GlobalStaticConfiguration.ApplicationUIRefreshInterval / 1000d).ToString("0.#"));
 
                 IsStatusMessageDisplayed = true;
-
-                await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
             }
         }
 
