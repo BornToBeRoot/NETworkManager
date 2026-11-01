@@ -159,6 +159,23 @@ public class HostsFileEditorViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets the time of the last refresh, null before the first one (shown in the header).
+    /// </summary>
+    public DateTime? LastRefreshTime
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+
+    /// <summary>
     /// Gets or sets a value indicating whether the status message is displayed.
     /// </summary>
     public bool IsStatusMessageDisplayed
@@ -702,8 +719,8 @@ public class HostsFileEditorViewModel : ViewModelBase
 
         IsRefreshing = true;
 
-        StatusMessage = Strings.RefreshingDots;
-        IsStatusMessageDisplayed = true;
+        // An error of the last refresh / action is hidden (the refresh icon spins while refreshing)
+        IsStatusMessageDisplayed = false;
 
         // Try 3 times if the hosts file is locked (e.g. by an antivirus or another editor)
         const int attempts = 3;
@@ -727,8 +744,10 @@ public class HostsFileEditorViewModel : ViewModelBase
 
                 entries.ToList().ForEach(Results.Add);
 
-                StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
-                IsStatusMessageDisplayed = true;
+                LastRefreshTime = DateTime.Now;
+
+                // The error of a previous attempt
+                IsStatusMessageDisplayed = false;
 
                 break;
             }
