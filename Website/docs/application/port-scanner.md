@@ -311,6 +311,30 @@ Resolve the hostname for given IP addresses.
 
 **Default:** `Enabled`
 
+### Show notification popup on changes
+
+Show a notification popup in the bottom-right corner of the primary screen when a [repeated scan](#repeat-the-scan) found changes since the previous scan (see [Changes since the last scan](#changes-since-the-last-scan); only ports that are open now like a host that is up, a port that is no longer open like a host that is down). One notification per scan: up to three changes, one per line, otherwise the number of changes. Not for a scan that was started manually.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+### Play sound on changes
+
+Play a system sound when a [repeated scan](#repeat-the-scan) found changes. Independent of the [popup](#show-notification-popup-on-changes).
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+### Display duration (seconds)
+
+Time in seconds the notification popup is shown before it closes automatically.
+
+**Type:** `Integer` [Min `3`, Max `60`]
+
+**Default:** `10`
+
 ### Adjust threads automatically
 
 Adjusts the number of hosts and ports that are scanned at the same time to the scan: up to `512` connections at the same time, at most `128` hosts and `128` ports per host. For example, `1-1024` scans 4 hosts with 128 ports at the same time, a single port (e.g. `3389` on a `/24`) 128 hosts. [Max. concurrent host threads](#max-concurrent-host-threads) and [Max. concurrent port threads](#max-concurrent-port-threads) are only used if this option is disabled, e.g. to slow down a scan.

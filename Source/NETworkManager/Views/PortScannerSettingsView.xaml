@@ -148,6 +148,24 @@
         <TextBlock Text="{x:Static localization:Strings.DNS}" Style="{StaticResource HeaderTextBlock}" />
         <mah:ToggleSwitch Header="{x:Static localization:Strings.ResolveHostname}" IsOn="{Binding ResolveHostname}"
                           Margin="0,0,0,20" />
+        <TextBlock Text="{x:Static localization:Strings.PingMonitorNotification}" Style="{StaticResource HeaderTextBlock}" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowNotificationPopupOnChanges}"
+                              IsOn="{Binding ShowNotificationPopup}" />
+            <Rectangle Width="24" Height="24" VerticalAlignment="Top"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_ScanChangesNotification}"
+                       Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.PlaySoundOnChanges}"
+                          IsOn="{Binding NotificationSound}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.NotificationDurationInSeconds}"
+                   Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding NotificationCloseTime}" Minimum="3" Maximum="60" Interval="1"
+                           IsEnabled="{Binding ShowNotificationPopup}" Margin="0,0,0,20" />
         <TextBlock Text="{x:Static localization:Strings.Multithreading}" Style="{StaticResource HeaderTextBlock}" />
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <mah:ToggleSwitch Header="{x:Static localization:Strings.AdjustThreadsAutomatically}"

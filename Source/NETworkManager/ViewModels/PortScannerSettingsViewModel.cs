@@ -261,6 +261,63 @@ public class PortScannerSettingsViewModel : ViewModelBase
         Math.Min(256, GlobalStaticConfiguration.PortScanner_MaxConnections / Math.Max(1, MaxPortThreads));
 
     /// <summary>
+    /// Gets or sets a value indicating whether a notification is shown when a repeated scan found changes.
+    /// </summary>
+    public bool ShowNotificationPopup
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PortScanner_ShowNotificationPopup = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether a sound is played when a repeated scan found changes.
+    /// </summary>
+    public bool NotificationSound
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PortScanner_NotificationSound = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the seconds until the notification is closed.
+    /// </summary>
+    public int NotificationCloseTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.PortScanner_NotificationCloseTime = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets the maximum number of threads for scanning ports.
     /// </summary>
     public int MaxPortThreads
@@ -313,6 +370,9 @@ public class PortScannerSettingsViewModel : ViewModelBase
     private void LoadSettings()
     {
         ShowAllResults = SettingsManager.Current.PortScanner_ShowAllResults;
+        ShowNotificationPopup = SettingsManager.Current.PortScanner_ShowNotificationPopup;
+        NotificationSound = SettingsManager.Current.PortScanner_NotificationSound;
+        NotificationCloseTime = SettingsManager.Current.PortScanner_NotificationCloseTime;
         Timeout = SettingsManager.Current.PortScanner_Timeout;
         Attempts = SettingsManager.Current.PortScanner_Attempts;
         PingHostsBeforeScan = SettingsManager.Current.PortScanner_PingHostsBeforeScan;

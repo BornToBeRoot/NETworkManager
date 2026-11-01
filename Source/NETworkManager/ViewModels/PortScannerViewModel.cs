@@ -1,5 +1,6 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
+using MahApps.Metro.IconPacks;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Converters;
@@ -1784,6 +1785,9 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             // A rescan updates rows, it is not a scan of the input (see CompareWithPreviousScan)
             var isRescan = _isRescan;
 
+            // A repeated scan notifies its changes (see NotifyChanges)
+            var isRepeat = _repeatRows != null;
+
             if (sender is PortScanner portScanner)
             {
                 portScanner.PortScanned -= PortScanned;
@@ -1924,7 +1928,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 var isCompleted = !e.IsCanceled && e.Exception == null && _scanInput != null && PortsToScan > 0;
 
                 if (isCompleted)
-                    CompareWithPreviousScan();
+                    CompareWithPreviousScan(isRepeat);
 
                 _repeatInput = isCompleted ? _scanInput : null;
                 UpdateRepeat();
@@ -1988,6 +1992,60 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Shows a notification / plays a sound (see settings) with the changes of a repeated scan: one notification per
+    /// scan, up to three changes one per line, otherwise the counters. Like the host up / down notification of the
+    /// Ping Monitor: only ports that are open now = up, any port that is no longer open = down.
+    /// </summary>
+    private void NotifyChanges()
+    {
+        var showPopup = SettingsManager.Current.PortScanner_ShowNotificationPopup;
+        var playSound = SettingsManager.Current.PortScanner_NotificationSound;
+
+        if (!showPopup && !playSound)
+            return;
+
+        var changes = Results.Where(x => x.Change != PortScannerPortChange.None).ToList();
+
+        if (changes.Count == 0)
+            return;
+
+        changes.Sort((x, y) =>
+        {
+            var result = IPAddressHelper.CompareIPAddresses(x.IPAddress, y.IPAddress);
+
+            return result != 0 ? result : x.Port.CompareTo(y.Port);
+        });
+
+        var isWarning = changes.Any(x => x.Change == PortScannerPortChange.Closed);
+
+        if (playSound)
+            NotificationManager.PlaySound(isWarning
+                ? System.Media.SystemSounds.Exclamation
+                : System.Media.SystemSounds.Asterisk);
+
+        if (!showPopup)
+            return;
+
+        const int maxLines = 3;
+
+        var message = changes.Count <= maxLines
+            ? string.Join(Environment.NewLine, changes.Select(x =>
+                $"{x.HostAsString}: {x.Port}" +
+                (string.IsNullOrEmpty(x.LookupInfo.Service) ? string.Empty : $" ({x.LookupInfo.Service})") + " " +
+                PortScannerPortChangeToStringConverter.ToLocalizedString(x.Change)))
+            : string.Join(" · ", new[]
+                {
+                    (Count: PortsNowOpen, Format: Strings.XNowOpen),
+                    (Count: PortsNoLongerOpen, Format: Strings.XNoLongerOpen)
+                }
+                .Where(x => x.Count > 0).Select(x => string.Format(x.Format, x.Count)));
+
+        NotificationManager.Show(isWarning ? PackIconMaterialKind.LanDisconnect : PackIconMaterialKind.LanConnect,
+            isWarning ? "Red" : "#badc58", $"{Strings.PortScanner} · {Host?.Trim()}", message,
+            SettingsManager.Current.PortScanner_NotificationCloseTime);
+    }
+
+    /// <summary>
     /// Checks if the running scan is compared with the previous scan (same input).
     /// </summary>
     private bool IsComparedWithBaseline()
@@ -2001,7 +2059,8 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// (e.g. the host didn't answer the ping before the scan). The scan becomes the baseline of the next one. Called on
     /// the UI thread.
     /// </summary>
-    private void CompareWithPreviousScan()
+    /// <param name="isRepeat">The scan was repeated automatically: changes are notified (see settings).</param>
+    private void CompareWithPreviousScan(bool isRepeat)
     {
         // The changes of the last comparison (rows of a repeated scan)
         foreach (var row in Results)
@@ -2028,6 +2087,9 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             PortsNowOpen = comparison.Opened.Count;
             PortsNoLongerOpen = comparison.Closed.Count + comparison.Missing.Count;
             HasComparison = true;
+
+            if (isRepeat)
+                NotifyChanges();
 
         }
 
