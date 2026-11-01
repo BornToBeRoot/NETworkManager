@@ -61,10 +61,12 @@ public sealed record WindowsHostInfo(SMBInfo SMB, WindowsNetApiInfo NetApi)
 
             var displayVersion = NetApi?.Registry?.DisplayVersion;
 
-            // Newer build than the list: e.g. "Windows 11 (build 27000)" -> "Windows 11 26H1"
+            // Newer Windows 11 build than the list: e.g. "Windows 11 (build 27000)" -> "Windows 11 26H1". Not for other
+            // unknown builds: the display version of a server (e.g. 24H2 for Server 2025) doesn't name the release, a
+            // name without "Server" would look like a client - they keep the build
             return !string.IsNullOrEmpty(displayVersion) && Version != null &&
-                   name.EndsWith($"(build {Version.Build})", StringComparison.Ordinal)
-                ? $"{name[..name.LastIndexOf('(')]}{displayVersion}"
+                   name == $"Windows 11 (build {Version.Build})"
+                ? $"Windows 11 {displayVersion}"
                 : name;
         }
     }
