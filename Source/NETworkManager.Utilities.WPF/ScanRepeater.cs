@@ -23,6 +23,10 @@ public sealed class ScanRepeater : INotifyPropertyChanged
     private bool _isArmed;
     private bool _isClosed;
 
+    // The input was changed while a scan was running: that scan is not repeated (the next one would scan the new
+    // input without its confirmation, mixed with the rows of the old input)
+    private bool _isInputChangedDuringScan;
+
     // Completed by OnScanEnded, so the timer waits for the end of the scan it started
     private TaskCompletionSource _scanCompletion;
 
@@ -102,11 +106,26 @@ public sealed class ScanRepeater : INotifyPropertyChanged
     }
 
     /// <summary>
-    ///     Stops repeating until the next completed scan: a manual scan is started or the input was changed.
+    ///     Stops repeating until the next completed scan: a manual scan is started.
     /// </summary>
     public void Disarm()
     {
         _isArmed = false;
+        _isInputChangedDuringScan = false;
+
+        Update();
+    }
+
+    /// <summary>
+    ///     The input was changed (e.g. typed or selected from the history, also while a scan is running): not repeated
+    ///     until it was scanned.
+    /// </summary>
+    public void OnInputChanged()
+    {
+        _isArmed = false;
+
+        if (_isScanRunning())
+            _isInputChangedDuringScan = true;
 
         Update();
     }
@@ -117,7 +136,8 @@ public sealed class ScanRepeater : INotifyPropertyChanged
     /// <param name="isCompleted">The scan of the input was completed (not canceled, no error).</param>
     public void OnScanEnded(bool isCompleted)
     {
-        _isArmed = isCompleted;
+        _isArmed = isCompleted && !_isInputChangedDuringScan;
+        _isInputChangedDuringScan = false;
 
         Update();
 

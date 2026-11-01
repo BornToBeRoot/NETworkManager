@@ -118,7 +118,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             field = value;
 
             // Another input is not repeated (until it was scanned)
-            Repeat?.Disarm();
+            Repeat?.OnInputChanged();
 
             OnPropertyChanged();
         }

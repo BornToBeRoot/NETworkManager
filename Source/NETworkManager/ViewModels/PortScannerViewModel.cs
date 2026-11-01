@@ -144,7 +144,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             field = value;
 
             // Another input is not repeated (until it was scanned)
-            Repeat?.Disarm();
+            Repeat?.OnInputChanged();
 
             OnPropertyChanged();
         }
@@ -170,7 +170,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             OnPropertyChanged();
 
             // Other ports are not repeated (until they were scanned)
-            Repeat?.Disarm();
+            Repeat?.OnInputChanged();
 
             // The message of the tab is about the ports passed in (e.g. a port profile of the profile was not
             // found), it no longer applies when they are changed. Hidden only if it is still shown - not an error of
