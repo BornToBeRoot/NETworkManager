@@ -21,7 +21,10 @@ namespace NETworkManager.Models.Network;
 /// </summary>
 public static class SMBInfoResolver
 {
-    private const int SMBPort = 445;
+    /// <summary>
+    ///     TCP port of SMB.
+    /// </summary>
+    public const int SMBPort = 445;
 
     // Max. size of an answer (NBT session header length), larger answers are invalid for a negotiate / session setup
     private const int MaxMessageSize = 64 * 1024;

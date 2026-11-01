@@ -24,10 +24,9 @@ public sealed class IPScanner(IPScannerOptions options)
 
     private static readonly ILog Log = LogManager.GetLogger(typeof(IPScanner));
 
-    /// <summary>
-    ///     TCP port of SMB, needed for the Windows host information.
-    /// </summary>
-    private const int SMBPort = 445;
+    // The port scan checks TCP 445 (SMB): the Windows host information is only read for hosts with 445 open
+    private readonly bool _isSMBPortScanned =
+        options.PortScanEnabled && options.PortScanPorts.Contains(SMBInfoResolver.SMBPort);
 
     /// <summary>
     ///     Max. number of hosts whose NetApi requests run at the same time, in all scans of the application. The calls
@@ -736,10 +735,10 @@ public sealed class IPScanner(IPScannerOptions options)
     /// <returns>True if the Windows host information is read.</returns>
     private bool IsSMBPortOpenOrNotScanned(List<PortInfo> ports)
     {
-        if (!options.PortScanEnabled || !options.PortScanPorts.Contains(SMBPort))
+        if (!_isSMBPortScanned)
             return true;
 
-        return ports.Any(x => x.Port == SMBPort && x.State == PortState.Open);
+        return ports.Any(x => x.Port == SMBInfoResolver.SMBPort && x.State == PortState.Open);
     }
 
     /// <summary>
