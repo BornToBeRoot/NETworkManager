@@ -8,6 +8,8 @@ using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
@@ -125,6 +127,39 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     private void ScanProfileAction()
     {
         AddTab(SelectedProfile);
+    }
+
+    /// <summary>
+    /// Gets the command to scan the selected profile with other Windows credentials (like Connect as... of Remote
+    /// Desktop).
+    /// </summary>
+    public ICommand ScanProfileAsCommand => new RelayCommand(_ => ScanProfileAsAction(), ScanProfile_CanExecute);
+
+    private void ScanProfileAsAction()
+    {
+        _ = ScanProfileAs();
+    }
+
+    /// <summary>
+    /// Asks for the Windows credentials (the ones of the profile / group as default) and scans the selected profile with
+    /// them in a new tab. They are only used by this tab, the profile is not changed.
+    /// </summary>
+    private async Task ScanProfileAs()
+    {
+        var profile = SelectedProfile;
+
+        var (isOK, windowsCredentials) = await WindowsCredentialsChildWindow.ShowAsync(Application.Current.MainWindow,
+            Strings.ScanAs, NETworkManager.Profiles.Application.IPScanner.GetWindowsCredentials(profile));
+
+        if (!isOK)
+            return;
+
+        // SNMP version and credentials of the profile, otherwise of its group, otherwise the settings (null)
+        var snmpCredentials = NETworkManager.Profiles.Application.IPScanner.GetSNMPCredentials(profile);
+
+        // No source: the credentials were entered for the tab
+        AddTab(profile.IPScanner_HostOrIPRange, true, snmpCredentials,
+            profile.IPScanner_OverrideSNMP ? profile.Name : profile.Group, windowsCredentials);
     }
 
     /// <summary>

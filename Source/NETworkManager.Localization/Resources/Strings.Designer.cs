@@ -6321,6 +6321,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Windows credentials for the Windows host information of this tab (also for repeated scans and Rescan), replacing the ones of the profile / group. They are not saved and are discarded when the tab is closed. Without credentials, the user running NETworkManager is used..
+        /// </summary>
+        public static string HelpMessage_WindowsCredentialsOfTheTab {
+            get {
+                return ResourceManager.GetString("HelpMessage_WindowsCredentialsOfTheTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Help translate the project on Transifex..
         /// </summary>
         public static string HelpTranslateOnTransifex {
@@ -12638,6 +12647,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scan as.
+        /// </summary>
+        public static string ScanAs {
+            get {
+                return ResourceManager.GetString("ScanAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan as....
+        /// </summary>
+        public static string ScanAsDots {
+            get {
+                return ResourceManager.GetString("ScanAsDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scan for NetBIOS.
         /// </summary>
         public static string ScanForNetBIOS {
@@ -15434,6 +15461,33 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Windows credentials.
+        /// </summary>
+        public static string WindowsCredentials {
+            get {
+                return ResourceManager.GetString("WindowsCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows credentials....
+        /// </summary>
+        public static string WindowsCredentialsDots {
+            get {
+                return ResourceManager.GetString("WindowsCredentialsDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows credentials of this tab ({0}).
+        /// </summary>
+        public static string WindowsCredentialsOfThisTabX {
+            get {
+                return ResourceManager.GetString("WindowsCredentialsOfThisTabX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Windows credentials of &quot;{0}&quot; ({1}).
         /// </summary>
         public static string WindowsCredentialsOfX {
@@ -15461,7 +15515,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The logon with the Windows credentials &quot;{0}&quot; failed (wrong username or password?). To protect the account from being locked out, they are not used for the other hosts and the next scans of this tab. Check the credentials of the profile / group and open a new tab..
+        ///   Looks up a localized string similar to The logon with the Windows credentials &quot;{0}&quot; failed (wrong username or password?). To protect the account from being locked out, they are not used for the other hosts and the next scans of this tab. Set them again with Windows credentials... in the options, or open a new tab after correcting the profile / group..
         /// </summary>
         public static string WindowsLogonFailedMessage {
             get {

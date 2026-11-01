@@ -5403,10 +5403,31 @@ Do you want to start the scan?</value>
     <value>Reading Windows host information is disabled!</value>
   </data>
   <data name="WindowsLogonFailedMessage" xml:space="preserve">
-    <value>The logon with the Windows credentials "{0}" failed (wrong username or password?). To protect the account from being locked out, they are not used for the other hosts and the next scans of this tab. Check the credentials of the profile / group and open a new tab.</value>
+    <value>The logon with the Windows credentials "{0}" failed (wrong username or password?). To protect the account from being locked out, they are not used for the other hosts and the next scans of this tab. Set them again with Windows credentials... in the options, or open a new tab after correcting the profile / group.</value>
     <comment>{0} is the user (e.g. CORP\admin)</comment>
   </data>
   <data name="WindowsLogonSkippedMessage" xml:space="preserve">
     <value>Not tried: the Windows credentials were rejected on another host (protection against an account lockout).</value>
+  </data>
+  <data name="WindowsCredentials" xml:space="preserve">
+    <value>Windows credentials</value>
+  </data>
+  <data name="WindowsCredentialsDots" xml:space="preserve">
+    <value>Windows credentials...</value>
+  </data>
+  <data name="ScanAsDots" xml:space="preserve">
+    <value>Scan as...</value>
+    <comment>IP Scanner: scan a profile with other Windows credentials</comment>
+  </data>
+  <data name="WindowsCredentialsOfThisTabX" xml:space="preserve">
+    <value>Windows credentials of this tab ({0})</value>
+    <comment>IP Scanner: the tab uses Windows credentials entered for it (not saved), {0} is the user (e.g. CORP\admin).</comment>
+  </data>
+  <data name="HelpMessage_WindowsCredentialsOfTheTab" xml:space="preserve">
+    <value>Windows credentials for the Windows host information of this tab (also for repeated scans and Rescan), replacing the ones of the profile / group. They are not saved and are discarded when the tab is closed. Without credentials, the user running NETworkManager is used.</value>
+  </data>
+  <data name="ScanAs" xml:space="preserve">
+    <value>Scan as</value>
+    <comment>IP Scanner: title of the dialog to scan a profile with other Windows credentials</comment>
   </data>
 </root>

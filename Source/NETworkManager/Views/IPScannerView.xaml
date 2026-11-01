@@ -181,10 +181,13 @@
                         <MenuItem Header="{x:Static localization:Strings.ReadWindowsHostInformation}"
                                   IsCheckable="True" StaysOpenOnClick="True"
                                   IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_WindowsEnabled, Mode=TwoWay}" />
-                        <!-- The tab uses the Windows credentials of the profile / group it was opened with -->
+                        <!-- The tab uses the Windows credentials of the profile / group it was opened with or entered for
+                             it -->
                         <MenuItem Header="{Binding WindowsCredentialsInfo}"
                                   IsEnabled="False"
                                   Visibility="{Binding WindowsCredentialsInfo, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
+                        <MenuItem Header="{x:Static localization:Strings.WindowsCredentialsDots}"
+                                  Command="{Binding SetWindowsCredentialsCommand}" />
                         <MenuItem Header="{x:Static localization:Strings.ScanForNetBIOS}"
                                   IsCheckable="True" StaysOpenOnClick="True"
                                   IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_NetBIOSEnabled, Mode=TwoWay}" />

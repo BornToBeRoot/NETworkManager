@@ -52,9 +52,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // SNMP request of a scan, see GetProfileSNMPCredentials), null for the ones of the settings
     private readonly SNMPSecureCredentials _snmpCredentials;
 
-    // Windows credentials of the profile / group the tab was opened with (password protected, see WindowsLogon), null
-    // for the user running the application
-    private readonly WindowsCredentials _windowsCredentials;
+    // Windows credentials of the profile / group the tab was opened with or entered for the tab (password protected,
+    // see WindowsLogon), null for the user running the application
+    private WindowsCredentials _windowsCredentials;
 
     // The Windows credentials were rejected in a scan of the tab (wrong username or password): not used for the next
     // scans, so a repeated scan doesn't lock the account (see WindowsLogonGate)
@@ -130,10 +130,21 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     public string SNMPCredentialsInfo { get; }
 
     /// <summary>
-    /// Profile / group whose Windows credentials the tab uses (shown in the options, e.g. 'Windows credentials of
-    /// "Site A" (CORP\admin)'), null if the user running the application is used.
+    /// Windows credentials the tab uses (shown in the options, e.g. 'Windows credentials of "Site A" (CORP\admin)' or
+    /// 'Windows credentials of this tab (CORP\admin)'), null if the user running the application is used.
     /// </summary>
-    public string WindowsCredentialsInfo { get; }
+    public string WindowsCredentialsInfo
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 
     /// <summary>
     /// Gets or sets the host or IP range to scan.
@@ -562,7 +573,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="windowsCredentials">
     /// Windows credentials of the profile / group the tab was opened with, null for the user running the application.
     /// </param>
-    /// <param name="windowsCredentialsSource">Name of the profile / group of <paramref name="windowsCredentials" />.</param>
+    /// <param name="windowsCredentialsSource">
+    /// Name of the profile / group of <paramref name="windowsCredentials" />, null if they were entered for the tab.
+    /// </param>
     public IPScannerViewModel(Guid tabId, string hostOrIPRange, bool start = true,
         SNMPSecureCredentials snmpCredentials = null, string snmpCredentialsSource = null,
         WindowsCredentials windowsCredentials = null, string windowsCredentialsSource = null)
@@ -576,7 +589,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _windowsCredentials = windowsCredentials;
         WindowsCredentialsInfo = windowsCredentials == null
             ? null
-            : string.Format(Strings.WindowsCredentialsOfX, windowsCredentialsSource, windowsCredentials);
+            : windowsCredentialsSource == null
+                ? string.Format(Strings.WindowsCredentialsOfThisTabX, windowsCredentials)
+                : string.Format(Strings.WindowsCredentialsOfX, windowsCredentialsSource, windowsCredentials);
 
         // Repeat of the scan (before the input is set, see its setter): not while a scan or rescan is running, or a
         // manual scan waits for its confirmation
@@ -747,6 +762,43 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// Gets the command to open the IP Scanner settings (from the scan options menu).
     /// </summary>
     public ICommand OpenSettingsCommand => new RelayCommand(_ => NavigationManager.OpenSettings());
+
+    /// <summary>
+    /// Gets the command to enter the Windows credentials of the tab (not saved), see
+    /// <see cref="WindowsCredentialsChildWindow" />.
+    /// </summary>
+    public ICommand SetWindowsCredentialsCommand =>
+        new RelayCommand(_ => SetWindowsCredentialsAction(), _ => !IsRunning);
+
+    private void SetWindowsCredentialsAction()
+    {
+        _ = SetWindowsCredentials();
+    }
+
+    /// <summary>
+    /// Shows the dialog for the Windows credentials of the tab. New credentials replace the ones of the profile / group
+    /// and are used again, also if the old ones were rejected.
+    /// </summary>
+    private async Task SetWindowsCredentials()
+    {
+        var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+
+        if (window == null)
+            return;
+
+        var (isOK, credentials) =
+            await WindowsCredentialsChildWindow.ShowAsync(window, Strings.WindowsCredentials, _windowsCredentials);
+
+        if (!isOK)
+            return;
+
+        _windowsCredentials = credentials;
+        _isWindowsCredentialsRejected = false;
+
+        WindowsCredentialsInfo = credentials == null
+            ? null
+            : string.Format(Strings.WindowsCredentialsOfThisTabX, credentials);
+    }
 
     /// <summary>
     /// Gets the command to redirect the selected host to another application.
@@ -1190,10 +1242,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
 
-        // Same options (columns, ports), but every host is reported - also if it is unreachable now. Windows credentials
-        // that were rejected since the last scan are not used again.
+        // Same options (columns, ports), but every host is reported - also if it is unreachable now. The current
+        // Windows credentials of the tab (entered since the last scan, or rejected since then: not used again)
         var rescanOptions = CreateRescanOptions(_lastScanOptions) with
         {
+            WindowsCredentials = _windowsCredentials,
             WindowsCredentialsRejected = _isWindowsCredentialsRejected
         };
 
