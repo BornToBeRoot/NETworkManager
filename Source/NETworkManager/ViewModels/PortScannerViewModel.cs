@@ -1763,9 +1763,11 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             FlushProgress();
 
-            // Repeated scan: canceled / failed - the rows of the last scan with their states; completed - a port of a
-            // host that was not scanned (e.g. it didn't answer the ping before the scan) didn't answer
-            var isRepeatDiscarded = _repeatRows != null && (e.IsCanceled || e.Exception != null);
+            // Repeated scan: canceled / failed or not started (no host left, e.g. a hostname could not be resolved) -
+            // the rows of the last scan with their states and counters; completed - a port of a host that was not
+            // scanned (e.g. it didn't answer the ping before the scan) didn't answer
+            var isNothingScanned = PortsToScan == 0;
+            var isRepeatDiscarded = _repeatRows != null && (e.IsCanceled || e.Exception != null || isNothingScanned);
 
             if (_repeatRows != null)
             {
@@ -1879,7 +1881,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
                 AddStatusMessage(e.Exception.Message);
             }
-            else if (Results.Count == 0 && PortsToScan > 0)
+            else if (Results.Count == 0 && !isNothingScanned)
             {
                 AddStatusMessage(Strings.NoOpenPortsFound);
             }
@@ -1902,7 +1904,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             // scan, and a repeated scan that failed (tried again after the interval, see ScanRepeater.OnScanEnded)
             if (!isRescan)
             {
-                var isCompleted = !e.IsCanceled && e.Exception == null && _scanInput != null && PortsToScan > 0;
+                var isCompleted = !e.IsCanceled && e.Exception == null && _scanInput != null && !isNothingScanned;
 
                 if (isCompleted)
                     CompareWithPreviousScan(isRepeat);

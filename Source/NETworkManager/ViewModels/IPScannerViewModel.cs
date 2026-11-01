@@ -1753,10 +1753,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                     row.CopyFrom(snapshot);
             }
 
-            // Canceled / failed repeated scan: the rows of the last scan with their values (before the counters are
-            // computed from them)
+            // Canceled / failed repeated scan, or not started (no host left, e.g. a hostname could not be resolved):
+            // the rows of the last scan with their values and counters (Start already reset the counters)
             var isRepeat = _repeatRows != null;
-            var isRepeatDiscarded = isRepeat && (e.IsCanceled || e.Exception != null);
+            var isNothingScanned = HostsToScan == 0;
+            var isRepeatDiscarded = isRepeat && (e.IsCanceled || e.Exception != null || isNothingScanned);
 
             if (isRepeatDiscarded)
             {
@@ -1766,7 +1767,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 foreach (var added in _repeatAdded)
                     Results.Remove(added);
             }
-            else if (isRepeat && HostsToScan > 0)
+            else if (isRepeat)
             {
                 // A row of an IP address that is no longer part of the input (e.g. a hostname resolves to another
                 // address now) was not scanned - it would stay unchanged forever
@@ -1830,7 +1831,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 StatusMessage = e.Exception.Message;
                 IsStatusMessageDisplayed = true;
             }
-            else if (Results.Count == 0 && HostsToScan > 0)
+            else if (Results.Count == 0 && !isNothingScanned)
             {
                 // Keep a message from the preparation (e.g. hostnames that could not be resolved)
                 AddStatusMessage(Strings.NoReachableHostsFound);
@@ -1850,7 +1851,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             // scan, and a repeated scan that failed (tried again after the interval, see ScanRepeater.OnScanEnded)
             if (!isRescan)
             {
-                var isCompleted = !e.IsCanceled && e.Exception == null && HostsToScan > 0;
+                var isCompleted = !e.IsCanceled && e.Exception == null && !isNothingScanned;
 
                 if (isCompleted)
                     CompareWithPreviousScan(isRepeat);
