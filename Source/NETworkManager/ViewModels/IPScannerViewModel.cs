@@ -576,7 +576,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _windowsCredentials = windowsCredentials;
         WindowsCredentialsInfo = windowsCredentials == null
             ? null
-            : $"{string.Format(Strings.WindowsCredentialsOfX, windowsCredentialsSource)} ({windowsCredentials})";
+            : string.Format(Strings.WindowsCredentialsOfX, windowsCredentialsSource, windowsCredentials);
 
         // Repeat of the scan (before the input is set, see its setter): not while a scan or rescan is running, or a
         // manual scan waits for its confirmation

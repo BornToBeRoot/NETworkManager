@@ -15434,7 +15434,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Windows credentials of &quot;{0}&quot;.
+        ///   Looks up a localized string similar to Windows credentials of &quot;{0}&quot; ({1}).
         /// </summary>
         public static string WindowsCredentialsOfX {
             get {

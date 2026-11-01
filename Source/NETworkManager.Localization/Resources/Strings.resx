@@ -5364,8 +5364,8 @@ Do you want to start the scan?</value>
     <value>Read the Windows host information of every reachable host over SMB (TCP port 445): with the port scan and port 445 in its list only for hosts with port 445 open, otherwise for every found host. Without credentials (SMB / NTLM negotiation, no logon): operating system and build, computer name, domain and the time offset. With credentials (NetApi): role (workstation, server, domain controller), description and workgroup; logged-on users and the patch level (remote registry) need admin rights on the host. The user running NETworkManager is used, or the Windows credentials of the profile / group the tab was opened with.</value>
   </data>
   <data name="WindowsCredentialsOfX" xml:space="preserve">
-    <value>Windows credentials of "{0}"</value>
-    <comment>IP Scanner: the tab uses the Windows credentials of a profile or group, {0} is its name.</comment>
+    <value>Windows credentials of "{0}" ({1})</value>
+    <comment>IP Scanner: the tab uses the Windows credentials of a profile or group, {0} is its name, {1} the user (e.g. CORP\admin).</comment>
   </data>
   <data name="OperatingSystem" xml:space="preserve">
     <value>Operating system</value>
