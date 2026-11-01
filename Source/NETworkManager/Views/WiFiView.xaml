@@ -23,6 +23,7 @@
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleansOrConverter x:Key="BooleansOrConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
@@ -205,15 +206,27 @@
                                     <Grid Grid.Row="0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="10" />
                                             <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Grid.Row="0"
                                                    Text="{x:Static Member=localization:Strings.Networks}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}"
                                                    Margin="0,0,0,0" />
-
-
+                                        <!-- Searching / loading: the search icon spins -->
+                                        <internalControls:RefreshStatusControl Grid.Column="1" Grid.Row="0"
+                                                                               LastRefreshTime="{Binding LastRefreshTime}"
+                                                                               LastRefreshFormat="{x:Static localization:Strings.LastScanAtX}"
+                                                                               RemainingTime="{Binding AutoRefreshTimer.RemainingTime}"
+                                                                               HorizontalAlignment="Right"
+                                                                               Margin="10,0,10,0">
+                                            <internalControls:RefreshStatusControl.IsRefreshing>
+                                                <MultiBinding Converter="{StaticResource BooleansOrConverter}">
+                                                    <Binding Path="IsNetworksLoading" />
+                                                    <Binding Path="IsBackgroundSearchRunning" />
+                                                </MultiBinding>
+                                            </internalControls:RefreshStatusControl.IsRefreshing>
+                                        </internalControls:RefreshStatusControl>
                                         <StackPanel Grid.Column="2" Grid.Row="0"
                                                     Orientation="Horizontal"
                                                     VerticalAlignment="Center"
@@ -905,12 +918,6 @@
                     <WrapPanel Orientation="Horizontal"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Left">
-                        <networkManager:LoadingIndicator IsActive="True"
-                                                         Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
-                                                         Visibility="{Binding Path=IsBackgroundSearchRunning, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                                         Width="24" Height="24"
-                                                         SpeedRatio="1"
-                                                         Margin="0,0,10,0" />
                         <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"
                                    Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                    Text="{Binding Path=StatusMessage}"

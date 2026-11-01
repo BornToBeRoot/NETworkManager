@@ -133,6 +133,27 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the time of the last scan of the networks, null before the first one (shown in the header).
+    /// </summary>
+    public DateTime? LastRefreshTime
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the auto refresh, for the countdown in the header (see <see cref="AutoRefreshTimer.RemainingTime"/>).
+    /// </summary>
+    public AutoRefreshTimer AutoRefreshTimer => _autoRefreshTimer;
+
     public bool AutoRefreshEnabled
     {
         get;
@@ -711,16 +732,13 @@ public class WiFiViewModel : ViewModelBase
     {
         Log.Debug($"ScanAsync - Scanning WiFi adapter \"{adapterInfo.NetworkInterfaceInfo.Name}\" with delay of {delayInMs} ms...");
 
+        // An error of the last scan is hidden (the search icon spins while searching)
+        IsStatusMessageDisplayed = false;
+
         if (refreshing)
-        {
-            StatusMessage = Strings.SearchingForNetworksDots;
             IsBackgroundSearchRunning = true;
-        }
         else
-        {
-            IsStatusMessageDisplayed = false;
             IsNetworksLoading = true;
-        }
 
         if (delayInMs != 0)
             await Task.Delay(delayInMs);
@@ -799,8 +817,7 @@ public class WiFiViewModel : ViewModelBase
             Radio6GHzLowerLegend = [.. legend6GHzLower];
             Radio6GHzUpperLegend = [.. legend6GHzUpper];
 
-            statusMessage = string.Format(Strings.LastScanAtX,
-                wiFiNetworkScanInfo.Timestamp.ToLongTimeString());
+            LastRefreshTime = wiFiNetworkScanInfo.Timestamp;
         }
         catch (Exception ex)
         {
@@ -822,8 +839,9 @@ public class WiFiViewModel : ViewModelBase
         }
         finally
         {
-            IsStatusMessageDisplayed = true;
+            // Only an error, the time of the scan is shown in the header
             StatusMessage = statusMessage;
+            IsStatusMessageDisplayed = !string.IsNullOrEmpty(statusMessage);
 
             IsBackgroundSearchRunning = false;
             IsNetworksLoading = false;

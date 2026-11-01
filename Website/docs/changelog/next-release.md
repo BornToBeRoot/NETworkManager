@@ -209,6 +209,7 @@ Release date: **xx.xx.2026**
 
 - The search filters after a short delay while typing instead of on every key press, `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Reloading the network adapters is faster: the wait of 2.5 seconds (so the reload button can't be spammed) now runs while loading instead of before it, and the reload icon spins until loading is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- The time of the last scan (`Last scan at 14:32`) is shown in the header of the networks instead of the status line below; with **Automatically update every**, a countdown to the next scan (`Next refresh in 00:04`). The tooltip shows the date and time. The line below only shows errors and the connection status; "Searching for networks..." is gone (the search icon spins). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 **Dashboard**
 
