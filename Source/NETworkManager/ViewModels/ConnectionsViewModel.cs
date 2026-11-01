@@ -245,12 +245,12 @@ public class ConnectionsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the status message is displayed.
+    /// Gets the time of the last refresh, null before the first one (shown in the header).
     /// </summary>
-    public bool IsStatusMessageDisplayed
+    public DateTime? LastRefreshTime
     {
         get;
-        set
+        private set
         {
             if (value == field)
                 return;
@@ -261,20 +261,9 @@ public class ConnectionsViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets the status message.
+    /// Gets the auto refresh, for the countdown in the header (see <see cref="AutoRefreshTimer.RemainingTime"/>).
     /// </summary>
-    public string StatusMessage
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
+    public AutoRefreshTimer AutoRefreshTimer => _autoRefreshTimer;
 
     #endregion
 
@@ -304,8 +293,6 @@ public class ConnectionsViewModel : ViewModelBase
     /// </summary>
     private async Task RefreshAction()
     {
-        IsStatusMessageDisplayed = false;
-
         await Refresh();
     }
 
@@ -376,8 +363,6 @@ public class ConnectionsViewModel : ViewModelBase
     {
         IsRefreshing = true;
 
-        StatusMessage = Strings.RefreshingDots;
-        IsStatusMessageDisplayed = true;
 
         // The first load right away; a refresh takes at least the refresh interval (the refresh button can't be
         // spammed), loading runs at the same time
@@ -390,8 +375,7 @@ public class ConnectionsViewModel : ViewModelBase
 
         results.ForEach(Results.Add);
 
-        StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
-        IsStatusMessageDisplayed = true;
+        LastRefreshTime = DateTime.Now;
 
         IsRefreshing = false;
     }

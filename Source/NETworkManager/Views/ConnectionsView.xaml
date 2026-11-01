@@ -5,7 +5,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
@@ -28,11 +27,10 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Column="0" Grid.Row="0">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
@@ -40,7 +38,13 @@
                                Style="{StaticResource HeaderTextBlock}"
                                Text="{x:Static localization:Strings.Connections}"
                                VerticalAlignment="Center" />
-                    <StackPanel Grid.Column="1"
+                    <internalControls:RefreshStatusControl Grid.Column="1"
+                                                           LastRefreshTime="{Binding LastRefreshTime}"
+                                                           RemainingTime="{Binding AutoRefreshTimer.RemainingTime}"
+                                                           IsRefreshing="{Binding IsRefreshing}"
+                                                           HorizontalAlignment="Right"
+                                                           Margin="10,0,10,0" />
+                    <StackPanel Grid.Column="2"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Right">
@@ -201,19 +205,6 @@
                                             SortMemberPath="ProcessPath" MinWidth="150" />
                     </DataGrid.Columns>
                 </controls:MultiSelectDataGrid>
-                <WrapPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Left">
-                    <networkManager:LoadingIndicator IsActive="True"
-                                                     Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
-                                                     Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                                     Width="24" Height="24"
-                                                     SpeedRatio="1" Margin="0,0,10,0" />
-                    <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"
-                               Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                               Text="{Binding Path=StatusMessage}"
-                               VerticalAlignment="Center" />
-                </WrapPanel>
             </Grid>
         </TabItem>
     </TabControl>
