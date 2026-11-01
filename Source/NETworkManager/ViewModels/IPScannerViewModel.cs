@@ -45,6 +45,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private bool _firstLoad = true;
     private bool _closed;
 
+    // A manual scan waits for the confirmation of a large scan (IsRunning is still false) - not repeated meanwhile
+    private bool _isConfirmingScan;
+
     // Background HostFound / HostUpdated events append here instead of hopping to the UI thread per
     // item - a DispatcherTimer periodically flushes this into the Results collection instead, so a large
     // scan doesn't flood the dispatcher queue with one BeginInvoke per host. One list for both, so an
@@ -530,8 +533,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
     public IPScannerViewModel(Guid tabId, string hostOrIPRange, bool start = true)
     {
-        // Repeat of the scan (before the input is set, see its setter): not while a scan or rescan is running
-        Repeat = new ScanRepeater(() => Start(isRepeat: true), () => IsRunning,
+        // Repeat of the scan (before the input is set, see its setter): not while a scan or rescan is running, or a
+        // manual scan waits for its confirmation
+        Repeat = new ScanRepeater(() => Start(isRepeat: true), () => IsRunning || _isConfirmingScan,
             SettingsManager.Current.IPScanner_AutoRefreshTime, x => SettingsManager.Current.IPScanner_AutoRefreshTime = x);
 
         _firstLoad = start;
@@ -937,9 +941,22 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive) ??
                          Application.Current.MainWindow;
 
-            if (!await DialogHelper.ShowConfirmationMessageAsync(window, Strings.Scan,
+            bool confirmed;
+
+            _isConfirmingScan = true;
+
+            try
+            {
+                confirmed = await DialogHelper.ShowConfirmationMessageAsync(window, Strings.Scan,
                     string.Format(Strings.ScanManyIPAddressesMessage, hostCount.ToString("N0")),
-                    ChildWindowIcon.Warn, Strings.Scan))
+                    ChildWindowIcon.Warn, Strings.Scan);
+            }
+            finally
+            {
+                _isConfirmingScan = false;
+            }
+
+            if (!confirmed)
                 return;
 
             // The tab may have been closed while the dialog was open (OnClose only stops a running scan)

@@ -57,6 +57,9 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private bool _firstLoad = true;
     private bool _closed;
 
+    // A manual scan waits for the confirmation of a large scan (IsRunning is still false) - not repeated meanwhile
+    private bool _isConfirmingScan;
+
     // Background PortScanned events append here instead of hopping to the UI thread per item -
     // a DispatcherTimer periodically flushes this into the Results collection instead, so a large
     // scan doesn't flood the dispatcher queue with one BeginInvoke per port.
@@ -577,8 +580,9 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// </param>
     public PortScannerViewModel(Guid tabId, string host, string port, bool start = true, string message = null)
     {
-        // Repeat of the scan (before the input is set, see its setter): not while a scan or rescan is running
-        Repeat = new ScanRepeater(() => Start(isRepeat: true), () => IsRunning,
+        // Repeat of the scan (before the input is set, see its setter): not while a scan or rescan is running, or a
+        // manual scan waits for its confirmation
+        Repeat = new ScanRepeater(() => Start(isRepeat: true), () => IsRunning || _isConfirmingScan,
             SettingsManager.Current.PortScanner_AutoRefreshTime, x => SettingsManager.Current.PortScanner_AutoRefreshTime = x);
 
         _firstLoad = start;
@@ -973,10 +977,23 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive) ??
                          Application.Current.MainWindow;
 
-            if (!await DialogHelper.ShowConfirmationMessageAsync(window, Strings.Scan,
+            bool confirmed;
+
+            _isConfirmingScan = true;
+
+            try
+            {
+                confirmed = await DialogHelper.ShowConfirmationMessageAsync(window, Strings.Scan,
                     string.Format(Strings.ScanManyPortsMessage, portCount.ToString("N0"), hostCount.ToString("N0"),
                         portsPerHost.ToString("N0")),
-                    ChildWindowIcon.Warn, Strings.Scan))
+                    ChildWindowIcon.Warn, Strings.Scan);
+            }
+            finally
+            {
+                _isConfirmingScan = false;
+            }
+
+            if (!confirmed)
                 return;
 
             // The tab may have been closed while the dialog was open (OnClose only stops a running scan)
