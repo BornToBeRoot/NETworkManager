@@ -249,6 +249,8 @@ public class IPScannerHostInfo : PropertyChangedBase
             OnPropertyChanged(nameof(Hostname));
             OnPropertyChanged(nameof(MACAddress));
             OnPropertyChanged(nameof(Vendor));
+            OnPropertyChanged(nameof(Domain));
+            OnPropertyChanged(nameof(IsDomainPending));
         }
     }
 
@@ -302,6 +304,7 @@ public class IPScannerHostInfo : PropertyChangedBase
             OnPropertyChanged();
             OnPropertyChanged(nameof(IsHostnamePending));
             OnPropertyChanged(nameof(IsMACAddressPending));
+            OnPropertyChanged(nameof(IsDomainPending));
         }
     }
 
@@ -626,6 +629,8 @@ public class IPScannerHostInfo : PropertyChangedBase
             OnPropertyChanged(nameof(HasWindowsOS));
             OnPropertyChanged(nameof(OSName));
             OnPropertyChanged(nameof(WindowsDomain));
+            OnPropertyChanged(nameof(Domain));
+            OnPropertyChanged(nameof(IsDomainPending));
             OnPropertyChanged(nameof(WindowsTimeOffset));
             OnPropertyChanged(nameof(IsWindowsTimeOffsetLarge));
             OnPropertyChanged(nameof(WindowsUsers));
@@ -653,6 +658,19 @@ public class IPScannerHostInfo : PropertyChangedBase
     ///     Domain or workgroup of the Windows host, empty if not known.
     /// </summary>
     public string WindowsDomain => Windows?.Domain ?? string.Empty;
+
+    /// <summary>
+    ///     Domain or workgroup of the host for the Domain column: of the Windows host information, otherwise the
+    ///     workgroup / domain of the NetBIOS answer, empty if neither is known.
+    /// </summary>
+    public string Domain => !string.IsNullOrEmpty(WindowsDomain)
+        ? WindowsDomain
+        : NetBIOSInfo is { IsReachable: true } ? NetBIOSInfo.GroupName ?? string.Empty : string.Empty;
+
+    /// <summary>
+    ///     The domain is not known yet, but a source (Windows host information, NetBIOS) is still running.
+    /// </summary>
+    public bool IsDomainPending => string.IsNullOrEmpty(Domain) && (IsWindowsPending || IsNetBIOSPending);
 
     /// <summary>
     ///     Time of the host minus the local time, null if not known.
@@ -757,6 +775,7 @@ public class IPScannerHostInfo : PropertyChangedBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(IsDomainPending));
         }
     }
 

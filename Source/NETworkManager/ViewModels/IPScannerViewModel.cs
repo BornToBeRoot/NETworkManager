@@ -644,7 +644,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                    Matches(info.SNMPDescription) ||
                    Matches(info.SNMPLocation) ||
                    Matches(info.WindowsOS) ||
-                   Matches(info.WindowsDomain) ||
+                   Matches(info.Domain) ||
                    Matches(info.WindowsUsers) ||
                    Matches(info.Windows?.ComputerName) ||
                    Matches(info.Windows?.Edition) ||
@@ -676,6 +676,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPDescription));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPLocation));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Windows));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Domain));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MACAddress));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Vendor));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Ports));

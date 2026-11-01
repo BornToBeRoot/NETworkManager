@@ -1220,18 +1220,19 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <!-- Windows host information: domain, time offset, users (the version is in the OS column) -->
+                <!-- Domain / workgroup: of the Windows host information, otherwise of the NetBIOS answer -->
                 <DataGridTextColumn Header="{x:Static localization:Strings.Domain}"
-                                    SortMemberPath="WindowsDomain"
-                                    Visibility="{Binding Path=Data.ScanOptions.WindowsEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                    SortMemberPath="Domain"
+                                    Visibility="{Binding Path=Data.ScanOptions.IsDomainShown, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="120">
                     <DataGridTextColumn.Binding>
                         <MultiBinding Converter="{StaticResource PendingToStringConverter}">
-                            <Binding Path="IsWindowsPending" />
-                            <Binding Path="WindowsDomain" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                            <Binding Path="IsDomainPending" />
+                            <Binding Path="Domain" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
+                <!-- Windows host information: time offset, users (the version is in the OS column) -->
                 <DataGridTextColumn Header="{x:Static localization:Strings.TimeOffset}"
                                     SortMemberPath="WindowsTimeOffset"
                                     Visibility="{Binding Path=Data.ScanOptions.WindowsEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"

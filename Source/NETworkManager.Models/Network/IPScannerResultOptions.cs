@@ -40,4 +40,9 @@ public sealed record IPScannerResultOptions(
     ///     The OS column is shown: the guess from the TTL (needs the ping) or the Windows version.
     /// </summary>
     public bool IsOSShown => (ICMPEnabled && OSGuessEnabled) || WindowsEnabled;
+
+    /// <summary>
+    ///     The Domain column is shown: domain / workgroup of the Windows host information or of the NetBIOS answer.
+    /// </summary>
+    public bool IsDomainShown => WindowsEnabled || NetBIOSEnabled;
 }
