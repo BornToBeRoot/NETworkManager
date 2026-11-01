@@ -1943,12 +1943,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             }
         }
 
+        // Once, not a search per gone host (e.g. a /16 with thousands of gone hosts after an outage)
+        var rowsByIPAddress = rows.DistinctBy(x => x.IPAddress).ToDictionary(x => x.IPAddress);
+
         foreach (var (ipAddress, previous) in comparison.Gone)
         {
             // A shown down host (Show unreachable, a rescan) is marked, otherwise a row is added
-            var row = rows.FirstOrDefault(x => x.IPAddress.Equals(ipAddress));
-
-            if (row != null)
+            if (rowsByIPAddress.TryGetValue(ipAddress, out var row))
                 row.MarkGone(previous);
             else
                 Results.Add(IPScannerHostInfo.CreateGone(ipAddress, previous));
