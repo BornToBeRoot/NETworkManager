@@ -131,12 +131,17 @@ public sealed class ScanRepeater : INotifyPropertyChanged
     }
 
     /// <summary>
-    ///     A scan ended (not a rescan of a part of the result). A completed scan is repeated, other scans are not.
+    ///     A scan ended (not a rescan of a part of the result). A completed scan is repeated; a repeated scan that
+    ///     failed (e.g. a hostname could not be resolved once) is tried again after the interval, so a short network
+    ///     problem doesn't end the monitoring. A canceled scan or a failed manual scan is not repeated.
     /// </summary>
     /// <param name="isCompleted">The scan of the input was completed (not canceled, no error).</param>
-    public void OnScanEnded(bool isCompleted)
+    /// <param name="isCanceled">The scan was canceled by the user.</param>
+    public void OnScanEnded(bool isCompleted, bool isCanceled)
     {
-        _isArmed = isCompleted && !_isInputChangedDuringScan;
+        var isRepeatedScan = _scanCompletion != null;
+
+        _isArmed = !_isInputChangedDuringScan && !isCanceled && (isCompleted || (isRepeatedScan && _isArmed));
         _isInputChangedDuringScan = false;
 
         Update();
@@ -174,12 +179,10 @@ public sealed class ScanRepeater : INotifyPropertyChanged
 
         await _startRepeatedScan();
 
-        // Not started (e.g. no probe enabled, invalid input - the message is shown): not repeated
+        // Not started (e.g. no probe enabled, a port profile was deleted - the message is shown): tried again after the
+        // interval, like a failed scan (see OnScanEnded)
         if (!_isScanRunning() && !scanCompletion.Task.IsCompleted)
         {
-            _isArmed = false;
-            Update();
-
             scanCompletion.TrySetResult();
             _scanCompletion = null;
         }

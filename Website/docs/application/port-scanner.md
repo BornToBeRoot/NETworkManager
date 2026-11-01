@@ -108,7 +108,7 @@ Only completed scans are compared: a canceled scan or a scan with other hosts or
 
 A repeated scan keeps the rows and updates their status in place (selection, scroll position, collapsed hosts and search stay): new open ports are added, ports that are no longer open are shown with their status. The scan is not asked to be confirmed again (many ports) and is not added to the history again.
 
-The repetition stops when a scan is canceled or fails, the hosts or ports are changed or the tab is closed; a manual **Scan** starts the interval again after the scan. The scan is also repeated while another tab or application is shown. The checkbox is per tab and not saved (a new tab doesn't repeat), the interval is saved.
+The repetition stops when a scan is canceled, the hosts or ports are changed (also while a scan is running) or the tab is closed; a manual **Scan** starts the interval again after the scan. If a repeated scan fails (e.g. a hostname can't be resolved for a moment), the message is shown and the scan is tried again after the interval. The scan is also repeated while another tab or application is shown. The checkbox is per tab and not saved (a new tab doesn't repeat), the interval is saved.
 
 ### Keyboard shortcuts
 

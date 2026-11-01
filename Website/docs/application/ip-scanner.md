@@ -158,7 +158,7 @@ Only completed scans are compared: a canceled scan or a scan with another input 
 
 A repeated scan keeps the rows and updates them in place (selection, scroll position, expanded details and search stay): new hosts are added, hosts that are down now are shown as **Gone**. The input is not asked to be confirmed again (large scans) and is not added to the history again.
 
-The repetition stops when a scan is canceled or fails (e.g. a hostname can't be resolved, no probe enabled), the input is changed or the tab is closed; a manual **Scan** starts the interval again after the scan. The scan is also repeated while another tab or application is shown. The checkbox is per tab and not saved (a new tab doesn't repeat), the interval is saved.
+The repetition stops when a scan is canceled, the input is changed (also while a scan is running) or the tab is closed; a manual **Scan** starts the interval again after the scan. If a repeated scan fails (e.g. a hostname can't be resolved for a moment), the message is shown and the scan is tried again after the interval, so a short network problem doesn't end the monitoring. The scan is also repeated while another tab or application is shown. The checkbox is per tab and not saved (a new tab doesn't repeat), the interval is saved.
 
 ### Row details
 

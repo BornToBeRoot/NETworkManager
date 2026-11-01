@@ -1859,8 +1859,8 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 AddStatusMessage(string.Format(Strings.XHostsDidNotAnswerThePingAndWereNotScanned,
                     pingScanner.HostsSkipped));
 
-            // Only a completed scan of the input is compared and becomes the baseline of the next one - and is repeated
-            // (not after a cancel or an error, so a failing scan doesn't repeat)
+            // Only a completed scan of the input is compared and becomes the baseline of the next one. Repeated: a completed
+            // scan, and a repeated scan that failed (tried again after the interval, see ScanRepeater.OnScanEnded)
             if (!isRescan)
             {
                 var isCompleted = !e.IsCanceled && e.Exception == null && _scanInput != null && PortsToScan > 0;
@@ -1868,7 +1868,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 if (isCompleted)
                     CompareWithPreviousScan(isRepeat);
 
-                Repeat.OnScanEnded(isCompleted);
+                Repeat.OnScanEnded(isCompleted, e.IsCanceled);
             }
 
             PreparingScan = false;
