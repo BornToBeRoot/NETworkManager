@@ -150,7 +150,7 @@ A scan of the same input as the last completed scan in the tab shows what change
 
 The **Change** column and the counters next to the **Result** header (e.g. `2 New · 1 Gone`) are only shown if the result is compared with a previous scan. **Last scan at** next to the counters shows when the last scan was completed (the tooltip shows the date).
 
-Only completed scans are compared: a canceled scan or a scan with another input starts over (the next scan of this input is compared with it). **Rescan** of selected hosts updates their rows and keeps the changes, but is not a scan of the input. The last scan is only kept in memory, as long as the tab is open. The change is also in the search and the export (`Change`, `PreviousMACAddress`).
+Only completed scans are compared: a canceled scan or a scan with another input starts over (the next scan of this input is compared with it). **Rescan** of selected hosts updates their rows and their changes against the same previous scan (e.g. a gone host that is up again), but is not a scan of the input. The last scan is only kept in memory, as long as the tab is open. The change is also in the search and the export (`Change`, `PreviousMACAddress`).
 
 ### Repeat the scan
 

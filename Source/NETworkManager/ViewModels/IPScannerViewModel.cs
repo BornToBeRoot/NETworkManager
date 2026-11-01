@@ -66,6 +66,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private Dictionary<IPAddress, IPScannerBaselineHost> _baseline;
     private string _baselineInput;
 
+    // Baseline the shown result was compared with, to update the changes of rescanned hosts (null without comparison)
+    private Dictionary<IPAddress, IPScannerBaselineHost> _comparisonBaseline;
+
     // Input of the running / last scan (not of a rescan of selected hosts)
     private string _scanInput;
 
@@ -972,6 +975,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             Repeat.Disarm();
 
             HasComparison = false;
+            _comparisonBaseline = null;
             HostsNew = 0;
             HostsGone = 0;
             HostsMACChanged = 0;
@@ -1726,6 +1730,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         {
             // A rescan of selected hosts updates rows, it is not a scan of the input (see CompareWithPreviousScan)
             var isRescan = _rescanRows != null;
+            var rescannedRows = _rescanRows?.Values.ToList();
 
             // All hosts and lookups are finished when the scanner raises ScanComplete - add the remaining
             // buffered hosts and apply the remaining updates before the scan ends, with the final counters
@@ -1818,6 +1823,16 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 AddStatusMessage(Strings.NoReachableHostsFound);
             }
 
+            // A completed rescan: the changes of the rescanned hosts against the same previous scan (e.g. a gone host that is
+            // up again)
+            if (isRescan && !e.IsCanceled && e.Exception == null && _comparisonBaseline != null)
+            {
+                var rescannedIPAddresses = rescannedRows.Select(x => x.IPAddress).ToHashSet();
+
+                ApplyComparison(rescannedRows, _comparisonBaseline.Where(x => rescannedIPAddresses.Contains(x.Key))
+                    .ToDictionary(x => x.Key, x => x.Value));
+            }
+
             // Only a completed scan of the input is compared and becomes the baseline of the next one. Repeated: a completed
             // scan, and a repeated scan that failed (tried again after the interval, see ScanRepeater.OnScanEnded)
             if (!isRescan)
@@ -1889,6 +1904,48 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Marks the changes of the rows against the baseline of the previous scan: new hosts and hosts with another MAC
+    /// address, the hosts that are gone (a shown row is marked, otherwise a row is added). Updates the counters.
+    /// </summary>
+    /// <param name="rows">Rows to compare (all rows of a scan, the rescanned rows of a rescan).</param>
+    /// <param name="baseline">Baseline of the previous scan (of these rows).</param>
+    private void ApplyComparison(IReadOnlyCollection<IPScannerHostInfo> rows,
+        IReadOnlyDictionary<IPAddress, IPScannerBaselineHost> baseline)
+    {
+        foreach (var host in rows)
+        {
+            host.Change = IPScannerHostChange.None;
+            host.PreviousMACAddress = string.Empty;
+        }
+
+        var comparison = IPScannerScanComparer.Compare(baseline, IPScannerScanComparer.CreateBaseline(rows));
+
+        foreach (var host in rows)
+        {
+            if (comparison.Changes.TryGetValue(host.IPAddress, out var change))
+            {
+                host.Change = change.Change;
+                host.PreviousMACAddress = change.PreviousMACAddress;
+            }
+        }
+
+        foreach (var (ipAddress, previous) in comparison.Gone)
+        {
+            // A shown down host (Show unreachable, a rescan) is marked, otherwise a row is added
+            var row = rows.FirstOrDefault(x => x.IPAddress.Equals(ipAddress));
+
+            if (row != null)
+                row.MarkGone(previous);
+            else
+                Results.Add(IPScannerHostInfo.CreateGone(ipAddress, previous));
+        }
+
+        HostsNew = Results.Count(x => x.Change == IPScannerHostChange.New);
+        HostsGone = Results.Count(x => x.Change == IPScannerHostChange.Gone);
+        HostsMACChanged = Results.Count(x => x.Change == IPScannerHostChange.MACChanged);
+    }
+
+    /// <summary>
     /// Compares the completed scan with the previous completed scan of the same input in this tab: marks new hosts
     /// and hosts with another MAC address, adds the hosts that are gone (shown as down, also without "Show
     /// unreachable"). The scan becomes the baseline of the next one. Called on the UI thread.
@@ -1907,35 +1964,17 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         if (_baseline != null && string.Equals(_baselineInput, _scanInput, StringComparison.OrdinalIgnoreCase))
         {
-            var comparison = IPScannerScanComparer.Compare(_baseline, current);
+            _comparisonBaseline = _baseline;
 
-            foreach (var host in Results)
-            {
-                if (comparison.Changes.TryGetValue(host.IPAddress, out var change))
-                {
-                    host.Change = change.Change;
-                    host.PreviousMACAddress = change.PreviousMACAddress;
-                }
-            }
-
-            foreach (var (ipAddress, previous) in comparison.Gone)
-            {
-                // A shown down host (Show unreachable) is marked, otherwise a row is added
-                var row = Results.FirstOrDefault(x => x.IPAddress.Equals(ipAddress));
-
-                if (row != null)
-                    row.MarkGone(previous);
-                else
-                    Results.Add(IPScannerHostInfo.CreateGone(ipAddress, previous));
-            }
-
-            HostsNew = comparison.Changes.Values.Count(x => x.Change == IPScannerHostChange.New);
-            HostsMACChanged = comparison.Changes.Values.Count(x => x.Change == IPScannerHostChange.MACChanged);
-            HostsGone = comparison.Gone.Count;
+            ApplyComparison(Results.ToList(), _baseline);
             HasComparison = true;
 
             if (isRepeat)
                 NotifyChanges();
+        }
+        else
+        {
+            _comparisonBaseline = null;
         }
 
         // A repeated scan updated the rows of hosts that are down now: only shown if they are gone (or unreachable hosts

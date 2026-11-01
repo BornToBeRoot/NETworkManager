@@ -84,6 +84,9 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private Dictionary<(IPAddress IPAddress, int Port), string> _baseline;
     private string _baselineInput;
 
+    // Baseline the shown result was compared with, to update the changes after a rescan (null without comparison)
+    private Dictionary<(IPAddress IPAddress, int Port), string> _comparisonBaseline;
+
     // Input of the running / last scan (not of a rescan), null until the ports are resolved
     private string _scanInput;
 
@@ -1029,6 +1032,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             Repeat.Disarm();
 
             HasComparison = false;
+            _comparisonBaseline = null;
             PortsNowOpen = 0;
             PortsNoLongerOpen = 0;
             LastScanTime = null;
@@ -1194,7 +1198,13 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
 
-        StartScanner(ScanOptions,
+        // The ports that were open in the compared scan are reported in any state, so a port that is no longer open has
+        // a row (see ApplyComparison)
+        var options = _comparisonBaseline != null
+            ? ScanOptions with { ReportPorts = _comparisonBaseline.Keys.ToHashSet() }
+            : ScanOptions;
+
+        StartScanner(options,
             (portScanner, ct) => portScanner.ScanAsync([.. ipAddresses.Select(x => (x, string.Empty))], _lastPorts, ct));
     }
 
@@ -1877,6 +1887,15 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 AddStatusMessage(string.Format(Strings.XHostsDidNotAnswerThePingAndWereNotScanned,
                     pingScanner.HostsSkipped));
 
+            // A completed rescan: the changes against the same previous scan (e.g. a port that is open again)
+            if (isRescan && !e.IsCanceled && e.Exception == null && _comparisonBaseline != null)
+            {
+                ApplyComparison(_comparisonBaseline);
+
+                if (!string.IsNullOrEmpty(Search))
+                    ResultsView.Refresh();
+            }
+
             // Only a completed scan of the input is compared and becomes the baseline of the next one. Repeated: a completed
             // scan, and a repeated scan that failed (tried again after the interval, see ScanRepeater.OnScanEnded)
             if (!isRescan)
@@ -1954,6 +1973,35 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Marks the ports that are open now / no longer open against the open ports of the previous scan, adds a row for
+    /// a port that was open and is not in the result (e.g. the host didn't answer the ping before the scan). Updates
+    /// the counters.
+    /// </summary>
+    /// <param name="baseline">Open ports of the previous scan.</param>
+    private void ApplyComparison(IReadOnlyDictionary<(IPAddress IPAddress, int Port), string> baseline)
+    {
+        var comparison = PortScannerScanComparer.Compare(baseline, Results);
+
+        foreach (var row in Results)
+        {
+            var key = (row.IPAddress, row.Port);
+
+            row.Change = comparison.Opened.Contains(key)
+                ? PortScannerPortChange.Opened
+                : comparison.Closed.Contains(key)
+                    ? PortScannerPortChange.Closed
+                    : PortScannerPortChange.None;
+        }
+
+        foreach (var (ipAddress, port, hostname) in comparison.Missing)
+            Results.Add(new PortScannerPortInfo(ipAddress, hostname, port, PortLookup.LookupByPortAndProtocol(port),
+                PortState.TimedOut) { Change = PortScannerPortChange.Closed });
+
+        PortsNowOpen = Results.Count(x => x.Change == PortScannerPortChange.Opened);
+        PortsNoLongerOpen = Results.Count(x => x.Change == PortScannerPortChange.Closed);
+    }
+
+    /// <summary>
     /// Checks if the running scan is compared with the previous scan (same input).
     /// </summary>
     private bool IsComparedWithBaseline()
@@ -1976,29 +2024,17 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         if (IsComparedWithBaseline())
         {
-            var comparison = PortScannerScanComparer.Compare(_baseline, Results);
+            _comparisonBaseline = _baseline;
 
-            foreach (var row in Results)
-            {
-                var key = (row.IPAddress, row.Port);
-
-                if (comparison.Opened.Contains(key))
-                    row.Change = PortScannerPortChange.Opened;
-                else if (comparison.Closed.Contains(key))
-                    row.Change = PortScannerPortChange.Closed;
-            }
-
-            foreach (var (ipAddress, port, hostname) in comparison.Missing)
-                Results.Add(new PortScannerPortInfo(ipAddress, hostname, port, PortLookup.LookupByPortAndProtocol(port),
-                    PortState.TimedOut) { Change = PortScannerPortChange.Closed });
-
-            PortsNowOpen = comparison.Opened.Count;
-            PortsNoLongerOpen = comparison.Closed.Count + comparison.Missing.Count;
+            ApplyComparison(_baseline);
             HasComparison = true;
 
             if (isRepeat)
                 NotifyChanges();
-
+        }
+        else
+        {
+            _comparisonBaseline = null;
         }
 
         // A repeated scan reports every port with a row: a port that is not open now is only shown if it is no longer
