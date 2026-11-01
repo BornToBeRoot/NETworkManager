@@ -1951,7 +1951,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             // Wrong Windows credentials of the profile / group: one message instead of an error in every row only
             if (!e.IsCanceled && e.Exception == null && _windowsCredentials != null)
             {
-                var logonFailures = Results.Count(x => x.Windows?.IsLogonFailure == true);
+                // A rescan only counts its rows (the other rows keep the result of the last scan)
+                var logonFailures = (isRescan ? rescannedRows : (IEnumerable<IPScannerHostInfo>)Results).Count(x => x.Windows?.IsLogonFailure == true);
 
                 if (logonFailures > 0)
                     AddStatusMessage(string.Format(Strings.WindowsLogonFailedMessage, _windowsCredentials,
