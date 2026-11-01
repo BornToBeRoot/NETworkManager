@@ -118,6 +118,15 @@ public class ProfileFileData : INotifyPropertyChanged
                     : string.Empty,
                 SNMP_Priv = p.SNMP_Priv != null
                     ? Utilities.SecureStringHelper.ConvertToString(p.SNMP_Priv)
+                    : string.Empty,
+                IPScanner_SNMPCommunity = p.IPScanner_SNMPCommunity != null
+                    ? Utilities.SecureStringHelper.ConvertToString(p.IPScanner_SNMPCommunity)
+                    : string.Empty,
+                IPScanner_SNMPAuth = p.IPScanner_SNMPAuth != null
+                    ? Utilities.SecureStringHelper.ConvertToString(p.IPScanner_SNMPAuth)
+                    : string.Empty,
+                IPScanner_SNMPPriv = p.IPScanner_SNMPPriv != null
+                    ? Utilities.SecureStringHelper.ConvertToString(p.IPScanner_SNMPPriv)
                     : string.Empty
             })],
             RemoteDesktop_Password = g.RemoteDesktop_Password != null
@@ -134,6 +143,15 @@ public class ProfileFileData : INotifyPropertyChanged
                 : string.Empty,
             SNMP_Priv = g.SNMP_Priv != null
                 ? Utilities.SecureStringHelper.ConvertToString(g.SNMP_Priv)
+                : string.Empty,
+            IPScanner_SNMPCommunity = g.IPScanner_SNMPCommunity != null
+                ? Utilities.SecureStringHelper.ConvertToString(g.IPScanner_SNMPCommunity)
+                : string.Empty,
+            IPScanner_SNMPAuth = g.IPScanner_SNMPAuth != null
+                ? Utilities.SecureStringHelper.ConvertToString(g.IPScanner_SNMPAuth)
+                : string.Empty,
+            IPScanner_SNMPPriv = g.IPScanner_SNMPPriv != null
+                ? Utilities.SecureStringHelper.ConvertToString(g.IPScanner_SNMPPriv)
                 : string.Empty
         }).Where(g => !g.IsDynamic)];
 
@@ -163,6 +181,15 @@ public class ProfileFileData : INotifyPropertyChanged
                         : null,
                     SNMP_Priv = !string.IsNullOrEmpty(ps.SNMP_Priv)
                         ? Utilities.SecureStringHelper.ConvertToSecureString(ps.SNMP_Priv)
+                        : null,
+                    IPScanner_SNMPCommunity = !string.IsNullOrEmpty(ps.IPScanner_SNMPCommunity)
+                        ? Utilities.SecureStringHelper.ConvertToSecureString(ps.IPScanner_SNMPCommunity)
+                        : null,
+                    IPScanner_SNMPAuth = !string.IsNullOrEmpty(ps.IPScanner_SNMPAuth)
+                        ? Utilities.SecureStringHelper.ConvertToSecureString(ps.IPScanner_SNMPAuth)
+                        : null,
+                    IPScanner_SNMPPriv = !string.IsNullOrEmpty(ps.IPScanner_SNMPPriv)
+                        ? Utilities.SecureStringHelper.ConvertToSecureString(ps.IPScanner_SNMPPriv)
                         : null
                 })],
                 RemoteDesktop_Password = !string.IsNullOrEmpty(gs.RemoteDesktop_Password)
@@ -179,6 +206,15 @@ public class ProfileFileData : INotifyPropertyChanged
                     : null,
                 SNMP_Priv = !string.IsNullOrEmpty(gs.SNMP_Priv)
                     ? Utilities.SecureStringHelper.ConvertToSecureString(gs.SNMP_Priv)
+                    : null,
+                IPScanner_SNMPCommunity = !string.IsNullOrEmpty(gs.IPScanner_SNMPCommunity)
+                    ? Utilities.SecureStringHelper.ConvertToSecureString(gs.IPScanner_SNMPCommunity)
+                    : null,
+                IPScanner_SNMPAuth = !string.IsNullOrEmpty(gs.IPScanner_SNMPAuth)
+                    ? Utilities.SecureStringHelper.ConvertToSecureString(gs.IPScanner_SNMPAuth)
+                    : null,
+                IPScanner_SNMPPriv = !string.IsNullOrEmpty(gs.IPScanner_SNMPPriv)
+                    ? Utilities.SecureStringHelper.ConvertToSecureString(gs.IPScanner_SNMPPriv)
                     : null
             }).ToList() ?? [];
         }

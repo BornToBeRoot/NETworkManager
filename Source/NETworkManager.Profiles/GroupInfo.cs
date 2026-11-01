@@ -41,6 +41,17 @@ public class GroupInfo
         // Profiles
         Profiles = group.Profiles;
 
+        // IP Scanner
+        IPScanner_OverrideSNMP = group.IPScanner_OverrideSNMP;
+        IPScanner_SNMPVersion = group.IPScanner_SNMPVersion;
+        IPScanner_SNMPCommunity = group.IPScanner_SNMPCommunity;
+        IPScanner_SNMPSecurity = group.IPScanner_SNMPSecurity;
+        IPScanner_SNMPUsername = group.IPScanner_SNMPUsername;
+        IPScanner_SNMPAuthenticationProvider = group.IPScanner_SNMPAuthenticationProvider;
+        IPScanner_SNMPAuth = group.IPScanner_SNMPAuth;
+        IPScanner_SNMPPrivacyProvider = group.IPScanner_SNMPPrivacyProvider;
+        IPScanner_SNMPPriv = group.IPScanner_SNMPPriv;
+
         // Port Scanner
         PortScanner_OverridePorts = group.PortScanner_OverridePorts;
         PortScanner_Ports = group.PortScanner_Ports;
@@ -184,6 +195,27 @@ public class GroupInfo
     [XmlIgnore] public bool IsDynamic { get; set; }
 
     [XmlIgnore] public List<ProfileInfo> Profiles { get; set; }
+
+    /// <summary>
+    ///     Use the SNMP version and credentials below for the IP Scanner instead of the settings (a profile before its
+    ///     group), see <see cref="Application.IPScanner.GetSNMPCredentials" />.
+    /// </summary>
+    public bool IPScanner_OverrideSNMP { get; set; }
+
+    public SNMPVersion IPScanner_SNMPVersion { get; set; } = GlobalStaticConfiguration.IPScanner_SNMPVersion;
+    [XmlIgnore] public SecureString IPScanner_SNMPCommunity { get; set; }
+    public SNMPV3Security IPScanner_SNMPSecurity { get; set; } = GlobalStaticConfiguration.SNMP_Security;
+    public string IPScanner_SNMPUsername { get; set; }
+
+    public SNMPV3AuthenticationProvider IPScanner_SNMPAuthenticationProvider { get; set; } =
+        GlobalStaticConfiguration.SNMP_AuthenticationProvider;
+
+    [XmlIgnore] public SecureString IPScanner_SNMPAuth { get; set; }
+
+    public SNMPV3PrivacyProvider IPScanner_SNMPPrivacyProvider { get; set; } =
+        GlobalStaticConfiguration.SNMP_PrivacyProvider;
+
+    [XmlIgnore] public SecureString IPScanner_SNMPPriv { get; set; }
 
     public bool PortScanner_OverridePorts { get; set; }
 
