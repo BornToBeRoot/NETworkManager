@@ -74,7 +74,23 @@ public static class SMBInfoResolver
             socket.LingerState = new LingerOption(true, 0);
             socket.NoDelay = true;
 
-            await socket.ConnectAsync(new IPEndPoint(ipAddress, SMBPort), linkedCts.Token).ConfigureAwait(false);
+            // Refused / no answer as SocketError instead of an exception (hosts without SMB, see SocketOperation)
+            using var connectArgs = new SocketAsyncEventArgs();
+            connectArgs.RemoteEndPoint = new IPEndPoint(ipAddress, SMBPort);
+
+            var connectTask = SocketOperation.RunAsync(connectArgs, socket.ConnectAsync);
+
+            SocketError socketError;
+
+            await using (linkedCts.Token.Register(() => Socket.CancelConnectAsync(connectArgs)))
+            {
+                socketError = await connectTask.ConfigureAwait(false);
+            }
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if (socketError != SocketError.Success)
+                return null;
 
             await using var stream = new NetworkStream(socket, false);
 
