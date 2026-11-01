@@ -4000,6 +4000,9 @@ Right-click for more options.</value>
   <data name="ReloadedAtX" xml:space="preserve">
     <value>Reloaded at {0}</value>
   </data>
+  <data name="NextRefreshInX" xml:space="preserve">
+    <value>Next refresh in {0}</value>
+  </data>
   <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
     <value>Failed to load hosts file: {0}</value>
   </data>

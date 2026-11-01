@@ -8518,6 +8518,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Next refresh in {0}.
+        /// </summary>
+        public static string NextRefreshInX {
+            get {
+                return ResourceManager.GetString("NextRefreshInX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string No {
