@@ -48,6 +48,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // A manual scan waits for the confirmation of a large scan (IsRunning is still false) - not repeated meanwhile
     private bool _isConfirmingScan;
 
+    // SNMP version and credentials of the profile / group the tab was opened with, null for the ones of the settings
+    private readonly SNMPCredentials _snmpCredentials;
+
     // Background HostFound / HostUpdated events append here instead of hopping to the UI thread per
     // item - a DispatcherTimer periodically flushes this into the Results collection instead, so a large
     // scan doesn't flood the dispatcher queue with one BeginInvoke per host. One list for both, so an
@@ -110,6 +113,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private int _latestHostsScanned;
     private int _latestHostsUp;
     private int _latestHostsDown;
+
+    /// <summary>
+    /// Profile / group whose SNMP version and credentials the tab uses (shown in the options, e.g. 'SNMP version and
+    /// credentials of "Site A"'), null if the ones of the settings are used.
+    /// </summary>
+    public string SNMPCredentialsInfo { get; }
 
     /// <summary>
     /// Gets or sets the host or IP range to scan.
@@ -531,8 +540,19 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="tabId">The unique identifier for the tab.</param>
     /// <param name="hostOrIPRange">The initial host or IP range to scan.</param>
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
-    public IPScannerViewModel(Guid tabId, string hostOrIPRange, bool start = true)
+    /// <param name="snmpCredentials">
+    /// SNMP version and credentials of the profile / group the tab was opened with, null for the ones of the settings.
+    /// </param>
+    /// <param name="snmpCredentialsSource">Name of the profile / group of <paramref name="snmpCredentials" />.</param>
+    public IPScannerViewModel(Guid tabId, string hostOrIPRange, bool start = true,
+        SNMPCredentials snmpCredentials = null, string snmpCredentialsSource = null)
     {
+        // Kept for the tab (also if the input is changed), like the ports of a profile in the Port Scanner
+        _snmpCredentials = snmpCredentials;
+        SNMPCredentialsInfo = snmpCredentials == null
+            ? null
+            : string.Format(Strings.SNMPVersionAndCredentialsOfX, snmpCredentialsSource);
+
         // Repeat of the scan (before the input is set, see its setter): not while a scan or rescan is running, or a
         // manual scan waits for its confirmation
         Repeat = new ScanRepeater(() => Start(isRepeat: true), () => IsRunning || _isConfirmingScan,
@@ -1076,7 +1096,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory, Host,
             SettingsManager.Current.General_HistoryListEntries);
 
-        var scanOptions = CreateScanOptions(ports, webPagePorts);
+        var scanOptions = CreateScanOptions(ports, webPagePorts, _snmpCredentials);
 
         ScanOptions = new IPScannerResultOptions(scanOptions);
 
@@ -1171,8 +1191,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// </summary>
     /// <param name="ports">Ports to scan.</param>
     /// <param name="webPagePorts">Ports whose web page title is read (if open).</param>
+    /// <param name="snmpCredentials">
+    /// SNMP version and credentials of the profile / group of the tab, null for the ones of the settings.
+    /// </param>
     /// <returns>Options for the <see cref="IPScanner"/>.</returns>
-    private static IPScannerOptions CreateScanOptions(int[] ports, int[] webPagePorts)
+    private static IPScannerOptions CreateScanOptions(int[] ports, int[] webPagePorts,
+        SNMPCredentials snmpCredentials)
     {
         return new IPScannerOptions
         {
@@ -1198,8 +1222,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             WebPagePorts = webPagePorts,
             WebPageTimeout = SettingsManager.Current.IPScanner_WebPageTimeout,
             SNMPEnabled = SettingsManager.Current.IPScanner_SNMPEnabled,
-            SNMPCredentials = SNMPCredentials.FromCommunity(SettingsManager.Current.IPScanner_SNMPVersion,
-                SettingsManager.Current.IPScanner_SNMPCommunity),
+            SNMPCredentials = snmpCredentials ?? SNMPCredentials.FromCommunity(
+                SettingsManager.Current.IPScanner_SNMPVersion, SettingsManager.Current.IPScanner_SNMPCommunity),
             SNMPTimeout = SettingsManager.Current.IPScanner_SNMPTimeout,
             ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults,
             ReportAllHosts = false
@@ -1224,7 +1248,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private static IPScannerResultOptions CreateResultOptions()
     {
         // Same mapping of the settings as for a scan (the ports don't matter for the result options)
-        return new IPScannerResultOptions(CreateScanOptions([], []));
+        return new IPScannerResultOptions(CreateScanOptions([], [], null));
     }
 
     /// <summary>

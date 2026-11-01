@@ -13555,6 +13555,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SNMP version and credentials of &quot;{0}&quot;.
+        /// </summary>
+        public static string SNMPVersionAndCredentialsOfX {
+            get {
+                return ResourceManager.GetString("SNMPVersionAndCredentialsOfX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SNTP Lookup.
         /// </summary>
         public static string SNTPLookup {

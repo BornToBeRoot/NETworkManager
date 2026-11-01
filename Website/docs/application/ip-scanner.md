@@ -66,7 +66,7 @@ with link-local addresses (`169.254.x.x`) given lower priority.
 
 :::
 
-The **Options** button next to **Scan** opens a menu to turn the most used [settings](#settings) on or off without opening the settings: [Ping hosts](#ping-hosts), [Resolve hostname](#resolve-hostname), [Scan ports](#scan-ports), [Scan for NetBIOS](#scan-for-netbios), [Find hosts in the local subnet](#find-hosts-in-the-local-subnet), [Resolve MAC address and vendor](#resolve-mac-address-and-vendor), [Resolve mDNS hostname](#resolve-mdns-hostname), [Read web pages](#read-web-pages) (only with the port scan), [Read the SNMP system information](#read-the-snmp-system-information), [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) and [Expand host view](#expand-host-view). **Open settings...** opens the IP Scanner settings. The menu stays open to change several options and is disabled while a scan is running.
+The **Options** button next to **Scan** opens a menu to turn the most used [settings](#settings) on or off without opening the settings: [Ping hosts](#ping-hosts), [Resolve hostname](#resolve-hostname), [Scan ports](#scan-ports), [Scan for NetBIOS](#scan-for-netbios), [Find hosts in the local subnet](#find-hosts-in-the-local-subnet), [Resolve MAC address and vendor](#resolve-mac-address-and-vendor), [Resolve mDNS hostname](#resolve-mdns-hostname), [Read web pages](#read-web-pages) (only with the port scan), [Read the SNMP system information](#read-the-snmp-system-information), [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) and [Expand host view](#expand-host-view). **Open settings...** opens the IP Scanner settings. The menu stays open to change several options and is disabled while a scan is running. A tab opened with a profile whose profile or group overrides the [SNMP version and credentials](#snmp-version-and-credentials) shows it below the SNMP option (e.g. `SNMP version and credentials of "Site A"`).
 
 The menu changes the settings: they apply to all tabs and are shown in the settings. Changes apply to the next scan (**Expand host view** immediately), like a change in the settings.
 
@@ -175,7 +175,7 @@ Expand a row with the button in front of it to see all values of the host, or en
 | **Web**          | URL, status code, title, `Server` and `X-Powered-By` header, realm of a login prompt, redirect target and TLS certificate (subject, issuer, valid until) |
 | **NetBIOS**      | Computer name, domain / workgroup and user                                                                                                    |
 | **Hostnames**    | DNS and mDNS hostname                                                                                                                         |
-| **SNMP**         | Name, description and location                                                                                                                |
+| **SNMP**         | Name, description and location; with SNMP v3 the error if the credentials are wrong (e.g. `Unknown user name.`)                                |
 
 The headers of the probes that can find a host (**Ping details**, **Ports**, **NetBIOS**, **SNMP**) show a status icon: a green check if the host answered the probe, a red cross if not (not while the probe is running). A section of a disabled setting shows a note (e.g. `SNMP is disabled!`).
 
@@ -221,6 +221,43 @@ Hostname or IP range to scan for active devices.
 See also the [IP Scanner](./ip-scanner) example inputs for more information about the supported host formats.
 
 :::
+
+### SNMP version and credentials
+
+**Version** under **Override default settings** uses the SNMP version and credentials of the profile for [Read the SNMP system information](#read-the-snmp-system-information) instead of the ones of its [group](#snmp-version-and-credentials-1) or of the [settings](#version), e.g. another community per site or SNMP v3:
+
+| Version     | Values                                                                                                                                 |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `V1`, `V2C` | **Community**                                                                                                                          |
+| `V3`        | **Security** (`NoAuthNoPriv`, `AuthNoPriv`, `AuthPriv`), **Username**, **Auth** (provider and password), **Priv** (provider and password) |
+
+Same values as the [SNMP](./snmp#version) tool. The passwords are only saved for the selected version and security level; an empty password box keeps the saved password (`Not changed`).
+
+**Type:** `Boolean` (override) and the values above
+
+**Default:** `Disabled`
+
+:::note
+
+Only for a tab opened with the profile, also if its input is changed later (like the ports of a profile in the [Port Scanner](./port-scanner)). Enabling the request itself stays a [setting](#read-the-snmp-system-information).
+
+:::
+
+:::warning
+
+Passwords are stored in plain text in the profile file unless [Profile file encryption](../faq/profile-file-encryption) is enabled.
+
+:::
+
+## Group
+
+### SNMP version and credentials
+
+SNMP version and credentials for the profiles of the group, see the [profile](#snmp-version-and-credentials). A profile that overrides them uses its own.
+
+**Type:** `Boolean` (override) and the values of the [profile](#snmp-version-and-credentials)
+
+**Default:** `Disabled`
 
 ## Settings
 
@@ -485,7 +522,9 @@ Read the name, description and location (`sysName`, `sysDescr`, `sysLocation`) o
 
 :::note
 
-A host with another community usually doesn't answer at all (no value after the timeout); an answer with an error (e.g. `noSuchName` of SNMP v1) still counts as up. The request is sent to every IP address of the range, also unused ones. Many intrusion detection systems report requests with common communities like `public`. SNMP v3 is not supported (it needs credentials), use the [SNMP](./snmp) tool for it.
+A host with another community usually doesn't answer at all (no value after the timeout); an answer with an error (e.g. `noSuchName` of SNMP v1) still counts as up. The request is sent to every IP address of the range, also unused ones. Many intrusion detection systems report requests with common communities like `public`.
+
+SNMP v3 needs credentials, so it is only available with the [SNMP version and credentials](#snmp-version-and-credentials) of a profile or group (not in the settings, the settings file is not encrypted). A discovery request is sent first: every SNMP v3 agent answers it, also without valid credentials, so the host is found anyway. Then the `GET` request with the user; wrong credentials are answered with an error, shown in the row details (**SNMP**) and exported as `SNMPError` (e.g. `UnknownUserName`, `AuthenticationFailed`). Each of the two requests waits up to the [timeout](#timeout-ms-5).
 
 :::
 

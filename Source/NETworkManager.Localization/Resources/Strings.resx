@@ -5353,4 +5353,8 @@ Do you want to start the scan?</value>
   <data name="MDNSHostname" xml:space="preserve">
     <value>mDNS hostname</value>
   </data>
+  <data name="SNMPVersionAndCredentialsOfX" xml:space="preserve">
+    <value>SNMP version and credentials of "{0}"</value>
+    <comment>IP Scanner: the tab uses the SNMP version and credentials of a profile or group, {0} is its name.</comment>
+  </data>
 </root>

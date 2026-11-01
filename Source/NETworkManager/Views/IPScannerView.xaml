@@ -36,6 +36,7 @@
         <converters:IPScannerOSGuessToStringConverter x:Key="IPScannerOSGuessToStringConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <converters:SNMPV3ErrorCodeToStringConverter x:Key="SNMPV3ErrorCodeToStringConverter" />
+        <converters:StringIsNotNullOrEmptyToVisibilityCollapsedConverter x:Key="StringIsNotNullOrEmptyToVisibilityCollapsedConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
@@ -196,6 +197,10 @@
                         <MenuItem Header="{x:Static localization:Strings.ReadTheSNMPSystemInformation}"
                                   IsCheckable="True" StaysOpenOnClick="True"
                                   IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_SNMPEnabled, Mode=TwoWay}" />
+                        <!-- The tab uses the SNMP version and credentials of the profile / group it was opened with -->
+                        <MenuItem Header="{Binding SNMPCredentialsInfo}"
+                                  IsEnabled="False"
+                                  Visibility="{Binding SNMPCredentialsInfo, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
                         <Separator />
                         <MenuItem Header="{x:Static localization:Strings.ShowUnreachableIPAddressesAndPorts}"
                                   IsCheckable="True" StaysOpenOnClick="True"
