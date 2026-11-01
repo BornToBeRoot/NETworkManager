@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
@@ -17,7 +18,10 @@ public static class IPScannerHostRoleHelper
     /// <param name="networkInterfaces">
     ///     Local network interfaces, see <see cref="NetworkInterface.GetNetworkInterfaces" />.
     /// </param>
-    /// <returns>Roles per IP address (without IPv6 scope id, see <see cref="GetRole" />).</returns>
+    /// <returns>
+    ///     Roles per IP address, IPv6 with its scope id (a link-local address is only unique on its interface, see
+    ///     <see cref="GetRole" />).
+    /// </returns>
     public static Dictionary<IPAddress, IPScannerHostRole> GetRoles(
         IEnumerable<NetworkInterfaceInfo> networkInterfaces)
     {
@@ -26,11 +30,7 @@ public static class IPScannerHostRoleHelper
         void Add(IEnumerable<IPAddress> ipAddresses, IPScannerHostRole role)
         {
             foreach (var ipAddress in ipAddresses ?? [])
-            {
-                var key = IPAddressHelper.WithoutScopeId(ipAddress);
-
-                roles[key] = roles.GetValueOrDefault(key) | role;
-            }
+                roles[ipAddress] = roles.GetValueOrDefault(ipAddress) | role;
         }
 
         foreach (var networkInterface in networkInterfaces.Where(x => x.IsOperational))
@@ -48,7 +48,10 @@ public static class IPScannerHostRoleHelper
     }
 
     /// <summary>
-    ///     Gets the roles of a host.
+    ///     Gets the roles of a host. An IPv6 address with a scope id only matches the address on the same interface
+    ///     (e.g. the gateway "fe80::1%12" is not the host "fe80::1%7" on another interface) or a known address without
+    ///     scope id; an address without scope id (e.g. entered as "fe80::1") matches it on every interface - the roles
+    ///     of all of them.
     /// </summary>
     /// <param name="roles">Roles per IP address, see <see cref="GetRoles" />.</param>
     /// <param name="ipAddress">IP address of the host (an IPv6 address may have a scope id).</param>
@@ -56,7 +59,27 @@ public static class IPScannerHostRoleHelper
     public static IPScannerHostRole GetRole(IReadOnlyDictionary<IPAddress, IPScannerHostRole> roles,
         IPAddress ipAddress)
     {
-        return roles.GetValueOrDefault(IPAddressHelper.WithoutScopeId(ipAddress));
+        var role = roles.GetValueOrDefault(ipAddress);
+
+        // IPv4, or no scope id known for the address
+        if (ipAddress.AddressFamily != AddressFamily.InterNetworkV6)
+            return role;
+
+        var withoutScopeId = IPAddressHelper.WithoutScopeId(ipAddress);
+
+        // With scope id: also a known address without scope id (e.g. a DNS server configured without one)
+        if (ipAddress.ScopeId != 0)
+            return role | roles.GetValueOrDefault(withoutScopeId);
+
+        // Without scope id: the interface is not known - the address on every interface
+        foreach (var (key, keyRole) in roles)
+        {
+            if (key.AddressFamily == AddressFamily.InterNetworkV6 && key.ScopeId != 0 &&
+                IPAddressHelper.WithoutScopeId(key).Equals(withoutScopeId))
+                role |= keyRole;
+        }
+
+        return role;
     }
 
     /// <summary>

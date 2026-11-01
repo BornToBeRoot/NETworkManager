@@ -55,7 +55,8 @@ internal sealed class IPScannerNeighborCache(IReadOnlyDictionary<IPAddress, IPSc
     private readonly SemaphoreSlim _neighborVerificationSemaphore =
         new(MaxConcurrentNeighborVerifications, MaxConcurrentNeighborVerifications);
 
-    // Default gateways of the operational network interfaces (without scope id), for the proxy ARP check
+    // Default gateways of the operational network interfaces (IPv6 with scope id, the neighbor table has both), for the
+    // proxy ARP check
     private readonly List<IPAddress> _gateways =
         [.. hostRoles.Where(x => x.Value.HasFlag(IPScannerHostRole.DefaultGateway)).Select(x => x.Key)];
 

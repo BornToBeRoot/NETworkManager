@@ -30,7 +30,11 @@ public class IPScannerHostRoleHelperTests
     [InlineData("fe80::23%12", IPScannerHostRole.LocalComputer)]
     [InlineData("192.168.1.1",
         IPScannerHostRole.DefaultGateway | IPScannerHostRole.DNSServer | IPScannerHostRole.DHCPServer)]
-    [InlineData("fe80::1%3", IPScannerHostRole.DefaultGateway)]
+    [InlineData("fe80::1%12", IPScannerHostRole.DefaultGateway)]
+    [InlineData("fe80::1", IPScannerHostRole.DefaultGateway)]
+    // Another link: the same link-local address is another host
+    [InlineData("fe80::1%3", IPScannerHostRole.None)]
+    [InlineData("fe80::23%7", IPScannerHostRole.None)]
     [InlineData("192.168.1.2", IPScannerHostRole.DNSServer)]
     [InlineData("192.168.1.50", IPScannerHostRole.None)]
     public void GetRole(string ipAddress, IPScannerHostRole expected)
@@ -38,6 +42,31 @@ public class IPScannerHostRoleHelperTests
         var roles = IPScannerHostRoleHelper.GetRoles([CreateInterface()]);
 
         Assert.Equal(expected, IPScannerHostRoleHelper.GetRole(roles, IPAddress.Parse(ipAddress)));
+    }
+
+    [Fact]
+    public void GetRole_SameLinkLocalAddressOnTwoInterfaces()
+    {
+        // fe80::1 is the gateway of interface 12 and a DNS server on interface 7 (another router)
+        var roles = IPScannerHostRoleHelper.GetRoles(
+        [
+            CreateInterface(),
+            new NetworkInterfaceInfo
+            {
+                IsOperational = true,
+                DNSServer = [IPAddress.Parse("fe80::1%7"), IPAddress.Parse("fe80::53")]
+            }
+        ]);
+
+        Assert.Equal(IPScannerHostRole.DefaultGateway, IPScannerHostRoleHelper.GetRole(roles, IPAddress.Parse("fe80::1%12")));
+        Assert.Equal(IPScannerHostRole.DNSServer, IPScannerHostRoleHelper.GetRole(roles, IPAddress.Parse("fe80::1%7")));
+
+        // Interface not known: both
+        Assert.Equal(IPScannerHostRole.DefaultGateway | IPScannerHostRole.DNSServer,
+            IPScannerHostRoleHelper.GetRole(roles, IPAddress.Parse("fe80::1")));
+
+        // Configured without scope id: on every interface
+        Assert.Equal(IPScannerHostRole.DNSServer, IPScannerHostRoleHelper.GetRole(roles, IPAddress.Parse("fe80::53%12")));
     }
 
     [Fact]
