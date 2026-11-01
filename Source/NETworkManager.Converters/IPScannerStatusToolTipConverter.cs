@@ -48,12 +48,13 @@ public sealed class IPScannerStatusToolTipConverter : IValueConverter
                 // No TTL for IPv6
                 return pingInfo.TTL > 0 ? $"{status} ({time}, {Strings.TTL} {pingInfo.TTL})" : $"{status} ({time})";
 
-            // Open: 22 (ssh), 80 (http) / Closed
+            // Open: 22 (ssh), 80 (http) / No open ports found! (closed or timed out - the ports that are not open may
+            // be hidden, see IPScanner.GetShownPorts)
             case List<PortInfo> ports:
                 var openPorts = ports.Where(x => x.State == PortState.Open).ToList();
 
                 if (openPorts.Count == 0)
-                    return ResourceTranslator.Translate(ResourceIdentifier.PortState, PortState.Closed);
+                    return Strings.NoOpenPortsFound;
 
                 var list = string.Join(", ", openPorts.Take(MaxPorts).Select(x =>
                     string.IsNullOrEmpty(x.LookupInfo?.Service) ? $"{x.Port}" : $"{x.Port} ({x.LookupInfo.Service})"));
