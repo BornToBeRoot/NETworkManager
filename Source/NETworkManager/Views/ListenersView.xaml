@@ -11,7 +11,6 @@
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:internalControls="clr-namespace:NETworkManager.Controls"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
-             xmlns:networkManager="clr-namespace:NETworkManager"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ListenersViewModel}">
     <UserControl.InputBindings>
         <KeyBinding Key="F5" Command="{Binding RefreshCommand}" />
@@ -27,11 +26,10 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Column="0" Grid.Row="0">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
@@ -39,7 +37,13 @@
                                Style="{StaticResource HeaderTextBlock}"
                                Text="{x:Static localization:Strings.Listeners}"
                                VerticalAlignment="Center" />
-                    <StackPanel Grid.Column="1"
+                    <internalControls:RefreshStatusControl Grid.Column="1"
+                                                           LastRefreshTime="{Binding LastRefreshTime}"
+                                                           RemainingTime="{Binding AutoRefreshTimer.RemainingTime}"
+                                                           IsRefreshing="{Binding IsRefreshing}"
+                                                           HorizontalAlignment="Right"
+                                                           Margin="10,0,10,0" />
+                    <StackPanel Grid.Column="2"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Right">
@@ -154,23 +158,6 @@
                                             MinWidth="100" />
                     </controls:MultiSelectDataGrid.Columns>
                 </controls:MultiSelectDataGrid>
-                <Grid Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <networkManager:LoadingIndicator Grid.Column="0" IsActive="True"
-                                                     Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
-                                                     Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                                     Width="24" Height="24"
-                                                     SpeedRatio="1" Margin="0,0,10,0" />
-                    <TextBlock Grid.Column="1"
-                               Style="{StaticResource ResourceKey=AccentTextBlock}"
-                               Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                               Text="{Binding Path=StatusMessage}"
-                               TextWrapping="Wrap"
-                               VerticalAlignment="Center" />
-                </Grid>
             </Grid>
         </TabItem>
     </TabControl>
