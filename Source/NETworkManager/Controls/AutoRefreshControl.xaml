@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="NETworkManager.Controls.AutoRefreshControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
+             xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
+             x:Name="Root"
+             mc:Ignorable="d">
+    <!-- "Automatically update every" + interval, used by every tool with an auto refresh (see AutoRefreshTimer) -->
+    <UserControl.Resources>
+        <converters:TimeUnitToStringConverter x:Key="TimeUnitToStringConverter" />
+    </UserControl.Resources>
+    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+        <CheckBox IsChecked="{Binding Path=IsChecked, ElementName=Root}"
+                  Content="{Binding Path=Text, ElementName=Root}"
+                  Margin="0,0,10,0" />
+        <ComboBox ItemsSource="{Binding Path=ItemsSource, ElementName=Root}"
+                  SelectedItem="{Binding Path=SelectedItem, ElementName=Root}"
+                  MinWidth="150">
+            <ComboBox.ItemTemplate>
+                <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} {1}">
+                                <Binding Path="Value" />
+                                <Binding Path="TimeUnit" Converter="{StaticResource TimeUnitToStringConverter}" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+    </StackPanel>
+</UserControl>

@@ -1,4 +1,4 @@
-using MahApps.Metro.IconPacks;
+using NETworkManager.Models;
 using NETworkManager.Settings;
 using System;
 using System.Collections.Generic;
@@ -28,23 +28,28 @@ public static class NotificationManager
     private static DateTime _lastSoundPlayed = DateTime.MinValue;
 
     /// <summary>
-    /// Shows a notification popup in the bottom-right corner of the primary screen.
-    /// Safe to call from any thread.
+    /// Shows a notification of a tool (popup in the bottom-right corner of the primary screen) and / or plays its sound
+    /// (settings of the tool): a gentle info sound if something is up, otherwise a warning sound. Safe to call from any
+    /// thread.
     /// </summary>
-    /// <param name="iconKind">The Material icon shown on the left of the popup.</param>
-    /// <param name="iconColor">The icon fill color (e.g. "Red" or "#badc58").</param>
-    /// <param name="title">The bold header text (e.g. the host title).</param>
-    /// <param name="message">The gray subtext below the header (e.g. "Host is up").</param>
-    /// <param name="closeTimeSeconds">Seconds before the popup closes automatically.</param>
-    public static void Show(PackIconMaterialKind iconKind, string iconColor, string title, string message, int closeTimeSeconds)
+    /// <param name="notification">The notification.</param>
+    /// <param name="showPopup">Show the popup.</param>
+    /// <param name="playSound">Play the sound.</param>
+    public static void Show(NotificationInfo notification, bool showPopup, bool playSound)
     {
+        if (playSound)
+            PlaySound(notification.Status == NotificationStatus.Up ? SystemSounds.Asterisk : SystemSounds.Exclamation);
+
+        if (!showPopup)
+            return;
+
         // A late ping callback during application shutdown may find no Application instance.
         if (Application.Current is null)
             return;
 
         Application.Current.Dispatcher.BeginInvoke(() =>
         {
-            var window = new NotificationWindow(iconKind, iconColor, title, message, closeTimeSeconds);
+            var window = new NotificationWindow(notification);
 
             window.Closed += (_, _) =>
             {
@@ -55,6 +60,20 @@ public static class NotificationManager
             ActiveWindows.Add(window);
             window.Show(); // triggers OnSourceInitialized → window positions itself
         });
+    }
+
+    /// <summary>
+    ///     Gets the lines of a notification about changes: up to <paramref name="maxLines" /> changes, one per line,
+    ///     otherwise the summary (one line per counter, e.g. "5 New" and "2 Gone"), so the popup stays small.
+    /// </summary>
+    /// <param name="lines">One line per change.</param>
+    /// <param name="summary">Summary of all changes (counters without a value of 0).</param>
+    /// <param name="maxLines">Maximum number of lines.</param>
+    /// <returns>Lines of the notification.</returns>
+    public static IReadOnlyList<NotificationLine> FormatChanges(IReadOnlyList<NotificationLine> lines,
+        IReadOnlyList<NotificationLine> summary, int maxLines = 3)
+    {
+        return lines.Count <= maxLines ? lines : summary;
     }
 
     /// <summary>

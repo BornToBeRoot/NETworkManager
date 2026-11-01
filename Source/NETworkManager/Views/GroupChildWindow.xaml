@@ -14,6 +14,7 @@
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:internalControls="clr-namespace:NETworkManager.Controls"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
@@ -143,6 +144,20 @@
                                                             <Condition
                                                                 Binding="{Binding Data.NameIsValid, Source={StaticResource BindingProxy}}"
                                                                 Value="False" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <!-- IP Scanner -->
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding (profiles:GroupViewInfo.Name)}"
+                                                                Value="{x:Static profiles:GroupViewName.IPScanner}" />
+                                                            <Condition
+                                                                Binding="{Binding Data.IPScanner_SNMP.HasError, Source={StaticResource BindingProxy}}"
+                                                                Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
                                                             <Setter Property="Visibility" Value="Visible" />
@@ -446,117 +461,7 @@
                                                                 Binding="{Binding (profiles:GroupViewInfo.Name)}"
                                                                 Value="{x:Static profiles:GroupViewName.SNMP}" />
                                                             <Condition
-                                                                Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}"
-                                                                Value="True" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}"
-                                                                Value="V1" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_IsCommunityEmpty, Source={StaticResource BindingProxy}}"
-                                                                Value="True" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <MultiDataTrigger.Setters>
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </MultiDataTrigger.Setters>
-                                                    </MultiDataTrigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition
-                                                                Binding="{Binding (profiles:GroupViewInfo.Name)}"
-                                                                Value="{x:Static profiles:GroupViewName.SNMP}" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}"
-                                                                Value="True" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}"
-                                                                Value="V2C" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_IsCommunityEmpty, Source={StaticResource BindingProxy}}"
-                                                                Value="True" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <MultiDataTrigger.Setters>
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </MultiDataTrigger.Setters>
-                                                    </MultiDataTrigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition
-                                                                Binding="{Binding (profiles:GroupViewInfo.Name)}"
-                                                                Value="{x:Static profiles:GroupViewName.SNMP}" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}"
-                                                                Value="True" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}"
-                                                                Value="V3" />
-                                                            <Condition
-                                                                Binding="{Binding ElementName=TextBoxSNMPUsername, Path=(Validation.HasError)}"
-                                                                Value="True" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <MultiDataTrigger.Setters>
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </MultiDataTrigger.Setters>
-                                                    </MultiDataTrigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition
-                                                                Binding="{Binding (profiles:GroupViewInfo.Name)}"
-                                                                Value="{x:Static profiles:GroupViewName.SNMP}" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}"
-                                                                Value="True" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}"
-                                                                Value="V3" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_Security, Source={StaticResource BindingProxy}}"
-                                                                Value="AuthNoPriv" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_IsAuthEmpty, Source={StaticResource BindingProxy}}"
-                                                                Value="True" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <MultiDataTrigger.Setters>
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </MultiDataTrigger.Setters>
-                                                    </MultiDataTrigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition
-                                                                Binding="{Binding (profiles:GroupViewInfo.Name)}"
-                                                                Value="{x:Static profiles:GroupViewName.SNMP}" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}"
-                                                                Value="True" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}"
-                                                                Value="V3" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_Security, Source={StaticResource BindingProxy}}"
-                                                                Value="AuthPriv" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_IsAuthEmpty, Source={StaticResource BindingProxy}}"
-                                                                Value="True" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <MultiDataTrigger.Setters>
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </MultiDataTrigger.Setters>
-                                                    </MultiDataTrigger>
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition
-                                                                Binding="{Binding (profiles:GroupViewInfo.Name)}"
-                                                                Value="{x:Static profiles:GroupViewName.SNMP}" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_OverrideVersionAndAuth, Source={StaticResource BindingProxy}}"
-                                                                Value="True" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_Version, Source={StaticResource BindingProxy}}"
-                                                                Value="V3" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_Security, Source={StaticResource BindingProxy}}"
-                                                                Value="AuthPriv" />
-                                                            <Condition
-                                                                Binding="{Binding Data.SNMP_IsPrivEmpty, Source={StaticResource BindingProxy}}"
+                                                                Binding="{Binding Data.SNMP_Credentials.HasError, Source={StaticResource BindingProxy}}"
                                                                 Value="True" />
                                                         </MultiDataTrigger.Conditions>
                                                         <MultiDataTrigger.Setters>
@@ -664,6 +569,20 @@
                                          Text="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          mah:TextBoxHelper.Watermark="{x:Static Member=localization:Strings.ExampleGroupDescription}" />
                             </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="{x:Static localization:Strings.IPScanner}" Tag="{x:Static profiles:GroupViewName.IPScanner}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel Margin="0,0,0,20">
+                            <!-- SNMP version and credentials of the profiles of the group (a profile can override them)
+                                 instead of the ones of the settings -->
+                            <TextBlock Text="{x:Static localization:Strings.OverrideDefaultSettings}"
+                                       Style="{StaticResource HeaderTextBlock}" Margin="0" />
+                            <Separator Background="{DynamicResource MahApps.Brushes.Gray8}" Margin="0,10,0,10" />
+                            <TextBlock Text="{x:Static localization:Strings.SNMP}"
+                                       Style="{StaticResource CenterTextBlock}" Margin="0,0,0,10" />
+                            <internalControls:SNMPCredentialsControl DataContext="{Binding IPScanner_SNMP}" />
                         </StackPanel>
                     </ScrollViewer>
                 </TabItem>
@@ -1899,18 +1818,6 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="10" />
                                     <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="10" />
-                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
@@ -1962,382 +1869,9 @@
                                 <ComboBox Grid.Column="2" Grid.Row="6" ItemsSource="{Binding SNMP_Modes}"
                                           SelectedItem="{Binding SNMP_Mode}"
                                           IsEnabled="{Binding SNMP_OverrideOIDAndMode}" />
-                                <CheckBox Grid.Column="0" Grid.Row="8"
-                                          Content="{x:Static localization:Strings.Version}"
-                                          IsChecked="{Binding SNMP_OverrideVersionAndAuth}"
-                                          Style="{StaticResource DefaultCheckBox}" />
-                                <ComboBox Grid.Column="2" Grid.Row="8" ItemsSource="{Binding SNMP_Versions}"
-                                          SelectedItem="{Binding SNMP_Version}"
-                                          IsEnabled="{Binding SNMP_OverrideVersionAndAuth}" />
-                                <TextBlock Grid.Column="0" Grid.Row="10"
-                                           Text="{x:Static localization:Strings.Community}" Margin="24,0,0,0">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}"
-                                               BasedOn="{StaticResource CenterTextBlock}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding SNMP_Version}" Value="V3">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <PasswordBox Grid.Column="2" Grid.Row="10" x:Name="PasswordBoxSNMPCommunity"
-                                             IsEnabled="{Binding SNMP_OverrideVersionAndAuth}">
-                                    <PasswordBox.Style>
-                                        <Style TargetType="{x:Type PasswordBox}"
-                                               BasedOn="{StaticResource DefaultPasswordBox}">
-                                            <Setter Property="mah:TextBoxHelper.Watermark"
-                                                    Value="{x:Static localization:Strings.NotChanged}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding SNMP_IsCommunityEmpty}" Value="True">
-                                                    <Setter Property="mah:TextBoxHelper.Watermark"
-                                                            Value="{x:Static localization:StaticStrings.ExampleSNMPCommunity}" />
-                                                </DataTrigger>
-                                                <DataTrigger Binding="{Binding SNMP_Version}" Value="V3">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </PasswordBox.Style>
-                                    <interactivity:Interaction.Behaviors>
-                                        <wpfHelpers:PasswordBoxBindingBehavior
-                                            Password="{Binding SNMP_Community, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </interactivity:Interaction.Behaviors>
-                                </PasswordBox>
-                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="10"
-                                           ToolTip="{x:Static localization:Strings.WarningMessage_ProfileFileNotEncryptedStoringPasswords}"
-                                           Margin="10,0,0,0">
-                                    <Rectangle.Style>
-                                        <Style TargetType="{x:Type Rectangle}"
-                                               BasedOn="{StaticResource WarnImageRectangle}">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SNMP_Version}" Value="V1" />
-                                                        <Condition Binding="{Binding IsProfileFileEncrypted}"
-                                                                   Value="False" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger.Setters>
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SNMP_Version}" Value="V2C" />
-                                                        <Condition Binding="{Binding IsProfileFileEncrypted}"
-                                                                   Value="False" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger.Setters>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Rectangle.Style>
-                                    <Rectangle.Resources>
-                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
-                                    </Rectangle.Resources>
-                                </Rectangle>
-                                <TextBlock Grid.Column="0" Grid.Row="10"
-                                           Text="{x:Static localization:Strings.Security}" Margin="24,0,0,0">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}"
-                                               BasedOn="{StaticResource CenterTextBlock}">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding SNMP_Version}" Value="V3">
-                                                    <Setter Property="Visibility" Value="Visible" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <ComboBox Grid.Column="2" Grid.Row="10" ItemsSource="{Binding SNMP_Securities}"
-                                          SelectedItem="{Binding SNMP_Security}"
-                                          IsEnabled="{Binding SNMP_OverrideVersionAndAuth}">
-                                    <ComboBox.Style>
-                                        <Style TargetType="{x:Type ComboBox}"
-                                               BasedOn="{StaticResource DefaultComboBox}">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding SNMP_Version}" Value="V3">
-                                                    <Setter Property="Visibility" Value="Visible" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ComboBox.Style>
-                                </ComboBox>
-                                <TextBlock Grid.Column="0" Grid.Row="12"
-                                           Text="{x:Static localization:Strings.Username}" Margin="24,0,0,0">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}"
-                                               BasedOn="{StaticResource CenterTextBlock}">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding SNMP_Version}" Value="V3">
-                                                    <Setter Property="Visibility" Value="Visible" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <TextBox Grid.Column="2" Grid.Row="12" x:Name="TextBoxSNMPUsername"
-                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleUsername}"
-                                         IsEnabled="{Binding SNMP_OverrideVersionAndAuth}">
-                                    <TextBox.Style>
-                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding SNMP_Version}" Value="V3">
-                                                    <Setter Property="Visibility" Value="Visible" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBox.Style>
-                                    <TextBox.Text>
-                                        <Binding Path="SNMP_Username" Mode="TwoWay"
-                                                 UpdateSourceTrigger="PropertyChanged">
-                                            <Binding.ValidationRules>
-                                                <validators:EmptyValidator ValidatesOnTargetUpdated="True" />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <TextBlock Grid.Column="0" Grid.Row="14" Text="{x:Static localization:Strings.Auth}"
-                                           Margin="24,0,0,0">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}"
-                                               BasedOn="{StaticResource CenterTextBlock}">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                                        <Condition Binding="{Binding SNMP_Security}" Value="AuthNoPriv" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger.Setters>
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                                        <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger.Setters>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <ComboBox Grid.Column="2" Grid.Row="14"
-                                          ItemsSource="{Binding SNMP_AuthenticationProviders}"
-                                          SelectedItem="{Binding SNMP_AuthenticationProvider}"
-                                          IsEnabled="{Binding SNMP_OverrideVersionAndAuth}">
-                                    <ComboBox.Style>
-                                        <Style TargetType="{x:Type ComboBox}"
-                                               BasedOn="{StaticResource DefaultComboBox}">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                                        <Condition Binding="{Binding SNMP_Security}" Value="AuthNoPriv" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger.Setters>
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                                        <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger.Setters>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ComboBox.Style>
-                                </ComboBox>
-                                <PasswordBox Grid.Column="2" Grid.Row="16" x:Name="PasswordBoxSNMPAuth"
-                                             IsEnabled="{Binding SNMP_OverrideVersionAndAuth}">
-                                    <PasswordBox.Style>
-                                        <Style TargetType="{x:Type PasswordBox}"
-                                               BasedOn="{StaticResource DefaultPasswordBox}">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Setter Property="mah:TextBoxHelper.Watermark"
-                                                    Value="{x:Static localization:Strings.NotChanged}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding SNMP_IsAuthEmpty}" Value="True">
-                                                    <Setter Property="mah:TextBoxHelper.Watermark"
-                                                            Value="{x:Static localization:StaticStrings.ExampleSNMPAuthSecret}" />
-                                                </DataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                                        <Condition Binding="{Binding SNMP_Security}" Value="AuthNoPriv" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger.Setters>
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                                        <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger.Setters>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </PasswordBox.Style>
-                                    <interactivity:Interaction.Behaviors>
-                                        <wpfHelpers:PasswordBoxBindingBehavior
-                                            Password="{Binding SNMP_Auth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </interactivity:Interaction.Behaviors>
-                                </PasswordBox>
-                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="16"
-                                           ToolTip="{x:Static localization:Strings.WarningMessage_ProfileFileNotEncryptedStoringPasswords}"
-                                           Margin="10,0,0,0">
-                                    <Rectangle.Style>
-                                        <Style TargetType="{x:Type Rectangle}"
-                                               BasedOn="{StaticResource WarnImageRectangle}">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                                        <Condition Binding="{Binding SNMP_Security}" Value="AuthNoPriv" />
-                                                        <Condition Binding="{Binding IsProfileFileEncrypted}"
-                                                                   Value="False" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger.Setters>
-                                                </MultiDataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                                        <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
-                                                        <Condition Binding="{Binding IsProfileFileEncrypted}"
-                                                                   Value="False" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger.Setters>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Rectangle.Style>
-                                    <Rectangle.Resources>
-                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
-                                    </Rectangle.Resources>
-                                </Rectangle>
-                                <TextBlock Grid.Column="0" Grid.Row="18" Text="{x:Static localization:Strings.Priv}"
-                                           Margin="24,0,0,0">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}"
-                                               BasedOn="{StaticResource CenterTextBlock}">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                                        <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger.Setters>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <ComboBox Grid.Column="2" Grid.Row="18" ItemsSource="{Binding SNMP_PrivacyProviders}"
-                                          SelectedItem="{Binding SNMP_PrivacyProvider}"
-                                          IsEnabled="{Binding SNMP_OverrideVersionAndAuth}">
-                                    <ComboBox.Style>
-                                        <Style TargetType="{x:Type ComboBox}"
-                                               BasedOn="{StaticResource DefaultComboBox}">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                                        <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger.Setters>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ComboBox.Style>
-                                </ComboBox>
-                                <PasswordBox Grid.Column="2" Grid.Row="20" x:Name="PasswordBoxSNMPPriv"
-                                             IsEnabled="{Binding SNMP_OverrideVersionAndAuth}">
-                                    <PasswordBox.Style>
-                                        <Style TargetType="{x:Type PasswordBox}"
-                                               BasedOn="{StaticResource DefaultPasswordBox}">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Setter Property="mah:TextBoxHelper.Watermark"
-                                                    Value="{x:Static localization:Strings.NotChanged}" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding SNMP_IsPrivEmpty}" Value="True">
-                                                    <Setter Property="mah:TextBoxHelper.Watermark"
-                                                            Value="{x:Static localization:StaticStrings.ExampleSNMPPrivSecret}" />
-                                                </DataTrigger>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                                        <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger.Setters>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </PasswordBox.Style>
-                                    <interactivity:Interaction.Behaviors>
-                                        <wpfHelpers:PasswordBoxBindingBehavior
-                                            Password="{Binding SNMP_Priv, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    </interactivity:Interaction.Behaviors>
-                                </PasswordBox>
-                                <Rectangle Width="24" Height="24" Grid.Column="3" Grid.Row="20"
-                                           ToolTip="{x:Static localization:Strings.WarningMessage_ProfileFileNotEncryptedStoringPasswords}"
-                                           Margin="10,0,0,0">
-                                    <Rectangle.Style>
-                                        <Style TargetType="{x:Type Rectangle}"
-                                               BasedOn="{StaticResource WarnImageRectangle}">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Style.Triggers>
-                                                <MultiDataTrigger>
-                                                    <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                                        <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
-                                                        <Condition Binding="{Binding IsProfileFileEncrypted}"
-                                                                   Value="False" />
-                                                    </MultiDataTrigger.Conditions>
-                                                    <MultiDataTrigger.Setters>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger.Setters>
-                                                </MultiDataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Rectangle.Style>
-                                    <Rectangle.Resources>
-                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
-                                    </Rectangle.Resources>
-                                </Rectangle>
+                                <!-- Version and credentials (see SNMPCredentialsControl) -->
+                                <internalControls:SNMPCredentialsControl Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4"
+                                                                         DataContext="{Binding SNMP_Credentials}" />
                             </Grid>
                         </StackPanel>
                     </ScrollViewer>
@@ -2368,6 +1902,10 @@
                                     <Setter Property="IsEnabled" Value="False" />
                                 </MultiDataTrigger.Setters>
                             </MultiDataTrigger>
+                            <!-- IP Scanner -->
+                            <DataTrigger Binding="{Binding IPScanner_SNMP.HasError}" Value="True">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
                             <!-- Port Scanner -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
@@ -2565,64 +2103,7 @@
                             </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
-                                    <Condition Binding="{Binding SNMP_Version}" Value="V1" />
-                                    <Condition Binding="{Binding SNMP_IsCommunityEmpty}" Value="True" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
-                                    <Condition Binding="{Binding SNMP_Version}" Value="V2C" />
-                                    <Condition Binding="{Binding SNMP_IsCommunityEmpty}" Value="True" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
-                                    <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                    <Condition
-                                        Binding="{Binding ElementName=TextBoxSNMPUsername, Path=(Validation.HasError)}"
-                                        Value="True" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
-                                    <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                    <Condition Binding="{Binding SNMP_Security}" Value="AuthNoPriv" />
-                                    <Condition Binding="{Binding SNMP_IsAuthEmpty}" Value="True" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
-                                    <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                    <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
-                                    <Condition Binding="{Binding SNMP_IsAuthEmpty}" Value="True" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.Setters>
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </MultiDataTrigger.Setters>
-                            </MultiDataTrigger>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding SNMP_OverrideVersionAndAuth}" Value="True" />
-                                    <Condition Binding="{Binding SNMP_Version}" Value="V3" />
-                                    <Condition Binding="{Binding SNMP_Security}" Value="AuthPriv" />
-                                    <Condition Binding="{Binding SNMP_IsPrivEmpty}" Value="True" />
+                                    <Condition Binding="{Binding SNMP_Credentials.HasError}" Value="True" />
                                 </MultiDataTrigger.Conditions>
                                 <MultiDataTrigger.Setters>
                                     <Setter Property="IsEnabled" Value="False" />

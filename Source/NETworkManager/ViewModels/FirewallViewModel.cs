@@ -199,6 +199,22 @@ public class FirewallViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets the time of the last refresh, null before the first one (shown in the header).
+    /// </summary>
+    public DateTime? LastRefreshTime
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets whether the status message bar is shown.
     /// </summary>
     public bool IsStatusMessageDisplayed
@@ -771,18 +787,23 @@ public class FirewallViewModel : ViewModelBase
         // Show the loading indicator instead of the (empty) list on the initial load, see IsLoading
         IsLoading = init;
 
-        StatusMessage = Strings.RefreshingDots;
-        IsStatusMessageDisplayed = true;
-
-        if (!init)
-            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+        // An error of the last refresh / action is hidden (the refresh icon spins while refreshing)
+        IsStatusMessageDisplayed = false;
 
         try
         {
             // Reset right before the setting is read, so only a change during the query triggers another refresh (see finally)
             _refreshPending = false;
 
-            var (rules, errors) = await Firewall.GetRulesAsync(onlyManagedRules: !ShowAllRules);
+            var onlyManagedRules = !ShowAllRules;
+
+            // The first load right away; a refresh takes at least the refresh interval (the refresh button can't be
+            // spammed), loading runs at the same time
+            var (rules, errors) = init
+                ? await Firewall.GetRulesAsync(onlyManagedRules: onlyManagedRules)
+                : await TaskHelper.WithMinimumDurationAsync(
+                    () => Firewall.GetRulesAsync(onlyManagedRules: onlyManagedRules),
+                    GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -811,18 +832,17 @@ public class FirewallViewModel : ViewModelBase
                 }
             });
 
-            IsStatusMessageDisplayed = true;
+            LastRefreshTime = DateTime.Now;
 
             // Only parts of the query failed (e.g. a single rule or a filter), show that the list may be incomplete
             if (errors.Count > 0)
             {
                 StatusMessage = string.Format(Strings.FirewallRulesLoadedWithErrorsMessage,
-                    DateTime.Now.ToShortTimeString(), errors[0]);
+                    LastRefreshTime.Value.ToShortTimeString(), errors[0]);
+                IsStatusMessageDisplayed = true;
 
                 return false;
             }
-
-            StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
 
             return true;
         }

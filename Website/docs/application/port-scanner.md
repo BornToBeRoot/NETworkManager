@@ -38,6 +38,7 @@ TCP (Transmission Control Protocol) is a connection-oriented transport-layer pro
 | `borntoberoot.net`               | Single IP address resolved from a host (`10.0.0.1`)                                          |
 | `borntoberoot.net/24`            | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)            |
 | `borntoberoot.net/255.255.255.0` | All IP addresses in a subnet resolved from a host (`10.0.0.0`, ..., `10.0.0.255`)            |
+| `!10.0.0.1`                      | Excludes an IP address (also a range, subnet or host, e.g. `!10.0.0.0/28`) from the other inputs|
 
 | Port                  | Description                                        |
 | --------------------- | -------------------------------------------------- |
@@ -48,6 +49,8 @@ TCP (Transmission Control Protocol) is a connection-oriented transport-layer pro
 :::note
 
 Multiple inputs can be combined with a semicolon (`;`). A column pasted from Excel (one entry per line) is converted to the semicolon-separated form automatically.
+
+An input starting with `!` excludes its IP addresses from the other inputs, e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254` (all formats of the table above; a hostname excludes all its IPv4 and IPv6 addresses, independent of the IPv4 preference). At least one input without `!` is required; if the exclusions remove every IP address, a message is shown instead. If the hostname of an exclusion can't be resolved (also if only the IPv4 or the IPv6 lookup fails, e.g. a timeout), nothing is scanned (otherwise its IP addresses would be scanned).
 
 Example: `10.0.0.0/24; 10.0.[10-20].1; 10.0.0.100-199` or `1-1024; 8080; 8443`
 
@@ -89,9 +92,23 @@ Right-click the header of a host (group) for the actions of the host:
 
 ### Result
 
-The results are grouped by host (one group per IP address, the header shows the hostname, the IP address and the number of open ports) and sorted by IP address and port. The number of open, closed and timed out ports is shown next to the **Result** header. A port is **open** if the connection was established, **closed** if the host refused the connection and **timed out** if there was no answer within the [timeout](#timeout-ms) (e.g. blocked by a firewall). Only open ports are shown, unless [Show closed ports](#show-closed-ports) is enabled (closed and timed out ports). The **Hostname** column is shown if [Resolve hostname](#resolve-hostname) was enabled when the scan was started.
+The results are grouped by host (one group per IP address, the header shows the hostname, the IP address and the number of open ports) and sorted by IP address and port. The number of open, closed and timed out ports is shown below the **Result** header. A port is **open** if the connection was established, **closed** if the host refused the connection and **timed out** if there was no answer within the [timeout](#timeout-ms) (e.g. blocked by a firewall). Only open ports are shown, unless [Show closed ports](#show-closed-ports) is enabled (closed and timed out ports). The **Hostname** column is shown if [Resolve hostname](#resolve-hostname) was enabled when the scan was started.
 
 The search box right of the **Result** header filters the results by IP address, hostname, port, protocol, service, description and status, also while the scan is running. **Export...** > all exports the filtered results; the counters always count all ports.
+
+### Changes since the last scan
+
+A scan of the same hosts and ports as the last completed scan in the tab shows what changed since then in the **Since last scan** column: **Now open** (the port is open now, it was not open in the last scan) and **No longer open** (it was open in the last scan, it is closed or timed out now). A port that is no longer open is shown with its status, also if [Show closed ports](#show-closed-ports) is disabled; if its host was not scanned (e.g. it didn't answer the [ping before the scan](#ping-hosts-before-the-scan)), it is shown as timed out. The counters below the **Result** header (e.g. `1 Now open · 2 No longer open`) and the column are only shown if the result is compared with a previous scan. **Last scan at** in the header shows when the last scan was completed (the tooltip shows the date).
+
+Only completed scans are compared: a canceled scan or a scan with other hosts or ports (also a changed port profile) starts over. **Rescan** updates the rows and their changes against the same previous scan (e.g. a port that is open again), but is not a scan of the input. The last scan is only kept in memory, as long as the tab is open. The change is also in the search and the export (`Change`).
+
+### Repeat the scan
+
+**Automatically scan every** right of the **Result** header repeats the scan after the selected interval (`1 min` to `1 h`, the pause after a scan, so scans don't overlap) - e.g. to watch whether a service is still running, see [Changes since the last scan](#changes-since-the-last-scan). The repetition starts with the next completed scan; while it waits, the header shows the countdown (`Next scan in 04:32`, the tooltip shows the last scan).
+
+A repeated scan keeps the rows and updates their status in place (selection, scroll position, collapsed hosts and search stay): new open ports are added, ports that are no longer open are shown with their status. The scan is not asked to be confirmed again (many ports) and is not added to the history again.
+
+The repetition stops when a scan is canceled, the hosts or ports are changed (also while a scan is running) or the tab is closed; a manual **Scan** starts the interval again after the scan. If a repeated scan fails (e.g. a hostname can't be resolved for a moment), the message is shown and the scan is tried again after the interval. The scan is also repeated while another tab or application is shown. The checkbox is per tab and not saved (a new tab doesn't repeat), the interval is saved.
 
 ### Keyboard shortcuts
 
@@ -293,6 +310,30 @@ Resolve the hostname for given IP addresses.
 **Type:** `Boolean`
 
 **Default:** `Enabled`
+
+### Show notification popup on changes
+
+Show a notification popup in the bottom-right corner of the primary screen when a [repeated scan](#repeat-the-scan) found changes since the previous scan (see [Changes since the last scan](#changes-since-the-last-scan); only ports that are open now like a host that is up, a port that is no longer open like a host that is down). One notification per scan: up to three changes, one per line with the IP address (and hostname), the port with its protocol (and service) and the change in its color (e.g. `10.0.0.5 (server) · 22/tcp (ssh) · No longer open`, green for open now, red for no longer open), otherwise one line per counter (e.g. `5 Now open`). Not for a scan that was started manually. The header shows the tool, the title the scanned input; the status icon is green for only ports that are open now, red for only ports that are no longer open, half green / half red for both. A click opens the tab of the scan.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+### Play sound on changes
+
+Play a system sound when a [repeated scan](#repeat-the-scan) found changes. Independent of the [popup](#show-notification-popup-on-changes).
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+### Display duration (seconds)
+
+Time in seconds the notification popup is shown before it closes automatically.
+
+**Type:** `Integer` [Min `3`, Max `60`]
+
+**Default:** `10`
 
 ### Adjust threads automatically
 

@@ -62,7 +62,7 @@ public class ListenersViewModel : ViewModelBase
         _ = Refresh(true);
 
         // Auto refresh
-        _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
+        _autoRefreshTimer = new AutoRefreshTimer(() => Refresh());
 
         AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
         SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
@@ -71,26 +71,6 @@ public class ListenersViewModel : ViewModelBase
         AutoRefreshEnabled = SettingsManager.Current.Listeners_AutoRefreshEnabled;
 
         _isLoading = false;
-    }
-
-    #endregion
-
-    #region Events
-
-    /// <summary>
-    /// Handles the Tick event of the auto-refresh timer.
-    /// </summary>
-    private async void AutoRefreshTimer_Tick(object sender, EventArgs e)
-    {
-        // Stop timer...
-        _autoRefreshTimer.Stop();
-
-        // Refresh
-        await Refresh();
-
-        // Restart timer, unless auto refresh was disabled or the view was hidden in the meantime
-        if (AutoRefreshEnabled && _isViewVisible)
-            _autoRefreshTimer.Start();
     }
 
     #endregion
@@ -105,10 +85,9 @@ public class ListenersViewModel : ViewModelBase
     private readonly bool _isLoading;
 
     /// <summary>
-    /// The timer for auto-refresh.
+    /// Refreshes the view automatically (see <see cref="AutoRefreshEnabled"/>).
     /// </summary>
-    private readonly DispatcherTimer _autoRefreshTimer = new();
-    private bool _isViewVisible = true;
+    private readonly AutoRefreshTimer _autoRefreshTimer;
 
     /// <summary>
     /// Delays filtering while the user is typing (see <see cref="Search"/>), so a large list is not filtered on
@@ -205,16 +184,7 @@ public class ListenersViewModel : ViewModelBase
 
             field = value;
 
-            // Start timer to refresh automatically
-            if (value)
-            {
-                _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime);
-                _autoRefreshTimer.Start();
-            }
-            else
-            {
-                _autoRefreshTimer.Stop();
-            }
+            _autoRefreshTimer.IsEnabled = value;
 
             OnPropertyChanged();
         }
@@ -241,11 +211,9 @@ public class ListenersViewModel : ViewModelBase
 
             field = value;
 
-            if (AutoRefreshEnabled)
-            {
+            // Not in the list (e.g. a removed interval of an old settings file): the previous interval is kept
+            if (value != null)
                 _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(value);
-                _autoRefreshTimer.Start();
-            }
 
             OnPropertyChanged();
         }
@@ -268,12 +236,12 @@ public class ListenersViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the status message is displayed.
+    /// Gets the time of the last refresh, null before the first one (shown in the header).
     /// </summary>
-    public bool IsStatusMessageDisplayed
+    public DateTime? LastRefreshTime
     {
         get;
-        set
+        private set
         {
             if (value == field)
                 return;
@@ -284,20 +252,9 @@ public class ListenersViewModel : ViewModelBase
     }
 
     /// <summary>
-    /// Gets or sets the status message.
+    /// Gets the auto refresh, for the countdown in the header (see <see cref="AutoRefreshTimer.RemainingTime"/>).
     /// </summary>
-    public string StatusMessage
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
+    public AutoRefreshTimer AutoRefreshTimer => _autoRefreshTimer;
 
     #endregion
 
@@ -327,8 +284,6 @@ public class ListenersViewModel : ViewModelBase
     /// </summary>
     private async Task RefreshAction()
     {
-        IsStatusMessageDisplayed = false;
-
         await Refresh();
     }
 
@@ -396,18 +351,19 @@ public class ListenersViewModel : ViewModelBase
     {
         IsRefreshing = true;
 
-        StatusMessage = Strings.RefreshingDots;
-        IsStatusMessageDisplayed = true;
 
-        if (init == false)
-            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+        // The first load right away; a refresh takes at least the refresh interval (the refresh button can't be
+        // spammed), loading runs at the same time
+        var results = init
+            ? await Listener.GetAllActiveListenersAsync()
+            : await TaskHelper.WithMinimumDurationAsync(() => Listener.GetAllActiveListenersAsync(),
+                GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         Results.Clear();
 
-        (await Listener.GetAllActiveListenersAsync()).ForEach(Results.Add);
+        results.ForEach(Results.Add);
 
-        StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
-        IsStatusMessageDisplayed = true;
+        LastRefreshTime = DateTime.Now;
 
         IsRefreshing = false;
     }
@@ -417,11 +373,7 @@ public class ListenersViewModel : ViewModelBase
     /// </summary>
     public void OnViewVisible()
     {
-        _isViewVisible = true;
-
-        // Restart timer...
-        if (AutoRefreshEnabled)
-            _autoRefreshTimer.Start();
+        _autoRefreshTimer.Resume();
     }
 
     /// <summary>
@@ -429,11 +381,7 @@ public class ListenersViewModel : ViewModelBase
     /// </summary>
     public void OnViewHide()
     {
-        _isViewVisible = false;
-
-        // Temporarily stop timer...
-        if (AutoRefreshEnabled)
-            _autoRefreshTimer.Stop();
+        _autoRefreshTimer.Pause();
     }
 
     /// <summary>

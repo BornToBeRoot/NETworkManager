@@ -63,7 +63,7 @@ Release date: **xx.xx.2026**
 
 **IP Scanner**
 
-- Added a live count of hosts up/down next to the **Result** header. Stays visible after the scan finishes. [#3572](https://github.com/BornToBeRoot/NETworkManager/pull/3572)
+- Added a live count of hosts up/down below the **Result** header. Stays visible after the scan finishes. [#3572](https://github.com/BornToBeRoot/NETworkManager/pull/3572)
 - Host input now accepts newline-separated hosts (one per line, e.g. a column pasted from Excel), converted automatically to the semicolon-separated form. Thanks to [@dearmb](https://github.com/dearmb) [#3568](https://github.com/BornToBeRoot/NETworkManager/pull/3568)
 - Host input now supports shorthand IPv4 ranges like `192.168.0.1-100`, in addition to the existing `192.168.0.0-192.168.0.100` and `192.168.[0-100].1` range formats. [#3568](https://github.com/BornToBeRoot/NETworkManager/pull/3568)
 - Added `21` (FTP, e.g. NAS), `23` (Telnet, e.g. older switches), `135` (RPC), `554` (RTSP, e.g. IP cameras), `631` (IPP, printers), `5900` (VNC), `5985` (WinRM), `7000` (AirPlay), `8009` (Chromecast), `8080` / `8443` (web interfaces of devices and appliances), `9100` (raw printing) and `62078` (iPhone / iPad) to the default **Ports** list used to detect if a host is reachable, e.g. hosts that block ICMP. An unreachable host is still finished after about 4 seconds (22 ports with **Max. concurrent port threads** `16`, like 2 ICMP attempts). Settings that are still on the old default are updated. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564) [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
@@ -75,30 +75,47 @@ Release date: **xx.xx.2026**
 - The export runs in the background, so the window stays responsive while a large result is exported, and uses the order shown in the result (sorting) instead of the order in which the hosts were scanned. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - The DNS hostname and the MAC address of a host are resolved at the same time instead of one after the other. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - New **Expand host view** setting to show the details of every host in the result (also hosts added while the scan is running), like in the **Ping Monitor**. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
-- The up / down counter next to the **Result** header is translated as one text, so translations can put the number in a different position. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- The up / down counter below the **Result** header is translated as one text, so translations can put the number in a different position. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - **Rescan** in the context menu scans the selected host(s) again with the settings of the shown scan and updates their rows, e.g. to check if a host is up again. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Added **Web Console** (https / http depending on the open ports) and **Wake on LAN** (with the MAC address) to the context menu. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Added a search box above the result to filter the hosts by IP address, hostname, MAC address, vendor and open ports, also while the scan is running. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - **Copy** > **IP address** / **Hostname** / **MAC address** is also available if multiple results are selected (one value per line, in the order shown). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Added a **Time** column with the round trip time of the ping. Sorted by time, hosts without a ping reply are at the end. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - A host is shown as soon as it answers (ping reply, open or refused port or NetBIOS answer) instead of after all probes and lookups are finished (up to the port scan / NetBIOS timeout, plus the DNS lookup). Values of probes that are still running are shown as `...`, the other results, the DNS hostname and the MAC address / vendor are filled in when they arrive. The DNS hostname and the MAC address are resolved right after the first answer. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
-- The CSV and XML export contain the DNS hostname (`DNSHostname`) in addition to the hostname (DNS, or NetBIOS as fallback), like the JSON export. It is added as last column (CSV) / element (XML), so the position of the other columns doesn't change. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- The CSV and XML export contain the DNS hostname (`DNSHostname`) in addition to the hostname (DNS, or NetBIOS as fallback), like the JSON export. It is added after the columns (CSV) / elements (XML) of the last release, so their position doesn't change. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Hosts are started one after another (every 10 ms, shorter with short timeouts and many threads) instead of all at the same moment. This avoids bursts of more than a thousand connection requests within a few milliseconds and makes the progress smoother. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Closed ports are reported immediately. Windows repeated the connection request after the host refused it and reported a closed port only after about 2 seconds. The connection request is sent once. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - New **Attempts** setting for the port scan (default `1`): another connection request is sent if there was no answer, e.g. on an unreliable network (Wi-Fi, VPN) or for hosts on the internet. Open and closed ports are not repeated. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Added **RDAP...** to the context menu to query the registration data of the IP address or hostname of a host in the [**RDAP**](../application/rdap.md) tool. [#3642](https://github.com/BornToBeRoot/NETworkManager/pull/3642)
+- The tooltip of the status icon shows the probes the host answered (e.g. `Up (detected by Ping, TCP)`), also as icons in the row details and in the export (`DetectedBy`). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- New **Ping hosts** setting (default on) to scan without ping, e.g. if ICMP is blocked: hosts are found by their ports, NetBIOS or SNMP answer, and unreachable hosts don't wait for the ping. At least one probe must be enabled. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- New **Find hosts in the local subnet** setting (default on): hosts in a local subnet that answer no probe (e.g. a Windows client in a public network, a phone, an IoT device) are found by their ARP / NDP entry, without additional packets; proxy ARP of the gateway is ignored. In the new **ARP / NDP** section of the settings, with **Resolve MAC address and vendor**. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- New **OS (guess)** column: the operating system guessed from the TTL of the ping reply (`Linux / Unix`, `Windows`, `Network device`; IPv4, no additional packets), setting **Guess the operating system from the TTL** (default on). Also in the search, **Copy** and the export (`OSGuess`). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- An icon marks this computer, the default gateway and the DNS and DHCP servers of the connected network interfaces (all roles in the tooltip), e.g. to find the router. Also in the search and the export (`Role`). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- New **Resolve mDNS hostname** setting (default off): the `.local` name of reachable hosts (Apple, Linux with Avahi, Android, printers, IoT devices), used as **Hostname** if there is no DNS name. The new **Hostnames** section of the row details shows the DNS, mDNS and NetBIOS name. Also in the search, **Copy** and the export (`MDNSHostname`). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- New **Read web pages** setting (default off): the web page (`GET /`) of reachable hosts is read from their open web ports (**Ports**, default `443; 80; 8443; 8080`, needs the port scan), e.g. to identify routers, printers and NAS. The title (or the realm of a login prompt, the `Server` header, a redirect) is shown in the new **Web** column; URL, status code, headers and the TLS certificate (issuer or `Self-signed`, expiry) in the row details. No cookies or credentials are sent. **Web Console** in the context menu opens the port that answered. Also in the search, **Copy** > **Web** and the export (`Web…`). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- New **Read the SNMP system information** setting (default off, `v1` / `v2c`): name, description and location of every IP address, e.g. to identify switches and printers; a host that answers is up, also if it blocks ping and ports. The name is shown in the new **SNMP name** column, all values in the row details. The community is saved as plain text (use a read-only one). Also in the search, **Copy** > **SNMP** and the export (`SNMP…`). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- The SNMP version and credentials can be overridden in a profile and in a group (new **IP Scanner** tab of the group, the profile before its group): another community per site, or SNMP `v3` (security level, user, authentication and privacy; saved in the profile file, encrypted with profile file encryption). With `v3`, every agent answers the discovery request, so the host is found also with wrong credentials; the error (e.g. unknown user) is shown in the row details and exported as `SNMPError`. The options of the tab show which profile / group is used. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- Values that are still being resolved show `...` instead of `-/-` (**Hostname** and **MAC address** / **Vendor** until all their sources are finished, the new columns and row details), so a missing value can be told apart from a pending one. **Copy** is disabled until the value arrived. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- **Ping status**, **Port status** and **NetBIOS reachable** show a status icon instead of the text, the details in the tooltip (e.g. `Success (2 ms, TTL 64)`, the open ports). The row details use four columns (**Ping details** / **Hostnames**, **Ports**, **Web**, **NetBIOS** / **SNMP**); a section of a disabled setting shows a note. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- New **Options** button next to **Scan**: turns the probes and lookups, **Show unreachable IP addresses and ports** and **Expand host view** on or off (the same settings as on the settings page, for all tabs) and opens the settings. On the settings page, the port scan settings and **Read web pages** are disabled while **Scan ports** is disabled. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- **Detect local subnet** opens a menu: the local subnet (as before), **Subnet of network interface** (e.g. LAN, Wi-Fi, VPN, Hyper-V) and **All local subnets**. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- IP addresses can be excluded with `!` in the host input (also in profiles and the run command), e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254`: IP addresses, ranges, subnets and hostnames (nothing is scanned if an excluded hostname can't be resolved). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- Changes since the last completed scan of the same input in the tab: **New**, **Gone** (shown as down) and **MAC changed** (the previous MAC address in the tooltip) in the new **Since last scan** column, counters below **Result** (e.g. `2 New · 1 Gone`) and **Last scan at**. Kept while the tab is open; also in the search and the export (`Change`, `PreviousMACAddress`). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- New **Automatically scan every** (`1 min` to `1 h`, with a countdown to the next scan): repeats the scan and updates the rows in place (selection, scroll position and search stay). Stops when a scan is canceled, the input is changed or the tab is closed; also runs while the tab is hidden. Per tab, the interval is saved. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- New **Notification** settings (popup, sound, display duration; popup on, sound off by default - only for a scan repeated by **Automatically scan every**): a repeated scan with changes shows one notification like the **Ping Monitor** (up to three changes, e.g. `10.0.0.5 (server) · New` with the change in its color, otherwise the counters) - green for only new hosts, red for only gone hosts, half green / half red for both, orange for a changed MAC address; a click opens the tab. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 **Port Scanner**
 
 - Added a port status icon column to the results, matching the port icon used in the IP Scanner's extended port info, to indicate at a glance whether a port is open (green) or closed (red). [#3558](https://github.com/BornToBeRoot/NETworkManager/issues/3558)
-- Added a live count of ports open/closed next to the **Result** header. Stays visible after the scan finishes. [#3572](https://github.com/BornToBeRoot/NETworkManager/pull/3572)
+- Added a live count of ports open/closed below the **Result** header. Stays visible after the scan finishes. [#3572](https://github.com/BornToBeRoot/NETworkManager/pull/3572)
 - Host and Ports input fields now accept newline-separated entries (one per line, e.g. a column pasted from Excel), converted automatically to the semicolon-separated form. [#3568](https://github.com/BornToBeRoot/NETworkManager/pull/3568)
 - Host input now supports shorthand IPv4 ranges like `192.168.0.1-100`, in addition to the existing `192.168.0.0-192.168.0.100` and `192.168.[0-100].1` range formats. [#3568](https://github.com/BornToBeRoot/NETworkManager/pull/3568)
 - New defaults: **Timeout** `4000` → `2000` ms (still allows one retransmission of a lost connection request), **Max. concurrent host threads** `5` → `4` and **Max. concurrent port threads** `256` → `128`, which puts less simultaneous load on the scanned hosts (up to 512 instead of 1280 connections at the same time). Settings that are still on the old default are updated. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564) [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Closed ports are reported immediately. Windows repeated the connection request after the host refused it and reported a closed port only after about 2 seconds, so a scan of a host that refuses most ports is much faster now (e.g. `1-1024`: about 1 second instead of about 16 seconds). The connection request is sent once. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - New **Attempts** setting (default `1`): another connection request is sent if there was no answer, e.g. on an unreliable network (Wi-Fi, VPN) or for hosts on the internet. Open and closed ports are not repeated. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
-- The counter next to the **Result** header shows timed out ports (no answer) separately: `Open · Closed · Timed out`. Before, they were counted as closed. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
-- The open / closed counter next to the **Result** header is translated as one text, so translations can put the number in a different position. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- The counter below the **Result** header shows timed out ports (no answer) separately: `Open · Closed · Timed out`. Before, they were counted as closed. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- The open / closed counter below the **Result** header is translated as one text, so translations can put the number in a different position. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - **Rescan** in the context menu scans the selected port(s) again and updates their state in place; **Rescan host** in the context menu of a host (group header) scans the host again with all ports of the shown scan and replaces its results. The context menu of a host also opens it in other tools, adds it as a profile and copies its IP address, hostname or open ports (e.g. `22; 80; 443`). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Added **Web Console** to the context menu of an open web port (`80`, `443`, `8080`, `8443`). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Added **Ping Monitor**, **Traceroute**, **DNS lookup...**, **RDAP...**, **Remote Desktop**, **PowerShell**, **PuTTY**, **TigerVNC** and **SNMP** to the context menu to open the host (hostname, otherwise the IP address) in the tool, like in the **IP Scanner**. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
@@ -116,6 +133,10 @@ Release date: **xx.xx.2026**
 - Groups: new **Ports** setting (ports, port ranges and port profiles) for the Port Scanner, used by the profiles of the group that don't override them (new **Ports** checkbox in the profile, like the other settings that can be set in the group). Existing profiles with ports keep them (the checkbox is enabled when the profile file is loaded). [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
 - The export runs in the background, so the window stays responsive while a large result is exported, and uses the order shown in the result (sorting, grouping) instead of the order in which the ports were scanned. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Ports are started one after another (every 1 ms, shorter with short timeouts and many threads) instead of all at the same moment. This avoids bursts of hundreds of connection requests within a few milliseconds and makes the progress smoother. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
+- IP addresses can be excluded with `!` in the host input (also in profiles and the run command), e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254`: IP addresses, ranges, subnets and hostnames (nothing is scanned if an excluded hostname can't be resolved). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- Changes since the last completed scan of the same hosts and ports in the tab: **Now open** and **No longer open** (shown with its status, also without **Show closed ports**) in the new **Since last scan** column, counters below **Result** and **Last scan at**. Kept while the tab is open; also in the search and the export (`Change`). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- New **Automatically scan every** (`1 min` to `1 h`, with a countdown to the next scan): repeats the scan and updates the rows in place (selection, scroll position, collapsed hosts and search stay). Stops when a scan is canceled, the hosts or ports are changed or the tab is closed; also runs while the tab is hidden. Per tab, the interval is saved. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- New **Notification** settings (popup, sound, display duration; popup on, sound off by default - only for a scan repeated by **Automatically scan every**): a repeated scan with changes shows one notification like the **Ping Monitor** (up to three ports, e.g. `10.0.0.5 (server) · 3389/tcp (rdp) · No longer open` with the change in its color, otherwise the counters) - green for only ports open now, red for only ports no longer open, half green / half red for both; a click opens the tab. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 **Ping Monitor**
 
@@ -125,6 +146,9 @@ Release date: **xx.xx.2026**
 - Reworked each monitored host's card: the collapsed quick info now shows labeled values (`Received: X · Lost: Y · Packet loss: Z%`) instead of unlabeled numbers, the expanded view shows only the latency chart (with more room, since Hostname/IP address are already visible in the header) and the last status change time moved to a tooltip on the connectivity icon. The **Status change** field was also renamed to **Last status change**. [#3572](https://github.com/BornToBeRoot/NETworkManager/pull/3572)
 - Host input now accepts newline-separated hosts (one per line, e.g. a column pasted from Excel), converted automatically to the semicolon-separated form. [#3568](https://github.com/BornToBeRoot/NETworkManager/pull/3568)
 - Host input now supports shorthand IPv4 ranges like `192.168.0.1-100`, in addition to the existing `192.168.0.0-192.168.0.100` and `192.168.[0-100].1` range formats. [#3568](https://github.com/BornToBeRoot/NETworkManager/pull/3568)
+- IP addresses can be excluded with `!` in the host input (also in profiles and the run command), e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254`: IP addresses, ranges, subnets and hostnames (nothing is scanned if an excluded hostname can't be resolved). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- The notification shows the tool in its header (icon and name), a click opens the **Ping Monitor**; down uses the red of the application. The message is a line with the IP address and the status in its color (e.g. `10.0.0.1 · Up`) like the notifications of the **IP Scanner** and the **Port Scanner** (was `Host is up`). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- **Play sound on status change** is off by default (the popup stays on); an existing setting is kept. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 **Traceroute**
 
@@ -142,6 +166,7 @@ Release date: **xx.xx.2026**
 - Multiple entries can now be selected to enable, disable or delete them at once, or to change their comment via **Edit entries...** (`F2`). The edit dialog switches to a bulk mode in which only the comment can be changed. [#3624](https://github.com/BornToBeRoot/NETworkManager/pull/3624)
 - Entries that don't change (e.g. enabling an already enabled entry, or confirming the edit dialog without changes) are no longer rewritten in the `hosts` file, so custom formatting such as tabs or alignment is kept. [#3624](https://github.com/BornToBeRoot/NETworkManager/pull/3624)
 - The search filters after a short delay while typing instead of on every key press (smoother with many entries), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; the line below the list only shows errors. A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 **Firewall**
 
@@ -161,6 +186,7 @@ Release date: **xx.xx.2026**
 - The export now contains whether a rule is managed by NETworkManager and its source. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
 - Faster loading of the rules managed by NETworkManager if there are many of them (the ports, addresses, programs etc. of all rules are queried at once instead of per rule). [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
 - `Enter` in the search box filters the rules right away instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; the line below the list only shows errors (e.g. rules loaded with errors, a failed action). A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until the rules are loaded (also with **Show all rules**). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 **Profiles**
 
@@ -169,18 +195,26 @@ Release date: **xx.xx.2026**
 **Connections**
 
 - The search filters after a short delay while typing instead of on every key press (smoother with many connections), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; with **Automatically update every**, a countdown to the next refresh (`Next refresh in 00:04`). A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 **Listeners**
 
 - The search filters after a short delay while typing instead of on every key press (smoother with many listeners), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; with **Automatically update every**, a countdown to the next refresh (`Next refresh in 00:04`). A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 **Neighbor Table**
 
 - The search filters after a short delay while typing instead of on every key press (smoother with many entries), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; with **Automatically update every**, a countdown to the next refresh (`Next refresh in 00:04`). The line below the list only shows errors. A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 **WiFi**
 
 - The search filters after a short delay while typing instead of on every key press, `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- The time of the last scan of the networks (`Last scan at 14:32`, the date in the tooltip) is shown in their header, with **Automatically update every** a countdown to the next scan; the line below only shows errors and the connection status. Reloading the network adapters is faster (the minimum of 2.5 seconds runs while loading) and the reload icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+
+**Dashboard**
+
+- Checking the **IP geolocation** and the **DNS resolver** is faster (the minimum of 2.5 seconds runs during the request, not before); the refresh icons spin until the check is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 ## Bug Fixes
 
@@ -225,23 +259,28 @@ Release date: **xx.xx.2026**
 **Connections**
 
 - Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
+- Fixed **Automatically update every** `1` / `5` minutes refreshing only every hour / every 5 hours. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - Fixed the hostname of the remote address (DNS `PTR`) being shown with a trailing dot (e.g. `server.example.com.`), also in the export. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
 **Listeners**
 
 - Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
+- Fixed **Automatically update every** `1` / `5` minutes refreshing only every hour / every 5 hours. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
 **Neighbor Table**
 
+- Fixed the **State** of the entries being shifted by one (e.g. `Reachable` entries were shown as `Stale`, `Permanent` entries as `Reachable`, `Unreachable` entries as `0`) since the table is read with the Windows API (2026.7.7). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - Fixed adding and deleting entries not working until the application was restarted if loading the PowerShell module `NetTCPIP` failed once. [cc05937](https://github.com/BornToBeRoot/NETworkManager/commit/cc05937a7de2bf1247621845f47077f3796b9bb2)
 - Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
+- Fixed **Automatically update every** `1` / `5` minutes refreshing only every hour / every 5 hours. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
 **WiFi**
 
 - Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
+- Fixed **Automatically update every** `1` / `5` minutes refreshing only every hour / every 5 hours. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - Fixed the auto refresh not being resumed after switching back from another tool. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
@@ -292,6 +331,7 @@ Release date: **xx.xx.2026**
 - Fixed **Copy** > **Ports** being shown in the context menu with the port scan disabled (it copied nothing). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed IPv6 hosts waiting for the NetBIOS timeout (NetBIOS doesn't exist over IPv6). NetBIOS is only requested from IPv4 addresses. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed columns that couldn't be made wider (by dragging or double-clicking the gripper) if the window was not wide enough, e.g. to see a long hostname. The last column still fills the remaining width, other columns can now grow beyond the window with a horizontal scrollbar. This also applies to the custom commands in the settings. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+- Fixed the export containing values of disabled probes, e.g. `PortStatus` `Closed` if **Scan ports** was disabled or `NetBIOSIsReachable` `False` if **Scan for NetBIOS** was disabled. They are exported as empty values now. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 **Port Scanner**
 
@@ -371,6 +411,10 @@ Release date: **xx.xx.2026**
 **Web Console**
 
 - Fixed no message being shown after **Delete browsing data** in the settings (whether the browsing data was deleted or an error occurred), and an error (e.g. the WebView2 runtime is not installed) not being handled.
+
+**Hosts File Editor**
+
+- Fixed the retry of a locked hosts file waiting 5 seconds between the attempts (the message said 2) and once more after the last attempt. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
 ## Dependencies, Refactoring & Documentation
 

@@ -159,6 +159,23 @@ public class HostsFileEditorViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets the time of the last refresh, null before the first one (shown in the header).
+    /// </summary>
+    public DateTime? LastRefreshTime
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+
+    /// <summary>
     /// Gets or sets a value indicating whether the status message is displayed.
     /// </summary>
     public bool IsStatusMessageDisplayed
@@ -702,26 +719,35 @@ public class HostsFileEditorViewModel : ViewModelBase
 
         IsRefreshing = true;
 
-        StatusMessage = Strings.RefreshingDots;
-        IsStatusMessageDisplayed = true;
+        // An error of the last refresh / action is hidden (the refresh icon spins while refreshing)
+        IsStatusMessageDisplayed = false;
 
-        // Retry 3 times if the hosts file is locked
-        for (var i = 1; i < 4; i++)
+        // Try 3 times if the hosts file is locked (e.g. by an antivirus or another editor)
+        const int attempts = 3;
+
+        for (var attempt = 1; attempt <= attempts; attempt++)
         {
-            // Wait for 2.5 seconds on refresh
-            if (init == false || i > 1)
+            // Wait for 2.5 seconds before another attempt (once, see catch)
+            if (attempt > 1)
                 await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
             try
             {
-                var entries = await HostsFileEditor.GetHostsFileEntriesAsync();
+                // The first load right away; a refresh takes at least the refresh interval (the refresh button can't
+                // be spammed), loading runs at the same time
+                var entries = init || attempt > 1
+                    ? await HostsFileEditor.GetHostsFileEntriesAsync()
+                    : await TaskHelper.WithMinimumDurationAsync(() => HostsFileEditor.GetHostsFileEntriesAsync(),
+                        GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
                 Results.Clear();
 
                 entries.ToList().ForEach(Results.Add);
 
-                StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
-                IsStatusMessageDisplayed = true;
+                LastRefreshTime = DateTime.Now;
+
+                // The error of a previous attempt
+                IsStatusMessageDisplayed = false;
 
                 break;
             }
@@ -731,13 +757,12 @@ public class HostsFileEditorViewModel : ViewModelBase
 
                 StatusMessage = string.Format(Strings.FailedToLoadHostsFileMessage, ex.Message);
 
-                if (i < 3)
+                // The wait is at the start of the next attempt; not after the last one
+                if (attempt < attempts)
                     StatusMessage += Environment.NewLine + string.Format(Strings.RetryingInXSecondsDots,
-                        GlobalStaticConfiguration.ApplicationUIRefreshInterval / 1000);
+                        (GlobalStaticConfiguration.ApplicationUIRefreshInterval / 1000d).ToString("0.#"));
 
                 IsStatusMessageDisplayed = true;
-
-                await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
             }
         }
 

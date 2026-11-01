@@ -2,6 +2,7 @@
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
+using NETworkManager.Converters;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -44,6 +45,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private bool _firstLoad = true;
     private bool _closed;
 
+    // A manual scan waits for the confirmation of a large scan (IsRunning is still false) - not repeated meanwhile
+    private bool _isConfirmingScan;
+
+    // SNMP version and credentials of the profile / group the tab was opened with (protected, plain text only for the
+    // SNMP request of a scan, see GetProfileSNMPCredentials), null for the ones of the settings
+    private readonly SNMPSecureCredentials _snmpCredentials;
+
     // Background HostFound / HostUpdated events append here instead of hopping to the UI thread per
     // item - a DispatcherTimer periodically flushes this into the Results collection instead, so a large
     // scan doesn't flood the dispatcher queue with one BeginInvoke per host. One list for both, so an
@@ -58,6 +66,28 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     // Options of the last scan, to rescan hosts with the same options (the columns follow them, see ScanOptions)
     private IPScannerOptions _lastScanOptions;
+
+    // Baseline of the last completed scan of this tab and its input: the next scan of the same input shows what
+    // changed (see CompareWithPreviousScan). Only in memory, gone when the tab is closed.
+    private Dictionary<IPAddress, IPScannerBaselineHost> _baseline;
+    private string _baselineInput;
+
+    // Baseline the shown result was compared with, to update the changes of rescanned hosts (null without comparison)
+    private Dictionary<IPAddress, IPScannerBaselineHost> _comparisonBaseline;
+
+    // Input of the running / last scan (not of a rescan of selected hosts)
+    private string _scanInput;
+
+
+    // Repeated scan: the rows of the last scan stay and are updated in place (selection, scroll position and expanded
+    // details stay) - row per IP address, new results are copied into it (_repeatResults: result -> row), new hosts
+    // are added (_repeatAdded). The values before the scan are restored if it is canceled or fails.
+    private Dictionary<IPAddress, IPScannerHostInfo> _repeatRows;
+    private readonly Dictionary<IPScannerHostInfo, IPScannerHostInfo> _repeatResults = [];
+    private readonly List<IPScannerHostInfo> _repeatAdded = [];
+    private readonly HashSet<IPAddress> _repeatReported = [];
+    private Dictionary<IPScannerHostInfo, IPScannerHostInfo> _repeatSnapshots;
+    private (int toScan, int scanned, int up, int down) _repeatCounters;
 
     // Rescan of shown hosts (see RescanSelectedHosts), null if no rescan is running: row per rescanned IP address
     // (every IP address is scanned once, see HostRangeHelper.ResolveAsync). The scanner creates new results - their
@@ -86,6 +116,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private int _latestHostsDown;
 
     /// <summary>
+    /// Profile / group whose SNMP version and credentials the tab uses (shown in the options, e.g. 'SNMP version and
+    /// credentials of "Site A"'), null if the ones of the settings are used.
+    /// </summary>
+    public string SNMPCredentialsInfo { get; }
+
+    /// <summary>
     /// Gets or sets the host or IP range to scan.
     /// </summary>
     public string Host
@@ -97,6 +133,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 return;
 
             field = value;
+
+            // Another input is not repeated (until it was scanned)
+            Repeat?.OnInputChanged();
+
             OnPropertyChanged();
         }
     }
@@ -119,6 +159,34 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             field = value;
             OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the IPv4 subnets of the local network interfaces, loaded when the menu of the subnet detection is opened.
+    /// </summary>
+    public ObservableCollection<LocalSubnetInfo> LocalSubnets { get; } = [];
+
+    // Incremented per load of LocalSubnets, so the result of an older load (menu opened twice) is ignored
+    private int _localSubnetsLoadId;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the menu of the subnet detection is open. Opening it loads the subnets
+    /// of the local network interfaces (<see cref="LocalSubnets"/>).
+    /// </summary>
+    public bool IsLocalSubnetMenuOpen
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+
+            if (value)
+                _ = LoadLocalSubnets();
         }
     }
 
@@ -298,6 +366,92 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Gets or sets the number of hosts that are up now and were not up in the previous scan (see <see cref="HasComparison"/>).
+    /// </summary>
+    public int HostsNew
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the number of hosts that are not up now and were up in the previous scan (see <see cref="HasComparison"/>).
+    /// </summary>
+    public int HostsGone
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the number of hosts that are up with another MAC address than in the previous scan (see <see cref="HasComparison"/>).
+    /// </summary>
+    public int HostsMACChanged
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the shown result is compared with the previous scan of the same input
+    /// (change column and counters).
+    /// </summary>
+    public bool HasComparison
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the time the last scan was completed, null before (or while a scan is running).
+    /// </summary>
+    public DateTime? LastScanTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the repeat of the scan ("Automatically scan every", countdown to the next scan).
+    /// </summary>
+    public ScanRepeater Repeat { get; }
+
+    /// <summary>
     /// Gets or sets a value indicating whether the scan is being prepared.
     /// </summary>
     public bool PreparingScan
@@ -387,8 +541,24 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="tabId">The unique identifier for the tab.</param>
     /// <param name="hostOrIPRange">The initial host or IP range to scan.</param>
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
-    public IPScannerViewModel(Guid tabId, string hostOrIPRange, bool start = true)
+    /// <param name="snmpCredentials">
+    /// SNMP version and credentials of the profile / group the tab was opened with, null for the ones of the settings.
+    /// </param>
+    /// <param name="snmpCredentialsSource">Name of the profile / group of <paramref name="snmpCredentials" />.</param>
+    public IPScannerViewModel(Guid tabId, string hostOrIPRange, bool start = true,
+        SNMPSecureCredentials snmpCredentials = null, string snmpCredentialsSource = null)
     {
+        // Kept for the tab (also if the input is changed), like the ports of a profile in the Port Scanner
+        _snmpCredentials = snmpCredentials;
+        SNMPCredentialsInfo = snmpCredentials == null
+            ? null
+            : string.Format(Strings.SNMPVersionAndCredentialsOfX, snmpCredentialsSource);
+
+        // Repeat of the scan (before the input is set, see its setter): not while a scan or rescan is running, or a
+        // manual scan waits for its confirmation
+        Repeat = new ScanRepeater(() => Start(isRepeat: true), () => IsRunning || _isConfirmingScan,
+            SettingsManager.Current.IPScanner_AutoRefreshTime, x => SettingsManager.Current.IPScanner_AutoRefreshTime = x);
+
         _firstLoad = start;
 
         ConfigurationManager.Current.IPScannerTabCount++;
@@ -423,8 +593,23 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             return Matches(info.PingInfo.IPAddress.ToString()) ||
                    Matches(info.Hostname) ||
+                   Matches(info.MDNSHostname) ||
+                   Matches(info.WebTitle) ||
+                   Matches(info.WebServer) ||
+                   Matches(info.WebPoweredBy) ||
+                   Matches(info.WebRealm) ||
+                   Matches(info.WebRedirectURL) ||
+                   Matches(info.WebCertificate?.Subject) ||
+                   Matches(info.WebCertificate?.Issuer) ||
+                   Matches(info.SNMPName) ||
+                   Matches(info.SNMPDescription) ||
+                   Matches(info.SNMPLocation) ||
                    Matches(info.MACAddress) ||
                    Matches(info.Vendor) ||
+                   (ScanOptions.OSGuessEnabled &&
+                    Matches(IPScannerOSGuessToStringConverter.ToLocalizedString(info.OSGuess))) ||
+                   Matches(IPScannerHostRoleToStringConverter.ToLocalizedString(info.Role)) ||
+                   Matches(IPScannerHostChangeToStringConverter.ToLocalizedString(info.Change)) ||
                    info.Ports.Any(x => Matches(x.Port.ToString()) || Matches(x.LookupInfo.Service));
         };
 
@@ -433,9 +618,21 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         // while searching, see ApplySearch.
         var liveShaping = (ICollectionViewLiveShaping)ResultsView;
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Hostname));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MDNSHostname));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebTitle));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Change));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebServer));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebPoweredBy));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebRealm));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebRedirectURL));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebCertificate));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPName));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPDescription));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPLocation));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MACAddress));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Vendor));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Ports));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.OSGuess));
 
         _searchDelay = new SearchDelay(GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan, ApplySearch);
     }
@@ -489,6 +686,37 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Gets the command to scan the subnet of a local network interface (<see cref="LocalSubnetInfo"/>).
+    /// </summary>
+    public ICommand UseLocalSubnetCommand => new RelayCommand(UseLocalSubnetAction);
+
+    private void UseLocalSubnetAction(object parameter)
+    {
+        if (parameter is not LocalSubnetInfo subnet)
+            return;
+
+        SetHostFromSubnetDetection(subnet.Subnet);
+    }
+
+    /// <summary>
+    /// Gets the command to scan the subnets of all local network interfaces (without the link-local subnet).
+    /// </summary>
+    public ICommand UseAllLocalSubnetsCommand => new RelayCommand(_ => UseAllLocalSubnetsAction());
+
+    private void UseAllLocalSubnetsAction()
+    {
+        var subnets = LocalSubnets.Where(x => !x.IsLinkLocal).Select(x => x.Subnet).Distinct().ToList();
+
+        if (subnets.Count > 0)
+            SetHostFromSubnetDetection(string.Join("; ", subnets));
+    }
+
+    /// <summary>
+    /// Gets the command to open the IP Scanner settings (from the scan options menu).
+    /// </summary>
+    public ICommand OpenSettingsCommand => new RelayCommand(_ => NavigationManager.OpenSettings());
+
+    /// <summary>
     /// Gets the command to redirect the selected host to another application.
     /// </summary>
     public ICommand RedirectDataToApplicationCommand => new RelayCommand(RedirectDataToApplicationAction);
@@ -520,6 +748,17 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private void OpenWebConsoleAction()
     {
+        // The port and scheme of the web page whose title was read
+        if (Uri.TryCreate(SelectedResult.WebURL, UriKind.Absolute, out var webURL))
+        {
+            NavigationManager.Open(new ApplicationRequest(ApplicationName.WebConsole)
+            {
+                Target = WebConsoleUrlHelper.CreateUrl(GetSelectedHost(), webURL.Port, webURL.Scheme)
+            });
+
+            return;
+        }
+
         // Ports may still be scanned - then http on the default port
         var openPorts = SelectedResult.IsPortScanPending
             ? []
@@ -677,8 +916,19 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <summary>
     /// Starts the IP scan.
     /// </summary>
-    private async Task Start()
+    private async Task Start(bool isRepeat = false)
     {
+        // A host is only found if it answers a probe - without ping, port scan, NetBIOS and SNMP every host is
+        // unreachable (ARP / NDP alone isn't enough: the neighbor entry is only created by the packets of the probes)
+        if (!SettingsManager.Current.IPScanner_ICMPEnabled && !SettingsManager.Current.IPScanner_PortScanEnabled &&
+            !SettingsManager.Current.IPScanner_NetBIOSEnabled && !SettingsManager.Current.IPScanner_SNMPEnabled)
+        {
+            StatusMessage = Strings.EnableAtLeastOneProbeToFindHostsMessage;
+            IsStatusMessageDisplayed = true;
+
+            return;
+        }
+
         // Every IP address is kept in memory - ask before a large scan and refuse a too large one
         // (e.g. 10.0.0.0/1) instead of running out of memory
         long hostCount;
@@ -706,14 +956,28 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return;
         }
 
-        if (hostCount > GlobalStaticConfiguration.IPScanner_ConfirmHostCount)
+        // Confirmed by the first scan, not asked again when the scan is repeated
+        if (!isRepeat && hostCount > GlobalStaticConfiguration.IPScanner_ConfirmHostCount)
         {
             var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive) ??
                          Application.Current.MainWindow;
 
-            if (!await DialogHelper.ShowConfirmationMessageAsync(window, Strings.Scan,
+            bool confirmed;
+
+            _isConfirmingScan = true;
+
+            try
+            {
+                confirmed = await DialogHelper.ShowConfirmationMessageAsync(window, Strings.Scan,
                     string.Format(Strings.ScanManyIPAddressesMessage, hostCount.ToString("N0")),
-                    ChildWindowIcon.Warn, Strings.Scan))
+                    ChildWindowIcon.Warn, Strings.Scan);
+            }
+            finally
+            {
+                _isConfirmingScan = false;
+            }
+
+            if (!confirmed)
                 return;
 
             // The tab may have been closed while the dialog was open (OnClose only stops a running scan)
@@ -732,7 +996,33 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             _resultsBuffer.Clear();
         }
 
-        Results.Clear();
+        if (isRepeat)
+        {
+            // The rows of the last scan stay (and its changes until the scan is completed), see ApplyRepeatResult
+            _repeatRows = Results.DistinctBy(x => x.IPAddress).ToDictionary(x => x.IPAddress);
+            _repeatResults.Clear();
+            _repeatAdded.Clear();
+            _repeatReported.Clear();
+            _repeatSnapshots = _repeatRows.Values.ToDictionary(x => x, x => x.Clone());
+            _repeatCounters = (HostsToScan, HostsScanned, HostsUp, HostsDown);
+        }
+        else
+        {
+            Results.Clear();
+
+            // Repeated from the end of this scan (see ScanComplete)
+            Repeat.Disarm();
+
+            HasComparison = false;
+            _comparisonBaseline = null;
+            HostsNew = 0;
+            HostsGone = 0;
+            HostsMACChanged = 0;
+            LastScanTime = null;
+        }
+
+        // Compared with the previous scan of the same input when this scan is completed (see ScanComplete)
+        _scanInput = Host?.Trim() ?? string.Empty;
 
         // No results are shown until the scan's options are known - follow the current settings
         ScanOptions = CreateResultOptions();
@@ -755,8 +1045,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Resolve hostnames and convert the ports. Start() is fire-and-forget, so every exception has to be
         // handled here - otherwise the scan would never end (IsRunning stays true).
-        (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved) hosts;
+        (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved, int excludedCount) hosts;
         int[] ports;
+        int[] webPagePorts;
 
         try
         {
@@ -766,6 +1057,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             ports = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(
                 SettingsManager.Current.IPScanner_PortScanPorts);
+
+            webPagePorts = await PortRangeHelper.ConvertPortRangeToIntArrayAsync(
+                SettingsManager.Current.IPScanner_WebPagePorts);
         }
         catch (OperationCanceledException)
         {
@@ -780,11 +1074,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Show error message if (some) hostnames could not be resolved
         if (hosts.hostnamesNotResolved.Count > 0)
-        {
-            StatusMessage =
-                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
-            IsStatusMessageDisplayed = true;
-        }
+            AddStatusMessage(
+                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}");
+
+        // The exclusions removed every host (also if hostnames could not be resolved, keep their message)
+        if (hosts.hosts.Count == 0 && hosts.excludedCount > 0)
+            AddStatusMessage(Strings.AllIPAddressesAreExcludedMessage);
 
         HostsToScan = hosts.hosts.Count;
 
@@ -798,16 +1093,21 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         PreparingScan = false;
 
         // Add host(s) to the history
-        ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory, Host,
+        if (!isRepeat)
+            ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory, Host,
             SettingsManager.Current.General_HistoryListEntries);
 
-        var scanOptions = CreateScanOptions(ports);
+        var scanOptions = CreateScanOptions(ports, webPagePorts,
+            GetProfileSNMPCredentials(SettingsManager.Current.IPScanner_SNMPEnabled));
 
         ScanOptions = new IPScannerResultOptions(scanOptions);
 
         _lastScanOptions = scanOptions;
 
-        StartScanner(scanOptions, hosts.hosts);
+        // A repeated scan reports the hosts with a row also if they are down now, so their row is updated (see
+        // ApplyRepeatResult) - not every unreachable host (e.g. a /16)
+        StartScanner(isRepeat ? scanOptions with { ReportHosts = _repeatRows.Keys.ToHashSet() } : scanOptions,
+            hosts.hosts);
     }
 
     /// <summary>
@@ -855,7 +1155,16 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _cancellationTokenSource = new CancellationTokenSource();
 
         // Same options (columns, ports), but every host is reported - also if it is unreachable now
-        StartScanner(CreateRescanOptions(_lastScanOptions), [.. _rescanRows.Keys.Select(x => (x, string.Empty))]);
+        var rescanOptions = CreateRescanOptions(_lastScanOptions);
+
+        // The plain text credentials of the profile / group were released after the last scan
+        if (_snmpCredentials != null)
+            rescanOptions = rescanOptions with
+            {
+                SNMPCredentials = GetProfileSNMPCredentials(rescanOptions.SNMPEnabled)
+            };
+
+        StartScanner(rescanOptions, [.. _rescanRows.Keys.Select(x => (x, string.Empty))]);
     }
 
     /// <summary>
@@ -892,13 +1201,20 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// Creates the scan options from the current settings.
     /// </summary>
     /// <param name="ports">Ports to scan.</param>
+    /// <param name="webPagePorts">Ports whose web page title is read (if open).</param>
+    /// <param name="snmpCredentials">
+    /// SNMP version and credentials of the profile / group of the tab, null for the ones of the settings.
+    /// </param>
     /// <returns>Options for the <see cref="IPScanner"/>.</returns>
-    private static IPScannerOptions CreateScanOptions(int[] ports)
+    private static IPScannerOptions CreateScanOptions(int[] ports, int[] webPagePorts,
+        SNMPCredentials snmpCredentials)
     {
         return new IPScannerOptions
         {
             MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads,
             MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads,
+            ICMPEnabled = SettingsManager.Current.IPScanner_ICMPEnabled,
+            OSGuessEnabled = SettingsManager.Current.IPScanner_OSGuessEnabled,
             ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,
             ICMPTimeout = SettingsManager.Current.IPScanner_ICMPTimeout,
             ICMPBufferSize = GlobalStaticConfiguration.LimitICMPBuffer(SettingsManager.Current.IPScanner_ICMPBuffer),
@@ -909,7 +1225,17 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             PortScanAttempts = SettingsManager.Current.IPScanner_PortScanAttempts,
             NetBIOSEnabled = SettingsManager.Current.IPScanner_NetBIOSEnabled,
             NetBIOSTimeout = SettingsManager.Current.IPScanner_NetBIOSTimeout,
+            ARPEnabled = SettingsManager.Current.IPScanner_ARPEnabled,
             ResolveMACAddress = SettingsManager.Current.IPScanner_ResolveMACAddress,
+            MDNSEnabled = SettingsManager.Current.IPScanner_MDNSEnabled,
+            MDNSTimeout = SettingsManager.Current.IPScanner_MDNSTimeout,
+            WebPageEnabled = SettingsManager.Current.IPScanner_WebPageEnabled,
+            WebPagePorts = webPagePorts,
+            WebPageTimeout = SettingsManager.Current.IPScanner_WebPageTimeout,
+            SNMPEnabled = SettingsManager.Current.IPScanner_SNMPEnabled,
+            SNMPCredentials = snmpCredentials ?? SNMPCredentials.FromCommunity(
+                SettingsManager.Current.IPScanner_SNMPVersion, SettingsManager.Current.IPScanner_SNMPCommunity),
+            SNMPTimeout = SettingsManager.Current.IPScanner_SNMPTimeout,
             ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults,
             ReportAllHosts = false
         };
@@ -927,16 +1253,51 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Gets the SNMP credentials of the profile / group of the tab for a scan: in plain text only if the SNMP request
+    /// is sent (released when the scan is completed, see <see cref="ReleaseSNMPCredentials" />).
+    /// </summary>
+    /// <param name="isSNMPEnabled">The SNMP request is sent by the scan.</param>
+    /// <returns>Credentials, null for the ones of the settings.</returns>
+    private SNMPCredentials GetProfileSNMPCredentials(bool isSNMPEnabled)
+    {
+        if (_snmpCredentials == null)
+            return null;
+
+        return isSNMPEnabled ? _snmpCredentials.ToCredentials() : new SNMPCredentials(_snmpCredentials.Version);
+    }
+
+    /// <summary>
+    /// Releases the plain text SNMP credentials of the profile / group from the options of the last scan (kept for a
+    /// rescan, which converts them again, see <see cref="GetProfileSNMPCredentials" />).
+    /// </summary>
+    private void ReleaseSNMPCredentials()
+    {
+        if (_snmpCredentials != null && _lastScanOptions != null)
+            _lastScanOptions = _lastScanOptions with
+            {
+                SNMPCredentials = new SNMPCredentials(_snmpCredentials.Version)
+            };
+    }
+
+    /// <summary>
     /// Creates the result options (columns, context menu and row details) from the current settings.
     /// </summary>
     /// <returns>Options for <see cref="ScanOptions"/>.</returns>
     private static IPScannerResultOptions CreateResultOptions()
     {
-        return new IPScannerResultOptions(
-            SettingsManager.Current.IPScanner_ResolveHostname,
-            SettingsManager.Current.IPScanner_PortScanEnabled,
-            SettingsManager.Current.IPScanner_NetBIOSEnabled,
-            SettingsManager.Current.IPScanner_ResolveMACAddress);
+        // Same mapping of the settings as for a scan (the ports don't matter for the result options)
+        return new IPScannerResultOptions(CreateScanOptions([], [], null));
+    }
+
+    /// <summary>
+    /// Shows a message below the input, after the message that is already shown (e.g. hostnames that could not be
+    /// resolved). The messages are cleared when a scan starts.
+    /// </summary>
+    /// <param name="message">Message to show.</param>
+    private void AddStatusMessage(string message)
+    {
+        StatusMessage = IsStatusMessageDisplayed ? StatusMessage + Environment.NewLine + message : message;
+        IsStatusMessageDisplayed = true;
     }
 
     /// <summary>
@@ -946,6 +1307,44 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         IsCanceling = true;
         _cancellationTokenSource.Cancel();
+    }
+
+    /// <summary>
+    /// Loads the subnets of the local network interfaces into <see cref="LocalSubnets"/>.
+    /// </summary>
+    private async Task LoadLocalSubnets()
+    {
+        var loadId = ++_localSubnetsLoadId;
+
+        try
+        {
+            var subnets = NetworkInterface.GetLocalSubnets(await NetworkInterface.GetNetworkInterfacesAsync());
+
+            // Menu opened again in the meantime - the newer load updates the list
+            if (loadId != _localSubnetsLoadId)
+                return;
+
+            LocalSubnets.Clear();
+
+            foreach (var subnet in subnets)
+                LocalSubnets.Add(subnet);
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while loading the subnets of the local network interfaces", ex);
+        }
+    }
+
+    /// <summary>
+    /// Sets the host to a detected / selected subnet.
+    /// </summary>
+    /// <param name="subnet">Subnet(s) to scan.</param>
+    private void SetHostFromSubnetDetection(string subnet)
+    {
+        Host = subnet;
+
+        // Fix: If the user clears the TextBox and then clicks again on the button, the TextBox remains empty...
+        OnPropertyChanged(nameof(Host));
     }
 
     /// <summary>
@@ -1110,7 +1509,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                         : GetSelectedResultsInGridOrder())
                     .Select(x => x.Clone()).ToList();
 
-                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
+                // Options of the shown scan (values of disabled probes are exported as empty values)
+                var options = ScanOptions;
+
+                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results, options));
             }
             catch (Exception ex)
             {
@@ -1150,6 +1552,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return;
 
         _closed = true;
+
+        // No repeated scan in the background
+        Repeat.Close();
 
         SettingsManager.Current.PropertyChanged -= SettingsManager_PropertyChanged;
 
@@ -1280,11 +1685,45 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         {
             if (_rescanRows != null)
                 ApplyRescanResult(host, update);
+            else if (_repeatRows != null)
+                ApplyRepeatResult(host, update);
             else if (update == null)
                 Results.Add(host);
             else
                 update.Apply();
         }
+    }
+
+    /// <summary>
+    /// Applies a result of a repeated scan (see <see cref="Start"/>): the row of the host is updated in place, a host
+    /// without a row is added if it is up (or unreachable hosts are shown). The hosts with a row are reported also if
+    /// they are down now (IPScannerOptions.ReportHosts), so their row is updated.
+    /// </summary>
+    /// <param name="host">Result of the scan.</param>
+    /// <param name="update">Update of the result, null if the host was found.</param>
+    private void ApplyRepeatResult(IPScannerHostInfo host, IPScannerHostUpdatedArgs update)
+    {
+        if (update == null)
+        {
+            _repeatReported.Add(host.IPAddress);
+
+            if (_repeatRows.TryGetValue(host.IPAddress, out var row))
+            {
+                row.CopyFrom(host);
+                _repeatResults[host] = row;
+            }
+            else if (host.IsReachable || _lastScanOptions.ShowAllResults)
+            {
+                Results.Add(host);
+                _repeatResults[host] = host;
+                _repeatAdded.Add(host);
+            }
+
+            return;
+        }
+
+        if (_repeatResults.TryGetValue(update.Host, out var target))
+            update.ApplyTo(target);
     }
 
     /// <summary>
@@ -1373,6 +1812,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         Application.Current.Dispatcher.Invoke(() =>
         {
+            // A rescan of selected hosts updates rows, it is not a scan of the input (see CompareWithPreviousScan)
+            var isRescan = _rescanRows != null;
+            var rescannedRows = _rescanRows?.Values.ToList();
+
             // All hosts and lookups are finished when the scanner raises ScanComplete - add the remaining
             // buffered hosts and apply the remaining updates before the scan ends, with the final counters
             _resultsFlushTimer?.Stop();
@@ -1389,6 +1832,44 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                     row.CopyFrom(snapshot);
             }
 
+            // Canceled / failed repeated scan, or not started (no host left, e.g. a hostname could not be resolved):
+            // the rows of the last scan with their values and counters (Start already reset the counters)
+            var isRepeat = _repeatRows != null;
+            var isNothingScanned = HostsToScan == 0;
+            var isRepeatDiscarded = isRepeat && (e.IsCanceled || e.Exception != null || isNothingScanned);
+
+            if (isRepeatDiscarded)
+            {
+                foreach (var (row, snapshot) in _repeatSnapshots)
+                    row.CopyFrom(snapshot);
+
+                foreach (var added in _repeatAdded)
+                    Results.Remove(added);
+            }
+            else if (isRepeat)
+            {
+                // A row of an IP address that is no longer part of the input (e.g. a hostname resolves to another
+                // address now) was not scanned - it would stay unchanged forever
+                foreach (var row in _repeatRows.Values.Where(x => !_repeatReported.Contains(x.IPAddress)).ToList())
+                    Results.Remove(row);
+            }
+
+            if (isRepeat)
+            {
+                _repeatRows = null;
+                _repeatResults.Clear();
+                _repeatAdded.Clear();
+                _repeatReported.Clear();
+                _repeatSnapshots = null;
+            }
+
+            // Canceled / failed: results of running lookups never arrive - no "..." for them (and Copy works)
+            if (e.IsCanceled || e.Exception != null)
+            {
+                foreach (var host in Results)
+                    host.EndPendingLookups();
+            }
+
             FlushProgress();
 
             // Rescan: back to the progress of the last scan
@@ -1401,6 +1882,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 HostsToScan = _rescanHostsToScan;
                 HostsScanned = _rescanHostsScanned;
             }
+
+            // Canceled / failed repeated scan: the counters of the restored rows (the last scan), not the partial ones
+            if (isRepeatDiscarded)
+                (HostsToScan, HostsScanned, HostsUp, HostsDown) = _repeatCounters;
 
             if (sender is IPScanner ipScanner)
             {
@@ -1425,14 +1910,36 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 StatusMessage = e.Exception.Message;
                 IsStatusMessageDisplayed = true;
             }
-            else if (Results.Count == 0 && HostsToScan > 0)
+            else if (Results.Count == 0 && !isNothingScanned)
             {
                 // Keep a message from the preparation (e.g. hostnames that could not be resolved)
-                StatusMessage = IsStatusMessageDisplayed
-                    ? StatusMessage + Environment.NewLine + Strings.NoReachableHostsFound
-                    : Strings.NoReachableHostsFound;
-                IsStatusMessageDisplayed = true;
+                AddStatusMessage(Strings.NoReachableHostsFound);
             }
+
+            // A completed rescan: the changes of the rescanned hosts against the same previous scan (e.g. a gone host that is
+            // up again)
+            if (isRescan && !e.IsCanceled && e.Exception == null && _comparisonBaseline != null)
+            {
+                var rescannedIPAddresses = rescannedRows.Select(x => x.IPAddress).ToHashSet();
+
+                ApplyComparison(rescannedRows, _comparisonBaseline.Where(x => rescannedIPAddresses.Contains(x.Key))
+                    .ToDictionary(x => x.Key, x => x.Value));
+            }
+
+            // Only a completed scan of the input is compared and becomes the baseline of the next one. Repeated: a completed
+            // scan, and a repeated scan that failed (tried again after the interval, see ScanRepeater.OnScanEnded)
+            if (!isRescan)
+            {
+                var isCompleted = !e.IsCanceled && e.Exception == null && !isNothingScanned;
+
+                if (isCompleted)
+                    CompareWithPreviousScan(isRepeat);
+
+                Repeat.OnScanEnded(isCompleted, e.IsCanceled);
+            }
+
+            // No plain text credentials of the profile / group until the next scan
+            ReleaseSNMPCredentials();
 
             PreparingScan = false;
             IsCanceling = false;
@@ -1440,7 +1947,154 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             // E.g. canceled during the preparation, or nothing found
             UpdateScanOptionsIfNoResults();
+
         });
+    }
+
+    /// <summary>
+    /// Shows a notification / plays a sound (see settings) with the changes of a repeated scan: one notification per
+    /// scan, up to three changes one per line, otherwise the counters. Like the host up / down notification of the
+    /// Ping Monitor: only new hosts = up, any gone / changed host = down.
+    /// </summary>
+    private void NotifyChanges()
+    {
+        var showPopup = SettingsManager.Current.IPScanner_ShowNotificationPopup;
+        var playSound = SettingsManager.Current.IPScanner_NotificationSound;
+
+        if (!showPopup && !playSound)
+            return;
+
+        var changes = Results.Where(x => x.Change != IPScannerHostChange.None).ToList();
+
+        if (changes.Count == 0)
+            return;
+
+        changes.Sort((x, y) => IPAddressHelper.CompareIPAddresses(x.IPAddress, y.IPAddress));
+
+        // "10.0.0.5 (server) · New" - new = up, gone = down, a changed MAC address = changed
+        var lines = changes.Select(x => new NotificationLine(NotificationLine.FormatHost(x.IPAddress, x.Hostname),
+            IPScannerHostChangeToStringConverter.ToLocalizedString(x.Change), GetNotificationStatus(x.Change))).ToList();
+
+        var summary = new[]
+            {
+                (Count: HostsNew, Format: Strings.XNew, Status: NotificationStatus.Up),
+                (Count: HostsGone, Format: Strings.XGone, Status: NotificationStatus.Down),
+                (Count: HostsMACChanged, Format: Strings.XMACChanged, Status: NotificationStatus.Changed)
+            }
+            .Where(x => x.Count > 0)
+            .Select(x => new NotificationLine(null, string.Format(x.Format, x.Count), x.Status)).ToList();
+
+        // New = up, gone = down, both = up and down, a changed MAC address = changed
+        var status = NotificationStatusHelper.FromChanges(HostsNew, HostsGone, HostsMACChanged);
+
+        NotificationManager.Show(new NotificationInfo(ApplicationName.IPScanner, status,
+                _scanInput, NotificationManager.FormatChanges(lines, summary),
+                SettingsManager.Current.IPScanner_NotificationCloseTime)
+            {
+                Request = new ShowTabRequest(ApplicationName.IPScanner, _tabId)
+            },
+            showPopup, playSound);
+    }
+
+    /// <summary>
+    /// Gets the status of a change in a notification: new = up, gone = down, a changed MAC address = changed.
+    /// </summary>
+    private static NotificationStatus GetNotificationStatus(IPScannerHostChange change)
+    {
+        return change switch
+        {
+            IPScannerHostChange.New => NotificationStatus.Up,
+            IPScannerHostChange.Gone => NotificationStatus.Down,
+            _ => NotificationStatus.Changed
+        };
+    }
+
+    /// <summary>
+    /// Marks the changes of the rows against the baseline of the previous scan: new hosts and hosts with another MAC
+    /// address, the hosts that are gone (a shown row is marked, otherwise a row is added). Updates the counters.
+    /// </summary>
+    /// <param name="rows">Rows to compare (all rows of a scan, the rescanned rows of a rescan).</param>
+    /// <param name="baseline">Baseline of the previous scan (of these rows).</param>
+    private void ApplyComparison(IReadOnlyCollection<IPScannerHostInfo> rows,
+        IReadOnlyDictionary<IPAddress, IPScannerBaselineHost> baseline)
+    {
+        foreach (var host in rows)
+        {
+            host.Change = IPScannerHostChange.None;
+            host.PreviousMACAddress = string.Empty;
+        }
+
+        var comparison = IPScannerScanComparer.Compare(baseline, IPScannerScanComparer.CreateBaseline(rows));
+
+        foreach (var host in rows)
+        {
+            if (comparison.Changes.TryGetValue(host.IPAddress, out var change))
+            {
+                host.Change = change.Change;
+                host.PreviousMACAddress = change.PreviousMACAddress;
+            }
+        }
+
+        // Once, not a search per gone host (e.g. a /16 with thousands of gone hosts after an outage)
+        var rowsByIPAddress = rows.DistinctBy(x => x.IPAddress).ToDictionary(x => x.IPAddress);
+
+        foreach (var (ipAddress, previous) in comparison.Gone)
+        {
+            // A shown down host (Show unreachable, a rescan) is marked, otherwise a row is added
+            if (rowsByIPAddress.TryGetValue(ipAddress, out var row))
+                row.MarkGone(previous);
+            else
+                Results.Add(IPScannerHostInfo.CreateGone(ipAddress, previous));
+        }
+
+        HostsNew = Results.Count(x => x.Change == IPScannerHostChange.New);
+        HostsGone = Results.Count(x => x.Change == IPScannerHostChange.Gone);
+        HostsMACChanged = Results.Count(x => x.Change == IPScannerHostChange.MACChanged);
+    }
+
+    /// <summary>
+    /// Compares the completed scan with the previous completed scan of the same input in this tab: marks new hosts
+    /// and hosts with another MAC address, adds the hosts that are gone (shown as down, also without "Show
+    /// unreachable"). The scan becomes the baseline of the next one. Called on the UI thread.
+    /// </summary>
+    /// <param name="isRepeat">The scan was repeated automatically: changes are notified (see settings).</param>
+    private void CompareWithPreviousScan(bool isRepeat)
+    {
+        // The changes of the last comparison (rows of a repeated scan)
+        foreach (var host in Results)
+        {
+            host.Change = IPScannerHostChange.None;
+            host.PreviousMACAddress = string.Empty;
+        }
+
+        var current = IPScannerScanComparer.CreateBaseline(Results);
+
+        if (_baseline != null && string.Equals(_baselineInput, _scanInput, StringComparison.OrdinalIgnoreCase))
+        {
+            _comparisonBaseline = _baseline;
+
+            ApplyComparison(Results.ToList(), _baseline);
+            HasComparison = true;
+
+            if (isRepeat)
+                NotifyChanges();
+        }
+        else
+        {
+            _comparisonBaseline = null;
+        }
+
+        // A repeated scan updated the rows of hosts that are down now: only shown if they are gone (or unreachable hosts
+        // are shown)
+        if (!_lastScanOptions.ShowAllResults)
+        {
+            foreach (var host in Results.Where(x => !x.IsReachable && x.Change != IPScannerHostChange.Gone).ToList())
+                Results.Remove(host);
+        }
+
+        _baseline = current;
+        _baselineInput = _scanInput;
+        LastScanTime = DateTime.Now;
     }
 
     #endregion

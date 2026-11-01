@@ -5,9 +5,9 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using log4net;
-using MahApps.Metro.IconPacks;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
@@ -107,6 +107,12 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
     /// </summary>
     private string NotificationHostDisplay =>
         DNSClientHelper.SanitizeHostname(Hostname) is { Length: > 0 } hostname ? hostname : IPAddress.ToString();
+
+    /// <summary>
+    /// IP address in the line of a notification ("10.0.0.1 · Up"), null if the title already is the IP address.
+    /// </summary>
+    private string NotificationIPAddress =>
+        NotificationHostDisplay == IPAddress.ToString() ? null : IPAddress.ToString();
 
     /// <summary>
     /// Gets the hostname of the monitored host.
@@ -706,14 +712,11 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
                 StatusTime = DateTime.Now;
                 IsReachable = true;
 
-                if (SettingsManager.Current.PingMonitor_NotificationSound)
-                    NotificationManager.PlaySound(System.Media.SystemSounds.Asterisk); // gentle info sound for UP
-
-                if (SettingsManager.Current.PingMonitor_ShowNotificationPopup)
-                    NotificationManager.Show(
-                        PackIconMaterialKind.LanConnect, "#badc58",
-                        NotificationHostDisplay, Strings.HostIsUp,
-                        SettingsManager.Current.PingMonitor_NotificationCloseTime);
+                NotificationManager.Show(new NotificationInfo(ApplicationName.PingMonitor, NotificationStatus.Up,
+                        NotificationHostDisplay, [new NotificationLine(NotificationIPAddress, Strings.Up, NotificationStatus.Up)],
+                        SettingsManager.Current.PingMonitor_NotificationCloseTime),
+                    SettingsManager.Current.PingMonitor_ShowNotificationPopup,
+                    SettingsManager.Current.PingMonitor_NotificationSound);
             }
 
             Received++;
@@ -740,14 +743,11 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
                 StatusTime = DateTime.Now;
                 IsReachable = false;
 
-                if (SettingsManager.Current.PingMonitor_NotificationSound)
-                    NotificationManager.PlaySound(System.Media.SystemSounds.Exclamation); // warning sound for DOWN
-
-                if (SettingsManager.Current.PingMonitor_ShowNotificationPopup)
-                    NotificationManager.Show(
-                        PackIconMaterialKind.LanDisconnect, "Red",
-                        NotificationHostDisplay, Strings.HostIsDown,
-                        SettingsManager.Current.PingMonitor_NotificationCloseTime);
+                NotificationManager.Show(new NotificationInfo(ApplicationName.PingMonitor, NotificationStatus.Down,
+                        NotificationHostDisplay, [new NotificationLine(NotificationIPAddress, Strings.Down, NotificationStatus.Down)],
+                        SettingsManager.Current.PingMonitor_NotificationCloseTime),
+                    SettingsManager.Current.PingMonitor_ShowNotificationPopup,
+                    SettingsManager.Current.PingMonitor_NotificationSound);
             }
 
             Lost++;

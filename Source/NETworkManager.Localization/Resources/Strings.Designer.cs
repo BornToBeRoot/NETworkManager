@@ -835,6 +835,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All IP addresses are excluded (inputs starting with !), there is nothing to scan..
+        /// </summary>
+        public static string AllIPAddressesAreExcludedMessage {
+            get {
+                return ResourceManager.GetString("AllIPAddressesAreExcludedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All local subnets.
+        /// </summary>
+        public static string AllLocalSubnets {
+            get {
+                return ResourceManager.GetString("AllLocalSubnets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Allow.
         /// </summary>
         public static string Allow {
@@ -876,6 +894,15 @@ namespace NETworkManager.Localization.Resources {
         public static string AnErrorOccurredWhileExportingTheData {
             get {
                 return ResourceManager.GetString("AnErrorOccurredWhileExportingTheData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Answered.
+        /// </summary>
+        public static string Answered {
+            get {
+                return ResourceManager.GetString("Answered", resourceCulture);
             }
         }
         
@@ -1276,6 +1303,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ARP / NDP.
+        /// </summary>
+        public static string ARPNDP {
+            get {
+                return ResourceManager.GetString("ARPNDP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ASN.
         /// </summary>
         public static string ASN {
@@ -1353,6 +1389,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Authorities {
             get {
                 return ResourceManager.GetString("Authorities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatically scan every.
+        /// </summary>
+        public static string AutomaticallyScanEvery {
+            get {
+                return ResourceManager.GetString("AutomaticallyScanEvery", resourceCulture);
             }
         }
         
@@ -1686,6 +1731,15 @@ namespace NETworkManager.Localization.Resources {
         public static string CapturingNetworkPackagesDots {
             get {
                 return ResourceManager.GetString("CapturingNetworkPackagesDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Certificate.
+        /// </summary>
+        public static string Certificate {
+            get {
+                return ResourceManager.GetString("Certificate", resourceCulture);
             }
         }
         
@@ -3416,6 +3470,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detect local subnet.
+        /// </summary>
+        public static string DetectLocalSubnet {
+            get {
+                return ResourceManager.GetString("DetectLocalSubnet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Developed and maintained by {0} with the help of the.
         /// </summary>
         public static string DevelopedAndMaintainedByX {
@@ -4052,6 +4115,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Enable {
             get {
                 return ResourceManager.GetString("Enable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable at least one of ping, port scan, NetBIOS or SNMP in the settings. A host is only found if it answers one of them..
+        /// </summary>
+        public static string EnableAtLeastOneProbeToFindHostsMessage {
+            get {
+                return ResourceManager.GetString("EnableAtLeastOneProbeToFindHostsMessage", resourceCulture);
             }
         }
         
@@ -5112,6 +5184,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find hosts in the local subnet.
+        /// </summary>
+        public static string FindHostsInTheLocalSubnet {
+            get {
+                return ResourceManager.GetString("FindHostsInTheLocalSubnet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Firewall.
         /// </summary>
         public static string Firewall {
@@ -5744,6 +5825,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Guess the operating system from the TTL.
+        /// </summary>
+        public static string GuessTheOperatingSystemFromTheTTL {
+            get {
+                return ResourceManager.GetString("GuessTheOperatingSystemFromTheTTL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Handle.
         /// </summary>
         public static string Handle {
@@ -5793,7 +5883,7 @@ namespace NETworkManager.Localization.Resources {
         ///
         ///Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
         ///
-        ///Click in the upper right corner on the help / documentation button ( [rest of string was truncated]&quot;;.
+        ///Click in the upper right corner on the help / documentation button (left [rest of string was truncated]&quot;;.
         /// </summary>
         public static string HelpMessage_ApplyThemeToPowerShellConsole {
             get {
@@ -5913,11 +6003,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find hosts in a local subnet that don&apos;t answer the ping, a port or NetBIOS (e.g. a firewall drops everything) by their entry in the neighbor table (ARP / NDP). To reach a host in a local subnet, Windows has to resolve its MAC address first, and a host answers this request even if its firewall drops everything else. No additional packets are sent, except to check an entry from earlier traffic again. Hosts behind a router can&apos;t be found this way. Only decides if a host is up - the MAC address and vendor are s [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string HelpMessage_FindHostsInTheLocalSubnet {
+            get {
+                return ResourceManager.GetString("HelpMessage_FindHostsInTheLocalSubnet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show all active Windows Firewall rules (e.g. Windows built-in rules, rules created by other applications or from Group Policy) instead of only the rules managed by NETworkManager. Rules not managed by NETworkManager can be enabled, disabled, deleted or copied, but not edited. Rules from a policy (e.g. Group Policy or MDM) can only be copied..
         /// </summary>
         public static string HelpMessage_FirewallShowAllRules {
             get {
                 return ResourceManager.GetString("HelpMessage_FirewallShowAllRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guess the operating system from the TTL of the ping reply: every operating system starts with a typical TTL, 64 (Linux, Unix, macOS, Android, iOS), 128 (Windows) or 255 (network devices like routers, switches and printers), and every router on the way reduces it by one. No additional packets are sent. It&apos;s a hint, not a detection: the TTL can be changed on the host, NAT and VPN can change it. Not available for IPv6 (the ping reply has no TTL)..
+        /// </summary>
+        public static string HelpMessage_GuessTheOperatingSystemFromTheTTL {
+            get {
+                return ResourceManager.GetString("HelpMessage_GuessTheOperatingSystemFromTheTTL", resourceCulture);
             }
         }
         
@@ -5981,6 +6089,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_PasswordNotDisplayedCanBeOverwritten {
             get {
                 return ResourceManager.GetString("HelpMessage_PasswordNotDisplayedCanBeOverwritten", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send a ping (ICMP echo request) to every host. Disable it if ICMP is blocked or rate limited in the network, the scan is faster then. Hosts that only answer the ping are not found without it..
+        /// </summary>
+        public static string HelpMessage_PingHosts {
+            get {
+                return ResourceManager.GetString("HelpMessage_PingHosts", resourceCulture);
             }
         }
         
@@ -6087,11 +6204,56 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Read the name, description and location (sysName, sysDescr, sysLocation) of every IP address with an SNMP v1 / v2c request to UDP port 161, sent with the other probes. A host that answers is shown as up (detected by SNMP), also if it doesn&apos;t answer the ping, a port or NetBIOS. A host with another community usually doesn&apos;t answer (timeout). Many intrusion detection systems report requests with common communities..
+        /// </summary>
+        public static string HelpMessage_ReadTheSNMPSystemInformation {
+            get {
+                return ResourceManager.GetString("HelpMessage_ReadTheSNMPSystemInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read the web page (GET /) of every reachable host with an open port of the list below, in this order (the port scan must be enabled and the ports must also be in its list): status code, title and the Server and X-Powered-By headers. The first port that answers is used (http on 80 and 8080, https and then http on other ports), redirects on the same host are followed. No cookies or credentials are sent, certificate errors are accepted. The request appears in the log of the web server..
+        /// </summary>
+        public static string HelpMessage_ReadWebPages {
+            get {
+                return ResourceManager.GetString("HelpMessage_ReadWebPages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show the MAC address and vendor of every found host: read from the neighbor table (ARP / NDP) for hosts in a local subnet, otherwise from the NetBIOS answer (if NetBIOS is enabled). Doesn&apos;t find hosts - a host that doesn&apos;t answer the ping, a port or NetBIOS is only found with &quot;Find hosts in the local subnet&quot;..
+        /// </summary>
+        public static string HelpMessage_ResolveMACAddressAndVendor {
+            get {
+                return ResourceManager.GetString("HelpMessage_ResolveMACAddressAndVendor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resolve the mDNS hostname (e.g. macbook.local) of every reachable host with a reverse lookup sent to UDP port 5353 of the host. Answered by Apple devices, Linux (Avahi), Android, printers and many IoT devices, usually only in the local subnet. Used as hostname if there is no DNS hostname..
+        /// </summary>
+        public static string HelpMessage_ResolveMDNSHostname {
+            get {
+                return ResourceManager.GetString("HelpMessage_ResolveMDNSHostname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Displays a dialog to save credentials after a successful sign-in..
         /// </summary>
         public static string HelpMessage_SaveCredentials {
             get {
                 return ResourceManager.GetString("HelpMessage_SaveCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only when the scan is repeated automatically (&quot;Automatically scan every&quot;): one notification per scan with the changes since the previous scan..
+        /// </summary>
+        public static string HelpMessage_ScanChangesNotification {
+            get {
+                return ResourceManager.GetString("HelpMessage_ScanChangesNotification", resourceCulture);
             }
         }
         
@@ -6213,29 +6375,38 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gone.
+        /// </summary>
+        public static string HostChange_Gone {
+            get {
+                return ResourceManager.GetString("HostChange_Gone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAC changed.
+        /// </summary>
+        public static string HostChange_MACChanged {
+            get {
+                return ResourceManager.GetString("HostChange_MACChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string HostChange_New {
+            get {
+                return ResourceManager.GetString("HostChange_New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hosting.
         /// </summary>
         public static string Hosting {
             get {
                 return ResourceManager.GetString("Hosting", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Host is down.
-        /// </summary>
-        public static string HostIsDown {
-            get {
-                return ResourceManager.GetString("HostIsDown", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Host is up.
-        /// </summary>
-        public static string HostIsUp {
-            get {
-                return ResourceManager.GetString("HostIsUp", resourceCulture);
             }
         }
         
@@ -6263,6 +6434,24 @@ namespace NETworkManager.Localization.Resources {
         public static string HostnameOrIPAddress {
             get {
                 return ResourceManager.GetString("HostnameOrIPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hostname resolution is disabled!.
+        /// </summary>
+        public static string HostnameResolutionIsDisabled {
+            get {
+                return ResourceManager.GetString("HostnameResolutionIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hostnames.
+        /// </summary>
+        public static string Hostnames {
+            get {
+                return ResourceManager.GetString("Hostnames", resourceCulture);
             }
         }
         
@@ -6943,6 +7132,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Issuer.
+        /// </summary>
+        public static string Issuer {
+            get {
+                return ResourceManager.GetString("Issuer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Jitter.
         /// </summary>
         public static string Jitter {
@@ -7366,6 +7564,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Linux / Unix.
+        /// </summary>
+        public static string LinuxUnix {
+            get {
+                return ResourceManager.GetString("LinuxUnix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Listeners.
         /// </summary>
         public static string Listeners {
@@ -7731,6 +7938,24 @@ namespace NETworkManager.Localization.Resources {
         public static string MaxPortThreads {
             get {
                 return ResourceManager.GetString("MaxPortThreads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mDNS.
+        /// </summary>
+        public static string MDNS {
+            get {
+                return ResourceManager.GetString("MDNS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mDNS hostname.
+        /// </summary>
+        public static string MDNSHostname {
+            get {
+                return ResourceManager.GetString("MDNSHostname", resourceCulture);
             }
         }
         
@@ -8140,6 +8365,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network device.
+        /// </summary>
+        public static string NetworkDevice {
+            get {
+                return ResourceManager.GetString("NetworkDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Network Interface.
         /// </summary>
         public static string NetworkInterface {
@@ -8311,6 +8545,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Next refresh in {0}.
+        /// </summary>
+        public static string NextRefreshInX {
+            get {
+                return ResourceManager.GetString("NextRefreshInX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Next scan in {0}.
+        /// </summary>
+        public static string NextScanInX {
+            get {
+                return ResourceManager.GetString("NextScanInX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         public static string No {
@@ -8325,6 +8577,15 @@ namespace NETworkManager.Localization.Resources {
         public static string NoADNSRecordsResolvedForXXXMessage {
             get {
                 return ResourceManager.GetString("NoADNSRecordsResolvedForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No answer.
+        /// </summary>
+        public static string NoAnswer {
+            get {
+                return ResourceManager.GetString("NoAnswer", resourceCulture);
             }
         }
         
@@ -8879,6 +9140,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OS (guess).
+        /// </summary>
+        public static string OSGuess {
+            get {
+                return ResourceManager.GetString("OSGuess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Based on the TTL of the ping reply ({0} hops).
+        /// </summary>
+        public static string OSGuessBasedOnTheTTLXHops {
+            get {
+                return ResourceManager.GetString("OSGuessBasedOnTheTTLXHops", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OUI.
         /// </summary>
         public static string OUI {
@@ -9131,11 +9410,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ping hosts.
+        /// </summary>
+        public static string PingHosts {
+            get {
+                return ResourceManager.GetString("PingHosts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ping hosts before the scan.
         /// </summary>
         public static string PingHostsBeforeScan {
             get {
                 return ResourceManager.GetString("PingHostsBeforeScan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ping is disabled!.
+        /// </summary>
+        public static string PingIsDisabled {
+            get {
+                return ResourceManager.GetString("PingIsDisabled", resourceCulture);
             }
         }
         
@@ -9185,6 +9482,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Play sound on changes.
+        /// </summary>
+        public static string PlaySoundOnChanges {
+            get {
+                return ResourceManager.GetString("PlaySoundOnChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Play sound on status change.
         /// </summary>
         public static string PlaySoundOnStatusChange {
@@ -9226,6 +9532,24 @@ namespace NETworkManager.Localization.Resources {
         public static string Portable {
             get {
                 return ResourceManager.GetString("Portable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No longer open.
+        /// </summary>
+        public static string PortChange_Closed {
+            get {
+                return ResourceManager.GetString("PortChange_Closed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Now open.
+        /// </summary>
+        public static string PortChange_Opened {
+            get {
+                return ResourceManager.GetString("PortChange_Opened", resourceCulture);
             }
         }
         
@@ -9392,6 +9716,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Previous MAC address: {0}.
+        /// </summary>
+        public static string PreviousMACAddressX {
+            get {
+                return ResourceManager.GetString("PreviousMACAddressX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Primary DNS server.
         /// </summary>
         public static string PrimaryDNSServer {
@@ -9475,7 +9808,7 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
         ///
-        ///First make a backup copy of your profile files be [rest of string was truncated]&quot;;.
+        ///First make a backup copy of your profile files befo [rest of string was truncated]&quot;;.
         /// </summary>
         public static string ProfileEncryptionDisclaimer {
             get {
@@ -10096,6 +10429,42 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reading web pages is disabled!.
+        /// </summary>
+        public static string ReadingWebPagesIsDisabled {
+            get {
+                return ResourceManager.GetString("ReadingWebPagesIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read the SNMP system information.
+        /// </summary>
+        public static string ReadTheSNMPSystemInformation {
+            get {
+                return ResourceManager.GetString("ReadTheSNMPSystemInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read web pages.
+        /// </summary>
+        public static string ReadWebPages {
+            get {
+                return ResourceManager.GetString("ReadWebPages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Realm.
+        /// </summary>
+        public static string Realm {
+            get {
+                return ResourceManager.GetString("Realm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Received.
         /// </summary>
         public static string Received {
@@ -10209,6 +10578,15 @@ namespace NETworkManager.Localization.Resources {
         public static string RedirectSmartcards {
             get {
                 return ResourceManager.GetString("RedirectSmartcards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Redirect to.
+        /// </summary>
+        public static string RedirectTo {
+            get {
+                return ResourceManager.GetString("RedirectTo", resourceCulture);
             }
         }
         
@@ -11464,6 +11842,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resolve mDNS hostname.
+        /// </summary>
+        public static string ResolveMDNSHostname {
+            get {
+                return ResourceManager.GetString("ResolveMDNSHostname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resolve PTR.
         /// </summary>
         public static string ResolvePTR {
@@ -12399,6 +12786,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Self-signed.
+        /// </summary>
+        public static string SelfSigned {
+            get {
+                return ResourceManager.GetString("SelfSigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send.
         /// </summary>
         public static string Send {
@@ -12790,6 +13186,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show notification popup on changes.
+        /// </summary>
+        public static string ShowNotificationPopupOnChanges {
+            get {
+                return ResourceManager.GetString("ShowNotificationPopupOnChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show notification popup on status change.
         /// </summary>
         public static string ShowNotificationPopupOnStatusChange {
@@ -12885,6 +13290,15 @@ namespace NETworkManager.Localization.Resources {
         public static string SignalStrength {
             get {
                 return ResourceManager.GetString("SignalStrength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Since last scan.
+        /// </summary>
+        public static string SinceLastScan {
+            get {
+                return ResourceManager.GetString("SinceLastScan", resourceCulture);
             }
         }
         
@@ -13096,6 +13510,33 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SNMP is disabled!.
+        /// </summary>
+        public static string SNMPIsDisabled {
+            get {
+                return ResourceManager.GetString("SNMPIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string SNMPLocation {
+            get {
+                return ResourceManager.GetString("SNMPLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SNMP name.
+        /// </summary>
+        public static string SNMPName {
+            get {
+                return ResourceManager.GetString("SNMPName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Authentication failure (incorrect password, community or key)..
         /// </summary>
         public static string SNMPV3ErrorCode_AuthenticationFailed {
@@ -13110,6 +13551,15 @@ namespace NETworkManager.Localization.Resources {
         public static string SNMPV3ErrorCode_UnknownUserName {
             get {
                 return ResourceManager.GetString("SNMPV3ErrorCode_UnknownUserName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SNMP version and credentials of &quot;{0}&quot;.
+        /// </summary>
+        public static string SNMPVersionAndCredentialsOfX {
+            get {
+                return ResourceManager.GetString("SNMPVersionAndCredentialsOfX", resourceCulture);
             }
         }
         
@@ -13358,6 +13808,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status code.
+        /// </summary>
+        public static string StatusCode {
+            get {
+                return ResourceManager.GetString("StatusCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Status window.
         /// </summary>
         public static string StatusWindow {
@@ -13426,6 +13885,15 @@ namespace NETworkManager.Localization.Resources {
         public static string SubnetMask {
             get {
                 return ResourceManager.GetString("SubnetMask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subnet of network interface.
+        /// </summary>
+        public static string SubnetOfNetworkInterface {
+            get {
+                return ResourceManager.GetString("SubnetOfNetworkInterface", resourceCulture);
             }
         }
         
@@ -13507,6 +13975,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Taupe {
             get {
                 return ResourceManager.GetString("Taupe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TCP.
+        /// </summary>
+        public static string TCP {
+            get {
+                return ResourceManager.GetString("TCP", resourceCulture);
             }
         }
         
@@ -13781,6 +14258,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This computer.
+        /// </summary>
+        public static string ThisComputer {
+            get {
+                return ResourceManager.GetString("ThisComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This will reset all settings!.
         /// </summary>
         public static string ThisWillResetAllSettings {
@@ -13966,6 +14452,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Timezone {
             get {
                 return ResourceManager.GetString("Timezone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
         
@@ -14173,6 +14668,15 @@ namespace NETworkManager.Localization.Resources {
         public static string UpdateNow {
             get {
                 return ResourceManager.GetString("UpdateNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up (detected by {0}).
+        /// </summary>
+        public static string UpDetectedByX {
+            get {
+                return ResourceManager.GetString("UpDetectedByX", resourceCulture);
             }
         }
         
@@ -14429,6 +14933,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Valid until.
+        /// </summary>
+        public static string ValidUntil {
+            get {
+                return ResourceManager.GetString("ValidUntil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value.
         /// </summary>
         public static string Value {
@@ -14580,6 +15093,24 @@ namespace NETworkManager.Localization.Resources {
         public static string WarnMessage_MultipleInstances {
             get {
                 return ResourceManager.GetString("WarnMessage_MultipleInstances", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The community is saved as plain text in the settings file (not encrypted). Use a read-only community (e.g. public), not one with write access..
+        /// </summary>
+        public static string WarnMessage_SNMPCommunity {
+            get {
+                return ResourceManager.GetString("WarnMessage_SNMPCommunity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Web.
+        /// </summary>
+        public static string Web {
+            get {
+                return ResourceManager.GetString("Web", resourceCulture);
             }
         }
         
@@ -14795,6 +15326,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Windows.
+        /// </summary>
+        public static string Windows {
+            get {
+                return ResourceManager.GetString("Windows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Windows DNS settings.
         /// </summary>
         public static string WindowsDNSSettings {
@@ -14876,11 +15416,65 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} (expired).
+        /// </summary>
+        public static string XExpired {
+            get {
+                return ResourceManager.GetString("XExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Gone.
+        /// </summary>
+        public static string XGone {
+            get {
+                return ResourceManager.GetString("XGone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} host(s) did not answer the ping and were not scanned..
         /// </summary>
         public static string XHostsDidNotAnswerThePingAndWereNotScanned {
             get {
                 return ResourceManager.GetString("XHostsDidNotAnswerThePingAndWereNotScanned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} MAC changed.
+        /// </summary>
+        public static string XMACChanged {
+            get {
+                return ResourceManager.GetString("XMACChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} New.
+        /// </summary>
+        public static string XNew {
+            get {
+                return ResourceManager.GetString("XNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} No longer open.
+        /// </summary>
+        public static string XNoLongerOpen {
+            get {
+                return ResourceManager.GetString("XNoLongerOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Now open.
+        /// </summary>
+        public static string XNowOpen {
+            get {
+                return ResourceManager.GetString("XNowOpen", resourceCulture);
             }
         }
         
@@ -14899,6 +15493,15 @@ namespace NETworkManager.Localization.Resources {
         public static string XPaused {
             get {
                 return ResourceManager.GetString("XPaused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X-Powered-By.
+        /// </summary>
+        public static string XPoweredBy {
+            get {
+                return ResourceManager.GetString("XPoweredBy", resourceCulture);
             }
         }
         

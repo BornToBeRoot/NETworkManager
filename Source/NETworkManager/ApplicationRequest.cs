@@ -1,4 +1,5 @@
-﻿using DnsClient;
+﻿using System;
+using DnsClient;
 using NETworkManager.Models;
 using NETworkManager.Models.Lookup;
 using NETworkManager.Models.RDAP;
@@ -107,4 +108,26 @@ public sealed record LookupRequest() : ApplicationRequest(ApplicationName.Lookup
     ///     Lookup to show (and run with the target).
     /// </summary>
     public LookupType Type { get; init; }
+}
+
+/// <summary>
+///     Request to show a tab of a tool (e.g. the IP Scanner tab that sent a notification). Only the tool is shown if the
+///     tab was closed (or is in another window).
+/// </summary>
+public sealed record ShowTabRequest : ApplicationRequest
+{
+    /// <summary>
+    ///     Creates a request to show a tab.
+    /// </summary>
+    /// <param name="application">Tool of the tab.</param>
+    /// <param name="tabId">Id of the tab (see <c>DragablzTabItem.Id</c>).</param>
+    public ShowTabRequest(ApplicationName application, Guid tabId) : base(application)
+    {
+        TabId = tabId;
+    }
+
+    /// <summary>
+    ///     Id of the tab to show.
+    /// </summary>
+    public Guid TabId { get; }
 }

@@ -132,6 +132,23 @@ public class PortScannerHostViewModel : ProfileHostViewModelBase
     #region Methods
 
     /// <summary>
+    /// Selects a tab (e.g. the tab that sent a notification). Nothing happens if it was closed or moved to another
+    /// window.
+    /// </summary>
+    /// <param name="tabId">Id of the tab.</param>
+    public void SelectTab(Guid tabId)
+    {
+        for (var i = 0; i < TabItems.Count; i++)
+        {
+            if (TabItems[i].Id != tabId)
+                continue;
+
+            SelectedTabIndex = i;
+            return;
+        }
+    }
+
+    /// <summary>
     /// Adds a new tab with the specified host and ports.
     /// </summary>
     /// <param name="host">The host to scan.</param>

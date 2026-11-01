@@ -39,4 +39,21 @@ public class PortScannerPortInfo : PortInfo
     ///     hostname (e.g. a generic PTR record of a provider).
     /// </summary>
     public string HostAsString => string.IsNullOrEmpty(Hostname) ? IPAddress.ToString() : $"{Hostname} ({IPAddress})";
+
+    /// <summary>
+    ///     Change since the previous scan of the same hosts and ports (set by the view model after the scan, see
+    ///     <see cref="PortScannerScanComparer" />).
+    /// </summary>
+    public PortScannerPortChange Change
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
 }

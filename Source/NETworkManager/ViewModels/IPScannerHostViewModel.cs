@@ -2,6 +2,7 @@ using Dragablz;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
+using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
@@ -144,16 +145,38 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     #region Methods
 
     /// <summary>
+    /// Selects a tab (e.g. the tab that sent a notification). Nothing happens if it was closed or moved to another
+    /// window.
+    /// </summary>
+    /// <param name="tabId">Id of the tab.</param>
+    public void SelectTab(Guid tabId)
+    {
+        for (var i = 0; i < TabItems.Count; i++)
+        {
+            if (TabItems[i].Id != tabId)
+                continue;
+
+            SelectedTabIndex = i;
+            return;
+        }
+    }
+
+    /// <summary>
     /// Adds a new tab for the specified host or IP range.
     /// </summary>
     /// <param name="hostOrIPRange">The host or IP range to scan.</param>
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
-    public void AddTab(string hostOrIPRange = null, bool start = true)
+    /// <param name="snmpCredentials">
+    /// SNMP version and credentials of a profile / group, null for the ones of the settings.
+    /// </param>
+    /// <param name="snmpCredentialsSource">Name of the profile / group of <paramref name="snmpCredentials" />.</param>
+    public void AddTab(string hostOrIPRange = null, bool start = true, SNMPSecureCredentials snmpCredentials = null,
+        string snmpCredentialsSource = null)
     {
         var tabId = Guid.NewGuid();
 
-        TabItems.Add(new DragablzTabItem(Strings.NewTab, new IPScannerView(tabId, hostOrIPRange, start),
-            tabId));
+        TabItems.Add(new DragablzTabItem(Strings.NewTab,
+            new IPScannerView(tabId, hostOrIPRange, start, snmpCredentials, snmpCredentialsSource), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
@@ -165,7 +188,11 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
     public void AddTab(ProfileInfo profile, bool start = true)
     {
-        AddTab(profile.IPScanner_HostOrIPRange, start: start);
+        // SNMP version and credentials of the profile, otherwise of its group, otherwise the settings (null)
+        var snmpCredentials = NETworkManager.Profiles.Application.IPScanner.GetSNMPCredentials(profile);
+
+        AddTab(profile.IPScanner_HostOrIPRange, start, snmpCredentials,
+            profile.IPScanner_OverrideSNMP ? profile.Name : profile.Group);
     }
 
     #endregion

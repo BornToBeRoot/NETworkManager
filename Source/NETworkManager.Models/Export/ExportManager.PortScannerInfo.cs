@@ -49,11 +49,11 @@ public static partial class ExportManager
         var stringBuilder = new StringBuilder();
 
         stringBuilder.AppendLine(
-            $"{nameof(PortScannerPortInfo.IPAddress)},{nameof(PortScannerPortInfo.Hostname)},{nameof(PortScannerPortInfo.Port)},{nameof(PortLookupInfo.Protocol)},{nameof(PortLookupInfo.Service)},{nameof(PortLookupInfo.Description)},{nameof(PortScannerPortInfo.State)}");
+            $"{nameof(PortScannerPortInfo.IPAddress)},{nameof(PortScannerPortInfo.Hostname)},{nameof(PortScannerPortInfo.Port)},{nameof(PortLookupInfo.Protocol)},{nameof(PortLookupInfo.Service)},{nameof(PortLookupInfo.Description)},{nameof(PortScannerPortInfo.State)},{nameof(PortScannerPortInfo.Change)}");
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.IPAddress},{CsvHelper.QuoteString(info.Hostname)},{info.Port},{info.LookupInfo.Protocol},{CsvHelper.QuoteString(info.LookupInfo.Service)},{CsvHelper.QuoteString(info.LookupInfo.Description)},{info.State}");
+                $"{info.IPAddress},{CsvHelper.QuoteString(info.Hostname)},{info.Port},{info.LookupInfo.Protocol},{CsvHelper.QuoteString(info.LookupInfo.Service)},{CsvHelper.QuoteString(info.LookupInfo.Description)},{info.State},{GetChange(info)}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }
@@ -77,7 +77,8 @@ public static partial class ExportManager
                             new XElement(nameof(PortLookupInfo.Protocol), info.LookupInfo.Protocol),
                             new XElement(nameof(PortLookupInfo.Service), info.LookupInfo.Service),
                             new XElement(nameof(PortLookupInfo.Description), info.LookupInfo.Description),
-                            new XElement(nameof(PortScannerPortInfo.State), info.State)))));
+                            new XElement(nameof(PortScannerPortInfo.State), info.State),
+                            new XElement(nameof(PortScannerPortInfo.Change), GetChange(info))))));
 
         document.Save(filePath);
     }
@@ -100,9 +101,18 @@ public static partial class ExportManager
                 Protocol = collection[i].LookupInfo.Protocol.ToString(),
                 collection[i].LookupInfo.Service,
                 collection[i].LookupInfo.Description,
-                State = collection[i].State.ToString()
+                State = collection[i].State.ToString(),
+                Change = GetChange(collection[i])
             };
 
         File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
+    }
+
+    /// <summary>
+    ///     Gets the change of a port since the previous scan, empty without a previous scan / change.
+    /// </summary>
+    private static string GetChange(PortScannerPortInfo info)
+    {
+        return info.Change == PortScannerPortChange.None ? string.Empty : info.Change.ToString();
     }
 }

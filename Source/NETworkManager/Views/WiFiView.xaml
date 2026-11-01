@@ -4,6 +4,7 @@
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             xmlns:internalControls="clr-namespace:NETworkManager.Controls"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -12,7 +13,6 @@
              xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:controls="clr-namespace:NETworkManager.Controls"
              xmlns:controls2="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
-             xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:WiFiViewModel}">
@@ -20,10 +20,10 @@
         <KeyBinding Key="F5" Command="{Binding Path=ScanNetworksCommand}" />
     </UserControl.InputBindings>
     <UserControl.Resources>
-        <converters:AutoRefreshTimeToStringConverter x:Key="AutoRefreshTimeToStringConverter" />
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanReverseToVisibilityCollapsedConverter x:Key="BooleanReverseToVisibilityCollapsedConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
+        <converters:BooleansOrConverter x:Key="BooleansOrConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
         <converters:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
@@ -206,42 +206,35 @@
                                     <Grid Grid.Row="0">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="10" />
                                             <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Grid.Row="0"
                                                    Text="{x:Static Member=localization:Strings.Networks}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}"
                                                    Margin="0,0,0,0" />
-
-
+                                        <!-- Searching / loading: the search icon spins -->
+                                        <internalControls:RefreshStatusControl Grid.Column="1" Grid.Row="0"
+                                                                               LastRefreshTime="{Binding LastRefreshTime}"
+                                                                               LastRefreshFormat="{x:Static localization:Strings.LastScanAtX}"
+                                                                               RemainingTime="{Binding AutoRefreshTimer.RemainingTime}"
+                                                                               HorizontalAlignment="Right"
+                                                                               Margin="10,0,10,0">
+                                            <internalControls:RefreshStatusControl.IsRefreshing>
+                                                <MultiBinding Converter="{StaticResource BooleansOrConverter}">
+                                                    <Binding Path="IsNetworksLoading" />
+                                                    <Binding Path="IsBackgroundSearchRunning" />
+                                                </MultiBinding>
+                                            </internalControls:RefreshStatusControl.IsRefreshing>
+                                        </internalControls:RefreshStatusControl>
                                         <StackPanel Grid.Column="2" Grid.Row="0"
                                                     Orientation="Horizontal"
                                                     VerticalAlignment="Center"
                                                     HorizontalAlignment="Right">
-                                            <CheckBox IsChecked="{Binding AutoRefreshEnabled}"
-                                                      Content="{x:Static Member=localization:Strings.AutomaticallyUpdateEvery}"
-                                                      Margin="0,0,10,0">
-                                            </CheckBox>
-                                            <ComboBox ItemsSource="{Binding Path=AutoRefreshTimes}"
-                                                      SelectedItem="{Binding Path=SelectedAutoRefreshTime}"
-                                                      MinWidth="150"
-                                                      Margin="0,0,10,0">
-                                                <ComboBox.ItemTemplate>
-                                                    <DataTemplate
-                                                        DataType="{x:Type TypeName=utilities:AutoRefreshTimeInfo}">
-                                                        <TextBlock>
-                                                            <TextBlock.Text>
-                                                                <MultiBinding StringFormat="{}{0} {1}">
-                                                                    <Binding Path="Value" />
-                                                                    <Binding Path="TimeUnit"
-                                                                             Converter="{StaticResource ResourceKey=AutoRefreshTimeToStringConverter}" />
-                                                                </MultiBinding>
-                                                            </TextBlock.Text>
-                                                        </TextBlock>
-                                                    </DataTemplate>
-                                                </ComboBox.ItemTemplate>
-                                            </ComboBox>
+                                            <internalControls:AutoRefreshControl IsChecked="{Binding AutoRefreshEnabled}"
+                                                                                 ItemsSource="{Binding AutoRefreshTimes}"
+                                                                                 SelectedItem="{Binding SelectedAutoRefreshTime}"
+                                                                                 Margin="0,0,10,0" />
                                             <Button Command="{Binding Path=ScanNetworksCommand}"
                                                     Style="{StaticResource CleanButton}"
                                                     ToolTip="{x:Static localization:Strings.Refresh}"
@@ -925,12 +918,6 @@
                     <WrapPanel Orientation="Horizontal"
                                VerticalAlignment="Center"
                                HorizontalAlignment="Left">
-                        <networkManager:LoadingIndicator IsActive="True"
-                                                         Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
-                                                         Visibility="{Binding Path=IsBackgroundSearchRunning, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                                         Width="24" Height="24"
-                                                         SpeedRatio="1"
-                                                         Margin="0,0,10,0" />
                         <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"
                                    Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                    Text="{Binding Path=StatusMessage}"

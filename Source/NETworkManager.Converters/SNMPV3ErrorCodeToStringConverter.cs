@@ -1,29 +1,30 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Windows.Data;
 using NETworkManager.Localization;
-using NETworkManager.Utilities;
+using NETworkManager.Models.Network;
 
 namespace NETworkManager.Converters;
 
 /// <summary>
-///     Convert <see cref="TimeUnit" /> to translated <see cref="string" /> or wise versa.
+///     Convert a <see cref="SNMPV3ErrorCode" /> to a translated <see cref="string" /> (e.g. "Authentication failed").
 /// </summary>
-public sealed class AutoRefreshTimeToStringConverter : IValueConverter
+public sealed class SNMPV3ErrorCodeToStringConverter : IValueConverter
 {
     /// <summary>
-    ///     Convert <see cref="TimeUnit" /> to translated <see cref="string" />.
+    ///     Convert a <see cref="SNMPV3ErrorCode" /> to a translated <see cref="string" />.
     /// </summary>
-    /// <param name="value">Object from type <see cref="TimeUnit" />.</param>
+    /// <param name="value">Error code as <see cref="SNMPV3ErrorCode" />.</param>
     /// <param name="targetType"></param>
     /// <param name="parameter"></param>
     /// <param name="culture"></param>
-    /// <returns>Translated <see cref="TimeUnit" />.</returns>
+    /// <returns>Translated error, empty for <see cref="SNMPV3ErrorCode.None" />.</returns>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value is not TimeUnit timeUnit
-            ? "-/-"
-            : ResourceTranslator.Translate(ResourceIdentifier.TimeUnit, timeUnit);
+        if (value is not SNMPV3ErrorCode errorCode || errorCode == SNMPV3ErrorCode.None)
+            return string.Empty;
+
+        return ResourceTranslator.Translate(ResourceIdentifier.SNMPV3ErrorCode, errorCode);
     }
 
     /// <summary>

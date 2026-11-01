@@ -175,6 +175,66 @@ public class DNSClient : SingletonBase<DNSClient>
     }
 
     /// <summary>
+    ///     Resolve all IPv4 and IPv6 addresses (A and AAAA records) of a hostname or FQDN, e.g. to exclude every address
+    ///     of a host. Both queries are sent at the same time.
+    /// </summary>
+    /// <param name="query">Hostname or FQDN as string like "example.com".</param>
+    /// <returns>
+    ///     IP addresses of the host (A records first), empty if the host has no record. Null if one of the queries
+    ///     failed (e.g. timeout, SERVFAIL) - the addresses of the host are then not completely known.
+    /// </returns>
+    public async Task<List<IPAddress>> ResolveAllAAndAaaaAsync(string query)
+    {
+        if (!_isConfigured)
+            throw new DNSClientNotConfiguredException(NotConfiguredMessage);
+
+        var state = _state;
+
+        query = AddDNSSuffixIfConfigured(query, state);
+
+        var results = await Task.WhenAll(QueryIPAddressesAsync(query, QueryType.A, state),
+            QueryIPAddressesAsync(query, QueryType.AAAA, state));
+
+        return results.Any(x => x == null) ? null : [.. results.SelectMany(x => x)];
+    }
+
+    /// <summary>
+    ///     Query the IP addresses of a hostname or FQDN for <see cref="ResolveAllAAndAaaaAsync" />.
+    /// </summary>
+    /// <param name="query">Hostname or FQDN (with the DNS suffix, if configured).</param>
+    /// <param name="queryType"><see cref="QueryType.A" /> or <see cref="QueryType.AAAA" />.</param>
+    /// <param name="state">Resolver state snapshot captured at the start of the resolve call.</param>
+    /// <returns>
+    ///     IP addresses of the records, empty if there is no record (incl. NXDOMAIN), null if the query failed.
+    /// </returns>
+    private static async Task<List<IPAddress>> QueryIPAddressesAsync(string query, QueryType queryType,
+        ResolverState state)
+    {
+        try
+        {
+            var result = await state.Client.QueryAsync(query, queryType);
+
+            // NXDOMAIN: the host has no record (not a failure like a timeout or SERVFAIL)
+            if (result.HasError)
+                return IsNotFoundResponseCode(result.Header.ResponseCode) ? [] : null;
+
+            // Only the records of the type (e.g. not the CNAME records of the answer)
+            return queryType == QueryType.A
+                ? [.. result.Answers.ARecords().Select(x => x.Address)]
+                : [.. result.Answers.AaaaRecords().Select(x => x.Address)];
+        }
+        catch (DnsResponseException)
+        {
+            return null;
+        }
+        catch (Exception ex)
+        {
+            Log.Error($"Error while resolving {queryType} records (Query string is \"{query}\").", ex);
+            return null;
+        }
+    }
+
+    /// <summary>
     ///     Resolve a CNAME from a hostname or FQDN.
     /// </summary>
     /// <param name="query">Hostname or FQDN as string like "example.com".</param>

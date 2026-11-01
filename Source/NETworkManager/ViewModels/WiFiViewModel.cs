@@ -41,8 +41,10 @@ public class WiFiViewModel : ViewModelBase
     private static readonly ILog Log = LogManager.GetLogger(typeof(WiFiViewModel));
 
     private readonly bool _isLoading;
-    private readonly DispatcherTimer _autoRefreshTimer = new();
-    private bool _isViewVisible = true;
+    /// <summary>
+    /// Refreshes the view automatically (see <see cref="AutoRefreshEnabled"/>).
+    /// </summary>
+    private readonly AutoRefreshTimer _autoRefreshTimer;
     private readonly DispatcherTimer _hideConnectionStatusMessageTimer = new();
 
     public bool SdkContractAvailable
@@ -131,6 +133,27 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the time of the last scan of the networks, null before the first one (shown in the header).
+    /// </summary>
+    public DateTime? LastRefreshTime
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the auto refresh, for the countdown in the header (see <see cref="AutoRefreshTimer.RemainingTime"/>).
+    /// </summary>
+    public AutoRefreshTimer AutoRefreshTimer => _autoRefreshTimer;
+
     public bool AutoRefreshEnabled
     {
         get;
@@ -144,16 +167,7 @@ public class WiFiViewModel : ViewModelBase
 
             field = value;
 
-            // Start timer to refresh automatically
-            if (value)
-            {
-                _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(SelectedAutoRefreshTime);
-                _autoRefreshTimer.Start();
-            }
-            else
-            {
-                _autoRefreshTimer.Stop();
-            }
+            _autoRefreshTimer.IsEnabled = value;
 
             OnPropertyChanged();
         }
@@ -174,11 +188,9 @@ public class WiFiViewModel : ViewModelBase
 
             field = value;
 
-            if (AutoRefreshEnabled)
-            {
+            // Not in the list (e.g. a removed interval of an old settings file): the previous interval is kept
+            if (value != null)
                 _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(value);
-                _autoRefreshTimer.Start();
-            }
 
             OnPropertyChanged();
         }
@@ -550,7 +562,9 @@ public class WiFiViewModel : ViewModelBase
         _ = LoadAdaptersAsync(SettingsManager.Current.WiFi_InterfaceId);
 
         // Auto refresh
-        _autoRefreshTimer.Tick += AutoRefreshTimer_Tick;
+        // Not while networks are loading or a connection is made (tried again after the interval)
+        _autoRefreshTimer = new AutoRefreshTimer(() => ScanAsync(SelectedAdapter, true),
+            () => !IsNetworksLoading && !IsBackgroundSearchRunning && !IsConnecting);
 
         AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
         SelectedAutoRefreshTime = AutoRefreshTimes.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
@@ -667,12 +681,12 @@ public class WiFiViewModel : ViewModelBase
 
         IsAdaptersLoading = true;
 
-        // Show a loading animation for the user
-        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
-
         try
         {
-            Adapters = await WiFi.GetAdapterAsync();
+            // Takes at least the refresh interval, so the reload animation is visible and the reload can't be spammed -
+            // loading runs at the same time
+            Adapters = await TaskHelper.WithMinimumDurationAsync(() => WiFi.GetAdapterAsync(),
+                GlobalStaticConfiguration.ApplicationUIRefreshInterval);
         }
         catch (Exception ex)
         {
@@ -718,16 +732,13 @@ public class WiFiViewModel : ViewModelBase
     {
         Log.Debug($"ScanAsync - Scanning WiFi adapter \"{adapterInfo.NetworkInterfaceInfo.Name}\" with delay of {delayInMs} ms...");
 
+        // An error of the last scan is hidden (the search icon spins while searching)
+        IsStatusMessageDisplayed = false;
+
         if (refreshing)
-        {
-            StatusMessage = Strings.SearchingForNetworksDots;
             IsBackgroundSearchRunning = true;
-        }
         else
-        {
-            IsStatusMessageDisplayed = false;
             IsNetworksLoading = true;
-        }
 
         if (delayInMs != 0)
             await Task.Delay(delayInMs);
@@ -806,8 +817,7 @@ public class WiFiViewModel : ViewModelBase
             Radio6GHzLowerLegend = [.. legend6GHzLower];
             Radio6GHzUpperLegend = [.. legend6GHzUpper];
 
-            statusMessage = string.Format(Strings.LastScanAtX,
-                wiFiNetworkScanInfo.Timestamp.ToLongTimeString());
+            LastRefreshTime = wiFiNetworkScanInfo.Timestamp;
         }
         catch (Exception ex)
         {
@@ -829,8 +839,9 @@ public class WiFiViewModel : ViewModelBase
         }
         finally
         {
-            IsStatusMessageDisplayed = true;
+            // Only an error, the time of the scan is shown in the header
             StatusMessage = statusMessage;
+            IsStatusMessageDisplayed = !string.IsNullOrEmpty(statusMessage);
 
             IsBackgroundSearchRunning = false;
             IsNetworksLoading = false;
@@ -1312,42 +1323,17 @@ public class WiFiViewModel : ViewModelBase
 
     public void OnViewVisible()
     {
-        _isViewVisible = true;
-
-        // Restart timer...
-        if (AutoRefreshEnabled)
-            _autoRefreshTimer.Start();
+        _autoRefreshTimer.Resume();
     }
 
     public void OnViewHide()
     {
-        _isViewVisible = false;
-
-        // Temporarily stop timer...
-        if (AutoRefreshEnabled)
-            _autoRefreshTimer.Stop();
+        _autoRefreshTimer.Pause();
     }
 
     #endregion
 
     #region Events
-
-    private async void AutoRefreshTimer_Tick(object sender, EventArgs e)
-    {
-        // Don't refresh if it's already loading or connecting
-        if (IsNetworksLoading || IsBackgroundSearchRunning || IsConnecting)
-            return;
-
-        // Stop timer...
-        _autoRefreshTimer.Stop();
-
-        // Scan networks
-        await ScanAsync(SelectedAdapter, true);
-
-        // Restart timer, unless auto refresh was disabled or the view was hidden in the meantime
-        if (AutoRefreshEnabled && _isViewVisible)
-            _autoRefreshTimer.Start();
-    }
 
     private void HideConnectionStatusMessageTimer_Tick(object sender, EventArgs e)
     {

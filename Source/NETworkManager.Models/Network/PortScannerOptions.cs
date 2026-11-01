@@ -63,4 +63,11 @@ public record PortScannerOptions
     ///     Include closed ports in the result.
     /// </summary>
     public required bool ShowAllResults { get; init; }
+
+    /// <summary>
+    ///     Ports that are reported in any state, also if <see cref="ShowAllResults" /> is disabled: the open ports of
+    ///     the previous scan, so a port that is no longer open has a row with its state (see
+    ///     <see cref="PortScannerScanComparer" />). Null for none.
+    /// </summary>
+    public System.Collections.Generic.IReadOnlySet<(System.Net.IPAddress IPAddress, int Port)> ReportPorts { get; init; }
 }

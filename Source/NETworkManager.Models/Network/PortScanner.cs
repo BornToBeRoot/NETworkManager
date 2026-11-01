@@ -291,7 +291,8 @@ public sealed class PortScanner
                             }
                         }
 
-                        if (_options.ShowAllResults || portState == PortState.Open)
+                        if (_options.ShowAllResults || portState == PortState.Open ||
+                            _options.ReportPorts?.Contains((host.ipAddress, port)) == true)
                             OnPortScanned(new PortScannerPortScannedArgs(
                                 new PortScannerPortInfo(host.ipAddress, hostname, port,
                                     PortLookup.LookupByPortAndProtocol(port), portState)));

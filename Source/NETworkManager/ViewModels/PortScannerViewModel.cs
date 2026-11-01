@@ -2,10 +2,12 @@
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
+using NETworkManager.Converters;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Export;
+using NETworkManager.Models.Lookup;
 using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
 using NETworkManager.Settings;
@@ -55,6 +57,9 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private bool _firstLoad = true;
     private bool _closed;
 
+    // A manual scan waits for the confirmation of a large scan (IsRunning is still false) - not repeated meanwhile
+    private bool _isConfirmingScan;
+
     // Background PortScanned events append here instead of hopping to the UI thread per item -
     // a DispatcherTimer periodically flushes this into the Results collection instead, so a large
     // scan doesn't flood the dispatcher queue with one BeginInvoke per port.
@@ -75,6 +80,31 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     // Ports of the last scan as entered (e.g. "22; 80; 443"), for a profile created from a result
     private string _lastPortsInput;
+
+    // Open ports of the last completed scan of this tab and its input (hosts + resolved ports): the next scan of the
+    // same input shows what changed (see CompareWithPreviousScan). Only in memory, gone when the tab is closed.
+    private Dictionary<(IPAddress IPAddress, int Port), string> _baseline;
+    private string _baselineInput;
+
+    // Baseline the shown result was compared with, to update the changes after a rescan (null without comparison)
+    private Dictionary<(IPAddress IPAddress, int Port), string> _comparisonBaseline;
+
+    // Input of the running / last scan (not of a rescan), null until the ports are resolved; the hosts as entered,
+    // e.g. for the title of the notification (the input may be changed during the scan)
+    private string _scanInput;
+    private string _scanHost;
+
+
+    // Repeated scan: the rows of the last scan stay and are updated in place (selection, scroll position and collapsed
+    // groups stay) - row per IP address and port, new open ports are added (_repeatAdded), the reported ports are
+    // remembered (a port of a host that was not scanned is not reported). The states before the scan are restored if
+    // it is canceled or fails.
+    private Dictionary<(IPAddress IPAddress, int Port), PortScannerPortInfo> _repeatRows;
+    private readonly List<PortScannerPortInfo> _repeatAdded = [];
+    private readonly HashSet<(IPAddress IPAddress, int Port)> _repeatReported = [];
+    private Dictionary<PortScannerPortInfo, PortState> _repeatSnapshots;
+    private (int toScan, int scanned, int open, int closed, int timedOut) _repeatCounters;
+    private Dictionary<IPAddress, (int closed, int timedOut)> _repeatPortsNotOpenPerHost;
 
     // Message of the tab, shown until the first scan has started or the ports are changed (see constructor)
     private string _message;
@@ -121,6 +151,10 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 return;
 
             field = value;
+
+            // Another input is not repeated (until it was scanned)
+            Repeat?.OnInputChanged();
+
             OnPropertyChanged();
         }
     }
@@ -143,6 +177,9 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
             field = value;
             OnPropertyChanged();
+
+            // Other ports are not repeated (until they were scanned)
+            Repeat?.OnInputChanged();
 
             // The message of the tab is about the ports passed in (e.g. a port profile of the profile was not
             // found), it no longer applies when they are changed. Hidden only if it is still shown - not an error of
@@ -366,6 +403,76 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Gets or sets the number of ports that are open now and were not open in the previous scan (see <see cref="HasComparison"/>).
+    /// </summary>
+    public int PortsNowOpen
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the number of ports that are not open now and were open in the previous scan (see <see cref="HasComparison"/>).
+    /// </summary>
+    public int PortsNoLongerOpen
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the shown result is compared with the previous scan of the same hosts
+    /// and ports (change column and counters).
+    /// </summary>
+    public bool HasComparison
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the time the last scan was completed, null before (or while a scan is running).
+    /// </summary>
+    public DateTime? LastScanTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the repeat of the scan ("Automatically scan every", countdown to the next scan).
+    /// </summary>
+    public ScanRepeater Repeat { get; }
+
+    /// <summary>
     /// Gets or sets a value indicating whether the scan is being prepared.
     /// </summary>
     public bool PreparingScan
@@ -473,6 +580,11 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// </param>
     public PortScannerViewModel(Guid tabId, string host, string port, bool start = true, string message = null)
     {
+        // Repeat of the scan (before the input is set, see its setter): not while a scan or rescan is running, or a
+        // manual scan waits for its confirmation
+        Repeat = new ScanRepeater(() => Start(isRepeat: true), () => IsRunning || _isConfirmingScan,
+            SettingsManager.Current.PortScanner_AutoRefreshTime, x => SettingsManager.Current.PortScanner_AutoRefreshTime = x);
+
         _firstLoad = start;
 
         ConfigurationManager.Current.PortScannerTabCount++;
@@ -529,7 +641,8 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                    Matches(info.LookupInfo.Service) ||
                    Matches(info.LookupInfo.Description) ||
                    Matches(info.State.ToString()) ||
-                   Matches(ResourceTranslator.Translate(ResourceIdentifier.PortState, info.State));
+                   Matches(ResourceTranslator.Translate(ResourceIdentifier.PortState, info.State)) ||
+                   Matches(PortScannerPortChangeToStringConverter.ToLocalizedString(info.Change));
         };
 
         _searchDelay = new SearchDelay(GlobalStaticConfiguration.SearchDispatcherTimerTimeSpan, ApplySearch);
@@ -559,6 +672,9 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return;
 
         _closed = true;
+
+        // No repeated scan in the background
+        Repeat.Close();
 
         SettingsManager.Current.PropertyChanged -= SettingsManager_PropertyChanged;
 
@@ -810,7 +926,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         IsStatusMessageDisplayed = true;
     }
 
-    private async Task Start()
+    private async Task Start(bool isRepeat = false)
     {
         // Port profiles in the input (e.g. "Webserver; 8080") are replaced by their ports. The input is validated, but
         // a port profile may have been renamed or deleted since.
@@ -855,15 +971,29 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return;
         }
 
-        if (portCount > GlobalStaticConfiguration.PortScanner_ConfirmPortCount)
+        // Confirmed by the first scan, not asked again when the scan is repeated
+        if (!isRepeat && portCount > GlobalStaticConfiguration.PortScanner_ConfirmPortCount)
         {
             var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive) ??
                          Application.Current.MainWindow;
 
-            if (!await DialogHelper.ShowConfirmationMessageAsync(window, Strings.Scan,
+            bool confirmed;
+
+            _isConfirmingScan = true;
+
+            try
+            {
+                confirmed = await DialogHelper.ShowConfirmationMessageAsync(window, Strings.Scan,
                     string.Format(Strings.ScanManyPortsMessage, portCount.ToString("N0"), hostCount.ToString("N0"),
                         portsPerHost.ToString("N0")),
-                    ChildWindowIcon.Warn, Strings.Scan))
+                    ChildWindowIcon.Warn, Strings.Scan);
+            }
+            finally
+            {
+                _isConfirmingScan = false;
+            }
+
+            if (!confirmed)
                 return;
 
             // The tab may have been closed while the dialog was open (OnClose only stops a running scan)
@@ -893,9 +1023,41 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             _resultsBuffer.Clear();
         }
 
-        OpenPortsPerHost.Clear();
-        Results.Clear();
+        // A canceled / failed repeated scan restores the counters of the last scan (see ScanComplete)
+        if (isRepeat)
+        {
+            _repeatCounters = (PortsToScan, PortsScanned, PortsOpen, PortsClosed, PortsTimedOut);
+            _repeatPortsNotOpenPerHost = new Dictionary<IPAddress, (int closed, int timedOut)>(_portsNotOpenPerHost);
+        }
+
+        // Set from the scanner at the end of the scan (see ScanComplete)
         _portsNotOpenPerHost.Clear();
+
+        if (isRepeat)
+        {
+            // The rows of the last scan stay (and its changes until the scan is completed), see ApplyRepeatResult
+            _repeatRows = Results.GroupBy(x => (x.IPAddress, x.Port)).ToDictionary(x => x.Key, x => x.First());
+            _repeatAdded.Clear();
+            _repeatReported.Clear();
+            _repeatSnapshots = _repeatRows.Values.ToDictionary(x => x, x => x.State);
+        }
+        else
+        {
+            OpenPortsPerHost.Clear();
+            Results.Clear();
+
+            // Repeated from the end of this scan (see ScanComplete)
+            Repeat.Disarm();
+
+            HasComparison = false;
+            _comparisonBaseline = null;
+            PortsNowOpen = 0;
+            PortsNoLongerOpen = 0;
+            LastScanTime = null;
+        }
+
+        // Compared with the previous scan of the same input when this scan is completed (see ScanComplete)
+        _scanInput = null;
 
         // No results are shown until the scan's options are known - follow the current settings
         ScanOptions = CreateScanOptions();
@@ -920,7 +1082,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Resolve hostnames and convert the ports. Start() is fire-and-forget, so every exception has to be
         // handled here - otherwise the scan would never end (IsRunning stays true).
-        (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved) hosts;
+        (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved, int excludedCount) hosts;
         int[] ports;
 
         try
@@ -947,6 +1109,10 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             AddStatusMessage(
                 $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}");
 
+        // The exclusions removed every host (also if hostnames could not be resolved)
+        if (hosts.hosts.Count == 0 && hosts.excludedCount > 0)
+            AddStatusMessage(Strings.AllIPAddressesAreExcludedMessage);
+
         PortsToScan = ports.Length * hosts.hosts.Count;
 
         // No host left (e.g. only hostnames that could not be resolved): don't start the scan, only the message above
@@ -958,20 +1124,40 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         PreparingScan = false;
 
-        // Add host(s) to the history
-        ListHelper.Modify(SettingsManager.Current.PortScanner_HostHistory, Host,
-            SettingsManager.Current.General_HistoryListEntries);
-        // A single port profile name is already in the list, only other inputs are added to the history
-        if (PortProfile.FindByName(SettingsManager.Current.PortScanner_PortProfiles, Ports) == null)
-            ListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory, Ports,
+        // Add host(s) to the history (not again when the scan is repeated)
+        if (!isRepeat)
+        {
+            ListHelper.Modify(SettingsManager.Current.PortScanner_HostHistory, Host,
                 SettingsManager.Current.General_HistoryListEntries);
+            // A single port profile name is already in the list, only other inputs are added to the history
+            if (PortProfile.FindByName(SettingsManager.Current.PortScanner_PortProfiles, Ports) == null)
+                ListHelper.Modify(SettingsManager.Current.PortScanner_PortHistory, Ports,
+                    SettingsManager.Current.General_HistoryListEntries);
+        }
 
         ScanOptions = CreateScanOptions();
 
         _lastPorts = ports;
         _lastPortsInput = Ports;
 
-        StartScanner(ScanOptions, (portScanner, ct) => portScanner.ScanAsync(hosts.hosts, ports, ct));
+        // The resolved ports: a changed port profile is another input
+        _scanHost = Host?.Trim() ?? string.Empty;
+        _scanInput = $"{_scanHost}|{string.Join(";", ports)}";
+
+        // The open ports of the previous scan of this input are also reported if they are closed now, so they get a
+        // row with their state - a repeated scan reports every port with a row, so it is updated (not in ScanOptions:
+        // not for a rescan, not for the columns)
+        var reportPorts = new HashSet<(IPAddress IPAddress, int Port)>();
+
+        if (IsComparedWithBaseline())
+            reportPorts.UnionWith(_baseline.Keys);
+
+        if (_repeatRows != null)
+            reportPorts.UnionWith(_repeatRows.Keys);
+
+        var options = reportPorts.Count > 0 ? ScanOptions with { ReportPorts = reportPorts } : ScanOptions;
+
+        StartScanner(options, (portScanner, ct) => portScanner.ScanAsync(hosts.hosts, ports, ct));
     }
 
     /// <summary>
@@ -1031,7 +1217,13 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
 
-        StartScanner(ScanOptions,
+        // The ports that were open in the compared scan are reported in any state, so a port that is no longer open has
+        // a row (see ApplyComparison)
+        var options = _comparisonBaseline != null
+            ? ScanOptions with { ReportPorts = _comparisonBaseline.Keys.ToHashSet() }
+            : ScanOptions;
+
+        StartScanner(options,
             (portScanner, ct) => portScanner.ScanAsync([.. ipAddresses.Select(x => (x, string.Empty))], _lastPorts, ct));
     }
 
@@ -1106,6 +1298,56 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             timedOut = Math.Max(0, timedOut + change);
 
         _portsNotOpenPerHost[ipAddress] = (closed, timedOut);
+    }
+
+    /// <summary>
+    /// Applies the results of a repeated scan (see <see cref="Start"/>): the row of the port is updated in place, new
+    /// ports (open, or closed ones if they are shown) are added.
+    /// </summary>
+    /// <param name="results">Results of the scan.</param>
+    private void ApplyRepeatResults(List<PortScannerPortInfo> results)
+    {
+        var added = new List<PortScannerPortInfo>();
+
+        foreach (var result in results)
+        {
+            var key = (result.IPAddress, result.Port);
+            _repeatReported.Add(key);
+
+            if (_repeatRows.TryGetValue(key, out var row))
+            {
+                SetPortState(row, result.State);
+                continue;
+            }
+
+            added.Add(result);
+            _repeatRows[key] = result;
+            _repeatAdded.Add(result);
+        }
+
+        if (added.Count > 0)
+            AddResults(added);
+    }
+
+    /// <summary>
+    /// Changes the state of a shown row and its count in <see cref="OpenPortsPerHost"/> (group header).
+    /// </summary>
+    /// <param name="row">Row to change.</param>
+    /// <param name="state">New state.</param>
+    private void SetPortState(PortScannerPortInfo row, PortState state)
+    {
+        if (row.State == state)
+            return;
+
+        if (row.State == PortState.Open || state == PortState.Open)
+        {
+            OpenPortsPerHost[row.IPAddress] = Math.Max(0,
+                OpenPortsPerHost.GetValueOrDefault(row.IPAddress) + (state == PortState.Open ? 1 : -1));
+
+            OpenPortsPerHostVersion++;
+        }
+
+        row.State = state;
     }
 
     /// <summary>
@@ -1444,6 +1686,13 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return;
         }
 
+        if (_repeatRows != null)
+        {
+            ApplyRepeatResults(itemsToAdd);
+
+            return;
+        }
+
         // Many rows (e.g. 1-65535 with closed ports shown): with one reset instead of one by one - WPF inserts every
         // added row into its group of the sorted view with a linear search of the group (rows x rows, the window hung
         // for minutes). A reset sorts and groups all rows once.
@@ -1509,6 +1758,12 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         Application.Current.Dispatcher.Invoke(() =>
         {
+            // A rescan updates rows, it is not a scan of the input (see CompareWithPreviousScan)
+            var isRescan = _isRescan;
+
+            // A repeated scan notifies its changes (see NotifyChanges)
+            var isRepeat = _repeatRows != null;
+
             if (sender is PortScanner portScanner)
             {
                 portScanner.PortScanned -= PortScanned;
@@ -1524,6 +1779,44 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 StoreProgress(finishedScanner);
 
             FlushProgress();
+
+            // Repeated scan: canceled / failed or not started (no host left, e.g. a hostname could not be resolved) -
+            // the rows of the last scan with their states and counters; completed - a port of a host that was not
+            // scanned (e.g. it didn't answer the ping before the scan) didn't answer
+            var isNothingScanned = PortsToScan == 0;
+            var isRepeatDiscarded = _repeatRows != null && (e.IsCanceled || e.Exception != null || isNothingScanned);
+
+            if (_repeatRows != null)
+            {
+                if (isRepeatDiscarded)
+                {
+                    foreach (var (row, state) in _repeatSnapshots)
+                        SetPortState(row, state);
+
+                    foreach (var row in _repeatAdded)
+                    {
+                        SetPortState(row, PortState.TimedOut);
+                        Results.Remove(row);
+                    }
+
+                    // The counters of the restored rows (the last scan), not the partial ones of this scan
+                    (PortsToScan, PortsScanned, PortsOpen, PortsClosed, PortsTimedOut) = _repeatCounters;
+
+                    foreach (var (ipAddress, count) in _repeatPortsNotOpenPerHost)
+                        _portsNotOpenPerHost[ipAddress] = count;
+                }
+                else
+                {
+                    foreach (var row in _repeatSnapshots.Keys.Where(x => !_repeatReported.Contains((x.IPAddress, x.Port))))
+                        SetPortState(row, PortState.TimedOut);
+                }
+
+                _repeatRows = null;
+                _repeatAdded.Clear();
+                _repeatReported.Clear();
+                _repeatSnapshots = null;
+                _repeatPortsNotOpenPerHost = null;
+            }
 
             // Canceled / failed rescan: keep the previous results of the hosts (their rows were removed when the
             // rescan started, only some ports were scanned again)
@@ -1542,7 +1835,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                     UpdatePortsNotOpenPerHost(row.IPAddress, row.State, 1);
                 }
             }
-            else if (sender is PortScanner finishedPortScanner && !isRescanDiscarded)
+            else if (sender is PortScanner finishedPortScanner && !isRescanDiscarded && !isRepeatDiscarded)
             {
                 if (_isRescan)
                 {
@@ -1605,7 +1898,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
                 AddStatusMessage(e.Exception.Message);
             }
-            else if (Results.Count == 0 && PortsToScan > 0)
+            else if (Results.Count == 0 && !isNothingScanned)
             {
                 AddStatusMessage(Strings.NoOpenPortsFound);
             }
@@ -1615,13 +1908,171 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 AddStatusMessage(string.Format(Strings.XHostsDidNotAnswerThePingAndWereNotScanned,
                     pingScanner.HostsSkipped));
 
+            // A completed rescan: the changes against the same previous scan (e.g. a port that is open again)
+            if (isRescan && !e.IsCanceled && e.Exception == null && _comparisonBaseline != null)
+            {
+                ApplyComparison(_comparisonBaseline);
+
+                if (!string.IsNullOrEmpty(Search))
+                    ResultsView.Refresh();
+            }
+
+            // Only a completed scan of the input is compared and becomes the baseline of the next one. Repeated: a completed
+            // scan, and a repeated scan that failed (tried again after the interval, see ScanRepeater.OnScanEnded)
+            if (!isRescan)
+            {
+                var isCompleted = !e.IsCanceled && e.Exception == null && _scanInput != null && !isNothingScanned;
+
+                if (isCompleted)
+                    CompareWithPreviousScan(isRepeat);
+
+                Repeat.OnScanEnded(isCompleted, e.IsCanceled);
+            }
+
             PreparingScan = false;
             IsCanceling = false;
             IsRunning = false;
 
             // E.g. canceled during the preparation, or nothing found
             UpdateScanOptionsIfNoResults();
+
         });
+    }
+
+    /// <summary>
+    /// Shows a notification / plays a sound (see settings) with the changes of a repeated scan: one notification per
+    /// scan, up to three changes one per line, otherwise the counters. Like the host up / down notification of the
+    /// Ping Monitor: only ports that are open now = up, any port that is no longer open = down.
+    /// </summary>
+    private void NotifyChanges()
+    {
+        var showPopup = SettingsManager.Current.PortScanner_ShowNotificationPopup;
+        var playSound = SettingsManager.Current.PortScanner_NotificationSound;
+
+        if (!showPopup && !playSound)
+            return;
+
+        var changes = Results.Where(x => x.Change != PortScannerPortChange.None).ToList();
+
+        if (changes.Count == 0)
+            return;
+
+        changes.Sort((x, y) =>
+        {
+            var result = IPAddressHelper.CompareIPAddresses(x.IPAddress, y.IPAddress);
+
+            return result != 0 ? result : x.Port.CompareTo(y.Port);
+        });
+
+        // "10.0.0.5 (server) · 22/tcp (ssh) · Now open" - open now = up, no longer open = down
+        var lines = changes.Select(x => new NotificationLine(
+            NotificationLine.JoinText(NotificationLine.FormatHost(x.IPAddress, x.Hostname),
+                $"{x.Port}/{x.LookupInfo.Protocol.ToString().ToLowerInvariant()}" +
+                (string.IsNullOrEmpty(x.LookupInfo.Service) ? string.Empty : $" ({x.LookupInfo.Service})")),
+            PortScannerPortChangeToStringConverter.ToLocalizedString(x.Change),
+            x.Change == PortScannerPortChange.Opened ? NotificationStatus.Up : NotificationStatus.Down)).ToList();
+
+        var summary = new[]
+            {
+                (Count: PortsNowOpen, Format: Strings.XNowOpen, Status: NotificationStatus.Up),
+                (Count: PortsNoLongerOpen, Format: Strings.XNoLongerOpen, Status: NotificationStatus.Down)
+            }
+            .Where(x => x.Count > 0)
+            .Select(x => new NotificationLine(null, string.Format(x.Format, x.Count), x.Status)).ToList();
+
+        // Open now = up, no longer open = down, both = up and down
+        var status = NotificationStatusHelper.FromChanges(PortsNowOpen, PortsNoLongerOpen, 0);
+
+        NotificationManager.Show(new NotificationInfo(ApplicationName.PortScanner, status,
+                _scanHost, NotificationManager.FormatChanges(lines, summary),
+                SettingsManager.Current.PortScanner_NotificationCloseTime)
+            {
+                Request = new ShowTabRequest(ApplicationName.PortScanner, _tabId)
+            },
+            showPopup, playSound);
+    }
+
+    /// <summary>
+    /// Marks the ports that are open now / no longer open against the open ports of the previous scan, adds a row for
+    /// a port that was open and is not in the result (e.g. the host didn't answer the ping before the scan). Updates
+    /// the counters.
+    /// </summary>
+    /// <param name="baseline">Open ports of the previous scan.</param>
+    private void ApplyComparison(IReadOnlyDictionary<(IPAddress IPAddress, int Port), string> baseline)
+    {
+        var comparison = PortScannerScanComparer.Compare(baseline, Results);
+
+        foreach (var row in Results)
+        {
+            var key = (row.IPAddress, row.Port);
+
+            row.Change = comparison.Opened.Contains(key)
+                ? PortScannerPortChange.Opened
+                : comparison.Closed.Contains(key)
+                    ? PortScannerPortChange.Closed
+                    : PortScannerPortChange.None;
+        }
+
+        foreach (var (ipAddress, port, hostname) in comparison.Missing)
+            Results.Add(new PortScannerPortInfo(ipAddress, hostname, port, PortLookup.LookupByPortAndProtocol(port),
+                PortState.TimedOut) { Change = PortScannerPortChange.Closed });
+
+        PortsNowOpen = Results.Count(x => x.Change == PortScannerPortChange.Opened);
+        PortsNoLongerOpen = Results.Count(x => x.Change == PortScannerPortChange.Closed);
+    }
+
+    /// <summary>
+    /// Checks if the running scan is compared with the previous scan (same input).
+    /// </summary>
+    private bool IsComparedWithBaseline()
+    {
+        return _baseline != null && string.Equals(_baselineInput, _scanInput, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    /// Compares the completed scan with the previous completed scan of the same hosts and ports in this tab: marks
+    /// the ports that are open now / no longer open, adds a row for a port that was open and is not in the result
+    /// (e.g. the host didn't answer the ping before the scan). The scan becomes the baseline of the next one. Called on
+    /// the UI thread.
+    /// </summary>
+    /// <param name="isRepeat">The scan was repeated automatically: changes are notified (see settings).</param>
+    private void CompareWithPreviousScan(bool isRepeat)
+    {
+        // The changes of the last comparison (rows of a repeated scan)
+        foreach (var row in Results)
+            row.Change = PortScannerPortChange.None;
+
+        if (IsComparedWithBaseline())
+        {
+            _comparisonBaseline = _baseline;
+
+            ApplyComparison(_baseline);
+            HasComparison = true;
+
+            if (isRepeat)
+                NotifyChanges();
+        }
+        else
+        {
+            _comparisonBaseline = null;
+        }
+
+        // A repeated scan reports every port with a row: a port that is not open now is only shown if it is no longer
+        // open (or closed ports are shown)
+        if (!ScanOptions.ShowAllResults)
+        {
+            foreach (var row in Results.Where(x => x.State != PortState.Open && x.Change == PortScannerPortChange.None)
+                         .ToList())
+                Results.Remove(row);
+        }
+
+        // The view isn't filtered live (see the constructor)
+        if (!string.IsNullOrEmpty(Search))
+            ResultsView.Refresh();
+
+        _baseline = PortScannerScanComparer.CreateBaseline(Results);
+        _baselineInput = _scanInput;
+        LastScanTime = DateTime.Now;
     }
 
     #endregion

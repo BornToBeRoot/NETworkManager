@@ -1,13 +1,18 @@
 using MahApps.Metro.IconPacks;
+using NETworkManager.Localization;
+using NETworkManager.Models;
 using NETworkManager.Utilities;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace NETworkManager;
@@ -38,10 +43,17 @@ public partial class NotificationWindow : INotifyPropertyChanged
     // Bound properties — all set once in the constructor, no change notifications needed.
     // Note: the header property is named NotificationTitle (not Title) to avoid clashing with
     // the inherited Window.Title property, which a "{Binding Title}" would otherwise resolve to.
+    // Opened when the notification is clicked (the tool or its tab)
+    private readonly ApplicationRequest _request;
+
+    // Header: the tool that sent the notification
+    public Brush ApplicationIconBrush { get; }
+    public string ApplicationTitle { get; }
+
     public PackIconMaterialKind IconKind { get; }
-    public string IconColor { get; }
+    public Brush IconBrush { get; }
     public string NotificationTitle { get; }
-    public string Message { get; }
+    public IReadOnlyList<NotificationLineItem> Lines { get; }
 
     // Timestamp shown in the header — captured when the notification is created, which is the
     // moment the status change occurred.
@@ -69,18 +81,27 @@ public partial class NotificationWindow : INotifyPropertyChanged
 
     #region Constructor
 
-    public NotificationWindow(PackIconMaterialKind iconKind, string iconColor, string title, string message, int closeTimeSeconds)
+    public NotificationWindow(NotificationInfo notification)
     {
         InitializeComponent();
         DataContext = this;
 
-        IconKind = iconKind;
-        IconColor = iconColor;
-        NotificationTitle = title;
-        Message = message;
+        _request = notification.Request ?? new ApplicationRequest(notification.Application);
+
+        ApplicationIconBrush = new VisualBrush(ApplicationManager.GetIcon(notification.Application))
+        {
+            Stretch = Stretch.Uniform
+        };
+        ApplicationTitle = ResourceTranslator.Translate(ResourceIdentifier.ApplicationName, notification.Application);
+
+        (IconKind, IconBrush) = GetStatusIcon(notification.Status);
+        NotificationTitle = notification.Title;
+        Lines = [.. notification.Lines.Select(x => new NotificationLineItem(
+            string.IsNullOrEmpty(x.Text) ? string.Empty : x.Text + NotificationLine.Separator, x.Status,
+            GetStatusBrush(x.StatusKind)))];
         Time = DateTime.Now.ToString("HH:mm:ss");
-        TimeMax = closeTimeSeconds;
-        TimeRemaining = closeTimeSeconds;
+        TimeMax = notification.CloseTimeSeconds;
+        TimeRemaining = notification.CloseTimeSeconds;
 
         CloseCommand = new RelayCommand(_ => CloseWindow());
 
@@ -103,11 +124,65 @@ public partial class NotificationWindow : INotifyPropertyChanged
         if (System.Windows.Application.Current.MainWindow is MainWindow mainWindow &&
             mainWindow.ShowWindowCommand.CanExecute(null))
             mainWindow.ShowWindowCommand.Execute(null);
+
+        // The tool (and the tab) that sent the notification
+        NavigationManager.Open(_request);
     }
 
     #endregion
 
     #region Methods
+
+    // Colors of the application (status icons, "Since last scan" of the scanners)
+    private static readonly Color UpColor = (Color)ColorConverter.ConvertFromString("#badc58");
+    private static readonly Color DownColor = (Color)ColorConverter.ConvertFromString("#b95353");
+    private static readonly Color ChangedColor = (Color)ColorConverter.ConvertFromString("#f1b856");
+
+    /// <summary>
+    /// Gets the icon and its brush of a status: up green, down red, up and down half green / half red (split along the
+    /// diagonal), changed orange.
+    /// </summary>
+    /// <param name="status">Status of the notification.</param>
+    /// <returns>Icon and brush.</returns>
+    private static (PackIconMaterialKind kind, Brush brush) GetStatusIcon(NotificationStatus status)
+    {
+        var brush = GetStatusBrush(status);
+
+        var kind = status switch
+        {
+            NotificationStatus.Up => PackIconMaterialKind.LanConnect,
+            NotificationStatus.Down => PackIconMaterialKind.LanDisconnect,
+            NotificationStatus.UpAndDown => PackIconMaterialKind.Lan,
+            _ => PackIconMaterialKind.LanPending
+        };
+
+        return (kind, brush);
+    }
+
+    /// <summary>
+    /// Gets the brush of a status (status icon, status text of a line): up green, down red, up and down half green /
+    /// half red (split along the diagonal), changed orange.
+    /// </summary>
+    /// <param name="status">Status.</param>
+    /// <returns>Frozen brush.</returns>
+    private static Brush GetStatusBrush(NotificationStatus status)
+    {
+        Brush brush = status switch
+        {
+            NotificationStatus.Up => new SolidColorBrush(UpColor),
+            NotificationStatus.Down => new SolidColorBrush(DownColor),
+            NotificationStatus.UpAndDown => new LinearGradientBrush(new GradientStopCollection
+            {
+                // Two stops at the same offset: a sharp diagonal edge instead of a gradient
+                new(UpColor, 0), new(UpColor, 0.5), new(DownColor, 0.5), new(DownColor, 1)
+            }, new Point(0, 0), new Point(1, 1)),
+            _ => new SolidColorBrush(ChangedColor)
+        };
+
+        brush.Freeze();
+
+        return brush;
+    }
 
     /// <summary>
     /// Called by <see cref="NotificationManager"/> when the stack changes (a sibling closes or
@@ -193,3 +268,12 @@ public partial class NotificationWindow : INotifyPropertyChanged
 
     #endregion
 }
+
+/// <summary>
+/// A line of the notification as shown: the text with the separator (empty if the line has only a status), the status
+/// and its brush (see <see cref="NotificationLine" />).
+/// </summary>
+/// <param name="Prefix">Text of the line with the separator, e.g. "10.0.0.5 (server) · ".</param>
+/// <param name="Status">Status text, e.g. "New".</param>
+/// <param name="StatusBrush">Brush of the status text.</param>
+public sealed record NotificationLineItem(string Prefix, string Status, Brush StatusBrush);

@@ -101,10 +101,10 @@ public class IPApiIPGeolocationWidgetViewModel : ViewModelBase
         IsRunning = true;
         Result = null;
 
-        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
-        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
-
-        Result = await IPGeolocationService.GetInstance().GetIPGeolocationAsync();
+        // Takes at least the refresh interval, so the reload animation is visible and the check can't be spammed -
+        // the request runs at the same time
+        Result = await TaskHelper.WithMinimumDurationAsync(() => IPGeolocationService.GetInstance().GetIPGeolocationAsync(),
+            GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         // Log error
         if (Result.HasError)

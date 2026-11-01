@@ -308,6 +308,17 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
     }
 
     /// <summary>
+    /// Shows a message below the input, after the message that is already shown (e.g. hostnames that could not be
+    /// resolved). The messages are cleared when a scan starts.
+    /// </summary>
+    /// <param name="message">Message to show.</param>
+    private void AddStatusMessage(string message)
+    {
+        StatusMessage = IsStatusMessageDisplayed ? StatusMessage + Environment.NewLine + message : message;
+        IsStatusMessageDisplayed = true;
+    }
+
+    /// <summary>
     ///     Starts the ping monitor.
     /// </summary>
     public async Task Start()
@@ -319,7 +330,7 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
         _cancellationTokenSource = new CancellationTokenSource();
 
         // Resolve hostnames
-        (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved) hosts;
+        (List<(IPAddress ipAddress, string hostname)> hosts, List<string> hostnamesNotResolved, int excludedCount) hosts;
 
         try
         {
@@ -336,10 +347,22 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
 
         // Show error message if (some) hostnames could not be resolved
         if (hosts.hostnamesNotResolved.Count > 0)
+            AddStatusMessage(
+                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}");
+
+        // The exclusions removed every host (also if hostnames could not be resolved, keep their message)
+        if (hosts.hosts.Count == 0 && hosts.excludedCount > 0)
+            AddStatusMessage(Strings.AllIPAddressesAreExcludedMessage);
+
+        // No host left (hostnames that could not be resolved, everything excluded): nothing to add, the input is kept
+        // to correct it
+        if (hosts.hosts.Count == 0)
         {
-            StatusMessage =
-                $"{Strings.TheFollowingHostnamesCouldNotBeResolved} {string.Join(", ", hosts.hostnamesNotResolved)}";
-            IsStatusMessageDisplayed = true;
+            // Also if Stop was clicked after the resolution - otherwise SetHost is rejected as still canceling
+            IsCanceling = false;
+            IsRunning = false;
+
+            return;
         }
 
         // Add host(s) to history

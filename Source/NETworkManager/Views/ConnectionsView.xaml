@@ -5,12 +5,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:networkManager="clr-namespace:NETworkManager"
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
-             xmlns:utilities="clr-namespace:NETworkManager.Utilities;assembly=NETworkManager.Utilities"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
+             xmlns:internalControls="clr-namespace:NETworkManager.Controls"
              xmlns:wpfHelpers="clr-namespace:NETworkManager.Utilities.WPF;assembly=NETworkManager.Utilities.WPF"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ConnectionsViewModel}">
     <UserControl.InputBindings>
@@ -19,7 +18,6 @@
     <UserControl.Resources>
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:TcpStateToStringConverter x:Key="TcpStateToStringConverter" />
-        <converters:TimeUnitToStringConverter x:Key="TimeUnitToStringConverter" />
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <TabControl Style="{StaticResource DefaultTabControl}">
@@ -29,11 +27,10 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="10" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Column="0" Grid.Row="0">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
@@ -41,31 +38,20 @@
                                Style="{StaticResource HeaderTextBlock}"
                                Text="{x:Static localization:Strings.Connections}"
                                VerticalAlignment="Center" />
-                    <StackPanel Grid.Column="1"
+                    <internalControls:RefreshStatusControl Grid.Column="1"
+                                                           LastRefreshTime="{Binding LastRefreshTime}"
+                                                           RemainingTime="{Binding AutoRefreshTimer.RemainingTime}"
+                                                           IsRefreshing="{Binding IsRefreshing}"
+                                                           HorizontalAlignment="Right"
+                                                           Margin="10,0,10,0" />
+                    <StackPanel Grid.Column="2"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Right">
-                        <CheckBox IsChecked="{Binding AutoRefreshEnabled}"
-                                  Content="{x:Static localization:Strings.AutomaticallyUpdateEvery}"
-                                  Margin="0,0,10,0" />
-                        <ComboBox ItemsSource="{Binding AutoRefreshTimes}"
-                                  SelectedItem="{Binding SelectedAutoRefreshTime}"
-                                  MinWidth="150"
-                                  Margin="0,0,10,0">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate DataType="utilities:AutoRefreshTimeInfo">
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Path="Value" />
-                                                <Binding Path="TimeUnit"
-                                                         Converter="{StaticResource TimeUnitToStringConverter}" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
+                        <internalControls:AutoRefreshControl IsChecked="{Binding AutoRefreshEnabled}"
+                                                             ItemsSource="{Binding AutoRefreshTimes}"
+                                                             SelectedItem="{Binding SelectedAutoRefreshTime}"
+                                                             Margin="0,0,10,0" />
                         <Button Command="{Binding Path=RefreshCommand}"
                                 Style="{StaticResource CleanButton}"
                                 ToolTip="{x:Static localization:Strings.Refresh}"
@@ -219,19 +205,6 @@
                                             SortMemberPath="ProcessPath" MinWidth="150" />
                     </DataGrid.Columns>
                 </controls:MultiSelectDataGrid>
-                <WrapPanel Grid.Column="0" Grid.Row="4" Orientation="Horizontal"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Left">
-                    <networkManager:LoadingIndicator IsActive="True"
-                                                     Style="{DynamicResource ResourceKey=LoadingIndicatorPulseStyle}"
-                                                     Visibility="{Binding Path=IsRefreshing, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                                     Width="24" Height="24"
-                                                     SpeedRatio="1" Margin="0,0,10,0" />
-                    <TextBlock Style="{StaticResource ResourceKey=AccentTextBlock}"
-                               Visibility="{Binding Path=IsStatusMessageDisplayed, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                               Text="{Binding Path=StatusMessage}"
-                               VerticalAlignment="Center" />
-                </WrapPanel>
             </Grid>
         </TabItem>
     </TabControl>

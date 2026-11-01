@@ -34,80 +34,103 @@
 
         <!-- Main content -->
         <Grid Grid.Row="0" Margin="10" Background="Transparent">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <!-- Status icon: kind and color bound from constructor parameters -->
-            <Rectangle Grid.Column="0" Grid.Row="0"
-                       Width="32" Height="32"
-                       Fill="{Binding IconColor}">
-                <Rectangle.OpacityMask>
-                    <VisualBrush Stretch="Uniform">
-                        <VisualBrush.Visual>
-                            <iconPacks:PackIconMaterial Kind="{Binding IconKind}" />
-                        </VisualBrush.Visual>
-                    </VisualBrush>
-                </Rectangle.OpacityMask>
-            </Rectangle>
-
-            <!-- Title + timestamp (header row) + Message (gray subtext) — fully generic -->
-            <Grid Grid.Column="2" Grid.Row="0" VerticalAlignment="Top">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <!-- Header: the tool that sent the notification (icon and name, like the application list) + time -->
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="6" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0"
-                           Text="{Binding NotificationTitle}"
+                <Rectangle Grid.Column="0"
+                           Width="16" Height="16"
+                           Fill="{DynamicResource MahApps.Brushes.Gray3}"
+                           OpacityMask="{Binding ApplicationIconBrush}"
+                           VerticalAlignment="Center" />
+                <TextBlock Grid.Column="2"
+                           Text="{Binding ApplicationTitle}"
                            Style="{StaticResource DefaultTextBlock}"
-                           TextTrimming="CharacterEllipsis" />
-                <TextBlock Grid.Row="0" Grid.Column="1"
+                           Foreground="{DynamicResource MahApps.Brushes.Gray3}"
+                           TextTrimming="CharacterEllipsis"
+                           VerticalAlignment="Center" />
+                <TextBlock Grid.Column="3"
                            Text="{Binding Time}"
                            Margin="10,0,0,0"
                            VerticalAlignment="Center"
                            Style="{StaticResource DefaultTextBlock}"
                            Foreground="{DynamicResource MahApps.Brushes.Gray5}" />
-                <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
-                           Text="{Binding Message}"
-                           Margin="0,5,0,0"
-                           Style="{StaticResource DefaultTextBlock}"
-                           Foreground="{DynamicResource MahApps.Brushes.Gray5}"
-                           TextWrapping="Wrap" />
+                <!-- Close [×] — gray, Gray5 on hover, NOT red -->
+                <Button Grid.Column="5"
+                        Command="{Binding CloseCommand}"
+                        ToolTip="{x:Static localization:Strings.Close}"
+                        Style="{StaticResource CleanButton}"
+                        VerticalAlignment="Top"
+                        Margin="0,0,0,0">
+                    <Rectangle Width="16" Height="16">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=WindowClose}" />
+                        </Rectangle.OpacityMask>
+                        <Rectangle.Style>
+                            <Style TargetType="{x:Type Rectangle}">
+                                <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
+                                        <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Rectangle.Style>
+                    </Rectangle>
+                </Button>
             </Grid>
-
-            <!-- Close [×] — gray, Gray5 on hover, NOT red -->
-            <Button Grid.Column="4"
-                    Command="{Binding CloseCommand}"
-                    ToolTip="{x:Static localization:Strings.Close}"
-                    Style="{StaticResource CleanButton}"
-                    VerticalAlignment="Top"
-                    Margin="0,2,0,0">
-                <Rectangle Width="16" Height="16">
+            <!-- Content: status icon (see NotificationWindow.GetStatusIcon) + title (the target) + one line per change
+                 ("10.0.0.5 (server) · New", the status in its color) -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Rectangle Grid.Column="0"
+                           Width="32" Height="32"
+                           VerticalAlignment="Top"
+                           Fill="{Binding IconBrush}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill" Visual="{iconPacks:Material Kind=WindowClose}" />
+                        <VisualBrush Stretch="Uniform">
+                            <VisualBrush.Visual>
+                                <iconPacks:PackIconMaterial Kind="{Binding IconKind}" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
                     </Rectangle.OpacityMask>
-                    <Rectangle.Style>
-                        <Style TargetType="{x:Type Rectangle}">
-                            <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray3}" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                    <Setter Property="Fill" Value="{DynamicResource MahApps.Brushes.Gray5}" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Rectangle.Style>
                 </Rectangle>
-            </Button>
+                <StackPanel Grid.Column="2" VerticalAlignment="Top">
+                    <TextBlock Text="{Binding NotificationTitle}"
+                               Style="{StaticResource DefaultTextBlock}"
+                               TextTrimming="CharacterEllipsis" />
+                    <ItemsControl ItemsSource="{Binding Lines}"
+                                  Margin="0,5,0,0"
+                                  Focusable="False">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type networkManager:NotificationLineItem}">
+                                <TextBlock Style="{StaticResource DefaultTextBlock}"
+                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                           TextWrapping="Wrap">
+                                    <Run Text="{Binding Prefix, Mode=OneWay}" /><Run Text="{Binding Status, Mode=OneWay}"
+                                                                                      Foreground="{Binding StatusBrush, Mode=OneWay}" />
+                                </TextBlock>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Grid>
         </Grid>
-
         <!-- Countdown ProgressBar — 3 px, depletes left-to-right -->
         <ProgressBar Grid.Row="1"
                      Minimum="0"

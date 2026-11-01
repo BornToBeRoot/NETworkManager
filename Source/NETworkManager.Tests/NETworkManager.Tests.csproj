@@ -18,5 +18,6 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\NETworkManager.Models\NETworkManager.Models.csproj" />
+        <ProjectReference Include="..\NETworkManager.Profiles\NETworkManager.Profiles.csproj" />
     </ItemGroup>
 </Project>

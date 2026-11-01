@@ -58,6 +58,15 @@ public class ProfileInfo
         IPScanner_Enabled = profile.IPScanner_Enabled;
         IPScanner_InheritHost = profile.IPScanner_InheritHost;
         IPScanner_HostOrIPRange = profile.IPScanner_HostOrIPRange;
+        IPScanner_OverrideSNMP = profile.IPScanner_OverrideSNMP;
+        IPScanner_SNMPVersion = profile.IPScanner_SNMPVersion;
+        IPScanner_SNMPCommunity = profile.IPScanner_SNMPCommunity;
+        IPScanner_SNMPSecurity = profile.IPScanner_SNMPSecurity;
+        IPScanner_SNMPUsername = profile.IPScanner_SNMPUsername;
+        IPScanner_SNMPAuthenticationProvider = profile.IPScanner_SNMPAuthenticationProvider;
+        IPScanner_SNMPAuth = profile.IPScanner_SNMPAuth;
+        IPScanner_SNMPPrivacyProvider = profile.IPScanner_SNMPPrivacyProvider;
+        IPScanner_SNMPPriv = profile.IPScanner_SNMPPriv;
 
         // Port Scanner
         PortScanner_Enabled = profile.PortScanner_Enabled;
@@ -314,6 +323,27 @@ public class ProfileInfo
     public bool IPScanner_Enabled { get; set; }
     public bool IPScanner_InheritHost { get; set; } = true;
     public string IPScanner_HostOrIPRange { get; set; }
+
+    /// <summary>
+    ///     Use the SNMP version and credentials below for the IP Scanner instead of the settings (a profile before its
+    ///     group), see <see cref="Application.IPScanner.GetSNMPCredentials" />.
+    /// </summary>
+    public bool IPScanner_OverrideSNMP { get; set; }
+
+    public SNMPVersion IPScanner_SNMPVersion { get; set; } = GlobalStaticConfiguration.IPScanner_SNMPVersion;
+    [XmlIgnore] public SecureString IPScanner_SNMPCommunity { get; set; }
+    public SNMPV3Security IPScanner_SNMPSecurity { get; set; } = GlobalStaticConfiguration.SNMP_Security;
+    public string IPScanner_SNMPUsername { get; set; }
+
+    public SNMPV3AuthenticationProvider IPScanner_SNMPAuthenticationProvider { get; set; } =
+        GlobalStaticConfiguration.SNMP_AuthenticationProvider;
+
+    [XmlIgnore] public SecureString IPScanner_SNMPAuth { get; set; }
+
+    public SNMPV3PrivacyProvider IPScanner_SNMPPrivacyProvider { get; set; } =
+        GlobalStaticConfiguration.SNMP_PrivacyProvider;
+
+    [XmlIgnore] public SecureString IPScanner_SNMPPriv { get; set; }
 
     public bool PortScanner_Enabled { get; set; }
     public bool PortScanner_InheritHost { get; set; } = true;

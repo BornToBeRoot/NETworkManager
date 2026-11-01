@@ -21,26 +21,31 @@ public static class AutoRefreshTime
     };
 
     /// <summary>
+    ///     Method returns a list with <see cref="AutoRefreshTimeInfo" />s to repeat a scan (IP Scanner, Port Scanner): a
+    ///     scan takes seconds to minutes, the interval is the pause after it.
+    /// </summary>
+    public static IEnumerable<AutoRefreshTimeInfo> GetScanDefaults => new List<AutoRefreshTimeInfo>
+    {
+        new(1, TimeUnit.Minute),
+        new(5, TimeUnit.Minute),
+        new(15, TimeUnit.Minute),
+        new(30, TimeUnit.Minute),
+        new(1, TimeUnit.Hour)
+    };
+
+    /// <summary>
     ///     Method to calculate a <see cref="TimeSpan" /> based on <see cref="AutoRefreshTimeInfo" />.
     /// </summary>
     /// <param name="info"><see cref="AutoRefreshTimeInfo" /> to calculate <see cref="TimeSpan" /></param>
     /// <returns>Returns the calculated <see cref="TimeSpan" />.</returns>
     public static TimeSpan CalculateTimeSpan(AutoRefreshTimeInfo info)
     {
-        switch (info.TimeUnit)
+        return info.TimeUnit switch
         {
-            // Calculate the seconds
-            case TimeUnit.Second:
-                return new TimeSpan(0, 0, info.Value);
-            // Calculate the minutes
-            case TimeUnit.Minute:
-                return new TimeSpan(0, info.Value * 60, 0);
-            // Calculate the hours
-            case TimeUnit.Hour:
-                return new TimeSpan(info.Value * 60, 0, 0);
-            case TimeUnit.None:
-            default:
-                throw new Exception("Wrong time unit.");
-        }
+            TimeUnit.Second => TimeSpan.FromSeconds(info.Value),
+            TimeUnit.Minute => TimeSpan.FromMinutes(info.Value),
+            TimeUnit.Hour => TimeSpan.FromHours(info.Value),
+            _ => throw new Exception("Wrong time unit.")
+        };
     }
 }

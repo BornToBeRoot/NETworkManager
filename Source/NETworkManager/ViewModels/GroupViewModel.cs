@@ -108,6 +108,15 @@ public class GroupViewModel : ViewModelBase
 
     #endregion
 
+    #region IP Scanner
+
+    /// <summary>
+    ///     Override of the SNMP version and credentials of the IP Scanner for the profiles of the group.
+    /// </summary>
+    public SNMPCredentialsViewModel IPScanner_SNMP { get; }
+
+    #endregion
+
     #region Port Scanner
 
     public bool PortScanner_OverridePorts
@@ -1477,178 +1486,10 @@ public class GroupViewModel : ViewModelBase
         }
     }
 
-    public bool SNMP_OverrideVersionAndAuth
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public IEnumerable<SNMPVersion> SNMP_Versions { get; }
-
-    public SNMPVersion SNMP_Version
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public bool SNMP_IsCommunityEmpty
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = true;
-
-    public SecureString SNMP_Community
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            // Validate the password string
-            SNMP_IsCommunityEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public IEnumerable<SNMPV3Security> SNMP_Securities { get; }
-
-    public SNMPV3Security SNMP_Security
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public string SNMP_Username
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public IEnumerable<SNMPV3AuthenticationProvider> SNMP_AuthenticationProviders { get; }
-
-    public SNMPV3AuthenticationProvider SNMP_AuthenticationProvider
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public bool SNMP_IsAuthEmpty
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = true;
-
-    public SecureString SNMP_Auth
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            // Validate the password string
-            SNMP_IsAuthEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public IEnumerable<SNMPV3PrivacyProvider> SNMP_PrivacyProviders { get; }
-
-    public SNMPV3PrivacyProvider SNMP_PrivacyProvider
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public bool SNMP_IsPrivEmpty
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = true;
-
-    public SecureString SNMP_Priv
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            // Validate the password string
-            SNMP_IsPrivEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
+    /// <summary>
+    ///     Override of the SNMP version and credentials of the SNMP tool (see <see cref="SNMPCredentialsViewModel" />).
+    /// </summary>
+    public SNMPCredentialsViewModel SNMP_Credentials { get; }
 
     #endregion
 
@@ -1674,6 +1515,12 @@ public class GroupViewModel : ViewModelBase
         // General
         Name = groupInfo.Name;
         Description = groupInfo.Description;
+
+        // IP Scanner
+        IPScanner_SNMP = new SNMPCredentialsViewModel(groupInfo.IPScanner_OverrideSNMP, groupInfo.IPScanner_SNMPVersion,
+            groupInfo.IPScanner_SNMPCommunity, groupInfo.IPScanner_SNMPSecurity, groupInfo.IPScanner_SNMPUsername,
+            groupInfo.IPScanner_SNMPAuthenticationProvider, groupInfo.IPScanner_SNMPAuth,
+            groupInfo.IPScanner_SNMPPrivacyProvider, groupInfo.IPScanner_SNMPPriv, IsProfileFileEncrypted);
 
         // Port Scanner
         PortScanner_OverridePorts = groupInfo.PortScanner_OverridePorts;
@@ -1796,20 +1643,9 @@ public class GroupViewModel : ViewModelBase
         SNMP_OID = groupInfo.SNMP_OID;
         SNMP_Modes = [SNMPMode.Get, SNMPMode.Walk, SNMPMode.Set];
         SNMP_Mode = SNMP_Modes.FirstOrDefault(x => x == groupInfo.SNMP_Mode);
-        SNMP_OverrideVersionAndAuth = groupInfo.SNMP_OverrideVersionAndAuth;
-        SNMP_Versions = Enum.GetValues(typeof(SNMPVersion)).Cast<SNMPVersion>().ToList();
-        SNMP_Version = SNMP_Versions.FirstOrDefault(x => x == groupInfo.SNMP_Version);
-        SNMP_Community = groupInfo.SNMP_Community;
-        SNMP_Securities = [SNMPV3Security.NoAuthNoPriv, SNMPV3Security.AuthNoPriv, SNMPV3Security.AuthPriv];
-        SNMP_Security = SNMP_Securities.FirstOrDefault(x => x == groupInfo.SNMP_Security);
-        SNMP_Username = groupInfo.SNMP_Username;
-        SNMP_AuthenticationProviders = [.. Enum.GetValues(typeof(SNMPV3AuthenticationProvider)).Cast<SNMPV3AuthenticationProvider>()];
-        SNMP_AuthenticationProvider =
-            SNMP_AuthenticationProviders.FirstOrDefault(x => x == groupInfo.SNMP_AuthenticationProvider);
-        SNMP_Auth = groupInfo.SNMP_Auth;
-        SNMP_PrivacyProviders = Enum.GetValues(typeof(SNMPV3PrivacyProvider)).Cast<SNMPV3PrivacyProvider>().ToList();
-        SNMP_PrivacyProvider = SNMP_PrivacyProviders.FirstOrDefault(x => x == groupInfo.SNMP_PrivacyProvider);
-        SNMP_Priv = groupInfo.SNMP_Priv;
+        SNMP_Credentials = new SNMPCredentialsViewModel(groupInfo.SNMP_OverrideVersionAndAuth, groupInfo.SNMP_Version,
+            groupInfo.SNMP_Community, groupInfo.SNMP_Security, groupInfo.SNMP_Username, groupInfo.SNMP_AuthenticationProvider,
+            groupInfo.SNMP_Auth, groupInfo.SNMP_PrivacyProvider, groupInfo.SNMP_Priv, IsProfileFileEncrypted);
 
         _isLoading = false;
     }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,57 +43,18 @@ public static class NetBIOSResolver
         0x00, 0x01
     };
 
-    /// <summary>
-    ///     Maximum size of a NetBIOS name status response (57 bytes header + 255 names x 18 bytes + statistics).
-    /// </summary>
-    private const int ResponseBufferSize = 8192;
-
     public static async Task<NetBIOSInfo> ResolveAsync(IPAddress ipAddress, int timeout,
         CancellationToken cancellationToken)
     {
         try
         {
-            using var socket = new Socket(ipAddress.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
+            // Name status response: 57 bytes header + 255 names x 18 bytes + statistics (max. 8192 bytes)
+            var response = await UdpRequest.SendAsync(ipAddress, NetBIOSUdpPort, RequestData, timeout,
+                cancellationToken).ConfigureAwait(false);
 
-            // Closing the socket on timeout or cancellation aborts a pending send / receive, it completes with
-            // OperationAborted. The results are reported as SocketError, no exception if the host doesn't
-            // answer (see SocketOperation).
-            using var timeoutCts = new CancellationTokenSource(timeout);
-            using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token);
-            await using var registration = linkedCts.Token.Register(socket.Dispose);
-
-            using var sendArgs = new SocketAsyncEventArgs();
-            sendArgs.RemoteEndPoint = new IPEndPoint(ipAddress, NetBIOSUdpPort);
-            sendArgs.SetBuffer(RequestData);
-
-            if (await SocketOperation.RunAsync(sendArgs, socket.SendToAsync).ConfigureAwait(false) !=
-                SocketError.Success)
+            // No answer (timeout), port unreachable, etc.
+            if (response == null)
                 return new NetBIOSInfo(ipAddress);
-
-            var buffer = new byte[ResponseBufferSize];
-            byte[] response;
-
-            // Wait for the answer of the host - a datagram from another address (e.g. a stray or spoofed one) is
-            // ignored, until the timeout
-            while (true)
-            {
-                using var receiveArgs = new SocketAsyncEventArgs();
-                receiveArgs.RemoteEndPoint = new IPEndPoint(
-                    ipAddress.AddressFamily == AddressFamily.InterNetworkV6 ? IPAddress.IPv6Any : IPAddress.Any, 0);
-                receiveArgs.SetBuffer(buffer);
-
-                // No answer (timeout), port unreachable, etc.
-                if (await SocketOperation.RunAsync(receiveArgs, socket.ReceiveFromAsync).ConfigureAwait(false) !=
-                    SocketError.Success)
-                    return new NetBIOSInfo(ipAddress);
-
-                if (receiveArgs.RemoteEndPoint is not IPEndPoint remoteEndPoint ||
-                    IPAddressHelper.CompareIPAddresses(remoteEndPoint.Address, ipAddress) != 0)
-                    continue;
-
-                response = buffer[..receiveArgs.BytesTransferred];
-                break;
-            }
 
             if (response.Length < ResponseBaseLen || response[ResponseTypePos] != ResponseTypeNbstat)
                 return new NetBIOSInfo(ipAddress); // response was too short

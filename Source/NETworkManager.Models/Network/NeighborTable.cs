@@ -76,6 +76,16 @@ public class NeighborTable
     private static extern void FreeMibTable(IntPtr memory);
 
     /// <summary>
+    /// Flushes the neighbor entry of <c>Row.Address</c> on the interface of the row and resolves it again (ARP request /
+    /// neighbor solicitation). Blocks until the neighbor answered or the resolution failed. Returns 0 on success.
+    /// </summary>
+    [DllImport("Iphlpapi.dll")]
+    private static extern uint ResolveIpNetEntry2(ref MIB_IPNET_ROW2 row, IntPtr sourceAddress);
+
+    // ResolveIpNetEntry2: the neighbor didn't answer (network name not found)
+    private const uint ERROR_BAD_NET_NAME = 67;
+
+    /// <summary>
     /// Ensures that only one PowerShell pipeline runs on <see cref="SharedRunspace"/> at a time.
     /// </summary>
     private static readonly SemaphoreSlim RunspaceLock = new(1, 1);
@@ -312,29 +322,82 @@ Import-Module NetTCPIP -ErrorAction Stop").Invoke();
     }
 
     /// <summary>
-    /// Returns a snapshot of the neighbor cache (IPv4 and IPv6) as map from IP address to MAC address
-    /// (e.g. "001122AABBCC"). IPv6 addresses are stored with their scope id (e.g. "fe80::1%3", for an address entered
+    /// Returns a snapshot of the neighbor cache (IPv4 and IPv6) as map from IP address to the entry (MAC address, state,
+    /// interface). IPv6 addresses are stored with their scope id (e.g. "fe80::1%3", for an address entered
     /// with one) and without it (see <see cref="IPAddressHelper.WithoutScopeId"/>, for an address entered without one -
     /// if the address is on several interfaces, the last entry wins). Entries without a MAC address, or with a link-layer
     /// address that is not a 6 byte MAC address (e.g. the IPv4 address of a tunnel interface), are skipped.
     /// Reading the table once and looking up many addresses is much cheaper than reading it per address.
     /// </summary>
-    public static Dictionary<IPAddress, string> GetMACAddressMap()
+    public static Dictionary<IPAddress, NeighborInfo> GetNeighborMap()
     {
-        var map = new Dictionary<IPAddress, string>();
+        var map = new Dictionary<IPAddress, NeighborInfo>();
 
         foreach (var entry in GetTable())
         {
             if (entry.MACAddress.GetAddressBytes().Length != 6)
                 continue;
 
-            var macAddress = entry.MACAddress.ToString();
-
-            map[entry.IPAddress] = macAddress;
-            map[IPAddressHelper.WithoutScopeId(entry.IPAddress)] = macAddress;
+            map[entry.IPAddress] = entry;
+            map[IPAddressHelper.WithoutScopeId(entry.IPAddress)] = entry;
         }
 
         return map;
+    }
+
+    /// <summary>
+    /// Verifies a neighbor entry: flushes the entry of <paramref name="ipAddress"/> on the interface and resolves it again
+    /// (ARP request for IPv4, neighbor solicitation for IPv6) via <c>ResolveIpNetEntry2</c>, e.g. to check if a neighbor
+    /// whose entry is <see cref="NeighborState.Stale"/> is still there. <b>Blocks</b> until the neighbor answered or
+    /// the resolution failed (about 3 seconds) - run it on a thread pool thread and limit how many run at the same time.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the neighbor (IPv4 or IPv6, with the scope id for a link-local address).</param>
+    /// <param name="interfaceIndex">Index of the interface the neighbor is on (e.g. of its current entry).</param>
+    /// <returns>MAC address (e.g. "001122AABBCC") if the neighbor answered, otherwise null.</returns>
+    public static string ResolveEntry(IPAddress ipAddress, int interfaceIndex)
+    {
+        // SOCKADDR_INET: family (2 bytes), IPv4: address at offset 4, IPv6: address at offset 8 and scope id at 24
+        var address = new byte[SOCKADDR_INET_SIZE];
+
+        if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
+        {
+            BitConverter.GetBytes(AF_INET).CopyTo(address, 0);
+            ipAddress.GetAddressBytes().CopyTo(address, 4);
+        }
+        else
+        {
+            BitConverter.GetBytes(AF_INET6).CopyTo(address, 0);
+            ipAddress.GetAddressBytes().CopyTo(address, 8);
+            BitConverter.GetBytes((uint)ipAddress.ScopeId).CopyTo(address, 24);
+        }
+
+        var row = new MIB_IPNET_ROW2
+        {
+            Address = address,
+            InterfaceIndex = (uint)interfaceIndex,
+            PhysicalAddress = new byte[IF_MAX_PHYS_ADDRESS_LENGTH]
+        };
+
+        var result = ResolveIpNetEntry2(ref row, IntPtr.Zero);
+
+        if (result != 0)
+        {
+            // No answer is the expected result for a neighbor that is gone
+            if (result != ERROR_BAD_NET_NAME)
+                Log.Warn($"Could not resolve the neighbor entry of {ipAddress} (interface {interfaceIndex}): " +
+                         new Win32Exception((int)result).Message);
+
+            return null;
+        }
+
+        if (row.PhysicalAddressLength != 6)
+            return null;
+
+        var macBytes = new byte[6];
+        Buffer.BlockCopy(row.PhysicalAddress, 0, macBytes, 0, 6);
+
+        // An unanswered resolution can return a zero MAC address
+        return macBytes.All(x => x == 0) ? null : new PhysicalAddress(macBytes).ToString();
     }
 
     /// <summary>
