@@ -60,6 +60,14 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // Options of the last scan, to rescan hosts with the same options (the columns follow them, see ScanOptions)
     private IPScannerOptions _lastScanOptions;
 
+    // Baseline of the last completed scan of this tab and its input: the next scan of the same input shows what
+    // changed (see CompareWithPreviousScan). Only in memory, gone when the tab is closed.
+    private Dictionary<IPAddress, IPScannerBaselineHost> _baseline;
+    private string _baselineInput;
+
+    // Input of the running / last scan (not of a rescan of selected hosts)
+    private string _scanInput;
+
     // Rescan of shown hosts (see RescanSelectedHosts), null if no rescan is running: row per rescanned IP address
     // (every IP address is scanned once, see HostRangeHelper.ResolveAsync). The scanner creates new results - their
     // values are copied into the existing rows (selection and expanded details stay), the updates of a new result are
@@ -327,6 +335,87 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Gets or sets the number of hosts that are up now and were not up in the previous scan (see <see cref="HasComparison"/>).
+    /// </summary>
+    public int HostsNew
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the number of hosts that are not up now and were up in the previous scan (see <see cref="HasComparison"/>).
+    /// </summary>
+    public int HostsGone
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the number of hosts that are up with another MAC address than in the previous scan (see <see cref="HasComparison"/>).
+    /// </summary>
+    public int HostsMACChanged
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the shown result is compared with the previous scan of the same input
+    /// (change column and counters).
+    /// </summary>
+    public bool HasComparison
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the time the last scan was completed, null before (or while a scan is running).
+    /// </summary>
+    public DateTime? LastScanTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets a value indicating whether the scan is being prepared.
     /// </summary>
     public bool PreparingScan
@@ -468,6 +557,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                    (ScanOptions.OSGuessEnabled &&
                     Matches(IPScannerOSGuessToStringConverter.ToLocalizedString(info.OSGuess))) ||
                    Matches(IPScannerHostRoleToStringConverter.ToLocalizedString(info.Role)) ||
+                   Matches(IPScannerHostChangeToStringConverter.ToLocalizedString(info.Change)) ||
                    info.Ports.Any(x => Matches(x.Port.ToString()) || Matches(x.LookupInfo.Service));
         };
 
@@ -478,6 +568,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Hostname));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MDNSHostname));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebTitle));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Change));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebServer));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebPoweredBy));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.WebRealm));
@@ -840,6 +931,14 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         }
 
         Results.Clear();
+
+        // Compared with the previous scan of the same input when this scan is completed (see ScanComplete)
+        _scanInput = Host?.Trim() ?? string.Empty;
+        HasComparison = false;
+        HostsNew = 0;
+        HostsGone = 0;
+        HostsMACChanged = 0;
+        LastScanTime = null;
 
         // No results are shown until the scan's options are known - follow the current settings
         ScanOptions = CreateResultOptions();
@@ -1547,6 +1646,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     {
         Application.Current.Dispatcher.Invoke(() =>
         {
+            // A rescan of selected hosts updates rows, it is not a scan of the input (see CompareWithPreviousScan)
+            var isRescan = _rescanRows != null;
+
             // All hosts and lookups are finished when the scanner raises ScanComplete - add the remaining
             // buffered hosts and apply the remaining updates before the scan ends, with the final counters
             _resultsFlushTimer?.Stop();
@@ -1612,6 +1714,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 AddStatusMessage(Strings.NoReachableHostsFound);
             }
 
+            // Only a completed scan of the input is compared and becomes the baseline of the next one
+            if (!isRescan && !e.IsCanceled && e.Exception == null && HostsToScan > 0)
+                CompareWithPreviousScan();
+
             PreparingScan = false;
             IsCanceling = false;
             IsRunning = false;
@@ -1619,6 +1725,50 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             // E.g. canceled during the preparation, or nothing found
             UpdateScanOptionsIfNoResults();
         });
+    }
+
+    /// <summary>
+    /// Compares the completed scan with the previous completed scan of the same input in this tab: marks new hosts
+    /// and hosts with another MAC address, adds the hosts that are gone (shown as down, also without "Show
+    /// unreachable"). The scan becomes the baseline of the next one. Called on the UI thread.
+    /// </summary>
+    private void CompareWithPreviousScan()
+    {
+        var current = IPScannerScanComparer.CreateBaseline(Results);
+
+        if (_baseline != null && string.Equals(_baselineInput, _scanInput, StringComparison.OrdinalIgnoreCase))
+        {
+            var comparison = IPScannerScanComparer.Compare(_baseline, current);
+
+            foreach (var host in Results)
+            {
+                if (comparison.Changes.TryGetValue(host.IPAddress, out var change))
+                {
+                    host.Change = change.Change;
+                    host.PreviousMACAddress = change.PreviousMACAddress;
+                }
+            }
+
+            foreach (var (ipAddress, previous) in comparison.Gone)
+            {
+                // A shown down host (Show unreachable) is marked, otherwise a row is added
+                var row = Results.FirstOrDefault(x => x.IPAddress.Equals(ipAddress));
+
+                if (row != null)
+                    row.Change = IPScannerHostChange.Gone;
+                else
+                    Results.Add(IPScannerHostInfo.CreateGone(ipAddress, previous));
+            }
+
+            HostsNew = comparison.Changes.Values.Count(x => x.Change == IPScannerHostChange.New);
+            HostsMACChanged = comparison.Changes.Values.Count(x => x.Change == IPScannerHostChange.MACChanged);
+            HostsGone = comparison.Gone.Count;
+            HasComparison = true;
+        }
+
+        _baseline = current;
+        _baselineInput = _scanInput;
+        LastScanTime = DateTime.Now;
     }
 
     #endregion

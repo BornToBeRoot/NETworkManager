@@ -649,6 +649,65 @@ public class IPScannerHostInfo : PropertyChangedBase
     }
 
     /// <summary>
+    ///     Change since the previous scan of the same input (set by the view model after the scan, see
+    ///     <see cref="IPScannerScanComparer" />). Not taken over by <see cref="CopyFrom" />: a rescan of the host keeps
+    ///     the change of the scan.
+    /// </summary>
+    public IPScannerHostChange Change
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     MAC address of the previous scan if it changed (<see cref="IPScannerHostChange.MACChanged" />), otherwise
+    ///     empty.
+    /// </summary>
+    public string PreviousMACAddress
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = string.Empty;
+
+    /// <summary>
+    ///     Creates the row of a host that was up in the previous scan and is not up now
+    ///     (<see cref="IPScannerHostChange.Gone" />), with the hostname and MAC address of the previous scan.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="previous">The host in the previous scan.</param>
+    /// <returns>Unreachable host, without pending values.</returns>
+    public static IPScannerHostInfo CreateGone(IPAddress ipAddress, IPScannerBaselineHost previous)
+    {
+        var host = new IPScannerHostInfo(ipAddress, false,
+            new PingInfo(System.DateTime.Now, ipAddress, IPStatus.Unknown), false, [], new NetBIOSInfo(ipAddress))
+        {
+            // The shown hostname of the previous scan (DNS, mDNS or NetBIOS) - the host is not asked again
+            DNSHostname = previous.Hostname,
+            NeighborMACAddress = previous.MACAddress,
+            NeighborVendor = previous.Vendor,
+            Change = IPScannerHostChange.Gone
+        };
+
+        host.EndPendingLookups();
+
+        return host;
+    }
+
+    /// <summary>
     ///     Takes over all values of another result of the same host (e.g. a rescan), so the shown row keeps its
     ///     identity (selection, expanded details). Call it on the thread that owns the host (UI thread).
     /// </summary>
@@ -703,6 +762,8 @@ public class IPScannerHostInfo : PropertyChangedBase
 
         // One list of the values (see CopyFrom), the new instance has no event subscribers yet
         clone.CopyFrom(this);
+        clone.Change = Change;
+        clone.PreviousMACAddress = PreviousMACAddress;
 
         return clone;
     }

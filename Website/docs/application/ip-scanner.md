@@ -118,6 +118,7 @@ The columns are shown according to the settings the scan was started with, setti
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | _Status_                       | Up / down, the tooltip shows the probes that answered                                                                                                                    |
 | _Role_                         | Icon if the host has a role for this computer: **This computer**, **Default-Gateway**, **DNS server** or **DHCP server** of a connected network interface (all roles in the tooltip) |
+| **Change**                     | Change since the previous scan, see [Changes since the last scan](#changes-since-the-last-scan) (only if the result is compared with one)
 | **IP address**                 | Scanned IP address                                                                                                                                                       |
 | **Hostname**                   | DNS hostname (`PTR`), otherwise the mDNS hostname, otherwise the NetBIOS name                                                                                           |
 | **Ping status**                | Status icon, the tooltip shows status, time and TTL (e.g. `Success (2 ms, TTL 64)`)                                                                                      |
@@ -138,6 +139,18 @@ Values arrive one after another while the scan is running:
 A column you sorted by is not sorted again for values that arrive later, click the header again. Sorted by **Time** or **MAC address**, hosts without a value are always at the end; hosts with the same value are sorted by IP address.
 
 The search box right of the **Result** header filters the results by IP address, hostname (DNS, mDNS, NetBIOS), MAC address, vendor, role, OS (guess), web page (title, headers, realm, redirect target, certificate), SNMP values and open ports (number or service), also while the scan is running. **Export...** > all exports the filtered results; the up / down counters always count all hosts. Results can also be exported while the scan is running, values that are still `...` are exported as empty values.
+
+### Changes since the last scan
+
+A scan of the same input as the last completed scan in the tab shows what changed since then:
+
+- **New**: the host is up now, it was not up in the last scan.
+- **Gone**: the host was up in the last scan, it is not up now. The row is added at the end of the scan (as down, with the hostname and MAC address of the last scan), also if [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) is disabled.
+- **MAC changed**: the host is up with another MAC address than in the last scan (both known), e.g. a replaced device, an IP address conflict or ARP spoofing. The tooltip shows the previous MAC address.
+
+The **Change** column and the counters next to the **Result** header (e.g. `2 New · 1 Gone`) are only shown if the result is compared with a previous scan. **Last scan at** next to the counters shows when the last scan was completed (the tooltip shows the date).
+
+Only completed scans are compared: a canceled scan or a scan with another input starts over (the next scan of this input is compared with it). **Rescan** of selected hosts updates their rows and keeps the changes, but is not a scan of the input. The last scan is only kept in memory, as long as the tab is open. The change is also in the search and the export (`Change`, `PreviousMACAddress`).
 
 ### Row details
 

@@ -112,7 +112,11 @@ public static partial class ExportManager
             new("WebCertificateNotAfter", certificate == null
                 ? null
                 : DateTimeHelper.DateTimeToFullDateTimeString(certificate.NotAfter.ToLocalTime())),
-            new("WebCertificateSelfSigned", certificate?.IsSelfSigned)
+            new("WebCertificateSelfSigned", certificate?.IsSelfSigned),
+            // Change since the previous scan of the same input (empty without a previous scan / change)
+            new(nameof(IPScannerHostInfo.Change),
+                info.Change == IPScannerHostChange.None ? null : info.Change.ToString()),
+            new(nameof(IPScannerHostInfo.PreviousMACAddress), info.PreviousMACAddress)
         ];
     }
 

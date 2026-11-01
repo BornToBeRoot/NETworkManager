@@ -12,6 +12,7 @@
              xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
              xmlns:network="clr-namespace:NETworkManager.Models.Network;assembly=NETworkManager.Models"
              xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             xmlns:internalControls="clr-namespace:NETworkManager.Controls"
              xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
              xmlns:models="clr-namespace:NETworkManager.Models;assembly=NETworkManager.Models"
              xmlns:settings="clr-namespace:NETworkManager.Settings;assembly=NETworkManager.Settings"
@@ -31,6 +32,7 @@
         <converters:SuccessStyleConverter x:Key="SuccessStyleConverter" />
         <converters:WebCertificateToStringConverter x:Key="WebCertificateToStringConverter" />
         <converters:IPScannerHostRoleToStringConverter x:Key="IPScannerHostRoleToStringConverter" />
+        <converters:IPScannerHostChangeToStringConverter x:Key="IPScannerHostChangeToStringConverter" />
         <converters:IPScannerOSGuessToStringConverter x:Key="IPScannerOSGuessToStringConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
@@ -347,7 +349,51 @@
                         <Binding Path="HostsDown" StringFormat="{x:Static localization:Strings.XDown}" />
                     </TextBlock.Text>
                 </TextBlock>
+                <!-- Changes since the previous scan of the same input (MAC changed only if there are any) -->
+                <StackPanel Orientation="Horizontal"
+                            Visibility="{Binding HasComparison, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="·"
+                                   Style="{StaticResource DefaultTextBlock}"
+                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                   Margin="6,0,6,0" />
+                        <TextBlock Style="{StaticResource DefaultTextBlock}"
+                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                            <TextBlock.Text>
+                                <Binding Path="HostsNew" StringFormat="{x:Static localization:Strings.XNew}" />
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="·"
+                                   Style="{StaticResource DefaultTextBlock}"
+                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                   Margin="6,0,6,0" />
+                        <TextBlock Style="{StaticResource DefaultTextBlock}"
+                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                            <TextBlock.Text>
+                                <Binding Path="HostsGone" StringFormat="{x:Static localization:Strings.XGone}" />
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding HostsMACChanged, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
+                        <TextBlock Text="·"
+                                   Style="{StaticResource DefaultTextBlock}"
+                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                   Margin="6,0,6,0" />
+                        <TextBlock Style="{StaticResource DefaultTextBlock}"
+                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                            <TextBlock.Text>
+                                <Binding Path="HostsMACChanged" StringFormat="{x:Static localization:Strings.XMACChanged}" />
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
+            <internalControls:RefreshStatusControl LastRefreshTime="{Binding LastScanTime}"
+                                                   LastRefreshFormat="{x:Static localization:Strings.LastScanAtX}"
+                                                   IsRefreshing="{Binding IsRunning}"
+                                                   Margin="20,0,0,0" />
             <TextBox Width="250"
                      Margin="20,0,0,0"
                      Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
@@ -918,6 +964,74 @@
                                     </Style>
                                 </Rectangle.Style>
                             </Rectangle>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!-- Change since the previous scan of the same input, only if the result is compared with one -->
+                <DataGridTemplateColumn Header="{x:Static localization:Strings.Change}"
+                                        SortMemberPath="Change"
+                                        MinWidth="120"
+                                        Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.HasComparison, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <StackPanel.Style>
+                                    <Style TargetType="{x:Type StackPanel}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Change}"
+                                                         Value="{x:Static network:IPScannerHostChange.None}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Change}"
+                                                         Value="{x:Static network:IPScannerHostChange.MACChanged}">
+                                                <Setter Property="ToolTip"
+                                                        Value="{Binding PreviousMACAddress, StringFormat={x:Static localization:Strings.PreviousMACAddressX}}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+                                <Rectangle Width="16" Height="16" Margin="0,0,5,0">
+                                    <Rectangle.Style>
+                                        <Style TargetType="{x:Type Rectangle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Change}"
+                                                             Value="{x:Static network:IPScannerHostChange.New}">
+                                                    <Setter Property="Fill" Value="#badc58" />
+                                                    <Setter Property="OpacityMask">
+                                                        <Setter.Value>
+                                                            <VisualBrush Stretch="Uniform"
+                                                                         Visual="{iconPacks:Material Kind=PlusCircle}" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Change}"
+                                                             Value="{x:Static network:IPScannerHostChange.Gone}">
+                                                    <Setter Property="Fill"
+                                                            Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                    <Setter Property="OpacityMask">
+                                                        <Setter.Value>
+                                                            <VisualBrush Stretch="Uniform"
+                                                                         Visual="{iconPacks:Material Kind=MinusCircle}" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Change}"
+                                                             Value="{x:Static network:IPScannerHostChange.MACChanged}">
+                                                    <Setter Property="Fill" Value="#f1b856" />
+                                                    <Setter Property="OpacityMask">
+                                                        <Setter.Value>
+                                                            <VisualBrush Stretch="Uniform"
+                                                                         Visual="{iconPacks:Material Kind=SwapHorizontal}" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                                <TextBlock Text="{Binding Change, Converter={StaticResource IPScannerHostChangeToStringConverter}}"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

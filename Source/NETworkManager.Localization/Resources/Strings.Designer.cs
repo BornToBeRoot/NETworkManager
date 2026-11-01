@@ -6357,6 +6357,33 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gone.
+        /// </summary>
+        public static string HostChange_Gone {
+            get {
+                return ResourceManager.GetString("HostChange_Gone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MAC changed.
+        /// </summary>
+        public static string HostChange_MACChanged {
+            get {
+                return ResourceManager.GetString("HostChange_MACChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        public static string HostChange_New {
+            get {
+                return ResourceManager.GetString("HostChange_New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hosting.
         /// </summary>
         public static string Hosting {
@@ -9649,6 +9676,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Preview {
             get {
                 return ResourceManager.GetString("Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previous MAC address: {0}.
+        /// </summary>
+        public static string PreviousMACAddressX {
+            get {
+                return ResourceManager.GetString("PreviousMACAddressX", resourceCulture);
             }
         }
         
@@ -15326,11 +15362,38 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} Gone.
+        /// </summary>
+        public static string XGone {
+            get {
+                return ResourceManager.GetString("XGone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} host(s) did not answer the ping and were not scanned..
         /// </summary>
         public static string XHostsDidNotAnswerThePingAndWereNotScanned {
             get {
                 return ResourceManager.GetString("XHostsDidNotAnswerThePingAndWereNotScanned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} MAC changed.
+        /// </summary>
+        public static string XMACChanged {
+            get {
+                return ResourceManager.GetString("XMACChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} New.
+        /// </summary>
+        public static string XNew {
+            get {
+                return ResourceManager.GetString("XNew", resourceCulture);
             }
         }
         
