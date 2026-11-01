@@ -99,10 +99,10 @@ public class IPApiDNSResolverWidgetViewModel : ViewModelBase
         IsRunning = true;
         Result = null;
 
-        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
-        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
-
-        Result = await DNSResolverService.GetInstance().GetDNSResolverAsync();
+        // Takes at least the refresh interval, so the reload animation is visible and the check can't be spammed -
+        // the request runs at the same time
+        Result = await TaskHelper.WithMinimumDurationAsync(() => DNSResolverService.GetInstance().GetDNSResolverAsync(),
+            GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         IsRunning = false;
     }
