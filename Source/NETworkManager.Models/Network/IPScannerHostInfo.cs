@@ -216,8 +216,22 @@ public class IPScannerHostInfo : PropertyChangedBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(OpenPorts));
+            OnPropertyChanged(nameof(OpenPortCount));
         }
     }
+
+    /// <summary>
+    ///     Open ports, comma-separated in the order of the ports (e.g. "22, 80, 443"), empty if none.
+    /// </summary>
+    public string OpenPorts => Ports == null
+        ? string.Empty
+        : string.Join(", ", Ports.Where(x => x.State == PortState.Open).Select(x => x.Port));
+
+    /// <summary>
+    ///     Number of open ports (sorting of the open ports).
+    /// </summary>
+    public int OpenPortCount => Ports?.Count(x => x.State == PortState.Open) ?? 0;
 
     /// <summary>
     ///     NetBIOS information about the host.

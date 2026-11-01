@@ -1197,24 +1197,29 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <!-- Status icon ("..." while running), details in the tooltip -->
-                <DataGridTemplateColumn Header="{x:Static localization:Strings.PortStatus}"
-                                        SortMemberPath="IsAnyPortOpen"
-                                        Visibility="{Binding Path=Data.ScanOptions.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
-                                        MinWidth="100">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <TextBlock Text="..." VerticalAlignment="Center"
-                                           Visibility="{Binding IsPortScanPending, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
-                                <Rectangle Width="16" Height="16" HorizontalAlignment="Left"
-                                           Style="{Binding IsAnyPortOpen, Converter={StaticResource SuccessStyleConverter}}"
-                                           ToolTip="{Binding Ports, Converter={StaticResource IPScannerStatusToolTipConverter}}"
-                                           Visibility="{Binding IsPortScanPending, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}" />
-                            </Grid>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <!-- Port numbers ("..." while running), with service in the tooltip; sorted by the number of open ports -->
+                <DataGridTextColumn Header="{x:Static localization:Strings.OpenPorts}"
+                                    SortMemberPath="OpenPortCount"
+                                    Visibility="{Binding Path=Data.ScanOptions.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                    MinWidth="120">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource PendingToStringConverter}">
+                            <Binding Path="IsPortScanPending" />
+                            <Binding Path="OpenPorts" Converter="{StaticResource StringNullOrEmptyToStringConverter}" />
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="ToolTip" Value="{Binding Ports, Converter={StaticResource IPScannerStatusToolTipConverter}}" />
+                            <Style.Triggers>
+                                <!-- No tooltip while running or without open port -->
+                                <DataTrigger Binding="{Binding IsAnyPortOpen}" Value="False">
+                                    <Setter Property="ToolTip" Value="{x:Null}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <!-- Windows host information: domain, time offset, users (the version is in the OS column) -->
                 <DataGridTextColumn Header="{x:Static localization:Strings.Domain}"
                                     SortMemberPath="WindowsDomain"
