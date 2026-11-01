@@ -229,6 +229,27 @@ public class NeighborTableViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets the time of the last refresh, null before the first one (shown in the header).
+    /// </summary>
+    public DateTime? LastRefreshTime
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets the auto refresh, for the countdown in the header (see <see cref="AutoRefreshTimer.RemainingTime"/>).
+    /// </summary>
+    public AutoRefreshTimer AutoRefreshTimer => _autoRefreshTimer;
+
     public bool IsStatusMessageDisplayed
     {
         get;
@@ -457,8 +478,8 @@ public class NeighborTableViewModel : ViewModelBase
     {
         IsRefreshing = true;
 
-        StatusMessage = Strings.RefreshingDots;
-        IsStatusMessageDisplayed = true;
+        // An error of the last refresh / action is hidden (the refresh icon spins while refreshing)
+        IsStatusMessageDisplayed = false;
 
         // The first load right away; a refresh takes at least the refresh interval (the refresh button can't be
         // spammed), loading runs at the same time
@@ -471,8 +492,7 @@ public class NeighborTableViewModel : ViewModelBase
 
         results.ForEach(Results.Add);
 
-        StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
-        IsStatusMessageDisplayed = true;
+        LastRefreshTime = DateTime.Now;
 
         IsRefreshing = false;
     }
