@@ -35,4 +35,9 @@ public sealed record IPScannerResultOptions(
             options.MDNSEnabled, options.WebPageEnabled, options.SNMPEnabled, options.WindowsEnabled)
     {
     }
+
+    /// <summary>
+    ///     The OS column is shown: the guess from the TTL (needs the ping) or the Windows version.
+    /// </summary>
+    public bool IsOSShown => (ICMPEnabled && OSGuessEnabled) || WindowsEnabled;
 }

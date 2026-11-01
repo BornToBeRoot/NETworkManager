@@ -9203,6 +9203,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OS.
+        /// </summary>
+        public static string OS {
+            get {
+                return ResourceManager.GetString("OS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OS (guess).
         /// </summary>
         public static string OSGuess {

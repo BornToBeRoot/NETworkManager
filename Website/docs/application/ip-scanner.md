@@ -122,9 +122,8 @@ The columns are shown according to the settings the scan was started with, setti
 | **IP address**                 | Scanned IP address                                                                                                                                                       |
 | **Hostname**                   | DNS hostname (`PTR`), otherwise the mDNS hostname, otherwise the NetBIOS name                                                                                           |
 | **Time**                       | Round trip time of the ping reply                                                                                                                                        |
-| **OS (guess)**                 | Operating system guessed from the TTL of the ping reply, see [Guess the operating system from the TTL](#guess-the-operating-system-from-the-ttl)                       |
+| **OS**                         | Windows version (e.g. `Windows 11 25H2`, edition and version number in the tooltip) if it was read, see [Read Windows host information](#read-windows-host-information), otherwise the operating system guessed from the TTL of the ping reply, see [Guess the operating system from the TTL](#guess-the-operating-system-from-the-ttl) |
 | **Port status**                | Status icon (a port is open), the tooltip shows the open ports with their service (e.g. `Open: 22 (ssh), 443 (https)`, the first 10)                                    |
-| **Windows**                    | Windows version (e.g. `Windows 11 25H2`), the version number in the tooltip, see [Read Windows host information](#read-windows-host-information)                       |
 | **Domain**                     | Domain (DNS name) or workgroup of the Windows host                                                                                                                       |
 | **Time offset**                | Time of the host minus the local time (e.g. `+1.2 s`, `-3 min 5 s`), highlighted above 5 minutes (the Kerberos limit, the logon in a domain fails)                     |
 | **Logged-on users**            | Logged-on users (needs admin rights on the host), one per line in the tooltip or why they could not be read (e.g. `Access is denied.`)                                  |
@@ -350,7 +349,7 @@ Size of the buffer for each ICMP request in bytes.
 
 ### Guess the operating system from the TTL
 
-Shows the operating system guessed from the TTL of the ping reply in the **OS (guess)** column (icon and text, `...` while the ping is running): every operating system starts with a typical TTL and every router on the way reduces it by one. The guess is the smallest typical TTL that is not lower than the received TTL, the tooltip shows the number of hops (e.g. TTL `126` → `Windows`, 2 hops). No additional packets are sent.
+Shows the operating system guessed from the TTL of the ping reply in the **OS** column (icon and text, `...` while the ping is running; the Windows version replaces it if it was read with [Read Windows host information](#read-windows-host-information)): every operating system starts with a typical TTL and every router on the way reduces it by one. The guess is the smallest typical TTL that is not lower than the received TTL, the tooltip shows the number of hops (e.g. TTL `126` → `Windows`, 2 hops). No additional packets are sent.
 
 | Initial TTL | OS (guess)       | Icon          | Examples                                     |
 | ----------- | ---------------- | ------------- | -------------------------------------------- |

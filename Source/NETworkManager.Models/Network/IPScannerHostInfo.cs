@@ -113,8 +113,15 @@ public class IPScannerHostInfo : PropertyChangedBase
             OnPropertyChanged();
             OnPropertyChanged(nameof(OSGuess));
             OnPropertyChanged(nameof(OSGuessHops));
+            OnPropertyChanged(nameof(OSName));
         }
     }
+
+    /// <summary>
+    ///     Operating system for sorting the OS column: the Windows version if it was read, otherwise the guess from the
+    ///     TTL, empty if neither is known.
+    /// </summary>
+    public string OSName => HasWindowsOS ? WindowsOS : OSGuess == IPScannerOSGuess.None ? string.Empty : OSGuess.ToString();
 
     /// <summary>
     ///     Operating system guessed from the TTL of the ping reply (see <see cref="IPScannerOSGuessHelper" />),
@@ -602,6 +609,8 @@ public class IPScannerHostInfo : PropertyChangedBase
             field = value;
             OnPropertyChanged();
             OnPropertyChanged(nameof(WindowsOS));
+            OnPropertyChanged(nameof(HasWindowsOS));
+            OnPropertyChanged(nameof(OSName));
             OnPropertyChanged(nameof(WindowsDomain));
             OnPropertyChanged(nameof(WindowsTimeOffset));
             OnPropertyChanged(nameof(IsWindowsTimeOffsetLarge));
@@ -620,6 +629,11 @@ public class IPScannerHostInfo : PropertyChangedBase
     ///     Name of the Windows version (e.g. "Windows 11 25H2"), empty if not known.
     /// </summary>
     public string WindowsOS => Windows?.OS ?? string.Empty;
+
+    /// <summary>
+    ///     The Windows version is known (shown in the OS column instead of the guess from the TTL).
+    /// </summary>
+    public bool HasWindowsOS => !string.IsNullOrEmpty(WindowsOS);
 
     /// <summary>
     ///     Domain or workgroup of the Windows host, empty if not known.

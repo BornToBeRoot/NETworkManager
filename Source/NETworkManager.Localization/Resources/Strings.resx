@@ -5436,4 +5436,8 @@ Do you want to start the scan?</value>
   <data name="NotRequired" xml:space="preserve">
     <value>Not required</value>
   </data>
+  <data name="OS" xml:space="preserve">
+    <value>OS</value>
+    <comment>Column of the IP Scanner: operating system (Windows version or guess from the TTL)</comment>
+  </data>
 </root>
