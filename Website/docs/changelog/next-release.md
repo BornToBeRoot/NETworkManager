@@ -242,12 +242,14 @@ Release date: **xx.xx.2026**
 **Connections**
 
 - Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
+- Fixed **Automatically update every** `1` / `5` minutes refreshing only every hour / every 5 hours. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - Fixed the hostname of the remote address (DNS `PTR`) being shown with a trailing dot (e.g. `server.example.com.`), also in the export. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
 **Listeners**
 
 - Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
+- Fixed **Automatically update every** `1` / `5` minutes refreshing only every hour / every 5 hours. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
 **Neighbor Table**
@@ -255,11 +257,13 @@ Release date: **xx.xx.2026**
 - Fixed the **State** of the entries being shifted by one (e.g. `Reachable` entries were shown as `Stale`, `Permanent` entries as `Reachable`, `Unreachable` entries as `0`) since the table is read with the Windows API (2026.7.7). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - Fixed adding and deleting entries not working until the application was restarted if loading the PowerShell module `NetTCPIP` failed once. [cc05937](https://github.com/BornToBeRoot/NETworkManager/commit/cc05937a7de2bf1247621845f47077f3796b9bb2)
 - Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
+- Fixed **Automatically update every** `1` / `5` minutes refreshing only every hour / every 5 hours. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
 **WiFi**
 
 - Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
+- Fixed **Automatically update every** `1` / `5` minutes refreshing only every hour / every 5 hours. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - Fixed the auto refresh not being resumed after switching back from another tool. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 

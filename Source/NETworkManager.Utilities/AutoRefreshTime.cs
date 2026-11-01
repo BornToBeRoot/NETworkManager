@@ -27,20 +27,12 @@ public static class AutoRefreshTime
     /// <returns>Returns the calculated <see cref="TimeSpan" />.</returns>
     public static TimeSpan CalculateTimeSpan(AutoRefreshTimeInfo info)
     {
-        switch (info.TimeUnit)
+        return info.TimeUnit switch
         {
-            // Calculate the seconds
-            case TimeUnit.Second:
-                return new TimeSpan(0, 0, info.Value);
-            // Calculate the minutes
-            case TimeUnit.Minute:
-                return new TimeSpan(0, info.Value * 60, 0);
-            // Calculate the hours
-            case TimeUnit.Hour:
-                return new TimeSpan(info.Value * 60, 0, 0);
-            case TimeUnit.None:
-            default:
-                throw new Exception("Wrong time unit.");
-        }
+            TimeUnit.Second => TimeSpan.FromSeconds(info.Value),
+            TimeUnit.Minute => TimeSpan.FromMinutes(info.Value),
+            TimeUnit.Hour => TimeSpan.FromHours(info.Value),
+            _ => throw new Exception("Wrong time unit.")
+        };
     }
 }
