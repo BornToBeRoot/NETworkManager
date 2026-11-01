@@ -84,7 +84,8 @@ public static class SMBInfoResolver
 
             var negotiateResponse = await ReadMessageAsync(stream, linkedCts.Token).ConfigureAwait(false);
 
-            var roundTripTime = stopwatch.Elapsed;
+            // Local time when the host answered: the middle of the round trip
+            var negotiateTime = sentAt + stopwatch.Elapsed / 2;
 
             var negotiate = ParseNegotiateResponse(negotiateResponse);
 
@@ -93,12 +94,17 @@ public static class SMBInfoResolver
 
             // Session setup with an NTLM negotiate message: the answer contains the challenge (no logon)
             NTLMChallengeInfo ntlm = null;
+            var sessionSetupTime = DateTime.MinValue;
 
             try
             {
+                var sessionSetupSent = stopwatch.Elapsed;
+
                 await WriteMessageAsync(stream, CreateSessionSetupRequest(), linkedCts.Token).ConfigureAwait(false);
 
                 var sessionSetupResponse = await ReadMessageAsync(stream, linkedCts.Token).ConfigureAwait(false);
+
+                sessionSetupTime = sentAt + (sessionSetupSent + stopwatch.Elapsed) / 2;
 
                 ntlm = ParseSessionSetupResponse(sessionSetupResponse);
             }
@@ -107,10 +113,14 @@ public static class SMBInfoResolver
                 // No challenge (e.g. NTLM disabled, the host closed the connection or the timeout): negotiate values only
             }
 
-            var systemTime = negotiate.SystemTime ?? ntlm?.Timestamp;
+            // Time of the host and the local time when it was sent: of the negotiate response, otherwise of the NTLM
+            // challenge (its own round trip, not the one of the negotiate request)
+            var (systemTime, localTime) = negotiate.SystemTime != null
+                ? (negotiate.SystemTime, negotiateTime)
+                : (ntlm?.Timestamp, sessionSetupTime);
 
             return new SMBInfo(negotiate.Dialect, negotiate.SigningRequired, negotiate.ServerGuid, systemTime,
-                systemTime - (sentAt + roundTripTime / 2), ntlm);
+                systemTime - localTime, ntlm);
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
