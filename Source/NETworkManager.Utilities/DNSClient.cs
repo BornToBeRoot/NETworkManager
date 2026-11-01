@@ -179,7 +179,10 @@ public class DNSClient : SingletonBase<DNSClient>
     ///     of a host. Both queries are sent at the same time.
     /// </summary>
     /// <param name="query">Hostname or FQDN as string like "example.com".</param>
-    /// <returns>IP addresses of the host (A records first), empty if none could be resolved (error or no record).</returns>
+    /// <returns>
+    ///     IP addresses of the host (A records first), empty if the host has no record. Null if one of the queries
+    ///     failed (e.g. timeout, SERVFAIL) - the addresses of the host are then not completely known.
+    /// </returns>
     public async Task<List<IPAddress>> ResolveAllAAndAaaaAsync(string query)
     {
         if (!_isConfigured)
@@ -192,7 +195,7 @@ public class DNSClient : SingletonBase<DNSClient>
         var results = await Task.WhenAll(QueryIPAddressesAsync(query, QueryType.A, state),
             QueryIPAddressesAsync(query, QueryType.AAAA, state));
 
-        return [.. results.SelectMany(x => x)];
+        return results.Any(x => x == null) ? null : [.. results.SelectMany(x => x)];
     }
 
     /// <summary>
@@ -201,7 +204,9 @@ public class DNSClient : SingletonBase<DNSClient>
     /// <param name="query">Hostname or FQDN (with the DNS suffix, if configured).</param>
     /// <param name="queryType"><see cref="QueryType.A" /> or <see cref="QueryType.AAAA" />.</param>
     /// <param name="state">Resolver state snapshot captured at the start of the resolve call.</param>
-    /// <returns>IP addresses of the records, empty on an error.</returns>
+    /// <returns>
+    ///     IP addresses of the records, empty if there is no record (incl. NXDOMAIN), null if the query failed.
+    /// </returns>
     private static async Task<List<IPAddress>> QueryIPAddressesAsync(string query, QueryType queryType,
         ResolverState state)
     {
@@ -209,8 +214,9 @@ public class DNSClient : SingletonBase<DNSClient>
         {
             var result = await state.Client.QueryAsync(query, queryType);
 
+            // NXDOMAIN: the host has no record (not a failure like a timeout or SERVFAIL)
             if (result.HasError)
-                return [];
+                return IsNotFoundResponseCode(result.Header.ResponseCode) ? [] : null;
 
             // Only the records of the type (e.g. not the CNAME records of the answer)
             return queryType == QueryType.A
@@ -219,12 +225,12 @@ public class DNSClient : SingletonBase<DNSClient>
         }
         catch (DnsResponseException)
         {
-            return [];
+            return null;
         }
         catch (Exception ex)
         {
             Log.Error($"Error while resolving {queryType} records (Query string is \"{query}\").", ex);
-            return [];
+            return null;
         }
     }
 

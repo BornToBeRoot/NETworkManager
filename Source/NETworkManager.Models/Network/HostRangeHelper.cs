@@ -454,7 +454,9 @@ public static class HostRangeHelper
                 var ipAddresses = await DNSClient.GetInstance().ResolveAllAAndAaaaAsync(input.Hostname)
                     .WaitAsync(cancellationToken).ConfigureAwait(false);
 
-                if (ipAddresses.Count == 0)
+                // A failed query (e.g. the A query timed out, the AAAA query returned records) - not all addresses
+                // of the host are known, an address that should be excluded could be scanned
+                if (ipAddresses == null || ipAddresses.Count == 0)
                     return null;
 
                 var ipAddressExclusions = ipAddresses.Select(CreateIPAddressExclusion).ToList();
