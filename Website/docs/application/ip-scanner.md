@@ -110,7 +110,7 @@ Only reachable hosts are shown, unless [Show unreachable IP addresses and ports]
 
 ### Result
 
-The number of reachable (up) and unreachable (down) IP addresses is shown next to the **Result** header. A message below the input is shown if no reachable host was found, the scan was canceled, a hostname could not be resolved or an error occurred.
+The number of reachable (up) and unreachable (down) IP addresses is shown below the **Result** header. A message below the input is shown if no reachable host was found, the scan was canceled, a hostname could not be resolved or an error occurred.
 
 The columns are shown according to the settings the scan was started with, settings changed afterwards apply to the next scan:
 
@@ -148,7 +148,7 @@ A scan of the same input as the last completed scan in the tab shows what change
 - **Gone**: the host was up in the last scan, it is not up now. The row is added at the end of the scan (as down, with the hostname and MAC address of the last scan), also if [Show unreachable IP addresses and ports](#show-unreachable-ip-addresses-and-ports) is disabled.
 - **MAC changed**: the host is up with another MAC address than in the last scan (both known), e.g. a replaced device, an IP address conflict or ARP spoofing. The tooltip shows the previous MAC address.
 
-The **Since last scan** column and the counters next to the **Result** header (e.g. `2 New · 1 Gone`) are only shown if the result is compared with a previous scan. **Last scan at** next to the counters shows when the last scan was completed (the tooltip shows the date).
+The **Since last scan** column and the counters below the **Result** header (e.g. `2 New · 1 Gone`) are only shown if the result is compared with a previous scan. **Last scan at** in the header shows when the last scan was completed (the tooltip shows the date).
 
 Only completed scans are compared: a canceled scan or a scan with another input starts over (the next scan of this input is compared with it). **Rescan** of selected hosts updates their rows and their changes against the same previous scan (e.g. a gone host that is up again), but is not a scan of the input. The last scan is only kept in memory, as long as the tab is open. The change is also in the search and the export (`Change`, `PreviousMACAddress`).
 

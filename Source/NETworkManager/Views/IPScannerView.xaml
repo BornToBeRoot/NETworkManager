@@ -51,6 +51,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Style="{StaticResource ResourceKey=HeaderTextBlock}"
@@ -322,94 +323,103 @@
                        Style="{DynamicResource StatusMessageTextBlock}"
                        Margin="0,10,0,0" />
         </Grid>
-        <TextBlock Grid.Column="0" Grid.Row="2"
-                   Style="{StaticResource HeaderTextBlock}"
-                   Text="{x:Static localization:Strings.Result}" />
-        <!-- Counters (once a scan was started) and search, right of the header -->
-        <StackPanel Grid.Column="0" Grid.Row="2"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal"
-                        VerticalAlignment="Center"
-                        Visibility="{Binding Path=HostsToScan, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
-                <TextBlock Style="{StaticResource DefaultTextBlock}"
-                           Foreground="{DynamicResource MahApps.Brushes.Gray5}">
-                    <TextBlock.Text>
-                        <Binding Path="HostsUp" StringFormat="{x:Static localization:Strings.XUp}" />
-                    </TextBlock.Text>
-                </TextBlock>
-                <TextBlock Text="·"
-                           Style="{StaticResource DefaultTextBlock}"
-                           Foreground="{DynamicResource MahApps.Brushes.Gray5}"
-                           Margin="6,0,6,0" />
-                <TextBlock Style="{StaticResource DefaultTextBlock}"
-                           Foreground="{DynamicResource MahApps.Brushes.Gray5}">
-                    <TextBlock.Text>
-                        <Binding Path="HostsDown" StringFormat="{x:Static localization:Strings.XDown}" />
-                    </TextBlock.Text>
-                </TextBlock>
-                <!-- Changes since the previous scan of the same input (MAC changed only if there are any) -->
-                <StackPanel Orientation="Horizontal"
-                            Visibility="{Binding HasComparison, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="·"
-                                   Style="{StaticResource DefaultTextBlock}"
-                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}"
-                                   Margin="6,0,6,0" />
-                        <TextBlock Style="{StaticResource DefaultTextBlock}"
-                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}">
-                            <TextBlock.Text>
-                                <Binding Path="HostsNew" StringFormat="{x:Static localization:Strings.XNew}" />
-                            </TextBlock.Text>
-                        </TextBlock>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="·"
-                                   Style="{StaticResource DefaultTextBlock}"
-                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}"
-                                   Margin="6,0,6,0" />
-                        <TextBlock Style="{StaticResource DefaultTextBlock}"
-                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}">
-                            <TextBlock.Text>
-                                <Binding Path="HostsGone" StringFormat="{x:Static localization:Strings.XGone}" />
-                            </TextBlock.Text>
-                        </TextBlock>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Visibility="{Binding HostsMACChanged, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
-                        <TextBlock Text="·"
-                                   Style="{StaticResource DefaultTextBlock}"
-                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}"
-                                   Margin="6,0,6,0" />
-                        <TextBlock Style="{StaticResource DefaultTextBlock}"
-                                   Foreground="{DynamicResource MahApps.Brushes.Gray5}">
-                            <TextBlock.Text>
-                                <Binding Path="HostsMACChanged" StringFormat="{x:Static localization:Strings.XMACChanged}" />
-                            </TextBlock.Text>
-                        </TextBlock>
-                    </StackPanel>
-                </StackPanel>
-            </StackPanel>
-            <!-- "Last scan at", while the scan is repeated the countdown to the next scan -->
-            <internalControls:RefreshStatusControl LastRefreshTime="{Binding LastScanTime}"
+        <!-- Header of the result: "Last scan at" / countdown (trimmed first if the header is narrow), repeat and search -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                       Style="{StaticResource HeaderTextBlock}"
+                       Text="{x:Static localization:Strings.Result}" />
+            <internalControls:RefreshStatusControl Grid.Column="1"
+                                                   LastRefreshTime="{Binding LastScanTime}"
                                                    LastRefreshFormat="{x:Static localization:Strings.LastScanAtX}"
                                                    RemainingTime="{Binding Repeat.Timer.RemainingTime}"
                                                    RemainingTimeFormat="{x:Static localization:Strings.NextScanInX}"
                                                    IsRefreshing="{Binding IsRunning}"
+                                                   HorizontalAlignment="Right"
                                                    Margin="20,0,0,0" />
-            <internalControls:AutoRefreshControl IsChecked="{Binding Repeat.IsEnabled}"
-                                                 ItemsSource="{Binding Repeat.Times}"
-                                                 SelectedItem="{Binding Repeat.SelectedTime}"
-                                                 Text="{x:Static localization:Strings.AutomaticallyScanEvery}"
-                                                 Margin="20,0,0,0" />
-            <TextBox Width="250"
-                     Margin="20,0,0,0"
-                     Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
-                     wpfHelpers:SearchTextBoxHelper.EnterCommand="{Binding ApplySearchCommand}"
-                     Style="{StaticResource SearchTextBox}" />
+            <StackPanel Grid.Column="2"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
+                <internalControls:AutoRefreshControl IsChecked="{Binding Repeat.IsEnabled}"
+                                                     ItemsSource="{Binding Repeat.Times}"
+                                                     SelectedItem="{Binding Repeat.SelectedTime}"
+                                                     Text="{x:Static localization:Strings.AutomaticallyScanEvery}"
+                                                     Margin="20,0,0,0" />
+                <TextBox Width="250"
+                         Margin="20,0,0,0"
+                         Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}"
+                         wpfHelpers:SearchTextBoxHelper.EnterCommand="{Binding ApplySearchCommand}"
+                         Style="{StaticResource SearchTextBox}" />
+            </StackPanel>
+        </Grid>
+        <!-- Counters (once a scan was started) on their own line, the changes since the last scan don't fit into the header -->
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    Margin="0,0,0,10"
+                    Visibility="{Binding Path=HostsToScan, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
+            <TextBlock Style="{StaticResource DefaultTextBlock}"
+                       Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                <TextBlock.Text>
+                    <Binding Path="HostsUp" StringFormat="{x:Static localization:Strings.XUp}" />
+                </TextBlock.Text>
+            </TextBlock>
+            <TextBlock Text="·"
+                       Style="{StaticResource DefaultTextBlock}"
+                       Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                       Margin="6,0,6,0" />
+            <TextBlock Style="{StaticResource DefaultTextBlock}"
+                       Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                <TextBlock.Text>
+                    <Binding Path="HostsDown" StringFormat="{x:Static localization:Strings.XDown}" />
+                </TextBlock.Text>
+            </TextBlock>
+            <!-- Changes since the previous scan of the same input (MAC changed only if there are any) -->
+            <StackPanel Orientation="Horizontal"
+                        Visibility="{Binding HasComparison, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="·"
+                               Style="{StaticResource DefaultTextBlock}"
+                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                               Margin="6,0,6,0" />
+                    <TextBlock Style="{StaticResource DefaultTextBlock}"
+                               Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                        <TextBlock.Text>
+                            <Binding Path="HostsNew" StringFormat="{x:Static localization:Strings.XNew}" />
+                        </TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="·"
+                               Style="{StaticResource DefaultTextBlock}"
+                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                               Margin="6,0,6,0" />
+                    <TextBlock Style="{StaticResource DefaultTextBlock}"
+                               Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                        <TextBlock.Text>
+                            <Binding Path="HostsGone" StringFormat="{x:Static localization:Strings.XGone}" />
+                        </TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Visibility="{Binding HostsMACChanged, Converter={StaticResource IntNotZeroToVisibilityCollapsedConverter}}">
+                    <TextBlock Text="·"
+                               Style="{StaticResource DefaultTextBlock}"
+                               Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                               Margin="6,0,6,0" />
+                    <TextBlock Style="{StaticResource DefaultTextBlock}"
+                               Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                        <TextBlock.Text>
+                            <Binding Path="HostsMACChanged" StringFormat="{x:Static localization:Strings.XMACChanged}" />
+                        </TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
         </StackPanel>
         <controls:MultiSelectDataGrid x:Name="DataGridResults"
-                                      Grid.Column="0" Grid.Row="3"
+                                      Grid.Column="0" Grid.Row="4"
                                       ItemsSource="{Binding Path=ResultsView}"
                                       SelectedItem="{Binding Path=SelectedResult}"
                                       SelectedItemsList="{Binding Path=SelectedResults, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
