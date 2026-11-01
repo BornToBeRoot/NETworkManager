@@ -623,6 +623,17 @@ Windows 10 / 11 and Windows Server 2016 and later all report the version `10.0`,
 
 :::note
 
+With the [Windows credentials](#windows-credentials) of a profile / group, a wrong password must not lock the account (every host in a domain makes the domain controller count a failed logon). The credentials are checked on one host first, the other hosts wait:
+
+- Accepted (also `Access is denied.`: logged on, but without rights): all hosts are asked.
+- Logon failure on a host in the domain of the credentials (or the third logon failure on hosts of other domains): the credentials are rejected. The other hosts are not tried (`Not tried: ...` in the row details), a message is shown and the tab doesn't use them for the next scans (also not for **Automatically scan every** and **Rescan**) - open a new tab after correcting them.
+
+Computers in a workgroup and local accounts (`.\admin`) are not part of this check: a logon failure there only affects the host (e.g. a Windows PC that is not in the domain shows the error in its row, the other hosts are not affected). The user running NETworkManager is not checked (no stored password).
+
+:::
+
+:::note
+
 The NetApi requests need the firewall rules **File and Printer Sharing (SMB-In)** on the host, the logged-on users admin rights (e.g. a domain admin or the local administrator), the patch level also the **Remote Registry** service (disabled by default on Windows clients).
 
 :::

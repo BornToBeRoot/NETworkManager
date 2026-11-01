@@ -56,6 +56,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // for the user running the application
     private readonly WindowsCredentials _windowsCredentials;
 
+    // The Windows credentials were rejected in a scan of the tab (wrong username or password): not used for the next
+    // scans, so a repeated scan doesn't lock the account (see WindowsLogonGate)
+    private bool _isWindowsCredentialsRejected;
+
     // Background HostFound / HostUpdated events append here instead of hopping to the UI thread per
     // item - a DispatcherTimer periodically flushes this into the Results collection instead, so a large
     // scan doesn't flood the dispatcher queue with one BeginInvoke per host. One list for both, so an
@@ -1128,7 +1132,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         var scanOptions = CreateScanOptions(ports, webPagePorts,
             GetProfileSNMPCredentials(SettingsManager.Current.IPScanner_SNMPEnabled)) with
         {
-            WindowsCredentials = _windowsCredentials
+            WindowsCredentials = _windowsCredentials,
+            WindowsCredentialsRejected = _isWindowsCredentialsRejected
         };
 
         ScanOptions = new IPScannerResultOptions(scanOptions);
@@ -1185,8 +1190,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _cancellationTokenSource?.Dispose();
         _cancellationTokenSource = new CancellationTokenSource();
 
-        // Same options (columns, ports), but every host is reported - also if it is unreachable now
-        var rescanOptions = CreateRescanOptions(_lastScanOptions);
+        // Same options (columns, ports), but every host is reported - also if it is unreachable now. Windows credentials
+        // that were rejected since the last scan are not used again.
+        var rescanOptions = CreateRescanOptions(_lastScanOptions) with
+        {
+            WindowsCredentialsRejected = _isWindowsCredentialsRejected
+        };
 
         // The plain text credentials of the profile / group were released after the last scan
         if (_snmpCredentials != null)
@@ -1949,15 +1958,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 AddStatusMessage(Strings.NoReachableHostsFound);
             }
 
-            // Wrong Windows credentials of the profile / group: one message instead of an error in every row only
-            if (!e.IsCanceled && e.Exception == null && _windowsCredentials != null)
+            // Windows credentials rejected (wrong username or password, also in a canceled scan): not used again in
+            // this tab, one message instead of only an error in the rows
+            if (sender is IPScanner { IsWindowsLogonRejected: true })
             {
-                // A rescan only counts its rows (the other rows keep the result of the last scan)
-                var logonFailures = (isRescan ? rescannedRows : (IEnumerable<IPScannerHostInfo>)Results).Count(x => x.Windows?.IsLogonFailure == true);
+                _isWindowsCredentialsRejected = true;
 
-                if (logonFailures > 0)
-                    AddStatusMessage(string.Format(Strings.WindowsLogonFailedMessage, _windowsCredentials,
-                        logonFailures));
+                AddStatusMessage(string.Format(Strings.WindowsLogonFailedMessage, _windowsCredentials));
             }
 
             // A completed rescan: the changes of the rescanned hosts against the same previous scan (e.g. a gone host that is

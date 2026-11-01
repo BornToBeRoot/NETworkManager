@@ -5403,7 +5403,10 @@ Do you want to start the scan?</value>
     <value>Reading Windows host information is disabled!</value>
   </data>
   <data name="WindowsLogonFailedMessage" xml:space="preserve">
-    <value>The logon with the Windows credentials "{0}" failed on {1} host(s). Check the username and password of the profile / group.</value>
-    <comment>{0} is the user (e.g. CORP\admin), {1} the number of hosts</comment>
+    <value>The logon with the Windows credentials "{0}" failed (wrong username or password?). To protect the account from being locked out, they are not used for the other hosts and the next scans of this tab. Check the credentials of the profile / group and open a new tab.</value>
+    <comment>{0} is the user (e.g. CORP\admin)</comment>
+  </data>
+  <data name="WindowsLogonSkippedMessage" xml:space="preserve">
+    <value>Not tried: the Windows credentials were rejected on another host (protection against an account lockout).</value>
   </data>
 </root>

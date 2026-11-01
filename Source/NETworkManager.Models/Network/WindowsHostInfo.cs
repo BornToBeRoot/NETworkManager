@@ -19,6 +19,12 @@ public sealed record WindowsHostInfo(SMBInfo SMB, WindowsNetApiInfo NetApi)
     public const int ErrorTimeout = 1460;
 
     /// <summary>
+    ///     Error of a host whose NetApi requests were not sent: the credentials were rejected on another host (wrong
+    ///     username or password), see <see cref="WindowsLogonGate" />. Not a Win32 error.
+    /// </summary>
+    public const int ErrorLogonSkipped = -1;
+
+    /// <summary>
     ///     Win32 errors of a failed logon with the credentials (wrong username or password, disabled / locked / expired
     ///     account, logon not allowed).
     /// </summary>
@@ -146,9 +152,9 @@ public sealed record WindowsHostInfo(SMBInfo SMB, WindowsNetApiInfo NetApi)
     ///     Gets the message of a Win32 error (of Windows, in the language of the system).
     /// </summary>
     /// <param name="error">Win32 error.</param>
-    /// <returns>Message, empty for 0.</returns>
+    /// <returns>Message, empty for 0 and <see cref="ErrorLogonSkipped" /> (translated by the caller).</returns>
     public static string GetErrorMessage(int error)
     {
-        return error == 0 ? string.Empty : new Win32Exception(error).Message;
+        return error is 0 or ErrorLogonSkipped ? string.Empty : new Win32Exception(error).Message;
     }
 }

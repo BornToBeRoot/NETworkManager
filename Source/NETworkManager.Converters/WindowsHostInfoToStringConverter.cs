@@ -45,15 +45,25 @@ public sealed class WindowsHostInfoToStringConverter : IValueConverter
             "TimeOffset" => info.TimeOffset is { } offset ? DateTimeHelper.TimeSpanToOffsetString(offset) : null,
             "Users" => info.Users != null
                 ? string.Join(Environment.NewLine, info.Users)
-                : WindowsHostInfo.GetErrorMessage(info.UsersError),
+                : GetErrorMessage(info.UsersError),
             "SMB" => info.SMB == null
                 ? null
                 : info.SMB.SigningRequired
                     ? string.Format(Strings.SMBDialectSigningRequired, info.SMB.Dialect)
                     : info.SMB.Dialect,
-            "Error" => WindowsHostInfo.GetErrorMessage(info.Error),
+            "Error" => GetErrorMessage(info.Error),
             _ => null
         };
+    }
+
+    /// <summary>
+    ///     Gets the message of an error of the NetApi requests (of Windows, or the credentials were not tried).
+    /// </summary>
+    private static string GetErrorMessage(int error)
+    {
+        return error == WindowsHostInfo.ErrorLogonSkipped
+            ? Strings.WindowsLogonSkippedMessage
+            : WindowsHostInfo.GetErrorMessage(error);
     }
 
     /// <summary>

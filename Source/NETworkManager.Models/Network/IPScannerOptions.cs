@@ -143,6 +143,12 @@ public record IPScannerOptions
     public WindowsCredentials WindowsCredentials { get; init; }
 
     /// <summary>
+    ///     The <see cref="WindowsCredentials" /> were rejected in an earlier scan of the tab (wrong username or
+    ///     password): they are not used, so a repeated scan doesn't lock the account, see <see cref="WindowsLogonGate" />.
+    /// </summary>
+    public bool WindowsCredentialsRejected { get; init; }
+
+    /// <summary>
     ///     Timeout in milliseconds of the SMB request and of the NetApi requests of a host.
     /// </summary>
     public required int WindowsTimeout { get; init; }

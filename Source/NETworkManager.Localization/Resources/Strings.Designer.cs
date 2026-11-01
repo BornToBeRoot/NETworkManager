@@ -15461,11 +15461,20 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The logon with the Windows credentials &quot;{0}&quot; failed on {1} host(s). Check the username and password of the profile / group..
+        ///   Looks up a localized string similar to The logon with the Windows credentials &quot;{0}&quot; failed (wrong username or password?). To protect the account from being locked out, they are not used for the other hosts and the next scans of this tab. Check the credentials of the profile / group and open a new tab..
         /// </summary>
         public static string WindowsLogonFailedMessage {
             get {
                 return ResourceManager.GetString("WindowsLogonFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not tried: the Windows credentials were rejected on another host (protection against an account lockout)..
+        /// </summary>
+        public static string WindowsLogonSkippedMessage {
+            get {
+                return ResourceManager.GetString("WindowsLogonSkippedMessage", resourceCulture);
             }
         }
         

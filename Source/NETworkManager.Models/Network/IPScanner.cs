@@ -43,6 +43,15 @@ public sealed class IPScanner(IPScannerOptions options)
     private WindowsLogon _windowsLogon;
     private int _windowsLogonError;
 
+    // Checks the credentials on one host before the others use them (account lockout), null without credentials
+    private WindowsLogonGate _windowsLogonGate;
+
+    /// <summary>
+    ///     The Windows credentials of the scan were rejected (wrong username or password), see
+    ///     <see cref="WindowsLogonGate" />. Read it after <see cref="ScanComplete" />.
+    /// </summary>
+    public bool IsWindowsLogonRejected => _windowsLogonGate?.IsRejected == true;
+
     /// <summary>
     ///     Time between the start of two hosts during the ramp-up, see <see cref="StartScheduler" />. With the
     ///     default settings the first 128 hosts are started within ~1.3 s instead of at the same moment (~11 connection
@@ -164,6 +173,9 @@ public sealed class IPScanner(IPScannerOptions options)
                 // Network logon for the NetApi requests of the Windows host information, once per scan
                 if (options.WindowsEnabled && options.WindowsCredentials != null)
                 {
+                    _windowsLogonGate = new WindowsLogonGate(options.WindowsCredentials,
+                        options.WindowsCredentialsRejected);
+
                     try
                     {
                         _windowsLogon = WindowsLogon.Create(options.WindowsCredentials);
@@ -763,7 +775,7 @@ public sealed class IPScanner(IPScannerOptions options)
         {
             var target = GetWindowsTarget(ipAddress, await dnsHostname.ConfigureAwait(false), smbInfo.NTLM);
 
-            netApiInfo = await ResolveNetApiAsync(ipAddress.ToString(), target, cancellationToken)
+            netApiInfo = await ResolveNetApiAsync(ipAddress.ToString(), target, smbInfo.NTLM, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -806,9 +818,10 @@ public sealed class IPScanner(IPScannerOptions options)
     /// </summary>
     /// <param name="ipAddress">IP address of the host (if the hostname can't be found).</param>
     /// <param name="target">Hostname or IP address to connect to, see <see cref="GetWindowsTarget" />.</param>
+    /// <param name="ntlm">NTLM challenge of the host (domain for the lockout protection), null if none.</param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     /// <returns>NetApi information, with <see cref="WindowsHostInfo.ErrorTimeout" /> after the timeout.</returns>
-    private async Task<WindowsNetApiInfo> ResolveNetApiAsync(string ipAddress, string target,
+    private async Task<WindowsNetApiInfo> ResolveNetApiAsync(string ipAddress, string target, NTLMChallengeInfo ntlm,
         CancellationToken cancellationToken)
     {
         if (_windowsLogonError != 0)
@@ -816,6 +829,42 @@ public sealed class IPScanner(IPScannerOptions options)
 
         var timeout = TimeSpan.FromMilliseconds(options.WindowsTimeout);
 
+        // Credentials: checked on one host before the others use them (a wrong password must not lock the account)
+        var decision = _windowsLogonGate == null
+            ? WindowsLogonGate.Decision.Proceed
+            : await _windowsLogonGate.WaitAsync(ntlm, timeout * 2, cancellationToken).ConfigureAwait(false);
+
+        switch (decision)
+        {
+            case WindowsLogonGate.Decision.Skip:
+                return WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorLogonSkipped);
+            case WindowsLogonGate.Decision.Timeout:
+                return WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorTimeout);
+        }
+
+        WindowsNetApiInfo info = null;
+
+        try
+        {
+            info = await ResolveNetApiWithLogonAsync(ipAddress, target, timeout, cancellationToken)
+                .ConfigureAwait(false);
+
+            return info;
+        }
+        finally
+        {
+            // Also on cancellation (null), so the next host can check the credentials
+            if (decision == WindowsLogonGate.Decision.Check)
+                _windowsLogonGate.Report(ntlm, info);
+        }
+    }
+
+    /// <summary>
+    ///     Runs the blocking NetApi requests of a host, see <see cref="ResolveNetApiAsync" />.
+    /// </summary>
+    private async Task<WindowsNetApiInfo> ResolveNetApiWithLogonAsync(string ipAddress, string target,
+        TimeSpan timeout, CancellationToken cancellationToken)
+    {
         // All slots are taken by calls that wait for Windows (e.g. hosts that don't answer RPC)
         if (!await WindowsSemaphore.WaitAsync(timeout, cancellationToken).ConfigureAwait(false))
             return WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorTimeout);

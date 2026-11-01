@@ -611,9 +611,10 @@ public class IPScannerHostInfo : PropertyChangedBase
     }
 
     /// <summary>
-    ///     The NetApi requests of the Windows host information failed (e.g. access denied, wrong password).
+    ///     The NetApi requests of the Windows host information failed (e.g. access denied, wrong password) or were not
+    ///     sent (credentials rejected on another host).
     /// </summary>
-    public bool HasWindowsError => Windows?.Error is > 0;
+    public bool HasWindowsError => Windows is { Error: not 0 };
 
     /// <summary>
     ///     Name of the Windows version (e.g. "Windows 11 25H2"), empty if not known.
