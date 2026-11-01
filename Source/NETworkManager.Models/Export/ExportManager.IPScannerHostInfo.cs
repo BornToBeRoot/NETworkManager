@@ -116,7 +116,10 @@ public static partial class ExportManager
             // Change since the previous scan of the same input (empty without a previous scan / change)
             new(nameof(IPScannerHostInfo.Change),
                 info.Change == IPScannerHostChange.None ? null : info.Change.ToString()),
-            new(nameof(IPScannerHostInfo.PreviousMACAddress), info.PreviousMACAddress)
+            new(nameof(IPScannerHostInfo.PreviousMACAddress), info.PreviousMACAddress),
+            // SNMPv3 error of the host (e.g. "AuthenticationFailed"), empty without
+            new(nameof(IPScannerHostInfo.SNMPError),
+                IfEnabled(options.SNMPEnabled, info.HasSNMPError ? info.SNMPError.ToString() : string.Empty), true)
         ];
     }
 

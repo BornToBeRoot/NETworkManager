@@ -161,7 +161,11 @@ public sealed class IPScanner(IPScannerOptions options)
                               (long)Math.Ceiling(options.PortScanPorts.Length / (double)options.MaxPortThreads)
                             : 0,
                         Math.Max(options.NetBIOSEnabled ? options.NetBIOSTimeout : 0,
-                            options.SNMPEnabled ? options.SNMPTimeout : 0)));
+                            // v3: discovery and request, each with the timeout
+                            options.SNMPEnabled
+                                ? (long)options.SNMPTimeout *
+                                  (options.SNMPCredentials.Version == SNMPVersion.V3 ? 2 : 1)
+                                : 0)));
 
                 var hostConcurrency = hosts.TryGetNonEnumeratedCount(out var hostCount)
                     ? Math.Min(hostCount, options.MaxHostThreads)
@@ -246,8 +250,8 @@ public sealed class IPScanner(IPScannerOptions options)
 
         // A host that answers the SNMP request is up as well (null if it didn't answer)
         var snmpTask = options.SNMPEnabled
-            ? SNMPSystemInfoResolver.ResolveAsync(ipAddress, options.SNMPVersion, options.SNMPCommunity,
-                options.SNMPTimeout, cancellationToken)
+            ? SNMPSystemInfoResolver.ResolveAsync(ipAddress, options.SNMPCredentials, options.SNMPTimeout,
+                cancellationToken)
             : null;
 
         var enrichTask = Task.CompletedTask;
@@ -365,6 +369,7 @@ public sealed class IPScanner(IPScannerOptions options)
                         x.SNMPName = value?.Name ?? string.Empty;
                         x.SNMPDescription = value?.Description ?? string.Empty;
                         x.SNMPLocation = value?.Location ?? string.Empty;
+                        x.SNMPError = value?.Error ?? SNMPV3ErrorCode.None;
                         x.IsSNMPPending = false;
                     };
                 }
@@ -524,6 +529,7 @@ public sealed class IPScanner(IPScannerOptions options)
             SNMPName = snmpInfo?.Name ?? string.Empty,
             SNMPDescription = snmpInfo?.Description ?? string.Empty,
             SNMPLocation = snmpInfo?.Location ?? string.Empty,
+            SNMPError = snmpInfo?.Error ?? SNMPV3ErrorCode.None,
             IsWebPagePending = isReachable && options.WebPageEnabled &&
                                  (ports == null ? options.PortScanEnabled : GetWebPorts(ports).Count > 0),
             IsPortScanPending = ports == null,

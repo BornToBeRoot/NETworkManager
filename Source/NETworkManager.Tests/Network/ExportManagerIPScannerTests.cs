@@ -22,7 +22,7 @@ public class ExportManagerIPScannerTests
         "NetBIOSIPAddress,NetBIOSComputerName,NetBIOSUserName,NetBIOSGroupName,NetBIOSMACAddress,NetBIOSVendor," +
         "MACAddress,Vendor,DNSHostname,DetectedBy,OSGuess,Role,MDNSHostname,WebTitle,WebURL,SNMPName,SNMPDescription," +
         "SNMPLocation,WebStatusCode,WebServer,WebPoweredBy,WebRealm,WebRedirectURL,WebCertificateSubject," +
-        "WebCertificateIssuer,WebCertificateNotAfter,WebCertificateSelfSigned,Change,PreviousMACAddress";
+        "WebCertificateIssuer,WebCertificateNotAfter,WebCertificateSelfSigned,Change,PreviousMACAddress,SNMPError";
 
     private static readonly IPScannerResultOptions AllEnabled = new(true, true, true, true, true, true, true, true, true);
 

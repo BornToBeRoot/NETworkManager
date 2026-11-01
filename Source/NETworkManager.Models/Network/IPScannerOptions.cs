@@ -120,14 +120,10 @@ public record IPScannerOptions
     public required bool SNMPEnabled { get; init; }
 
     /// <summary>
-    ///     SNMP version (<see cref="SNMPVersion.V1" /> or <see cref="SNMPVersion.V2C" />).
+    ///     SNMP version and credentials (community for v1 / v2c, user for v3): of the settings, or the override of the
+    ///     profile / group the tab was opened with.
     /// </summary>
-    public required SNMPVersion SNMPVersion { get; init; }
-
-    /// <summary>
-    ///     SNMP community.
-    /// </summary>
-    public required string SNMPCommunity { get; init; }
+    public required SNMPCredentials SNMPCredentials { get; init; }
 
     /// <summary>
     ///     Timeout in milliseconds after which an SNMP request is considered lost.

@@ -35,6 +35,7 @@
         <converters:IPScannerHostChangeToStringConverter x:Key="IPScannerHostChangeToStringConverter" />
         <converters:IPScannerOSGuessToStringConverter x:Key="IPScannerOSGuessToStringConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
+        <converters:SNMPV3ErrorCodeToStringConverter x:Key="SNMPV3ErrorCodeToStringConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
         <converters:IntZeroToVisibilityCollapsedConverter x:Key="IntZeroToVisibilityCollapsedConverter" />
@@ -1901,6 +1902,12 @@
                                                     </MultiBinding>
                                                 </TextBox.Text>
                                             </TextBox>
+                                        </HeaderedContentControl>
+                                    </ListViewItem>
+                                    <!-- SNMPv3: the host answered with an error (e.g. unknown user, wrong password) -->
+                                    <ListViewItem Visibility="{Binding Path=HasSNMPError, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                        <HeaderedContentControl Header="{x:Static localization:Strings.Error}" Style="{StaticResource HostDetailsRow}">
+                                            <TextBox Text="{Binding Path=SNMPError, Mode=OneWay, Converter={StaticResource SNMPV3ErrorCodeToStringConverter}}" />
                                         </HeaderedContentControl>
                                     </ListViewItem>
                                 </ListView>

@@ -1198,8 +1198,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             WebPagePorts = webPagePorts,
             WebPageTimeout = SettingsManager.Current.IPScanner_WebPageTimeout,
             SNMPEnabled = SettingsManager.Current.IPScanner_SNMPEnabled,
-            SNMPVersion = SettingsManager.Current.IPScanner_SNMPVersion,
-            SNMPCommunity = SettingsManager.Current.IPScanner_SNMPCommunity,
+            SNMPCredentials = SNMPCredentials.FromCommunity(SettingsManager.Current.IPScanner_SNMPVersion,
+                SettingsManager.Current.IPScanner_SNMPCommunity),
             SNMPTimeout = SettingsManager.Current.IPScanner_SNMPTimeout,
             ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults,
             ReportAllHosts = false

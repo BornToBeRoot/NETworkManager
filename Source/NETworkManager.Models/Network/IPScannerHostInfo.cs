@@ -563,6 +563,29 @@ public class IPScannerHostInfo : PropertyChangedBase
     } = string.Empty;
 
     /// <summary>
+    ///     SNMPv3 error of the host (e.g. unknown user, wrong password: it answered, the values are empty),
+    ///     <see cref="SNMPV3ErrorCode.None" /> otherwise.
+    /// </summary>
+    public SNMPV3ErrorCode SNMPError
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(HasSNMPError));
+        }
+    }
+
+    /// <summary>
+    ///     The host answered the SNMPv3 request with an error (see <see cref="SNMPError" />).
+    /// </summary>
+    public bool HasSNMPError => SNMPError != SNMPV3ErrorCode.None;
+
+    /// <summary>
     ///     Indicates whether the DNS hostname (PTR) is still resolved (<see cref="DNSHostname" /> is a placeholder).
     /// </summary>
     public bool IsDNSPending
@@ -757,6 +780,7 @@ public class IPScannerHostInfo : PropertyChangedBase
         SNMPName = source.SNMPName;
         SNMPDescription = source.SNMPDescription;
         SNMPLocation = source.SNMPLocation;
+        SNMPError = source.SNMPError;
         IsDNSPending = source.IsDNSPending;
         IsNeighborMACAddressPending = source.IsNeighborMACAddressPending;
         IsMDNSPending = source.IsMDNSPending;
