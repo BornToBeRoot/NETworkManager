@@ -113,4 +113,17 @@ public class IPScannerScanComparerTests
         Assert.False(gone.IsHostnamePending);
         Assert.False(gone.IsMACAddressPending);
     }
+
+    [Fact]
+    public void MarkGoneShowsThePreviousValuesIfTheHostHasNone()
+    {
+        var row = new IPScannerHostInfo(A, false, new PingInfo(), false, [], new NetBIOSInfo(A));
+
+        row.MarkGone(new IPScannerBaselineHost(true, "nas.local", "00:11", "Synology"));
+
+        Assert.Equal(IPScannerHostChange.Gone, row.Change);
+        Assert.Equal("nas.local", row.Hostname);
+        Assert.Equal("00:11", row.MACAddress);
+        Assert.Equal("Synology", row.Vendor);
+    }
 }

@@ -2020,7 +2020,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 var row = Results.FirstOrDefault(x => x.IPAddress.Equals(ipAddress));
 
                 if (row != null)
-                    row.Change = IPScannerHostChange.Gone;
+                    row.MarkGone(previous);
                 else
                     Results.Add(IPScannerHostInfo.CreateGone(ipAddress, previous));
             }

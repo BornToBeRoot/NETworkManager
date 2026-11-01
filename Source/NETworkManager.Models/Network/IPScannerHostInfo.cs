@@ -708,6 +708,25 @@ public class IPScannerHostInfo : PropertyChangedBase
     }
 
     /// <summary>
+    ///     Marks a shown row of a host that is down now as <see cref="IPScannerHostChange.Gone" /> (e.g. a row of a
+    ///     repeated scan): the hostname and MAC address of the previous scan are shown if the host has none now.
+    /// </summary>
+    /// <param name="previous">The host in the previous scan.</param>
+    public void MarkGone(IPScannerBaselineHost previous)
+    {
+        if (string.IsNullOrEmpty(Hostname))
+            DNSHostname = previous.Hostname;
+
+        if (string.IsNullOrEmpty(MACAddress))
+        {
+            NeighborMACAddress = previous.MACAddress;
+            NeighborVendor = previous.Vendor;
+        }
+
+        Change = IPScannerHostChange.Gone;
+    }
+
+    /// <summary>
     ///     Takes over all values of another result of the same host (e.g. a rescan), so the shown row keeps its
     ///     identity (selection, expanded details). Call it on the thread that owns the host (UI thread).
     /// </summary>
