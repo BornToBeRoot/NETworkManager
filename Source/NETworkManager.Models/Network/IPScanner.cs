@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using log4net;
 using NETworkManager.Models.Lookup;
 using NETworkManager.Utilities;
 
@@ -19,6 +21,27 @@ namespace NETworkManager.Models.Network;
 public sealed class IPScanner(IPScannerOptions options)
 {
     #region Variables
+
+    private static readonly ILog Log = LogManager.GetLogger(typeof(IPScanner));
+
+    /// <summary>
+    ///     TCP port of SMB, needed for the Windows host information.
+    /// </summary>
+    private const int SMBPort = 445;
+
+    /// <summary>
+    ///     Max. number of hosts whose NetApi requests run at the same time. The calls are blocking and can't be
+    ///     canceled (see <see cref="WindowsNetApiResolver" />): each one has its own thread, a call that exceeds the
+    ///     timeout keeps its slot until Windows returns, so blocked calls never take more threads than this.
+    /// </summary>
+    private const int MaxWindowsThreads = 16;
+
+    private readonly SemaphoreSlim _windowsSemaphore = new(MaxWindowsThreads, MaxWindowsThreads);
+
+    // Network logon with the Windows credentials of the profile / group (null: the user running the application) and
+    // the error if it could not be created (every host gets it instead of using another user)
+    private WindowsLogon _windowsLogon;
+    private int _windowsLogonError;
 
     /// <summary>
     ///     Time between the start of two hosts during the ramp-up, see <see cref="StartScheduler" />. With the
@@ -138,6 +161,24 @@ public sealed class IPScanner(IPScannerOptions options)
                 _hostRoles = IPScannerHostRoleHelper.GetRoles(networkInterfaces);
                 _neighborCache = new IPScannerNeighborCache(_hostRoles);
 
+                // Network logon for the NetApi requests of the Windows host information, once per scan
+                if (options.WindowsEnabled && options.WindowsCredentials != null)
+                {
+                    try
+                    {
+                        _windowsLogon = WindowsLogon.Create(options.WindowsCredentials);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Warn($"Could not log on with the Windows credentials of the profile / group " +
+                                 $"({options.WindowsCredentials}), the NetApi requests are skipped.", ex);
+
+                        _windowsLogonError = ex is Win32Exception win32Exception
+                            ? win32Exception.NativeErrorCode
+                            : 1326; // ERROR_LOGON_FAILURE
+                    }
+                }
+
                 var hostParallelOptions = new ParallelOptions
                 {
                     CancellationToken = cancellationToken,
@@ -200,6 +241,9 @@ public sealed class IPScanner(IPScannerOptions options)
             }
             finally
             {
+                // A NetApi call that exceeded the timeout may still run, the thread keeps its impersonation token
+                _windowsLogon?.Dispose();
+
                 OnScanComplete(new ScanCompleteArgs(isCanceled, exception));
             }
         });
@@ -268,8 +312,13 @@ public sealed class IPScanner(IPScannerOptions options)
         // Probes that answered so far
         var detectedBy = IPScannerDetectionMethod.None;
 
-        // The title of the web page is read for the found host (when the port scan is finished)
+        // The title of the web page and the Windows host information are read for the found host (when the port scan
+        // is finished)
         var isWebPagePending = false;
+        var isWindowsPending = false;
+
+        // DNS hostname of the host (empty if none or disabled) - the NetApi requests use it to connect by name
+        var dnsHostname = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
 
         IPScannerHostInfo hostInfo = null;
 
@@ -279,13 +328,15 @@ public sealed class IPScanner(IPScannerOptions options)
         {
             hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo, snmpInfo, isSNMPFinished);
             isWebPagePending = hostInfo.IsWebPagePending;
+            isWindowsPending = hostInfo.IsWindowsPending;
 
             _hostsUp.Increment();
 
             OnHostFound(new IPScannerHostFoundArgs(hostInfo));
             OnProgressChanged();
 
-            enrichTask = EnrichAsync(ipAddress, hostInfo, DateTime.UtcNow, networkInterfaces, cancellationToken);
+            enrichTask = EnrichAsync(ipAddress, hostInfo, DateTime.UtcNow, networkInterfaces, dnsHostname,
+                cancellationToken);
         }
 
         try
@@ -430,6 +481,16 @@ public sealed class IPScanner(IPScannerOptions options)
                     OnHostUpdated(new IPScannerHostUpdatedArgs(hostInfo, x => x.IsWebPagePending = false));
             }
 
+            // Windows host information - only with TCP 445 open if the port scan checked it, so after the port scan
+            if (isWindowsPending)
+            {
+                if (IsSMBPortOpenOrNotScanned(ports))
+                    enrichTask = Task.WhenAll(enrichTask,
+                        UpdateWindowsAsync(ipAddress, hostInfo, dnsHostname.Task, cancellationToken));
+                else
+                    OnHostUpdated(new IPScannerHostUpdatedArgs(hostInfo, x => x.IsWindowsPending = false));
+            }
+
             if (hostInfo == null)
             {
                 // Count unreachable hosts unconditionally, since ShowAllResults may prevent them from ever
@@ -447,7 +508,7 @@ public sealed class IPScanner(IPScannerOptions options)
                     // An unreachable host doesn't need a new snapshot of the neighbor table - the table is only read
                     // if it was not read yet (e.g. a host that blocks ICMP still has an ARP entry from the ping)
                     enrichTask = EnrichAsync(ipAddress, hostInfo, DateTime.MinValue, networkInterfaces,
-                        cancellationToken);
+                        dnsHostname, cancellationToken);
                 }
             }
 
@@ -532,6 +593,7 @@ public sealed class IPScanner(IPScannerOptions options)
             SNMPError = snmpInfo?.Error ?? SNMPV3ErrorCode.None,
             IsWebPagePending = isReachable && options.WebPageEnabled &&
                                  (ports == null ? options.PortScanEnabled : GetWebPorts(ports).Count > 0),
+            IsWindowsPending = isReachable && options.WindowsEnabled && (ports == null || IsSMBPortOpenOrNotScanned(ports)),
             IsPortScanPending = ports == null,
             IsNetBIOSPending = netBIOSInfo == null
         };
@@ -547,14 +609,29 @@ public sealed class IPScanner(IPScannerOptions options)
     /// <param name="host">Result of the host, already raised in <see cref="HostFound" />.</param>
     /// <param name="discoveredAt">Time the host answered, <see cref="DateTime.MinValue" /> if it is unreachable.</param>
     /// <param name="networkInterfaces">Local network interfaces (for the MAC address lookup).</param>
+    /// <param name="dnsHostnameResult">Completed with the DNS hostname (empty if none or disabled).</param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     private async Task EnrichAsync(IPAddress ipAddress, IPScannerHostInfo host, DateTime discoveredAt,
-        List<NetworkInterfaceInfo> networkInterfaces, CancellationToken cancellationToken)
+        List<NetworkInterfaceInfo> networkInterfaces, TaskCompletionSource<string> dnsHostnameResult,
+        CancellationToken cancellationToken)
     {
         async Task UpdateHostnameAsync()
         {
-            var dnsHostname = await DNSClient.GetInstance().ResolvePtrOrEmptyAsync(ipAddress, cancellationToken)
-                .ConfigureAwait(false);
+            string dnsHostname;
+
+            try
+            {
+                dnsHostname = await DNSClient.GetInstance().ResolvePtrOrEmptyAsync(ipAddress, cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch
+            {
+                // Also on cancellation / an error, nothing waits for a hostname that never comes
+                dnsHostnameResult.TrySetResult(string.Empty);
+                throw;
+            }
+
+            dnsHostnameResult.TrySetResult(dnsHostname ?? string.Empty);
 
             // Also without a hostname, so the placeholder is replaced
             OnHostUpdated(new IPScannerHostUpdatedArgs(host, x =>
@@ -593,6 +670,9 @@ public sealed class IPScanner(IPScannerOptions options)
 
         // Requests sent to the host (e.g. mDNS) only for reachable hosts
         var isReachable = discoveredAt != DateTime.MinValue;
+
+        if (!options.ResolveHostname)
+            dnsHostnameResult.TrySetResult(string.Empty);
 
         // The lookups don't depend on each other - run them concurrently, the host is finished after the slowest one
         // instead of after all of them
@@ -644,6 +724,143 @@ public sealed class IPScanner(IPScannerOptions options)
             x.WebCertificate = webPageInfo?.Certificate;
             x.IsWebPagePending = false;
         }));
+    }
+
+    /// <summary>
+    ///     Checks if the Windows host information is read for a found host: with the port scan and TCP 445 in its
+    ///     ports only if 445 is open, otherwise for every found host (the SMB request tells if 445 is open).
+    /// </summary>
+    /// <param name="ports">All probed ports (empty if the port scan is disabled).</param>
+    /// <returns>True if the Windows host information is read.</returns>
+    private bool IsSMBPortOpenOrNotScanned(List<PortInfo> ports)
+    {
+        if (!options.PortScanEnabled || !options.PortScanPorts.Contains(SMBPort))
+            return true;
+
+        return ports.Any(x => x.Port == SMBPort && x.State == PortState.Open);
+    }
+
+    /// <summary>
+    ///     Reads the Windows host information of a host and raises it as <see cref="HostUpdated" />: the SMB / NTLM
+    ///     values (no credentials), then - if the host answered on TCP 445 - the NetApi values with the credentials of
+    ///     the scan.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="host">Result of the host, already raised in <see cref="HostFound" />.</param>
+    /// <param name="dnsHostname">DNS hostname of the host (empty if none or disabled).</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    private async Task UpdateWindowsAsync(IPAddress ipAddress, IPScannerHostInfo host, Task<string> dnsHostname,
+        CancellationToken cancellationToken)
+    {
+        var smbInfo = await SMBInfoResolver.ResolveAsync(ipAddress, options.WindowsTimeout, cancellationToken)
+            .ConfigureAwait(false);
+
+        WindowsNetApiInfo netApiInfo = null;
+
+        // No SMB answer: no NetApi requests (they would wait for the SMB / RPC timeouts)
+        if (smbInfo != null)
+        {
+            var target = GetWindowsTarget(ipAddress, await dnsHostname.ConfigureAwait(false), smbInfo.NTLM);
+
+            netApiInfo = await ResolveNetApiAsync(ipAddress.ToString(), target, cancellationToken)
+                .ConfigureAwait(false);
+        }
+
+        var windowsInfo = smbInfo == null ? null : new WindowsHostInfo(smbInfo, netApiInfo);
+
+        // Also without an answer, so the placeholder is replaced
+        OnHostUpdated(new IPScannerHostUpdatedArgs(host, x =>
+        {
+            x.Windows = windowsInfo;
+            x.IsWindowsPending = false;
+        }));
+    }
+
+    /// <summary>
+    ///     Gets the name the NetApi requests connect to: the DNS hostname if it belongs to the host (its first label is
+    ///     the computer name of the NTLM challenge - a stale PTR record could name another computer), so Kerberos can
+    ///     be used; otherwise the IP address (NTLM only).
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host.</param>
+    /// <param name="dnsHostname">DNS hostname (empty if none).</param>
+    /// <param name="ntlm">NTLM challenge of the host, null if none.</param>
+    /// <returns>Hostname or IP address.</returns>
+    public static string GetWindowsTarget(IPAddress ipAddress, string dnsHostname, NTLMChallengeInfo ntlm)
+    {
+        if (string.IsNullOrEmpty(dnsHostname) || ntlm == null)
+            return ipAddress.ToString();
+
+        var label = dnsHostname.Split('.')[0];
+
+        var computerNames = new[] { ntlm.NetBIOSComputerName, ntlm.DNSComputerName.Split('.')[0] };
+
+        return computerNames.Any(x => string.Equals(x, label, StringComparison.OrdinalIgnoreCase))
+            ? dnsHostname.TrimEnd('.')
+            : ipAddress.ToString();
+    }
+
+    /// <summary>
+    ///     Runs the blocking NetApi requests of a host on its own thread (max. <see cref="MaxWindowsThreads" /> at the
+    ///     same time) with the network logon of the scan, waits at most the timeout.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the host (if the hostname can't be found).</param>
+    /// <param name="target">Hostname or IP address to connect to, see <see cref="GetWindowsTarget" />.</param>
+    /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
+    /// <returns>NetApi information, with <see cref="WindowsHostInfo.ErrorTimeout" /> after the timeout.</returns>
+    private async Task<WindowsNetApiInfo> ResolveNetApiAsync(string ipAddress, string target,
+        CancellationToken cancellationToken)
+    {
+        if (_windowsLogonError != 0)
+            return WindowsNetApiInfo.FromError(_windowsLogonError);
+
+        var timeout = TimeSpan.FromMilliseconds(options.WindowsTimeout);
+
+        // All slots are taken by calls that wait for Windows (e.g. hosts that don't answer RPC)
+        if (!await _windowsSemaphore.WaitAsync(timeout, cancellationToken).ConfigureAwait(false))
+            return WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorTimeout);
+
+        var logon = _windowsLogon;
+
+        var task = Task.Factory.StartNew(() =>
+        {
+            try
+            {
+                WindowsNetApiInfo Resolve()
+                {
+                    var info = WindowsNetApiResolver.Resolve(target);
+
+                    // The hostname can't be found (e.g. no forward lookup zone): the IP address (NTLM)
+                    return target != ipAddress && info.Error is 53 or 67 or 1214 or 1231
+                        ? WindowsNetApiResolver.Resolve(ipAddress)
+                        : info;
+                }
+
+                return logon != null ? logon.Run(Resolve) : Resolve();
+            }
+            catch (Exception ex)
+            {
+                // E.g. the logon was disposed by the end of the scan while the call waited for a slot
+                Log.Debug($"NetApi requests to {target} failed.", ex);
+
+                return WindowsNetApiInfo.FromError(ex is Win32Exception win32Exception
+                    ? win32Exception.NativeErrorCode
+                    : 31); // ERROR_GEN_FAILURE
+            }
+            finally
+            {
+                _windowsSemaphore.Release();
+            }
+        }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+
+        try
+        {
+            return await task.WaitAsync(timeout, cancellationToken).ConfigureAwait(false);
+        }
+        catch (TimeoutException)
+        {
+            // The call keeps its thread (and slot) until Windows returns, its result is ignored
+            return WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorTimeout);
+        }
     }
 
     /// <summary>

@@ -356,7 +356,7 @@ public class IPScannerHostInfo : PropertyChangedBase
 
     /// <summary>
     ///     Ends the lookups that are still running when the scan was canceled or failed (their results never arrive):
-    ///     DNS hostname, MAC address, mDNS hostname and web page show no value instead of "...", and
+    ///     DNS hostname, MAC address, mDNS hostname, web page and Windows show no value instead of "...", and
     ///     <see cref="Hostname" /> / <see cref="MACAddress" /> no longer wait for NetBIOS. The probes that decide if
     ///     the host is up (ping, ports, NetBIOS, SNMP) stay pending ("..." = not finished). Call it on the thread that
     ///     owns the host (UI thread).
@@ -367,6 +367,7 @@ public class IPScannerHostInfo : PropertyChangedBase
         IsNeighborMACAddressPending = false;
         IsMDNSPending = false;
         IsWebPagePending = false;
+        IsWindowsPending = false;
 
         _areLookupsEnded = true;
 
@@ -586,6 +587,23 @@ public class IPScannerHostInfo : PropertyChangedBase
     public bool HasSNMPError => SNMPError != SNMPV3ErrorCode.None;
 
     /// <summary>
+    ///     Windows host information (SMB / NTLM without credentials, NetApi with the credentials of the scan), null if
+    ///     it was not read (yet) or the host didn't answer on TCP 445.
+    /// </summary>
+    public WindowsHostInfo Windows
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     ///     Indicates whether the DNS hostname (PTR) is still resolved (<see cref="DNSHostname" /> is a placeholder).
     /// </summary>
     public bool IsDNSPending
@@ -642,6 +660,23 @@ public class IPScannerHostInfo : PropertyChangedBase
     ///     (<see cref="WebTitle" /> is a placeholder).
     /// </summary>
     public bool IsWebPagePending
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Indicates whether the Windows host information is still read, or the port scan it needs is still running
+    ///     (<see cref="Windows" /> is a placeholder).
+    /// </summary>
+    public bool IsWindowsPending
     {
         get;
         internal set
@@ -781,10 +816,12 @@ public class IPScannerHostInfo : PropertyChangedBase
         SNMPDescription = source.SNMPDescription;
         SNMPLocation = source.SNMPLocation;
         SNMPError = source.SNMPError;
+        Windows = source.Windows;
         IsDNSPending = source.IsDNSPending;
         IsNeighborMACAddressPending = source.IsNeighborMACAddressPending;
         IsMDNSPending = source.IsMDNSPending;
         IsWebPagePending = source.IsWebPagePending;
+        IsWindowsPending = source.IsWindowsPending;
 
         // A rescan restarts the lookups (or a canceled one restores the ended state)
         _areLookupsEnded = source._areLookupsEnded;

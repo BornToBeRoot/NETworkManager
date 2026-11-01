@@ -166,7 +166,7 @@ public static partial class ExportManager
             new NetBIOSInfo(IPAddress.None));
 
         return GetFields(placeholder, new IPScannerResultOptions(false, false, false, false, false, false, false, false,
-            false)).Select(x => x.Name);
+            false, false)).Select(x => x.Name);
     }
 
     /// <summary>

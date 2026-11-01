@@ -6222,6 +6222,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Read the Windows host information of every reachable host over SMB (TCP port 445): with the port scan and port 445 in its list only for hosts with port 445 open, otherwise for every found host. Without credentials (SMB / NTLM negotiation, no logon): operating system and build, computer name, domain and the time offset. With credentials (NetApi): role (workstation, server, domain controller), description and workgroup; logged-on users and the patch level (remote registry) need admin rights on the host. The u [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string HelpMessage_ReadWindowsHostInformation {
+            get {
+                return ResourceManager.GetString("HelpMessage_ReadWindowsHostInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show the MAC address and vendor of every found host: read from the neighbor table (ARP / NDP) for hosts in a local subnet, otherwise from the NetBIOS answer (if NetBIOS is enabled). Doesn&apos;t find hosts - a host that doesn&apos;t answer the ping, a port or NetBIOS is only found with &quot;Find hosts in the local subnet&quot;..
         /// </summary>
         public static string HelpMessage_ResolveMACAddressAndVendor {
@@ -10452,6 +10461,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ReadWebPages {
             get {
                 return ResourceManager.GetString("ReadWebPages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read Windows host information.
+        /// </summary>
+        public static string ReadWindowsHostInformation {
+            get {
+                return ResourceManager.GetString("ReadWindowsHostInformation", resourceCulture);
             }
         }
         
@@ -15331,6 +15349,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Windows {
             get {
                 return ResourceManager.GetString("Windows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows credentials of &quot;{0}&quot;.
+        /// </summary>
+        public static string WindowsCredentialsOfX {
+            get {
+                return ResourceManager.GetString("WindowsCredentialsOfX", resourceCulture);
             }
         }
         

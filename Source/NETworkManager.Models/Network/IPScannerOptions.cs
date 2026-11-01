@@ -131,6 +131,23 @@ public record IPScannerOptions
     public required int SNMPTimeout { get; init; }
 
     /// <summary>
+    ///     Read the Windows host information of reachable hosts (SMB / NTLM without credentials, NetApi with the
+    ///     credentials below), see <see cref="SMBInfoResolver" /> and <see cref="WindowsNetApiResolver" />.
+    /// </summary>
+    public required bool WindowsEnabled { get; init; }
+
+    /// <summary>
+    ///     Windows credentials of the profile / group the tab was opened with for the NetApi requests, null for the user
+    ///     running the application (there are no Windows credentials in the settings).
+    /// </summary>
+    public WindowsCredentials WindowsCredentials { get; init; }
+
+    /// <summary>
+    ///     Timeout in milliseconds of the SMB request and of the NetApi requests of a host.
+    /// </summary>
+    public required int WindowsTimeout { get; init; }
+
+    /// <summary>
     ///     Include unreachable IP addresses in the result.
     /// </summary>
     public required bool ShowAllResults { get; init; }

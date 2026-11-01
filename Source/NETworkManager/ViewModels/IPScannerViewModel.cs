@@ -52,6 +52,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // SNMP request of a scan, see GetProfileSNMPCredentials), null for the ones of the settings
     private readonly SNMPSecureCredentials _snmpCredentials;
 
+    // Windows credentials of the profile / group the tab was opened with (password protected, see WindowsLogon), null
+    // for the user running the application
+    private readonly WindowsCredentials _windowsCredentials;
+
     // Background HostFound / HostUpdated events append here instead of hopping to the UI thread per
     // item - a DispatcherTimer periodically flushes this into the Results collection instead, so a large
     // scan doesn't flood the dispatcher queue with one BeginInvoke per host. One list for both, so an
@@ -120,6 +124,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// credentials of "Site A"'), null if the ones of the settings are used.
     /// </summary>
     public string SNMPCredentialsInfo { get; }
+
+    /// <summary>
+    /// Profile / group whose Windows credentials the tab uses (shown in the options, e.g. 'Windows credentials of
+    /// "Site A" (CORP\admin)'), null if the user running the application is used.
+    /// </summary>
+    public string WindowsCredentialsInfo { get; }
 
     /// <summary>
     /// Gets or sets the host or IP range to scan.
@@ -545,14 +555,24 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// SNMP version and credentials of the profile / group the tab was opened with, null for the ones of the settings.
     /// </param>
     /// <param name="snmpCredentialsSource">Name of the profile / group of <paramref name="snmpCredentials" />.</param>
+    /// <param name="windowsCredentials">
+    /// Windows credentials of the profile / group the tab was opened with, null for the user running the application.
+    /// </param>
+    /// <param name="windowsCredentialsSource">Name of the profile / group of <paramref name="windowsCredentials" />.</param>
     public IPScannerViewModel(Guid tabId, string hostOrIPRange, bool start = true,
-        SNMPSecureCredentials snmpCredentials = null, string snmpCredentialsSource = null)
+        SNMPSecureCredentials snmpCredentials = null, string snmpCredentialsSource = null,
+        WindowsCredentials windowsCredentials = null, string windowsCredentialsSource = null)
     {
         // Kept for the tab (also if the input is changed), like the ports of a profile in the Port Scanner
         _snmpCredentials = snmpCredentials;
         SNMPCredentialsInfo = snmpCredentials == null
             ? null
             : string.Format(Strings.SNMPVersionAndCredentialsOfX, snmpCredentialsSource);
+
+        _windowsCredentials = windowsCredentials;
+        WindowsCredentialsInfo = windowsCredentials == null
+            ? null
+            : $"{string.Format(Strings.WindowsCredentialsOfX, windowsCredentialsSource)} ({windowsCredentials})";
 
         // Repeat of the scan (before the input is set, see its setter): not while a scan or rescan is running, or a
         // manual scan waits for its confirmation
@@ -1098,7 +1118,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             SettingsManager.Current.General_HistoryListEntries);
 
         var scanOptions = CreateScanOptions(ports, webPagePorts,
-            GetProfileSNMPCredentials(SettingsManager.Current.IPScanner_SNMPEnabled));
+            GetProfileSNMPCredentials(SettingsManager.Current.IPScanner_SNMPEnabled)) with
+        {
+            WindowsCredentials = _windowsCredentials
+        };
 
         ScanOptions = new IPScannerResultOptions(scanOptions);
 
@@ -1236,6 +1259,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             SNMPCredentials = snmpCredentials ?? SNMPCredentials.FromCommunity(
                 SettingsManager.Current.IPScanner_SNMPVersion, SettingsManager.Current.IPScanner_SNMPCommunity),
             SNMPTimeout = SettingsManager.Current.IPScanner_SNMPTimeout,
+            WindowsEnabled = SettingsManager.Current.IPScanner_WindowsEnabled,
+            WindowsTimeout = SettingsManager.Current.IPScanner_WindowsTimeout,
             ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults,
             ReportAllHosts = false
         };

@@ -24,7 +24,7 @@ public class ExportManagerIPScannerTests
         "SNMPLocation,WebStatusCode,WebServer,WebPoweredBy,WebRealm,WebRedirectURL,WebCertificateSubject," +
         "WebCertificateIssuer,WebCertificateNotAfter,WebCertificateSelfSigned,Change,PreviousMACAddress,SNMPError";
 
-    private static readonly IPScannerResultOptions AllEnabled = new(true, true, true, true, true, true, true, true, true);
+    private static readonly IPScannerResultOptions AllEnabled = new(true, true, true, true, true, true, true, true, true, true);
 
     private static string Export(ExportFileType fileType, params IPScannerHostInfo[] hosts)
     {

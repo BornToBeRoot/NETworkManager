@@ -170,13 +170,19 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     /// SNMP version and credentials of a profile / group, null for the ones of the settings.
     /// </param>
     /// <param name="snmpCredentialsSource">Name of the profile / group of <paramref name="snmpCredentials" />.</param>
+    /// <param name="windowsCredentials">
+    /// Windows credentials of a profile / group, null for the user running the application.
+    /// </param>
+    /// <param name="windowsCredentialsSource">Name of the profile / group of <paramref name="windowsCredentials" />.</param>
     public void AddTab(string hostOrIPRange = null, bool start = true, SNMPSecureCredentials snmpCredentials = null,
-        string snmpCredentialsSource = null)
+        string snmpCredentialsSource = null, WindowsCredentials windowsCredentials = null,
+        string windowsCredentialsSource = null)
     {
         var tabId = Guid.NewGuid();
 
         TabItems.Add(new DragablzTabItem(Strings.NewTab,
-            new IPScannerView(tabId, hostOrIPRange, start, snmpCredentials, snmpCredentialsSource), tabId));
+            new IPScannerView(tabId, hostOrIPRange, start, snmpCredentials, snmpCredentialsSource, windowsCredentials,
+                windowsCredentialsSource), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
@@ -191,8 +197,12 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
         // SNMP version and credentials of the profile, otherwise of its group, otherwise the settings (null)
         var snmpCredentials = NETworkManager.Profiles.Application.IPScanner.GetSNMPCredentials(profile);
 
+        // Windows credentials of the profile, otherwise of its group, otherwise the user running the application (null)
+        var windowsCredentials = NETworkManager.Profiles.Application.IPScanner.GetWindowsCredentials(profile);
+
         AddTab(profile.IPScanner_HostOrIPRange, start, snmpCredentials,
-            profile.IPScanner_OverrideSNMP ? profile.Name : profile.Group);
+            profile.IPScanner_OverrideSNMP ? profile.Name : profile.Group, windowsCredentials,
+            profile.IPScanner_UseWindowsCredentials ? profile.Name : profile.Group);
     }
 
     #endregion

@@ -201,6 +201,13 @@
                         <MenuItem Header="{Binding SNMPCredentialsInfo}"
                                   IsEnabled="False"
                                   Visibility="{Binding SNMPCredentialsInfo, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
+                        <MenuItem Header="{x:Static localization:Strings.ReadWindowsHostInformation}"
+                                  IsCheckable="True" StaysOpenOnClick="True"
+                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_WindowsEnabled, Mode=TwoWay}" />
+                        <!-- The tab uses the Windows credentials of the profile / group it was opened with -->
+                        <MenuItem Header="{Binding WindowsCredentialsInfo}"
+                                  IsEnabled="False"
+                                  Visibility="{Binding WindowsCredentialsInfo, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
                         <Separator />
                         <MenuItem Header="{x:Static localization:Strings.ShowUnreachableIPAddressesAndPorts}"
                                   IsCheckable="True" StaysOpenOnClick="True"
