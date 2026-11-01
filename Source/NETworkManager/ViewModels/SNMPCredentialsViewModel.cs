@@ -8,7 +8,7 @@ using NETworkManager.Utilities;
 namespace NETworkManager.ViewModels;
 
 /// <summary>
-///     Override of the SNMP version and credentials in the profile and group dialog (IP Scanner, see
+///     Override of the SNMP version and credentials in the profile and group dialog (SNMP tool, IP Scanner; see
 ///     <see cref="Controls.SNMPCredentialsControl" />): v1 / v2c with a community, v3 with a user. The passwords stay
 ///     unchanged unless a new one is entered.
 /// </summary>

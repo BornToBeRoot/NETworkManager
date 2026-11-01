@@ -259,26 +259,15 @@ public static class ProfileDialogManager
             SNMP_OverrideOIDAndMode = instance.SNMP_OverrideOIDAndMode,
             SNMP_OID = instance.SNMP_OID,
             SNMP_Mode = instance.SNMP_Mode,
-            SNMP_OverrideVersionAndAuth = instance.SNMP_OverrideVersionAndAuth,
-            SNMP_Version = instance.SNMP_Version,
-            SNMP_Community =
-                instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version != SNMPVersion.V3
-                    ? instance.SNMP_Community
-                    : new SecureString(),
-            SNMP_Security = instance.SNMP_Security,
-            SNMP_Username = instance.SNMP_Username,
-            SNMP_AuthenticationProvider = instance.SNMP_AuthenticationProvider,
-            SNMP_Auth = instance.SNMP_OverrideVersionAndAuth &&
-                        instance.SNMP_Version == SNMPVersion.V3 &&
-                        instance.SNMP_Security != SNMPV3Security.NoAuthNoPriv
-                ? instance.SNMP_Auth
-                : new SecureString(),
-            SNMP_PrivacyProvider = instance.SNMP_PrivacyProvider,
-            SNMP_Priv = instance.SNMP_OverrideVersionAndAuth &&
-                        instance.SNMP_Version == SNMPVersion.V3 &&
-                        instance.SNMP_Security == SNMPV3Security.AuthPriv
-                ? instance.SNMP_Priv
-                : new SecureString(),
+            SNMP_OverrideVersionAndAuth = instance.SNMP_Credentials.IsOverridden,
+            SNMP_Version = instance.SNMP_Credentials.Version,
+            SNMP_Community = instance.SNMP_Credentials.CommunityToSave,
+            SNMP_Security = instance.SNMP_Credentials.Security,
+            SNMP_Username = instance.SNMP_Credentials.Username,
+            SNMP_AuthenticationProvider = instance.SNMP_Credentials.AuthenticationProvider,
+            SNMP_Auth = instance.SNMP_Credentials.AuthToSave,
+            SNMP_PrivacyProvider = instance.SNMP_Credentials.PrivacyProvider,
+            SNMP_Priv = instance.SNMP_Credentials.PrivToSave,
 
             // Wake on LAN
             WakeOnLAN_Enabled = instance.WakeOnLAN_Enabled,
@@ -486,26 +475,15 @@ public static class ProfileDialogManager
             SNMP_OverrideOIDAndMode = instance.SNMP_OverrideOIDAndMode,
             SNMP_OID = instance.SNMP_OID,
             SNMP_Mode = instance.SNMP_Mode,
-            SNMP_OverrideVersionAndAuth = instance.SNMP_OverrideVersionAndAuth,
-            SNMP_Version = instance.SNMP_Version,
-            SNMP_Community =
-                instance.SNMP_OverrideVersionAndAuth && instance.SNMP_Version != SNMPVersion.V3
-                    ? instance.SNMP_Community
-                    : new SecureString(),
-            SNMP_Security = instance.SNMP_Security,
-            SNMP_Username = instance.SNMP_Username,
-            SNMP_AuthenticationProvider = instance.SNMP_AuthenticationProvider,
-            SNMP_Auth = instance.SNMP_OverrideVersionAndAuth &&
-                        instance.SNMP_Version == SNMPVersion.V3 &&
-                        instance.SNMP_Security != SNMPV3Security.NoAuthNoPriv
-                ? instance.SNMP_Auth
-                : new SecureString(),
-            SNMP_PrivacyProvider = instance.SNMP_PrivacyProvider,
-            SNMP_Priv = instance.SNMP_OverrideVersionAndAuth &&
-                        instance.SNMP_Version == SNMPVersion.V3 &&
-                        instance.SNMP_Security == SNMPV3Security.AuthPriv
-                ? instance.SNMP_Priv
-                : new SecureString()
+            SNMP_OverrideVersionAndAuth = instance.SNMP_Credentials.IsOverridden,
+            SNMP_Version = instance.SNMP_Credentials.Version,
+            SNMP_Community = instance.SNMP_Credentials.CommunityToSave,
+            SNMP_Security = instance.SNMP_Credentials.Security,
+            SNMP_Username = instance.SNMP_Credentials.Username,
+            SNMP_AuthenticationProvider = instance.SNMP_Credentials.AuthenticationProvider,
+            SNMP_Auth = instance.SNMP_Credentials.AuthToSave,
+            SNMP_PrivacyProvider = instance.SNMP_Credentials.PrivacyProvider,
+            SNMP_Priv = instance.SNMP_Credentials.PrivToSave
         };
     }
 

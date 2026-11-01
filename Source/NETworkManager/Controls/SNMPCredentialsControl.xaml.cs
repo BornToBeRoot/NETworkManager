@@ -1,8 +1,8 @@
 namespace NETworkManager.Controls;
 
 /// <summary>
-///     Override of the SNMP version and credentials in the profile and group dialog, the DataContext is a
-///     <see cref="ViewModels.SNMPCredentialsViewModel" />.
+///     Override of the SNMP version and credentials in the profile and group dialog (SNMP tool, IP Scanner), the
+///     DataContext is a <see cref="ViewModels.SNMPCredentialsViewModel" />.
 /// </summary>
 public partial class SNMPCredentialsControl
 {
