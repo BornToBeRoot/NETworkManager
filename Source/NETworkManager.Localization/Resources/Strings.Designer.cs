@@ -6249,6 +6249,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only when the scan is repeated automatically (&quot;Automatically scan every&quot;): one notification per scan with the changes since the previous scan..
+        /// </summary>
+        public static string HelpMessage_ScanChangesNotification {
+            get {
+                return ResourceManager.GetString("HelpMessage_ScanChangesNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Only IPv4 addresses are scanned for NetBIOS, NetBIOS doesn&apos;t exist over IPv6..
         /// </summary>
         public static string HelpMessage_ScanForNetBIOS {
@@ -9487,6 +9496,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Placeholder {
             get {
                 return ResourceManager.GetString("Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play sound on changes.
+        /// </summary>
+        public static string PlaySoundOnChanges {
+            get {
+                return ResourceManager.GetString("PlaySoundOnChanges", resourceCulture);
             }
         }
         
@@ -13182,6 +13200,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ShowMap {
             get {
                 return ResourceManager.GetString("ShowMap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show notification popup on changes.
+        /// </summary>
+        public static string ShowNotificationPopupOnChanges {
+            get {
+                return ResourceManager.GetString("ShowNotificationPopupOnChanges", resourceCulture);
             }
         }
         

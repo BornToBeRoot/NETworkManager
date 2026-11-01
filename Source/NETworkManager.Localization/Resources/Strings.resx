@@ -4042,6 +4042,15 @@ Right-click for more options.</value>
   <data name="AutomaticallyScanEvery" xml:space="preserve">
     <value>Automatically scan every</value>
   </data>
+  <data name="ShowNotificationPopupOnChanges" xml:space="preserve">
+    <value>Show notification popup on changes</value>
+  </data>
+  <data name="PlaySoundOnChanges" xml:space="preserve">
+    <value>Play sound on changes</value>
+  </data>
+  <data name="HelpMessage_ScanChangesNotification" xml:space="preserve">
+    <value>Only when the scan is repeated automatically ("Automatically scan every"): one notification per scan with the changes since the previous scan.</value>
+  </data>
   <data name="FailedToLoadHostsFileMessage" xml:space="preserve">
     <value>Failed to load hosts file: {0}</value>
   </data>

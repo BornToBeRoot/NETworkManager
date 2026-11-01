@@ -564,6 +564,63 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether a notification is shown when a repeated scan found changes.
+    /// </summary>
+    public bool ShowNotificationPopup
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_ShowNotificationPopup = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether a sound is played when a repeated scan found changes.
+    /// </summary>
+    public bool NotificationSound
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_NotificationSound = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the seconds until the notification is closed.
+    /// </summary>
+    public int NotificationCloseTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_NotificationCloseTime = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets or sets the maximum number of port threads.
     /// </summary>
     public int MaxPortThreads
@@ -622,6 +679,9 @@ public class IPScannerSettingsViewModel : ViewModelBase
     private void LoadSettings()
     {
         ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults;
+        ShowNotificationPopup = SettingsManager.Current.IPScanner_ShowNotificationPopup;
+        NotificationSound = SettingsManager.Current.IPScanner_NotificationSound;
+        NotificationCloseTime = SettingsManager.Current.IPScanner_NotificationCloseTime;
         ExpandHostView = SettingsManager.Current.IPScanner_ExpandHostView;
         ICMPEnabled = SettingsManager.Current.IPScanner_ICMPEnabled;
         ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts;

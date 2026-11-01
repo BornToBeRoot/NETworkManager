@@ -524,6 +524,30 @@ Timeout in milliseconds after which an SNMP request is considered lost.
 
 **Default:** `2000`
 
+### Show notification popup on changes
+
+Show a notification popup in the bottom-right corner of the primary screen when a [repeated scan](#repeat-the-scan) found changes since the previous scan (see [Changes since the last scan](#changes-since-the-last-scan); only new hosts like a host that is up, a gone host or a changed MAC address like a host that is down). One notification per scan: up to three changes, one per line, otherwise the number of changes. Not for a scan that was started manually.
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+### Play sound on changes
+
+Play a system sound when a [repeated scan](#repeat-the-scan) found changes. Independent of the [popup](#show-notification-popup-on-changes).
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+### Display duration (seconds)
+
+Time in seconds the notification popup is shown before it closes automatically.
+
+**Type:** `Integer` [Min `3`, Max `60`]
+
+**Default:** `10`
+
 ### Custom commands
 
 Custom commands that can be executed with a right click on the selected result.

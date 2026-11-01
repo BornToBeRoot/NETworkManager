@@ -1,5 +1,6 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
+using MahApps.Metro.IconPacks;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Converters;
@@ -1884,7 +1885,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 var isCompleted = !e.IsCanceled && e.Exception == null && HostsToScan > 0;
 
                 if (isCompleted)
-                    CompareWithPreviousScan();
+                    CompareWithPreviousScan(isRepeat);
 
                 _repeatInput = isCompleted ? _scanInput : null;
                 UpdateRepeat();
@@ -1936,11 +1937,60 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
+    /// Shows a notification / plays a sound (see settings) with the changes of a repeated scan: one notification per
+    /// scan, up to three changes one per line, otherwise the counters. Like the host up / down notification of the
+    /// Ping Monitor: only new hosts = up, any gone / changed host = down.
+    /// </summary>
+    private void NotifyChanges()
+    {
+        var showPopup = SettingsManager.Current.IPScanner_ShowNotificationPopup;
+        var playSound = SettingsManager.Current.IPScanner_NotificationSound;
+
+        if (!showPopup && !playSound)
+            return;
+
+        var changes = Results.Where(x => x.Change != IPScannerHostChange.None).ToList();
+
+        if (changes.Count == 0)
+            return;
+
+        changes.Sort((x, y) => IPAddressHelper.CompareIPAddresses(x.IPAddress, y.IPAddress));
+
+        var isWarning = changes.Any(x => x.Change != IPScannerHostChange.New);
+
+        if (playSound)
+            NotificationManager.PlaySound(isWarning
+                ? System.Media.SystemSounds.Exclamation
+                : System.Media.SystemSounds.Asterisk);
+
+        if (!showPopup)
+            return;
+
+        const int maxLines = 3;
+
+        var message = changes.Count <= maxLines
+            ? string.Join(Environment.NewLine, changes.Select(x =>
+                $"{(string.IsNullOrEmpty(x.Hostname) ? x.IPAddress : $"{x.IPAddress} ({x.Hostname})")}: " +
+                IPScannerHostChangeToStringConverter.ToLocalizedString(x.Change)))
+            : string.Join(" · ", new[]
+                {
+                    (Count: HostsNew, Format: Strings.XNew), (Count: HostsGone, Format: Strings.XGone),
+                    (Count: HostsMACChanged, Format: Strings.XMACChanged)
+                }
+                .Where(x => x.Count > 0).Select(x => string.Format(x.Format, x.Count)));
+
+        NotificationManager.Show(isWarning ? PackIconMaterialKind.LanDisconnect : PackIconMaterialKind.LanConnect,
+            isWarning ? "Red" : "#badc58", $"{Strings.IPScanner} · {_scanInput}", message,
+            SettingsManager.Current.IPScanner_NotificationCloseTime);
+    }
+
+    /// <summary>
     /// Compares the completed scan with the previous completed scan of the same input in this tab: marks new hosts
     /// and hosts with another MAC address, adds the hosts that are gone (shown as down, also without "Show
     /// unreachable"). The scan becomes the baseline of the next one. Called on the UI thread.
     /// </summary>
-    private void CompareWithPreviousScan()
+    /// <param name="isRepeat">The scan was repeated automatically: changes are notified (see settings).</param>
+    private void CompareWithPreviousScan(bool isRepeat)
     {
         // The changes of the last comparison (rows of a repeated scan)
         foreach (var host in Results)
@@ -1979,6 +2029,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             HostsMACChanged = comparison.Changes.Values.Count(x => x.Change == IPScannerHostChange.MACChanged);
             HostsGone = comparison.Gone.Count;
             HasComparison = true;
+
+            if (isRepeat)
+                NotifyChanges();
         }
 
         // A repeated scan updated the rows of hosts that are down now: only shown if they are gone (or unreachable hosts

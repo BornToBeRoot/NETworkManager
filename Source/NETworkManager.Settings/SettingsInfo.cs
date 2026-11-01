@@ -1236,6 +1236,54 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_AutoRefreshTime;
 
+    /// <summary>
+    ///     Show a notification when a repeated scan found changes.
+    /// </summary>
+    public bool IPScanner_ShowNotificationPopup
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_ShowNotificationPopup;
+
+    /// <summary>
+    ///     Play a sound when a repeated scan found changes.
+    /// </summary>
+    public bool IPScanner_NotificationSound
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_NotificationSound;
+
+    /// <summary>
+    ///     Seconds until the notification of a repeated scan is closed.
+    /// </summary>
+    public int IPScanner_NotificationCloseTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_NotificationCloseTime;
+
     public bool IPScanner_ICMPEnabled
     {
         get;
@@ -1715,6 +1763,54 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.PortScanner_AutoRefreshTime;
+
+    /// <summary>
+    ///     Show a notification when a repeated scan found changes.
+    /// </summary>
+    public bool PortScanner_ShowNotificationPopup
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PortScanner_ShowNotificationPopup;
+
+    /// <summary>
+    ///     Play a sound when a repeated scan found changes.
+    /// </summary>
+    public bool PortScanner_NotificationSound
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PortScanner_NotificationSound;
+
+    /// <summary>
+    ///     Seconds until the notification of a repeated scan is closed.
+    /// </summary>
+    public int PortScanner_NotificationCloseTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.PortScanner_NotificationCloseTime;
 
     public int PortScanner_Attempts
     {

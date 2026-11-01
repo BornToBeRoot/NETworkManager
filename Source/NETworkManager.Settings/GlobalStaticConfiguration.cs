@@ -177,6 +177,10 @@ public static class GlobalStaticConfiguration
 
     public static AutoRefreshTimeInfo IPScanner_AutoRefreshTime =>
         AutoRefreshTime.GetScanDefaults.First(x => x.Value == 5 && x.TimeUnit == TimeUnit.Minute);
+
+    public static bool IPScanner_ShowNotificationPopup => false;
+    public static bool IPScanner_NotificationSound => false;
+    public static int IPScanner_NotificationCloseTime => 10;
     public static ExportFileType IPScanner_ExportFileType => ExportFileType.Csv;
     // Larger scans need a confirmation, even larger ones are refused (every IP address / port is kept in memory)
     public static long IPScanner_ConfirmHostCount => 65536;
@@ -194,6 +198,10 @@ public static class GlobalStaticConfiguration
 
     public static AutoRefreshTimeInfo PortScanner_AutoRefreshTime =>
         AutoRefreshTime.GetScanDefaults.First(x => x.Value == 5 && x.TimeUnit == TimeUnit.Minute);
+
+    public static bool PortScanner_ShowNotificationPopup => false;
+    public static bool PortScanner_NotificationSound => false;
+    public static int PortScanner_NotificationCloseTime => 10;
     public static int PortScanner_Attempts => 1;
     public static bool PortScanner_PingHostsBeforeScan => false;
     public static int PortScanner_ICMPAttempts => 2;
