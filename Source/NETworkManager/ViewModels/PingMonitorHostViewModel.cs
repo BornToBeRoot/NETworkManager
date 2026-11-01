@@ -358,6 +358,8 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
         // to correct it
         if (hosts.hosts.Count == 0)
         {
+            // Also if Stop was clicked after the resolution - otherwise SetHost is rejected as still canceling
+            IsCanceling = false;
             IsRunning = false;
 
             return;
