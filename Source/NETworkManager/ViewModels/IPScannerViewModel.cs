@@ -1,6 +1,5 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.IconPacks;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Converters;
@@ -1889,32 +1888,20 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         changes.Sort((x, y) => IPAddressHelper.CompareIPAddresses(x.IPAddress, y.IPAddress));
 
-        var isWarning = changes.Any(x => x.Change != IPScannerHostChange.New);
+        var lines = changes.Select(x =>
+            $"{(string.IsNullOrEmpty(x.Hostname) ? x.IPAddress : $"{x.IPAddress} ({x.Hostname})")}: " +
+            IPScannerHostChangeToStringConverter.ToLocalizedString(x.Change)).ToList();
 
-        if (playSound)
-            NotificationManager.PlaySound(isWarning
-                ? System.Media.SystemSounds.Exclamation
-                : System.Media.SystemSounds.Asterisk);
+        var summary = string.Join(" · ", new[]
+            {
+                (Count: HostsNew, Format: Strings.XNew), (Count: HostsGone, Format: Strings.XGone),
+                (Count: HostsMACChanged, Format: Strings.XMACChanged)
+            }
+            .Where(x => x.Count > 0).Select(x => string.Format(x.Format, x.Count)));
 
-        if (!showPopup)
-            return;
-
-        const int maxLines = 3;
-
-        var message = changes.Count <= maxLines
-            ? string.Join(Environment.NewLine, changes.Select(x =>
-                $"{(string.IsNullOrEmpty(x.Hostname) ? x.IPAddress : $"{x.IPAddress} ({x.Hostname})")}: " +
-                IPScannerHostChangeToStringConverter.ToLocalizedString(x.Change)))
-            : string.Join(" · ", new[]
-                {
-                    (Count: HostsNew, Format: Strings.XNew), (Count: HostsGone, Format: Strings.XGone),
-                    (Count: HostsMACChanged, Format: Strings.XMACChanged)
-                }
-                .Where(x => x.Count > 0).Select(x => string.Format(x.Format, x.Count)));
-
-        NotificationManager.Show(isWarning ? PackIconMaterialKind.LanDisconnect : PackIconMaterialKind.LanConnect,
-            isWarning ? "Red" : "#badc58", $"{Strings.IPScanner} · {_scanInput}", message,
-            SettingsManager.Current.IPScanner_NotificationCloseTime);
+        NotificationManager.ShowStatusChange(changes.All(x => x.Change == IPScannerHostChange.New),
+            $"{Strings.IPScanner} · {_scanInput}", NotificationManager.FormatChanges(lines, summary), showPopup,
+            playSound, SettingsManager.Current.IPScanner_NotificationCloseTime);
     }
 
     /// <summary>

@@ -38,6 +38,47 @@ public static class NotificationManager
     /// <param name="closeTimeSeconds">Seconds before the popup closes automatically.</param>
     public static void Show(PackIconMaterialKind iconKind, string iconColor, string title, string message, int closeTimeSeconds)
     {
+        ShowWindow(iconKind, iconColor, title, message, closeTimeSeconds);
+    }
+
+    /// <summary>
+    ///     Shows a status change (e.g. a host is up / down in the Ping Monitor, changes of a repeated scan): up with a
+    ///     green connected icon and a gentle info sound, down with a red disconnected icon and a warning sound. Popup
+    ///     and sound are optional (settings of the application).
+    /// </summary>
+    /// <param name="isUp">Up (e.g. new hosts only), otherwise down (e.g. a host is gone).</param>
+    /// <param name="title">The bold header text (e.g. the host title).</param>
+    /// <param name="message">The gray subtext below the header (e.g. "Host is up").</param>
+    /// <param name="showPopup">Show the popup.</param>
+    /// <param name="playSound">Play the sound.</param>
+    /// <param name="closeTimeSeconds">Seconds before the popup closes automatically.</param>
+    public static void ShowStatusChange(bool isUp, string title, string message, bool showPopup, bool playSound,
+        int closeTimeSeconds)
+    {
+        if (playSound)
+            PlaySound(isUp ? SystemSounds.Asterisk : SystemSounds.Exclamation);
+
+        if (showPopup)
+            Show(isUp ? PackIconMaterialKind.LanConnect : PackIconMaterialKind.LanDisconnect, isUp ? "#badc58" : "Red",
+                title, message, closeTimeSeconds);
+    }
+
+    /// <summary>
+    ///     Formats a list of changes for the message of a notification: up to <paramref name="maxLines" /> changes, one
+    ///     per line, otherwise the summary (e.g. "5 New · 2 Gone"), so the popup stays small.
+    /// </summary>
+    /// <param name="lines">One line per change.</param>
+    /// <param name="summary">Summary of all changes.</param>
+    /// <param name="maxLines">Maximum number of lines.</param>
+    /// <returns>Message of the notification.</returns>
+    public static string FormatChanges(IReadOnlyCollection<string> lines, string summary, int maxLines = 3)
+    {
+        return lines.Count <= maxLines ? string.Join(Environment.NewLine, lines) : summary;
+    }
+
+    private static void ShowWindow(PackIconMaterialKind iconKind, string iconColor, string title, string message,
+        int closeTimeSeconds)
+    {
         // A late ping callback during application shutdown may find no Application instance.
         if (Application.Current is null)
             return;

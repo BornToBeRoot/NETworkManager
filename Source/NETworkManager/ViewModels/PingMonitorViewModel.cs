@@ -5,7 +5,6 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using log4net;
-using MahApps.Metro.IconPacks;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -706,14 +705,10 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
                 StatusTime = DateTime.Now;
                 IsReachable = true;
 
-                if (SettingsManager.Current.PingMonitor_NotificationSound)
-                    NotificationManager.PlaySound(System.Media.SystemSounds.Asterisk); // gentle info sound for UP
-
-                if (SettingsManager.Current.PingMonitor_ShowNotificationPopup)
-                    NotificationManager.Show(
-                        PackIconMaterialKind.LanConnect, "#badc58",
-                        NotificationHostDisplay, Strings.HostIsUp,
-                        SettingsManager.Current.PingMonitor_NotificationCloseTime);
+                NotificationManager.ShowStatusChange(true, NotificationHostDisplay, Strings.HostIsUp,
+                    SettingsManager.Current.PingMonitor_ShowNotificationPopup,
+                    SettingsManager.Current.PingMonitor_NotificationSound,
+                    SettingsManager.Current.PingMonitor_NotificationCloseTime);
             }
 
             Received++;
@@ -740,14 +735,10 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
                 StatusTime = DateTime.Now;
                 IsReachable = false;
 
-                if (SettingsManager.Current.PingMonitor_NotificationSound)
-                    NotificationManager.PlaySound(System.Media.SystemSounds.Exclamation); // warning sound for DOWN
-
-                if (SettingsManager.Current.PingMonitor_ShowNotificationPopup)
-                    NotificationManager.Show(
-                        PackIconMaterialKind.LanDisconnect, "Red",
-                        NotificationHostDisplay, Strings.HostIsDown,
-                        SettingsManager.Current.PingMonitor_NotificationCloseTime);
+                NotificationManager.ShowStatusChange(false, NotificationHostDisplay, Strings.HostIsDown,
+                    SettingsManager.Current.PingMonitor_ShowNotificationPopup,
+                    SettingsManager.Current.PingMonitor_NotificationSound,
+                    SettingsManager.Current.PingMonitor_NotificationCloseTime);
             }
 
             Lost++;

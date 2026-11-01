@@ -1,6 +1,5 @@
 ﻿using log4net;
 using MahApps.Metro.Controls;
-using MahApps.Metro.IconPacks;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Converters;
@@ -1946,33 +1945,20 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return result != 0 ? result : x.Port.CompareTo(y.Port);
         });
 
-        var isWarning = changes.Any(x => x.Change == PortScannerPortChange.Closed);
+        var lines = changes.Select(x =>
+            $"{x.HostAsString}: {x.Port}" +
+            (string.IsNullOrEmpty(x.LookupInfo.Service) ? string.Empty : $" ({x.LookupInfo.Service})") + " " +
+            PortScannerPortChangeToStringConverter.ToLocalizedString(x.Change)).ToList();
 
-        if (playSound)
-            NotificationManager.PlaySound(isWarning
-                ? System.Media.SystemSounds.Exclamation
-                : System.Media.SystemSounds.Asterisk);
+        var summary = string.Join(" · ", new[]
+            {
+                (Count: PortsNowOpen, Format: Strings.XNowOpen), (Count: PortsNoLongerOpen, Format: Strings.XNoLongerOpen)
+            }
+            .Where(x => x.Count > 0).Select(x => string.Format(x.Format, x.Count)));
 
-        if (!showPopup)
-            return;
-
-        const int maxLines = 3;
-
-        var message = changes.Count <= maxLines
-            ? string.Join(Environment.NewLine, changes.Select(x =>
-                $"{x.HostAsString}: {x.Port}" +
-                (string.IsNullOrEmpty(x.LookupInfo.Service) ? string.Empty : $" ({x.LookupInfo.Service})") + " " +
-                PortScannerPortChangeToStringConverter.ToLocalizedString(x.Change)))
-            : string.Join(" · ", new[]
-                {
-                    (Count: PortsNowOpen, Format: Strings.XNowOpen),
-                    (Count: PortsNoLongerOpen, Format: Strings.XNoLongerOpen)
-                }
-                .Where(x => x.Count > 0).Select(x => string.Format(x.Format, x.Count)));
-
-        NotificationManager.Show(isWarning ? PackIconMaterialKind.LanDisconnect : PackIconMaterialKind.LanConnect,
-            isWarning ? "Red" : "#badc58", $"{Strings.PortScanner} · {_scanHost}", message,
-            SettingsManager.Current.PortScanner_NotificationCloseTime);
+        NotificationManager.ShowStatusChange(changes.All(x => x.Change == PortScannerPortChange.Opened),
+            $"{Strings.PortScanner} · {_scanHost}", NotificationManager.FormatChanges(lines, summary), showPopup,
+            playSound, SettingsManager.Current.PortScanner_NotificationCloseTime);
     }
 
     /// <summary>
