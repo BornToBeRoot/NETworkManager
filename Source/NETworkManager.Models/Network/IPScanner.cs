@@ -174,9 +174,10 @@ public sealed class IPScanner(IPScannerOptions options)
                         Log.Warn($"Could not log on with the Windows credentials of the profile / group " +
                                  $"({options.WindowsCredentials}), the NetApi requests are skipped.", ex);
 
+                        // Not a wrong password (the logon doesn't check it): the Win32 error, otherwise ERROR_GEN_FAILURE
                         _windowsLogonError = ex is Win32Exception win32Exception
                             ? win32Exception.NativeErrorCode
-                            : 1326; // ERROR_LOGON_FAILURE
+                            : 31;
                     }
                 }
 
