@@ -20,4 +20,20 @@ public class DateTimeHelperTests
     {
         Assert.Equal(expected, DateTimeHelper.TimeSpanToCountdownString(TimeSpan.FromSeconds(seconds)));
     }
+
+    [Theory]
+    [InlineData(0, "+0.0 s")]
+    [InlineData(1.234, "+1.2 s")]
+    [InlineData(-0.04, "-0.0 s")]
+    [InlineData(59.9, "+59.9 s")]
+    [InlineData(59.97, "+1 min 0 s")]
+    [InlineData(-185, "-3 min 5 s")]
+    [InlineData(7380, "+2 h 3 min")]
+    [InlineData(-100800, "-1 d 4 h")]
+    public void ConvertsTimeSpanToOffset(double seconds, string expected)
+    {
+        Assert.Equal(expected,
+            DateTimeHelper.TimeSpanToOffsetString(TimeSpan.FromSeconds(seconds),
+                System.Globalization.CultureInfo.InvariantCulture));
+    }
 }

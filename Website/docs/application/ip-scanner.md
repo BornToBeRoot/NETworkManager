@@ -85,7 +85,7 @@ Right-clicking a result allows forwarding device information to another tool (e.
 | **Wake on LAN**                                                                   | Sends a magic packet to the MAC address of the host with [Wake on LAN](./wake-on-lan) (only with a MAC address) |
 | **Custom commands**                                                               | Executes a [custom command](#custom-commands) for the host                                                    |
 | **Add profile...**                                                                | Creates a new profile with the host (IP address), the hostname as name and the MAC address for Wake on LAN    |
-| **Copy**                                                                          | Copies the selected information to the clipboard (values only when the probe / lookup is finished); with the optional requests also **mDNS hostname**, **Web** > **Title** / **URL** / **Server** and **SNMP** > **Name** / **Description** / **Location** |
+| **Copy**                                                                          | Copies the selected information to the clipboard (values only when the probe / lookup is finished); with the optional requests also **mDNS hostname**, **Web** > **Title** / **URL** / **Server** and **SNMP** > **Name** / **Description** / **Location** and **Windows** > **Operating system** / **Domain** / **Logged-on users** |
 | **Export...**                                                                     | Exports the selected or all results to a file                                                                 |
 
 A NetBIOS or mDNS name (shown as hostname if there is no DNS hostname) is not passed to other tools, because it may not be resolvable via DNS - the IP address is used instead. **DNS lookup...** / **RDAP...** > **Hostname** are only available with a DNS hostname. In [custom commands](#custom-commands), `{{Hostname}}` is the shown hostname (DNS, mDNS or NetBIOS).
@@ -127,18 +127,22 @@ The columns are shown according to the settings the scan was started with, setti
 | **Port status**                | Status icon (a port is open), the tooltip shows the open ports with their service (e.g. `Open: 22 (ssh), 443 (https)`, the first 10)                                    |
 | **Web**                        | Title of the web page, otherwise the realm of a login prompt, the `Server` header or the target of a redirect; the URL in the tooltip, see [Read web pages](#read-web-pages) |
 | **SNMP name**                  | `sysName`, see [Read the SNMP system information](#read-the-snmp-system-information)                                                                                    |
+| **Windows**                    | Windows version (e.g. `Windows 11 25H2`), the version number in the tooltip, see [Read Windows host information](#read-windows-host-information)                       |
+| **Domain**                     | Domain (DNS name) or workgroup of the Windows host                                                                                                                       |
+| **Time offset**                | Time of the host minus the local time (e.g. `+1.2 s`, `-3 min 5 s`), highlighted above 5 minutes (the Kerberos limit, the logon in a domain fails)                     |
+| **Logged-on users**            | Logged-on users (needs admin rights on the host), one per line in the tooltip or why they could not be read (e.g. `Access is denied.`)                                  |
 | **NetBIOS reachable**          | Status icon, the tooltip shows the computer name and the workgroup / domain (e.g. `Yes (PC01, WORKGROUP)`)                                                               |
 | **MAC address** / **Vendor**   | From the neighbor table (ARP / NDP), the NetBIOS answer as fallback                                                                                                      |
 
 Values arrive one after another while the scan is running:
 
-- `...`: the probe or lookup is still running. **Hostname** and **MAC address** / **Vendor** stay `...` until no source can change them any more (e.g. the NetBIOS name as fallback), **Web** until the port scan is finished (it needs the open ports).
+- `...`: the probe or lookup is still running. **Hostname** and **MAC address** / **Vendor** stay `...` until no source can change them any more (e.g. the NetBIOS name as fallback), **Web** and **Windows** until the port scan is finished (they need the open ports).
 - `-/-`: finished, no result.
-- After **Cancel**, the lookups that were still running (hostname, MAC address, mDNS, web page) show `-/-`; ping, ports, NetBIOS and SNMP that didn't finish stay `...`.
+- After **Cancel**, the lookups that were still running (hostname, MAC address, mDNS, web page, Windows) show `-/-`; ping, ports, NetBIOS and SNMP that didn't finish stay `...`.
 
 A column you sorted by is not sorted again for values that arrive later, click the header again. Sorted by **Time** or **MAC address**, hosts without a value are always at the end; hosts with the same value are sorted by IP address.
 
-The search box right of the **Result** header filters the results by IP address, hostname (DNS, mDNS, NetBIOS), MAC address, vendor, role, OS (guess), web page (title, headers, realm, redirect target, certificate), SNMP values and open ports (number or service), also while the scan is running. **Export...** > all exports the filtered results; the up / down counters always count all hosts. Results can also be exported while the scan is running, values that are still `...` are exported as empty values.
+The search box right of the **Result** header filters the results by IP address, hostname (DNS, mDNS, NetBIOS), MAC address, vendor, role, OS (guess), web page (title, headers, realm, redirect target, certificate), SNMP values, Windows values (version, edition, computer name, domain, description, logged-on users) and open ports (number or service), also while the scan is running. **Export...** > all exports the filtered results; the up / down counters always count all hosts. Results can also be exported while the scan is running, values that are still `...` are exported as empty values.
 
 ### Changes since the last scan
 
@@ -164,9 +168,9 @@ The repetition stops when a scan is canceled, the input is changed (also while a
 
 Expand a row with the button in front of it to see all values of the host, or enable [Expand host view](#expand-host-view) to expand all hosts:
 
-| Ping details | Ports | Web | NetBIOS |
-| ------------ | ----- | --- | ------- |
-| **Hostnames** | (ports) | (web) | **SNMP** |
+| Ping details | Ports | Web | NetBIOS | Windows |
+| ------------ | ----- | --- | ------- | ------- |
+| **Hostnames** | (ports) | (web) | **SNMP** | (Windows) |
 
 | Section          | Content                                                                                                                                       |
 | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -176,6 +180,7 @@ Expand a row with the button in front of it to see all values of the host, or en
 | **NetBIOS**      | Computer name, domain / workgroup and user                                                                                                    |
 | **Hostnames**    | DNS and mDNS hostname                                                                                                                         |
 | **SNMP**         | Name, description and location; with SNMP v3 the error if the credentials are wrong (e.g. `Unknown user name.`)                                |
+| **Windows**      | Operating system, edition, version (with patch level if read from the registry), role, computer name, domain, description, time offset, logged-on users (one per line), SMB version (and if signing is required); the error of the NetApi requests (e.g. `Access is denied.`, wrong password) |
 
 The headers of the probes that can find a host (**Ping details**, **Ports**, **NetBIOS**, **SNMP**) show a status icon: a green check if the host answered the probe, a red cross if not (not while the probe is running). A section of a disabled setting shows a note (e.g. `SNMP is disabled!`).
 

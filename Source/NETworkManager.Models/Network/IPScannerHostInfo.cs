@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -600,8 +601,49 @@ public class IPScannerHostInfo : PropertyChangedBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(WindowsOS));
+            OnPropertyChanged(nameof(WindowsDomain));
+            OnPropertyChanged(nameof(WindowsTimeOffset));
+            OnPropertyChanged(nameof(IsWindowsTimeOffsetLarge));
+            OnPropertyChanged(nameof(WindowsUsers));
+            OnPropertyChanged(nameof(HasWindowsError));
         }
     }
+
+    /// <summary>
+    ///     The NetApi requests of the Windows host information failed (e.g. access denied, wrong password).
+    /// </summary>
+    public bool HasWindowsError => Windows?.Error is > 0;
+
+    /// <summary>
+    ///     Name of the Windows version (e.g. "Windows 11 25H2"), empty if not known.
+    /// </summary>
+    public string WindowsOS => Windows?.OS ?? string.Empty;
+
+    /// <summary>
+    ///     Domain or workgroup of the Windows host, empty if not known.
+    /// </summary>
+    public string WindowsDomain => Windows?.Domain ?? string.Empty;
+
+    /// <summary>
+    ///     Time of the host minus the local time, null if not known.
+    /// </summary>
+    public TimeSpan? WindowsTimeOffset => Windows?.TimeOffset;
+
+    /// <summary>
+    ///     Max. time offset of Kerberos (default of the domain policy): a larger offset breaks the logon in a domain.
+    /// </summary>
+    public static readonly TimeSpan MaxKerberosTimeOffset = TimeSpan.FromMinutes(5);
+
+    /// <summary>
+    ///     The time offset is larger than the Kerberos limit (highlighted in the result).
+    /// </summary>
+    public bool IsWindowsTimeOffsetLarge => WindowsTimeOffset?.Duration() > MaxKerberosTimeOffset;
+
+    /// <summary>
+    ///     Logged-on users, comma-separated (empty if none or not read).
+    /// </summary>
+    public string WindowsUsers => Windows?.Users is { } users ? string.Join(", ", users) : string.Empty;
 
     /// <summary>
     ///     Indicates whether the DNS hostname (PTR) is still resolved (<see cref="DNSHostname" /> is a placeholder).

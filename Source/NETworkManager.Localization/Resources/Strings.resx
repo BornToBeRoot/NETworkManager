@@ -5367,4 +5367,43 @@ Do you want to start the scan?</value>
     <value>Windows credentials of "{0}"</value>
     <comment>IP Scanner: the tab uses the Windows credentials of a profile or group, {0} is its name.</comment>
   </data>
+  <data name="OperatingSystem" xml:space="preserve">
+    <value>Operating system</value>
+  </data>
+  <data name="Edition" xml:space="preserve">
+    <value>Edition</value>
+    <comment>Edition of Windows, e.g. Pro or Enterprise</comment>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+    <comment>Role of a Windows host: workstation, server or domain controller</comment>
+  </data>
+  <data name="Workstation" xml:space="preserve">
+    <value>Workstation</value>
+    <comment>Role of a Windows host (client)</comment>
+  </data>
+  <data name="DomainController" xml:space="preserve">
+    <value>Domain controller</value>
+  </data>
+  <data name="TimeOffset" xml:space="preserve">
+    <value>Time offset</value>
+    <comment>Time of the host minus the local time</comment>
+  </data>
+  <data name="LoggedOnUsers" xml:space="preserve">
+    <value>Logged-on users</value>
+  </data>
+  <data name="SMB" xml:space="preserve">
+    <value>SMB</value>
+  </data>
+  <data name="SMBDialectSigningRequired" xml:space="preserve">
+    <value>{0} (signing required)</value>
+    <comment>SMB version of the connection, {0} is the version (e.g. 3.1.1)</comment>
+  </data>
+  <data name="ReadingWindowsHostInformationIsDisabled" xml:space="preserve">
+    <value>Reading Windows host information is disabled!</value>
+  </data>
+  <data name="WindowsLogonFailedMessage" xml:space="preserve">
+    <value>The logon with the Windows credentials "{0}" failed on {1} host(s). Check the username and password of the profile / group.</value>
+    <comment>{0} is the user (e.g. CORP\admin), {1} the number of hosts</comment>
+  </data>
 </root>

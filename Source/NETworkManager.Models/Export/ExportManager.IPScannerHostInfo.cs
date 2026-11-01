@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -67,7 +68,13 @@ public static partial class ExportManager
         var netBIOSInfo = GetNetBIOSInfo(info, options);
         var certificate = GetWebCertificate(info, options);
 
+        // Windows host information: null (empty values) if disabled, "" if the host had none
+        var windows = options.WindowsEnabled ? info.Windows : null;
+
         string IfEnabled(bool isEnabled, string value) => isEnabled ? value : null;
+
+        string IfWindows(Func<WindowsHostInfo, string> value) =>
+            options.WindowsEnabled ? windows == null ? string.Empty : value(windows) ?? string.Empty : null;
 
         return
         [
@@ -119,7 +126,24 @@ public static partial class ExportManager
             new(nameof(IPScannerHostInfo.PreviousMACAddress), info.PreviousMACAddress),
             // SNMPv3 error of the host (e.g. "AuthenticationFailed"), empty without
             new(nameof(IPScannerHostInfo.SNMPError),
-                IfEnabled(options.SNMPEnabled, info.HasSNMPError ? info.SNMPError.ToString() : string.Empty), true)
+                IfEnabled(options.SNMPEnabled, info.HasSNMPError ? info.SNMPError.ToString() : string.Empty), true),
+            // Windows host information (SMB / NTLM, NetApi)
+            new("WindowsOS", IfWindows(x => x.OS), true),
+            new("WindowsEdition", IfWindows(x => x.Edition), true),
+            new("WindowsVersion", IfWindows(x => x.Version?.ToString())),
+            new("WindowsRole", IfWindows(x => x.Role == WindowsHostRole.Unknown ? string.Empty : x.Role.ToString())),
+            new("WindowsComputerName", IfWindows(x => x.ComputerName), true),
+            new("WindowsDomain", IfWindows(x => x.Domain), true),
+            // Seconds (time of the host minus the local time)
+            new("WindowsTimeOffset",
+                IfWindows(x => x.TimeOffset?.TotalSeconds.ToString("0.000", CultureInfo.InvariantCulture))),
+            new("WindowsUsers", IfWindows(x => x.Users == null ? string.Empty : string.Join("; ", x.Users)), true),
+            new("WindowsDescription", IfWindows(x => x.Description), true),
+            // Win32 error of the NetApi requests (e.g. 5 = access denied, 1326 = wrong username or password)
+            new("WindowsError", IfWindows(x => x.Error == 0 ? string.Empty : x.Error.ToString())),
+            new("SMBDialect", IfWindows(x => x.SMB?.Dialect)),
+            new("SMBSigningRequired", IfWindows(x => x.SMB?.SigningRequired.ToString())),
+            new("SMBServerGuid", IfWindows(x => x.SMB?.ServerGuid.ToString()))
         ];
     }
 

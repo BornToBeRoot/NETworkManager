@@ -624,6 +624,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                    Matches(info.SNMPName) ||
                    Matches(info.SNMPDescription) ||
                    Matches(info.SNMPLocation) ||
+                   Matches(info.WindowsOS) ||
+                   Matches(info.WindowsDomain) ||
+                   Matches(info.WindowsUsers) ||
+                   Matches(info.Windows?.ComputerName) ||
+                   Matches(info.Windows?.Edition) ||
+                   Matches(info.Windows?.Description) ||
                    Matches(info.MACAddress) ||
                    Matches(info.Vendor) ||
                    (ScanOptions.OSGuessEnabled &&
@@ -649,6 +655,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPName));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPDescription));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.SNMPLocation));
+        liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Windows));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.MACAddress));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Vendor));
         liveShaping.LiveFilteringProperties.Add(nameof(IPScannerHostInfo.Ports));
@@ -1939,6 +1946,16 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             {
                 // Keep a message from the preparation (e.g. hostnames that could not be resolved)
                 AddStatusMessage(Strings.NoReachableHostsFound);
+            }
+
+            // Wrong Windows credentials of the profile / group: one message instead of an error in every row only
+            if (!e.IsCanceled && e.Exception == null && _windowsCredentials != null)
+            {
+                var logonFailures = Results.Count(x => x.Windows?.IsLogonFailure == true);
+
+                if (logonFailures > 0)
+                    AddStatusMessage(string.Format(Strings.WindowsLogonFailedMessage, _windowsCredentials,
+                        logonFailures));
             }
 
             // A completed rescan: the changes of the rescanned hosts against the same previous scan (e.g. a gone host that is
