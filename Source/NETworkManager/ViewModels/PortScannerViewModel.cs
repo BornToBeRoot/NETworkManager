@@ -87,8 +87,10 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // Baseline the shown result was compared with, to update the changes after a rescan (null without comparison)
     private Dictionary<(IPAddress IPAddress, int Port), string> _comparisonBaseline;
 
-    // Input of the running / last scan (not of a rescan), null until the ports are resolved
+    // Input of the running / last scan (not of a rescan), null until the ports are resolved; the hosts as entered,
+    // e.g. for the title of the notification (the input may be changed during the scan)
     private string _scanInput;
+    private string _scanHost;
 
 
     // Repeated scan: the rows of the last scan stay and are updated in place (selection, scroll position and collapsed
@@ -1123,7 +1125,8 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _lastPortsInput = Ports;
 
         // The resolved ports: a changed port profile is another input
-        _scanInput = $"{Host?.Trim()}|{string.Join(";", ports)}";
+        _scanHost = Host?.Trim() ?? string.Empty;
+        _scanInput = $"{_scanHost}|{string.Join(";", ports)}";
 
         // The open ports of the previous scan of this input are also reported if they are closed now, so they get a
         // row with their state - a repeated scan reports every port with a row, so it is updated (not in ScanOptions:
@@ -1968,7 +1971,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 .Where(x => x.Count > 0).Select(x => string.Format(x.Format, x.Count)));
 
         NotificationManager.Show(isWarning ? PackIconMaterialKind.LanDisconnect : PackIconMaterialKind.LanConnect,
-            isWarning ? "Red" : "#badc58", $"{Strings.PortScanner} · {Host?.Trim()}", message,
+            isWarning ? "Red" : "#badc58", $"{Strings.PortScanner} · {_scanHost}", message,
             SettingsManager.Current.PortScanner_NotificationCloseTime);
     }
 
