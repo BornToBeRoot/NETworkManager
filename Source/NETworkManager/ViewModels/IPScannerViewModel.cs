@@ -69,13 +69,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // Input of the running / last scan (not of a rescan of selected hosts)
     private string _scanInput;
 
-    // Repeat of the scan ("Automatically scan every"): the input of the last completed scan, null if the scan is not
-    // repeated (until the next completed scan: after a manual start, a cancel, an error or a changed input)
-    private string _repeatInput;
-    private readonly AutoRefreshTimer _autoRefreshTimer;
-
-    // Completed by ScanComplete, so the repeat timer waits for the end of the scan it started
-    private TaskCompletionSource _scanCompletion;
 
     // Repeated scan: the rows of the last scan stay and are updated in place (selection, scroll position and expanded
     // details stay) - row per IP address, new results are copied into it (_repeatResults: result -> row), new hosts
@@ -125,12 +118,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             field = value;
 
             // Another input is not repeated (until it was scanned)
-            if (_repeatInput != null &&
-                !string.Equals(value?.Trim(), _repeatInput, StringComparison.OrdinalIgnoreCase))
-            {
-                _repeatInput = null;
-                UpdateRepeat();
-            }
+            Repeat?.Disarm();
 
             OnPropertyChanged();
         }
@@ -442,57 +430,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the scan is repeated automatically after the interval (per tab and not
-    /// saved: a new tab or a profile doesn't start to repeat). Starts with the next completed scan.
+    /// Gets the repeat of the scan ("Automatically scan every", countdown to the next scan).
     /// </summary>
-    public bool AutoRefreshEnabled
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            UpdateRepeat();
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets the intervals to repeat the scan.
-    /// </summary>
-    public ICollectionView AutoRefreshTimes { get; }
-
-    /// <summary>
-    /// Gets or sets the interval to repeat the scan (the pause after a scan, saved for all tabs).
-    /// </summary>
-    public AutoRefreshTimeInfo SelectedAutoRefreshTime
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-
-            // Not in the list (e.g. a removed interval of an old settings file): the previous interval is kept
-            if (value != null)
-            {
-                SettingsManager.Current.IPScanner_AutoRefreshTime = value;
-                _autoRefreshTimer.Interval = AutoRefreshTime.CalculateTimeSpan(value);
-            }
-
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets the timer of the repeated scan, for the countdown in the header (see
-    /// <see cref="AutoRefreshTimer.RemainingTime"/>).
-    /// </summary>
-    public AutoRefreshTimer AutoRefreshTimer => _autoRefreshTimer;
+    public ScanRepeater Repeat { get; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the scan is being prepared.
@@ -586,14 +526,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
     public IPScannerViewModel(Guid tabId, string hostOrIPRange, bool start = true)
     {
-        // Repeat of the scan (before Host is set, see its setter): not while a scan or rescan is running
-        _autoRefreshTimer = new AutoRefreshTimer(RepeatScanAsync, () => !IsRunning);
-
-        AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetScanDefaults);
-        SelectedAutoRefreshTime = AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
-            x.Value == SettingsManager.Current.IPScanner_AutoRefreshTime.Value &&
-            x.TimeUnit == SettingsManager.Current.IPScanner_AutoRefreshTime.TimeUnit) ??
-            AutoRefreshTimes.SourceCollection.Cast<AutoRefreshTimeInfo>().First();
+        // Repeat of the scan (before the input is set, see its setter): not while a scan or rescan is running
+        Repeat = new ScanRepeater(() => Start(isRepeat: true), () => IsRunning,
+            SettingsManager.Current.IPScanner_AutoRefreshTime, x => SettingsManager.Current.IPScanner_AutoRefreshTime = x);
 
         _firstLoad = start;
 
@@ -1032,8 +967,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             Results.Clear();
 
             // Repeated from the end of this scan (see ScanComplete)
-            _repeatInput = null;
-            UpdateRepeat();
+            Repeat.Disarm();
 
             HasComparison = false;
             HostsNew = 0;
@@ -1532,8 +1466,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _closed = true;
 
         // No repeated scan in the background
-        UpdateRepeat();
-        _scanCompletion?.TrySetResult();
+        Repeat.Close();
 
         SettingsManager.Current.PropertyChanged -= SettingsManager_PropertyChanged;
 
@@ -1887,8 +1820,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 if (isCompleted)
                     CompareWithPreviousScan(isRepeat);
 
-                _repeatInput = isCompleted ? _scanInput : null;
-                UpdateRepeat();
+                Repeat.OnScanEnded(isCompleted);
             }
 
             PreparingScan = false;
@@ -1898,42 +1830,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             // E.g. canceled during the preparation, or nothing found
             UpdateScanOptionsIfNoResults();
 
-            // The repeat timer waits for the end of the scan (see RepeatScanAsync)
-            _scanCompletion?.TrySetResult();
-            _scanCompletion = null;
         });
-    }
-
-    /// <summary>
-    /// Starts or stops the timer of the repeated scan: runs while "Automatically scan every" is enabled and the last
-    /// scan of the input was completed.
-    /// </summary>
-    private void UpdateRepeat()
-    {
-        if (_autoRefreshTimer != null)
-            _autoRefreshTimer.IsEnabled = AutoRefreshEnabled && _repeatInput != null && !_closed;
-    }
-
-    /// <summary>
-    /// Repeats the scan (tick of the repeat timer) and waits until it is finished, so the interval starts after it.
-    /// </summary>
-    private async Task RepeatScanAsync()
-    {
-        _scanCompletion = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-
-        await Start(isRepeat: true);
-
-        // Not started (e.g. no probe enabled, invalid input - the message is shown): not repeated
-        if (!IsRunning && _scanCompletion != null)
-        {
-            _repeatInput = null;
-            UpdateRepeat();
-
-            _scanCompletion.TrySetResult();
-        }
-
-        if (_scanCompletion != null)
-            await _scanCompletion.Task;
     }
 
     /// <summary>
