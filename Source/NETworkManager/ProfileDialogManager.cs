@@ -104,18 +104,10 @@ public static class ProfileDialogManager
             RemoteDesktop_Host = instance.RemoteDesktop_InheritHost
                 ? instance.Host?.Trim()
                 : instance.RemoteDesktop_Host?.Trim(),
-            RemoteDesktop_UseCredentials = instance.RemoteDesktop_UseCredentials,
-            RemoteDesktop_Username =
-                instance.RemoteDesktop_UseCredentials
-                    ? instance.RemoteDesktop_Username
-                    : string.Empty, // Remove sensitive info on disable
-            RemoteDesktop_Domain =
-                instance.RemoteDesktop_UseCredentials
-                    ? instance.RemoteDesktop_Domain
-                    : string.Empty, // Remove sensitive info on disable
-            RemoteDesktop_Password = instance.RemoteDesktop_UseCredentials
-                ? instance.RemoteDesktop_Password
-                : new SecureString(), // Remove sensitive info on disable
+            RemoteDesktop_UseCredentials = instance.RemoteDesktop_Credentials.UseCredentials,
+            RemoteDesktop_Username = instance.RemoteDesktop_Credentials.UsernameToSave,
+            RemoteDesktop_Domain = instance.RemoteDesktop_Credentials.DomainToSave,
+            RemoteDesktop_Password = instance.RemoteDesktop_Credentials.PasswordToSave,
             RemoteDesktop_AdminSession = instance.RemoteDesktop_AdminSession,
             RemoteDesktop_OverrideDisplay = instance.RemoteDesktop_OverrideDisplay,
             RemoteDesktop_AdjustScreenAutomatically = instance.RemoteDesktop_AdjustScreenAutomatically,
@@ -349,18 +341,10 @@ public static class ProfileDialogManager
             DNSLookup_DNSServerInput = dnsLookupDNSServerInput,
 
             // Remote Desktop
-            RemoteDesktop_UseCredentials = instance.RemoteDesktop_UseCredentials,
-            RemoteDesktop_Username =
-                instance.RemoteDesktop_UseCredentials
-                    ? instance.RemoteDesktop_Username
-                    : string.Empty, // Remove sensitive info on disable
-            RemoteDesktop_Domain =
-                instance.RemoteDesktop_UseCredentials
-                    ? instance.RemoteDesktop_Domain
-                    : string.Empty, // Remove sensitive info on disable
-            RemoteDesktop_Password = instance.RemoteDesktop_UseCredentials
-                ? instance.RemoteDesktop_Password
-                : new SecureString(), // Remove sensitive info on disable
+            RemoteDesktop_UseCredentials = instance.RemoteDesktop_Credentials.UseCredentials,
+            RemoteDesktop_Username = instance.RemoteDesktop_Credentials.UsernameToSave,
+            RemoteDesktop_Domain = instance.RemoteDesktop_Credentials.DomainToSave,
+            RemoteDesktop_Password = instance.RemoteDesktop_Credentials.PasswordToSave,
             RemoteDesktop_AdminSession = instance.RemoteDesktop_AdminSession,
             RemoteDesktop_OverrideDisplay = instance.RemoteDesktop_OverrideDisplay,
             RemoteDesktop_AdjustScreenAutomatically = instance.RemoteDesktop_AdjustScreenAutomatically,

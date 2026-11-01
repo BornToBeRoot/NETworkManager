@@ -136,10 +136,9 @@ public class ProfileViewModel : ViewModelBase
             : profileInfo.RemoteDesktop_Enabled;
         RemoteDesktop_InheritHost = profileInfo.RemoteDesktop_InheritHost;
         RemoteDesktop_Host = profileInfo.RemoteDesktop_Host;
-        RemoteDesktop_UseCredentials = profileInfo.RemoteDesktop_UseCredentials;
-        RemoteDesktop_Username = profileInfo.RemoteDesktop_Username;
-        RemoteDesktop_Domain = profileInfo.RemoteDesktop_Domain;
-        RemoteDesktop_Password = profileInfo.RemoteDesktop_Password;
+        RemoteDesktop_Credentials = new WindowsCredentialsViewModel(profileInfo.RemoteDesktop_UseCredentials,
+            profileInfo.RemoteDesktop_Username, profileInfo.RemoteDesktop_Domain, profileInfo.RemoteDesktop_Password,
+            IsProfileFileEncrypted);
         RemoteDesktop_AdminSession = profileInfo.RemoteDesktop_AdminSession;
         RemoteDesktop_OverrideDisplay = profileInfo.RemoteDesktop_OverrideDisplay;
         RemoteDesktop_AdjustScreenAutomatically = profileInfo.RemoteDesktop_AdjustScreenAutomatically;
@@ -1069,74 +1068,10 @@ public class ProfileViewModel : ViewModelBase
         }
     }
 
-    public bool RemoteDesktop_UseCredentials
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public string RemoteDesktop_Username
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public string RemoteDesktop_Domain
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public bool RemoteDesktop_IsPasswordEmpty
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = true;
-
-    public SecureString RemoteDesktop_Password
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            // Validate the password string
-            RemoteDesktop_IsPasswordEmpty =
-                value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
+    /// <summary>
+    /// Credentials (username, domain, password) for Remote Desktop, see <see cref="WindowsCredentialsViewModel" />.
+    /// </summary>
+    public WindowsCredentialsViewModel RemoteDesktop_Credentials { get; }
 
     public bool RemoteDesktop_AdminSession
     {
