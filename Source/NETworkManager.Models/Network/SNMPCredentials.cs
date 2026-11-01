@@ -5,7 +5,8 @@ namespace NETworkManager.Models.Network;
 /// <summary>
 ///     Version and credentials of an SNMP request of the IP Scanner (see <see cref="SNMPSystemInfoResolver" />): the
 ///     community for v1 / v2c, the user (security level, authentication and privacy) for v3. Plain text only for the
-///     duration of a scan; <see cref="ToString" /> doesn't contain the secrets.
+///     duration of a scan (a tab keeps the ones of a profile / group as <see cref="SNMPSecureCredentials" />);
+///     <see cref="ToString" /> doesn't contain the secrets.
 /// </summary>
 /// <param name="Version">SNMP version.</param>
 public sealed record SNMPCredentials(SNMPVersion Version)

@@ -19,7 +19,7 @@ public partial class IPScannerView : IDragablzTabItem
     private readonly IPScannerViewModel _viewModel;
 
     public IPScannerView(Guid tabId, string hostOrIPRange = null, bool start = true,
-        SNMPCredentials snmpCredentials = null, string snmpCredentialsSource = null)
+        SNMPSecureCredentials snmpCredentials = null, string snmpCredentialsSource = null)
     {
         InitializeComponent();
 

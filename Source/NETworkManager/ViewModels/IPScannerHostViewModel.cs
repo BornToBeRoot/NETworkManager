@@ -170,7 +170,7 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     /// SNMP version and credentials of a profile / group, null for the ones of the settings.
     /// </param>
     /// <param name="snmpCredentialsSource">Name of the profile / group of <paramref name="snmpCredentials" />.</param>
-    public void AddTab(string hostOrIPRange = null, bool start = true, SNMPCredentials snmpCredentials = null,
+    public void AddTab(string hostOrIPRange = null, bool start = true, SNMPSecureCredentials snmpCredentials = null,
         string snmpCredentialsSource = null)
     {
         var tabId = Guid.NewGuid();

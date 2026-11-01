@@ -1,6 +1,5 @@
 using System.Security;
 using NETworkManager.Models.Network;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.Profiles.Application;
 
@@ -8,11 +7,12 @@ public static class IPScanner
 {
     /// <summary>
     ///     Gets the SNMP version and credentials of a profile for the IP Scanner: its own (if overridden), otherwise the
-    ///     ones of its group (if overridden), otherwise null (the settings are used).
+    ///     ones of its group (if overridden), otherwise null (the settings are used). Protected, converted to plain text
+    ///     only for the SNMP request of a scan (see <see cref="SNMPSecureCredentials.ToCredentials" />).
     /// </summary>
     /// <param name="profile">Profile the tab is opened with.</param>
     /// <returns>Credentials, null if neither the profile nor its group overrides them.</returns>
-    public static SNMPCredentials GetSNMPCredentials(ProfileInfo profile)
+    public static SNMPSecureCredentials GetSNMPCredentials(ProfileInfo profile)
     {
         return GetSNMPCredentials(profile, ProfileManager.GetGroupByName(profile.Group));
     }
@@ -24,7 +24,7 @@ public static class IPScanner
     /// <param name="profile">Profile.</param>
     /// <param name="group">Group of the profile, null if it can't be found.</param>
     /// <returns>Credentials, null if neither the profile nor its group overrides them.</returns>
-    public static SNMPCredentials GetSNMPCredentials(ProfileInfo profile, GroupInfo group)
+    public static SNMPSecureCredentials GetSNMPCredentials(ProfileInfo profile, GroupInfo group)
     {
         if (profile.IPScanner_OverrideSNMP)
             return CreateCredentials(profile.IPScanner_SNMPVersion, profile.IPScanner_SNMPCommunity,
@@ -42,26 +42,22 @@ public static class IPScanner
     }
 
     /// <summary>
-    ///     Creates the credentials (plain text for the scan) of the values of a profile or group.
+    ///     Creates the credentials of the values of a profile or group (copies of the passwords, a change of the profile
+    ///     doesn't change an open tab).
     /// </summary>
-    private static SNMPCredentials CreateCredentials(SNMPVersion version, SecureString community,
+    private static SNMPSecureCredentials CreateCredentials(SNMPVersion version, SecureString community,
         SNMPV3Security security, string username, SNMPV3AuthenticationProvider authenticationProvider,
         SecureString auth, SNMPV3PrivacyProvider privacyProvider, SecureString priv)
     {
-        return new SNMPCredentials(version)
+        return new SNMPSecureCredentials(version)
         {
-            Community = ToString(community),
+            Community = community?.Copy(),
             Security = security,
             Username = username ?? string.Empty,
             AuthenticationProvider = authenticationProvider,
-            Auth = ToString(auth),
+            Auth = auth?.Copy(),
             PrivacyProvider = privacyProvider,
-            Priv = ToString(priv)
+            Priv = priv?.Copy()
         };
-    }
-
-    private static string ToString(SecureString value)
-    {
-        return value == null ? string.Empty : SecureStringHelper.ConvertToString(value);
     }
 }

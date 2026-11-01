@@ -57,7 +57,7 @@ public class IPScannerSNMPCredentialsTests
     [Fact]
     public void Profile_BeforeGroup()
     {
-        var credentials = IPScannerProfile.GetSNMPCredentials(CreateProfile(true), CreateGroup(true));
+        var credentials = IPScannerProfile.GetSNMPCredentials(CreateProfile(true), CreateGroup(true)).ToCredentials();
 
         Assert.Equal(SNMPVersion.V2C, credentials.Version);
         Assert.Equal("profile-community", credentials.Community);
@@ -66,7 +66,7 @@ public class IPScannerSNMPCredentialsTests
     [Fact]
     public void Group_IfProfileDoesNotOverride()
     {
-        var credentials = IPScannerProfile.GetSNMPCredentials(CreateProfile(false), CreateGroup(true));
+        var credentials = IPScannerProfile.GetSNMPCredentials(CreateProfile(false), CreateGroup(true)).ToCredentials();
 
         Assert.Equal(SNMPVersion.V3, credentials.Version);
         Assert.Equal(SNMPV3Security.AuthPriv, credentials.Security);
@@ -75,6 +75,20 @@ public class IPScannerSNMPCredentialsTests
         Assert.Equal("group-auth", credentials.Auth);
         Assert.Equal(SNMPV3PrivacyProvider.AES256, credentials.PrivacyProvider);
         Assert.Equal("group-priv", credentials.Priv);
+    }
+
+    [Fact]
+    public void Protected_UntilTheScan()
+    {
+        var group = CreateGroup(true);
+
+        var credentials = IPScannerProfile.GetSNMPCredentials(CreateProfile(false), group);
+
+        // Copies of the passwords (a change of the profile doesn't change an open tab), no secrets in ToString
+        Assert.NotSame(group.IPScanner_SNMPAuth, credentials.Auth);
+        Assert.Equal("group-auth", SecureStringHelper.ConvertToString(credentials.Auth));
+        Assert.DoesNotContain("group-", credentials.ToString());
+        Assert.Contains("monitor", credentials.ToString());
     }
 
     [Fact]

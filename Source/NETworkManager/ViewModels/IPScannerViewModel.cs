@@ -48,8 +48,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // A manual scan waits for the confirmation of a large scan (IsRunning is still false) - not repeated meanwhile
     private bool _isConfirmingScan;
 
-    // SNMP version and credentials of the profile / group the tab was opened with, null for the ones of the settings
-    private readonly SNMPCredentials _snmpCredentials;
+    // SNMP version and credentials of the profile / group the tab was opened with (protected, plain text only for the
+    // SNMP request of a scan, see GetProfileSNMPCredentials), null for the ones of the settings
+    private readonly SNMPSecureCredentials _snmpCredentials;
 
     // Background HostFound / HostUpdated events append here instead of hopping to the UI thread per
     // item - a DispatcherTimer periodically flushes this into the Results collection instead, so a large
@@ -545,7 +546,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// </param>
     /// <param name="snmpCredentialsSource">Name of the profile / group of <paramref name="snmpCredentials" />.</param>
     public IPScannerViewModel(Guid tabId, string hostOrIPRange, bool start = true,
-        SNMPCredentials snmpCredentials = null, string snmpCredentialsSource = null)
+        SNMPSecureCredentials snmpCredentials = null, string snmpCredentialsSource = null)
     {
         // Kept for the tab (also if the input is changed), like the ports of a profile in the Port Scanner
         _snmpCredentials = snmpCredentials;
@@ -1096,7 +1097,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             ListHelper.Modify(SettingsManager.Current.IPScanner_HostHistory, Host,
             SettingsManager.Current.General_HistoryListEntries);
 
-        var scanOptions = CreateScanOptions(ports, webPagePorts, _snmpCredentials);
+        var scanOptions = CreateScanOptions(ports, webPagePorts,
+            GetProfileSNMPCredentials(SettingsManager.Current.IPScanner_SNMPEnabled));
 
         ScanOptions = new IPScannerResultOptions(scanOptions);
 
@@ -1153,7 +1155,16 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _cancellationTokenSource = new CancellationTokenSource();
 
         // Same options (columns, ports), but every host is reported - also if it is unreachable now
-        StartScanner(CreateRescanOptions(_lastScanOptions), [.. _rescanRows.Keys.Select(x => (x, string.Empty))]);
+        var rescanOptions = CreateRescanOptions(_lastScanOptions);
+
+        // The plain text credentials of the profile / group were released after the last scan
+        if (_snmpCredentials != null)
+            rescanOptions = rescanOptions with
+            {
+                SNMPCredentials = GetProfileSNMPCredentials(rescanOptions.SNMPEnabled)
+            };
+
+        StartScanner(rescanOptions, [.. _rescanRows.Keys.Select(x => (x, string.Empty))]);
     }
 
     /// <summary>
@@ -1239,6 +1250,33 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     private static IPScannerOptions CreateRescanOptions(IPScannerOptions options)
     {
         return options with { ReportAllHosts = true };
+    }
+
+    /// <summary>
+    /// Gets the SNMP credentials of the profile / group of the tab for a scan: in plain text only if the SNMP request
+    /// is sent (released when the scan is completed, see <see cref="ReleaseSNMPCredentials" />).
+    /// </summary>
+    /// <param name="isSNMPEnabled">The SNMP request is sent by the scan.</param>
+    /// <returns>Credentials, null for the ones of the settings.</returns>
+    private SNMPCredentials GetProfileSNMPCredentials(bool isSNMPEnabled)
+    {
+        if (_snmpCredentials == null)
+            return null;
+
+        return isSNMPEnabled ? _snmpCredentials.ToCredentials() : new SNMPCredentials(_snmpCredentials.Version);
+    }
+
+    /// <summary>
+    /// Releases the plain text SNMP credentials of the profile / group from the options of the last scan (kept for a
+    /// rescan, which converts them again, see <see cref="GetProfileSNMPCredentials" />).
+    /// </summary>
+    private void ReleaseSNMPCredentials()
+    {
+        if (_snmpCredentials != null && _lastScanOptions != null)
+            _lastScanOptions = _lastScanOptions with
+            {
+                SNMPCredentials = new SNMPCredentials(_snmpCredentials.Version)
+            };
     }
 
     /// <summary>
@@ -1899,6 +1937,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
                 Repeat.OnScanEnded(isCompleted, e.IsCanceled);
             }
+
+            // No plain text credentials of the profile / group until the next scan
+            ReleaseSNMPCredentials();
 
             PreparingScan = false;
             IsCanceling = false;
