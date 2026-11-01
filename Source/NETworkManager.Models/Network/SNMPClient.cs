@@ -14,19 +14,6 @@ namespace NETworkManager.Models.Network;
 
 public sealed class SNMPClient
 {
-    #region Variables
-
-    /// <summary>
-    ///     List of known SNMPv3 error codes with their Object Identifier.
-    /// </summary>
-    private readonly Dictionary<ObjectIdentifier, SNMPV3ErrorCode> _snmpv3ErrorOIDs = new()
-    {
-        { new ObjectIdentifier("1.3.6.1.6.3.15.1.1.3.0"), SNMPV3ErrorCode.UnknownUserName },
-        { new ObjectIdentifier("1.3.6.1.6.3.15.1.1.5.0"), SNMPV3ErrorCode.AuthenticationFailed }
-    };
-
-    #endregion
-
     #region Events
 
     /// <summary>
@@ -192,7 +179,7 @@ public sealed class SNMPClient
                 if (response is ReportMessage)
                     // Check for SNMPv3 error codes
                     if (pdu.Variables.Count > 0 &&
-                        _snmpv3ErrorOIDs.TryGetValue(pdu.Variables[0].Id, out var errorCodeV3))
+                        SNMPV3Helper.TryGetErrorCode(pdu.Variables[0].Id, out var errorCodeV3))
                     {
                         OnError(new SNMPErrorArgs(errorCodeV3));
 
@@ -359,7 +346,7 @@ public sealed class SNMPClient
                     {
                         // Check for SNMPv3 error codes
                         if (pdu.Variables.Count > 0 &&
-                            _snmpv3ErrorOIDs.TryGetValue(pdu.Variables[0].Id, out var errorCodeV3))
+                            SNMPV3Helper.TryGetErrorCode(pdu.Variables[0].Id, out var errorCodeV3))
                         {
                             OnError(new SNMPErrorArgs(errorCodeV3));
 
@@ -393,7 +380,7 @@ public sealed class SNMPClient
                             if (response is ReportMessage)
                                 // Check for SNMPv3 error codes
                                 if (pdu.Variables.Count > 0 &&
-                                    _snmpv3ErrorOIDs.TryGetValue(pdu.Variables[0].Id, out errorCodeV3))
+                                    SNMPV3Helper.TryGetErrorCode(pdu.Variables[0].Id, out errorCodeV3))
                                 {
                                     OnError(new SNMPErrorArgs(errorCodeV3));
 
@@ -537,7 +524,7 @@ public sealed class SNMPClient
                 if (response is ReportMessage)
                     // Check for SNMPv3 error codes
                     if (pdu.Variables.Count > 0 &&
-                        _snmpv3ErrorOIDs.TryGetValue(pdu.Variables[0].Id, out var errorCodeV3))
+                        SNMPV3Helper.TryGetErrorCode(pdu.Variables[0].Id, out var errorCodeV3))
                     {
                         OnError(new SNMPErrorArgs(errorCodeV3));
 
@@ -568,91 +555,10 @@ public sealed class SNMPClient
     /// <returns>Privacy provider.</returns>
     private static IPrivacyProvider GetPrivacyProvider(SNMPOptionsV3 options)
     {
-        return options.Security switch
-        {
-            // AuthPriv
-            SNMPV3Security.AuthPriv => GetPrivacyProvider(options.AuthProvider, options.Auth, options.PrivProvider,
-                options.Priv),
-
-            // AuthNoPriv
-            SNMPV3Security.AuthNoPriv => GetPrivacyProvider(options.AuthProvider, options.Auth),
-
-            // NoAuthNoPriv
-            _ => GetPrivacyProvider()
-        };
-    }
-
-    /// <summary>
-    ///     Create the privacy provider with default values.
-    /// </summary>
-    /// <returns>Privacy provider.</returns>
-    private static IPrivacyProvider GetPrivacyProvider()
-    {
-        return new DefaultPrivacyProvider(DefaultAuthenticationProvider.Instance);
-    }
-
-    /// <summary>
-    ///     Create the privacy provider based on the given information's.
-    /// </summary>
-    /// <param name="authProvider">Authentication provider to use.</param>
-    /// <param name="auth">Authentication password.</param>
-    /// <returns>Privacy provider.</returns>
-    private static IPrivacyProvider GetPrivacyProvider(SNMPV3AuthenticationProvider authProvider, SecureString auth)
-    {
-        return new DefaultPrivacyProvider(GetAuthenticationProvider(authProvider, auth));
-    }
-
-    /// <summary>
-    ///     Create the privacy provider based on the given information's.
-    /// </summary>
-    /// <param name="authProvider">Authentication provider to use.</param>
-    /// <param name="auth">Authentication password.</param>
-    /// <param name="privProvider">Privacy provider to use.</param>
-    /// <param name="priv">Privacy password.</param>
-    /// <returns>Privacy provider.</returns>
-    private static IPrivacyProvider GetPrivacyProvider(SNMPV3AuthenticationProvider authProvider, SecureString auth,
-        SNMPV3PrivacyProvider privProvider, SecureString priv)
-    {
-        var privPlain = SecureStringHelper.ConvertToString(priv);
-
-        return privProvider switch
-        {
-#pragma warning disable CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
-            SNMPV3PrivacyProvider.DES => new DESPrivacyProvider(new OctetString(privPlain),
-                GetAuthenticationProvider(authProvider, auth)),
-#pragma warning restore CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
-            SNMPV3PrivacyProvider.AES => new AESPrivacyProvider(new OctetString(privPlain),
-                GetAuthenticationProvider(authProvider, auth)),
-            SNMPV3PrivacyProvider.AES192 => new AES192PrivacyProvider(new OctetString(privPlain),
-                GetAuthenticationProvider(authProvider, auth)),
-            SNMPV3PrivacyProvider.AES256 => new AES256PrivacyProvider(new OctetString(privPlain),
-                GetAuthenticationProvider(authProvider, auth)),
-            _ => null
-        };
-    }
-
-    /// <summary>
-    ///     Create the authentication provider based on the given information's.
-    /// </summary>
-    /// <param name="authProvider">Authentication provider to use.</param>
-    /// <param name="auth">Authentication password.</param>
-    /// <returns>Authentication provider.</returns>
-    private static IAuthenticationProvider GetAuthenticationProvider(SNMPV3AuthenticationProvider authProvider,
-        SecureString auth)
-    {
-        var authPlain = SecureStringHelper.ConvertToString(auth);
-
-        return authProvider switch
-        {
-#pragma warning disable CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
-            SNMPV3AuthenticationProvider.MD5 => new MD5AuthenticationProvider(new OctetString(authPlain)),
-            SNMPV3AuthenticationProvider.SHA1 => new SHA1AuthenticationProvider(new OctetString(authPlain)),
-#pragma warning restore CS0618 // Allow outdated algorithms. We provide the function also for old devices. The user should use newer algorithms...
-            SNMPV3AuthenticationProvider.SHA256 => new SHA256AuthenticationProvider(new OctetString(authPlain)),
-            SNMPV3AuthenticationProvider.SHA384 => new SHA384AuthenticationProvider(new OctetString(authPlain)),
-            SNMPV3AuthenticationProvider.SHA512 => new SHA512AuthenticationProvider(new OctetString(authPlain)),
-            _ => null
-        };
+        return SNMPV3Helper.CreatePrivacyProvider(options.Security, options.AuthProvider,
+            options.Auth != null ? SecureStringHelper.ConvertToString(options.Auth) : string.Empty,
+            options.PrivProvider,
+            options.Priv != null ? SecureStringHelper.ConvertToString(options.Priv) : string.Empty);
     }
 
     #endregion
