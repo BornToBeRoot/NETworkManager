@@ -379,12 +379,16 @@ public class ConnectionsViewModel : ViewModelBase
         StatusMessage = Strings.RefreshingDots;
         IsStatusMessageDisplayed = true;
 
-        if (init == false)
-            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+        // The first load right away; a refresh takes at least the refresh interval (the refresh button can't be
+        // spammed), loading runs at the same time
+        var results = init
+            ? await Connection.GetActiveTcpConnectionsAsync()
+            : await TaskHelper.WithMinimumDurationAsync(() => Connection.GetActiveTcpConnectionsAsync(),
+                GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
         Results.Clear();
 
-        (await Connection.GetActiveTcpConnectionsAsync()).ForEach(Results.Add);
+        results.ForEach(Results.Add);
 
         StatusMessage = string.Format(Strings.ReloadedAtX, DateTime.Now.ToShortTimeString());
         IsStatusMessageDisplayed = true;
