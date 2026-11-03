@@ -1326,7 +1326,7 @@
     <comment>Column header (IP Scanner, Port Scanner): what changed since the last scan, e.g. "New", "Gone".</comment>
   </data>
   <data name="HostChange_New" xml:space="preserve">
-    <value>New</value>
+    <value>新規</value>
   </data>
   <data name="HostChange_Gone" xml:space="preserve">
     <value>Gone</value>
@@ -5208,13 +5208,13 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>TCP</value>
   </data>
   <data name="PingHosts" xml:space="preserve">
-    <value>Ping hosts</value>
+    <value>Ping ホスト</value>
   </data>
   <data name="HelpMessage_PingHosts" xml:space="preserve">
     <value>Send a ping (ICMP echo request) to every host. Disable it if ICMP is blocked or rate limited in the network, the scan is faster then. Hosts that only answer the ping are not found without it.</value>
   </data>
   <data name="PingIsDisabled" xml:space="preserve">
-    <value>Ping is disabled!</value>
+    <value>Ping が無効です!</value>
   </data>
   <data name="EnableAtLeastOneProbeToFindHostsMessage" xml:space="preserve">
     <value>Enable at least one of ping, port scan, NetBIOS or SNMP in the settings. A host is only found if it answers one of them.</value>
@@ -5244,13 +5244,13 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>Guess the operating system from the TTL of the ping reply: every operating system starts with a typical TTL, 64 (Linux, Unix, macOS, Android, iOS), 128 (Windows) or 255 (network devices like routers, switches and printers), and every router on the way reduces it by one. No additional packets are sent. It's a hint, not a detection: the TTL can be changed on the host, NAT and VPN can change it. Not available for IPv6 (the ping reply has no TTL).</value>
   </data>
   <data name="OSGuess" xml:space="preserve">
-    <value>OS (guess)</value>
+    <value>OS (推測)</value>
   </data>
   <data name="LinuxUnix" xml:space="preserve">
     <value>Linux / Unix</value>
   </data>
   <data name="NetworkDevice" xml:space="preserve">
-    <value>Network device</value>
+    <value>ネットワーク デバイス</value>
   </data>
   <data name="Windows" xml:space="preserve">
     <value>Windows</value>
@@ -5259,19 +5259,19 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>Based on the TTL of the ping reply ({0} hops)</value>
   </data>
   <data name="ThisComputer" xml:space="preserve">
-    <value>This computer</value>
+    <value>このコンピューター</value>
   </data>
   <data name="MDNS" xml:space="preserve">
     <value>mDNS</value>
   </data>
   <data name="ResolveMDNSHostname" xml:space="preserve">
-    <value>Resolve mDNS hostname</value>
+    <value>mDNS ホスト名の解決</value>
   </data>
   <data name="HelpMessage_ResolveMDNSHostname" xml:space="preserve">
     <value>Resolve the mDNS hostname (e.g. macbook.local) of every reachable host with a reverse lookup sent to UDP port 5353 of the host. Answered by Apple devices, Linux (Avahi), Android, printers and many IoT devices, usually only in the local subnet. Used as hostname if there is no DNS hostname.</value>
   </data>
   <data name="SNMPName" xml:space="preserve">
-    <value>SNMP name</value>
+    <value>SNMP 名</value>
   </data>
   <data name="ReadTheSNMPSystemInformation" xml:space="preserve">
     <value>Read the SNMP system information</value>
@@ -5286,22 +5286,22 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>Show the MAC address and vendor of every found host: read from the neighbor table (ARP / NDP) for hosts in a local subnet, otherwise from the NetBIOS answer (if NetBIOS is enabled). Doesn't find hosts - a host that doesn't answer the ping, a port or NetBIOS is only found with "Find hosts in the local subnet".</value>
   </data>
   <data name="StatusCode" xml:space="preserve">
-    <value>Status code</value>
+    <value>状態コード</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Title</value>
+    <value>タイトル</value>
   </data>
   <data name="Web" xml:space="preserve">
     <value>Web</value>
   </data>
   <data name="Hostnames" xml:space="preserve">
-    <value>Hostnames</value>
+    <value>ホスト名</value>
   </data>
   <data name="XPoweredBy" xml:space="preserve">
     <value>X-Powered-By</value>
   </data>
   <data name="SNMPLocation" xml:space="preserve">
-    <value>Location</value>
+    <value>場所</value>
     <comment>Physical location of a device (SNMP sysLocation, e.g. "Server room"), not the location of a file or folder.</comment>
   </data>
   <data name="HostnameResolutionIsDisabled" xml:space="preserve">
@@ -5311,7 +5311,7 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>Reading web pages is disabled!</value>
   </data>
   <data name="SNMPIsDisabled" xml:space="preserve">
-    <value>SNMP is disabled!</value>
+    <value>SNMP が無効です!</value>
   </data>
   <data name="Answered" xml:space="preserve">
     <value>Answered</value>
@@ -5351,7 +5351,7 @@ Cloudflareは、お客様のIPアドレスおよびネットワーク情報を�
     <value>All IP addresses are excluded (inputs starting with !), there is nothing to scan.</value>
   </data>
   <data name="MDNSHostname" xml:space="preserve">
-    <value>mDNS hostname</value>
+    <value>mDNS ホスト名</value>
   </data>
   <data name="SNMPVersionAndCredentialsOfX" xml:space="preserve">
     <value>SNMP version and credentials of "{0}"</value>
