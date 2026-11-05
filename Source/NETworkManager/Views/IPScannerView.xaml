@@ -33,7 +33,6 @@
         <converters:WebCertificateToStringConverter x:Key="WebCertificateToStringConverter" />
         <converters:IPScannerHostRoleToStringConverter x:Key="IPScannerHostRoleToStringConverter" />
         <converters:IPScannerHostChangeToStringConverter x:Key="IPScannerHostChangeToStringConverter" />
-        <converters:IPScannerOSGuessToStringConverter x:Key="IPScannerOSGuessToStringConverter" />
         <converters:IPScannerOSToStringConverter x:Key="IPScannerOSToStringConverter" />
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <converters:SNMPV3ErrorCodeToStringConverter x:Key="SNMPV3ErrorCodeToStringConverter" />
@@ -45,7 +44,6 @@
         <converters:PendingToStringConverter x:Key="PendingToStringConverter" />
         <converters:PingTimeToStringConverter x:Key="PingTimeToStringConverter" />
         <converters:PortOpenStyleConverter x:Key="PortOpenStyleConverter" />
-        <converters:PortOpenToStringConverter x:Key="PortOpenToStringConverter" />
         <converters:StringIsNotNullOrEmptyToBooleanConverter x:Key="StringIsNotNullOrEmptyToBooleanConverter" />
         <converters:HostnameHasDomainToBooleanConverter x:Key="HostnameHasDomainToBooleanConverter" />
         <converters:StringNullOrEmptyToStringConverter x:Key="StringNullOrEmptyToStringConverter" />
@@ -692,11 +690,35 @@
                                   IsEnabled="{Binding Path=SelectedResult.IsMDNSPending, Converter={StaticResource BooleanReverseConverter}}"
                                   Visibility="{Binding Path=ScanOptions.MDNSEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static localization:Strings.PortStatus}"
+                        <!-- Text of the OS column: the Windows version, otherwise the guess from the TTL -->
+                        <MenuItem Header="{x:Static localization:Strings.OS}"
                                   Command="{Binding CopyDataToClipboardCommand}"
-                                  CommandParameter="{Binding Path=SelectedResult.IsAnyPortOpen, Converter={StaticResource PortOpenToStringConverter}}"
+                                  IsEnabled="{Binding Path=SelectedResult.IsOSPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.IsOSShown, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}">
+                            <MenuItem.CommandParameter>
+                                <MultiBinding Converter="{StaticResource IPScannerOSToStringConverter}">
+                                    <Binding Path="SelectedResult.OSGuess" />
+                                    <Binding Path="SelectedResult.OSGuessHops" />
+                                    <Binding Path="SelectedResult.IsPingPending" />
+                                    <Binding Path="ScanOptions.OSGuessEnabled" />
+                                    <Binding Path="SelectedResult.Windows" />
+                                    <Binding Path="SelectedResult.IsWindowsPending" />
+                                </MultiBinding>
+                            </MenuItem.CommandParameter>
+                        </MenuItem>
+                        <MenuItem Header="{x:Static localization:Strings.OpenPorts}"
+                                  Command="{Binding CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.OpenPorts}"
                                   IsEnabled="{Binding Path=SelectedResult.IsPortScanPending, Converter={StaticResource BooleanReverseConverter}}"
                                   Visibility="{Binding Path=ScanOptions.PortScanEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
+                                  Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                        <!-- Domain column: of the Windows host information, otherwise of the NetBIOS answer -->
+                        <MenuItem Header="{x:Static localization:Strings.Domain}"
+                                  Command="{Binding CopyDataToClipboardCommand}"
+                                  CommandParameter="{Binding Path=SelectedResult.Domain}"
+                                  IsEnabled="{Binding Path=SelectedResult.IsDomainPending, Converter={StaticResource BooleanReverseConverter}}"
+                                  Visibility="{Binding Path=ScanOptions.IsDomainShown, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static localization:Strings.PingStatus}"
                                   Command="{Binding CopyDataToClipboardCommand}"
@@ -751,23 +773,6 @@
                                   IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
                                   Visibility="{Binding Path=ScanOptions.ICMPEnabled, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                        <MenuItem Header="{x:Static localization:Strings.OSGuess}"
-                                  Command="{Binding CopyDataToClipboardCommand}"
-                                  IsEnabled="{Binding Path=SelectedResult.IsPingPending, Converter={StaticResource BooleanReverseConverter}}"
-                                  Style="{StaticResource ResourceKey=CopyMenuItem}">
-                            <MenuItem.CommandParameter>
-                                <MultiBinding Converter="{StaticResource IPScannerOSGuessToStringConverter}">
-                                    <Binding Path="SelectedResult.OSGuess" />
-                                    <Binding Path="SelectedResult.OSGuessHops" />
-                                </MultiBinding>
-                            </MenuItem.CommandParameter>
-                            <MenuItem.Visibility>
-                                <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
-                                    <Binding Path="ScanOptions.ICMPEnabled" />
-                                    <Binding Path="ScanOptions.OSGuessEnabled" />
-                                </MultiBinding>
-                            </MenuItem.Visibility>
-                        </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.Bytes}"
                                   Command="{Binding CopyDataToClipboardCommand}"
                                   CommandParameter="{Binding Path=SelectedResult.PingInfo.Bytes}"
@@ -782,9 +787,9 @@
                                       CommandParameter="{Binding Path=SelectedResult.WindowsOS}"
                                       IsEnabled="{Binding Path=SelectedResult.IsWindowsPending, Converter={StaticResource BooleanReverseConverter}}"
                                       Style="{StaticResource ResourceKey=CopyMenuItem}" />
-                            <MenuItem Header="{x:Static localization:Strings.Domain}"
+                            <MenuItem Header="{x:Static localization:Strings.TimeOffset}"
                                       Command="{Binding CopyDataToClipboardCommand}"
-                                      CommandParameter="{Binding Path=SelectedResult.WindowsDomain}"
+                                      CommandParameter="{Binding Path=SelectedResult.Windows, Converter={StaticResource WindowsHostInfoToStringConverter}, ConverterParameter=TimeOffset}"
                                       IsEnabled="{Binding Path=SelectedResult.IsWindowsPending, Converter={StaticResource BooleanReverseConverter}}"
                                       Style="{StaticResource ResourceKey=CopyMenuItem}" />
                             <MenuItem Header="{x:Static localization:Strings.LoggedOnUsers}"

@@ -114,6 +114,7 @@ public class IPScannerHostInfo : PropertyChangedBase
             OnPropertyChanged(nameof(OSGuess));
             OnPropertyChanged(nameof(OSGuessHops));
             OnPropertyChanged(nameof(OSName));
+            OnPropertyChanged(nameof(IsOSPending));
         }
     }
 
@@ -122,6 +123,11 @@ public class IPScannerHostInfo : PropertyChangedBase
     ///     TTL, empty if neither is known.
     /// </summary>
     public string OSName => HasWindowsOS ? WindowsOS : OSGuess == IPScannerOSGuess.None ? string.Empty : OSGuess.ToString();
+
+    /// <summary>
+    ///     The operating system is not known yet, but a source (Windows host information, ping) is still running.
+    /// </summary>
+    public bool IsOSPending => string.IsNullOrEmpty(OSName) && (IsWindowsPending || IsPingPending);
 
     /// <summary>
     ///     Operating system guessed from the TTL of the ping reply (see <see cref="IPScannerOSGuessHelper" />),
@@ -269,6 +275,7 @@ public class IPScannerHostInfo : PropertyChangedBase
             OnPropertyChanged();
             OnPropertyChanged(nameof(OSGuess));
             OnPropertyChanged(nameof(OSGuessHops));
+            OnPropertyChanged(nameof(IsOSPending));
         }
     }
 
@@ -628,6 +635,7 @@ public class IPScannerHostInfo : PropertyChangedBase
             OnPropertyChanged(nameof(WindowsOS));
             OnPropertyChanged(nameof(HasWindowsOS));
             OnPropertyChanged(nameof(OSName));
+            OnPropertyChanged(nameof(IsOSPending));
             OnPropertyChanged(nameof(WindowsDomain));
             OnPropertyChanged(nameof(Domain));
             OnPropertyChanged(nameof(IsDomainPending));
@@ -776,6 +784,7 @@ public class IPScannerHostInfo : PropertyChangedBase
             field = value;
             OnPropertyChanged();
             OnPropertyChanged(nameof(IsDomainPending));
+            OnPropertyChanged(nameof(IsOSPending));
         }
     }
 
