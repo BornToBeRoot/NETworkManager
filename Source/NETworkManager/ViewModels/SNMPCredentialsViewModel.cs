@@ -12,7 +12,7 @@ namespace NETworkManager.ViewModels;
 ///     <see cref="Controls.SNMPCredentialsControl" />): v1 / v2c with a community, v3 with a user. The passwords stay
 ///     unchanged unless a new one is entered.
 /// </summary>
-public class SNMPCredentialsViewModel : ViewModelBase
+public class SNMPCredentialsViewModel : ViewModelBase, IHasInputError
 {
     /// <summary>
     ///     Creates the values of the dialog from a profile or group.

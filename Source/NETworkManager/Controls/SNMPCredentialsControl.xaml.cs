@@ -1,6 +1,3 @@
-using System.Windows.Controls;
-using NETworkManager.ViewModels;
-
 namespace NETworkManager.Controls;
 
 /// <summary>
@@ -9,27 +6,11 @@ namespace NETworkManager.Controls;
 /// </summary>
 public partial class SNMPCredentialsControl
 {
-    // Text boxes whose input is invalid: WPF doesn't pass it to the view model (it keeps the last valid value)
-    private int _inputErrors;
-
     public SNMPCredentialsControl()
     {
         InitializeComponent();
 
-        // Raised for the bindings with NotifyOnValidationError, so the dialog can't be saved with invalid input
-        Validation.AddErrorHandler(this, (_, e) =>
-        {
-            _inputErrors += e.Action == ValidationErrorEventAction.Added ? 1 : -1;
-
-            UpdateInputError();
-        });
-
-        DataContextChanged += (_, _) => UpdateInputError();
-    }
-
-    private void UpdateInputError()
-    {
-        if (DataContext is SNMPCredentialsViewModel viewModel)
-            viewModel.HasInputError = _inputErrors > 0;
+        // Invalid input of the text boxes: the dialog can't be saved
+        InputErrorTracker.Track(this);
     }
 }

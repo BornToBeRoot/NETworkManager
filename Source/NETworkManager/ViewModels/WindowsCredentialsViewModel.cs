@@ -10,7 +10,7 @@ namespace NETworkManager.ViewModels;
 ///     Desktop, IP Scanner; see <see cref="Controls.WindowsCredentialsControl" />). The password stays unchanged unless a
 ///     new one is entered.
 /// </summary>
-public class WindowsCredentialsViewModel : ViewModelBase
+public class WindowsCredentialsViewModel : ViewModelBase, IHasInputError
 {
     /// <summary>
     ///     Creates the values of the dialog from a profile or group.
