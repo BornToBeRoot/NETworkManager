@@ -133,7 +133,7 @@ The columns are shown according to the settings the scan was started with, setti
 
 Values arrive one after another while the scan is running:
 
-- `...`: the probe or lookup is still running. **Hostname** and **MAC address** / **Vendor** stay `...` until no source can change them any more (e.g. the NetBIOS name as fallback), **Web** and **Windows** until the port scan is finished (they need the open ports).
+- `...`: the probe or lookup is still running. **Hostname** and **MAC address** / **Vendor** stay `...` until no source can change them any more (e.g. the NetBIOS name as fallback), **Web** until the port scan is finished (it needs the open ports), **Windows** until the port scan is finished if port `445` is in its ports (not after the other probes).
 - `-/-`: finished, no result.
 - After **Cancel**, the lookups that were still running (hostname, MAC address, mDNS, web page, Windows) show `-/-`; ping, ports, NetBIOS and SNMP that didn't finish stay `...`.
 

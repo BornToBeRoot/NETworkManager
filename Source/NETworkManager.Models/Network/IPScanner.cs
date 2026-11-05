@@ -335,8 +335,26 @@ public sealed class IPScanner(IPScannerOptions options)
 
         IPScannerHostInfo hostInfo = null;
 
+        var isWindowsStarted = false;
+
+        // Windows host information of a found host - as soon as the result of TCP 445 is known if the port scan
+        // checks it (not after the other probes, e.g. SNMP or a long port list), otherwise right away
+        void StartWindows()
+        {
+            if (!isWindowsPending || isWindowsStarted || (_isSMBPortScanned && ports == null))
+                return;
+
+            isWindowsStarted = true;
+
+            if (IsSMBPortOpenOrNotScanned(ports))
+                enrichTask = Task.WhenAll(enrichTask,
+                    UpdateWindowsAsync(ipAddress, hostInfo, dnsHostname.Task, cancellationToken));
+            else
+                OnHostUpdated(new IPScannerHostUpdatedArgs(hostInfo, x => x.IsWindowsPending = false));
+        }
+
         // The host answered (the first probe, or its neighbor entry): it is up - raise it as found with the results so
-        // far and start the lookups (DNS, MAC address, mDNS)
+        // far and start the lookups (DNS, MAC address, mDNS, Windows)
         void RaiseHostFound()
         {
             hostInfo = CreateHostInfo(ipAddress, detectedBy, pingInfo, ports, netBIOSInfo, snmpInfo, isSNMPFinished);
@@ -350,6 +368,8 @@ public sealed class IPScanner(IPScannerOptions options)
 
             enrichTask = EnrichAsync(ipAddress, hostInfo, DateTime.UtcNow, networkInterfaces, dnsHostname,
                 cancellationToken);
+
+            StartWindows();
         }
 
         try
@@ -460,6 +480,9 @@ public sealed class IPScanner(IPScannerOptions options)
                     if (update != null)
                         OnHostUpdated(new IPScannerHostUpdatedArgs(hostInfo, update));
 
+                    // E.g. the port scan finished
+                    StartWindows();
+
                     continue;
                 }
 
@@ -492,16 +515,6 @@ public sealed class IPScanner(IPScannerOptions options)
                         UpdateWebPageAsync(ipAddress, hostInfo, webPorts, cancellationToken));
                 else
                     OnHostUpdated(new IPScannerHostUpdatedArgs(hostInfo, x => x.IsWebPagePending = false));
-            }
-
-            // Windows host information - only with TCP 445 open if the port scan checked it, so after the port scan
-            if (isWindowsPending)
-            {
-                if (IsSMBPortOpenOrNotScanned(ports))
-                    enrichTask = Task.WhenAll(enrichTask,
-                        UpdateWindowsAsync(ipAddress, hostInfo, dnsHostname.Task, cancellationToken));
-                else
-                    OnHostUpdated(new IPScannerHostUpdatedArgs(hostInfo, x => x.IsWindowsPending = false));
             }
 
             if (hostInfo == null)
@@ -744,7 +757,9 @@ public sealed class IPScanner(IPScannerOptions options)
     ///     Checks if the Windows host information is read for a found host: with the port scan and TCP 445 in its
     ///     ports only if 445 is open, otherwise for every found host (the SMB request tells if 445 is open).
     /// </summary>
-    /// <param name="ports">All probed ports (empty if the port scan is disabled).</param>
+    /// <param name="ports">
+    ///     All probed ports (empty if the port scan is disabled; null while it runs, only if it doesn't check 445).
+    /// </param>
     /// <returns>True if the Windows host information is read.</returns>
     private bool IsSMBPortOpenOrNotScanned(List<PortInfo> ports)
     {
