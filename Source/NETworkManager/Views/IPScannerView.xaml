@@ -200,17 +200,32 @@
                         <MenuItem Header="{x:Static localization:Strings.ReadTheSNMPSystemInformation}"
                                   IsCheckable="True" StaysOpenOnClick="True"
                                   IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_SNMPEnabled, Mode=TwoWay}" />
-                        <Separator />
                         <!-- Credentials of the tab: of the profile / group it was opened with (SNMP, Windows) or entered
-                             for it (Windows) -->
+                             for it (Windows) - no separator if none is shown -->
+                        <Separator>
+                            <Separator.Visibility>
+                                <MultiBinding Converter="{StaticResource BooleansOrToVisibilityCollapsedConverter}">
+                                    <Binding Source="{x:Static settings:SettingsManager.Current}" Path="IPScanner_WindowsEnabled" />
+                                    <Binding Path="SNMPCredentialsInfo" Converter="{StaticResource StringIsNotNullOrEmptyToBooleanConverter}" />
+                                </MultiBinding>
+                            </Separator.Visibility>
+                        </Separator>
                         <MenuItem Header="{Binding SNMPCredentialsInfo}"
                                   IsEnabled="False"
                                   Visibility="{Binding SNMPCredentialsInfo, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
+                        <!-- Windows credentials only with Read Windows host information (not used otherwise) -->
                         <MenuItem Header="{Binding WindowsCredentialsInfo}"
-                                  IsEnabled="False"
-                                  Visibility="{Binding WindowsCredentialsInfo, Converter={StaticResource StringIsNotNullOrEmptyToVisibilityCollapsedConverter}}" />
+                                  IsEnabled="False">
+                            <MenuItem.Visibility>
+                                <MultiBinding Converter="{StaticResource BooleansAndToVisibilityCollapsedConverter}">
+                                    <Binding Source="{x:Static settings:SettingsManager.Current}" Path="IPScanner_WindowsEnabled" />
+                                    <Binding Path="WindowsCredentialsInfo" Converter="{StaticResource StringIsNotNullOrEmptyToBooleanConverter}" />
+                                </MultiBinding>
+                            </MenuItem.Visibility>
+                        </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.SetWindowsCredentialsDots}"
-                                  Command="{Binding SetWindowsCredentialsCommand}" />
+                                  Command="{Binding SetWindowsCredentialsCommand}"
+                                  Visibility="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_WindowsEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                         <Separator />
                         <MenuItem Header="{x:Static localization:Strings.ShowUnreachableIPAddressesAndPorts}"
                                   IsCheckable="True" StaysOpenOnClick="True"
