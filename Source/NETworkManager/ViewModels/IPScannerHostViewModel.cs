@@ -153,6 +153,10 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
         var (isOK, windowsCredentials) = await WindowsCredentialsChildWindow.ShowAsync(Application.Current.MainWindow,
             Strings.ScanAs, profileCredentials);
 
+        // Not used (canceled or other credentials): the copy of the password of the profile / group
+        if (!isOK || !ReferenceEquals(windowsCredentials, profileCredentials))
+            profileCredentials?.Password?.Dispose();
+
         if (!isOK)
             return;
 

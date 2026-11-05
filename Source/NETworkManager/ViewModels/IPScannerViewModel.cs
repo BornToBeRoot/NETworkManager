@@ -799,6 +799,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         if (ReferenceEquals(credentials, _windowsCredentials))
             return;
 
+        // The password of the replaced credentials is a copy of the tab (the dialog copied it if it was kept)
+        _windowsCredentials?.Password?.Dispose();
         _windowsCredentials = credentials;
 
         WindowsCredentialsInfo = credentials == null
@@ -1662,6 +1664,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         // Stop scan
         if (IsRunning)
             Stop();
+
+        // Copy of the password of the tab (a running scan logged on at its start, it is canceled)
+        _windowsCredentials?.Password?.Dispose();
 
         ConfigurationManager.Current.IPScannerTabCount--;
     }
