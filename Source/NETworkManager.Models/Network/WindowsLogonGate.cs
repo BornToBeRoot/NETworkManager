@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -77,6 +78,9 @@ public sealed class WindowsLogonGate
     private State _state;
     private int _logonFailures;
     private int _acceptsOutsideDomain;
+
+    // Hosts that are not gated and rejected the credentials themselves (e.g. a workgroup computer): not tried again
+    private readonly HashSet<string> _rejectedHosts = new(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
     ///     Creates the gate for the credentials of a scan.
@@ -161,19 +165,21 @@ public sealed class WindowsLogonGate
     ///     until it is its turn to check them (one host at a time) or they were rejected.
     /// </summary>
     /// <param name="ntlm">NTLM challenge of the host, null if none.</param>
+    /// <param name="host">IP address of the host (a host that is not gated is skipped after its own logon failure).</param>
     /// <param name="timeout">Max. time to wait for the turn (a slow host checking them doesn't stall the scan).</param>
     /// <param name="cancellationToken">Token to monitor for cancellation requests.</param>
     /// <returns>What the host does with the credentials.</returns>
-    public async Task<Decision> WaitAsync(NTLMChallengeInfo ntlm, TimeSpan timeout,
+    public async Task<Decision> WaitAsync(NTLMChallengeInfo ntlm, string host, TimeSpan timeout,
         CancellationToken cancellationToken)
     {
-        // Rejected: not used for any host (also not for the hosts that are not gated - e.g. a workgroup computer
-        // would count the wrong password against its own account in every scan)
-        if (IsRejected)
-            return Decision.Skip;
-
+        // Not gated (workgroup computer, local account): independent of a rejection by the domain hosts (e.g. the
+        // local admin of workgroup computers), but not tried again after its own logon failure (its account would
+        // count the wrong password in every scan). Call ReportUngated with the result.
         if (!IsGated(ntlm))
-            return Decision.Proceed;
+        {
+            lock (_lock)
+                return _rejectedHosts.Contains(host) ? Decision.Skip : Decision.Proceed;
+        }
 
         var decision = GetDecision();
 
@@ -236,6 +242,21 @@ public sealed class WindowsLogonGate
         {
             _turn.Release();
         }
+    }
+
+    /// <summary>
+    ///     Reports the result of a host that is not gated (<see cref="IsGated" /> false, <see cref="Decision.Proceed" />):
+    ///     after a logon failure, the host is skipped in the next scans.
+    /// </summary>
+    /// <param name="host">IP address of the host.</param>
+    /// <param name="info">Result of the NetApi requests, null if they didn't run (e.g. canceled).</param>
+    public void ReportUngated(string host, WindowsNetApiInfo info)
+    {
+        if (info == null || !WindowsHostInfo.IsLogonError(info.Error))
+            return;
+
+        lock (_lock)
+            _rejectedHosts.Add(host);
     }
 
     private Decision? GetDecision()

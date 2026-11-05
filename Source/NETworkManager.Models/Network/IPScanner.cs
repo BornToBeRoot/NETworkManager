@@ -853,7 +853,7 @@ public sealed class IPScanner(IPScannerOptions options)
         // Credentials: checked on one host before the others use them (a wrong password must not lock the account)
         var decision = _windowsLogonGate == null
             ? WindowsLogonGate.Decision.Proceed
-            : await _windowsLogonGate.WaitAsync(ntlm, timeout * 2, cancellationToken).ConfigureAwait(false);
+            : await _windowsLogonGate.WaitAsync(ntlm, ipAddress, timeout * 2, cancellationToken).ConfigureAwait(false);
 
         switch (decision)
         {
@@ -867,9 +867,12 @@ public sealed class IPScanner(IPScannerOptions options)
         // The host checks the credentials: its result is reported when the call returns - also after the timeout of
         // the host, so the next host doesn't check them while this logon is still running (a late logon failure in
         // the domain still rejects them)
+        // A host that is not gated reports its own logon failure (skipped in the next scans)
         Action<WindowsNetApiInfo> onCallCompleted = decision == WindowsLogonGate.Decision.Check
             ? x => _windowsLogonGate.Report(ntlm, x)
-            : null;
+            : _windowsLogonGate != null && !_windowsLogonGate.IsGated(ntlm)
+                ? x => _windowsLogonGate.ReportUngated(ipAddress, x)
+                : null;
 
         return await ResolveNetApiWithLogonAsync(ipAddress, target, timeout, onCallCompleted, cancellationToken)
             .ConfigureAwait(false);
