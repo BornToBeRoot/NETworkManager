@@ -255,7 +255,7 @@ Passwords are stored in plain text in the profile file unless [Profile file encr
 
 **Use credentials** under **Windows** uses the **Username**, **Domain** and **Password** of the profile for [Read Windows host information](#read-windows-host-information) instead of the ones of its [group](#windows-credentials-1) or of the user running NETworkManager. There are no Windows credentials in the settings: a scan without a profile uses the user running NETworkManager, unless credentials are set for the tab (**Options** > **Set Windows credentials...**). **Scan as...** in the context menu of a profile asks for the credentials (the ones of the profile / group as default) and scans the profile with them in a new tab, without changing the profile (like **Connect as...** of the Remote Desktop).
 
-The domain is optional: `.` for a local account of the scanned hosts, empty if the username contains it (`CORP\admin` or `admin@corp.example.com`). An empty password box keeps the saved password (`Not changed`).
+The domain is optional: `.` for a local account of the scanned hosts, empty if the username contains it (`CORP\admin` or `admin@corp.example.com`, then the domain of the username is used). An empty password box keeps the saved password (`Not changed`).
 
 **Type:** `Boolean` and the values above
 

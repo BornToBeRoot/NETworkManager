@@ -68,26 +68,27 @@ public sealed class WindowsLogon : IDisposable
     }
 
     /// <summary>
-    ///     Splits the username into user and domain for <c>LogonUser</c>: "DOMAIN\user" with an empty domain,
-    ///     "user@domain" (UPN) needs no domain (null).
+    ///     Splits the username into user and domain for <c>LogonUser</c>: "DOMAIN\user" uses the domain of the
+    ///     username (also if a domain is set - "DOMAIN\user" as user would always fail), "user@domain" (UPN) needs no
+    ///     domain (null), otherwise the domain (null if empty).
     /// </summary>
     /// <param name="username">Username.</param>
     /// <param name="domain">Domain, may be empty.</param>
-    /// <returns>Username and domain (null for a UPN without domain).</returns>
+    /// <returns>Username and domain (null for a UPN or without domain).</returns>
     public static (string username, string domain) SplitUsername(string username, string domain)
     {
         username ??= string.Empty;
-
-        if (!string.IsNullOrEmpty(domain))
-            return (username, domain);
 
         var index = username.IndexOf('\\');
 
         if (index > 0)
             return (username[(index + 1)..], username[..index]);
 
-        // UPN (user@domain) or a user without domain: null, LogonUser takes the UPN as it is
-        return (username, null);
+        // UPN (user@domain): LogonUser takes it as it is, the domain must be null
+        if (username.Contains('@'))
+            return (username, null);
+
+        return (username, string.IsNullOrEmpty(domain) ? null : domain);
     }
 
     public void Dispose()

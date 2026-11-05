@@ -15,7 +15,16 @@ public sealed record WindowsCredentials(string Username, string Domain, SecureSt
     /// <summary>
     ///     User as shown in the IP Scanner (e.g. "CORP\admin"), without the password.
     /// </summary>
-    public string DisplayName => string.IsNullOrEmpty(Domain) ? Username : $@"{Domain}\{Username}";
+    public string DisplayName
+    {
+        get
+        {
+            // As used for the logon (e.g. not "CORP\CORP\admin" for "CORP\admin" with the domain "CORP")
+            var (username, domain) = WindowsLogon.SplitUsername(Username, Domain);
+
+            return domain == null ? username : $@"{domain}\{username}";
+        }
+    }
 
     /// <summary>
     ///     Without the password.

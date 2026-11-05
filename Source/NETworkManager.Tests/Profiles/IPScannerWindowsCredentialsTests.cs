@@ -87,6 +87,7 @@ public class IPScannerWindowsCredentialsTests
         Assert.NotSame(group.IPScanner_WindowsPassword, credentials.Password);
         Assert.Equal(@"corp.example.com\admin", credentials.ToString());
         Assert.Equal("admin", (credentials with { Domain = string.Empty }).DisplayName);
+        Assert.Equal(@"CORP\admin", (credentials with { Username = @"CORP\admin", Domain = "CORP" }).DisplayName);
     }
 
     [Fact]

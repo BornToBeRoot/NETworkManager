@@ -30,6 +30,9 @@ public class WindowsHostInfoTests
     [InlineData(@".\admin", "", "admin", ".")]
     [InlineData("admin@corp.example.com", "", "admin@corp.example.com", null)]
     [InlineData("admin", "", "admin", null)]
+    [InlineData(@"CORP\admin", "CORP", "admin", "CORP")] // domain also in the username
+    [InlineData(@"CORP\admin", "LAB", "admin", "CORP")] // the domain of the username wins
+    [InlineData("admin@corp.example.com", "CORP", "admin@corp.example.com", null)] // UPN: no domain
     public void WindowsLogon_SplitUsername(string username, string domain, string expectedUsername,
         string expectedDomain)
     {
