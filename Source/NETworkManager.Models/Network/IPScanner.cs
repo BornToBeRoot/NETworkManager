@@ -843,37 +843,55 @@ public sealed class IPScanner(IPScannerOptions options)
                 return WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorLogonNotChecked);
         }
 
-        WindowsNetApiInfo info = null;
+        // The host checks the credentials: its result is reported when the call returns - also after the timeout of
+        // the host, so the next host doesn't check them while this logon is still running (a late logon failure in
+        // the domain still rejects them)
+        Action<WindowsNetApiInfo> onCallCompleted = decision == WindowsLogonGate.Decision.Check
+            ? x => _windowsLogonGate.Report(ntlm, x)
+            : null;
 
-        try
-        {
-            info = await ResolveNetApiWithLogonAsync(ipAddress, target, timeout, cancellationToken)
-                .ConfigureAwait(false);
-
-            return info;
-        }
-        finally
-        {
-            // Also on cancellation (null), so the next host can check the credentials
-            if (decision == WindowsLogonGate.Decision.Check)
-                _windowsLogonGate.Report(ntlm, info);
-        }
+        return await ResolveNetApiWithLogonAsync(ipAddress, target, timeout, onCallCompleted, cancellationToken)
+            .ConfigureAwait(false);
     }
 
     /// <summary>
     ///     Runs the blocking NetApi requests of a host, see <see cref="ResolveNetApiAsync" />.
     /// </summary>
+    /// <param name="onCallCompleted">
+    ///     Called once with the result of the call when it returns (also after the timeout), null if it was not started
+    ///     (canceled while waiting for a slot); optional.
+    /// </param>
     private async Task<WindowsNetApiInfo> ResolveNetApiWithLogonAsync(string ipAddress, string target,
-        TimeSpan timeout, CancellationToken cancellationToken)
+        TimeSpan timeout, Action<WindowsNetApiInfo> onCallCompleted, CancellationToken cancellationToken)
     {
         // All slots are taken by calls that wait for Windows (e.g. hosts that don't answer RPC)
-        if (!await WindowsSemaphore.WaitAsync(timeout, cancellationToken).ConfigureAwait(false))
-            return WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorTimeout);
+        bool isSlotFree;
+
+        try
+        {
+            isSlotFree = await WindowsSemaphore.WaitAsync(timeout, cancellationToken).ConfigureAwait(false);
+        }
+        catch (OperationCanceledException)
+        {
+            onCallCompleted?.Invoke(null);
+            throw;
+        }
+
+        if (!isSlotFree)
+        {
+            var info = WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorTimeout);
+
+            onCallCompleted?.Invoke(info);
+
+            return info;
+        }
 
         var logon = _windowsLogon;
 
         var task = Task.Factory.StartNew(() =>
         {
+            WindowsNetApiInfo result = null;
+
             try
             {
                 WindowsNetApiInfo Resolve()
@@ -886,20 +904,26 @@ public sealed class IPScanner(IPScannerOptions options)
                         : info;
                 }
 
-                return logon != null ? logon.Run(Resolve) : Resolve();
+                result = logon != null ? logon.Run(Resolve) : Resolve();
+
+                return result;
             }
             catch (Exception ex)
             {
                 // E.g. the logon was disposed by the end of the scan while the call waited for a slot
                 Log.Debug($"NetApi requests to {target} failed.", ex);
 
-                return WindowsNetApiInfo.FromError(ex is Win32Exception win32Exception
+                result = WindowsNetApiInfo.FromError(ex is Win32Exception win32Exception
                     ? win32Exception.NativeErrorCode
                     : 31); // ERROR_GEN_FAILURE
+
+                return result;
             }
             finally
             {
                 WindowsSemaphore.Release();
+
+                onCallCompleted?.Invoke(result);
             }
         }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
 
@@ -909,7 +933,8 @@ public sealed class IPScanner(IPScannerOptions options)
         }
         catch (TimeoutException)
         {
-            // The call keeps its thread (and slot) until Windows returns, its result is ignored
+            // The call keeps its thread (and slot) until Windows returns, its result is only reported (see
+            // onCallCompleted)
             return WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorTimeout);
         }
     }
