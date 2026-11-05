@@ -21,6 +21,8 @@ public class WindowsCredentialsChildWindowViewModel : ViewModelBase
     public WindowsCredentialsChildWindowViewModel(Action<WindowsCredentialsChildWindowViewModel> okCommand,
         Action<WindowsCredentialsChildWindowViewModel> cancelHandler, WindowsCredentials credentials)
     {
+        _credentials = credentials;
+
         OKCommand = new RelayCommand(_ => okCommand(this));
         CancelCommand = new RelayCommand(_ => cancelHandler(this));
 
@@ -28,6 +30,9 @@ public class WindowsCredentialsChildWindowViewModel : ViewModelBase
         Credentials = new WindowsCredentialsViewModel(credentials != null, credentials?.Username,
             credentials?.Domain, credentials?.Password, true);
     }
+
+    // Credentials the dialog was opened with
+    private readonly WindowsCredentials _credentials;
 
     public ICommand OKCommand { get; }
 
@@ -39,13 +44,31 @@ public class WindowsCredentialsChildWindowViewModel : ViewModelBase
     public WindowsCredentialsViewModel Credentials { get; }
 
     /// <summary>
-    ///     Gets the entered credentials (copy of the password), null for the user running the application.
+    ///     Gets the entered credentials (copy of the password), null for the user running the application - the
+    ///     credentials the dialog was opened with if nothing was changed (e.g. the source of "Scan as..." is kept).
     /// </summary>
     public WindowsCredentials ToCredentials()
     {
+        if (IsUnchanged())
+            return _credentials;
+
         return Credentials.UseCredentials
             ? new WindowsCredentials(Credentials.Username?.Trim() ?? string.Empty,
                 Credentials.Domain?.Trim() ?? string.Empty, Credentials.Password?.Copy())
             : null;
+    }
+
+    /// <summary>
+    ///     Nothing was changed: still used or not used, same username / domain and no new password.
+    /// </summary>
+    private bool IsUnchanged()
+    {
+        if (_credentials == null)
+            return !Credentials.UseCredentials;
+
+        return Credentials.UseCredentials &&
+               (Credentials.Username?.Trim() ?? string.Empty) == _credentials.Username &&
+               (Credentials.Domain?.Trim() ?? string.Empty) == _credentials.Domain &&
+               ReferenceEquals(Credentials.Password, _credentials.Password);
     }
 }

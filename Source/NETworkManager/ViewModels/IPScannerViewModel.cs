@@ -793,8 +793,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         if (!isOK)
             return;
 
-        _windowsCredentials = credentials;
         _isWindowsCredentialsRejected = false;
+
+        // Unchanged: the source (e.g. the profile / group) stays
+        if (ReferenceEquals(credentials, _windowsCredentials))
+            return;
+
+        _windowsCredentials = credentials;
 
         WindowsCredentialsInfo = credentials == null
             ? null

@@ -148,8 +148,10 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     {
         var profile = SelectedProfile;
 
+        var profileCredentials = NETworkManager.Profiles.Application.IPScanner.GetWindowsCredentials(profile);
+
         var (isOK, windowsCredentials) = await WindowsCredentialsChildWindow.ShowAsync(Application.Current.MainWindow,
-            Strings.ScanAs, NETworkManager.Profiles.Application.IPScanner.GetWindowsCredentials(profile));
+            Strings.ScanAs, profileCredentials);
 
         if (!isOK)
             return;
@@ -157,9 +159,12 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
         // SNMP version and credentials of the profile, otherwise of its group, otherwise the settings (null)
         var snmpCredentials = NETworkManager.Profiles.Application.IPScanner.GetSNMPCredentials(profile);
 
-        // No source: the credentials were entered for the tab
+        // Unchanged: the ones of the profile / group (shown as their source), otherwise entered for the tab (no source)
         AddTab(profile.IPScanner_HostOrIPRange, true, snmpCredentials,
-            profile.IPScanner_OverrideSNMP ? profile.Name : profile.Group, windowsCredentials);
+            profile.IPScanner_OverrideSNMP ? profile.Name : profile.Group, windowsCredentials,
+            windowsCredentials != null && ReferenceEquals(windowsCredentials, profileCredentials)
+                ? profile.IPScanner_UseWindowsCredentials ? profile.Name : profile.Group
+                : null);
     }
 
     /// <summary>
