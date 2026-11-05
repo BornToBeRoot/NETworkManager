@@ -889,6 +889,16 @@ public sealed class IPScanner(IPScannerOptions options)
     private async Task<WindowsNetApiInfo> ResolveNetApiWithLogonAsync(string ipAddress, string target,
         TimeSpan timeout, Action<WindowsNetApiInfo> onCallCompleted, CancellationToken cancellationToken)
     {
+        // Every path reports through Complete, exactly once (the lockout protection releases its turn): the NetApi
+        // values (the registry doesn't change the logon), the result of the call, or why it didn't run
+        var isCompleted = 0;
+
+        void Complete(WindowsNetApiInfo info)
+        {
+            if (Interlocked.Exchange(ref isCompleted, 1) == 0)
+                onCallCompleted?.Invoke(info);
+        }
+
         // All slots are taken by calls that wait for Windows (e.g. hosts that don't answer RPC)
         bool isSlotFree;
 
@@ -898,7 +908,7 @@ public sealed class IPScanner(IPScannerOptions options)
         }
         catch (OperationCanceledException)
         {
-            onCallCompleted?.Invoke(null);
+            Complete(null);
             throw;
         }
 
@@ -906,7 +916,7 @@ public sealed class IPScanner(IPScannerOptions options)
         {
             var info = WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorTimeout);
 
-            onCallCompleted?.Invoke(info);
+            Complete(info);
 
             return info;
         }
@@ -915,15 +925,6 @@ public sealed class IPScanner(IPScannerOptions options)
 
         // Values of the NetApi before the remote registry is read: kept if the registry exceeds the timeout
         WindowsNetApiInfo netApiRead = null;
-
-        // The result is known with the NetApi values (the registry doesn't change the logon), report it only once
-        var isCompleted = 0;
-
-        void Complete(WindowsNetApiInfo info)
-        {
-            if (Interlocked.Exchange(ref isCompleted, 1) == 0)
-                onCallCompleted?.Invoke(info);
-        }
 
         void OnNetApiRead(WindowsNetApiInfo info)
         {
