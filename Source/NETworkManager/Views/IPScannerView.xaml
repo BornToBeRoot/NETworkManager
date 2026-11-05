@@ -37,6 +37,8 @@
         <converters:IPStatusToStringConverter x:Key="IPStatusToStringConverter" />
         <converters:SNMPV3ErrorCodeToStringConverter x:Key="SNMPV3ErrorCodeToStringConverter" />
         <converters:WindowsHostInfoToStringConverter x:Key="WindowsHostInfoToStringConverter" />
+        <!-- Copy: empty instead of "-/-" without a value -->
+        <converters:WindowsHostInfoToStringConverter x:Key="WindowsHostInfoToCopyStringConverter" NoValue="" />
         <converters:StringIsNotNullOrEmptyToVisibilityCollapsedConverter x:Key="StringIsNotNullOrEmptyToVisibilityCollapsedConverter" />
         <converters:IntNotZeroToVisibilityCollapsedConverter x:Key="IntNotZeroToVisibilityCollapsedConverter" />
         <converters:IntToStringConverter x:Key="IntToStringConverter" />
@@ -712,7 +714,8 @@
                                   Visibility="{Binding Path=ScanOptions.IsOSShown, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}">
                             <MenuItem.CommandParameter>
-                                <MultiBinding Converter="{StaticResource IPScannerOSToStringConverter}">
+                                <MultiBinding Converter="{StaticResource IPScannerOSToStringConverter}"
+                                              ConverterParameter="Copy">
                                     <Binding Path="SelectedResult.OSGuess" />
                                     <Binding Path="SelectedResult.OSGuessHops" />
                                     <Binding Path="SelectedResult.IsPingPending" />
@@ -804,7 +807,7 @@
                                       Style="{StaticResource ResourceKey=CopyMenuItem}" />
                             <MenuItem Header="{x:Static localization:Strings.TimeOffset}"
                                       Command="{Binding CopyDataToClipboardCommand}"
-                                      CommandParameter="{Binding Path=SelectedResult.Windows, Converter={StaticResource WindowsHostInfoToStringConverter}, ConverterParameter=TimeOffset}"
+                                      CommandParameter="{Binding Path=SelectedResult.Windows, Converter={StaticResource WindowsHostInfoToCopyStringConverter}, ConverterParameter=TimeOffset}"
                                       IsEnabled="{Binding Path=SelectedResult.IsWindowsPending, Converter={StaticResource BooleanReverseConverter}}"
                                       Style="{StaticResource ResourceKey=CopyMenuItem}" />
                             <MenuItem Header="{x:Static localization:Strings.LoggedOnUsers}"

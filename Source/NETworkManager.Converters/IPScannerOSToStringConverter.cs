@@ -21,7 +21,10 @@ public sealed class IPScannerOSToStringConverter : IMultiValueConverter
     ///     is still read.
     /// </param>
     /// <param name="targetType"></param>
-    /// <param name="parameter">"ToolTip" to get the tooltip (version of Windows, or the hops of the guess).</param>
+    /// <param name="parameter">
+    ///     "ToolTip" to get the tooltip (version of Windows, or the hops of the guess), "Copy" for the clipboard (empty
+    ///     without value).
+    /// </param>
     /// <param name="culture"></param>
     /// <returns>Text ("..." while running, "-/-" without value) or tooltip (null without value).</returns>
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -55,6 +58,9 @@ public sealed class IPScannerOSToStringConverter : IMultiValueConverter
 
         if (isToolTip)
             return null;
+
+        if (parameter as string == "Copy")
+            return string.Empty;
 
         return isPingPending || isWindowsPending ? "..." : "-/-";
     }

@@ -16,7 +16,10 @@ namespace NETworkManager.Converters;
 /// </summary>
 public sealed class WindowsHostInfoToStringConverter : IValueConverter
 {
-    private const string NoValue = "-/-";
+    /// <summary>
+    ///     Text without a value: "-/-" (default), empty for Copy.
+    /// </summary>
+    public string NoValue { get; set; } = "-/-";
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
