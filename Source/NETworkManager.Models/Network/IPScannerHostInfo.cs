@@ -119,15 +119,40 @@ public class IPScannerHostInfo : PropertyChangedBase
     }
 
     /// <summary>
-    ///     Operating system for sorting the OS column: the Windows version if it was read, otherwise the guess from the
-    ///     TTL, empty if neither is known.
+    ///     The operating system is guessed from the TTL in the scan of the host (the OS column shows the guess). Default
+    ///     on, set by the scan.
     /// </summary>
-    public string OSName => HasWindowsOS ? WindowsOS : OSGuess == IPScannerOSGuess.None ? string.Empty : OSGuess.ToString();
+    public bool IsOSGuessEnabled
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(OSName));
+            OnPropertyChanged(nameof(IsOSPending));
+        }
+    } = true;
 
     /// <summary>
-    ///     The operating system is not known yet, but a source (Windows host information, ping) is still running.
+    ///     Operating system for sorting the OS column: the Windows version if it was read, otherwise the guess from the
+    ///     TTL (if enabled), empty if neither is known.
     /// </summary>
-    public bool IsOSPending => string.IsNullOrEmpty(OSName) && (IsWindowsPending || IsPingPending);
+    public string OSName => HasWindowsOS
+        ? WindowsOS
+        : !IsOSGuessEnabled || OSGuess == IPScannerOSGuess.None
+            ? string.Empty
+            : OSGuess.ToString();
+
+    /// <summary>
+    ///     The operating system is not known yet, but a source (Windows host information, ping for the guess) is still
+    ///     running.
+    /// </summary>
+    public bool IsOSPending => string.IsNullOrEmpty(OSName) &&
+                               (IsWindowsPending || (IsOSGuessEnabled && IsPingPending));
 
     /// <summary>
     ///     Operating system guessed from the TTL of the ping reply (see <see cref="IPScannerOSGuessHelper" />),
@@ -894,6 +919,7 @@ public class IPScannerHostInfo : PropertyChangedBase
         IsReachable = source.IsReachable;
         DetectedBy = source.DetectedBy;
         Role = source.Role;
+        IsOSGuessEnabled = source.IsOSGuessEnabled;
         PingInfo = source.PingInfo;
         IsAnyPortOpen = source.IsAnyPortOpen;
         Ports = source.Ports;

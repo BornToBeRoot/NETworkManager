@@ -594,6 +594,7 @@ public sealed class IPScanner(IPScannerOptions options)
             DetectedBy = detectedBy,
             Role = IPScannerHostRoleHelper.GetRole(_hostRoles, ipAddress),
             IsPingPending = pingInfo == null && options.ICMPEnabled,
+            IsOSGuessEnabled = options.OSGuessEnabled,
             // Lookups of every shown host and requests to reachable hosts, started after the host was found (see
             // EnrichAsync, ScanHostAsync)
             IsDNSPending = options.ResolveHostname,
