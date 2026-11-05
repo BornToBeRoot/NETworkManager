@@ -246,6 +246,12 @@ public class IPScannerHostInfo : PropertyChangedBase
                 return;
 
             field = value;
+
+            // Computed once (sorting / search read them often)
+            var openPorts = value?.Where(x => x.State == PortState.Open).Select(x => x.Port).ToList() ?? [];
+            _openPorts = string.Join(", ", openPorts);
+            _openPortCount = openPorts.Count;
+
             OnPropertyChanged();
             OnPropertyChanged(nameof(OpenPorts));
             OnPropertyChanged(nameof(OpenPortCount));
@@ -255,14 +261,16 @@ public class IPScannerHostInfo : PropertyChangedBase
     /// <summary>
     ///     Open ports, comma-separated in the order of the ports (e.g. "22, 80, 443"), empty if none.
     /// </summary>
-    public string OpenPorts => Ports == null
-        ? string.Empty
-        : string.Join(", ", Ports.Where(x => x.State == PortState.Open).Select(x => x.Port));
+    public string OpenPorts => _openPorts;
+
+    // Cache of OpenPorts / OpenPortCount, set with Ports
+    private string _openPorts = string.Empty;
+    private int _openPortCount;
 
     /// <summary>
     ///     Number of open ports (sorting of the open ports).
     /// </summary>
-    public int OpenPortCount => Ports?.Count(x => x.State == PortState.Open) ?? 0;
+    public int OpenPortCount => _openPortCount;
 
     /// <summary>
     ///     NetBIOS information about the host.
@@ -657,6 +665,10 @@ public class IPScannerHostInfo : PropertyChangedBase
                 return;
 
             field = value;
+
+            // Computed once (sorting / search of the OS column read it often)
+            _windowsOS = value?.OS ?? string.Empty;
+
             OnPropertyChanged();
             OnPropertyChanged(nameof(WindowsOS));
             OnPropertyChanged(nameof(HasWindowsOS));
@@ -681,7 +693,10 @@ public class IPScannerHostInfo : PropertyChangedBase
     /// <summary>
     ///     Name of the Windows version (e.g. "Windows 11 25H2"), empty if not known.
     /// </summary>
-    public string WindowsOS => Windows?.OS ?? string.Empty;
+    public string WindowsOS => _windowsOS;
+
+    // Cache of WindowsOS, set with Windows
+    private string _windowsOS = string.Empty;
 
     /// <summary>
     ///     The Windows version is known (shown in the OS column instead of the guess from the TTL).
