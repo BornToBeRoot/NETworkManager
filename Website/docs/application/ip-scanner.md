@@ -455,7 +455,7 @@ With the [Windows credentials](#windows-credentials) of a profile / group, a wro
 - Accepted (also `Access is denied.`: logged on, but without rights) on a host in the domain of the credentials, or on three hosts of other domains (a host that logs a failed logon on as guest, e.g. a NAS, also accepts a wrong password): all hosts are asked.
 - Logon failure on a host in the domain of the credentials, any logon failure if the credentials have no domain (e.g. `admin`), or the third logon failure on hosts of other domains: the credentials are rejected. The other hosts are not tried (`Not tried: ...` in the row details), a message is shown and the tab doesn't use them for the next scans (also not for **Automatically scan every** and **Rescan**) - set them again with **Options** > **Set Windows credentials...** or open a new tab after correcting the profile. The logon failures are counted over all scans of the tab, so a repeated scan doesn't start again from zero.
 
-Computers in a workgroup and local accounts (`.\admin`) are not part of this check: a logon failure there only affects the host (e.g. a Windows PC that is not in the domain shows the error in its row, the other hosts are not affected). The user running NETworkManager is not checked (no stored password).
+Computers in a workgroup and local accounts (`.\admin`) are not part of this check: a logon failure there only affects the host (e.g. a Windows PC that is not in the domain shows the error in its row, the other hosts are not affected). Rejected credentials are not used for them either. The user running NETworkManager is not checked (no stored password).
 
 :::
 

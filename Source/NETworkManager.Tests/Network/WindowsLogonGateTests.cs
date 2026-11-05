@@ -241,7 +241,9 @@ public class WindowsLogonGateTests
         gate.Report(CorpHost, LogonFailure);
 
         Assert.Equal(WindowsLogonGate.Decision.Skip, await gate.WaitAsync(CorpHost, Timeout, CancellationToken.None));
-        Assert.Equal(WindowsLogonGate.Decision.Proceed,
+
+        // Also not for a host that is not gated
+        Assert.Equal(WindowsLogonGate.Decision.Skip,
             await gate.WaitAsync(WorkgroupHost, Timeout, CancellationToken.None));
     }
 }

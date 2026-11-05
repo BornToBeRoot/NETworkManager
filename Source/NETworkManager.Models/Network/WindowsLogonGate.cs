@@ -150,6 +150,11 @@ public sealed class WindowsLogonGate
     public async Task<Decision> WaitAsync(NTLMChallengeInfo ntlm, TimeSpan timeout,
         CancellationToken cancellationToken)
     {
+        // Rejected: not used for any host (also not for the hosts that are not gated - e.g. a workgroup computer
+        // would count the wrong password against its own account in every scan)
+        if (IsRejected)
+            return Decision.Skip;
+
         if (!IsGated(ntlm))
             return Decision.Proceed;
 
