@@ -13,8 +13,9 @@ namespace NETworkManager.Models.Network;
 ///         <item>Accepted (success, or access denied = logged on without rights) on a host in the domain of the
 ///         credentials, or on the third host of other domains (a host that maps a failed logon to guest, e.g. a NAS
 ///         with <c>map to guest = bad user</c>, also answers a wrong password): all hosts run.</item>
-///         <item>Logon failure on a host in the domain of the credentials (the domain controller checked them), or the
-///         third logon failure on other hosts (e.g. no domain known): rejected, the remaining hosts are not tried.</item>
+///         <item>Logon failure on a host in the domain of the credentials (the domain controller checked them), any
+///         logon failure if the credentials have no domain (e.g. "admin"), or the third logon failure on hosts of
+///         other domains: rejected, the remaining hosts are not tried.</item>
 ///         <item>Other errors (timeout, no RPC) or a logon failure on a computer of another domain: the next host
 ///         checks.</item>
 ///     </list>
@@ -206,7 +207,8 @@ public sealed class WindowsLogonGate
 
                 _logonFailures++;
 
-                if (IsInDomain(ntlm) || _logonFailures >= MaxLogonFailures)
+                // Without a domain (e.g. "admin"), the host's domain controller may have checked them
+                if (IsInDomain(ntlm) || string.IsNullOrEmpty(_domain) || _logonFailures >= MaxLogonFailures)
                     _state = State.Rejected;
             }
         }

@@ -130,6 +130,18 @@ public class WindowsLogonGateTests
     }
 
     [Fact]
+    public async Task LogonFailureWithoutDomain_Rejected()
+    {
+        // "admin" without domain: the domain controller of the host may have counted it
+        var gate = CreateGate("admin", "");
+
+        await gate.WaitAsync(OtherDomainHost, Timeout, CancellationToken.None);
+        gate.Report(OtherDomainHost, LogonFailure);
+
+        Assert.True(gate.IsRejected);
+    }
+
+    [Fact]
     public async Task TimeoutOrCancellation_NotDecided_NextHostChecks()
     {
         var gate = CreateGate();
