@@ -233,11 +233,29 @@ public class SNMPCredentialsViewModel : ViewModelBase
     public bool IsProfileFileEncrypted { get; }
 
     /// <summary>
+    ///     A text box of the control has invalid input (set by the control): WPF doesn't pass invalid input to the
+    ///     view model, which keeps the last valid value (e.g. the first character of a cleared username).
+    /// </summary>
+    public bool HasInputError
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(HasError));
+        }
+    }
+
+    /// <summary>
     ///     Overridden, but a value is missing (the dialog can't be saved): the community (v1 / v2c), the username or a
     ///     password of the security level (v3).
     /// </summary>
     public bool HasError => IsOverridden && (IsV3
-        ? string.IsNullOrWhiteSpace(Username) || (HasAuth && IsAuthEmpty) || (HasPriv && IsPrivEmpty)
+        ? HasInputError || string.IsNullOrWhiteSpace(Username) || (HasAuth && IsAuthEmpty) || (HasPriv && IsPrivEmpty)
         : IsCommunityEmpty);
 
     /// <summary>

@@ -103,11 +103,29 @@ public class WindowsCredentialsViewModel : ViewModelBase
     public bool IsProfileFileEncrypted { get; }
 
     /// <summary>
+    ///     A text box of the control has invalid input (set by the control): WPF doesn't pass invalid input to the
+    ///     view model, which keeps the last valid value (e.g. the first character of a cleared username).
+    /// </summary>
+    public bool HasInputError
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(HasError));
+        }
+    }
+
+    /// <summary>
     ///     Used, but a value is invalid (the dialog can't be saved): the username is empty or contains spaces, the
     ///     domain is invalid or the password is empty. Same rules as the validators of the text boxes.
     /// </summary>
     public bool HasError => UseCredentials &&
-                            (!IsValid(new EmptyValidator(), Username) || !IsValid(new NoSpacesValidator(), Username) ||
+                            (HasInputError || !IsValid(new EmptyValidator(), Username) || !IsValid(new NoSpacesValidator(), Username) ||
                              !IsValid(new EmptyOrWindowsDomainValidator(), Domain) || IsPasswordEmpty);
 
     /// <summary>
