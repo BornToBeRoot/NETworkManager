@@ -67,6 +67,38 @@ public class WindowsLogonGateTests
     }
 
     [Fact]
+    public async Task SuccessInAnotherDomain_NextHostChecks_AcceptedAfterMinAccepts()
+    {
+        // E.g. a NAS that maps a failed logon to guest: its success doesn't prove the password
+        var gate = CreateGate();
+
+        for (var i = 0; i < WindowsLogonGate.MinAcceptsOutsideDomain; i++)
+        {
+            Assert.Equal(WindowsLogonGate.Decision.Check,
+                await gate.WaitAsync(OtherDomainHost, Timeout, CancellationToken.None));
+
+            gate.Report(OtherDomainHost, Success);
+        }
+
+        Assert.Equal(WindowsLogonGate.Decision.Proceed,
+            await gate.WaitAsync(CorpHost, Timeout, CancellationToken.None));
+    }
+
+    [Fact]
+    public async Task SuccessInAnotherDomain_ThenLogonFailureInTheDomain_Rejected()
+    {
+        var gate = CreateGate();
+
+        await gate.WaitAsync(OtherDomainHost, Timeout, CancellationToken.None);
+        gate.Report(OtherDomainHost, Success);
+
+        Assert.Equal(WindowsLogonGate.Decision.Check, await gate.WaitAsync(CorpHost, Timeout, CancellationToken.None));
+        gate.Report(CorpHost, LogonFailure);
+
+        Assert.True(gate.IsRejected);
+    }
+
+    [Fact]
     public async Task LogonFailureInTheDomain_Rejected()
     {
         var gate = CreateGate();

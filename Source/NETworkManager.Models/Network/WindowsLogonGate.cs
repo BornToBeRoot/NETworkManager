@@ -10,7 +10,9 @@ namespace NETworkManager.Models.Network;
 ///     lockout threshold in seconds. The credentials are checked on one host first (the others wait); only if they are
 ///     accepted, the hosts run in parallel:
 ///     <list type="bullet">
-///         <item>Accepted (success, or access denied = logged on without rights): all hosts run.</item>
+///         <item>Accepted (success, or access denied = logged on without rights) on a host in the domain of the
+///         credentials, or on the third host of other domains (a host that maps a failed logon to guest, e.g. a NAS
+///         with <c>map to guest = bad user</c>, also answers a wrong password): all hosts run.</item>
 ///         <item>Logon failure on a host in the domain of the credentials (the domain controller checked them), or the
 ///         third logon failure on other hosts (e.g. no domain known): rejected, the remaining hosts are not tried.</item>
 ///         <item>Other errors (timeout, no RPC) or a logon failure on a computer of another domain: the next host
@@ -25,6 +27,12 @@ public sealed class WindowsLogonGate
     ///     Max. logon failures on hosts that are not in the domain of the credentials before they are rejected.
     /// </summary>
     public const int MaxLogonFailures = 3;
+
+    /// <summary>
+    ///     Accepts on hosts that are not in the domain of the credentials before they are accepted (e.g. the domain of
+    ///     a UPN suffix is not the domain of the hosts) - one could be a host that maps a failed logon to guest.
+    /// </summary>
+    public const int MinAcceptsOutsideDomain = 3;
 
     /// <summary>
     ///     What a host does with the credentials.
@@ -67,6 +75,7 @@ public sealed class WindowsLogonGate
 
     private State _state;
     private int _logonFailures;
+    private int _acceptsOutsideDomain;
 
     /// <summary>
     ///     Creates the gate for the credentials of a scan.
@@ -182,10 +191,13 @@ public sealed class WindowsLogonGate
                 if (_state != State.Unchecked)
                     return;
 
-                // Access denied: logged on, but without rights - the credentials are correct
+                // Access denied: logged on, but without rights - the credentials are correct. Only proven by a host in
+                // their domain: another host may have logged on as guest, also with a wrong password
                 if (info.Error is 0 or 5)
                 {
-                    _state = State.Accepted;
+                    if (IsInDomain(ntlm) || ++_acceptsOutsideDomain >= MinAcceptsOutsideDomain)
+                        _state = State.Accepted;
+
                     return;
                 }
 
