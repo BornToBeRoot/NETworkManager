@@ -48,6 +48,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // A manual scan waits for the confirmation of a large scan (IsRunning is still false) - not repeated meanwhile
     private bool _isConfirmingScan;
 
+    // The Windows credentials of the tab are edited - not repeated meanwhile (OK would replace the credentials and their
+    // lockout protection under the running scan)
+    private bool _isEditingWindowsCredentials;
+
     // SNMP version and credentials of the profile / group the tab was opened with (protected, plain text only for the
     // SNMP request of a scan, see GetProfileSNMPCredentials), null for the ones of the settings
     private readonly SNMPSecureCredentials _snmpCredentials;
@@ -599,7 +603,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
         // Repeat of the scan (before the input is set, see its setter): not while a scan or rescan is running, or a
         // manual scan waits for its confirmation
-        Repeat = new ScanRepeater(() => Start(isRepeat: true), () => IsRunning || _isConfirmingScan,
+        Repeat = new ScanRepeater(() => Start(isRepeat: true), () => IsRunning || _isConfirmingScan || _isEditingWindowsCredentials,
             SettingsManager.Current.IPScanner_AutoRefreshTime, x => SettingsManager.Current.IPScanner_AutoRefreshTime = x);
 
         _firstLoad = start;
@@ -791,8 +795,20 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         if (window == null)
             return;
 
-        var (isOK, credentials) =
-            await WindowsCredentialsChildWindow.ShowAsync(window, Strings.WindowsCredentials, _windowsCredentials);
+        bool isOK;
+        WindowsCredentials credentials;
+
+        _isEditingWindowsCredentials = true;
+
+        try
+        {
+            (isOK, credentials) =
+                await WindowsCredentialsChildWindow.ShowAsync(window, Strings.WindowsCredentials, _windowsCredentials);
+        }
+        finally
+        {
+            _isEditingWindowsCredentials = false;
+        }
 
         if (!isOK)
             return;
