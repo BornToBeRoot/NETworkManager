@@ -170,7 +170,8 @@ public static class WindowsNetApiResolver
 
             return (NERR_Success, role,
                 role == WindowsHostRole.DomainController || (info.sv101_type & SV_TYPE_DOMAIN_MEMBER) != 0,
-                Clean(info.sv101_comment));
+                // A description with several lines on one line
+                StringHelper.ReplaceControlCharactersWithSpace(info.sv101_comment));
         }
         finally
         {
