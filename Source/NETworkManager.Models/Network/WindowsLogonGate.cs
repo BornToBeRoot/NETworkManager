@@ -82,8 +82,7 @@ public sealed class WindowsLogonGate
     ///     Creates the gate for the credentials of a scan.
     /// </summary>
     /// <param name="credentials">Credentials of the scan.</param>
-    /// <param name="isRejected">The credentials were already rejected in an earlier scan of the tab.</param>
-    public WindowsLogonGate(WindowsCredentials credentials, bool isRejected = false)
+    public WindowsLogonGate(WindowsCredentials credentials)
     {
         var (username, domain) = WindowsLogon.SplitUsername(credentials.Username, credentials.Domain);
 
@@ -93,7 +92,6 @@ public sealed class WindowsLogonGate
 
         _domain = domain ?? string.Empty;
         _isLocalAccount = _domain == ".";
-        _state = isRejected ? State.Rejected : State.Unchecked;
     }
 
     /// <summary>

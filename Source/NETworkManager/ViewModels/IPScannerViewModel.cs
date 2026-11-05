@@ -56,9 +56,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // see WindowsLogon), null for the user running the application
     private WindowsCredentials _windowsCredentials;
 
-    // The Windows credentials were rejected in a scan of the tab (wrong username or password): not used for the next
-    // scans, so a repeated scan doesn't lock the account (see WindowsLogonGate)
-    private bool _isWindowsCredentialsRejected;
+    // Lockout protection of the Windows credentials for all scans of the tab (logon failures and the rejected state
+    // are kept, so repeated scans don't lock the account), null without credentials; new with new credentials
+    private WindowsLogonGate _windowsLogonGate;
+
+    // The message that the Windows credentials were rejected was shown (once, also if they were rejected after the
+    // scan was completed - a check that exceeded the timeout)
+    private bool _isWindowsLogonRejectedShown;
 
     // Background HostFound / HostUpdated events append here instead of hopping to the UI thread per
     // item - a DispatcherTimer periodically flushes this into the Results collection instead, so a large
@@ -586,7 +590,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             ? null
             : string.Format(Strings.SNMPVersionAndCredentialsOfX, snmpCredentialsSource);
 
-        _windowsCredentials = windowsCredentials;
+        SetWindowsCredentialsOfTab(windowsCredentials);
         WindowsCredentialsInfo = windowsCredentials == null
             ? null
             : windowsCredentialsSource == null
@@ -793,19 +797,31 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         if (!isOK)
             return;
 
-        _isWindowsCredentialsRejected = false;
-
-        // Unchanged: the source (e.g. the profile / group) stays
+        // Unchanged: the source (e.g. the profile / group) stays, but they are checked again (also if rejected)
         if (ReferenceEquals(credentials, _windowsCredentials))
+        {
+            SetWindowsCredentialsOfTab(credentials);
             return;
+        }
 
         // The password of the replaced credentials is a copy of the tab (the dialog copied it if it was kept)
         _windowsCredentials?.Password?.Dispose();
-        _windowsCredentials = credentials;
+        SetWindowsCredentialsOfTab(credentials);
 
         WindowsCredentialsInfo = credentials == null
             ? null
             : string.Format(Strings.WindowsCredentialsOfThisTabX, credentials);
+    }
+
+    /// <summary>
+    /// Sets the Windows credentials of the tab with a new lockout protection (not checked, not rejected).
+    /// </summary>
+    /// <param name="credentials">Credentials, null for the user running the application.</param>
+    private void SetWindowsCredentialsOfTab(WindowsCredentials credentials)
+    {
+        _windowsCredentials = credentials;
+        _windowsLogonGate = credentials == null ? null : new WindowsLogonGate(credentials);
+        _isWindowsLogonRejectedShown = false;
     }
 
     /// <summary>
@@ -1193,7 +1209,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             GetProfileSNMPCredentials(SettingsManager.Current.IPScanner_SNMPEnabled)) with
         {
             WindowsCredentials = _windowsCredentials,
-            WindowsCredentialsRejected = _isWindowsCredentialsRejected
+            WindowsLogonGate = _windowsLogonGate
         };
 
         ScanOptions = new IPScannerResultOptions(scanOptions);
@@ -1251,11 +1267,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _cancellationTokenSource = new CancellationTokenSource();
 
         // Same options (columns, ports), but every host is reported - also if it is unreachable now. The current
-        // Windows credentials of the tab (entered since the last scan, or rejected since then: not used again)
+        // Windows credentials of the tab (entered since the last scan) and their lockout protection
         var rescanOptions = CreateRescanOptions(_lastScanOptions) with
         {
             WindowsCredentials = _windowsCredentials,
-            WindowsCredentialsRejected = _isWindowsCredentialsRejected
+            WindowsLogonGate = _windowsLogonGate
         };
 
         // The plain text credentials of the profile / group were released after the last scan
@@ -2022,11 +2038,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 AddStatusMessage(Strings.NoReachableHostsFound);
             }
 
-            // Windows credentials rejected (wrong username or password, also in a canceled scan): not used again in
-            // this tab, one message instead of only an error in the rows
-            if (sender is IPScanner { IsWindowsLogonRejected: true })
+            // Windows credentials rejected (wrong username or password, also in a canceled scan or after an earlier
+            // scan completed): not used again in this tab, one message instead of only an error in the rows - once,
+            // not again in the next scans
+            if (_windowsLogonGate?.IsRejected == true && !_isWindowsLogonRejectedShown)
             {
-                _isWindowsCredentialsRejected = true;
+                _isWindowsLogonRejectedShown = true;
 
                 AddStatusMessage(string.Format(Strings.WindowsLogonFailedMessage, _windowsCredentials));
             }

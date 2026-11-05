@@ -47,12 +47,6 @@ public sealed class IPScanner(IPScannerOptions options)
     private WindowsLogonGate _windowsLogonGate;
 
     /// <summary>
-    ///     The Windows credentials of the scan were rejected (wrong username or password), see
-    ///     <see cref="WindowsLogonGate" />. Read it after <see cref="ScanComplete" />.
-    /// </summary>
-    public bool IsWindowsLogonRejected => _windowsLogonGate?.IsRejected == true;
-
-    /// <summary>
     ///     Time between the start of two hosts during the ramp-up, see <see cref="StartScheduler" />. With the
     ///     default settings the first 128 hosts are started within ~1.3 s instead of at the same moment (~11 connection
     ///     requests per 10 ms instead of ~1400 at once), the following ones when a slot is free. Shorter if a host
@@ -173,8 +167,8 @@ public sealed class IPScanner(IPScannerOptions options)
                 // Network logon for the NetApi requests of the Windows host information, once per scan
                 if (options.WindowsEnabled && options.WindowsCredentials != null)
                 {
-                    _windowsLogonGate = new WindowsLogonGate(options.WindowsCredentials,
-                        options.WindowsCredentialsRejected);
+                    // Of the tab (all its scans), otherwise for this scan
+                    _windowsLogonGate = options.WindowsLogonGate ?? new WindowsLogonGate(options.WindowsCredentials);
 
                     try
                     {

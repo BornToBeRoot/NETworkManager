@@ -24,12 +24,10 @@ public class WindowsLogonGateTests
     private static readonly NTLMChallengeInfo WorkgroupHost =
         new(new Version(10, 0, 26200), "PC01", "PC01", "PC01", "PC01", string.Empty, null);
 
-    private static WindowsLogonGate CreateGate(string username = "admin", string domain = "CORP",
-        bool isRejected = false)
+    private static WindowsLogonGate CreateGate(string username = "admin", string domain = "CORP")
     {
         return new WindowsLogonGate(
-            new WindowsCredentials(username, domain, SecureStringHelper.ConvertToSecureString("password")),
-            isRejected);
+            new WindowsCredentials(username, domain, SecureStringHelper.ConvertToSecureString("password")));
     }
 
     private static readonly WindowsNetApiInfo LogonFailure = WindowsNetApiInfo.FromError(1326);
@@ -109,6 +107,22 @@ public class WindowsLogonGateTests
         gate.Report(CorpHost, LogonFailure);
 
         Assert.Equal(WindowsLogonGate.Decision.Skip, await second);
+        Assert.True(gate.IsRejected);
+    }
+
+    [Fact]
+    public async Task LogonFailuresOfEarlierScansCount()
+    {
+        // Same gate in the next scan (e.g. Automatically scan every): 2 failures per scan don't stay below the limit
+        var gate = CreateGate();
+
+        for (var scan = 0; scan < 2; scan++)
+        for (var i = 0; i < 2 && !gate.IsRejected; i++)
+        {
+            await gate.WaitAsync(OtherDomainHost, Timeout, CancellationToken.None);
+            gate.Report(OtherDomainHost, LogonFailure);
+        }
+
         Assert.True(gate.IsRejected);
     }
 
@@ -220,7 +234,11 @@ public class WindowsLogonGateTests
     [Fact]
     public async Task RejectedInAnEarlierScan_Skip()
     {
-        var gate = CreateGate(isRejected: true);
+        // The tab keeps the gate for all its scans
+        var gate = CreateGate();
+
+        await gate.WaitAsync(CorpHost, Timeout, CancellationToken.None);
+        gate.Report(CorpHost, LogonFailure);
 
         Assert.Equal(WindowsLogonGate.Decision.Skip, await gate.WaitAsync(CorpHost, Timeout, CancellationToken.None));
         Assert.Equal(WindowsLogonGate.Decision.Proceed,
