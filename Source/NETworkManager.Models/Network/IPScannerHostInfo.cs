@@ -300,6 +300,7 @@ public class IPScannerHostInfo : PropertyChangedBase
             OnPropertyChanged();
             OnPropertyChanged(nameof(OSGuess));
             OnPropertyChanged(nameof(OSGuessHops));
+            OnPropertyChanged(nameof(OSName));
             OnPropertyChanged(nameof(IsOSPending));
         }
     }
