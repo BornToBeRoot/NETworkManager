@@ -16,7 +16,8 @@ public class WindowsVersionHelperTests
     [InlineData("10.0.19045", null, "Windows 10 22H2")]
     [InlineData("10.0.17763", null, "Windows 10 1809 / Server 2019")]
     [InlineData("10.0.14393", true, "Windows Server 2016")]
-    [InlineData("10.0.27000", null, "Windows 11 (build 27000)")]
+    [InlineData("10.0.27000", false, "Windows 11 (build 27000)")]
+    [InlineData("10.0.27000", null, "Windows (build 27000)")] // role unknown: maybe a newer Windows Server
     [InlineData("10.0.27000", true, "Windows (build 27000)")]
     [InlineData("10.0.12345", null, "Windows (build 12345)")]
     [InlineData("6.3.9600", null, "Windows 8.1 / Server 2012 R2")]

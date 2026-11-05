@@ -60,8 +60,9 @@ public static class WindowsVersionHelper
             if (Builds.TryGetValue(version.Build, out var names))
                 return Choose(names.Client, names.Server, isServer);
 
-            // Unknown build (e.g. a newer release): Windows 11 from build 22000
-            return version.Build >= 22000 && isServer != true
+            // Unknown build (e.g. a newer release): Windows 11 from build 22000 for a workstation - not if the role is
+            // unknown (usual without credentials), it could be a newer Windows Server
+            return version.Build >= 22000 && isServer == false
                 ? $"Windows 11 (build {version.Build})"
                 : $"Windows (build {version.Build})";
         }
