@@ -62,9 +62,12 @@ public sealed class WindowsHostInfoToStringConverter : IValueConverter
     /// </summary>
     private static string GetErrorMessage(int error)
     {
-        return error == WindowsHostInfo.ErrorLogonSkipped
-            ? Strings.WindowsLogonSkippedMessage
-            : WindowsHostInfo.GetErrorMessage(error);
+        return error switch
+        {
+            WindowsHostInfo.ErrorLogonSkipped => Strings.WindowsLogonSkippedMessage,
+            WindowsHostInfo.ErrorLogonNotChecked => Strings.WindowsLogonNotCheckedMessage,
+            _ => WindowsHostInfo.GetErrorMessage(error)
+        };
     }
 
     /// <summary>

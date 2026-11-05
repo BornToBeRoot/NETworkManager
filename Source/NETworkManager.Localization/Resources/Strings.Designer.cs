@@ -15551,6 +15551,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not tried: the Windows credentials were still being checked on another host (protection against an account lockout)..
+        /// </summary>
+        public static string WindowsLogonNotCheckedMessage {
+            get {
+                return ResourceManager.GetString("WindowsLogonNotCheckedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not tried: the Windows credentials were rejected on another host (protection against an account lockout)..
         /// </summary>
         public static string WindowsLogonSkippedMessage {

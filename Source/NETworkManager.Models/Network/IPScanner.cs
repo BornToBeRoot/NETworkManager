@@ -838,8 +838,9 @@ public sealed class IPScanner(IPScannerOptions options)
         {
             case WindowsLogonGate.Decision.Skip:
                 return WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorLogonSkipped);
+            // Never contacted: not the timeout of the host
             case WindowsLogonGate.Decision.Timeout:
-                return WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorTimeout);
+                return WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorLogonNotChecked);
         }
 
         WindowsNetApiInfo info = null;

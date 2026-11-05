@@ -179,4 +179,14 @@ public class WindowsHostInfoTests
     {
         Assert.Equal(expected, new WindowsHostInfo(null, WindowsNetApiInfo.FromError(error)).IsLogonFailure);
     }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(WindowsHostInfo.ErrorLogonSkipped)]
+    [InlineData(WindowsHostInfo.ErrorLogonNotChecked)]
+    public void GetErrorMessage_NoWin32Error_Empty(int error)
+    {
+        // Not tried: translated by the converter, no Windows message ("Unknown error (0xfffffffe)")
+        Assert.Equal(string.Empty, WindowsHostInfo.GetErrorMessage(error));
+    }
 }

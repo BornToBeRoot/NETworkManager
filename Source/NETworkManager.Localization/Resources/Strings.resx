@@ -5405,6 +5405,9 @@ Do you want to start the scan?</value>
   <data name="WindowsLogonSkippedMessage" xml:space="preserve">
     <value>Not tried: the Windows credentials were rejected on another host (protection against an account lockout).</value>
   </data>
+  <data name="WindowsLogonNotCheckedMessage" xml:space="preserve">
+    <value>Not tried: the Windows credentials were still being checked on another host (protection against an account lockout).</value>
+  </data>
   <data name="WindowsCredentials" xml:space="preserve">
     <value>Windows credentials</value>
   </data>
