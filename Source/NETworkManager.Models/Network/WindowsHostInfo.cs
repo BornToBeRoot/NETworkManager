@@ -150,11 +150,6 @@ public sealed record WindowsHostInfo(SMBInfo SMB, WindowsNetApiInfo NetApi)
     public int UsersError => NetApi?.UsersError ?? 0;
 
     /// <summary>
-    ///     The logon to the host with the credentials of the scan failed (e.g. wrong password).
-    /// </summary>
-    public bool IsLogonFailure => IsLogonError(Error);
-
-    /// <summary>
     ///     Checks if a Win32 error of the NetApi requests is a failed logon with the credentials (wrong username or
     ///     password, disabled / locked / expired account, logon not allowed).
     /// </summary>

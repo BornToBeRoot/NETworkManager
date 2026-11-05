@@ -103,7 +103,7 @@ public class WindowsHostInfoTests
         Assert.Null(info.Users);
         Assert.Equal(5, info.Error);
         Assert.Equal(5, info.UsersError);
-        Assert.False(info.IsLogonFailure);
+        Assert.False(WindowsHostInfo.IsLogonError(info.Error));
     }
 
     [Fact]
@@ -178,9 +178,9 @@ public class WindowsHostInfoTests
     [InlineData(5, false)] // access denied
     [InlineData(WindowsHostInfo.ErrorTimeout, false)]
     [InlineData(0, false)]
-    public void IsLogonFailure(int error, bool expected)
+    public void IsLogonError(int error, bool expected)
     {
-        Assert.Equal(expected, new WindowsHostInfo(null, WindowsNetApiInfo.FromError(error)).IsLogonFailure);
+        Assert.Equal(expected, WindowsHostInfo.IsLogonError(error));
     }
 
     [Theory]
