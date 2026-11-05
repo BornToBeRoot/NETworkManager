@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -280,9 +281,7 @@ public static class WindowsNetApiResolver
     /// </summary>
     private static string Clean(string value)
     {
-        return string.IsNullOrEmpty(value)
-            ? string.Empty
-            : new string([.. value.Where(c => !char.IsControl(c))]).Trim();
+        return StringHelper.RemoveControlCharacters(value).Trim();
     }
 
     #region P/Invoke

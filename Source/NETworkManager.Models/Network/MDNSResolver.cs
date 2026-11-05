@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -152,7 +153,7 @@ public static class MDNSResolver
                 // export fail
                 var name = ReadName(response, ref dataOffset) ?? string.Empty;
 
-                return new string([.. name.Where(x => !char.IsControl(x))]);
+                return StringHelper.RemoveControlCharacters(name);
             }
 
             offset += dataLength;

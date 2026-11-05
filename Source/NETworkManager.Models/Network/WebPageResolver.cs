@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -260,8 +261,7 @@ public static partial class WebPageResolver
     /// <returns>Cleaned value.</returns>
     public static string CleanHeaderValue(string value)
     {
-        var withoutControlCharacters = new string([.. (value ?? string.Empty).Where(x => !char.IsControl(x))]);
-        var cleaned = WhitespaceRegex().Replace(withoutControlCharacters, " ").Trim();
+        var cleaned = WhitespaceRegex().Replace(StringHelper.RemoveControlCharacters(value), " ").Trim();
 
         return cleaned.Length > MaxTitleLength ? cleaned[..MaxTitleLength] + "..." : cleaned;
     }
@@ -334,7 +334,7 @@ public static partial class WebPageResolver
         var title = WhitespaceRegex().Replace(WebUtility.HtmlDecode(match.Groups[1].Value), " ").Trim();
 
         // Control characters (e.g. from a broken page) are not shown
-        title = new string([.. title.Where(x => !char.IsControl(x))]);
+        title = StringHelper.RemoveControlCharacters(title);
 
         return title.Length > MaxTitleLength ? title[..MaxTitleLength] + "..." : title;
     }

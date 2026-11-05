@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -472,15 +473,7 @@ public static class SMBInfoResolver
     /// </summary>
     private static string ToString(ReadOnlySpan<byte> value)
     {
-        var text = Encoding.Unicode.GetString(value);
-
-        var builder = new StringBuilder(text.Length);
-
-        foreach (var c in text)
-            if (!char.IsControl(c))
-                builder.Append(c);
-
-        return builder.ToString();
+        return StringHelper.RemoveControlCharacters(Encoding.Unicode.GetString(value));
     }
 
     #endregion
