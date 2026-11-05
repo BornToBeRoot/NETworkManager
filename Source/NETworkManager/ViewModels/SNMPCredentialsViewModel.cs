@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security;
 using NETworkManager.Models.Network;
-using NETworkManager.Utilities;
 
 namespace NETworkManager.ViewModels;
 
@@ -275,6 +274,7 @@ public class SNMPCredentialsViewModel : ViewModelBase, IHasInputError
 
     private static bool IsEmpty(SecureString value)
     {
-        return value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+        // Length: not decrypted to a managed string
+        return value == null || value.Length == 0;
     }
 }

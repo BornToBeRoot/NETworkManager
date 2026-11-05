@@ -1,6 +1,5 @@
 using System.Globalization;
 using System.Security;
-using NETworkManager.Utilities;
 using NETworkManager.Validators;
 
 namespace NETworkManager.ViewModels;
@@ -91,7 +90,8 @@ public class WindowsCredentialsViewModel : ViewModelBase, IHasInputError
             field = value;
             OnPropertyChanged();
 
-            IsPasswordEmpty = value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
+            // Length: not decrypted to a managed string
+            IsPasswordEmpty = value == null || value.Length == 0;
             OnPropertyChanged(nameof(IsPasswordEmpty));
             OnPropertyChanged(nameof(HasError));
         }
