@@ -185,10 +185,8 @@ public sealed class IPScanner(IPScannerOptions options)
                         Log.Warn($"Could not log on with the Windows credentials of the profile / group " +
                                  $"({options.WindowsCredentials}), the NetApi requests are skipped.", ex);
 
-                        // Not a wrong password (the logon doesn't check it): the Win32 error, otherwise ERROR_GEN_FAILURE
-                        _windowsLogonError = ex is Win32Exception win32Exception
-                            ? win32Exception.NativeErrorCode
-                            : 31;
+                        // Not a wrong password (the logon doesn't check it)
+                        _windowsLogonError = GetWin32Error(ex);
                     }
                 }
 
@@ -754,6 +752,18 @@ public sealed class IPScanner(IPScannerOptions options)
     }
 
     /// <summary>
+    ///     Gets the Win32 error of an exception of the Windows logon / NetApi requests.
+    /// </summary>
+    /// <param name="ex">Exception.</param>
+    /// <returns>Error of a <see cref="Win32Exception" />, otherwise <c>ERROR_GEN_FAILURE</c> (31).</returns>
+    private static int GetWin32Error(Exception ex)
+    {
+        const int errorGenFailure = 31;
+
+        return ex is Win32Exception win32Exception ? win32Exception.NativeErrorCode : errorGenFailure;
+    }
+
+    /// <summary>
     ///     Checks if the Windows host information is read for a found host: with the port scan and TCP 445 in its
     ///     ports only if 445 is open, otherwise for every found host (the SMB request tells if 445 is open).
     /// </summary>
@@ -949,9 +959,7 @@ public sealed class IPScanner(IPScannerOptions options)
                 // E.g. the logon was disposed by the end of the scan while the call waited for a slot
                 Log.Debug($"NetApi requests to {target} failed.", ex);
 
-                result = WindowsNetApiInfo.FromError(ex is Win32Exception win32Exception
-                    ? win32Exception.NativeErrorCode
-                    : 31); // ERROR_GEN_FAILURE
+                result = WindowsNetApiInfo.FromError(GetWin32Error(ex));
 
                 return result;
             }

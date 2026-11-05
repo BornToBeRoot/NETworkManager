@@ -202,7 +202,7 @@ public sealed class WindowsLogonGate
                     return;
                 }
 
-                if (!new WindowsHostInfo(null, info).IsLogonFailure)
+                if (!WindowsHostInfo.IsLogonError(info.Error))
                     return;
 
                 _logonFailures++;
