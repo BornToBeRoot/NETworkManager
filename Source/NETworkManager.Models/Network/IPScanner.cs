@@ -169,6 +169,7 @@ public sealed class IPScanner(IPScannerOptions options)
                 {
                     // Of the tab (all its scans), otherwise for this scan
                     _windowsLogonGate = options.WindowsLogonGate ?? new WindowsLogonGate(options.WindowsCredentials);
+                    _windowsLogonGate.StartScan();
 
                     try
                     {

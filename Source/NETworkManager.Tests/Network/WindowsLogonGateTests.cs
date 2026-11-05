@@ -111,6 +111,37 @@ public class WindowsLogonGateTests
     }
 
     [Fact]
+    public async Task AcceptedInAnEarlierScan_CheckedAgain()
+    {
+        // E.g. the password was changed in the domain since the last scan of the tab
+        var gate = CreateGate();
+
+        await gate.WaitAsync(CorpHost, Timeout, CancellationToken.None);
+        gate.Report(CorpHost, Success);
+        Assert.Equal(WindowsLogonGate.Decision.Proceed, await gate.WaitAsync(CorpHost, Timeout, CancellationToken.None));
+
+        gate.StartScan();
+
+        Assert.Equal(WindowsLogonGate.Decision.Check, await gate.WaitAsync(CorpHost, Timeout, CancellationToken.None));
+        gate.Report(CorpHost, LogonFailure);
+
+        Assert.True(gate.IsRejected);
+    }
+
+    [Fact]
+    public async Task RejectedInAnEarlierScan_StaysRejected()
+    {
+        var gate = CreateGate();
+
+        await gate.WaitAsync(CorpHost, Timeout, CancellationToken.None);
+        gate.Report(CorpHost, LogonFailure);
+
+        gate.StartScan();
+
+        Assert.Equal(WindowsLogonGate.Decision.Skip, await gate.WaitAsync(CorpHost, Timeout, CancellationToken.None));
+    }
+
+    [Fact]
     public async Task LogonFailuresOfEarlierScansCount()
     {
         // Same gate in the next scan (e.g. Automatically scan every): 2 failures per scan don't stay below the limit

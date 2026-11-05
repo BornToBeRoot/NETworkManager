@@ -107,6 +107,23 @@ public sealed class WindowsLogonGate
     }
 
     /// <summary>
+    ///     Starts a scan with the gate (kept by the tab for all its scans): credentials accepted in an earlier scan are
+    ///     checked again (e.g. the password was changed or expired since then), the logon failures and a rejection are
+    ///     kept.
+    /// </summary>
+    public void StartScan()
+    {
+        lock (_lock)
+        {
+            if (_state != State.Accepted)
+                return;
+
+            _state = State.Unchecked;
+            _acceptsOutsideDomain = 0;
+        }
+    }
+
+    /// <summary>
     ///     Checks if the logon to a host can count at a domain controller: not for a local account and not for a
     ///     computer in a workgroup (known from the NTLM challenge; without challenge it is unknown, so it is gated).
     /// </summary>
