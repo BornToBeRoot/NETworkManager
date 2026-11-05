@@ -473,7 +473,7 @@ The NetApi requests need the firewall rules **File and Printer Sharing (SMB-In)*
 
 ### Timeout (ms)
 
-Timeout in milliseconds of the SMB request and of the NetApi requests of a host (each). NetApi requests that take longer are shown as timed out; they keep running in the background until Windows ends them (max. 16 at the same time, for all tabs and repeated scans).
+Timeout in milliseconds of the SMB request and of the NetApi requests of a host (each). NetApi requests that take longer are shown as timed out (if only the remote registry takes longer, the other values are shown without the patch level); they keep running in the background until Windows ends them (max. 16 at the same time, for all tabs and repeated scans).
 
 **Type:** `Integer` [Min `500`, Max `30000`]
 

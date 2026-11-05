@@ -858,8 +858,9 @@ public sealed class IPScanner(IPScannerOptions options)
     ///     Runs the blocking NetApi requests of a host, see <see cref="ResolveNetApiAsync" />.
     /// </summary>
     /// <param name="onCallCompleted">
-    ///     Called once with the result of the call when it returns (also after the timeout), null if it was not started
-    ///     (canceled while waiting for a slot); optional.
+    ///     Called once with the result of the call when it is known (the NetApi values were read before the remote
+    ///     registry, or the call returned - also after the timeout), null if it was not started (canceled while waiting
+    ///     for a slot); optional.
     /// </param>
     private async Task<WindowsNetApiInfo> ResolveNetApiWithLogonAsync(string ipAddress, string target,
         TimeSpan timeout, Action<WindowsNetApiInfo> onCallCompleted, CancellationToken cancellationToken)
@@ -888,6 +889,25 @@ public sealed class IPScanner(IPScannerOptions options)
 
         var logon = _windowsLogon;
 
+        // Values of the NetApi before the remote registry is read: kept if the registry exceeds the timeout
+        WindowsNetApiInfo netApiRead = null;
+
+        // The result is known with the NetApi values (the registry doesn't change the logon), report it only once
+        var isCompleted = 0;
+
+        void Complete(WindowsNetApiInfo info)
+        {
+            if (Interlocked.Exchange(ref isCompleted, 1) == 0)
+                onCallCompleted?.Invoke(info);
+        }
+
+        void OnNetApiRead(WindowsNetApiInfo info)
+        {
+            Volatile.Write(ref netApiRead, info);
+
+            Complete(info);
+        }
+
         var task = Task.Factory.StartNew(() =>
         {
             WindowsNetApiInfo result = null;
@@ -896,11 +916,11 @@ public sealed class IPScanner(IPScannerOptions options)
             {
                 WindowsNetApiInfo Resolve()
                 {
-                    var info = WindowsNetApiResolver.Resolve(target);
+                    var info = WindowsNetApiResolver.Resolve(target, OnNetApiRead);
 
                     // The hostname can't be found (e.g. no forward lookup zone): the IP address (NTLM)
                     return target != ipAddress && info.Error is 53 or 67 or 1214 or 1231
-                        ? WindowsNetApiResolver.Resolve(ipAddress)
+                        ? WindowsNetApiResolver.Resolve(ipAddress, OnNetApiRead)
                         : info;
                 }
 
@@ -923,7 +943,7 @@ public sealed class IPScanner(IPScannerOptions options)
             {
                 WindowsSemaphore.Release();
 
-                onCallCompleted?.Invoke(result);
+                Complete(result);
             }
         }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
 
@@ -934,8 +954,8 @@ public sealed class IPScanner(IPScannerOptions options)
         catch (TimeoutException)
         {
             // The call keeps its thread (and slot) until Windows returns, its result is only reported (see
-            // onCallCompleted)
-            return WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorTimeout);
+            // onCallCompleted). The NetApi values if only the remote registry is still read (without patch level).
+            return Volatile.Read(ref netApiRead) ?? WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorTimeout);
         }
     }
 

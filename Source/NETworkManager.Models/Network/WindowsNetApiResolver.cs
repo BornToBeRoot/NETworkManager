@@ -42,8 +42,12 @@ public static class WindowsNetApiResolver
     ///     Reads the information of a host (blocking).
     /// </summary>
     /// <param name="host">DNS hostname or IP address of the host.</param>
+    /// <param name="onNetApiRead">
+    ///     Called with the values of the NetApi before the remote registry is read (it can be slow, e.g. a service that
+    ///     is started on demand), so a caller with a timeout can keep them; optional.
+    /// </param>
     /// <returns>Information, with the Win32 error if the first request failed.</returns>
-    public static WindowsNetApiInfo Resolve(string host)
+    public static WindowsNetApiInfo Resolve(string host, Action<WindowsNetApiInfo> onNetApiRead = null)
     {
         var server = $@"\\{ToServerName(host)}";
 
@@ -56,11 +60,18 @@ public static class WindowsNetApiResolver
 
         var (users, usersError) = GetUsers(server);
 
-        // The registry needs admin rights like the users - not tried without them (one RPC connection less)
-        var registry = usersError == NERR_Success ? GetRegistryVersion(ToServerName(host)) : null;
+        var info = new WindowsNetApiInfo(NERR_Success, role, isDomainMember, description, workgroup, users,
+            usersError, null);
 
-        return new WindowsNetApiInfo(NERR_Success, role, isDomainMember, description, workgroup, users,
-            usersError, registry);
+        // The registry needs admin rights like the users - not tried without them (one RPC connection less)
+        if (usersError != NERR_Success)
+            return info;
+
+        onNetApiRead?.Invoke(info);
+
+        var registry = GetRegistryVersion(ToServerName(host));
+
+        return registry == null ? info : info with { Registry = registry };
     }
 
     /// <summary>
