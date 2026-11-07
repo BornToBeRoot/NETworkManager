@@ -15,10 +15,10 @@ namespace NETworkManager.Models.Network;
 ///     <list type="bullet">
 ///         <item>Accepted (success, access denied = logged on without rights, or a logon type the host doesn't grant
 ///         after the password was checked) on a host in the domain of the credentials: all hosts run, the logon failures
-///         of the account are reset (like the domain controller does). A success on a host of another domain (or with credentials without domain)
-///         proves nothing - a host that maps a failed logon to guest (e.g. a NAS with <c>map to guest = bad
-///         user</c>) or a local account with the same name also answer a wrong password: only this host uses them, the
-///         next host checks them.</item>
+///         of the account are reset (like the domain controller does). A success on a host of another domain (or with
+///         credentials without domain) proves nothing - a host that maps a failed logon to guest (e.g. a NAS with
+///         <c>map to guest = bad user</c>) or a local account with the same name also answer a wrong password: only
+///         this host uses them, the next host checks them.</item>
 ///         <item>Logon failure on a host in the domain of the credentials (the domain controller checked them), any
 ///         logon failure if the credentials have no domain (e.g. "admin"), or the max. logon failures (setting) on hosts
 ///         of other domains: rejected, the remaining hosts are not tried. The logon failures are counted per account for
