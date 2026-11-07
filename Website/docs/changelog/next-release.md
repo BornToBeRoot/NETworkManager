@@ -286,6 +286,7 @@ Release date: **xx.xx.2026**
 - Fixed the auto refresh not being resumed after switching back from another tool. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 - Fixed the application crashing when **Automatically update every** was enabled and no WiFi adapter was found (e.g. disabled or unplugged). `F5` no longer tries to scan without an adapter. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed the **Refresh** button below "No WiFi adapters found" being disabled while **Automatically update every** was enabled. The adapters could only be loaded again after a restart. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 

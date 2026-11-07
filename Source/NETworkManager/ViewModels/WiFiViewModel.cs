@@ -598,7 +598,8 @@ public class WiFiViewModel : ViewModelBase
 
     private bool ReloadAdapter_CanExecute(object obj)
     {
-        return !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !AutoRefreshEnabled && !IsConnecting;
+        // Not blocked by the auto refresh (it only scans the networks): without an adapter its toggle is hidden
+        return !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !IsConnecting;
     }
 
     private void ReloadAdapterAction()
