@@ -110,6 +110,12 @@ public sealed class WindowsLogonGate
     }
 
     /// <summary>
+    ///     Raised once when the credentials are rejected - also after the scan was completed (a check that exceeded the
+    ///     timeout reports its result when Windows returns). Raised on the thread of the report.
+    /// </summary>
+    public event EventHandler Rejected;
+
+    /// <summary>
     ///     The credentials were rejected (wrong username or password).
     /// </summary>
     public bool IsRejected
@@ -228,6 +234,8 @@ public sealed class WindowsLogonGate
     /// <param name="info">Result of the NetApi requests, null if they didn't run (e.g. canceled).</param>
     public void Report(NTLMChallengeInfo ntlm, WindowsNetApiInfo info)
     {
+        var isRejected = false;
+
         try
         {
             if (info == null)
@@ -266,13 +274,20 @@ public sealed class WindowsLogonGate
 
                 // Without a domain (e.g. "admin"), the host's domain controller may have checked them
                 if (IsInDomain(ntlm) || string.IsNullOrEmpty(_domain) || logonFailures >= _maxLogonFailures)
+                {
                     _state = State.Rejected;
+                    isRejected = true;
+                }
             }
         }
         finally
         {
             _turn.Release();
         }
+
+        // Outside the lock (the handler may read the state)
+        if (isRejected)
+            Rejected?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>

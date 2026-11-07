@@ -271,6 +271,29 @@ public class WindowsLogonGateTests
     }
 
     [Fact]
+    public async Task Rejected_RaisedOnce()
+    {
+        // Also after the scan (a check that exceeded the timeout reports later), so the tab can show the message
+        var gate = CreateGate();
+        var raised = 0;
+        gate.Rejected += (_, _) => raised++;
+
+        await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
+        gate.Report(CorpHost, Success with { Error = WindowsHostInfo.ErrorTimeout });
+        Assert.Equal(0, raised);
+
+        await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
+        gate.Report(CorpHost, LogonFailure);
+        Assert.Equal(1, raised);
+
+        // The next scans skip them without raising it again
+        gate.StartScan(MaxLogonFailures);
+        Assert.Equal(WindowsLogonGate.Decision.Skip,
+            await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
+        Assert.Equal(1, raised);
+    }
+
+    [Fact]
     public async Task LogonFailureWithoutDomain_Rejected()
     {
         // "admin" without domain: the domain controller of the host may have counted it

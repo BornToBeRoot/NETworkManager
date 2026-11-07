@@ -835,9 +835,45 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="credentials">Credentials, null for the user running the application.</param>
     private void SetWindowsCredentialsOfTab(WindowsCredentials credentials)
     {
+        if (_windowsLogonGate != null)
+            _windowsLogonGate.Rejected -= WindowsLogonGate_Rejected;
+
         _windowsCredentials = credentials;
         _windowsLogonGate = credentials == null ? null : new WindowsLogonGate(credentials);
         _isWindowsLogonRejectedShown = false;
+
+        if (_windowsLogonGate != null)
+            _windowsLogonGate.Rejected += WindowsLogonGate_Rejected;
+    }
+
+    /// <summary>
+    /// The Windows credentials of the tab were rejected: the message is shown when the scan is completed, or right away
+    /// if it was already completed (a check that exceeded the timeout reported its result after the scan).
+    /// </summary>
+    private void WindowsLogonGate_Rejected(object sender, EventArgs e)
+    {
+        Application.Current?.Dispatcher.BeginInvoke(() =>
+        {
+            // Credentials replaced since then, or the scan shows it when it is completed
+            if (!ReferenceEquals(sender, _windowsLogonGate) || IsRunning || _closed)
+                return;
+
+            ShowWindowsLogonRejected();
+        });
+    }
+
+    /// <summary>
+    /// Shows the message that the Windows credentials of the tab were rejected (not used again in this tab) - once per
+    /// credentials, not again in the next scans.
+    /// </summary>
+    private void ShowWindowsLogonRejected()
+    {
+        if (_windowsLogonGate?.IsRejected != true || _isWindowsLogonRejectedShown)
+            return;
+
+        _isWindowsLogonRejectedShown = true;
+
+        AddStatusMessage(string.Format(Strings.WindowsLogonFailedMessage, _windowsCredentials));
     }
 
     /// <summary>
@@ -2055,15 +2091,9 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 AddStatusMessage(Strings.NoReachableHostsFound);
             }
 
-            // Windows credentials rejected (wrong username or password, also in a canceled scan or after an earlier
-            // scan completed): not used again in this tab, one message instead of only an error in the rows - once,
-            // not again in the next scans
-            if (_windowsLogonGate?.IsRejected == true && !_isWindowsLogonRejectedShown)
-            {
-                _isWindowsLogonRejectedShown = true;
-
-                AddStatusMessage(string.Format(Strings.WindowsLogonFailedMessage, _windowsCredentials));
-            }
+            // Windows credentials rejected (wrong username or password, also in a canceled scan): one message after
+            // the other messages of the scan (rejected after the scan: see WindowsLogonGate_Rejected)
+            ShowWindowsLogonRejected();
 
             // A completed rescan: the changes of the rescanned hosts against the same previous scan (e.g. a gone host that is
             // up again)
