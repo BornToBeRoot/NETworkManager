@@ -562,9 +562,10 @@ public class WiFiViewModel : ViewModelBase
         _ = LoadAdaptersAsync(SettingsManager.Current.WiFi_InterfaceId);
 
         // Auto refresh
-        // Not while networks are loading or a connection is made (tried again after the interval)
+        // Not without an adapter, or while networks are loading or a connection is made (tried again after the
+        // interval)
         _autoRefreshTimer = new AutoRefreshTimer(() => ScanAsync(SelectedAdapter, true),
-            () => !IsNetworksLoading && !IsBackgroundSearchRunning && !IsConnecting);
+            () => SelectedAdapter != null && !IsNetworksLoading && !IsBackgroundSearchRunning && !IsConnecting);
 
         AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
         SelectedAutoRefreshTime = AutoRefreshTimes.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
@@ -610,7 +611,7 @@ public class WiFiViewModel : ViewModelBase
 
     private bool ScanNetworks_CanExecute(object obj)
     {
-        return !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !AutoRefreshEnabled && !IsConnecting;
+        return SelectedAdapter != null && !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !AutoRefreshEnabled && !IsConnecting;
     }
 
     private async Task ScanNetworksAction()
