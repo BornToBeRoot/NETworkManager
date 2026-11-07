@@ -12,8 +12,10 @@ namespace NETworkManager.Models.Network;
 ///     accepted, the hosts run in parallel:
 ///     <list type="bullet">
 ///         <item>Accepted (success, or access denied = logged on without rights) on a host in the domain of the
-///         credentials, or on the third host of other domains (a host that maps a failed logon to guest, e.g. a NAS
-///         with <c>map to guest = bad user</c>, also answers a wrong password): all hosts run.</item>
+///         credentials: all hosts run. A success on a host of another domain (or with credentials without domain)
+///         proves nothing - a host that maps a failed logon to guest (e.g. a NAS with <c>map to guest = bad
+///         user</c>) or a local account with the same name also answer a wrong password: only this host uses them, the
+///         next host checks them.</item>
 ///         <item>Logon failure on a host in the domain of the credentials (the domain controller checked them), any
 ///         logon failure if the credentials have no domain (e.g. "admin"), or the third logon failure on hosts of
 ///         other domains: rejected, the remaining hosts are not tried.</item>
@@ -29,12 +31,6 @@ public sealed class WindowsLogonGate
     ///     Max. logon failures on hosts that are not in the domain of the credentials before they are rejected.
     /// </summary>
     public const int MaxLogonFailures = 3;
-
-    /// <summary>
-    ///     Accepts on hosts that are not in the domain of the credentials before they are accepted (e.g. the domain of
-    ///     a UPN suffix is not the domain of the hosts) - one could be a host that maps a failed logon to guest.
-    /// </summary>
-    public const int MinAcceptsOutsideDomain = 3;
 
     /// <summary>
     ///     What a host does with the credentials.
@@ -77,7 +73,6 @@ public sealed class WindowsLogonGate
 
     private State _state;
     private int _logonFailures;
-    private int _acceptsOutsideDomain;
 
     // Hosts that are not gated and rejected the credentials themselves (e.g. a workgroup computer): not tried again
     private readonly HashSet<string> _rejectedHosts = new(StringComparer.OrdinalIgnoreCase);
@@ -119,11 +114,8 @@ public sealed class WindowsLogonGate
     {
         lock (_lock)
         {
-            if (_state != State.Accepted)
-                return;
-
-            _state = State.Unchecked;
-            _acceptsOutsideDomain = 0;
+            if (_state == State.Accepted)
+                _state = State.Unchecked;
         }
     }
 
@@ -153,7 +145,9 @@ public sealed class WindowsLogonGate
     }
 
     /// <summary>
-    ///     Checks if a host is in the domain of the credentials (NetBIOS or DNS name).
+    ///     Checks if a host is in the domain of the credentials (NetBIOS or DNS name), or in the forest whose root domain
+    ///     is the domain of the credentials (DNS name, e.g. the UPN suffix "example.com" of a host in
+    ///     "corp.example.com"): a domain controller of the forest checks the logon.
     /// </summary>
     /// <param name="ntlm">NTLM challenge of the host, null if none.</param>
     /// <returns>True if the domain controller of the credentials checks the logon.</returns>
@@ -161,7 +155,8 @@ public sealed class WindowsLogonGate
     {
         return ntlm != null && !string.IsNullOrEmpty(_domain) &&
                (string.Equals(_domain, ntlm.NetBIOSDomainName, StringComparison.OrdinalIgnoreCase) ||
-                string.Equals(_domain, ntlm.DNSDomainName, StringComparison.OrdinalIgnoreCase));
+                string.Equals(_domain, ntlm.DNSDomainName, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(_domain, ntlm.DNSTreeName, StringComparison.OrdinalIgnoreCase));
     }
 
     /// <summary>
@@ -223,10 +218,11 @@ public sealed class WindowsLogonGate
                     return;
 
                 // Access denied: logged on, but without rights - the credentials are correct. Only proven by a host in
-                // their domain: another host may have logged on as guest, also with a wrong password
+                // their domain: another host may have logged on as guest or with a local account of the same name,
+                // also with a wrong password (only this host used them, the next host checks them)
                 if (info.Error is 0 or 5)
                 {
-                    if (IsInDomain(ntlm) || ++_acceptsOutsideDomain >= MinAcceptsOutsideDomain)
+                    if (IsInDomain(ntlm))
                         _state = State.Accepted;
 
                     return;

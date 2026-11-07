@@ -65,20 +65,45 @@ public class WindowsLogonGateTests
     }
 
     [Fact]
-    public async Task SuccessInAnotherDomain_NextHostChecks_AcceptedAfterMinAccepts()
+    public async Task SuccessesInAnotherDomain_NeverAccepted_NextHostChecks()
     {
-        // E.g. a NAS that maps a failed logon to guest: its success doesn't prove the password
+        // E.g. a NAS that maps a failed logon to guest: its success doesn't prove the password - also not of several
+        // hosts, or of the same host in several scans
         var gate = CreateGate();
 
-        for (var i = 0; i < WindowsLogonGate.MinAcceptsOutsideDomain; i++)
+        for (var scan = 0; scan < 5; scan++)
         {
+            gate.StartScan();
+
             Assert.Equal(WindowsLogonGate.Decision.Check,
                 await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None));
 
             gate.Report(OtherDomainHost, Success);
+
+            // The next host of the scan still checks them (one at a time)
+            Assert.Equal(WindowsLogonGate.Decision.Check,
+                await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
+
+            gate.Report(CorpHost, null);
+        }
+    }
+
+    [Fact]
+    public async Task WithoutDomain_SuccessesNeverAccepted()
+    {
+        // "admin" without domain: the local admin of some hosts (same password) doesn't prove the password of a
+        // domain account "admin" that the domain controller checks on the hosts without this local account
+        var gate = CreateGate("admin", "");
+
+        for (var i = 0; i < 5; i++)
+        {
+            Assert.Equal(WindowsLogonGate.Decision.Check,
+                await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
+
+            gate.Report(CorpHost, Success);
         }
 
-        Assert.Equal(WindowsLogonGate.Decision.Proceed,
+        Assert.Equal(WindowsLogonGate.Decision.Check,
             await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
     }
 
@@ -287,7 +312,9 @@ public class WindowsLogonGateTests
     [InlineData("admin", "corp.example.com", true)]
     [InlineData(@"CORP\admin", "", true)]
     [InlineData("admin@corp.example.com", "", true)]
-    [InlineData("admin@example.com", "", false)] // other UPN suffix: not known as the domain
+    [InlineData("admin@example.com", "", true)] // UPN suffix of the forest (root domain)
+    [InlineData("admin", "example.com", true)]
+    [InlineData("admin@contoso.com", "", false)] // other UPN suffix: not known as the domain
     [InlineData("admin", "LAB", false)]
     [InlineData("admin", "", false)]
     public void IsInDomain(string username, string domain, bool expected)
