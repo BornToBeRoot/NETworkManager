@@ -51,6 +51,12 @@ public class WiFiNetworkInfo
     public double ChannelBandwidthCenterFrequencyInGigahertz { get; set; }
 
     /// <summary>
+    ///     Indicates if the <see cref="ChannelBandwidth" /> is estimated from the radio band and the PHY kind, because it
+    ///     could not be read from the beacon of the access point.
+    /// </summary>
+    public bool IsChannelBandwidthEstimated { get; set; }
+
+    /// <summary>
     ///     Indicates if the Wi-Fi network Ssid is hidden.
     /// </summary>
     public bool IsHidden { get; set; }

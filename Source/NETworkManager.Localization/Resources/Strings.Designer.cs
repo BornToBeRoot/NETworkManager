@@ -1856,6 +1856,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Estimated from the band and the WiFi standard: the channel width could not be read from the beacon of the access point..
+        /// </summary>
+        public static string ChannelWidthEstimatedToolTip {
+            get {
+                return ResourceManager.GetString("ChannelWidthEstimatedToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chart time (seconds).
         /// </summary>
         public static string ChartTimeInSeconds {

@@ -79,8 +79,9 @@ public static class WiFi
         {
             var channelFrequencyInGigahertz = ConvertChannelFrequencyToGigahertz(availableNetwork.ChannelCenterFrequencyInKilohertz);
             var radio = GetWiFiRadioFromChannelFrequency(channelFrequencyInGigahertz);
-            var (channelBandwidth, channelBandwidthCenterFrequencyInGigahertz) = GetChannelBandwidth(channels,
-                availableNetwork.Bssid, radio, availableNetwork.PhyKind, channelFrequencyInGigahertz);
+            var (channelBandwidth, channelBandwidthCenterFrequencyInGigahertz, isChannelBandwidthEstimated) =
+                GetChannelBandwidth(channels, availableNetwork.Bssid, radio, availableNetwork.PhyKind,
+                    channelFrequencyInGigahertz);
 
             var wifiNetworkInfo = new WiFiNetworkInfo
             {
@@ -90,6 +91,7 @@ public static class WiFi
                 Channel = GetChannelFromChannelFrequency(channelFrequencyInGigahertz),
                 ChannelBandwidth = channelBandwidth,
                 ChannelBandwidthCenterFrequencyInGigahertz = channelBandwidthCenterFrequencyInGigahertz,
+                IsChannelBandwidthEstimated = isChannelBandwidthEstimated,
                 IsHidden = string.IsNullOrEmpty(availableNetwork.Ssid),
                 IsConnected = availableNetwork.Bssid.Equals(bssid, StringComparison.OrdinalIgnoreCase),
                 NetworkAuthenticationType = GetHumanReadableNetworkAuthenticationType(availableNetwork.SecuritySettings.NetworkAuthenticationType),
@@ -335,28 +337,29 @@ public static class WiFi
     /// <summary>
     ///     Determines the channel bandwidth (MHz) and its center frequency (GHz) for a network. Prefers
     ///     the values parsed from the native BSS list (<see cref="WlanApi" />); if unavailable, falls back
-    ///     to a heuristic based on the radio band and PHY kind (centered on the primary channel).
+    ///     to a heuristic based on the radio band and PHY kind (centered on the primary channel, marked as estimated).
     /// </summary>
-    private static (int Bandwidth, double CenterFrequencyInGigahertz) GetChannelBandwidth(
+    private static (int Bandwidth, double CenterFrequencyInGigahertz, bool IsEstimated) GetChannelBandwidth(
         IReadOnlyDictionary<string, WlanApi.WlanBssChannel> channels, string networkBssid, WiFiRadio radio,
         WiFiPhyKind phyKind, double primaryFrequencyInGigahertz)
     {
         if (!string.IsNullOrEmpty(networkBssid) && channels.TryGetValue(networkBssid, out var channel) &&
             channel.BandwidthMHz > 0 && channel.CenterFrequencyMHz > 0)
-            return (channel.BandwidthMHz, channel.CenterFrequencyMHz / 1000.0);
+            return (channel.BandwidthMHz, channel.CenterFrequencyMHz / 1000.0, false);
 
-        return (GetHeuristicChannelBandwidth(radio, phyKind), primaryFrequencyInGigahertz);
+        return (GetHeuristicChannelBandwidth(radio, phyKind), primaryFrequencyInGigahertz, true);
     }
 
     /// <summary>
     ///     Estimates the channel bandwidth (MHz) from the radio band and PHY kind when the exact
-    ///     value could not be read from the BSS list.
+    ///     value could not be read from the BSS list. 2.4 GHz is always 20 MHz: 40 MHz is supported since
+    ///     802.11n, but rarely used (only 3 channels without overlap).
     /// </summary>
     private static int GetHeuristicChannelBandwidth(WiFiRadio radio, WiFiPhyKind phyKind)
     {
         return radio switch
         {
-            WiFiRadio.GHz2dot4 => phyKind == WiFiPhyKind.HT ? 40 : 20,
+            WiFiRadio.GHz2dot4 => 20,
             WiFiRadio.GHz5 => phyKind switch
             {
                 WiFiPhyKind.Vht or WiFiPhyKind.HE or WiFiPhyKind.Eht => 80,

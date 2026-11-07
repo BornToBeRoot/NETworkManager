@@ -213,6 +213,7 @@ Release date: **xx.xx.2026**
 
 - The search filters after a short delay while typing instead of on every key press, `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last scan of the networks (`Last scan at 14:32`, the date in the tooltip) is shown in their header, with **Automatically update every** a countdown to the next scan; the line below only shows errors and the connection status. Reloading the network adapters is faster (the minimum of 2.5 seconds runs while loading) and the reload icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- A channel width that could not be read from the beacon of the access point and is estimated is shown as `~80 MHz` (grid, copy and the tooltip of the **Channels** tab), the tooltip of the cell explains it. Estimated widths on 2.4 GHz are 20 MHz (40 MHz is rarely used there). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 

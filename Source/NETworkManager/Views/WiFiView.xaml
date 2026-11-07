@@ -339,7 +339,7 @@
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem Header="{x:Static Member=localization:Strings.ChannelWidth}"
                                                               Command="{Binding Path=CopyDataToClipboardCommand}"
-                                                              CommandParameter="{Binding Path=SelectedNetwork.ChannelBandwidth, Converter={StaticResource ResourceKey=WiFiChannelBandwidthToStringConverter}}"
+                                                              CommandParameter="{Binding Path=SelectedNetwork, Converter={StaticResource ResourceKey=WiFiChannelBandwidthToStringConverter}}"
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem
                                                         Header="{x:Static Member=localization:Strings.SignalStrength}"
@@ -610,9 +610,23 @@
                                                                 MinWidth="80" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.ChannelWidth}"
-                                                Binding="{Binding Path=(network:WiFiNetworkInfo.ChannelBandwidth), Converter={StaticResource ResourceKey=WiFiChannelBandwidthToStringConverter}}"
+                                                Binding="{Binding Path=., Converter={StaticResource ResourceKey=WiFiChannelBandwidthToStringConverter}}"
                                                 SortMemberPath="ChannelBandwidth"
-                                                MinWidth="120" />
+                                                MinWidth="120">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Style.Triggers>
+                                                            <!-- "~80 MHz": why the width is estimated -->
+                                                            <DataTrigger
+                                                                Binding="{Binding Path=(network:WiFiNetworkInfo.IsChannelBandwidthEstimated)}"
+                                                                Value="True">
+                                                                <Setter Property="ToolTip"
+                                                                        Value="{x:Static Member=localization:Strings.ChannelWidthEstimatedToolTip}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.SignalStrength}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).NetworkRssiInDecibelMilliwatts, Converter={StaticResource ResourceKey=WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter}}"
