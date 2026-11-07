@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Security;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using log4net;
@@ -22,9 +24,7 @@ namespace NETworkManager.Models.Network;
 ///         this host uses them, the next host checks them.</item>
 ///         <item>Logon failure on a host in the domain of the credentials (the domain controller checked them), any
 ///         logon failure if the credentials have no domain (e.g. "admin"), or the max. logon failures (setting) on hosts
-///         of other domains: rejected, the remaining hosts are not tried. The logon failures are counted per account for
-///         all gates (tabs, credentials entered again) until the application is closed, like the domain controller
-///         counts them; a new gate still checks them once (e.g. the password was corrected).</item>
+///         of other domains: rejected, the remaining hosts are not tried.</item>
 ///         <item>Errors that show the logon was not decided (timeout, host / RPC / domain controller of the host not
 ///         reachable, see <see cref="WindowsHostInfo.IsLogonNotDecided" />) or a logon failure on a computer of
 ///         another domain: the next host checks. Every other error counts as a logon failure (e.g. a Kerberos / SSPI
@@ -34,17 +34,51 @@ namespace NETworkManager.Models.Network;
 ///     ("." or the computer name as domain; "." is logged on with the computer name of each host, see
 ///     <see cref="WindowsCredentials.ForHost" />) - a failure there only affects the host itself. Only a host whose
 ///     computer and domain name are known from its NTLM challenge.
+///     <para>
+///         Per account (e.g. "CORP\admin", also "corp.example.com\admin" = "admin@corp.example.com") for all gates
+///         (tabs) until the application is closed, like the domain controller counts them: one host checks them at a
+///         time, the logon failures are counted, and a rejected password stays rejected - a new gate (e.g. another tab
+///         of the same profile) with it starts rejected. A new gate with another password (e.g. corrected in the
+///         profile) or with credentials the user entered (also unchanged, e.g. after the account was unlocked) checks
+///         them again.
+///     </para>
 /// </summary>
 public sealed class WindowsLogonGate
 {
     private static readonly ILog Log = LogManager.GetLogger(typeof(WindowsLogonGate));
 
     /// <summary>
-    ///     Logon failures of each account (as used for the logon, e.g. "CORP\admin") on hosts of other domains, for all
-    ///     gates of the application.
+    ///     State of each account for all gates of the application, see <see cref="GetAccountKey" />.
     /// </summary>
-    private static readonly ConcurrentDictionary<string, StrongBox<int>> LogonFailuresOfAccounts =
+    private static readonly ConcurrentDictionary<string, AccountState> Accounts =
         new(StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>
+    ///     Random key of the password fingerprints (<see cref="GetPasswordFingerprint" />), new for every start of the
+    ///     application - the fingerprints only exist in memory.
+    /// </summary>
+    private static readonly byte[] FingerprintKey = RandomNumberGenerator.GetBytes(32);
+
+    /// <summary>
+    ///     State of an account, shared by all its gates.
+    /// </summary>
+    private sealed class AccountState
+    {
+        /// <summary>
+        ///     One host of all gates of the account checks the credentials at a time.
+        /// </summary>
+        public readonly SemaphoreSlim Turn = new(1, 1);
+
+        /// <summary>
+        ///     Fingerprints of the rejected passwords: a new gate with one of them starts rejected. Locked by the state.
+        /// </summary>
+        public readonly HashSet<string> RejectedPasswords = new(StringComparer.Ordinal);
+
+        /// <summary>
+        ///     Logon failures of the account (reset by an accept in the domain).
+        /// </summary>
+        public int LogonFailures;
+    }
 
     /// <summary>
     ///     What a host does with the credentials.
@@ -79,8 +113,15 @@ public sealed class WindowsLogonGate
         Rejected
     }
 
+    // Order: _lock, then _accountState (never the other way)
     private readonly Lock _lock = new();
-    private readonly SemaphoreSlim _turn = new(1, 1);
+
+    // Of the account (shared with its other gates): its turn, rejected passwords and logon failures
+    private readonly AccountState _accountState;
+    private readonly SemaphoreSlim _turn;
+
+    // Keyed hash of the password of the credentials, see GetPasswordFingerprint
+    private readonly string _passwordFingerprint;
 
     // Account as used for the logon (e.g. "CORP\admin") for the log, never the password
     private readonly string _account;
@@ -92,9 +133,6 @@ public sealed class WindowsLogonGate
     private int _skippedHosts;
     private int _timedOutHosts;
 
-    // Shared with the other gates of the account
-    private readonly StrongBox<int> _logonFailures;
-
     private State _state;
 
     // Max. logon failures on hosts of other domains (setting of the scan, see StartScan), 1 until a scan started
@@ -104,10 +142,15 @@ public sealed class WindowsLogonGate
     private readonly HashSet<string> _rejectedHosts = new(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
-    ///     Creates the gate for the credentials of a scan.
+    ///     Creates the gate for the credentials of a scan (kept by the tab for all its scans).
     /// </summary>
     /// <param name="credentials">Credentials of the scan.</param>
-    public WindowsLogonGate(WindowsCredentials credentials)
+    /// <param name="isEnteredByUser">
+    ///     The user entered the credentials (e.g. Set Windows credentials..., Scan as..., also unchanged): checked
+    ///     again also if their password was rejected before. Otherwise (e.g. of a profile) a rejected password starts
+    ///     rejected.
+    /// </param>
+    public WindowsLogonGate(WindowsCredentials credentials, bool isEnteredByUser = false)
     {
         var (username, domain) = WindowsLogon.SplitUsername(credentials.Username, credentials.Domain);
 
@@ -119,7 +162,72 @@ public sealed class WindowsLogonGate
         _isLocalAccount = _domain == ".";
 
         _account = credentials.DisplayName;
-        _logonFailures = LogonFailuresOfAccounts.GetOrAdd(_account, _ => new StrongBox<int>());
+
+        _accountState = Accounts.GetOrAdd(GetAccountKey(username, _domain), _ => new AccountState());
+        _turn = _accountState.Turn;
+        _passwordFingerprint = GetPasswordFingerprint(credentials.Password);
+
+        lock (_accountState)
+        {
+            if (isEnteredByUser)
+                _accountState.RejectedPasswords.Remove(_passwordFingerprint);
+            else if (_accountState.RejectedPasswords.Contains(_passwordFingerprint))
+                _state = State.Rejected;
+        }
+    }
+
+    /// <summary>
+    ///     Gets the key of an account: "domain\user" (the suffix of a UPN as domain, so "admin@corp.example.com" is
+    ///     "corp.example.com\admin"), the user without domain.
+    /// </summary>
+    /// <param name="username">Username as used for the logon (without the domain of "DOMAIN\user").</param>
+    /// <param name="domain">Domain (also of a UPN), empty if none.</param>
+    /// <returns>Key, compared ignoring the case.</returns>
+    private static string GetAccountKey(string username, string domain)
+    {
+        if (username.Contains('@'))
+            username = username[..username.LastIndexOf('@')];
+
+        return string.IsNullOrEmpty(domain) ? username : $@"{domain}\{username}";
+    }
+
+    /// <summary>
+    ///     Gets a keyed hash (HMAC-SHA256, random key per start of the application) of a password, to know if a password
+    ///     was rejected without keeping it. The password is only copied to a pinned buffer that is zeroed right away.
+    /// </summary>
+    /// <param name="password">Password, null for an empty one.</param>
+    /// <returns>Fingerprint (Base64).</returns>
+    private static string GetPasswordFingerprint(SecureString password)
+    {
+        if (password == null || password.Length == 0)
+            return Convert.ToBase64String(HMACSHA256.HashData(FingerprintKey, ReadOnlySpan<byte>.Empty));
+
+        var length = password.Length * 2;
+        var buffer = GC.AllocateArray<byte>(length, pinned: true);
+        var unmanaged = Marshal.SecureStringToGlobalAllocUnicode(password);
+
+        try
+        {
+            Marshal.Copy(unmanaged, buffer, 0, length);
+
+            return Convert.ToBase64String(HMACSHA256.HashData(FingerprintKey, buffer));
+        }
+        finally
+        {
+            CryptographicOperations.ZeroMemory(buffer);
+            Marshal.ZeroFreeGlobalAllocUnicode(unmanaged);
+        }
+    }
+
+    /// <summary>
+    ///     Rejects the credentials (called in the lock): also for the other gates of the account with this password.
+    /// </summary>
+    private void SetRejected()
+    {
+        _state = State.Rejected;
+
+        lock (_accountState)
+            _accountState.RejectedPasswords.Add(_passwordFingerprint);
     }
 
     /// <summary>
@@ -143,7 +251,7 @@ public sealed class WindowsLogonGate
     /// <summary>
     ///     Starts a scan with the gate (kept by the tab for all its scans): credentials accepted in an earlier scan are
     ///     checked again (e.g. the password was changed or expired since then), the logon failures and a rejection are
-    ///     kept.
+    ///     kept (also a rejection of the password in another gate of the account since then).
     /// </summary>
     /// <param name="maxLogonFailures">
     ///     Max. logon failures on hosts of other domains before the credentials are rejected (setting, min. 1).
@@ -159,6 +267,8 @@ public sealed class WindowsLogonGate
             if (_state == State.Accepted)
                 _state = State.Unchecked;
 
+            UpdateFromAccount();
+
             state = _state;
         }
 
@@ -166,12 +276,12 @@ public sealed class WindowsLogonGate
         Interlocked.Exchange(ref _timedOutHosts, 0);
 
         if (state == State.Rejected)
-            Log.Info($"Windows credentials \"{_account}\" were rejected in an earlier scan, they are not used for " +
-                     "the domain hosts of this scan (lockout protection).");
+            Log.Info($"Windows credentials \"{_account}\" were rejected before (in an earlier scan or another tab), " +
+                     "they are not used for the domain hosts of this scan (lockout protection).");
         else
             Log.Info($"Scan with the Windows credentials \"{_account}\": checked on one host first (lockout " +
                      $"protection, max. {_maxLogonFailures} logon failure(s) on hosts of other domains, " +
-                     $"{Volatile.Read(ref _logonFailures.Value)} counted for the account).");
+                     $"{Volatile.Read(ref _accountState.LogonFailures)} counted for the account).");
     }
 
     /// <summary>
@@ -365,7 +475,7 @@ public sealed class WindowsLogonGate
                         _state = State.Accepted;
 
                         // A successful logon resets the failures at the domain controller (badPwdCount)
-                        Interlocked.Exchange(ref _logonFailures.Value, 0);
+                        Interlocked.Exchange(ref _accountState.LogonFailures, 0);
 
                         log = () => Log.Info($"Windows credentials \"{_account}\" accepted on {hostName} (in their " +
                                              $"domain, error {GetError(info.Error)}): the other hosts use them.");
@@ -394,13 +504,13 @@ public sealed class WindowsLogonGate
                     return;
                 }
 
-                var logonFailures = Interlocked.Increment(ref _logonFailures.Value);
+                var logonFailures = Interlocked.Increment(ref _accountState.LogonFailures);
                 var isInDomain = IsInDomain(ntlm);
 
                 // Without a domain (e.g. "admin"), the host's domain controller may have checked them
                 if (isInDomain || string.IsNullOrEmpty(_domain) || logonFailures >= _maxLogonFailures)
                 {
-                    _state = State.Rejected;
+                    SetRejected();
                     isRejected = true;
                 }
 
@@ -458,10 +568,28 @@ public sealed class WindowsLogonGate
                  "again in the next scans of the tab (lockout protection).");
     }
 
+    /// <summary>
+    ///     Takes a rejection of the password by another gate of the account (called in the lock): e.g. another tab
+    ///     checked them while this gate waited for the turn of the account.
+    /// </summary>
+    private void UpdateFromAccount()
+    {
+        if (_state == State.Rejected)
+            return;
+
+        lock (_accountState)
+        {
+            if (_accountState.RejectedPasswords.Contains(_passwordFingerprint))
+                _state = State.Rejected;
+        }
+    }
+
     private Decision? GetDecision()
     {
         lock (_lock)
         {
+            UpdateFromAccount();
+
             return _state switch
             {
                 State.Accepted => Decision.Proceed,

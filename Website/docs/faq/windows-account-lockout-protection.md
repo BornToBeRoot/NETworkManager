@@ -16,7 +16,7 @@ The user running NETworkManager (no credentials set) is not checked: Windows use
 ## How does it work?
 
 1. **Without credentials first:** the SMB / NTLM negotiation (no logon, no failed logon) tells the computer name and the domain or workgroup of the host. A host in a domain is _gated_ (see [below](#which-hosts-are-not-gated)).
-2. **One host checks the credentials**, the other gated hosts wait. A host that waits longer than twice the [timeout](../application/ip-scanner#timeout-ms-2) is not tried (`Not tried: the Windows credentials were still being checked on another host ...`). The host that checks keeps its turn until Windows returns, also after its timeout - two hosts never check them at the same time.
+2. **One host checks the credentials**, the other gated hosts wait. A host that waits longer than twice the [timeout](../application/ip-scanner#timeout-ms-2) is not tried (`Not tried: the Windows credentials were still being checked on another host ...`). The host that checks keeps its turn until Windows returns, also after its timeout - two hosts never check them at the same time, also not in different tabs (one turn per account).
 3. **The result of that host decides** (see the table below): the credentials are _accepted_ (all hosts use them in parallel), _rejected_ (no other host uses them) or the next host checks them.
 4. **Every scan checks them again** on one host first (e.g. the password was changed or expired since the last scan, also with **Automatically scan every** and **Rescan**). A rejection is kept for the tab.
 
@@ -41,10 +41,10 @@ A wrong password is not always reported as `The user name or password is incorre
 
 ## How are the failed logons counted?
 
-- **Per account for all tabs** (e.g. `CORP\admin`), until NETworkManager is closed - like the domain controller counts them. Another tab with the same account (**Scan as...**, the same profile) or credentials set again don't start again from zero.
+- **Per account for all tabs** (e.g. `CORP\admin`; `admin@corp.example.com` and `corp.example.com\admin` are the same account, `CORP\admin` is counted separately), until NETworkManager is closed - like the domain controller counts them. Another tab with the same account (**Scan as...**, the same profile) or credentials set again don't start again from zero.
 - **Max. logon failures** (setting, default `2`, `1` - `5`) only applies to hosts of other domains (e.g. a trusted domain, whose domain controller passes the logon on to the domain of the account). A failure in the domain of the credentials or without domain rejects them right away.
 - **Accepted in the domain resets the counter**, like a successful logon resets `badPwdCount` at the domain controller.
-- **Credentials set again are checked once** (e.g. a corrected password) - also if the account already reached the limit; a failure then rejects them right away.
+- **Credentials entered again or with another password are checked once** (e.g. a corrected password) - also if the account already reached the limit; a failure then rejects them right away.
 
 :::warning
 
@@ -57,7 +57,8 @@ A domain controller may count one wrong password twice (Kerberos first, then NTL
 - The other hosts don't use them: `Not tried: the Windows credentials were rejected on another host ...` in the row details (export: `WindowsError` `-1`).
 - A message is shown in the tab (also if a check that exceeded the timeout rejects them after the scan).
 - The next scans of the tab don't use them for the domain hosts (also **Automatically scan every** and **Rescan**).
-- To use them again, set them with **Options** > **Set Windows credentials...** (also unchanged, e.g. after the account was unlocked) or open a new tab after correcting the profile / group.
+- **Other tabs with the same account and password don't use them either**, also new ones (e.g. another tab of the same profile or group) - until NETworkManager is closed. The password itself is not kept: only a keyed hash in memory (HMAC-SHA256 with a random key per start of NETworkManager) to recognize it.
+- To use them again, enter them with **Options** > **Set Windows credentials...** or **Scan as...** (also unchanged, e.g. after the account was unlocked), or correct the password in the profile / group and open a new tab.
 
 ## Which hosts are not gated?
 

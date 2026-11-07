@@ -30,10 +30,11 @@ public class WindowsLogonGateTests
     ///     Creates the gate and starts a scan. Without a username: a new account (the logon failures are counted per
     ///     account for all gates of the application, also of other tests).
     /// </summary>
-    private static WindowsLogonGate CreateGate(string username = null, string domain = "CORP")
+    private static WindowsLogonGate CreateGate(string username = null, string domain = "CORP",
+        string password = "password", bool isEnteredByUser = false)
     {
         var gate = new WindowsLogonGate(new WindowsCredentials(username ?? $"admin-{Guid.NewGuid():N}", domain,
-            SecureStringHelper.ConvertToSecureString("password")));
+            SecureStringHelper.ConvertToSecureString(password)), isEnteredByUser);
 
         gate.StartScan(MaxLogonFailures);
 
@@ -103,7 +104,7 @@ public class WindowsLogonGateTests
     {
         // "admin" without domain: the local admin of some hosts (same password) doesn't prove the password of a
         // domain account "admin" that the domain controller checks on the hosts without this local account
-        var gate = CreateGate("admin", "");
+        var gate = CreateGate($"admin-{Guid.NewGuid():N}", "");
 
         for (var i = 0; i < 5; i++)
         {
@@ -262,8 +263,8 @@ public class WindowsLogonGateTests
         second.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
         Assert.True(second.IsRejected);
 
-        // A new gate still checks them once (e.g. the password was corrected), rejected by its first failure
-        var third = CreateGate(username);
+        // Entered again by the user (e.g. after the account was unlocked): checked once, rejected by its first failure
+        var third = CreateGate(username, isEnteredByUser: true);
         Assert.Equal(WindowsLogonGate.Decision.Check,
             await third.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None));
         third.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
@@ -294,10 +295,82 @@ public class WindowsLogonGateTests
     }
 
     [Fact]
+    public async Task OneHostAtATimeForAllGatesOfTheAccount()
+    {
+        // E.g. several tabs of profiles of the same group: one check at a time, not one per tab
+        var username = $"admin-{Guid.NewGuid():N}";
+
+        var first = CreateGate(username);
+        var second = CreateGate(username);
+
+        Assert.Equal(WindowsLogonGate.Decision.Check,
+            await first.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
+
+        var waiting = second.WaitAsync(CorpHost, "10.0.0.2", Timeout, CancellationToken.None);
+        Assert.False(waiting.IsCompleted);
+
+        // Rejected by the first tab: the second one doesn't try the same password
+        first.Report(CorpHost, "10.0.0.1", LogonFailure);
+
+        Assert.Equal(WindowsLogonGate.Decision.Skip, await waiting);
+        Assert.True(second.IsRejected);
+    }
+
+    [Fact]
+    public async Task RejectedPassword_NewGateStartsRejected()
+    {
+        // E.g. another tab of the same profile after the rejection
+        var username = $"admin-{Guid.NewGuid():N}";
+
+        var first = CreateGate(username);
+        await first.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
+        first.Report(CorpHost, "10.0.0.1", LogonFailure);
+
+        var second = CreateGate(username);
+        Assert.True(second.IsRejected);
+        Assert.Equal(WindowsLogonGate.Decision.Skip,
+            await second.WaitAsync(CorpHost, "10.0.0.2", Timeout, CancellationToken.None));
+    }
+
+    [Fact]
+    public async Task RejectedPassword_OtherPasswordOrEnteredByUser_CheckedAgain()
+    {
+        var username = $"admin-{Guid.NewGuid():N}";
+
+        var first = CreateGate(username);
+        await first.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
+        first.Report(CorpHost, "10.0.0.1", LogonFailure);
+
+        // E.g. the password was corrected in the profile
+        Assert.False(CreateGate(username, password: "corrected").IsRejected);
+
+        // Entered by the user (also unchanged, e.g. after the account was unlocked): checked again, also by the next
+        // gates (the rejection of the password is removed)
+        var entered = CreateGate(username, isEnteredByUser: true);
+        Assert.False(entered.IsRejected);
+        Assert.Equal(WindowsLogonGate.Decision.Check,
+            await entered.WaitAsync(CorpHost, "10.0.0.2", Timeout, CancellationToken.None));
+        entered.Report(CorpHost, "10.0.0.2", Success);
+    }
+
+    [Fact]
+    public async Task UpnAndDnsDomain_SameAccount()
+    {
+        var username = $"admin-{Guid.NewGuid():N}";
+
+        var upn = CreateGate($"{username}@corp.example.com", "");
+        await upn.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
+        upn.Report(CorpHost, "10.0.0.1", LogonFailure);
+
+        Assert.True(CreateGate(username, "corp.example.com").IsRejected);
+        Assert.True(CreateGate($@"corp.example.com\{username}", "").IsRejected);
+    }
+
+    [Fact]
     public async Task LogonFailureWithoutDomain_Rejected()
     {
         // "admin" without domain: the domain controller of the host may have counted it
-        var gate = CreateGate("admin", "");
+        var gate = CreateGate($"admin-{Guid.NewGuid():N}", "");
 
         await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
         gate.Report(OtherDomainHost, "10.0.0.1", LogonFailure);

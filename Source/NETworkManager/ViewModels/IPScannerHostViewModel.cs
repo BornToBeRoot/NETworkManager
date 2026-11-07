@@ -178,7 +178,7 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
             profile.IPScanner_OverrideSNMP ? profile.Name : profile.Group, windowsCredentials,
             windowsCredentials != null && ReferenceEquals(windowsCredentials, profileCredentials)
                 ? profile.IPScanner_UseWindowsCredentials ? profile.Name : profile.Group
-                : null);
+                : null, true);
     }
 
     /// <summary>
@@ -228,15 +228,18 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     /// Windows credentials of a profile / group, null for the user running the application.
     /// </param>
     /// <param name="windowsCredentialsSource">Name of the profile / group of <paramref name="windowsCredentials" />.</param>
+    /// <param name="isWindowsCredentialsEntered">
+    /// The user entered <paramref name="windowsCredentials" /> (Scan as...): checked again also if rejected before.
+    /// </param>
     public void AddTab(string hostOrIPRange = null, bool start = true, SNMPSecureCredentials snmpCredentials = null,
         string snmpCredentialsSource = null, WindowsCredentials windowsCredentials = null,
-        string windowsCredentialsSource = null)
+        string windowsCredentialsSource = null, bool isWindowsCredentialsEntered = false)
     {
         var tabId = Guid.NewGuid();
 
         TabItems.Add(new DragablzTabItem(Strings.NewTab,
             new IPScannerView(tabId, hostOrIPRange, start, snmpCredentials, snmpCredentialsSource, windowsCredentials,
-                windowsCredentialsSource), tabId));
+                windowsCredentialsSource, isWindowsCredentialsEntered), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }

@@ -584,9 +584,14 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     /// <param name="windowsCredentialsSource">
     /// Name of the profile / group of <paramref name="windowsCredentials" />, null if they were entered for the tab.
     /// </param>
+    /// <param name="isWindowsCredentialsEntered">
+    /// The user entered <paramref name="windowsCredentials" /> (Scan as...): checked again also if their password was
+    /// rejected before (see <see cref="WindowsLogonGate" />).
+    /// </param>
     public IPScannerViewModel(Guid tabId, string hostOrIPRange, bool start = true,
         SNMPSecureCredentials snmpCredentials = null, string snmpCredentialsSource = null,
-        WindowsCredentials windowsCredentials = null, string windowsCredentialsSource = null)
+        WindowsCredentials windowsCredentials = null, string windowsCredentialsSource = null,
+        bool isWindowsCredentialsEntered = false)
     {
         // Kept for the tab (also if the input is changed), like the ports of a profile in the Port Scanner
         _snmpCredentials = snmpCredentials;
@@ -594,7 +599,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             ? null
             : string.Format(Strings.SNMPVersionAndCredentialsOfX, snmpCredentialsSource);
 
-        SetWindowsCredentialsOfTab(windowsCredentials);
+        SetWindowsCredentialsOfTab(windowsCredentials, isWindowsCredentialsEntered);
         WindowsCredentialsInfo = windowsCredentials == null
             ? null
             : windowsCredentialsSource == null
@@ -816,13 +821,13 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         // Unchanged: the source (e.g. the profile / group) stays, but they are checked again (also if rejected)
         if (ReferenceEquals(credentials, _windowsCredentials))
         {
-            SetWindowsCredentialsOfTab(credentials);
+            SetWindowsCredentialsOfTab(credentials, true);
             return;
         }
 
         // The password of the replaced credentials is a copy of the tab (the dialog copied it if it was kept)
         _windowsCredentials?.Password?.Dispose();
-        SetWindowsCredentialsOfTab(credentials);
+        SetWindowsCredentialsOfTab(credentials, true);
 
         WindowsCredentialsInfo = credentials == null
             ? null
@@ -830,16 +835,18 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
-    /// Sets the Windows credentials of the tab with a new lockout protection (not checked, not rejected).
+    /// Sets the Windows credentials of the tab with a new lockout protection (not checked; rejected if their password
+    /// was rejected before and they were not entered by the user).
     /// </summary>
     /// <param name="credentials">Credentials, null for the user running the application.</param>
-    private void SetWindowsCredentialsOfTab(WindowsCredentials credentials)
+    /// <param name="isEntered">The user entered them (also unchanged): checked again also if rejected before.</param>
+    private void SetWindowsCredentialsOfTab(WindowsCredentials credentials, bool isEntered)
     {
         if (_windowsLogonGate != null)
             _windowsLogonGate.Rejected -= WindowsLogonGate_Rejected;
 
         _windowsCredentials = credentials;
-        _windowsLogonGate = credentials == null ? null : new WindowsLogonGate(credentials);
+        _windowsLogonGate = credentials == null ? null : new WindowsLogonGate(credentials, isEntered);
         _isWindowsLogonRejectedShown = false;
 
         if (_windowsLogonGate != null)

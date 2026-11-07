@@ -20,12 +20,13 @@ public partial class IPScannerView : IDragablzTabItem
 
     public IPScannerView(Guid tabId, string hostOrIPRange = null, bool start = true,
         SNMPSecureCredentials snmpCredentials = null, string snmpCredentialsSource = null,
-        WindowsCredentials windowsCredentials = null, string windowsCredentialsSource = null)
+        WindowsCredentials windowsCredentials = null, string windowsCredentialsSource = null,
+        bool isWindowsCredentialsEntered = false)
     {
         InitializeComponent();
 
         _viewModel = new IPScannerViewModel(tabId, hostOrIPRange, start, snmpCredentials, snmpCredentialsSource,
-            windowsCredentials, windowsCredentialsSource);
+            windowsCredentials, windowsCredentialsSource, isWindowsCredentialsEntered);
 
         DataContext = _viewModel;
 
