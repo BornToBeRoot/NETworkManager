@@ -22,7 +22,6 @@ public class WindowsVersionHelperTests
     [InlineData("10.0.12345", null, "Windows (build 12345)")]
     [InlineData("6.3.9600", null, "Windows 8.1 / Server 2012 R2")]
     [InlineData("6.1.7601", true, "Windows Server 2008 R2")]
-    [InlineData("5.1.2600", null, "Windows XP")]
     public void GetName(string version, bool? isServer, string expected)
     {
         Assert.Equal(expected, WindowsVersionHelper.GetName(Version.Parse(version), isServer));
@@ -31,6 +30,7 @@ public class WindowsVersionHelperTests
     [Theory]
     [InlineData("6.1.0")] // Samba
     [InlineData("4.0.1381")] // Unknown major / minor
+    [InlineData("5.1.2600")] // Windows XP: SMB1 only, never read
     public void GetName_Unknown(string version)
     {
         Assert.Null(WindowsVersionHelper.GetName(Version.Parse(version), null));

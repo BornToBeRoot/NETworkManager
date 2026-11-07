@@ -67,10 +67,10 @@ public static class WindowsVersionHelper
                 : $"Windows (build {version.Build})";
         }
 
+        // Windows Vista / Server 2008 and later: earlier versions (XP, Server 2003) only know SMB1, the version is read
+        // over SMB2 only
         return (version.Major, version.Minor) switch
         {
-            (5, 1) => "Windows XP",
-            (5, 2) => Choose("Windows XP x64", "Windows Server 2003", isServer),
             (6, 0) => Choose("Windows Vista", "Windows Server 2008", isServer),
             (6, 1) => Choose("Windows 7", "Windows Server 2008 R2", isServer),
             (6, 2) => Choose("Windows 8", "Windows Server 2012", isServer),
