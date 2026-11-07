@@ -966,9 +966,11 @@ public sealed class IPScanner(IPScannerOptions options)
             WindowsNetApiInfo result = null;
             WindowsLogon hostLogon = null;
 
-            // The requests were sent with the logon (impersonated): only then the result can be a failed logon -
-            // otherwise (e.g. the logon was disposed, the local logon failed) the lockout protection gets no result
+            // The requests were sent with the logon (impersonated) and returned: only then the result can be a failed
+            // logon - otherwise (e.g. the logon was disposed, the local logon failed, an exception of the call) the
+            // lockout protection gets no result
             var isSent = false;
+            var isException = false;
 
             try
             {
@@ -994,9 +996,12 @@ public sealed class IPScanner(IPScannerOptions options)
             }
             catch (Exception ex)
             {
-                // E.g. the logon was disposed by the end of the scan while the call waited for a slot (not sent)
+                // E.g. the logon was disposed by the end of the scan while the call waited for a slot (not sent). Not a
+                // failed logon: the host reports it as an error code, never as an exception (e.g. an exception after
+                // NetServerGetInfo succeeded must not reject correct credentials)
                 Log.Debug($"NetApi requests to {target} failed (sent: {isSent}).", ex);
 
+                isException = true;
                 result = WindowsNetApiInfo.FromError(GetWin32Error(ex));
 
                 return result;
@@ -1007,8 +1012,8 @@ public sealed class IPScanner(IPScannerOptions options)
 
                 WindowsSemaphore.Release();
 
-                // Not sent: not decided, the next host checks them (the row shows the error)
-                Complete(isSent ? result : null);
+                // Not sent or an exception: not decided, the next host checks them (the row shows the error)
+                Complete(isSent && !isException ? result : null);
             }
         }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
 

@@ -26,7 +26,7 @@ The user running NETworkManager (no credentials set) is not checked: Windows use
 | Success, `Access is denied.` (logged on without rights), logon type not granted | **Accepted** (only by a Windows host), the counted failures of the account are reset | This host only, the next host checks them | This host only, the next host checks them |
 | Failed logon (e.g. wrong password, disabled / locked / expired account) or an unknown error | **Rejected** | Counted, **rejected** after [Max. logon failures](../application/ip-scanner#max-logon-failures) | **Rejected** |
 | Logon not allowed (logon hours, workstation, account restriction) | Not counted, the next host checks them | Not counted, the next host checks them | Not counted, the next host checks them |
-| No decision (timeout, host / RPC / its domain controller not reachable, NTLM blocked, the requests were not sent) | The next host checks them | The next host checks them | The next host checks them |
+| No decision (timeout, host / RPC / its domain controller not reachable, NTLM blocked, the requests were not sent or failed in NETworkManager) | The next host checks them | The next host checks them | The next host checks them |
 
 ### When is a host in the domain of the credentials?
 
