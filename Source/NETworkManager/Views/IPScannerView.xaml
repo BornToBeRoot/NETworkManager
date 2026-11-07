@@ -185,13 +185,10 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{x:Static localization:Strings.ReadWindowsHostInformation}"
                                                VerticalAlignment="Center" />
-                                    <!-- Beta: tested publicly -->
-                                    <Border Background="{DynamicResource MahApps.Brushes.Accent}" CornerRadius="2" Padding="4,1"
-                                            Margin="10,0,0,0" VerticalAlignment="Center"
-                                            ToolTip="{x:Static localization:Strings.BetaFeatureMessage}">
-                                        <TextBlock Text="{x:Static localization:Strings.Beta}" FontSize="11"
-                                                   Foreground="{DynamicResource MahApps.Brushes.IdealForeground}" />
-                                    </Border>
+                                    <!-- Beta: tested publicly (less padding, the height of a menu item) -->
+                                    <TextBlock Text="{x:Static localization:Strings.Beta}"
+                                               Style="{StaticResource TagTextBlock}" Padding="5,1" Margin="10,0,0,0"
+                                               ToolTip="{x:Static localization:Strings.BetaFeatureMessage}" />
                                 </StackPanel>
                             </MenuItem.Header>
                         </MenuItem>

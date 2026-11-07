@@ -168,9 +168,7 @@
                 </TextBlock>
                 <TextBlock Grid.Column="8" Grid.Row="0"
                            HorizontalAlignment="Right"
-                           Background="{DynamicResource MahApps.Brushes.Gray8}"
-                           Padding="5" Text="ICMP" Style="{StaticResource AccentTextBlock}"
-                           VerticalAlignment="Center" />
+                           Text="ICMP" Style="{StaticResource TagTextBlock}" />
                 <Button Grid.Column="10" Grid.Row="0"
                         Command="{Binding PingCommand}"
                         Style="{StaticResource CleanButton}">
