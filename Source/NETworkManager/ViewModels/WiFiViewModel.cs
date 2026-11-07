@@ -1323,12 +1323,13 @@ public class WiFiViewModel : ViewModelBase
 
     public void OnViewVisible()
     {
-        _autoRefreshTimer.Resume();
+        // Not created if the WiFi API is not available or the access is denied (see constructor)
+        _autoRefreshTimer?.Resume();
     }
 
     public void OnViewHide()
     {
-        _autoRefreshTimer.Pause();
+        _autoRefreshTimer?.Pause();
     }
 
     #endregion
