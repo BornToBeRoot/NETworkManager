@@ -179,6 +179,35 @@ public class WindowsLogonGateTests
     }
 
     [Fact]
+    public async Task UpnWithOtherSuffix_SuccessOnWindowsDomainMember_Accepted()
+    {
+        // E.g. admin@company.com for the domain corp.example.com: the member passes the UPN to its domain controller,
+        // a Windows member doesn't log a wrong password of a domain account on as guest
+        var gate = CreateGate($"admin-{Guid.NewGuid():N}@company.com", "");
+
+        await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
+        gate.Report(CorpHost, "10.0.0.1", Success);
+
+        Assert.Equal(WindowsLogonGate.Decision.Proceed,
+            await gate.WaitAsync(CorpHost, "10.0.0.2", Timeout, CancellationToken.None));
+    }
+
+    [Fact]
+    public async Task UpnWithOtherSuffix_SuccessOnNonWindowsMember_NotAccepted()
+    {
+        var samba = new NTLMChallengeInfo(new Version(6, 1, 0), "NAS01", "CORP", "nas01.corp.example.com",
+            "corp.example.com", "example.com", null);
+
+        var gate = CreateGate($"admin-{Guid.NewGuid():N}@company.com", "");
+
+        await gate.WaitAsync(samba, "10.0.0.9", ShortTimeout, CancellationToken.None);
+        gate.Report(samba, "10.0.0.9", Success);
+
+        Assert.Equal(WindowsLogonGate.Decision.Check,
+            await gate.WaitAsync(CorpHost, "10.0.0.1", ShortTimeout, CancellationToken.None));
+    }
+
+    [Fact]
     public async Task AccessDenied_CredentialsAccepted()
     {
         var gate = CreateGate();

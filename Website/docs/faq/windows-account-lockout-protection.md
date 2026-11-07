@@ -32,11 +32,13 @@ The user running NETworkManager (no credentials set) is not checked: Windows use
 
 The domain of the credentials is the domain of `DOMAIN\user`, the **Domain** field or the suffix of a UPN (`user@corp.example.com`). A host is in this domain if its NTLM negotiation names it as its NetBIOS domain (`CORP`), its DNS domain (`corp.example.com`) or its forest (`example.com`, e.g. for `admin@example.com`). Only such a host is checked by a domain controller that knows the account - its answer proves the password, or proves that a failed logon was counted.
 
+For a UPN, also a Windows host of another domain accepts them if it is a domain member (it passes the UPN to its domain controller), e.g. `admin@company.com` for the domain `corp.local`.
+
 Only a **Windows** host (it sends its build in the NTLM negotiation) accepts the credentials for all hosts: a Samba server or NAS in the domain could map a wrong password to guest (`map to guest = bad password`) and answer it with a success. A logon failure on such a host still rejects them.
 
 ### Why doesn't a success on another host accept the credentials?
 
-A host outside the domain of the credentials doesn't prove the password: a NAS or Samba server that maps a failed logon to guest (`map to guest = bad user`) or a computer with a local account of the same name (and the same password) also answers a wrong password with a success. Only this host uses the credentials, the next host still checks them. For credentials without domain or with a UPN suffix that is not the domain of the hosts, the hosts stay one at a time - slower, but a wrong password can't reach all hosts.
+A host outside the domain of the credentials doesn't prove the password: a NAS or Samba server that maps a failed logon to guest (`map to guest = bad user`) or a computer with a local account of the same name (and the same password) also answers a wrong password with a success. Only this host uses the credentials, the next host still checks them. For credentials without domain, the hosts stay one at a time - slower, but a wrong password can't reach all hosts.
 
 ### Why does an unknown error count as a failed logon?
 
@@ -95,6 +97,6 @@ The checks are written to the [log file](./file-locations) (`NETworkManager.log`
 ## Recommendations
 
 - Use an account with only the rights you need, e.g. a dedicated account for the inventory.
-- Prefer `DOMAIN\user` or the UPN of the domain (`user@corp.example.com`): only then can a host accept the credentials for all hosts.
+- Prefer `DOMAIN\user` or a UPN (`user@corp.example.com`): credentials without domain are never accepted for all hosts (the hosts stay one at a time).
 - Test new credentials on a small range first (e.g. one server), the result is shown in the row details.
 - Keep **Max. logon failures** low, at most half of the lockout threshold of your domain.

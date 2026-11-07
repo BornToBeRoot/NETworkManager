@@ -134,6 +134,9 @@ public sealed class WindowsLogonGate
     private readonly string _domain;
     private readonly bool _isLocalAccount;
 
+    // UPN (user@suffix): resolved by a domain controller of the host, also with a suffix that is not a domain name
+    private readonly bool _isUpn;
+
     // Hosts of the scan that were not tried (rejected / waited longer than the timeout), for the log of the scan
     private int _skippedHosts;
     private int _timedOutHosts;
@@ -165,7 +168,10 @@ public sealed class WindowsLogonGate
 
         // UPN (user@corp.example.com): the domain is the suffix
         if (domain == null && username.Contains('@'))
+        {
             domain = username[(username.LastIndexOf('@') + 1)..];
+            _isUpn = true;
+        }
 
         _domain = domain ?? string.Empty;
         _isLocalAccount = _domain == ".";
@@ -383,6 +389,19 @@ public sealed class WindowsLogonGate
     }
 
     /// <summary>
+    ///     Checks if a success on a host proves the password for all hosts: a Windows host (build of the NTLM challenge;
+    ///     Samba / NAS devices send none or 0 and may log a wrong password on as guest) in the domain of the
+    ///     credentials, or for a UPN any Windows member of a domain (it passes the UPN to its domain controller, also
+    ///     with a suffix that is not the name of the domain, e.g. "admin@company.com" for "corp.local").
+    /// </summary>
+    /// <param name="ntlm">NTLM challenge of the host, null if none.</param>
+    /// <returns>True if the host decides for all hosts.</returns>
+    private bool CanAccept(NTLMChallengeInfo ntlm)
+    {
+        return ntlm?.Version is { Build: > 0 } && (IsInDomain(ntlm) || (_isUpn && ntlm.IsDomainMember));
+    }
+
+    /// <summary>
     ///     Waits until the host can use the credentials: right away if it is not gated or they were accepted, otherwise
     ///     until it is its turn to check them (one host at a time) or they were rejected.
     /// </summary>
@@ -419,7 +438,7 @@ public sealed class WindowsLogonGate
         // the credentials to decide: a domain that is not trusted fails also with a correct password - the first
         // hosts of the scan must not reject them before a host of their domain checked them. Not for credentials
         // without domain (no host is in their domain).
-        if (decision == null && !string.IsNullOrEmpty(_domain) && !IsInDomain(ntlm))
+        if (decision == null && !string.IsNullOrEmpty(_domain) && !IsInDomain(ntlm) && !CanAccept(ntlm))
         {
             Task decided;
 
@@ -508,9 +527,9 @@ public sealed class WindowsLogonGate
                 // the next host checks them)
                 if (info.Error is 0 or 5 or WindowsHostInfo.ErrorLogonTypeNotGranted)
                 {
-                    // A Windows host (build of the NTLM challenge; Samba / NAS devices send none or 0) doesn't log a
-                    // wrong password of a domain account on as guest
-                    if (IsInDomain(ntlm) && ntlm.Version is { Build: > 0 })
+                    // A Windows host in their domain (or a Windows member of a domain for a UPN) doesn't log a wrong
+                    // password of a domain account on as guest
+                    if (CanAccept(ntlm))
                     {
                         _state = State.Accepted;
                         _decided.TrySetResult();
@@ -518,12 +537,15 @@ public sealed class WindowsLogonGate
                         // A successful logon resets the failures at the domain controller (badPwdCount)
                         Interlocked.Exchange(ref _accountState.LogonFailures, 0);
 
-                        log = () => Log.Info($"Windows credentials \"{_account}\" accepted on {hostName} (in their " +
-                                             $"domain, error {GetError(info.Error)}): the other hosts use them.");
+                        log = () => Log.Info($"Windows credentials \"{_account}\" accepted on {hostName} (Windows " +
+                                             $"host of their domain, error {GetError(info.Error)}): the other hosts " +
+                                             "use them.");
                     }
                     else
                     {
-                        var where = IsInDomain(ntlm) ? "not a Windows host" : "not in their domain";
+                        var where = IsInDomain(ntlm) || (_isUpn && ntlm?.IsDomainMember == true)
+                            ? "not a Windows host"
+                            : "not in their domain";
 
                         log = () => Log.Info($"Windows credentials \"{_account}\" logged on to {hostName} (error " +
                                              $"{GetError(info.Error)}), but {where} - not proven (e.g. guest, local " +
@@ -590,9 +612,10 @@ public sealed class WindowsLogonGate
 
     /// <summary>
     ///     Reports the result of a gated host that used the accepted credentials (<see cref="Decision.Proceed" />): a
-    ///     logon failure on a host in their domain (e.g. the password was changed or the account locked during the
-    ///     scan) rejects them for the hosts that didn't start yet. Failures on hosts of other domains are expected also
-    ///     with a correct password (e.g. a domain that is not trusted).
+    ///     logon failure on a host in their domain, or on a host that could accept them (<see cref="CanAccept" />, e.g.
+    ///     a domain member for a UPN), rejects them for the hosts that didn't start yet (e.g. the password was changed
+    ///     or the account locked during the scan). Failures on hosts of other domains are expected also with a correct
+    ///     password (e.g. a domain that is not trusted).
     /// </summary>
     /// <param name="ntlm">NTLM challenge of the host, null if none.</param>
     /// <param name="host">IP address of the host (for the log).</param>
@@ -601,7 +624,7 @@ public sealed class WindowsLogonGate
     {
         if (info == null || info.Error is 0 or 5 or WindowsHostInfo.ErrorLogonTypeNotGranted ||
             WindowsHostInfo.IsLogonNotDecided(info.Error) || WindowsHostInfo.IsLogonNotAllowed(info.Error) ||
-            !IsInDomain(ntlm))
+            !(IsInDomain(ntlm) || CanAccept(ntlm)))
             return;
 
         int logonFailures;
