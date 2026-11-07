@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace NETworkManager.Models.Network;
 
@@ -214,7 +216,9 @@ public sealed record WindowsHostInfo(SMBInfo SMB, WindowsNetApiInfo NetApi)
     }
 
     /// <summary>
-    ///     Gets the message of a Win32 error (of Windows, in the language of the system).
+    ///     Gets the message of a Win32 error (of Windows, in the language of the system). NetApi errors (NERR_*,
+    ///     2100 - 2999, e.g. 2114 "The Server service is not started.") are read from <c>netmsg.dll</c>, they are not
+    ///     in the messages of the system.
     /// </summary>
     /// <param name="error">Win32 error.</param>
     /// <returns>
@@ -223,6 +227,68 @@ public sealed record WindowsHostInfo(SMBInfo SMB, WindowsNetApiInfo NetApi)
     /// </returns>
     public static string GetErrorMessage(int error)
     {
-        return error is 0 or ErrorLogonSkipped or ErrorLogonNotChecked ? string.Empty : new Win32Exception(error).Message;
+        if (error is 0 or ErrorLogonSkipped or ErrorLogonNotChecked)
+            return string.Empty;
+
+        if (error is >= NERR_BASE and <= MAX_NERR && GetNetApiMessage(error) is { Length: > 0 } message)
+            return message;
+
+        return new Win32Exception(error).Message;
     }
+
+    #region NetApi messages
+
+    private const int NERR_BASE = 2100;
+    private const int MAX_NERR = 2999;
+
+    private const uint LOAD_LIBRARY_AS_DATAFILE = 0x00000002;
+    private const uint FORMAT_MESSAGE_IGNORE_INSERTS = 0x00000200;
+    private const uint FORMAT_MESSAGE_FROM_HMODULE = 0x00000800;
+
+    // netmsg.dll as data file, loaded once (IntPtr.Zero if it can't be loaded, e.g. not on Windows)
+    private static readonly Lazy<IntPtr> NetMsgModule = new(() =>
+    {
+        try
+        {
+            return LoadLibraryEx("netmsg.dll", IntPtr.Zero, LOAD_LIBRARY_AS_DATAFILE);
+        }
+        catch (Exception)
+        {
+            return IntPtr.Zero;
+        }
+    });
+
+    /// <summary>
+    ///     Gets the message of a NetApi error from <c>netmsg.dll</c>, null if it is not known.
+    /// </summary>
+    private static string GetNetApiMessage(int error)
+    {
+        var module = NetMsgModule.Value;
+
+        if (module == IntPtr.Zero)
+            return null;
+
+        try
+        {
+            var buffer = new StringBuilder(512);
+
+            var length = FormatMessage(FORMAT_MESSAGE_FROM_HMODULE | FORMAT_MESSAGE_IGNORE_INSERTS, module,
+                (uint)error, 0, buffer, buffer.Capacity, IntPtr.Zero);
+
+            return length > 0 ? buffer.ToString().Trim() : null;
+        }
+        catch (Exception)
+        {
+            return null;
+        }
+    }
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true, EntryPoint = "LoadLibraryExW")]
+    private static extern IntPtr LoadLibraryEx(string lpLibFileName, IntPtr hFile, uint dwFlags);
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true, EntryPoint = "FormatMessageW")]
+    private static extern int FormatMessage(uint dwFlags, IntPtr lpSource, uint dwMessageId, uint dwLanguageId,
+        StringBuilder lpBuffer, int nSize, IntPtr arguments);
+
+    #endregion
 }

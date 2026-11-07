@@ -197,6 +197,13 @@ public class WindowsHostInfoTests
         Assert.Equal(expected, WindowsHostInfo.IsLogonNotAllowed(error));
     }
 
+    [Fact]
+    public void GetErrorMessage_NetApiError_Message()
+    {
+        // NERR_ServerNotStarted: from netmsg.dll on Windows, otherwise the message of the system - never empty
+        Assert.False(string.IsNullOrEmpty(WindowsHostInfo.GetErrorMessage(2114)));
+    }
+
     [Theory]
     [InlineData(0)]
     [InlineData(WindowsHostInfo.ErrorLogonSkipped)]
