@@ -37,7 +37,10 @@ public static class WindowsVersionHelper
         { 22631, ("Windows 11 23H2", null) },
         { 25398, (null, "Windows Server 23H2") },
         { 26100, ("Windows 11 24H2", "Windows Server 2025") },
-        { 26200, ("Windows 11 25H2", null) }
+        { 26200, ("Windows 11 25H2", null) },
+        { 26300, ("Windows 11 26H2", null) },
+        // Only on new devices with new chips (e.g. Snapdragon X2), existing PCs get 26H2
+        { 28000, ("Windows 11 26H1", null) }
     };
 
     /// <summary>

@@ -132,22 +132,22 @@ public class WindowsHostInfoTests
     [Fact]
     public void Registry_NewerBuild_DisplayVersion()
     {
-        var registry = new WindowsRegistryVersion(new Version(10, 0, 28000, 1), "26H2", "Enterprise", false);
+        var registry = new WindowsRegistryVersion(new Version(10, 0, 29000, 1), "27H2", "Enterprise", false);
 
         var info = new WindowsHostInfo(null, CreateNetApi(WindowsHostRole.Workstation, registry));
 
-        Assert.Equal("Windows 11 26H2", info.OS);
+        Assert.Equal("Windows 11 27H2", info.OS);
     }
 
     [Fact]
     public void Registry_NewerServerBuild_KeepsTheBuild()
     {
         // The display version of a server doesn't name the release (no client-like "Windows 25H2")
-        var registry = new WindowsRegistryVersion(new Version(10, 0, 28000, 1), "25H2", "ServerStandard", true);
+        var registry = new WindowsRegistryVersion(new Version(10, 0, 29000, 1), "25H2", "ServerStandard", true);
 
         var info = new WindowsHostInfo(null, CreateNetApi(WindowsHostRole.Server, registry));
 
-        Assert.Equal("Windows (build 28000)", info.OS);
+        Assert.Equal("Windows (build 29000)", info.OS);
     }
 
     [Fact]

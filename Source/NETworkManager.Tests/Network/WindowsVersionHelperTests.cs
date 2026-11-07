@@ -7,6 +7,8 @@ namespace NETworkManager.Tests.Network;
 public class WindowsVersionHelperTests
 {
     [Theory]
+    [InlineData("10.0.28000", null, "Windows 11 26H1")]
+    [InlineData("10.0.26300", null, "Windows 11 26H2")]
     [InlineData("10.0.26200", null, "Windows 11 25H2")]
     [InlineData("10.0.26100", null, "Windows 11 24H2 / Server 2025")]
     [InlineData("10.0.26100", true, "Windows Server 2025")]
