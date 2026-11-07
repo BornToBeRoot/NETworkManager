@@ -5403,7 +5403,7 @@ Do you want to start the scan?</value>
     <comment>{0} is the user (e.g. CORP\admin)</comment>
   </data>
   <data name="WindowsLogonSkippedMessage" xml:space="preserve">
-    <value>Not tried: the Windows credentials were rejected on another host (protection against an account lockout).</value>
+    <value>Not tried: the Windows credentials were rejected on another host, or by this host in an earlier scan (protection against an account lockout).</value>
   </data>
   <data name="WindowsLogonNotCheckedMessage" xml:space="preserve">
     <value>Not tried: the Windows credentials were still being checked on another host (protection against an account lockout).</value>

@@ -5919,7 +5919,7 @@ namespace NETworkManager.Localization.Resources {
         ///
         ///Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
         ///
-        ///Click in the upper right corner on the help / documentation button (left [rest of string was truncated]&quot;;.
+        ///Click in the upper right corner on the help / documentation button ( [rest of string was truncated]&quot;;.
         /// </summary>
         public static string HelpMessage_ApplyThemeToPowerShellConsole {
             get {
@@ -6075,7 +6075,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Logon failures with the Windows credentials of a profile / group / tab on hosts outside the domain of the credentials (e.g. in a trusted domain) before they are rejected and not used for the other hosts. A logon failure on a host in the domain of the credentials, or with credentials without domain, rejects them right away. The failures are counted per account for all tabs until NETworkManager is closed. A domain controller may count one failed logon twice (Kerberos, then NTLM): keep this value b [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to Logon failures with the Windows credentials of a profile / group / tab on hosts outside the domain of the credentials (e.g. in a trusted domain) before they are rejected and not used for the other hosts. A logon failure on a host in the domain of the credentials, or with credentials without domain, rejects them right away. The failures are counted per account for all tabs until NETworkManager is closed. A domain controller may count one failed logon twice (Kerberos, then NTLM): keep this value below half of [rest of string was truncated]&quot;;.
         /// </summary>
         public static string HelpMessage_MaxLogonFailures {
             get {
@@ -9916,7 +9916,7 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
         ///
-        ///First make a backup copy of your profile files befo [rest of string was truncated]&quot;;.
+        ///First make a backup copy of your profile files be [rest of string was truncated]&quot;;.
         /// </summary>
         public static string ProfileEncryptionDisclaimer {
             get {
@@ -15596,7 +15596,7 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not tried: the Windows credentials were rejected on another host (protection against an account lockout)..
+        ///   Looks up a localized string similar to Not tried: the Windows credentials were rejected on another host, or by this host in an earlier scan (protection against an account lockout)..
         /// </summary>
         public static string WindowsLogonSkippedMessage {
             get {
