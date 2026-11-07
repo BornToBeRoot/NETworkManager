@@ -291,6 +291,7 @@ Release date: **xx.xx.2026**
 - Fixed **Connect...** and **Disconnect** being available while a connection is made, and **Connect...** failing if the networks were scanned again while the context menu was open. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed **Use credentials** being ignored when connecting to a WPA / WPA2 / WPA3 Enterprise network (EAP). If it is disabled, no username and password are sent and Windows uses the logged-on user or a certificate. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the **WPS** button of the connect dialog never being shown. Whether a network supports WPS (push button) is checked again when the dialog is opened. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed the connect dialog not focusing the first input: the SSID of a hidden network or the username (EAP) was not focused. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 
