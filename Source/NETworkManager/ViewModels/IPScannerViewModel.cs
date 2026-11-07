@@ -68,6 +68,10 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // scan was completed - a check that exceeded the timeout)
     private bool _isWindowsLogonRejectedShown;
 
+    // The running / last scan used the Windows credentials of the tab (Read Windows host information enabled): only
+    // then its completion shows that they were rejected
+    private bool _isWindowsLogonUsed;
+
     // Background HostFound / HostUpdated events append here instead of hopping to the UI thread per
     // item - a DispatcherTimer periodically flushes this into the Results collection instead, so a large
     // scan doesn't flood the dispatcher queue with one BeginInvoke per host. One list for both, so an
@@ -1356,6 +1360,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         var ipScanner = new IPScanner(scanOptions);
 
         _ipScanner = ipScanner;
+        _isWindowsLogonUsed = scanOptions.WindowsEnabled && scanOptions.WindowsCredentials != null;
 
         ipScanner.HostFound += HostFound;
         ipScanner.HostUpdated += HostUpdated;
@@ -2102,8 +2107,11 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             }
 
             // Windows credentials rejected (wrong username or password, also in a canceled scan): one message after
-            // the other messages of the scan (rejected after the scan: see WindowsLogonGate_Rejected)
-            ShowWindowsLogonRejected();
+            // the other messages of the scan (rejected after the scan: see WindowsLogonGate_Rejected). Not for a scan
+            // that didn't use them (Read Windows host information disabled, nothing scanned) - e.g. a tab whose
+            // credentials start rejected
+            if (sender is IPScanner && _isWindowsLogonUsed)
+                ShowWindowsLogonRejected();
 
             // A completed rescan: the changes of the rescanned hosts against the same previous scan (e.g. a gone host that is
             // up again)
