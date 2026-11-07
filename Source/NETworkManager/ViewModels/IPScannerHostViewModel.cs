@@ -170,15 +170,9 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
         if (!isOK)
             return;
 
-        // SNMP version and credentials of the profile, otherwise of its group, otherwise the settings (null)
-        var snmpCredentials = NETworkManager.Profiles.Application.IPScanner.GetSNMPCredentials(profile);
-
         // Unchanged: the ones of the profile / group (shown as their source), otherwise entered for the tab (no source)
-        AddTab(profile.IPScanner_HostOrIPRange, true, snmpCredentials,
-            profile.IPScanner_OverrideSNMP ? profile.Name : profile.Group, windowsCredentials,
-            windowsCredentials != null && ReferenceEquals(windowsCredentials, profileCredentials)
-                ? profile.IPScanner_UseWindowsCredentials ? profile.Name : profile.Group
-                : null, true);
+        AddProfileTab(profile, true, windowsCredentials,
+            windowsCredentials != null && ReferenceEquals(windowsCredentials, profileCredentials), true);
     }
 
     /// <summary>
@@ -251,15 +245,32 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
     public void AddTab(ProfileInfo profile, bool start = true)
     {
+        // Windows credentials of the profile, otherwise of its group, otherwise the user running the application (null)
+        AddProfileTab(profile, start, NETworkManager.Profiles.Application.IPScanner.GetWindowsCredentials(profile), true,
+            false);
+    }
+
+    /// <summary>
+    /// Adds a new tab for a profile (also Scan as...): its host, the SNMP version and credentials of the profile /
+    /// group (otherwise the settings) and the Windows credentials.
+    /// </summary>
+    /// <param name="profile">The profile to scan.</param>
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    /// <param name="windowsCredentials">Windows credentials, null for the user running the application.</param>
+    /// <param name="isOfProfile">
+    /// <paramref name="windowsCredentials" /> are the ones of the profile / group (shown as their source), otherwise
+    /// entered for the tab.
+    /// </param>
+    /// <param name="isEntered">The user entered <paramref name="windowsCredentials" /> (Scan as...).</param>
+    private void AddProfileTab(ProfileInfo profile, bool start, WindowsCredentials windowsCredentials,
+        bool isOfProfile, bool isEntered)
+    {
         // SNMP version and credentials of the profile, otherwise of its group, otherwise the settings (null)
         var snmpCredentials = NETworkManager.Profiles.Application.IPScanner.GetSNMPCredentials(profile);
 
-        // Windows credentials of the profile, otherwise of its group, otherwise the user running the application (null)
-        var windowsCredentials = NETworkManager.Profiles.Application.IPScanner.GetWindowsCredentials(profile);
-
         AddTab(profile.IPScanner_HostOrIPRange, start, snmpCredentials,
             profile.IPScanner_OverrideSNMP ? profile.Name : profile.Group, windowsCredentials,
-            profile.IPScanner_UseWindowsCredentials ? profile.Name : profile.Group);
+            isOfProfile ? profile.IPScanner_UseWindowsCredentials ? profile.Name : profile.Group : null, isEntered);
     }
 
     #endregion
