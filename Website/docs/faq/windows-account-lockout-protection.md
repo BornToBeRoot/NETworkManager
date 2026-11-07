@@ -90,7 +90,7 @@ The checks are written to the [log file](./file-locations) (`NETworkManager.log`
 
 - **Other applications and computers** that use the same account (e.g. a mapped drive with an old password) also count failed logons - the IP Scanner only knows its own.
 - **The counter of NETworkManager doesn't expire**: the domain controller resets `badPwdCount` after the lockout observation window (e.g. 15 minutes), NETworkManager only when the credentials are accepted in the domain or NETworkManager is restarted.
-- **A host you don't control** could pretend to be in the domain of the credentials and accept a wrong password - only scan networks you trust with privileged accounts (see the warning in [Read Windows host information](../application/ip-scanner#read-windows-host-information)).
+- **A host you don't control** could pretend to be a Windows host in the domain of the credentials and accept a wrong password: the next failed logon in the domain stops them again, but the hosts that already started (at most 16) still try it - only scan networks you trust with privileged accounts (see the warning in [Read Windows host information](../application/ip-scanner#read-windows-host-information)).
 
 ## Recommendations
 
