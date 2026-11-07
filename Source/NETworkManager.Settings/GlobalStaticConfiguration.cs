@@ -173,6 +173,8 @@ public static class GlobalStaticConfiguration
     public static SNMPVersion IPScanner_SNMPVersion => SNMPVersion.V2C;
     public static string IPScanner_SNMPCommunity => "public";
     public static int IPScanner_SNMPTimeout => 2000;
+    public static bool IPScanner_WindowsEnabled => false;
+    public static int IPScanner_WindowsTimeout => 5000;
     public static bool IPScanner_ExpandHostView => false;
 
     public static AutoRefreshTimeInfo IPScanner_AutoRefreshTime =>

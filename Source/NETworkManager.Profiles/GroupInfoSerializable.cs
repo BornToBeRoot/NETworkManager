@@ -34,6 +34,11 @@ public class GroupInfoSerializable : GroupInfo
     public new string IPScanner_SNMPPriv { get; set; }
 
     /// <summary>
+    ///     Override the default IP Scanner Windows password to make it serializable.
+    /// </summary>
+    public new string IPScanner_WindowsPassword { get; set; }
+
+    /// <summary>
     ///     Override the default remote desktop password to make it serializable.
     /// </summary>
     public new string RemoteDesktop_Password { get; set; }

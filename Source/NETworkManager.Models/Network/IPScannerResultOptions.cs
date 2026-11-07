@@ -13,6 +13,7 @@
 /// <param name="MDNSEnabled">The mDNS hostname was resolved.</param>
 /// <param name="WebPageEnabled">The title of the web pages was read.</param>
 /// <param name="SNMPEnabled">The SNMP system information was read.</param>
+/// <param name="WindowsEnabled">The Windows host information was read.</param>
 public sealed record IPScannerResultOptions(
     bool ICMPEnabled,
     bool OSGuessEnabled,
@@ -22,7 +23,8 @@ public sealed record IPScannerResultOptions(
     bool ResolveMACAddress,
     bool MDNSEnabled,
     bool WebPageEnabled,
-    bool SNMPEnabled)
+    bool SNMPEnabled,
+    bool WindowsEnabled)
 {
     /// <summary>
     ///     Creates the result options from the options of a scan.
@@ -30,7 +32,17 @@ public sealed record IPScannerResultOptions(
     /// <param name="options">Options of the scan.</param>
     public IPScannerResultOptions(IPScannerOptions options)
         : this(options.ICMPEnabled, options.OSGuessEnabled, options.ResolveHostname, options.PortScanEnabled, options.NetBIOSEnabled, options.ResolveMACAddress,
-            options.MDNSEnabled, options.WebPageEnabled, options.SNMPEnabled)
+            options.MDNSEnabled, options.WebPageEnabled, options.SNMPEnabled, options.WindowsEnabled)
     {
     }
+
+    /// <summary>
+    ///     The OS column is shown: the guess from the TTL (needs the ping) or the Windows version.
+    /// </summary>
+    public bool IsOSShown => (ICMPEnabled && OSGuessEnabled) || WindowsEnabled;
+
+    /// <summary>
+    ///     The Domain column is shown: domain / workgroup of the Windows host information or of the NetBIOS answer.
+    /// </summary>
+    public bool IsDomainShown => WindowsEnabled || NetBIOSEnabled;
 }

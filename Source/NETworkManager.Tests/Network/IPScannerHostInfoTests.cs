@@ -35,6 +35,8 @@ public class IPScannerHostInfoTests
                 var type when type.IsEnum => Enum.GetValues(type).Cast<object>().Last(),
                 var type when type == typeof(WebCertificateInfo) =>
                     new WebCertificateInfo("CN", "Issuer", DateTime.UtcNow, false),
+                var type when type == typeof(WindowsHostInfo) =>
+                    new WindowsHostInfo(null, WindowsNetApiInfo.FromError(5)),
                 // Objects of the constructor (ping, ports, NetBIOS)
                 _ => null
             };

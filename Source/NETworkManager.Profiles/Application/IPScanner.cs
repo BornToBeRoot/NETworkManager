@@ -42,6 +42,37 @@ public static class IPScanner
     }
 
     /// <summary>
+    ///     Gets the Windows credentials of a profile for the Windows host information of the IP Scanner: its own (if
+    ///     used), otherwise the ones of its group (if used), otherwise null (the user running the application). There are
+    ///     no Windows credentials in the settings.
+    /// </summary>
+    /// <param name="profile">Profile the tab is opened with.</param>
+    /// <returns>Credentials, null if neither the profile nor its group uses credentials.</returns>
+    public static WindowsCredentials GetWindowsCredentials(ProfileInfo profile)
+    {
+        return GetWindowsCredentials(profile, ProfileManager.GetGroupByName(profile.Group));
+    }
+
+    /// <summary>
+    ///     Gets the Windows credentials of a profile and its group, see <see cref="GetWindowsCredentials(ProfileInfo)" />.
+    /// </summary>
+    /// <param name="profile">Profile.</param>
+    /// <param name="group">Group of the profile, null if it can't be found.</param>
+    /// <returns>Credentials (copy of the password), null if neither the profile nor its group uses credentials.</returns>
+    public static WindowsCredentials GetWindowsCredentials(ProfileInfo profile, GroupInfo group)
+    {
+        if (profile.IPScanner_UseWindowsCredentials)
+            return new WindowsCredentials(profile.IPScanner_WindowsUsername ?? string.Empty,
+                profile.IPScanner_WindowsDomain ?? string.Empty, profile.IPScanner_WindowsPassword?.Copy());
+
+        if (group is { IPScanner_UseWindowsCredentials: true })
+            return new WindowsCredentials(group.IPScanner_WindowsUsername ?? string.Empty,
+                group.IPScanner_WindowsDomain ?? string.Empty, group.IPScanner_WindowsPassword?.Copy());
+
+        return null;
+    }
+
+    /// <summary>
     ///     Creates the credentials of the values of a profile or group (copies of the passwords, a change of the profile
     ///     doesn't change an open tab).
     /// </summary>

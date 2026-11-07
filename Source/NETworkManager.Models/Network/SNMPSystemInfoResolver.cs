@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Lextm.SharpSnmpLib;
 using Lextm.SharpSnmpLib.Messaging;
 using Lextm.SharpSnmpLib.Security;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -275,8 +276,6 @@ public static class SNMPSystemInfoResolver
             return string.Empty;
 
         // Control characters (e.g. line breaks in sysDescr) are shown as spaces, several spaces as one
-        var value = new string([.. octetString.ToString().Select(x => char.IsControl(x) ? ' ' : x)]);
-
-        return string.Join(' ', value.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+        return StringHelper.ReplaceControlCharactersWithSpace(octetString.ToString());
     }
 }

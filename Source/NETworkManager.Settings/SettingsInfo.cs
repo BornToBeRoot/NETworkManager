@@ -1597,6 +1597,32 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_SNMPTimeout;
 
+    public bool IPScanner_WindowsEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_WindowsEnabled;
+
+    public int IPScanner_WindowsTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_WindowsTimeout;
+
     public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
     {
         get;
