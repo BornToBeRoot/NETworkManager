@@ -828,6 +828,15 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         if (!isOK)
             return;
 
+        // The tab was closed while the dialog was open (its password is disposed): new credentials are not used
+        if (_closed)
+        {
+            if (!ReferenceEquals(credentials, _windowsCredentials))
+                credentials?.Password?.Dispose();
+
+            return;
+        }
+
         // Unchanged: the source (e.g. the profile / group) stays, but they are checked again (also if rejected)
         if (ReferenceEquals(credentials, _windowsCredentials))
         {
