@@ -267,6 +267,22 @@ public class WindowsLogonGateTests
     }
 
     [Theory]
+    [InlineData("admin", "CORP", "", "")]
+    [InlineData("admin", "", "", "")]
+    [InlineData(@"CORP\admin", "", "", "")]
+    [InlineData("admin", "CORP", "NAS01", "")]
+    [InlineData("admin", "", "", "CORP")]
+    public void ChallengeWithoutNames_Gated(string username, string domain, string computerName, string domainName)
+    {
+        // E.g. a challenge without (or with a truncated) target info: not known if the host is in a domain - the empty
+        // names are neither a workgroup computer nor the computer of a local account
+        var ntlm = new NTLMChallengeInfo(new Version(10, 0, 26200), computerName, domainName, string.Empty,
+            string.Empty, string.Empty, null);
+
+        Assert.True(CreateGate(username, domain).IsGated(ntlm));
+    }
+
+    [Theory]
     [InlineData("admin", "CORP", true)]
     [InlineData("admin", "corp.example.com", true)]
     [InlineData(@"CORP\admin", "", true)]

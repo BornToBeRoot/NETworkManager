@@ -129,7 +129,8 @@ public sealed class WindowsLogonGate
 
     /// <summary>
     ///     Checks if the logon to a host can count at a domain controller: not for a local account and not for a
-    ///     computer in a workgroup (known from the NTLM challenge; without challenge it is unknown, so it is gated).
+    ///     computer in a workgroup (known from the NTLM challenge; without challenge or without its computer / domain
+    ///     name it is unknown, so it is gated).
     /// </summary>
     /// <param name="ntlm">NTLM challenge of the host, null if none.</param>
     /// <returns>True if the host is gated.</returns>
@@ -138,7 +139,10 @@ public sealed class WindowsLogonGate
         if (_isLocalAccount)
             return false;
 
-        if (ntlm == null)
+        // E.g. a challenge without (or with a truncated) target info: empty names are no workgroup computer and no
+        // computer of a local account
+        if (ntlm == null || string.IsNullOrEmpty(ntlm.NetBIOSComputerName) ||
+            string.IsNullOrEmpty(ntlm.NetBIOSDomainName))
             return true;
 
         // Local account of the host (its computer name as domain)
