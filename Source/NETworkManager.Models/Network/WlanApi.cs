@@ -7,13 +7,14 @@ namespace NETworkManager.Models.Network;
 
 /// <summary>
 ///     Native Wi-Fi (<c>wlanapi.dll</c>) interop used to determine the channel bandwidth
-///     (20 / 40 / 80 / 160 MHz) of nearby access points.
+///     (20 / 40 / 80 / 160 MHz) and its center frequency of nearby access points.
 ///     <para>
 ///     The Windows Runtime Wi-Fi API (<see cref="Windows.Devices.WiFi.WiFiAvailableNetwork" />) does
-///     not expose the channel width. The native BSS list (<c>WlanGetNetworkBssList</c>) however
-///     returns the raw 802.11 information elements (IEs) of each beacon / probe response. The width
-///     is parsed from the HT-Operation (802.11n), VHT-Operation (802.11ac) and HE-Operation
-///     (802.11ax / 6 GHz) elements.
+///     not expose the channel width, its frequency is the one of the primary 20 MHz channel (where
+///     the beacons are sent). The native BSS list (<c>WlanGetNetworkBssList</c>) however returns the
+///     raw 802.11 information elements (IEs) of each beacon / probe response. The width and the
+///     center of the whole channel are parsed from the HT-Operation (802.11n), VHT-Operation
+///     (802.11ac) and HE-Operation (802.11ax / 6 GHz) elements.
 ///     </para>
 ///     All calls are wrapped in try/catch; on any failure an empty result is returned so the caller
 ///     can fall back to a heuristic (see <see cref="WiFi" />).
@@ -30,6 +31,15 @@ public static class WlanApi
     private const byte EidVhtOperation = 192;
     private const byte EidExtension = 255;
     private const byte ExtEidHeOperation = 36;
+
+    /// <summary>
+    ///     Channel of an access point parsed from its information elements.
+    /// </summary>
+    /// <param name="BandwidthMHz">Channel width in MHz (20, 40, 80, 160), 0 if unknown.</param>
+    /// <param name="CenterFrequencyMHz">
+    ///     Center frequency of the whole channel in MHz (e.g. 5210 for 80 MHz on the channels 36 - 48), 0 if unknown.
+    /// </param>
+    public readonly record struct WlanBssChannel(int BandwidthMHz, int CenterFrequencyMHz);
 
     private enum DOT11_BSS_TYPE
     {
@@ -124,14 +134,14 @@ public static class WlanApi
 
     /// <summary>
     ///     Returns a map of BSSID (lowercase, colon-separated, e.g. <c>aa:bb:cc:dd:ee:ff</c>) to the
-    ///     channel bandwidth in MHz for all access points visible to the given Wi-Fi interface.
+    ///     channel (width and center) for all access points visible to the given Wi-Fi interface.
     ///     BSSIDs whose width could not be parsed are omitted from the result.
     /// </summary>
     /// <param name="interfaceGuid">GUID of the Wi-Fi interface (<c>NetworkAdapter.NetworkAdapterId</c>).</param>
-    /// <returns>A (possibly empty) map of BSSID to channel bandwidth in MHz.</returns>
-    public static Dictionary<string, int> GetBssChannelWidths(Guid interfaceGuid)
+    /// <returns>A (possibly empty) map of BSSID to its channel.</returns>
+    public static Dictionary<string, WlanBssChannel> GetBssChannels(Guid interfaceGuid)
     {
-        var result = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        var result = new Dictionary<string, WlanBssChannel>(StringComparer.OrdinalIgnoreCase);
 
         var clientHandle = IntPtr.Zero;
 
@@ -166,10 +176,11 @@ public static class WlanApi
     }
 
     /// <summary>
-    ///     Queries the BSS list for a single WLAN interface and adds the parsed channel widths to
+    ///     Queries the BSS list for a single WLAN interface and adds the parsed channels to
     ///     <paramref name="result" />. Returns <see langword="true" /> if the query succeeded.
     /// </summary>
-    private static bool TryQueryBssList(IntPtr clientHandle, Guid interfaceGuid, Dictionary<string, int> result)
+    private static bool TryQueryBssList(IntPtr clientHandle, Guid interfaceGuid,
+        Dictionary<string, WlanBssChannel> result)
     {
         var bssListPtr = IntPtr.Zero;
 
@@ -213,10 +224,11 @@ public static class WlanApi
                 var ie = new byte[ieSize];
                 Marshal.Copy(IntPtr.Add(bssListPtr, (int)ieStart), ie, 0, ieSize);
 
-                var width = GetBandwidthFromInformationElements(ie);
+                // Frequency of the primary channel (kHz)
+                var channel = GetChannelFromInformationElements(ie, (int)(entry.ulChCenterFrequency / 1000));
 
-                if (width > 0)
-                    result[FormatBssid(entry.dot11Bssid)] = width;
+                if (channel.BandwidthMHz > 0)
+                    result[FormatBssid(entry.dot11Bssid)] = channel;
             }
 
             return true;
@@ -267,13 +279,17 @@ public static class WlanApi
     }
 
     /// <summary>
-    ///     Walks the TLV-encoded 802.11 information elements and returns the widest channel
-    ///     bandwidth (MHz) advertised by the HT-, VHT- or HE-Operation element. Returns 0 if none
-    ///     of these elements are present.
+    ///     Walks the TLV-encoded 802.11 information elements and returns the widest channel advertised
+    ///     by the HT-, VHT- or HE-Operation element, with the center frequency of the whole channel.
+    ///     Returns <c>default</c> (width 0) if none of these elements are present.
     /// </summary>
-    private static int GetBandwidthFromInformationElements(byte[] ie)
+    /// <param name="ie">Information elements of a beacon / probe response.</param>
+    /// <param name="primaryFrequencyMHz">Frequency of the primary 20 MHz channel in MHz (e.g. 5180).</param>
+    public static WlanBssChannel GetChannelFromInformationElements(byte[] ie, int primaryFrequencyMHz)
     {
-        int htWidth = 0, vhtWidth = 0, heWidth = 0;
+        WlanBssChannel ht = default;
+        byte[] vhtOperation = null;
+        int heOffset = -1, heLength = 0;
 
         var pos = 0;
 
@@ -289,50 +305,88 @@ public static class WlanApi
             switch (id)
             {
                 case EidHtOperation when len >= 2:
-                {
-                    // HT Operation Information byte 0: bits 0-1 secondary channel offset,
-                    // bit 2 STA channel width (0 = 20 MHz, 1 = any/40 MHz).
-                    var info = ie[data + 1];
-                    var secondaryChannelOffset = info & 0x03;
-                    var staChannelWidth = (info >> 2) & 0x01;
-                    htWidth = staChannelWidth == 1 && secondaryChannelOffset != 0 ? 40 : 20;
+                    ht = ParseHtChannel(ie[data + 1], primaryFrequencyMHz);
                     break;
-                }
                 case EidVhtOperation when len >= 3:
-                    vhtWidth = ParseVhtWidth(ie[data], ie[data + 1], ie[data + 2], htWidth);
+                    vhtOperation = [ie[data], ie[data + 1], ie[data + 2]];
                     break;
                 case EidExtension when len >= 1 && ie[data] == ExtEidHeOperation:
-                    heWidth = ParseHeWidth(ie, data + 1, len - 1, htWidth);
+                    heOffset = data + 1;
+                    heLength = len - 1;
                     break;
             }
 
             pos = data + len;
         }
 
-        return Math.Max(htWidth, Math.Max(vhtWidth, heWidth));
+        // VHT and HE defer to HT for 20 / 40 MHz, so they are parsed after the loop (independent of the order)
+        var vht = vhtOperation == null
+            ? default
+            : ParseVhtChannel(vhtOperation[0], vhtOperation[1], vhtOperation[2], ht, primaryFrequencyMHz);
+
+        var he = heOffset < 0 ? default : ParseHeChannel(ie, heOffset, heLength, ht, primaryFrequencyMHz);
+
+        // The widest channel; on a tie the newer element (its center is the more precise one)
+        return Widest(Widest(ht, vht), he);
     }
 
     /// <summary>
-    ///     Resolves the channel width from a VHT-Operation channel-width field plus its two center
-    ///     frequency segments. Falls back to <paramref name="htWidth" /> when the VHT field signals
-    ///     "20/40 MHz".
+    ///     Returns <paramref name="candidate" /> if it is at least as wide as <paramref name="current" />.
     /// </summary>
-    private static int ParseVhtWidth(int channelWidth, int segment0, int segment1, int htWidth)
+    private static WlanBssChannel Widest(WlanBssChannel current, WlanBssChannel candidate)
+    {
+        return candidate.BandwidthMHz > 0 && candidate.BandwidthMHz >= current.BandwidthMHz ? candidate : current;
+    }
+
+    /// <summary>
+    ///     Parses the HT Operation Information byte 0: bits 0-1 secondary channel offset (1 = above,
+    ///     3 = below), bit 2 STA channel width (0 = 20 MHz, 1 = any / 40 MHz).
+    /// </summary>
+    private static WlanBssChannel ParseHtChannel(byte info, int primaryFrequencyMHz)
+    {
+        var secondaryChannelOffset = info & 0x03;
+        var staChannelWidth = (info >> 2) & 0x01;
+
+        if (staChannelWidth == 1 && secondaryChannelOffset == 1)
+            return new WlanBssChannel(40, primaryFrequencyMHz + 10);
+
+        if (staChannelWidth == 1 && secondaryChannelOffset == 3)
+            return new WlanBssChannel(40, primaryFrequencyMHz - 10);
+
+        return new WlanBssChannel(20, primaryFrequencyMHz);
+    }
+
+    /// <summary>
+    ///     Resolves the channel from a VHT-Operation channel-width field plus its two channel center
+    ///     frequency segments (CCFS, channel numbers). Falls back to <paramref name="ht" /> when the
+    ///     VHT field signals "20/40 MHz".
+    /// </summary>
+    private static WlanBssChannel ParseVhtChannel(int channelWidth, int segment0, int segment1, WlanBssChannel ht,
+        int primaryFrequencyMHz)
     {
         switch (channelWidth)
         {
             case 0: // 20/40 MHz -> defer to HT
-                return htWidth > 0 ? htWidth : 20;
+                return ht.BandwidthMHz > 0 ? ht : new WlanBssChannel(20, primaryFrequencyMHz);
             case 1: // 80 MHz, unless the segments indicate 160 / 80+80 MHz
                 if (segment1 == 0)
-                    return 80;
+                    return new WlanBssChannel(80, ChannelToFrequency(segment0, primaryFrequencyMHz));
+
                 var diff = Math.Abs(segment0 - segment1);
-                return diff is 8 or > 16 ? 160 : 80;
-            case 2: // 160 MHz (deprecated encoding)
+
+                // 160 MHz: segment 1 is the center of the 160 MHz channel
+                if (diff == 8)
+                    return new WlanBssChannel(160, ChannelToFrequency(segment1, primaryFrequencyMHz));
+
+                // 80+80 MHz (two separate 80 MHz segments) is shown as 160 MHz around the primary segment
+                return diff > 16
+                    ? new WlanBssChannel(160, ChannelToFrequency(segment0, primaryFrequencyMHz))
+                    : new WlanBssChannel(80, ChannelToFrequency(segment0, primaryFrequencyMHz));
+            case 2: // 160 MHz (deprecated encoding): segment 0 is the center of the 160 MHz channel
             case 3: // 80+80 MHz (deprecated encoding) - treated as 160 MHz for display
-                return 160;
+                return new WlanBssChannel(160, ChannelToFrequency(segment0, primaryFrequencyMHz));
             default:
-                return 80;
+                return new WlanBssChannel(80, ChannelToFrequency(segment0, primaryFrequencyMHz));
         }
     }
 
@@ -340,18 +394,20 @@ public static class WlanApi
     ///     Parses the HE-Operation element (802.11ax). Optional sub-fields (VHT Operation
     ///     Information, 6 GHz Operation Information) are only present when the corresponding bit in
     ///     the HE Operation Parameters is set; their offsets therefore depend on the preceding
-    ///     fields. This is a best-effort parse: on any ambiguity 0 is returned so the caller can
-    ///     fall back to a heuristic.
+    ///     fields. This is a best-effort parse: on any ambiguity <c>default</c> (width 0) is returned so
+    ///     the caller can fall back to a heuristic.
     /// </summary>
     /// <param name="ie">The full information element buffer.</param>
     /// <param name="offset">Offset of the HE Operation Parameters (after the extension id byte).</param>
     /// <param name="length">Remaining length of the HE-Operation element after the extension id.</param>
-    /// <param name="htWidth">Width parsed from the HT-Operation element (used as VHT fallback).</param>
-    private static int ParseHeWidth(byte[] ie, int offset, int length, int htWidth)
+    /// <param name="ht">Channel parsed from the HT-Operation element (used as VHT fallback).</param>
+    /// <param name="primaryFrequencyMHz">Frequency of the primary 20 MHz channel in MHz.</param>
+    private static WlanBssChannel ParseHeChannel(byte[] ie, int offset, int length, WlanBssChannel ht,
+        int primaryFrequencyMHz)
     {
         // HE Operation Parameters (3) + BSS Color (1) + Basic HE-MCS And NSS Set (2) = 6 bytes minimum.
         if (length < 6)
-            return 0;
+            return default;
 
         var end = offset + length;
 
@@ -363,12 +419,12 @@ public static class WlanApi
         var sixGhzOperationInformationPresent = ((heOperationParameters >> 17) & 1) == 1;
 
         var cursor = offset + 3 + 1 + 2; // skip parameters, BSS color, basic HE-MCS
-        var width = 0;
+        WlanBssChannel channel = default;
 
         if (vhtOperationInformationPresent)
         {
             if (cursor + 3 <= end)
-                width = Math.Max(width, ParseVhtWidth(ie[cursor], ie[cursor + 1], ie[cursor + 2], htWidth));
+                channel = ParseVhtChannel(ie[cursor], ie[cursor + 1], ie[cursor + 2], ht, primaryFrequencyMHz);
 
             cursor += 3;
         }
@@ -378,21 +434,45 @@ public static class WlanApi
 
         if (sixGhzOperationInformationPresent && cursor + 2 <= end)
         {
-            // 6 GHz Operation Information: Primary Channel (1), Control (1), ...
+            // 6 GHz Operation Information: Primary Channel (1), Control (1), CCFS0 (1), CCFS1 (1), ...
             // Control byte bits 0-1 = channel width (0 = 20, 1 = 40, 2 = 80, 3 = 160/80+80 MHz).
-            var channelWidth = ie[cursor + 1] & 0x03;
-            var sixGhzWidth = channelWidth switch
+            var sixGhzWidth = (ie[cursor + 1] & 0x03) switch
             {
                 0 => 20,
                 1 => 40,
                 2 => 80,
-                3 => 160,
-                _ => 0
+                _ => 160
             };
-            width = Math.Max(width, sixGhzWidth);
+
+            // CCFS0 is the center of the channel (of the primary 80 MHz channel for 160 MHz), CCFS1 the center of
+            // the 160 MHz channel (0 for narrower channels)
+            var segment0 = cursor + 3 <= end ? ie[cursor + 2] : 0;
+            var segment1 = cursor + 4 <= end ? ie[cursor + 3] : 0;
+            var centerChannel = sixGhzWidth == 160 && segment1 != 0 ? segment1 : segment0;
+
+            channel = Widest(channel,
+                new WlanBssChannel(sixGhzWidth, ChannelToFrequency(centerChannel, primaryFrequencyMHz)));
         }
 
-        return width;
+        return channel;
+    }
+
+    /// <summary>
+    ///     Converts a channel number of the band of the primary channel to its frequency in MHz.
+    /// </summary>
+    /// <param name="channel">Channel number (e.g. 42), 0 if not set.</param>
+    /// <param name="primaryFrequencyMHz">Frequency of the primary channel, used for the band and as fallback.</param>
+    private static int ChannelToFrequency(int channel, int primaryFrequencyMHz)
+    {
+        if (channel == 0)
+            return primaryFrequencyMHz;
+
+        return primaryFrequencyMHz switch
+        {
+            >= 5925 => 5950 + channel * 5, // 6 GHz
+            >= 4900 => 5000 + channel * 5, // 5 GHz
+            _ => channel == 14 ? 2484 : 2407 + channel * 5 // 2.4 GHz
+        };
     }
 
     /// <summary>

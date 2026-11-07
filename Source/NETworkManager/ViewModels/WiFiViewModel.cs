@@ -800,7 +800,7 @@ public class WiFiViewModel : ViewModelBase
                     case WiFiRadio.GHz6:
                         // Split by channel center into the lower (1-125) and upper (129-233) chart.
                         var centerChannel = FrequencyToChannelAxis(
-                            network.ChannelCenterFrequencyInGigahertz * 1000, WiFiRadio.GHz6);
+                            network.ChannelBandwidthCenterFrequencyInGigahertz * 1000, WiFiRadio.GHz6);
 
                         if (centerChannel < SixGHzSplitChannel)
                         {
@@ -1044,7 +1044,7 @@ public class WiFiViewModel : ViewModelBase
 
     /// <summary>
     ///     Builds a line series and a matching legend entry for a single network, rendered as a
-    ///     trapezoid centered on its channel center frequency.
+    ///     trapezoid centered on the center frequency of the whole channel (not of the primary channel).
     /// </summary>
     private static (LineSeries<WiFiChannelPoint> Series, WiFiChannelLegendEntry Legend) BuildNetworkSeries(WiFiNetworkInfo network, int colorIndex)
     {
@@ -1052,7 +1052,8 @@ public class WiFiViewModel : ViewModelBase
 
         double dbm = network.AvailableNetwork.NetworkRssiInDecibelMilliwatts;
         var center = ChannelNumberToDisplay(
-            FrequencyToChannelAxis(network.ChannelCenterFrequencyInGigahertz * 1000, network.Radio), network.Radio);
+            FrequencyToChannelAxis(network.ChannelBandwidthCenterFrequencyInGigahertz * 1000, network.Radio),
+            network.Radio);
 
         // Channel-number space uses 5 MHz per unit, so a bandwidth in MHz spans bandwidth/5 units.
         var bandwidth = network.ChannelBandwidth;

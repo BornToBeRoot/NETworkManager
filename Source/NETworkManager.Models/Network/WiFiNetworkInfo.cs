@@ -28,7 +28,8 @@ public class WiFiNetworkInfo
     public WiFiRadio Radio { get; init; }
 
     /// <summary>
-    ///    The channel center frequency in Gigahertz like 2.4 GHz, 5 GHz, etc.
+    ///    The channel center frequency in Gigahertz like 2.4 GHz, 5 GHz, etc. of the primary 20 MHz channel (where the
+    ///    beacons are sent).
     /// </summary>
     public double ChannelCenterFrequencyInGigahertz { get; set; }
 
@@ -42,6 +43,12 @@ public class WiFiNetworkInfo
     ///     the BSS list when available, otherwise estimated from radio band and PHY kind.
     /// </summary>
     public int ChannelBandwidth { get; set; }
+
+    /// <summary>
+    ///     The center frequency in Gigahertz of the whole channel (<see cref="ChannelBandwidth" />), e.g. 5.21 for
+    ///     80 MHz on the channels 36 - 48. The frequency of the primary channel if the bandwidth is estimated.
+    /// </summary>
+    public double ChannelBandwidthCenterFrequencyInGigahertz { get; set; }
 
     /// <summary>
     ///     Indicates if the Wi-Fi network Ssid is hidden.

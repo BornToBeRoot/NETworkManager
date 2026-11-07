@@ -293,6 +293,7 @@ Release date: **xx.xx.2026**
 - Fixed the **WPS** button of the connect dialog never being shown. Whether a network supports WPS (push button) is checked again when the dialog is opened. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the connect dialog not focusing the first input: the SSID of a hidden network or the username (EAP) was not focused. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the connect dialog asking for a pre-shared key for WPA3 Enterprise networks (instead of username and password) and for OWE (Enhanced Open) networks, which need no password. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed networks with a channel width of 40, 80 or 160 MHz being drawn at the wrong position on the **Channels** tab: they were centered on their primary channel (e.g. 80 MHz on channel 36 over the channels 28 - 44 instead of 36 - 48), so overlapping networks were shown wrong. The center of the whole channel is read from the beacon now. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 
