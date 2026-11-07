@@ -1319,9 +1319,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _cancellationTokenSource = new CancellationTokenSource();
 
         // Same options (columns, ports), but every host is reported - also if it is unreachable now. The current
-        // Windows credentials of the tab (entered since the last scan) and their lockout protection
+        // Windows credentials of the tab (entered since the last scan) and their lockout protection. Read Windows host
+        // information turned off since the last scan: not read (no logon with the credentials), the rescanned hosts
+        // have no Windows values
         var rescanOptions = CreateRescanOptions(_lastScanOptions) with
         {
+            WindowsEnabled = _lastScanOptions.WindowsEnabled && SettingsManager.Current.IPScanner_WindowsEnabled,
             WindowsCredentials = _windowsCredentials,
             WindowsLogonGate = _windowsLogonGate
         };
