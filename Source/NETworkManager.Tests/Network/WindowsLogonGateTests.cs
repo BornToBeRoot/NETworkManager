@@ -315,6 +315,86 @@ public class WindowsLogonGateTests
         Assert.True(gate.IsRejected);
     }
 
+    [Fact]
+    public async Task LogonTypeNotGrantedInTheDomain_PasswordCorrect_Accepted()
+    {
+        // E.g. "Deny access to this computer from the network" on a domain controller: checked by the host after the
+        // domain controller accepted the password
+        var gate = CreateGate();
+
+        await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
+        gate.Report(CorpHost, WindowsNetApiInfo.FromError(1385));
+
+        Assert.False(gate.IsRejected);
+        Assert.Equal(WindowsLogonGate.Decision.Proceed,
+            await gate.WaitAsync(CorpHost, "10.0.0.2", Timeout, CancellationToken.None));
+    }
+
+    [Theory]
+    [InlineData(1327)] // account restriction (e.g. Protected Users with NTLM)
+    [InlineData(1328)] // logon hours
+    [InlineData(1329)] // workstation not allowed
+    public async Task LogonNotAllowedInTheDomain_NotRejected_NextHostChecks(int error)
+    {
+        // No failed logon at the domain controller, but the password is not proven (the restriction may be checked
+        // before it)
+        var gate = CreateGate();
+
+        await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
+        gate.Report(CorpHost, WindowsNetApiInfo.FromError(error));
+
+        Assert.False(gate.IsRejected);
+        Assert.Equal(WindowsLogonGate.Decision.Check,
+            await gate.WaitAsync(CorpHost, "10.0.0.2", Timeout, CancellationToken.None));
+    }
+
+    [Fact]
+    public async Task LogonNotAllowedInAnotherDomain_NotCounted()
+    {
+        var gate = CreateGate();
+        gate.StartScan(1);
+
+        await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+        gate.Report(OtherDomainHost, WindowsNetApiInfo.FromError(1385));
+
+        Assert.False(gate.IsRejected);
+        Assert.Equal(WindowsLogonGate.Decision.Check,
+            await gate.WaitAsync(OtherDomainHost, "10.0.1.2", Timeout, CancellationToken.None));
+    }
+
+    [Fact]
+    public async Task UngatedHost_LogonNotAllowed_NotSkipped()
+    {
+        var gate = CreateGate();
+
+        await gate.WaitAsync(WorkgroupHost, "10.0.2.1", Timeout, CancellationToken.None);
+        gate.ReportUngated("10.0.2.1", WindowsNetApiInfo.FromError(1385));
+
+        Assert.Equal(WindowsLogonGate.Decision.Proceed,
+            await gate.WaitAsync(WorkgroupHost, "10.0.2.1", Timeout, CancellationToken.None));
+    }
+
+    [Fact]
+    public async Task AcceptedInTheDomain_ResetsTheLogonFailures()
+    {
+        // A successful logon resets the failures at the domain controller (badPwdCount)
+        var gate = CreateGate();
+
+        await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+        gate.Report(OtherDomainHost, LogonFailure);
+
+        await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
+        gate.Report(CorpHost, Success);
+
+        // Next scan: one failure is below the limit again
+        gate.StartScan(MaxLogonFailures);
+
+        await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+        gate.Report(OtherDomainHost, LogonFailure);
+
+        Assert.False(gate.IsRejected);
+    }
+
     [Theory]
     [InlineData(53)] // network path not found
     [InlineData(1231)] // network unreachable

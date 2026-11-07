@@ -186,6 +186,17 @@ public class WindowsHostInfoTests
     }
 
     [Theory]
+    [InlineData(1385, true)] // logon type not granted
+    [InlineData(1328, true)] // logon hours
+    [InlineData(1326, false)] // wrong username or password
+    [InlineData(1909, false)] // locked
+    [InlineData(0, false)]
+    public void IsLogonNotAllowed(int error, bool expected)
+    {
+        Assert.Equal(expected, WindowsHostInfo.IsLogonNotAllowed(error));
+    }
+
+    [Theory]
     [InlineData(0)]
     [InlineData(WindowsHostInfo.ErrorLogonSkipped)]
     [InlineData(WindowsHostInfo.ErrorLogonNotChecked)]

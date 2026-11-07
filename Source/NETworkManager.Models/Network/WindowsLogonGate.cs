@@ -13,8 +13,9 @@ namespace NETworkManager.Models.Network;
 ///     lockout threshold in seconds. The credentials are checked on one host first (the others wait); only if they are
 ///     accepted, the hosts run in parallel:
 ///     <list type="bullet">
-///         <item>Accepted (success, or access denied = logged on without rights) on a host in the domain of the
-///         credentials: all hosts run. A success on a host of another domain (or with credentials without domain)
+///         <item>Accepted (success, access denied = logged on without rights, or a logon type the host doesn't grant
+///         after the password was checked) on a host in the domain of the credentials: all hosts run, the logon failures
+///         of the account are reset (like the domain controller does). A success on a host of another domain (or with credentials without domain)
 ///         proves nothing - a host that maps a failed logon to guest (e.g. a NAS with <c>map to guest = bad
 ///         user</c>) or a local account with the same name also answer a wrong password: only this host uses them, the
 ///         next host checks them.</item>
@@ -237,20 +238,28 @@ public sealed class WindowsLogonGate
                 if (_state != State.Unchecked)
                     return;
 
-                // Access denied: logged on, but without rights - the credentials are correct. Only proven by a host in
-                // their domain: another host may have logged on as guest or with a local account of the same name,
-                // also with a wrong password (only this host used them, the next host checks them)
-                if (info.Error is 0 or 5)
+                // Access denied (logged on, but without rights) or a logon type the host doesn't grant (checked after
+                // the password, e.g. "Deny access to this computer from the network" on a domain controller): the
+                // credentials are correct. Only proven by a host in their domain: another host may have logged on as
+                // guest or with a local account of the same name, also with a wrong password (only this host used them,
+                // the next host checks them)
+                if (info.Error is 0 or 5 or WindowsHostInfo.ErrorLogonTypeNotGranted)
                 {
                     if (IsInDomain(ntlm))
+                    {
                         _state = State.Accepted;
+
+                        // A successful logon resets the failures at the domain controller (badPwdCount)
+                        Interlocked.Exchange(ref _logonFailures.Value, 0);
+                    }
 
                     return;
                 }
 
-                // Only an error that shows that no domain controller checked them lets the next host check them,
-                // every other error may be a wrong password
-                if (WindowsHostInfo.IsLogonNotDecided(info.Error))
+                // Only an error that shows that no domain controller checked them, or a logon that is not allowed for
+                // the account (e.g. logon hours, Protected Users with NTLM - no failed logon), lets the next host check
+                // them, every other error may be a wrong password
+                if (WindowsHostInfo.IsLogonNotDecided(info.Error) || WindowsHostInfo.IsLogonNotAllowed(info.Error))
                     return;
 
                 var logonFailures = Interlocked.Increment(ref _logonFailures.Value);
@@ -269,13 +278,15 @@ public sealed class WindowsLogonGate
     /// <summary>
     ///     Reports the result of a host that is not gated (<see cref="IsGated" /> false, <see cref="Decision.Proceed" />):
     ///     after a logon failure (every error except success, access denied and the errors of
-    ///     <see cref="WindowsHostInfo.IsLogonNotDecided" />), the host is skipped in the next scans.
+    ///     <see cref="WindowsHostInfo.IsLogonNotAllowed" /> / <see cref="WindowsHostInfo.IsLogonNotDecided" />), the
+    ///     host is skipped in the next scans.
     /// </summary>
     /// <param name="host">IP address of the host.</param>
     /// <param name="info">Result of the NetApi requests, null if they didn't run (e.g. canceled).</param>
     public void ReportUngated(string host, WindowsNetApiInfo info)
     {
-        if (info == null || info.Error is 0 or 5 || WindowsHostInfo.IsLogonNotDecided(info.Error))
+        if (info == null || info.Error is 0 or 5 || WindowsHostInfo.IsLogonNotAllowed(info.Error) ||
+            WindowsHostInfo.IsLogonNotDecided(info.Error))
             return;
 
         lock (_lock)

@@ -31,6 +31,20 @@ public sealed record WindowsHostInfo(SMBInfo SMB, WindowsNetApiInfo NetApi)
     public const int ErrorLogonNotChecked = -2;
 
     /// <summary>
+    ///     Win32 error of a logon type that is not granted on the host (<c>ERROR_LOGON_TYPE_NOT_GRANTED</c>, e.g. "Deny
+    ///     access to this computer from the network"): checked by the host after the domain controller accepted the
+    ///     password.
+    /// </summary>
+    public const int ErrorLogonTypeNotGranted = 1385;
+
+    /// <summary>
+    ///     Win32 errors of a logon that is not allowed for the account: account restriction (e.g. Protected Users with
+    ///     NTLM), logon hours, workstation, logon type not granted. No failed logon is counted for them (checked after
+    ///     the password, or the password was not checked).
+    /// </summary>
+    private static readonly HashSet<int> LogonNotAllowedErrors = [1327, 1328, 1329, ErrorLogonTypeNotGranted];
+
+    /// <summary>
     ///     Win32 errors of NetApi requests whose logon was not decided: the host (or its SMB / RPC service) can't be
     ///     reached, the connection was closed, the domain controller of the host can't be reached or NTLM is blocked -
     ///     no domain controller checked the password. Every other error may be a failed logon (e.g. a Kerberos / SSPI
@@ -175,6 +189,18 @@ public sealed record WindowsHostInfo(SMBInfo SMB, WindowsNetApiInfo NetApi)
     ///     Win32 error of the logged-on users (0 if they were read or the NetApi was not read).
     /// </summary>
     public int UsersError => NetApi?.UsersError ?? 0;
+
+    /// <summary>
+    ///     Checks if a Win32 error of the NetApi requests is a logon that is not allowed for the account (e.g. on this
+    ///     host or at this time): no failed logon at the domain controller, but the password is not proven either
+    ///     (except <see cref="ErrorLogonTypeNotGranted" />).
+    /// </summary>
+    /// <param name="error">Win32 error.</param>
+    /// <returns>True if the logon is not allowed.</returns>
+    public static bool IsLogonNotAllowed(int error)
+    {
+        return LogonNotAllowedErrors.Contains(error);
+    }
 
     /// <summary>
     ///     Checks if a Win32 error of the NetApi requests shows that the logon was not decided (host, network, RPC or
