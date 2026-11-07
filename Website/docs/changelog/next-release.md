@@ -289,6 +289,7 @@ Release date: **xx.xx.2026**
 - Fixed the **Refresh** button below "No WiFi adapters found" being disabled while **Automatically update every** was enabled. The adapters could only be loaded again after a restart. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the application crashing if connecting to or disconnecting from a network failed with an error (e.g. the adapter was disabled meanwhile). The error is shown in the status below the networks, and scanning is no longer blocked afterwards. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed **Connect...** and **Disconnect** being available while a connection is made, and **Connect...** failing if the networks were scanned again while the context menu was open. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed **Use credentials** being ignored when connecting to a WPA / WPA2 / WPA3 Enterprise network (EAP). If it is disabled, no username and password are sent and Windows uses the logged-on user or a certificate. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 

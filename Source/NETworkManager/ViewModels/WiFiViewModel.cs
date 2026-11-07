@@ -1162,7 +1162,9 @@ public class WiFiViewModel : ViewModelBase
                     case WiFiConnectMode.Psk:
                         credential.Password = SecureStringHelper.ConvertToString(instance.PreSharedKey);
                         break;
-                    case WiFiConnectMode.Eap:
+                    // Without credentials, Windows uses the logged-on user or a certificate (like an open network,
+                    // an empty credential is passed)
+                    case WiFiConnectMode.Eap when instance.UseCredentials:
                         credential.UserName = instance.Username;
 
                         if (!string.IsNullOrEmpty(instance.Domain))
