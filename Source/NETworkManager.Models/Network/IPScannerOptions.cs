@@ -155,6 +155,12 @@ public record IPScannerOptions
     public required int WindowsTimeout { get; init; }
 
     /// <summary>
+    ///     Max. logon failures with the <see cref="WindowsCredentials" /> on hosts of other domains before they are
+    ///     rejected, see <see cref="WindowsLogonGate" />.
+    /// </summary>
+    public required int WindowsMaxLogonFailures { get; init; }
+
+    /// <summary>
     ///     Include unreachable IP addresses in the result.
     /// </summary>
     public required bool ShowAllResults { get; init; }

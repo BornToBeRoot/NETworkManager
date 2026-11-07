@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,8 +19,10 @@ namespace NETworkManager.Models.Network;
 ///         user</c>) or a local account with the same name also answer a wrong password: only this host uses them, the
 ///         next host checks them.</item>
 ///         <item>Logon failure on a host in the domain of the credentials (the domain controller checked them), any
-///         logon failure if the credentials have no domain (e.g. "admin"), or the third logon failure on hosts of
-///         other domains: rejected, the remaining hosts are not tried.</item>
+///         logon failure if the credentials have no domain (e.g. "admin"), or the max. logon failures (setting) on hosts
+///         of other domains: rejected, the remaining hosts are not tried. The logon failures are counted per account for
+///         all gates (tabs, credentials entered again) until the application is closed, like the domain controller
+///         counts them; a new gate still checks them once (e.g. the password was corrected).</item>
 ///         <item>Errors that show the logon was not decided (timeout, host / RPC / domain controller of the host not
 ///         reachable, see <see cref="WindowsHostInfo.IsLogonNotDecided" />) or a logon failure on a computer of
 ///         another domain: the next host checks. Every other error counts as a logon failure (e.g. a Kerberos / SSPI
@@ -30,9 +34,11 @@ namespace NETworkManager.Models.Network;
 public sealed class WindowsLogonGate
 {
     /// <summary>
-    ///     Max. logon failures on hosts that are not in the domain of the credentials before they are rejected.
+    ///     Logon failures of each account (as used for the logon, e.g. "CORP\admin") on hosts of other domains, for all
+    ///     gates of the application.
     /// </summary>
-    public const int MaxLogonFailures = 3;
+    private static readonly ConcurrentDictionary<string, StrongBox<int>> LogonFailuresOfAccounts =
+        new(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>
     ///     What a host does with the credentials.
@@ -73,8 +79,13 @@ public sealed class WindowsLogonGate
     private readonly string _domain;
     private readonly bool _isLocalAccount;
 
+    // Shared with the other gates of the account
+    private readonly StrongBox<int> _logonFailures;
+
     private State _state;
-    private int _logonFailures;
+
+    // Max. logon failures on hosts of other domains (setting of the scan, see StartScan), 1 until a scan started
+    private int _maxLogonFailures = 1;
 
     // Hosts that are not gated and rejected the credentials themselves (e.g. a workgroup computer): not tried again
     private readonly HashSet<string> _rejectedHosts = new(StringComparer.OrdinalIgnoreCase);
@@ -93,6 +104,8 @@ public sealed class WindowsLogonGate
 
         _domain = domain ?? string.Empty;
         _isLocalAccount = _domain == ".";
+
+        _logonFailures = LogonFailuresOfAccounts.GetOrAdd(credentials.DisplayName, _ => new StrongBox<int>());
     }
 
     /// <summary>
@@ -112,10 +125,15 @@ public sealed class WindowsLogonGate
     ///     checked again (e.g. the password was changed or expired since then), the logon failures and a rejection are
     ///     kept.
     /// </summary>
-    public void StartScan()
+    /// <param name="maxLogonFailures">
+    ///     Max. logon failures on hosts of other domains before the credentials are rejected (setting, min. 1).
+    /// </param>
+    public void StartScan(int maxLogonFailures)
     {
         lock (_lock)
         {
+            _maxLogonFailures = Math.Max(1, maxLogonFailures);
+
             if (_state == State.Accepted)
                 _state = State.Unchecked;
         }
@@ -235,10 +253,10 @@ public sealed class WindowsLogonGate
                 if (WindowsHostInfo.IsLogonNotDecided(info.Error))
                     return;
 
-                _logonFailures++;
+                var logonFailures = Interlocked.Increment(ref _logonFailures.Value);
 
                 // Without a domain (e.g. "admin"), the host's domain controller may have checked them
-                if (IsInDomain(ntlm) || string.IsNullOrEmpty(_domain) || _logonFailures >= MaxLogonFailures)
+                if (IsInDomain(ntlm) || string.IsNullOrEmpty(_domain) || logonFailures >= _maxLogonFailures)
                     _state = State.Rejected;
             }
         }

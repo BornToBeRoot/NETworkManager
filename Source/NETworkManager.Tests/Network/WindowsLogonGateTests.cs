@@ -24,10 +24,20 @@ public class WindowsLogonGateTests
     private static readonly NTLMChallengeInfo WorkgroupHost =
         new(new Version(10, 0, 26200), "PC01", "PC01", "PC01", "PC01", string.Empty, null);
 
-    private static WindowsLogonGate CreateGate(string username = "admin", string domain = "CORP")
+    private const int MaxLogonFailures = 2;
+
+    /// <summary>
+    ///     Creates the gate and starts a scan. Without a username: a new account (the logon failures are counted per
+    ///     account for all gates of the application, also of other tests).
+    /// </summary>
+    private static WindowsLogonGate CreateGate(string username = null, string domain = "CORP")
     {
-        return new WindowsLogonGate(
-            new WindowsCredentials(username, domain, SecureStringHelper.ConvertToSecureString("password")));
+        var gate = new WindowsLogonGate(new WindowsCredentials(username ?? $"admin-{Guid.NewGuid():N}", domain,
+            SecureStringHelper.ConvertToSecureString("password")));
+
+        gate.StartScan(MaxLogonFailures);
+
+        return gate;
     }
 
     private static readonly WindowsNetApiInfo LogonFailure = WindowsNetApiInfo.FromError(1326);
@@ -73,7 +83,7 @@ public class WindowsLogonGateTests
 
         for (var scan = 0; scan < 5; scan++)
         {
-            gate.StartScan();
+            gate.StartScan(MaxLogonFailures);
 
             Assert.Equal(WindowsLogonGate.Decision.Check,
                 await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None));
@@ -145,7 +155,7 @@ public class WindowsLogonGateTests
         gate.Report(CorpHost, Success);
         Assert.Equal(WindowsLogonGate.Decision.Proceed, await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
 
-        gate.StartScan();
+        gate.StartScan(MaxLogonFailures);
 
         Assert.Equal(WindowsLogonGate.Decision.Check, await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
         gate.Report(CorpHost, LogonFailure);
@@ -161,7 +171,7 @@ public class WindowsLogonGateTests
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
         gate.Report(CorpHost, LogonFailure);
 
-        gate.StartScan();
+        gate.StartScan(MaxLogonFailures);
 
         Assert.Equal(WindowsLogonGate.Decision.Skip, await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
     }
@@ -204,7 +214,7 @@ public class WindowsLogonGateTests
     {
         var gate = CreateGate();
 
-        for (var i = 0; i < WindowsLogonGate.MaxLogonFailures; i++)
+        for (var i = 0; i < MaxLogonFailures; i++)
         {
             Assert.False(gate.IsRejected);
             Assert.Equal(WindowsLogonGate.Decision.Check,
@@ -214,6 +224,50 @@ public class WindowsLogonGateTests
         }
 
         Assert.True(gate.IsRejected);
+    }
+
+    [Theory]
+    [InlineData(1)]
+    [InlineData(3)]
+    public async Task MaxLogonFailuresOfTheScan(int maxLogonFailures)
+    {
+        var gate = CreateGate();
+        gate.StartScan(maxLogonFailures);
+
+        for (var i = 0; i < maxLogonFailures; i++)
+        {
+            Assert.False(gate.IsRejected);
+
+            await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+            gate.Report(OtherDomainHost, LogonFailure);
+        }
+
+        Assert.True(gate.IsRejected);
+    }
+
+    [Fact]
+    public async Task LogonFailuresCountedForAllGatesOfTheAccount()
+    {
+        // E.g. another tab (Scan as..., the same profile) or the credentials entered again: the domain controller
+        // counts the failures of the account, not of the tab
+        var username = $"admin-{Guid.NewGuid():N}";
+
+        var first = CreateGate(username);
+        await first.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+        first.Report(OtherDomainHost, LogonFailure);
+        Assert.False(first.IsRejected);
+
+        var second = CreateGate(username);
+        await second.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+        second.Report(OtherDomainHost, LogonFailure);
+        Assert.True(second.IsRejected);
+
+        // A new gate still checks them once (e.g. the password was corrected), rejected by its first failure
+        var third = CreateGate(username);
+        Assert.Equal(WindowsLogonGate.Decision.Check,
+            await third.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None));
+        third.Report(OtherDomainHost, LogonFailure);
+        Assert.True(third.IsRejected);
     }
 
     [Fact]

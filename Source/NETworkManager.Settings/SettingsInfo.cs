@@ -1623,6 +1623,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_WindowsTimeout;
 
+    public int IPScanner_WindowsMaxLogonFailures
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_WindowsMaxLogonFailures;
+
     public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
     {
         get;

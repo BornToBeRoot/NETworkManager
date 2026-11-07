@@ -175,6 +175,7 @@ public static class GlobalStaticConfiguration
     public static int IPScanner_SNMPTimeout => 2000;
     public static bool IPScanner_WindowsEnabled => false;
     public static int IPScanner_WindowsTimeout => 5000;
+    public static int IPScanner_WindowsMaxLogonFailures => 2;
     public static bool IPScanner_ExpandHostView => false;
 
     public static AutoRefreshTimeInfo IPScanner_AutoRefreshTime =>

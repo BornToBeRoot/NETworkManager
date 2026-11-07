@@ -6057,6 +6057,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Logon failures with the Windows credentials of a profile / group / tab on hosts outside the domain of the credentials (e.g. in a trusted domain) before they are rejected and not used for the other hosts. A logon failure on a host in the domain of the credentials, or with credentials without domain, rejects them right away. The failures are counted per account for all tabs until NETworkManager is closed. A domain controller may count one failed logon twice (Kerberos, then NTLM): keep this value b [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string HelpMessage_MaxLogonFailures {
+            get {
+                return ResourceManager.GetString("HelpMessage_MaxLogonFailures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of consecutive failed pings (timeouts) required before a &quot;Host is down&quot; notification is shown. Higher values reduce noise from flapping hosts..
         /// </summary>
         public static string HelpMessage_NotificationFailureThreshold {
@@ -7974,6 +7983,15 @@ namespace NETworkManager.Localization.Resources {
         public static string MaximumNumberOfHopsReached {
             get {
                 return ResourceManager.GetString("MaximumNumberOfHopsReached", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max. logon failures.
+        /// </summary>
+        public static string MaxLogonFailures {
+            get {
+                return ResourceManager.GetString("MaxLogonFailures", resourceCulture);
             }
         }
         

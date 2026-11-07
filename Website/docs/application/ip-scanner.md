@@ -453,7 +453,7 @@ Windows 10 / 11 and Windows Server 2016 and later all report the version `10.0`,
 With the [Windows credentials](#windows-credentials) of a profile / group, a wrong password must not lock the account (every host in a domain makes the domain controller count a failed logon). The credentials are checked on one host first, the other hosts wait:
 
 - Accepted (also `Access is denied.`: logged on, but without rights) on a host in the domain of the credentials (also in its forest, e.g. `admin@example.com` for a host in `corp.example.com`): all hosts are asked. A success on a host of another domain or with credentials without domain doesn't prove the password (a host that logs a failed logon on as guest, e.g. a NAS, or a local account with the same name also accept a wrong password): the next host checks them, the hosts stay one at a time (hosts that wait longer than twice the timeout are not tried, `Not tried: ...`).
-- Logon failure on a host in the domain of the credentials, any logon failure if the credentials have no domain (e.g. `admin`), or the third logon failure on hosts of other domains: the credentials are rejected. The other hosts are not tried (`Not tried: ...` in the row details), a message is shown and the tab doesn't use them for the next scans (also not for **Automatically scan every** and **Rescan**) - set them again with **Options** > **Set Windows credentials...** or open a new tab after correcting the profile. The logon failures are counted over all scans of the tab, so a repeated scan doesn't start again from zero; accepted credentials are checked again in every scan (e.g. a password changed since then).
+- Logon failure on a host in the domain of the credentials, any logon failure if the credentials have no domain (e.g. `admin`), or the [Max. logon failures](#max-logon-failures) on hosts of other domains (e.g. a trusted domain): the credentials are rejected. The other hosts are not tried (`Not tried: ...` in the row details), a message is shown and the tab doesn't use them for the next scans (also not for **Automatically scan every** and **Rescan**) - set them again with **Options** > **Set Windows credentials...** or open a new tab after correcting the profile. The logon failures are counted per account for all scans and tabs until NETworkManager is closed (like the domain controller counts them), so a repeated scan or another tab doesn't start again from zero - credentials set again are still checked once; accepted credentials are checked again in every scan (e.g. a password changed since then).
 - Errors that show that no domain controller checked the password (e.g. the timeout, the host, its RPC service or its domain controller not reachable): the next host checks them. Every other error counts as a logon failure (e.g. `The user's account has expired.`), so an error of a wrong password that is not known as one can't let all hosts try it.
 
 Computers in a workgroup (known from the NTLM negotiation) and local accounts (`.\admin`) are not part of this check - a host that doesn't send its computer and domain name (no NTLM, or incomplete values) is checked like a domain host: a logon failure there only affects the host (e.g. a Windows PC that is not in the domain shows the error in its row, the other hosts are not affected). A rejection on the domain hosts doesn't affect them (e.g. the local admin of workgroup computers), but a host that rejected the credentials itself is not tried again in the next scans of the tab. The user running NETworkManager is not checked (no stored password).
@@ -479,6 +479,20 @@ Timeout in milliseconds of the SMB request and of the NetApi requests of a host 
 **Type:** `Integer` [Min `500`, Max `30000`]
 
 **Default:** `5000`
+
+### Max. logon failures
+
+Logon failures with the [Windows credentials](#windows-credentials) on hosts outside the domain of the credentials (e.g. in a trusted domain) before they are rejected and not used for the other hosts, see [Read Windows host information](#read-windows-host-information). A logon failure on a host in the domain of the credentials, or with credentials without domain, rejects them right away. The failures are counted per account for all tabs until NETworkManager is closed.
+
+**Type:** `Integer` [Min `1`, Max `5`]
+
+**Default:** `2`
+
+:::warning
+
+A domain controller may count one failed logon twice (Kerberos, then NTLM). Keep this value below half of the account lockout threshold of your domain.
+
+:::
 
 ### Scan for NetBIOS
 

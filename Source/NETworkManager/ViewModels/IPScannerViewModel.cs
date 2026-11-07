@@ -1371,6 +1371,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             SNMPTimeout = SettingsManager.Current.IPScanner_SNMPTimeout,
             WindowsEnabled = SettingsManager.Current.IPScanner_WindowsEnabled,
             WindowsTimeout = SettingsManager.Current.IPScanner_WindowsTimeout,
+            WindowsMaxLogonFailures = SettingsManager.Current.IPScanner_WindowsMaxLogonFailures,
             ShowAllResults = SettingsManager.Current.IPScanner_ShowAllResults,
             ReportAllHosts = false
         };
