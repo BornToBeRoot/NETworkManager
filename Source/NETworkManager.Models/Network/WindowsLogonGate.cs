@@ -17,9 +17,10 @@ namespace NETworkManager.Models.Network;
 ///     accepted, the hosts run in parallel:
 ///     <list type="bullet">
 ///         <item>Accepted (success, access denied = logged on without rights, or a logon type the host doesn't grant
-///         after the password was checked) on a host in the domain of the credentials: all hosts run, the logon failures
-///         of the account are reset (like the domain controller does). A success on a host of another domain (or with
-///         credentials without domain) proves nothing - a host that maps a failed logon to guest (e.g. a NAS with
+///         after the password was checked) on a Windows host in the domain of the credentials: all hosts run, the logon
+///         failures of the account are reset (like the domain controller does). A success on a host of another domain,
+///         on a host that is not Windows (e.g. a Samba / NAS member of the domain with <c>map to guest = bad
+///         password</c>) or with credentials without domain proves nothing - a host that maps a failed logon to guest (e.g. a NAS with
 ///         <c>map to guest = bad user</c>) or a local account with the same name also answer a wrong password: only
 ///         this host uses them, the next host checks them.</item>
 ///         <item>Logon failure on a host in the domain of the credentials (the domain controller checked them), any
@@ -470,7 +471,9 @@ public sealed class WindowsLogonGate
                 // the next host checks them)
                 if (info.Error is 0 or 5 or WindowsHostInfo.ErrorLogonTypeNotGranted)
                 {
-                    if (IsInDomain(ntlm))
+                    // A Windows host (build of the NTLM challenge; Samba / NAS devices send none or 0) doesn't log a
+                    // wrong password of a domain account on as guest
+                    if (IsInDomain(ntlm) && ntlm.Version is { Build: > 0 })
                     {
                         _state = State.Accepted;
 
@@ -482,9 +485,11 @@ public sealed class WindowsLogonGate
                     }
                     else
                     {
+                        var where = IsInDomain(ntlm) ? "not a Windows host" : "not in their domain";
+
                         log = () => Log.Info($"Windows credentials \"{_account}\" logged on to {hostName} (error " +
-                                             $"{GetError(info.Error)}), but not in their domain - not proven (e.g. " +
-                                             "guest, local account): the next host checks them (lockout protection).");
+                                             $"{GetError(info.Error)}), but {where} - not proven (e.g. guest, local " +
+                                             "account): the next host checks them (lockout protection).");
                     }
 
                     return;

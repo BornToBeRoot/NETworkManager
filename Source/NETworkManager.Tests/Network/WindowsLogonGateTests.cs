@@ -64,6 +64,32 @@ public class WindowsLogonGateTests
         Assert.False(gate.IsRejected);
     }
 
+    [Theory]
+    [InlineData(6, 1, 0)] // Samba
+    [InlineData(null, null, null)] // no version (e.g. a NAS)
+    public async Task SuccessOnNonWindowsHostInTheDomain_NotAccepted(int? major, int? minor, int? build)
+    {
+        // E.g. a Samba / NAS member of the domain with "map to guest = bad password": a wrong password is a guest
+        // logon - only a Windows host proves the password
+        var samba = new NTLMChallengeInfo(major == null ? null : new Version(major.Value, minor.Value, build.Value),
+            "NAS01", "CORP", "nas01.corp.example.com", "corp.example.com", "example.com", null);
+
+        var gate = CreateGate();
+
+        await gate.WaitAsync(samba, "10.0.0.9", Timeout, CancellationToken.None);
+        gate.Report(samba, "10.0.0.9", Success);
+
+        Assert.Equal(WindowsLogonGate.Decision.Check,
+            await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
+
+        // A logon failure on such a host still rejects them (the domain controller may have counted it)
+        gate.Report(CorpHost, "10.0.0.1", null);
+        await gate.WaitAsync(samba, "10.0.0.9", Timeout, CancellationToken.None);
+        gate.Report(samba, "10.0.0.9", LogonFailure);
+
+        Assert.True(gate.IsRejected);
+    }
+
     [Fact]
     public async Task AccessDenied_CredentialsAccepted()
     {

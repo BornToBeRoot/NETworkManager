@@ -22,7 +22,7 @@ The user running NETworkManager (no credentials set) is not checked: Windows use
 
 | Result on the host that checks them | Host in the domain of the credentials | Host in another domain | Credentials without domain (e.g. `admin`) |
 | --- | --- | --- | --- |
-| Success, `Access is denied.` (logged on without rights), logon type not granted | **Accepted**, the counted failures of the account are reset | This host only, the next host checks them | This host only, the next host checks them |
+| Success, `Access is denied.` (logged on without rights), logon type not granted | **Accepted** (only by a Windows host), the counted failures of the account are reset | This host only, the next host checks them | This host only, the next host checks them |
 | Failed logon (e.g. wrong password, disabled / locked / expired account) or an unknown error | **Rejected** | Counted, **rejected** after [Max. logon failures](../application/ip-scanner#max-logon-failures) | **Rejected** |
 | Logon not allowed (logon hours, workstation, account restriction) | Not counted, the next host checks them | Not counted, the next host checks them | Not counted, the next host checks them |
 | No decision (timeout, host / RPC / its domain controller not reachable, NTLM blocked) | The next host checks them | The next host checks them | The next host checks them |
@@ -30,6 +30,8 @@ The user running NETworkManager (no credentials set) is not checked: Windows use
 ### When is a host in the domain of the credentials?
 
 The domain of the credentials is the domain of `DOMAIN\user`, the **Domain** field or the suffix of a UPN (`user@corp.example.com`). A host is in this domain if its NTLM negotiation names it as its NetBIOS domain (`CORP`), its DNS domain (`corp.example.com`) or its forest (`example.com`, e.g. for `admin@example.com`). Only such a host is checked by a domain controller that knows the account - its answer proves the password, or proves that a failed logon was counted.
+
+Only a **Windows** host (it sends its build in the NTLM negotiation) accepts the credentials for all hosts: a Samba server or NAS in the domain could map a wrong password to guest (`map to guest = bad password`) and answer it with a success. A logon failure on such a host still rejects them.
 
 ### Why doesn't a success on another host accept the credentials?
 
