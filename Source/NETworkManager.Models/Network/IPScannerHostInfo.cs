@@ -138,14 +138,20 @@ public class IPScannerHostInfo : PropertyChangedBase
     } = true;
 
     /// <summary>
-    ///     Operating system for sorting the OS column: the Windows version if it was read, otherwise the guess from the
-    ///     TTL (if enabled), empty if neither is known.
+    ///     Name of a guessed operating system as shown in the OS column (translated, set by the application - this
+    ///     project has no translations), for sorting; the name of the value by default.
+    /// </summary>
+    public static Func<IPScannerOSGuess, string> OSGuessToString { get; set; } = x => x.ToString();
+
+    /// <summary>
+    ///     Operating system for sorting the OS column (as shown): the Windows version if it was read, otherwise the
+    ///     guess from the TTL (if enabled), empty if neither is known.
     /// </summary>
     public string OSName => HasWindowsOS
         ? WindowsOS
         : !IsOSGuessEnabled || OSGuess == IPScannerOSGuess.None
             ? string.Empty
-            : OSGuess.ToString();
+            : OSGuessToString(OSGuess);
 
     /// <summary>
     ///     The operating system is not known yet, but a source (Windows host information, ping for the guess) is still

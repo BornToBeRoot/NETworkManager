@@ -572,6 +572,12 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     #region Constructor, load settings, shutdown
 
+    static IPScannerViewModel()
+    {
+        // The OS column is sorted by the translated name of a guessed operating system, as it is shown
+        IPScannerHostInfo.OSGuessToString = IPScannerOSGuessToStringConverter.ToLocalizedString;
+    }
+
     /// <summary>
     /// Initializes a new instance of the <see cref="IPScannerViewModel"/> class.
     /// </summary>
