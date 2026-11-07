@@ -18,7 +18,8 @@ The user running NETworkManager (no credentials set) is not checked: Windows use
 1. **Without credentials first:** the SMB / NTLM negotiation (no logon, no failed logon) tells the computer name and the domain or workgroup of the host. A host in a domain is _gated_ (see [below](#which-hosts-are-not-gated)).
 2. **One host checks the credentials**, the other gated hosts wait. A host that waits longer than twice the [timeout](../application/ip-scanner#timeout-ms-2) is not tried (`Not tried: the Windows credentials were still being checked on another host ...`). The host that checks keeps its turn until Windows returns, also after its timeout - two hosts never check them at the same time, also not in different tabs (one turn per account).
 3. **The result of that host decides** (see the table below): the credentials are _accepted_ (all hosts use them in parallel), _rejected_ (no other host uses them) or the next host checks them.
-4. **Every scan checks them again** on one host first (e.g. the password was changed or expired since the last scan, also with **Automatically scan every** and **Rescan**). A rejection is kept for the tab.
+4. **While the hosts use accepted credentials**, a failed logon on a host in their domain (e.g. the password was changed or the account locked during the scan) rejects them for the hosts that didn't start yet (at most 16 hosts run at the same time). A failure on a host of another domain doesn't (expected also with a correct password, e.g. a domain that is not trusted).
+5. **Every scan checks them again** on one host first (e.g. the password was changed or expired since the last scan, also with **Automatically scan every** and **Rescan**). A rejection is kept for the tab.
 
 | Result on the host that checks them | Host in the domain of the credentials | Host in another domain | Credentials without domain (e.g. `admin`) |
 | --- | --- | --- | --- |

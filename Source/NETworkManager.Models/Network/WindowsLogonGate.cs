@@ -19,13 +19,15 @@ namespace NETworkManager.Models.Network;
 ///         <item>Accepted (success, access denied = logged on without rights, or a logon type the host doesn't grant
 ///         after the password was checked) on a Windows host in the domain of the credentials: all hosts run, the logon
 ///         failures of the account are reset (like the domain controller does). A success on a host of another domain,
-///         on a host that is not Windows (e.g. a Samba / NAS member of the domain with <c>map to guest = bad
-///         password</c>) or with credentials without domain proves nothing - a host that maps a failed logon to guest (e.g. a NAS with
-///         <c>map to guest = bad user</c>) or a local account with the same name also answer a wrong password: only
-///         this host uses them, the next host checks them.</item>
+///         on a host that is not Windows or with credentials without domain proves nothing - a host that maps a failed
+///         logon to guest (e.g. a NAS with <c>map to guest = bad user</c> outside the domain, or a Samba / NAS member
+///         of the domain with <c>map to guest = bad password</c>) or a local account with the same name also answer a
+///         wrong password: only this host uses them, the next host checks them.</item>
 ///         <item>Logon failure on a host in the domain of the credentials (the domain controller checked them), any
 ///         logon failure if the credentials have no domain (e.g. "admin"), or the max. logon failures (setting) on hosts
-///         of other domains: rejected, the remaining hosts are not tried.</item>
+///         of other domains: rejected, the remaining hosts are not tried. Also after they were accepted: a logon
+///         failure on a host in their domain while the hosts run (e.g. the password was changed or the account locked
+///         during the scan) rejects them for the hosts that didn't start yet.</item>
 ///         <item>Errors that show the logon was not decided (timeout, host / RPC / domain controller of the host not
 ///         reachable, see <see cref="WindowsHostInfo.IsLogonNotDecided" />) or a logon failure on a computer of
 ///         another domain: the next host checks. Every other error counts as a logon failure (e.g. a Kerberos / SSPI
@@ -71,7 +73,8 @@ public sealed class WindowsLogonGate
         public readonly SemaphoreSlim Turn = new(1, 1);
 
         /// <summary>
-        ///     Fingerprints of the rejected passwords: a new gate with one of them starts rejected. Locked by the state.
+        ///     Fingerprints of the rejected passwords: a new gate with one of them starts rejected (locked by the
+        ///     state).
         /// </summary>
         public readonly HashSet<string> RejectedPasswords = new(StringComparer.Ordinal);
 
@@ -87,7 +90,8 @@ public sealed class WindowsLogonGate
     public enum Decision
     {
         /// <summary>
-        ///     Use them (accepted, or not gated). Don't call <see cref="Report" />.
+        ///     Use them (accepted, or not gated). Don't call <see cref="Report" />; call <see cref="ReportAccepted" />
+        ///     (gated) or <see cref="ReportUngated" /> (not gated) with the result.
         /// </summary>
         Proceed,
 
@@ -193,8 +197,9 @@ public sealed class WindowsLogonGate
     }
 
     /// <summary>
-    ///     Gets a keyed hash (HMAC-SHA256, random key per start of the application) of a password, to know if a password
-    ///     was rejected without keeping it. The password is only copied to a pinned buffer that is zeroed right away.
+    ///     Gets a keyed hash (HMAC-SHA256, random key per start of the application) of a password, to know if a
+    ///     password was rejected without keeping it. The password is only copied to a pinned buffer that is zeroed right
+    ///     away.
     /// </summary>
     /// <param name="password">Password, null for an empty one.</param>
     /// <returns>Fingerprint (Base64).</returns>
@@ -548,6 +553,46 @@ public sealed class WindowsLogonGate
         // Outside the lock (the handler may read the state)
         if (isRejected)
             Rejected?.Invoke(this, EventArgs.Empty);
+    }
+
+    /// <summary>
+    ///     Reports the result of a gated host that used the accepted credentials (<see cref="Decision.Proceed" />): a
+    ///     logon failure on a host in their domain (e.g. the password was changed or the account locked during the
+    ///     scan) rejects them for the hosts that didn't start yet. Failures on hosts of other domains are expected also
+    ///     with a correct password (e.g. a domain that is not trusted).
+    /// </summary>
+    /// <param name="ntlm">NTLM challenge of the host, null if none.</param>
+    /// <param name="host">IP address of the host (for the log).</param>
+    /// <param name="info">Result of the NetApi requests, null if they didn't run (e.g. canceled).</param>
+    public void ReportAccepted(NTLMChallengeInfo ntlm, string host, WindowsNetApiInfo info)
+    {
+        if (info == null || info.Error is 0 or 5 or WindowsHostInfo.ErrorLogonTypeNotGranted ||
+            WindowsHostInfo.IsLogonNotDecided(info.Error) || WindowsHostInfo.IsLogonNotAllowed(info.Error) ||
+            !IsInDomain(ntlm))
+            return;
+
+        int logonFailures;
+
+        lock (_lock)
+        {
+            // Rejected already (e.g. by another host of the scan)
+            if (_state == State.Rejected)
+                return;
+
+            logonFailures = Interlocked.Increment(ref _accountState.LogonFailures);
+
+            SetRejected();
+        }
+
+        var hostName = GetHostName(host, ntlm);
+
+        Log.Warn($"Logon of \"{_account}\" failed on {hostName}: error {GetError(info.Error)} (logon failure " +
+                 $"{logonFailures} of the account).");
+        Log.Warn($"Windows credentials \"{_account}\" rejected after a logon failure in their domain while the hosts " +
+                 "used them (e.g. the password was changed or the account locked during the scan): not used for the " +
+                 "hosts that didn't start yet and the next scans of the tab (lockout protection).");
+
+        Rejected?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>

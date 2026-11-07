@@ -884,11 +884,15 @@ public sealed class IPScanner(IPScannerOptions options)
         // A host that is not gated reports its own logon failure (skipped in the next scans)
         var isUngated = _windowsLogonGate != null && !_windowsLogonGate.IsGated(ntlm);
 
-        Action<WindowsNetApiInfo> onCallCompleted = decision == WindowsLogonGate.Decision.Check
-            ? x => _windowsLogonGate.Report(ntlm, ipAddress, x)
-            : isUngated
-                ? x => _windowsLogonGate.ReportUngated(ntlm, ipAddress, x)
-                : null;
+        // A gated host that uses the accepted credentials reports a logon failure in their domain (e.g. the password
+        // was changed during the scan): rejected for the hosts that didn't start yet
+        Action<WindowsNetApiInfo> onCallCompleted = _windowsLogonGate == null
+            ? null
+            : decision == WindowsLogonGate.Decision.Check
+                ? x => _windowsLogonGate.Report(ntlm, ipAddress, x)
+                : isUngated
+                    ? x => _windowsLogonGate.ReportUngated(ntlm, ipAddress, x)
+                    : x => _windowsLogonGate.ReportAccepted(ntlm, ipAddress, x);
 
         // Local account (".\admin"): logged on with the computer name of the host ("PC01\admin"), so only the host
         // checks it (not gated, the computer name is known)

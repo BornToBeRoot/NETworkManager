@@ -91,6 +91,49 @@ public class WindowsLogonGateTests
     }
 
     [Fact]
+    public async Task Accepted_LogonFailureInTheDomain_Rejected()
+    {
+        // E.g. the password was changed or the account locked during the scan: the hosts that didn't start yet don't
+        // try it
+        var gate = CreateGate();
+        var raised = 0;
+        gate.Rejected += (_, _) => raised++;
+
+        await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
+        gate.Report(CorpHost, "10.0.0.1", Success);
+
+        Assert.Equal(WindowsLogonGate.Decision.Proceed,
+            await gate.WaitAsync(CorpHost, "10.0.0.2", Timeout, CancellationToken.None));
+        gate.ReportAccepted(CorpHost, "10.0.0.2", WindowsNetApiInfo.FromError(1909));
+
+        Assert.True(gate.IsRejected);
+        Assert.Equal(1, raised);
+        Assert.Equal(WindowsLogonGate.Decision.Skip,
+            await gate.WaitAsync(CorpHost, "10.0.0.3", Timeout, CancellationToken.None));
+    }
+
+    [Theory]
+    [InlineData(1326, false)] // another domain (e.g. not trusted): expected also with a correct password
+    [InlineData(WindowsHostInfo.ErrorTimeout, true)]
+    [InlineData(5, true)]
+    [InlineData(1385, true)]
+    public async Task Accepted_OtherResults_NotRejected(int error, bool isInDomain)
+    {
+        var gate = CreateGate();
+
+        await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
+        gate.Report(CorpHost, "10.0.0.1", Success);
+
+        var host = isInDomain ? CorpHost : OtherDomainHost;
+        await gate.WaitAsync(host, "10.0.0.2", Timeout, CancellationToken.None);
+        gate.ReportAccepted(host, "10.0.0.2", WindowsNetApiInfo.FromError(error));
+
+        Assert.False(gate.IsRejected);
+        Assert.Equal(WindowsLogonGate.Decision.Proceed,
+            await gate.WaitAsync(CorpHost, "10.0.0.3", Timeout, CancellationToken.None));
+    }
+
+    [Fact]
     public async Task AccessDenied_CredentialsAccepted()
     {
         var gate = CreateGate();
