@@ -1144,59 +1144,32 @@ public class WiFiViewModel : ViewModelBase
 
             var ssid = selectedNetwork.IsHidden ? instance.Ssid : selectedNetwork.AvailableNetwork.Ssid;
 
-            // Show status message (not hidden by the timer of a previous message)
-            _hideConnectionStatusMessageTimer.Stop();
-            IsConnecting = true;
-            ConnectionStatusMessage = string.Format(Strings.ConnectingToXXX, ssid);
-            IsConnectionStatusMessageDisplayed = true;
-
-            // Connect to the network
-            var reconnectionKind = instance.ConnectAutomatically
-                ? WiFiReconnectionKind.Automatic
-                : WiFiReconnectionKind.Manual;
-
-            PasswordCredential credential = new();
-
-            switch (instance.ConnectMode)
+            await ConnectAsync(ssid, () =>
             {
-                case WiFiConnectMode.Psk:
-                    credential.Password = SecureStringHelper.ConvertToString(instance.PreSharedKey);
-                    break;
-                case WiFiConnectMode.Eap:
-                    credential.UserName = instance.Username;
+                PasswordCredential credential = new();
 
-                    if (!string.IsNullOrEmpty(instance.Domain))
-                        credential.Resource = instance.Domain;
+                switch (instance.ConnectMode)
+                {
+                    case WiFiConnectMode.Psk:
+                        credential.Password = SecureStringHelper.ConvertToString(instance.PreSharedKey);
+                        break;
+                    case WiFiConnectMode.Eap:
+                        credential.UserName = instance.Username;
 
-                    credential.Password = SecureStringHelper.ConvertToString(instance.Password);
-                    break;
-            }
+                        if (!string.IsNullOrEmpty(instance.Domain))
+                            credential.Resource = instance.Domain;
 
-            WiFiConnectionStatus connectionResult;
+                        credential.Password = SecureStringHelper.ConvertToString(instance.Password);
+                        break;
+                }
 
-            if (selectedNetwork.IsHidden)
-                connectionResult = await WiFi.ConnectAsync(instance.Options.AdapterInfo.WiFiAdapter,
-                    instance.Options.NetworkInfo.AvailableNetwork, reconnectionKind, credential, instance.Ssid);
-            else
-                connectionResult = await WiFi.ConnectAsync(instance.Options.AdapterInfo.WiFiAdapter,
-                    instance.Options.NetworkInfo.AvailableNetwork, reconnectionKind, credential);
-
-            // Done connecting
-            IsConnecting = false;
-
-            // Get result
-            ConnectionStatusMessage = connectionResult == WiFiConnectionStatus.Success
-                ? string.Format(Strings.SuccessfullyConnectedToXXX, ssid)
-                : string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid,
-                    ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
-
-            // Hide message automatically
-            _hideConnectionStatusMessageTimer.Stop();
-            _hideConnectionStatusMessageTimer.Start();
-
-            // Update the Wi-Fi networks.
-            // Wait because an error may occur if a refresh is done directly after connecting.            
-            await ScanAsync(SelectedAdapter, true, 5000);
+                return selectedNetwork.IsHidden
+                    ? WiFi.ConnectAsync(instance.Options.AdapterInfo.WiFiAdapter,
+                        instance.Options.NetworkInfo.AvailableNetwork, GetReconnectionKind(instance), credential,
+                        instance.Ssid)
+                    : WiFi.ConnectAsync(instance.Options.AdapterInfo.WiFiAdapter,
+                        instance.Options.NetworkInfo.AvailableNetwork, GetReconnectionKind(instance), credential);
+            });
         }, async instance =>
         {
             // Connect WPS
@@ -1205,37 +1178,8 @@ public class WiFiViewModel : ViewModelBase
 
             var ssid = selectedNetwork.IsHidden ? instance.Ssid : selectedNetwork.AvailableNetwork.Ssid;
 
-            // Show status message (not hidden by the timer of a previous message)
-            _hideConnectionStatusMessageTimer.Stop();
-            IsConnecting = true;
-            ConnectionStatusMessage = string.Format(Strings.ConnectingToXXX, ssid);
-            IsConnectionStatusMessageDisplayed = true;
-
-            // Connect to the network
-            var reconnectionKind = instance.ConnectAutomatically
-                ? WiFiReconnectionKind.Automatic
-                : WiFiReconnectionKind.Manual;
-
-            var connectionResult = await WiFi.ConnectWpsAsync(
-                instance.Options.AdapterInfo.WiFiAdapter, instance.Options.NetworkInfo.AvailableNetwork,
-                reconnectionKind);
-
-            // Done connecting
-            IsConnecting = false;
-
-            // Get result
-            ConnectionStatusMessage = connectionResult == WiFiConnectionStatus.Success
-                ? string.Format(Strings.SuccessfullyConnectedToXXX, ssid)
-                : string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid,
-                    ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
-
-            // Hide message automatically
-            _hideConnectionStatusMessageTimer.Stop();
-            _hideConnectionStatusMessageTimer.Start();
-
-            // Update the Wi-Fi networks.
-            // Wait because an error may occur if a refresh is done directly after connecting.            
-            await ScanAsync(SelectedAdapter, true, 5000);
+            await ConnectAsync(ssid, () => WiFi.ConnectWpsAsync(instance.Options.AdapterInfo.WiFiAdapter,
+                instance.Options.NetworkInfo.AvailableNetwork, GetReconnectionKind(instance)));
         },
             _ =>
             {
@@ -1254,6 +1198,49 @@ public class WiFiViewModel : ViewModelBase
         ConfigurationManager.Current.IsChildWindowOpen = true;
 
         _ = Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
+    }
+
+    /// <summary>
+    ///     Gets the reconnection kind of the connect dialog ("Connect automatically").
+    /// </summary>
+    private static WiFiReconnectionKind GetReconnectionKind(WiFiConnectViewModel instance)
+    {
+        return instance.ConnectAutomatically ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual;
+    }
+
+    /// <summary>
+    ///     Connects to a network and shows the status (connecting, result) below the networks. The networks are
+    ///     scanned again afterwards.
+    /// </summary>
+    /// <param name="ssid">SSID of the network, shown in the status message.</param>
+    /// <param name="connect">Connects to the network (Open / PSK / EAP or WPS) and returns the result.</param>
+    private async Task ConnectAsync(string ssid, Func<Task<WiFiConnectionStatus>> connect)
+    {
+        // Show status message (not hidden by the timer of a previous message)
+        _hideConnectionStatusMessageTimer.Stop();
+        IsConnecting = true;
+        ConnectionStatusMessage = string.Format(Strings.ConnectingToXXX, ssid);
+        IsConnectionStatusMessageDisplayed = true;
+
+        // Connect to the network
+        var connectionResult = await connect();
+
+        // Done connecting
+        IsConnecting = false;
+
+        // Get result
+        ConnectionStatusMessage = connectionResult == WiFiConnectionStatus.Success
+            ? string.Format(Strings.SuccessfullyConnectedToXXX, ssid)
+            : string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid,
+                ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
+
+        // Hide message automatically
+        _hideConnectionStatusMessageTimer.Stop();
+        _hideConnectionStatusMessageTimer.Start();
+
+        // Update the Wi-Fi networks.
+        // Wait because an error may occur if a refresh is done directly after connecting.
+        await ScanAsync(SelectedAdapter, true, 5000);
     }
 
     private async void Disconnect()
