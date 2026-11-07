@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -112,8 +113,52 @@ public class IPScannerHostInfo : PropertyChangedBase
             OnPropertyChanged();
             OnPropertyChanged(nameof(OSGuess));
             OnPropertyChanged(nameof(OSGuessHops));
+            OnPropertyChanged(nameof(OSName));
+            OnPropertyChanged(nameof(IsOSPending));
         }
     }
+
+    /// <summary>
+    ///     The operating system is guessed from the TTL in the scan of the host (the OS column shows the guess). Default
+    ///     on, set by the scan.
+    /// </summary>
+    public bool IsOSGuessEnabled
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(OSName));
+            OnPropertyChanged(nameof(IsOSPending));
+        }
+    } = true;
+
+    /// <summary>
+    ///     Name of a guessed operating system as shown in the OS column (translated, set by the application - this
+    ///     project has no translations), for sorting; the name of the value by default.
+    /// </summary>
+    public static Func<IPScannerOSGuess, string> OSGuessToString { get; set; } = x => x.ToString();
+
+    /// <summary>
+    ///     Operating system for sorting the OS column (as shown): the Windows version if it was read, otherwise the
+    ///     guess from the TTL (if enabled), empty if neither is known.
+    /// </summary>
+    public string OSName => HasWindowsOS
+        ? WindowsOS
+        : !IsOSGuessEnabled || OSGuess == IPScannerOSGuess.None
+            ? string.Empty
+            : OSGuessToString(OSGuess);
+
+    /// <summary>
+    ///     The operating system is not known yet, but a source (Windows host information, ping for the guess) is still
+    ///     running.
+    /// </summary>
+    public bool IsOSPending => string.IsNullOrEmpty(OSName) &&
+                               (IsWindowsPending || (IsOSGuessEnabled && IsPingPending));
 
     /// <summary>
     ///     Operating system guessed from the TTL of the ping reply (see <see cref="IPScannerOSGuessHelper" />),
@@ -207,9 +252,31 @@ public class IPScannerHostInfo : PropertyChangedBase
                 return;
 
             field = value;
+
+            // Computed once (sorting / search read them often)
+            var openPorts = value?.Where(x => x.State == PortState.Open).Select(x => x.Port).ToList() ?? [];
+            _openPorts = string.Join(", ", openPorts);
+            _openPortCount = openPorts.Count;
+
             OnPropertyChanged();
+            OnPropertyChanged(nameof(OpenPorts));
+            OnPropertyChanged(nameof(OpenPortCount));
         }
     }
+
+    /// <summary>
+    ///     Open ports, comma-separated in the order of the ports (e.g. "22, 80, 443"), empty if none.
+    /// </summary>
+    public string OpenPorts => _openPorts;
+
+    // Cache of OpenPorts / OpenPortCount, set with Ports
+    private string _openPorts = string.Empty;
+    private int _openPortCount;
+
+    /// <summary>
+    ///     Number of open ports (sorting of the open ports).
+    /// </summary>
+    public int OpenPortCount => _openPortCount;
 
     /// <summary>
     ///     NetBIOS information about the host.
@@ -227,6 +294,8 @@ public class IPScannerHostInfo : PropertyChangedBase
             OnPropertyChanged(nameof(Hostname));
             OnPropertyChanged(nameof(MACAddress));
             OnPropertyChanged(nameof(Vendor));
+            OnPropertyChanged(nameof(Domain));
+            OnPropertyChanged(nameof(IsDomainPending));
         }
     }
 
@@ -245,6 +314,8 @@ public class IPScannerHostInfo : PropertyChangedBase
             OnPropertyChanged();
             OnPropertyChanged(nameof(OSGuess));
             OnPropertyChanged(nameof(OSGuessHops));
+            OnPropertyChanged(nameof(OSName));
+            OnPropertyChanged(nameof(IsOSPending));
         }
     }
 
@@ -280,6 +351,7 @@ public class IPScannerHostInfo : PropertyChangedBase
             OnPropertyChanged();
             OnPropertyChanged(nameof(IsHostnamePending));
             OnPropertyChanged(nameof(IsMACAddressPending));
+            OnPropertyChanged(nameof(IsDomainPending));
         }
     }
 
@@ -356,7 +428,7 @@ public class IPScannerHostInfo : PropertyChangedBase
 
     /// <summary>
     ///     Ends the lookups that are still running when the scan was canceled or failed (their results never arrive):
-    ///     DNS hostname, MAC address, mDNS hostname and web page show no value instead of "...", and
+    ///     DNS hostname, MAC address, mDNS hostname, web page and Windows show no value instead of "...", and
     ///     <see cref="Hostname" /> / <see cref="MACAddress" /> no longer wait for NetBIOS. The probes that decide if
     ///     the host is up (ping, ports, NetBIOS, SNMP) stay pending ("..." = not finished). Call it on the thread that
     ///     owns the host (UI thread).
@@ -367,6 +439,7 @@ public class IPScannerHostInfo : PropertyChangedBase
         IsNeighborMACAddressPending = false;
         IsMDNSPending = false;
         IsWebPagePending = false;
+        IsWindowsPending = false;
 
         _areLookupsEnded = true;
 
@@ -586,6 +659,99 @@ public class IPScannerHostInfo : PropertyChangedBase
     public bool HasSNMPError => SNMPError != SNMPV3ErrorCode.None;
 
     /// <summary>
+    ///     Windows host information (SMB / NTLM without credentials, NetApi with the credentials of the scan), null if
+    ///     it was not read (yet) or the host didn't answer on TCP 445.
+    /// </summary>
+    public WindowsHostInfo Windows
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+
+            // Computed once (sorting / search of the OS and Logged-on users columns read them often)
+            _windowsOS = value?.OS ?? string.Empty;
+            _windowsUsers = value?.Users is { } users ? string.Join(", ", users) : string.Empty;
+
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(WindowsOS));
+            OnPropertyChanged(nameof(HasWindowsOS));
+            OnPropertyChanged(nameof(OSName));
+            OnPropertyChanged(nameof(IsOSPending));
+            OnPropertyChanged(nameof(WindowsDomain));
+            OnPropertyChanged(nameof(Domain));
+            OnPropertyChanged(nameof(IsDomainPending));
+            OnPropertyChanged(nameof(WindowsTimeOffset));
+            OnPropertyChanged(nameof(IsWindowsTimeOffsetLarge));
+            OnPropertyChanged(nameof(WindowsUsers));
+            OnPropertyChanged(nameof(HasWindowsError));
+        }
+    }
+
+    /// <summary>
+    ///     The NetApi requests of the Windows host information failed (e.g. access denied, wrong password) or were not
+    ///     sent (credentials rejected on another host).
+    /// </summary>
+    public bool HasWindowsError => Windows is { Error: not 0 };
+
+    /// <summary>
+    ///     Name of the Windows version (e.g. "Windows 11 25H2"), empty if not known.
+    /// </summary>
+    public string WindowsOS => _windowsOS;
+
+    // Cache of WindowsOS, set with Windows
+    private string _windowsOS = string.Empty;
+
+    /// <summary>
+    ///     The Windows version is known (shown in the OS column instead of the guess from the TTL).
+    /// </summary>
+    public bool HasWindowsOS => !string.IsNullOrEmpty(WindowsOS);
+
+    /// <summary>
+    ///     Domain or workgroup of the Windows host, empty if not known.
+    /// </summary>
+    public string WindowsDomain => Windows?.Domain ?? string.Empty;
+
+    /// <summary>
+    ///     Domain or workgroup of the host for the Domain column: of the Windows host information, otherwise the
+    ///     workgroup / domain of the NetBIOS answer, empty if neither is known.
+    /// </summary>
+    public string Domain => !string.IsNullOrEmpty(WindowsDomain)
+        ? WindowsDomain
+        : NetBIOSInfo is { IsReachable: true } ? NetBIOSInfo.GroupName ?? string.Empty : string.Empty;
+
+    /// <summary>
+    ///     The domain is not known yet, but a source (Windows host information, NetBIOS) is still running.
+    /// </summary>
+    public bool IsDomainPending => string.IsNullOrEmpty(Domain) && (IsWindowsPending || IsNetBIOSPending);
+
+    /// <summary>
+    ///     Time of the host minus the local time, null if not known.
+    /// </summary>
+    public TimeSpan? WindowsTimeOffset => Windows?.TimeOffset;
+
+    /// <summary>
+    ///     Max. time offset of Kerberos (default of the domain policy): a larger offset breaks the logon in a domain.
+    /// </summary>
+    public static readonly TimeSpan MaxKerberosTimeOffset = TimeSpan.FromMinutes(5);
+
+    /// <summary>
+    ///     The time offset is larger than the Kerberos limit (highlighted in the result).
+    /// </summary>
+    public bool IsWindowsTimeOffsetLarge => WindowsTimeOffset?.Duration() > MaxKerberosTimeOffset;
+
+    /// <summary>
+    ///     Logged-on users, comma-separated (empty if none or not read).
+    /// </summary>
+    public string WindowsUsers => _windowsUsers;
+
+    // Cache of WindowsUsers, set with Windows
+    private string _windowsUsers = string.Empty;
+
+    /// <summary>
     ///     Indicates whether the DNS hostname (PTR) is still resolved (<see cref="DNSHostname" /> is a placeholder).
     /// </summary>
     public bool IsDNSPending
@@ -651,6 +817,25 @@ public class IPScannerHostInfo : PropertyChangedBase
 
             field = value;
             OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Indicates whether the Windows host information is still read, or the port scan it needs is still running
+    ///     (<see cref="Windows" /> is a placeholder).
+    /// </summary>
+    public bool IsWindowsPending
+    {
+        get;
+        internal set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(IsDomainPending));
+            OnPropertyChanged(nameof(IsOSPending));
         }
     }
 
@@ -760,6 +945,7 @@ public class IPScannerHostInfo : PropertyChangedBase
         IsReachable = source.IsReachable;
         DetectedBy = source.DetectedBy;
         Role = source.Role;
+        IsOSGuessEnabled = source.IsOSGuessEnabled;
         PingInfo = source.PingInfo;
         IsAnyPortOpen = source.IsAnyPortOpen;
         Ports = source.Ports;
@@ -781,10 +967,12 @@ public class IPScannerHostInfo : PropertyChangedBase
         SNMPDescription = source.SNMPDescription;
         SNMPLocation = source.SNMPLocation;
         SNMPError = source.SNMPError;
+        Windows = source.Windows;
         IsDNSPending = source.IsDNSPending;
         IsNeighborMACAddressPending = source.IsNeighborMACAddressPending;
         IsMDNSPending = source.IsMDNSPending;
         IsWebPagePending = source.IsWebPagePending;
+        IsWindowsPending = source.IsWindowsPending;
 
         // A rescan restarts the lookups (or a canceled one restores the ended state)
         _areLookupsEnded = source._areLookupsEnded;

@@ -1492,6 +1492,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Beta.
+        /// </summary>
+        public static string Beta {
+            get {
+                return ResourceManager.GetString("Beta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beta: this feature is tested publicly and may change. Please report problems on GitHub..
+        /// </summary>
+        public static string BetaFeatureMessage {
+            get {
+                return ResourceManager.GetString("BetaFeatureMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bit Calculator.
         /// </summary>
         public static string BitCalculator {
@@ -3812,6 +3830,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Domain controller.
+        /// </summary>
+        public static string DomainController {
+            get {
+                return ResourceManager.GetString("DomainController", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Domain name.
         /// </summary>
         public static string DomainName {
@@ -4016,6 +4043,15 @@ namespace NETworkManager.Localization.Resources {
         public static string EditGroupDots {
             get {
                 return ResourceManager.GetString("EditGroupDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edition.
+        /// </summary>
+        public static string Edition {
+            get {
+                return ResourceManager.GetString("Edition", resourceCulture);
             }
         }
         
@@ -4959,24 +4995,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Experimental.
-        /// </summary>
-        public static string Experimental {
-            get {
-                return ResourceManager.GetString("Experimental", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Experimental features.
-        /// </summary>
-        public static string ExperimentalFeatures {
-            get {
-                return ResourceManager.GetString("ExperimentalFeatures", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Explorer (Win+E).
         /// </summary>
         public static string Explorer {
@@ -5883,7 +5901,7 @@ namespace NETworkManager.Localization.Resources {
         ///
         ///Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
         ///
-        ///Click in the upper right corner on the help / documentation button (left [rest of string was truncated]&quot;;.
+        ///Click in the upper right corner on the help / documentation button ( [rest of string was truncated]&quot;;.
         /// </summary>
         public static string HelpMessage_ApplyThemeToPowerShellConsole {
             get {
@@ -5994,15 +6012,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable experimental features to test new functions. These are not yet complete, contain bugs, can crash the application and may change again until release..
-        /// </summary>
-        public static string HelpMessage_ExperimentalFeatures {
-            get {
-                return ResourceManager.GetString("HelpMessage_ExperimentalFeatures", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Find hosts in a local subnet that don&apos;t answer the ping, a port or NetBIOS (e.g. a firewall drops everything) by their entry in the neighbor table (ARP / NDP). To reach a host in a local subnet, Windows has to resolve its MAC address first, and a host answers this request even if its firewall drops everything else. No additional packets are sent, except to check an entry from earlier traffic again. Hosts behind a router can&apos;t be found this way. Only decides if a host is up - the MAC address and vendor are s [rest of string was truncated]&quot;;.
         /// </summary>
         public static string HelpMessage_FindHostsInTheLocalSubnet {
@@ -6035,6 +6044,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_MaximumNumberOfBackups {
             get {
                 return ResourceManager.GetString("HelpMessage_MaximumNumberOfBackups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logon failures with the Windows credentials of a profile / group / tab on hosts outside the domain of the credentials (e.g. in a trusted domain) before they are rejected and not used for the other hosts. A logon failure on a host in the domain of the credentials, or with credentials without domain, rejects them right away. The failures are counted per account for all tabs until NETworkManager is closed. A domain controller may count one failed logon twice (Kerberos, then NTLM): keep this value below half of [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string HelpMessage_MaxLogonFailures {
+            get {
+                return ResourceManager.GetString("HelpMessage_MaxLogonFailures", resourceCulture);
             }
         }
         
@@ -6222,6 +6240,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Read the Windows host information of every reachable host over SMB (TCP port 445): with the port scan and port 445 in its list only for hosts with port 445 open, otherwise for every found host. Without credentials (SMB / NTLM negotiation, no logon): operating system and build, computer name, domain and the time offset. With credentials (NetApi): role (workstation, server, domain controller), description and workgroup; logged-on users and the patch level (remote registry) need admin rights on the host. The u [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string HelpMessage_ReadWindowsHostInformation {
+            get {
+                return ResourceManager.GetString("HelpMessage_ReadWindowsHostInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show the MAC address and vendor of every found host: read from the neighbor table (ARP / NDP) for hosts in a local subnet, otherwise from the NetBIOS answer (if NetBIOS is enabled). Doesn&apos;t find hosts - a host that doesn&apos;t answer the ping, a port or NetBIOS is only found with &quot;Find hosts in the local subnet&quot;..
         /// </summary>
         public static string HelpMessage_ResolveMACAddressAndVendor {
@@ -6290,6 +6317,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_UseCustomThemes {
             get {
                 return ResourceManager.GetString("HelpMessage_UseCustomThemes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows credentials for the Windows host information of this tab (also for repeated scans and Rescan), replacing the ones of the profile / group. They are not saved and are discarded when the tab is closed. Without credentials, the user running NETworkManager is used..
+        /// </summary>
+        public static string HelpMessage_WindowsCredentialsOfTheTab {
+            get {
+                return ResourceManager.GetString("HelpMessage_WindowsCredentialsOfTheTab", resourceCulture);
             }
         }
         
@@ -7753,6 +7789,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Logged-on users.
+        /// </summary>
+        public static string LoggedOnUsers {
+            get {
+                return ResourceManager.GetString("LoggedOnUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log mode.
         /// </summary>
         public static string LogMode {
@@ -7933,11 +7978,29 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max. logon failures.
+        /// </summary>
+        public static string MaxLogonFailures {
+            get {
+                return ResourceManager.GetString("MaxLogonFailures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max. concurrent port threads.
         /// </summary>
         public static string MaxPortThreads {
             get {
                 return ResourceManager.GetString("MaxPortThreads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max. concurrent Windows host information threads.
+        /// </summary>
+        public static string MaxWindowsThreads {
+            get {
+                return ResourceManager.GetString("MaxWindowsThreads", resourceCulture);
             }
         }
         
@@ -8771,6 +8834,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not required.
+        /// </summary>
+        public static string NotRequired {
+            get {
+                return ResourceManager.GetString("NotRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not set.
         /// </summary>
         public static string NotSet {
@@ -9113,6 +9185,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operating system.
+        /// </summary>
+        public static string OperatingSystem {
+            get {
+                return ResourceManager.GetString("OperatingSystem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Options.
         /// </summary>
         public static string Options {
@@ -9136,6 +9217,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Organization {
             get {
                 return ResourceManager.GetString("Organization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OS.
+        /// </summary>
+        public static string OS {
+            get {
+                return ResourceManager.GetString("OS", resourceCulture);
             }
         }
         
@@ -9808,7 +9898,7 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
         ///
-        ///First make a backup copy of your profile files befo [rest of string was truncated]&quot;;.
+        ///First make a backup copy of your profile files be [rest of string was truncated]&quot;;.
         /// </summary>
         public static string ProfileEncryptionDisclaimer {
             get {
@@ -10438,6 +10528,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reading Windows host information is disabled!.
+        /// </summary>
+        public static string ReadingWindowsHostInformationIsDisabled {
+            get {
+                return ResourceManager.GetString("ReadingWindowsHostInformationIsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Read the SNMP system information.
         /// </summary>
         public static string ReadTheSNMPSystemInformation {
@@ -10452,6 +10551,15 @@ namespace NETworkManager.Localization.Resources {
         public static string ReadWebPages {
             get {
                 return ResourceManager.GetString("ReadWebPages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read Windows host information.
+        /// </summary>
+        public static string ReadWindowsHostInformation {
+            get {
+                return ResourceManager.GetString("ReadWindowsHostInformation", resourceCulture);
             }
         }
         
@@ -11716,6 +11824,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Required.
+        /// </summary>
+        public static string Required {
+            get {
+                return ResourceManager.GetString("Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rescan.
         /// </summary>
         public static string Rescan {
@@ -12103,6 +12220,15 @@ namespace NETworkManager.Localization.Resources {
         public static string RloginPort {
             get {
                 return ResourceManager.GetString("RloginPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role.
+        /// </summary>
+        public static string Role {
+            get {
+                return ResourceManager.GetString("Role", resourceCulture);
             }
         }
         
@@ -12562,6 +12688,24 @@ namespace NETworkManager.Localization.Resources {
         public static string Scan {
             get {
                 return ResourceManager.GetString("Scan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan as.
+        /// </summary>
+        public static string ScanAs {
+            get {
+                return ResourceManager.GetString("ScanAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan as....
+        /// </summary>
+        public static string ScanAsDots {
+            get {
+                return ResourceManager.GetString("ScanAsDots", resourceCulture);
             }
         }
         
@@ -13060,6 +13204,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Set Windows credentials....
+        /// </summary>
+        public static string SetWindowsCredentialsDots {
+            get {
+                return ResourceManager.GetString("SetWindowsCredentialsDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Several profiles are named &quot;{0}&quot;, select one!.
         /// </summary>
         public static string SeveralProfilesAreNamedXSelectOne {
@@ -13326,6 +13479,24 @@ namespace NETworkManager.Localization.Resources {
         public static string Slogan {
             get {
                 return ResourceManager.GetString("Slogan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SMB.
+        /// </summary>
+        public static string SMB {
+            get {
+                return ResourceManager.GetString("SMB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SMB signing.
+        /// </summary>
+        public static string SMBSigning {
+            get {
+                return ResourceManager.GetString("SMBSigning", resourceCulture);
             }
         }
         
@@ -14357,6 +14528,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Time offset.
+        /// </summary>
+        public static string TimeOffset {
+            get {
+                return ResourceManager.GetString("TimeOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Timeout.
         /// </summary>
         public static string Timeout {
@@ -15335,6 +15515,33 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Windows credentials.
+        /// </summary>
+        public static string WindowsCredentials {
+            get {
+                return ResourceManager.GetString("WindowsCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows credentials of this tab ({0}).
+        /// </summary>
+        public static string WindowsCredentialsOfThisTabX {
+            get {
+                return ResourceManager.GetString("WindowsCredentialsOfThisTabX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Windows credentials of &quot;{0}&quot; ({1}).
+        /// </summary>
+        public static string WindowsCredentialsOfX {
+            get {
+                return ResourceManager.GetString("WindowsCredentialsOfX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Windows DNS settings.
         /// </summary>
         public static string WindowsDNSSettings {
@@ -15349,6 +15556,42 @@ namespace NETworkManager.Localization.Resources {
         public static string WindowsFirewallSettings {
             get {
                 return ResourceManager.GetString("WindowsFirewallSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The logon with the Windows credentials &quot;{0}&quot; failed (wrong username or password?). To protect the account from being locked out, they are not used for the other hosts and the next scans of this tab. Set them again with Set Windows credentials... in the options, or open a new tab after correcting the profile / group..
+        /// </summary>
+        public static string WindowsLogonFailedMessage {
+            get {
+                return ResourceManager.GetString("WindowsLogonFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not tried: the Windows credentials were still being checked on another host (protection against an account lockout)..
+        /// </summary>
+        public static string WindowsLogonNotCheckedMessage {
+            get {
+                return ResourceManager.GetString("WindowsLogonNotCheckedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not tried: the Windows credentials were rejected on another host, or by this host in an earlier scan (protection against an account lockout)..
+        /// </summary>
+        public static string WindowsLogonSkippedMessage {
+            get {
+                return ResourceManager.GetString("WindowsLogonSkippedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workstation.
+        /// </summary>
+        public static string Workstation {
+            get {
+                return ResourceManager.GetString("Workstation", resourceCulture);
             }
         }
         

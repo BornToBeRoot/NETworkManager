@@ -9,7 +9,8 @@ namespace NETworkManager.Models.Network;
 ///     methods (e.g. <see cref="Socket.ConnectAsync(System.Net.EndPoint)" />), these report the result as
 ///     <see cref="SocketError" /> instead of throwing an exception for every refused connection, timeout or
 ///     unreachable host. A scan has thousands of these, and every exception is slow with a debugger attached
-///     (the whole application lags). Used by <see cref="PortProbe" /> and <see cref="NetBIOSResolver" />.
+///     (the whole application lags). Used by <see cref="PortProbe" />, <see cref="NetBIOSResolver" /> and
+///     <see cref="SMBInfoResolver" />.
 /// </summary>
 internal static class SocketOperation
 {

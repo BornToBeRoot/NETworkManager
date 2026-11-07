@@ -107,7 +107,6 @@ public static class GlobalStaticConfiguration
     // Settings: Update
     public static bool Update_CheckForUpdatesAtStartup => true;
     public static bool Update_CheckForPreReleases => false;
-    public static bool Experimental_EnableExperimentalFeatures => false;
 
     // Settings: Profiles
     public static bool Profiles_IsDailyBackupEnabled => true;
@@ -160,6 +159,7 @@ public static class GlobalStaticConfiguration
     public static int IPScanner_PortScanAttempts => 1;
     public static int IPScanner_MaxHostThreads => 128;
     public static int IPScanner_MaxPortThreads => 16;
+    public static int IPScanner_MaxWindowsThreads => 16;
     public static bool IPScanner_NetBIOSEnabled => true;
     public static int IPScanner_NetBIOSTimeout => 2000;
     public static bool IPScanner_ARPEnabled => true;
@@ -173,6 +173,9 @@ public static class GlobalStaticConfiguration
     public static SNMPVersion IPScanner_SNMPVersion => SNMPVersion.V2C;
     public static string IPScanner_SNMPCommunity => "public";
     public static int IPScanner_SNMPTimeout => 2000;
+    public static bool IPScanner_WindowsEnabled => false;
+    public static int IPScanner_WindowsTimeout => 5000;
+    public static int IPScanner_WindowsMaxLogonFailures => 2;
     public static bool IPScanner_ExpandHostView => false;
 
     public static AutoRefreshTimeInfo IPScanner_AutoRefreshTime =>

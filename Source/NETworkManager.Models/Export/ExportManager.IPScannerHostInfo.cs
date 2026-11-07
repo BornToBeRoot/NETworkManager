@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -67,7 +68,16 @@ public static partial class ExportManager
         var netBIOSInfo = GetNetBIOSInfo(info, options);
         var certificate = GetWebCertificate(info, options);
 
+        // Windows host information: null (empty values) if disabled, "" if the host had none
+        var windows = options.WindowsEnabled ? info.Windows : null;
+
         string IfEnabled(bool isEnabled, string value) => isEnabled ? value : null;
+
+        string IfWindows(Func<WindowsHostInfo, string> value) =>
+            options.WindowsEnabled ? windows == null ? string.Empty : value(windows) ?? string.Empty : null;
+
+        // Number / bool like WebStatusCode / WebCertificateSelfSigned: null without a value
+        object IfWindowsValue(Func<WindowsHostInfo, object> value) => windows == null ? null : value(windows);
 
         return
         [
@@ -119,7 +129,24 @@ public static partial class ExportManager
             new(nameof(IPScannerHostInfo.PreviousMACAddress), info.PreviousMACAddress),
             // SNMPv3 error of the host (e.g. "AuthenticationFailed"), empty without
             new(nameof(IPScannerHostInfo.SNMPError),
-                IfEnabled(options.SNMPEnabled, info.HasSNMPError ? info.SNMPError.ToString() : string.Empty), true)
+                IfEnabled(options.SNMPEnabled, info.HasSNMPError ? info.SNMPError.ToString() : string.Empty), true),
+            // Windows host information (SMB / NTLM, NetApi)
+            new("WindowsOS", IfWindows(x => x.OS), true),
+            new("WindowsEdition", IfWindows(x => x.Edition), true),
+            new("WindowsVersion", IfWindows(x => x.Version?.ToString())),
+            new("WindowsRole", IfWindows(x => x.Role == WindowsHostRole.Unknown ? string.Empty : x.Role.ToString())),
+            new("WindowsComputerName", IfWindows(x => x.ComputerName), true),
+            new("WindowsDomain", IfWindows(x => x.Domain), true),
+            // Seconds (time of the host minus the local time)
+            new("WindowsTimeOffset",
+                IfWindowsValue(x => x.TimeOffset is { } offset ? Math.Round(offset.TotalSeconds, 3) : null)),
+            new("WindowsUsers", IfWindows(x => x.Users == null ? string.Empty : string.Join("; ", x.Users)), true),
+            new("WindowsDescription", IfWindows(x => x.Description), true),
+            // Win32 error of the NetApi requests (e.g. 5 = access denied, 1326 = wrong username or password)
+            new("WindowsError", IfWindowsValue(x => x.Error == 0 ? null : x.Error)),
+            new("SMBDialect", IfWindows(x => x.SMB?.Dialect)),
+            new("SMBSigningRequired", IfWindowsValue(x => x.SMB?.SigningRequired)),
+            new("SMBServerGuid", IfWindows(x => x.SMB?.ServerGuid.ToString()))
         ];
     }
 
@@ -147,7 +174,8 @@ public static partial class ExportManager
                 var value = field.Value is List<PortInfo> ports
                     ? string.Join(";", ports.Select(port =>
                         $"{port.Port}/{port.LookupInfo.Protocol}/{port.LookupInfo.Service}/{port.LookupInfo.Description}/{port.State}"))
-                    : $"{field.Value}";
+                    // Invariant: a decimal comma would split the column (e.g. WindowsTimeOffset)
+                    : Convert.ToString(field.Value, CultureInfo.InvariantCulture);
 
                 return field.IsQuoted ? CsvHelper.QuoteString(value) : value;
             })));
@@ -166,7 +194,7 @@ public static partial class ExportManager
             new NetBIOSInfo(IPAddress.None));
 
         return GetFields(placeholder, new IPScannerResultOptions(false, false, false, false, false, false, false, false,
-            false)).Select(x => x.Name);
+            false, false)).Select(x => x.Name);
     }
 
     /// <summary>

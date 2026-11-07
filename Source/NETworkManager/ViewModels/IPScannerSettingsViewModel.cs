@@ -508,6 +508,64 @@ public class IPScannerSettingsViewModel : ViewModelBase
     }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the Windows host information of reachable hosts is read.
+    /// </summary>
+    public bool WindowsEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_WindowsEnabled = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the timeout in milliseconds of the SMB request and of the NetApi requests of a host.
+    /// </summary>
+    public int WindowsTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_WindowsTimeout = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the max. logon failures with the Windows credentials on hosts of other domains before they are
+    /// rejected (lockout protection).
+    /// </summary>
+    public int WindowsMaxLogonFailures
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_WindowsMaxLogonFailures = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
     /// Gets the collection view of custom commands.
     /// </summary>
     public ICollectionView CustomCommands { get; }
@@ -639,6 +697,25 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets the maximum number of hosts whose Windows host information (NetApi) is read at the same time.
+    /// </summary>
+    public int MaxWindowsThreads
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_MaxWindowsThreads = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Constructor, load settings
@@ -706,8 +783,12 @@ public class IPScannerSettingsViewModel : ViewModelBase
         SNMPVersion = SettingsManager.Current.IPScanner_SNMPVersion;
         SNMPCommunity = SettingsManager.Current.IPScanner_SNMPCommunity;
         SNMPTimeout = SettingsManager.Current.IPScanner_SNMPTimeout;
+        WindowsEnabled = SettingsManager.Current.IPScanner_WindowsEnabled;
+        WindowsTimeout = SettingsManager.Current.IPScanner_WindowsTimeout;
+        WindowsMaxLogonFailures = SettingsManager.Current.IPScanner_WindowsMaxLogonFailures;
         MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads;
         MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads;
+        MaxWindowsThreads = SettingsManager.Current.IPScanner_MaxWindowsThreads;
     }
 
     #endregion

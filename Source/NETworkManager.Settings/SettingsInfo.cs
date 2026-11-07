@@ -608,19 +608,6 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Update_CheckForPreReleases;
 
-    public bool Experimental_EnableExperimentalFeatures
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Experimental_EnableExperimentalFeatures;
-
     // Profiles
 
     public string Profiles_FolderLocation
@@ -1597,6 +1584,45 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_SNMPTimeout;
 
+    public bool IPScanner_WindowsEnabled
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_WindowsEnabled;
+
+    public int IPScanner_WindowsTimeout
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_WindowsTimeout;
+
+    public int IPScanner_WindowsMaxLogonFailures
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_WindowsMaxLogonFailures;
+
     public ObservableCollection<CustomCommandInfo> IPScanner_CustomCommands
     {
         get;
@@ -1636,6 +1662,19 @@ public class SettingsInfo : INotifyPropertyChanged
             OnPropertyChanged();
         }
     } = GlobalStaticConfiguration.IPScanner_MaxPortThreads;
+
+    public int IPScanner_MaxWindowsThreads
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_MaxWindowsThreads;
 
     public string IPScanner_ExportFilePath
     {

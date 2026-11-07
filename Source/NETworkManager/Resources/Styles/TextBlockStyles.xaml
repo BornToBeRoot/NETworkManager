@@ -26,6 +26,13 @@
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.Accent}" />
     </Style>
 
+    <!-- Short label next to a value or setting, e.g. the protocol of a Ping Monitor host (ICMP) or a beta setting -->
+    <Style x:Key="TagTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource AccentTextBlock}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
     <Style x:Key="ErrorTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
         <Setter Property="TextWrapping" Value="Wrap" />
         <Setter Property="Foreground" Value="#b95353" />

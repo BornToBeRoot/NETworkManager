@@ -67,6 +67,10 @@ public class ProfileInfo
         IPScanner_SNMPAuth = profile.IPScanner_SNMPAuth;
         IPScanner_SNMPPrivacyProvider = profile.IPScanner_SNMPPrivacyProvider;
         IPScanner_SNMPPriv = profile.IPScanner_SNMPPriv;
+        IPScanner_UseWindowsCredentials = profile.IPScanner_UseWindowsCredentials;
+        IPScanner_WindowsUsername = profile.IPScanner_WindowsUsername;
+        IPScanner_WindowsDomain = profile.IPScanner_WindowsDomain;
+        IPScanner_WindowsPassword = profile.IPScanner_WindowsPassword;
 
         // Port Scanner
         PortScanner_Enabled = profile.PortScanner_Enabled;
@@ -344,6 +348,17 @@ public class ProfileInfo
         GlobalStaticConfiguration.SNMP_PrivacyProvider;
 
     [XmlIgnore] public SecureString IPScanner_SNMPPriv { get; set; }
+
+    /// <summary>
+    ///     Use the Windows credentials below for the Windows host information of the IP Scanner instead of the user
+    ///     running the application (a profile before its group), see
+    ///     <see cref="Application.IPScanner.GetWindowsCredentials" />.
+    /// </summary>
+    public bool IPScanner_UseWindowsCredentials { get; set; }
+
+    public string IPScanner_WindowsUsername { get; set; }
+    public string IPScanner_WindowsDomain { get; set; }
+    [XmlIgnore] public SecureString IPScanner_WindowsPassword { get; set; }
 
     public bool PortScanner_Enabled { get; set; }
     public bool PortScanner_InheritHost { get; set; } = true;

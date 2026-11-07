@@ -17,6 +17,13 @@ public record IPScannerOptions
     public required int MaxPortThreads { get; init; }
 
     /// <summary>
+    ///     Max. number of hosts whose NetApi requests run at the same time, in all scans of the application (the calls
+    ///     are blocking and keep their thread after the timeout until Windows returns), see
+    ///     <see cref="WindowsNetApiSlots" />.
+    /// </summary>
+    public required int MaxWindowsThreads { get; init; }
+
+    /// <summary>
     ///     Ping the host.
     /// </summary>
     public required bool ICMPEnabled { get; init; }
@@ -129,6 +136,36 @@ public record IPScannerOptions
     ///     Timeout in milliseconds after which an SNMP request is considered lost.
     /// </summary>
     public required int SNMPTimeout { get; init; }
+
+    /// <summary>
+    ///     Read the Windows host information of reachable hosts (SMB / NTLM without credentials, NetApi with the
+    ///     credentials below), see <see cref="SMBInfoResolver" /> and <see cref="WindowsNetApiResolver" />.
+    /// </summary>
+    public required bool WindowsEnabled { get; init; }
+
+    /// <summary>
+    ///     Windows credentials of the profile / group the tab was opened with for the NetApi requests, null for the user
+    ///     running the application (there are no Windows credentials in the settings).
+    /// </summary>
+    public WindowsCredentials WindowsCredentials { get; init; }
+
+    /// <summary>
+    ///     Lockout protection of the <see cref="WindowsCredentials" />, kept by the tab for all its scans (accepted /
+    ///     rejected state, a check that is still running; the logon failures are counted per account for all tabs), so
+    ///     repeated scans don't lock the account. Null: a new one for the scan.
+    /// </summary>
+    public WindowsLogonGate WindowsLogonGate { get; init; }
+
+    /// <summary>
+    ///     Timeout in milliseconds of the SMB request and of the NetApi requests of a host.
+    /// </summary>
+    public required int WindowsTimeout { get; init; }
+
+    /// <summary>
+    ///     Max. logon failures with the <see cref="WindowsCredentials" /> on hosts of other domains before they are
+    ///     rejected, see <see cref="WindowsLogonGate" />.
+    /// </summary>
+    public required int WindowsMaxLogonFailures { get; init; }
 
     /// <summary>
     ///     Include unreachable IP addresses in the result.

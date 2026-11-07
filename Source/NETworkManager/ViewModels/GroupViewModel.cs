@@ -115,6 +115,12 @@ public class GroupViewModel : ViewModelBase
     /// </summary>
     public SNMPCredentialsViewModel IPScanner_SNMP { get; }
 
+    /// <summary>
+    ///     Windows credentials for the Windows host information of the IP Scanner for the profiles of the group
+    ///     (otherwise the user running the application).
+    /// </summary>
+    public WindowsCredentialsViewModel IPScanner_WindowsCredentials { get; }
+
     #endregion
 
     #region Port Scanner
@@ -204,82 +210,9 @@ public class GroupViewModel : ViewModelBase
     #region Remote Desktop
 
     /// <summary>
-    /// Gets or sets a value indicating whether to use credentials for Remote Desktop.
+    /// Credentials (username, domain, password) for Remote Desktop, see <see cref="WindowsCredentialsViewModel" />.
     /// </summary>
-    public bool RemoteDesktop_UseCredentials
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets the username for Remote Desktop.
-    /// </summary>
-    public string RemoteDesktop_Username
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    /// <summary>
-    /// Gets or sets the domain for Remote Desktop.
-    /// </summary>
-    public string RemoteDesktop_Domain
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public bool RemoteDesktop_IsPasswordEmpty
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = true;
-
-    public SecureString RemoteDesktop_Password
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            // Validate the password string
-            RemoteDesktop_IsPasswordEmpty =
-                value == null || string.IsNullOrEmpty(SecureStringHelper.ConvertToString(value));
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
+    public WindowsCredentialsViewModel RemoteDesktop_Credentials { get; }
 
     public bool RemoteDesktop_AdminSession
     {
@@ -1521,6 +1454,9 @@ public class GroupViewModel : ViewModelBase
             groupInfo.IPScanner_SNMPCommunity, groupInfo.IPScanner_SNMPSecurity, groupInfo.IPScanner_SNMPUsername,
             groupInfo.IPScanner_SNMPAuthenticationProvider, groupInfo.IPScanner_SNMPAuth,
             groupInfo.IPScanner_SNMPPrivacyProvider, groupInfo.IPScanner_SNMPPriv, IsProfileFileEncrypted);
+        IPScanner_WindowsCredentials = new WindowsCredentialsViewModel(groupInfo.IPScanner_UseWindowsCredentials,
+            groupInfo.IPScanner_WindowsUsername, groupInfo.IPScanner_WindowsDomain,
+            groupInfo.IPScanner_WindowsPassword, IsProfileFileEncrypted);
 
         // Port Scanner
         PortScanner_OverridePorts = groupInfo.PortScanner_OverridePorts;
@@ -1533,10 +1469,9 @@ public class GroupViewModel : ViewModelBase
             SettingsManager.Current.DNSLookup_DNSServers, out _);
 
         // Remote Desktop
-        RemoteDesktop_UseCredentials = groupInfo.RemoteDesktop_UseCredentials;
-        RemoteDesktop_Username = groupInfo.RemoteDesktop_Username;
-        RemoteDesktop_Domain = groupInfo.RemoteDesktop_Domain;
-        RemoteDesktop_Password = groupInfo.RemoteDesktop_Password;
+        RemoteDesktop_Credentials = new WindowsCredentialsViewModel(groupInfo.RemoteDesktop_UseCredentials,
+            groupInfo.RemoteDesktop_Username, groupInfo.RemoteDesktop_Domain, groupInfo.RemoteDesktop_Password,
+            IsProfileFileEncrypted);
         RemoteDesktop_AdminSession = groupInfo.RemoteDesktop_AdminSession;
         RemoteDesktop_OverrideDisplay = groupInfo.RemoteDesktop_OverrideDisplay;
         RemoteDesktop_AdjustScreenAutomatically = groupInfo.RemoteDesktop_AdjustScreenAutomatically;

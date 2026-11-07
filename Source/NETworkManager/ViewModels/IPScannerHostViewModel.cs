@@ -4,10 +4,13 @@ using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace NETworkManager.ViewModels;
@@ -128,6 +131,51 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     }
 
     /// <summary>
+    /// Gets the command to scan the selected profile with other Windows credentials (like Connect as... of Remote
+    /// Desktop).
+    /// </summary>
+    public ICommand ScanProfileAsCommand => new RelayCommand(_ => ScanProfileAsAction(), ScanProfileAs_CanExecute);
+
+    /// <summary>
+    /// Checks if the scan as command can be executed: only with Read Windows host information (the credentials are not
+    /// used otherwise).
+    /// </summary>
+    private bool ScanProfileAs_CanExecute(object obj)
+    {
+        return ScanProfile_CanExecute(obj) && SettingsManager.Current.IPScanner_WindowsEnabled;
+    }
+
+    private void ScanProfileAsAction()
+    {
+        _ = ScanProfileAs();
+    }
+
+    /// <summary>
+    /// Asks for the Windows credentials (the ones of the profile / group as default) and scans the selected profile with
+    /// them in a new tab. They are only used by this tab, the profile is not changed.
+    /// </summary>
+    private async Task ScanProfileAs()
+    {
+        var profile = SelectedProfile;
+
+        var profileCredentials = NETworkManager.Profiles.Application.IPScanner.GetWindowsCredentials(profile);
+
+        var (isOK, windowsCredentials) = await WindowsCredentialsChildWindow.ShowAsync(Application.Current.MainWindow,
+            Strings.ScanAs, profileCredentials);
+
+        // Not used (canceled or other credentials): the copy of the password of the profile / group
+        if (!isOK || !ReferenceEquals(windowsCredentials, profileCredentials))
+            profileCredentials?.Password?.Dispose();
+
+        if (!isOK)
+            return;
+
+        // Unchanged: the ones of the profile / group (shown as their source), otherwise entered for the tab (no source)
+        AddProfileTab(profile, true, windowsCredentials,
+            windowsCredentials != null && ReferenceEquals(windowsCredentials, profileCredentials), true);
+    }
+
+    /// <summary>
     /// Gets the callback for closing a tab item.
     /// </summary>
     public ItemActionCallback CloseItemCommand => CloseItemAction;
@@ -170,13 +218,22 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     /// SNMP version and credentials of a profile / group, null for the ones of the settings.
     /// </param>
     /// <param name="snmpCredentialsSource">Name of the profile / group of <paramref name="snmpCredentials" />.</param>
+    /// <param name="windowsCredentials">
+    /// Windows credentials of a profile / group, null for the user running the application.
+    /// </param>
+    /// <param name="windowsCredentialsSource">Name of the profile / group of <paramref name="windowsCredentials" />.</param>
+    /// <param name="isWindowsCredentialsEntered">
+    /// The user entered <paramref name="windowsCredentials" /> (Scan as...): checked again also if rejected before.
+    /// </param>
     public void AddTab(string hostOrIPRange = null, bool start = true, SNMPSecureCredentials snmpCredentials = null,
-        string snmpCredentialsSource = null)
+        string snmpCredentialsSource = null, WindowsCredentials windowsCredentials = null,
+        string windowsCredentialsSource = null, bool isWindowsCredentialsEntered = false)
     {
         var tabId = Guid.NewGuid();
 
         TabItems.Add(new DragablzTabItem(Strings.NewTab,
-            new IPScannerView(tabId, hostOrIPRange, start, snmpCredentials, snmpCredentialsSource), tabId));
+            new IPScannerView(tabId, hostOrIPRange, start, snmpCredentials, snmpCredentialsSource, windowsCredentials,
+                windowsCredentialsSource, isWindowsCredentialsEntered), tabId));
 
         SelectedTabIndex = TabItems.Count - 1;
     }
@@ -188,11 +245,32 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
     public void AddTab(ProfileInfo profile, bool start = true)
     {
+        // Windows credentials of the profile, otherwise of its group, otherwise the user running the application (null)
+        AddProfileTab(profile, start, NETworkManager.Profiles.Application.IPScanner.GetWindowsCredentials(profile), true,
+            false);
+    }
+
+    /// <summary>
+    /// Adds a new tab for a profile (also Scan as...): its host, the SNMP version and credentials of the profile /
+    /// group (otherwise the settings) and the Windows credentials.
+    /// </summary>
+    /// <param name="profile">The profile to scan.</param>
+    /// <param name="start">Starts it on the first load. If false, the input is only filled in.</param>
+    /// <param name="windowsCredentials">Windows credentials, null for the user running the application.</param>
+    /// <param name="isOfProfile">
+    /// <paramref name="windowsCredentials" /> are the ones of the profile / group (shown as their source), otherwise
+    /// entered for the tab.
+    /// </param>
+    /// <param name="isEntered">The user entered <paramref name="windowsCredentials" /> (Scan as...).</param>
+    private void AddProfileTab(ProfileInfo profile, bool start, WindowsCredentials windowsCredentials,
+        bool isOfProfile, bool isEntered)
+    {
         // SNMP version and credentials of the profile, otherwise of its group, otherwise the settings (null)
         var snmpCredentials = NETworkManager.Profiles.Application.IPScanner.GetSNMPCredentials(profile);
 
         AddTab(profile.IPScanner_HostOrIPRange, start, snmpCredentials,
-            profile.IPScanner_OverrideSNMP ? profile.Name : profile.Group);
+            profile.IPScanner_OverrideSNMP ? profile.Name : profile.Group, windowsCredentials,
+            isOfProfile ? profile.IPScanner_UseWindowsCredentials ? profile.Name : profile.Group : null, isEntered);
     }
 
     #endregion
