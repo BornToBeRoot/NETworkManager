@@ -4995,24 +4995,6 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Experimental.
-        /// </summary>
-        public static string Experimental {
-            get {
-                return ResourceManager.GetString("Experimental", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Experimental features.
-        /// </summary>
-        public static string ExperimentalFeatures {
-            get {
-                return ResourceManager.GetString("ExperimentalFeatures", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Explorer (Win+E).
         /// </summary>
         public static string Explorer {
@@ -6026,15 +6008,6 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_CustomPublicIPv6AddressAPI {
             get {
                 return ResourceManager.GetString("HelpMessage_CustomPublicIPv6AddressAPI", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable experimental features to test new functions. These are not yet complete, contain bugs, can crash the application and may change again until release..
-        /// </summary>
-        public static string HelpMessage_ExperimentalFeatures {
-            get {
-                return ResourceManager.GetString("HelpMessage_ExperimentalFeatures", resourceCulture);
             }
         }
         

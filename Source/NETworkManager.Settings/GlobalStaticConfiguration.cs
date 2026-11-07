@@ -107,7 +107,6 @@ public static class GlobalStaticConfiguration
     // Settings: Update
     public static bool Update_CheckForUpdatesAtStartup => true;
     public static bool Update_CheckForPreReleases => false;
-    public static bool Experimental_EnableExperimentalFeatures => false;
 
     // Settings: Profiles
     public static bool Profiles_IsDailyBackupEnabled => true;

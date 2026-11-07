@@ -608,19 +608,6 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.Update_CheckForPreReleases;
 
-    public bool Experimental_EnableExperimentalFeatures
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    } = GlobalStaticConfiguration.Experimental_EnableExperimentalFeatures;
-
     // Profiles
 
     public string Profiles_FolderLocation

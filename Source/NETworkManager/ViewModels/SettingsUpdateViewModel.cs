@@ -45,23 +45,6 @@ public class SettingsUpdateViewModel : ViewModelBase
         }
     }
 
-
-    public bool EnableExperimentalFeatures
-    {
-        get;
-        set
-        {
-            if (value == field)
-                return;
-
-            if (!_isLoading)
-                SettingsManager.Current.Experimental_EnableExperimentalFeatures = value;
-
-            field = value;
-            OnPropertyChanged();
-        }
-    }
-
     #endregion
 
     #region Constructor, LoadSettings
@@ -81,7 +64,6 @@ public class SettingsUpdateViewModel : ViewModelBase
         CheckForUpdatesAtStartup = PolicyManager.Current?.Update_CheckForUpdatesAtStartup
                                     ?? SettingsManager.Current.Update_CheckForUpdatesAtStartup;
         CheckForPreReleases = SettingsManager.Current.Update_CheckForPreReleases;
-        EnableExperimentalFeatures = SettingsManager.Current.Experimental_EnableExperimentalFeatures;
     }
 
     #endregion
