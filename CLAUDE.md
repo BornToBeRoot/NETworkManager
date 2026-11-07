@@ -1,1 +1,1 @@
-See [AGENTS.md](AGENTS.md) for project guidelines and conventions.
+See @AGENTS.md for project guidelines and conventions.
