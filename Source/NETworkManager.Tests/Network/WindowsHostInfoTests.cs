@@ -103,7 +103,7 @@ public class WindowsHostInfoTests
         Assert.Null(info.Users);
         Assert.Equal(5, info.Error);
         Assert.Equal(5, info.UsersError);
-        Assert.False(WindowsHostInfo.IsLogonError(info.Error));
+        Assert.False(WindowsHostInfo.IsLogonNotDecided(info.Error));
     }
 
     [Fact]
@@ -173,14 +173,16 @@ public class WindowsHostInfoTests
     }
 
     [Theory]
-    [InlineData(1326, true)] // wrong username or password
-    [InlineData(1909, true)] // locked
+    [InlineData(WindowsHostInfo.ErrorTimeout, true)]
+    [InlineData(53, true)] // network path not found
+    [InlineData(1722, true)] // RPC server unavailable
+    [InlineData(1326, false)] // wrong username or password
+    [InlineData(1909, false)] // locked
+    [InlineData(1265, false)] // unknown: may be a failed logon
     [InlineData(5, false)] // access denied
-    [InlineData(WindowsHostInfo.ErrorTimeout, false)]
-    [InlineData(0, false)]
-    public void IsLogonError(int error, bool expected)
+    public void IsLogonNotDecided(int error, bool expected)
     {
-        Assert.Equal(expected, WindowsHostInfo.IsLogonError(error));
+        Assert.Equal(expected, WindowsHostInfo.IsLogonNotDecided(error));
     }
 
     [Theory]

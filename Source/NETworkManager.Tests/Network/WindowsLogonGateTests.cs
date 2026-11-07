@@ -243,6 +243,55 @@ public class WindowsLogonGateTests
         Assert.False(gate.IsRejected);
     }
 
+    [Theory]
+    [InlineData(1793)] // account expired
+    [InlineData(86)] // ERROR_INVALID_PASSWORD (STATUS_WRONG_PASSWORD)
+    [InlineData(1244)] // not authenticated
+    [InlineData(unchecked((int)0x8009030C))] // SEC_E_LOGON_DENIED
+    [InlineData(1265)] // any other error: not known as "no logon"
+    public async Task UnknownErrorInTheDomain_CountsAsLogonFailure(int error)
+    {
+        // A wrong password reported with an error that is not in the list of logon errors (e.g. Kerberos / SSPI) must
+        // not let every host try it
+        var gate = CreateGate();
+
+        await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
+        gate.Report(CorpHost, WindowsNetApiInfo.FromError(error));
+
+        Assert.True(gate.IsRejected);
+    }
+
+    [Theory]
+    [InlineData(53)] // network path not found
+    [InlineData(1231)] // network unreachable
+    [InlineData(1722)] // RPC server unavailable
+    [InlineData(1311)] // no logon servers (domain controller of the host unreachable)
+    [InlineData(1937)] // NTLM blocked
+    [InlineData(WindowsHostInfo.ErrorTimeout)]
+    public async Task NoLogon_NotDecided_NextHostChecks(int error)
+    {
+        var gate = CreateGate();
+
+        await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
+        gate.Report(CorpHost, WindowsNetApiInfo.FromError(error));
+
+        Assert.False(gate.IsRejected);
+        Assert.Equal(WindowsLogonGate.Decision.Check,
+            await gate.WaitAsync(CorpHost, "10.0.0.2", Timeout, CancellationToken.None));
+    }
+
+    [Fact]
+    public async Task UngatedHost_UnknownError_Skipped()
+    {
+        var gate = CreateGate();
+
+        await gate.WaitAsync(WorkgroupHost, "10.0.2.1", Timeout, CancellationToken.None);
+        gate.ReportUngated("10.0.2.1", WindowsNetApiInfo.FromError(1793));
+
+        Assert.Equal(WindowsLogonGate.Decision.Skip,
+            await gate.WaitAsync(WorkgroupHost, "10.0.2.1", Timeout, CancellationToken.None));
+    }
+
     [Fact]
     public async Task WaitingLongerThanTheTimeout()
     {

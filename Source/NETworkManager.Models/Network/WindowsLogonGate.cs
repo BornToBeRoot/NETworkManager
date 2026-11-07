@@ -19,8 +19,10 @@ namespace NETworkManager.Models.Network;
 ///         <item>Logon failure on a host in the domain of the credentials (the domain controller checked them), any
 ///         logon failure if the credentials have no domain (e.g. "admin"), or the third logon failure on hosts of
 ///         other domains: rejected, the remaining hosts are not tried.</item>
-///         <item>Other errors (timeout, no RPC) or a logon failure on a computer of another domain: the next host
-///         checks.</item>
+///         <item>Errors that show the logon was not decided (timeout, host / RPC / domain controller of the host not
+///         reachable, see <see cref="WindowsHostInfo.IsLogonNotDecided" />) or a logon failure on a computer of
+///         another domain: the next host checks. Every other error counts as a logon failure (e.g. a Kerberos / SSPI
+///         error of a wrong password that is not known as one).</item>
 ///     </list>
 ///     Hosts whose logon can't count at a domain controller are not gated: computers in a workgroup and local accounts
 ///     ("." or the computer name as domain) - a failure there only affects the host itself.
@@ -228,7 +230,9 @@ public sealed class WindowsLogonGate
                     return;
                 }
 
-                if (!WindowsHostInfo.IsLogonError(info.Error))
+                // Only an error that shows that no domain controller checked them lets the next host check them,
+                // every other error may be a wrong password
+                if (WindowsHostInfo.IsLogonNotDecided(info.Error))
                     return;
 
                 _logonFailures++;
@@ -246,13 +250,14 @@ public sealed class WindowsLogonGate
 
     /// <summary>
     ///     Reports the result of a host that is not gated (<see cref="IsGated" /> false, <see cref="Decision.Proceed" />):
-    ///     after a logon failure, the host is skipped in the next scans.
+    ///     after a logon failure (every error except success, access denied and the errors of
+    ///     <see cref="WindowsHostInfo.IsLogonNotDecided" />), the host is skipped in the next scans.
     /// </summary>
     /// <param name="host">IP address of the host.</param>
     /// <param name="info">Result of the NetApi requests, null if they didn't run (e.g. canceled).</param>
     public void ReportUngated(string host, WindowsNetApiInfo info)
     {
-        if (info == null || !WindowsHostInfo.IsLogonError(info.Error))
+        if (info == null || info.Error is 0 or 5 || WindowsHostInfo.IsLogonNotDecided(info.Error))
             return;
 
         lock (_lock)

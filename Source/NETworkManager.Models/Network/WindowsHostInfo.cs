@@ -31,10 +31,37 @@ public sealed record WindowsHostInfo(SMBInfo SMB, WindowsNetApiInfo NetApi)
     public const int ErrorLogonNotChecked = -2;
 
     /// <summary>
-    ///     Win32 errors of a failed logon with the credentials (wrong username or password, disabled / locked / expired
-    ///     account, logon not allowed).
+    ///     Win32 errors of NetApi requests whose logon was not decided: the host (or its SMB / RPC service) can't be
+    ///     reached, the connection was closed, the domain controller of the host can't be reached or NTLM is blocked -
+    ///     no domain controller checked the password. Every other error may be a failed logon (e.g. a Kerberos / SSPI
+    ///     error of a wrong password), see <see cref="IsLogonNotDecided" />.
     /// </summary>
-    private static readonly HashSet<int> LogonErrors = [1326, 1327, 1328, 1329, 1330, 1331, 1385, 1907, 1909];
+    private static readonly HashSet<int> LogonNotDecidedErrors =
+    [
+        31, // ERROR_GEN_FAILURE (exception of the call, e.g. the logon was disposed)
+        50, // ERROR_NOT_SUPPORTED
+        53, // ERROR_BAD_NETPATH
+        59, // ERROR_UNEXP_NET_ERR
+        64, // ERROR_NETNAME_DELETED
+        67, // ERROR_BAD_NET_NAME
+        121, // ERROR_SEM_TIMEOUT
+        1214, // ERROR_INVALID_NETNAME
+        1225, // ERROR_CONNECTION_REFUSED
+        1231, // ERROR_NETWORK_UNREACHABLE
+        1232, // ERROR_HOST_UNREACHABLE
+        1236, // ERROR_CONNECTION_ABORTED
+        1311, // ERROR_NO_LOGON_SERVERS
+        ErrorTimeout,
+        1722, // RPC_S_SERVER_UNAVAILABLE
+        1726, // RPC_S_CALL_FAILED
+        1727, // RPC_S_CALL_FAILED_DNE
+        1753, // EPT_S_NOT_REGISTERED
+        1788, // ERROR_TRUSTED_DOMAIN_FAILURE
+        1789, // ERROR_TRUSTED_RELATIONSHIP_FAILURE
+        1937, // ERROR_NTLM_BLOCKED
+        2102, // NERR_WkstaNotStarted
+        2114 // NERR_ServerNotStarted
+    ];
 
     /// <summary>
     ///     Version of Windows: of the registry (with patch level), otherwise of the NTLM challenge (major.minor.build),
@@ -150,14 +177,15 @@ public sealed record WindowsHostInfo(SMBInfo SMB, WindowsNetApiInfo NetApi)
     public int UsersError => NetApi?.UsersError ?? 0;
 
     /// <summary>
-    ///     Checks if a Win32 error of the NetApi requests is a failed logon with the credentials (wrong username or
-    ///     password, disabled / locked / expired account, logon not allowed).
+    ///     Checks if a Win32 error of the NetApi requests shows that the logon was not decided (host, network, RPC or
+    ///     the domain controller of the host not reachable). The lockout protection counts every other error as a
+    ///     failed logon, so an unknown error of a wrong password can't let the next hosts try it.
     /// </summary>
     /// <param name="error">Win32 error.</param>
-    /// <returns>True for a failed logon.</returns>
-    public static bool IsLogonError(int error)
+    /// <returns>True if no domain controller checked the password.</returns>
+    public static bool IsLogonNotDecided(int error)
     {
-        return LogonErrors.Contains(error);
+        return LogonNotDecidedErrors.Contains(error);
     }
 
     /// <summary>
