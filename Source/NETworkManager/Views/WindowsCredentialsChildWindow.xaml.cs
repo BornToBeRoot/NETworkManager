@@ -38,11 +38,17 @@ public partial class WindowsCredentialsChildWindow
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
 
-            result.TrySetResult((true, instance.ToCredentials()));
-        }, _ =>
+            // The credentials have a copy of an entered password
+            var entered = instance.ToCredentials();
+            instance.ReleaseEnteredPassword();
+
+            result.TrySetResult((true, entered));
+        }, instance =>
         {
             childWindow.IsOpen = false;
             ConfigurationManager.Current.IsChildWindowOpen = false;
+
+            instance.ReleaseEnteredPassword();
 
             result.TrySetResult((false, null));
         }, credentials);

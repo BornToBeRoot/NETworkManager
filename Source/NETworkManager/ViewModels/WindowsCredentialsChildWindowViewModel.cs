@@ -59,6 +59,16 @@ public class WindowsCredentialsChildWindowViewModel : ViewModelBase
     }
 
     /// <summary>
+    ///     Disposes the password entered in the dialog (after <see cref="ToCredentials" /> copied it, or on Cancel) -
+    ///     not the password of the credentials the dialog was opened with (owned by the caller).
+    /// </summary>
+    public void ReleaseEnteredPassword()
+    {
+        if (!ReferenceEquals(Credentials.Password, _credentials?.Password))
+            Credentials.Password?.Dispose();
+    }
+
+    /// <summary>
     ///     Nothing was changed: still used or not used, same username / domain and no new password.
     /// </summary>
     private bool IsUnchanged()
