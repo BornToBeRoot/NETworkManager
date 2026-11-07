@@ -631,7 +631,7 @@ public class WiFiViewModel : ViewModelBase
 
     private void DisconnectAction()
     {
-        Disconnect();
+        _ = DisconnectAsync();
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
@@ -1222,17 +1222,29 @@ public class WiFiViewModel : ViewModelBase
         ConnectionStatusMessage = string.Format(Strings.ConnectingToXXX, ssid);
         IsConnectionStatusMessageDisplayed = true;
 
-        // Connect to the network
-        var connectionResult = await connect();
+        try
+        {
+            // Connect to the network
+            var connectionResult = await connect();
 
-        // Done connecting
-        IsConnecting = false;
+            // Get result
+            ConnectionStatusMessage = connectionResult == WiFiConnectionStatus.Success
+                ? string.Format(Strings.SuccessfullyConnectedToXXX, ssid)
+                : string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid,
+                    ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
+        }
+        catch (Exception ex)
+        {
+            // E.g. the adapter was disabled while connecting
+            Log.Error($"Error while connecting to the WiFi network \"{ssid}\".", ex);
 
-        // Get result
-        ConnectionStatusMessage = connectionResult == WiFiConnectionStatus.Success
-            ? string.Format(Strings.SuccessfullyConnectedToXXX, ssid)
-            : string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid,
-                ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
+            ConnectionStatusMessage = string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid, ex.Message);
+        }
+        finally
+        {
+            // Done connecting
+            IsConnecting = false;
+        }
 
         // Hide message automatically
         _hideConnectionStatusMessageTimer.Stop();
@@ -1243,22 +1255,33 @@ public class WiFiViewModel : ViewModelBase
         await ScanAsync(SelectedAdapter, true, 5000);
     }
 
-    private async void Disconnect()
+    private async Task DisconnectAsync()
     {
         var connectedNetwork = Networks.FirstOrDefault(x => x.IsConnected);
 
-        WiFi.Disconnect(SelectedAdapter.WiFiAdapter);
-
-        if (connectedNetwork != null)
+        try
         {
-            ConnectionStatusMessage = string.Format(Strings.XXXDisconnected,
-                connectedNetwork.AvailableNetwork.Ssid);
-            IsConnectionStatusMessageDisplayed = true;
+            WiFi.Disconnect(SelectedAdapter.WiFiAdapter);
 
-            // Hide message automatically
-            _hideConnectionStatusMessageTimer.Stop();
-            _hideConnectionStatusMessageTimer.Start();
+            if (connectedNetwork != null)
+            {
+                ConnectionStatusMessage = string.Format(Strings.XXXDisconnected,
+                    connectedNetwork.AvailableNetwork.Ssid);
+                IsConnectionStatusMessageDisplayed = true;
+            }
         }
+        catch (Exception ex)
+        {
+            Log.Error("Error while disconnecting the WiFi adapter.", ex);
+
+            ConnectionStatusMessage = string.Format(Strings.CouldNotDisconnectFromXXXReasonXXX,
+                connectedNetwork?.AvailableNetwork.Ssid, ex.Message);
+            IsConnectionStatusMessageDisplayed = true;
+        }
+
+        // Hide message automatically
+        _hideConnectionStatusMessageTimer.Stop();
+        _hideConnectionStatusMessageTimer.Start();
 
         // Refresh
         await ScanAsync(SelectedAdapter, true, GlobalStaticConfiguration.ApplicationUIRefreshInterval);

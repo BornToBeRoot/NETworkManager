@@ -5450,4 +5450,7 @@ Do you want to start the scan?</value>
   <data name="BetaFeatureMessage" xml:space="preserve">
     <value>Beta: this feature is tested publicly and may change. Please report problems on GitHub.</value>
   </data>
+  <data name="CouldNotDisconnectFromXXXReasonXXX" xml:space="preserve">
+    <value>Could not disconnect from {0} ({1})!</value>
+  </data>
 </root>

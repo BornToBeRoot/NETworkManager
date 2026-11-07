@@ -2607,6 +2607,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not disconnect from {0} ({1})!.
+        /// </summary>
+        public static string CouldNotDisconnectFromXXXReasonXXX {
+            get {
+                return ResourceManager.GetString("CouldNotDisconnectFromXXXReasonXXX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not find the application &quot;{0}&quot;. Maybe the application was hidden in the settings?.
         /// </summary>
         public static string CouldNotFindApplicationXXXMessage {
