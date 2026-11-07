@@ -796,7 +796,11 @@ public sealed class IPScanner(IPScannerOptions options)
         // No SMB answer: no NetApi requests (they would wait for the SMB / RPC timeouts)
         if (smbInfo != null)
         {
-            var target = GetWindowsTarget(ipAddress, await dnsHostname.ConfigureAwait(false), smbInfo.NTLM);
+            // Without credentials of the scan: the logon of the user running the application (no stored password)
+            var isGated = _windowsLogonGate?.IsGated(smbInfo.NTLM) ?? true;
+
+            var target = GetWindowsTarget(ipAddress, await dnsHostname.ConfigureAwait(false), smbInfo.NTLM,
+                isGated);
 
             netApiInfo = await ResolveNetApiAsync(ipAddress.ToString(), target, smbInfo.NTLM, cancellationToken)
                 .ConfigureAwait(false);
@@ -816,15 +820,23 @@ public sealed class IPScanner(IPScannerOptions options)
     ///     Gets the name the NetApi requests connect to: the DNS hostname if it is the DNS name the host itself sends in
     ///     the NTLM challenge (the full name - a stale PTR record or a computer with the same name in another domain
     ///     could resolve to another host, which would get the credentials and show its values), so Kerberos can be
-    ///     used; otherwise the IP address (NTLM only), e.g. for a computer in a workgroup (no DNS domain).
+    ///     used; otherwise the IP address (NTLM only), e.g. for a computer in a workgroup (no DNS domain). A host that is
+    ///     not gated by the lockout protection (workgroup computer, local account) always gets the IP address: with a
+    ///     hostname, Kerberos would first ask the domain controller of the credentials for a ticket - a wrong password
+    ///     would count there for every such host, in parallel.
     /// </summary>
     /// <param name="ipAddress">IP address of the host.</param>
     /// <param name="dnsHostname">DNS hostname (empty if none).</param>
     /// <param name="ntlm">NTLM challenge of the host, null if none.</param>
+    /// <param name="isGated">
+    ///     The host is gated by the lockout protection, or the scan has no credentials (see
+    ///     <see cref="WindowsLogonGate.IsGated" />).
+    /// </param>
     /// <returns>Hostname or IP address.</returns>
-    public static string GetWindowsTarget(IPAddress ipAddress, string dnsHostname, NTLMChallengeInfo ntlm)
+    public static string GetWindowsTarget(IPAddress ipAddress, string dnsHostname, NTLMChallengeInfo ntlm,
+        bool isGated)
     {
-        if (string.IsNullOrEmpty(dnsHostname) || string.IsNullOrEmpty(ntlm?.DNSComputerName) ||
+        if (!isGated || string.IsNullOrEmpty(dnsHostname) || string.IsNullOrEmpty(ntlm?.DNSComputerName) ||
             !ntlm.DNSComputerName.Contains('.'))
             return ipAddress.ToString();
 

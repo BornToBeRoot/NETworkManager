@@ -66,6 +66,8 @@ Hosts whose logon can't count at a domain controller use the credentials right a
 - **Computers in a workgroup** (the NTLM negotiation sends the computer name as domain): they check the credentials with their own local accounts.
 - **Local accounts** (`.\admin`, or the computer name as domain): `.` is replaced by the computer name of each host (`PC01\admin`), so only the host checks it - never a domain controller.
 
+These hosts are always asked by their IP address (NTLM): with their DNS name, Windows could use Kerberos and first ask the domain controller of the credentials for a ticket - a wrong password would count there for each of them.
+
 A host that rejected the credentials itself is not tried again in the next scans of the tab (one failed logon per host and tab, not per scan): `Not tried: ... or by this host in an earlier scan`.
 
 A host that doesn't send its computer and domain name (NTLM disabled, or incomplete values) is gated like a domain host: it is not known if a domain controller checks its logon.
