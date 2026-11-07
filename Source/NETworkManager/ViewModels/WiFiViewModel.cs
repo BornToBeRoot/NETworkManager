@@ -620,14 +620,23 @@ public class WiFiViewModel : ViewModelBase
         await ScanAsync(SelectedAdapter, true);
     }
 
-    public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction());
+    public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), ConnectDisconnect_CanExecute);
+
+    /// <summary>
+    ///     A network is selected (the selection is cleared when the networks are scanned again) and no connection is
+    ///     made at the moment.
+    /// </summary>
+    private bool ConnectDisconnect_CanExecute(object obj)
+    {
+        return SelectedNetwork != null && !IsConnecting;
+    }
 
     private void ConnectAction()
     {
         Connect();
     }
 
-    public ICommand DisconnectCommand => new RelayCommand(_ => DisconnectAction());
+    public ICommand DisconnectCommand => new RelayCommand(_ => DisconnectAction(), ConnectDisconnect_CanExecute);
 
     private void DisconnectAction()
     {
