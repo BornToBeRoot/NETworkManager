@@ -427,6 +427,12 @@ In a local network (LAN), `1` is enough. On an unreliable network (e.g. Wi-Fi, V
 
 ### Read Windows host information
 
+:::info Beta
+
+This setting is in beta (**Beta** label in the settings and the **Options** menu): it is tested publicly and may change. Turn it off to stop all SMB requests and logons of the scans (also of **Rescan**). Please report problems on [GitHub](https://github.com/BornToBeRoot/NETworkManager/issues).
+
+:::
+
 Read the Windows host information of every reachable host over SMB (TCP port `445`). With [Scan ports](#scan-ports) enabled and port `445` in its [ports](#ports), only hosts with port `445` open are asked, otherwise every found host (a host without SMB is finished after the SMB request).
 
 Two steps, the second only if the host answered the first:

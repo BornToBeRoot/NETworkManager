@@ -111,6 +111,13 @@
         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
             <mah:ToggleSwitch Header="{x:Static localization:Strings.ReadWindowsHostInformation}"
                               IsOn="{Binding WindowsEnabled}" />
+            <!-- Beta: tested publicly -->
+            <Border Background="{DynamicResource MahApps.Brushes.Accent}" CornerRadius="2" Padding="4,1"
+                    Margin="10,4,0,0" VerticalAlignment="Top"
+                    ToolTip="{x:Static localization:Strings.BetaFeatureMessage}">
+                <TextBlock Text="{x:Static localization:Strings.Beta}" FontSize="11"
+                           Foreground="{DynamicResource MahApps.Brushes.IdealForeground}" />
+            </Border>
             <Rectangle Width="24" Height="24" VerticalAlignment="Top"
                        ToolTip="{x:Static localization:Strings.HelpMessage_ReadWindowsHostInformation}"
                        Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">

@@ -179,9 +179,22 @@
                         <MenuItem Header="{x:Static localization:Strings.ScanPorts}"
                                   IsCheckable="True" StaysOpenOnClick="True"
                                   IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_PortScanEnabled, Mode=TwoWay}" />
-                        <MenuItem Header="{x:Static localization:Strings.ReadWindowsHostInformation}"
-                                  IsCheckable="True" StaysOpenOnClick="True"
-                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_WindowsEnabled, Mode=TwoWay}" />
+                        <MenuItem IsCheckable="True" StaysOpenOnClick="True"
+                                  IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_WindowsEnabled, Mode=TwoWay}">
+                            <MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{x:Static localization:Strings.ReadWindowsHostInformation}"
+                                               VerticalAlignment="Center" />
+                                    <!-- Beta: tested publicly -->
+                                    <Border Background="{DynamicResource MahApps.Brushes.Accent}" CornerRadius="2" Padding="4,1"
+                                            Margin="10,0,0,0" VerticalAlignment="Center"
+                                            ToolTip="{x:Static localization:Strings.BetaFeatureMessage}">
+                                        <TextBlock Text="{x:Static localization:Strings.Beta}" FontSize="11"
+                                                   Foreground="{DynamicResource MahApps.Brushes.IdealForeground}" />
+                                    </Border>
+                                </StackPanel>
+                            </MenuItem.Header>
+                        </MenuItem>
                         <MenuItem Header="{x:Static localization:Strings.ScanForNetBIOS}"
                                   IsCheckable="True" StaysOpenOnClick="True"
                                   IsChecked="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_NetBIOSEnabled, Mode=TwoWay}" />

@@ -5450,4 +5450,10 @@ Do you want to start the scan?</value>
   <data name="HelpMessage_MaxLogonFailures" xml:space="preserve">
     <value>Logon failures with the Windows credentials of a profile / group / tab on hosts outside the domain of the credentials (e.g. in a trusted domain) before they are rejected and not used for the other hosts. A logon failure on a host in the domain of the credentials, or with credentials without domain, rejects them right away. The failures are counted per account for all tabs until NETworkManager is closed. A domain controller may count one failed logon twice (Kerberos, then NTLM): keep this value below half of the account lockout threshold of your domain.</value>
   </data>
+  <data name="Beta" xml:space="preserve">
+    <value>Beta</value>
+  </data>
+  <data name="BetaFeatureMessage" xml:space="preserve">
+    <value>Beta: this feature is tested publicly and may change. Please report problems on GitHub.</value>
+  </data>
 </root>

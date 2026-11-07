@@ -1492,6 +1492,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Beta.
+        /// </summary>
+        public static string Beta {
+            get {
+                return ResourceManager.GetString("Beta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beta: this feature is tested publicly and may change. Please report problems on GitHub..
+        /// </summary>
+        public static string BetaFeatureMessage {
+            get {
+                return ResourceManager.GetString("BetaFeatureMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bit Calculator.
         /// </summary>
         public static string BitCalculator {
