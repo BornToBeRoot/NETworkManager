@@ -464,6 +464,8 @@ With the [Windows credentials](#windows-credentials) of a profile / group, a wro
 
 Computers in a workgroup (known from the NTLM negotiation) and local accounts (`.\admin`, logged on with the computer name the host sends in the NTLM negotiation, e.g. `PC01\admin`, so a domain controller never checks them) are not part of this check - a host that doesn't send its computer and domain name (no NTLM, or incomplete values) is checked like a domain host: a logon failure there only affects the host (e.g. a Windows PC that is not in the domain shows the error in its row, the other hosts are not affected). A rejection on the domain hosts doesn't affect them (e.g. the local admin of workgroup computers), but a host that rejected the credentials itself is not tried again in the next scans of the tab. The user running NETworkManager is not checked (no stored password).
 
+The checks are written to the [log file](../faq/file-locations) without the password: every scan with the credentials, each logon failure (account, IP address, computer name and domain of the host, Windows error), the accept, the rejection and how many hosts didn't use the credentials. The host that checks them and errors without a decision are only logged with the log level `DEBUG`.
+
 :::
 
 :::warning

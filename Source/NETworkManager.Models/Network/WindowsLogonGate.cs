@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using log4net;
 
 namespace NETworkManager.Models.Network;
 
@@ -36,6 +37,8 @@ namespace NETworkManager.Models.Network;
 /// </summary>
 public sealed class WindowsLogonGate
 {
+    private static readonly ILog Log = LogManager.GetLogger(typeof(WindowsLogonGate));
+
     /// <summary>
     ///     Logon failures of each account (as used for the logon, e.g. "CORP\admin") on hosts of other domains, for all
     ///     gates of the application.
@@ -79,8 +82,15 @@ public sealed class WindowsLogonGate
     private readonly Lock _lock = new();
     private readonly SemaphoreSlim _turn = new(1, 1);
 
+    // Account as used for the logon (e.g. "CORP\admin") for the log, never the password
+    private readonly string _account;
+
     private readonly string _domain;
     private readonly bool _isLocalAccount;
+
+    // Hosts of the scan that were not tried (rejected / waited longer than the timeout), for the log of the scan
+    private int _skippedHosts;
+    private int _timedOutHosts;
 
     // Shared with the other gates of the account
     private readonly StrongBox<int> _logonFailures;
@@ -108,7 +118,8 @@ public sealed class WindowsLogonGate
         _domain = domain ?? string.Empty;
         _isLocalAccount = _domain == ".";
 
-        _logonFailures = LogonFailuresOfAccounts.GetOrAdd(credentials.DisplayName, _ => new StrongBox<int>());
+        _account = credentials.DisplayName;
+        _logonFailures = LogonFailuresOfAccounts.GetOrAdd(_account, _ => new StrongBox<int>());
     }
 
     /// <summary>
@@ -139,13 +150,68 @@ public sealed class WindowsLogonGate
     /// </param>
     public void StartScan(int maxLogonFailures)
     {
+        State state;
+
         lock (_lock)
         {
             _maxLogonFailures = Math.Max(1, maxLogonFailures);
 
             if (_state == State.Accepted)
                 _state = State.Unchecked;
+
+            state = _state;
         }
+
+        Interlocked.Exchange(ref _skippedHosts, 0);
+        Interlocked.Exchange(ref _timedOutHosts, 0);
+
+        if (state == State.Rejected)
+            Log.Info($"Windows credentials \"{_account}\" were rejected in an earlier scan, they are not used for " +
+                     "the domain hosts of this scan (lockout protection).");
+        else
+            Log.Info($"Scan with the Windows credentials \"{_account}\": checked on one host first (lockout " +
+                     $"protection, max. {_maxLogonFailures} logon failure(s) on hosts of other domains, " +
+                     $"{Volatile.Read(ref _logonFailures.Value)} counted for the account).");
+    }
+
+    /// <summary>
+    ///     Logs the hosts of the scan that didn't use the credentials (rejected, or waited longer than the timeout for
+    ///     the check on another host) - once per scan instead of per host.
+    /// </summary>
+    public void LogScanSummary()
+    {
+        var skipped = Volatile.Read(ref _skippedHosts);
+        var timedOut = Volatile.Read(ref _timedOutHosts);
+
+        if (skipped > 0)
+            Log.Info($"{skipped} host(s) didn't use the Windows credentials \"{_account}\": rejected (lockout " +
+                     "protection).");
+
+        if (timedOut > 0)
+            Log.Info($"{timedOut} host(s) didn't use the Windows credentials \"{_account}\": waited longer than " +
+                     "the timeout while they were checked on another host (lockout protection).");
+    }
+
+    /// <summary>
+    ///     Name of a host for the log: IP address, computer name and domain of the NTLM challenge (e.g. "10.0.0.5
+    ///     (CLIENT01, domain CORP)", "10.0.2.1 (PC01, workgroup)").
+    /// </summary>
+    private static string GetHostName(string host, NTLMChallengeInfo ntlm)
+    {
+        if (string.IsNullOrEmpty(ntlm?.NetBIOSComputerName))
+            return $"{host} (no NTLM computer name)";
+
+        return ntlm.IsDomainMember
+            ? $"{host} ({ntlm.NetBIOSComputerName}, domain {ntlm.NetBIOSDomainName})"
+            : $"{host} ({ntlm.NetBIOSComputerName}, workgroup)";
+    }
+
+    /// <summary>
+    ///     Win32 error for the log, e.g. "1326 (The user name or password is incorrect.)".
+    /// </summary>
+    private static string GetError(int error)
+    {
+        return $"{error} ({WindowsHostInfo.GetErrorMessage(error)})";
     }
 
     /// <summary>
@@ -206,25 +272,54 @@ public sealed class WindowsLogonGate
         // count the wrong password in every scan). Call ReportUngated with the result.
         if (!IsGated(ntlm))
         {
+            bool isRejectedHost;
+
             lock (_lock)
-                return _rejectedHosts.Contains(host) ? Decision.Skip : Decision.Proceed;
+                isRejectedHost = _rejectedHosts.Contains(host);
+
+            if (!isRejectedHost)
+                return Decision.Proceed;
+
+            Log.Debug($"Windows credentials \"{_account}\" not used for {GetHostName(host, ntlm)}: the host " +
+                      "rejected them in an earlier scan (lockout protection).");
+
+            return Decision.Skip;
         }
 
         var decision = GetDecision();
 
-        if (decision != null)
-            return decision.Value;
-
-        if (!await _turn.WaitAsync(timeout, cancellationToken).ConfigureAwait(false))
-            return GetDecision() ?? Decision.Timeout;
-
-        // Another host may have decided while this one waited
-        decision = GetDecision();
-
         if (decision == null)
-            return Decision.Check;
+        {
+            if (!await _turn.WaitAsync(timeout, cancellationToken).ConfigureAwait(false))
+            {
+                decision = GetDecision() ?? Decision.Timeout;
+            }
+            else
+            {
+                // Another host may have decided while this one waited
+                decision = GetDecision();
 
-        _turn.Release();
+                if (decision == null)
+                {
+                    Log.Debug($"Windows credentials \"{_account}\" are checked on {GetHostName(host, ntlm)}, the " +
+                              "other hosts wait (lockout protection).");
+
+                    return Decision.Check;
+                }
+
+                _turn.Release();
+            }
+        }
+
+        switch (decision)
+        {
+            case Decision.Skip:
+                Interlocked.Increment(ref _skippedHosts);
+                break;
+            case Decision.Timeout:
+                Interlocked.Increment(ref _timedOutHosts);
+                break;
+        }
 
         return decision.Value;
     }
@@ -234,15 +329,24 @@ public sealed class WindowsLogonGate
     ///     host check them if it didn't decide.
     /// </summary>
     /// <param name="ntlm">NTLM challenge of the host, null if none.</param>
+    /// <param name="host">IP address of the host (for the log).</param>
     /// <param name="info">Result of the NetApi requests, null if they didn't run (e.g. canceled).</param>
-    public void Report(NTLMChallengeInfo ntlm, WindowsNetApiInfo info)
+    public void Report(NTLMChallengeInfo ntlm, string host, WindowsNetApiInfo info)
     {
         var isRejected = false;
+
+        // Logged outside the lock
+        Action log = null;
+        var hostName = GetHostName(host, ntlm);
 
         try
         {
             if (info == null)
+            {
+                log = () => Log.Debug($"Windows credentials \"{_account}\" not checked on {hostName} (canceled), " +
+                                      "the next host checks them.");
                 return;
+            }
 
             lock (_lock)
             {
@@ -262,6 +366,15 @@ public sealed class WindowsLogonGate
 
                         // A successful logon resets the failures at the domain controller (badPwdCount)
                         Interlocked.Exchange(ref _logonFailures.Value, 0);
+
+                        log = () => Log.Info($"Windows credentials \"{_account}\" accepted on {hostName} (in their " +
+                                             $"domain, error {GetError(info.Error)}): the other hosts use them.");
+                    }
+                    else
+                    {
+                        log = () => Log.Info($"Windows credentials \"{_account}\" logged on to {hostName} (error " +
+                                             $"{GetError(info.Error)}), but not in their domain - not proven (e.g. " +
+                                             "guest, local account): the next host checks them (lockout protection).");
                     }
 
                     return;
@@ -271,21 +384,50 @@ public sealed class WindowsLogonGate
                 // the account (e.g. logon hours, Protected Users with NTLM - no failed logon), lets the next host check
                 // them, every other error may be a wrong password
                 if (WindowsHostInfo.IsLogonNotDecided(info.Error) || WindowsHostInfo.IsLogonNotAllowed(info.Error))
+                {
+                    log = WindowsHostInfo.IsLogonNotAllowed(info.Error)
+                        ? () => Log.Info($"Logon of \"{_account}\" to {hostName} not allowed: error " +
+                                         $"{GetError(info.Error)} - no logon failure counted, the next host checks " +
+                                         "the credentials.")
+                        : () => Log.Debug($"Windows credentials \"{_account}\" not checked on {hostName}: error " +
+                                          $"{GetError(info.Error)}, the next host checks them.");
                     return;
+                }
 
                 var logonFailures = Interlocked.Increment(ref _logonFailures.Value);
+                var isInDomain = IsInDomain(ntlm);
 
                 // Without a domain (e.g. "admin"), the host's domain controller may have checked them
-                if (IsInDomain(ntlm) || string.IsNullOrEmpty(_domain) || logonFailures >= _maxLogonFailures)
+                if (isInDomain || string.IsNullOrEmpty(_domain) || logonFailures >= _maxLogonFailures)
                 {
                     _state = State.Rejected;
                     isRejected = true;
                 }
+
+                var reason = isInDomain
+                    ? "a logon failure in their domain"
+                    : string.IsNullOrEmpty(_domain)
+                        ? "a logon failure without domain (the domain controller of the host may count it)"
+                        : $"{logonFailures} of max. {_maxLogonFailures} logon failure(s) on hosts of other domains";
+
+                log = () =>
+                {
+                    Log.Warn($"Logon of \"{_account}\" failed on {hostName}: error {GetError(info.Error)} " +
+                             $"(logon failure {logonFailures} of the account).");
+
+                    if (isRejected)
+                        Log.Warn($"Windows credentials \"{_account}\" rejected after {reason}: not used for the " +
+                                 "other hosts and the next scans of the tab (lockout protection).");
+                    else
+                        Log.Info($"Windows credentials \"{_account}\": {reason}, the next host checks them.");
+                };
             }
         }
         finally
         {
             _turn.Release();
+
+            log?.Invoke();
         }
 
         // Outside the lock (the handler may read the state)
@@ -299,9 +441,10 @@ public sealed class WindowsLogonGate
     ///     <see cref="WindowsHostInfo.IsLogonNotAllowed" /> / <see cref="WindowsHostInfo.IsLogonNotDecided" />), the
     ///     host is skipped in the next scans.
     /// </summary>
+    /// <param name="ntlm">NTLM challenge of the host (for the log).</param>
     /// <param name="host">IP address of the host.</param>
     /// <param name="info">Result of the NetApi requests, null if they didn't run (e.g. canceled).</param>
-    public void ReportUngated(string host, WindowsNetApiInfo info)
+    public void ReportUngated(NTLMChallengeInfo ntlm, string host, WindowsNetApiInfo info)
     {
         if (info == null || info.Error is 0 or 5 || WindowsHostInfo.IsLogonNotAllowed(info.Error) ||
             WindowsHostInfo.IsLogonNotDecided(info.Error))
@@ -309,6 +452,10 @@ public sealed class WindowsLogonGate
 
         lock (_lock)
             _rejectedHosts.Add(host);
+
+        Log.Warn($"Logon of \"{_account}\" failed on {GetHostName(host, ntlm)}: error {GetError(info.Error)} - " +
+                 "workgroup computer / local account (not checked by a domain controller), the host is not tried " +
+                 "again in the next scans of the tab (lockout protection).");
     }
 
     private Decision? GetDecision()

@@ -250,6 +250,8 @@ public sealed class IPScanner(IPScannerOptions options)
                 // A NetApi call that exceeded the timeout may still run, the thread keeps its impersonation token
                 _windowsLogon?.Dispose();
 
+                _windowsLogonGate?.LogScanSummary();
+
                 OnScanComplete(new ScanCompleteArgs(isCanceled, exception));
             }
         });
@@ -871,9 +873,9 @@ public sealed class IPScanner(IPScannerOptions options)
         var isUngated = _windowsLogonGate != null && !_windowsLogonGate.IsGated(ntlm);
 
         Action<WindowsNetApiInfo> onCallCompleted = decision == WindowsLogonGate.Decision.Check
-            ? x => _windowsLogonGate.Report(ntlm, x)
+            ? x => _windowsLogonGate.Report(ntlm, ipAddress, x)
             : isUngated
-                ? x => _windowsLogonGate.ReportUngated(ipAddress, x)
+                ? x => _windowsLogonGate.ReportUngated(ntlm, ipAddress, x)
                 : null;
 
         // Local account (".\admin"): logged on with the computer name of the host ("PC01\admin"), so only the host

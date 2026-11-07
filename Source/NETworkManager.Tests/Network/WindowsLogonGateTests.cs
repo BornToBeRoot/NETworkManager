@@ -56,7 +56,7 @@ public class WindowsLogonGateTests
         var second = gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
         Assert.False(second.IsCompleted);
 
-        gate.Report(CorpHost, Success);
+        gate.Report(CorpHost, "10.0.0.1", Success);
 
         Assert.Equal(WindowsLogonGate.Decision.Proceed, await second);
         Assert.Equal(WindowsLogonGate.Decision.Proceed, await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
@@ -69,7 +69,7 @@ public class WindowsLogonGateTests
         var gate = CreateGate();
 
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
-        gate.Report(CorpHost, WindowsNetApiInfo.FromError(5));
+        gate.Report(CorpHost, "10.0.0.1", WindowsNetApiInfo.FromError(5));
 
         Assert.Equal(WindowsLogonGate.Decision.Proceed, await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
     }
@@ -88,13 +88,13 @@ public class WindowsLogonGateTests
             Assert.Equal(WindowsLogonGate.Decision.Check,
                 await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None));
 
-            gate.Report(OtherDomainHost, Success);
+            gate.Report(OtherDomainHost, "10.0.0.1", Success);
 
             // The next host of the scan still checks them (one at a time)
             Assert.Equal(WindowsLogonGate.Decision.Check,
                 await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
 
-            gate.Report(CorpHost, null);
+            gate.Report(CorpHost, "10.0.0.1", null);
         }
     }
 
@@ -110,7 +110,7 @@ public class WindowsLogonGateTests
             Assert.Equal(WindowsLogonGate.Decision.Check,
                 await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
 
-            gate.Report(CorpHost, Success);
+            gate.Report(CorpHost, "10.0.0.1", Success);
         }
 
         Assert.Equal(WindowsLogonGate.Decision.Check,
@@ -123,10 +123,10 @@ public class WindowsLogonGateTests
         var gate = CreateGate();
 
         await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
-        gate.Report(OtherDomainHost, Success);
+        gate.Report(OtherDomainHost, "10.0.0.1", Success);
 
         Assert.Equal(WindowsLogonGate.Decision.Check, await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
-        gate.Report(CorpHost, LogonFailure);
+        gate.Report(CorpHost, "10.0.0.1", LogonFailure);
 
         Assert.True(gate.IsRejected);
     }
@@ -139,7 +139,7 @@ public class WindowsLogonGateTests
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
         var second = gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
 
-        gate.Report(CorpHost, LogonFailure);
+        gate.Report(CorpHost, "10.0.0.1", LogonFailure);
 
         Assert.Equal(WindowsLogonGate.Decision.Skip, await second);
         Assert.True(gate.IsRejected);
@@ -152,13 +152,13 @@ public class WindowsLogonGateTests
         var gate = CreateGate();
 
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
-        gate.Report(CorpHost, Success);
+        gate.Report(CorpHost, "10.0.0.1", Success);
         Assert.Equal(WindowsLogonGate.Decision.Proceed, await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
 
         gate.StartScan(MaxLogonFailures);
 
         Assert.Equal(WindowsLogonGate.Decision.Check, await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
-        gate.Report(CorpHost, LogonFailure);
+        gate.Report(CorpHost, "10.0.0.1", LogonFailure);
 
         Assert.True(gate.IsRejected);
     }
@@ -169,7 +169,7 @@ public class WindowsLogonGateTests
         var gate = CreateGate();
 
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
-        gate.Report(CorpHost, LogonFailure);
+        gate.Report(CorpHost, "10.0.0.1", LogonFailure);
 
         gate.StartScan(MaxLogonFailures);
 
@@ -184,7 +184,7 @@ public class WindowsLogonGateTests
 
         Assert.Equal(WindowsLogonGate.Decision.Proceed,
             await gate.WaitAsync(WorkgroupHost, "10.0.2.1", Timeout, CancellationToken.None));
-        gate.ReportUngated("10.0.2.1", LogonFailure);
+        gate.ReportUngated(WorkgroupHost, "10.0.2.1", LogonFailure);
 
         Assert.Equal(WindowsLogonGate.Decision.Skip,
             await gate.WaitAsync(WorkgroupHost, "10.0.2.1", Timeout, CancellationToken.None));
@@ -203,7 +203,7 @@ public class WindowsLogonGateTests
         for (var i = 0; i < 2 && !gate.IsRejected; i++)
         {
             await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
-            gate.Report(OtherDomainHost, LogonFailure);
+            gate.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
         }
 
         Assert.True(gate.IsRejected);
@@ -220,7 +220,7 @@ public class WindowsLogonGateTests
             Assert.Equal(WindowsLogonGate.Decision.Check,
                 await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None));
 
-            gate.Report(OtherDomainHost, LogonFailure);
+            gate.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
         }
 
         Assert.True(gate.IsRejected);
@@ -239,7 +239,7 @@ public class WindowsLogonGateTests
             Assert.False(gate.IsRejected);
 
             await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
-            gate.Report(OtherDomainHost, LogonFailure);
+            gate.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
         }
 
         Assert.True(gate.IsRejected);
@@ -254,19 +254,19 @@ public class WindowsLogonGateTests
 
         var first = CreateGate(username);
         await first.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
-        first.Report(OtherDomainHost, LogonFailure);
+        first.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
         Assert.False(first.IsRejected);
 
         var second = CreateGate(username);
         await second.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
-        second.Report(OtherDomainHost, LogonFailure);
+        second.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
         Assert.True(second.IsRejected);
 
         // A new gate still checks them once (e.g. the password was corrected), rejected by its first failure
         var third = CreateGate(username);
         Assert.Equal(WindowsLogonGate.Decision.Check,
             await third.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None));
-        third.Report(OtherDomainHost, LogonFailure);
+        third.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
         Assert.True(third.IsRejected);
     }
 
@@ -279,11 +279,11 @@ public class WindowsLogonGateTests
         gate.Rejected += (_, _) => raised++;
 
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
-        gate.Report(CorpHost, Success with { Error = WindowsHostInfo.ErrorTimeout });
+        gate.Report(CorpHost, "10.0.0.1", Success with { Error = WindowsHostInfo.ErrorTimeout });
         Assert.Equal(0, raised);
 
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
-        gate.Report(CorpHost, LogonFailure);
+        gate.Report(CorpHost, "10.0.0.1", LogonFailure);
         Assert.Equal(1, raised);
 
         // The next scans skip them without raising it again
@@ -300,7 +300,7 @@ public class WindowsLogonGateTests
         var gate = CreateGate("admin", "");
 
         await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
-        gate.Report(OtherDomainHost, LogonFailure);
+        gate.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
 
         Assert.True(gate.IsRejected);
     }
@@ -311,10 +311,10 @@ public class WindowsLogonGateTests
         var gate = CreateGate();
 
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
-        gate.Report(CorpHost, WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorTimeout));
+        gate.Report(CorpHost, "10.0.0.1", WindowsNetApiInfo.FromError(WindowsHostInfo.ErrorTimeout));
 
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
-        gate.Report(CorpHost, null);
+        gate.Report(CorpHost, "10.0.0.1", null);
 
         Assert.Equal(WindowsLogonGate.Decision.Check, await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
         Assert.False(gate.IsRejected);
@@ -333,7 +333,7 @@ public class WindowsLogonGateTests
         var gate = CreateGate();
 
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
-        gate.Report(CorpHost, WindowsNetApiInfo.FromError(error));
+        gate.Report(CorpHost, "10.0.0.1", WindowsNetApiInfo.FromError(error));
 
         Assert.True(gate.IsRejected);
     }
@@ -346,7 +346,7 @@ public class WindowsLogonGateTests
         var gate = CreateGate();
 
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
-        gate.Report(CorpHost, WindowsNetApiInfo.FromError(1385));
+        gate.Report(CorpHost, "10.0.0.1", WindowsNetApiInfo.FromError(1385));
 
         Assert.False(gate.IsRejected);
         Assert.Equal(WindowsLogonGate.Decision.Proceed,
@@ -364,7 +364,7 @@ public class WindowsLogonGateTests
         var gate = CreateGate();
 
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
-        gate.Report(CorpHost, WindowsNetApiInfo.FromError(error));
+        gate.Report(CorpHost, "10.0.0.1", WindowsNetApiInfo.FromError(error));
 
         Assert.False(gate.IsRejected);
         Assert.Equal(WindowsLogonGate.Decision.Check,
@@ -378,7 +378,7 @@ public class WindowsLogonGateTests
         gate.StartScan(1);
 
         await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
-        gate.Report(OtherDomainHost, WindowsNetApiInfo.FromError(1385));
+        gate.Report(OtherDomainHost, "10.0.0.1", WindowsNetApiInfo.FromError(1385));
 
         Assert.False(gate.IsRejected);
         Assert.Equal(WindowsLogonGate.Decision.Check,
@@ -391,7 +391,7 @@ public class WindowsLogonGateTests
         var gate = CreateGate();
 
         await gate.WaitAsync(WorkgroupHost, "10.0.2.1", Timeout, CancellationToken.None);
-        gate.ReportUngated("10.0.2.1", WindowsNetApiInfo.FromError(1385));
+        gate.ReportUngated(WorkgroupHost, "10.0.2.1", WindowsNetApiInfo.FromError(1385));
 
         Assert.Equal(WindowsLogonGate.Decision.Proceed,
             await gate.WaitAsync(WorkgroupHost, "10.0.2.1", Timeout, CancellationToken.None));
@@ -404,16 +404,16 @@ public class WindowsLogonGateTests
         var gate = CreateGate();
 
         await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
-        gate.Report(OtherDomainHost, LogonFailure);
+        gate.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
 
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
-        gate.Report(CorpHost, Success);
+        gate.Report(CorpHost, "10.0.0.1", Success);
 
         // Next scan: one failure is below the limit again
         gate.StartScan(MaxLogonFailures);
 
         await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
-        gate.Report(OtherDomainHost, LogonFailure);
+        gate.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
 
         Assert.False(gate.IsRejected);
     }
@@ -430,7 +430,7 @@ public class WindowsLogonGateTests
         var gate = CreateGate();
 
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
-        gate.Report(CorpHost, WindowsNetApiInfo.FromError(error));
+        gate.Report(CorpHost, "10.0.0.1", WindowsNetApiInfo.FromError(error));
 
         Assert.False(gate.IsRejected);
         Assert.Equal(WindowsLogonGate.Decision.Check,
@@ -443,7 +443,7 @@ public class WindowsLogonGateTests
         var gate = CreateGate();
 
         await gate.WaitAsync(WorkgroupHost, "10.0.2.1", Timeout, CancellationToken.None);
-        gate.ReportUngated("10.0.2.1", WindowsNetApiInfo.FromError(1793));
+        gate.ReportUngated(WorkgroupHost, "10.0.2.1", WindowsNetApiInfo.FromError(1793));
 
         Assert.Equal(WindowsLogonGate.Decision.Skip,
             await gate.WaitAsync(WorkgroupHost, "10.0.2.1", Timeout, CancellationToken.None));
@@ -540,7 +540,7 @@ public class WindowsLogonGateTests
         var gate = CreateGate();
 
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
-        gate.Report(CorpHost, LogonFailure);
+        gate.Report(CorpHost, "10.0.0.1", LogonFailure);
 
         Assert.Equal(WindowsLogonGate.Decision.Skip, await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
 
