@@ -672,8 +672,9 @@ public class IPScannerHostInfo : PropertyChangedBase
 
             field = value;
 
-            // Computed once (sorting / search of the OS column read it often)
+            // Computed once (sorting / search of the OS and Logged-on users columns read them often)
             _windowsOS = value?.OS ?? string.Empty;
+            _windowsUsers = value?.Users is { } users ? string.Join(", ", users) : string.Empty;
 
             OnPropertyChanged();
             OnPropertyChanged(nameof(WindowsOS));
@@ -745,7 +746,10 @@ public class IPScannerHostInfo : PropertyChangedBase
     /// <summary>
     ///     Logged-on users, comma-separated (empty if none or not read).
     /// </summary>
-    public string WindowsUsers => Windows?.Users is { } users ? string.Join(", ", users) : string.Empty;
+    public string WindowsUsers => _windowsUsers;
+
+    // Cache of WindowsUsers, set with Windows
+    private string _windowsUsers = string.Empty;
 
     /// <summary>
     ///     Indicates whether the DNS hostname (PTR) is still resolved (<see cref="DNSHostname" /> is a placeholder).
