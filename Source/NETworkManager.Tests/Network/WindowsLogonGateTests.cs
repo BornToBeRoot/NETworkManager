@@ -481,7 +481,12 @@ public class WindowsLogonGateTests
         var gate = CreateGate(username, domain);
 
         Assert.False(gate.IsGated(CorpHost));
-        Assert.False(gate.IsGated(null));
+        Assert.False(gate.IsGated(WorkgroupHost));
+
+        // Without the computer name of the host it can't be logged on as its local account
+        Assert.True(gate.IsGated(null));
+        Assert.True(gate.IsGated(new NTLMChallengeInfo(null, string.Empty, string.Empty, string.Empty, string.Empty,
+            string.Empty, null)));
     }
 
     [Fact]

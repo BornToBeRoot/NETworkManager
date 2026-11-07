@@ -30,7 +30,9 @@ namespace NETworkManager.Models.Network;
 ///         error of a wrong password that is not known as one).</item>
 ///     </list>
 ///     Hosts whose logon can't count at a domain controller are not gated: computers in a workgroup and local accounts
-///     ("." or the computer name as domain) - a failure there only affects the host itself.
+///     ("." or the computer name as domain; "." is logged on with the computer name of each host, see
+///     <see cref="WindowsCredentials.ForHost" />) - a failure there only affects the host itself. Only a host whose
+///     computer and domain name are known from its NTLM challenge.
 /// </summary>
 public sealed class WindowsLogonGate
 {
@@ -155,14 +157,15 @@ public sealed class WindowsLogonGate
     /// <returns>True if the host is gated.</returns>
     public bool IsGated(NTLMChallengeInfo ntlm)
     {
-        if (_isLocalAccount)
-            return false;
-
         // E.g. a challenge without (or with a truncated) target info: empty names are no workgroup computer and no
-        // computer of a local account
+        // computer of a local account - also not for ".": the logon needs the computer name of the host
         if (ntlm == null || string.IsNullOrEmpty(ntlm.NetBIOSComputerName) ||
             string.IsNullOrEmpty(ntlm.NetBIOSDomainName))
             return true;
+
+        // Local account: logged on with the computer name of the host
+        if (_isLocalAccount)
+            return false;
 
         // Local account of the host (its computer name as domain)
         if (string.Equals(_domain, ntlm.NetBIOSComputerName, StringComparison.OrdinalIgnoreCase))

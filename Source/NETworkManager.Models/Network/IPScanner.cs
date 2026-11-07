@@ -868,26 +868,36 @@ public sealed class IPScanner(IPScannerOptions options)
         // the host, so the next host doesn't check them while this logon is still running (a late logon failure in
         // the domain still rejects them)
         // A host that is not gated reports its own logon failure (skipped in the next scans)
+        var isUngated = _windowsLogonGate != null && !_windowsLogonGate.IsGated(ntlm);
+
         Action<WindowsNetApiInfo> onCallCompleted = decision == WindowsLogonGate.Decision.Check
             ? x => _windowsLogonGate.Report(ntlm, x)
-            : _windowsLogonGate != null && !_windowsLogonGate.IsGated(ntlm)
+            : isUngated
                 ? x => _windowsLogonGate.ReportUngated(ipAddress, x)
                 : null;
 
-        return await ResolveNetApiWithLogonAsync(ipAddress, target, timeout, onCallCompleted, cancellationToken)
-            .ConfigureAwait(false);
+        // Local account (".\admin"): logged on with the computer name of the host ("PC01\admin"), so only the host
+        // checks it (not gated, the computer name is known)
+        var hostCredentials = isUngated ? options.WindowsCredentials.ForHost(ntlm.NetBIOSComputerName) : null;
+
+        return await ResolveNetApiWithLogonAsync(ipAddress, target, timeout, hostCredentials, onCallCompleted,
+            cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
     ///     Runs the blocking NetApi requests of a host, see <see cref="ResolveNetApiAsync" />.
     /// </summary>
+    /// <param name="hostCredentials">
+    ///     Credentials of a local account for this host (logged on for this call), null for the logon of the scan.
+    /// </param>
     /// <param name="onCallCompleted">
     ///     Called once with the result of the call when it is known (the NetApi values were read before the remote
     ///     registry, or the call returned - also after the timeout), null if it was not started (canceled while waiting
     ///     for a slot); optional.
     /// </param>
     private async Task<WindowsNetApiInfo> ResolveNetApiWithLogonAsync(string ipAddress, string target,
-        TimeSpan timeout, Action<WindowsNetApiInfo> onCallCompleted, CancellationToken cancellationToken)
+        TimeSpan timeout, WindowsCredentials hostCredentials, Action<WindowsNetApiInfo> onCallCompleted,
+        CancellationToken cancellationToken)
     {
         // Every path reports through Complete, exactly once (the lockout protection releases its turn): the NetApi
         // values (the registry doesn't change the logon), the result of the call, or why it didn't run
@@ -936,6 +946,7 @@ public sealed class IPScanner(IPScannerOptions options)
         var task = Task.Factory.StartNew(() =>
         {
             WindowsNetApiInfo result = null;
+            WindowsLogon hostLogon = null;
 
             try
             {
@@ -948,6 +959,10 @@ public sealed class IPScanner(IPScannerOptions options)
                         ? WindowsNetApiResolver.Resolve(ipAddress, OnNetApiRead)
                         : info;
                 }
+
+                // Local logon, no network: an error is not a failed logon at the host (e.g. invalid username)
+                if (hostCredentials != null)
+                    logon = hostLogon = WindowsLogon.Create(hostCredentials);
 
                 result = logon != null ? logon.Run(Resolve) : Resolve();
 
@@ -964,6 +979,8 @@ public sealed class IPScanner(IPScannerOptions options)
             }
             finally
             {
+                hostLogon?.Dispose();
+
                 WindowsSemaphore.Release();
 
                 Complete(result);

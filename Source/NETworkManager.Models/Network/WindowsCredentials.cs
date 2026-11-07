@@ -27,6 +27,25 @@ public sealed record WindowsCredentials(string Username, string Domain, SecureSt
     }
 
     /// <summary>
+    ///     Local account of the scanned hosts ("." as domain, e.g. ".\admin").
+    /// </summary>
+    public bool IsLocalAccount => WindowsLogon.SplitUsername(Username, Domain).domain == ".";
+
+    /// <summary>
+    ///     Gets the credentials of a local account for one host: its computer name as domain (e.g. "PC01\admin"
+    ///     instead of ".\admin"), so the host checks them with its own accounts - never passed to a domain controller.
+    /// </summary>
+    /// <param name="computerName">NetBIOS name of the host (of its NTLM challenge).</param>
+    /// <returns>Credentials for the host (same password), null if they are not a local account.</returns>
+    public WindowsCredentials ForHost(string computerName)
+    {
+        if (!IsLocalAccount || string.IsNullOrEmpty(computerName))
+            return null;
+
+        return new WindowsCredentials(WindowsLogon.SplitUsername(Username, Domain).username, computerName, Password);
+    }
+
+    /// <summary>
     ///     Without the password.
     /// </summary>
     public override string ToString()
