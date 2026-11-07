@@ -2003,6 +2003,9 @@ Profile files are not affected!</value>
   <data name="MaxPortThreads" xml:space="preserve">
     <value>Max. concurrent port threads</value>
   </data>
+  <data name="MaxWindowsThreads" xml:space="preserve">
+    <value>Max. concurrent Windows host information threads</value>
+  </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
   </data>

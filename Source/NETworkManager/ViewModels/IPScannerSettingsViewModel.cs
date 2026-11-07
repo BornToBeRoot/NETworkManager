@@ -697,6 +697,25 @@ public class IPScannerSettingsViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    /// Gets or sets the maximum number of hosts whose Windows host information (NetApi) is read at the same time.
+    /// </summary>
+    public int MaxWindowsThreads
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            if (!_isLoading)
+                SettingsManager.Current.IPScanner_MaxWindowsThreads = value;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     #endregion
 
     #region Constructor, load settings
@@ -769,6 +788,7 @@ public class IPScannerSettingsViewModel : ViewModelBase
         WindowsMaxLogonFailures = SettingsManager.Current.IPScanner_WindowsMaxLogonFailures;
         MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads;
         MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads;
+        MaxWindowsThreads = SettingsManager.Current.IPScanner_MaxWindowsThreads;
     }
 
     #endregion

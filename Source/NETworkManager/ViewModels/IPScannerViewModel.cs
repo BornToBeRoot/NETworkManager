@@ -1412,6 +1412,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         {
             MaxHostThreads = SettingsManager.Current.IPScanner_MaxHostThreads,
             MaxPortThreads = SettingsManager.Current.IPScanner_MaxPortThreads,
+            MaxWindowsThreads = SettingsManager.Current.IPScanner_MaxWindowsThreads,
             ICMPEnabled = SettingsManager.Current.IPScanner_ICMPEnabled,
             OSGuessEnabled = SettingsManager.Current.IPScanner_OSGuessEnabled,
             ICMPAttempts = SettingsManager.Current.IPScanner_ICMPAttempts,

@@ -476,7 +476,7 @@ The NetApi requests need the firewall rules **File and Printer Sharing (SMB-In)*
 
 ### Timeout (ms)
 
-Timeout in milliseconds of the SMB request and of the NetApi requests of a host (each). NetApi requests that take longer are shown as timed out (if only the remote registry takes longer, the other values are shown without the patch level); they keep running in the background until Windows ends them (max. 16 at the same time, for all tabs and repeated scans).
+Timeout in milliseconds of the SMB request and of the NetApi requests of a host (each). NetApi requests that take longer are shown as timed out (if only the remote registry takes longer, the other values are shown without the patch level); they keep running in the background until Windows ends them (for all tabs and repeated scans limited by [Max. concurrent Windows host information threads](#max-concurrent-windows-host-information-threads)).
 
 **Type:** `Integer` [Min `500`, Max `30000`]
 
@@ -758,3 +758,11 @@ Maximum number of ports that are scanned at the same time for each host (IP addr
 Too many simultaneous requests may be detected as a port scan and blocked or rate-limited by a firewall (local, on the network or on the scanned devices). If hosts are missing in the result, reduce the number of threads. This will increase the scan time.
 
 :::
+
+### Max. concurrent Windows host information threads
+
+Maximum number of hosts whose NetApi requests of [Read Windows host information](#read-windows-host-information) run at the same time, for all tabs and repeated scans. The requests are blocking: each one uses its own operating system thread, also after the [timeout](#timeout-ms-2) until Windows ends it (e.g. a host that doesn't answer RPC). A host that doesn't get a free slot within the timeout is shown as timed out. A changed value applies to the next requests, also while requests of a running scan are still waiting.
+
+**Type:** `Integer` [Min `1`, Max `64`]
+
+**Default:** `16`

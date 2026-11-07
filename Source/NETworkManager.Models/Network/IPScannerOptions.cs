@@ -17,6 +17,13 @@ public record IPScannerOptions
     public required int MaxPortThreads { get; init; }
 
     /// <summary>
+    ///     Max. number of hosts whose NetApi requests run at the same time, in all scans of the application (the calls
+    ///     are blocking and keep their thread after the timeout until Windows returns), see
+    ///     <see cref="WindowsNetApiSlots" />.
+    /// </summary>
+    public required int MaxWindowsThreads { get; init; }
+
+    /// <summary>
     ///     Ping the host.
     /// </summary>
     public required bool ICMPEnabled { get; init; }

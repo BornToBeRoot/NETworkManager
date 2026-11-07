@@ -1663,6 +1663,19 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.IPScanner_MaxPortThreads;
 
+    public int IPScanner_MaxWindowsThreads
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.IPScanner_MaxWindowsThreads;
+
     public string IPScanner_ExportFilePath
     {
         get;

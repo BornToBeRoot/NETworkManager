@@ -28,16 +28,6 @@ public sealed class IPScanner(IPScannerOptions options)
     private readonly bool _isSMBPortScanned =
         options.PortScanEnabled && options.PortScanPorts.Contains(SMBInfoResolver.SMBPort);
 
-    /// <summary>
-    ///     Max. number of hosts whose NetApi requests run at the same time, in all scans of the application. The calls
-    ///     are blocking and can't be canceled (see <see cref="WindowsNetApiResolver" />): each one has its own thread, a
-    ///     call that exceeds the timeout keeps its slot until Windows returns - also after its scan is completed, so
-    ///     the slots are shared by all scans (tabs, repeated scans), otherwise blocked calls could pile up.
-    /// </summary>
-    private const int MaxWindowsThreads = 16;
-
-    private static readonly SemaphoreSlim WindowsSemaphore = new(MaxWindowsThreads, MaxWindowsThreads);
-
     // Network logon with the Windows credentials of the profile / group (null: the user running the application) and
     // the error if it could not be created (every host gets it instead of using another user)
     private WindowsLogon _windowsLogon;
@@ -848,8 +838,9 @@ public sealed class IPScanner(IPScannerOptions options)
     }
 
     /// <summary>
-    ///     Runs the blocking NetApi requests of a host on its own thread (max. <see cref="MaxWindowsThreads" /> at the
-    ///     same time) with the network logon of the scan, waits at most the timeout.
+    ///     Runs the blocking NetApi requests of a host on its own thread (max.
+    ///     <see cref="IPScannerOptions.MaxWindowsThreads" /> at the same time in all scans, see
+    ///     <see cref="WindowsNetApiSlots" />) with the network logon of the scan, waits at most the timeout.
     /// </summary>
     /// <param name="ipAddress">IP address of the host (if the hostname can't be found).</param>
     /// <param name="target">Hostname or IP address to connect to, see <see cref="GetWindowsTarget" />.</param>
@@ -932,7 +923,8 @@ public sealed class IPScanner(IPScannerOptions options)
 
         try
         {
-            isSlotFree = await WindowsSemaphore.WaitAsync(timeout, cancellationToken).ConfigureAwait(false);
+            isSlotFree = await WindowsNetApiSlots.Shared
+                .WaitAsync(options.MaxWindowsThreads, timeout, cancellationToken).ConfigureAwait(false);
         }
         catch (OperationCanceledException)
         {
@@ -1010,7 +1002,7 @@ public sealed class IPScanner(IPScannerOptions options)
             {
                 hostLogon?.Dispose();
 
-                WindowsSemaphore.Release();
+                WindowsNetApiSlots.Shared.Release();
 
                 // Not sent or an exception: not decided, the next host checks them (the row shows the error)
                 Complete(isSent && !isException ? result : null);

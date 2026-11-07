@@ -7996,6 +7996,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max. concurrent Windows host information threads.
+        /// </summary>
+        public static string MaxWindowsThreads {
+            get {
+                return ResourceManager.GetString("MaxWindowsThreads", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to mDNS.
         /// </summary>
         public static string MDNS {
