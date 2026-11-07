@@ -235,16 +235,30 @@ public static class WiFi
     /// <returns>Connect mode as <see cref="WiFiConnectMode" />.</returns>
     public static WiFiConnectMode GetConnectMode(WiFiAvailableNetwork network)
     {
-        // Enterprise
-        if (network.SecuritySettings.NetworkAuthenticationType is NetworkAuthenticationType.Rsna or NetworkAuthenticationType.Wpa)
+        return GetConnectMode(network.SecuritySettings.NetworkAuthenticationType,
+            network.SecuritySettings.NetworkEncryptionType);
+    }
+
+    /// <summary>
+    ///     Get the connect mode from the authentication and encryption type of a Wi-Fi network.
+    /// </summary>
+    /// <param name="authenticationType">Authentication type of the network.</param>
+    /// <param name="encryptionType">Encryption type of the network.</param>
+    /// <returns>Connect mode as <see cref="WiFiConnectMode" />.</returns>
+    public static WiFiConnectMode GetConnectMode(NetworkAuthenticationType authenticationType,
+        NetworkEncryptionType encryptionType)
+    {
+        // Enterprise (WPA, WPA2, WPA3)
+        if (authenticationType is NetworkAuthenticationType.Rsna or NetworkAuthenticationType.Wpa
+            or NetworkAuthenticationType.Wpa3Enterprise or NetworkAuthenticationType.Wpa3Enterprise192Bits)
             return WiFiConnectMode.Eap;
 
-        // Open
-        if (network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211 ||
-            network.SecuritySettings.NetworkEncryptionType == NetworkEncryptionType.None)
+        // Open, also OWE (Enhanced Open: encrypted, but without a password)
+        if (authenticationType is NetworkAuthenticationType.Open80211 or NetworkAuthenticationType.Owe ||
+            encryptionType == NetworkEncryptionType.None)
             return WiFiConnectMode.Open;
 
-        // Pre-Shared-Key
+        // Pre-Shared-Key (WEP, WPA, WPA2, WPA3 SAE)
         return WiFiConnectMode.Psk;
     }
 

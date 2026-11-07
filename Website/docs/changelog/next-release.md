@@ -292,6 +292,7 @@ Release date: **xx.xx.2026**
 - Fixed **Use credentials** being ignored when connecting to a WPA / WPA2 / WPA3 Enterprise network (EAP). If it is disabled, no username and password are sent and Windows uses the logged-on user or a certificate. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the **WPS** button of the connect dialog never being shown. Whether a network supports WPS (push button) is checked again when the dialog is opened. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the connect dialog not focusing the first input: the SSID of a hidden network or the username (EAP) was not focused. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed the connect dialog asking for a pre-shared key for WPA3 Enterprise networks (instead of username and password) and for OWE (Enhanced Open) networks, which need no password. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 
