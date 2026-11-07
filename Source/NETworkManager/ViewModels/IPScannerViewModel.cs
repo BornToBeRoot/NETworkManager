@@ -60,8 +60,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     // see WindowsLogon), null for the user running the application
     private WindowsCredentials _windowsCredentials;
 
-    // Lockout protection of the Windows credentials for all scans of the tab (logon failures and the rejected state
-    // are kept, so repeated scans don't lock the account), null without credentials; new with new credentials
+    // Lockout protection of the Windows credentials for all scans of the tab (the rejected state is kept, the logon
+    // failures are counted per account for all tabs), null without credentials; new with new credentials
     private WindowsLogonGate _windowsLogonGate;
 
     // The message that the Windows credentials were rejected was shown (once, also if they were rejected after the

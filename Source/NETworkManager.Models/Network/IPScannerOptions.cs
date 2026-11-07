@@ -143,9 +143,9 @@ public record IPScannerOptions
     public WindowsCredentials WindowsCredentials { get; init; }
 
     /// <summary>
-    ///     Lockout protection of the <see cref="WindowsCredentials" />, kept by the tab for all its scans (logon
-    ///     failures, accepted / rejected state, a check that is still running), so repeated scans don't lock the
-    ///     account. Null: a new one for the scan.
+    ///     Lockout protection of the <see cref="WindowsCredentials" />, kept by the tab for all its scans (accepted /
+    ///     rejected state, a check that is still running; the logon failures are counted per account for all tabs), so
+    ///     repeated scans don't lock the account. Null: a new one for the scan.
     /// </summary>
     public WindowsLogonGate WindowsLogonGate { get; init; }
 
