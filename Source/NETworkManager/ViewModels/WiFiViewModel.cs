@@ -881,11 +881,13 @@ public class WiFiViewModel : ViewModelBase
     // 2.4 GHz operating channels are 1, 2, 3, ... 14 (every channel number), labeled with the channel
     private static readonly HashSet<int> ValidChannels2Dot4GHz = BuildChannelSet(1, 14, 1);
 
-    // 5 GHz operating channels are 36, 40, 44, ... 165 (every 4 in channel-number space), labeled with
+    // 5 GHz operating channels are 36 - 64 and 100 - 144 (every 4 in channel-number space) and 149 - 165 (UNII-3,
+    // odd channel numbers), labeled with the channel
     private static readonly HashSet<int> ValidChannels5GHz =
     [
         .. BuildChannelSet(36, 64, 4),
-        .. BuildChannelSet(100, 165, 4)
+        .. BuildChannelSet(100, 144, 4),
+        .. BuildChannelSet(149, 165, 4)
     ];
 
     // 6 GHz operating channels are 1, 5, 9, ... 233 (every 4 in channel-number space), labeled with the

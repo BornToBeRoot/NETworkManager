@@ -296,6 +296,7 @@ Release date: **xx.xx.2026**
 - Fixed the connect dialog asking for a pre-shared key for WPA3 Enterprise networks (instead of username and password) and for OWE (Enhanced Open) networks, which need no password. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed networks with a channel width of 40, 80 or 160 MHz being drawn at the wrong position on the **Channels** tab: they were centered on their primary channel (e.g. 80 MHz on channel 36 over the channels 28 - 44 instead of 36 - 48), so overlapping networks were shown wrong. The center of the whole channel is read from the beacon now. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed WiFi 7 (802.11be) networks with a channel width of 320 MHz being shown with 160 MHz. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed the 5 GHz chart of the **Channels** tab labeling the channels above 144 as 148, 152 ... 164 instead of 149, 153 ... 165. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 
