@@ -28,6 +28,14 @@ public class WlanApiTests
         return [255, (byte)body.Length, .. body];
     }
 
+    // EHT Operation (255 / 106): parameters (bit 0 = EHT Operation Information present), basic EHT-MCS and NSS set (4),
+    // control (bits 0-2 channel width), CCFS0, CCFS1
+    private static byte[] EhtOperation(byte control, byte segment0, byte segment1)
+    {
+        byte[] body = [106, 0x01, 0, 0, 0, 0, control, segment0, segment1];
+        return [255, (byte)body.Length, .. body];
+    }
+
     private static WlanApi.WlanBssChannel Parse(int primaryFrequencyMHz, params byte[][] elements)
     {
         return WlanApi.GetChannelFromInformationElements(elements.SelectMany(x => x).ToArray(), primaryFrequencyMHz);
@@ -105,6 +113,22 @@ public class WlanApiTests
     {
         Assert.Equal(new WlanApi.WlanBssChannel(expectedWidth, expectedCenter),
             Parse(5955, HeOperation6GHz(control, segment0, segment1)));
+    }
+
+    [Fact]
+    public void Eht320_IsCenteredOnSegment1()
+    {
+        // Primary channel 1, 320 MHz on the channels 1 - 61 (center channel 31, segment 0 = primary 160 MHz)
+        Assert.Equal(new WlanApi.WlanBssChannel(320, 6105),
+            Parse(5955, HeOperation6GHz(3, 7, 15), EhtOperation(4, 15, 31)));
+    }
+
+    [Fact]
+    public void EhtWithoutOperationInformation_KeepsHe()
+    {
+        byte[] eht = [255, 6, 106, 0x00, 0, 0, 0, 0];
+
+        Assert.Equal(new WlanApi.WlanBssChannel(160, 6025), Parse(5955, HeOperation6GHz(3, 7, 15), eht));
     }
 
     [Fact]

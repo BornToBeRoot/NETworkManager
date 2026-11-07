@@ -7,14 +7,14 @@ namespace NETworkManager.Models.Network;
 
 /// <summary>
 ///     Native Wi-Fi (<c>wlanapi.dll</c>) interop used to determine the channel bandwidth
-///     (20 / 40 / 80 / 160 MHz) and its center frequency of nearby access points.
+///     (20 / 40 / 80 / 160 / 320 MHz) and its center frequency of nearby access points.
 ///     <para>
 ///     The Windows Runtime Wi-Fi API (<see cref="Windows.Devices.WiFi.WiFiAvailableNetwork" />) does
 ///     not expose the channel width, its frequency is the one of the primary 20 MHz channel (where
 ///     the beacons are sent). The native BSS list (<c>WlanGetNetworkBssList</c>) however returns the
 ///     raw 802.11 information elements (IEs) of each beacon / probe response. The width and the
 ///     center of the whole channel are parsed from the HT-Operation (802.11n), VHT-Operation
-///     (802.11ac) and HE-Operation (802.11ax / 6 GHz) elements.
+///     (802.11ac), HE-Operation (802.11ax / 6 GHz) and EHT-Operation (802.11be) elements.
 ///     </para>
 ///     All calls are wrapped in try/catch; on any failure an empty result is returned so the caller
 ///     can fall back to a heuristic (see <see cref="WiFi" />).
@@ -31,11 +31,12 @@ public static class WlanApi
     private const byte EidVhtOperation = 192;
     private const byte EidExtension = 255;
     private const byte ExtEidHeOperation = 36;
+    private const byte ExtEidEhtOperation = 106;
 
     /// <summary>
     ///     Channel of an access point parsed from its information elements.
     /// </summary>
-    /// <param name="BandwidthMHz">Channel width in MHz (20, 40, 80, 160), 0 if unknown.</param>
+    /// <param name="BandwidthMHz">Channel width in MHz (20, 40, 80, 160, 320), 0 if unknown.</param>
     /// <param name="CenterFrequencyMHz">
     ///     Center frequency of the whole channel in MHz (e.g. 5210 for 80 MHz on the channels 36 - 48), 0 if unknown.
     /// </param>
@@ -280,7 +281,7 @@ public static class WlanApi
 
     /// <summary>
     ///     Walks the TLV-encoded 802.11 information elements and returns the widest channel advertised
-    ///     by the HT-, VHT- or HE-Operation element, with the center frequency of the whole channel.
+    ///     by the HT-, VHT-, HE- or EHT-Operation element, with the center frequency of the whole channel.
     ///     Returns <c>default</c> (width 0) if none of these elements are present.
     /// </summary>
     /// <param name="ie">Information elements of a beacon / probe response.</param>
@@ -290,6 +291,7 @@ public static class WlanApi
         WlanBssChannel ht = default;
         byte[] vhtOperation = null;
         int heOffset = -1, heLength = 0;
+        int ehtOffset = -1, ehtLength = 0;
 
         var pos = 0;
 
@@ -314,6 +316,10 @@ public static class WlanApi
                     heOffset = data + 1;
                     heLength = len - 1;
                     break;
+                case EidExtension when len >= 1 && ie[data] == ExtEidEhtOperation:
+                    ehtOffset = data + 1;
+                    ehtLength = len - 1;
+                    break;
             }
 
             pos = data + len;
@@ -326,8 +332,10 @@ public static class WlanApi
 
         var he = heOffset < 0 ? default : ParseHeChannel(ie, heOffset, heLength, ht, primaryFrequencyMHz);
 
+        var eht = ehtOffset < 0 ? default : ParseEhtChannel(ie, ehtOffset, ehtLength, primaryFrequencyMHz);
+
         // The widest channel; on a tie the newer element (its center is the more precise one)
-        return Widest(Widest(ht, vht), he);
+        return Widest(Widest(Widest(ht, vht), he), eht);
     }
 
     /// <summary>
@@ -455,6 +463,45 @@ public static class WlanApi
         }
 
         return channel;
+    }
+
+    /// <summary>
+    ///     Parses the EHT-Operation element (802.11be): EHT Operation Parameters (1, bit 0 = EHT
+    ///     Operation Information present) and Basic EHT-MCS And NSS Set (4), followed by the EHT
+    ///     Operation Information: Control (1, bits 0-2 = 20 / 40 / 80 / 160 / 320 MHz), CCFS0 (1),
+    ///     CCFS1 (1). Only present if the channel differs from the HT / VHT / HE elements (e.g. 320 MHz).
+    /// </summary>
+    /// <param name="ie">The full information element buffer.</param>
+    /// <param name="offset">Offset of the EHT Operation Parameters (after the extension id byte).</param>
+    /// <param name="length">Remaining length of the EHT-Operation element after the extension id.</param>
+    /// <param name="primaryFrequencyMHz">Frequency of the primary 20 MHz channel in MHz.</param>
+    private static WlanBssChannel ParseEhtChannel(byte[] ie, int offset, int length, int primaryFrequencyMHz)
+    {
+        if (length < 8 || (ie[offset] & 0x01) == 0)
+            return default;
+
+        var cursor = offset + 1 + 4; // skip parameters, basic EHT-MCS
+
+        var width = (ie[cursor] & 0x07) switch
+        {
+            0 => 20,
+            1 => 40,
+            2 => 80,
+            3 => 160,
+            4 => 320,
+            _ => 0
+        };
+
+        if (width == 0)
+            return default;
+
+        // CCFS0 is the center of the channel (of the primary 80 / 160 MHz channel for 160 / 320 MHz), CCFS1 the
+        // center of the 160 / 320 MHz channel
+        var segment0 = ie[cursor + 1];
+        var segment1 = ie[cursor + 2];
+        var centerChannel = width >= 160 && segment1 != 0 ? segment1 : segment0;
+
+        return new WlanBssChannel(width, ChannelToFrequency(centerChannel, primaryFrequencyMHz));
     }
 
     /// <summary>
