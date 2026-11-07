@@ -4,6 +4,7 @@ using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
 using NETworkManager.Profiles;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using NETworkManager.Views;
 using System;
@@ -133,7 +134,16 @@ public class IPScannerHostViewModel : ProfileHostViewModelBase
     /// Gets the command to scan the selected profile with other Windows credentials (like Connect as... of Remote
     /// Desktop).
     /// </summary>
-    public ICommand ScanProfileAsCommand => new RelayCommand(_ => ScanProfileAsAction(), ScanProfile_CanExecute);
+    public ICommand ScanProfileAsCommand => new RelayCommand(_ => ScanProfileAsAction(), ScanProfileAs_CanExecute);
+
+    /// <summary>
+    /// Checks if the scan as command can be executed: only with Read Windows host information (the credentials are not
+    /// used otherwise).
+    /// </summary>
+    private bool ScanProfileAs_CanExecute(object obj)
+    {
+        return ScanProfile_CanExecute(obj) && SettingsManager.Current.IPScanner_WindowsEnabled;
+    }
 
     private void ScanProfileAsAction()
     {

@@ -52,8 +52,10 @@
                     </Rectangle>
                 </MenuItem.Icon>
             </MenuItem>
+            <!-- Windows credentials only with Read Windows host information (not used otherwise) -->
             <MenuItem Header="{x:Static localization:Strings.ScanAsDots}"
-                      Command="{Binding ScanProfileAsCommand}">
+                      Command="{Binding ScanProfileAsCommand}"
+                      Visibility="{Binding Source={x:Static settings:SettingsManager.Current}, Path=IPScanner_WindowsEnabled, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                 <MenuItem.Icon>
                     <Rectangle Width="16" Height="16"
                                Fill="{DynamicResource MahApps.Brushes.Gray3}">
