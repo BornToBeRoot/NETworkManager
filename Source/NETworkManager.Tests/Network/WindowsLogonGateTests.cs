@@ -15,6 +15,9 @@ public class WindowsLogonGateTests
 {
     private static readonly TimeSpan Timeout = TimeSpan.FromSeconds(5);
 
+    // Hosts of other domains first wait half of it for a decision of a host in the domain of the credentials
+    private static readonly TimeSpan ShortTimeout = TimeSpan.FromMilliseconds(200);
+
     private static readonly NTLMChallengeInfo CorpHost = new(new Version(10, 0, 26200), "CLIENT01", "CORP",
         "client01.corp.example.com", "corp.example.com", "example.com", null);
 
@@ -134,6 +137,48 @@ public class WindowsLogonGateTests
     }
 
     [Fact]
+    public async Task HostOfAnotherDomain_WaitsForTheDomain()
+    {
+        // E.g. a host of a domain that is not trusted (logon failure also with a correct password) is found first: a
+        // host in the domain of the credentials decides, the other host doesn't check them
+        var gate = CreateGate();
+
+        var other = gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+
+        Assert.Equal(WindowsLogonGate.Decision.Check,
+            await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
+        Assert.False(other.IsCompleted);
+
+        gate.Report(CorpHost, "10.0.0.1", Success);
+
+        Assert.Equal(WindowsLogonGate.Decision.Proceed, await other);
+    }
+
+    [Fact]
+    public async Task HostOfAnotherDomain_NoDecision_ChecksThemAfterHalfTheTimeout()
+    {
+        var gate = CreateGate();
+
+        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
+        Assert.Equal(WindowsLogonGate.Decision.Check,
+            await gate.WaitAsync(OtherDomainHost, "10.0.1.1", TimeSpan.FromMilliseconds(400), CancellationToken.None));
+        Assert.True(stopwatch.Elapsed >= TimeSpan.FromMilliseconds(150), stopwatch.Elapsed.ToString());
+    }
+
+    [Fact]
+    public async Task WithoutDomain_NoWaitForTheDomain()
+    {
+        // No host is in the domain of credentials without domain
+        var gate = CreateGate($"admin-{Guid.NewGuid():N}", "");
+
+        var task = gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+
+        Assert.True(task.IsCompleted);
+        Assert.Equal(WindowsLogonGate.Decision.Check, await task);
+    }
+
+    [Fact]
     public async Task AccessDenied_CredentialsAccepted()
     {
         var gate = CreateGate();
@@ -156,7 +201,7 @@ public class WindowsLogonGateTests
             gate.StartScan(MaxLogonFailures);
 
             Assert.Equal(WindowsLogonGate.Decision.Check,
-                await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None));
+                await gate.WaitAsync(OtherDomainHost, "10.0.1.1", ShortTimeout, CancellationToken.None));
 
             gate.Report(OtherDomainHost, "10.0.0.1", Success);
 
@@ -192,7 +237,7 @@ public class WindowsLogonGateTests
     {
         var gate = CreateGate();
 
-        await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+        await gate.WaitAsync(OtherDomainHost, "10.0.1.1", ShortTimeout, CancellationToken.None);
         gate.Report(OtherDomainHost, "10.0.0.1", Success);
 
         Assert.Equal(WindowsLogonGate.Decision.Check, await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None));
@@ -272,7 +317,7 @@ public class WindowsLogonGateTests
         for (var scan = 0; scan < 2; scan++)
         for (var i = 0; i < 2 && !gate.IsRejected; i++)
         {
-            await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+            await gate.WaitAsync(OtherDomainHost, "10.0.1.1", ShortTimeout, CancellationToken.None);
             gate.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
         }
 
@@ -288,7 +333,7 @@ public class WindowsLogonGateTests
         {
             Assert.False(gate.IsRejected);
             Assert.Equal(WindowsLogonGate.Decision.Check,
-                await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None));
+                await gate.WaitAsync(OtherDomainHost, "10.0.1.1", ShortTimeout, CancellationToken.None));
 
             gate.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
         }
@@ -308,7 +353,7 @@ public class WindowsLogonGateTests
         {
             Assert.False(gate.IsRejected);
 
-            await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+            await gate.WaitAsync(OtherDomainHost, "10.0.1.1", ShortTimeout, CancellationToken.None);
             gate.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
         }
 
@@ -323,19 +368,19 @@ public class WindowsLogonGateTests
         var username = $"admin-{Guid.NewGuid():N}";
 
         var first = CreateGate(username);
-        await first.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+        await first.WaitAsync(OtherDomainHost, "10.0.1.1", ShortTimeout, CancellationToken.None);
         first.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
         Assert.False(first.IsRejected);
 
         var second = CreateGate(username);
-        await second.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+        await second.WaitAsync(OtherDomainHost, "10.0.1.1", ShortTimeout, CancellationToken.None);
         second.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
         Assert.True(second.IsRejected);
 
         // Entered again by the user (e.g. after the account was unlocked): checked once, rejected by its first failure
         var third = CreateGate(username, isEnteredByUser: true);
         Assert.Equal(WindowsLogonGate.Decision.Check,
-            await third.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None));
+            await third.WaitAsync(OtherDomainHost, "10.0.1.1", ShortTimeout, CancellationToken.None));
         third.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
         Assert.True(third.IsRejected);
     }
@@ -441,7 +486,7 @@ public class WindowsLogonGateTests
         // "admin" without domain: the domain controller of the host may have counted it
         var gate = CreateGate($"admin-{Guid.NewGuid():N}", "");
 
-        await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+        await gate.WaitAsync(OtherDomainHost, "10.0.1.1", ShortTimeout, CancellationToken.None);
         gate.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
 
         Assert.True(gate.IsRejected);
@@ -520,12 +565,12 @@ public class WindowsLogonGateTests
         var gate = CreateGate();
         gate.StartScan(1);
 
-        await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+        await gate.WaitAsync(OtherDomainHost, "10.0.1.1", ShortTimeout, CancellationToken.None);
         gate.Report(OtherDomainHost, "10.0.0.1", WindowsNetApiInfo.FromError(1385));
 
         Assert.False(gate.IsRejected);
         Assert.Equal(WindowsLogonGate.Decision.Check,
-            await gate.WaitAsync(OtherDomainHost, "10.0.1.2", Timeout, CancellationToken.None));
+            await gate.WaitAsync(OtherDomainHost, "10.0.1.2", ShortTimeout, CancellationToken.None));
     }
 
     [Fact]
@@ -546,7 +591,7 @@ public class WindowsLogonGateTests
         // A successful logon resets the failures at the domain controller (badPwdCount)
         var gate = CreateGate();
 
-        await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+        await gate.WaitAsync(OtherDomainHost, "10.0.1.1", ShortTimeout, CancellationToken.None);
         gate.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
 
         await gate.WaitAsync(CorpHost, "10.0.0.1", Timeout, CancellationToken.None);
@@ -555,7 +600,7 @@ public class WindowsLogonGateTests
         // Next scan: one failure is below the limit again
         gate.StartScan(MaxLogonFailures);
 
-        await gate.WaitAsync(OtherDomainHost, "10.0.1.1", Timeout, CancellationToken.None);
+        await gate.WaitAsync(OtherDomainHost, "10.0.1.1", ShortTimeout, CancellationToken.None);
         gate.Report(OtherDomainHost, "10.0.0.1", LogonFailure);
 
         Assert.False(gate.IsRejected);

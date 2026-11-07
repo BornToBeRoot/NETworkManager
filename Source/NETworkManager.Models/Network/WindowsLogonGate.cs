@@ -140,6 +140,10 @@ public sealed class WindowsLogonGate
 
     private State _state;
 
+    // Completed when the credentials are accepted / rejected (new when a scan checks them again): hosts of other
+    // domains wait for it first, see WaitAsync
+    private TaskCompletionSource _decided = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
     // Max. logon failures on hosts of other domains (setting of the scan, see StartScan), 1 until a scan started
     private int _maxLogonFailures = 1;
 
@@ -177,7 +181,10 @@ public sealed class WindowsLogonGate
             if (isEnteredByUser)
                 _accountState.RejectedPasswords.Remove(_passwordFingerprint);
             else if (_accountState.RejectedPasswords.Contains(_passwordFingerprint))
+            {
                 _state = State.Rejected;
+                _decided.TrySetResult();
+            }
         }
     }
 
@@ -231,6 +238,7 @@ public sealed class WindowsLogonGate
     private void SetRejected()
     {
         _state = State.Rejected;
+        _decided.TrySetResult();
 
         lock (_accountState)
             _accountState.RejectedPasswords.Add(_passwordFingerprint);
@@ -271,7 +279,10 @@ public sealed class WindowsLogonGate
             _maxLogonFailures = Math.Max(1, maxLogonFailures);
 
             if (_state == State.Accepted)
+            {
                 _state = State.Unchecked;
+                _decided = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+            }
 
             UpdateFromAccount();
 
@@ -404,6 +415,27 @@ public sealed class WindowsLogonGate
 
         var decision = GetDecision();
 
+        // A host of another domain (or without challenge) waits up to half of the timeout for a host in the domain of
+        // the credentials to decide: a domain that is not trusted fails also with a correct password - the first
+        // hosts of the scan must not reject them before a host of their domain checked them. Not for credentials
+        // without domain (no host is in their domain).
+        if (decision == null && !string.IsNullOrEmpty(_domain) && !IsInDomain(ntlm))
+        {
+            Task decided;
+
+            lock (_lock)
+                decided = _decided.Task;
+
+            var grace = timeout / 2;
+
+            await Task.WhenAny(decided, Task.Delay(grace, cancellationToken)).ConfigureAwait(false);
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            decision = GetDecision();
+            timeout -= grace;
+        }
+
         if (decision == null)
         {
             if (!await _turn.WaitAsync(timeout, cancellationToken).ConfigureAwait(false))
@@ -481,6 +513,7 @@ public sealed class WindowsLogonGate
                     if (IsInDomain(ntlm) && ntlm.Version is { Build: > 0 })
                     {
                         _state = State.Accepted;
+                        _decided.TrySetResult();
 
                         // A successful logon resets the failures at the domain controller (badPwdCount)
                         Interlocked.Exchange(ref _accountState.LogonFailures, 0);
@@ -629,9 +662,12 @@ public sealed class WindowsLogonGate
 
         lock (_accountState)
         {
-            if (_accountState.RejectedPasswords.Contains(_passwordFingerprint))
-                _state = State.Rejected;
+            if (!_accountState.RejectedPasswords.Contains(_passwordFingerprint))
+                return;
         }
+
+        _state = State.Rejected;
+        _decided.TrySetResult();
     }
 
     private Decision? GetDecision()
