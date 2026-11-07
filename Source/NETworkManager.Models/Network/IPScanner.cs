@@ -962,10 +962,16 @@ public sealed class IPScanner(IPScannerOptions options)
             WindowsNetApiInfo result = null;
             WindowsLogon hostLogon = null;
 
+            // The requests were sent with the logon (impersonated): only then the result can be a failed logon -
+            // otherwise (e.g. the logon was disposed, the local logon failed) the lockout protection gets no result
+            var isSent = false;
+
             try
             {
                 WindowsNetApiInfo Resolve()
                 {
+                    isSent = true;
+
                     var info = WindowsNetApiResolver.Resolve(target, OnNetApiRead);
 
                     // The hostname can't be found (e.g. no forward lookup zone): the IP address (NTLM)
@@ -984,8 +990,8 @@ public sealed class IPScanner(IPScannerOptions options)
             }
             catch (Exception ex)
             {
-                // E.g. the logon was disposed by the end of the scan while the call waited for a slot
-                Log.Debug($"NetApi requests to {target} failed.", ex);
+                // E.g. the logon was disposed by the end of the scan while the call waited for a slot (not sent)
+                Log.Debug($"NetApi requests to {target} failed (sent: {isSent}).", ex);
 
                 result = WindowsNetApiInfo.FromError(GetWin32Error(ex));
 
@@ -997,7 +1003,8 @@ public sealed class IPScanner(IPScannerOptions options)
 
                 WindowsSemaphore.Release();
 
-                Complete(result);
+                // Not sent: not decided, the next host checks them (the row shows the error)
+                Complete(isSent ? result : null);
             }
         }, CancellationToken.None, TaskCreationOptions.LongRunning, TaskScheduler.Default);
 

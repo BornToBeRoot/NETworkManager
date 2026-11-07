@@ -454,8 +454,8 @@ public sealed class WindowsLogonGate
         {
             if (info == null)
             {
-                log = () => Log.Debug($"Windows credentials \"{_account}\" not checked on {hostName} (canceled), " +
-                                      "the next host checks them.");
+                log = () => Log.Debug($"Windows credentials \"{_account}\" not checked on {hostName} (canceled, " +
+                                      "or the requests were not sent), the next host checks them.");
                 return;
             }
 

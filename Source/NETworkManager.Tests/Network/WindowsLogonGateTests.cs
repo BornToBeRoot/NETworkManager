@@ -425,6 +425,7 @@ public class WindowsLogonGateTests
     [InlineData(1244)] // not authenticated
     [InlineData(unchecked((int)0x8009030C))] // SEC_E_LOGON_DENIED
     [InlineData(1265)] // any other error: not known as "no logon"
+    [InlineData(31)] // ERROR_GEN_FAILURE of the host (e.g. NT_STATUS_UNSUCCESSFUL of Samba)
     public async Task UnknownErrorInTheDomain_CountsAsLogonFailure(int error)
     {
         // A wrong password reported with an error that is not in the list of logon errors (e.g. Kerberos / SSPI) must

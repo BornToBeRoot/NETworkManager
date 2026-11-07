@@ -179,6 +179,7 @@ public class WindowsHostInfoTests
     [InlineData(1326, false)] // wrong username or password
     [InlineData(1909, false)] // locked
     [InlineData(1265, false)] // unknown: may be a failed logon
+    [InlineData(31, false)] // ERROR_GEN_FAILURE: a request that was not sent is not reported (see IPScanner)
     [InlineData(5, false)] // access denied
     public void IsLogonNotDecided(int error, bool expected)
     {

@@ -52,7 +52,6 @@ public sealed record WindowsHostInfo(SMBInfo SMB, WindowsNetApiInfo NetApi)
     /// </summary>
     private static readonly HashSet<int> LogonNotDecidedErrors =
     [
-        31, // ERROR_GEN_FAILURE (exception of the call, e.g. the logon was disposed)
         50, // ERROR_NOT_SUPPORTED
         53, // ERROR_BAD_NETPATH
         59, // ERROR_UNEXP_NET_ERR
