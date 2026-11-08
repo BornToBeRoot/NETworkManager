@@ -11,6 +11,8 @@ public class WiFiConnectModeTests
     [InlineData(NetworkAuthenticationType.Owe, NetworkEncryptionType.Ccmp, WiFiConnectMode.Open)]
     [InlineData(NetworkAuthenticationType.RsnaPsk, NetworkEncryptionType.None, WiFiConnectMode.Open)]
     [InlineData(NetworkAuthenticationType.SharedKey80211, NetworkEncryptionType.Wep, WiFiConnectMode.Psk)]
+    [InlineData(NetworkAuthenticationType.Open80211, NetworkEncryptionType.Wep, WiFiConnectMode.Psk)]
+    [InlineData(NetworkAuthenticationType.Open80211, NetworkEncryptionType.Wep40, WiFiConnectMode.Psk)]
     [InlineData(NetworkAuthenticationType.WpaPsk, NetworkEncryptionType.Tkip, WiFiConnectMode.Psk)]
     [InlineData(NetworkAuthenticationType.RsnaPsk, NetworkEncryptionType.Ccmp, WiFiConnectMode.Psk)]
     [InlineData(NetworkAuthenticationType.Wpa3Sae, NetworkEncryptionType.Ccmp, WiFiConnectMode.Psk)]

@@ -557,8 +557,8 @@
                                                                                     Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SignalBars}"
                                                                                     Value="0" />
                                                                                 <Condition
-                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkAuthenticationType}"
-                                                                                    Value="Open80211" />
+                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkEncryptionType}"
+                                                                                    Value="None" />
                                                                             </MultiDataTrigger.Conditions>
                                                                             <MultiDataTrigger.Setters>
                                                                                 <Setter Property="OpacityMask"
@@ -571,8 +571,8 @@
                                                                                     Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SignalBars}"
                                                                                     Value="1" />
                                                                                 <Condition
-                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkAuthenticationType}"
-                                                                                    Value="Open80211" />
+                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkEncryptionType}"
+                                                                                    Value="None" />
                                                                             </MultiDataTrigger.Conditions>
                                                                             <MultiDataTrigger.Setters>
                                                                                 <Setter Property="OpacityMask"
@@ -585,8 +585,8 @@
                                                                                     Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SignalBars}"
                                                                                     Value="2" />
                                                                                 <Condition
-                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkAuthenticationType}"
-                                                                                    Value="Open80211" />
+                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkEncryptionType}"
+                                                                                    Value="None" />
                                                                             </MultiDataTrigger.Conditions>
                                                                             <MultiDataTrigger.Setters>
                                                                                 <Setter Property="OpacityMask"
@@ -599,8 +599,8 @@
                                                                                     Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SignalBars}"
                                                                                     Value="3" />
                                                                                 <Condition
-                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkAuthenticationType}"
-                                                                                    Value="Open80211" />
+                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkEncryptionType}"
+                                                                                    Value="None" />
                                                                             </MultiDataTrigger.Conditions>
                                                                             <MultiDataTrigger.Setters>
                                                                                 <Setter Property="OpacityMask"
@@ -613,8 +613,8 @@
                                                                                     Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SignalBars}"
                                                                                     Value="4" />
                                                                                 <Condition
-                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkAuthenticationType}"
-                                                                                    Value="Open80211" />
+                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkEncryptionType}"
+                                                                                    Value="None" />
                                                                             </MultiDataTrigger.Conditions>
                                                                             <MultiDataTrigger.Setters>
                                                                                 <Setter Property="OpacityMask"

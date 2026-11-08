@@ -304,6 +304,7 @@ Release date: **xx.xx.2026**
 - Fixed a network being marked as **Connected** that the selected adapter isn't connected to, if the computer has several WiFi adapters and the selected one was disconnected. An error while reading the connected network no longer ends the scan. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the connection status message (e.g. "Connecting to ...") being hidden too early, while still connecting, if a previous message (e.g. after connecting or disconnecting) was shown shortly before. Each message is now shown for 15 seconds. [#3638](https://github.com/BornToBeRoot/NETworkManager/pull/3638)
 - Fixed the adapter list and the auto refresh keeping a removed adapter (e.g. an unplugged USB adapter) after **Refresh** found no adapter or failed: "No WiFi adapters found" is shown now. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed WEP networks with open authentication being treated as unsecured: the connect dialog asked for no key (the connection failed) and the signal icon showed no lock. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **IP Scanner**
 

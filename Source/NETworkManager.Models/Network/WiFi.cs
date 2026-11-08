@@ -234,9 +234,9 @@ public static class WiFi
             or NetworkAuthenticationType.Wpa3Enterprise or NetworkAuthenticationType.Wpa3Enterprise192Bits)
             return WiFiConnectMode.Eap;
 
-        // Open, also OWE (Enhanced Open: encrypted, but without a password)
-        if (authenticationType is NetworkAuthenticationType.Open80211 or NetworkAuthenticationType.Owe ||
-            encryptionType == NetworkEncryptionType.None)
+        // Open (no encryption), also OWE (Enhanced Open: encrypted, but without a password). Not Open80211 with WEP:
+        // the authentication is open, but the WEP key is needed (Pre-Shared-Key)
+        if (authenticationType == NetworkAuthenticationType.Owe || encryptionType == NetworkEncryptionType.None)
             return WiFiConnectMode.Open;
 
         // Pre-Shared-Key (WEP, WPA, WPA2, WPA3 SAE)
