@@ -78,4 +78,40 @@ public class NetworkInterfaceConfigTests
         Assert.Equal("1.1.1.1", config.PrimaryDNSServer);
         Assert.Equal("1.0.0.1", config.SecondaryDNSServer);
     }
+
+    [Fact]
+    public void Create_UnusedValuesAreRemoved()
+    {
+        var config = NetworkInterfaceConfig.Create("Ethernet", false, "not used; Remove-Item", "/24", "x", false,
+            "y", "z");
+
+        Assert.Null(config.IPAddress);
+        Assert.Null(config.Subnetmask);
+        Assert.Null(config.Gateway);
+        Assert.Null(config.PrimaryDNSServer);
+        Assert.Null(config.SecondaryDNSServer);
+        Assert.Null(config.GetInvalidValue());
+    }
+
+    [Fact]
+    public void GetInvalidValue_ValidConfig_ReturnsNull()
+    {
+        Assert.Null(CreateStatic().GetInvalidValue());
+        Assert.Null(CreateStatic(secondaryDNSServer: "").GetInvalidValue());
+    }
+
+    [Theory]
+    [InlineData("192.168.1.10; Remove-Item C:\\ -Recurse", "/24", "192.168.1.1", "1.1.1.1")]
+    [InlineData("192.168.1.10", "255.255.255.0 & calc", "192.168.1.1", "1.1.1.1")]
+    [InlineData("192.168.1.10", "/24", "192.168.1.1 | calc", "1.1.1.1")]
+    [InlineData("192.168.1.10", "/24", "192.168.1.1", "$(calc)")]
+    [InlineData("192.168.1.256", "/24", "", "")]
+    public void GetInvalidValue_ReturnsInvalidValue(string ipAddress, string subnetmask, string gateway,
+        string primaryDNSServer)
+    {
+        var config = NetworkInterfaceConfig.Create("Ethernet", true, ipAddress, subnetmask, gateway, true,
+            primaryDNSServer, "");
+
+        Assert.NotNull(config.GetInvalidValue());
+    }
 }

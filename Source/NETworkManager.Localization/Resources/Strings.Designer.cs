@@ -6081,7 +6081,7 @@ namespace NETworkManager.Localization.Resources {
         ///
         ///Only the PowerShell consoles configured in the PowerShell settings are modified. Both Windows PowerShell and PWSH (PowerShell 7 and higher) are supported.
         ///
-        ///Click in the upper right corner on the help / documentation button ( [rest of string was truncated]&quot;;.
+        ///Click in the upper right corner on the help / documentation button (left [rest of string was truncated]&quot;;.
         /// </summary>
         public static string HelpMessage_ApplyThemeToPowerShellConsole {
             get {
@@ -8959,6 +8959,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &quot;{0}&quot; is not a valid IPv4 address or subnet mask. Check the configuration (or the profile) and try again..
+        /// </summary>
+        public static string NetworkInterfaceConfigInvalidValueX {
+            get {
+                return ResourceManager.GetString("NetworkInterfaceConfigInvalidValueX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration applied.
         /// </summary>
         public static string NetworkInterfaceConfigurationAppliedSuccessfully {
@@ -10420,7 +10429,7 @@ namespace NETworkManager.Localization.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Profile files are encrypted on disk using AES with a key size of 256 bits and a block size of 128 bits in CBC mode. The encryption key is derived from a master password using Rfc2898DeriveBytes (PBKDF2) with 1,000,000 iterations. At runtime, passwords are stored as SecureString once the profile file is loaded. For some functions, the password must be converted to a normal string and remains unencrypted in memory until the garbage collector cleans them up.
         ///
-        ///First make a backup copy of your profile files be [rest of string was truncated]&quot;;.
+        ///First make a backup copy of your profile files befo [rest of string was truncated]&quot;;.
         /// </summary>
         public static string ProfileEncryptionDisclaimer {
             get {

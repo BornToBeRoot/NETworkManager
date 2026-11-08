@@ -5654,4 +5654,7 @@ Do you want to start the scan?</value>
   <data name="MDNSDiscovery_InterfaceNotAvailable" xml:space="preserve">
     <value>The last used network interface is not available, "{0}" is used instead.</value>
   </data>
+  <data name="NetworkInterfaceConfigInvalidValueX" xml:space="preserve">
+    <value>"{0}" is not a valid IPv4 address or subnet mask. Check the configuration (or the profile) and try again.</value>
+  </data>
 </root>
