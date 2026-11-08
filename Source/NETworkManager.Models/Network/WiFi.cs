@@ -65,13 +65,24 @@ public static class WiFi
     /// <param name="adapters">Wi-Fi adapters to update.</param>
     public static void UpdateAdapterStates(IEnumerable<WiFiAdapterInfo> adapters)
     {
-        var states = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
-            .ToDictionary(x => x.Id, x => x.OperationalStatus == System.Net.NetworkInformation.OperationalStatus.Up,
-                StringComparer.OrdinalIgnoreCase);
+        // Optional (only the icon of the adapter selection): an error keeps the previous states instead of failing the
+        // scan it is called after
+        try
+        {
+            var states = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
 
-        foreach (var adapter in adapters)
-            if (states.TryGetValue(adapter.NetworkInterfaceInfo.Id, out var isOperational))
-                adapter.IsOperational = isOperational;
+            foreach (var networkInterface in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
+                states.TryAdd(networkInterface.Id,
+                    networkInterface.OperationalStatus == System.Net.NetworkInformation.OperationalStatus.Up);
+
+            foreach (var adapter in adapters)
+                if (states.TryGetValue(adapter.NetworkInterfaceInfo.Id, out var isOperational))
+                    adapter.IsOperational = isOperational;
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while reading the state of the WiFi adapters.", ex);
+        }
     }
 
     /// <summary>
