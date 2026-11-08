@@ -99,22 +99,31 @@ public static partial class ExportManager
 
     /// <summary>
     ///     Value with a list of objects that have fields of their own (e.g. the ports of a host): in the CSV file the
-    ///     values of an item are separated by <c>/</c> and the items by <c>;</c>, in the XML file every item is an
-    ///     element (<paramref name="ItemName" />), in the JSON file an array of objects.
+    ///     values of the <paramref name="CsvFields" /> of an item are separated by <c>/</c> and the items by <c>; </c>
+    ///     (only fields without free text, so the value can be split again), in the XML file every item is an element
+    ///     (<paramref name="ItemName" />) with all fields, in the JSON file an array of objects with all fields.
     /// </summary>
     /// <typeparam name="TItem">Type of the items.</typeparam>
     /// <param name="ItemName">Name of the XML element of an item.</param>
     /// <param name="Items">Items to export.</param>
-    /// <param name="Fields">Exported fields of an item.</param>
+    /// <param name="Fields">Exported fields of an item (XML, JSON).</param>
+    /// <param name="CsvFields">Exported fields of an item in the CSV file (without free text).</param>
     private sealed record ExportList<TItem>(
         string ItemName,
         IEnumerable<TItem> Items,
-        IReadOnlyList<ExportField<TItem>> Fields) : IExportList
+        IReadOnlyList<ExportField<TItem>> Fields,
+        IReadOnlyList<ExportField<TItem>> CsvFields) : IExportList
     {
         /// <inheritdoc />
         public IEnumerable<IEnumerable<(string Name, object Value)>> GetItems()
         {
             return Items.Select(item => Fields.Select(field => (field.Name, field.GetValue(item))));
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<IEnumerable<object>> GetCsvItems()
+        {
+            return Items.Select(item => CsvFields.Select(field => field.GetValue(item)));
         }
     }
 
@@ -132,6 +141,12 @@ public static partial class ExportManager
         ///     Gets the names and values of the fields of every item.
         /// </summary>
         IEnumerable<IEnumerable<(string Name, object Value)>> GetItems();
+
+        /// <summary>
+        ///     Gets the values of the CSV fields of every item (values without free text, so the joined value can be
+        ///     split again).
+        /// </summary>
+        IEnumerable<IEnumerable<object>> GetCsvItems();
     }
 
     #endregion
@@ -172,23 +187,32 @@ public static partial class ExportManager
     /// </summary>
     private static void CreateCsv<T>(string filePath, IEnumerable<T> collection, IReadOnlyList<ExportField<T>> fields)
     {
-        var stringBuilder = new StringBuilder();
+        // Written line by line (a large result isn't kept in memory as one string), UTF-8 without BOM
+        using var writer = new StreamWriter(filePath);
 
-        stringBuilder.AppendLine(string.Join(",", fields.Select(field => field.Name)));
+        writer.WriteLine(string.Join(",", fields.Select(field => field.Name)));
 
         foreach (var info in collection)
-            stringBuilder.AppendLine(string.Join(",", fields.Select(field =>
-            {
-                var fieldValue = field.GetValue(info);
+            writer.WriteLine(string.Join(",", fields.Select(field => ToCsvValue(field, field.GetValue(info)))));
+    }
 
-                var value = fieldValue is IExportList list
-                    ? string.Join(";", list.GetItems().Select(item => string.Join("/", item.Select(x => ToText(x.Value)))))
-                    : ToText(fieldValue);
+    /// <summary>
+    ///     Formats a value for the CSV file. An empty value (<c>null</c>, also a list without items) stays empty - also
+    ///     in a quoted column, so it differs from an empty text (<c>""</c>), like <c>null</c> and <c>""</c> in JSON.
+    /// </summary>
+    private static string ToCsvValue<T>(ExportField<T> field, object fieldValue)
+    {
+        var value = fieldValue is IExportList list
+            ? string.Join(ListSeparator,
+                list.GetCsvItems().Select(item => string.Join("/", item.Select(ToText)))) is { Length: > 0 } items
+                ? items
+                : null
+            : ToText(fieldValue);
 
-                return field.IsQuoted || IsQuoteRequired(value) ? CsvHelper.QuoteString(value) : value;
-            })));
+        if (value == null)
+            return string.Empty;
 
-        File.WriteAllText(filePath, stringBuilder.ToString());
+        return field.IsQuoted || IsQuoteRequired(value) ? CsvHelper.QuoteString(value) : value;
     }
 
     /// <summary>

@@ -38,11 +38,20 @@ public static partial class ExportManager
     ];
 
     /// <summary>
+    ///     Exported fields of a <see cref="PortInfo" /> in the CSV file: without service and description (free text, may
+    ///     contain <c>/</c> or <c>;</c>), so the value can be split again (e.g. <c>80/Tcp/Open; 443/Tcp/Closed</c>).
+    /// </summary>
+    private static readonly ExportField<PortInfo>[] PortInfoCsvExportFields =
+    [
+        PortInfoExportFields[0], PortInfoExportFields[1], PortInfoExportFields[4]
+    ];
+
+    /// <summary>
     ///     Gets the exported fields of an <see cref="IPScannerHostInfo" />, grouped by topic (host, ping, ports, NetBIOS,
     ///     web page, SNMP, Windows, change since the previous scan). Values of a probe that is still running
     ///     (export during a scan, or a scan canceled before the probe finished) or disabled are placeholders - exported
-    ///     as empty values instead of a result. The ports are an <see cref="ExportList{TItem}" /> (joined in the CSV
-    ///     file, one element per port in XML, an array in JSON).
+    ///     as empty values instead of a result. The ports are an <see cref="ExportList{TItem}" /> (port / protocol /
+    ///     state joined in the CSV file, one element per port in XML, an array in JSON).
     /// </summary>
     /// <param name="options">Options of the scan the hosts are from.</param>
     /// <returns>Fields in the order of the columns.</returns>
@@ -93,7 +102,8 @@ public static partial class ExportManager
             // Port scan
             new("PortStatus", x => GetPortStatus(x, options)),
             new(nameof(IPScannerHostInfo.Ports), x => new ExportList<PortInfo>(nameof(PortInfo),
-                x.Ports != null && options.PortScanEnabled ? x.Ports : [], PortInfoExportFields), true),
+                x.Ports != null && options.PortScanEnabled ? x.Ports : [], PortInfoExportFields,
+                PortInfoCsvExportFields), true),
             // NetBIOS
             new("NetBIOSIsReachable", IfNetBIOS(x => x.IsReachable)),
             new("NetBIOSIPAddress", IfNetBIOS(x => x.IPAddress)),

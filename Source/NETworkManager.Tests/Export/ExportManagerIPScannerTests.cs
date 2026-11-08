@@ -226,7 +226,8 @@ public class ExportManagerIPScannerTests
         var files = ExportAll((f, t) => ExportManager.Export(f, t, [CreateHostWithPorts()], AllEnabled));
 
         Assert.Equal(CsvHeader.Split(',').Length, files.CsvRows[0].Count);
-        Assert.Equal("80/Tcp/http/World Wide Web, HTTP/Open;443/Tcp/https/TLS/Closed", files.CsvValue("Ports"));
+        // CSV: port / protocol / state only (service and description are free text with "/" or ";")
+        Assert.Equal("80/Tcp/Open; 443/Tcp/Closed", files.CsvValue("Ports"));
 
         // XML: one element per port (no element for the list)
         var ports = files.XmlItems[0].Elements(nameof(PortInfo)).ToList();
@@ -251,6 +252,7 @@ public class ExportManagerIPScannerTests
         var files = ExportAll((f, t) => ExportManager.Export(f, t, [CreateHostWithPorts()], options));
 
         Assert.Equal("", files.CsvValue("Ports"));
+        Assert.DoesNotContain("\"\"", files.CsvLines[1].Split(',')[CsvHeader.Split(',').ToList().IndexOf("Ports")]);
         Assert.Equal("", files.CsvValue("PortStatus"));
         Assert.Empty(files.XmlItems[0].Elements(nameof(PortInfo)));
         Assert.Empty((JArray)files.JsonValue("Ports"));

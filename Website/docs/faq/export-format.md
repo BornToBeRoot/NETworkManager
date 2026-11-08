@@ -25,7 +25,7 @@ The CSV columns, the XML elements and the JSON keys have the same names and orde
 
 | Value                   | Format                                                                                                                                                                       |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Empty value             | Empty in CSV, empty element in XML, `null` in JSON (e.g. the ping time without a reply)                                                                                     |
+| Empty value             | Empty in CSV (also in a column with quotes), empty element in XML, `null` in JSON (e.g. the ping time without a reply). An empty text is `""` in CSV and JSON                         |
 | Number                  | Decimal point in every language (e.g. `10.5`), without a unit. JSON: number                                                                                                |
 | Time / duration         | Number in a fixed unit: ping time in milliseconds (e.g. `4`), SNTP **Offset** in seconds and **RoundTripDelay** in milliseconds, WiFi **BeaconInterval** in milliseconds and **Uptime** in seconds, **Speed** of a network interface in bit/s |
 | Yes / No                | `True` / `False` (CSV), `true` / `false` (XML, JSON)                                                                                                                         |
@@ -38,4 +38,10 @@ The CSV columns, the XML elements and the JSON keys have the same names and orde
 
 In the CSV file, text that may contain a comma (e.g. hostname, description, comment) is always enclosed in quotes (`"`), any other value only if it contains a comma, a quote or a line break. A quote in a value is doubled (`""`), as defined in [RFC 4180](https://www.rfc-editor.org/rfc/rfc4180), e.g. for `Import-Csv` in PowerShell.
 
-The ports of a host in the **IP Scanner** export are one value in the CSV file (`Port/Protocol/Service/Description/State`, ports separated by `;`), one `PortInfo` element per port in the XML file and an array of objects in the JSON file.
+:::warning
+
+Values are exported as they are, also text from the network (e.g. a web page title or an SNMP description). A value that starts with `=`, `+`, `-` or `@` may be run as a formula when the CSV file is opened in a spreadsheet application like Excel - open exports of networks you don't trust as text, or use the JSON / XML export.
+
+:::
+
+The ports of a host in the **IP Scanner** export are one value in the CSV file with port, protocol and state (`Port/Protocol/State`, ports separated by `; `, e.g. `80/Tcp/Open; 443/Tcp/Closed`), one `PortInfo` element per port in the XML file and an array of objects in the JSON file - both also with the service and description.

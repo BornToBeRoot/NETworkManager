@@ -61,6 +61,19 @@ public class ExportManagerTests
     }
 
     [Fact]
+    public void Csv_EmptyValueVsEmptyText()
+    {
+        // Empty value: empty (also in a quoted column), empty text: "" - like null and "" in JSON
+        var files = ExportAll((f, t) => ExportManager.Export(f, t,
+            [new OUIInfo("00:11:22", null), new OUIInfo("00:11:23", "")]));
+
+        Assert.Equal("00:11:22,", files.CsvLines[1]);
+        Assert.Equal("00:11:23,\"\"", files.CsvLines[2]);
+        Assert.Equal(JTokenType.Null, files.JsonItems[0]["Vendor"]!.Type);
+        Assert.Equal("", (string)files.JsonItems[1]["Vendor"]);
+    }
+
+    [Fact]
     public void Json_NumberAsNumber_EnumAsText()
     {
         var files = ExportAll((f, t) => ExportManager.Export(f, t,
