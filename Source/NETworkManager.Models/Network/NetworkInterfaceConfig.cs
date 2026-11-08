@@ -111,9 +111,14 @@ public class NetworkInterfaceConfig
     ///     The values are inserted into a command line that runs elevated, so they must be checked again before they
     ///     are applied: profile files can be edited or shared without the validation of the UI.
     /// </summary>
-    /// <returns>The invalid value, or <see langword="null" /> if all values are empty or valid.</returns>
+    /// <returns>The invalid value (<see cref="string.Empty" /> if the IP address or subnet mask of a static IP
+    /// address is missing), or <see langword="null" /> if all values are valid.</returns>
     public string GetInvalidValue()
     {
+        // Required for a static IP address (not checked by the UI for profiles from edited or shared files)
+        if (EnableStaticIPAddress && (string.IsNullOrEmpty(IPAddress) || string.IsNullOrEmpty(Subnetmask)))
+            return string.Empty;
+
         foreach (var value in new[] { IPAddress, Gateway, PrimaryDNSServer, SecondaryDNSServer })
         {
             if (!string.IsNullOrEmpty(value) && !RegexHelper.IPv4AddressRegex().IsMatch(value))
