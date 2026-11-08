@@ -672,13 +672,14 @@ public class WiFiViewModel : ViewModelBase
     public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), ConnectDisconnect_CanExecute);
 
     /// <summary>
-    ///     A network is selected that is still visible (not gone since the last scan), no connection is made and no scan
-    ///     is running at the moment (connecting and disconnecting scan the networks again afterwards).
+    ///     A network is selected that is still visible (not gone since the last scan), no connection is made, no scan is
+    ///     running and the adapters are not reloaded at the moment (connecting and disconnecting scan the networks again
+    ///     afterwards, the reload scans the reloaded adapter).
     /// </summary>
     private bool ConnectDisconnect_CanExecute(object obj)
     {
-        return SelectedNetwork is { Change: not WiFiNetworkChange.Gone } && !IsConnecting && !IsNetworksLoading &&
-               !IsBackgroundSearchRunning;
+        return SelectedNetwork is { Change: not WiFiNetworkChange.Gone } && !IsConnecting && !IsAdaptersLoading &&
+               !IsNetworksLoading && !IsBackgroundSearchRunning;
     }
 
     private void ConnectAction()
