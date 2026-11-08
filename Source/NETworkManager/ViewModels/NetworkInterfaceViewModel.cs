@@ -912,6 +912,44 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         _ = ApplyConfigurationFromProfile();
     }
 
+    /// <summary>
+    /// Gets the command to add a profile with the configuration of the Configure tab, bound to the selected network
+    /// interface.
+    /// </summary>
+    public ICommand AddProfileFromConfigurationCommand => new RelayCommand(_ => AddProfileFromConfigurationAction(),
+        AddProfileFromConfiguration_CanExecute);
+
+    private bool AddProfileFromConfiguration_CanExecute(object parameter) =>
+        AdditionalCommands_CanExecute(parameter) && SelectedNetworkInterface != null;
+
+    private void AddProfileFromConfigurationAction()
+    {
+        var networkInterface = SelectedNetworkInterface;
+
+        ProfileInfo profileInfo = new()
+        {
+            Name = networkInterface.Name,
+            // Required by the profile, not used by the Network Interface
+            Host = ConfigEnableStaticIPAddress
+                ? ConfigIPAddress?.Trim()
+                : networkInterface.IPv4Address?.FirstOrDefault()?.Item1.ToString(),
+
+            NetworkInterface_BindToInterface = true,
+            NetworkInterface_InterfaceId = networkInterface.Id,
+            NetworkInterface_InterfaceName = networkInterface.Name,
+            NetworkInterface_EnableStaticIPAddress = ConfigEnableStaticIPAddress,
+            NetworkInterface_IPAddress = ConfigIPAddress,
+            NetworkInterface_Subnetmask = ConfigSubnetmask,
+            NetworkInterface_Gateway = ConfigGateway,
+            NetworkInterface_EnableStaticDNS = ConfigEnableStaticDNS,
+            NetworkInterface_PrimaryDNSServer = ConfigPrimaryDNSServer,
+            NetworkInterface_SecondaryDNSServer = ConfigSecondaryDNSServer
+        };
+
+        _ = ProfileDialogManager.ShowAddProfileDialog(Application.Current.MainWindow, this, profileInfo, null,
+            ApplicationName.NetworkInterface);
+    }
+
     #region Additional commands
 
     private bool AdditionalCommands_CanExecute(object parameter)

@@ -34,6 +34,7 @@ Release date: **xx.xx.2026**
 **Network Interface**
 
 - The tooltip of a profile shows the bound network interface and the IP address / subnet mask (or **Obtain an IP address automatically**) instead of the host, which is not used by **Network Interface**. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- **Add profile...** on the **Configure** tab creates a profile with the shown configuration, bound to the selected network interface, e.g. to save the current configuration and apply it again later. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **LLDP / CDP Capture**
 
