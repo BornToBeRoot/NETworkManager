@@ -47,6 +47,10 @@ Release date: **xx.xx.2026**
 - Fixed a tab dropped into another tab bar being inserted at the wrong position with display scaling above 100 %. [#3717](https://github.com/BornToBeRoot/NETworkManager/pull/3717)
 - Fixed the splitter between tabs split on top of each other also reacting 3 px into the tabs on the left and right. [#3717](https://github.com/BornToBeRoot/NETworkManager/pull/3717)
 
+**Network Interface**
+
+- Fixed **Apply** failing when the IPv4 address or the subnet mask on the **Configure** tab (or in **Add IPv4 address...**) started or ended with a space. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+
 **DNS Lookup**
 
 - Fixed the last column of the DNS servers (settings) not filling the remaining width. [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)
