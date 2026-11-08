@@ -22,6 +22,8 @@ Release date: **xx.xx.2026**
 - Removed the **ThreadPool additional min. threads** setting (Settings > General) and the application-wide `ThreadPool.SetMinThreads` workaround it configured for the IP Scanner and Port Scanner. It's no longer needed now that both scan engines use non-blocking async concurrency instead of blocking calls. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
 - **Port Scanner**: the JSON export uses the key `State` for the port state (like CSV and XML) instead of `Status`. Scripts that read `Status` have to be adjusted. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - **IP Scanner**: the export contains the ping time (`Time`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`, `-/-`). `Time`, `TTL` and `Bytes` are empty without a reply instead of `-/-` / `0`, like in all exports.
+- **Ping Monitor**: the export contains the ping time (`Time`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`, `-/-`). `Time`, `TTL` and `Bytes` are empty without a reply instead of `-/-` / `0`, like in all exports.
+- **Traceroute**: the export contains the times (`Time1` - `Time3`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`), empty without a reply instead of `-/-`, like in all exports.
 
 ## What's new?
 
@@ -371,6 +373,7 @@ Release date: **xx.xx.2026**
 - Fixed the ping not working when the ICMP **Buffer** was set to more than `65500` bytes (Windows limit). The maximum is now `65500`, higher values are lowered to `65500`. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Fixed hosts being added twice if the inputs overlap (e.g. `10.0.0.1; 10.0.0.0/24`). If an IP address is also entered as hostname, the hostname is kept; different hostnames of the same IP address (e.g. two names of one server) are all kept. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Fixed **Copy** > **Hostname** copying a hostname resolved via DNS (`PTR`) with a trailing dot (e.g. `server.example.com.`). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- Fixed the CSV export breaking the row if the hostname contains a comma. The hostname is quoted now.
 
 **Traceroute**
 
