@@ -312,11 +312,13 @@ public class ConnectionsViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType,
-                    instance.ExportAll
-                        ? Results
-                        : new ObservableCollection<ConnectionInfo>(SelectedResults.Cast<ConnectionInfo>()
-                            .ToArray()));
+                // The rows shown in the grid (search / filter) in the order shown (sorting). Copied on the UI thread,
+                // exported in the background
+                var results = instance.ExportAll
+                    ? ResultsView.GetItemsInViewOrder<ConnectionInfo>()
+                    : ResultsView.GetSelectedItemsInViewOrder<ConnectionInfo>(SelectedResults);
+
+                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }
             catch (Exception ex)
             {
