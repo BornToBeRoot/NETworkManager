@@ -31,6 +31,7 @@ Release date: **xx.xx.2026**
 - **IP Scanner**: the columns of the export are grouped by topic instead of new columns being appended at the end: host (`IsReachable`, `DetectedBy`, `IPAddress`, hostnames, MAC address, vendor, role, OS), ping, port scan, NetBIOS, web page, SNMP, Windows host information and the change since the last scan.
 - **Discovery Protocol**: the columns of the export are in the order shown: `Management` and `ChassisId` (new) after `IPAddress`, `LocalConnection` and `LocalInterface` (new) at the end.
 - **Firewall**: the columns of the export are in the order of the grid: `IsEnabled` first, the local and remote address before the port (`LocalAddresses`, `LocalPorts`, `RemoteAddresses`, `RemotePorts`), then `Program`, `InterfaceType`, `NetworkProfiles` and `Description`.
+- **IP Geolocation**: the columns of the export are in the order shown: `Query` (IP address) and `Reverse` after `Currency`, then the network (`Isp`, `Org`, `As`, `Asname`, `Hosting`, `Proxy`, `Mobile`), like the geolocation in the **Traceroute** export.
 
 ## What's new?
 
@@ -190,6 +191,7 @@ Release date: **xx.xx.2026**
 **Traceroute**
 
 - Added **RDAP...** to the context menu to query the registration data of the IP address, hostname or AS number of a hop in the [**RDAP**](../application/rdap.md) tool. [#3642](https://github.com/BornToBeRoot/NETworkManager/pull/3642)
+- The export contains the region name shown in the grid (`RegionName`, e.g. `Bavaria`) after the region code (`Region`, e.g. `BY`), like the **IP Geolocation** export.
 
 **DNS Lookup**
 

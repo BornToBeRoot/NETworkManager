@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using NETworkManager.Models.IPApi;
 
 namespace NETworkManager.Models.Export;
@@ -6,7 +6,8 @@ namespace NETworkManager.Models.Export;
 public static partial class ExportManager
 {
     /// <summary>
-    ///     Exported fields of an <see cref="IPGeolocationInfo" />.
+    ///     Exported fields of an <see cref="IPGeolocationInfo" /> in the order shown: location, time zone and currency,
+    ///     IP address, network (same order as the geolocation of a <see cref="Network.TracerouteHopInfo" />).
     /// </summary>
     private static readonly ExportField<IPGeolocationInfo>[] IPGeolocationInfoExportFields =
     [
@@ -26,15 +27,16 @@ public static partial class ExportManager
         // Seconds (offset of the time zone to UTC)
         new(nameof(IPGeolocationInfo.Offset), x => x.Offset),
         new(nameof(IPGeolocationInfo.Currency), x => x.Currency),
+        // IP address and its DNS name
+        new(nameof(IPGeolocationInfo.Query), x => x.Query),
+        new(nameof(IPGeolocationInfo.Reverse), x => x.Reverse, true),
         new(nameof(IPGeolocationInfo.Isp), x => x.Isp, true),
         new(nameof(IPGeolocationInfo.Org), x => x.Org, true),
         new(nameof(IPGeolocationInfo.As), x => x.As, true),
         new(nameof(IPGeolocationInfo.Asname), x => x.Asname, true),
-        new(nameof(IPGeolocationInfo.Reverse), x => x.Reverse, true),
-        new(nameof(IPGeolocationInfo.Mobile), x => x.Mobile),
-        new(nameof(IPGeolocationInfo.Proxy), x => x.Proxy),
         new(nameof(IPGeolocationInfo.Hosting), x => x.Hosting),
-        new(nameof(IPGeolocationInfo.Query), x => x.Query)
+        new(nameof(IPGeolocationInfo.Proxy), x => x.Proxy),
+        new(nameof(IPGeolocationInfo.Mobile), x => x.Mobile)
     ];
 
     /// <summary>

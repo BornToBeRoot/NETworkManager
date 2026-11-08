@@ -107,13 +107,14 @@ public class ExportManagerToolTests
         ]));
 
         AssertConsistent(files,
-            "Hop,Status1,Time1,Status2,Time2,Status3,Time3,IPAddress,Hostname,Continent,Country,Region,City,District," +
-            "Isp,Org,As,Asname,Hosting,Proxy,Mobile");
+            "Hop,Status1,Time1,Status2,Time2,Status3,Time3,IPAddress,Hostname,Continent,Country,Region,RegionName," +
+            "City,District,Isp,Org,As,Asname,Hosting,Proxy,Mobile");
 
         Assert.Equal("1", files.CsvValue("Time1"));
         Assert.Equal("", files.CsvValue("Time2"));
         Assert.Equal("3", files.CsvValue("Time3"));
         Assert.Equal("Example, Inc.", files.CsvValue("Isp"));
+        Assert.Equal("Bavaria", files.CsvValue("RegionName"));
         Assert.Equal(JTokenType.Boolean, files.JsonValue("Proxy").Type);
 
         // Hop without reply and geolocation
@@ -347,7 +348,7 @@ public class ExportManagerToolTests
 
         AssertConsistent(files,
             "Status,Continent,ContinentCode,Country,CountryCode,Region,RegionName,City,District,Zip,Lat,Lon,Timezone," +
-            "Offset,Currency,Isp,Org,As,Asname,Reverse,Mobile,Proxy,Hosting,Query");
+            "Offset,Currency,Query,Reverse,Isp,Org,As,Asname,Hosting,Proxy,Mobile");
 
         // Decimal point in every language
         Assert.Equal("48.1374", files.CsvValue("Lat"));

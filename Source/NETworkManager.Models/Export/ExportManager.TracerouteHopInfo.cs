@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Models.Network;
@@ -24,7 +24,8 @@ public static partial class ExportManager
         new(nameof(TracerouteHopInfo.Hostname), x => x.Hostname, true),
         new(nameof(IPGeolocationInfo.Continent), IfGeolocation(x => x.Continent), true),
         new(nameof(IPGeolocationInfo.Country), IfGeolocation(x => x.Country), true),
-        new(nameof(IPGeolocationInfo.Region), IfGeolocation(x => x.Region), true),
+        new(nameof(IPGeolocationInfo.Region), IfGeolocation(x => x.Region)),
+        new(nameof(IPGeolocationInfo.RegionName), IfGeolocation(x => x.RegionName), true),
         new(nameof(IPGeolocationInfo.City), IfGeolocation(x => x.City), true),
         new(nameof(IPGeolocationInfo.District), IfGeolocation(x => x.District), true),
         new(nameof(IPGeolocationInfo.Isp), IfGeolocation(x => x.Isp), true),
