@@ -2000,6 +2000,9 @@
   <data name="MaxPortThreads" xml:space="preserve">
     <value>최대 동시 포트 스레드 수</value>
   </data>
+  <data name="MaxWindowsThreads" xml:space="preserve">
+    <value>Max. concurrent Windows host information threads</value>
+  </data>
   <data name="PowerShell" xml:space="preserve">
     <value>PowerShell</value>
   </data>
@@ -3779,15 +3782,6 @@ URL: http://ip-api.com/</value>
   <data name="ProfileGroup_Application" xml:space="preserve">
     <value>응용 프로그램</value>
   </data>
-  <data name="HelpMessage_ExperimentalFeatures" xml:space="preserve">
-    <value>실험 기능을 활성화하여 새 기능을 테스트합니다. 아직 완료되지 않았고 버그가 포함되어 있으며 응용 프로그램이 크래시될 수 있으며 출시될 때까지 다시 변경될 수 있습니다.</value>
-  </data>
-  <data name="ExperimentalFeatures" xml:space="preserve">
-    <value>실험적 기능</value>
-  </data>
-  <data name="Experimental" xml:space="preserve">
-    <value>실험적</value>
-  </data>
   <data name="RunCommandDots" xml:space="preserve">
     <value>Run command...</value>
   </data>
@@ -5353,5 +5347,104 @@ Do you want to start the scan?</value>
   <data name="SNMPVersionAndCredentialsOfX" xml:space="preserve">
     <value>SNMP version and credentials of "{0}"</value>
     <comment>IP Scanner: the tab uses the SNMP version and credentials of a profile or group, {0} is its name.</comment>
+  </data>
+  <data name="ReadWindowsHostInformation" xml:space="preserve">
+    <value>Read Windows host information</value>
+  </data>
+  <data name="HelpMessage_ReadWindowsHostInformation" xml:space="preserve">
+    <value>Read the Windows host information of every reachable host over SMB (TCP port 445): with the port scan and port 445 in its list only for hosts with port 445 open, otherwise for every found host. Without credentials (SMB / NTLM negotiation, no logon): operating system and build, computer name, domain and the time offset. With credentials (NetApi): role (workstation, server, domain controller), description and workgroup; logged-on users and the patch level (remote registry) need admin rights on the host. The user running NETworkManager is used, or the Windows credentials of the profile / group the tab was opened with. Every host that answers on port 445 receives a logon with these credentials (NTLM if it is asked by its IP address) - only scan networks you trust.</value>
+  </data>
+  <data name="WindowsCredentialsOfX" xml:space="preserve">
+    <value>Windows credentials of "{0}" ({1})</value>
+    <comment>IP Scanner: the tab uses the Windows credentials of a profile or group, {0} is its name, {1} the user (e.g. CORP\admin).</comment>
+  </data>
+  <data name="OperatingSystem" xml:space="preserve">
+    <value>Operating system</value>
+  </data>
+  <data name="Edition" xml:space="preserve">
+    <value>Edition</value>
+    <comment>Edition of Windows, e.g. Pro or Enterprise</comment>
+  </data>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
+    <comment>Role of a Windows host: workstation, server or domain controller</comment>
+  </data>
+  <data name="Workstation" xml:space="preserve">
+    <value>Workstation</value>
+    <comment>Role of a Windows host (client)</comment>
+  </data>
+  <data name="DomainController" xml:space="preserve">
+    <value>Domain controller</value>
+  </data>
+  <data name="TimeOffset" xml:space="preserve">
+    <value>Time offset</value>
+    <comment>Time of the host minus the local time</comment>
+  </data>
+  <data name="LoggedOnUsers" xml:space="preserve">
+    <value>Logged-on users</value>
+  </data>
+  <data name="SMB" xml:space="preserve">
+    <value>SMB</value>
+  </data>
+  <data name="ReadingWindowsHostInformationIsDisabled" xml:space="preserve">
+    <value>Reading Windows host information is disabled!</value>
+  </data>
+  <data name="WindowsLogonFailedMessage" xml:space="preserve">
+    <value>The logon with the Windows credentials "{0}" failed (wrong username or password?). To protect the account from being locked out, they are not used for the other hosts and the next scans of this tab. Set them again with Set Windows credentials... in the options, or open a new tab after correcting the profile / group.</value>
+    <comment>{0} is the user (e.g. CORP\admin)</comment>
+  </data>
+  <data name="WindowsLogonSkippedMessage" xml:space="preserve">
+    <value>Not tried: the Windows credentials were rejected on another host, or by this host in an earlier scan (protection against an account lockout).</value>
+  </data>
+  <data name="WindowsLogonNotCheckedMessage" xml:space="preserve">
+    <value>Not tried: the Windows credentials were still being checked on another host (protection against an account lockout).</value>
+  </data>
+  <data name="WindowsCredentials" xml:space="preserve">
+    <value>Windows credentials</value>
+  </data>
+  <data name="ScanAsDots" xml:space="preserve">
+    <value>Scan as...</value>
+    <comment>IP Scanner: scan a profile with other Windows credentials</comment>
+  </data>
+  <data name="WindowsCredentialsOfThisTabX" xml:space="preserve">
+    <value>Windows credentials of this tab ({0})</value>
+    <comment>IP Scanner: the tab uses Windows credentials entered for it (not saved), {0} is the user (e.g. CORP\admin).</comment>
+  </data>
+  <data name="HelpMessage_WindowsCredentialsOfTheTab" xml:space="preserve">
+    <value>Windows credentials for the Windows host information of this tab (also for repeated scans and Rescan), replacing the ones of the profile / group. They are not saved and are discarded when the tab is closed. Without credentials, the user running NETworkManager is used.</value>
+  </data>
+  <data name="ScanAs" xml:space="preserve">
+    <value>Scan as</value>
+    <comment>IP Scanner: title of the dialog to scan a profile with other Windows credentials</comment>
+  </data>
+  <data name="SMBSigning" xml:space="preserve">
+    <value>SMB signing</value>
+    <comment>Whether the SMB server of a host requires signed messages</comment>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="NotRequired" xml:space="preserve">
+    <value>Not required</value>
+  </data>
+  <data name="OS" xml:space="preserve">
+    <value>OS</value>
+    <comment>Column of the IP Scanner: operating system (Windows version or guess from the TTL)</comment>
+  </data>
+  <data name="SetWindowsCredentialsDots" xml:space="preserve">
+    <value>Set Windows credentials...</value>
+    <comment>IP Scanner: options menu, Windows credentials of the tab (not saved)</comment>
+  </data>
+  <data name="MaxLogonFailures" xml:space="preserve">
+    <value>Max. logon failures</value>
+  </data>
+  <data name="HelpMessage_MaxLogonFailures" xml:space="preserve">
+    <value>Logon failures with the Windows credentials of a profile / group / tab on hosts outside the domain of the credentials (e.g. in a trusted domain) before they are rejected and not used for the other hosts. A logon failure on a host in the domain of the credentials, or with credentials without domain, rejects them right away. The failures are counted per account for all tabs until NETworkManager is closed. A domain controller may count one failed logon twice (Kerberos, then NTLM): keep this value below half of the account lockout threshold of your domain.</value>
+  </data>
+  <data name="Beta" xml:space="preserve">
+    <value>Beta</value>
+  </data>
+  <data name="BetaFeatureMessage" xml:space="preserve">
+    <value>Beta: this feature is tested publicly and may change. Please report problems on GitHub.</value>
   </data>
 </root>
