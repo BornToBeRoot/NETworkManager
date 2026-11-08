@@ -5,7 +5,6 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using log4net;
-using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Converters;
@@ -554,7 +553,7 @@ public class WiFiViewModel : ViewModelBase
         // the adapter again, which scans it), networks are loading or a connection is made (tried again after the
         // interval)
         _autoRefreshTimer = new AutoRefreshTimer(() => ScanAsync(SelectedAdapter, true, isAutoRefresh: true),
-            () => SelectedAdapter != null && !IsDialogOpen() && !IsAdaptersLoading && !IsNetworksLoading &&
+            () => SelectedAdapter != null && !DialogHelper.IsAnyDialogOpen() && !IsAdaptersLoading && !IsNetworksLoading &&
                   !IsBackgroundSearchRunning && !IsConnecting);
 
         AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
@@ -636,18 +635,8 @@ public class WiFiViewModel : ViewModelBase
     private bool ReloadAdapter_CanExecute(object obj)
     {
         // Not blocked by the auto refresh (it only scans the networks): without an adapter its toggle is hidden
-        return !IsDialogOpen() && !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning &&
+        return !DialogHelper.IsAnyDialogOpen() && !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning &&
                !IsConnecting;
-    }
-
-    /// <summary>
-    ///     A dialog (e.g. connect, export) is open: no refresh behind it (F5), and no auto refresh.
-    /// </summary>
-    private static bool IsDialogOpen()
-    {
-        return Application.Current.MainWindow == null ||
-               ((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen ||
-               ConfigurationManager.Current.IsChildWindowOpen;
     }
 
     private void ReloadAdapterAction()
@@ -660,7 +649,7 @@ public class WiFiViewModel : ViewModelBase
 
     private bool ScanNetworks_CanExecute(object obj)
     {
-        return SelectedAdapter != null && !IsDialogOpen() && !IsAdaptersLoading && !IsNetworksLoading &&
+        return SelectedAdapter != null && !DialogHelper.IsAnyDialogOpen() && !IsAdaptersLoading && !IsNetworksLoading &&
                !IsBackgroundSearchRunning && !AutoRefreshEnabled && !IsConnecting;
     }
 

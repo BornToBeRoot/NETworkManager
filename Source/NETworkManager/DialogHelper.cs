@@ -1,4 +1,5 @@
-﻿using MahApps.Metro.SimpleChildWindow;
+﻿using MahApps.Metro.Controls;
+using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -106,6 +107,18 @@ namespace NETworkManager
             await parentWindow.ShowChildWindowAsync(childWindow);
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets whether a dialog (MahApps dialog or child window) is open in the main window, or the main window doesn't
+        /// exist yet - commands that would open another dialog, or run (e.g. refresh) behind it, can't be executed.
+        /// </summary>
+        /// <returns>True if a dialog is open or there is no main window.</returns>
+        public static bool IsAnyDialogOpen()
+        {
+            return Application.Current.MainWindow is not MetroWindow mainWindow ||
+                   mainWindow.IsAnyDialogOpen ||
+                   ConfigurationManager.Current.IsChildWindowOpen;
         }
 
         /// <summary>
