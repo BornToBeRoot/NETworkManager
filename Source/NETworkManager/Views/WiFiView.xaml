@@ -76,7 +76,8 @@
                                         </Grid.ColumnDefinitions>
                                         <ComboBox Grid.Column="0" x:Name="ComboBoxAdapters"
                                                   ItemsSource="{Binding Path=Adapters}"
-                                                  SelectedItem="{Binding Path=SelectedAdapter}">
+                                                  SelectedItem="{Binding Path=SelectedAdapter}"
+                                                  IsEnabled="{Binding Path=CanChangeAdapter}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Horizontal">

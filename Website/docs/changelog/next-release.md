@@ -299,6 +299,7 @@ Release date: **xx.xx.2026**
 - Fixed the 5 GHz chart of the **Channels** tab labeling the channels above 144 as 148, 152 ... 164 instead of 149, 153 ... 165. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed networks on the 5 GHz channels 169 - 177 (UNII-4) and 32 being shown with channel `-1`, without band (always shown, not affected by the band filter) and missing on the **Channels** tab. 6 GHz channel 2 (5935 MHz) is shown as channel `2` instead of `-1`. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed sorting by the signal icon (first column) and by **Encryption** not changing the order of the networks. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed the networks of the previously selected adapter possibly being shown after selecting another adapter while a scan was running. The adapter can't be changed while scanning or connecting. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 
