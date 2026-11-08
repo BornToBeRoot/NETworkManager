@@ -145,15 +145,19 @@ public static class WlanApi
     }
 
     /// <summary>
-    ///     Returns a map of BSSID (lowercase, colon-separated, e.g. <c>aa:bb:cc:dd:ee:ff</c>) to the
-    ///     channel (width and center) for all access points visible to the given Wi-Fi interface.
-    ///     BSSIDs whose width could not be parsed are omitted from the result.
+    ///     Reads the BSSID of the connected access point and the channels (width and center) of all access points
+    ///     visible to the given Wi-Fi interface, with one client handle.
     /// </summary>
     /// <param name="interfaceGuid">GUID of the Wi-Fi interface (<c>NetworkAdapter.NetworkAdapterId</c>).</param>
-    /// <returns>A (possibly empty) map of BSSID to its channel.</returns>
-    public static Dictionary<string, WlanBssChannel> GetBssChannels(Guid interfaceGuid)
+    /// <returns>
+    ///     The BSSID of the connected access point (lowercase, colon-separated, e.g. <c>aa:bb:cc:dd:ee:ff</c>; null if
+    ///     not connected or not read) and a (possibly empty) map of BSSID to its channel. BSSIDs whose width could not
+    ///     be parsed are omitted.
+    /// </returns>
+    public static (string ConnectedBssid, Dictionary<string, WlanBssChannel> Channels) GetBssInfo(Guid interfaceGuid)
     {
-        var result = new Dictionary<string, WlanBssChannel>(StringComparer.OrdinalIgnoreCase);
+        var channels = new Dictionary<string, WlanBssChannel>(StringComparer.OrdinalIgnoreCase);
+        string connectedBssid = null;
 
         var clientHandle = IntPtr.Zero;
 
@@ -164,15 +168,17 @@ public static class WlanApi
             if (ret != ErrorSuccess)
             {
                 Log.Warn($"WlanOpenHandle failed with error code {ret}.");
-                return result;
+                return (null, channels);
             }
+
+            connectedBssid = GetConnectedBssid(clientHandle, interfaceGuid);
 
             // The WinRT NetworkAdapterId normally matches the native WLAN interface GUID. If it does
             // not (driver/OS specifics), fall back to enumerating all WLAN interfaces and merging
             // their BSS lists (matching is done by BSSID, so mixing interfaces is harmless).
-            if (!TryQueryBssList(clientHandle, interfaceGuid, result))
+            if (!TryQueryBssList(clientHandle, interfaceGuid, channels))
                 foreach (var guid in EnumerateInterfaces(clientHandle))
-                    TryQueryBssList(clientHandle, guid, result);
+                    TryQueryBssList(clientHandle, guid, channels);
         }
         catch (Exception ex)
         {
@@ -184,34 +190,25 @@ public static class WlanApi
                 WlanCloseHandle(clientHandle, IntPtr.Zero);
         }
 
-        return result;
+        return (connectedBssid, channels);
     }
 
     /// <summary>
-    ///     Returns the BSSID (lowercase, colon-separated, e.g. <c>aa:bb:cc:dd:ee:ff</c>) of the access point the
-    ///     given Wi-Fi interface is connected to.
+    ///     Returns the BSSID of the access point the given Wi-Fi interface is connected to.
     /// </summary>
-    /// <param name="interfaceGuid">GUID of the Wi-Fi interface (<c>NetworkAdapter.NetworkAdapterId</c>).</param>
+    /// <param name="clientHandle">Open client handle.</param>
+    /// <param name="interfaceGuid">GUID of the Wi-Fi interface.</param>
     /// <returns>The BSSID, or null if the interface is not connected or it could not be read.</returns>
-    public static string GetConnectedBssid(Guid interfaceGuid)
+    private static string GetConnectedBssid(IntPtr clientHandle, Guid interfaceGuid)
     {
-        var clientHandle = IntPtr.Zero;
         var dataPtr = IntPtr.Zero;
 
         try
         {
-            var ret = WlanOpenHandle(WlanApiVersion2, IntPtr.Zero, out _, out clientHandle);
-
-            if (ret != ErrorSuccess)
-            {
-                Log.Warn($"WlanOpenHandle failed with error code {ret}.");
-                return null;
-            }
-
             var guid = interfaceGuid;
 
             // Fails with ERROR_INVALID_STATE (5023) if the interface is not connected
-            ret = WlanQueryInterface(clientHandle, ref guid, WlanIntfOpcodeCurrentConnection, IntPtr.Zero,
+            var ret = WlanQueryInterface(clientHandle, ref guid, WlanIntfOpcodeCurrentConnection, IntPtr.Zero,
                 out var dataSize, out dataPtr, IntPtr.Zero);
 
             if (ret != ErrorSuccess || dataPtr == IntPtr.Zero || dataSize < ConnectionAttributesBssidOffset + 6)
@@ -224,6 +221,7 @@ public static class WlanApi
         }
         catch (Exception ex)
         {
+            // Optional (marks the connected network): the BSS list is still read
             Log.Error("Error while reading the connected Wi-Fi network via wlanapi.dll.", ex);
 
             return null;
@@ -232,9 +230,6 @@ public static class WlanApi
         {
             if (dataPtr != IntPtr.Zero)
                 WlanFreeMemory(dataPtr);
-
-            if (clientHandle != IntPtr.Zero)
-                WlanCloseHandle(clientHandle, IntPtr.Zero);
         }
     }
 

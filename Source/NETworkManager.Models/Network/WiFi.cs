@@ -109,13 +109,10 @@ public static class WiFi
     {
         var adapterId = adapter.NetworkAdapter.NetworkAdapterId;
 
-        // BSSID of the network this adapter is connected to (null if not connected or not read)
-        var bssid = WlanApi.GetConnectedBssid(adapterId);
-
-        // The WinRT API does not expose the channel bandwidth (and its center), so it is read from the
-        // native BSS list (wlanapi.dll) and matched by BSSID below. Failures yield an empty map and we
-        // fall back to a heuristic per network.
-        var channels = WlanApi.GetBssChannels(adapterId);
+        // BSSID of the network this adapter is connected to (null if not connected or not read). The WinRT API does
+        // not expose the channel bandwidth (and its center), so it is read from the native BSS list (wlanapi.dll)
+        // and matched by BSSID below. Failures yield an empty map and we fall back to a heuristic per network.
+        var (bssid, channels) = WlanApi.GetBssInfo(adapterId);
 
         var wifiNetworkInfos = new List<WiFiNetworkInfo>();
 
