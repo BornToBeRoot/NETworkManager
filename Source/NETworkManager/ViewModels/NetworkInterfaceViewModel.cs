@@ -772,6 +772,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         {
             IsNetworkInterfaceLoading = false;
         }
+
+        ReloadIfPending();
     }
 
     #endregion
@@ -1178,11 +1180,20 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         Application.Current?.Dispatcher.BeginInvoke(new Action(ReloadNetworkInterfaces));
     }
 
+    /// <summary>
+    /// A reload was requested while the network interfaces were loaded (e.g. after Apply while a reload started by
+    /// a network change is running, which may have read the interfaces in the middle of the change).
+    /// </summary>
+    private bool _reloadPending;
+
     private async void ReloadNetworkInterfaces()
     {
-        // Avoid multiple reloads
+        // Avoid multiple reloads at the same time, but reload once more afterwards
         if (IsNetworkInterfaceLoading)
+        {
+            _reloadPending = true;
             return;
+        }
 
         IsNetworkInterfaceLoading = true;
 
@@ -1221,6 +1232,18 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         {
             IsNetworkInterfaceLoading = false;
         }
+
+        ReloadIfPending();
+    }
+
+    private void ReloadIfPending()
+    {
+        if (!_reloadPending)
+            return;
+
+        _reloadPending = false;
+
+        ReloadNetworkInterfaces();
     }
 
     private void SetConfigurationDefaults(NetworkInterfaceInfo info)
