@@ -84,7 +84,8 @@ public sealed class SNTPLookup
         // part of a second / millisecond isn't cut off. The network time has a resolution of 1 ms
         var roundTripDelayTicks = localEndTime.Ticks - localStartTime.Ticks;
         var offsetInSeconds = Math.Round(
-            (networkTime.Ticks - (localStartTime.Ticks + roundTripDelayTicks / 2.0)) / TimeSpan.TicksPerSecond, 3);
+            (networkTime.Ticks - (localStartTime.Ticks + roundTripDelayTicks / 2.0)) / TimeSpan.TicksPerSecond, 3) +
+            0.0; // + 0.0: no "-0" if a tiny negative offset is rounded to 0
 
         return new SNTPDateTime
         {
