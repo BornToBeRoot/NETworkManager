@@ -846,16 +846,21 @@ public class WiFiViewModel : ViewModelBase
             statusMessage = string.Format(Strings.ErrorWhileScanningWiFiAdapterXXXWithErrorXXX,
                 adapterInfo.NetworkInterfaceInfo.Name, ex.Message);
 
-            // Clear the existing old values if an error occurs
-            Networks.Clear();
-            Radio2Dot4GHzSeries = [];
-            Radio5GHzSeries = [];
-            Radio6GHzLowerSeries = [];
-            Radio6GHzUpperSeries = [];
-            Radio2Dot4GHzLegend = [];
-            Radio5GHzLegend = [];
-            Radio6GHzLowerLegend = [];
-            Radio6GHzUpperLegend = [];
+            // A refresh (manual, automatic, after connecting) keeps the networks of the last scan (e.g. the adapter is
+            // busy shortly after connecting); the header still shows the time of the last scan. The networks of
+            // another adapter (first scan) are cleared.
+            if (!refreshing)
+            {
+                Networks.Clear();
+                Radio2Dot4GHzSeries = [];
+                Radio5GHzSeries = [];
+                Radio6GHzLowerSeries = [];
+                Radio6GHzUpperSeries = [];
+                Radio2Dot4GHzLegend = [];
+                Radio5GHzLegend = [];
+                Radio6GHzLowerLegend = [];
+                Radio6GHzUpperLegend = [];
+            }
         }
         finally
         {
