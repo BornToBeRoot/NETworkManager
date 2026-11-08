@@ -5548,4 +5548,22 @@ Vuoi avviare la scansione?</value>
   <data name="BetaFeatureMessage" xml:space="preserve">
     <value>Beta: this feature is tested publicly and may change. Please report problems on GitHub.</value>
   </data>
+  <data name="CouldNotDisconnectFromXXXReasonXXX" xml:space="preserve">
+    <value>Could not disconnect from {0} ({1})!</value>
+  </data>
+  <data name="ChannelWidthEstimatedToolTip" xml:space="preserve">
+    <value>Estimated from the band and the WiFi standard: the channel width could not be read from the beacon of the access point.</value>
+  </data>
+  <data name="WiFiNetworkChange_Changed" xml:space="preserve">
+    <value>Changed</value>
+  </data>
+  <data name="XChanged" xml:space="preserve">
+    <value>{0} Changed</value>
+  </data>
+  <data name="PreviouslyX" xml:space="preserve">
+    <value>Previously: {0}</value>
+  </data>
+  <data name="HelpMessage_WiFiChangesNotification" xml:space="preserve">
+    <value>Only when the networks are scanned automatically ("Automatically update every") and WiFi is shown: one notification per scan with the changes since the previous scan of the adapter.</value>
+  </data>
 </root>
