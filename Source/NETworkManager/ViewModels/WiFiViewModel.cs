@@ -628,7 +628,7 @@ public class WiFiViewModel : ViewModelBase
 
             // Search by SSID ("Hidden Network" as shown), authentication type, channel frequency, channel, BSSID,
             // vendor and PHY kind
-            return GetDisplaySsid(info).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+            return WiFiNetworkToSsidStringConverter.GetSsid(info).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.NetworkAuthenticationType.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    $"{info.ChannelCenterFrequencyInGigahertz}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    $"{info.Channel}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
@@ -1310,7 +1310,7 @@ public class WiFiViewModel : ViewModelBase
 
         var points = pointList.ToArray();
 
-        var ssid = GetDisplaySsid(network);
+        var ssid = WiFiNetworkToSsidStringConverter.GetSsid(network);
 
         var series = new LineSeries<WiFiChannelPoint>
         {
@@ -1401,7 +1401,7 @@ public class WiFiViewModel : ViewModelBase
             return;
 
         var changes = Networks.Where(x => x.Change != WiFiNetworkChange.None)
-            .OrderBy(GetDisplaySsid, StringComparer.CurrentCultureIgnoreCase)
+            .OrderBy(WiFiNetworkToSsidStringConverter.GetSsid, StringComparer.CurrentCultureIgnoreCase)
             .ThenBy(x => x.Bssid, StringComparer.OrdinalIgnoreCase)
             .ToList();
 
@@ -1409,7 +1409,7 @@ public class WiFiViewModel : ViewModelBase
             return;
 
         // "MyNetwork (AA:BB:CC:DD:EE:FF) · New" - new = up, gone = down, changed = changed
-        var lines = changes.Select(x => new NotificationLine($"{GetDisplaySsid(x)} ({x.Bssid})",
+        var lines = changes.Select(x => new NotificationLine($"{WiFiNetworkToSsidStringConverter.GetSsid(x)} ({x.Bssid})",
             WiFiNetworkChangeToStringConverter.ToLocalizedString(x.Change), GetNotificationStatus(x.Change))).ToList();
 
         var summary = new[]
@@ -1441,14 +1441,6 @@ public class WiFiViewModel : ViewModelBase
             WiFiNetworkChange.Gone => NotificationStatus.Down,
             _ => NotificationStatus.Changed
         };
-    }
-
-    /// <summary>
-    ///     Gets the SSID of a network as shown in the grid ("Hidden Network" for a hidden network).
-    /// </summary>
-    private static string GetDisplaySsid(WiFiNetworkInfo network)
-    {
-        return network.IsHidden ? Strings.HiddenNetwork : network.AvailableNetwork.Ssid;
     }
 
     /// <summary>
@@ -1619,7 +1611,7 @@ public class WiFiViewModel : ViewModelBase
 
             if (connectedNetwork != null)
             {
-                ConnectionStatusMessage = string.Format(Strings.XXXDisconnected, GetDisplaySsid(connectedNetwork));
+                ConnectionStatusMessage = string.Format(Strings.XXXDisconnected, WiFiNetworkToSsidStringConverter.GetSsid(connectedNetwork));
                 IsConnectionStatusMessageDisplayed = true;
             }
         }
@@ -1628,7 +1620,7 @@ public class WiFiViewModel : ViewModelBase
             Log.Error("Error while disconnecting the WiFi adapter.", ex);
 
             ConnectionStatusMessage = string.Format(Strings.CouldNotDisconnectFromXXXReasonXXX,
-                GetDisplaySsid(connectedNetwork), ex.Message);
+                WiFiNetworkToSsidStringConverter.GetSsid(connectedNetwork), ex.Message);
             IsConnectionStatusMessageDisplayed = true;
         }
 

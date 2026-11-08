@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
@@ -56,7 +56,7 @@ public partial class LiveChartsWiFiChannelTooltip : IChartTooltip, INotifyProper
             if (!seenNetworks.Add(network))
                 continue;
 
-            var ssid = network.IsHidden ? Strings.HiddenNetwork : network.AvailableNetwork.Ssid;
+            var ssid = WiFiNetworkToSsidStringConverter.GetSsid(network);
             var bssid = network.Bssid;
             var dbm = $"{network.AvailableNetwork.NetworkRssiInDecibelMilliwatts} dBm";
             var widthText = WiFiChannelBandwidthToStringConverter.Format(network);
