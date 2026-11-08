@@ -500,7 +500,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             // Only if the user selects the profile. The profile list is rebuilt (and the previous or the first profile
             // selected again) when the view becomes visible, on search / filter and when a profile changes: this
             // must not overwrite the values entered on the Configure tab or switch the network interface.
-            if (value != null && !IsProfileSelectedByCode)
+            // Not while a configuration is applied (like Reset): the result would be shown for another interface
+            if (value != null && !IsProfileSelectedByCode && !IsConfigurationRunning)
                 LoadProfile(value);
 
             base.SelectedProfile = value;
@@ -850,7 +851,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// </summary>
     public ICommand LoadProfileCommand => new RelayCommand(_ => LoadProfile(SelectedProfile), LoadProfile_CanExecute);
 
-    private bool LoadProfile_CanExecute(object parameter) => SelectedProfile != null;
+    private bool LoadProfile_CanExecute(object parameter) => SelectedProfile != null && !IsConfigurationRunning;
 
     /// <summary>
     /// Gets the command to apply the profile configuration.
