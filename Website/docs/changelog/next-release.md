@@ -216,6 +216,7 @@ Release date: **xx.xx.2026**
 - A channel width that could not be read from the beacon of the access point and is estimated is shown as `~80 MHz` (grid, copy and the tooltip of the **Channels** tab), the tooltip of the cell explains it. Estimated widths on 2.4 GHz are 20 MHz (40 MHz is rarely used there). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - After allowing the access to the WiFi adapter in the Windows settings (location), **Refresh** below the message (or switching back to WiFi) loads the adapters. A restart of the application is no longer needed. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - The BSSID is shown, copied and exported in the same format as the MAC addresses of the other tools (`AA:BB:CC:DD:EE:FF` instead of `aa:bb:cc:dd:ee:ff`). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Reloading the adapters keeps the networks visible while they are scanned again (the refresh icon spins), instead of replacing them by the loading indicator. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 

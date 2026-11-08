@@ -113,7 +113,11 @@ public class WiFiViewModel : ViewModelBase
                 if (!_isLoading)
                     SettingsManager.Current.WiFi_InterfaceId = value.NetworkInterfaceInfo.Id;
 
-                _ = ScanAsync(value);
+                // The same adapter after the adapters were reloaded: refresh in the background (the networks stay
+                // visible), another adapter: show the loading indicator instead of the networks of the previous one
+                var isSameAdapter = field != null && field.NetworkInterfaceInfo.Id == value.NetworkInterfaceInfo.Id;
+
+                _ = ScanAsync(value, isSameAdapter);
             }
 
             field = value;
