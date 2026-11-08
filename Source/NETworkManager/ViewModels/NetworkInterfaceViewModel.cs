@@ -511,26 +511,6 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         }
     }
 
-    /// <summary>
-    /// Fills in the values of a profile on the Configure tab.
-    /// </summary>
-    private void SetConfigurationFromProfile(ProfileInfo profile)
-    {
-        ConfigEnableDynamicIPAddress = !profile.NetworkInterface_EnableStaticIPAddress;
-        ConfigEnableStaticIPAddress = profile.NetworkInterface_EnableStaticIPAddress;
-        ConfigIPAddress = profile.NetworkInterface_IPAddress;
-        ConfigGateway = profile.NetworkInterface_Gateway;
-        ConfigSubnetmask = profile.NetworkInterface_Subnetmask;
-
-        // DNS servers can only be obtained automatically with DHCP (older profiles may contain both)
-        var enableStaticDNS = profile.NetworkInterface_EnableStaticIPAddress ||
-                              profile.NetworkInterface_EnableStaticDNS;
-        ConfigEnableDynamicDNS = !enableStaticDNS;
-        ConfigEnableStaticDNS = enableStaticDNS;
-        ConfigPrimaryDNSServer = profile.NetworkInterface_PrimaryDNSServer;
-        ConfigSecondaryDNSServer = profile.NetworkInterface_SecondaryDNSServer;
-    }
-
     #endregion
 
     #region Constructor, LoadSettings, OnShutdown
@@ -1289,6 +1269,26 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             ConfigPrimaryDNSServer = dnsServers.Count > 0 ? dnsServers[0].ToString() : string.Empty;
             ConfigSecondaryDNSServer = dnsServers.Count > 1 ? dnsServers[1].ToString() : string.Empty;
         }
+    }
+
+    /// <summary>
+    /// Fills in the values of a profile on the Configure tab.
+    /// </summary>
+    private void SetConfigurationFromProfile(ProfileInfo profile)
+    {
+        ConfigEnableDynamicIPAddress = !profile.NetworkInterface_EnableStaticIPAddress;
+        ConfigEnableStaticIPAddress = profile.NetworkInterface_EnableStaticIPAddress;
+        ConfigIPAddress = profile.NetworkInterface_IPAddress;
+        ConfigGateway = profile.NetworkInterface_Gateway;
+        ConfigSubnetmask = profile.NetworkInterface_Subnetmask;
+
+        // DNS servers can only be obtained automatically with DHCP (older profiles may contain both)
+        var enableStaticDNS = profile.NetworkInterface_EnableStaticIPAddress ||
+                              profile.NetworkInterface_EnableStaticDNS;
+        ConfigEnableDynamicDNS = !enableStaticDNS;
+        ConfigEnableStaticDNS = enableStaticDNS;
+        ConfigPrimaryDNSServer = profile.NetworkInterface_PrimaryDNSServer;
+        ConfigSecondaryDNSServer = profile.NetworkInterface_SecondaryDNSServer;
     }
 
     private Task ApplyConfiguration()
