@@ -1375,17 +1375,29 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             Strings.HelpMessage_FixNetworkInterfaceOfProfile, ChildWindowIcon.Warn, Strings.Apply);
     }
 
-    private async Task ApplyConfigurationAsync(NetworkInterfaceConfig config)
+    /// <summary>
+    /// Shows a (localized) message if a value of the configuration is not a valid IPv4 address or subnet mask. The
+    /// model checks it again before running netsh, but its exception is not localized.
+    /// </summary>
+    /// <returns><see langword="true" /> if the configuration is valid.</returns>
+    private bool ValidateConfiguration(NetworkInterfaceConfig config)
     {
         // Profiles can contain values that were not validated by the UI (e.g. edited or shared profile files).
         var invalidValue = config.GetInvalidValue();
 
-        if (invalidValue != null)
-        {
-            StatusMessage = string.Format(Strings.NetworkInterfaceConfigInvalidValueX, invalidValue);
-            IsStatusMessageDisplayed = true;
+        if (invalidValue == null)
+            return true;
+
+        StatusMessage = string.Format(Strings.NetworkInterfaceConfigInvalidValueX, invalidValue);
+        IsStatusMessageDisplayed = true;
+
+        return false;
+    }
+
+    private async Task ApplyConfigurationAsync(NetworkInterfaceConfig config)
+    {
+        if (!ValidateConfiguration(config))
             return;
-        }
 
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
@@ -1482,19 +1494,19 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     private async Task AddIPv4Address(string ipAddress, string subnetmaskOrCidr)
     {
-        IsConfigurationRunning = true;
-        IsStatusMessageDisplayed = false;
-
-        ipAddress = ipAddress.Trim();
-        var subnetmask = NetworkInterfaceConfig.ConvertSubnetmaskOrCidr(subnetmaskOrCidr);
-
         var config = new NetworkInterfaceConfig
         {
             Name = SelectedNetworkInterface.Name,
             EnableDhcpStaticIpCoexistence = SelectedNetworkInterface.DhcpEnabled,
-            IPAddress = ipAddress,
-            Subnetmask = subnetmask
+            IPAddress = ipAddress.Trim(),
+            Subnetmask = NetworkInterfaceConfig.ConvertSubnetmaskOrCidr(subnetmaskOrCidr)
         };
+
+        if (!ValidateConfiguration(config))
+            return;
+
+        IsConfigurationRunning = true;
+        IsStatusMessageDisplayed = false;
 
         try
         {
@@ -1518,14 +1530,17 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     private async Task RemoveIPv4Address(string ipAddress)
     {
-        IsConfigurationRunning = true;
-        IsStatusMessageDisplayed = false;
-
         var config = new NetworkInterfaceConfig
         {
             Name = SelectedNetworkInterface.Name,
             IPAddress = ipAddress
         };
+
+        if (!ValidateConfiguration(config))
+            return;
+
+        IsConfigurationRunning = true;
+        IsStatusMessageDisplayed = false;
 
         try
         {
