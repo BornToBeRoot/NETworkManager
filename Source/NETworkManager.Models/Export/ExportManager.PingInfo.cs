@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using NETworkManager.Models.Network;
 
 namespace NETworkManager.Models.Export;
@@ -6,17 +6,18 @@ namespace NETworkManager.Models.Export;
 public static partial class ExportManager
 {
     /// <summary>
-    ///     Exported fields of a <see cref="PingInfo" />. Bytes, time (ms) and TTL are empty without a reply.
+    ///     Exported fields of a <see cref="PingInfo" /> (status, time, TTL, bytes like the ping of the IP Scanner). Time
+    ///     (ms), TTL and bytes are empty without a reply.
     /// </summary>
     private static readonly ExportField<PingInfo>[] PingInfoExportFields =
     [
         new(nameof(PingInfo.Timestamp), x => x.Timestamp),
         new(nameof(PingInfo.IPAddress), x => x.IPAddress),
         new(nameof(PingInfo.Hostname), x => x.Hostname, true),
-        new(nameof(PingInfo.Bytes), x => HasPingReply(x.Status) ? x.Bytes : null),
+        new(nameof(PingInfo.Status), x => x.Status),
         new(nameof(PingInfo.Time), x => HasPingReply(x.Status) ? x.Time : null),
         new(nameof(PingInfo.TTL), x => HasPingReply(x.Status) ? x.TTL : null),
-        new(nameof(PingInfo.Status), x => x.Status)
+        new(nameof(PingInfo.Bytes), x => HasPingReply(x.Status) ? x.Bytes : null)
     ];
 
     /// <summary>

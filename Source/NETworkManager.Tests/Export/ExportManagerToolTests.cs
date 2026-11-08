@@ -68,7 +68,7 @@ public class ExportManagerToolTests
             new PingInfo(Time, IPAddress, "host, a", IPStatus.TimedOut)
         ]));
 
-        AssertConsistent(files, "Timestamp,IPAddress,Hostname,Bytes,Time,TTL,Status");
+        AssertConsistent(files, "Timestamp,IPAddress,Hostname,Status,Time,TTL,Bytes");
         Assert.Equal("2026-11-08 10:15:30.123", files.CsvValue("Timestamp"));
         Assert.Equal("2026-11-08 10:15:30.123", files.XmlValue("Timestamp"));
         Assert.Equal("2026-11-08 10:15:30.123", (string)files.JsonValue("Timestamp"));
@@ -86,7 +86,7 @@ public class ExportManagerToolTests
         var files = ExportAll((f, t) => ExportManager.Export(f, t,
             [new PingInfo(Time, IPAddress, "host", IPStatus.TimedOut)]));
 
-        Assert.Equal("2026-11-08 10:15:30.123,10.0.0.1,\"host\",,,,TimedOut", files.CsvLines[1]);
+        Assert.Equal("2026-11-08 10:15:30.123,10.0.0.1,\"host\",TimedOut,,,", files.CsvLines[1]);
         Assert.Equal(JTokenType.Null, files.JsonValue("Time").Type);
         Assert.Equal(JTokenType.Null, files.JsonValue("TTL").Type);
         Assert.Equal(JTokenType.Null, files.JsonValue("Bytes").Type);
