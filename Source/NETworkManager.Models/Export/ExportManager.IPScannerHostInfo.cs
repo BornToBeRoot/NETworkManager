@@ -249,4 +249,4 @@ public static partial class ExportManager
 
         return info.IsAnyPortOpen ? PortState.Open : PortState.Closed;
     }
-}
+}
