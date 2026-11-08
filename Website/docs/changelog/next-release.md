@@ -50,6 +50,7 @@ Release date: **xx.xx.2026**
 **Network Interface**
 
 - Fixed **Apply** failing when the IPv4 address or the subnet mask on the **Configure** tab (or in **Add IPv4 address...**) started or ended with a space. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed **Apply** and **Add IPv4 address...** failing when the CIDR was entered without a slash (e.g. `24` instead of `/24`), although it was accepted as valid. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **DNS Lookup**
 
