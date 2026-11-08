@@ -188,22 +188,19 @@ public sealed class Ping
         }, cancellationToken);
     }
 
-    // Param: disableSpecialChar --> ExportManager --> "<" this char cannot be displayed in xml
     /// <summary>
-    ///     Converts the ping time to a string representation.
+    ///     Converts the ping time to a string representation (e.g. <c>&lt;1 ms</c>, <c>4 ms</c>), <c>-/-</c> without a
+    ///     reply.
     /// </summary>
     /// <param name="status">The IP status of the ping reply.</param>
     /// <param name="time">The round-trip time in milliseconds.</param>
-    /// <param name="disableSpecialChar">If true, disables special characters like '&lt;' in the output (e.g., for XML export).</param>
     /// <returns>The formatted time string.</returns>
-    public static string TimeToString(IPStatus status, long time, bool disableSpecialChar = false)
+    public static string TimeToString(IPStatus status, long time)
     {
         if (status != IPStatus.Success && status != IPStatus.TtlExpired)
             return "-/-";
 
-        _ = long.TryParse(time.ToString(), out var t);
-
-        return disableSpecialChar ? $"{t} ms" : t == 0 ? "<1 ms" : $"{t} ms";
+        return time == 0 ? "<1 ms" : $"{time} ms";
     }
 
     #endregion
