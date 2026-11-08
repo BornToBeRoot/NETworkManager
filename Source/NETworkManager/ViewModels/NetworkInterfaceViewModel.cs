@@ -1367,7 +1367,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         if (SelectedNetworkInterface is not { IsOperational: true })
         {
             await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.NetworkInterfaceNotFound,
-                message + Strings.HelpMessage_FixNetworkInterfaceOfProfile, ChildWindowIcon.Warn);
+                message + Strings.FixNetworkInterfaceOfProfileHint, ChildWindowIcon.Warn);
 
             return false;
         }
@@ -1376,7 +1376,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             Strings.NetworkInterfaceNotFound,
             message + string.Format(Strings.ApplyProfileToSelectedNetworkInterfaceXInstead,
                 SelectedNetworkInterface.Name) + Environment.NewLine + Environment.NewLine +
-            Strings.HelpMessage_FixNetworkInterfaceOfProfile, ChildWindowIcon.Warn, Strings.Apply);
+            Strings.FixNetworkInterfaceOfProfileHint, ChildWindowIcon.Warn, Strings.Apply);
     }
 
     /// <summary>

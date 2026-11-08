@@ -5489,7 +5489,7 @@ Do you want to start the scan?</value>
   <data name="ApplyProfileToSelectedNetworkInterfaceXInstead" xml:space="preserve">
     <value>Apply the profile to the selected network interface "{0}" instead?</value>
   </data>
-  <data name="HelpMessage_FixNetworkInterfaceOfProfile" xml:space="preserve">
+  <data name="FixNetworkInterfaceOfProfileHint" xml:space="preserve">
     <value>To fix this, edit the profile and select another network interface or disable "Bind to network interface".</value>
   </data>
 </root>
