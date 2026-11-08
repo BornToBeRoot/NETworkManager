@@ -40,7 +40,16 @@ public static partial class ExportManager
         new(nameof(WiFiNetworkInfo.AvailableNetwork.SecuritySettings.NetworkEncryptionType),
             x => x.AvailableNetwork.SecuritySettings.NetworkEncryptionType),
         new(nameof(WiFiNetworkInfo.AvailableNetwork.BeaconInterval), x => x.AvailableNetwork.BeaconInterval),
-        new(nameof(WiFiNetworkInfo.AvailableNetwork.Uptime), x => x.AvailableNetwork.Uptime)
+        new(nameof(WiFiNetworkInfo.AvailableNetwork.Uptime), x => x.AvailableNetwork.Uptime),
+        // Values shown in the grid
+        new(nameof(WiFiNetworkInfo.IsConnected), x => x.IsConnected),
+        // Human-readable authentication type (e.g. "WPA2 Personal (PSK)")
+        new("Security", x => x.NetworkAuthenticationType),
+        new(nameof(WiFiNetworkInfo.Channel), x => x.Channel),
+        // MHz, estimated if the width could not be read from the beacon
+        new("ChannelWidth", x => x.ChannelBandwidth),
+        new("ChannelWidthEstimated", x => x.IsChannelBandwidthEstimated),
+        new(nameof(WiFiNetworkInfo.Vendor), x => x.Vendor)
     ];
 
     /// <summary>

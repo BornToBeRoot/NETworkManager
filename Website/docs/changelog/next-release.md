@@ -218,6 +218,7 @@ Release date: **xx.xx.2026**
 - The BSSID is shown, copied and exported in the same format as the MAC addresses of the other tools (`AA:BB:CC:DD:EE:FF` instead of `aa:bb:cc:dd:ee:ff`). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Reloading the adapters keeps the networks visible while they are scanned again (the refresh icon spins), instead of replacing them by the loading indicator. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - An unknown security or PHY kind is shown as `-/-` (like an unknown vendor) instead of the untranslated text `Unknown`. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- The export contains the values shown in the grid that were missing: `IsConnected`, `Security`, `Channel`, `ChannelWidth` (MHz), `ChannelWidthEstimated` and `Vendor` (appended as the last columns / elements). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 
