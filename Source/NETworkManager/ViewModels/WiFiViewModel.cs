@@ -994,6 +994,13 @@ public class WiFiViewModel : ViewModelBase
             // another adapter (first scan) are cleared.
             if (!refreshing)
             {
+                // No time of the last scan and no changes of the previous adapter in the header
+                LastRefreshTime = null;
+                HasComparison = false;
+                NetworksNew = 0;
+                NetworksGone = 0;
+                NetworksChanged = 0;
+
                 Networks.Clear();
                 Radio2Dot4GHzSeries = [];
                 Radio5GHzSeries = [];
