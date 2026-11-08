@@ -79,6 +79,13 @@ public abstract class ProfileHostViewModelBase : ViewModelBase, IProfileHostView
     }
 
     /// <summary>
+    ///     Whether <see cref="SelectedProfile" /> is set because the profile list was rebuilt (view visible, search,
+    ///     filter, profiles changed: the previous or the first profile is selected again), not by the user. Tools that
+    ///     react to a selection (e.g. fill in values) can ignore these.
+    /// </summary>
+    protected bool IsProfileSelectedByCode { get; private set; }
+
+    /// <summary>
     ///     Gets or sets the search text.
     /// </summary>
     public string Search
@@ -456,13 +463,22 @@ public abstract class ProfileHostViewModelBase : ViewModelBase, IProfileHostView
         Profiles.GroupDescriptions.Add(new PropertyGroupDescription(nameof(ProfileInfo.Group)));
 
         // Set specific profile or first if null
-        SelectedProfile = null;
+        IsProfileSelectedByCode = true;
 
-        if (profile != null)
-            SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
-                              Profiles.Cast<ProfileInfo>().FirstOrDefault();
-        else
-            SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
+        try
+        {
+            SelectedProfile = null;
+
+            if (profile != null)
+                SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault(x => x.Equals(profile)) ??
+                                  Profiles.Cast<ProfileInfo>().FirstOrDefault();
+            else
+                SelectedProfile = Profiles.Cast<ProfileInfo>().FirstOrDefault();
+        }
+        finally
+        {
+            IsProfileSelectedByCode = false;
+        }
     }
 
     private void RefreshProfiles()
