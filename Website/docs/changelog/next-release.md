@@ -217,6 +217,7 @@ Release date: **xx.xx.2026**
 - After allowing the access to the WiFi adapter in the Windows settings (location), **Refresh** below the message (or switching back to WiFi) loads the adapters. A restart of the application is no longer needed. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - The BSSID is shown, copied and exported in the same format as the MAC addresses of the other tools (`AA:BB:CC:DD:EE:FF` instead of `aa:bb:cc:dd:ee:ff`). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Reloading the adapters keeps the networks visible while they are scanned again (the refresh icon spins), instead of replacing them by the loading indicator. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- An unknown security or PHY kind is shown as `-/-` (like an unknown vendor) instead of the untranslated text `Unknown`. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 

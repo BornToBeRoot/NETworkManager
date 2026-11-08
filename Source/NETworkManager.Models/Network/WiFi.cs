@@ -403,8 +403,8 @@ public static class WiFi
     {
         return networkAuthenticationType switch
         {
-            NetworkAuthenticationType.None => "-/-",
-            NetworkAuthenticationType.Unknown => "Unknown",
+            // No value like an unknown vendor ("Unknown" is not translated in the model)
+            NetworkAuthenticationType.None or NetworkAuthenticationType.Unknown => "-/-",
             NetworkAuthenticationType.Open80211 => "Open",
             NetworkAuthenticationType.SharedKey80211 => "WEP",
             NetworkAuthenticationType.Wpa => "WPA Enterprise",
@@ -430,7 +430,7 @@ public static class WiFi
     {
         return phyKind switch
         {
-            WiFiPhyKind.Unknown => "Unknown",
+            WiFiPhyKind.Unknown => "-/-",
             WiFiPhyKind.Dsss or WiFiPhyKind.Fhss => "802.11",
             WiFiPhyKind.Ofdm => "802.11a",
             WiFiPhyKind.Hrdsss => "802.11b",
