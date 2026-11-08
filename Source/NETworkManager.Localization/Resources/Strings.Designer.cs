@@ -5780,6 +5780,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To fix this, edit the profile and select another network interface or disable &quot;Bind to network interface&quot;..
+        /// </summary>
+        public static string FixNetworkInterfaceOfProfileHint {
+            get {
+                return ResourceManager.GetString("FixNetworkInterfaceOfProfileHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flush DNS cache.
         /// </summary>
         public static string FlushDNSCache {
@@ -6242,15 +6251,6 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_FirewallShowAllRules {
             get {
                 return ResourceManager.GetString("HelpMessage_FirewallShowAllRules", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to To fix this, edit the profile and select another network interface or disable &quot;Bind to network interface&quot;..
-        /// </summary>
-        public static string HelpMessage_FixNetworkInterfaceOfProfile {
-            get {
-                return ResourceManager.GetString("HelpMessage_FixNetworkInterfaceOfProfile", resourceCulture);
             }
         }
         
