@@ -148,6 +148,11 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     } = [];
 
     /// <summary>
+    /// ID of the interface the bandwidth meter and the configuration were set up for.
+    /// </summary>
+    private string _selectedNetworkInterfaceId;
+
+    /// <summary>
     /// Gets or sets the currently selected network interface.
     /// </summary>
     public NetworkInterfaceInfo SelectedNetworkInterface
@@ -158,8 +163,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             if (value == field)
                 return;
 
-            if (value != null)
+            // A reload creates new objects for the same interfaces (and the ComboBox selects null while the list is
+            // replaced). Only start a new measurement and reset the configuration if another interface is selected,
+            // not when the selected one is reloaded (e.g. after a network change or Apply).
+            if (value != null && value.Id != _selectedNetworkInterfaceId)
             {
+                _selectedNetworkInterfaceId = value.Id;
+
                 if (!_isLoading)
                     SettingsManager.Current.NetworkInterface_InterfaceId = value.Id;
 
