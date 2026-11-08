@@ -19,13 +19,17 @@ public class ExportManagerIPScannerTests
     ///     Columns of the CSV export (names and order), grouped by topic.
     /// </summary>
     private const string CsvHeader =
-        "IsReachable,IPAddress,Hostname,PingStatus,Timestamp,Time,TTL,Bytes,PortStatus,Ports,NetBIOSIsReachable," +
-        "NetBIOSIPAddress,NetBIOSComputerName,NetBIOSUserName,NetBIOSGroupName,NetBIOSMACAddress,NetBIOSVendor," +
-        "MACAddress,Vendor,DNSHostname,DetectedBy,OSGuess,Role,MDNSHostname,WebTitle,WebURL,SNMPName,SNMPDescription," +
-        "SNMPLocation,WebStatusCode,WebServer,WebPoweredBy,WebRealm,WebRedirectURL,WebCertificateSubject," +
-        "WebCertificateIssuer,WebCertificateNotAfter,WebCertificateSelfSigned,Change,PreviousMACAddress,SNMPError," +
+        "IsReachable,DetectedBy,IPAddress,Hostname,DNSHostname,MDNSHostname,MACAddress,Vendor,Role,OSGuess," +
+        "PingStatus,Timestamp,Time,TTL,Bytes," +
+        "PortStatus,Ports," +
+        "NetBIOSIsReachable,NetBIOSIPAddress,NetBIOSComputerName,NetBIOSUserName,NetBIOSGroupName,NetBIOSMACAddress," +
+        "NetBIOSVendor," +
+        "WebURL,WebStatusCode,WebTitle,WebServer,WebPoweredBy,WebRealm,WebRedirectURL,WebCertificateSubject," +
+        "WebCertificateIssuer,WebCertificateNotAfter,WebCertificateSelfSigned," +
+        "SNMPName,SNMPDescription,SNMPLocation,SNMPError," +
         "WindowsOS,WindowsEdition,WindowsVersion,WindowsRole,WindowsComputerName,WindowsDomain,WindowsTimeOffset," +
-        "WindowsUsers,WindowsDescription,WindowsError,SMBDialect,SMBSigningRequired,SMBServerGuid";
+        "WindowsUsers,WindowsDescription,WindowsError,SMBDialect,SMBSigningRequired,SMBServerGuid," +
+        "Change,PreviousMACAddress";
 
     private static readonly IPScannerResultOptions AllEnabled = new(true, true, true, true, true, true, true, true, true, true);
 

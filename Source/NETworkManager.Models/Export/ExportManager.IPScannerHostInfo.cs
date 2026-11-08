@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NETworkManager.Models.Network;
@@ -38,8 +38,8 @@ public static partial class ExportManager
     ];
 
     /// <summary>
-    ///     Gets the exported fields of an <see cref="IPScannerHostInfo" />. The released columns come first, new ones are
-    ///     appended at the end, so the position of a column never changes. Values of a probe that is still running
+    ///     Gets the exported fields of an <see cref="IPScannerHostInfo" />, grouped by topic (host, ping, ports, NetBIOS,
+    ///     web page, SNMP, Windows, change since the previous scan). Values of a probe that is still running
     ///     (export during a scan, or a scan canceled before the probe finished) or disabled are placeholders - exported
     ///     as empty values instead of a result. The ports are an <see cref="ExportList{TItem}" /> (joined in the CSV
     ///     file, one element per port in XML, an array in JSON).
@@ -73,18 +73,28 @@ public static partial class ExportManager
 
         return
         [
+            // Host (the hostname is the DNS name, or the mDNS / NetBIOS name as fallback)
             new(nameof(IPScannerHostInfo.IsReachable), x => x.IsReachable),
+            new(nameof(IPScannerHostInfo.DetectedBy), GetDetectedBy, true),
             new(nameof(PingInfo.IPAddress), x => x.PingInfo.IPAddress),
             new(nameof(IPScannerHostInfo.Hostname), x => x.Hostname, true),
+            new(nameof(IPScannerHostInfo.DNSHostname), x => x.DNSHostname, true),
+            new(nameof(IPScannerHostInfo.MDNSHostname), IfEnabled(options.MDNSEnabled, x => x.MDNSHostname), true),
+            new(nameof(IPScannerHostInfo.MACAddress), x => x.MACAddress),
+            new(nameof(IPScannerHostInfo.Vendor), x => x.Vendor, true),
+            new(nameof(IPScannerHostInfo.Role), GetRole, true),
+            new(nameof(IPScannerHostInfo.OSGuess), x => GetOSGuess(x, options)),
+            // Ping (time in ms, time / TTL / bytes only with a reply)
             new("PingStatus", x => GetPingInfo(x, options)?.Status),
             new(nameof(PingInfo.Timestamp), x => GetPingInfo(x, options)?.Timestamp),
-            // ms
             new(nameof(PingInfo.Time), IfPingReply(x => x.Time)),
             new(nameof(PingInfo.TTL), IfPingReply(x => x.TTL)),
             new(nameof(PingInfo.Bytes), IfPingReply(x => x.Bytes)),
+            // Port scan
             new("PortStatus", x => GetPortStatus(x, options)),
             new(nameof(IPScannerHostInfo.Ports), x => new ExportList<PortInfo>(nameof(PortInfo),
                 x.Ports != null && options.PortScanEnabled ? x.Ports : [], PortInfoExportFields), true),
+            // NetBIOS
             new("NetBIOSIsReachable", IfNetBIOS(x => x.IsReachable)),
             new("NetBIOSIPAddress", IfNetBIOS(x => x.IPAddress)),
             new("NetBIOSComputerName", IfNetBIOS(x => x.ComputerName), true),
@@ -92,21 +102,10 @@ public static partial class ExportManager
             new("NetBIOSGroupName", IfNetBIOS(x => x.GroupName), true),
             new("NetBIOSMACAddress", IfNetBIOS(x => x.MACAddress)),
             new("NetBIOSVendor", IfNetBIOS(x => x.Vendor), true),
-            new(nameof(IPScannerHostInfo.MACAddress), x => x.MACAddress),
-            new(nameof(IPScannerHostInfo.Vendor), x => x.Vendor, true),
-            // Added later - after the released columns, so their position doesn't change
-            new(nameof(IPScannerHostInfo.DNSHostname), x => x.DNSHostname, true),
-            new(nameof(IPScannerHostInfo.DetectedBy), GetDetectedBy, true),
-            new(nameof(IPScannerHostInfo.OSGuess), x => GetOSGuess(x, options)),
-            new(nameof(IPScannerHostInfo.Role), GetRole, true),
-            new(nameof(IPScannerHostInfo.MDNSHostname), IfEnabled(options.MDNSEnabled, x => x.MDNSHostname), true),
-            new(nameof(IPScannerHostInfo.WebTitle), IfEnabled(isWebPageRead, x => x.WebTitle), true),
+            // Web page (only read with the port scan)
             new(nameof(IPScannerHostInfo.WebURL), IfEnabled(isWebPageRead, x => x.WebURL), true),
-            new(nameof(IPScannerHostInfo.SNMPName), IfEnabled(options.SNMPEnabled, x => x.SNMPName), true),
-            new(nameof(IPScannerHostInfo.SNMPDescription), IfEnabled(options.SNMPEnabled, x => x.SNMPDescription),
-                true),
-            new(nameof(IPScannerHostInfo.SNMPLocation), IfEnabled(options.SNMPEnabled, x => x.SNMPLocation), true),
             new(nameof(IPScannerHostInfo.WebStatusCode), x => GetWebStatusCode(x, options)),
+            new(nameof(IPScannerHostInfo.WebTitle), IfEnabled(isWebPageRead, x => x.WebTitle), true),
             new(nameof(IPScannerHostInfo.WebServer), IfEnabled(isWebPageRead, x => x.WebServer), true),
             new(nameof(IPScannerHostInfo.WebPoweredBy), IfEnabled(isWebPageRead, x => x.WebPoweredBy), true),
             new(nameof(IPScannerHostInfo.WebRealm), IfEnabled(isWebPageRead, x => x.WebRealm), true),
@@ -115,30 +114,34 @@ public static partial class ExportManager
             new("WebCertificateIssuer", IfCertificate(x => x.Issuer), true),
             new("WebCertificateNotAfter", IfCertificate(x => x.NotAfter.ToLocalTime())),
             new("WebCertificateSelfSigned", IfCertificate(x => x.IsSelfSigned)),
-            // Change since the previous scan of the same input (empty without a previous scan / change)
-            new(nameof(IPScannerHostInfo.Change), x => x.Change == IPScannerHostChange.None ? null : x.Change),
-            new(nameof(IPScannerHostInfo.PreviousMACAddress), x => x.PreviousMACAddress),
-            // SNMPv3 error of the host (e.g. "AuthenticationFailed"), empty without
+            // SNMP system information (SNMPError: SNMPv3 error of the host, e.g. "AuthenticationFailed")
+            new(nameof(IPScannerHostInfo.SNMPName), IfEnabled(options.SNMPEnabled, x => x.SNMPName), true),
+            new(nameof(IPScannerHostInfo.SNMPDescription), IfEnabled(options.SNMPEnabled, x => x.SNMPDescription),
+                true),
+            new(nameof(IPScannerHostInfo.SNMPLocation), IfEnabled(options.SNMPEnabled, x => x.SNMPLocation), true),
             new(nameof(IPScannerHostInfo.SNMPError),
                 IfEnabled(options.SNMPEnabled, x => x.HasSNMPError ? x.SNMPError.ToString() : string.Empty), true),
-            // Windows host information (SMB / NTLM, NetApi)
+            // Windows host information (SMB / NTLM, NetApi). WindowsTimeOffset: seconds (time of the host minus the local
+            // time), WindowsError: Win32 error of the NetApi requests (e.g. 5 = access denied, 1326 = wrong username or
+            // password)
             new("WindowsOS", IfWindows(x => x.OS), true),
             new("WindowsEdition", IfWindows(x => x.Edition), true),
             new("WindowsVersion", IfWindows(x => x.Version?.ToString())),
             new("WindowsRole", IfWindows(x => x.Role == WindowsHostRole.Unknown ? string.Empty : x.Role.ToString())),
             new("WindowsComputerName", IfWindows(x => x.ComputerName), true),
             new("WindowsDomain", IfWindows(x => x.Domain), true),
-            // Seconds (time of the host minus the local time)
             new("WindowsTimeOffset",
                 IfWindowsValue(x => x.TimeOffset is { } offset ? Math.Round(offset.TotalSeconds, 3) : null)),
             new("WindowsUsers", IfWindows(x => x.Users == null ? string.Empty : string.Join(ListSeparator, x.Users)),
                 true),
             new("WindowsDescription", IfWindows(x => x.Description), true),
-            // Win32 error of the NetApi requests (e.g. 5 = access denied, 1326 = wrong username or password)
             new("WindowsError", IfWindowsValue(x => x.Error == 0 ? null : x.Error)),
             new("SMBDialect", IfWindows(x => x.SMB?.Dialect)),
             new("SMBSigningRequired", IfWindowsValue(x => x.SMB?.SigningRequired)),
-            new("SMBServerGuid", IfWindows(x => x.SMB?.ServerGuid.ToString()))
+            new("SMBServerGuid", IfWindows(x => x.SMB?.ServerGuid.ToString())),
+            // Change since the previous scan of the same input (empty without a previous scan / change)
+            new(nameof(IPScannerHostInfo.Change), x => x.Change == IPScannerHostChange.None ? null : x.Change),
+            new(nameof(IPScannerHostInfo.PreviousMACAddress), x => x.PreviousMACAddress)
         ];
     }
 
