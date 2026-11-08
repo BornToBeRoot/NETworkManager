@@ -125,4 +125,15 @@ public class NetworkInterfaceConfigTests
         Assert.Equal("1.1.1.1", config.PrimaryDNSServer);
         Assert.Equal("8.8.8.8", config.SecondaryDNSServer);
     }
+
+    [Theory]
+    [InlineData("", "/24")]
+    [InlineData("192.168.1.10", "")]
+    [InlineData(null, null)]
+    public void GetInvalidValue_StaticIPWithoutAddressOrSubnetmask_ReturnsEmpty(string ipAddress, string subnetmask)
+    {
+        var config = NetworkInterfaceConfig.Create("Ethernet", true, ipAddress, subnetmask, "", false, null, null);
+
+        Assert.Equal(string.Empty, config.GetInvalidValue());
+    }
 }
