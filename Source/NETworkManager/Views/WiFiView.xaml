@@ -428,7 +428,7 @@
                                             </Style>
                                         </controls2:MultiSelectDataGrid.RowStyle>
                                         <controls2:MultiSelectDataGrid.Columns>
-                                            <DataGridTemplateColumn MinWidth="44" SortMemberPath="ChannelCenterFrequencyInKilohertz">
+                                            <DataGridTemplateColumn MinWidth="44" SortMemberPath="AvailableNetwork.SignalBars">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Rectangle Width="24" Height="24"
@@ -640,7 +640,7 @@
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.Encryption}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkEncryptionType}"
-                                                SortMemberPath="AvailableNetwork.NetworkEncryptionType"
+                                                SortMemberPath="AvailableNetwork.SecuritySettings.NetworkEncryptionType"
                                                 MinWidth="100" />
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.BSSID}"
                                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).Bssid}"
