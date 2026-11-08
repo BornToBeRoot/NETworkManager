@@ -96,7 +96,7 @@
                                                                             Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
                                                                     <Style.Triggers>
                                                                         <DataTrigger
-                                                                            Binding="{Binding Path=NetworkInterfaceInfo.IsOperational}"
+                                                                            Binding="{Binding Path=IsOperational}"
                                                                             Value="True">
                                                                             <Setter Property="OpacityMask"
                                                                                 Value="{StaticResource ResourceKey=VisualUp}" />

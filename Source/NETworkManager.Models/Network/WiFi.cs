@@ -46,13 +46,31 @@ public static class WiFi
                 wifiAdapterInfos.Add(new WiFiAdapterInfo
                 {
                     NetworkInterfaceInfo = networkInterface,
-                    WiFiAdapter = wiFiAdapter
+                    WiFiAdapter = wiFiAdapter,
+                    IsOperational = networkInterface.IsOperational
                 });
             else
                 Log.Warn($"Could not find network interface for WiFi adapter with id: {wiFiAdapterId}");
         }
 
         return wifiAdapterInfos;
+    }
+
+    /// <summary>
+    ///     Updates <see cref="WiFiAdapterInfo.IsOperational" /> of the adapters (e.g. after connecting or
+    ///     disconnecting). Reads only the operational status of the network interfaces (fast), not all
+    ///     their information like <see cref="NetworkInterface.GetNetworkInterfacesAsync" />.
+    /// </summary>
+    /// <param name="adapters">Wi-Fi adapters to update.</param>
+    public static void UpdateAdapterStates(IEnumerable<WiFiAdapterInfo> adapters)
+    {
+        var states = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
+            .ToDictionary(x => x.Id, x => x.OperationalStatus == System.Net.NetworkInformation.OperationalStatus.Up,
+                StringComparer.OrdinalIgnoreCase);
+
+        foreach (var adapter in adapters)
+            if (states.TryGetValue(adapter.NetworkInterfaceInfo.Id, out var isOperational))
+                adapter.IsOperational = isOperational;
     }
 
     /// <summary>

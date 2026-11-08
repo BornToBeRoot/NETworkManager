@@ -839,6 +839,9 @@ public class WiFiViewModel : ViewModelBase
             Radio6GHzUpperLegend = [.. legend6GHzUpper];
 
             LastRefreshTime = wiFiNetworkScanInfo.Timestamp;
+
+            // Connected / disconnected (also outside of NETworkManager) - the icon of the adapter selection
+            WiFi.UpdateAdapterStates(Adapters);
         }
         catch (Exception ex)
         {
