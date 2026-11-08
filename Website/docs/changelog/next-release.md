@@ -246,6 +246,14 @@ Release date: **xx.xx.2026**
 
 - Added an **Export...** button below the result, like in the other tools. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
 
+**Subnet Calculator**
+
+- **Export...** (subnetting) exports the subnets in the order shown (sorting), the selected subnets in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+
+**Lookup**
+
+- **Export...** (OUI and port lookup) exports the results in the order shown (sorting), the selected results in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+
 **Connections**
 
 - The search filters after a short delay while typing instead of on every key press (smoother with many connections), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
