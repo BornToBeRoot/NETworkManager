@@ -79,12 +79,12 @@ public sealed class SNTPLookup
         var milliseconds = intPart * 1000 + fractionPart * 1000 / 0x100000000L;
         var networkTime = new DateTime(1900, 1, 1).AddMilliseconds((long)milliseconds);
 
-        // Offset of the local clock (local time in the middle of the request minus the network time) in seconds and
-        // round trip delay in milliseconds - as double, so a part of a second / millisecond isn't cut off. The network
-        // time has a resolution of 1 ms
+        // Offset like NTP (network time minus the local time in the middle of the request, positive if the local clock is
+        // behind: the correction for the local clock) in seconds and round trip delay in milliseconds - as double, so a
+        // part of a second / millisecond isn't cut off. The network time has a resolution of 1 ms
         var roundTripDelayTicks = localEndTime.Ticks - localStartTime.Ticks;
         var offsetInSeconds = Math.Round(
-            (localStartTime.Ticks + roundTripDelayTicks / 2.0 - networkTime.Ticks) / TimeSpan.TicksPerSecond, 3);
+            (networkTime.Ticks - (localStartTime.Ticks + roundTripDelayTicks / 2.0)) / TimeSpan.TicksPerSecond, 3);
 
         return new SNTPDateTime
         {

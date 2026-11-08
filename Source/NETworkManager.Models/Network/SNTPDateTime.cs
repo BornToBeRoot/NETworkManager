@@ -35,7 +35,8 @@ public class SNTPDateTime
     public double RoundTripDelay { get; set; }
 
     /// <summary>
-    ///     Offset to the local clock in seconds.
+    ///     Offset of the local clock in seconds like NTP: network time minus local time (positive if the local clock is
+    ///     behind).
     /// </summary>
     public double Offset { get; set; }
 }

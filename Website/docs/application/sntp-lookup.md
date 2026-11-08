@@ -8,6 +8,8 @@ keywords: [NETworkManager, SNTP lookup, NTP, time server, time synchronization, 
 
 With **SNTP Lookup** you can query one or more SNTP servers to get the current network time and view the offset to the local clock.
 
+The **Offset** (seconds) is the time of the server minus the local time, like in NTP tools (e.g. `w32tm /stripchart`): positive if the local clock is behind, negative if it is ahead. The times are shown in UTC.
+
 :::info
 
 SNTP (Simple Network Time Protocol) is a simplified version of NTP (Network Time Protocol) used for synchronizing clocks between devices on a network. It is designed for scenarios where precise timing is not critical. SNTP servers obtain their time from upstream NTP or SNTP servers and distribute it to clients. SNTP operates over UDP and uses port 123 by default. It is widely supported by operating systems and network devices.
