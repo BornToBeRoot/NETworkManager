@@ -34,14 +34,6 @@ Release date: **xx.xx.2026**
 - Run command: the **Port Scanner** needs ports, which can also be names of port profiles, also several and together with ports (e.g. `portscan 10.0.0.1 webserver` or `portscan 10.0.0.1 "DNS (via TCP)";webserver;22`, suggested after the host and after a `;`). Own history size for the run command (default 20, [Settings > General](../settings/general.md#number-of-stored-entries-run-command)). `Tab` also completes profiles and port profiles, `PageUp`/`PageDown` move the selection by 5 suggestions. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
 - Run command dialog redesigned: the icon of the recognized feature, the syntax with the part being typed highlighted, the values as they were understood (e.g. `Hosts: borntoberoot.net`, `Type: AAAA`), validation while typing, grouped suggestions with the typed text highlighted, examples and key hints (can be hidden in the settings). The dialog uses more space in a large window. The title bar shows a **Run command...** box in the center (like the command center of VS Code) instead of the icon. Type only a target (e.g. `10.0.0.1`, `server-01`, `00:11:22:33:44:55`, `10.0.0.0/24`) to get the commands that accept it, recent commands are also suggested while typing (e.g. a host); optionally, a target in the clipboard is suggested ([Settings > General](../settings/general.md#suggest-the-clipboard-content-as-target)). `Ctrl+Enter` runs and keeps the dialog open, `Shift+Enter` fills in the input without starting, `Shift+Del` or the remove button removes a recent command. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
 
-**RDAP**
-
-- New [**RDAP**](../application/rdap.md) tool to look up registration data via the Registration Data Access Protocol, the standardized, JSON-based successor of Whois. Supports domains, nameservers, top-level domains, IP addresses/CIDR prefixes, AS numbers and entity handles; the type is detected automatically or can be selected. The RDAP server is determined automatically using the IANA bootstrap files, which are cached locally and can be updated in the new **Settings > RDAP** page. Results are shown in a structured view (details, status, events, nameservers, DNSSEC, networks and AS numbers of an organization, contacts, notices) or as raw JSON, and can be exported as JSON or text. For domains (e.g. `.com`/`.net`), the referral to the registrar's RDAP server is followed as well (can be disabled in **Settings > RDAP**). Includes profile support. If no RDAP server is known for a domain, it can be opened in **Whois** with a single click. IP addresses and hostnames can be queried from the context menu of **IP Scanner** and **Traceroute**, AS numbers from **Traceroute**; for a hostname (e.g. `www.borntoberoot.net`), the registered domain is queried (determined with the included [Public Suffix List](https://publicsuffix.org/)). [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607) [#3642](https://github.com/BornToBeRoot/NETworkManager/pull/3642)
-
-**Traceroute**
-
-- New **Map** view below the hop list, visualizing each resolved hop's geolocation on an offline world map. Consecutive hops are connected with curved, directional arrows; hovering a marker shows its location, ISP/ASN, hostname, IP address and average round-trip time, while hovering an arrow shows the source and destination location of that segment. The map supports mouse-wheel zoom and drag-to-pan, and can be collapsed via a toggle button on the map itself, similar to the Profiles panel. The map is only shown if **Check IP geolocation** and the new **Show map** setting are both enabled, since hops need a resolved geolocation to be plotted. [#3520](https://github.com/BornToBeRoot/NETworkManager/pull/3520)
-
 **Settings**
 
 - New global **DNS suffix** options in [Settings > Network](../settings/network.md): **Add DNS suffix (primary) to hostname** appends the Windows primary (or, if none is set, the active network adapter's connection-specific) DNS suffix to a bare hostname before resolving it, and **Use custom DNS suffix** lets you override it with a suffix of your own. Previously only available in DNS Lookup, this now also applies to every other tool that resolves hostnames through NETworkManager's shared DNS resolver (e.g. Ping, Traceroute, Port Scanner, IP Scanner, SNTP Lookup) — DNS Lookup stays independent. [#3591](https://github.com/BornToBeRoot/NETworkManager/pull/3591)
@@ -51,6 +43,14 @@ Release date: **xx.xx.2026**
 
 - Changes since the last scan: each scan is compared with the previous scan of the same adapter (by BSSID). The new column **Since last scan** shows networks that are **New**, **Gone** (shown faded until the next scan) or **Changed** (channel, channel width or security, the tooltip shows the previous values), the header shows the counters (e.g. `2 New · 1 Gone`). Also in the search and the export (`Change`). Useful with **Automatically update every** to see new access points or channel changes. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
+**Traceroute**
+
+- New **Map** view below the hop list, visualizing each resolved hop's geolocation on an offline world map. Consecutive hops are connected with curved, directional arrows; hovering a marker shows its location, ISP/ASN, hostname, IP address and average round-trip time, while hovering an arrow shows the source and destination location of that segment. The map supports mouse-wheel zoom and drag-to-pan, and can be collapsed via a toggle button on the map itself, similar to the Profiles panel. The map is only shown if **Check IP geolocation** and the new **Show map** setting are both enabled, since hops need a resolved geolocation to be plotted. [#3520](https://github.com/BornToBeRoot/NETworkManager/pull/3520)
+
+**RDAP**
+
+- New [**RDAP**](../application/rdap.md) tool to look up registration data via the Registration Data Access Protocol, the standardized, JSON-based successor of Whois. Supports domains, nameservers, top-level domains, IP addresses/CIDR prefixes, AS numbers and entity handles; the type is detected automatically or can be selected. The RDAP server is determined automatically using the IANA bootstrap files, which are cached locally and can be updated in the new **Settings > RDAP** page. Results are shown in a structured view (details, status, events, nameservers, DNSSEC, networks and AS numbers of an organization, contacts, notices) or as raw JSON, and can be exported as JSON or text. For domains (e.g. `.com`/`.net`), the referral to the registrar's RDAP server is followed as well (can be disabled in **Settings > RDAP**). Includes profile support. If no RDAP server is known for a domain, it can be opened in **Whois** with a single click. IP addresses and hostnames can be queried from the context menu of **IP Scanner** and **Traceroute**, AS numbers from **Traceroute**; for a hostname (e.g. `www.borntoberoot.net`), the registered domain is queried (determined with the included [Public Suffix List](https://publicsuffix.org/)). [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607) [#3642](https://github.com/BornToBeRoot/NETworkManager/pull/3642)
+
 ## Improvements
 
 - Links (e.g. in **About**, **Web Console** and the notices in **RDAP**) are now keyboard accessible: they can be reached with `Tab` and opened with `Enter`. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
@@ -58,13 +58,32 @@ Release date: **xx.xx.2026**
 - The collapsed/expanded state of profile groups (e.g. **linux-server**) is now remembered per profile file and shared across all tools, instead of resetting every time you switch tools or restart the application. [#3539](https://github.com/BornToBeRoot/NETworkManager/pull/3539)
 - The **Experimental features** setting in **Settings > Update** is removed: features in testing are marked with a **Beta** label at their own setting instead (e.g. **Read Windows host information** of the **IP Scanner**). [#3691](https://github.com/BornToBeRoot/NETworkManager/pull/3691)
 
+**Profiles**
+
+- **Settings > Profiles**: `Enter` in the search box filters the profiles right away instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+
+**Dashboard**
+
+- Checking the **IP geolocation** and the **DNS resolver** is faster (the minimum of 2.5 seconds runs during the request, not before); the refresh icons spin until the check is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+
 **Network Interface**
 
 - Members of the **Network Configuration Operators** group can now change the network configuration (IP address, DNS servers, release/renew) without being an administrator. NETworkManager has to run elevated (**Restart as Administrator**, confirm with your own credentials). The hint is now also shown as tooltip on **Apply** in the profile context menu. [#3606](https://github.com/BornToBeRoot/NETworkManager/issues/3606)
 
-**Whois**
+**WiFi**
 
-- Added an **Export...** button below the result, like in the other tools. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
+- The search filters after a short delay while typing instead of on every key press, `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- The time of the last scan of the networks (`Last scan at 14:32`, the date in the tooltip) is shown in their header, with **Automatically update every** a countdown to the next scan; the line below only shows errors and the connection status. Reloading the network adapters is faster (the minimum of 2.5 seconds runs while loading) and the reload icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- A channel width that could not be read from the beacon of the access point and is estimated is shown as `~80 MHz` (grid, copy and the tooltip of the **Channels** tab), the tooltip of the cell explains it. Estimated widths on 2.4 GHz are 20 MHz (40 MHz is rarely used there). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- After allowing the access to the WiFi adapter in the Windows settings (location), **Refresh** below the message (or switching back to WiFi) loads the adapters. A restart of the application is no longer needed. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- The BSSID is shown, copied and exported in the same format as the MAC addresses of the other tools (`AA:BB:CC:DD:EE:FF` instead of `aa:bb:cc:dd:ee:ff`). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Reloading the adapters keeps the networks visible while they are scanned again (the refresh icon spins), instead of replacing them by the loading indicator. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- An unknown security or PHY kind is shown as `-/-` (like an unknown vendor) instead of the untranslated text `Unknown`. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- The export contains the values shown in the grid that were missing: `IsConnected`, `Security`, `Channel`, `ChannelWidth` (MHz), `ChannelWidthEstimated` and `Vendor` (appended as the last columns / elements). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- **Export...** > all exports the networks shown in the grid (filtered by band and search) in the order shown, the selected networks are exported in the order shown too. The file is written in the background. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Scanning the networks (also **Automatically update every**) no longer freezes the window briefly: the connected network is read from the WiFi API instead of `netsh` via PowerShell, and the vendor lookups run in the background. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- The selected network stays selected (and in view) when the networks are scanned again, e.g. with **Automatically update every**. The list is replaced at once instead of network by network. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- If several networks are selected, **Copy...** > **SSID** / **BSSID** copies the values of all selected networks (one per line, in the order shown, without duplicates). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **IP Scanner**
 
@@ -194,9 +213,9 @@ Release date: **xx.xx.2026**
 - `Enter` in the search box filters the rules right away instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; the line below the list only shows errors (e.g. rules loaded with errors, a failed action). A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until the rules are loaded (also with **Show all rules**). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
-**Profiles**
+**Whois**
 
-- **Settings > Profiles**: `Enter` in the search box filters the profiles right away instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- Added an **Export...** button below the result, like in the other tools. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
 
 **Connections**
 
@@ -213,25 +232,6 @@ Release date: **xx.xx.2026**
 - The search filters after a short delay while typing instead of on every key press (smoother with many entries), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; with **Automatically update every**, a countdown to the next refresh (`Next refresh in 00:04`). The line below the list only shows errors. A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
-**WiFi**
-
-- The search filters after a short delay while typing instead of on every key press, `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
-- The time of the last scan of the networks (`Last scan at 14:32`, the date in the tooltip) is shown in their header, with **Automatically update every** a countdown to the next scan; the line below only shows errors and the connection status. Reloading the network adapters is faster (the minimum of 2.5 seconds runs while loading) and the reload icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
-- A channel width that could not be read from the beacon of the access point and is estimated is shown as `~80 MHz` (grid, copy and the tooltip of the **Channels** tab), the tooltip of the cell explains it. Estimated widths on 2.4 GHz are 20 MHz (40 MHz is rarely used there). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
-- After allowing the access to the WiFi adapter in the Windows settings (location), **Refresh** below the message (or switching back to WiFi) loads the adapters. A restart of the application is no longer needed. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
-- The BSSID is shown, copied and exported in the same format as the MAC addresses of the other tools (`AA:BB:CC:DD:EE:FF` instead of `aa:bb:cc:dd:ee:ff`). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
-- Reloading the adapters keeps the networks visible while they are scanned again (the refresh icon spins), instead of replacing them by the loading indicator. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
-- An unknown security or PHY kind is shown as `-/-` (like an unknown vendor) instead of the untranslated text `Unknown`. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
-- The export contains the values shown in the grid that were missing: `IsConnected`, `Security`, `Channel`, `ChannelWidth` (MHz), `ChannelWidthEstimated` and `Vendor` (appended as the last columns / elements). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
-- **Export...** > all exports the networks shown in the grid (filtered by band and search) in the order shown, the selected networks are exported in the order shown too. The file is written in the background. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
-- Scanning the networks (also **Automatically update every**) no longer freezes the window briefly: the connected network is read from the WiFi API instead of `netsh` via PowerShell, and the vendor lookups run in the background. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
-- The selected network stays selected (and in view) when the networks are scanned again, e.g. with **Automatically update every**. The list is replaced at once instead of network by network. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
-- If several networks are selected, **Copy...** > **SSID** / **BSSID** copies the values of all selected networks (one per line, in the order shown, without duplicates). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
-
-**Dashboard**
-
-- Checking the **IP geolocation** and the **DNS resolver** is faster (the minimum of 2.5 seconds runs during the request, not before); the refresh icons spin until the check is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
-
 ## Bug Fixes
 
 - Fixed changes to lists in the settings (e.g. query histories, port profiles, custom commands) not being saved if no other setting was changed in the same session. This happened since the settings are stored as JSON. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
@@ -241,57 +241,39 @@ Release date: **xx.xx.2026**
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in **About** and the DNS server profiles in **Settings > Network**. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 - Fixed the screenshot that is shown in place of embedded windows (**Remote Desktop**, **PowerShell**, **PuTTY**, **TigerVNC**, **Web Console**) while a dialog is open being cropped / stretched with a display scaling above 100% or on a monitor with a different scaling, and being stretched / scaled if the window is resized while the dialog is open (it keeps its size now). The `AirspacePanel` of [AirspaceFixer](https://github.com/chris84948/AirspaceFixer) is now part of NETworkManager, based on the fork [AirspaceFixerDotNet](https://github.com/ellipticbit/AirspaceFixerDotNet) with per monitor DPI support, which also fixes a GDI handle leak. [#3681](https://github.com/BornToBeRoot/NETworkManager/pull/3681)
 
-**Firewall**
+**History**
 
-- Fixed the name of the feature not being translatable in the list of features, the settings and the run command (missing translation key). [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
-- Fixed `F5` not refreshing the rule list, although it is documented as shortcut. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
-- Fixed an empty rule list with "Reloaded at ..." being shown if the rules could not be loaded (e.g. the Windows Firewall service is not running). An error is shown now, and a message if the rules could only be loaded partially. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
-- Fixed the Firewall not working until the application was restarted if loading the PowerShell module `NetSecurity` failed once. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
-- Fixed keywords like `LocalSubnet` or `DNS` being accepted for **Local addresses** in the add / edit / copy rule dialog, although Windows only accepts `Any` there (saving the rule failed). The same applies to `Any4` / `Any6` for local and remote addresses. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
-- Fixed a horizontal scrollbar appearing in the add / edit / copy rule dialog when the name or description is very long. [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
-- Fixed port keywords (e.g. `RPC`) and combinations of interface types being shown as **Any**. Editing a rule that was changed outside of NETworkManager to use such values no longer silently removes them (the rule can't be edited in this case). [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
-- Fixed the program of a rule not being shown in the row details and the edit dialog. Saving the edit dialog then removed the program from the rule, so the rule applied to all programs. [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
-- Fixed editing a rule deleting and re-creating it, which removed properties that are not supported by NETworkManager (e.g. ICMP types or a service set in the Windows Firewall management console). Only the changed properties are updated now (ICMP types are reset if the protocol is changed). [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
-- Fixed program paths with environment variables (e.g. `%SystemRoot%\System32\svchost.exe`) being rejected as non-existent in the add / edit / copy rule dialog. [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
-- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+- Fixed adding an entry to the history of an input (e.g. hosts, ports, domains) failing when the number of stored entries is set to `0` in [Settings > General](../settings/general.md#number-of-stored-entries). With `0`, no entries are stored. Removing an entry from the history (also the oldest one, shared by several tabs) no longer clears the input that shows it. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
 
-**Ping Monitor**
+**Input validation**
 
-- Fixed long error messages (e.g. from a failed host resolution) in the tooltip of the error icon not being wrapped. [#3626](https://github.com/BornToBeRoot/NETworkManager/pull/3626)
-- Fixed the ping not working when the ICMP **Buffer** was set to more than `65500` bytes (Windows limit). The maximum is now `65500`, higher values are lowered to `65500`. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
-- Fixed hosts being added twice if the inputs overlap (e.g. `10.0.0.1; 10.0.0.0/24`). If an IP address is also entered as hostname, the hostname is kept; different hostnames of the same IP address (e.g. two names of one server) are all kept. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
-- Fixed **Copy** > **Hostname** copying a hostname resolved via DNS (`PTR`) with a trailing dot (e.g. `server.example.com.`). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- Fixed host names being accepted with a hyphen at the start or end of a label other than the first (e.g. `server.-bad-.com`) and with only digits (e.g. `10.0.0.` or `192.168.1`, which are an incomplete IPv4 address). The same applies to the domain in **Whois**. IPv4 addresses are still accepted in all host fields, now checked explicitly in the **Remote Desktop** host field. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed MAC addresses and their first 3 bytes (**Wake on LAN**, **Lookup** > **OUI**, profiles) being accepted with any character instead of a dot in the format `0000.0000.0000` (e.g. `0011 2233 4455`). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed IPv6 subnets in the **Subnet Calculator** being accepted with a leading `s` (e.g. `sss2001:db8::/32`) and rejected with an embedded IPv4 address (e.g. `::ffff:192.168.0.1/96`). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed the port of the **Remote Desktop** host field (`host:port`) being accepted empty or as `0`. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed the application freezing when validating an invalid domain with many labels in **Whois** (exponential backtracking of the regular expression). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed IPv6 subnets with whitespace or a zone index (e.g. `fe80::1%eth0/64`) being accepted in the **Subnet Calculator**, which can't calculate them. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed an empty entry in **Lookup** > **OUI** / **Port** (e.g. `22;;80`) finding every vendor or service. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed **Lookup** > **Port** searching for a port with an upper-case protocol (e.g. `22/TCP`) as a service instead of the port and protocol. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
 
-**Traceroute**
+**Profiles**
 
-- Fixed the trace not working when the ICMP **Buffer** was set to more than `65500` bytes (Windows limit). The maximum is now `65500`, higher values are lowered to `65500`. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
-- Fixed hostnames of the hops resolved via DNS (`PTR`) being shown with a trailing dot (e.g. `server.example.com.`), also in the export and when opened in another feature (e.g. **RDAP**). A single-label name (e.g. `gateway.`) keeps the dot, so the DNS suffix isn't appended, except for **Remote Desktop**, **PuTTY**, **TigerVNC** and **PowerShell**, which resolve it via Windows. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
-- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper), e.g. to read a long hostname. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+- Fixed `Enter` in the search box of the import result importing the profiles (default button). It filters the found profiles right away now, instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the groups (Settings > Profiles) and the import result. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+- Fixed the names of the features in the group dialog shown without spaces (e.g. `RemoteDesktop` instead of **Remote Desktop**). [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
+- Fixed the profiles of a group renamed only by case (e.g. `servers` → `Servers`) keeping the old group name. Opening them in a feature with group settings (e.g. **Remote Desktop**, **PuTTY**) failed, and editing one could create a second group with the old name. Profile files with such profiles are repaired when they are loaded. [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
+
+**Dashboard**
+
+- Fixed the **Network Connection** widget running a full connection check on every application startup, even if the Status Window or Dashboard was never opened. It now only checks when actually shown - via the tray icon, on a network change, or when the Dashboard tab is opened. [#3553](https://github.com/BornToBeRoot/NETworkManager/pull/3553)
+- Fixed the DNS status (Computer/Router/Internet) in the **Network Connection** widget showing as an error when no PTR record exists for the address, which is common and expected for private IP ranges. This is now shown as informational instead of critical. [#3553](https://github.com/BornToBeRoot/NETworkManager/pull/3553)
+- Fixed a race condition in the **Network Connection** widget where results from a superseded check could overwrite the results of a newer, still-running check after quickly reopening the widget. [#3553](https://github.com/BornToBeRoot/NETworkManager/pull/3553)
+- Fixed the Status Window closing by itself after being opened from the tray icon (or with the hotkey), if it was opened automatically on a network change shortly before. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
+- Fixed the DNS hostname (`PTR`) in the **Network Connection** widget being shown with a trailing dot (e.g. `router.example.com.`). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 
 **Network Interface**
 
 - Fixed errors when changing the network configuration (e.g. missing permissions) not being shown — the change was reported as successful although it failed. The error message of Windows is now shown. [#3606](https://github.com/BornToBeRoot/NETworkManager/issues/3606)
-
-**Connections**
-
-- Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
-- Fixed **Automatically update every** `1` / `5` minutes refreshing only every hour / every 5 hours. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
-- Fixed the hostname of the remote address (DNS `PTR`) being shown with a trailing dot (e.g. `server.example.com.`), also in the export. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
-- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
-
-**Listeners**
-
-- Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
-- Fixed **Automatically update every** `1` / `5` minutes refreshing only every hour / every 5 hours. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
-- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
-
-**Neighbor Table**
-
-- Fixed the **State** of the entries being shifted by one (e.g. `Reachable` entries were shown as `Stale`, `Permanent` entries as `Reachable`, `Unreachable` entries as `0`) since the table is read with the Windows API (2026.7.7). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
-- Fixed adding and deleting entries not working until the application was restarted if loading the PowerShell module `NetTCPIP` failed once. [cc05937](https://github.com/BornToBeRoot/NETworkManager/commit/cc05937a7de2bf1247621845f47077f3796b9bb2)
-- Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
-- Fixed **Automatically update every** `1` / `5` minutes refreshing only every hour / every 5 hours. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
-- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
 **WiFi**
 
@@ -319,22 +301,7 @@ Release date: **xx.xx.2026**
 - Fixed `F5` scanning and **Automatically update every** refreshing the networks behind an open dialog (e.g. **Connect...** or **Export...**). The auto refresh waits until the dialog is closed. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the CSV export breaking the row of a network whose SSID contains a comma or a quote. SSID, security and vendor are quoted. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed a network being marked as **Connected** that the selected adapter isn't connected to, if the computer has several WiFi adapters and the selected one was disconnected. An error while reading the connected network no longer ends the scan. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
-
-**Dashboard**
-
-- Fixed the **Network Connection** widget running a full connection check on every application startup, even if the Status Window or Dashboard was never opened. It now only checks when actually shown - via the tray icon, on a network change, or when the Dashboard tab is opened. [#3553](https://github.com/BornToBeRoot/NETworkManager/pull/3553)
-- Fixed the DNS status (Computer/Router/Internet) in the **Network Connection** widget showing as an error when no PTR record exists for the address, which is common and expected for private IP ranges. This is now shown as informational instead of critical. [#3553](https://github.com/BornToBeRoot/NETworkManager/pull/3553)
-- Fixed a race condition in the **Network Connection** widget where results from a superseded check could overwrite the results of a newer, still-running check after quickly reopening the widget. [#3553](https://github.com/BornToBeRoot/NETworkManager/pull/3553)
-- Fixed the Status Window closing by itself after being opened from the tray icon (or with the hotkey), if it was opened automatically on a network change shortly before. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
-- Fixed the DNS hostname (`PTR`) in the **Network Connection** widget being shown with a trailing dot (e.g. `router.example.com.`). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
-
-**DNS Lookup**
-
-- Fixed **Inherit host from general** of a profile being saved with the value of the **Traceroute**, so the host of the DNS lookup could be replaced with the host of the profile. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
-- Fixed a DNS server opened with the run command in another case than configured (e.g. `cloudflare` for `Cloudflare`) being looked up as hostname instead of using the configured DNS server. Names of DNS servers are case-insensitive now. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
-- Fixed **Add DNS suffix (primary) to hostname** silently appending no suffix at all on machines without a Windows primary DNS suffix configured (e.g. not domain-joined), even though a usable suffix was available via the active network adapter's connection-specific DNS suffix (shown under **DNS Suffix Search List** in `ipconfig /all`). It now falls back to that adapter's suffix in this case. [#3591](https://github.com/BornToBeRoot/NETworkManager/pull/3591)
-- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the DNS server profiles in the settings. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
-- Fixed a technical error (*An invalid IP address was specified*) being shown for a hostname looked up with `PTR`. A message is shown and the hostname is skipped, the other hosts are looked up. [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
+- Fixed the connection status message (e.g. "Connecting to ...") being hidden too early, while still connecting, if a previous message (e.g. after connecting or disconnecting) was shown shortly before. Each message is now shown for 15 seconds. [#3638](https://github.com/BornToBeRoot/NETworkManager/pull/3638)
 
 **IP Scanner**
 
@@ -392,40 +359,30 @@ Release date: **xx.xx.2026**
 - Fixed the ports of different hosts with the same hostname (DNS `PTR`, e.g. a generic name of a provider or a server with two IP addresses) being shown in one group. The results are grouped per IP address, the group header shows the hostname and the IP address. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed **Edit** (`F2`, double-click) and **Delete** (`Del`) of a port profile in the settings being available without a selected profile (edit created a new profile). The delete confirmation shows the name of the profile. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 
-**IP Geolocation**
+**Ping Monitor**
 
-- Fixed the query history of **IP Geolocation** being written to the history of **Whois** instead of its own. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
+- Fixed long error messages (e.g. from a failed host resolution) in the tooltip of the error icon not being wrapped. [#3626](https://github.com/BornToBeRoot/NETworkManager/pull/3626)
+- Fixed the ping not working when the ICMP **Buffer** was set to more than `65500` bytes (Windows limit). The maximum is now `65500`, higher values are lowered to `65500`. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
+- Fixed hosts being added twice if the inputs overlap (e.g. `10.0.0.1; 10.0.0.0/24`). If an IP address is also entered as hostname, the hostname is kept; different hostnames of the same IP address (e.g. two names of one server) are all kept. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
+- Fixed **Copy** > **Hostname** copying a hostname resolved via DNS (`PTR`) with a trailing dot (e.g. `server.example.com.`). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 
-**WiFi**
+**Traceroute**
 
-- Fixed the connection status message (e.g. "Connecting to ...") being hidden too early, while still connecting, if a previous message (e.g. after connecting or disconnecting) was shown shortly before. Each message is now shown for 15 seconds. [#3638](https://github.com/BornToBeRoot/NETworkManager/pull/3638)
+- Fixed the trace not working when the ICMP **Buffer** was set to more than `65500` bytes (Windows limit). The maximum is now `65500`, higher values are lowered to `65500`. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
+- Fixed hostnames of the hops resolved via DNS (`PTR`) being shown with a trailing dot (e.g. `server.example.com.`), also in the export and when opened in another feature (e.g. **RDAP**). A single-label name (e.g. `gateway.`) keeps the dot, so the DNS suffix isn't appended, except for **Remote Desktop**, **PuTTY**, **TigerVNC** and **PowerShell**, which resolve it via Windows. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper), e.g. to read a long hostname. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
-**History**
+**DNS Lookup**
 
-- Fixed adding an entry to the history of an input (e.g. hosts, ports, domains) failing when the number of stored entries is set to `0` in [Settings > General](../settings/general.md#number-of-stored-entries). With `0`, no entries are stored. Removing an entry from the history (also the oldest one, shared by several tabs) no longer clears the input that shows it. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed **Inherit host from general** of a profile being saved with the value of the **Traceroute**, so the host of the DNS lookup could be replaced with the host of the profile. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- Fixed a DNS server opened with the run command in another case than configured (e.g. `cloudflare` for `Cloudflare`) being looked up as hostname instead of using the configured DNS server. Names of DNS servers are case-insensitive now. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- Fixed **Add DNS suffix (primary) to hostname** silently appending no suffix at all on machines without a Windows primary DNS suffix configured (e.g. not domain-joined), even though a usable suffix was available via the active network adapter's connection-specific DNS suffix (shown under **DNS Suffix Search List** in `ipconfig /all`). It now falls back to that adapter's suffix in this case. [#3591](https://github.com/BornToBeRoot/NETworkManager/pull/3591)
+- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the DNS server profiles in the settings. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+- Fixed a technical error (*An invalid IP address was specified*) being shown for a hostname looked up with `PTR`. A message is shown and the hostname is skipped, the other hosts are looked up. [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
 
-**Input validation**
+**Web Console**
 
-- Fixed host names being accepted with a hyphen at the start or end of a label other than the first (e.g. `server.-bad-.com`) and with only digits (e.g. `10.0.0.` or `192.168.1`, which are an incomplete IPv4 address). The same applies to the domain in **Whois**. IPv4 addresses are still accepted in all host fields, now checked explicitly in the **Remote Desktop** host field. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
-- Fixed MAC addresses and their first 3 bytes (**Wake on LAN**, **Lookup** > **OUI**, profiles) being accepted with any character instead of a dot in the format `0000.0000.0000` (e.g. `0011 2233 4455`). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
-- Fixed IPv6 subnets in the **Subnet Calculator** being accepted with a leading `s` (e.g. `sss2001:db8::/32`) and rejected with an embedded IPv4 address (e.g. `::ffff:192.168.0.1/96`). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
-- Fixed the port of the **Remote Desktop** host field (`host:port`) being accepted empty or as `0`. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
-- Fixed the application freezing when validating an invalid domain with many labels in **Whois** (exponential backtracking of the regular expression). [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
-- Fixed IPv6 subnets with whitespace or a zone index (e.g. `fe80::1%eth0/64`) being accepted in the **Subnet Calculator**, which can't calculate them. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
-- Fixed an empty entry in **Lookup** > **OUI** / **Port** (e.g. `22;;80`) finding every vendor or service. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
-- Fixed **Lookup** > **Port** searching for a port with an upper-case protocol (e.g. `22/TCP`) as a service instead of the port and protocol. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
-
-**Subnet Calculator**
-
-- Fixed **Subnetting** getting stuck when the new subnet mask is smaller than the subnet mask of the subnet (e.g. `10.0.0.0/24` with `/16`) or too large for the address family (e.g. `/40` for IPv4). An error is shown instead. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
-- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the subnetting result. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
-
-**Profiles**
-
-- Fixed `Enter` in the search box of the import result importing the profiles (default button). It filters the found profiles right away now, instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
-- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the groups (Settings > Profiles) and the import result. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
-- Fixed the names of the features in the group dialog shown without spaces (e.g. `RemoteDesktop` instead of **Remote Desktop**). [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
-- Fixed the profiles of a group renamed only by case (e.g. `servers` → `Servers`) keeping the old group name. Opening them in a feature with group settings (e.g. **Remote Desktop**, **PuTTY**) failed, and editing one could create a second group with the old name. Profile files with such profiles are repaired when they are loaded. [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
+- Fixed no message being shown after **Delete browsing data** in the settings (whether the browsing data was deleted or an error occurred), and an error (e.g. the WebView2 runtime is not installed) not being handled.
 
 **SNMP**
 
@@ -436,21 +393,61 @@ Release date: **xx.xx.2026**
 
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the SNTP server profiles in the settings. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
+**Hosts File Editor**
+
+- Fixed the retry of a locked hosts file waiting 5 seconds between the attempts (the message said 2) and once more after the last attempt. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+
+**Firewall**
+
+- Fixed the name of the feature not being translatable in the list of features, the settings and the run command (missing translation key). [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
+- Fixed `F5` not refreshing the rule list, although it is documented as shortcut. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
+- Fixed an empty rule list with "Reloaded at ..." being shown if the rules could not be loaded (e.g. the Windows Firewall service is not running). An error is shown now, and a message if the rules could only be loaded partially. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
+- Fixed the Firewall not working until the application was restarted if loading the PowerShell module `NetSecurity` failed once. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
+- Fixed keywords like `LocalSubnet` or `DNS` being accepted for **Local addresses** in the add / edit / copy rule dialog, although Windows only accepts `Any` there (saving the rule failed). The same applies to `Any4` / `Any6` for local and remote addresses. [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
+- Fixed a horizontal scrollbar appearing in the add / edit / copy rule dialog when the name or description is very long. [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
+- Fixed port keywords (e.g. `RPC`) and combinations of interface types being shown as **Any**. Editing a rule that was changed outside of NETworkManager to use such values no longer silently removes them (the rule can't be edited in this case). [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
+- Fixed the program of a rule not being shown in the row details and the edit dialog. Saving the edit dialog then removed the program from the rule, so the rule applied to all programs. [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
+- Fixed editing a rule deleting and re-creating it, which removed properties that are not supported by NETworkManager (e.g. ICMP types or a service set in the Windows Firewall management console). Only the changed properties are updated now (ICMP types are reset if the protocol is changed). [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
+- Fixed program paths with environment variables (e.g. `%SystemRoot%\System32\svchost.exe`) being rejected as non-existent in the add / edit / copy rule dialog. [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
+- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+
 **RDAP**
 
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the bootstrap files in the settings. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+
+**IP Geolocation**
+
+- Fixed the query history of **IP Geolocation** being written to the history of **Whois** instead of its own. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
+
+**Subnet Calculator**
+
+- Fixed **Subnetting** getting stuck when the new subnet mask is smaller than the subnet mask of the subnet (e.g. `10.0.0.0/24` with `/16`) or too large for the address family (e.g. `/40` for IPv4). An error is shown instead. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
+- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the subnetting result. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
 **Lookup**
 
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the OUI and port lookup. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
-**Web Console**
+**Connections**
 
-- Fixed no message being shown after **Delete browsing data** in the settings (whether the browsing data was deleted or an error occurred), and an error (e.g. the WebView2 runtime is not installed) not being handled.
+- Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
+- Fixed **Automatically update every** `1` / `5` minutes refreshing only every hour / every 5 hours. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- Fixed the hostname of the remote address (DNS `PTR`) being shown with a trailing dot (e.g. `server.example.com.`), also in the export. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
-**Hosts File Editor**
+**Listeners**
 
-- Fixed the retry of a locked hosts file waiting 5 seconds between the attempts (the message said 2) and once more after the last attempt. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
+- Fixed **Automatically update every** `1` / `5` minutes refreshing only every hour / every 5 hours. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+
+**Neighbor Table**
+
+- Fixed the **State** of the entries being shifted by one (e.g. `Reachable` entries were shown as `Stale`, `Permanent` entries as `Reachable`, `Unreachable` entries as `0`) since the table is read with the Windows API (2026.7.7). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- Fixed adding and deleting entries not working until the application was restarted if loading the PowerShell module `NetTCPIP` failed once. [cc05937](https://github.com/BornToBeRoot/NETworkManager/commit/cc05937a7de2bf1247621845f47077f3796b9bb2)
+- Fixed the auto refresh continuing in the background after switching to another tool, or after it was disabled, if this happened while a refresh was running. [#3639](https://github.com/BornToBeRoot/NETworkManager/pull/3639)
+- Fixed **Automatically update every** `1` / `5` minutes refreshing only every hour / every 5 hours. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
 ## Dependencies, Refactoring & Documentation
 
