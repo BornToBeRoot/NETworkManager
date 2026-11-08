@@ -301,6 +301,7 @@ Release date: **xx.xx.2026**
 - Fixed sorting by the signal icon (first column) and by **Encryption** not changing the order of the networks. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the networks of the previously selected adapter possibly being shown after selecting another adapter while a scan was running. The adapter can't be changed while scanning or connecting. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed all networks and charts being removed if a refresh (manual, **Automatically update every** or after connecting) failed. The networks of the last scan stay, the error is shown below them. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed the message after disconnecting from a hidden network missing the name (" disconnected!"), and the search not finding hidden networks by the shown text `Hidden Network`. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 

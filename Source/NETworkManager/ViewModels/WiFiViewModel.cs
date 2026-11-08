@@ -557,8 +557,9 @@ public class WiFiViewModel : ViewModelBase
             if (string.IsNullOrEmpty(Search))
                 return true;
 
-            // Search by SSID, authentication type, channel frequency, channel, BSSID, vendor and PHY kind
-            return info.AvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+            // Search by SSID ("Hidden Network" as shown), authentication type, channel frequency, channel, BSSID,
+            // vendor and PHY kind
+            return GetDisplaySsid(info).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.NetworkAuthenticationType.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    $"{info.ChannelCenterFrequencyInGigahertz}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    $"{info.Channel}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
@@ -1103,13 +1104,11 @@ public class WiFiViewModel : ViewModelBase
 
         var points = pointList.ToArray();
 
-        var name = network.IsHidden
-            ? $"{Strings.HiddenNetwork} ({network.AvailableNetwork.Bssid})"
-            : $"{network.AvailableNetwork.Ssid} ({network.AvailableNetwork.Bssid})";
+        var ssid = GetDisplaySsid(network);
 
         var series = new LineSeries<WiFiChannelPoint>
         {
-            Name = name,
+            Name = $"{ssid} ({network.AvailableNetwork.Bssid})",
             Values = points,
             // Plot in 0..100 space (dBm + 100) so the area fill drops to the bottom baseline.
             Mapping = (point, _) => new Coordinate(point.ChannelAxis, point.Dbm + SignalOffset),
@@ -1120,10 +1119,17 @@ public class WiFiViewModel : ViewModelBase
         };
 
         var wpfColor = Color.FromArgb(color.Alpha, color.Red, color.Green, color.Blue);
-        var legendSsid = network.IsHidden ? Strings.HiddenNetwork : network.AvailableNetwork.Ssid;
-        var legend = new WiFiChannelLegendEntry(new SolidColorBrush(wpfColor), legendSsid, network.AvailableNetwork.Bssid);
+        var legend = new WiFiChannelLegendEntry(new SolidColorBrush(wpfColor), ssid, network.AvailableNetwork.Bssid);
 
         return (series, legend);
+    }
+
+    /// <summary>
+    ///     Gets the SSID of a network as shown in the grid ("Hidden Network" for a hidden network).
+    /// </summary>
+    private static string GetDisplaySsid(WiFiNetworkInfo network)
+    {
+        return network.IsHidden ? Strings.HiddenNetwork : network.AvailableNetwork.Ssid;
     }
 
     /// <summary>
@@ -1295,8 +1301,7 @@ public class WiFiViewModel : ViewModelBase
 
             if (connectedNetwork != null)
             {
-                ConnectionStatusMessage = string.Format(Strings.XXXDisconnected,
-                    connectedNetwork.AvailableNetwork.Ssid);
+                ConnectionStatusMessage = string.Format(Strings.XXXDisconnected, GetDisplaySsid(connectedNetwork));
                 IsConnectionStatusMessageDisplayed = true;
             }
         }
@@ -1305,7 +1310,7 @@ public class WiFiViewModel : ViewModelBase
             Log.Error("Error while disconnecting the WiFi adapter.", ex);
 
             ConnectionStatusMessage = string.Format(Strings.CouldNotDisconnectFromXXXReasonXXX,
-                connectedNetwork?.AvailableNetwork.Ssid, ex.Message);
+                connectedNetwork == null ? null : GetDisplaySsid(connectedNetwork), ex.Message);
             IsConnectionStatusMessageDisplayed = true;
         }
 
