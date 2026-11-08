@@ -685,6 +685,29 @@ public class WiFiViewModel : ViewModelBase
         _ = DisconnectAsync();
     }
 
+    /// <summary>
+    ///     Gets the command to copy a value of all selected networks (one per line, in the order shown in the grid,
+    ///     without duplicates). Parameter: <c>SSID</c> or <c>BSSID</c>.
+    /// </summary>
+    public ICommand CopySelectedNetworksCommand => new RelayCommand(CopySelectedNetworksAction);
+
+    private void CopySelectedNetworksAction(object parameter)
+    {
+        Func<WiFiNetworkInfo, string> selector = parameter switch
+        {
+            // Hidden networks have no SSID
+            "SSID" => x => x.AvailableNetwork.Ssid,
+            "BSSID" => x => x.Bssid,
+            _ => null
+        };
+
+        if (selector == null)
+            return;
+
+        ClipboardHelper.SetClipboard(string.Join(Environment.NewLine,
+            GetSelectedNetworksInGridOrder().Select(selector).Where(x => !string.IsNullOrEmpty(x)).Distinct()));
+    }
+
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
 
     private void ExportAction()

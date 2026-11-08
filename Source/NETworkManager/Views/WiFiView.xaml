@@ -399,6 +399,18 @@
                                             </ContextMenu>
                                             <ContextMenu x:Key="MultiRowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}"
                                                          MinWidth="150">
+                                                <!-- One value per line, in the order shown, without duplicates -->
+                                                <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
+                                                          Style="{StaticResource ResourceKey=CopyMenuItem}">
+                                                    <MenuItem Header="{x:Static Member=localization:Strings.SSID}"
+                                                              Command="{Binding Path=CopySelectedNetworksCommand}"
+                                                              CommandParameter="SSID"
+                                                              Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                                    <MenuItem Header="{x:Static Member=localization:Strings.BSSID}"
+                                                              Command="{Binding Path=CopySelectedNetworksCommand}"
+                                                              CommandParameter="BSSID"
+                                                              Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                                </MenuItem>
                                                 <MenuItem Header="{x:Static Member=localization:Strings.ExportDots}"
                                                           Command="{Binding Path=ExportCommand}">
                                                     <MenuItem.Icon>
