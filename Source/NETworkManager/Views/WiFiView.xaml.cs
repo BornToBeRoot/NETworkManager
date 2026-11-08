@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using NETworkManager.ViewModels;
 
 namespace NETworkManager.Views;
@@ -17,6 +20,28 @@ public partial class WiFiView
         InitializeComponent();
 
         DataContext = _viewModel;
+
+        _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+    }
+
+    /// <summary>
+    ///     Scrolls the selected network into view, e.g. when it is selected again after the networks were scanned
+    ///     again (see <see cref="WiFiViewModel.SelectedNetwork" />).
+    /// </summary>
+    private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName != nameof(WiFiViewModel.SelectedNetwork) || _viewModel.SelectedNetwork == null)
+            return;
+
+        // Wait until the DataGrid has processed the new items and the selection
+        Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+        {
+            var network = _viewModel.SelectedNetwork;
+
+            // The network may be hidden by the filter / search
+            if (network != null && DataGridNetworks.Items.Contains(network))
+                DataGridNetworks.ScrollIntoView(network);
+        }));
     }
 
     public void OnViewHide()

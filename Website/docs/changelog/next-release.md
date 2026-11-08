@@ -221,6 +221,7 @@ Release date: **xx.xx.2026**
 - The export contains the values shown in the grid that were missing: `IsConnected`, `Security`, `Channel`, `ChannelWidth` (MHz), `ChannelWidthEstimated` and `Vendor` (appended as the last columns / elements). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - **Export...** > all exports the networks shown in the grid (filtered by band and search) in the order shown, the selected networks are exported in the order shown too. The file is written in the background. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Scanning the networks (also **Automatically update every**) no longer freezes the window briefly: the connected network is read from the WiFi API instead of `netsh` via PowerShell, and the vendor lookups run in the background. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- The selected network stays selected (and in view) when the networks are scanned again, e.g. with **Automatically update every**. The list is replaced at once instead of network by network. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 

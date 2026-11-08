@@ -288,7 +288,7 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    public ObservableCollection<WiFiNetworkInfo> Networks
+    public ObservableRangeCollection<WiFiNetworkInfo> Networks
     {
         get;
         init
@@ -806,11 +806,22 @@ public class WiFiViewModel : ViewModelBase
 
             Log.Debug("ScanAsync - Scan completed. Found " + wiFiNetworkScanInfo.WiFiNetworkInfos.Count + " networks.");
 
-            // Clear the values after the scan to make the UI smoother
-            Log.Debug("ScanAsync - Clearing old values...");
-            Networks.Clear();
+            // Remember the selected network, because replacing the networks clears the selection
+            var selectedBssid = SelectedNetwork?.Bssid;
 
-            Log.Debug("ScanAsync - Adding new values...");
+            // Replace all networks with a single notification, so the view is filtered / sorted only once
+            Networks.ReplaceAll(wiFiNetworkScanInfo.WiFiNetworkInfos);
+
+            // Select the network again (e.g. after an auto refresh), so the selection and the scroll position are kept.
+            // If several networks were selected, only this one is selected again. Not if it is hidden by the filter.
+            if (selectedBssid != null)
+            {
+                var network = Networks.FirstOrDefault(x => x.Bssid == selectedBssid);
+
+                if (network != null && NetworksView.Contains(network))
+                    SelectedNetwork = network;
+            }
+
             List<ISeries> series2Dot4GHz = [];
             List<ISeries> series5GHz = [];
             List<ISeries> series6GHzLower = [];
@@ -822,11 +833,6 @@ public class WiFiViewModel : ViewModelBase
 
             foreach (var network in wiFiNetworkScanInfo.WiFiNetworkInfos)
             {
-                Log.Debug("ScanAsync - Add network: " + network.AvailableNetwork.Ssid + " with channel frequency: " +
-                          network.AvailableNetwork.ChannelCenterFrequencyInKilohertz);
-
-                Networks.Add(network);
-
                 switch (network.Radio)
                 {
                     case WiFiRadio.GHz2dot4:
