@@ -78,7 +78,7 @@ Each scan is compared with the previous scan of the same adapter (by BSSID):
 - **Gone**: the network was visible in the last scan, it is not visible now. The row is shown faded (as it was in the last scan) until the next scan; it can't be connected.
 - **Changed**: the channel, the channel width or the security of the network changed (e.g. the access point switched the channel because of interference or radar). The tooltip shows the previous values. A change of the signal strength is not shown (it varies with every scan), and an estimated channel width is not compared.
 
-The **Since last scan** column and the counters right of the **Networks** header (e.g. `2 New · 1 Gone`) are only shown if the networks are compared with a previous scan. Changing the adapter starts over. The last scan is only kept in memory. The change is also in the search and the export (`Change`). Together with **Automatically update every**, this shows new access points or channel changes in the area.
+The **Since last scan** column and the counters right of the **Networks** header (e.g. `2 New · 1 Gone`) are only shown if the networks are compared with a previous scan. The counters count all networks, also the ones hidden by the band filter or the search. Changing the adapter starts over. The last scan is only kept in memory. The change is also in the search and the export (`Change`). Together with **Automatically update every**, this shows new access points or channel changes in the area; the changes of an automatic refresh can be shown as a notification, see [Show notification popup on changes](#show-notification-popup-on-changes).
 
 ### Context menu
 
@@ -136,3 +136,29 @@ The charts show all networks of the last scan: the band filter, the search and t
 Move the mouse over a network to display details such as SSID, BSSID, channel, channel width and signal strength in a tooltip.
 
 :::
+
+## Settings
+
+### Show notification popup on changes
+
+Show a notification popup in the bottom-right corner of the primary screen when an automatic refresh (**Automatically update every**) found changes since the previous scan (see [Changes since the last scan](#changes-since-the-last-scan)). One notification per scan: up to three changes, one per line with the SSID and BSSID and the change in its color (e.g. `MyNetwork (AA:BB:CC:DD:EE:FF) · New`, green for new, red for gone, orange for changed), otherwise one line per counter (e.g. `5 New`, `2 Gone`). Not for a scan that was started manually, and only while **WiFi** is shown (the automatic refresh pauses while another tool is shown). The header shows the tool, the title the adapter; the status icon is green for only new networks, red for only gone networks, half green / half red for both, orange for only changed networks. A click opens **WiFi**.
+
+**Type:** `Boolean`
+
+**Default:** `Enabled`
+
+### Play sound on changes
+
+Play a system sound when an automatic refresh found changes. Independent of the [popup](#show-notification-popup-on-changes).
+
+**Type:** `Boolean`
+
+**Default:** `Disabled`
+
+### Display duration (seconds)
+
+Time in seconds the notification popup is shown before it closes automatically.
+
+**Type:** `Integer` [Min `3`, Max `60`]
+
+**Default:** `10`

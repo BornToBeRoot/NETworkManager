@@ -260,6 +260,7 @@ public static class DocumentationManager
             SettingsName.Settings => DocumentationIdentifier.SettingsSettings,
             SettingsName.Dashboard => GetIdentifierByApplicationName(ApplicationName.Dashboard),
             SettingsName.NetworkInterface => GetIdentifierByApplicationName(ApplicationName.NetworkInterface),
+            SettingsName.WiFi => GetIdentifierByApplicationName(ApplicationName.WiFi),
             SettingsName.IPScanner => GetIdentifierByApplicationName(ApplicationName.IPScanner),
             SettingsName.PortScanner => GetIdentifierByApplicationName(ApplicationName.PortScanner),
             SettingsName.PingMonitor => GetIdentifierByApplicationName(ApplicationName.PingMonitor),

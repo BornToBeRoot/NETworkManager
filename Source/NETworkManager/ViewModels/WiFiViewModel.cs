@@ -11,6 +11,7 @@ using NETworkManager.Controls;
 using NETworkManager.Converters;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
@@ -631,7 +632,7 @@ public class WiFiViewModel : ViewModelBase
         // Auto refresh (enabled when the access is allowed, see Start)
         // Not without an adapter, while a dialog is open (e.g. connect), or while networks are loading or a connection
         // is made (tried again after the interval)
-        _autoRefreshTimer = new AutoRefreshTimer(() => ScanAsync(SelectedAdapter, true),
+        _autoRefreshTimer = new AutoRefreshTimer(() => ScanAsync(SelectedAdapter, true, isAutoRefresh: true),
             () => SelectedAdapter != null && !IsDialogOpen() && !IsNetworksLoading && !IsBackgroundSearchRunning &&
                   !IsConnecting);
 
@@ -881,7 +882,17 @@ public class WiFiViewModel : ViewModelBase
         Log.Debug("LoadAdaptersAsync - Done.");
     }
 
-    private async Task ScanAsync(WiFiAdapterInfo adapterInfo, bool refreshing = false, int delayInMs = 0)
+    /// <summary>
+    ///     Scans the networks of an adapter and shows them (with the changes since the previous scan).
+    /// </summary>
+    /// <param name="adapterInfo">Adapter to scan.</param>
+    /// <param name="refreshing">
+    ///     A refresh of the shown networks (in the background, they stay visible), not the first scan of the adapter.
+    /// </param>
+    /// <param name="delayInMs">Delay before the scan (e.g. after connecting).</param>
+    /// <param name="isAutoRefresh">The scan is an automatic refresh: changes are notified (see settings).</param>
+    private async Task ScanAsync(WiFiAdapterInfo adapterInfo, bool refreshing = false, int delayInMs = 0,
+        bool isAutoRefresh = false)
     {
         Log.Debug($"ScanAsync - Scanning WiFi adapter \"{adapterInfo.NetworkInterfaceInfo.Name}\" with delay of {delayInMs} ms...");
 
@@ -910,6 +921,9 @@ public class WiFiViewModel : ViewModelBase
             // Replace all networks with a single notification, so the view is filtered / sorted only once. With the
             // networks that are gone since the previous scan of this adapter.
             Networks.ReplaceAll(CompareWithPreviousScan(adapterInfo, wiFiNetworkScanInfo.WiFiNetworkInfos));
+
+            if (isAutoRefresh && HasComparison)
+                NotifyChanges(adapterInfo);
 
             // Select the network again (e.g. after an auto refresh), so the selection and the scroll position are kept.
             // If several networks were selected, only this one is selected again. Not if it is hidden by the filter.
@@ -1328,6 +1342,62 @@ public class WiFiViewModel : ViewModelBase
         _previousScanAdapterId = adapterId;
 
         return rows;
+    }
+
+    /// <summary>
+    ///     Shows a notification with the changes since the previous scan (popup and / or sound, see settings), if there
+    ///     are any. Like the IP Scanner, only for an automatic refresh. A click on it shows WiFi.
+    /// </summary>
+    /// <param name="adapterInfo">Adapter of the scan (title of the notification).</param>
+    private void NotifyChanges(WiFiAdapterInfo adapterInfo)
+    {
+        var showPopup = SettingsManager.Current.WiFi_ShowNotificationPopup;
+        var playSound = SettingsManager.Current.WiFi_NotificationSound;
+
+        if (!showPopup && !playSound)
+            return;
+
+        var changes = Networks.Where(x => x.Change != WiFiNetworkChange.None)
+            .OrderBy(GetDisplaySsid, StringComparer.CurrentCultureIgnoreCase)
+            .ThenBy(x => x.Bssid, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        if (changes.Count == 0)
+            return;
+
+        // "MyNetwork (AA:BB:CC:DD:EE:FF) · New" - new = up, gone = down, changed = changed
+        var lines = changes.Select(x => new NotificationLine($"{GetDisplaySsid(x)} ({x.Bssid})",
+            WiFiNetworkChangeToStringConverter.ToLocalizedString(x.Change), GetNotificationStatus(x.Change))).ToList();
+
+        var summary = new[]
+            {
+                (Count: NetworksNew, Format: Strings.XNew, Status: NotificationStatus.Up),
+                (Count: NetworksGone, Format: Strings.XGone, Status: NotificationStatus.Down),
+                (Count: NetworksChanged, Format: Strings.XChanged, Status: NotificationStatus.Changed)
+            }
+            .Where(x => x.Count > 0)
+            .Select(x => new NotificationLine(null, string.Format(x.Format, x.Count), x.Status)).ToList();
+
+        // New = up, gone = down, both = up and down, only changed = changed
+        var status = NotificationStatusHelper.FromChanges(NetworksNew, NetworksGone, NetworksChanged);
+
+        NotificationManager.Show(new NotificationInfo(ApplicationName.WiFi, status,
+                adapterInfo.NetworkInterfaceInfo.Name, NotificationManager.FormatChanges(lines, summary),
+                SettingsManager.Current.WiFi_NotificationCloseTime),
+            showPopup, playSound);
+    }
+
+    /// <summary>
+    ///     Gets the status (icon / color) of a change in the notification.
+    /// </summary>
+    private static NotificationStatus GetNotificationStatus(WiFiNetworkChange change)
+    {
+        return change switch
+        {
+            WiFiNetworkChange.New => NotificationStatus.Up,
+            WiFiNetworkChange.Gone => NotificationStatus.Down,
+            _ => NotificationStatus.Changed
+        };
     }
 
     /// <summary>

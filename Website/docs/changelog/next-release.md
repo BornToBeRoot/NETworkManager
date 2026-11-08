@@ -42,6 +42,7 @@ Release date: **xx.xx.2026**
 **WiFi**
 
 - Changes since the last scan: each scan is compared with the previous scan of the same adapter (by BSSID). The new column **Since last scan** shows networks that are **New**, **Gone** (shown faded until the next scan) or **Changed** (channel, channel width or security, the tooltip shows the previous values), the header shows the counters (e.g. `2 New · 1 Gone`). Also in the search and the export (`Change`). Useful with **Automatically update every** to see new access points or channel changes. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Notification for changes: when **Automatically update every** finds new, gone or changed networks, a notification popup (and optionally a sound) shows them, like the **IP Scanner**. Configurable in the new [WiFi settings](../application/wifi.md#settings) (**Show notification popup on changes**, **Play sound on changes**, **Display duration**). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Traceroute**
 

@@ -6339,6 +6339,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only when the networks are scanned automatically (&quot;Automatically update every&quot;) and WiFi is shown: one notification per scan with the changes since the previous scan of the adapter..
+        /// </summary>
+        public static string HelpMessage_WiFiChangesNotification {
+            get {
+                return ResourceManager.GetString("HelpMessage_WiFiChangesNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Windows credentials for the Windows host information of this tab (also for repeated scans and Rescan), replacing the ones of the profile / group. They are not saved and are discarded when the tab is closed. Without credentials, the user running NETworkManager is used..
         /// </summary>
         public static string HelpMessage_WindowsCredentialsOfTheTab {

@@ -50,6 +50,8 @@ public static class SettingsViewManager
             SettingsGroup.Application),
         new(SettingsName.NetworkInterface, ApplicationManager.GetIcon(ApplicationName.NetworkInterface),
             SettingsGroup.Application),
+        new(SettingsName.WiFi, ApplicationManager.GetIcon(ApplicationName.WiFi),
+            SettingsGroup.Application),
         new(SettingsName.IPScanner, ApplicationManager.GetIcon(ApplicationName.IPScanner),
             SettingsGroup.Application),
         new(SettingsName.PortScanner, ApplicationManager.GetIcon(ApplicationName.PortScanner),

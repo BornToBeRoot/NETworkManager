@@ -5465,4 +5465,7 @@ Do you want to start the scan?</value>
   <data name="PreviouslyX" xml:space="preserve">
     <value>Previously: {0}</value>
   </data>
+  <data name="HelpMessage_WiFiChangesNotification" xml:space="preserve">
+    <value>Only when the networks are scanned automatically ("Automatically update every") and WiFi is shown: one notification per scan with the changes since the previous scan of the adapter.</value>
+  </data>
 </root>
