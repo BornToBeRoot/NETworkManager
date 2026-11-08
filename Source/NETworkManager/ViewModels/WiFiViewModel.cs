@@ -44,6 +44,11 @@ public class WiFiViewModel : ViewModelBase
     private static readonly ILog Log = LogManager.GetLogger(typeof(WiFiViewModel));
 
     private readonly bool _isLoading;
+
+    /// <summary>
+    ///     The access to the WiFi adapter is being checked again (see <see cref="CheckAccessAsync" />).
+    /// </summary>
+    private bool _isCheckingAccess;
     /// <summary>
     /// Refreshes the view automatically (see <see cref="AutoRefreshEnabled"/>).
     /// </summary>
@@ -654,7 +659,7 @@ public class WiFiViewModel : ViewModelBase
 
         if (SdkContractAvailable)
         {
-            // Check if the access is denied and show a message (checked again, see CheckAccess)
+            // Check if the access is denied and show a message (checked again, see CheckAccessAsync)
             WiFiAdapterAccessEnabled = RequestAccess();
 
             if (WiFiAdapterAccessEnabled)
@@ -679,12 +684,22 @@ public class WiFiViewModel : ViewModelBase
     ///     Checks the access to the WiFi adapter again while it is denied (e.g. it was allowed in the Windows settings
     ///     after the message was shown), and starts if it is allowed now - without a restart of the application.
     /// </summary>
-    private void CheckAccess()
+    private async Task CheckAccessAsync()
     {
-        if (!SdkContractAvailable || WiFiAdapterAccessEnabled)
+        if (!SdkContractAvailable || WiFiAdapterAccessEnabled || _isCheckingAccess)
             return;
 
-        WiFiAdapterAccessEnabled = RequestAccess();
+        _isCheckingAccess = true;
+
+        try
+        {
+            // Not on the UI thread (called on every switch to WiFi while the access is denied)
+            WiFiAdapterAccessEnabled = await RequestAccessAsync();
+        }
+        finally
+        {
+            _isCheckingAccess = false;
+        }
 
         if (WiFiAdapterAccessEnabled)
             Start();
@@ -792,7 +807,7 @@ public class WiFiViewModel : ViewModelBase
         _ = Export();
     }
 
-    public ICommand CheckAccessCommand => new RelayCommand(_ => CheckAccess());
+    public ICommand CheckAccessCommand => new RelayCommand(_ => { _ = CheckAccessAsync(); });
 
     public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
 
@@ -811,9 +826,19 @@ public class WiFiViewModel : ViewModelBase
     /// <returns>Fails if the access is denied.</returns>
     private static bool RequestAccess()
     {
+        // Safe to block: the continuation of RequestAccessAsync doesn't need the UI thread (ConfigureAwait(false))
+        return RequestAccessAsync().GetAwaiter().GetResult();
+    }
+
+    /// <summary>
+    ///     Request access to the Wi-Fi adapter without blocking the calling thread.
+    /// </summary>
+    /// <returns>Fails if the access is denied.</returns>
+    private static async Task<bool> RequestAccessAsync()
+    {
         try
         {
-            var accessStatus = WiFiAdapter.RequestAccessAsync().GetAwaiter().GetResult();
+            var accessStatus = await WiFiAdapter.RequestAccessAsync().AsTask().ConfigureAwait(false);
 
             return accessStatus == WiFiAccessStatus.Allowed;
         }
@@ -1665,7 +1690,7 @@ public class WiFiViewModel : ViewModelBase
     public void OnViewVisible()
     {
         // The access may have been allowed in the Windows settings in the meantime
-        CheckAccess();
+        _ = CheckAccessAsync();
 
         _autoRefreshTimer.Resume();
     }
