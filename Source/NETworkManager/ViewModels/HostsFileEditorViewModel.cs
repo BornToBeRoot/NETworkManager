@@ -303,9 +303,7 @@ public class HostsFileEditorViewModel : ViewModelBase
                 {
                     // The rows shown in the grid (search / filter) in the order shown (sorting). Copied on the UI thread,
                     // exported in the background
-                    var results = instance.ExportAll
-                        ? ResultsView.GetItemsInViewOrder<HostsFileEntry>()
-                        : ResultsView.GetSelectedItemsInViewOrder<HostsFileEntry>(SelectedResults);
+                    var results = ResultsView.GetItemsInViewOrder<HostsFileEntry>(instance.ExportAll, SelectedResults);
 
                     await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
                 }

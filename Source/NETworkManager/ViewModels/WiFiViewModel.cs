@@ -1484,9 +1484,7 @@ public class WiFiViewModel : ViewModelBase
             {
                 // The networks shown in the grid (band filter, search) in their order. Copied on the UI thread, exported
                 // in the background
-                var networks = instance.ExportAll
-                    ? NetworksView.GetItemsInViewOrder<WiFiNetworkInfo>()
-                    : NetworksView.GetSelectedItemsInViewOrder<WiFiNetworkInfo>(SelectedNetworks);
+                var networks = NetworksView.GetItemsInViewOrder<WiFiNetworkInfo>(instance.ExportAll, SelectedNetworks);
 
                 await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, networks));
             }

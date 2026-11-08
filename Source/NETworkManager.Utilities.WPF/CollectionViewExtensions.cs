@@ -41,6 +41,20 @@ public static class CollectionViewExtensions
     }
 
     /// <summary>
+    ///     Gets all items or only the selected items in the order they are shown, e.g. for <b>Export...</b> > All /
+    ///     Selected. Call it on the UI thread.
+    /// </summary>
+    /// <typeparam name="T">Type of the items.</typeparam>
+    /// <param name="view">View of the items (e.g. the view a grid is bound to).</param>
+    /// <param name="all">True for all items shown, false for the selected items.</param>
+    /// <param name="selectedItems">Selected items (e.g. <c>DataGrid.SelectedItems</c>), only used if not all.</param>
+    /// <returns>Items in the order shown.</returns>
+    public static List<T> GetItemsInViewOrder<T>(this ICollectionView view, bool all, IEnumerable selectedItems)
+    {
+        return all ? view.GetItemsInViewOrder<T>() : view.GetSelectedItemsInViewOrder<T>(selectedItems);
+    }
+
+    /// <summary>
     ///     Gets the items of groups (recursive for nested groups).
     /// </summary>
     private static IEnumerable<T> GetItems<T>(IEnumerable groupsOrItems)

@@ -1692,9 +1692,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 // Copy the results on the UI thread (they are still updated while a scan is running) and
                 // export the copies in the background, so a large export doesn't freeze the window. In the
                 // order shown in the grid (Results is in the order the hosts were found).
-                var results = (instance.ExportAll
-                        ? ResultsView.GetItemsInViewOrder<IPScannerHostInfo>()
-                        : ResultsView.GetSelectedItemsInViewOrder<IPScannerHostInfo>(SelectedResults))
+                var results = ResultsView.GetItemsInViewOrder<IPScannerHostInfo>(instance.ExportAll, SelectedResults)
                     .Select(x => x.Clone()).ToList();
 
                 // Options of the shown scan (values of disabled probes are exported as empty values)

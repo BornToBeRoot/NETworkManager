@@ -553,9 +553,7 @@ public class DNSLookupViewModel : ViewModelBase
             {
                 // The rows shown in the grid (search / filter) in the order shown (sorting). Copied on the UI thread,
                 // exported in the background
-                var results = instance.ExportAll
-                    ? ResultsView.GetItemsInViewOrder<DNSLookupRecordInfo>()
-                    : ResultsView.GetSelectedItemsInViewOrder<DNSLookupRecordInfo>(SelectedResults);
+                var results = ResultsView.GetItemsInViewOrder<DNSLookupRecordInfo>(instance.ExportAll, SelectedResults);
 
                 await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }

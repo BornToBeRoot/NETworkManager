@@ -461,9 +461,7 @@ public class TracerouteViewModel : ViewModelBase
             {
                 // The rows shown in the grid (search / filter) in the order shown (sorting). Copied on the UI thread,
                 // exported in the background
-                var results = instance.ExportAll
-                    ? ResultsView.GetItemsInViewOrder<TracerouteHopInfo>()
-                    : ResultsView.GetSelectedItemsInViewOrder<TracerouteHopInfo>(SelectedResults);
+                var results = ResultsView.GetItemsInViewOrder<TracerouteHopInfo>(instance.ExportAll, SelectedResults);
 
                 await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }

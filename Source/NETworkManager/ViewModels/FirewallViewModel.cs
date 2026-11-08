@@ -699,9 +699,7 @@ public class FirewallViewModel : ViewModelBase
             {
                 // The rows shown in the grid (search / filter) in the order shown (sorting). Copied on the UI thread,
                 // exported in the background
-                var results = instance.ExportAll
-                    ? ResultsView.GetItemsInViewOrder<FirewallRule>()
-                    : ResultsView.GetSelectedItemsInViewOrder<FirewallRule>(SelectedResults);
+                var results = ResultsView.GetItemsInViewOrder<FirewallRule>(instance.ExportAll, SelectedResults);
 
                 await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }

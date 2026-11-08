@@ -230,9 +230,7 @@ public class SNTPLookupViewModel : ViewModelBase
             {
                 // The rows shown in the grid (search / filter) in the order shown (sorting). Copied on the UI thread,
                 // exported in the background
-                var results = instance.ExportAll
-                    ? ResultsView.GetItemsInViewOrder<SNTPLookupInfo>()
-                    : ResultsView.GetSelectedItemsInViewOrder<SNTPLookupInfo>(SelectedResults);
+                var results = ResultsView.GetItemsInViewOrder<SNTPLookupInfo>(instance.ExportAll, SelectedResults);
 
                 await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }

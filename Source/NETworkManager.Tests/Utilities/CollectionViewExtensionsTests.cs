@@ -63,6 +63,24 @@ public class CollectionViewExtensionsTests
         Assert.Equal([1, 3, 4], GetSelectedItems([5, 4, 1, 3]));
     }
 
+    [Fact]
+    public void GetItemsInViewOrder_AllOrSelected()
+    {
+        SkipUnlessWindows();
+
+        // All shown (export > All) vs. selected (export > Selected), both in the order shown
+        Assert.Equal([1, 2, 3, 4], GetItemsAllOrSelected(true, [5, 4, 1, 3]));
+        Assert.Equal([1, 3, 4], GetItemsAllOrSelected(false, [5, 4, 1, 3]));
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static List<int> GetItemsAllOrSelected(bool all, int[] selectedValues)
+    {
+        var selected = selectedValues.Select(value => Items.Single(x => x.Value == value)).ToList();
+
+        return CreateView(true, true, false).GetItemsInViewOrder<Item>(all, selected).Select(x => x.Value).ToList();
+    }
+
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static List<int> GetItems(bool sort, bool filter, bool group)
     {

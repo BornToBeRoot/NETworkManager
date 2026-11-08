@@ -1553,9 +1553,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 // Copy the results on the UI thread (they may still change while a scan is running) and
                 // export them in the background, so a large export doesn't freeze the window. In the order
                 // shown in the grid (Results is in the order the ports were finished).
-                var results = instance.ExportAll
-                    ? ResultsView.GetItemsInViewOrder<PortScannerPortInfo>()
-                    : ResultsView.GetSelectedItemsInViewOrder<PortScannerPortInfo>(SelectedResults);
+                var results = ResultsView.GetItemsInViewOrder<PortScannerPortInfo>(instance.ExportAll, SelectedResults);
 
                 await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }
