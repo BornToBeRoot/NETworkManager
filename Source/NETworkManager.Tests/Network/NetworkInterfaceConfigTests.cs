@@ -114,4 +114,15 @@ public class NetworkInterfaceConfigTests
 
         Assert.NotNull(config.GetInvalidValue());
     }
+
+    [Fact]
+    public void Create_StaticIPWithDHCPDNS_UsesStaticDNSServers()
+    {
+        var config = NetworkInterfaceConfig.Create("Ethernet", true, "192.168.1.10", "/24", "192.168.1.1", false,
+            "1.1.1.1", "8.8.8.8");
+
+        Assert.True(config.EnableStaticDNS);
+        Assert.Equal("1.1.1.1", config.PrimaryDNSServer);
+        Assert.Equal("8.8.8.8", config.SecondaryDNSServer);
+    }
 }
