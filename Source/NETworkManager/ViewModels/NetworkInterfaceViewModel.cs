@@ -738,19 +738,28 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     {
         IsNetworkInterfaceLoading = true;
 
-        // Get all network interfaces...
-        (await NetworkInterface.GetNetworkInterfacesAsync()).ForEach(NetworkInterfaces.Add);
-
-        // Get the last selected interface, if it is still available on this machine...
-        if (NetworkInterfaces.Count > 0)
+        try
         {
-            var info = NetworkInterfaces.FirstOrDefault(s =>
-                s.Id == SettingsManager.Current.NetworkInterface_InterfaceId);
+            // Get all network interfaces...
+            (await NetworkInterface.GetNetworkInterfacesAsync()).ForEach(NetworkInterfaces.Add);
 
-            SelectedNetworkInterface = info ?? NetworkInterfaces[0];
+            // Get the last selected interface, if it is still available on this machine...
+            if (NetworkInterfaces.Count > 0)
+            {
+                var info = NetworkInterfaces.FirstOrDefault(s =>
+                    s.Id == SettingsManager.Current.NetworkInterface_InterfaceId);
+
+                SelectedNetworkInterface = info ?? NetworkInterfaces[0];
+            }
         }
-
-        IsNetworkInterfaceLoading = false;
+        catch (Exception ex)
+        {
+            Log.Error("Error while loading the network interfaces.", ex);
+        }
+        finally
+        {
+            IsNetworkInterfaceLoading = false;
+        }
     }
 
     #endregion
@@ -1102,31 +1111,41 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
         IsNetworkInterfaceLoading = true;
 
-        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
-        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
-
-        // Store the last selected id
-        var id = SelectedNetworkInterface?.Id ?? string.Empty;
-
-        // Get all network interfaces...
-        var networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
-
-        // Invoke on UI thread synchronously
-        Application.Current.Dispatcher.Invoke(() =>
+        try
         {
-            // Clear the list
-            NetworkInterfaces.Clear();
+            // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
+            await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
-            // Add all network interfaces to the list
-            networkInterfaces.ForEach(NetworkInterfaces.Add);
-        });
+            // Store the last selected id
+            var id = SelectedNetworkInterface?.Id ?? string.Empty;
 
-        // Set the last selected interface, if it is still available on this machine (e.g. not a removed USB or
-        // VPN adapter), otherwise the first one...
-        SelectedNetworkInterface = NetworkInterfaces.FirstOrDefault(x => x.Id == id) ??
-                                   NetworkInterfaces.FirstOrDefault();
+            // Get all network interfaces...
+            var networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
 
-        IsNetworkInterfaceLoading = false;
+            // Invoke on UI thread synchronously
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                // Clear the list
+                NetworkInterfaces.Clear();
+
+                // Add all network interfaces to the list
+                networkInterfaces.ForEach(NetworkInterfaces.Add);
+            });
+
+            // Set the last selected interface, if it is still available on this machine (e.g. not a removed USB or
+            // VPN adapter), otherwise the first one...
+            SelectedNetworkInterface = NetworkInterfaces.FirstOrDefault(x => x.Id == id) ??
+                                       NetworkInterfaces.FirstOrDefault();
+        }
+        catch (Exception ex)
+        {
+            // async void: an unhandled exception would crash the application
+            Log.Error("Error while reloading the network interfaces.", ex);
+        }
+        finally
+        {
+            IsNetworkInterfaceLoading = false;
+        }
     }
 
     private void SetConfigurationDefaults(NetworkInterfaceInfo info)
