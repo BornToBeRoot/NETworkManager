@@ -444,6 +444,7 @@ Release date: **xx.xx.2026**
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the SNTP server profiles in the settings. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 - Fixed the CSV export breaking the row with a decimal comma (e.g. German) in the offset and round trip delay, the values are exported with a decimal point now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 - Fixed the offset being cut off to whole seconds and the round trip delay to whole milliseconds (e.g. an offset of 0.25 s was shown and exported as `0 s`). The offset is shown with millisecond precision, the round trip delay with 0.01 ms. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- Fixed a wrong offset of about one hour for a lookup in the hour that is repeated at the end of the daylight saving time, and the network connection of a failed request (e.g. timeout) not being closed. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Hosts File Editor**
 
