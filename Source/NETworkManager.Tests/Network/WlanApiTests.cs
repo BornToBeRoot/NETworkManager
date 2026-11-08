@@ -116,6 +116,13 @@ public class WlanApiTests
     }
 
     [Fact]
+    public void He6GHz80Plus80_IsCenteredOnThePrimarySegment()
+    {
+        // Segments around the channels 7 and 71: 160 MHz around the primary segment (channel 7), like VHT
+        Assert.Equal(new WlanApi.WlanBssChannel(160, 5985), Parse(5955, HeOperation6GHz(3, 7, 71)));
+    }
+
+    [Fact]
     public void He6GHzChannel2_IsAt5935()
     {
         Assert.Equal(new WlanApi.WlanBssChannel(20, 5935), Parse(5935, HeOperation6GHz(0, 2, 0)));

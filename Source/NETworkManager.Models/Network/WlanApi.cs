@@ -515,10 +515,13 @@ public static class WlanApi
             };
 
             // CCFS0 is the center of the channel (of the primary 80 MHz channel for 160 MHz), CCFS1 the center of
-            // the 160 MHz channel (0 for narrower channels)
+            // the 160 MHz channel (0 for narrower channels). For 80+80 MHz (segments more than 8 channels apart),
+            // CCFS1 is the center of the second segment: shown as 160 MHz around the primary segment, like VHT.
             var segment0 = cursor + 3 <= end ? ie[cursor + 2] : 0;
             var segment1 = cursor + 4 <= end ? ie[cursor + 3] : 0;
-            var centerChannel = sixGhzWidth == 160 && segment1 != 0 ? segment1 : segment0;
+            var centerChannel = sixGhzWidth == 160 && segment1 != 0 && Math.Abs(segment1 - segment0) == 8
+                ? segment1
+                : segment0;
 
             channel = Widest(channel,
                 new WlanBssChannel(sixGhzWidth, ChannelToFrequency(centerChannel, primaryFrequencyMHz)));
