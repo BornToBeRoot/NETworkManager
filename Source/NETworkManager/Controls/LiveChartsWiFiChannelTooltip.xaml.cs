@@ -57,7 +57,7 @@ public partial class LiveChartsWiFiChannelTooltip : IChartTooltip, INotifyProper
                 continue;
 
             var ssid = network.IsHidden ? Strings.HiddenNetwork : network.AvailableNetwork.Ssid;
-            var bssid = network.AvailableNetwork.Bssid;
+            var bssid = network.Bssid;
             var dbm = $"{network.AvailableNetwork.NetworkRssiInDecibelMilliwatts} dBm";
             var widthText = WiFiChannelBandwidthToStringConverter.Format(network);
             var channelDetail = $"{Strings.Channel} {network.Channel} · {widthText}";

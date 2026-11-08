@@ -359,7 +359,7 @@
                                                         Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem Header="{x:Static Member=localization:Strings.BSSID}"
                                                               Command="{Binding Path=CopyDataToClipboardCommand}"
-                                                              CommandParameter="{Binding Path=SelectedNetwork.AvailableNetwork.Bssid}"
+                                                              CommandParameter="{Binding Path=SelectedNetwork.Bssid}"
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem Header="{x:Static Member=localization:Strings.Vendor}"
                                                               Command="{Binding Path=CopyDataToClipboardCommand}"
@@ -644,8 +644,8 @@
                                                 SortMemberPath="AvailableNetwork.SecuritySettings.NetworkEncryptionType"
                                                 MinWidth="100" />
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.BSSID}"
-                                                                Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).Bssid}"
-                                                                SortMemberPath="AvailableNetwork.Bssid"
+                                                                Binding="{Binding Path=(network:WiFiNetworkInfo.Bssid)}"
+                                                                SortMemberPath="Bssid"
                                                                 MinWidth="140" />
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.Vendor}"
                                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.Vendor)}"

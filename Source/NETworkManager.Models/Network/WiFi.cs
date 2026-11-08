@@ -7,6 +7,7 @@ using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
 using Windows.Security.Credentials;
 using NETworkManager.Models.Lookup;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -104,6 +105,7 @@ public static class WiFi
             var wifiNetworkInfo = new WiFiNetworkInfo
             {
                 AvailableNetwork = availableNetwork,
+                Bssid = MACAddressHelper.GetDefaultFormat(availableNetwork.Bssid),
                 Radio = radio,
                 ChannelCenterFrequencyInGigahertz = channelFrequencyInGigahertz,
                 Channel = GetChannelFromChannelFrequency(channelFrequencyInGigahertz),

@@ -23,6 +23,12 @@ public class WiFiNetworkInfo
     public WiFiAvailableNetwork AvailableNetwork { get; init; }
 
     /// <summary>
+    ///     BSSID (MAC address of the access point) in the default format of the application (e.g.
+    ///     <c>AA:BB:CC:DD:EE:FF</c>), like the MAC addresses of the other tools.
+    /// </summary>
+    public string Bssid { get; init; }
+
+    /// <summary>
     ///    Radio that is used like 2.4 GHz, 5 GHz, etc.
     /// </summary>
     public WiFiRadio Radio { get; init; }

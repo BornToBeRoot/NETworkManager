@@ -544,7 +544,7 @@ public class WiFiViewModel : ViewModelBase
                    info.NetworkAuthenticationType.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    $"{info.ChannelCenterFrequencyInGigahertz}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    $"{info.Channel}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.AvailableNetwork.Bssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.Bssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.Vendor.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.PhyKind.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
@@ -1141,7 +1141,7 @@ public class WiFiViewModel : ViewModelBase
 
         var series = new LineSeries<WiFiChannelPoint>
         {
-            Name = $"{ssid} ({network.AvailableNetwork.Bssid})",
+            Name = $"{ssid} ({network.Bssid})",
             Values = points,
             // Plot in 0..100 space (dBm + 100) so the area fill drops to the bottom baseline.
             Mapping = (point, _) => new Coordinate(point.ChannelAxis, point.Dbm + SignalOffset),
@@ -1152,7 +1152,7 @@ public class WiFiViewModel : ViewModelBase
         };
 
         var wpfColor = Color.FromArgb(color.Alpha, color.Red, color.Green, color.Blue);
-        var legend = new WiFiChannelLegendEntry(new SolidColorBrush(wpfColor), ssid, network.AvailableNetwork.Bssid);
+        var legend = new WiFiChannelLegendEntry(new SolidColorBrush(wpfColor), ssid, network.Bssid);
 
         return (series, legend);
     }

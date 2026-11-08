@@ -47,11 +47,11 @@ public static partial class ExportManager
         var stringBuilder = new StringBuilder();
 
         stringBuilder.AppendLine(
-            $"{nameof(WiFiNetworkInfo.AvailableNetwork.Bssid)},{nameof(WiFiNetworkInfo.AvailableNetwork.Ssid)},{nameof(WiFiNetworkInfo.AvailableNetwork.ChannelCenterFrequencyInKilohertz)},{nameof(WiFiNetworkInfo.AvailableNetwork.SignalBars)},{nameof(WiFiNetworkInfo.AvailableNetwork.IsWiFiDirect)},{nameof(WiFiNetworkInfo.AvailableNetwork.NetworkRssiInDecibelMilliwatts)},{nameof(WiFiNetworkInfo.AvailableNetwork.PhyKind)},{nameof(WiFiNetworkInfo.AvailableNetwork.NetworkKind)},{nameof(WiFiNetworkInfo.AvailableNetwork.SecuritySettings.NetworkAuthenticationType)},{nameof(WiFiNetworkInfo.AvailableNetwork.SecuritySettings.NetworkEncryptionType)},{nameof(WiFiNetworkInfo.AvailableNetwork.BeaconInterval)},{nameof(WiFiNetworkInfo.AvailableNetwork.Uptime)}");
+            $"{nameof(WiFiNetworkInfo.Bssid)},{nameof(WiFiNetworkInfo.AvailableNetwork.Ssid)},{nameof(WiFiNetworkInfo.AvailableNetwork.ChannelCenterFrequencyInKilohertz)},{nameof(WiFiNetworkInfo.AvailableNetwork.SignalBars)},{nameof(WiFiNetworkInfo.AvailableNetwork.IsWiFiDirect)},{nameof(WiFiNetworkInfo.AvailableNetwork.NetworkRssiInDecibelMilliwatts)},{nameof(WiFiNetworkInfo.AvailableNetwork.PhyKind)},{nameof(WiFiNetworkInfo.AvailableNetwork.NetworkKind)},{nameof(WiFiNetworkInfo.AvailableNetwork.SecuritySettings.NetworkAuthenticationType)},{nameof(WiFiNetworkInfo.AvailableNetwork.SecuritySettings.NetworkEncryptionType)},{nameof(WiFiNetworkInfo.AvailableNetwork.BeaconInterval)},{nameof(WiFiNetworkInfo.AvailableNetwork.Uptime)}");
 
         foreach (var info in collection)
             stringBuilder.AppendLine(
-                $"{info.AvailableNetwork.Bssid},{info.AvailableNetwork.Ssid},{info.AvailableNetwork.ChannelCenterFrequencyInKilohertz},{info.AvailableNetwork.SignalBars},{info.AvailableNetwork.IsWiFiDirect},{info.AvailableNetwork.NetworkRssiInDecibelMilliwatts},{info.AvailableNetwork.PhyKind},{info.AvailableNetwork.NetworkKind},{info.AvailableNetwork.SecuritySettings.NetworkAuthenticationType},{info.AvailableNetwork.SecuritySettings.NetworkEncryptionType},{info.AvailableNetwork.BeaconInterval},{info.AvailableNetwork.Uptime}");
+                $"{info.Bssid},{info.AvailableNetwork.Ssid},{info.AvailableNetwork.ChannelCenterFrequencyInKilohertz},{info.AvailableNetwork.SignalBars},{info.AvailableNetwork.IsWiFiDirect},{info.AvailableNetwork.NetworkRssiInDecibelMilliwatts},{info.AvailableNetwork.PhyKind},{info.AvailableNetwork.NetworkKind},{info.AvailableNetwork.SecuritySettings.NetworkAuthenticationType},{info.AvailableNetwork.SecuritySettings.NetworkEncryptionType},{info.AvailableNetwork.BeaconInterval},{info.AvailableNetwork.Uptime}");
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }
@@ -69,7 +69,7 @@ public static partial class ExportManager
                     from info in collection
                     select
                         new XElement(nameof(WiFiNetworkInfo),
-                            new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.Bssid), info.AvailableNetwork.Bssid),
+                            new XElement(nameof(WiFiNetworkInfo.Bssid), info.Bssid),
                             new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.Ssid), info.AvailableNetwork.Ssid),
                             new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.ChannelCenterFrequencyInKilohertz),
                                 info.AvailableNetwork.ChannelCenterFrequencyInKilohertz),
@@ -109,7 +109,7 @@ public static partial class ExportManager
         for (var i = 0; i < collection.Count; i++)
             jsonData[i] = new
             {
-                collection[i].AvailableNetwork.Bssid,
+                collection[i].Bssid,
                 collection[i].AvailableNetwork.Ssid,
                 collection[i].AvailableNetwork.ChannelCenterFrequencyInKilohertz,
                 SignalBars = collection[i].AvailableNetwork.SignalBars.ToString(),
