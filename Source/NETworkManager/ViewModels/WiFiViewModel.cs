@@ -881,7 +881,8 @@ public class WiFiViewModel : ViewModelBase
                     SelectedNetwork = network;
             }
 
-            // Series and legend of each chart (the color of a network depends on its position in its chart)
+            // Series and legend of each chart. The color of a network depends on its position in its chart; the two 6 GHz
+            // charts count together, so a network that is drawn in both has the same color in both.
             var charts = new Dictionary<WiFiChannelChart, (List<ISeries> Series, List<WiFiChannelLegendEntry> Legend)>
             {
                 [Chart2Dot4GHz] = ([], []),
@@ -890,10 +891,12 @@ public class WiFiViewModel : ViewModelBase
                 [Chart6GHzUpper] = ([], [])
             };
 
-            void AddToChart(WiFiChannelChart chart, WiFiNetworkInfo network)
+            var sixGHzColorIndex = 0;
+
+            void AddToChart(WiFiChannelChart chart, WiFiNetworkInfo network, int? colorIndex = null)
             {
                 var (series, legend) = charts[chart];
-                var (networkSeries, networkLegend) = BuildNetworkSeries(network, series.Count);
+                var (networkSeries, networkLegend) = BuildNetworkSeries(network, colorIndex ?? series.Count);
 
                 series.Add(networkSeries);
                 legend.Add(networkLegend);
@@ -919,10 +922,12 @@ public class WiFiViewModel : ViewModelBase
                             network.ChannelBandwidthCenterFrequencyInGigahertz * 1000, network.ChannelBandwidth);
 
                         if (lower)
-                            AddToChart(Chart6GHzLower, network);
+                            AddToChart(Chart6GHzLower, network, sixGHzColorIndex);
 
                         if (upper)
-                            AddToChart(Chart6GHzUpper, network);
+                            AddToChart(Chart6GHzUpper, network, sixGHzColorIndex);
+
+                        sixGHzColorIndex++;
 
                         break;
                 }
