@@ -29,7 +29,7 @@ The CSV columns, the XML elements and the JSON keys have the same names and orde
 | Number                  | Decimal point in every language (e.g. `10.5`), without a unit. JSON: number                                                                                                |
 | Time / duration         | Number in a fixed unit: ping time in milliseconds (e.g. `4`), SNTP **Offset** in seconds and **RoundTripDelay** in milliseconds, **Speed** of a network interface in bit/s |
 | Yes / No                | `True` / `False` (CSV), `true` / `false` (XML, JSON)                                                                                                                         |
-| Date and time           | Local time as `yyyy-MM-dd HH:mm:ss.fff` (e.g. `2026-11-08 10:15:30.123`)                                                                                                    |
+| Date and time           | `yyyy-MM-dd HH:mm:ss.fff` (e.g. `2026-11-08 10:15:30.123`) in the time shown in the tool: local time, **SNTP Lookup** in UTC                                                 |
 | Status, type, state     | English name (e.g. `Success`, `TimedOut`, `Open`, `Tcp`), several values separated by `, ` (e.g. `ICMP, TCP`)                                                               |
 | MAC address             | `AA:BB:CC:DD:EE:FF`                                                                                                                                                          |
 | List (e.g. IP addresses) | One value, separated by `; ` (e.g. `10.0.0.53; 10.0.0.54`)                                                                                                                 |
