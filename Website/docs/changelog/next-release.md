@@ -21,6 +21,10 @@ Release date: **xx.xx.2026**
 
 ## What's new?
 
+**Network Interface**
+
+- Network Interface profiles can be bound to a network interface (**Bind to network interface** in the profile): the profile is always applied to this network interface, selecting the profile also selects it. If the network interface is not found on this computer, a dialog shows its name and ID and offers to apply the profile to the selected network interface instead. [#146](https://github.com/BornToBeRoot/NETworkManager/issues/146)
+
 **mDNS Discovery**
 
 - Added a dedicated browser for services advertised on the local network, including printers, scanners, web servers and media devices. Select an interface and service types or service type profiles (e.g. Printers, editable in the settings, with history) or discover all types, inspect hostnames, ports, IPv4 / IPv6 addresses and TXT records, filter, copy and export the results. **Raw DNS records** shows the individual DNS records instead, with each TXT entry on its own row; other and unknown record types are preserved as raw data. Includes the `mdns` / `dnssd` run commands (e.g. `mdns printers 30`) with suggestions of the service type profiles and durations. Thanks to [@MovGP0](https://github.com/MovGP0) [#3719](https://github.com/BornToBeRoot/NETworkManager/pull/3719)

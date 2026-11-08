@@ -46,6 +46,9 @@ public class ProfileInfo
 
         // Network Interface
         NetworkInterface_Enabled = profile.NetworkInterface_Enabled;
+        NetworkInterface_BindToInterface = profile.NetworkInterface_BindToInterface;
+        NetworkInterface_InterfaceId = profile.NetworkInterface_InterfaceId;
+        NetworkInterface_InterfaceName = profile.NetworkInterface_InterfaceName;
         NetworkInterface_EnableStaticIPAddress = profile.NetworkInterface_EnableStaticIPAddress;
         NetworkInterface_IPAddress = profile.NetworkInterface_IPAddress;
         NetworkInterface_Subnetmask = profile.NetworkInterface_Subnetmask;
@@ -316,6 +319,24 @@ public class ProfileInfo
     public bool IsDynamic { get; set; }
 
     public bool NetworkInterface_Enabled { get; set; }
+
+    /// <summary>
+    ///     Apply the profile to the network interface <see cref="NetworkInterface_InterfaceId" /> instead of the one
+    ///     selected in the Network Interface tool.
+    /// </summary>
+    public bool NetworkInterface_BindToInterface { get; set; }
+
+    /// <summary>
+    ///     ID (GUID) of the network interface the profile is bound to. Unique per computer.
+    /// </summary>
+    public string NetworkInterface_InterfaceId { get; set; }
+
+    /// <summary>
+    ///     Name of the network interface the profile is bound to (when it was selected), shown if the network interface
+    ///     is not found on this computer.
+    /// </summary>
+    public string NetworkInterface_InterfaceName { get; set; }
+
     public bool NetworkInterface_EnableStaticIPAddress { get; set; }
     public string NetworkInterface_IPAddress { get; set; }
     public string NetworkInterface_Subnetmask { get; set; }

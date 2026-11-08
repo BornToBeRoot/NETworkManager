@@ -1,4 +1,5 @@
 using DnsClient;
+using log4net;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -12,6 +13,7 @@ using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
@@ -26,6 +28,8 @@ namespace NETworkManager.ViewModels;
 
 public class ProfileViewModel : ViewModelBase
 {
+    private static readonly ILog Log = LogManager.GetLogger(typeof(ProfileViewModel));
+
     #region Constructor
 
     public ProfileViewModel(Action<ProfileViewModel> saveCommand, Action<ProfileViewModel> cancelHandler,
@@ -68,6 +72,9 @@ public class ProfileViewModel : ViewModelBase
         NetworkInterface_Enabled = editMode == ProfileEditMode.Add
             ? applicationName == ApplicationName.NetworkInterface
             : profileInfo.NetworkInterface_Enabled;
+        _networkInterfaceBoundId = profileInfo.NetworkInterface_InterfaceId;
+        _networkInterfaceBoundName = profileInfo.NetworkInterface_InterfaceName;
+        NetworkInterface_BindToInterface = profileInfo.NetworkInterface_BindToInterface;
         NetworkInterface_EnableDynamicIPAddress = !profileInfo.NetworkInterface_EnableStaticIPAddress;
         NetworkInterface_EnableStaticIPAddress = profileInfo.NetworkInterface_EnableStaticIPAddress;
         NetworkInterface_IPAddress = profileInfo.NetworkInterface_IPAddress;
@@ -535,6 +542,89 @@ public class ProfileViewModel : ViewModelBase
 
             OnPropertyChanged();
         }
+    }
+
+    /// <summary>
+    ///     ID and name of the network interface the profile is bound to (loaded from the profile).
+    /// </summary>
+    private readonly string _networkInterfaceBoundId;
+
+    private readonly string _networkInterfaceBoundName;
+
+    private bool _networkInterfacesLoaded;
+
+    public bool NetworkInterface_BindToInterface
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+
+            // Only load the network interfaces if they are needed (PowerShell, slows down every profile dialog)
+            if (value)
+                _ = LoadNetworkInterfacesAsync();
+        }
+    }
+
+    /// <summary>
+    ///     Network interfaces of this computer to bind the profile to. A bound network interface that is not found on
+    ///     this computer is added (with <see cref="Strings.NotFoundOnThisComputer" />), so it is kept when the profile
+    ///     is saved.
+    /// </summary>
+    public ObservableCollection<NetworkInterfaceInfo> NetworkInterface_Interfaces { get; } = [];
+
+    public NetworkInterfaceInfo NetworkInterface_SelectedInterface
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private async Task LoadNetworkInterfacesAsync()
+    {
+        if (_networkInterfacesLoaded)
+            return;
+
+        _networkInterfacesLoaded = true;
+
+        try
+        {
+            foreach (var networkInterface in await NetworkInterface.GetNetworkInterfacesAsync())
+                NetworkInterface_Interfaces.Add(networkInterface);
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while loading the network interfaces.", ex);
+        }
+
+        if (string.IsNullOrEmpty(_networkInterfaceBoundId))
+            return;
+
+        var boundInterface = NetworkInterface_Interfaces.FirstOrDefault(x => x.Id == _networkInterfaceBoundId);
+
+        if (boundInterface == null)
+        {
+            boundInterface = new NetworkInterfaceInfo
+            {
+                Id = _networkInterfaceBoundId,
+                Name = _networkInterfaceBoundName,
+                Description = Strings.NotFoundOnThisComputer
+            };
+
+            NetworkInterface_Interfaces.Add(boundInterface);
+        }
+
+        NetworkInterface_SelectedInterface = boundInterface;
     }
 
     public bool NetworkInterface_EnableDynamicIPAddress
