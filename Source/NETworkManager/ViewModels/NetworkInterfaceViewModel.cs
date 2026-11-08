@@ -372,7 +372,10 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
             // DNS servers can only be obtained automatically with DHCP (same as the Windows dialog)
             if (value)
+            {
+                ConfigEnableDynamicDNS = false;
                 ConfigEnableStaticDNS = true;
+            }
 
             field = value;
             OnPropertyChanged();
@@ -1251,9 +1254,12 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     private void SetConfigurationDefaults(NetworkInterfaceInfo info)
     {
+        // Both options of a radio button pair are set: the RadioButton group only unchecks the other one while the
+        // Configure tab is loaded (not if another tab is shown).
         if (info.DhcpEnabled)
         {
             ConfigEnableDynamicIPAddress = true;
+            ConfigEnableStaticIPAddress = false;
 
             // Values of another interface or profile don't belong to this one (same as the Windows dialog: empty)
             ConfigIPAddress = string.Empty;
@@ -1262,6 +1268,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         }
         else
         {
+            ConfigEnableDynamicIPAddress = false;
             ConfigEnableStaticIPAddress = true;
             ConfigIPAddress = info.IPv4Address.FirstOrDefault()?.Item1.ToString();
             ConfigSubnetmask = info.IPv4Address.FirstOrDefault()?.Item2.ToString();
@@ -1270,15 +1277,17 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 : string.Empty;
         }
 
-        if (info.DNSAutoconfigurationEnabled)
+        if (info.DNSAutoconfigurationEnabled && info.DhcpEnabled)
         {
             ConfigEnableDynamicDNS = true;
+            ConfigEnableStaticDNS = false;
 
             ConfigPrimaryDNSServer = string.Empty;
             ConfigSecondaryDNSServer = string.Empty;
         }
         else
         {
+            ConfigEnableDynamicDNS = false;
             ConfigEnableStaticDNS = true;
 
             var dnsServers = info.DNSServer.Where(x => x.AddressFamily == AddressFamily.InterNetwork)
