@@ -75,6 +75,11 @@ public class NetworkInterfaceConfig
 
         var subnetmask = enableStaticIPAddress ? ConvertSubnetmaskOrCidr(subnetmaskOrCidr) : subnetmaskOrCidr?.Trim();
 
+        // DNS servers can only be obtained automatically with DHCP (older profiles may contain a static IP address
+        // with DHCP for the DNS servers, the UI selects static DNS servers in that case)
+        if (enableStaticIPAddress)
+            enableStaticDNS = true;
+
         // If primary and secondary DNS are empty --> autoconfiguration
         if (enableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) && string.IsNullOrEmpty(secondaryDNSServer))
             enableStaticDNS = false;
