@@ -1,18 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
+﻿using System.Collections.Generic;
 using NETworkManager.Models.Lookup;
 using NETworkManager.Models.Network;
-using NETworkManager.Utilities;
-using Newtonsoft.Json;
 
 namespace NETworkManager.Models.Export;
 
 public static partial class ExportManager
 {
+    /// <summary>
+    ///     Exported fields of a <see cref="PortScannerPortInfo" />.
+    /// </summary>
+    private static readonly ExportField<PortScannerPortInfo>[] PortScannerPortInfoExportFields =
+    [
+        new(nameof(PortScannerPortInfo.IPAddress), x => x.IPAddress),
+        new(nameof(PortScannerPortInfo.Hostname), x => x.Hostname, true),
+        new(nameof(PortScannerPortInfo.Port), x => x.Port),
+        new(nameof(PortLookupInfo.Protocol), x => x.LookupInfo.Protocol),
+        new(nameof(PortLookupInfo.Service), x => x.LookupInfo.Service, true),
+        new(nameof(PortLookupInfo.Description), x => x.LookupInfo.Description, true),
+        new(nameof(PortScannerPortInfo.State), x => x.State),
+        // Change since the previous scan (empty without a previous scan / change)
+        new(nameof(PortScannerPortInfo.Change), x => x.Change == PortScannerPortChange.None ? null : x.Change)
+    ];
+
     /// <summary>
     ///     Method to export objects from type <see cref="PortScannerPortInfo" /> to a file.
     /// </summary>
@@ -22,97 +31,6 @@ public static partial class ExportManager
     public static void Export(string filePath, ExportFileType fileType,
         IReadOnlyList<PortScannerPortInfo> collection)
     {
-        switch (fileType)
-        {
-            case ExportFileType.Csv:
-                CreateCsv(collection, filePath);
-                break;
-            case ExportFileType.Xml:
-                CreateXml(collection, filePath);
-                break;
-            case ExportFileType.Json:
-                CreateJson(collection, filePath);
-                break;
-            case ExportFileType.Txt:
-            default:
-                throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
-        }
-    }
-
-    /// <summary>
-    ///     Creates a CSV file from the given <see cref="PortScannerPortInfo" /> collection.
-    /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{PortScannerPortInfo}" /> to export.</param>
-    /// <param name="filePath">Path to the export file.</param>
-    private static void CreateCsv(IEnumerable<PortScannerPortInfo> collection, string filePath)
-    {
-        var stringBuilder = new StringBuilder();
-
-        stringBuilder.AppendLine(
-            $"{nameof(PortScannerPortInfo.IPAddress)},{nameof(PortScannerPortInfo.Hostname)},{nameof(PortScannerPortInfo.Port)},{nameof(PortLookupInfo.Protocol)},{nameof(PortLookupInfo.Service)},{nameof(PortLookupInfo.Description)},{nameof(PortScannerPortInfo.State)},{nameof(PortScannerPortInfo.Change)}");
-
-        foreach (var info in collection)
-            stringBuilder.AppendLine(
-                $"{info.IPAddress},{CsvHelper.QuoteString(info.Hostname)},{info.Port},{info.LookupInfo.Protocol},{CsvHelper.QuoteString(info.LookupInfo.Service)},{CsvHelper.QuoteString(info.LookupInfo.Description)},{info.State},{GetChange(info)}");
-
-        File.WriteAllText(filePath, stringBuilder.ToString());
-    }
-
-    /// <summary>
-    ///     Creates a XML file from the given <see cref="PortScannerPortInfo" /> collection.
-    /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{PortScannerPortInfo}" /> to export.</param>
-    /// <param name="filePath">Path to the export file.</param>
-    private static void CreateXml(IEnumerable<PortScannerPortInfo> collection, string filePath)
-    {
-        var document = new XDocument(DefaultXDeclaration,
-            new XElement(ApplicationName.PortScanner.ToString(),
-                new XElement(nameof(PortScannerPortInfo) + "s",
-                    from info in collection
-                    select
-                        new XElement(nameof(PortScannerPortInfo),
-                            new XElement(nameof(PortScannerPortInfo.IPAddress), info.IPAddress),
-                            new XElement(nameof(PortScannerPortInfo.Hostname), info.Hostname),
-                            new XElement(nameof(PortScannerPortInfo.Port), info.Port),
-                            new XElement(nameof(PortLookupInfo.Protocol), info.LookupInfo.Protocol),
-                            new XElement(nameof(PortLookupInfo.Service), info.LookupInfo.Service),
-                            new XElement(nameof(PortLookupInfo.Description), info.LookupInfo.Description),
-                            new XElement(nameof(PortScannerPortInfo.State), info.State),
-                            new XElement(nameof(PortScannerPortInfo.Change), GetChange(info))))));
-
-        document.Save(filePath);
-    }
-
-    /// <summary>
-    ///     Creates a JSON file from the given <see cref="PortScannerPortInfo" /> collection.
-    /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{PortScannerPortInfo}" /> to export.</param>
-    /// <param name="filePath">Path to the export file.</param>
-    private static void CreateJson(IReadOnlyList<PortScannerPortInfo> collection, string filePath)
-    {
-        var jsonData = new object[collection.Count];
-
-        for (var i = 0; i < collection.Count; i++)
-            jsonData[i] = new
-            {
-                IPAddress = collection[i].IPAddress.ToString(),
-                collection[i].Hostname,
-                collection[i].Port,
-                Protocol = collection[i].LookupInfo.Protocol.ToString(),
-                collection[i].LookupInfo.Service,
-                collection[i].LookupInfo.Description,
-                State = collection[i].State.ToString(),
-                Change = GetChange(collection[i])
-            };
-
-        File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
-    }
-
-    /// <summary>
-    ///     Gets the change of a port since the previous scan, empty without a previous scan / change.
-    /// </summary>
-    private static string GetChange(PortScannerPortInfo info)
-    {
-        return info.Change == PortScannerPortChange.None ? string.Empty : info.Change.ToString();
+        Export(filePath, fileType, collection, PortScannerPortInfoExportFields, ApplicationName.PortScanner);
     }
 }

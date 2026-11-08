@@ -38,7 +38,7 @@ Without administrator privileges, the view is read-only. Use the **Restart as ad
 | Action | Description |
 |--------|-------------|
 | **Copy** | Copies the selected information to the clipboard |
-| **Export...** | Exports the selected or all results to a file |
+| **Export...** | Exports the results shown (all or the selected ones) to a file in the order shown, see [Export format](../faq/export-format.md) |
 | **Delete** | Removes the selected entry |
 
 ### Keyboard shortcuts

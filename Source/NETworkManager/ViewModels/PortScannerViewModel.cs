@@ -898,7 +898,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return;
 
         ClipboardHelper.SetClipboard(string.Join(Environment.NewLine,
-            GetSelectedResultsInGridOrder().Select(selector).Where(x => !string.IsNullOrEmpty(x)).Distinct()));
+            ResultsView.GetSelectedItemsInViewOrder<PortScannerPortInfo>(SelectedResults).Select(selector).Where(x => !string.IsNullOrEmpty(x)).Distinct()));
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
@@ -1235,7 +1235,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         if (IsRunning || _lastPorts == null)
             return;
 
-        var rows = GetSelectedResultsInGridOrder();
+        var rows = ResultsView.GetSelectedItemsInViewOrder<PortScannerPortInfo>(SelectedResults);
 
         if (rows.Count == 0)
             return;
@@ -1537,28 +1537,6 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
         _cancellationTokenSource.Cancel();
     }
 
-    /// <summary>
-    /// Gets the results in the order shown in the grid: grouped by host, sorted within the group.
-    /// </summary>
-    /// <returns>Results.</returns>
-    private IEnumerable<PortScannerPortInfo> GetResultsInGridOrder()
-    {
-        return ResultsView.Groups.Cast<CollectionViewGroup>()
-            .SelectMany(group => group.Items.Cast<PortScannerPortInfo>());
-    }
-
-    /// <summary>
-    /// Gets the selected results in the order shown in the grid (<see cref="SelectedResults"/> is in the order they
-    /// were selected).
-    /// </summary>
-    /// <returns>Selected results.</returns>
-    private List<PortScannerPortInfo> GetSelectedResultsInGridOrder()
-    {
-        var selectedResults = new HashSet<PortScannerPortInfo>(SelectedResults.Cast<PortScannerPortInfo>());
-
-        return GetResultsInGridOrder().Where(selectedResults.Contains).ToList();
-    }
-
     private Task Export()
     {
         var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
@@ -1575,9 +1553,7 @@ public class PortScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 // Copy the results on the UI thread (they may still change while a scan is running) and
                 // export them in the background, so a large export doesn't freeze the window. In the order
                 // shown in the grid (Results is in the order the ports were finished).
-                var results = instance.ExportAll
-                    ? GetResultsInGridOrder().ToList()
-                    : GetSelectedResultsInGridOrder();
+                var results = ResultsView.GetItemsInViewOrder<PortScannerPortInfo>(instance.ExportAll, SelectedResults);
 
                 await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }

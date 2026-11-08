@@ -5,6 +5,7 @@ using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
+using NETworkManager.Utilities.WPF;
 using NETworkManager.Views;
 using System;
 using System.Collections;
@@ -170,10 +171,11 @@ public class SubnetCalculatorSubnettingViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType,
-                    instance.ExportAll
-                        ? Results
-                        : new ObservableCollection<IPNetworkInfo>(SelectedResults.Cast<IPNetworkInfo>().ToArray()));
+                // The rows shown in the grid (search / filter) in the order shown (sorting). Copied on the UI thread,
+                // exported in the background
+                var results = ResultsView.GetItemsInViewOrder<IPNetworkInfo>(instance.ExportAll, SelectedResults);
+
+                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }
             catch (Exception ex)
             {

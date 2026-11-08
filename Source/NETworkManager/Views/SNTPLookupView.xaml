@@ -16,8 +16,8 @@
         <converters:BooleanReverseConverter x:Key="BooleanReverseConverter" />
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
-        <converters:DoubleToMillisecondsStringConverter x:Key="IntToMillisecondsStringConverter" />
-        <converters:IntToSecondsStringConverter x:Key="IntToSecondsStringConverter" />
+        <converters:DoubleToMillisecondsStringConverter x:Key="DoubleToMillisecondsStringConverter" />
+        <converters:DoubleToSecondsStringConverter x:Key="DoubleToSecondsStringConverter" />
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
     </UserControl.Resources>
     <Grid Margin="10">
@@ -148,11 +148,11 @@
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static Member=localization:Strings.Offset}"
                                   Command="{Binding Path=CopyDataToClipboardCommand}"
-                                  CommandParameter="{Binding Path=SelectedResult.DateTime.Offset, Converter={StaticResource ResourceKey=IntToSecondsStringConverter}}"
+                                  CommandParameter="{Binding Path=SelectedResult.DateTime.Offset, Converter={StaticResource ResourceKey=DoubleToSecondsStringConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                         <MenuItem Header="{x:Static Member=localization:Strings.RoundTripDelay}"
                                   Command="{Binding Path=CopyDataToClipboardCommand}"
-                                  CommandParameter="{Binding Path=SelectedResult.DateTime.RoundTripDelay, Converter={StaticResource ResourceKey=IntToMillisecondsStringConverter}}"
+                                  CommandParameter="{Binding Path=SelectedResult.DateTime.RoundTripDelay, Converter={StaticResource ResourceKey=DoubleToMillisecondsStringConverter}}"
                                   Style="{StaticResource ResourceKey=CopyMenuItem}" />
                     </MenuItem>
                     <MenuItem Header="{x:Static Member=localization:Strings.ExportDots}"
@@ -216,11 +216,11 @@
                                     SortMemberPath="DateTime.LocalEndTime"
                                     MinWidth="180" />
                 <DataGridTextColumn Header="{x:Static Member=localization:Strings.Offset}"
-                                    Binding="{Binding Path=(network:SNTPLookupInfo.DateTime).Offset, Converter={StaticResource ResourceKey=IntToSecondsStringConverter}}"
+                                    Binding="{Binding Path=(network:SNTPLookupInfo.DateTime).Offset, Converter={StaticResource ResourceKey=DoubleToSecondsStringConverter}}"
                                     SortMemberPath="DateTime.Offset"
                                     MinWidth="80" />
                 <DataGridTextColumn Header="{x:Static Member=localization:Strings.RoundTripDelay}"
-                                    Binding="{Binding Path=(network:SNTPLookupInfo.DateTime).RoundTripDelay, Converter={StaticResource ResourceKey=IntToMillisecondsStringConverter}}"
+                                    Binding="{Binding Path=(network:SNTPLookupInfo.DateTime).RoundTripDelay, Converter={StaticResource ResourceKey=DoubleToMillisecondsStringConverter}}"
                                     SortMemberPath="DateTime.RoundTripDelay"
                                     MinWidth="80" />
             </controls:MultiSelectDataGrid.Columns>

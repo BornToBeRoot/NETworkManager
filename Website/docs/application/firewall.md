@@ -77,7 +77,7 @@ Multiple rules can be selected (`Ctrl` / `Shift` + click) to enable, disable or 
 | **Copy as** | Opens the dialog pre-filled with the selected rule to create a new rule based on it (single rule only, not for rules with [unsupported values](#rules-not-managed-by-networkmanager)) |
 | **Delete** | Removes the selected rule or rules (after confirmation) |
 | **Copy** | Copies the rule information to the clipboard (single rule only) |
-| **Export** | Exports the selected rules (or all rules) to a file (CSV, XML or JSON, incl. whether the rule is managed by NETworkManager and its source) |
+| **Export** | Exports the rules shown (all or the selected ones) to a file in the order shown (CSV, XML or JSON, incl. whether the rule is managed by NETworkManager and its source), see [Export format](../faq/export-format.md) |
 
 ### Keyboard shortcuts
 

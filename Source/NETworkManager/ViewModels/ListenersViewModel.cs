@@ -303,10 +303,11 @@ public class ListenersViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType,
-                    instance.ExportAll
-                        ? Results
-                        : new ObservableCollection<ListenerInfo>(SelectedResults.Cast<ListenerInfo>().ToArray()));
+                // The rows shown in the grid (search / filter) in the order shown (sorting). Copied on the UI thread,
+                // exported in the background
+                var results = ResultsView.GetItemsInViewOrder<ListenerInfo>(instance.ExportAll, SelectedResults);
+
+                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }
             catch (Exception ex)
             {

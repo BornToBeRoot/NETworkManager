@@ -77,7 +77,7 @@ The **Ports** input lists the recently scanned ports (history) and the [port pro
 | **SNMP** | Opens the host (hostname if resolved, otherwise the IP address) in [SNMP](./snmp) |
 | **Add profile...** | Creates a new profile with the host (IP address), the hostname as name and the ports of the shown scan for the Port Scanner |
 | **Copy**        | Copies the selected information to the clipboard                                                               |
-| **Export...**   | Exports the selected or all results to a file                                                                  |
+| **Export...** | Exports the results shown (all or the selected ones) to a file in the order shown, see [Export format](../faq/export-format.md) |
 
 If multiple results are selected, **Rescan**, **Copy** > **IP address** / **Hostname** / **Port** / **IP address:Port** (one value per line, in the order shown, without duplicates; IPv6 as `[address]:port`) and **Export...** are available.
 
@@ -94,7 +94,7 @@ Right-click the header of a host (group) for the actions of the host:
 
 The results are grouped by host (one group per IP address, the header shows the hostname, the IP address and the number of open ports) and sorted by IP address and port. The number of open, closed and timed out ports is shown below the **Result** header. A port is **open** if the connection was established, **closed** if the host refused the connection and **timed out** if there was no answer within the [timeout](#timeout-ms) (e.g. blocked by a firewall). Only open ports are shown, unless [Show closed ports](#show-closed-ports) is enabled (closed and timed out ports). The **Hostname** column is shown if [Resolve hostname](#resolve-hostname) was enabled when the scan was started.
 
-The search box right of the **Result** header filters the results by IP address, hostname, port, protocol, service, description and status, also while the scan is running. **Export...** > all exports the filtered results; the counters always count all ports.
+The search box right of the **Result** header filters the results by IP address, hostname, port, protocol, service, description and status, also while the scan is running. **Export...** > all exports the filtered results (grouped by host, in the order shown); the counters always count all ports.
 
 ### Changes since the last scan
 

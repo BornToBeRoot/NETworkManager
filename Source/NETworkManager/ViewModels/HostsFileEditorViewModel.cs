@@ -301,11 +301,11 @@ public class HostsFileEditorViewModel : ViewModelBase
 
                 try
                 {
-                    ExportManager.Export(instance.FilePath, instance.FileType,
-                        instance.ExportAll
-                            ? Results
-                            : new ObservableCollection<HostsFileEntry>(SelectedResults.Cast<HostsFileEntry>()
-                                .ToArray()));
+                    // The rows shown in the grid (search / filter) in the order shown (sorting). Copied on the UI thread,
+                    // exported in the background
+                    var results = ResultsView.GetItemsInViewOrder<HostsFileEntry>(instance.ExportAll, SelectedResults);
+
+                    await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
                 }
                 catch (Exception ex)
                 {

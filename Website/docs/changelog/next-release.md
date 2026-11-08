@@ -20,7 +20,18 @@ Release date: **xx.xx.2026**
 ## Breaking Changes
 
 - Removed the **ThreadPool additional min. threads** setting (Settings > General) and the application-wide `ThreadPool.SetMinThreads` workaround it configured for the IP Scanner and Port Scanner. It's no longer needed now that both scan engines use non-blocking async concurrency instead of blocking calls. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
+- **Exports (CSV, XML, JSON)**: the exports of all tools now use the same format, see [Export format](../faq/export-format.md). Columns may have been reordered (like shown in the tool) or added, and values are formatted the same way in every tool (e.g. numbers without unit and with a decimal point, dates as `yyyy-MM-dd HH:mm:ss.fff`, MAC addresses as `AA:BB:CC:DD:EE:FF`, empty values instead of placeholders like `-/-`). If you process exports with scripts or other tools, check them after the update and read the columns by name instead of by position. The changes of each tool are listed below. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **Network Interface**: the export contains the MAC address (`PhysicalAddress`) as `AA:BB:CC:DD:EE:FF` instead of `AABBCCDDEEFF`, the DHCP lease (`DhcpLeaseObtained`, `DhcpLeaseExpires`) as `2026-11-08 10:15:30.123` in every format and language (empty without DHCP), and lists of IP addresses separated by `; ` instead of `;`, like in all exports. The IPv6 link-local address comes before the IPv6 address, like in the details. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **WiFi**: the export contains `BeaconInterval` (milliseconds, e.g. `102.4`) and `Uptime` (seconds) as numbers instead of text (`00:00:00.1024000`), like the durations of all exports. The columns of the export are in the order of the grid (SSID, connected, security, frequency, channel, channel width, signal, authentication, encryption, BSSID, vendor, ...) instead of the BSSID first and the values shown in the grid at the end. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **IP Scanner**: the export contains the ping time (`Time`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`, `-/-`). `Time`, `TTL` and `Bytes` are empty without a reply instead of `-/-` / `0`, like in all exports. The columns of the export are grouped by topic instead of new columns being appended at the end: host (`IsReachable`, `DetectedBy`, `IPAddress`, hostnames, MAC address, vendor, role, OS), ping, port scan, NetBIOS, web page, SNMP, Windows host information and the change since the last scan. The ports in the CSV export contain port, protocol and state (`80/Tcp/Open; 443/Tcp/Closed`) instead of also service and description, which can contain `/` and `;` (JSON / XML unchanged). [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 - **Port Scanner**: the JSON export uses the key `State` for the port state (like CSV and XML) instead of `Status`. Scripts that read `Status` have to be adjusted. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- **Ping Monitor**: the export contains the ping time (`Time`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`, `-/-`). `Time`, `TTL` and `Bytes` are empty without a reply instead of `-/-` / `0`, like in all exports. The columns are `Timestamp`, `IPAddress`, `Hostname`, `Status`, `Time`, `TTL`, `Bytes` (status first, like the ping of the **IP Scanner**). [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **Traceroute**: the export contains the times (`Time1` - `Time3`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`), empty without a reply instead of `-/-`, like in all exports. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **SNTP Lookup**: the export contains `Offset` (seconds) and `RoundTripDelay` (milliseconds) as numbers with a decimal point (e.g. `-0.25`) instead of text with the unit (`-0.25 s`, `10.5 ms`), like in all exports. The **Offset** (also in the grid) uses the sign of NTP: time of the server minus the local time (positive if the local clock is behind), the opposite of before. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **Firewall**: the columns of the export are in the order of the grid: `IsEnabled` first, the local and remote address before the port (`LocalAddresses`, `LocalPorts`, `RemoteAddresses`, `RemotePorts`), then `Program`, `InterfaceType`, `NetworkProfiles` and `Description`. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **Discovery Protocol**: the columns of the export are in the order shown: `Management` and `ChassisId` (new) after `IPAddress`, `LocalConnection` and `LocalInterface` (new) at the end. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **IP Geolocation**: the columns of the export are in the order shown: `Query` (IP address) and `Reverse` after `Currency`, then the network (`Isp`, `Org`, `As`, `Asname`, `Hosting`, `Proxy`, `Mobile`), like the geolocation in the **Traceroute** export. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **Neighbor Table**: the export contains the MAC address as `AA:BB:CC:DD:EE:FF` (like it is shown) instead of `AABBCCDDEEFF`, like in all exports. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 ## What's new?
 
@@ -70,6 +81,7 @@ Release date: **xx.xx.2026**
 **Network Interface**
 
 - Members of the **Network Configuration Operators** group can now change the network configuration (IP address, DNS servers, release/renew) without being an administrator. NETworkManager has to run elevated (**Restart as Administrator**, confirm with your own credentials). The hint is now also shown as tooltip on **Apply** in the profile context menu. [#3606](https://github.com/BornToBeRoot/NETworkManager/issues/3606)
+- The export contains the network profile (`Profile`, e.g. `Private`) after the speed, like in the details. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **WiFi**
 
@@ -80,7 +92,7 @@ Release date: **xx.xx.2026**
 - The BSSID is shown, copied and exported in the same format as the MAC addresses of the other tools (`AA:BB:CC:DD:EE:FF` instead of `aa:bb:cc:dd:ee:ff`). [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - Reloading the adapters keeps the networks visible while they are scanned again (the refresh icon spins), instead of replacing them by the loading indicator. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - An unknown security or PHY kind is shown as `-/-` (like an unknown vendor) instead of the untranslated text `Unknown`. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
-- The export contains the values shown in the grid that were missing: `IsConnected`, `Security`, `Channel`, `ChannelWidth` (MHz), `ChannelWidthEstimated` and `Vendor` (appended as the last columns / elements). [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
+- The export contains the values shown in the grid that were missing: `IsConnected`, `Security`, `Channel`, `ChannelWidth` (MHz), `ChannelWidthEstimated` and `Vendor`. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - **Export...** > all exports the networks shown in the grid (filtered by band and search) in the order shown, the selected networks are exported in the order shown too. The file is written in the background. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - Scanning the networks (also **Automatically update every**) no longer freezes the window briefly: the connected network is read from the WiFi API instead of `netsh` via PowerShell, and the vendor lookups run in the background. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - The selected network stays selected (and in view) when the networks are scanned again, e.g. with **Automatically update every**. The list is replaced at once instead of network by network. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
@@ -107,7 +119,7 @@ Release date: **xx.xx.2026**
 - **Copy** > **IP address** / **Hostname** / **MAC address** is also available if multiple results are selected (one value per line, in the order shown). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Added a **Time** column with the round trip time of the ping. Sorted by time, hosts without a ping reply are at the end. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - A host is shown as soon as it answers (ping reply, open or refused port or NetBIOS answer) instead of after all probes and lookups are finished (up to the port scan / NetBIOS timeout, plus the DNS lookup). Values of probes that are still running are shown as `...`, the other results, the DNS hostname and the MAC address / vendor are filled in when they arrive. The DNS hostname and the MAC address are resolved right after the first answer. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
-- The CSV and XML export contain the DNS hostname (`DNSHostname`) in addition to the hostname (DNS, or NetBIOS as fallback), like the JSON export. It is added after the columns (CSV) / elements (XML) of the last release, so their position doesn't change. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- The CSV and XML export contain the DNS hostname (`DNSHostname`) in addition to the hostname (DNS, or NetBIOS as fallback), like the JSON export. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Hosts are started one after another (every 10 ms, shorter with short timeouts and many threads) instead of all at the same moment. This avoids bursts of more than a thousand connection requests within a few milliseconds and makes the progress smoother. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Closed ports are reported immediately. Windows repeated the connection request after the host refused it and reported a closed port only after about 2 seconds. The connection request is sent once. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - New **Attempts** setting for the port scan (default `1`): another connection request is sent if there was no answer, e.g. on an unreliable network (Wi-Fi, VPN) or for hosts on the internet. Open and closed ports are not repeated. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
@@ -175,16 +187,28 @@ Release date: **xx.xx.2026**
 - IP addresses can be excluded with `!` in the host input (also in profiles and the run command), e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254`: IP addresses, ranges, subnets and hostnames (nothing is scanned if an excluded hostname can't be resolved). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - The notification shows the tool in its header (icon and name), a click opens the **Ping Monitor**; down uses the red of the application. The message is a line with the IP address and the status in its color (e.g. `10.0.0.1 · Up`) like the notifications of the **IP Scanner** and the **Port Scanner** (was `Host is up`). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - **Play sound on status change** is off by default (the popup stays on); an existing setting is kept. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- **Export...** writes the file in the background, so the window stays responsive with a long history. The history is only updated on the UI thread, so an export while pinging can no longer fail or miss results. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Traceroute**
 
 - Added **RDAP...** to the context menu to query the registration data of the IP address, hostname or AS number of a hop in the [**RDAP**](../application/rdap.md) tool. [#3642](https://github.com/BornToBeRoot/NETworkManager/pull/3642)
+- The export contains the region name shown in the grid (`RegionName`, e.g. `Bavaria`) after the region code (`Region`, e.g. `BY`), like the **IP Geolocation** export. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **Export...** exports the hops in the order shown (by hop), the selected hops in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **DNS Lookup**
 
 - Profiles: new option **DNS server** to use a DNS server of the profile instead of the one selected in the DNS lookup, with the same list and `Tab` completion. It can also be set in the group (used by the profiles of the group that don't override it). New option **Type** (record type) in the profile; without it, a profile is looked up with `PTR` for IP addresses and `A` for hostnames instead of the last selected record type. Configured DNS servers are referenced by the profile (changes apply, also after a rename), their IP addresses are saved as well and used, with a note, if the DNS server can't be found (e.g. a profile file shared from another computer). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660) [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
 - Several DNS servers can be entered, also names of configured DNS servers together with custom DNS servers (e.g. `Google Public DNS; Cloudflare; 9.9.9.9`), every DNS server is queried once; `[Windows DNS]` in a list adds the DNS servers of Windows. The list of the **DNS server** input shows the history and the configured DNS servers (name, with the IP addresses below), `Tab` completes the name of a DNS server that is being typed (e.g. `google; cl` → `google; Cloudflare`). The name of a DNS server must not contain `;` (replaced by `,` when updating). Also with the run command (`dns borntoberoot.net "Google Public DNS";cloudflare`). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - IP addresses opened from another feature (e.g. **IP Scanner** > **DNS lookup** > **IP address**), from a profile or with the run command are looked up with `PTR` instead of the selected record type. [#3644](https://github.com/BornToBeRoot/NETworkManager/pull/3644)
+- **Export...** exports the results in the order shown (sorting), the selected results in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+
+**SNMP**
+
+- **Export...** exports the results in the order shown (sorting), the selected results in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+
+**SNTP Lookup**
+
+- **Export...** exports the results in the order shown (sorting), the selected results in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Hosts File Editor**
 
@@ -193,6 +217,7 @@ Release date: **xx.xx.2026**
 - Entries that don't change (e.g. enabling an already enabled entry, or confirming the edit dialog without changes) are no longer rewritten in the `hosts` file, so custom formatting such as tabs or alignment is kept. [#3624](https://github.com/BornToBeRoot/NETworkManager/pull/3624)
 - The search filters after a short delay while typing instead of on every key press (smoother with many entries), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; the line below the list only shows errors. A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- **Export** exports the entries shown (search) in the order shown (sorting), the selected entries in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Firewall**
 
@@ -213,25 +238,41 @@ Release date: **xx.xx.2026**
 - Faster loading of the rules managed by NETworkManager if there are many of them (the ports, addresses, programs etc. of all rules are queried at once instead of per rule). [#3637](https://github.com/BornToBeRoot/NETworkManager/pull/3637)
 - `Enter` in the search box filters the rules right away instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; the line below the list only shows errors (e.g. rules loaded with errors, a failed action). A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until the rules are loaded (also with **Show all rules**). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- **Export** exports the rules shown (search) in the order shown (sorting), the selected rules in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+
+**Discovery Protocol**
+
+- The export contains the values shown that were missing: `Management`, `ChassisId`, `LocalConnection` and `LocalInterface`. The columns are in the order shown (`Management` and `ChassisId` after `IPAddress`). [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Whois**
 
 - Added an **Export...** button below the result, like in the other tools. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
 
+**Subnet Calculator**
+
+- **Export...** (subnetting) exports the subnets in the order shown (sorting), the selected subnets in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+
+**Lookup**
+
+- **Export...** (OUI and port lookup) exports the results in the order shown (sorting), the selected results in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+
 **Connections**
 
 - The search filters after a short delay while typing instead of on every key press (smoother with many connections), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; with **Automatically update every**, a countdown to the next refresh (`Next refresh in 00:04`). A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- **Export...** exports the entries shown (search) in the order shown (sorting), the selected entries in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Listeners**
 
 - The search filters after a short delay while typing instead of on every key press (smoother with many listeners), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; with **Automatically update every**, a countdown to the next refresh (`Next refresh in 00:04`). A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- **Export...** exports the entries shown (search) in the order shown (sorting), the selected entries in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Neighbor Table**
 
 - The search filters after a short delay while typing instead of on every key press (smoother with many entries), `Enter` filters right away. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; with **Automatically update every**, a countdown to the next refresh (`Next refresh in 00:04`). The line below the list only shows errors. A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until it is finished. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- **Export...** exports the entries shown (search) in the order shown (sorting), the selected entries in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 ## Bug Fixes
 
@@ -275,6 +316,7 @@ Release date: **xx.xx.2026**
 **Network Interface**
 
 - Fixed errors when changing the network configuration (e.g. missing permissions) not being shown — the change was reported as successful although it failed. The error message of Windows is now shown. [#3606](https://github.com/BornToBeRoot/NETworkManager/issues/3606)
+- Fixed the CSV export breaking the row if the name, the description or the DNS suffix contains a comma (they are quoted now), and the JSON export containing the MAC address as `{}` and the status as a number (e.g. `1` instead of `Up`). [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **WiFi**
 
@@ -301,6 +343,7 @@ Release date: **xx.xx.2026**
 - Fixed the icon of the adapter selection (connected / disconnected) keeping the state of when the adapters were loaded. It is updated after each scan, e.g. after connecting or disconnecting. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - Fixed `F5` scanning and **Automatically update every** refreshing the networks behind an open dialog (e.g. **Connect...** or **Export...**). The auto refresh waits until the dialog is closed. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - Fixed the CSV export breaking the row of a network whose SSID contains a comma or a quote. SSID, security and vendor are quoted. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
+- Fixed the export formatting values differently per format: the JSON export contains `IsWiFiDirect`, `IsConnected`, `ChannelWidthEstimated` as `true` / `false` and `SignalBars`, `NetworkRssiInDecibelMilliwatts` as numbers instead of text, the XML export `BeaconInterval` and `Uptime` like the CSV export (e.g. `00:00:00.1024000`) instead of `PT0.1024S`, and the CSV export decimals with a point in every language. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 - Fixed a network being marked as **Connected** that the selected adapter isn't connected to, if the computer has several WiFi adapters and the selected one was disconnected. An error while reading the connected network no longer ends the scan. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - Fixed the connection status message (e.g. "Connecting to ...") being hidden too early, while still connecting, if a previous message (e.g. after connecting or disconnecting) was shown shortly before. Each message is now shown for 15 seconds. [#3638](https://github.com/BornToBeRoot/NETworkManager/pull/3638)
 - Fixed the adapter list and the auto refresh keeping a removed adapter (e.g. an unplugged USB adapter) after **Refresh** found no adapter or failed: "No WiFi adapters found" is shown now. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
@@ -369,6 +412,7 @@ Release date: **xx.xx.2026**
 - Fixed the ping not working when the ICMP **Buffer** was set to more than `65500` bytes (Windows limit). The maximum is now `65500`, higher values are lowered to `65500`. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Fixed hosts being added twice if the inputs overlap (e.g. `10.0.0.1; 10.0.0.0/24`). If an IP address is also entered as hostname, the hostname is kept; different hostnames of the same IP address (e.g. two names of one server) are all kept. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Fixed **Copy** > **Hostname** copying a hostname resolved via DNS (`PTR`) with a trailing dot (e.g. `server.example.com.`). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
+- Fixed the CSV export breaking the row if the hostname contains a comma. The hostname is quoted now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Traceroute**
 
@@ -383,6 +427,7 @@ Release date: **xx.xx.2026**
 - Fixed **Add DNS suffix (primary) to hostname** silently appending no suffix at all on machines without a Windows primary DNS suffix configured (e.g. not domain-joined), even though a usable suffix was available via the active network adapter's connection-specific DNS suffix (shown under **DNS Suffix Search List** in `ipconfig /all`). It now falls back to that adapter's suffix in this case. [#3591](https://github.com/BornToBeRoot/NETworkManager/pull/3591)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the DNS server profiles in the settings. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 - Fixed a technical error (*An invalid IP address was specified*) being shown for a hostname looked up with `PTR`. A message is shown and the hostname is skipped, the other hosts are looked up. [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
+- Fixed the CSV export breaking the row if a result (e.g. a `TXT` record) contains a comma or a quote. Domain name, result and name server hostname are quoted now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Web Console**
 
@@ -392,14 +437,20 @@ Release date: **xx.xx.2026**
 
 - Fixed `Enter` in the search box of the OID profiles dialog closing the dialog with **OK**. It only filters the OID profiles now. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the OID profiles (dialog, settings). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+- Fixed the CSV export breaking the row if the data contains a comma or a quote. The data is quoted now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- Fixed the XML export failing (no file) if the data contains control characters that XML doesn't allow (e.g. binary `OctetString` values). These characters are removed in the XML file, CSV and JSON contain the data unchanged. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **SNTP Lookup**
 
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the SNTP server profiles in the settings. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+- Fixed the CSV export breaking the row with a decimal comma (e.g. German) in the offset and round trip delay, the values are exported with a decimal point now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- Fixed the offset being cut off to whole seconds and the round trip delay to whole milliseconds (e.g. an offset of 0.25 s was shown and exported as `0 s`). The offset is shown with millisecond precision, the round trip delay with 0.01 ms. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- Fixed a wrong offset of about one hour for a lookup in the hour that is repeated at the end of the daylight saving time, and the network connection of a failed request (e.g. timeout) not being closed. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Hosts File Editor**
 
 - Fixed the retry of a locked hosts file waiting 5 seconds between the attempts (the message said 2) and once more after the last attempt. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- Fixed the CSV export breaking the row if the comment contains a comma. Hostname and comment are quoted now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Firewall**
 
@@ -415,6 +466,10 @@ Release date: **xx.xx.2026**
 - Fixed program paths with environment variables (e.g. `%SystemRoot%\System32\svchost.exe`) being rejected as non-existent in the add / edit / copy rule dialog. [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 
+**Discovery Protocol**
+
+- Fixed the CSV export breaking the row if a value (e.g. the device description) contains a comma or a quote. Text values are quoted now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+
 **RDAP**
 
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the bootstrap files in the settings. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
@@ -422,11 +477,16 @@ Release date: **xx.xx.2026**
 **IP Geolocation**
 
 - Fixed the query history of **IP Geolocation** being written to the history of **Whois** instead of its own. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
+- Fixed the CSV export breaking the row with a decimal comma (e.g. German) in the latitude / longitude, or a comma in a text (e.g. the ISP `Example, Inc.`). Decimals are exported with a decimal point, text is quoted now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Subnet Calculator**
 
 - Fixed **Subnetting** getting stuck when the new subnet mask is smaller than the subnet mask of the subnet (e.g. `10.0.0.0/24` with `/16`) or too large for the address family (e.g. `/40` for IPv4). An error is shown instead. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the subnetting result. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+
+**Bit Calculator**
+
+- Fixed the CSV export breaking the row with a decimal comma (e.g. German), the values are exported with a decimal point now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Lookup**
 
@@ -467,5 +527,6 @@ Release date: **xx.xx.2026**
 - Added a unit test project (xUnit) with tests for the run command parser and the history lists. [#3644](https://github.com/BornToBeRoot/NETworkManager/pull/3644)
 - Reworked the GitHub issue templates as forms (bug report, feature request, question) that ask for the relevant information (e.g. affected feature, version, installation, Windows version, log), with links to the documentation, discussions, translations and security advisories. Simplified the pull request template and removed the Copilot summary section. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Faster CI: AppVeyor no longer builds a branch a second time when a PR is open, skips changes that only affect the documentation / website, builds ARM64 only for releases and now runs the unit tests. The website is only built for PRs that change it and builds about 3x faster (Docusaurus Faster). Dependabot also updates the GitHub Actions, and CodeQL also scans the workflows. Website changes are only merged automatically if the website builds. Dependabot major updates are no longer merged automatically. Removed the stale bot. [#3675](https://github.com/BornToBeRoot/NETworkManager/pull/3675)
+- The exports (CSV, XML, JSON) of all tools define their columns once and are written by one shared writer, so the three formats can't drift apart and every tool formats the same kind of value the same way (not translated), see [Export format](../faq/export-format.md). Added unit tests for the exports. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
