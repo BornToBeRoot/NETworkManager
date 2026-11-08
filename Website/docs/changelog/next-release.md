@@ -25,6 +25,7 @@ Release date: **xx.xx.2026**
 - **Ping Monitor**: the export contains the ping time (`Time`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`, `-/-`). `Time`, `TTL` and `Bytes` are empty without a reply instead of `-/-` / `0`, like in all exports.
 - **Traceroute**: the export contains the times (`Time1` - `Time3`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`), empty without a reply instead of `-/-`, like in all exports.
 - **Network Interface**: the export contains the MAC address (`PhysicalAddress`) as `AA:BB:CC:DD:EE:FF` instead of `AABBCCDDEEFF`, the DHCP lease (`DhcpLeaseObtained`, `DhcpLeaseExpires`) as `2026-11-08 10:15:30.123` in every format and language (empty without DHCP), and lists of IP addresses separated by `; ` instead of `;`, like in all exports.
+- **SNTP Lookup**: the export contains `Offset` (seconds) and `RoundTripDelay` (milliseconds) as numbers with a decimal point (e.g. `-0.25`) instead of text with the unit (`-0.25 s`, `10.5 ms`), like in all exports.
 
 ## What's new?
 
@@ -391,6 +392,7 @@ Release date: **xx.xx.2026**
 - Fixed **Add DNS suffix (primary) to hostname** silently appending no suffix at all on machines without a Windows primary DNS suffix configured (e.g. not domain-joined), even though a usable suffix was available via the active network adapter's connection-specific DNS suffix (shown under **DNS Suffix Search List** in `ipconfig /all`). It now falls back to that adapter's suffix in this case. [#3591](https://github.com/BornToBeRoot/NETworkManager/pull/3591)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the DNS server profiles in the settings. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 - Fixed a technical error (*An invalid IP address was specified*) being shown for a hostname looked up with `PTR`. A message is shown and the hostname is skipped, the other hosts are looked up. [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
+- Fixed the CSV export breaking the row if a result (e.g. a `TXT` record) contains a comma or a quote. Domain name, result and name server hostname are quoted now.
 
 **Web Console**
 
@@ -404,6 +406,7 @@ Release date: **xx.xx.2026**
 **SNTP Lookup**
 
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the SNTP server profiles in the settings. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+- Fixed the CSV export breaking the row with a decimal comma (e.g. German) in the offset and round trip delay, the values are exported with a decimal point now.
 
 **Hosts File Editor**
 

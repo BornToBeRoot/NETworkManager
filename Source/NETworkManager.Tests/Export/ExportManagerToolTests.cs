@@ -195,6 +195,49 @@ public class ExportManagerToolTests
 
     #endregion
 
+    #region DNS Lookup
+
+    [Fact]
+    public void DNSLookup_Consistent()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t,
+            [new DNSLookupRecordInfo("example.com", 300, "IN", "TXT", "v=spf1 a, mx \"x\"", "1.1.1.1", "one.one", 53)]));
+
+        AssertConsistent(files,
+            "DomainName,TTL,RecordClass,RecordType,Result,NameServerIPAddress,NameServerHostName,NameServerPort");
+        Assert.Equal("v=spf1 a, mx \"x\"", files.CsvValue("Result"));
+        Assert.Equal(300, (int)files.JsonValue("TTL"));
+    }
+
+    #endregion
+
+    #region SNTP Lookup
+
+    [Fact]
+    public void SNTPLookup_Consistent()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t,
+        [
+            new SNTPLookupInfo("pool.ntp.org", "1.2.3.4:123",
+                new SNTPDateTime
+                {
+                    LocalStartTime = Time, NetworkTime = Time.AddMilliseconds(5), LocalEndTime = Time.AddMilliseconds(10),
+                    RoundTripDelay = 10.5, Offset = -0.25
+                })
+        ]));
+
+        AssertConsistent(files, "Server,IPEndPoint,NetworkTime,LocalStartTime,LocalEndTime,Offset,RoundTripDelay");
+        Assert.Equal("2026-11-08 10:15:30.128", files.CsvValue("NetworkTime"));
+
+        // Numbers without unit (s / ms), decimal point
+        Assert.Equal("-0.25", files.CsvValue("Offset"));
+        Assert.Equal("10.5", files.XmlValue("RoundTripDelay"));
+        Assert.Equal(-0.25, (double)files.JsonValue("Offset"));
+        Assert.Equal(JTokenType.Float, files.JsonValue("RoundTripDelay").Type);
+    }
+
+    #endregion
+
     private static IPGeolocationInfo CreateGeolocation()
     {
         return new IPGeolocationInfo
