@@ -512,29 +512,9 @@ public class WiFiViewModel : ViewModelBase
 
         _isLoading = true;
 
-        // Set up the channel charts (axes, sections, paints) unconditionally so the chart bindings
-        // are never null, even on the code paths that return early below.
+        // Set up the channel charts (axes, sections, paints), the list and the timers unconditionally, so the
+        // bindings are never null - also if the WiFi API is not available or the access is denied (yet)
         InitializeCharts();
-
-        // Check if Microsoft.Windows.SDK.Contracts is available
-        SdkContractAvailable = ApiInformation.IsTypePresent("Windows.Devices.WiFi.WiFiAdapter");
-
-        if (!SdkContractAvailable)
-        {
-            _isLoading = false;
-
-            return;
-        }
-
-        // Check if the access is denied and show a message
-        WiFiAdapterAccessEnabled = RequestAccess();
-
-        if (!WiFiAdapterAccessEnabled)
-        {
-            _isLoading = false;
-
-            return;
-        }
 
         // Result view + search
         NetworksView = CollectionViewSource.GetDefaultView(Networks);
@@ -569,10 +549,7 @@ public class WiFiViewModel : ViewModelBase
                    info.PhyKind.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
         };
 
-        // Load network adapters
-        _ = LoadAdaptersAsync(SettingsManager.Current.WiFi_InterfaceId);
-
-        // Auto refresh
+        // Auto refresh (enabled when the access is allowed, see Start)
         // Not without an adapter, while a dialog is open (e.g. connect), or while networks are loading or a connection
         // is made (tried again after the interval)
         _autoRefreshTimer = new AutoRefreshTimer(() => ScanAsync(SelectedAdapter, true),
@@ -583,7 +560,6 @@ public class WiFiViewModel : ViewModelBase
         SelectedAutoRefreshTime = AutoRefreshTimes.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
             x.Value == SettingsManager.Current.WiFi_AutoRefreshTime.Value &&
             x.TimeUnit == SettingsManager.Current.WiFi_AutoRefreshTime.TimeUnit);
-        AutoRefreshEnabled = SettingsManager.Current.WiFi_AutoRefreshEnabled;
 
         // Hide ConnectionStatusMessage automatically
         _hideConnectionStatusMessageTimer.Interval = new TimeSpan(0, 0, 15);
@@ -592,7 +568,45 @@ public class WiFiViewModel : ViewModelBase
         // Load settings
         LoadSettings();
 
+        // Check if Microsoft.Windows.SDK.Contracts is available
+        SdkContractAvailable = ApiInformation.IsTypePresent("Windows.Devices.WiFi.WiFiAdapter");
+
+        if (SdkContractAvailable)
+        {
+            // Check if the access is denied and show a message (checked again, see CheckAccess)
+            WiFiAdapterAccessEnabled = RequestAccess();
+
+            if (WiFiAdapterAccessEnabled)
+                Start();
+        }
+
         _isLoading = false;
+    }
+
+    /// <summary>
+    ///     Loads the adapters (scans the networks of the selected one) and enables the auto refresh. Called once the
+    ///     access to the WiFi adapter is allowed.
+    /// </summary>
+    private void Start()
+    {
+        _ = LoadAdaptersAsync(SettingsManager.Current.WiFi_InterfaceId);
+
+        AutoRefreshEnabled = SettingsManager.Current.WiFi_AutoRefreshEnabled;
+    }
+
+    /// <summary>
+    ///     Checks the access to the WiFi adapter again while it is denied (e.g. it was allowed in the Windows settings
+    ///     after the message was shown), and starts if it is allowed now - without a restart of the application.
+    /// </summary>
+    private void CheckAccess()
+    {
+        if (!SdkContractAvailable || WiFiAdapterAccessEnabled)
+            return;
+
+        WiFiAdapterAccessEnabled = RequestAccess();
+
+        if (WiFiAdapterAccessEnabled)
+            Start();
     }
 
     private void LoadSettings()
@@ -673,6 +687,8 @@ public class WiFiViewModel : ViewModelBase
     {
         _ = Export();
     }
+
+    public ICommand CheckAccessCommand => new RelayCommand(_ => CheckAccess());
 
     public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
 
@@ -1387,13 +1403,15 @@ public class WiFiViewModel : ViewModelBase
 
     public void OnViewVisible()
     {
-        // Not created if the WiFi API is not available or the access is denied (see constructor)
-        _autoRefreshTimer?.Resume();
+        // The access may have been allowed in the Windows settings in the meantime
+        CheckAccess();
+
+        _autoRefreshTimer.Resume();
     }
 
     public void OnViewHide()
     {
-        _autoRefreshTimer?.Pause();
+        _autoRefreshTimer.Pause();
     }
 
     #endregion
