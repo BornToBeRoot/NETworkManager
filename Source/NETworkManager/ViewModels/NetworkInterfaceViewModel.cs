@@ -1106,101 +1106,26 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         }
     }
 
-    private async Task ApplyConfiguration()
+    private Task ApplyConfiguration()
     {
-        IsConfigurationRunning = true;
-        IsStatusMessageDisplayed = false;
-
-        var subnetmask = ConfigSubnetmask;
-
-        // CIDR to subnetmask
-        if (ConfigEnableStaticIPAddress && subnetmask.StartsWith("/"))
-            subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
-
-        // If primary and secondary DNS are empty --> autoconfiguration
-        if (ConfigEnableStaticDNS && string.IsNullOrEmpty(ConfigPrimaryDNSServer) &&
-            string.IsNullOrEmpty(ConfigSecondaryDNSServer))
-            ConfigEnableDynamicDNS = true;
-
-        // When primary DNS is empty, swap it with secondary (if not empty)
-        if (ConfigEnableStaticDNS && string.IsNullOrEmpty(ConfigPrimaryDNSServer) &&
-            !string.IsNullOrEmpty(ConfigSecondaryDNSServer))
-        {
-            ConfigPrimaryDNSServer = ConfigSecondaryDNSServer;
-            ConfigSecondaryDNSServer = string.Empty;
-        }
-
-        var config = new NetworkInterfaceConfig
-        {
-            Name = SelectedNetworkInterface.Name,
-            EnableStaticIPAddress = ConfigEnableStaticIPAddress,
-            IPAddress = ConfigIPAddress,
-            Subnetmask = subnetmask,
-            Gateway = ConfigGateway,
-            EnableStaticDNS = ConfigEnableStaticDNS,
-            PrimaryDNSServer = ConfigPrimaryDNSServer,
-            SecondaryDNSServer = ConfigSecondaryDNSServer
-        };
-
-        try
-        {
-            await NetworkInterface.ConfigureNetworkInterfaceAsync(config);
-
-            ReloadNetworkInterfaces();
-
-            StatusMessage = Strings.NetworkInterfaceConfigurationAppliedSuccessfully;
-            IsStatusMessageDisplayed = true;
-        }
-        catch (Exception ex)
-        {
-            StatusMessage = ex.Message;
-            IsStatusMessageDisplayed = true;
-        }
-        finally
-        {
-            IsConfigurationRunning = false;
-        }
+        return ApplyConfigurationAsync(NetworkInterfaceConfig.Create(SelectedNetworkInterface.Name,
+            ConfigEnableStaticIPAddress, ConfigIPAddress, ConfigSubnetmask, ConfigGateway, ConfigEnableStaticDNS,
+            ConfigPrimaryDNSServer, ConfigSecondaryDNSServer));
     }
 
-    private async Task ApplyConfigurationFromProfile()
+    private Task ApplyConfigurationFromProfile()
+    {
+        return ApplyConfigurationAsync(NetworkInterfaceConfig.Create(SelectedNetworkInterface.Name,
+            SelectedProfile.NetworkInterface_EnableStaticIPAddress, SelectedProfile.NetworkInterface_IPAddress,
+            SelectedProfile.NetworkInterface_Subnetmask, SelectedProfile.NetworkInterface_Gateway,
+            SelectedProfile.NetworkInterface_EnableStaticDNS, SelectedProfile.NetworkInterface_PrimaryDNSServer,
+            SelectedProfile.NetworkInterface_SecondaryDNSServer));
+    }
+
+    private async Task ApplyConfigurationAsync(NetworkInterfaceConfig config)
     {
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
-
-        var subnetmask = SelectedProfile.NetworkInterface_Subnetmask;
-
-        // CIDR to subnetmask
-        if (SelectedProfile.NetworkInterface_EnableStaticIPAddress && subnetmask.StartsWith("/"))
-            subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
-
-        var enableStaticDNS = SelectedProfile.NetworkInterface_EnableStaticDNS;
-
-        var primaryDNSServer = SelectedProfile.NetworkInterface_PrimaryDNSServer;
-        var secondaryDNSServer = SelectedProfile.NetworkInterface_SecondaryDNSServer;
-
-        // If primary and secondary DNS are empty --> autoconfiguration
-        if (enableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) && string.IsNullOrEmpty(secondaryDNSServer))
-            enableStaticDNS = false;
-
-        // When primary DNS is empty, swap it with secondary (if not empty)
-        if (SelectedProfile.NetworkInterface_EnableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) &&
-            !string.IsNullOrEmpty(secondaryDNSServer))
-        {
-            primaryDNSServer = secondaryDNSServer;
-            secondaryDNSServer = string.Empty;
-        }
-
-        var config = new NetworkInterfaceConfig
-        {
-            Name = SelectedNetworkInterface.Name,
-            EnableStaticIPAddress = SelectedProfile.NetworkInterface_EnableStaticIPAddress,
-            IPAddress = SelectedProfile.NetworkInterface_IPAddress,
-            Subnetmask = subnetmask,
-            Gateway = SelectedProfile.NetworkInterface_Gateway,
-            EnableStaticDNS = enableStaticDNS,
-            PrimaryDNSServer = primaryDNSServer,
-            SecondaryDNSServer = secondaryDNSServer
-        };
 
         try
         {
