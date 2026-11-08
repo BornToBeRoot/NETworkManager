@@ -1554,9 +1554,18 @@
                                            Text="{x:Static localization:Strings.SubnetMask}" Margin="24,0,0,0"
                                            VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
                                 <ComboBox x:Name="ComboBoxNetworkInterfaceSubnetmask" Grid.Column="2" Grid.Row="2"
-                                          Style="{StaticResource EditableComboBox}"
                                           mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4SubnetmaskIPv4CIDR}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                           ItemsSource="{x:Static network:Subnetmask.List}">
+                                    <ComboBox.Style>
+                                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource EditableComboBox}">
+                                            <Style.Triggers>
+                                                <!-- No validation errors while disabled (static IP address not selected) -->
+                                                <DataTrigger Binding="{Binding NetworkInterface_EnableStaticIPAddress}" Value="False">
+                                                    <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ComboBox.Style>
                                     <ComboBox.Text>
                                         <Binding Path="NetworkInterface_Subnetmask" Mode="TwoWay"
                                                  UpdateSourceTrigger="PropertyChanged">
