@@ -24,6 +24,7 @@ Release date: **xx.xx.2026**
 - **IP Scanner**: the export contains the ping time (`Time`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`, `-/-`). `Time`, `TTL` and `Bytes` are empty without a reply instead of `-/-` / `0`, like in all exports.
 - **Ping Monitor**: the export contains the ping time (`Time`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`, `-/-`). `Time`, `TTL` and `Bytes` are empty without a reply instead of `-/-` / `0`, like in all exports.
 - **Traceroute**: the export contains the times (`Time1` - `Time3`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`), empty without a reply instead of `-/-`, like in all exports.
+- **Network Interface**: the export contains the MAC address (`PhysicalAddress`) as `AA:BB:CC:DD:EE:FF` instead of `AABBCCDDEEFF`, the DHCP lease (`DhcpLeaseObtained`, `DhcpLeaseExpires`) as `2026-11-08 10:15:30.123` in every format and language (empty without DHCP), and lists of IP addresses separated by `; ` instead of `;`, like in all exports.
 
 ## What's new?
 
@@ -73,6 +74,7 @@ Release date: **xx.xx.2026**
 **Network Interface**
 
 - Members of the **Network Configuration Operators** group can now change the network configuration (IP address, DNS servers, release/renew) without being an administrator. NETworkManager has to run elevated (**Restart as Administrator**, confirm with your own credentials). The hint is now also shown as tooltip on **Apply** in the profile context menu. [#3606](https://github.com/BornToBeRoot/NETworkManager/issues/3606)
+- The export contains the network profile (`Profile`, e.g. `Private`) as last column / element.
 
 **WiFi**
 
@@ -278,6 +280,7 @@ Release date: **xx.xx.2026**
 **Network Interface**
 
 - Fixed errors when changing the network configuration (e.g. missing permissions) not being shown — the change was reported as successful although it failed. The error message of Windows is now shown. [#3606](https://github.com/BornToBeRoot/NETworkManager/issues/3606)
+- Fixed the CSV export breaking the row if the name, the description or the DNS suffix contains a comma (they are quoted now), and the JSON export containing the MAC address as `{}` and the status as a number (e.g. `1` instead of `Up`).
 
 **WiFi**
 

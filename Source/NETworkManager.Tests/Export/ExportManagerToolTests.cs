@@ -121,6 +121,80 @@ public class ExportManagerToolTests
 
     #endregion
 
+    #region Network Interface
+
+    private static NetworkInterfaceInfo CreateNetworkInterface()
+    {
+        return new NetworkInterfaceInfo
+        {
+            Id = "{GUID}", Name = "Ethernet, 2", Description = "Intel(R) Ethernet \"I219\"", Type = "Ethernet",
+            PhysicalAddress = PhysicalAddress.Parse("00-11-22-AA-BB-CC"), Status = OperationalStatus.Up,
+            IsOperational = true, Speed = 1000000000, IPv4ProtocolAvailable = true,
+            IPv4Address = [Tuple.Create(IPAddress, IPAddress.Parse("255.255.255.0"))],
+            IPv4Gateway = [IPAddress.Parse("10.0.0.254")], DhcpEnabled = true,
+            DhcpServer = [IPAddress.Parse("10.0.0.254")], DhcpLeaseObtained = Time, DhcpLeaseExpires = Time.AddDays(1),
+            IPv6ProtocolAvailable = true, IPv6Address = [IPAddress.Parse("fd00::1")],
+            IPv6AddressLinkLocal = [IPAddress.Parse("fe80::1")], IPv6Gateway = [], DNSAutoconfigurationEnabled = true,
+            DNSSuffix = "corp.example.com", DNSServer = [IPAddress.Parse("10.0.0.53"), IPAddress.Parse("10.0.0.54")],
+            Profile = NetworkProfile.Private
+        };
+    }
+
+    [Fact]
+    public void NetworkInterface_Consistent()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t, [CreateNetworkInterface()]));
+
+        AssertConsistent(files,
+            "Id,Name,Description,Type,PhysicalAddress,Status,IsOperational,Speed,IPv4ProtocolAvailable,IPv4Address," +
+            "IPv4Gateway,DhcpEnabled,DhcpServer,DhcpLeaseObtained,DhcpLeaseExpires,IPv6ProtocolAvailable,IPv6Address," +
+            "IPv6AddressLinkLocal,IPv6Gateway,DNSAutoconfigurationEnabled,DNSSuffix,DNSServer,Profile");
+        Assert.Equal("Ethernet, 2", files.CsvValue("Name"));
+        Assert.Equal("Private", files.CsvValue("Profile"));
+    }
+
+    [Fact]
+    public void NetworkInterface_Values()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t, [CreateNetworkInterface()]));
+
+        // MAC address like in the other tools, status as text (also in JSON)
+        Assert.Equal("00:11:22:AA:BB:CC", files.CsvValue("PhysicalAddress"));
+        Assert.Equal("00:11:22:AA:BB:CC", (string)files.JsonValue("PhysicalAddress"));
+        Assert.Equal("Up", (string)files.JsonValue("Status"));
+        Assert.Equal(1000000000, (long)files.JsonValue("Speed"));
+
+        // Lists separated by "; ", empty list empty
+        Assert.Equal("10.0.0.1/24", files.CsvValue("IPv4Address"));
+        Assert.Equal("10.0.0.53; 10.0.0.54", files.CsvValue("DNSServer"));
+        Assert.Equal("10.0.0.53; 10.0.0.54", files.XmlValue("DNSServer"));
+        Assert.Equal("10.0.0.53; 10.0.0.54", (string)files.JsonValue("DNSServer"));
+        Assert.Equal(JTokenType.Null, files.JsonValue("IPv6Gateway").Type);
+
+        // Date and time like in the other tools
+        Assert.Equal("2026-11-08 10:15:30.123", files.CsvValue("DhcpLeaseObtained"));
+        Assert.Equal("2026-11-08 10:15:30.123", files.XmlValue("DhcpLeaseObtained"));
+        Assert.Equal("2026-11-09 10:15:30.123", (string)files.JsonValue("DhcpLeaseExpires"));
+    }
+
+    [Fact]
+    public void NetworkInterface_WithoutDhcpAndMACAddress_Empty()
+    {
+        var networkInterface = CreateNetworkInterface();
+        networkInterface.PhysicalAddress = PhysicalAddress.None;
+        networkInterface.DhcpEnabled = false;
+        networkInterface.DhcpLeaseObtained = new DateTime();
+        networkInterface.DhcpLeaseExpires = new DateTime();
+
+        var files = ExportAll((f, t) => ExportManager.Export(f, t, [networkInterface]));
+
+        Assert.Equal("", files.CsvValue("PhysicalAddress"));
+        Assert.Equal("", files.CsvValue("DhcpLeaseObtained"));
+        Assert.Equal(JTokenType.Null, files.JsonValue("DhcpLeaseExpires").Type);
+    }
+
+    #endregion
+
     private static IPGeolocationInfo CreateGeolocation()
     {
         return new IPGeolocationInfo

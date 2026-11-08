@@ -279,7 +279,10 @@ public static partial class ExportManager
             DateTime dateTime => dateTime.ToString(DateTimeFormat, CultureInfo.InvariantCulture),
             TimeSpan timeSpan => timeSpan.ToString("c", CultureInfo.InvariantCulture),
             PhysicalAddress physicalAddress => ToText(physicalAddress),
-            IEnumerable list => string.Join(ListSeparator, list.Cast<object>().Select(ToText)),
+            // Empty list: empty value
+            IEnumerable list => list.Cast<object>().Select(ToText).ToList() is { Count: > 0 } items
+                ? string.Join(ListSeparator, items)
+                : null,
             IFormattable formattable => formattable.ToString(null, CultureInfo.InvariantCulture),
             _ => value.ToString()
         };
