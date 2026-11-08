@@ -27,6 +27,7 @@ Release date: **xx.xx.2026**
 - **Network Interface**: the export contains the MAC address (`PhysicalAddress`) as `AA:BB:CC:DD:EE:FF` instead of `AABBCCDDEEFF`, the DHCP lease (`DhcpLeaseObtained`, `DhcpLeaseExpires`) as `2026-11-08 10:15:30.123` in every format and language (empty without DHCP), and lists of IP addresses separated by `; ` instead of `;`, like in all exports. The IPv6 link-local address comes before the IPv6 address, like in the details.
 - **SNTP Lookup**: the export contains `Offset` (seconds) and `RoundTripDelay` (milliseconds) as numbers with a decimal point (e.g. `-0.25`) instead of text with the unit (`-0.25 s`, `10.5 ms`), like in all exports.
 - **Neighbor Table**: the export contains the MAC address as `AA:BB:CC:DD:EE:FF` (like it is shown) instead of `AABBCCDDEEFF`, like in all exports.
+- **WiFi**: the columns of the export are in the order of the grid (SSID, connected, security, frequency, channel, channel width, signal, authentication, encryption, BSSID, vendor, ...) instead of the BSSID first and the values shown in the grid at the end.
 
 ## What's new?
 
@@ -87,7 +88,7 @@ Release date: **xx.xx.2026**
 - The BSSID is shown, copied and exported in the same format as the MAC addresses of the other tools (`AA:BB:CC:DD:EE:FF` instead of `aa:bb:cc:dd:ee:ff`). [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - Reloading the adapters keeps the networks visible while they are scanned again (the refresh icon spins), instead of replacing them by the loading indicator. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - An unknown security or PHY kind is shown as `-/-` (like an unknown vendor) instead of the untranslated text `Unknown`. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
-- The export contains the values shown in the grid that were missing: `IsConnected`, `Security`, `Channel`, `ChannelWidth` (MHz), `ChannelWidthEstimated` and `Vendor` (appended as the last columns / elements). [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
+- The export contains the values shown in the grid that were missing: `IsConnected`, `Security`, `Channel`, `ChannelWidth` (MHz), `ChannelWidthEstimated` and `Vendor`. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - **Export...** > all exports the networks shown in the grid (filtered by band and search) in the order shown, the selected networks are exported in the order shown too. The file is written in the background. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - Scanning the networks (also **Automatically update every**) no longer freezes the window briefly: the connected network is read from the WiFi API instead of `netsh` via PowerShell, and the vendor lookups run in the background. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - The selected network stays selected (and in view) when the networks are scanned again, e.g. with **Automatically update every**. The list is replaced at once instead of network by network. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
