@@ -479,12 +479,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     #endregion
 
     /// <summary>
-    /// Profile whose values were last filled into the <c>Config*</c> fields.
-    /// </summary>
-    private ProfileInfo _prefilledProfile;
-
-    /// <summary>
-    /// Gets or sets the selected profile. Pre-fills the <c>Config*</c> fields from the profile.
+    /// Gets or sets the selected profile. Selecting a profile selects the network interface it is bound to and fills
+    /// in its values on the Configure tab.
     /// </summary>
     public override ProfileInfo SelectedProfile
     {
@@ -494,35 +490,42 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             if (value == base.SelectedProfile)
                 return;
 
-            // The profile list is rebuilt (and the selected profile selected again) when the view becomes visible or a
-            // profile changes. Only fill in the values if another profile (or the edited one, which is a new object)
-            // is selected, otherwise the values entered on the Configure tab are overwritten.
-            if (value != null && !ReferenceEquals(value, _prefilledProfile))
+            // Only if the user selects the profile. The profile list is rebuilt (and the previous or the first profile
+            // selected again) when the view becomes visible, on search / filter and when a profile changes: this
+            // must not overwrite the values entered on the Configure tab or switch the network interface.
+            if (value != null && !IsProfileSelectedByCode)
             {
-                _prefilledProfile = value;
-
                 // Select the network interface the profile is bound to (if it exists on this computer)
                 var boundNetworkInterface = GetBoundNetworkInterface(value);
 
                 if (boundNetworkInterface != null)
                     SelectedNetworkInterface = boundNetworkInterface;
 
-                ConfigEnableDynamicIPAddress = !value.NetworkInterface_EnableStaticIPAddress;
-                ConfigEnableStaticIPAddress = value.NetworkInterface_EnableStaticIPAddress;
-                ConfigIPAddress = value.NetworkInterface_IPAddress;
-                ConfigGateway = value.NetworkInterface_Gateway;
-                ConfigSubnetmask = value.NetworkInterface_Subnetmask;
-                // DNS servers can only be obtained automatically with DHCP (older profiles may contain both)
-                var enableStaticDNS = value.NetworkInterface_EnableStaticIPAddress ||
-                                      value.NetworkInterface_EnableStaticDNS;
-                ConfigEnableDynamicDNS = !enableStaticDNS;
-                ConfigEnableStaticDNS = enableStaticDNS;
-                ConfigPrimaryDNSServer = value.NetworkInterface_PrimaryDNSServer;
-                ConfigSecondaryDNSServer = value.NetworkInterface_SecondaryDNSServer;
+                SetConfigurationFromProfile(value);
             }
 
             base.SelectedProfile = value;
         }
+    }
+
+    /// <summary>
+    /// Fills in the values of a profile on the Configure tab.
+    /// </summary>
+    private void SetConfigurationFromProfile(ProfileInfo profile)
+    {
+        ConfigEnableDynamicIPAddress = !profile.NetworkInterface_EnableStaticIPAddress;
+        ConfigEnableStaticIPAddress = profile.NetworkInterface_EnableStaticIPAddress;
+        ConfigIPAddress = profile.NetworkInterface_IPAddress;
+        ConfigGateway = profile.NetworkInterface_Gateway;
+        ConfigSubnetmask = profile.NetworkInterface_Subnetmask;
+
+        // DNS servers can only be obtained automatically with DHCP (older profiles may contain both)
+        var enableStaticDNS = profile.NetworkInterface_EnableStaticIPAddress ||
+                              profile.NetworkInterface_EnableStaticDNS;
+        ConfigEnableDynamicDNS = !enableStaticDNS;
+        ConfigEnableStaticDNS = enableStaticDNS;
+        ConfigPrimaryDNSServer = profile.NetworkInterface_PrimaryDNSServer;
+        ConfigSecondaryDNSServer = profile.NetworkInterface_SecondaryDNSServer;
     }
 
     #endregion
