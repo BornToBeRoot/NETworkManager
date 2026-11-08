@@ -7,6 +7,7 @@ using Windows.Devices.WiFi;
 using Windows.Networking.Connectivity;
 using Windows.Security.Credentials;
 using NETworkManager.Models.Lookup;
+using NETworkManager.Utilities;
 
 namespace NETworkManager.Models.Network;
 
@@ -46,13 +47,42 @@ public static class WiFi
                 wifiAdapterInfos.Add(new WiFiAdapterInfo
                 {
                     NetworkInterfaceInfo = networkInterface,
-                    WiFiAdapter = wiFiAdapter
+                    WiFiAdapter = wiFiAdapter,
+                    IsOperational = networkInterface.IsOperational
                 });
             else
                 Log.Warn($"Could not find network interface for WiFi adapter with id: {wiFiAdapterId}");
         }
 
         return wifiAdapterInfos;
+    }
+
+    /// <summary>
+    ///     Updates <see cref="WiFiAdapterInfo.IsOperational" /> of the adapters (e.g. after connecting or
+    ///     disconnecting). Reads only the operational status of the network interfaces (fast), not all
+    ///     their information like <see cref="NetworkInterface.GetNetworkInterfacesAsync" />.
+    /// </summary>
+    /// <param name="adapters">Wi-Fi adapters to update.</param>
+    public static void UpdateAdapterStates(IEnumerable<WiFiAdapterInfo> adapters)
+    {
+        // Optional (only the icon of the adapter selection): an error keeps the previous states instead of failing the
+        // scan it is called after
+        try
+        {
+            var states = new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var networkInterface in System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces())
+                states.TryAdd(networkInterface.Id,
+                    networkInterface.OperationalStatus == System.Net.NetworkInformation.OperationalStatus.Up);
+
+            foreach (var adapter in adapters)
+                if (states.TryGetValue(adapter.NetworkInterfaceInfo.Id, out var isOperational))
+                    adapter.IsOperational = isOperational;
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while reading the state of the WiFi adapters.", ex);
+        }
     }
 
     /// <summary>
@@ -65,32 +95,52 @@ public static class WiFi
         // Scan network adapter async
         await adapter.ScanAsync();
 
-        // Try to get the current connected Wi-Fi network of this network adapter
-        var (_, bssid) = TryGetConnectedNetworkFromWiFiAdapter(adapter.NetworkAdapter.NetworkAdapterId.ToString());
+        // The rest (native calls, vendor lookups) runs in the background - the caller continues on the UI thread
+        // after ScanAsync
+        return await Task.Run(() => CreateScanInfo(adapter));
+    }
 
-        // The WinRT API does not expose the channel bandwidth, so it is read from the native
-        // BSS list (wlanapi.dll) and matched by BSSID below. Failures yield an empty map and we
-        // fall back to a heuristic per network.
-        var channelWidths = WlanApi.GetBssChannelWidths(adapter.NetworkAdapter.NetworkAdapterId);
+    /// <summary>
+    ///     Creates the result of a scan from the network report of the adapter.
+    /// </summary>
+    /// <param name="adapter">WiFi adapter as <see cref="WiFiAdapter" /> after the scan.</param>
+    /// <returns>A report as <see cref="WiFiNetworkScanInfo" /> including a list of <see cref="WiFiNetworkInfo" />.</returns>
+    private static WiFiNetworkScanInfo CreateScanInfo(WiFiAdapter adapter)
+    {
+        var adapterId = adapter.NetworkAdapter.NetworkAdapterId;
+
+        // Read once: every access returns the current report, the networks and the time must be of the same one
+        var report = adapter.NetworkReport;
+
+        // BSSID of the network this adapter is connected to (null if not connected or not read). The WinRT API does
+        // not expose the channel bandwidth (and its center), so it is read from the native BSS list (wlanapi.dll)
+        // and matched by BSSID below. Failures yield an empty map and we fall back to a heuristic per network.
+        var (bssid, channels) = WlanApi.GetBssInfo(adapterId);
 
         var wifiNetworkInfos = new List<WiFiNetworkInfo>();
 
-        foreach (var availableNetwork in adapter.NetworkReport.AvailableNetworks)
+        foreach (var availableNetwork in report.AvailableNetworks)
         {
             var channelFrequencyInGigahertz = ConvertChannelFrequencyToGigahertz(availableNetwork.ChannelCenterFrequencyInKilohertz);
             var radio = GetWiFiRadioFromChannelFrequency(channelFrequencyInGigahertz);
+            var (channelBandwidth, channelBandwidthCenterFrequencyInGigahertz, isChannelBandwidthEstimated) =
+                GetChannelBandwidth(channels, availableNetwork.Bssid, radio, availableNetwork.PhyKind,
+                    channelFrequencyInGigahertz);
 
             var wifiNetworkInfo = new WiFiNetworkInfo
             {
                 AvailableNetwork = availableNetwork,
+                Bssid = MACAddressHelper.GetDefaultFormat(availableNetwork.Bssid),
                 Radio = radio,
                 ChannelCenterFrequencyInGigahertz = channelFrequencyInGigahertz,
                 Channel = GetChannelFromChannelFrequency(channelFrequencyInGigahertz),
-                ChannelBandwidth = GetChannelBandwidth(channelWidths, availableNetwork.Bssid, radio, availableNetwork.PhyKind),
+                ChannelBandwidth = channelBandwidth,
+                ChannelBandwidthCenterFrequencyInGigahertz = channelBandwidthCenterFrequencyInGigahertz,
+                IsChannelBandwidthEstimated = isChannelBandwidthEstimated,
                 IsHidden = string.IsNullOrEmpty(availableNetwork.Ssid),
                 IsConnected = availableNetwork.Bssid.Equals(bssid, StringComparison.OrdinalIgnoreCase),
                 NetworkAuthenticationType = GetHumanReadableNetworkAuthenticationType(availableNetwork.SecuritySettings.NetworkAuthenticationType),
-                Vendor = (await OUILookup.LookupByMacAddressAsync(availableNetwork.Bssid)).FirstOrDefault()?.Vendor ?? "-/-",
+                Vendor = OUILookup.LookupByMacAddress(availableNetwork.Bssid).FirstOrDefault()?.Vendor ?? "-/-",
                 PhyKind = GetHumanReadablePhyKind(availableNetwork.PhyKind)
             };
 
@@ -99,75 +149,9 @@ public static class WiFi
 
         return new WiFiNetworkScanInfo
         {
-            NetworkAdapterId = adapter.NetworkAdapter.NetworkAdapterId,
             WiFiNetworkInfos = wifiNetworkInfos,
-            Timestamp = adapter.NetworkReport.Timestamp.LocalDateTime
+            Timestamp = report.Timestamp.LocalDateTime
         };
-    }
-
-    /// <summary>
-    ///     Try to get the current connected Wi-Fi network (SSID and BSSID) of a network adapter from
-    ///     netsh.exe.
-    ///     Calling netsh.exe and parsing the output feels so dirty, but Microsoft's API returns only
-    ///     the WLAN profile and the SSID of the connected network. The BSSID is needed to find a
-    ///     specific access point among several.
-    /// </summary>
-    /// <param name="adapterId">GUID of the Wi-Fi network adapter.</param>
-    /// <returns>SSID and BSSID of the connected Wi-Fi network. Values are null if not detected.</returns>
-    // ReSharper disable once UnusedTupleComponentInReturnValue
-    private static (string SSID, string BSSID) TryGetConnectedNetworkFromWiFiAdapter(string adapterId)
-    {
-        string ssid = null;
-        string bssid = null;
-
-        using (var powerShell = System.Management.Automation.PowerShell.Create())
-        {
-            powerShell.AddScript("netsh wlan show interfaces");
-
-            var psOutputs = powerShell.Invoke();
-
-            /*
-            if (powerShell.Streams.Error.Count > 0) { // Handle error? }
-            if (powerShell.Streams.Warning.Count > 0) { // Handle warning? }
-            */
-
-            /* Each object looks like this:
-             *
-             * Name : Wireless
-             * Description : Intel ...
-             * GUID : 90d8...
-             * SSID : Devices
-             * BSSID : 6a:d7:...
-             */
-
-            var foundAdapter = false;
-
-            foreach (var outputItem in psOutputs)
-            {
-                // Find line with the network adapter id...
-                if (outputItem.ToString().Contains(adapterId, StringComparison.OrdinalIgnoreCase))
-                    foundAdapter = true;
-
-                // ...and skip all lines until we found it.
-                if (!foundAdapter)
-                    continue;
-
-                // Extract SSID from the line
-                if (outputItem.ToString().Contains(" SSID ", StringComparison.OrdinalIgnoreCase))
-                    ssid = outputItem.ToString().Split(':')[1].Trim();
-
-                // Extract BSSID from the line
-                if (outputItem.ToString().Contains(" BSSID ", StringComparison.OrdinalIgnoreCase))
-                    bssid = outputItem.ToString().Split(':', 2)[1].Trim();
-
-                // Break if we got the values, otherwise we might overwrite them
-                // with values from another adapter.
-                if (!string.IsNullOrEmpty(ssid) && !string.IsNullOrEmpty(bssid))
-                    break;
-            }
-        }
-
-        return (ssid, bssid);
     }
 
     /// <summary>
@@ -189,12 +173,7 @@ public static class WiFi
         else
             connectionResult = await adapter.ConnectAsync(network, reconnectionKind, credential, ssid);
 
-        // Wrong password may cause connection to timeout.
-        // Disconnect any network from the adapter to return it to a non-busy state.
-        if (connectionResult.ConnectionStatus == WiFiConnectionStatus.Timeout)
-            Disconnect(adapter);
-
-        return connectionResult.ConnectionStatus;
+        return GetConnectionStatus(adapter, connectionResult);
     }
 
     /// <summary>
@@ -210,6 +189,17 @@ public static class WiFi
         var connectionResult = await adapter.ConnectAsync(network, reconnectionKind, null,
             string.Empty, WiFiConnectionMethod.WpsPushButton);
 
+        return GetConnectionStatus(adapter, connectionResult);
+    }
+
+    /// <summary>
+    ///     Gets the status of a connection attempt. After a timeout the adapter is disconnected.
+    /// </summary>
+    /// <param name="adapter">Wi-Fi adapter which was used for the connection.</param>
+    /// <param name="connectionResult">Result of the connection attempt.</param>
+    /// <returns>Status of the connection.</returns>
+    private static WiFiConnectionStatus GetConnectionStatus(WiFiAdapter adapter, WiFiConnectionResult connectionResult)
+    {
         // Wrong password may cause connection to timeout.
         // Disconnect any network from the adapter to return it to a non-busy state.
         if (connectionResult.ConnectionStatus == WiFiConnectionStatus.Timeout)
@@ -235,16 +225,30 @@ public static class WiFi
     /// <returns>Connect mode as <see cref="WiFiConnectMode" />.</returns>
     public static WiFiConnectMode GetConnectMode(WiFiAvailableNetwork network)
     {
-        // Enterprise
-        if (network.SecuritySettings.NetworkAuthenticationType is NetworkAuthenticationType.Rsna or NetworkAuthenticationType.Wpa)
+        return GetConnectMode(network.SecuritySettings.NetworkAuthenticationType,
+            network.SecuritySettings.NetworkEncryptionType);
+    }
+
+    /// <summary>
+    ///     Get the connect mode from the authentication and encryption type of a Wi-Fi network.
+    /// </summary>
+    /// <param name="authenticationType">Authentication type of the network.</param>
+    /// <param name="encryptionType">Encryption type of the network.</param>
+    /// <returns>Connect mode as <see cref="WiFiConnectMode" />.</returns>
+    public static WiFiConnectMode GetConnectMode(NetworkAuthenticationType authenticationType,
+        NetworkEncryptionType encryptionType)
+    {
+        // Enterprise (WPA, WPA2, WPA3)
+        if (authenticationType is NetworkAuthenticationType.Rsna or NetworkAuthenticationType.Wpa
+            or NetworkAuthenticationType.Wpa3Enterprise or NetworkAuthenticationType.Wpa3Enterprise192Bits)
             return WiFiConnectMode.Eap;
 
-        // Open
-        if (network.SecuritySettings.NetworkAuthenticationType == NetworkAuthenticationType.Open80211 ||
-            network.SecuritySettings.NetworkEncryptionType == NetworkEncryptionType.None)
+        // Open (no encryption), also OWE (Enhanced Open: encrypted, but without a password). Not Open80211 with WEP:
+        // the authentication is open, but the WEP key is needed (Pre-Shared-Key)
+        if (authenticationType == NetworkAuthenticationType.Owe || encryptionType == NetworkEncryptionType.None)
             return WiFiConnectMode.Open;
 
-        // Pre-Shared-Key
+        // Pre-Shared-Key (WEP, WPA, WPA2, WPA3 SAE)
         return WiFiConnectMode.Psk;
     }
 
@@ -265,8 +269,8 @@ public static class WiFi
     ///     Get the Wi-Fi channel from channel frequency.
     /// </summary>
     /// <param name="gigahertz">Input like 2.422 or 5.240.</param>
-    /// <returns>Wi-Fi channel like 3 or 48.</returns>
-    private static int GetChannelFromChannelFrequency(double gigahertz)
+    /// <returns>Wi-Fi channel like 3 or 48, -1 if the frequency is not a channel.</returns>
+    public static int GetChannelFromChannelFrequency(double gigahertz)
     {
         // Convert to integer MHz to avoid floating-point precision issues from the
         // kilohertz / 1_000_000.0 conversion in ConvertChannelFrequencyToGigahertz.
@@ -278,15 +282,37 @@ public static class WiFi
         if (mhz == 2484)
             return 14;
 
-        // 5 GHz: channels follow f = 5000 + ch×5 MHz
-        if (mhz is >= 5180 and <= 5825)
+        // 5 GHz: channels 32-177 follow f = 5000 + ch×5 MHz (169-177 = UNII-4)
+        if (mhz is >= 5160 and <= 5885)
             return (mhz - 5000) / 5;
 
-        // 6 GHz: channels 1-233 follow f = 5950 + ch×5 MHz
+        // 6 GHz: channel 2 is at 5935 MHz, channels 1-233 follow f = 5950 + ch×5 MHz
+        if (mhz == 5935)
+            return 2;
+
         if (mhz is >= 5955 and <= 7115)
             return (mhz - 5950) / 5;
 
         return -1;
+    }
+
+    /// <summary>
+    ///     Get the frequency of a Wi-Fi channel (the inverse of <see cref="GetChannelFromChannelFrequency" />).
+    /// </summary>
+    /// <param name="channel">Channel like 3 or 48.</param>
+    /// <param name="radio">Band of the channel (the channel numbers of the bands overlap).</param>
+    /// <returns>Frequency in MHz like 2422 or 5240.</returns>
+    public static int GetFrequencyFromChannel(int channel, WiFiRadio radio)
+    {
+        return radio switch
+        {
+            // Channel 14 is at 2484 MHz and does not follow the ch×5 + 2407 spacing
+            WiFiRadio.GHz2dot4 => channel == 14 ? 2484 : 2407 + channel * 5,
+            WiFiRadio.GHz5 => 5000 + channel * 5,
+            // Channel 2 is at 5935 MHz, below channel 1 (5955 MHz)
+            WiFiRadio.GHz6 => channel == 2 ? 5935 : 5950 + channel * 5,
+            _ => 0
+        };
     }
 
     /// <summary>
@@ -304,40 +330,43 @@ public static class WiFi
     /// </summary>
     /// <param name="gigahertz">Frequency in gigahertz like 2.412 or 5.180.</param>
     /// <returns>Radio like 2.4 GHz, 5 GHz, etc. as <see cref="WiFiRadio" />.</returns>
-    private static WiFiRadio GetWiFiRadioFromChannelFrequency(double gigahertz)
+    public static WiFiRadio GetWiFiRadioFromChannelFrequency(double gigahertz)
     {
         return gigahertz switch
         {
             >= 2.412 and <= 2.484 => WiFiRadio.GHz2dot4,
-            >= 5.180 and <= 5.825 => WiFiRadio.GHz5,
+            >= 5.160 and <= 5.885 => WiFiRadio.GHz5,
             >= 5.925 and <= 7.125 => WiFiRadio.GHz6,
             _ => WiFiRadio.Unknown
         };
     }
 
     /// <summary>
-    ///     Determines the channel bandwidth (MHz) for a network. Prefers the value parsed from the
-    ///     native BSS list (<see cref="WlanApi" />); if unavailable, falls back to a heuristic based
-    ///     on the radio band and PHY kind, and finally to 20 MHz.
+    ///     Determines the channel bandwidth (MHz) and its center frequency (GHz) for a network. Prefers
+    ///     the values parsed from the native BSS list (<see cref="WlanApi" />); if unavailable, falls back
+    ///     to a heuristic based on the radio band and PHY kind (centered on the primary channel, marked as estimated).
     /// </summary>
-    private static int GetChannelBandwidth(IReadOnlyDictionary<string, int> channelWidths, string networkBssid,
-        WiFiRadio radio, WiFiPhyKind phyKind)
+    private static (int Bandwidth, double CenterFrequencyInGigahertz, bool IsEstimated) GetChannelBandwidth(
+        IReadOnlyDictionary<string, WlanApi.WlanBssChannel> channels, string networkBssid, WiFiRadio radio,
+        WiFiPhyKind phyKind, double primaryFrequencyInGigahertz)
     {
-        if (!string.IsNullOrEmpty(networkBssid) && channelWidths.TryGetValue(networkBssid, out var width) && width > 0)
-            return width;
-     
-        return GetHeuristicChannelBandwidth(radio, phyKind);
+        if (!string.IsNullOrEmpty(networkBssid) && channels.TryGetValue(networkBssid, out var channel) &&
+            channel.BandwidthMHz > 0 && channel.CenterFrequencyMHz > 0)
+            return (channel.BandwidthMHz, channel.CenterFrequencyMHz / 1000.0, false);
+
+        return (GetHeuristicChannelBandwidth(radio, phyKind), primaryFrequencyInGigahertz, true);
     }
 
     /// <summary>
     ///     Estimates the channel bandwidth (MHz) from the radio band and PHY kind when the exact
-    ///     value could not be read from the BSS list.
+    ///     value could not be read from the BSS list. 2.4 GHz is always 20 MHz: 40 MHz is supported since
+    ///     802.11n, but rarely used (only 3 channels without overlap).
     /// </summary>
     private static int GetHeuristicChannelBandwidth(WiFiRadio radio, WiFiPhyKind phyKind)
     {
         return radio switch
         {
-            WiFiRadio.GHz2dot4 => phyKind == WiFiPhyKind.HT ? 40 : 20,
+            WiFiRadio.GHz2dot4 => 20,
             WiFiRadio.GHz5 => phyKind switch
             {
                 WiFiPhyKind.Vht or WiFiPhyKind.HE or WiFiPhyKind.Eht => 80,
@@ -358,8 +387,8 @@ public static class WiFi
     {
         return networkAuthenticationType switch
         {
-            NetworkAuthenticationType.None => "-/-",
-            NetworkAuthenticationType.Unknown => "Unknown",
+            // No value like an unknown vendor ("Unknown" is not translated in the model)
+            NetworkAuthenticationType.None or NetworkAuthenticationType.Unknown => "-/-",
             NetworkAuthenticationType.Open80211 => "Open",
             NetworkAuthenticationType.SharedKey80211 => "WEP",
             NetworkAuthenticationType.Wpa => "WPA Enterprise",
@@ -385,7 +414,7 @@ public static class WiFi
     {
         return phyKind switch
         {
-            WiFiPhyKind.Unknown => "Unknown",
+            WiFiPhyKind.Unknown => "-/-",
             WiFiPhyKind.Dsss or WiFiPhyKind.Fhss => "802.11",
             WiFiPhyKind.Ofdm => "802.11a",
             WiFiPhyKind.Hrdsss => "802.11b",

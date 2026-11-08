@@ -1,5 +1,4 @@
 ﻿using log4net;
-using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization.Resources;
@@ -194,9 +193,7 @@ public class IPGeolocationViewModel : ViewModelBase
     /// <returns><c>true</c> if the command can be executed; otherwise, <c>false</c>.</returns>
     private bool Query_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
+        return !DialogHelper.IsAnyDialogOpen();
     }
 
     /// <summary>

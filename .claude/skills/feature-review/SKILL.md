@@ -104,6 +104,12 @@ Go through these areas. Skip an area if it doesn't apply, but say so in one line
    than the same kind of file in the comparison features (`wc -l`), a file that grew a lot (`git log --stat`), the same
    lines found twice with `git grep`, a helper from the "Shared helpers" list in
    [references/conventions.md](references/conventions.md) re-implemented in the feature.
+10. **Tests** — which logic of the feature has no unit tests in `Source/NETworkManager.Tests`: parsing, mapping and
+   conversion (e.g. frequency → channel), decisions (e.g. which dialog / mode, what counts as a change), comparisons,
+   validation, export field lists. Logic hidden in a view model or a private method that could be a small public
+   static method in `NETworkManager.Models` (no `InternalsVisibleTo` in the solution, reference:
+   `IPScannerNeighborCheck`, `IPScannerScanComparer`). A bug that a test would have caught is a strong hint
+   (report it as `T1`, ... with the bugs it would have caught).
 
 #### Refactoring: only if the code gets simpler
 
@@ -184,6 +190,9 @@ Compared with: <features from step 3>
 ### Other (security, localization, docs)
 | # | Finding | Proposed fix |
 
+### Tests
+| # | Untested logic (`path:line`) | Bugs it would have caught | Proposal (move to `NETworkManager.Models` if needed + test cases) |
+
 ### Refactoring / simplification
 | # | Where | Problem (duplication / complexity) | Proposal | Gain | Must stay identical / test |
 
@@ -220,6 +229,12 @@ When fixing:
   already exists in two or more places. Keep the code simple: no new abstraction for a single use.
 - One commit per finding, with its ID in the subject (e.g. `Fix: Port Scanner: ... (B3)`); a refactoring gets its own
   commit without behaviour changes.
+- Write unit tests with every fix and feature where possible, in the same commit (xUnit,
+  `Source/NETworkManager.Tests/<Area>/<Class>Tests.cs`), so the coverage of the tool grows with each change: a bug fix
+  gets a test that fails without the fix, new logic gets tests for its cases and edge cases. Move testable logic
+  (parsing, mapping, decisions, comparisons) out of the view model / private methods into a small public static
+  method or class in `NETworkManager.Models` first. What can't be tested (UI, WinRT / system APIs, network) goes into
+  the manual Windows tests of the handover file.
 - Add strings to `Strings.resx` and, in alphabetical order, to `Strings.Designer.cs`.
 - Update the feature documentation and add a changelog entry in `Website/docs/changelog/next-release.md`.
 - Never modify `Source/3rdparty/`.

@@ -7,8 +7,10 @@ using LiveChartsCore.SkiaSharpView.Painting.Effects;
 using log4net;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
+using NETworkManager.Converters;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
+using NETworkManager.Models;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
@@ -41,6 +43,11 @@ public class WiFiViewModel : ViewModelBase
     private static readonly ILog Log = LogManager.GetLogger(typeof(WiFiViewModel));
 
     private readonly bool _isLoading;
+
+    /// <summary>
+    ///     The access to the WiFi adapter is being checked again (see <see cref="CheckAccessAsync" />).
+    /// </summary>
+    private bool _isCheckingAccess;
     /// <summary>
     /// Refreshes the view automatically (see <see cref="AutoRefreshEnabled"/>).
     /// </summary>
@@ -83,6 +90,7 @@ public class WiFiViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(CanChangeAdapter));
         }
     }
 
@@ -112,13 +120,27 @@ public class WiFiViewModel : ViewModelBase
                 if (!_isLoading)
                     SettingsManager.Current.WiFi_InterfaceId = value.NetworkInterfaceInfo.Id;
 
-                _ = ScanAsync(value);
+                // The same adapter after the adapters were reloaded: refresh in the background (the networks stay
+                // visible), another adapter: show the loading indicator instead of the networks of the previous one.
+                // Compared with the adapter of the shown networks, not the previous selection: replacing the adapters
+                // clears the selection of the combo box (null) before the reloaded adapter is selected.
+                var isSameAdapter = value.NetworkInterfaceInfo.Id == _previousScanAdapterId;
+
+                _ = ScanAsync(value, isSameAdapter);
             }
 
             field = value;
             OnPropertyChanged();
         }
     }
+
+    /// <summary>
+    ///     Gets whether another adapter can be selected: not while the adapters are reloaded (the reloaded adapter is
+    ///     selected afterwards), the networks are scanned (the result of the previous adapter could arrive after the one
+    ///     of the new adapter) or a connection is made.
+    /// </summary>
+    public bool CanChangeAdapter => !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning &&
+                                    !IsConnecting;
 
     public bool IsNetworksLoading
     {
@@ -130,6 +152,7 @@ public class WiFiViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(CanChangeAdapter));
         }
     }
 
@@ -276,7 +299,79 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
-    public ObservableCollection<WiFiNetworkInfo> Networks
+    /// <summary>
+    ///     Networks of the last successful scan and the id of its adapter: the next scan of the same adapter is compared
+    ///     with it (see <see cref="CompareWithPreviousScan" />). Only in memory.
+    /// </summary>
+    private IReadOnlyList<WiFiNetworkInfo> _previousScan;
+
+    private string _previousScanAdapterId;
+
+    /// <summary>
+    ///     Gets whether the shown networks are compared with a previous scan (shows the column and the counters).
+    /// </summary>
+    public bool HasComparison
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Gets the number of networks that are visible now and were not in the previous scan.
+    /// </summary>
+    public int NetworksNew
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Gets the number of networks that were visible in the previous scan and are not now.
+    /// </summary>
+    public int NetworksGone
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Gets the number of networks whose channel, channel width or security changed since the previous scan.
+    /// </summary>
+    public int NetworksChanged
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ObservableRangeCollection<WiFiNetworkInfo> Networks
     {
         get;
         init
@@ -317,102 +412,12 @@ public class WiFiViewModel : ViewModelBase
         }
     } = new ArrayList();
 
-    public ISeries[] Radio2Dot4GHzSeries
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
-
-    public ISeries[] Radio5GHzSeries
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
-
     // 6 GHz spans a very wide range (channels 1-233). It is split into a lower (1-125) and an upper
     // (129-233) chart for readability, similar to the UniFi channel view.
-    public ISeries[] Radio6GHzLowerSeries
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
-
-    public ISeries[] Radio6GHzUpperSeries
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
-
-    public Axis[] Radio2Dot4GHzXAxes { get; private set; }
-    public Axis[] Radio5GHzXAxes { get; private set; }
-    public Axis[] Radio6GHzLowerXAxes { get; private set; }
-    public Axis[] Radio6GHzUpperXAxes { get; private set; }
-
-    public Axis[] Radio2Dot4GHzYAxes { get; private set; }
-    public Axis[] Radio5GHzYAxes { get; private set; }
-    public Axis[] Radio6GHzLowerYAxes { get; private set; }
-    public Axis[] Radio6GHzUpperYAxes { get; private set; }
-
-    public RectangularSection[] Radio2Dot4GHzSections { get; private set; }
-    public RectangularSection[] Radio5GHzSections { get; private set; }
-    public RectangularSection[] Radio6GHzLowerSections { get; private set; }
-    public RectangularSection[] Radio6GHzUpperSections { get; private set; }
-
-    public WiFiChannelLegendEntry[] Radio2Dot4GHzLegend
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
-
-    public WiFiChannelLegendEntry[] Radio5GHzLegend
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
-
-    public WiFiChannelLegendEntry[] Radio6GHzLowerLegend
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
-
-    public WiFiChannelLegendEntry[] Radio6GHzUpperLegend
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
+    public WiFiChannelChart Chart2Dot4GHz { get; private set; }
+    public WiFiChannelChart Chart5GHz { get; private set; }
+    public WiFiChannelChart Chart6GHzLower { get; private set; }
+    public WiFiChannelChart Chart6GHzUpper { get; private set; }
 
     public bool IsStatusMessageDisplayed
     {
@@ -437,6 +442,7 @@ public class WiFiViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(CanChangeAdapter));
         }
     }
 
@@ -463,6 +469,7 @@ public class WiFiViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(CanChangeAdapter));
         }
     }
 
@@ -502,29 +509,9 @@ public class WiFiViewModel : ViewModelBase
 
         _isLoading = true;
 
-        // Set up the channel charts (axes, sections, paints) unconditionally so the chart bindings
-        // are never null, even on the code paths that return early below.
+        // Set up the channel charts (axes, sections, paints), the list and the timers unconditionally, so the
+        // bindings are never null - also if the WiFi API is not available or the access is denied (yet)
         InitializeCharts();
-
-        // Check if Microsoft.Windows.SDK.Contracts is available
-        SdkContractAvailable = ApiInformation.IsTypePresent("Windows.Devices.WiFi.WiFiAdapter");
-
-        if (!SdkContractAvailable)
-        {
-            _isLoading = false;
-
-            return;
-        }
-
-        // Check if the access is denied and show a message
-        WiFiAdapterAccessEnabled = RequestAccess();
-
-        if (!WiFiAdapterAccessEnabled)
-        {
-            _isLoading = false;
-
-            return;
-        }
 
         // Result view + search
         NetworksView = CollectionViewSource.GetDefaultView(Networks);
@@ -548,29 +535,31 @@ public class WiFiViewModel : ViewModelBase
             if (string.IsNullOrEmpty(Search))
                 return true;
 
-            // Search by SSID, authentication type, channel frequency, channel, BSSID, vendor and PHY kind
-            return info.AvailableNetwork.Ssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+            // Search by SSID ("Hidden Network" as shown), authentication type, channel frequency, channel, BSSID,
+            // vendor and PHY kind
+            return WiFiNetworkToSsidStringConverter.GetSsid(info).IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.NetworkAuthenticationType.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    $"{info.ChannelCenterFrequencyInGigahertz}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    $"{info.Channel}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.AvailableNetwork.Bssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   info.Bssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.Vendor.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.PhyKind.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+                   info.PhyKind.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   (HasComparison && WiFiNetworkChangeToStringConverter.ToLocalizedString(info.Change)
+                       .IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1);
         };
 
-        // Load network adapters
-        _ = LoadAdaptersAsync(SettingsManager.Current.WiFi_InterfaceId);
-
-        // Auto refresh
-        // Not while networks are loading or a connection is made (tried again after the interval)
-        _autoRefreshTimer = new AutoRefreshTimer(() => ScanAsync(SelectedAdapter, true),
-            () => !IsNetworksLoading && !IsBackgroundSearchRunning && !IsConnecting);
+        // Auto refresh (enabled when the access is allowed, see Start)
+        // Not without an adapter, while a dialog is open (e.g. connect), or while the adapters are reloaded (they select
+        // the adapter again, which scans it), networks are loading or a connection is made (tried again after the
+        // interval)
+        _autoRefreshTimer = new AutoRefreshTimer(() => ScanAsync(SelectedAdapter, true, isAutoRefresh: true),
+            () => SelectedAdapter != null && !DialogHelper.IsAnyDialogOpen() && !IsAdaptersLoading && !IsNetworksLoading &&
+                  !IsBackgroundSearchRunning && !IsConnecting);
 
         AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
         SelectedAutoRefreshTime = AutoRefreshTimes.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
             x.Value == SettingsManager.Current.WiFi_AutoRefreshTime.Value &&
             x.TimeUnit == SettingsManager.Current.WiFi_AutoRefreshTime.TimeUnit);
-        AutoRefreshEnabled = SettingsManager.Current.WiFi_AutoRefreshEnabled;
 
         // Hide ConnectionStatusMessage automatically
         _hideConnectionStatusMessageTimer.Interval = new TimeSpan(0, 0, 15);
@@ -579,7 +568,55 @@ public class WiFiViewModel : ViewModelBase
         // Load settings
         LoadSettings();
 
+        // Check if Microsoft.Windows.SDK.Contracts is available
+        SdkContractAvailable = ApiInformation.IsTypePresent("Windows.Devices.WiFi.WiFiAdapter");
+
+        if (SdkContractAvailable)
+        {
+            // Check if the access is denied and show a message (checked again, see CheckAccessAsync)
+            WiFiAdapterAccessEnabled = RequestAccess();
+
+            if (WiFiAdapterAccessEnabled)
+                Start();
+        }
+
         _isLoading = false;
+    }
+
+    /// <summary>
+    ///     Loads the adapters (scans the networks of the selected one) and enables the auto refresh. Called once the
+    ///     access to the WiFi adapter is allowed.
+    /// </summary>
+    private void Start()
+    {
+        _ = LoadAdaptersAsync(SettingsManager.Current.WiFi_InterfaceId);
+
+        AutoRefreshEnabled = SettingsManager.Current.WiFi_AutoRefreshEnabled;
+    }
+
+    /// <summary>
+    ///     Checks the access to the WiFi adapter again while it is denied (e.g. it was allowed in the Windows settings
+    ///     after the message was shown), and starts if it is allowed now - without a restart of the application.
+    /// </summary>
+    private async Task CheckAccessAsync()
+    {
+        if (!SdkContractAvailable || WiFiAdapterAccessEnabled || _isCheckingAccess)
+            return;
+
+        _isCheckingAccess = true;
+
+        try
+        {
+            // Not on the UI thread (called on every switch to WiFi while the access is denied)
+            WiFiAdapterAccessEnabled = await RequestAccessAsync();
+        }
+        finally
+        {
+            _isCheckingAccess = false;
+        }
+
+        if (WiFiAdapterAccessEnabled)
+            Start();
     }
 
     private void LoadSettings()
@@ -597,7 +634,9 @@ public class WiFiViewModel : ViewModelBase
 
     private bool ReloadAdapter_CanExecute(object obj)
     {
-        return !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !AutoRefreshEnabled && !IsConnecting;
+        // Not blocked by the auto refresh (it only scans the networks): without an adapter its toggle is hidden
+        return !DialogHelper.IsAnyDialogOpen() && !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning &&
+               !IsConnecting;
     }
 
     private void ReloadAdapterAction()
@@ -610,7 +649,8 @@ public class WiFiViewModel : ViewModelBase
 
     private bool ScanNetworks_CanExecute(object obj)
     {
-        return !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning && !AutoRefreshEnabled && !IsConnecting;
+        return SelectedAdapter != null && !DialogHelper.IsAnyDialogOpen() && !IsAdaptersLoading && !IsNetworksLoading &&
+               !IsBackgroundSearchRunning && !AutoRefreshEnabled && !IsConnecting;
     }
 
     private async Task ScanNetworksAction()
@@ -618,18 +658,52 @@ public class WiFiViewModel : ViewModelBase
         await ScanAsync(SelectedAdapter, true);
     }
 
-    public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction());
+    public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), ConnectDisconnect_CanExecute);
+
+    /// <summary>
+    ///     A network is selected that is still visible (not gone since the last scan), no connection is made, no scan is
+    ///     running and the adapters are not reloaded at the moment (connecting and disconnecting scan the networks again
+    ///     afterwards, the reload scans the reloaded adapter).
+    /// </summary>
+    private bool ConnectDisconnect_CanExecute(object obj)
+    {
+        return SelectedNetwork is { Change: not WiFiNetworkChange.Gone } && !IsConnecting && !IsAdaptersLoading &&
+               !IsNetworksLoading && !IsBackgroundSearchRunning;
+    }
 
     private void ConnectAction()
     {
         Connect();
     }
 
-    public ICommand DisconnectCommand => new RelayCommand(_ => DisconnectAction());
+    public ICommand DisconnectCommand => new RelayCommand(_ => DisconnectAction(), ConnectDisconnect_CanExecute);
 
     private void DisconnectAction()
     {
-        Disconnect();
+        _ = DisconnectAsync();
+    }
+
+    /// <summary>
+    ///     Gets the command to copy a value of all selected networks (one per line, in the order shown in the grid,
+    ///     without duplicates). Parameter: <c>SSID</c> or <c>BSSID</c>.
+    /// </summary>
+    public ICommand CopySelectedNetworksCommand => new RelayCommand(CopySelectedNetworksAction);
+
+    private void CopySelectedNetworksAction(object parameter)
+    {
+        Func<WiFiNetworkInfo, string> selector = parameter switch
+        {
+            // Hidden networks have no SSID
+            "SSID" => x => x.AvailableNetwork.Ssid,
+            "BSSID" => x => x.Bssid,
+            _ => null
+        };
+
+        if (selector == null)
+            return;
+
+        ClipboardHelper.SetClipboard(string.Join(Environment.NewLine,
+            GetSelectedNetworksInGridOrder().Select(selector).Where(x => !string.IsNullOrEmpty(x)).Distinct()));
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
@@ -638,6 +712,8 @@ public class WiFiViewModel : ViewModelBase
     {
         _ = Export();
     }
+
+    public ICommand CheckAccessCommand => new RelayCommand(_ => { _ = CheckAccessAsync(); });
 
     public ICommand OpenSettingsCommand => new RelayCommand(_ => OpenSettingsAction());
 
@@ -656,9 +732,19 @@ public class WiFiViewModel : ViewModelBase
     /// <returns>Fails if the access is denied.</returns>
     private static bool RequestAccess()
     {
+        // Safe to block: the continuation of RequestAccessAsync doesn't need the UI thread (ConfigureAwait(false))
+        return RequestAccessAsync().GetAwaiter().GetResult();
+    }
+
+    /// <summary>
+    ///     Request access to the Wi-Fi adapter without blocking the calling thread.
+    /// </summary>
+    /// <returns>Fails if the access is denied.</returns>
+    private static async Task<bool> RequestAccessAsync()
+    {
         try
         {
-            var accessStatus = WiFiAdapter.RequestAccessAsync().GetAwaiter().GetResult();
+            var accessStatus = await WiFiAdapter.RequestAccessAsync().AsTask().ConfigureAwait(false);
 
             return accessStatus == WiFiAccessStatus.Allowed;
         }
@@ -692,7 +778,8 @@ public class WiFiViewModel : ViewModelBase
         {
             Log.Error("Error trying to get WiFi adapters.", ex);
 
-            Adapters.Clear();
+            // A new list (Clear() on the list doesn't update the view, it would keep showing the previous adapters)
+            Adapters = [];
         }
 
         // Check if we found any adapters
@@ -721,6 +808,9 @@ public class WiFiViewModel : ViewModelBase
         else
         {
             Log.Debug("LoadAdaptersAsync - No WiFi adapters found.");
+
+            // E.g. the USB adapter was unplugged: no auto refresh of the removed adapter (its toggle is hidden now)
+            SelectedAdapter = null;
         }
 
         IsAdaptersLoading = false;
@@ -728,7 +818,17 @@ public class WiFiViewModel : ViewModelBase
         Log.Debug("LoadAdaptersAsync - Done.");
     }
 
-    private async Task ScanAsync(WiFiAdapterInfo adapterInfo, bool refreshing = false, int delayInMs = 0)
+    /// <summary>
+    ///     Scans the networks of an adapter and shows them (with the changes since the previous scan).
+    /// </summary>
+    /// <param name="adapterInfo">Adapter to scan.</param>
+    /// <param name="refreshing">
+    ///     A refresh of the shown networks (in the background, they stay visible), not the first scan of the adapter.
+    /// </param>
+    /// <param name="delayInMs">Delay before the scan (e.g. after connecting).</param>
+    /// <param name="isAutoRefresh">The scan is an automatic refresh: changes are notified (see settings).</param>
+    private async Task ScanAsync(WiFiAdapterInfo adapterInfo, bool refreshing = false, int delayInMs = 0,
+        bool isAutoRefresh = false)
     {
         Log.Debug($"ScanAsync - Scanning WiFi adapter \"{adapterInfo.NetworkInterfaceInfo.Name}\" with delay of {delayInMs} ms...");
 
@@ -751,73 +851,85 @@ public class WiFiViewModel : ViewModelBase
 
             Log.Debug("ScanAsync - Scan completed. Found " + wiFiNetworkScanInfo.WiFiNetworkInfos.Count + " networks.");
 
-            // Clear the values after the scan to make the UI smoother
-            Log.Debug("ScanAsync - Clearing old values...");
-            Networks.Clear();
+            // Remember the selected network, because replacing the networks clears the selection
+            var selectedBssid = SelectedNetwork?.Bssid;
 
-            Log.Debug("ScanAsync - Adding new values...");
-            List<ISeries> series2Dot4GHz = [];
-            List<ISeries> series5GHz = [];
-            List<ISeries> series6GHzLower = [];
-            List<ISeries> series6GHzUpper = [];
-            List<WiFiChannelLegendEntry> legend2Dot4GHz = [];
-            List<WiFiChannelLegendEntry> legend5GHz = [];
-            List<WiFiChannelLegendEntry> legend6GHzLower = [];
-            List<WiFiChannelLegendEntry> legend6GHzUpper = [];
+            // Replace all networks with a single notification, so the view is filtered / sorted only once. With the
+            // networks that are gone since the previous scan of this adapter.
+            Networks.ReplaceAll(CompareWithPreviousScan(adapterInfo, wiFiNetworkScanInfo.WiFiNetworkInfos));
+
+            if (isAutoRefresh && HasComparison)
+                NotifyChanges(adapterInfo);
+
+            // Select the network again (e.g. after an auto refresh), so the selection and the scroll position are kept.
+            // If several networks were selected, only this one is selected again. Not if it is hidden by the filter.
+            if (selectedBssid != null)
+            {
+                var network = Networks.FirstOrDefault(x => x.Bssid == selectedBssid);
+
+                if (network != null && NetworksView.Contains(network))
+                    SelectedNetwork = network;
+            }
+
+            // Series and legend of each chart. The color of a network depends on its position in its chart; the two 6 GHz
+            // charts count together, so a network that is drawn in both has the same color in both.
+            var charts = new Dictionary<WiFiChannelChart, (List<ISeries> Series, List<WiFiChannelLegendEntry> Legend)>
+            {
+                [Chart2Dot4GHz] = ([], []),
+                [Chart5GHz] = ([], []),
+                [Chart6GHzLower] = ([], []),
+                [Chart6GHzUpper] = ([], [])
+            };
+
+            var sixGHzColorIndex = 0;
+
+            void AddToChart(WiFiChannelChart chart, WiFiNetworkInfo network, int? colorIndex = null)
+            {
+                var (series, legend) = charts[chart];
+                var (networkSeries, networkLegend) = BuildNetworkSeries(network, colorIndex ?? series.Count);
+
+                series.Add(networkSeries);
+                legend.Add(networkLegend);
+            }
 
             foreach (var network in wiFiNetworkScanInfo.WiFiNetworkInfos)
             {
-                Log.Debug("ScanAsync - Add network: " + network.AvailableNetwork.Ssid + " with channel frequency: " +
-                          network.AvailableNetwork.ChannelCenterFrequencyInKilohertz);
-
-                Networks.Add(network);
-
                 switch (network.Radio)
                 {
                     case WiFiRadio.GHz2dot4:
-                        var (s24, l24) = BuildNetworkSeries(network, series2Dot4GHz.Count);
-                        series2Dot4GHz.Add(s24);
-                        legend2Dot4GHz.Add(l24);
+                        AddToChart(Chart2Dot4GHz, network);
                         break;
 
                     case WiFiRadio.GHz5:
-                        var (s5, l5) = BuildNetworkSeries(network, series5GHz.Count);
-                        series5GHz.Add(s5);
-                        legend5GHz.Add(l5);
+                        AddToChart(Chart5GHz, network);
                         break;
 
                     case WiFiRadio.GHz6:
-                        // Split by channel center into the lower (1-125) and upper (129-233) chart.
-                        var centerChannel = FrequencyToChannelAxis(
-                            network.ChannelCenterFrequencyInGigahertz * 1000, WiFiRadio.GHz6);
+                        // Split into the lower (1-125) and upper (129-233) chart by the channels the network covers
+                        // (channel-number space, 5 MHz per unit). A network that crosses the split (e.g. 320 MHz
+                        // around channel 127 covers 95 - 159) is drawn in both charts.
+                        var (lower, upper) = WiFiChannelAxis.GetSixGHzCharts(
+                            network.ChannelBandwidthCenterFrequencyInGigahertz * 1000, network.ChannelBandwidth);
 
-                        if (centerChannel < SixGHzSplitChannel)
-                        {
-                            var (s6L, l6L) = BuildNetworkSeries(network, series6GHzLower.Count);
-                            series6GHzLower.Add(s6L);
-                            legend6GHzLower.Add(l6L);
-                        }
-                        else
-                        {
-                            var (s6U, l6U) = BuildNetworkSeries(network, series6GHzUpper.Count);
-                            series6GHzUpper.Add(s6U);
-                            legend6GHzUpper.Add(l6U);
-                        }
+                        if (lower)
+                            AddToChart(Chart6GHzLower, network, sixGHzColorIndex);
+
+                        if (upper)
+                            AddToChart(Chart6GHzUpper, network, sixGHzColorIndex);
+
+                        sixGHzColorIndex++;
 
                         break;
                 }
             }
 
-            Radio2Dot4GHzSeries = [.. series2Dot4GHz];
-            Radio5GHzSeries = [.. series5GHz];
-            Radio6GHzLowerSeries = [.. series6GHzLower];
-            Radio6GHzUpperSeries = [.. series6GHzUpper];
-            Radio2Dot4GHzLegend = [.. legend2Dot4GHz];
-            Radio5GHzLegend = [.. legend5GHz];
-            Radio6GHzLowerLegend = [.. legend6GHzLower];
-            Radio6GHzUpperLegend = [.. legend6GHzUpper];
+            foreach (var (chart, (series, legend)) in charts)
+                chart.Update(series, legend);
 
             LastRefreshTime = wiFiNetworkScanInfo.Timestamp;
+
+            // Connected / disconnected (also outside of NETworkManager) - the icon of the adapter selection
+            WiFi.UpdateAdapterStates(Adapters);
         }
         catch (Exception ex)
         {
@@ -826,16 +938,27 @@ public class WiFiViewModel : ViewModelBase
             statusMessage = string.Format(Strings.ErrorWhileScanningWiFiAdapterXXXWithErrorXXX,
                 adapterInfo.NetworkInterfaceInfo.Name, ex.Message);
 
-            // Clear the existing old values if an error occurs
-            Networks.Clear();
-            Radio2Dot4GHzSeries = [];
-            Radio5GHzSeries = [];
-            Radio6GHzLowerSeries = [];
-            Radio6GHzUpperSeries = [];
-            Radio2Dot4GHzLegend = [];
-            Radio5GHzLegend = [];
-            Radio6GHzLowerLegend = [];
-            Radio6GHzUpperLegend = [];
+            // A refresh (manual, automatic, after connecting) keeps the networks of the last scan (e.g. the adapter is
+            // busy shortly after connecting); the header still shows the time of the last scan. The networks of
+            // another adapter (first scan) are cleared.
+            if (!refreshing)
+            {
+                // No time of the last scan and no changes of the previous adapter in the header, nothing to compare
+                // the next scan with (the networks are cleared)
+                LastRefreshTime = null;
+                _previousScan = null;
+                _previousScanAdapterId = null;
+                HasComparison = false;
+                NetworksNew = 0;
+                NetworksGone = 0;
+                NetworksChanged = 0;
+
+                Networks.Clear();
+                Chart2Dot4GHz.Clear();
+                Chart5GHz.Clear();
+                Chart6GHzLower.Clear();
+                Chart6GHzUpper.Clear();
+            }
         }
         finally
         {
@@ -870,28 +993,18 @@ public class WiFiViewModel : ViewModelBase
     // 2.4 GHz operating channels are 1, 2, 3, ... 14 (every channel number), labeled with the channel
     private static readonly HashSet<int> ValidChannels2Dot4GHz = BuildChannelSet(1, 14, 1);
 
-    // 5 GHz operating channels are 36, 40, 44, ... 165 (every 4 in channel-number space), labeled with
+    // 5 GHz operating channels are 36 - 64 and 100 - 144 (every 4 in channel-number space) and 149 - 177 (UNII-3 / -4,
+    // odd channel numbers), labeled with the channel
     private static readonly HashSet<int> ValidChannels5GHz =
     [
         .. BuildChannelSet(36, 64, 4),
-        .. BuildChannelSet(100, 165, 4)
+        .. BuildChannelSet(100, 144, 4),
+        .. BuildChannelSet(149, 177, 4)
     ];
 
-    // 6 GHz operating channels are 1, 5, 9, ... 233 (every 4 in channel-number space), labeled with the
+    // 6 GHz operating channels are 1, 5, 9, ... 233 (every 4 in channel-number space), labeled with the channel.
+    // Channel 2 (5935 MHz) is below channel 1, at -3 on the axis - not labeled (the tooltip shows it).
     private static readonly HashSet<int> ValidChannels6GHz = BuildChannelSet(1, 233, 4);
-
-    // Channel that splits the 6 GHz band into the lower (1-125) and upper (129-233) chart. 127 sits
-    // cleanly between the operating channels 125 and 129.
-    private const int SixGHzSplitChannel = 127;
-
-    // The 5 GHz band has a large unused range between channel 64 (UNII-2) and channel 100
-    // (UNII-2 Extended). On a frequency-linear axis this would render as dead space, so it is
-    // compressed: channels above 64 are shifted left, leaving only a small visual gap that still
-    // provides room for the channel-width trapezoids.
-    private const int FiveGHzGapStartChannel = 64;
-    private const int FiveGHzGapEndChannel = 100;
-    private const int FiveGHzGapDisplayUnits = 16;
-    private const int FiveGHzGapShift = FiveGHzGapEndChannel - FiveGHzGapStartChannel - FiveGHzGapDisplayUnits;
 
     private static HashSet<int> BuildChannelSet(int first, int last, int step)
     {
@@ -920,29 +1033,22 @@ public class WiFiViewModel : ViewModelBase
         // (min, max) in display space. The lower bound is extended below the first channel so the
         // left flank of its trapezoid reaches the baseline instead of being clipped. The 5 GHz
         // upper bound is reduced because the 64..100 dead zone is compressed.
-        Radio2Dot4GHzXAxes = BuildXAxes(-2, 16, ValidChannels2Dot4GHz, false, labelColor);
-        Radio5GHzXAxes = BuildXAxes(30, 152, ValidChannels5GHz, true, labelColor);
-        Radio6GHzLowerXAxes = BuildXAxes(-2, 128, ValidChannels6GHz, false, labelColor);
-        Radio6GHzUpperXAxes = BuildXAxes(126, 236, ValidChannels6GHz, false, labelColor);
-
-        Radio2Dot4GHzYAxes = BuildYAxes(labelColor, separatorColor);
-        Radio5GHzYAxes = BuildYAxes(labelColor, separatorColor);
-        Radio6GHzLowerYAxes = BuildYAxes(labelColor, separatorColor);
-        Radio6GHzUpperYAxes = BuildYAxes(labelColor, separatorColor);
-
-        Radio2Dot4GHzSections = BuildSections();
-        Radio5GHzSections = BuildSections();
-        Radio6GHzLowerSections = BuildSections();
-        Radio6GHzUpperSections = BuildSections();
+        Chart2Dot4GHz = new WiFiChannelChart(BuildXAxes(-2, 16, ValidChannels2Dot4GHz, WiFiRadio.GHz2dot4, labelColor),
+            BuildYAxes(labelColor, separatorColor), BuildSections());
+        Chart5GHz = new WiFiChannelChart(BuildXAxes(30, 160, ValidChannels5GHz, WiFiRadio.GHz5, labelColor),
+            BuildYAxes(labelColor, separatorColor), BuildSections());
+        Chart6GHzLower = new WiFiChannelChart(BuildXAxes(-6, 128, ValidChannels6GHz, WiFiRadio.GHz6, labelColor),
+            BuildYAxes(labelColor, separatorColor), BuildSections());
+        Chart6GHzUpper = new WiFiChannelChart(BuildXAxes(126, 236, ValidChannels6GHz, WiFiRadio.GHz6, labelColor),
+            BuildYAxes(labelColor, separatorColor), BuildSections());
     }
 
     /// <summary>
     ///     Builds an X-axis in channel-number space (which is linear with the channel frequency).
     ///     Only channels contained in <paramref name="validChannels" /> are labeled; all other tick
-    ///     positions stay blank. When <paramref name="applyFiveGHzGap" /> is set, the 5 GHz gap shift
-    ///     is reversed before the label lookup.
+    ///     positions stay blank (see <see cref="WiFiChannelAxis" />).
     /// </summary>
-    private static Axis[] BuildXAxes(double min, double max, HashSet<int> validChannels, bool applyFiveGHzGap,
+    private static Axis[] BuildXAxes(double min, double max, HashSet<int> validChannels, WiFiRadio radio,
         SKColor labelColor)
     {
         return
@@ -958,10 +1064,7 @@ public class WiFiViewModel : ViewModelBase
                 ForceStepToMin = true,
                 Labeler = value =>
                 {
-                    var channel = (int)Math.Round(value);
-
-                    if (applyFiveGHzGap && channel > FiveGHzGapStartChannel)
-                        channel += FiveGHzGapShift;
+                    var channel = WiFiChannelAxis.PositionToChannel((int)Math.Round(value), radio);
 
                     return validChannels.Contains(channel) ? channel.ToString() : string.Empty;
                 },
@@ -1033,15 +1136,16 @@ public class WiFiViewModel : ViewModelBase
 
     /// <summary>
     ///     Builds a line series and a matching legend entry for a single network, rendered as a
-    ///     trapezoid centered on its channel center frequency.
+    ///     trapezoid centered on the center frequency of the whole channel (not of the primary channel).
     /// </summary>
     private static (LineSeries<WiFiChannelPoint> Series, WiFiChannelLegendEntry Legend) BuildNetworkSeries(WiFiNetworkInfo network, int colorIndex)
     {
         var color = ChartPalette[colorIndex % ChartPalette.Length];
 
         double dbm = network.AvailableNetwork.NetworkRssiInDecibelMilliwatts;
-        var center = ChannelNumberToDisplay(
-            FrequencyToChannelAxis(network.ChannelCenterFrequencyInGigahertz * 1000, network.Radio), network.Radio);
+        var center = WiFiChannelAxis.ChannelToPosition(
+            WiFiChannelAxis.FrequencyToChannel(network.ChannelBandwidthCenterFrequencyInGigahertz * 1000,
+                network.Radio), network.Radio);
 
         // Channel-number space uses 5 MHz per unit, so a bandwidth in MHz spans bandwidth/5 units.
         var bandwidth = network.ChannelBandwidth;
@@ -1074,13 +1178,11 @@ public class WiFiViewModel : ViewModelBase
 
         var points = pointList.ToArray();
 
-        var name = network.IsHidden
-            ? $"{Strings.HiddenNetwork} ({network.AvailableNetwork.Bssid})"
-            : $"{network.AvailableNetwork.Ssid} ({network.AvailableNetwork.Bssid})";
+        var ssid = WiFiNetworkToSsidStringConverter.GetSsid(network);
 
         var series = new LineSeries<WiFiChannelPoint>
         {
-            Name = name,
+            Name = $"{ssid} ({network.Bssid})",
             Values = points,
             // Plot in 0..100 space (dBm + 100) so the area fill drops to the bottom baseline.
             Mapping = (point, _) => new Coordinate(point.ChannelAxis, point.Dbm + SignalOffset),
@@ -1091,38 +1193,122 @@ public class WiFiViewModel : ViewModelBase
         };
 
         var wpfColor = Color.FromArgb(color.Alpha, color.Red, color.Green, color.Blue);
-        var legendSsid = network.IsHidden ? Strings.HiddenNetwork : network.AvailableNetwork.Ssid;
-        var legend = new WiFiChannelLegendEntry(new SolidColorBrush(wpfColor), legendSsid, network.AvailableNetwork.Bssid);
+        var legend = new WiFiChannelLegendEntry(new SolidColorBrush(wpfColor), ssid, network.Bssid);
 
         return (series, legend);
     }
 
     /// <summary>
-    ///     Converts a channel center frequency (MHz) to channel-number space for the chart X axis.
-    ///     This mapping is linear with frequency (5 MHz per unit).
+    ///     Compares the networks of a scan with the previous scan of the same adapter: marks new and changed networks,
+    ///     adds the networks that are gone (shown until the next scan). The scan becomes the one the next scan is
+    ///     compared with. Another adapter (or the first scan) starts without a comparison.
     /// </summary>
-    private static double FrequencyToChannelAxis(double frequencyMHz, WiFiRadio radio)
+    /// <param name="adapterInfo">Adapter of the scan.</param>
+    /// <param name="networks">Networks of the scan.</param>
+    /// <returns>The networks to show (the scanned ones and the gone ones).</returns>
+    private List<WiFiNetworkInfo> CompareWithPreviousScan(WiFiAdapterInfo adapterInfo,
+        IReadOnlyList<WiFiNetworkInfo> networks)
     {
-        return radio switch
+        var rows = new List<WiFiNetworkInfo>(networks);
+        var adapterId = adapterInfo.NetworkInterfaceInfo.Id;
+
+        if (_previousScan != null && _previousScanAdapterId == adapterId)
         {
-            // Channel 14 is at 2484 MHz and does not follow the standard ch×5 + 2407 spacing.
-            WiFiRadio.GHz2dot4 => (int)Math.Round(frequencyMHz) == 2484 ? 14.0 : (frequencyMHz - 2407) / 5.0,
-            WiFiRadio.GHz5 => (frequencyMHz - 5000) / 5.0,
-            WiFiRadio.GHz6 => (frequencyMHz - 5950) / 5.0,
-            _ => 0
-        };
+            // The networks of the previous scan are not shown anymore (except the gone ones): no chain of previous
+            // networks over the scans
+            foreach (var network in _previousScan)
+                network.Previous = null;
+
+            var comparison = WiFiScanComparer.Compare(_previousScan, networks);
+
+            foreach (var (network, change, previous) in comparison.Changes)
+            {
+                network.Change = change;
+                network.Previous = previous;
+            }
+
+            // Shown as they were in the previous scan (not connected, not drawn in the charts)
+            foreach (var network in comparison.Gone)
+            {
+                network.Change = WiFiNetworkChange.Gone;
+                network.IsConnected = false;
+
+                rows.Add(network);
+            }
+
+            NetworksNew = comparison.Changes.Count(x => x.Change == WiFiNetworkChange.New);
+            NetworksGone = comparison.Gone.Count;
+            NetworksChanged = comparison.Changes.Count(x => x.Change == WiFiNetworkChange.Changed);
+            HasComparison = true;
+        }
+        else
+        {
+            NetworksNew = 0;
+            NetworksGone = 0;
+            NetworksChanged = 0;
+            HasComparison = false;
+        }
+
+        _previousScan = networks;
+        _previousScanAdapterId = adapterId;
+
+        return rows;
     }
 
     /// <summary>
-    ///     Maps a channel number to its display position on the X axis. For 5 GHz the unused
-    ///     64..100 range is compressed so it does not render as dead space.
+    ///     Shows a notification with the changes since the previous scan (popup and / or sound, see settings), if there
+    ///     are any. Like the IP Scanner, only for an automatic refresh. A click on it shows WiFi.
     /// </summary>
-    private static double ChannelNumberToDisplay(double channelNumber, WiFiRadio radio)
+    /// <param name="adapterInfo">Adapter of the scan (title of the notification).</param>
+    private void NotifyChanges(WiFiAdapterInfo adapterInfo)
     {
-        if (radio == WiFiRadio.GHz5 && channelNumber > FiveGHzGapStartChannel)
-            return channelNumber - FiveGHzGapShift;
+        var showPopup = SettingsManager.Current.WiFi_ShowNotificationPopup;
+        var playSound = SettingsManager.Current.WiFi_NotificationSound;
 
-        return channelNumber;
+        if (!showPopup && !playSound)
+            return;
+
+        var changes = Networks.Where(x => x.Change != WiFiNetworkChange.None)
+            .OrderBy(WiFiNetworkToSsidStringConverter.GetSsid, StringComparer.CurrentCultureIgnoreCase)
+            .ThenBy(x => x.Bssid, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        if (changes.Count == 0)
+            return;
+
+        // "MyNetwork (AA:BB:CC:DD:EE:FF) · New" - new = up, gone = down, changed = changed
+        var lines = changes.Select(x => new NotificationLine($"{WiFiNetworkToSsidStringConverter.GetSsid(x)} ({x.Bssid})",
+            WiFiNetworkChangeToStringConverter.ToLocalizedString(x.Change), GetNotificationStatus(x.Change))).ToList();
+
+        var summary = new[]
+            {
+                (Count: NetworksNew, Format: Strings.XNew, Status: NotificationStatus.Up),
+                (Count: NetworksGone, Format: Strings.XGone, Status: NotificationStatus.Down),
+                (Count: NetworksChanged, Format: Strings.XChanged, Status: NotificationStatus.Changed)
+            }
+            .Where(x => x.Count > 0)
+            .Select(x => new NotificationLine(null, string.Format(x.Format, x.Count), x.Status)).ToList();
+
+        // New = up, gone = down, both = up and down, only changed = changed
+        var status = NotificationStatusHelper.FromChanges(NetworksNew, NetworksGone, NetworksChanged);
+
+        NotificationManager.Show(new NotificationInfo(ApplicationName.WiFi, status,
+                adapterInfo.NetworkInterfaceInfo.Name, NotificationManager.FormatChanges(lines, summary),
+                SettingsManager.Current.WiFi_NotificationCloseTime),
+            showPopup, playSound);
+    }
+
+    /// <summary>
+    ///     Gets the status (icon / color) of a change in the notification.
+    /// </summary>
+    private static NotificationStatus GetNotificationStatus(WiFiNetworkChange change)
+    {
+        return change switch
+        {
+            WiFiNetworkChange.New => NotificationStatus.Up,
+            WiFiNetworkChange.Gone => NotificationStatus.Down,
+            _ => NotificationStatus.Changed
+        };
     }
 
     private void Connect()
@@ -1142,59 +1328,32 @@ public class WiFiViewModel : ViewModelBase
 
             var ssid = selectedNetwork.IsHidden ? instance.Ssid : selectedNetwork.AvailableNetwork.Ssid;
 
-            // Show status message (not hidden by the timer of a previous message)
-            _hideConnectionStatusMessageTimer.Stop();
-            IsConnecting = true;
-            ConnectionStatusMessage = string.Format(Strings.ConnectingToXXX, ssid);
-            IsConnectionStatusMessageDisplayed = true;
-
-            // Connect to the network
-            var reconnectionKind = instance.ConnectAutomatically
-                ? WiFiReconnectionKind.Automatic
-                : WiFiReconnectionKind.Manual;
-
-            PasswordCredential credential = new();
-
-            switch (instance.ConnectMode)
+            await ConnectAsync(ssid, () =>
             {
-                case WiFiConnectMode.Psk:
-                    credential.Password = SecureStringHelper.ConvertToString(instance.PreSharedKey);
-                    break;
-                case WiFiConnectMode.Eap:
-                    credential.UserName = instance.Username;
+                PasswordCredential credential = new();
 
-                    if (!string.IsNullOrEmpty(instance.Domain))
-                        credential.Resource = instance.Domain;
+                switch (instance.ConnectMode)
+                {
+                    case WiFiConnectMode.Psk:
+                        credential.Password = SecureStringHelper.ConvertToString(instance.PreSharedKey);
+                        break;
+                    // Without credentials, Windows uses the logged-on user or a certificate (like an open network,
+                    // an empty credential is passed)
+                    case WiFiConnectMode.Eap when instance.UseCredentials:
+                        credential.UserName = instance.Username;
 
-                    credential.Password = SecureStringHelper.ConvertToString(instance.Password);
-                    break;
-            }
+                        if (!string.IsNullOrEmpty(instance.Domain))
+                            credential.Resource = instance.Domain;
 
-            WiFiConnectionStatus connectionResult;
+                        credential.Password = SecureStringHelper.ConvertToString(instance.Password);
+                        break;
+                }
 
-            if (selectedNetwork.IsHidden)
-                connectionResult = await WiFi.ConnectAsync(instance.Options.AdapterInfo.WiFiAdapter,
-                    instance.Options.NetworkInfo.AvailableNetwork, reconnectionKind, credential, instance.Ssid);
-            else
-                connectionResult = await WiFi.ConnectAsync(instance.Options.AdapterInfo.WiFiAdapter,
-                    instance.Options.NetworkInfo.AvailableNetwork, reconnectionKind, credential);
-
-            // Done connecting
-            IsConnecting = false;
-
-            // Get result
-            ConnectionStatusMessage = connectionResult == WiFiConnectionStatus.Success
-                ? string.Format(Strings.SuccessfullyConnectedToXXX, ssid)
-                : string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid,
-                    ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
-
-            // Hide message automatically
-            _hideConnectionStatusMessageTimer.Stop();
-            _hideConnectionStatusMessageTimer.Start();
-
-            // Update the Wi-Fi networks.
-            // Wait because an error may occur if a refresh is done directly after connecting.            
-            await ScanAsync(SelectedAdapter, true, 5000);
+                // The SSID only for a hidden network
+                return WiFi.ConnectAsync(instance.Options.AdapterInfo.WiFiAdapter,
+                    instance.Options.NetworkInfo.AvailableNetwork, GetReconnectionKind(instance), credential,
+                    selectedNetwork.IsHidden ? instance.Ssid : null);
+            });
         }, async instance =>
         {
             // Connect WPS
@@ -1203,37 +1362,8 @@ public class WiFiViewModel : ViewModelBase
 
             var ssid = selectedNetwork.IsHidden ? instance.Ssid : selectedNetwork.AvailableNetwork.Ssid;
 
-            // Show status message (not hidden by the timer of a previous message)
-            _hideConnectionStatusMessageTimer.Stop();
-            IsConnecting = true;
-            ConnectionStatusMessage = string.Format(Strings.ConnectingToXXX, ssid);
-            IsConnectionStatusMessageDisplayed = true;
-
-            // Connect to the network
-            var reconnectionKind = instance.ConnectAutomatically
-                ? WiFiReconnectionKind.Automatic
-                : WiFiReconnectionKind.Manual;
-
-            var connectionResult = await WiFi.ConnectWpsAsync(
-                instance.Options.AdapterInfo.WiFiAdapter, instance.Options.NetworkInfo.AvailableNetwork,
-                reconnectionKind);
-
-            // Done connecting
-            IsConnecting = false;
-
-            // Get result
-            ConnectionStatusMessage = connectionResult == WiFiConnectionStatus.Success
-                ? string.Format(Strings.SuccessfullyConnectedToXXX, ssid)
-                : string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid,
-                    ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
-
-            // Hide message automatically
-            _hideConnectionStatusMessageTimer.Stop();
-            _hideConnectionStatusMessageTimer.Start();
-
-            // Update the Wi-Fi networks.
-            // Wait because an error may occur if a refresh is done directly after connecting.            
-            await ScanAsync(SelectedAdapter, true, 5000);
+            await ConnectAsync(ssid, () => WiFi.ConnectWpsAsync(instance.Options.AdapterInfo.WiFiAdapter,
+                instance.Options.NetworkInfo.AvailableNetwork, GetReconnectionKind(instance)));
         },
             _ =>
             {
@@ -1254,25 +1384,101 @@ public class WiFiViewModel : ViewModelBase
         _ = Application.Current.MainWindow.ShowChildWindowAsync(childWindow);
     }
 
-    private async void Disconnect()
+    /// <summary>
+    ///     Gets the reconnection kind of the connect dialog ("Connect automatically").
+    /// </summary>
+    private static WiFiReconnectionKind GetReconnectionKind(WiFiConnectViewModel instance)
     {
-        var connectedNetwork = Networks.FirstOrDefault(x => x.IsConnected);
+        return instance.ConnectAutomatically ? WiFiReconnectionKind.Automatic : WiFiReconnectionKind.Manual;
+    }
 
-        WiFi.Disconnect(SelectedAdapter.WiFiAdapter);
+    /// <summary>
+    ///     Connects to a network and shows the status (connecting, result) below the networks. The networks are
+    ///     scanned again afterwards.
+    /// </summary>
+    /// <param name="ssid">SSID of the network, shown in the status message.</param>
+    /// <param name="connect">Connects to the network (Open / PSK / EAP or WPS) and returns the result.</param>
+    private async Task ConnectAsync(string ssid, Func<Task<WiFiConnectionStatus>> connect)
+    {
+        // Show status message (not hidden by the timer of a previous message)
+        _hideConnectionStatusMessageTimer.Stop();
+        IsConnecting = true;
+        ConnectionStatusMessage = string.Format(Strings.ConnectingToXXX, ssid);
+        IsConnectionStatusMessageDisplayed = true;
 
-        if (connectedNetwork != null)
+        try
         {
-            ConnectionStatusMessage = string.Format(Strings.XXXDisconnected,
-                connectedNetwork.AvailableNetwork.Ssid);
-            IsConnectionStatusMessageDisplayed = true;
+            // Connect to the network
+            var connectionResult = await connect();
 
-            // Hide message automatically
-            _hideConnectionStatusMessageTimer.Stop();
-            _hideConnectionStatusMessageTimer.Start();
+            // Get result
+            ConnectionStatusMessage = connectionResult == WiFiConnectionStatus.Success
+                ? string.Format(Strings.SuccessfullyConnectedToXXX, ssid)
+                : string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid,
+                    ResourceTranslator.Translate(ResourceIdentifier.WiFiConnectionStatus, connectionResult));
         }
+        catch (Exception ex)
+        {
+            // E.g. the adapter was disabled while connecting
+            Log.Error($"Error while connecting to the WiFi network \"{ssid}\".", ex);
+
+            ConnectionStatusMessage = string.Format(Strings.CouldNotConnectToXXXReasonXXX, ssid, ex.Message);
+        }
+        finally
+        {
+            // Done connecting
+            IsConnecting = false;
+        }
+
+        // Hide message automatically
+        _hideConnectionStatusMessageTimer.Stop();
+        _hideConnectionStatusMessageTimer.Start();
+
+        // Update the Wi-Fi networks.
+        // Wait because an error may occur if a refresh is done directly after connecting.
+        await ScanAsync(SelectedAdapter, true, 5000);
+    }
+
+    private async Task DisconnectAsync()
+    {
+        // The menu item is only shown for the connected network (the selected one if no network is marked anymore)
+        var connectedNetwork = Networks.FirstOrDefault(x => x.IsConnected) ?? SelectedNetwork;
+
+        try
+        {
+            WiFi.Disconnect(SelectedAdapter.WiFiAdapter);
+
+            if (connectedNetwork != null)
+            {
+                ConnectionStatusMessage = string.Format(Strings.XXXDisconnected, WiFiNetworkToSsidStringConverter.GetSsid(connectedNetwork));
+                IsConnectionStatusMessageDisplayed = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while disconnecting the WiFi adapter.", ex);
+
+            ConnectionStatusMessage = string.Format(Strings.CouldNotDisconnectFromXXXReasonXXX,
+                WiFiNetworkToSsidStringConverter.GetSsid(connectedNetwork), ex.Message);
+            IsConnectionStatusMessageDisplayed = true;
+        }
+
+        // Hide message automatically
+        _hideConnectionStatusMessageTimer.Stop();
+        _hideConnectionStatusMessageTimer.Start();
 
         // Refresh
         await ScanAsync(SelectedAdapter, true, GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+    }
+
+    /// <summary>
+    ///     Gets the selected networks in the order they are shown in the grid (not in the order they were selected).
+    /// </summary>
+    private List<WiFiNetworkInfo> GetSelectedNetworksInGridOrder()
+    {
+        var selectedNetworks = new HashSet<WiFiNetworkInfo>(SelectedNetworks.Cast<WiFiNetworkInfo>());
+
+        return NetworksView.Cast<WiFiNetworkInfo>().Where(selectedNetworks.Contains).ToList();
     }
 
     private Task Export()
@@ -1286,11 +1492,13 @@ public class WiFiViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType,
-                    instance.ExportAll
-                        ? Networks
-                        : new ObservableCollection<WiFiNetworkInfo>(SelectedNetworks.Cast<WiFiNetworkInfo>()
-                            .ToArray()));
+                // The networks shown in the grid (band filter, search) in their order. Copied on the UI thread, exported
+                // in the background
+                var networks = instance.ExportAll
+                    ? NetworksView.Cast<WiFiNetworkInfo>().ToList()
+                    : GetSelectedNetworksInGridOrder();
+
+                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, networks));
             }
             catch (Exception ex)
             {
@@ -1323,6 +1531,9 @@ public class WiFiViewModel : ViewModelBase
 
     public void OnViewVisible()
     {
+        // The access may have been allowed in the Windows settings in the meantime
+        _ = CheckAccessAsync();
+
         _autoRefreshTimer.Resume();
     }
 
@@ -1357,5 +1568,3 @@ public class WiFiViewModel : ViewModelBase
 
     #endregion
 }
-
-public record WiFiChannelLegendEntry(SolidColorBrush Color, string Ssid, string Bssid);

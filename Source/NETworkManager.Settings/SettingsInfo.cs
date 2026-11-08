@@ -1151,6 +1151,54 @@ public class SettingsInfo : INotifyPropertyChanged
         }
     } = GlobalStaticConfiguration.WiFi_AutoRefreshTime;
 
+    /// <summary>
+    ///     Show a notification when an automatic refresh found changes.
+    /// </summary>
+    public bool WiFi_ShowNotificationPopup
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.WiFi_ShowNotificationPopup;
+
+    /// <summary>
+    ///     Play a sound when an automatic refresh found changes.
+    /// </summary>
+    public bool WiFi_NotificationSound
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.WiFi_NotificationSound;
+
+    /// <summary>
+    ///     Seconds until the notification of an automatic refresh is closed.
+    /// </summary>
+    public int WiFi_NotificationCloseTime
+    {
+        get;
+        set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    } = GlobalStaticConfiguration.WiFi_NotificationCloseTime;
+
     public string WiFi_ExportFilePath
     {
         get;

@@ -15,6 +15,7 @@ public enum SettingsName
     Settings,
     Dashboard,
     NetworkInterface,
+    WiFi,
     IPScanner,
     PortScanner,
     PingMonitor,

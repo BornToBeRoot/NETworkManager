@@ -8,19 +8,7 @@ namespace NETworkManager.Models.Network;
 /// </summary>
 public class WiFiNetworkScanInfo
 {
-    /// <summary>
-    ///     Create an instance of <see cref="WiFiNetworkScanInfo" />.
-    /// </summary>
-    public WiFiNetworkScanInfo()
-    {
-    }
-
     #region Variables
-
-    /// <summary>
-    ///     If of the network adapter who performed the scan.
-    /// </summary>
-    public Guid NetworkAdapterId { get; set; }
 
     /// <summary>
     ///     List of available WiFi networks on the network adapter.

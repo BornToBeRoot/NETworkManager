@@ -1,5 +1,4 @@
 ﻿using log4net;
-using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Converters;
@@ -733,9 +732,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
 
     private bool Scan_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
+        return !DialogHelper.IsAnyDialogOpen();
     }
 
     private void ScanAction()

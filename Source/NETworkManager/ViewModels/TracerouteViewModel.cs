@@ -283,9 +283,7 @@ public class TracerouteViewModel : ViewModelBase
 
     private bool Trace_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow)!.IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
+        return !DialogHelper.IsAnyDialogOpen();
     }
 
     private void TraceAction()

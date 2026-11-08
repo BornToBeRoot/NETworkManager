@@ -7,14 +7,6 @@ namespace NETworkManager.Models.Network;
 /// </summary>
 public class WiFiNetworkInfo
 {
-    /// <summary>
-    ///     /// Create an instance of <see cref="WiFiNetworkInfo" />.
-    /// </summary>
-    public WiFiNetworkInfo()
-    {
-
-    }
-
     #region Variables
 
     /// <summary>
@@ -23,12 +15,19 @@ public class WiFiNetworkInfo
     public WiFiAvailableNetwork AvailableNetwork { get; init; }
 
     /// <summary>
+    ///     BSSID (MAC address of the access point) in the default format of the application (e.g.
+    ///     <c>AA:BB:CC:DD:EE:FF</c>), like the MAC addresses of the other tools.
+    /// </summary>
+    public string Bssid { get; init; }
+
+    /// <summary>
     ///    Radio that is used like 2.4 GHz, 5 GHz, etc.
     /// </summary>
     public WiFiRadio Radio { get; init; }
 
     /// <summary>
-    ///    The channel center frequency in Gigahertz like 2.4 GHz, 5 GHz, etc.
+    ///    The channel center frequency in Gigahertz like 2.4 GHz, 5 GHz, etc. of the primary 20 MHz channel (where the
+    ///    beacons are sent).
     /// </summary>
     public double ChannelCenterFrequencyInGigahertz { get; set; }
 
@@ -42,6 +41,18 @@ public class WiFiNetworkInfo
     ///     the BSS list when available, otherwise estimated from radio band and PHY kind.
     /// </summary>
     public int ChannelBandwidth { get; set; }
+
+    /// <summary>
+    ///     The center frequency in Gigahertz of the whole channel (<see cref="ChannelBandwidth" />), e.g. 5.21 for
+    ///     80 MHz on the channels 36 - 48. The frequency of the primary channel if the bandwidth is estimated.
+    /// </summary>
+    public double ChannelBandwidthCenterFrequencyInGigahertz { get; set; }
+
+    /// <summary>
+    ///     Indicates if the <see cref="ChannelBandwidth" /> is estimated from the radio band and the PHY kind, because it
+    ///     could not be read from the beacon of the access point.
+    /// </summary>
+    public bool IsChannelBandwidthEstimated { get; set; }
 
     /// <summary>
     ///     Indicates if the Wi-Fi network Ssid is hidden.
@@ -67,5 +78,17 @@ public class WiFiNetworkInfo
     /// Human-readable phy kind.
     /// </summary>
     public string PhyKind { get; set; }
+
+    /// <summary>
+    ///     Change since the previous scan of the same adapter (set by the view model after the scan, see
+    ///     <see cref="WiFiScanComparer" />).
+    /// </summary>
+    public WiFiNetworkChange Change { get; set; }
+
+    /// <summary>
+    ///     The network of the previous scan if it <see cref="WiFiNetworkChange.Changed" /> (channel, channel width or
+    ///     security), otherwise null.
+    /// </summary>
+    public WiFiNetworkInfo Previous { get; set; }
     #endregion
 }

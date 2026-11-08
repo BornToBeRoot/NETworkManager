@@ -169,9 +169,7 @@ public class SNTPLookupViewModel : ViewModelBase
 
     private bool Query_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
+        return !DialogHelper.IsAnyDialogOpen();
     }
 
     private void QueryAction()

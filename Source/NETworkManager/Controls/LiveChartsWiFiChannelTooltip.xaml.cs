@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
@@ -9,6 +9,7 @@ using LiveChartsCore.Kernel;
 using LiveChartsCore.Kernel.Sketches;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
+using NETworkManager.Converters;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Network;
 using SkiaSharp;
@@ -55,10 +56,10 @@ public partial class LiveChartsWiFiChannelTooltip : IChartTooltip, INotifyProper
             if (!seenNetworks.Add(network))
                 continue;
 
-            var ssid = network.IsHidden ? Strings.HiddenNetwork : network.AvailableNetwork.Ssid;
-            var bssid = network.AvailableNetwork.Bssid;
+            var ssid = WiFiNetworkToSsidStringConverter.GetSsid(network);
+            var bssid = network.Bssid;
             var dbm = $"{network.AvailableNetwork.NetworkRssiInDecibelMilliwatts} dBm";
-            var widthText = $"{network.ChannelBandwidth} MHz";
+            var widthText = WiFiChannelBandwidthToStringConverter.Format(network);
             var channelDetail = $"{Strings.Channel} {network.Channel} · {widthText}";
 
             TooltipEntries.Add(new TooltipEntry(SkColorToBrush(GetSeriesColor(point)), ssid, bssid, dbm, channelDetail));

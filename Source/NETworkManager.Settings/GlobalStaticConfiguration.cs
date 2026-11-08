@@ -144,6 +144,10 @@ public static class GlobalStaticConfiguration
     public static AutoRefreshTimeInfo WiFi_AutoRefreshTime =>
         AutoRefreshTime.GetDefaults.First(x => x.Value == 30 && x.TimeUnit == TimeUnit.Second);
 
+    public static bool WiFi_ShowNotificationPopup => true;
+    public static bool WiFi_NotificationSound => false;
+    public static int WiFi_NotificationCloseTime => 10;
+
     public static ExportFileType WiFi_ExportFileType => ExportFileType.Csv;
 
     // Application: IP Scanner    

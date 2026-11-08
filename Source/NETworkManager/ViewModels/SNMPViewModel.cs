@@ -1,5 +1,4 @@
 ﻿using log4net;
-using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Localization;
@@ -438,9 +437,7 @@ public class SNMPViewModel : ViewModelBase
 
     private bool Work_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
+        return !DialogHelper.IsAnyDialogOpen();
     }
 
     private void WorkAction()

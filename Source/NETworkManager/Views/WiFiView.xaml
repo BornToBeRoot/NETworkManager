@@ -29,11 +29,49 @@
         <converters:TimeSpanToMillisecondConverter x:Key="TimeSpanToMillisecondConverter" />
         <converters:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
         <converters:WiFiChannelBandwidthToStringConverter x:Key="WiFiChannelBandwidthToStringConverter" />
+        <converters:WiFiNetworkChangeToStringConverter x:Key="WiFiNetworkChangeToStringConverter" />
         <converters:WiFiChannelCenterFrequencyToFrequencyStringConverter
             x:Key="WiFiChannelCenterFrequencyToFrequencyStringConverter" />
         <converters:WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter
             x:Key="WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter" />
         <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
+        <!-- Channel charts (2.4 GHz, 5 GHz, 6 GHz lower / upper) and their legends -->
+        <Style x:Key="WiFiChannelChart" TargetType="{x:Type lvc:CartesianChart}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="LegendPosition" Value="Hidden" />
+            <Setter Property="FindingStrategy" Value="CompareOnlyX" />
+            <Setter Property="DrawMarginFrame" Value="{x:Null}" />
+            <Setter Property="EasingFunction" Value="{x:Null}" />
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+        </Style>
+        <Style x:Key="WiFiChannelLegend" TargetType="{x:Type ItemsControl}">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
+                            <Rectangle Width="16" Height="3"
+                                       Fill="{Binding Color}"
+                                       VerticalAlignment="Center"
+                                       Margin="0,0,4,0" />
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="{Binding Ssid}"
+                                           Style="{StaticResource AccentTextBlock}" />
+                                <TextBlock Text="{Binding Bssid}"
+                                           Style="{StaticResource ConsoleTextBlock}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid>
@@ -76,7 +114,8 @@
                                         </Grid.ColumnDefinitions>
                                         <ComboBox Grid.Column="0" x:Name="ComboBoxAdapters"
                                                   ItemsSource="{Binding Path=Adapters}"
-                                                  SelectedItem="{Binding Path=SelectedAdapter}">
+                                                  SelectedItem="{Binding Path=SelectedAdapter}"
+                                                  IsEnabled="{Binding Path=CanChangeAdapter}">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Horizontal">
@@ -95,7 +134,7 @@
                                                                             Value="{DynamicResource ResourceKey=MahApps.Brushes.Gray3}" />
                                                                     <Style.Triggers>
                                                                         <DataTrigger
-                                                                            Binding="{Binding Path=NetworkInterfaceInfo.IsOperational}"
+                                                                            Binding="{Binding Path=IsOperational}"
                                                                             Value="True">
                                                                             <Setter Property="OpacityMask"
                                                                                 Value="{StaticResource ResourceKey=VisualUp}" />
@@ -213,6 +252,43 @@
                                                    Text="{x:Static Member=localization:Strings.Networks}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}"
                                                    Margin="0,0,0,0" />
+                                        <!-- Changes since the previous scan of the same adapter (changed only if there are any) -->
+                                        <StackPanel Grid.Column="1" Grid.Row="0"
+                                                    Orientation="Horizontal"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Left"
+                                                    Margin="10,0,0,0"
+                                                    Visibility="{Binding Path=HasComparison, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}">
+                                            <TextBlock Style="{StaticResource DefaultTextBlock}"
+                                                       Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                                                <TextBlock.Text>
+                                                    <Binding Path="NetworksNew" StringFormat="{x:Static localization:Strings.XNew}" />
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                            <TextBlock Text="·"
+                                                       Style="{StaticResource DefaultTextBlock}"
+                                                       Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                                       Margin="6,0,6,0" />
+                                            <TextBlock Style="{StaticResource DefaultTextBlock}"
+                                                       Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                                                <TextBlock.Text>
+                                                    <Binding Path="NetworksGone" StringFormat="{x:Static localization:Strings.XGone}" />
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                            <StackPanel Orientation="Horizontal"
+                                                        Visibility="{Binding Path=NetworksChanged, Converter={StaticResource ResourceKey=IntNotZeroToVisibilityCollapsedConverter}}">
+                                                <TextBlock Text="·"
+                                                           Style="{StaticResource DefaultTextBlock}"
+                                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}"
+                                                           Margin="6,0,6,0" />
+                                                <TextBlock Style="{StaticResource DefaultTextBlock}"
+                                                           Foreground="{DynamicResource MahApps.Brushes.Gray5}">
+                                                    <TextBlock.Text>
+                                                        <Binding Path="NetworksChanged" StringFormat="{x:Static localization:Strings.XChanged}" />
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </StackPanel>
                                         <!-- Searching / loading: the search icon spins -->
                                         <internalControls:RefreshStatusControl Grid.Column="1" Grid.Row="0"
                                                                                LastRefreshTime="{Binding LastRefreshTime}"
@@ -339,7 +415,7 @@
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem Header="{x:Static Member=localization:Strings.ChannelWidth}"
                                                               Command="{Binding Path=CopyDataToClipboardCommand}"
-                                                              CommandParameter="{Binding Path=SelectedNetwork.ChannelBandwidth, Converter={StaticResource ResourceKey=WiFiChannelBandwidthToStringConverter}}"
+                                                              CommandParameter="{Binding Path=SelectedNetwork, Converter={StaticResource ResourceKey=WiFiChannelBandwidthToStringConverter}}"
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem
                                                         Header="{x:Static Member=localization:Strings.SignalStrength}"
@@ -358,7 +434,7 @@
                                                         Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem Header="{x:Static Member=localization:Strings.BSSID}"
                                                               Command="{Binding Path=CopyDataToClipboardCommand}"
-                                                              CommandParameter="{Binding Path=SelectedNetwork.AvailableNetwork.Bssid}"
+                                                              CommandParameter="{Binding Path=SelectedNetwork.Bssid}"
                                                               Style="{StaticResource ResourceKey=CopyMenuItem}" />
                                                     <MenuItem Header="{x:Static Member=localization:Strings.Vendor}"
                                                               Command="{Binding Path=CopyDataToClipboardCommand}"
@@ -398,6 +474,18 @@
                                             </ContextMenu>
                                             <ContextMenu x:Key="MultiRowContextMenu" DataContext="{Binding Data, Source={StaticResource BindingProxy}}"
                                                          MinWidth="150">
+                                                <!-- One value per line, in the order shown, without duplicates -->
+                                                <MenuItem Header="{x:Static Member=localization:Strings.CopyDots}"
+                                                          Style="{StaticResource ResourceKey=CopyMenuItem}">
+                                                    <MenuItem Header="{x:Static Member=localization:Strings.SSID}"
+                                                              Command="{Binding Path=CopySelectedNetworksCommand}"
+                                                              CommandParameter="SSID"
+                                                              Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                                    <MenuItem Header="{x:Static Member=localization:Strings.BSSID}"
+                                                              Command="{Binding Path=CopySelectedNetworksCommand}"
+                                                              CommandParameter="BSSID"
+                                                              Style="{StaticResource ResourceKey=CopyMenuItem}" />
+                                                </MenuItem>
                                                 <MenuItem Header="{x:Static Member=localization:Strings.ExportDots}"
                                                           Command="{Binding Path=ExportCommand}">
                                                     <MenuItem.Icon>
@@ -418,6 +506,12 @@
                                                 <Setter Property="ContextMenu"
                                                         Value="{StaticResource ResourceKey=MultiRowContextMenu}" />
                                                 <Style.Triggers>
+                                                    <!-- Gone since the last scan: shown as it was, faded -->
+                                                    <DataTrigger
+                                                        Binding="{Binding Path=(network:WiFiNetworkInfo.Change)}"
+                                                        Value="{x:Static network:WiFiNetworkChange.Gone}">
+                                                        <Setter Property="Opacity" Value="0.5" />
+                                                    </DataTrigger>
                                                     <DataTrigger
                                                         Binding="{Binding Path=SelectedItems.Count, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TypeName=DataGrid}}}"
                                                         Value="1">
@@ -428,7 +522,7 @@
                                             </Style>
                                         </controls2:MultiSelectDataGrid.RowStyle>
                                         <controls2:MultiSelectDataGrid.Columns>
-                                            <DataGridTemplateColumn MinWidth="44" SortMemberPath="ChannelCenterFrequencyInKilohertz">
+                                            <DataGridTemplateColumn MinWidth="44" SortMemberPath="AvailableNetwork.SignalBars">
                                                 <DataGridTemplateColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <Rectangle Width="24" Height="24"
@@ -500,8 +594,8 @@
                                                                                     Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SignalBars}"
                                                                                     Value="0" />
                                                                                 <Condition
-                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkAuthenticationType}"
-                                                                                    Value="Open80211" />
+                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkEncryptionType}"
+                                                                                    Value="None" />
                                                                             </MultiDataTrigger.Conditions>
                                                                             <MultiDataTrigger.Setters>
                                                                                 <Setter Property="OpacityMask"
@@ -514,8 +608,8 @@
                                                                                     Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SignalBars}"
                                                                                     Value="1" />
                                                                                 <Condition
-                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkAuthenticationType}"
-                                                                                    Value="Open80211" />
+                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkEncryptionType}"
+                                                                                    Value="None" />
                                                                             </MultiDataTrigger.Conditions>
                                                                             <MultiDataTrigger.Setters>
                                                                                 <Setter Property="OpacityMask"
@@ -528,8 +622,8 @@
                                                                                     Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SignalBars}"
                                                                                     Value="2" />
                                                                                 <Condition
-                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkAuthenticationType}"
-                                                                                    Value="Open80211" />
+                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkEncryptionType}"
+                                                                                    Value="None" />
                                                                             </MultiDataTrigger.Conditions>
                                                                             <MultiDataTrigger.Setters>
                                                                                 <Setter Property="OpacityMask"
@@ -542,8 +636,8 @@
                                                                                     Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SignalBars}"
                                                                                     Value="3" />
                                                                                 <Condition
-                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkAuthenticationType}"
-                                                                                    Value="Open80211" />
+                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkEncryptionType}"
+                                                                                    Value="None" />
                                                                             </MultiDataTrigger.Conditions>
                                                                             <MultiDataTrigger.Setters>
                                                                                 <Setter Property="OpacityMask"
@@ -556,8 +650,8 @@
                                                                                     Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SignalBars}"
                                                                                     Value="4" />
                                                                                 <Condition
-                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkAuthenticationType}"
-                                                                                    Value="Open80211" />
+                                                                                    Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkEncryptionType}"
+                                                                                    Value="None" />
                                                                             </MultiDataTrigger.Conditions>
                                                                             <MultiDataTrigger.Setters>
                                                                                 <Setter Property="OpacityMask"
@@ -568,6 +662,72 @@
                                                                 </Style>
                                                             </Rectangle.Style>
                                                         </Rectangle>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
+                                            <!-- Change since the previous scan of the same adapter, only if the networks are compared with one -->
+                                            <!-- Same design as in the IP Scanner (icon + text in its color) -->
+                                            <DataGridTemplateColumn Header="{x:Static localization:Strings.SinceLastScan}"
+                                                                    SortMemberPath="Change"
+                                                                    MinWidth="140"
+                                                                    Visibility="{Binding Source={StaticResource BindingProxy}, Path=Data.HasComparison, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel x:Name="ChangePanel" Orientation="Horizontal"
+                                                                    VerticalAlignment="Center">
+                                                            <Rectangle x:Name="ChangeIcon" Width="12" Height="12"
+                                                                       Margin="0,0,4,0" />
+                                                            <TextBlock x:Name="ChangeText"
+                                                                       Text="{Binding Path=(network:WiFiNetworkInfo.Change), Converter={StaticResource WiFiNetworkChangeToStringConverter}}"
+                                                                       VerticalAlignment="Center" />
+                                                        </StackPanel>
+                                                        <DataTemplate.Triggers>
+                                                            <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.Change)}"
+                                                                         Value="{x:Static network:WiFiNetworkChange.None}">
+                                                                <Setter TargetName="ChangePanel" Property="Visibility"
+                                                                        Value="Collapsed" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.Change)}"
+                                                                         Value="{x:Static network:WiFiNetworkChange.New}">
+                                                                <Setter TargetName="ChangeIcon" Property="Fill"
+                                                                        Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                                <Setter TargetName="ChangeIcon" Property="OpacityMask">
+                                                                    <Setter.Value>
+                                                                        <VisualBrush Stretch="Uniform"
+                                                                                     Visual="{iconPacks:Material Kind=Plus}" />
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter TargetName="ChangeText" Property="Foreground"
+                                                                        Value="{DynamicResource MahApps.Brushes.Gray5}" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.Change)}"
+                                                                         Value="{x:Static network:WiFiNetworkChange.Gone}">
+                                                                <Setter TargetName="ChangeIcon" Property="Fill" Value="#b95353" />
+                                                                <Setter TargetName="ChangeIcon" Property="OpacityMask">
+                                                                    <Setter.Value>
+                                                                        <VisualBrush Stretch="Uniform"
+                                                                                     Visual="{iconPacks:Material Kind=Minus}" />
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter TargetName="ChangeText" Property="Foreground"
+                                                                        Value="#b95353" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.Change)}"
+                                                                         Value="{x:Static network:WiFiNetworkChange.Changed}">
+                                                                <Setter TargetName="ChangeIcon" Property="Fill" Value="#f1b856" />
+                                                                <Setter TargetName="ChangeIcon" Property="OpacityMask">
+                                                                    <Setter.Value>
+                                                                        <VisualBrush Stretch="Uniform"
+                                                                                     Visual="{iconPacks:Material Kind=SwapHorizontal}" />
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter TargetName="ChangeText" Property="Foreground"
+                                                                        Value="#f1b856" />
+                                                                <!-- Channel, width and security of the previous scan -->
+                                                                <Setter TargetName="ChangePanel" Property="ToolTip"
+                                                                        Value="{Binding Path=., Converter={StaticResource WiFiNetworkChangeToStringConverter}, ConverterParameter=ToolTip}" />
+                                                            </DataTrigger>
+                                                        </DataTemplate.Triggers>
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
@@ -610,9 +770,23 @@
                                                                 MinWidth="80" />
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.ChannelWidth}"
-                                                Binding="{Binding Path=(network:WiFiNetworkInfo.ChannelBandwidth), Converter={StaticResource ResourceKey=WiFiChannelBandwidthToStringConverter}}"
+                                                Binding="{Binding Path=., Converter={StaticResource ResourceKey=WiFiChannelBandwidthToStringConverter}}"
                                                 SortMemberPath="ChannelBandwidth"
-                                                MinWidth="120" />
+                                                MinWidth="120">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="{x:Type TextBlock}">
+                                                        <Style.Triggers>
+                                                            <!-- "~80 MHz": why the width is estimated -->
+                                                            <DataTrigger
+                                                                Binding="{Binding Path=(network:WiFiNetworkInfo.IsChannelBandwidthEstimated)}"
+                                                                Value="True">
+                                                                <Setter Property="ToolTip"
+                                                                        Value="{x:Static Member=localization:Strings.ChannelWidthEstimatedToolTip}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.SignalStrength}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).NetworkRssiInDecibelMilliwatts, Converter={StaticResource ResourceKey=WiFiNetworkRssiInDecibelMilliwattsToSignalStrengthStringConverter}}"
@@ -626,11 +800,11 @@
                                             <DataGridTextColumn
                                                 Header="{x:Static Member=localization:Strings.Encryption}"
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkEncryptionType}"
-                                                SortMemberPath="AvailableNetwork.NetworkEncryptionType"
+                                                SortMemberPath="AvailableNetwork.SecuritySettings.NetworkEncryptionType"
                                                 MinWidth="100" />
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.BSSID}"
-                                                                Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).Bssid}"
-                                                                SortMemberPath="AvailableNetwork.Bssid"
+                                                                Binding="{Binding Path=(network:WiFiNetworkInfo.Bssid)}"
+                                                                SortMemberPath="Bssid"
                                                                 MinWidth="140" />
                                             <DataGridTextColumn Header="{x:Static Member=localization:Strings.Vendor}"
                                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.Vendor)}"
@@ -713,16 +887,11 @@
                                         <TextBlock Grid.Row="0" Text="{x:Static Member=localization:Strings.GHz2dot4}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
                                         <lvc:CartesianChart Grid.Row="1"
-                                                            Background="Transparent"
-                                                            Series="{Binding Path=Radio2Dot4GHzSeries}"
-                                                            XAxes="{Binding Path=Radio2Dot4GHzXAxes}"
-                                                            YAxes="{Binding Path=Radio2Dot4GHzYAxes}"
-                                                            Sections="{Binding Path=Radio2Dot4GHzSections}"
-                                                            LegendPosition="Hidden"
-                                                            FindingStrategy="CompareOnlyX"
-                                                            DrawMarginFrame="{x:Null}"
-                                                            EasingFunction="{x:Null}"
-                                                            RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                                            Style="{StaticResource ResourceKey=WiFiChannelChart}"
+                                                            Series="{Binding Path=Chart2Dot4GHz.Series}"
+                                                            XAxes="{Binding Path=Chart2Dot4GHz.XAxes}"
+                                                            YAxes="{Binding Path=Chart2Dot4GHz.YAxes}"
+                                                            Sections="{Binding Path=Chart2Dot4GHz.Sections}">
                                             <lvc:CartesianChart.Tooltip>
                                                 <controls:LiveChartsWiFiChannelTooltip />
                                             </lvc:CartesianChart.Tooltip>
@@ -731,44 +900,17 @@
                                                       HorizontalScrollBarVisibility="Auto"
                                                       VerticalScrollBarVisibility="Disabled"
                                                       Margin="0,4,0,0">
-                                            <ItemsControl ItemsSource="{Binding Radio2Dot4GHzLegend}"
-                                                          HorizontalAlignment="Center">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" />
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
-                                                            <Rectangle Width="16" Height="3"
-                                                                       Fill="{Binding Color}"
-                                                                       VerticalAlignment="Center"
-                                                                       Margin="0,0,4,0" />
-                                                            <StackPanel Orientation="Vertical">
-                                                                <TextBlock Text="{Binding Ssid}"
-                                                                           Style="{StaticResource AccentTextBlock}" />
-                                                                <TextBlock Text="{Binding Bssid}"
-                                                                           Style="{StaticResource ConsoleTextBlock}" />
-                                                            </StackPanel>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
+                                            <ItemsControl ItemsSource="{Binding Path=Chart2Dot4GHz.Legend}"
+                                                          Style="{StaticResource ResourceKey=WiFiChannelLegend}" />
                                         </ScrollViewer>
                                         <TextBlock Grid.Row="4" Text="{x:Static Member=localization:Strings.GHz5}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
                                         <lvc:CartesianChart Grid.Row="5"
-                                                            Background="Transparent"
-                                                            Series="{Binding Path=Radio5GHzSeries}"
-                                                            XAxes="{Binding Path=Radio5GHzXAxes}"
-                                                            YAxes="{Binding Path=Radio5GHzYAxes}"
-                                                            Sections="{Binding Path=Radio5GHzSections}"
-                                                            LegendPosition="Hidden"
-                                                            FindingStrategy="CompareOnlyX"
-                                                            DrawMarginFrame="{x:Null}"
-                                                            EasingFunction="{x:Null}"
-                                                            RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                                            Style="{StaticResource ResourceKey=WiFiChannelChart}"
+                                                            Series="{Binding Path=Chart5GHz.Series}"
+                                                            XAxes="{Binding Path=Chart5GHz.XAxes}"
+                                                            YAxes="{Binding Path=Chart5GHz.YAxes}"
+                                                            Sections="{Binding Path=Chart5GHz.Sections}">
                                             <lvc:CartesianChart.Tooltip>
                                                 <controls:LiveChartsWiFiChannelTooltip />
                                             </lvc:CartesianChart.Tooltip>
@@ -777,30 +919,8 @@
                                                       HorizontalScrollBarVisibility="Auto"
                                                       VerticalScrollBarVisibility="Disabled"
                                                       Margin="0,4,0,0">
-                                            <ItemsControl ItemsSource="{Binding Radio5GHzLegend}"
-                                                          HorizontalAlignment="Center">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" />
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
-                                                            <Rectangle Width="16" Height="3"
-                                                                       Fill="{Binding Color}"
-                                                                       VerticalAlignment="Center"
-                                                                       Margin="0,0,4,0" />
-                                                            <StackPanel Orientation="Vertical">
-                                                                <TextBlock Text="{Binding Ssid}"
-                                                                           Style="{StaticResource AccentTextBlock}" />
-                                                                <TextBlock Text="{Binding Bssid}"
-                                                                           Style="{StaticResource ConsoleTextBlock}" />
-                                                            </StackPanel>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
+                                            <ItemsControl ItemsSource="{Binding Path=Chart5GHz.Legend}"
+                                                          Style="{StaticResource ResourceKey=WiFiChannelLegend}" />
                                         </ScrollViewer>
                                     </Grid>
                                 </TabItem>
@@ -818,16 +938,11 @@
                                         <TextBlock Grid.Row="0" Text="{Binding Source={x:Static localization:Strings.GHz6}, StringFormat={}{0} (1 - 125)}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
                                         <lvc:CartesianChart Grid.Row="1"
-                                                            Background="Transparent"
-                                                            Series="{Binding Path=Radio6GHzLowerSeries}"
-                                                            XAxes="{Binding Path=Radio6GHzLowerXAxes}"
-                                                            YAxes="{Binding Path=Radio6GHzLowerYAxes}"
-                                                            Sections="{Binding Path=Radio6GHzLowerSections}"
-                                                            LegendPosition="Hidden"
-                                                            FindingStrategy="CompareOnlyX"
-                                                            DrawMarginFrame="{x:Null}"
-                                                            EasingFunction="{x:Null}"
-                                                            RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                                            Style="{StaticResource ResourceKey=WiFiChannelChart}"
+                                                            Series="{Binding Path=Chart6GHzLower.Series}"
+                                                            XAxes="{Binding Path=Chart6GHzLower.XAxes}"
+                                                            YAxes="{Binding Path=Chart6GHzLower.YAxes}"
+                                                            Sections="{Binding Path=Chart6GHzLower.Sections}">
                                             <lvc:CartesianChart.Tooltip>
                                                 <controls:LiveChartsWiFiChannelTooltip />
                                             </lvc:CartesianChart.Tooltip>
@@ -836,44 +951,17 @@
                                                       HorizontalScrollBarVisibility="Auto"
                                                       VerticalScrollBarVisibility="Disabled"
                                                       Margin="0,4,0,0">
-                                            <ItemsControl ItemsSource="{Binding Radio6GHzLowerLegend}"
-                                                          HorizontalAlignment="Center">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" />
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
-                                                            <Rectangle Width="16" Height="3"
-                                                                       Fill="{Binding Color}"
-                                                                       VerticalAlignment="Center"
-                                                                       Margin="0,0,4,0" />
-                                                            <StackPanel Orientation="Vertical">
-                                                                <TextBlock Text="{Binding Ssid}"
-                                                                           Style="{StaticResource AccentTextBlock}" />
-                                                                <TextBlock Text="{Binding Bssid}"
-                                                                           Style="{StaticResource ConsoleTextBlock}" />
-                                                            </StackPanel>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
+                                            <ItemsControl ItemsSource="{Binding Path=Chart6GHzLower.Legend}"
+                                                          Style="{StaticResource ResourceKey=WiFiChannelLegend}" />
                                         </ScrollViewer>
                                         <TextBlock Grid.Row="4" Text="{Binding Source={x:Static localization:Strings.GHz6}, StringFormat={}{0} (129 - 233)}"
                                                    Style="{StaticResource ResourceKey=HeaderTextBlock}" />
                                         <lvc:CartesianChart Grid.Row="5"
-                                                            Background="Transparent"
-                                                            Series="{Binding Path=Radio6GHzUpperSeries}"
-                                                            XAxes="{Binding Path=Radio6GHzUpperXAxes}"
-                                                            YAxes="{Binding Path=Radio6GHzUpperYAxes}"
-                                                            Sections="{Binding Path=Radio6GHzUpperSections}"
-                                                            LegendPosition="Hidden"
-                                                            FindingStrategy="CompareOnlyX"
-                                                            DrawMarginFrame="{x:Null}"
-                                                            EasingFunction="{x:Null}"
-                                                            RenderOptions.BitmapScalingMode="NearestNeighbor">
+                                                            Style="{StaticResource ResourceKey=WiFiChannelChart}"
+                                                            Series="{Binding Path=Chart6GHzUpper.Series}"
+                                                            XAxes="{Binding Path=Chart6GHzUpper.XAxes}"
+                                                            YAxes="{Binding Path=Chart6GHzUpper.YAxes}"
+                                                            Sections="{Binding Path=Chart6GHzUpper.Sections}">
                                             <lvc:CartesianChart.Tooltip>
                                                 <controls:LiveChartsWiFiChannelTooltip />
                                             </lvc:CartesianChart.Tooltip>
@@ -882,30 +970,8 @@
                                                       HorizontalScrollBarVisibility="Auto"
                                                       VerticalScrollBarVisibility="Disabled"
                                                       Margin="0,4,0,0">
-                                            <ItemsControl ItemsSource="{Binding Radio6GHzUpperLegend}"
-                                                          HorizontalAlignment="Center">
-                                                <ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <StackPanel Orientation="Horizontal" />
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel Orientation="Horizontal" Margin="0,0,12,0">
-                                                            <Rectangle Width="16" Height="3"
-                                                                       Fill="{Binding Color}"
-                                                                       VerticalAlignment="Center"
-                                                                       Margin="0,0,4,0" />
-                                                            <StackPanel Orientation="Vertical">
-                                                                <TextBlock Text="{Binding Ssid}"
-                                                                           Style="{StaticResource AccentTextBlock}" />
-                                                                <TextBlock Text="{Binding Bssid}"
-                                                                           Style="{StaticResource ConsoleTextBlock}" />
-                                                            </StackPanel>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
+                                            <ItemsControl ItemsSource="{Binding Path=Chart6GHzUpper.Legend}"
+                                                          Style="{StaticResource ResourceKey=WiFiChannelLegend}" />
                                         </ScrollViewer>
                                     </Grid>
                                 </TabItem>
@@ -1013,24 +1079,46 @@
             </StackPanel.Style>
             <TextBlock Text="{x:Static localization:Strings.WiFiAccessNotAvailableMessage}"
                        Style="{StaticResource MessageTextBlock}" Margin="0,0,0,10" />
-            <Button HorizontalAlignment="Center" Command="{Binding Path=OpenSettingsCommand}"
-                    Style="{StaticResource ImageWithTextButton}">
-                <Button.Content>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Cog}" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                        <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.OpenSettings}"
-                                   Style="{StaticResource ButtonWithImageTextBlock}" />
-                    </Grid>
-                </Button.Content>
-            </Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Command="{Binding Path=OpenSettingsCommand}"
+                        Style="{StaticResource ImageWithTextButton}">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:MaterialLight Kind=Cog}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.OpenSettings}"
+                                       Style="{StaticResource ButtonWithImageTextBlock}" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <!-- Check the access again after it was allowed in the Windows settings -->
+                <Button Command="{Binding Path=CheckAccessCommand}"
+                        Style="{StaticResource ImageWithTextButton}"
+                        Margin="10,0,0,0">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                <Rectangle.OpacityMask>
+                                    <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Refresh}" />
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Refresh}"
+                                       Style="{StaticResource ButtonWithImageTextBlock}" />
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>

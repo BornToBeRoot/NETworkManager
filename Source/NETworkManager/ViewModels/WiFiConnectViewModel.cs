@@ -1,3 +1,4 @@
+using log4net;
 using NETworkManager.Models.Network;
 using NETworkManager.Utilities;
 using NETworkManager.Settings;
@@ -10,6 +11,8 @@ namespace NETworkManager.ViewModels;
 
 public class WiFiConnectViewModel : ViewModelBase
 {
+    private static readonly ILog Log = LogManager.GetLogger(typeof(WiFiConnectViewModel));
+
     /// <summary>
     ///     Current WiFi adapter info and network info.
     /// </summary>
@@ -273,6 +276,10 @@ public class WiFiConnectViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    ///     Checks if WPS (push button) is available for the network (shows the WPS button). Called when the dialog is
+    ///     loaded.
+    /// </summary>
     public async Task CheckWpsAsync()
     {
         // Only check if WPS is available for networks secured by Pre-shared key who are not hidden
@@ -280,15 +287,25 @@ public class WiFiConnectViewModel : ViewModelBase
             return;
 
         IsWpsChecking = true;
-        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)
-        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval / 2);
 
-        IsWpsAvailable =
-            await WiFi.IsWpsAvailable(Options.AdapterInfo.WiFiAdapter, Options.NetworkInfo.AvailableNetwork);
+        try
+        {
+            // Takes at least the refresh interval, so the animation is visible - the check runs at the same time
+            IsWpsAvailable = await TaskHelper.WithMinimumDurationAsync(
+                () => WiFi.IsWpsAvailable(Options.AdapterInfo.WiFiAdapter, Options.NetworkInfo.AvailableNetwork),
+                GlobalStaticConfiguration.ApplicationUIRefreshInterval);
+        }
+        catch (Exception ex)
+        {
+            // Optional: the network can still be connected with the pre-shared key
+            Log.Error("Error while checking if WPS is available.", ex);
 
-        // Make the user happy, let him see a reload animation (and he cannot spam the reload command)        
-        await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval / 2);
-        IsWpsChecking = false;
+            IsWpsAvailable = false;
+        }
+        finally
+        {
+            IsWpsChecking = false;
+        }
     }
 
     /// <summary>

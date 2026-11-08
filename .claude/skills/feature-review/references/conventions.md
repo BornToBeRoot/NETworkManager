@@ -134,6 +134,8 @@ Reference: `HostsFileEditorView.xaml`, `FirewallView.xaml`.
 
 - Child windows: set `ConfigurationManager.Current.IsChildWindowOpen` before showing and reset it in both
   OK and Cancel handlers; dialog view models get OK/Cancel actions.
+- Commands that open a dialog or run behind one (scan, refresh, auto refresh, modify) check
+  `!DialogHelper.IsAnyDialogOpen()` in their `CanExecute` (main window, MahApps dialog, child window), no own copy.
 - Add/edit/copy dialogs share one view model with `EditMode` (`Add`, `Edit`, `Copy`; profiles use
   `ProfileEditMode`). Copy appends `" - " + Strings.CopyNoun` to a name where names identify items.
 - Deletes are confirmed with `DialogHelper.ShowConfirmationMessageAsync(..., ChildWindowIcon.Info, Strings.Delete)`.

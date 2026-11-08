@@ -4,7 +4,6 @@ using System.Net;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using MahApps.Metro.Controls;
 using NETworkManager.Models.Network;
 using NETworkManager.Settings;
 using NETworkManager.Utilities;
@@ -106,9 +105,7 @@ public class SubnetCalculatorWideSubnetViewModel : ViewModelBase
 
     private bool Calculate_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
+        return !DialogHelper.IsAnyDialogOpen();
     }
 
     private void CalculateAction()

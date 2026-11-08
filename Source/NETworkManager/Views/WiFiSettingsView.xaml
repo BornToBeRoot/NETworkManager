@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="NETworkManager.Views.WiFiSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:viewModels="clr-namespace:NETworkManager.ViewModels"
+             xmlns:localization="clr-namespace:NETworkManager.Localization.Resources;assembly=NETworkManager.Localization"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:WiFiSettingsViewModel}">
+    <StackPanel>
+        <!-- Changes since the last scan of an automatic refresh (like the IP Scanner) -->
+        <TextBlock Text="{x:Static localization:Strings.PingMonitorNotification}" Style="{StaticResource HeaderTextBlock}" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <mah:ToggleSwitch Header="{x:Static localization:Strings.ShowNotificationPopupOnChanges}"
+                              IsOn="{Binding ShowNotificationPopup}" />
+            <Rectangle Width="24" Height="24" VerticalAlignment="Top"
+                       ToolTip="{x:Static localization:Strings.HelpMessage_WiFiChangesNotification}"
+                       Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                <Rectangle.Resources>
+                    <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                </Rectangle.Resources>
+            </Rectangle>
+        </StackPanel>
+        <mah:ToggleSwitch Header="{x:Static localization:Strings.PlaySoundOnChanges}"
+                          IsOn="{Binding NotificationSound}" Margin="0,0,0,10" />
+        <TextBlock Text="{x:Static localization:Strings.NotificationDurationInSeconds}"
+                   Style="{StaticResource DefaultTextBlock}" Margin="0,0,0,10" />
+        <mah:NumericUpDown Value="{Binding NotificationCloseTime}" Minimum="3" Maximum="60" Interval="1"
+                           IsEnabled="{Binding ShowNotificationPopup}" />
+    </StackPanel>
+</UserControl>

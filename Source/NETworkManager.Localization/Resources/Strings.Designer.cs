@@ -1856,6 +1856,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Estimated from the band and the WiFi standard: the channel width could not be read from the beacon of the access point..
+        /// </summary>
+        public static string ChannelWidthEstimatedToolTip {
+            get {
+                return ResourceManager.GetString("ChannelWidthEstimatedToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chart time (seconds).
         /// </summary>
         public static string ChartTimeInSeconds {
@@ -2603,6 +2612,15 @@ namespace NETworkManager.Localization.Resources {
         public static string CouldNotDetectSubnetmask {
             get {
                 return ResourceManager.GetString("CouldNotDetectSubnetmask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not disconnect from {0} ({1})!.
+        /// </summary>
+        public static string CouldNotDisconnectFromXXXReasonXXX {
+            get {
+                return ResourceManager.GetString("CouldNotDisconnectFromXXXReasonXXX", resourceCulture);
             }
         }
         
@@ -6321,6 +6339,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only when the networks are scanned automatically (&quot;Automatically update every&quot;) and WiFi is shown: one notification per scan with the changes since the previous scan of the adapter..
+        /// </summary>
+        public static string HelpMessage_WiFiChangesNotification {
+            get {
+                return ResourceManager.GetString("HelpMessage_WiFiChangesNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Windows credentials for the Windows host information of this tab (also for repeated scans and Rescan), replacing the ones of the profile / group. They are not saved and are discarded when the tab is closed. Without credentials, the user running NETworkManager is used..
         /// </summary>
         public static string HelpMessage_WindowsCredentialsOfTheTab {
@@ -9802,6 +9829,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Preview {
             get {
                 return ResourceManager.GetString("Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Previously: {0}.
+        /// </summary>
+        public static string PreviouslyX {
+            get {
+                return ResourceManager.GetString("PreviouslyX", resourceCulture);
             }
         }
         
@@ -15497,6 +15533,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changed.
+        /// </summary>
+        public static string WiFiNetworkChange_Changed {
+            get {
+                return ResourceManager.GetString("WiFiNetworkChange_Changed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Window.
         /// </summary>
         public static string Window {
@@ -15637,6 +15682,15 @@ namespace NETworkManager.Localization.Resources {
         public static string XADNSRecordsResolvedForXXXMessage {
             get {
                 return ResourceManager.GetString("XADNSRecordsResolvedForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Changed.
+        /// </summary>
+        public static string XChanged {
+            get {
+                return ResourceManager.GetString("XChanged", resourceCulture);
             }
         }
         
