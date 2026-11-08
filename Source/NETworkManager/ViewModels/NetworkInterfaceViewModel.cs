@@ -492,6 +492,11 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     #endregion
 
     /// <summary>
+    /// Profile whose values were last filled into the <c>Config*</c> fields.
+    /// </summary>
+    private ProfileInfo _prefilledProfile;
+
+    /// <summary>
     /// Gets or sets the selected profile. Pre-fills the <c>Config*</c> fields from the profile.
     /// </summary>
     public override ProfileInfo SelectedProfile
@@ -502,8 +507,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             if (value == base.SelectedProfile)
                 return;
 
-            if (value != null)
+            // The profile list is rebuilt (and the selected profile selected again) when the view becomes visible or a
+            // profile changes. Only fill in the values if another profile (or the edited one, which is a new object)
+            // is selected, otherwise the values entered on the Configure tab are overwritten.
+            if (value != null && !ReferenceEquals(value, _prefilledProfile))
             {
+                _prefilledProfile = value;
+
                 ConfigEnableDynamicIPAddress = !value.NetworkInterface_EnableStaticIPAddress;
                 ConfigEnableStaticIPAddress = value.NetworkInterface_EnableStaticIPAddress;
                 ConfigIPAddress = value.NetworkInterface_IPAddress;
