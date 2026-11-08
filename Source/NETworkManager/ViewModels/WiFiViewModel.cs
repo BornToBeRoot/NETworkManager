@@ -847,7 +847,8 @@ public class WiFiViewModel : ViewModelBase
         {
             Log.Error("Error trying to get WiFi adapters.", ex);
 
-            Adapters.Clear();
+            // A new list (Clear() on the list doesn't update the view, it would keep showing the previous adapters)
+            Adapters = [];
         }
 
         // Check if we found any adapters
@@ -876,6 +877,9 @@ public class WiFiViewModel : ViewModelBase
         else
         {
             Log.Debug("LoadAdaptersAsync - No WiFi adapters found.");
+
+            // E.g. the USB adapter was unplugged: no auto refresh of the removed adapter (its toggle is hidden now)
+            SelectedAdapter = null;
         }
 
         IsAdaptersLoading = false;
