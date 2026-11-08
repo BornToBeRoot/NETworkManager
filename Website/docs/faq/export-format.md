@@ -34,6 +34,8 @@ The CSV columns, the XML elements and the JSON keys have the same names and orde
 | MAC address             | `AA:BB:CC:DD:EE:FF`                                                                                                                                                          |
 | List (e.g. IP addresses) | One value, separated by `; ` (e.g. `10.0.0.53; 10.0.0.54`)                                                                                                                 |
 
+**IP Scanner**: an empty value (`null` in JSON) means the value is not available - the probe is disabled or was still running (e.g. export during a scan). An empty text (`""` in JSON) means the probe ran, but the host had no value (e.g. **Windows** values of a host without Windows host information, **SNMPError** without an error). **Ports** is an empty array in JSON if no port was found or the port scan is disabled (see **PortStatus**).
+
 In the CSV file, text that may contain a comma (e.g. hostname, description, comment) is always enclosed in quotes (`"`), any other value only if it contains a comma, a quote or a line break. A quote in a value is doubled (`""`), as defined in [RFC 4180](https://www.rfc-editor.org/rfc/rfc4180), e.g. for `Import-Csv` in PowerShell.
 
 The ports of a host in the **IP Scanner** export are one value in the CSV file (`Port/Protocol/Service/Description/State`, ports separated by `;`), one `PortInfo` element per port in the XML file and an array of objects in the JSON file.
