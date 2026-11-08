@@ -15,7 +15,7 @@ Most tools can export their results with **Export...** (selected or all results)
 | XML  | `<Tool><Types><Type>...</Type></Types></Tool>` (e.g. `<PingMonitor><PingInfos><PingInfo>`), one element per column            |
 | JSON | Array with one object per result, one key per column                                                                          |
 
-The CSV columns, the XML elements and the JSON keys have the same names and order. Columns are never moved or renamed: new columns are appended at the end, so a script that reads the columns by position keeps working.
+The CSV columns, the XML elements and the JSON keys have the same names and order. The columns are in a logical order: like they are shown in the tool, related values next to each other (e.g. the ping or the web page values of the **IP Scanner**). A new column is added where it belongs, so a script should read the columns by name (CSV header, XML element, JSON key) instead of by position.
 
 ## How are the values formatted?
 

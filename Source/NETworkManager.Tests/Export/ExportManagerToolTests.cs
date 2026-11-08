@@ -15,7 +15,7 @@ using static NETworkManager.Tests.Export.ExportTestHelper;
 namespace NETworkManager.Tests.Export;
 
 /// <summary>
-///     Exports of the tools: columns (released columns must not move, new ones are appended at the end), the same names in
+///     Exports of the tools: columns (names and order), the same names in
 ///     CSV / XML / JSON, one CSV value per column (also with commas and quotes in text) and the shared value formats.
 /// </summary>
 public class ExportManagerToolTests

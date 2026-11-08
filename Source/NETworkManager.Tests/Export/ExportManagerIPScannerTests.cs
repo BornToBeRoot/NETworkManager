@@ -16,8 +16,7 @@ namespace NETworkManager.Tests.Export;
 public class ExportManagerIPScannerTests
 {
     /// <summary>
-    ///     Columns of the CSV export - scripts read them by position: released columns must not move, new ones are
-    ///     appended at the end.
+    ///     Columns of the CSV export (names and order), grouped by topic.
     /// </summary>
     private const string CsvHeader =
         "IsReachable,IPAddress,Hostname,PingStatus,Timestamp,Time,TTL,Bytes,PortStatus,Ports,NetBIOSIsReachable," +

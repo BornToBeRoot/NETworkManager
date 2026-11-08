@@ -21,8 +21,9 @@ namespace NETworkManager.Models.Export;
 ///     <c>PingInfoExportFields</c>), the CSV, XML and JSON files are written from this list by
 ///     <see cref="Export{T}" />. The values have the same format in every tool and are never translated:
 ///     <list type="bullet">
-///         <item>Names: CSV column = XML element = JSON key, in the same order. Released columns never move, new ones
-///         are appended at the end.</item>
+///         <item>Names: CSV column = XML element = JSON key, in the same order. The columns are in a logical order
+///         (like shown in the tool, related values next to each other), a new column is added where it belongs - read
+///         them by name, not by position.</item>
 ///         <item>Empty value (<c>null</c>): empty in CSV, empty element in XML, <c>null</c> in JSON.</item>
 ///         <item>Numbers with a decimal point (invariant culture), without a unit (e.g. ping time in ms, offset in
 ///         s - the unit is documented). Bools as <c>True</c> / <c>False</c> (CSV), <c>true</c> / <c>false</c> (XML).

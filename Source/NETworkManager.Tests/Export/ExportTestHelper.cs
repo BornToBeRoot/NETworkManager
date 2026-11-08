@@ -85,7 +85,7 @@ internal static class ExportTestHelper
     ///     CSV header, the XML elements and the JSON keys, and one CSV value per column in every row.
     /// </summary>
     /// <param name="files">Exported files.</param>
-    /// <param name="expectedHeader">Expected CSV header (released columns must not move).</param>
+    /// <param name="expectedHeader">Expected CSV header (names and order of the columns).</param>
     public static void AssertConsistent(ExportFiles files, string expectedHeader)
     {
         var header = expectedHeader.Split(',');
