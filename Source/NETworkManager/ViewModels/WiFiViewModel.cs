@@ -703,7 +703,7 @@ public class WiFiViewModel : ViewModelBase
             return;
 
         ClipboardHelper.SetClipboard(string.Join(Environment.NewLine,
-            GetSelectedNetworksInGridOrder().Select(selector).Where(x => !string.IsNullOrEmpty(x)).Distinct()));
+            NetworksView.GetSelectedItemsInViewOrder<WiFiNetworkInfo>(SelectedNetworks).Select(selector).Where(x => !string.IsNullOrEmpty(x)).Distinct()));
     }
 
     public ICommand ExportCommand => new RelayCommand(_ => ExportAction());
@@ -1471,16 +1471,6 @@ public class WiFiViewModel : ViewModelBase
         await ScanAsync(SelectedAdapter, true, GlobalStaticConfiguration.ApplicationUIRefreshInterval);
     }
 
-    /// <summary>
-    ///     Gets the selected networks in the order they are shown in the grid (not in the order they were selected).
-    /// </summary>
-    private List<WiFiNetworkInfo> GetSelectedNetworksInGridOrder()
-    {
-        var selectedNetworks = new HashSet<WiFiNetworkInfo>(SelectedNetworks.Cast<WiFiNetworkInfo>());
-
-        return NetworksView.Cast<WiFiNetworkInfo>().Where(selectedNetworks.Contains).ToList();
-    }
-
     private Task Export()
     {
         var childWindow = new ExportChildWindow();
@@ -1495,8 +1485,8 @@ public class WiFiViewModel : ViewModelBase
                 // The networks shown in the grid (band filter, search) in their order. Copied on the UI thread, exported
                 // in the background
                 var networks = instance.ExportAll
-                    ? NetworksView.Cast<WiFiNetworkInfo>().ToList()
-                    : GetSelectedNetworksInGridOrder();
+                    ? NetworksView.GetItemsInViewOrder<WiFiNetworkInfo>()
+                    : NetworksView.GetSelectedItemsInViewOrder<WiFiNetworkInfo>(SelectedNetworks);
 
                 await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, networks));
             }

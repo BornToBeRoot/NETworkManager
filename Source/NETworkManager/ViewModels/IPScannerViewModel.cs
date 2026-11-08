@@ -1074,7 +1074,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
             return;
 
         ClipboardHelper.SetClipboard(string.Join(Environment.NewLine,
-            GetSelectedResultsInGridOrder().Select(selector).Where(x => !string.IsNullOrEmpty(x)).Distinct()));
+            ResultsView.GetSelectedItemsInViewOrder<IPScannerHostInfo>(SelectedResults).Select(selector).Where(x => !string.IsNullOrEmpty(x)).Distinct()));
     }
 
     /// <summary>
@@ -1306,7 +1306,7 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
         if (IsRunning || _lastScanOptions == null)
             return;
 
-        var selectedIPAddresses = GetSelectedResultsInGridOrder().Select(x => x.IPAddress).ToHashSet();
+        var selectedIPAddresses = ResultsView.GetSelectedItemsInViewOrder<IPScannerHostInfo>(SelectedResults).Select(x => x.IPAddress).ToHashSet();
 
         if (selectedIPAddresses.Count == 0)
             return;
@@ -1673,18 +1673,6 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
     }
 
     /// <summary>
-    /// Gets the selected results in the order shown in the grid (<see cref="SelectedResults"/> is in the order they
-    /// were selected).
-    /// </summary>
-    /// <returns>Selected results.</returns>
-    private List<IPScannerHostInfo> GetSelectedResultsInGridOrder()
-    {
-        var selectedResults = new HashSet<IPScannerHostInfo>(SelectedResults.Cast<IPScannerHostInfo>());
-
-        return ResultsView.Cast<IPScannerHostInfo>().Where(selectedResults.Contains).ToList();
-    }
-
-    /// <summary>
     /// Exports the scan results.
     /// </summary>
     /// <returns>A task that represents the asynchronous operation.</returns>
@@ -1705,8 +1693,8 @@ public class IPScannerViewModel : ViewModelBase, IProfileManagerMinimal
                 // export the copies in the background, so a large export doesn't freeze the window. In the
                 // order shown in the grid (Results is in the order the hosts were found).
                 var results = (instance.ExportAll
-                        ? ResultsView.Cast<IPScannerHostInfo>()
-                        : GetSelectedResultsInGridOrder())
+                        ? ResultsView.GetItemsInViewOrder<IPScannerHostInfo>()
+                        : ResultsView.GetSelectedItemsInViewOrder<IPScannerHostInfo>(SelectedResults))
                     .Select(x => x.Clone()).ToList();
 
                 // Options of the shown scan (values of disabled probes are exported as empty values)
