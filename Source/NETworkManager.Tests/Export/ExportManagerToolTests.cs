@@ -304,8 +304,8 @@ public class ExportManagerToolTests
         ]));
 
         AssertConsistent(files,
-            "Device,DeviceDescription,Port,PortDescription,Model,VLAN,IPAddress,Protocol,TimeToLive,Management," +
-            "ChassisId,LocalConnection,LocalInterface");
+            "Device,DeviceDescription,Port,PortDescription,Model,VLAN,IPAddress,Management,ChassisId,Protocol," +
+            "TimeToLive,LocalConnection,LocalInterface");
         Assert.Equal("Cisco IOS, Version 15", files.CsvValue("DeviceDescription"));
         Assert.Equal("Intel(R) Ethernet", (string)files.JsonValue("LocalInterface"));
     }

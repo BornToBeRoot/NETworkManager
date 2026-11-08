@@ -29,6 +29,7 @@ Release date: **xx.xx.2026**
 - **Neighbor Table**: the export contains the MAC address as `AA:BB:CC:DD:EE:FF` (like it is shown) instead of `AABBCCDDEEFF`, like in all exports.
 - **WiFi**: the columns of the export are in the order of the grid (SSID, connected, security, frequency, channel, channel width, signal, authentication, encryption, BSSID, vendor, ...) instead of the BSSID first and the values shown in the grid at the end.
 - **IP Scanner**: the columns of the export are grouped by topic instead of new columns being appended at the end: host (`IsReachable`, `DetectedBy`, `IPAddress`, hostnames, MAC address, vendor, role, OS), ping, port scan, NetBIOS, web page, SNMP, Windows host information and the change since the last scan.
+- **Discovery Protocol**: the columns of the export are in the order shown: `Management` and `ChassisId` (new) after `IPAddress`, `LocalConnection` and `LocalInterface` (new) at the end.
 
 ## What's new?
 
@@ -225,7 +226,7 @@ Release date: **xx.xx.2026**
 
 **Discovery Protocol**
 
-- The export contains the values shown that were missing: `Management`, `ChassisId`, `LocalConnection` and `LocalInterface` (appended as the last columns / elements).
+- The export contains the values shown that were missing: `Management`, `ChassisId`, `LocalConnection` and `LocalInterface`. The columns are in the order shown (`Management` and `ChassisId` after `IPAddress`).
 
 **Whois**
 

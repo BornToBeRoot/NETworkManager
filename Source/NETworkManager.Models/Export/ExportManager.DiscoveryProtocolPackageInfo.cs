@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using NETworkManager.Models.Network;
 
 namespace NETworkManager.Models.Export;
@@ -6,8 +6,7 @@ namespace NETworkManager.Models.Export;
 public static partial class ExportManager
 {
     /// <summary>
-    ///     Exported fields of a <see cref="DiscoveryProtocolPackageInfo" />. The released columns come first, new ones
-    ///     are appended at the end, so the position of a column never changes.
+    ///     Exported fields of a <see cref="DiscoveryProtocolPackageInfo" /> in the order shown.
     /// </summary>
     private static readonly ExportField<DiscoveryProtocolPackageInfo>[] DiscoveryProtocolPackageInfoExportFields =
     [
@@ -18,11 +17,10 @@ public static partial class ExportManager
         new(nameof(DiscoveryProtocolPackageInfo.Model), x => x.Model, true),
         new(nameof(DiscoveryProtocolPackageInfo.VLAN), x => x.VLAN),
         new(nameof(DiscoveryProtocolPackageInfo.IPAddress), x => x.IPAddress, true),
-        new(nameof(DiscoveryProtocolPackageInfo.Protocol), x => x.Protocol),
-        new(nameof(DiscoveryProtocolPackageInfo.TimeToLive), x => x.TimeToLive),
-        // Added later - after the released columns, so their position doesn't change
         new(nameof(DiscoveryProtocolPackageInfo.Management), x => x.Management, true),
         new(nameof(DiscoveryProtocolPackageInfo.ChassisId), x => x.ChassisId, true),
+        new(nameof(DiscoveryProtocolPackageInfo.Protocol), x => x.Protocol),
+        new(nameof(DiscoveryProtocolPackageInfo.TimeToLive), x => x.TimeToLive),
         new(nameof(DiscoveryProtocolPackageInfo.LocalConnection), x => x.LocalConnection, true),
         new(nameof(DiscoveryProtocolPackageInfo.LocalInterface), x => x.LocalInterface, true)
     ];
