@@ -86,17 +86,39 @@ public class NetworkInterfaceConfig
             secondaryDNSServer = string.Empty;
         }
 
+        // Values of the option that is not used (e.g. a static IP address stored in a profile that uses DHCP) are not
+        // applied and not validated.
         return new NetworkInterfaceConfig
         {
             Name = name,
             EnableStaticIPAddress = enableStaticIPAddress,
-            IPAddress = ipAddress,
-            Subnetmask = subnetmask,
-            Gateway = gateway,
+            IPAddress = enableStaticIPAddress ? ipAddress : null,
+            Subnetmask = enableStaticIPAddress ? subnetmask : null,
+            Gateway = enableStaticIPAddress ? gateway : null,
             EnableStaticDNS = enableStaticDNS,
-            PrimaryDNSServer = primaryDNSServer,
-            SecondaryDNSServer = secondaryDNSServer
+            PrimaryDNSServer = enableStaticDNS ? primaryDNSServer : null,
+            SecondaryDNSServer = enableStaticDNS ? secondaryDNSServer : null
         };
+    }
+
+    /// <summary>
+    ///     Gets the first value that is not a valid IPv4 address (IP address, gateway, DNS servers) or subnet mask.
+    ///     The values are inserted into a command line that runs elevated, so they must be checked again before they
+    ///     are applied: profile files can be edited or shared without the validation of the UI.
+    /// </summary>
+    /// <returns>The invalid value, or <see langword="null" /> if all values are empty or valid.</returns>
+    public string GetInvalidValue()
+    {
+        foreach (var value in new[] { IPAddress, Gateway, PrimaryDNSServer, SecondaryDNSServer })
+        {
+            if (!string.IsNullOrEmpty(value) && !RegexHelper.IPv4AddressRegex().IsMatch(value))
+                return value;
+        }
+
+        if (!string.IsNullOrEmpty(Subnetmask) && !RegexHelper.SubnetmaskRegex().IsMatch(Subnetmask))
+            return Subnetmask;
+
+        return null;
     }
 
     /// <summary>

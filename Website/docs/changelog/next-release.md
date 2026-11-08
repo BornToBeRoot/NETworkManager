@@ -277,6 +277,7 @@ Release date: **xx.xx.2026**
 - Fixed errors when changing the network configuration (e.g. missing permissions) not being shown — the change was reported as successful although it failed. The error message of Windows is now shown. [#3606](https://github.com/BornToBeRoot/NETworkManager/issues/3606)
 - Fixed **Apply** failing when the IPv4 address or the subnet mask on the **Configure** tab (or in **Add IPv4 address...**) started or ended with a space. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed **Apply** and **Add IPv4 address...** failing when the CIDR was entered without a slash (e.g. `24` instead of `/24`), although it was accepted as valid. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed values of a profile (IP address, subnet mask, gateway, DNS servers) being passed to `netsh` without checking them again. A manipulated or shared profile file could run other commands with elevated rights when the profile was applied. Invalid values are now reported and nothing is changed. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **WiFi**
 

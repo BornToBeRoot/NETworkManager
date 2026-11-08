@@ -456,6 +456,8 @@ public sealed class NetworkInterface
     /// gateway, and DNS server settings. Cannot be null.</param>
     private static void ConfigureNetworkInterface(NetworkInterfaceConfig config)
     {
+        ThrowIfInvalid(config);
+
         var name = PowerShellHelper.EscapeSingleQuotes(config.Name);
         var commands = new List<string>();
 
@@ -620,6 +622,8 @@ public sealed class NetworkInterface
     /// coexistence settings. Cannot be null.</param>
     private static void AddIPAddressToNetworkInterface(NetworkInterfaceConfig config)
     {
+        ThrowIfInvalid(config);
+
         var name = PowerShellHelper.EscapeSingleQuotes(config.Name);
         var commands = new List<string>();
 
@@ -649,8 +653,24 @@ public sealed class NetworkInterface
     /// null.</param>
     private static void RemoveIPAddressFromNetworkInterface(NetworkInterfaceConfig config)
     {
+        ThrowIfInvalid(config);
+
         var name = PowerShellHelper.EscapeSingleQuotes(config.Name);
         RunCommands([$"& netsh interface ipv4 delete address '{name}' {config.IPAddress}"]);
+    }
+
+    /// <summary>
+    /// Throws if a value of the configuration is not a valid IPv4 address or subnet mask, so that nothing else (e.g. a
+    /// command from a manipulated profile file) can be inserted into the command line that runs elevated.
+    /// </summary>
+    /// <param name="config">Configuration to check.</param>
+    /// <exception cref="FormatException">If a value is invalid.</exception>
+    private static void ThrowIfInvalid(NetworkInterfaceConfig config)
+    {
+        var invalidValue = config.GetInvalidValue();
+
+        if (invalidValue != null)
+            throw new FormatException($"\"{invalidValue}\" is not a valid IPv4 address or subnet mask.");
     }
 
     /// <summary>

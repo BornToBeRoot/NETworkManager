@@ -1124,6 +1124,16 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     private async Task ApplyConfigurationAsync(NetworkInterfaceConfig config)
     {
+        // Profiles can contain values that were not validated by the UI (e.g. edited or shared profile files).
+        var invalidValue = config.GetInvalidValue();
+
+        if (invalidValue != null)
+        {
+            StatusMessage = string.Format(Strings.NetworkInterfaceConfigInvalidValueX, invalidValue);
+            IsStatusMessageDisplayed = true;
+            return;
+        }
+
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
 

@@ -8473,6 +8473,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &quot;{0}&quot; is not a valid IPv4 address or subnet mask. Check the configuration (or the profile) and try again..
+        /// </summary>
+        public static string NetworkInterfaceConfigInvalidValueX {
+            get {
+                return ResourceManager.GetString("NetworkInterfaceConfigInvalidValueX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration applied.
         /// </summary>
         public static string NetworkInterfaceConfigurationAppliedSuccessfully {
