@@ -1375,7 +1375,9 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
             if (boundNetworkInterface == null)
             {
-                if (!await ConfirmApplyToSelectedNetworkInterface(profile))
+                networkInterface = await ConfirmApplyToSelectedNetworkInterface(profile);
+
+                if (networkInterface == null)
                     return;
             }
             else
@@ -1420,8 +1422,9 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// The network interface of the profile is not found on this computer: ask whether the profile should be applied
     /// to the selected network interface instead (only if it can be configured).
     /// </summary>
-    /// <returns><see langword="true" /> to apply the profile to the selected network interface.</returns>
-    private async Task<bool> ConfirmApplyToSelectedNetworkInterface(ProfileInfo profile)
+    /// <returns>The selected network interface (current object after the dialog, the list may have been reloaded
+    /// meanwhile), or <see langword="null" /> if canceled or it is no longer selected.</returns>
+    private async Task<NetworkInterfaceInfo> ConfirmApplyToSelectedNetworkInterface(ProfileInfo profile)
     {
         var message = string.Format(Strings.NetworkInterfaceOfProfileXNotFoundOnThisComputer, profile.Name) +
                       Environment.NewLine + Environment.NewLine +
@@ -1429,19 +1432,25 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                       $"{Strings.ID}: {profile.NetworkInterface_InterfaceId}" + Environment.NewLine +
                       Environment.NewLine;
 
-        if (SelectedNetworkInterface is not { IsOperational: true })
+        var selectedNetworkInterface = SelectedNetworkInterface;
+
+        if (selectedNetworkInterface is not { IsOperational: true })
         {
             await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.NetworkInterfaceNotFound,
                 message + Strings.FixNetworkInterfaceOfProfileHint, ChildWindowIcon.Warn);
 
-            return false;
+            return null;
         }
 
-        return await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
-            Strings.NetworkInterfaceNotFound,
-            message + string.Format(Strings.ApplyProfileToSelectedNetworkInterfaceXInstead,
-                SelectedNetworkInterface.Name) + Environment.NewLine + Environment.NewLine +
-            Strings.FixNetworkInterfaceOfProfileHint, ChildWindowIcon.Warn, Strings.Apply);
+        if (!await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
+                Strings.NetworkInterfaceNotFound,
+                message + string.Format(Strings.ApplyProfileToSelectedNetworkInterfaceXInstead,
+                    selectedNetworkInterface.Name) + Environment.NewLine + Environment.NewLine +
+                Strings.FixNetworkInterfaceOfProfileHint, ChildWindowIcon.Warn, Strings.Apply))
+            return null;
+
+        // Only the network interface named in the dialog (a reload may have selected another one meanwhile)
+        return SelectedNetworkInterface?.Id == selectedNetworkInterface.Id ? SelectedNetworkInterface : null;
     }
 
     /// <summary>
