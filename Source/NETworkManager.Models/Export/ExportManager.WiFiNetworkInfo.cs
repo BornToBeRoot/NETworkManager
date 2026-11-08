@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using NETworkManager.Models.Network;
+using NETworkManager.Utilities;
 using Newtonsoft.Json;
 
 namespace NETworkManager.Models.Export;
@@ -17,7 +18,11 @@ public static partial class ExportManager
     /// </summary>
     /// <param name="Name">Name of the column / element.</param>
     /// <param name="GetValue">Gets the value of a network (e.g. a string, a number, an enum or a time span).</param>
-    private sealed record WiFiNetworkExportField(string Name, Func<WiFiNetworkInfo, object> GetValue);
+    /// <param name="IsQuoted">The value is quoted in the CSV file (text that may contain a comma, e.g. the SSID).</param>
+    private sealed record WiFiNetworkExportField(
+        string Name,
+        Func<WiFiNetworkInfo, object> GetValue,
+        bool IsQuoted = false);
 
     /// <summary>
     ///     Exported values of a WiFi network - one list for CSV, XML and JSON. The released columns come first, new ones
@@ -26,7 +31,7 @@ public static partial class ExportManager
     private static readonly WiFiNetworkExportField[] WiFiNetworkExportFields =
     [
         new(nameof(WiFiNetworkInfo.Bssid), x => x.Bssid),
-        new(nameof(WiFiNetworkInfo.AvailableNetwork.Ssid), x => x.AvailableNetwork.Ssid),
+        new(nameof(WiFiNetworkInfo.AvailableNetwork.Ssid), x => x.AvailableNetwork.Ssid, true),
         new(nameof(WiFiNetworkInfo.AvailableNetwork.ChannelCenterFrequencyInKilohertz),
             x => x.AvailableNetwork.ChannelCenterFrequencyInKilohertz),
         new(nameof(WiFiNetworkInfo.AvailableNetwork.SignalBars), x => x.AvailableNetwork.SignalBars),
@@ -44,12 +49,12 @@ public static partial class ExportManager
         // Values shown in the grid
         new(nameof(WiFiNetworkInfo.IsConnected), x => x.IsConnected),
         // Human-readable authentication type (e.g. "WPA2 Personal (PSK)")
-        new("Security", x => x.NetworkAuthenticationType),
+        new("Security", x => x.NetworkAuthenticationType, true),
         new(nameof(WiFiNetworkInfo.Channel), x => x.Channel),
         // MHz, estimated if the width could not be read from the beacon
         new("ChannelWidth", x => x.ChannelBandwidth),
         new("ChannelWidthEstimated", x => x.IsChannelBandwidthEstimated),
-        new(nameof(WiFiNetworkInfo.Vendor), x => x.Vendor)
+        new(nameof(WiFiNetworkInfo.Vendor), x => x.Vendor, true)
     ];
 
     /// <summary>
@@ -90,7 +95,11 @@ public static partial class ExportManager
 
         foreach (var info in collection)
             stringBuilder.AppendLine(string.Join(",", WiFiNetworkExportFields.Select(field =>
-                Convert.ToString(field.GetValue(info), CultureInfo.CurrentCulture))));
+            {
+                var value = Convert.ToString(field.GetValue(info), CultureInfo.CurrentCulture);
+
+                return field.IsQuoted ? CsvHelper.QuoteString(value) : value;
+            })));
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }

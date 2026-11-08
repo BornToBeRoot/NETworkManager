@@ -309,6 +309,7 @@ Release date: **xx.xx.2026**
 - Fixed the message after disconnecting from a hidden network missing the name (" disconnected!"), and the search not finding hidden networks by the shown text `Hidden Network`. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the icon of the adapter selection (connected / disconnected) keeping the state of when the adapters were loaded. It is updated after each scan, e.g. after connecting or disconnecting. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed `F5` scanning and **Automatically update every** refreshing the networks behind an open dialog (e.g. **Connect...** or **Export...**). The auto refresh waits until the dialog is closed. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed the CSV export breaking the row of a network whose SSID contains a comma or a quote. SSID, security and vendor are quoted. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 
