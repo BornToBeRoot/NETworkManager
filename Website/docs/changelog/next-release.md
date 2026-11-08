@@ -20,18 +20,18 @@ Release date: **xx.xx.2026**
 ## Breaking Changes
 
 - Removed the **ThreadPool additional min. threads** setting (Settings > General) and the application-wide `ThreadPool.SetMinThreads` workaround it configured for the IP Scanner and Port Scanner. It's no longer needed now that both scan engines use non-blocking async concurrency instead of blocking calls. [#3564](https://github.com/BornToBeRoot/NETworkManager/pull/3564)
-- **Exports (CSV, XML, JSON)**: the exports of all tools now use the same format, see [Export format](../faq/export-format.md). Columns may have been reordered (like shown in the tool) or added, and values are formatted the same way in every tool (e.g. numbers without unit and with a decimal point, dates as `yyyy-MM-dd HH:mm:ss.fff`, MAC addresses as `AA:BB:CC:DD:EE:FF`, empty values instead of placeholders like `-/-`). If you process exports with scripts or other tools, check them after the update and read the columns by name instead of by position. The changes of each tool are listed below.
-- **Network Interface**: the export contains the MAC address (`PhysicalAddress`) as `AA:BB:CC:DD:EE:FF` instead of `AABBCCDDEEFF`, the DHCP lease (`DhcpLeaseObtained`, `DhcpLeaseExpires`) as `2026-11-08 10:15:30.123` in every format and language (empty without DHCP), and lists of IP addresses separated by `; ` instead of `;`, like in all exports. The IPv6 link-local address comes before the IPv6 address, like in the details.
-- **WiFi**: the columns of the export are in the order of the grid (SSID, connected, security, frequency, channel, channel width, signal, authentication, encryption, BSSID, vendor, ...) instead of the BSSID first and the values shown in the grid at the end.
-- **IP Scanner**: the export contains the ping time (`Time`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`, `-/-`). `Time`, `TTL` and `Bytes` are empty without a reply instead of `-/-` / `0`, like in all exports. The columns of the export are grouped by topic instead of new columns being appended at the end: host (`IsReachable`, `DetectedBy`, `IPAddress`, hostnames, MAC address, vendor, role, OS), ping, port scan, NetBIOS, web page, SNMP, Windows host information and the change since the last scan.
+- **Exports (CSV, XML, JSON)**: the exports of all tools now use the same format, see [Export format](../faq/export-format.md). Columns may have been reordered (like shown in the tool) or added, and values are formatted the same way in every tool (e.g. numbers without unit and with a decimal point, dates as `yyyy-MM-dd HH:mm:ss.fff`, MAC addresses as `AA:BB:CC:DD:EE:FF`, empty values instead of placeholders like `-/-`). If you process exports with scripts or other tools, check them after the update and read the columns by name instead of by position. The changes of each tool are listed below. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **Network Interface**: the export contains the MAC address (`PhysicalAddress`) as `AA:BB:CC:DD:EE:FF` instead of `AABBCCDDEEFF`, the DHCP lease (`DhcpLeaseObtained`, `DhcpLeaseExpires`) as `2026-11-08 10:15:30.123` in every format and language (empty without DHCP), and lists of IP addresses separated by `; ` instead of `;`, like in all exports. The IPv6 link-local address comes before the IPv6 address, like in the details. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **WiFi**: the columns of the export are in the order of the grid (SSID, connected, security, frequency, channel, channel width, signal, authentication, encryption, BSSID, vendor, ...) instead of the BSSID first and the values shown in the grid at the end. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **IP Scanner**: the export contains the ping time (`Time`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`, `-/-`). `Time`, `TTL` and `Bytes` are empty without a reply instead of `-/-` / `0`, like in all exports. The columns of the export are grouped by topic instead of new columns being appended at the end: host (`IsReachable`, `DetectedBy`, `IPAddress`, hostnames, MAC address, vendor, role, OS), ping, port scan, NetBIOS, web page, SNMP, Windows host information and the change since the last scan. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 - **Port Scanner**: the JSON export uses the key `State` for the port state (like CSV and XML) instead of `Status`. Scripts that read `Status` have to be adjusted. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
-- **Ping Monitor**: the export contains the ping time (`Time`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`, `-/-`). `Time`, `TTL` and `Bytes` are empty without a reply instead of `-/-` / `0`, like in all exports. The columns are `Timestamp`, `IPAddress`, `Hostname`, `Status`, `Time`, `TTL`, `Bytes` (status first, like the ping of the **IP Scanner**).
-- **Traceroute**: the export contains the times (`Time1` - `Time3`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`), empty without a reply instead of `-/-`, like in all exports.
-- **SNTP Lookup**: the export contains `Offset` (seconds) and `RoundTripDelay` (milliseconds) as numbers with a decimal point (e.g. `-0.25`) instead of text with the unit (`-0.25 s`, `10.5 ms`), like in all exports.
-- **Firewall**: the columns of the export are in the order of the grid: `IsEnabled` first, the local and remote address before the port (`LocalAddresses`, `LocalPorts`, `RemoteAddresses`, `RemotePorts`), then `Program`, `InterfaceType`, `NetworkProfiles` and `Description`.
-- **Discovery Protocol**: the columns of the export are in the order shown: `Management` and `ChassisId` (new) after `IPAddress`, `LocalConnection` and `LocalInterface` (new) at the end.
-- **IP Geolocation**: the columns of the export are in the order shown: `Query` (IP address) and `Reverse` after `Currency`, then the network (`Isp`, `Org`, `As`, `Asname`, `Hosting`, `Proxy`, `Mobile`), like the geolocation in the **Traceroute** export.
-- **Neighbor Table**: the export contains the MAC address as `AA:BB:CC:DD:EE:FF` (like it is shown) instead of `AABBCCDDEEFF`, like in all exports.
+- **Ping Monitor**: the export contains the ping time (`Time`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`, `-/-`). `Time`, `TTL` and `Bytes` are empty without a reply instead of `-/-` / `0`, like in all exports. The columns are `Timestamp`, `IPAddress`, `Hostname`, `Status`, `Time`, `TTL`, `Bytes` (status first, like the ping of the **IP Scanner**). [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **Traceroute**: the export contains the times (`Time1` - `Time3`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`), empty without a reply instead of `-/-`, like in all exports. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **SNTP Lookup**: the export contains `Offset` (seconds) and `RoundTripDelay` (milliseconds) as numbers with a decimal point (e.g. `-0.25`) instead of text with the unit (`-0.25 s`, `10.5 ms`), like in all exports. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **Firewall**: the columns of the export are in the order of the grid: `IsEnabled` first, the local and remote address before the port (`LocalAddresses`, `LocalPorts`, `RemoteAddresses`, `RemotePorts`), then `Program`, `InterfaceType`, `NetworkProfiles` and `Description`. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **Discovery Protocol**: the columns of the export are in the order shown: `Management` and `ChassisId` (new) after `IPAddress`, `LocalConnection` and `LocalInterface` (new) at the end. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **IP Geolocation**: the columns of the export are in the order shown: `Query` (IP address) and `Reverse` after `Currency`, then the network (`Isp`, `Org`, `As`, `Asname`, `Hosting`, `Proxy`, `Mobile`), like the geolocation in the **Traceroute** export. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **Neighbor Table**: the export contains the MAC address as `AA:BB:CC:DD:EE:FF` (like it is shown) instead of `AABBCCDDEEFF`, like in all exports. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 ## What's new?
 
@@ -81,7 +81,7 @@ Release date: **xx.xx.2026**
 **Network Interface**
 
 - Members of the **Network Configuration Operators** group can now change the network configuration (IP address, DNS servers, release/renew) without being an administrator. NETworkManager has to run elevated (**Restart as Administrator**, confirm with your own credentials). The hint is now also shown as tooltip on **Apply** in the profile context menu. [#3606](https://github.com/BornToBeRoot/NETworkManager/issues/3606)
-- The export contains the network profile (`Profile`, e.g. `Private`) after the speed, like in the details.
+- The export contains the network profile (`Profile`, e.g. `Private`) after the speed, like in the details. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **WiFi**
 
@@ -191,7 +191,7 @@ Release date: **xx.xx.2026**
 **Traceroute**
 
 - Added **RDAP...** to the context menu to query the registration data of the IP address, hostname or AS number of a hop in the [**RDAP**](../application/rdap.md) tool. [#3642](https://github.com/BornToBeRoot/NETworkManager/pull/3642)
-- The export contains the region name shown in the grid (`RegionName`, e.g. `Bavaria`) after the region code (`Region`, e.g. `BY`), like the **IP Geolocation** export.
+- The export contains the region name shown in the grid (`RegionName`, e.g. `Bavaria`) after the region code (`Region`, e.g. `BY`), like the **IP Geolocation** export. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **DNS Lookup**
 
@@ -229,7 +229,7 @@ Release date: **xx.xx.2026**
 
 **Discovery Protocol**
 
-- The export contains the values shown that were missing: `Management`, `ChassisId`, `LocalConnection` and `LocalInterface`. The columns are in the order shown (`Management` and `ChassisId` after `IPAddress`).
+- The export contains the values shown that were missing: `Management`, `ChassisId`, `LocalConnection` and `LocalInterface`. The columns are in the order shown (`Management` and `ChassisId` after `IPAddress`). [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Whois**
 
@@ -292,7 +292,7 @@ Release date: **xx.xx.2026**
 **Network Interface**
 
 - Fixed errors when changing the network configuration (e.g. missing permissions) not being shown — the change was reported as successful although it failed. The error message of Windows is now shown. [#3606](https://github.com/BornToBeRoot/NETworkManager/issues/3606)
-- Fixed the CSV export breaking the row if the name, the description or the DNS suffix contains a comma (they are quoted now), and the JSON export containing the MAC address as `{}` and the status as a number (e.g. `1` instead of `Up`).
+- Fixed the CSV export breaking the row if the name, the description or the DNS suffix contains a comma (they are quoted now), and the JSON export containing the MAC address as `{}` and the status as a number (e.g. `1` instead of `Up`). [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **WiFi**
 
@@ -319,7 +319,7 @@ Release date: **xx.xx.2026**
 - Fixed the icon of the adapter selection (connected / disconnected) keeping the state of when the adapters were loaded. It is updated after each scan, e.g. after connecting or disconnecting. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - Fixed `F5` scanning and **Automatically update every** refreshing the networks behind an open dialog (e.g. **Connect...** or **Export...**). The auto refresh waits until the dialog is closed. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - Fixed the CSV export breaking the row of a network whose SSID contains a comma or a quote. SSID, security and vendor are quoted. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
-- Fixed the export formatting values differently per format: the JSON export contains `IsWiFiDirect`, `IsConnected`, `ChannelWidthEstimated` as `true` / `false` and `SignalBars`, `NetworkRssiInDecibelMilliwatts` as numbers instead of text, the XML export `BeaconInterval` and `Uptime` like the CSV export (e.g. `00:00:00.1024000`) instead of `PT0.1024S`, and the CSV export decimals with a point in every language.
+- Fixed the export formatting values differently per format: the JSON export contains `IsWiFiDirect`, `IsConnected`, `ChannelWidthEstimated` as `true` / `false` and `SignalBars`, `NetworkRssiInDecibelMilliwatts` as numbers instead of text, the XML export `BeaconInterval` and `Uptime` like the CSV export (e.g. `00:00:00.1024000`) instead of `PT0.1024S`, and the CSV export decimals with a point in every language. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 - Fixed a network being marked as **Connected** that the selected adapter isn't connected to, if the computer has several WiFi adapters and the selected one was disconnected. An error while reading the connected network no longer ends the scan. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
 - Fixed the connection status message (e.g. "Connecting to ...") being hidden too early, while still connecting, if a previous message (e.g. after connecting or disconnecting) was shown shortly before. Each message is now shown for 15 seconds. [#3638](https://github.com/BornToBeRoot/NETworkManager/pull/3638)
 - Fixed the adapter list and the auto refresh keeping a removed adapter (e.g. an unplugged USB adapter) after **Refresh** found no adapter or failed: "No WiFi adapters found" is shown now. [#3695](https://github.com/BornToBeRoot/NETworkManager/pull/3695)
@@ -388,7 +388,7 @@ Release date: **xx.xx.2026**
 - Fixed the ping not working when the ICMP **Buffer** was set to more than `65500` bytes (Windows limit). The maximum is now `65500`, higher values are lowered to `65500`. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Fixed hosts being added twice if the inputs overlap (e.g. `10.0.0.1; 10.0.0.0/24`). If an IP address is also entered as hostname, the hostname is kept; different hostnames of the same IP address (e.g. two names of one server) are all kept. [#3653](https://github.com/BornToBeRoot/NETworkManager/pull/3653)
 - Fixed **Copy** > **Hostname** copying a hostname resolved via DNS (`PTR`) with a trailing dot (e.g. `server.example.com.`). [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
-- Fixed the CSV export breaking the row if the hostname contains a comma. The hostname is quoted now.
+- Fixed the CSV export breaking the row if the hostname contains a comma. The hostname is quoted now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Traceroute**
 
@@ -403,7 +403,7 @@ Release date: **xx.xx.2026**
 - Fixed **Add DNS suffix (primary) to hostname** silently appending no suffix at all on machines without a Windows primary DNS suffix configured (e.g. not domain-joined), even though a usable suffix was available via the active network adapter's connection-specific DNS suffix (shown under **DNS Suffix Search List** in `ipconfig /all`). It now falls back to that adapter's suffix in this case. [#3591](https://github.com/BornToBeRoot/NETworkManager/pull/3591)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the DNS server profiles in the settings. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 - Fixed a technical error (*An invalid IP address was specified*) being shown for a hostname looked up with `PTR`. A message is shown and the hostname is skipped, the other hosts are looked up. [#3667](https://github.com/BornToBeRoot/NETworkManager/pull/3667)
-- Fixed the CSV export breaking the row if a result (e.g. a `TXT` record) contains a comma or a quote. Domain name, result and name server hostname are quoted now.
+- Fixed the CSV export breaking the row if a result (e.g. a `TXT` record) contains a comma or a quote. Domain name, result and name server hostname are quoted now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Web Console**
 
@@ -413,17 +413,17 @@ Release date: **xx.xx.2026**
 
 - Fixed `Enter` in the search box of the OID profiles dialog closing the dialog with **OK**. It only filters the OID profiles now. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the OID profiles (dialog, settings). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
-- Fixed the CSV export breaking the row if the data contains a comma or a quote. The data is quoted now.
+- Fixed the CSV export breaking the row if the data contains a comma or a quote. The data is quoted now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **SNTP Lookup**
 
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the SNTP server profiles in the settings. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
-- Fixed the CSV export breaking the row with a decimal comma (e.g. German) in the offset and round trip delay, the values are exported with a decimal point now.
+- Fixed the CSV export breaking the row with a decimal comma (e.g. German) in the offset and round trip delay, the values are exported with a decimal point now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Hosts File Editor**
 
 - Fixed the retry of a locked hosts file waiting 5 seconds between the attempts (the message said 2) and once more after the last attempt. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
-- Fixed the CSV export breaking the row if the comment contains a comma. Hostname and comment are quoted now.
+- Fixed the CSV export breaking the row if the comment contains a comma. Hostname and comment are quoted now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Firewall**
 
@@ -441,7 +441,7 @@ Release date: **xx.xx.2026**
 
 **Discovery Protocol**
 
-- Fixed the CSV export breaking the row if a value (e.g. the device description) contains a comma or a quote. Text values are quoted now.
+- Fixed the CSV export breaking the row if a value (e.g. the device description) contains a comma or a quote. Text values are quoted now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **RDAP**
 
@@ -450,7 +450,7 @@ Release date: **xx.xx.2026**
 **IP Geolocation**
 
 - Fixed the query history of **IP Geolocation** being written to the history of **Whois** instead of its own. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
-- Fixed the CSV export breaking the row with a decimal comma (e.g. German) in the latitude / longitude, or a comma in a text (e.g. the ISP `Example, Inc.`). Decimals are exported with a decimal point, text is quoted now.
+- Fixed the CSV export breaking the row with a decimal comma (e.g. German) in the latitude / longitude, or a comma in a text (e.g. the ISP `Example, Inc.`). Decimals are exported with a decimal point, text is quoted now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Subnet Calculator**
 
@@ -459,7 +459,7 @@ Release date: **xx.xx.2026**
 
 **Bit Calculator**
 
-- Fixed the CSV export breaking the row with a decimal comma (e.g. German), the values are exported with a decimal point now.
+- Fixed the CSV export breaking the row with a decimal comma (e.g. German), the values are exported with a decimal point now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Lookup**
 
@@ -500,6 +500,6 @@ Release date: **xx.xx.2026**
 - Added a unit test project (xUnit) with tests for the run command parser and the history lists. [#3644](https://github.com/BornToBeRoot/NETworkManager/pull/3644)
 - Reworked the GitHub issue templates as forms (bug report, feature request, question) that ask for the relevant information (e.g. affected feature, version, installation, Windows version, log), with links to the documentation, discussions, translations and security advisories. Simplified the pull request template and removed the Copilot summary section. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Faster CI: AppVeyor no longer builds a branch a second time when a PR is open, skips changes that only affect the documentation / website, builds ARM64 only for releases and now runs the unit tests. The website is only built for PRs that change it and builds about 3x faster (Docusaurus Faster). Dependabot also updates the GitHub Actions, and CodeQL also scans the workflows. Website changes are only merged automatically if the website builds. Dependabot major updates are no longer merged automatically. Removed the stale bot. [#3675](https://github.com/BornToBeRoot/NETworkManager/pull/3675)
-- The exports (CSV, XML, JSON) of all tools define their columns once and are written by one shared writer, so the three formats can't drift apart and every tool formats the same kind of value the same way (not translated), see [Export format](../faq/export-format.md). Added unit tests for the exports.
+- The exports (CSV, XML, JSON) of all tools define their columns once and are written by one shared writer, so the three formats can't drift apart and every tool formats the same kind of value the same way (not translated), see [Export format](../faq/export-format.md). Added unit tests for the exports. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 - Language files updated via [#transifex](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Ftransifex-integration)
 - Dependencies updated via [#dependabot](https://github.com/BornToBeRoot/NETworkManager/pulls?q=author%3Aapp%2Fdependabot)
