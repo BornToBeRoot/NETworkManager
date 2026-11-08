@@ -1,4 +1,6 @@
-﻿namespace NETworkManager.Models.Network;
+﻿using NETworkManager.Utilities;
+
+namespace NETworkManager.Models.Network;
 
 public class NetworkInterfaceConfig
 {
@@ -49,7 +51,7 @@ public class NetworkInterfaceConfig
 
     /// <summary>
     ///     Creates the configuration for a network interface from the values entered by the user (Configure tab or
-    ///     profile). Values are trimmed, a subnet mask in CIDR notation (e.g. "/24") is converted to a subnet mask, static DNS servers
+    ///     profile). Values are trimmed, a subnet mask in CIDR notation (e.g. "/24" or "24") is converted to a subnet mask, static DNS servers
     ///     without any address fall back to DHCP and a secondary DNS server without a primary one becomes the primary.
     /// </summary>
     /// <param name="name">Name of the network interface.</param>
@@ -71,11 +73,7 @@ public class NetworkInterfaceConfig
         primaryDNSServer = primaryDNSServer?.Trim();
         secondaryDNSServer = secondaryDNSServer?.Trim();
 
-        var subnetmask = subnetmaskOrCidr?.Trim();
-
-        // CIDR to subnetmask
-        if (enableStaticIPAddress && subnetmask.StartsWith("/"))
-            subnetmask = Network.Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
+        var subnetmask = enableStaticIPAddress ? ConvertSubnetmaskOrCidr(subnetmaskOrCidr) : subnetmaskOrCidr?.Trim();
 
         // If primary and secondary DNS are empty --> autoconfiguration
         if (enableStaticDNS && string.IsNullOrEmpty(primaryDNSServer) && string.IsNullOrEmpty(secondaryDNSServer))
@@ -99,5 +97,23 @@ public class NetworkInterfaceConfig
             PrimaryDNSServer = primaryDNSServer,
             SecondaryDNSServer = secondaryDNSServer
         };
+    }
+
+    /// <summary>
+    ///     Converts a subnet mask or CIDR as accepted by the IPv4SubnetmaskOrCIDRValidator (e.g. "255.255.255.0",
+    ///     "/24" or "24") to a subnet mask, which is required by <c>netsh</c>.
+    /// </summary>
+    /// <param name="subnetmaskOrCidr">Subnet mask or CIDR.</param>
+    /// <returns>Subnet mask, or the trimmed input if it is neither a subnet mask nor a CIDR.</returns>
+    public static string ConvertSubnetmaskOrCidr(string subnetmaskOrCidr)
+    {
+        var value = subnetmaskOrCidr?.Trim();
+
+        if (string.IsNullOrEmpty(value) || RegexHelper.SubnetmaskRegex().IsMatch(value))
+            return value;
+
+        return int.TryParse(value.TrimStart('/'), out var cidr) && cidr is >= 0 and <= 32
+            ? Network.Subnetmask.GetFromCidr(cidr).Subnetmask
+            : value;
     }
 }

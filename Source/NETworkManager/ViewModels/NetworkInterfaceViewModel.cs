@@ -1223,11 +1223,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         IsStatusMessageDisplayed = false;
 
         ipAddress = ipAddress.Trim();
-        var subnetmask = subnetmaskOrCidr.Trim();
-
-        // CIDR to subnetmask
-        if (subnetmask.StartsWith("/"))
-            subnetmask = Subnetmask.GetFromCidr(int.Parse(subnetmask.TrimStart('/'))).Subnetmask;
+        var subnetmask = NetworkInterfaceConfig.ConvertSubnetmaskOrCidr(subnetmaskOrCidr);
 
         var config = new NetworkInterfaceConfig
         {

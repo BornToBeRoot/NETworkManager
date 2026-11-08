@@ -31,6 +31,9 @@ public class NetworkInterfaceConfigTests
     [InlineData("/24", "255.255.255.0")]
     [InlineData("/16", "255.255.0.0")]
     [InlineData("/32", "255.255.255.255")]
+    [InlineData("24", "255.255.255.0")]
+    [InlineData(" 8 ", "255.0.0.0")]
+    [InlineData("255.255.252.0", "255.255.252.0")]
     public void Create_CidrIsConvertedToSubnetmask(string cidr, string expected)
     {
         Assert.Equal(expected, CreateStatic(cidr).Subnetmask);
