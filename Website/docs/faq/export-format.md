@@ -27,7 +27,7 @@ The CSV columns, the XML elements and the JSON keys have the same names and orde
 | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Empty value             | Empty in CSV, empty element in XML, `null` in JSON (e.g. the ping time without a reply)                                                                                     |
 | Number                  | Decimal point in every language (e.g. `10.5`), without a unit. JSON: number                                                                                                |
-| Time / duration         | Number in a fixed unit: ping time in milliseconds (e.g. `4`), SNTP **Offset** in seconds and **RoundTripDelay** in milliseconds, **Speed** of a network interface in bit/s |
+| Time / duration         | Number in a fixed unit: ping time in milliseconds (e.g. `4`), SNTP **Offset** in seconds and **RoundTripDelay** in milliseconds, WiFi **BeaconInterval** in milliseconds and **Uptime** in seconds, **Speed** of a network interface in bit/s |
 | Yes / No                | `True` / `False` (CSV), `true` / `false` (XML, JSON)                                                                                                                         |
 | Date and time           | `yyyy-MM-dd HH:mm:ss.fff` (e.g. `2026-11-08 10:15:30.123`) in the time shown in the tool: local time, **SNTP Lookup** in UTC                                                 |
 | Status, type, state     | English name (e.g. `Success`, `TimedOut`, `Open`, `Tcp`), several values separated by `, ` (e.g. `ICMP, TCP`)                                                               |

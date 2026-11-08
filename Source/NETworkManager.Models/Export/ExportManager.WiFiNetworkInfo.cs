@@ -33,8 +33,10 @@ public static partial class ExportManager
         new(nameof(WiFiNetworkInfo.AvailableNetwork.PhyKind), x => x.AvailableNetwork.PhyKind),
         new(nameof(WiFiNetworkInfo.AvailableNetwork.NetworkKind), x => x.AvailableNetwork.NetworkKind),
         new(nameof(WiFiNetworkInfo.AvailableNetwork.IsWiFiDirect), x => x.AvailableNetwork.IsWiFiDirect),
-        new(nameof(WiFiNetworkInfo.AvailableNetwork.BeaconInterval), x => x.AvailableNetwork.BeaconInterval),
-        new(nameof(WiFiNetworkInfo.AvailableNetwork.Uptime), x => x.AvailableNetwork.Uptime),
+        // Durations as number like in the other exports: ms (e.g. 102.4) / whole seconds
+        new(nameof(WiFiNetworkInfo.AvailableNetwork.BeaconInterval),
+            x => x.AvailableNetwork.BeaconInterval.TotalMilliseconds),
+        new(nameof(WiFiNetworkInfo.AvailableNetwork.Uptime), x => (long)x.AvailableNetwork.Uptime.TotalSeconds),
         // Change since the previous scan of the same adapter (empty without a previous scan / change)
         new(nameof(WiFiNetworkInfo.Change), x => x.Change == WiFiNetworkChange.None ? null : x.Change)
     ];

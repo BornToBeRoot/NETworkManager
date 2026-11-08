@@ -29,7 +29,8 @@ namespace NETworkManager.Models.Export;
 ///         s - the unit is documented). Bools as <c>True</c> / <c>False</c> (CSV), <c>true</c> / <c>false</c> (XML).
 ///         JSON: numbers and bools as JSON numbers / bools, everything else as text.</item>
 ///         <item>Date and time as shown in the tool (local time; SNTP Lookup: UTC) as <c>yyyy-MM-dd HH:mm:ss.fff</c>,
-///         time span as <c>[-][d.]hh:mm:ss[.fffffff]</c>.</item>
+///         durations as numbers in a fixed unit (see above; a time span only as fallback:
+///         <c>[-][d.]hh:mm:ss[.fffffff]</c>).</item>
 ///         <item>Enums as their (English) name (e.g. <c>Success</c>, flags: <c>ICMP, TCP</c>).</item>
 ///         <item>MAC addresses as <c>AA:BB:CC:DD:EE:FF</c>.</item>
 ///         <item>Lists (e.g. IP addresses) as one text, separated by <c>; </c>.</item>
