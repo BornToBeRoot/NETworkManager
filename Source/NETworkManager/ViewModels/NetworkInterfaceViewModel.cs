@@ -529,9 +529,11 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
         InitializeProfileHost();
 
-        // Detect if network address or status changed...
-        NetworkChange.NetworkAvailabilityChanged += (_, _) => ReloadNetworkInterfaces();
-        NetworkChange.NetworkAddressChanged += (_, _) => ReloadNetworkInterfaces();
+        // Detect if network address or status changed... The events are raised on a thread pool thread: reload on the
+        // UI thread, otherwise the bandwidth meter (DispatcherTimer) of the selected interface is created on a thread
+        // without a running dispatcher and never updates.
+        NetworkChange.NetworkAvailabilityChanged += (_, _) => ReloadNetworkInterfacesOnUIThread();
+        NetworkChange.NetworkAddressChanged += (_, _) => ReloadNetworkInterfacesOnUIThread();
 
         // React to settings changes (e.g. the configurable bandwidth chart time window)
         SettingsManager.Current.PropertyChanged += SettingsManager_PropertyChanged;
@@ -1090,6 +1092,11 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     #endregion
 
     #region Methods
+
+    private void ReloadNetworkInterfacesOnUIThread()
+    {
+        Application.Current?.Dispatcher.BeginInvoke(new Action(ReloadNetworkInterfaces));
+    }
 
     private async void ReloadNetworkInterfaces()
     {

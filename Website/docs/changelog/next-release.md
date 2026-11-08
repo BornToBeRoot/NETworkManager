@@ -55,6 +55,7 @@ Release date: **xx.xx.2026**
 - Fixed **Apply** failing for a static IP address without a default gateway. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the configuration being blocked (progress bar running until a restart) when **Apply** was used after the selected network adapter was removed (e.g. a USB or VPN adapter). The first adapter is selected instead. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed **Apply** in the profile context menu being available while another change was running or the selected network adapter was not connected (the **Apply** button was already disabled). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed the **Bandwidth** chart and statistics no longer updating after the network configuration changed (e.g. after **Apply**, a DHCP renewal or connecting a VPN). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **DNS Lookup**
 
