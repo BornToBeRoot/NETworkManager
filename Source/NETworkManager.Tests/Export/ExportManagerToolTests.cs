@@ -149,9 +149,9 @@ public class ExportManagerToolTests
         var files = ExportAll((f, t) => ExportManager.Export(f, t, [CreateNetworkInterface()]));
 
         AssertConsistent(files,
-            "Id,Name,Description,Type,PhysicalAddress,Status,IsOperational,Speed,IPv4ProtocolAvailable,IPv4Address," +
-            "IPv4Gateway,DhcpEnabled,DhcpServer,DhcpLeaseObtained,DhcpLeaseExpires,IPv6ProtocolAvailable,IPv6Address," +
-            "IPv6AddressLinkLocal,IPv6Gateway,DNSAutoconfigurationEnabled,DNSSuffix,DNSServer,Profile");
+            "Id,Name,Description,Type,PhysicalAddress,Status,IsOperational,Speed,Profile,IPv4ProtocolAvailable," +
+            "IPv4Address,IPv4Gateway,DhcpEnabled,DhcpServer,DhcpLeaseObtained,DhcpLeaseExpires,IPv6ProtocolAvailable," +
+            "IPv6AddressLinkLocal,IPv6Address,IPv6Gateway,DNSAutoconfigurationEnabled,DNSSuffix,DNSServer");
         Assert.Equal("Ethernet, 2", files.CsvValue("Name"));
         Assert.Equal("Private", files.CsvValue("Profile"));
     }

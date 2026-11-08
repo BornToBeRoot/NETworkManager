@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NETworkManager.Models.Network;
@@ -8,8 +8,8 @@ namespace NETworkManager.Models.Export;
 public static partial class ExportManager
 {
     /// <summary>
-    ///     Exported fields of a <see cref="NetworkInterfaceInfo" />. The released columns come first, new ones are
-    ///     appended at the end, so the position of a column never changes.
+    ///     Exported fields of a <see cref="NetworkInterfaceInfo" /> in the order of the details: interface, IPv4 (incl.
+    ///     DHCP), IPv6, DNS.
     /// </summary>
     private static readonly ExportField<NetworkInterfaceInfo>[] NetworkInterfaceInfoExportFields =
     [
@@ -22,6 +22,7 @@ public static partial class ExportManager
         new(nameof(NetworkInterfaceInfo.IsOperational), x => x.IsOperational),
         // Bit/s
         new(nameof(NetworkInterfaceInfo.Speed), x => x.Speed),
+        new(nameof(NetworkInterfaceInfo.Profile), x => x.Profile),
         new(nameof(NetworkInterfaceInfo.IPv4ProtocolAvailable), x => x.IPv4ProtocolAvailable),
         // IP address with prefix length (e.g. 192.168.1.10/24)
         new(nameof(NetworkInterfaceInfo.IPv4Address),
@@ -33,14 +34,12 @@ public static partial class ExportManager
         new(nameof(NetworkInterfaceInfo.DhcpLeaseObtained), x => GetDhcpLease(x.DhcpLeaseObtained)),
         new(nameof(NetworkInterfaceInfo.DhcpLeaseExpires), x => GetDhcpLease(x.DhcpLeaseExpires)),
         new(nameof(NetworkInterfaceInfo.IPv6ProtocolAvailable), x => x.IPv6ProtocolAvailable),
-        new(nameof(NetworkInterfaceInfo.IPv6Address), x => x.IPv6Address),
         new(nameof(NetworkInterfaceInfo.IPv6AddressLinkLocal), x => x.IPv6AddressLinkLocal),
+        new(nameof(NetworkInterfaceInfo.IPv6Address), x => x.IPv6Address),
         new(nameof(NetworkInterfaceInfo.IPv6Gateway), x => x.IPv6Gateway),
         new(nameof(NetworkInterfaceInfo.DNSAutoconfigurationEnabled), x => x.DNSAutoconfigurationEnabled),
         new(nameof(NetworkInterfaceInfo.DNSSuffix), x => x.DNSSuffix, true),
-        new(nameof(NetworkInterfaceInfo.DNSServer), x => x.DNSServer),
-        // Added later - after the released columns, so their position doesn't change
-        new(nameof(NetworkInterfaceInfo.Profile), x => x.Profile)
+        new(nameof(NetworkInterfaceInfo.DNSServer), x => x.DNSServer)
     ];
 
     /// <summary>
