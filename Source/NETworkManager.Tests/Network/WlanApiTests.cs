@@ -116,6 +116,12 @@ public class WlanApiTests
     }
 
     [Fact]
+    public void He6GHzChannel2_IsAt5935()
+    {
+        Assert.Equal(new WlanApi.WlanBssChannel(20, 5935), Parse(5935, HeOperation6GHz(0, 2, 0)));
+    }
+
+    [Fact]
     public void Eht320_IsCenteredOnSegment1()
     {
         // Primary channel 1, 320 MHz on the channels 1 - 61 (center channel 31, segment 0 = primary 160 MHz)

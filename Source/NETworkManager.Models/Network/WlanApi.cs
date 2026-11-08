@@ -578,7 +578,7 @@ public static class WlanApi
 
         return primaryFrequencyMHz switch
         {
-            >= 5925 => 5950 + channel * 5, // 6 GHz
+            >= 5925 => channel == 2 ? 5935 : 5950 + channel * 5, // 6 GHz (channel 2 is below channel 1)
             >= 4900 => 5000 + channel * 5, // 5 GHz
             _ => channel == 14 ? 2484 : 2407 + channel * 5 // 2.4 GHz
         };
