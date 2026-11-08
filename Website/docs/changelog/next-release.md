@@ -438,6 +438,7 @@ Release date: **xx.xx.2026**
 - Fixed `Enter` in the search box of the OID profiles dialog closing the dialog with **OK**. It only filters the OID profiles now. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the OID profiles (dialog, settings). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
 - Fixed the CSV export breaking the row if the data contains a comma or a quote. The data is quoted now. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- Fixed the XML export failing (no file) if the data contains control characters that XML doesn't allow (e.g. binary `OctetString` values). These characters are removed in the XML file, CSV and JSON contain the data unchanged. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **SNTP Lookup**
 

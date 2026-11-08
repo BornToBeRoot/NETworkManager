@@ -8,6 +8,7 @@ using System.Net.NetworkInformation;
 using System.Numerics;
 using System.Text;
 using System.Xml.Linq;
+using XmlConvert = System.Xml.XmlConvert;
 using NETworkManager.Utilities;
 using Newtonsoft.Json;
 
@@ -224,11 +225,42 @@ public static partial class ExportManager
     }
 
     /// <summary>
-    ///     Gets the value of a XML element: bools as XML bools (<c>true</c> / <c>false</c>), everything else as text.
+    ///     Gets the value of a XML element: bools as XML bools (<c>true</c> / <c>false</c>), everything else as text
+    ///     without the characters XML doesn't allow (e.g. control characters in SNMP data), which would fail the whole
+    ///     export.
     /// </summary>
     private static object ToXmlValue(object value)
     {
-        return value is bool ? value : ToText(value);
+        return value is bool ? value : RemoveInvalidXmlChars(ToText(value));
+    }
+
+    /// <summary>
+    ///     Removes the characters that are not allowed in XML 1.0 (e.g. <c>0x00</c>, <c>0x1B</c>, a single surrogate).
+    /// </summary>
+    /// <param name="text">Text to clean.</param>
+    /// <returns>Text without invalid characters (the same instance if it has none).</returns>
+    private static string RemoveInvalidXmlChars(string text)
+    {
+        if (text == null || text.All(XmlConvert.IsXmlChar))
+            return text;
+
+        var stringBuilder = new StringBuilder(text.Length);
+
+        for (var i = 0; i < text.Length; i++)
+        {
+            if (XmlConvert.IsXmlChar(text[i]))
+            {
+                stringBuilder.Append(text[i]);
+            }
+            else if (i + 1 < text.Length && XmlConvert.IsXmlSurrogatePair(text[i + 1], text[i]))
+            {
+                // Valid surrogate pair (e.g. an emoji)
+                stringBuilder.Append(text, i, 2);
+                i++;
+            }
+        }
+
+        return stringBuilder.ToString();
     }
 
     /// <summary>

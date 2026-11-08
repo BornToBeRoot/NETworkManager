@@ -94,6 +94,16 @@ public class ExportManagerTests
     }
 
     [Fact]
+    public void Xml_InvalidCharactersRemoved()
+    {
+        // Control characters (e.g. in SNMP data) are not allowed in XML 1.0 - the export must not fail
+        var files = ExportAll((f, t) => ExportManager.Export(f, t, [new OUIInfo("00:11:22", "Ven\0dor\u001B \U0001F600")]));
+
+        Assert.Equal("Vendor \U0001F600", files.XmlValue("Vendor"));
+        Assert.Equal("Ven\0dor\u001B \U0001F600", (string)files.JsonValue("Vendor"));
+    }
+
+    [Fact]
     public void Txt_NotSupported()
     {
         Assert.Throws<ArgumentOutOfRangeException>(() =>
