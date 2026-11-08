@@ -413,102 +413,12 @@ public class WiFiViewModel : ViewModelBase
         }
     } = new ArrayList();
 
-    public ISeries[] Radio2Dot4GHzSeries
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
-
-    public ISeries[] Radio5GHzSeries
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
-
     // 6 GHz spans a very wide range (channels 1-233). It is split into a lower (1-125) and an upper
     // (129-233) chart for readability, similar to the UniFi channel view.
-    public ISeries[] Radio6GHzLowerSeries
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
-
-    public ISeries[] Radio6GHzUpperSeries
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
-
-    public Axis[] Radio2Dot4GHzXAxes { get; private set; }
-    public Axis[] Radio5GHzXAxes { get; private set; }
-    public Axis[] Radio6GHzLowerXAxes { get; private set; }
-    public Axis[] Radio6GHzUpperXAxes { get; private set; }
-
-    public Axis[] Radio2Dot4GHzYAxes { get; private set; }
-    public Axis[] Radio5GHzYAxes { get; private set; }
-    public Axis[] Radio6GHzLowerYAxes { get; private set; }
-    public Axis[] Radio6GHzUpperYAxes { get; private set; }
-
-    public RectangularSection[] Radio2Dot4GHzSections { get; private set; }
-    public RectangularSection[] Radio5GHzSections { get; private set; }
-    public RectangularSection[] Radio6GHzLowerSections { get; private set; }
-    public RectangularSection[] Radio6GHzUpperSections { get; private set; }
-
-    public WiFiChannelLegendEntry[] Radio2Dot4GHzLegend
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
-
-    public WiFiChannelLegendEntry[] Radio5GHzLegend
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
-
-    public WiFiChannelLegendEntry[] Radio6GHzLowerLegend
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
-
-    public WiFiChannelLegendEntry[] Radio6GHzUpperLegend
-    {
-        get;
-        private set
-        {
-            field = value;
-            OnPropertyChanged();
-        }
-    } = [];
+    public WiFiChannelChart Chart2Dot4GHz { get; private set; }
+    public WiFiChannelChart Chart5GHz { get; private set; }
+    public WiFiChannelChart Chart6GHzLower { get; private set; }
+    public WiFiChannelChart Chart6GHzUpper { get; private set; }
 
     public bool IsStatusMessageDisplayed
     {
@@ -971,29 +881,34 @@ public class WiFiViewModel : ViewModelBase
                     SelectedNetwork = network;
             }
 
-            List<ISeries> series2Dot4GHz = [];
-            List<ISeries> series5GHz = [];
-            List<ISeries> series6GHzLower = [];
-            List<ISeries> series6GHzUpper = [];
-            List<WiFiChannelLegendEntry> legend2Dot4GHz = [];
-            List<WiFiChannelLegendEntry> legend5GHz = [];
-            List<WiFiChannelLegendEntry> legend6GHzLower = [];
-            List<WiFiChannelLegendEntry> legend6GHzUpper = [];
+            // Series and legend of each chart (the color of a network depends on its position in its chart)
+            var charts = new Dictionary<WiFiChannelChart, (List<ISeries> Series, List<WiFiChannelLegendEntry> Legend)>
+            {
+                [Chart2Dot4GHz] = ([], []),
+                [Chart5GHz] = ([], []),
+                [Chart6GHzLower] = ([], []),
+                [Chart6GHzUpper] = ([], [])
+            };
+
+            void AddToChart(WiFiChannelChart chart, WiFiNetworkInfo network)
+            {
+                var (series, legend) = charts[chart];
+                var (networkSeries, networkLegend) = BuildNetworkSeries(network, series.Count);
+
+                series.Add(networkSeries);
+                legend.Add(networkLegend);
+            }
 
             foreach (var network in wiFiNetworkScanInfo.WiFiNetworkInfos)
             {
                 switch (network.Radio)
                 {
                     case WiFiRadio.GHz2dot4:
-                        var (s24, l24) = BuildNetworkSeries(network, series2Dot4GHz.Count);
-                        series2Dot4GHz.Add(s24);
-                        legend2Dot4GHz.Add(l24);
+                        AddToChart(Chart2Dot4GHz, network);
                         break;
 
                     case WiFiRadio.GHz5:
-                        var (s5, l5) = BuildNetworkSeries(network, series5GHz.Count);
-                        series5GHz.Add(s5);
-                        legend5GHz.Add(l5);
+                        AddToChart(Chart5GHz, network);
                         break;
 
                     case WiFiRadio.GHz6:
@@ -1005,31 +920,17 @@ public class WiFiViewModel : ViewModelBase
                         var halfWidth = network.ChannelBandwidth / 10.0;
 
                         if (centerChannel - halfWidth < SixGHzSplitChannel)
-                        {
-                            var (s6L, l6L) = BuildNetworkSeries(network, series6GHzLower.Count);
-                            series6GHzLower.Add(s6L);
-                            legend6GHzLower.Add(l6L);
-                        }
+                            AddToChart(Chart6GHzLower, network);
 
                         if (centerChannel + halfWidth > SixGHzSplitChannel)
-                        {
-                            var (s6U, l6U) = BuildNetworkSeries(network, series6GHzUpper.Count);
-                            series6GHzUpper.Add(s6U);
-                            legend6GHzUpper.Add(l6U);
-                        }
+                            AddToChart(Chart6GHzUpper, network);
 
                         break;
                 }
             }
 
-            Radio2Dot4GHzSeries = [.. series2Dot4GHz];
-            Radio5GHzSeries = [.. series5GHz];
-            Radio6GHzLowerSeries = [.. series6GHzLower];
-            Radio6GHzUpperSeries = [.. series6GHzUpper];
-            Radio2Dot4GHzLegend = [.. legend2Dot4GHz];
-            Radio5GHzLegend = [.. legend5GHz];
-            Radio6GHzLowerLegend = [.. legend6GHzLower];
-            Radio6GHzUpperLegend = [.. legend6GHzUpper];
+            foreach (var (chart, (series, legend)) in charts)
+                chart.Update(series, legend);
 
             LastRefreshTime = wiFiNetworkScanInfo.Timestamp;
 
@@ -1059,14 +960,10 @@ public class WiFiViewModel : ViewModelBase
                 NetworksChanged = 0;
 
                 Networks.Clear();
-                Radio2Dot4GHzSeries = [];
-                Radio5GHzSeries = [];
-                Radio6GHzLowerSeries = [];
-                Radio6GHzUpperSeries = [];
-                Radio2Dot4GHzLegend = [];
-                Radio5GHzLegend = [];
-                Radio6GHzLowerLegend = [];
-                Radio6GHzUpperLegend = [];
+                Chart2Dot4GHz.Clear();
+                Chart5GHz.Clear();
+                Chart6GHzLower.Clear();
+                Chart6GHzUpper.Clear();
             }
         }
         finally
@@ -1155,20 +1052,14 @@ public class WiFiViewModel : ViewModelBase
         // (min, max) in display space. The lower bound is extended below the first channel so the
         // left flank of its trapezoid reaches the baseline instead of being clipped. The 5 GHz
         // upper bound is reduced because the 64..100 dead zone is compressed.
-        Radio2Dot4GHzXAxes = BuildXAxes(-2, 16, ValidChannels2Dot4GHz, false, labelColor);
-        Radio5GHzXAxes = BuildXAxes(30, 160, ValidChannels5GHz, true, labelColor);
-        Radio6GHzLowerXAxes = BuildXAxes(-6, 128, ValidChannels6GHz, false, labelColor);
-        Radio6GHzUpperXAxes = BuildXAxes(126, 236, ValidChannels6GHz, false, labelColor);
-
-        Radio2Dot4GHzYAxes = BuildYAxes(labelColor, separatorColor);
-        Radio5GHzYAxes = BuildYAxes(labelColor, separatorColor);
-        Radio6GHzLowerYAxes = BuildYAxes(labelColor, separatorColor);
-        Radio6GHzUpperYAxes = BuildYAxes(labelColor, separatorColor);
-
-        Radio2Dot4GHzSections = BuildSections();
-        Radio5GHzSections = BuildSections();
-        Radio6GHzLowerSections = BuildSections();
-        Radio6GHzUpperSections = BuildSections();
+        Chart2Dot4GHz = new WiFiChannelChart(BuildXAxes(-2, 16, ValidChannels2Dot4GHz, false, labelColor),
+            BuildYAxes(labelColor, separatorColor), BuildSections());
+        Chart5GHz = new WiFiChannelChart(BuildXAxes(30, 160, ValidChannels5GHz, true, labelColor),
+            BuildYAxes(labelColor, separatorColor), BuildSections());
+        Chart6GHzLower = new WiFiChannelChart(BuildXAxes(-6, 128, ValidChannels6GHz, false, labelColor),
+            BuildYAxes(labelColor, separatorColor), BuildSections());
+        Chart6GHzUpper = new WiFiChannelChart(BuildXAxes(126, 236, ValidChannels6GHz, false, labelColor),
+            BuildYAxes(labelColor, separatorColor), BuildSections());
     }
 
     /// <summary>
@@ -1729,5 +1620,3 @@ public class WiFiViewModel : ViewModelBase
 
     #endregion
 }
-
-public record WiFiChannelLegendEntry(SolidColorBrush Color, string Ssid, string Bssid);
