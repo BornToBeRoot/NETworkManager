@@ -1357,6 +1357,10 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             return;
         }
 
+        // Show the applied values on the Configure tab (selecting the bound network interface above filled in its
+        // current configuration)
+        SetConfigurationFromProfile(profile);
+
         await ApplyConfigurationAsync(NetworkInterfaceConfig.Create(networkInterface.Name,
             profile.NetworkInterface_EnableStaticIPAddress, profile.NetworkInterface_IPAddress,
             profile.NetworkInterface_Subnetmask, profile.NetworkInterface_Gateway,
