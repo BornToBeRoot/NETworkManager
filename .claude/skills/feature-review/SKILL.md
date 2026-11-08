@@ -187,8 +187,11 @@ Compared with: <features from step 3>
 ### Missing essentials
 | # | Gap | Why it's essential | Size (small fix / issue) |
 
-### Other (security, localization, docs, tests)
+### Other (security, localization, docs)
 | # | Finding | Proposed fix |
+
+### Tests
+| # | Untested logic (`path:line`) | Bugs it would have caught | Proposal (move to `NETworkManager.Models` if needed + test cases) |
 
 ### Refactoring / simplification
 | # | Where | Problem (duplication / complexity) | Proposal | Gain | Must stay identical / test |
