@@ -5450,4 +5450,22 @@ Scan starten?</value>
   <data name="BetaFeatureMessage" xml:space="preserve">
     <value>Beta: Diese Funktion wird öffentlich getestet und kann sich ändern. Bitte melde Probleme auf GitHub.</value>
   </data>
+  <data name="CouldNotDisconnectFromXXXReasonXXX" xml:space="preserve">
+    <value>Die Verbindung zu {0} ({1}) konnte nicht getrennt werden!</value>
+  </data>
+  <data name="ChannelWidthEstimatedToolTip" xml:space="preserve">
+    <value>Schätzung anhand des Frequenzbands und des WLAN-Standards: Die Kanalbreite konnte nicht aus dem Beacon des Access Points ausgelesen werden.</value>
+  </data>
+  <data name="WiFiNetworkChange_Changed" xml:space="preserve">
+    <value>Geändert</value>
+  </data>
+  <data name="XChanged" xml:space="preserve">
+    <value>{0} Geändert</value>
+  </data>
+  <data name="PreviouslyX" xml:space="preserve">
+    <value>Zuvor: {0}</value>
+  </data>
+  <data name="HelpMessage_WiFiChangesNotification" xml:space="preserve">
+    <value>Nur wenn die Netzwerke automatisch gescannt werden („Automatisch aktualisieren alle“) und WLAN angezeigt wird: eine Benachrichtigung pro Scan mit den Änderungen seit dem letzten Scan des Adapters.</value>
+  </data>
 </root>
