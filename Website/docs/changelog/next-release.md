@@ -275,6 +275,7 @@ Release date: **xx.xx.2026**
 **Network Interface**
 
 - Fixed errors when changing the network configuration (e.g. missing permissions) not being shown — the change was reported as successful although it failed. The error message of Windows is now shown. [#3606](https://github.com/BornToBeRoot/NETworkManager/issues/3606)
+- Fixed **Apply** failing when the IPv4 address or the subnet mask on the **Configure** tab (or in **Add IPv4 address...**) started or ended with a space. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **WiFi**
 

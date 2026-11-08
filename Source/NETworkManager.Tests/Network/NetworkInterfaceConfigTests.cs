@@ -62,4 +62,17 @@ public class NetworkInterfaceConfigTests
         Assert.False(config.EnableStaticIPAddress);
         Assert.False(config.EnableStaticDNS);
     }
+
+    [Fact]
+    public void Create_ValuesAreTrimmed()
+    {
+        var config = NetworkInterfaceConfig.Create("Ethernet", true, " 192.168.1.10 ", " /24", "192.168.1.1 ", true,
+            " 1.1.1.1", "1.0.0.1 ");
+
+        Assert.Equal("192.168.1.10", config.IPAddress);
+        Assert.Equal("255.255.255.0", config.Subnetmask);
+        Assert.Equal("192.168.1.1", config.Gateway);
+        Assert.Equal("1.1.1.1", config.PrimaryDNSServer);
+        Assert.Equal("1.0.0.1", config.SecondaryDNSServer);
+    }
 }

@@ -1222,7 +1222,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
 
-        var subnetmask = subnetmaskOrCidr;
+        ipAddress = ipAddress.Trim();
+        var subnetmask = subnetmaskOrCidr.Trim();
 
         // CIDR to subnetmask
         if (subnetmask.StartsWith("/"))

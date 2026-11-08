@@ -49,7 +49,7 @@ public class NetworkInterfaceConfig
 
     /// <summary>
     ///     Creates the configuration for a network interface from the values entered by the user (Configure tab or
-    ///     profile). A subnet mask in CIDR notation (e.g. "/24") is converted to a subnet mask, static DNS servers
+    ///     profile). Values are trimmed, a subnet mask in CIDR notation (e.g. "/24") is converted to a subnet mask, static DNS servers
     ///     without any address fall back to DHCP and a secondary DNS server without a primary one becomes the primary.
     /// </summary>
     /// <param name="name">Name of the network interface.</param>
@@ -65,7 +65,13 @@ public class NetworkInterfaceConfig
         string subnetmaskOrCidr, string gateway, bool enableStaticDNS, string primaryDNSServer,
         string secondaryDNSServer)
     {
-        var subnetmask = subnetmaskOrCidr;
+        // Values from the UI are validated with trimmed input (and profile values are trimmed when saved).
+        ipAddress = ipAddress?.Trim();
+        gateway = gateway?.Trim();
+        primaryDNSServer = primaryDNSServer?.Trim();
+        secondaryDNSServer = secondaryDNSServer?.Trim();
+
+        var subnetmask = subnetmaskOrCidr?.Trim();
 
         // CIDR to subnetmask
         if (enableStaticIPAddress && subnetmask.StartsWith("/"))
