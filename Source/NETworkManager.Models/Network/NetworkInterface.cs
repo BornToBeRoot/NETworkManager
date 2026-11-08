@@ -458,23 +458,43 @@ public sealed class NetworkInterface
     {
         ThrowIfInvalid(config);
 
-        var name = PowerShellHelper.EscapeSingleQuotes(config.Name);
-        var commands = new List<string>();
-
         // netsh returns an error if DHCP is already enabled. Skip these commands, so every error can be reported.
         var (dhcpEnabled, dnsAutoconfigurationEnabled) = GetCurrentDhcpState(config.Name);
 
-        // IP
+        RunCommands(GetConfigureCommands(config, dhcpEnabled, dnsAutoconfigurationEnabled));
+    }
+
+    /// <summary>
+    /// Gets the <c>netsh</c> commands to apply the configuration to a network interface. Switching to DHCP is skipped
+    /// if DHCP is already enabled, because <c>netsh</c> returns an error in that case.
+    /// </summary>
+    /// <param name="config">Configuration to apply (values must be validated, see <see cref="ThrowIfInvalid" />).</param>
+    /// <param name="dhcpEnabled">Whether DHCP is currently enabled for the IP address (<see langword="null" /> if unknown).</param>
+    /// <param name="dnsAutoconfigurationEnabled">Whether DHCP is currently enabled for the DNS servers (<see langword="null" /> if unknown).</param>
+    /// <returns>Commands to run.</returns>
+    public static List<string> GetConfigureCommands(NetworkInterfaceConfig config, bool? dhcpEnabled,
+        bool? dnsAutoconfigurationEnabled)
+    {
+        var name = PowerShellHelper.EscapeSingleQuotes(config.Name);
+        var commands = new List<string>();
+
+        // IP (without gateway: "gateway=none", an empty value is a syntax error)
         if (config.EnableStaticIPAddress)
-            commands.Add($"& netsh interface ipv4 set address name='{name}' source=static address={config.IPAddress} mask={config.Subnetmask} gateway={config.Gateway}");
+        {
+            var gateway = string.IsNullOrEmpty(config.Gateway) ? "none" : config.Gateway;
+
+            commands.Add($"& netsh interface ipv4 set address name='{name}' source=static address={config.IPAddress} mask={config.Subnetmask} gateway={gateway}");
+        }
         else if (dhcpEnabled != true)
+        {
             commands.Add($"& netsh interface ipv4 set address name='{name}' source=dhcp");
+        }
 
         // DNS
         if (config.EnableStaticDNS)
         {
             commands.Add($"& netsh interface ipv4 set dnsservers name='{name}' source=static address={config.PrimaryDNSServer} register=primary validate=no");
-          
+
             if (!string.IsNullOrEmpty(config.SecondaryDNSServer))
                 commands.Add($"& netsh interface ipv4 add dnsservers name='{name}' address={config.SecondaryDNSServer} index=2 validate=no");
         }
@@ -483,7 +503,7 @@ public sealed class NetworkInterface
             commands.Add($"& netsh interface ipv4 set dnsservers name='{name}' source=dhcp");
         }
 
-        RunCommands(commands);
+        return commands;
     }
 
     /// <summary>
