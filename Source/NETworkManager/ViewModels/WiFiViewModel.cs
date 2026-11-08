@@ -1518,12 +1518,10 @@ public class WiFiViewModel : ViewModelBase
                         break;
                 }
 
-                return selectedNetwork.IsHidden
-                    ? WiFi.ConnectAsync(instance.Options.AdapterInfo.WiFiAdapter,
-                        instance.Options.NetworkInfo.AvailableNetwork, GetReconnectionKind(instance), credential,
-                        instance.Ssid)
-                    : WiFi.ConnectAsync(instance.Options.AdapterInfo.WiFiAdapter,
-                        instance.Options.NetworkInfo.AvailableNetwork, GetReconnectionKind(instance), credential);
+                // The SSID only for a hidden network
+                return WiFi.ConnectAsync(instance.Options.AdapterInfo.WiFiAdapter,
+                    instance.Options.NetworkInfo.AvailableNetwork, GetReconnectionKind(instance), credential,
+                    selectedNetwork.IsHidden ? instance.Ssid : null);
             });
         }, async instance =>
         {

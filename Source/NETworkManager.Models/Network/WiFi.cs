@@ -173,12 +173,7 @@ public static class WiFi
         else
             connectionResult = await adapter.ConnectAsync(network, reconnectionKind, credential, ssid);
 
-        // Wrong password may cause connection to timeout.
-        // Disconnect any network from the adapter to return it to a non-busy state.
-        if (connectionResult.ConnectionStatus == WiFiConnectionStatus.Timeout)
-            Disconnect(adapter);
-
-        return connectionResult.ConnectionStatus;
+        return GetConnectionStatus(adapter, connectionResult);
     }
 
     /// <summary>
@@ -194,6 +189,17 @@ public static class WiFi
         var connectionResult = await adapter.ConnectAsync(network, reconnectionKind, null,
             string.Empty, WiFiConnectionMethod.WpsPushButton);
 
+        return GetConnectionStatus(adapter, connectionResult);
+    }
+
+    /// <summary>
+    ///     Gets the status of a connection attempt. After a timeout the adapter is disconnected.
+    /// </summary>
+    /// <param name="adapter">Wi-Fi adapter which was used for the connection.</param>
+    /// <param name="connectionResult">Result of the connection attempt.</param>
+    /// <returns>Status of the connection.</returns>
+    private static WiFiConnectionStatus GetConnectionStatus(WiFiAdapter adapter, WiFiConnectionResult connectionResult)
+    {
         // Wrong password may cause connection to timeout.
         // Disconnect any network from the adapter to return it to a non-busy state.
         if (connectionResult.ConnectionStatus == WiFiConnectionStatus.Timeout)
