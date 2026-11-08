@@ -1,6 +1,7 @@
 using System;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Models.Lookup;
@@ -234,6 +235,52 @@ public class ExportManagerToolTests
         Assert.Equal("10.5", files.XmlValue("RoundTripDelay"));
         Assert.Equal(-0.25, (double)files.JsonValue("Offset"));
         Assert.Equal(JTokenType.Float, files.JsonValue("RoundTripDelay").Type);
+    }
+
+    #endregion
+
+    #region Connections, Listeners, Neighbor Table
+
+    [Fact]
+    public void Connections_Consistent()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t,
+        [
+            new ConnectionInfo(TransportProtocol.Tcp, IPAddress, 50000, IPAddress.Parse("1.2.3.4"), 443,
+                "a, b.example.com", TcpState.Established, 1234, "chrome", @"C:\Program Files\chrome, x.exe")
+        ]));
+
+        AssertConsistent(files,
+            "Protocol,LocalIPAddress,LocalPort,RemoteIPAddress,RemotePort,RemoteHostname,TcpState,ProcessId," +
+            "ProcessName,ProcessPath");
+        Assert.Equal("Established", (string)files.JsonValue("TcpState"));
+        Assert.Equal(@"C:\Program Files\chrome, x.exe", files.CsvValue("ProcessPath"));
+    }
+
+    [Fact]
+    public void Listeners_Consistent()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t,
+            [new ListenerInfo(TransportProtocol.Udp, IPAddress.Parse("::"), 53)]));
+
+        AssertConsistent(files, "Protocol,IPAddress,Port");
+        Assert.Equal("Udp,::,53", files.CsvLines[1]);
+    }
+
+    [Fact]
+    public void NeighborTable_Consistent()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t,
+        [
+            new NeighborInfo(IPAddress, PhysicalAddress.Parse("00-11-22-AA-BB-CC"), false, 12, "Ethernet, 2",
+                NeighborState.Reachable, AddressFamily.InterNetwork)
+        ]));
+
+        AssertConsistent(files, "IPAddress,MACAddress,InterfaceAlias,InterfaceIndex,State,AddressFamily,IsMulticast");
+        Assert.Equal("00:11:22:AA:BB:CC", files.CsvValue("MACAddress"));
+        Assert.Equal("00:11:22:AA:BB:CC", (string)files.JsonValue("MACAddress"));
+        Assert.Equal("Reachable", (string)files.JsonValue("State"));
+        Assert.Equal("Ethernet, 2", files.CsvValue("InterfaceAlias"));
     }
 
     #endregion

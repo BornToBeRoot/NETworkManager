@@ -26,6 +26,7 @@ Release date: **xx.xx.2026**
 - **Traceroute**: the export contains the times (`Time1` - `Time3`) as a number of milliseconds (e.g. `4`) instead of text (`4 ms`), empty without a reply instead of `-/-`, like in all exports.
 - **Network Interface**: the export contains the MAC address (`PhysicalAddress`) as `AA:BB:CC:DD:EE:FF` instead of `AABBCCDDEEFF`, the DHCP lease (`DhcpLeaseObtained`, `DhcpLeaseExpires`) as `2026-11-08 10:15:30.123` in every format and language (empty without DHCP), and lists of IP addresses separated by `; ` instead of `;`, like in all exports.
 - **SNTP Lookup**: the export contains `Offset` (seconds) and `RoundTripDelay` (milliseconds) as numbers with a decimal point (e.g. `-0.25`) instead of text with the unit (`-0.25 s`, `10.5 ms`), like in all exports.
+- **Neighbor Table**: the export contains the MAC address as `AA:BB:CC:DD:EE:FF` (like it is shown) instead of `AABBCCDDEEFF`, like in all exports.
 
 ## What's new?
 
