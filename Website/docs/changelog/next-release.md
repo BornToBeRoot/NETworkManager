@@ -416,6 +416,7 @@ Release date: **xx.xx.2026**
 **Hosts File Editor**
 
 - Fixed the retry of a locked hosts file waiting 5 seconds between the attempts (the message said 2) and once more after the last attempt. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- Fixed the CSV export breaking the row if the comment contains a comma. Hostname and comment are quoted now.
 
 **Firewall**
 
@@ -442,6 +443,7 @@ Release date: **xx.xx.2026**
 **IP Geolocation**
 
 - Fixed the query history of **IP Geolocation** being written to the history of **Whois** instead of its own. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
+- Fixed the CSV export breaking the row with a decimal comma (e.g. German) in the latitude / longitude, or a comma in a text (e.g. the ISP `Example, Inc.`). Decimals are exported with a decimal point, text is quoted now.
 
 **Subnet Calculator**
 

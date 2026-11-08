@@ -3,6 +3,8 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using NETworkManager.Models.Export;
+using NETworkManager.Models.Firewall;
+using NETworkManager.Models.HostsFileEditor;
 using NETworkManager.Models.IPApi;
 using NETworkManager.Models.Lookup;
 using NETworkManager.Models.Network;
@@ -306,6 +308,53 @@ public class ExportManagerToolTests
             "ChassisId,LocalConnection,LocalInterface");
         Assert.Equal("Cisco IOS, Version 15", files.CsvValue("DeviceDescription"));
         Assert.Equal("Intel(R) Ethernet", (string)files.JsonValue("LocalInterface"));
+    }
+
+    #endregion
+
+    #region Hosts File Editor, Firewall, IP Geolocation
+
+    [Fact]
+    public void HostsFileEditor_Consistent()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t,
+            [new HostsFileEntry(true, "10.0.0.1", "a.local b.local", "comment, with \"quotes\"")]));
+
+        AssertConsistent(files, "IsEnabled,IPAddress,Hostname,Comment");
+        Assert.Equal("comment, with \"quotes\"", files.CsvValue("Comment"));
+        Assert.Equal("True", files.CsvValue("IsEnabled"));
+        Assert.Equal("true", files.XmlValue("IsEnabled"));
+        Assert.Equal(JTokenType.Boolean, files.JsonValue("IsEnabled").Type);
+    }
+
+    [Fact]
+    public void Firewall_Consistent()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t,
+            [new FirewallRule { Name = "Rule, 1", Description = "Description \"x\"" }]));
+
+        AssertConsistent(files,
+            "Name,IsEnabled,IsManaged,Source,Direction,Action,Protocol,LocalPorts,RemotePorts,LocalAddresses," +
+            "RemoteAddresses,NetworkProfiles,InterfaceType,Program,Description");
+        Assert.Equal("Rule, 1", files.CsvValue("Name"));
+        Assert.Equal("Inbound", (string)files.JsonValue("Direction"));
+    }
+
+    [Fact]
+    public void IPGeolocation_Consistent()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t, [CreateGeolocation()]));
+
+        AssertConsistent(files,
+            "Status,Continent,ContinentCode,Country,CountryCode,Region,RegionName,City,District,Zip,Lat,Lon,Timezone," +
+            "Offset,Currency,Isp,Org,As,Asname,Reverse,Mobile,Proxy,Hosting,Query");
+
+        // Decimal point in every language
+        Assert.Equal("48.1374", files.CsvValue("Lat"));
+        Assert.Equal("11.5755", files.XmlValue("Lon"));
+        Assert.Equal(48.1374, (double)files.JsonValue("Lat"));
+        Assert.Equal("Example, Inc.", files.CsvValue("Isp"));
+        Assert.Equal("Org \"Quoted\"", files.CsvValue("Org"));
     }
 
     #endregion
