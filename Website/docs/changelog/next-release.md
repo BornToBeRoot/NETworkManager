@@ -75,6 +75,7 @@ Release date: **xx.xx.2026**
 - Fixed **IP Scanner** on the **Information** tab being enabled for a network adapter without IPv4 address (e.g. disconnected) and doing nothing when clicked. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the profile dialog showing validation errors on the disabled IP address and DNS server fields (e.g. for a new profile with **Obtain an IP address automatically**). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the **Information** tab possibly showing the old configuration after **Apply**, **Release & Renew** or adding / removing an IP address, if the network adapters were reloaded because of a network change at the same time. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed the selected network adapter not being selected again when it is back after it was missing (e.g. a VPN or USB adapter), also after a restart. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **DNS Lookup**
 

@@ -40,7 +40,11 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     private BandwidthMeter _bandwidthMeter;
 
-    private readonly bool _isLoading;
+    /// <summary>
+    /// The network interface is selected by the (re)load of the network interfaces, not by the user: the selection is
+    /// not saved, so a fallback (e.g. while a VPN or USB adapter is missing) doesn't replace the remembered one.
+    /// </summary>
+    private bool _isSelectingNetworkInterfaceByCode;
 
     /// <summary>
     /// Gets or sets a value indicating whether network interfaces are currently loading.
@@ -185,7 +189,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             {
                 _selectedNetworkInterfaceId = value.Id;
 
-                if (!_isLoading)
+                if (!_isSelectingNetworkInterfaceByCode)
                     SettingsManager.Current.NetworkInterface_InterfaceId = value.Id;
 
                 // Bandwidth
@@ -527,8 +531,6 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// </summary>
     public NetworkInterfaceViewModel()
     {
-        _isLoading = true;
-
         // Initialize the bandwidth chart before loading interfaces, so the chart collections
         // exist by the time the (possibly synchronous) interface load selects an interface and
         // starts the bandwidth meter.
@@ -549,8 +551,6 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
         // Colors of the bandwidth chart for the new theme (the paints don't follow the theme)
         AppearanceManager.ThemeResourcesChanged += (_, _) => ApplyBandwidthChartColors();
-
-        _isLoading = false;
     }
 
     /// <summary>
@@ -763,13 +763,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             (await NetworkInterface.GetNetworkInterfacesAsync()).ForEach(NetworkInterfaces.Add);
 
             // Get the last selected interface, if it is still available on this machine...
-            if (NetworkInterfaces.Count > 0)
-            {
-                var info = NetworkInterfaces.FirstOrDefault(s =>
-                    s.Id == SettingsManager.Current.NetworkInterface_InterfaceId);
-
-                SelectedNetworkInterface = info ?? NetworkInterfaces[0];
-            }
+            SelectNetworkInterfaceAfterLoad(null);
         }
         catch (Exception ex)
         {
@@ -1213,7 +1207,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             await Task.Delay(GlobalStaticConfiguration.ApplicationUIRefreshInterval);
 
             // Store the last selected id
-            var id = SelectedNetworkInterface?.Id ?? string.Empty;
+            var id = SelectedNetworkInterface?.Id;
 
             // Get all network interfaces...
             var networkInterfaces = await NetworkInterface.GetNetworkInterfacesAsync();
@@ -1228,10 +1222,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 networkInterfaces.ForEach(NetworkInterfaces.Add);
             });
 
-            // Set the last selected interface, if it is still available on this machine (e.g. not a removed USB or
-            // VPN adapter), otherwise the first one...
-            SelectedNetworkInterface = NetworkInterfaces.FirstOrDefault(x => x.Id == id) ??
-                                       NetworkInterfaces.FirstOrDefault();
+            SelectNetworkInterfaceAfterLoad(id);
         }
         catch (Exception ex)
         {
@@ -1244,6 +1235,36 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         }
 
         ReloadIfPending();
+    }
+
+    /// <summary>
+    /// Selects a network interface after the list was (re)loaded: the one selected by the user (saved in the settings,
+    /// also if it is back after it was missing, e.g. a VPN or USB adapter), then the one selected before, then the
+    /// first one. The selection is not saved, so a fallback doesn't replace the remembered network interface.
+    /// </summary>
+    /// <param name="previousId">ID of the network interface selected before the reload.</param>
+    private void SelectNetworkInterfaceAfterLoad(string previousId)
+    {
+        _isSelectingNetworkInterfaceByCode = true;
+
+        try
+        {
+            SelectedNetworkInterface =
+                NetworkInterfaces.FirstOrDefault(x => x.Id == SettingsManager.Current.NetworkInterface_InterfaceId) ??
+                NetworkInterfaces.FirstOrDefault(x => x.Id == previousId) ??
+                NetworkInterfaces.FirstOrDefault();
+        }
+        finally
+        {
+            _isSelectingNetworkInterfaceByCode = false;
+        }
+
+        // No network interface left: stop the measurement of the removed one (it would look it up every second)
+        if (SelectedNetworkInterface != null)
+            return;
+
+        StopBandwidthMeter();
+        _selectedNetworkInterfaceId = null;
     }
 
     private void ReloadIfPending()
