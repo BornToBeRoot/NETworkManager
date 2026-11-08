@@ -1574,7 +1574,8 @@ public class WiFiViewModel : ViewModelBase
 
     private async Task DisconnectAsync()
     {
-        var connectedNetwork = Networks.FirstOrDefault(x => x.IsConnected);
+        // The menu item is only shown for the connected network (the selected one if no network is marked anymore)
+        var connectedNetwork = Networks.FirstOrDefault(x => x.IsConnected) ?? SelectedNetwork;
 
         try
         {
@@ -1591,7 +1592,7 @@ public class WiFiViewModel : ViewModelBase
             Log.Error("Error while disconnecting the WiFi adapter.", ex);
 
             ConnectionStatusMessage = string.Format(Strings.CouldNotDisconnectFromXXXReasonXXX,
-                connectedNetwork == null ? null : GetDisplaySsid(connectedNetwork), ex.Message);
+                GetDisplaySsid(connectedNetwork), ex.Message);
             IsConnectionStatusMessageDisplayed = true;
         }
 
