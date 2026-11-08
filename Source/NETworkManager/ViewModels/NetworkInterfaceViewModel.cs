@@ -521,8 +521,11 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 ConfigIPAddress = value.NetworkInterface_IPAddress;
                 ConfigGateway = value.NetworkInterface_Gateway;
                 ConfigSubnetmask = value.NetworkInterface_Subnetmask;
-                ConfigEnableDynamicDNS = !value.NetworkInterface_EnableStaticDNS;
-                ConfigEnableStaticDNS = value.NetworkInterface_EnableStaticDNS;
+                // DNS servers can only be obtained automatically with DHCP (older profiles may contain both)
+                var enableStaticDNS = value.NetworkInterface_EnableStaticIPAddress ||
+                                      value.NetworkInterface_EnableStaticDNS;
+                ConfigEnableDynamicDNS = !enableStaticDNS;
+                ConfigEnableStaticDNS = enableStaticDNS;
                 ConfigPrimaryDNSServer = value.NetworkInterface_PrimaryDNSServer;
                 ConfigSecondaryDNSServer = value.NetworkInterface_SecondaryDNSServer;
             }

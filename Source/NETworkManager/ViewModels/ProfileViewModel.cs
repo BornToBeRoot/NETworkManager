@@ -73,8 +73,10 @@ public class ProfileViewModel : ViewModelBase
         NetworkInterface_IPAddress = profileInfo.NetworkInterface_IPAddress;
         NetworkInterface_Gateway = profileInfo.NetworkInterface_Gateway;
         NetworkInterface_Subnetmask = profileInfo.NetworkInterface_Subnetmask;
-        NetworkInterface_EnableDynamicDNS = !profileInfo.NetworkInterface_EnableStaticDNS;
-        NetworkInterface_EnableStaticDNS = profileInfo.NetworkInterface_EnableStaticDNS;
+        // DNS servers can only be obtained automatically with DHCP (older or imported profiles may contain both)
+        NetworkInterface_EnableStaticDNS = profileInfo.NetworkInterface_EnableStaticIPAddress ||
+                                           profileInfo.NetworkInterface_EnableStaticDNS;
+        NetworkInterface_EnableDynamicDNS = !NetworkInterface_EnableStaticDNS;
         NetworkInterface_PrimaryDNSServer = profileInfo.NetworkInterface_PrimaryDNSServer;
         NetworkInterface_SecondaryDNSServer = profileInfo.NetworkInterface_SecondaryDNSServer;
 

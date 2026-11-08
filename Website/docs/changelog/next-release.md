@@ -59,6 +59,7 @@ Release date: **xx.xx.2026**
 - Fixed the **Bandwidth** measurement being restarted and the values entered on the **Configure** tab being replaced whenever the network configuration of the computer changed (e.g. a new IPv6 address or a VPN connection), although the selected network adapter stayed the same. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the values entered on the **Configure** tab being replaced with the values of the selected profile after switching to another tool and back, or after any profile was changed. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed **Use the following DNS server addresses** being selected on the **Configure** tab when switching to **Obtain an IP address automatically**. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed profiles with a static IP address and **Obtain DNS server address automatically** (e.g. from older profile files) showing an option that could not be changed in the profile dialog. **Use the following DNS server addresses** is selected instead, as for every static IP address. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **DNS Lookup**
 
