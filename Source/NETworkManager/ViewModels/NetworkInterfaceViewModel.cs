@@ -970,13 +970,21 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the command to open IP Scanner.
     /// </summary>
-    public ICommand IPScannerCommand => new RelayCommand(_ => IPScannerAction(), AdditionalCommands_CanExecute);
+    public ICommand IPScannerCommand => new RelayCommand(_ => IPScannerAction(), IPScanner_CanExecute);
+
+    /// <summary>
+    /// The IP Scanner needs an IPv4 address with subnet mask (e.g. not for a disconnected adapter).
+    /// </summary>
+    private bool IPScanner_CanExecute(object parameter) => AdditionalCommands_CanExecute(parameter) &&
+                                                          GetFirstIPv4AddressWithSubnetmask() != null;
+
+    private Tuple<System.Net.IPAddress, System.Net.IPAddress> GetFirstIPv4AddressWithSubnetmask() =>
+        SelectedNetworkInterface?.IPv4Address?.FirstOrDefault(x => x.Item2 != null);
 
     private void IPScannerAction()
     {
-        var ipTuple = SelectedNetworkInterface?.IPv4Address.FirstOrDefault();
+        var ipTuple = GetFirstIPv4AddressWithSubnetmask();
 
-        // ToDo: Log error in the future
         if (ipTuple == null)
             return;
 
