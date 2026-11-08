@@ -407,6 +407,7 @@ Release date: **xx.xx.2026**
 
 - Fixed `Enter` in the search box of the OID profiles dialog closing the dialog with **OK**. It only filters the OID profiles now. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the result and the OID profiles (dialog, settings). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+- Fixed the CSV export breaking the row if the data contains a comma or a quote. The data is quoted now.
 
 **SNTP Lookup**
 
@@ -449,6 +450,10 @@ Release date: **xx.xx.2026**
 
 - Fixed **Subnetting** getting stuck when the new subnet mask is smaller than the subnet mask of the subnet (e.g. `10.0.0.0/24` with `/16`) or too large for the address family (e.g. `/40` for IPv4). An error is shown instead. [#3646](https://github.com/BornToBeRoot/NETworkManager/pull/3646)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper) in the subnetting result. The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+
+**Bit Calculator**
+
+- Fixed the CSV export breaking the row with a decimal comma (e.g. German), the values are exported with a decimal point now.
 
 **Lookup**
 

@@ -359,6 +359,50 @@ public class ExportManagerToolTests
 
     #endregion
 
+    #region Subnet Calculator, Bit Calculator, SNMP
+
+    [Fact]
+    public void SubnetCalculator_Consistent()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t,
+            [new IPNetworkInfo(IPNetwork2.Parse("10.0.0.0/24")), new IPNetworkInfo(IPNetwork2.Parse("2001:db8::/32"))]));
+
+        AssertConsistent(files, "Network,Broadcast,Total,Netmask,Cidr,FirstUsable,LastUsable,Usable");
+        Assert.Equal("10.0.0.0,10.0.0.255,256,255.255.255.0,24,10.0.0.1,10.0.0.254,254", files.CsvLines[1]);
+        Assert.Equal(256, (int)files.JsonValue("Total"));
+
+        // Large numbers (IPv6) as JSON number
+        Assert.Equal(JTokenType.Integer, files.JsonItems[1]["Total"]!.Type);
+    }
+
+    [Fact]
+    public void BitCalculator_DecimalPoint()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t,
+            [new BitCaluclatorInfo(1.5, 0.1875, 0.0015, 0.00018, 1, 2, 3, 4, 5, 6, 7, 8)]));
+
+        AssertConsistent(files,
+            "Bits,Bytes,Kilobits,Kilobytes,Megabits,Megabytes,Gigabits,Gigabytes,Terabits,Terabytes,Petabits,Petabytes");
+        Assert.Equal("1.5,0.1875,0.0015,0.00018,1,2,3,4,5,6,7,8", files.CsvLines[1]);
+        Assert.Equal("0.1875", files.XmlValue("Bytes"));
+        Assert.Equal(1.5, (double)files.JsonValue("Bits"));
+    }
+
+    [Fact]
+    public void SNMP_Consistent()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t,
+        [
+            new SNMPInfo(new Lextm.SharpSnmpLib.ObjectIdentifier("1.3.6.1.2.1.1.1.0"),
+                new Lextm.SharpSnmpLib.OctetString("Linux sw1, 5.10 \"x\""))
+        ]));
+
+        AssertConsistent(files, "OID,Data");
+        Assert.Equal("Linux sw1, 5.10 \"x\"", files.CsvValue("Data"));
+    }
+
+    #endregion
+
     private static IPGeolocationInfo CreateGeolocation()
     {
         return new IPGeolocationInfo
