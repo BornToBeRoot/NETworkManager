@@ -291,6 +291,25 @@ public static class WiFi
     }
 
     /// <summary>
+    ///     Get the frequency of a Wi-Fi channel (the inverse of <see cref="GetChannelFromChannelFrequency" />).
+    /// </summary>
+    /// <param name="channel">Channel like 3 or 48.</param>
+    /// <param name="radio">Band of the channel (the channel numbers of the bands overlap).</param>
+    /// <returns>Frequency in MHz like 2422 or 5240.</returns>
+    public static int GetFrequencyFromChannel(int channel, WiFiRadio radio)
+    {
+        return radio switch
+        {
+            // Channel 14 is at 2484 MHz and does not follow the ch×5 + 2407 spacing
+            WiFiRadio.GHz2dot4 => channel == 14 ? 2484 : 2407 + channel * 5,
+            WiFiRadio.GHz5 => 5000 + channel * 5,
+            // Channel 2 is at 5935 MHz, below channel 1 (5955 MHz)
+            WiFiRadio.GHz6 => channel == 2 ? 5935 : 5950 + channel * 5,
+            _ => 0
+        };
+    }
+
+    /// <summary>
     ///     Convert the channel frequency to gigahertz.
     /// </summary>
     /// <param name="kilohertz">Frequency in kilohertz like 2422000 or 5240000.</param>

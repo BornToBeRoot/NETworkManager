@@ -1,4 +1,5 @@
-﻿using NETworkManager.Models.Network;
+﻿using System.Linq;
+using NETworkManager.Models.Network;
 using Xunit;
 
 namespace NETworkManager.Tests.Network;
@@ -20,6 +21,26 @@ public class WiFiChannelTests
     public void GetChannelFromChannelFrequency_ReturnsTheChannel(double gigahertz, int expected)
     {
         Assert.Equal(expected, WiFi.GetChannelFromChannelFrequency(gigahertz));
+    }
+
+    [Theory]
+    [InlineData(WiFiRadio.GHz2dot4, 1, 14)]
+    [InlineData(WiFiRadio.GHz5, 32, 177)]
+    [InlineData(WiFiRadio.GHz6, 1, 233)]
+    public void GetFrequencyFromChannel_IsTheInverseOfGetChannelFromChannelFrequency(WiFiRadio radio, int first,
+        int last)
+    {
+        // Every channel of the band (also 2.4 GHz channel 14 and 6 GHz channel 2) back and forth, in the same band
+        int[] channels = radio == WiFiRadio.GHz6 ? [2, .. Enumerable.Range(first, last - first + 1)]
+            : [.. Enumerable.Range(first, last - first + 1)];
+
+        foreach (var channel in channels)
+        {
+            var gigahertz = WiFi.GetFrequencyFromChannel(channel, radio) / 1000.0;
+
+            Assert.Equal(channel, WiFi.GetChannelFromChannelFrequency(gigahertz));
+            Assert.Equal(radio, WiFi.GetWiFiRadioFromChannelFrequency(gigahertz));
+        }
     }
 
     [Theory]
