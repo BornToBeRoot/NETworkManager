@@ -121,8 +121,10 @@ public class WiFiViewModel : ViewModelBase
                     SettingsManager.Current.WiFi_InterfaceId = value.NetworkInterfaceInfo.Id;
 
                 // The same adapter after the adapters were reloaded: refresh in the background (the networks stay
-                // visible), another adapter: show the loading indicator instead of the networks of the previous one
-                var isSameAdapter = field != null && field.NetworkInterfaceInfo.Id == value.NetworkInterfaceInfo.Id;
+                // visible), another adapter: show the loading indicator instead of the networks of the previous one.
+                // Compared with the adapter of the shown networks, not the previous selection: replacing the adapters
+                // clears the selection of the combo box (null) before the reloaded adapter is selected.
+                var isSameAdapter = value.NetworkInterfaceInfo.Id == _previousScanAdapterId;
 
                 _ = ScanAsync(value, isSameAdapter);
             }
@@ -1038,8 +1040,11 @@ public class WiFiViewModel : ViewModelBase
             // another adapter (first scan) are cleared.
             if (!refreshing)
             {
-                // No time of the last scan and no changes of the previous adapter in the header
+                // No time of the last scan and no changes of the previous adapter in the header, nothing to compare
+                // the next scan with (the networks are cleared)
                 LastRefreshTime = null;
+                _previousScan = null;
+                _previousScanAdapterId = null;
                 HasComparison = false;
                 NetworksNew = 0;
                 NetworksGone = 0;
