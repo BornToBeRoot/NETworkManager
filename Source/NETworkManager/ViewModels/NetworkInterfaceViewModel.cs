@@ -1484,7 +1484,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     /// <summary>
     /// Runs a configuration action (netsh / ipconfig): only one at a time, the success message or the error (of
-    /// Windows) is shown below the configuration, the network interfaces are reloaded afterwards.
+    /// Windows) is shown below the configuration, the network interfaces are reloaded afterwards (also after an error).
     /// </summary>
     /// <param name="action">Action to run.</param>
     /// <param name="successMessage">Message shown if the action succeeded.</param>
@@ -1497,9 +1497,6 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         try
         {
             await action();
-
-            if (reload)
-                ReloadNetworkInterfaces();
 
             StatusMessage = successMessage;
             StatusMessageLevel = StatusLevel.Success;
@@ -1514,6 +1511,11 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         finally
         {
             IsConfigurationRunning = false;
+
+            // Also after an error: the commands run one after another and stop at the first error, the ones before
+            // may have changed the configuration (e.g. IP address set, DNS servers failed).
+            if (reload)
+                ReloadNetworkInterfaces();
         }
     }
 
