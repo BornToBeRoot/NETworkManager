@@ -355,7 +355,9 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             if (value == field)
                 return;
 
-            ConfigEnableStaticDNS = true;
+            // DNS servers can only be obtained automatically with DHCP (same as the Windows dialog)
+            if (value)
+                ConfigEnableStaticDNS = true;
 
             field = value;
             OnPropertyChanged();
