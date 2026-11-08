@@ -997,17 +997,21 @@ public class WiFiViewModel : ViewModelBase
                         break;
 
                     case WiFiRadio.GHz6:
-                        // Split by channel center into the lower (1-125) and upper (129-233) chart.
+                        // Split into the lower (1-125) and upper (129-233) chart by the channels the network covers
+                        // (channel-number space, 5 MHz per unit). A network that crosses the split (e.g. 320 MHz
+                        // around channel 127 covers 95 - 159) is drawn in both charts.
                         var centerChannel = FrequencyToChannelAxis(
                             network.ChannelBandwidthCenterFrequencyInGigahertz * 1000, WiFiRadio.GHz6);
+                        var halfWidth = network.ChannelBandwidth / 10.0;
 
-                        if (centerChannel < SixGHzSplitChannel)
+                        if (centerChannel - halfWidth < SixGHzSplitChannel)
                         {
                             var (s6L, l6L) = BuildNetworkSeries(network, series6GHzLower.Count);
                             series6GHzLower.Add(s6L);
                             legend6GHzLower.Add(l6L);
                         }
-                        else
+
+                        if (centerChannel + halfWidth > SixGHzSplitChannel)
                         {
                             var (s6U, l6U) = BuildNetworkSeries(network, series6GHzUpper.Count);
                             series6GHzUpper.Add(s6U);
