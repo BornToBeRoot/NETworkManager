@@ -13,6 +13,37 @@ namespace NETworkManager.Models.Export;
 public static partial class ExportManager
 {
     /// <summary>
+    ///     Exported column (CSV) / element (XML, JSON key) of a WiFi network, see <see cref="WiFiNetworkExportFields" />.
+    /// </summary>
+    /// <param name="Name">Name of the column / element.</param>
+    /// <param name="GetValue">Gets the value of a network (e.g. a string, a number, an enum or a time span).</param>
+    private sealed record WiFiNetworkExportField(string Name, Func<WiFiNetworkInfo, object> GetValue);
+
+    /// <summary>
+    ///     Exported values of a WiFi network - one list for CSV, XML and JSON. The released columns come first, new ones
+    ///     are appended at the end, so the position of a column never changes.
+    /// </summary>
+    private static readonly WiFiNetworkExportField[] WiFiNetworkExportFields =
+    [
+        new(nameof(WiFiNetworkInfo.Bssid), x => x.Bssid),
+        new(nameof(WiFiNetworkInfo.AvailableNetwork.Ssid), x => x.AvailableNetwork.Ssid),
+        new(nameof(WiFiNetworkInfo.AvailableNetwork.ChannelCenterFrequencyInKilohertz),
+            x => x.AvailableNetwork.ChannelCenterFrequencyInKilohertz),
+        new(nameof(WiFiNetworkInfo.AvailableNetwork.SignalBars), x => x.AvailableNetwork.SignalBars),
+        new(nameof(WiFiNetworkInfo.AvailableNetwork.IsWiFiDirect), x => x.AvailableNetwork.IsWiFiDirect),
+        new(nameof(WiFiNetworkInfo.AvailableNetwork.NetworkRssiInDecibelMilliwatts),
+            x => x.AvailableNetwork.NetworkRssiInDecibelMilliwatts),
+        new(nameof(WiFiNetworkInfo.AvailableNetwork.PhyKind), x => x.AvailableNetwork.PhyKind),
+        new(nameof(WiFiNetworkInfo.AvailableNetwork.NetworkKind), x => x.AvailableNetwork.NetworkKind),
+        new(nameof(WiFiNetworkInfo.AvailableNetwork.SecuritySettings.NetworkAuthenticationType),
+            x => x.AvailableNetwork.SecuritySettings.NetworkAuthenticationType),
+        new(nameof(WiFiNetworkInfo.AvailableNetwork.SecuritySettings.NetworkEncryptionType),
+            x => x.AvailableNetwork.SecuritySettings.NetworkEncryptionType),
+        new(nameof(WiFiNetworkInfo.AvailableNetwork.BeaconInterval), x => x.AvailableNetwork.BeaconInterval),
+        new(nameof(WiFiNetworkInfo.AvailableNetwork.Uptime), x => x.AvailableNetwork.Uptime)
+    ];
+
+    /// <summary>
     ///     Method to export objects from type <see cref="WiFiNetworkInfo" /> to a file.
     /// </summary>
     /// <param name="filePath">Path to the export file.</param>
@@ -46,12 +77,11 @@ public static partial class ExportManager
     {
         var stringBuilder = new StringBuilder();
 
-        stringBuilder.AppendLine(
-            $"{nameof(WiFiNetworkInfo.Bssid)},{nameof(WiFiNetworkInfo.AvailableNetwork.Ssid)},{nameof(WiFiNetworkInfo.AvailableNetwork.ChannelCenterFrequencyInKilohertz)},{nameof(WiFiNetworkInfo.AvailableNetwork.SignalBars)},{nameof(WiFiNetworkInfo.AvailableNetwork.IsWiFiDirect)},{nameof(WiFiNetworkInfo.AvailableNetwork.NetworkRssiInDecibelMilliwatts)},{nameof(WiFiNetworkInfo.AvailableNetwork.PhyKind)},{nameof(WiFiNetworkInfo.AvailableNetwork.NetworkKind)},{nameof(WiFiNetworkInfo.AvailableNetwork.SecuritySettings.NetworkAuthenticationType)},{nameof(WiFiNetworkInfo.AvailableNetwork.SecuritySettings.NetworkEncryptionType)},{nameof(WiFiNetworkInfo.AvailableNetwork.BeaconInterval)},{nameof(WiFiNetworkInfo.AvailableNetwork.Uptime)}");
+        stringBuilder.AppendLine(string.Join(",", WiFiNetworkExportFields.Select(field => field.Name)));
 
         foreach (var info in collection)
-            stringBuilder.AppendLine(
-                $"{info.Bssid},{info.AvailableNetwork.Ssid},{info.AvailableNetwork.ChannelCenterFrequencyInKilohertz},{info.AvailableNetwork.SignalBars},{info.AvailableNetwork.IsWiFiDirect},{info.AvailableNetwork.NetworkRssiInDecibelMilliwatts},{info.AvailableNetwork.PhyKind},{info.AvailableNetwork.NetworkKind},{info.AvailableNetwork.SecuritySettings.NetworkAuthenticationType},{info.AvailableNetwork.SecuritySettings.NetworkEncryptionType},{info.AvailableNetwork.BeaconInterval},{info.AvailableNetwork.Uptime}");
+            stringBuilder.AppendLine(string.Join(",", WiFiNetworkExportFields.Select(field =>
+                Convert.ToString(field.GetValue(info), CultureInfo.CurrentCulture))));
 
         File.WriteAllText(filePath, stringBuilder.ToString());
     }
@@ -67,32 +97,9 @@ public static partial class ExportManager
             new XElement(ApplicationName.WiFi.ToString(),
                 new XElement(nameof(WiFiNetworkInfo) + "s",
                     from info in collection
-                    select
-                        new XElement(nameof(WiFiNetworkInfo),
-                            new XElement(nameof(WiFiNetworkInfo.Bssid), info.Bssid),
-                            new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.Ssid), info.AvailableNetwork.Ssid),
-                            new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.ChannelCenterFrequencyInKilohertz),
-                                info.AvailableNetwork.ChannelCenterFrequencyInKilohertz),
-                            new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.SignalBars),
-                                info.AvailableNetwork.SignalBars),
-                            new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.IsWiFiDirect),
-                                info.AvailableNetwork.IsWiFiDirect),
-                            new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.NetworkRssiInDecibelMilliwatts),
-                                info.AvailableNetwork.NetworkRssiInDecibelMilliwatts),
-                            new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.PhyKind),
-                                info.AvailableNetwork.PhyKind),
-                            new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.NetworkKind),
-                                info.AvailableNetwork.NetworkKind),
-                            new XElement(
-                                nameof(WiFiNetworkInfo.AvailableNetwork.SecuritySettings.NetworkAuthenticationType),
-                                info.AvailableNetwork.SecuritySettings.NetworkAuthenticationType),
-                            new XElement(
-                                nameof(WiFiNetworkInfo.AvailableNetwork.SecuritySettings.NetworkEncryptionType),
-                                info.AvailableNetwork.SecuritySettings.NetworkEncryptionType),
-                            new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.BeaconInterval),
-                                info.AvailableNetwork.BeaconInterval),
-                            new XElement(nameof(WiFiNetworkInfo.AvailableNetwork.Uptime),
-                                info.AvailableNetwork.Uptime)))));
+                    select new XElement(nameof(WiFiNetworkInfo),
+                        from field in WiFiNetworkExportFields
+                        select new XElement(field.Name, field.GetValue(info))))));
 
         document.Save(filePath);
     }
@@ -104,27 +111,16 @@ public static partial class ExportManager
     /// <param name="filePath">Path to the export file.</param>
     private static void CreateJson(IReadOnlyList<WiFiNetworkInfo> collection, string filePath)
     {
-        var jsonData = new object[collection.Count];
-
-        for (var i = 0; i < collection.Count; i++)
-            jsonData[i] = new
+        var jsonData = collection
+            .Select(info => WiFiNetworkExportFields.ToDictionary(field => field.Name, field =>
             {
-                collection[i].Bssid,
-                collection[i].AvailableNetwork.Ssid,
-                collection[i].AvailableNetwork.ChannelCenterFrequencyInKilohertz,
-                SignalBars = collection[i].AvailableNetwork.SignalBars.ToString(),
-                IsWiFiDirect = collection[i].AvailableNetwork.IsWiFiDirect.ToString(),
-                NetworkRssiInDecibelMilliwatts = collection[i].AvailableNetwork.NetworkRssiInDecibelMilliwatts
-                    .ToString(CultureInfo.CurrentCulture),
-                PhyKind = collection[i].AvailableNetwork.PhyKind.ToString(),
-                NetworkKind = collection[i].AvailableNetwork.NetworkKind.ToString(),
-                NetworkAuthenticationType =
-                    collection[i].AvailableNetwork.SecuritySettings.NetworkAuthenticationType.ToString(),
-                NetworkEncryptionType =
-                    collection[i].AvailableNetwork.SecuritySettings.NetworkEncryptionType.ToString(),
-                BeaconInterval = collection[i].AvailableNetwork.BeaconInterval.ToString(),
-                Uptime = collection[i].AvailableNetwork.Uptime.ToString()
-            };
+                var value = field.GetValue(info);
+
+                // Numbers (frequency) and text as they are, other values (enums, time spans, signal bars, RSSI) as
+                // text like in the CSV file
+                return value is int or string ? value : Convert.ToString(value, CultureInfo.CurrentCulture);
+            }))
+            .ToArray();
 
         File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
