@@ -221,6 +221,10 @@ Release date: **xx.xx.2026**
 - `Enter` in the search box filters the rules right away instead of after the delay while typing. [#3660](https://github.com/BornToBeRoot/NETworkManager/pull/3660)
 - The time of the last refresh (`Reloaded at 14:32`, the date in the tooltip) is shown in the header instead of a status line below the list; the line below the list only shows errors (e.g. rules loaded with errors, a failed action). A manual refresh is faster (the minimum of 2.5 seconds runs while loading, not before) and the refresh icon spins until the rules are loaded (also with **Show all rules**). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 
+**Discovery Protocol**
+
+- The export contains the values shown that were missing: `Management`, `ChassisId`, `LocalConnection` and `LocalInterface` (appended as the last columns / elements).
+
 **Whois**
 
 - Added an **Export...** button below the result, like in the other tools. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
@@ -426,6 +430,10 @@ Release date: **xx.xx.2026**
 - Fixed editing a rule deleting and re-creating it, which removed properties that are not supported by NETworkManager (e.g. ICMP types or a service set in the Windows Firewall management console). Only the changed properties are updated now (ICMP types are reset if the protocol is changed). [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
 - Fixed program paths with environment variables (e.g. `%SystemRoot%\System32\svchost.exe`) being rejected as non-existent in the add / edit / copy rule dialog. [#3630](https://github.com/BornToBeRoot/NETworkManager/pull/3630)
 - Fixed columns that couldn't be made wider than the window (by dragging or double-clicking the gripper). The grid scrolls horizontally now, the last (or main) column still fills the remaining width. [#3557](https://github.com/BornToBeRoot/NETworkManager/issues/3557)
+
+**Discovery Protocol**
+
+- Fixed the CSV export breaking the row if a value (e.g. the device description) contains a comma or a quote. Text values are quoted now.
 
 **RDAP**
 

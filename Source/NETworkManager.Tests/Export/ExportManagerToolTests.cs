@@ -285,6 +285,31 @@ public class ExportManagerToolTests
 
     #endregion
 
+    #region Discovery Protocol
+
+    [Fact]
+    public void DiscoveryProtocol_Consistent()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t,
+        [
+            new DiscoveryProtocolPackageInfo
+            {
+                Device = "sw1", DeviceDescription = "Cisco IOS, Version 15", Port = "Gi0/1", PortDescription = "Uplink",
+                Model = "C2960", VLAN = "10", IPAddress = "10.0.0.2", Protocol = "CDP", TimeToLive = "180",
+                Management = "10.0.0.2", ChassisId = "00:11:22:33:44:55", LocalConnection = "Ethernet",
+                LocalInterface = "Intel(R) Ethernet"
+            }
+        ]));
+
+        AssertConsistent(files,
+            "Device,DeviceDescription,Port,PortDescription,Model,VLAN,IPAddress,Protocol,TimeToLive,Management," +
+            "ChassisId,LocalConnection,LocalInterface");
+        Assert.Equal("Cisco IOS, Version 15", files.CsvValue("DeviceDescription"));
+        Assert.Equal("Intel(R) Ethernet", (string)files.JsonValue("LocalInterface"));
+    }
+
+    #endregion
+
     private static IPGeolocationInfo CreateGeolocation()
     {
         return new IPGeolocationInfo
