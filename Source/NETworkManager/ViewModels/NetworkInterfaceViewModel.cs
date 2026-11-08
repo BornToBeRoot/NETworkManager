@@ -184,9 +184,9 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
                 // Configuration
                 SetConfigurationDefaults(value);
-
-                CanConfigure = value.IsOperational;
             }
+
+            CanConfigure = value?.IsOperational == true;
 
             field = value;
             OnPropertyChanged();
@@ -850,7 +850,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// Gets the command to apply the network configuration.
     /// </summary>
     public ICommand ApplyConfigurationCommand =>
-        new RelayCommand(_ => ApplyConfigurationAction(), ConfigureCommands_CanExecute);
+        new RelayCommand(_ => ApplyConfigurationAction(), ApplyConfiguration_CanExecute);
 
     /// <summary>
     /// Action to apply the network configuration.
@@ -863,7 +863,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the command to apply the profile configuration.
     /// </summary>
-    public ICommand ApplyProfileCommand => new RelayCommand(_ => ApplyProfileAction(), ConfigureCommands_CanExecute);
+    public ICommand ApplyProfileCommand => new RelayCommand(_ => ApplyProfileAction(), ApplyProfile_CanExecute);
 
     private void ApplyProfileAction()
     {
@@ -877,8 +877,30 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         return !DialogHelper.IsAnyDialogOpen();
     }
 
+    /// <summary>
+    /// Configuration actions that don't need a network interface (e.g. flush DNS cache). Only one runs at a time.
+    /// </summary>
     private bool ConfigureCommands_CanExecute(object parameter) => HasPermissionToConfigure &&
+                                                                   !IsConfigurationRunning &&
                                                                    !DialogHelper.IsAnyDialogOpen();
+
+    /// <summary>
+    /// Configuration actions on the selected network interface (release/renew, add/remove IP address).
+    /// </summary>
+    private bool ConfigureNetworkInterface_CanExecute(object parameter) =>
+        ConfigureCommands_CanExecute(parameter) && SelectedNetworkInterface != null;
+
+    /// <summary>
+    /// Apply the configuration (Configure tab): the network interface must be connected.
+    /// </summary>
+    private bool ApplyConfiguration_CanExecute(object parameter) =>
+        ConfigureCommands_CanExecute(parameter) && CanConfigure;
+
+    /// <summary>
+    /// Apply the selected profile (profile context menu): same conditions as the Apply button.
+    /// </summary>
+    private bool ApplyProfile_CanExecute(object parameter) =>
+        ApplyConfiguration_CanExecute(parameter) && SelectedProfile != null;
 
     /// <summary>
     /// Gets the command to restart the application with administrator privileges.
@@ -941,7 +963,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the command to release and renew IP address.
     /// </summary>
-    public ICommand ReleaseRenewCommand => new RelayCommand(_ => ReleaseRenewAction(), ConfigureCommands_CanExecute);
+    public ICommand ReleaseRenewCommand => new RelayCommand(_ => ReleaseRenewAction(), ConfigureNetworkInterface_CanExecute);
 
     private void ReleaseRenewAction()
     {
@@ -951,7 +973,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the command to release IP address.
     /// </summary>
-    public ICommand ReleaseCommand => new RelayCommand(_ => ReleaseAction(), ConfigureCommands_CanExecute);
+    public ICommand ReleaseCommand => new RelayCommand(_ => ReleaseAction(), ConfigureNetworkInterface_CanExecute);
 
     private void ReleaseAction()
     {
@@ -961,7 +983,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the command to renew IP address.
     /// </summary>
-    public ICommand RenewCommand => new RelayCommand(_ => RenewAction(), ConfigureCommands_CanExecute);
+    public ICommand RenewCommand => new RelayCommand(_ => RenewAction(), ConfigureNetworkInterface_CanExecute);
 
     private void RenewAction()
     {
@@ -971,7 +993,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the command to release and renew IPv6 address.
     /// </summary>
-    public ICommand ReleaseRenew6Command => new RelayCommand(_ => ReleaseRenew6Action(), ConfigureCommands_CanExecute);
+    public ICommand ReleaseRenew6Command => new RelayCommand(_ => ReleaseRenew6Action(), ConfigureNetworkInterface_CanExecute);
 
     private void ReleaseRenew6Action()
     {
@@ -981,7 +1003,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the command to release IPv6 address.
     /// </summary>
-    public ICommand Release6Command => new RelayCommand(_ => Release6Action(), ConfigureCommands_CanExecute);
+    public ICommand Release6Command => new RelayCommand(_ => Release6Action(), ConfigureNetworkInterface_CanExecute);
 
     private void Release6Action()
     {
@@ -991,7 +1013,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// <summary>
     /// Gets the command to renew IPv6 address.
     /// </summary>
-    public ICommand Renew6Command => new RelayCommand(_ => Renew6Action(), ConfigureCommands_CanExecute);
+    public ICommand Renew6Command => new RelayCommand(_ => Renew6Action(), ConfigureNetworkInterface_CanExecute);
 
     private void Renew6Action()
     {
@@ -1002,7 +1024,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// Gets the command to add an IPv4 address.
     /// </summary>
     public ICommand AddIPv4AddressCommand => new RelayCommand(parameter => { _ = AddIPv4AddressAction(); },
-        ConfigureCommands_CanExecute);
+        ConfigureNetworkInterface_CanExecute);
 
     private async Task AddIPv4AddressAction()
     {
@@ -1033,7 +1055,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// Gets the command to remove an IPv4 address.
     /// </summary>
     public ICommand RemoveIPv4AddressCommand => new RelayCommand(parameter => { _ = RemoveIPv4AddressAction(); },
-        ConfigureCommands_CanExecute);
+        ConfigureNetworkInterface_CanExecute);
 
     private async Task RemoveIPv4AddressAction()
     {
@@ -1096,10 +1118,10 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             networkInterfaces.ForEach(NetworkInterfaces.Add);
         });
 
-        // Set the last selected interface, if it is still available on this machine...
-        SelectedNetworkInterface = string.IsNullOrEmpty(id)
-            ? NetworkInterfaces.FirstOrDefault()
-            : NetworkInterfaces.FirstOrDefault(x => x.Id == id);
+        // Set the last selected interface, if it is still available on this machine (e.g. not a removed USB or
+        // VPN adapter), otherwise the first one...
+        SelectedNetworkInterface = NetworkInterfaces.FirstOrDefault(x => x.Id == id) ??
+                                   NetworkInterfaces.FirstOrDefault();
 
         IsNetworkInterfaceLoading = false;
     }
