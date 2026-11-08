@@ -1685,6 +1685,11 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
     private bool _resetBandwidthStatisticOnNextUpdate;
 
+    /// <summary>
+    /// The view is created when it is shown for the first time (without OnViewVisible).
+    /// </summary>
+    private bool _isViewVisible = true;
+
     private void StartBandwidthMeter(string networkInterfaceId)
     {
         // Reset chart
@@ -1695,7 +1700,11 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
 
         _bandwidthMeter = new BandwidthMeter(networkInterfaceId);
         _bandwidthMeter.UpdateSpeed += BandwidthMeter_UpdateSpeed;
-        _bandwidthMeter.Start();
+
+        // Another adapter can be selected while the view is hidden (e.g. by a reload after a network change): start
+        // the measurement when the view becomes visible (ResumeBandwidthMeter).
+        if (_isViewVisible)
+            _bandwidthMeter.Start();
     }
 
     private void ResumeBandwidthMeter()
@@ -1725,6 +1734,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// </summary>
     public override void OnViewVisible()
     {
+        _isViewVisible = true;
+
         base.OnViewVisible();
 
         ResumeBandwidthMeter();
@@ -1735,6 +1746,8 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     /// </summary>
     public override void OnViewHide()
     {
+        _isViewVisible = false;
+
         StopBandwidthMeter();
 
         base.OnViewHide();
