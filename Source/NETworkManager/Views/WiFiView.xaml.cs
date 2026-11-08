@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
@@ -21,19 +21,20 @@ public partial class WiFiView
 
         DataContext = _viewModel;
 
-        _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+        _viewModel.Networks.CollectionChanged += Networks_CollectionChanged;
     }
 
     /// <summary>
-    ///     Scrolls the selected network into view, e.g. when it is selected again after the networks were scanned
-    ///     again (see <see cref="WiFiViewModel.SelectedNetwork" />).
+    ///     Scrolls the selected network into view after the networks were replaced by a scan (it is selected again,
+    ///     see <see cref="WiFiViewModel.SelectedNetwork" />). Not when the user changes the selection (e.g. Ctrl+click),
+    ///     the grid would jump.
     /// </summary>
-    private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void Networks_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
-        if (e.PropertyName != nameof(WiFiViewModel.SelectedNetwork) || _viewModel.SelectedNetwork == null)
+        if (e.Action != NotifyCollectionChangedAction.Reset)
             return;
 
-        // Wait until the DataGrid has processed the new items and the selection
+        // Wait until the network is selected again and the DataGrid has processed the new items and the selection
         Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
         {
             var network = _viewModel.SelectedNetwork;
