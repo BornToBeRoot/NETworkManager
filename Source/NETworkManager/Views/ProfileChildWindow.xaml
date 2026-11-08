@@ -1513,7 +1513,14 @@
                             <Grid IsEnabled="{Binding NetworkInterface_EnableStaticIPAddress}" Margin="0,0,0,10">
                                 <Grid.Resources>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                                        <Style.Triggers>
+                                            <!-- No validation errors on disabled fields (same as the Configure tab) -->
+                                            <DataTrigger Binding="{Binding NetworkInterface_EnableStaticIPAddress}" Value="False">
+                                                <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
                                 </Grid.Resources>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
@@ -1588,7 +1595,14 @@
                             <Grid IsEnabled="{Binding NetworkInterface_EnableStaticDNS}">
                                 <Grid.Resources>
                                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}" />
+                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                                        <Style.Triggers>
+                                            <!-- No validation errors on disabled fields (same as the Configure tab) -->
+                                            <DataTrigger Binding="{Binding NetworkInterface_EnableStaticDNS}" Value="False">
+                                                <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
                                 </Grid.Resources>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
