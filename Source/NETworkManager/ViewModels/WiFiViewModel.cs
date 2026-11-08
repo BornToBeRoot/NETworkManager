@@ -630,11 +630,12 @@ public class WiFiViewModel : ViewModelBase
         };
 
         // Auto refresh (enabled when the access is allowed, see Start)
-        // Not without an adapter, while a dialog is open (e.g. connect), or while networks are loading or a connection
-        // is made (tried again after the interval)
+        // Not without an adapter, while a dialog is open (e.g. connect), or while the adapters are reloaded (they select
+        // the adapter again, which scans it), networks are loading or a connection is made (tried again after the
+        // interval)
         _autoRefreshTimer = new AutoRefreshTimer(() => ScanAsync(SelectedAdapter, true, isAutoRefresh: true),
-            () => SelectedAdapter != null && !IsDialogOpen() && !IsNetworksLoading && !IsBackgroundSearchRunning &&
-                  !IsConnecting);
+            () => SelectedAdapter != null && !IsDialogOpen() && !IsAdaptersLoading && !IsNetworksLoading &&
+                  !IsBackgroundSearchRunning && !IsConnecting);
 
         AutoRefreshTimes = CollectionViewSource.GetDefaultView(AutoRefreshTime.GetDefaults);
         SelectedAutoRefreshTime = AutoRefreshTimes.Cast<AutoRefreshTimeInfo>().FirstOrDefault(x =>
