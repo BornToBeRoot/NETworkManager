@@ -73,7 +73,7 @@ public class NetworkInterfaceConfig
         primaryDNSServer = primaryDNSServer?.Trim();
         secondaryDNSServer = secondaryDNSServer?.Trim();
 
-        var subnetmask = enableStaticIPAddress ? ConvertSubnetmaskOrCidr(subnetmaskOrCidr) : subnetmaskOrCidr?.Trim();
+        var subnetmask = enableStaticIPAddress ? ConvertSubnetmaskOrCidr(subnetmaskOrCidr) : null;
 
         // DNS servers can only be obtained automatically with DHCP (older profiles may contain a static IP address
         // with DHCP for the DNS servers, the UI selects static DNS servers in that case)
@@ -139,8 +139,10 @@ public class NetworkInterfaceConfig
         if (string.IsNullOrEmpty(value) || RegexHelper.SubnetmaskRegex().IsMatch(value))
             return value;
 
+        // Not Subnetmask.ConvertSubnetmaskOrCidrToCidr: it throws for invalid input, which is reported by
+        // GetInvalidValue instead
         return int.TryParse(value.TrimStart('/'), out var cidr) && cidr is >= 0 and <= 32
-            ? Network.Subnetmask.GetFromCidr(cidr).Subnetmask
+            ? Network.Subnetmask.ConvertCidrToSubnetmask(cidr)
             : value;
     }
 }
