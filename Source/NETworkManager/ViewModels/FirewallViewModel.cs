@@ -1,5 +1,4 @@
 using log4net;
-using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
 using NETworkManager.Converters;
@@ -554,9 +553,7 @@ public class FirewallViewModel : ViewModelBase
     private bool ModifyRule_CanExecute()
     {
         return ConfigurationManager.Current.IsAdmin &&
-               Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen &&
+               !DialogHelper.IsAnyDialogOpen() &&
                !IsRefreshing &&
                !IsModifying;
     }

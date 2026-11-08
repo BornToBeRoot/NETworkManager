@@ -1,4 +1,3 @@
-using MahApps.Metro.Controls;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
 using NETworkManager.Models.Network;
@@ -169,9 +168,7 @@ public class WakeOnLANViewModel : ProfileHostViewModelBase
 
     private bool WakeUpAction_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
+        return !DialogHelper.IsAnyDialogOpen();
     }
 
     private void WakeUpAction()

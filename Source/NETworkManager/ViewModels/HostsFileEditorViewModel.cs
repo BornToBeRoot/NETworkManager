@@ -1,5 +1,4 @@
 ﻿using log4net;
-using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -270,9 +269,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     /// <returns><c>true</c> if the command can be executed; otherwise, <c>false</c>.</returns>
     private bool Refresh_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen &&
+        return !DialogHelper.IsAnyDialogOpen() &&
                !IsRefreshing &&
                !IsModifying;
     }
@@ -635,9 +632,7 @@ public class HostsFileEditorViewModel : ViewModelBase
     private bool ModifyEntry_CanExecute(object obj)
     {
         return ConfigurationManager.Current.IsAdmin &&
-               Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen &&
+               !DialogHelper.IsAnyDialogOpen() &&
                !IsRefreshing &&
                !IsModifying;
     }

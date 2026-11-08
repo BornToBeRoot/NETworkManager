@@ -1,4 +1,3 @@
-using MahApps.Metro.Controls;
 using NETworkManager.Converters;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models;
@@ -196,9 +195,7 @@ public class PingMonitorHostViewModel : ProfileHostViewModelBase
 
     private bool Ping_CanExecute(object parameter)
     {
-        return Application.Current.MainWindow != null &&
-               !((MetroWindow)Application.Current.MainWindow).IsAnyDialogOpen &&
-               !ConfigurationManager.Current.IsChildWindowOpen;
+        return !DialogHelper.IsAnyDialogOpen();
     }
 
     private void PingAction()
