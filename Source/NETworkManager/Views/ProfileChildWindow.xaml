@@ -1404,12 +1404,11 @@
                                           IsEnabled="{Binding NetworkInterface_BindToInterface}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
+                                            <!-- Same as the network interface selection of the Network Interface -->
                                             <StackPanel>
-                                                <TextBlock Text="{Binding Name}"
-                                                           Style="{StaticResource DefaultTextBlock}" />
-                                                <TextBlock Text="{Binding Description}"
-                                                           Style="{StaticResource InfoTextBlock}"
-                                                           TextTrimming="CharacterEllipsis" />
+                                                <TextBlock Text="{Binding Path=Name}" />
+                                                <TextBlock Text="{Binding Path=Description}"
+                                                           Foreground="{DynamicResource MahApps.Brushes.Gray3}" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
