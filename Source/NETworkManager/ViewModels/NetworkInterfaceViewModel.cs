@@ -1473,21 +1473,35 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         return false;
     }
 
-    private async Task ApplyConfigurationAsync(NetworkInterfaceConfig config)
+    private Task ApplyConfigurationAsync(NetworkInterfaceConfig config)
     {
         if (!ValidateConfiguration(config))
-            return;
+            return Task.CompletedTask;
 
+        return RunConfigurationAsync(() => NetworkInterface.ConfigureNetworkInterfaceAsync(config),
+            Strings.NetworkInterfaceConfigurationAppliedSuccessfully);
+    }
+
+    /// <summary>
+    /// Runs a configuration action (netsh / ipconfig): only one at a time, the success message or the error (of
+    /// Windows) is shown below the configuration, the network interfaces are reloaded afterwards.
+    /// </summary>
+    /// <param name="action">Action to run.</param>
+    /// <param name="successMessage">Message shown if the action succeeded.</param>
+    /// <param name="reload">Reload the network interfaces (not needed if no interface is changed).</param>
+    private async Task RunConfigurationAsync(Func<Task> action, string successMessage, bool reload = true)
+    {
         IsConfigurationRunning = true;
         IsStatusMessageDisplayed = false;
 
         try
         {
-            await NetworkInterface.ConfigureNetworkInterfaceAsync(config);
+            await action();
 
-            ReloadNetworkInterfaces();
+            if (reload)
+                ReloadNetworkInterfaces();
 
-            StatusMessage = Strings.NetworkInterfaceConfigurationAppliedSuccessfully;
+            StatusMessage = successMessage;
             StatusMessageLevel = StatusLevel.Success;
             IsStatusMessageDisplayed = true;
         }
@@ -1516,43 +1530,17 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         }
     }
 
-    private async Task FlushDNSAsync()
+    private Task FlushDNSAsync()
     {
-        IsConfigurationRunning = true;
-        IsStatusMessageDisplayed = false;
-
-        try
-        {
-            await NetworkInterface.FlushDnsAsync();
-
-            StatusMessage = Strings.FlushDNSCacheSuccessfully;
-            StatusMessageLevel = StatusLevel.Success;
-            IsStatusMessageDisplayed = true;
-        }
-        catch (Exception ex)
-        {
-            StatusMessage = ex.Message;
-            StatusMessageLevel = StatusLevel.Error;
-            IsStatusMessageDisplayed = true;
-        }
-        finally
-        {
-            IsConfigurationRunning = false;
-        }
+        return RunConfigurationAsync(NetworkInterface.FlushDnsAsync, Strings.FlushDNSCacheSuccessfully, false);
     }
 
-    private async Task ReleaseRenewAsync(IPConfigReleaseRenewMode releaseRenewMode)
+    private Task ReleaseRenewAsync(IPConfigReleaseRenewMode releaseRenewMode)
     {
-        IsConfigurationRunning = true;
-        IsStatusMessageDisplayed = false;
+        var name = SelectedNetworkInterface.Name;
 
-        try
-        {
-            await NetworkInterface.ReleaseRenewAsync(releaseRenewMode, SelectedNetworkInterface.Name);
-
-            ReloadNetworkInterfaces();
-
-            StatusMessage = releaseRenewMode switch
+        return RunConfigurationAsync(() => NetworkInterface.ReleaseRenewAsync(releaseRenewMode, name),
+            releaseRenewMode switch
             {
                 IPConfigReleaseRenewMode.ReleaseRenew => Strings.IPv4AddressReleasedAndRenewedSuccessfully,
                 IPConfigReleaseRenewMode.Release => Strings.IPv4AddressReleasedSuccessfully,
@@ -1561,23 +1549,10 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
                 IPConfigReleaseRenewMode.Release6 => Strings.IPv6AddressReleasedSuccessfully,
                 IPConfigReleaseRenewMode.Renew6 => Strings.IPv6AddressRenewedSuccessfully,
                 _ => string.Empty
-            };
-            StatusMessageLevel = StatusLevel.Success;
-            IsStatusMessageDisplayed = true;
-        }
-        catch (Exception ex)
-        {
-            StatusMessage = ex.Message;
-            StatusMessageLevel = StatusLevel.Error;
-            IsStatusMessageDisplayed = true;
-        }
-        finally
-        {
-            IsConfigurationRunning = false;
-        }
+            });
     }
 
-    private async Task AddIPv4Address(string ipAddress, string subnetmaskOrCidr)
+    private Task AddIPv4Address(string ipAddress, string subnetmaskOrCidr)
     {
         var config = new NetworkInterfaceConfig
         {
@@ -1588,34 +1563,13 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         };
 
         if (!ValidateConfiguration(config))
-            return;
+            return Task.CompletedTask;
 
-        IsConfigurationRunning = true;
-        IsStatusMessageDisplayed = false;
-
-        try
-        {
-            await NetworkInterface.AddIPAddressToNetworkInterfaceAsync(config);
-
-            ReloadNetworkInterfaces();
-
-            StatusMessage = Strings.IPv4AddressAddedSuccessfully;
-            StatusMessageLevel = StatusLevel.Success;
-            IsStatusMessageDisplayed = true;
-        }
-        catch (Exception ex)
-        {
-            StatusMessage = ex.Message;
-            StatusMessageLevel = StatusLevel.Error;
-            IsStatusMessageDisplayed = true;
-        }
-        finally
-        {
-            IsConfigurationRunning = false;
-        }
+        return RunConfigurationAsync(() => NetworkInterface.AddIPAddressToNetworkInterfaceAsync(config),
+            Strings.IPv4AddressAddedSuccessfully);
     }
 
-    private async Task RemoveIPv4Address(string ipAddress)
+    private Task RemoveIPv4Address(string ipAddress)
     {
         var config = new NetworkInterfaceConfig
         {
@@ -1624,31 +1578,10 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         };
 
         if (!ValidateConfiguration(config))
-            return;
+            return Task.CompletedTask;
 
-        IsConfigurationRunning = true;
-        IsStatusMessageDisplayed = false;
-
-        try
-        {
-            await NetworkInterface.RemoveIPAddressFromNetworkInterfaceAsync(config);
-
-            ReloadNetworkInterfaces();
-
-            StatusMessage = Strings.IPv4AddressRemovedSuccessfully;
-            StatusMessageLevel = StatusLevel.Success;
-            IsStatusMessageDisplayed = true;
-        }
-        catch (Exception ex)
-        {
-            StatusMessage = ex.Message;
-            StatusMessageLevel = StatusLevel.Error;
-            IsStatusMessageDisplayed = true;
-        }
-        finally
-        {
-            IsConfigurationRunning = false;
-        }
+        return RunConfigurationAsync(() => NetworkInterface.RemoveIPAddressFromNetworkInterfaceAsync(config),
+            Strings.IPv4AddressRemovedSuccessfully);
     }
 
     private void ResetBandwidthChart()
