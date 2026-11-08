@@ -1453,6 +1453,25 @@
                                         </MenuItem>
                                     </mah:DropDownButton.Items>
                                 </mah:DropDownButton>
+                                <Button HorizontalAlignment="Left" Command="{Binding AddProfileFromConfigurationCommand}"
+                                        Style="{StaticResource ImageWithTextButton}" Margin="0,0,10,10">
+                                    <Button.Content>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform"
+                                                                 Visual="{iconPacks:Material Kind=Plus}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.AddProfileDots}"
+                                                       Style="{StaticResource ButtonWithImageTextBlock}" />
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
                             </WrapPanel>
                             <Button Grid.Column="2" Command="{Binding ApplyConfigurationCommand}"
                                     wpfHelpers:PermissionToolTipHelper.Text="{x:Static localization:Strings.NetworkInterfaceConfigureAdminMessage}"
