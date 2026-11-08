@@ -73,6 +73,27 @@ public class CollectionViewExtensionsTests
         Assert.Equal([1, 3, 4], GetItemsAllOrSelected(false, [5, 4, 1, 3]));
     }
 
+    [Fact]
+    public void GetSelectedItemsInViewOrder_EqualItems_OnlySelectedOne()
+    {
+        SkipUnlessWindows();
+
+        // Two equal records: only the selected instance is returned (by reference, not by value)
+        Assert.Equal(1, GetSelectedOfTwoEqualItems());
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static int GetSelectedOfTwoEqualItems()
+    {
+        var first = new Item("a", 1);
+        var second = new Item("a", 1);
+        var view = new ListCollectionView(new List<Item> { first, second });
+
+        var selected = view.GetSelectedItemsInViewOrder<Item>(new List<Item> { second });
+
+        return selected.Count(x => ReferenceEquals(x, second)) == 1 && selected.Count == 1 ? 1 : 0;
+    }
+
     [MethodImpl(MethodImplOptions.NoInlining)]
     private static List<int> GetItemsAllOrSelected(bool all, int[] selectedValues)
     {

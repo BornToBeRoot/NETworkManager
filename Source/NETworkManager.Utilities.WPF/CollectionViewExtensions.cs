@@ -35,9 +35,10 @@ public static class CollectionViewExtensions
     /// <returns>Selected items in the order shown, without items that are not shown (e.g. filtered).</returns>
     public static List<T> GetSelectedItemsInViewOrder<T>(this ICollectionView view, IEnumerable selectedItems)
     {
-        var selected = new HashSet<T>(selectedItems.Cast<T>());
+        // By reference: two equal items (e.g. records) are still two rows, only the selected one is returned
+        var selected = new HashSet<object>(selectedItems.Cast<object>(), ReferenceEqualityComparer.Instance);
 
-        return view.GetItemsInViewOrder<T>().Where(selected.Contains).ToList();
+        return view.GetItemsInViewOrder<T>().Where(item => selected.Contains(item)).ToList();
     }
 
     /// <summary>
