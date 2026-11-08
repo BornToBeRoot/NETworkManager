@@ -31,6 +31,10 @@ Release date: **xx.xx.2026**
 
 ## Improvements
 
+**Network Interface**
+
+- The tooltip of a profile shows the bound network interface and the IP address / subnet mask (or **Obtain an IP address automatically**) instead of the host, which is not used by **Network Interface**. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+
 **LLDP / CDP Capture**
 
 - Renamed "Discovery Protocol" to "LLDP / CDP Capture", so it is clear what the tool does (and it is not confused with mDNS Discovery). The run command is now `lldpcdpcapture` with the aliases `lldp` and `cdp`, the documentation moved to [LLDP / CDP Capture](../application/lldp-cdp-capture.md). The selected protocol and duration are reset to the defaults. [#3721](https://github.com/BornToBeRoot/NETworkManager/issues/3721)

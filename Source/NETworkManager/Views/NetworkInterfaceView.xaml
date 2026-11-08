@@ -49,8 +49,34 @@
                 <Grid.ToolTip>
                     <ToolTip MinWidth="250">
                         <StackPanel Margin="10">
-                            <TextBlock Text="{Binding Host}"
-                                       Style="{StaticResource DefaultTextBlock}" />
+                            <TextBlock Margin="0,0,0,5"
+                                       Visibility="{Binding NetworkInterface_BindToInterface, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}" />
+                                </TextBlock.Style>
+                                <Run Text="{x:Static localization:Strings.Interface}" /><Run Text=": " /><Run Text="{Binding NetworkInterface_InterfaceName, Mode=OneWay}" />
+                            </TextBlock>
+                            <TextBlock>
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
+                                        <Setter Property="Text"
+                                                Value="{x:Static localization:Strings.ObtainAnIPAddressAutomatically}" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding NetworkInterface_EnableStaticIPAddress}"
+                                                         Value="True">
+                                                <Setter Property="Text">
+                                                    <Setter.Value>
+                                                        <MultiBinding StringFormat="{}{0} / {1}">
+                                                            <Binding Path="NetworkInterface_IPAddress" />
+                                                            <Binding Path="NetworkInterface_Subnetmask" />
+                                                        </MultiBinding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                             <Separator Background="{DynamicResource Brushes.Surface.Border}"
                                        Margin="0,10" />
                             <TextBlock Text="{Binding Description}"
