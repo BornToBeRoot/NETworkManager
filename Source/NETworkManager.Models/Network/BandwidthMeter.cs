@@ -15,8 +15,8 @@ public class BandwidthMeter
         _timer.Interval = TimeSpan.FromMilliseconds(UpdateInterval);
         _timer.Tick += Timer_Tick;
 
-        _networkInterface = System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
-            .FirstOrDefault(x => x.Id == id);
+        _id = id;
+        _networkInterface = FindNetworkInterface(id);
     }
 
     #endregion
@@ -55,7 +55,8 @@ public class BandwidthMeter
     public bool IsRunning => _timer.IsEnabled;
 
     private readonly DispatcherTimer _timer = new();
-    private readonly System.Net.NetworkInformation.NetworkInterface _networkInterface;
+    private readonly string _id;
+    private System.Net.NetworkInformation.NetworkInterface _networkInterface;
     private readonly Stopwatch _stopwatch = new();
     private long _previousBytesSent;
     private long _previousBytesReceived;
@@ -91,7 +92,10 @@ public class BandwidthMeter
 
     private void Update()
     {
-        // The interface may have been removed/disabled after this meter was created.
+        // The interface may have been removed/disabled after this meter was created: look it up again (e.g. a
+        // VPN or USB adapter that was added again with the same ID).
+        _networkInterface ??= FindNetworkInterface(_id);
+
         if (_networkInterface == null)
             return;
 
@@ -104,7 +108,11 @@ public class BandwidthMeter
         }
         catch (NetworkInformationException)
         {
-            // Transient failure (e.g. adapter going down) - skip this tick.
+            // Adapter going down or removed (the object is stale) - skip this tick and look it up again on the
+            // next one. The baseline is seeded again, so there is no speed spike.
+            _networkInterface = null;
+            _canUpdate = false;
+
             return;
         }
 
@@ -138,6 +146,12 @@ public class BandwidthMeter
 
         OnUpdateSpeed(new BandwidthMeterSpeedArgs(DateTime.Now, totalBytesReceived, totalBytesSent,
             byteReceivedSpeed, byteSentSpeed));
+    }
+
+    private static System.Net.NetworkInformation.NetworkInterface FindNetworkInterface(string id)
+    {
+        return System.Net.NetworkInformation.NetworkInterface.GetAllNetworkInterfaces()
+            .FirstOrDefault(x => x.Id == id);
     }
 
     #endregion
