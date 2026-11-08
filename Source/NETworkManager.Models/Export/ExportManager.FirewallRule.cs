@@ -6,25 +6,25 @@ namespace NETworkManager.Models.Export;
 public static partial class ExportManager
 {
     /// <summary>
-    ///     Exported fields of a <see cref="FirewallRule" />. Ports, addresses, network profiles, interface type and
+    ///     Exported fields of a <see cref="FirewallRule" /> in the order of the grid. Ports, addresses, network profiles, interface type and
     ///     program as shown (e.g. <c>80; 443</c>, empty if not restricted).
     /// </summary>
     private static readonly ExportField<FirewallRule>[] FirewallRuleExportFields =
     [
-        new(nameof(FirewallRule.Name), x => x.Name, true),
         new(nameof(FirewallRule.IsEnabled), x => x.IsEnabled),
+        new(nameof(FirewallRule.Name), x => x.Name, true),
         new(nameof(FirewallRule.IsManaged), x => x.IsManaged),
         new(nameof(FirewallRule.Source), x => x.Source),
         new(nameof(FirewallRule.Direction), x => x.Direction),
         new(nameof(FirewallRule.Action), x => x.Action),
         new(nameof(FirewallRule.Protocol), x => x.Protocol),
-        new(nameof(FirewallRule.LocalPorts), x => x.LocalPortsDisplay, true),
-        new(nameof(FirewallRule.RemotePorts), x => x.RemotePortsDisplay, true),
         new(nameof(FirewallRule.LocalAddresses), x => x.LocalAddressesDisplay, true),
+        new(nameof(FirewallRule.LocalPorts), x => x.LocalPortsDisplay, true),
         new(nameof(FirewallRule.RemoteAddresses), x => x.RemoteAddressesDisplay, true),
-        new(nameof(FirewallRule.NetworkProfiles), x => x.NetworkProfilesDisplay, true),
-        new(nameof(FirewallRule.InterfaceType), x => x.InterfaceTypeDisplay, true),
+        new(nameof(FirewallRule.RemotePorts), x => x.RemotePortsDisplay, true),
         new(nameof(FirewallRule.Program), x => x.ProgramDisplay, true),
+        new(nameof(FirewallRule.InterfaceType), x => x.InterfaceTypeDisplay, true),
+        new(nameof(FirewallRule.NetworkProfiles), x => x.NetworkProfilesDisplay, true),
         new(nameof(FirewallRule.Description), x => x.Description, true)
     ];
 

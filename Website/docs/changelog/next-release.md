@@ -30,6 +30,7 @@ Release date: **xx.xx.2026**
 - **WiFi**: the columns of the export are in the order of the grid (SSID, connected, security, frequency, channel, channel width, signal, authentication, encryption, BSSID, vendor, ...) instead of the BSSID first and the values shown in the grid at the end.
 - **IP Scanner**: the columns of the export are grouped by topic instead of new columns being appended at the end: host (`IsReachable`, `DetectedBy`, `IPAddress`, hostnames, MAC address, vendor, role, OS), ping, port scan, NetBIOS, web page, SNMP, Windows host information and the change since the last scan.
 - **Discovery Protocol**: the columns of the export are in the order shown: `Management` and `ChassisId` (new) after `IPAddress`, `LocalConnection` and `LocalInterface` (new) at the end.
+- **Firewall**: the columns of the export are in the order of the grid: `IsEnabled` first, the local and remote address before the port (`LocalAddresses`, `LocalPorts`, `RemoteAddresses`, `RemotePorts`), then `Program`, `InterfaceType`, `NetworkProfiles` and `Description`.
 
 ## What's new?
 

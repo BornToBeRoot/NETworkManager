@@ -334,8 +334,8 @@ public class ExportManagerToolTests
             [new FirewallRule { Name = "Rule, 1", Description = "Description \"x\"" }]));
 
         AssertConsistent(files,
-            "Name,IsEnabled,IsManaged,Source,Direction,Action,Protocol,LocalPorts,RemotePorts,LocalAddresses," +
-            "RemoteAddresses,NetworkProfiles,InterfaceType,Program,Description");
+            "IsEnabled,Name,IsManaged,Source,Direction,Action,Protocol,LocalAddresses,LocalPorts,RemoteAddresses," +
+            "RemotePorts,Program,InterfaceType,NetworkProfiles,Description");
         Assert.Equal("Rule, 1", files.CsvValue("Name"));
         Assert.Equal("Inbound", (string)files.JsonValue("Direction"));
     }
