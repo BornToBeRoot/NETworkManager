@@ -8,6 +8,7 @@ using log4net;
 using MahApps.Metro.Controls;
 using MahApps.Metro.SimpleChildWindow;
 using NETworkManager.Controls;
+using NETworkManager.Converters;
 using NETworkManager.Localization;
 using NETworkManager.Localization.Resources;
 using NETworkManager.Models.Export;
@@ -288,6 +289,78 @@ public class WiFiViewModel : ViewModelBase
         }
     }
 
+    /// <summary>
+    ///     Networks of the last successful scan and the id of its adapter: the next scan of the same adapter is compared
+    ///     with it (see <see cref="CompareWithPreviousScan" />). Only in memory.
+    /// </summary>
+    private IReadOnlyList<WiFiNetworkInfo> _previousScan;
+
+    private string _previousScanAdapterId;
+
+    /// <summary>
+    ///     Gets whether the shown networks are compared with a previous scan (shows the column and the counters).
+    /// </summary>
+    public bool HasComparison
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Gets the number of networks that are visible now and were not in the previous scan.
+    /// </summary>
+    public int NetworksNew
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Gets the number of networks that were visible in the previous scan and are not now.
+    /// </summary>
+    public int NetworksGone
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
+    /// <summary>
+    ///     Gets the number of networks whose channel, channel width or security changed since the previous scan.
+    /// </summary>
+    public int NetworksChanged
+    {
+        get;
+        private set
+        {
+            if (value == field)
+                return;
+
+            field = value;
+            OnPropertyChanged();
+        }
+    }
+
     public ObservableRangeCollection<WiFiNetworkInfo> Networks
     {
         get;
@@ -550,7 +623,9 @@ public class WiFiViewModel : ViewModelBase
                    $"{info.Channel}".IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.Bssid.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
                    info.Vendor.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
-                   info.PhyKind.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1;
+                   info.PhyKind.IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1 ||
+                   (HasComparison && WiFiNetworkChangeToStringConverter.ToLocalizedString(info.Change)
+                       .IndexOf(Search, StringComparison.OrdinalIgnoreCase) > -1);
         };
 
         // Auto refresh (enabled when the access is allowed, see Start)
@@ -665,12 +740,12 @@ public class WiFiViewModel : ViewModelBase
     public ICommand ConnectCommand => new RelayCommand(_ => ConnectAction(), ConnectDisconnect_CanExecute);
 
     /// <summary>
-    ///     A network is selected (the selection is cleared when the networks are scanned again) and no connection is
-    ///     made at the moment.
+    ///     A network is selected that is still visible (not gone since the last scan) and no connection is made at the
+    ///     moment.
     /// </summary>
     private bool ConnectDisconnect_CanExecute(object obj)
     {
-        return SelectedNetwork != null && !IsConnecting;
+        return SelectedNetwork is { Change: not WiFiNetworkChange.Gone } && !IsConnecting;
     }
 
     private void ConnectAction()
@@ -832,8 +907,9 @@ public class WiFiViewModel : ViewModelBase
             // Remember the selected network, because replacing the networks clears the selection
             var selectedBssid = SelectedNetwork?.Bssid;
 
-            // Replace all networks with a single notification, so the view is filtered / sorted only once
-            Networks.ReplaceAll(wiFiNetworkScanInfo.WiFiNetworkInfos);
+            // Replace all networks with a single notification, so the view is filtered / sorted only once. With the
+            // networks that are gone since the previous scan of this adapter.
+            Networks.ReplaceAll(CompareWithPreviousScan(adapterInfo, wiFiNetworkScanInfo.WiFiNetworkInfos));
 
             // Select the network again (e.g. after an auto refresh), so the selection and the scroll position are kept.
             // If several networks were selected, only this one is selected again. Not if it is hidden by the filter.
@@ -1188,6 +1264,63 @@ public class WiFiViewModel : ViewModelBase
         var legend = new WiFiChannelLegendEntry(new SolidColorBrush(wpfColor), ssid, network.Bssid);
 
         return (series, legend);
+    }
+
+    /// <summary>
+    ///     Compares the networks of a scan with the previous scan of the same adapter: marks new and changed networks,
+    ///     adds the networks that are gone (shown until the next scan). The scan becomes the one the next scan is
+    ///     compared with. Another adapter (or the first scan) starts without a comparison.
+    /// </summary>
+    /// <param name="adapterInfo">Adapter of the scan.</param>
+    /// <param name="networks">Networks of the scan.</param>
+    /// <returns>The networks to show (the scanned ones and the gone ones).</returns>
+    private List<WiFiNetworkInfo> CompareWithPreviousScan(WiFiAdapterInfo adapterInfo,
+        IReadOnlyList<WiFiNetworkInfo> networks)
+    {
+        var rows = new List<WiFiNetworkInfo>(networks);
+        var adapterId = adapterInfo.NetworkInterfaceInfo.Id;
+
+        if (_previousScan != null && _previousScanAdapterId == adapterId)
+        {
+            // The networks of the previous scan are not shown anymore (except the gone ones): no chain of previous
+            // networks over the scans
+            foreach (var network in _previousScan)
+                network.Previous = null;
+
+            var comparison = WiFiScanComparer.Compare(_previousScan, networks);
+
+            foreach (var (network, change, previous) in comparison.Changes)
+            {
+                network.Change = change;
+                network.Previous = previous;
+            }
+
+            // Shown as they were in the previous scan (not connected, not drawn in the charts)
+            foreach (var network in comparison.Gone)
+            {
+                network.Change = WiFiNetworkChange.Gone;
+                network.IsConnected = false;
+
+                rows.Add(network);
+            }
+
+            NetworksNew = comparison.Changes.Count(x => x.Change == WiFiNetworkChange.New);
+            NetworksGone = comparison.Gone.Count;
+            NetworksChanged = comparison.Changes.Count(x => x.Change == WiFiNetworkChange.Changed);
+            HasComparison = true;
+        }
+        else
+        {
+            NetworksNew = 0;
+            NetworksGone = 0;
+            NetworksChanged = 0;
+            HasComparison = false;
+        }
+
+        _previousScan = networks;
+        _previousScanAdapterId = adapterId;
+
+        return rows;
     }
 
     /// <summary>

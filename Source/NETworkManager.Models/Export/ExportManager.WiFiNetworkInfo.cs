@@ -54,7 +54,9 @@ public static partial class ExportManager
         // MHz, estimated if the width could not be read from the beacon
         new("ChannelWidth", x => x.ChannelBandwidth),
         new("ChannelWidthEstimated", x => x.IsChannelBandwidthEstimated),
-        new(nameof(WiFiNetworkInfo.Vendor), x => x.Vendor, true)
+        new(nameof(WiFiNetworkInfo.Vendor), x => x.Vendor, true),
+        // Change since the previous scan of the same adapter (empty without a previous scan / change)
+        new(nameof(WiFiNetworkInfo.Change), x => x.Change == WiFiNetworkChange.None ? null : x.Change.ToString())
     ];
 
     /// <summary>
@@ -134,9 +136,9 @@ public static partial class ExportManager
             {
                 var value = field.GetValue(info);
 
-                // Numbers (frequency) and text as they are, other values (enums, time spans, signal bars, RSSI) as
-                // text like in the CSV file
-                return value is int or string ? value : Convert.ToString(value, CultureInfo.CurrentCulture);
+                // Numbers (frequency), text and empty values as they are, other values (enums, time spans, signal bars,
+                // RSSI) as text like in the CSV file
+                return value is null or int or string ? value : Convert.ToString(value, CultureInfo.CurrentCulture);
             }))
             .ToArray();
 

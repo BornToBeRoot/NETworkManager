@@ -78,5 +78,17 @@ public class WiFiNetworkInfo
     /// Human-readable phy kind.
     /// </summary>
     public string PhyKind { get; set; }
+
+    /// <summary>
+    ///     Change since the previous scan of the same adapter (set by the view model after the scan, see
+    ///     <see cref="WiFiScanComparer" />).
+    /// </summary>
+    public WiFiNetworkChange Change { get; set; }
+
+    /// <summary>
+    ///     The network of the previous scan if it <see cref="WiFiNetworkChange.Changed" /> (channel, channel width or
+    ///     security), otherwise null.
+    /// </summary>
+    public WiFiNetworkInfo Previous { get; set; }
     #endregion
 }

@@ -9824,6 +9824,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Previously: {0}.
+        /// </summary>
+        public static string PreviouslyX {
+            get {
+                return ResourceManager.GetString("PreviouslyX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Previous MAC address: {0}.
         /// </summary>
         public static string PreviousMACAddressX {
@@ -15515,6 +15524,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Changed.
+        /// </summary>
+        public static string WiFiNetworkChange_Changed {
+            get {
+                return ResourceManager.GetString("WiFiNetworkChange_Changed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Window.
         /// </summary>
         public static string Window {
@@ -15655,6 +15673,15 @@ namespace NETworkManager.Localization.Resources {
         public static string XADNSRecordsResolvedForXXXMessage {
             get {
                 return ResourceManager.GetString("XADNSRecordsResolvedForXXXMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Changed.
+        /// </summary>
+        public static string XChanged {
+            get {
+                return ResourceManager.GetString("XChanged", resourceCulture);
             }
         }
         

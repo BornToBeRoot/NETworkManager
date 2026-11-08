@@ -47,6 +47,10 @@ Release date: **xx.xx.2026**
 - New global **DNS suffix** options in [Settings > Network](../settings/network.md): **Add DNS suffix (primary) to hostname** appends the Windows primary (or, if none is set, the active network adapter's connection-specific) DNS suffix to a bare hostname before resolving it, and **Use custom DNS suffix** lets you override it with a suffix of your own. Previously only available in DNS Lookup, this now also applies to every other tool that resolves hostnames through NETworkManager's shared DNS resolver (e.g. Ping, Traceroute, Port Scanner, IP Scanner, SNTP Lookup) — DNS Lookup stays independent. [#3591](https://github.com/BornToBeRoot/NETworkManager/pull/3591)
 - **DNS server(s)** in [Settings > Network](../settings/network.md) is now a list of servers (IP address + port), configured via an **Edit DNS server** dialog, replacing the previous single semicolon-separated, port-53-only text field. [#3591](https://github.com/BornToBeRoot/NETworkManager/pull/3591)
 
+**WiFi**
+
+- Changes since the last scan: each scan is compared with the previous scan of the same adapter (by BSSID). The new column **Since last scan** shows networks that are **New**, **Gone** (shown faded until the next scan) or **Changed** (channel, channel width or security, the tooltip shows the previous values), the header shows the counters (e.g. `2 New · 1 Gone`). Also in the search and the export (`Change`). Useful with **Automatically update every** to see new access points or channel changes. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+
 ## Improvements
 
 - Links (e.g. in **About**, **Web Console** and the notices in **RDAP**) are now keyboard accessible: they can be reached with `Tab` and opened with `Enter`. [#3607](https://github.com/BornToBeRoot/NETworkManager/pull/3607)
