@@ -109,6 +109,9 @@ public static class WiFi
     {
         var adapterId = adapter.NetworkAdapter.NetworkAdapterId;
 
+        // Read once: every access returns the current report, the networks and the time must be of the same one
+        var report = adapter.NetworkReport;
+
         // BSSID of the network this adapter is connected to (null if not connected or not read). The WinRT API does
         // not expose the channel bandwidth (and its center), so it is read from the native BSS list (wlanapi.dll)
         // and matched by BSSID below. Failures yield an empty map and we fall back to a heuristic per network.
@@ -116,7 +119,7 @@ public static class WiFi
 
         var wifiNetworkInfos = new List<WiFiNetworkInfo>();
 
-        foreach (var availableNetwork in adapter.NetworkReport.AvailableNetworks)
+        foreach (var availableNetwork in report.AvailableNetworks)
         {
             var channelFrequencyInGigahertz = ConvertChannelFrequencyToGigahertz(availableNetwork.ChannelCenterFrequencyInKilohertz);
             var radio = GetWiFiRadioFromChannelFrequency(channelFrequencyInGigahertz);
@@ -147,7 +150,7 @@ public static class WiFi
         return new WiFiNetworkScanInfo
         {
             WiFiNetworkInfos = wifiNetworkInfos,
-            Timestamp = adapter.NetworkReport.Timestamp.LocalDateTime
+            Timestamp = report.Timestamp.LocalDateTime
         };
     }
 
