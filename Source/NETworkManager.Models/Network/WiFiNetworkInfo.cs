@@ -7,14 +7,6 @@ namespace NETworkManager.Models.Network;
 /// </summary>
 public class WiFiNetworkInfo
 {
-    /// <summary>
-    ///     /// Create an instance of <see cref="WiFiNetworkInfo" />.
-    /// </summary>
-    public WiFiNetworkInfo()
-    {
-
-    }
-
     #region Variables
 
     /// <summary>

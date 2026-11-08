@@ -138,7 +138,6 @@ public static class WiFi
 
         return new WiFiNetworkScanInfo
         {
-            NetworkAdapterId = adapterId,
             WiFiNetworkInfos = wifiNetworkInfos,
             Timestamp = adapter.NetworkReport.Timestamp.LocalDateTime
         };
