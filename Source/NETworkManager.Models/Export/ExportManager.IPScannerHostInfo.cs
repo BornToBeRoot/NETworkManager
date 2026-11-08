@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Xml.Linq;
 using NETworkManager.Models.Network;
-using NETworkManager.Utilities;
-using Newtonsoft.Json;
 
 namespace NETworkManager.Models.Export;
 
@@ -27,109 +20,107 @@ public static partial class ExportManager
     public static void Export(string filePath, ExportFileType fileType,
         IReadOnlyList<IPScannerHostInfo> collection, IPScannerResultOptions options)
     {
-        switch (fileType)
-        {
-            case ExportFileType.Csv:
-                CreateCsv(collection, options, filePath);
-                break;
-            case ExportFileType.Xml:
-                CreateXml(collection, options, filePath);
-                break;
-            case ExportFileType.Json:
-                CreateJson(collection, options, filePath);
-                break;
-            case ExportFileType.Txt:
-            default:
-                throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
-        }
+        // Skip if critical data is null
+        Export(filePath, fileType, collection.Where(info => info?.PingInfo != null),
+            GetIPScannerHostInfoExportFields(options), ApplicationName.IPScanner);
     }
 
     /// <summary>
-    ///     Value of an exported column (CSV) / element (XML, JSON key), see <see cref="GetFields" />.
+    ///     Exported fields of a <see cref="PortInfo" /> (ports of a host, see <see cref="ExportList{TItem}" />).
     /// </summary>
-    /// <param name="Name">Name of the column / element.</param>
-    /// <param name="Value">Value (e.g. a bool, an enum or a string), null for an empty value.</param>
-    /// <param name="IsQuoted">The value is quoted in the CSV file (text that may contain a comma).</param>
-    private sealed record ExportField(string Name, object Value, bool IsQuoted = false);
+    private static readonly ExportField<PortInfo>[] PortInfoExportFields =
+    [
+        new(nameof(PortInfo.Port), x => x.Port),
+        new(nameof(PortInfo.LookupInfo.Protocol), x => x.LookupInfo.Protocol),
+        new(nameof(PortInfo.LookupInfo.Service), x => x.LookupInfo.Service),
+        new(nameof(PortInfo.LookupInfo.Description), x => x.LookupInfo.Description),
+        new(nameof(PortInfo.State), x => x.State)
+    ];
 
     /// <summary>
-    ///     Gets the exported values of a host - one list for CSV, XML and JSON. The released columns come first, new
-    ///     ones are appended at the end, so the position of a column never changes. Values of a probe that is still
-    ///     running (export during a scan, or a scan canceled before the probe finished) or disabled are placeholders -
-    ///     exported as empty values instead of a result. The ports are a <see cref="List{PortInfo}" /> (joined in the CSV
-    ///     file, one element per port in XML / JSON).
+    ///     Gets the exported fields of an <see cref="IPScannerHostInfo" />. The released columns come first, new ones are
+    ///     appended at the end, so the position of a column never changes. Values of a probe that is still running
+    ///     (export during a scan, or a scan canceled before the probe finished) or disabled are placeholders - exported
+    ///     as empty values instead of a result. The ports are an <see cref="ExportList{TItem}" /> (joined in the CSV
+    ///     file, one element per port in XML, an array in JSON).
     /// </summary>
-    /// <param name="info">Host to export.</param>
-    /// <param name="options">Options of the scan the host is from.</param>
-    /// <returns>Values in the order of the columns.</returns>
-    private static List<ExportField> GetFields(IPScannerHostInfo info, IPScannerResultOptions options)
+    /// <param name="options">Options of the scan the hosts are from.</param>
+    /// <returns>Fields in the order of the columns.</returns>
+    private static ExportField<IPScannerHostInfo>[] GetIPScannerHostInfoExportFields(IPScannerResultOptions options)
     {
-        var ping = GetPingInfo(info, options);
-        var netBIOSInfo = GetNetBIOSInfo(info, options);
-        var certificate = GetWebCertificate(info, options);
+        var isWebPageRead = IsWebPageRead(options);
+
+        Func<IPScannerHostInfo, object> IfEnabled(bool isEnabled, Func<IPScannerHostInfo, object> value) =>
+            info => isEnabled ? value(info) : null;
+
+        // Ping values only with a reply (time, TTL, bytes)
+        Func<IPScannerHostInfo, object> IfPingReply(Func<PingInfo, object> value) => info =>
+            GetPingInfo(info, options) is { } ping && HasPingReply(ping.Status) ? value(ping) : null;
+
+        Func<IPScannerHostInfo, object> IfNetBIOS(Func<NetBIOSInfo, object> value) => info =>
+            GetNetBIOSInfo(info, options) is { } netBIOSInfo ? value(netBIOSInfo) : null;
+
+        Func<IPScannerHostInfo, object> IfCertificate(Func<WebCertificateInfo, object> value) => info =>
+            GetWebCertificate(info, options) is { } certificate ? value(certificate) : null;
 
         // Windows host information: null (empty values) if disabled, "" if the host had none
-        var windows = options.WindowsEnabled ? info.Windows : null;
-
-        string IfEnabled(bool isEnabled, string value) => isEnabled ? value : null;
-
-        string IfWindows(Func<WindowsHostInfo, string> value) =>
-            options.WindowsEnabled ? windows == null ? string.Empty : value(windows) ?? string.Empty : null;
+        Func<IPScannerHostInfo, object> IfWindows(Func<WindowsHostInfo, string> value) => info =>
+            options.WindowsEnabled ? info.Windows == null ? string.Empty : value(info.Windows) ?? string.Empty : null;
 
         // Number / bool like WebStatusCode / WebCertificateSelfSigned: null without a value
-        object IfWindowsValue(Func<WindowsHostInfo, object> value) => windows == null ? null : value(windows);
+        Func<IPScannerHostInfo, object> IfWindowsValue(Func<WindowsHostInfo, object> value) => info =>
+            options.WindowsEnabled && info.Windows != null ? value(info.Windows) : null;
 
         return
         [
-            new(nameof(IPScannerHostInfo.IsReachable), info.IsReachable),
-            new(nameof(PingInfo.IPAddress), info.PingInfo.IPAddress),
-            new(nameof(IPScannerHostInfo.Hostname), info.Hostname, true),
-            new("PingStatus", ping?.Status),
-            new(nameof(PingInfo.Timestamp),
-                ping == null ? null : DateTimeHelper.DateTimeToFullDateTimeString(ping.Timestamp)),
-            new(nameof(PingInfo.Time), ping == null ? null : Ping.TimeToString(ping.Status, ping.Time, true)),
-            new(nameof(PingInfo.TTL), ping?.TTL),
-            new(nameof(PingInfo.Bytes), ping?.Bytes),
-            new("PortStatus", GetPortStatus(info, options)),
-            new(nameof(IPScannerHostInfo.Ports), info.Ports != null && options.PortScanEnabled ? info.Ports : [], true),
-            new("NetBIOSIsReachable", netBIOSInfo?.IsReachable),
-            new("NetBIOSIPAddress", netBIOSInfo?.IPAddress),
-            new("NetBIOSComputerName", netBIOSInfo?.ComputerName, true),
-            new("NetBIOSUserName", netBIOSInfo?.UserName, true),
-            new("NetBIOSGroupName", netBIOSInfo?.GroupName, true),
-            new("NetBIOSMACAddress", netBIOSInfo?.MACAddress),
-            new("NetBIOSVendor", netBIOSInfo?.Vendor, true),
-            new(nameof(IPScannerHostInfo.MACAddress), info.MACAddress),
-            new(nameof(IPScannerHostInfo.Vendor), info.Vendor, true),
+            new(nameof(IPScannerHostInfo.IsReachable), x => x.IsReachable),
+            new(nameof(PingInfo.IPAddress), x => x.PingInfo.IPAddress),
+            new(nameof(IPScannerHostInfo.Hostname), x => x.Hostname, true),
+            new("PingStatus", x => GetPingInfo(x, options)?.Status),
+            new(nameof(PingInfo.Timestamp), x => GetPingInfo(x, options)?.Timestamp),
+            // ms
+            new(nameof(PingInfo.Time), IfPingReply(x => x.Time)),
+            new(nameof(PingInfo.TTL), IfPingReply(x => x.TTL)),
+            new(nameof(PingInfo.Bytes), IfPingReply(x => x.Bytes)),
+            new("PortStatus", x => GetPortStatus(x, options)),
+            new(nameof(IPScannerHostInfo.Ports), x => new ExportList<PortInfo>(nameof(PortInfo),
+                x.Ports != null && options.PortScanEnabled ? x.Ports : [], PortInfoExportFields), true),
+            new("NetBIOSIsReachable", IfNetBIOS(x => x.IsReachable)),
+            new("NetBIOSIPAddress", IfNetBIOS(x => x.IPAddress)),
+            new("NetBIOSComputerName", IfNetBIOS(x => x.ComputerName), true),
+            new("NetBIOSUserName", IfNetBIOS(x => x.UserName), true),
+            new("NetBIOSGroupName", IfNetBIOS(x => x.GroupName), true),
+            new("NetBIOSMACAddress", IfNetBIOS(x => x.MACAddress)),
+            new("NetBIOSVendor", IfNetBIOS(x => x.Vendor), true),
+            new(nameof(IPScannerHostInfo.MACAddress), x => x.MACAddress),
+            new(nameof(IPScannerHostInfo.Vendor), x => x.Vendor, true),
             // Added later - after the released columns, so their position doesn't change
-            new(nameof(IPScannerHostInfo.DNSHostname), info.DNSHostname, true),
-            new(nameof(IPScannerHostInfo.DetectedBy), GetDetectedBy(info), true),
-            new(nameof(IPScannerHostInfo.OSGuess), GetOSGuess(info, options)),
-            new(nameof(IPScannerHostInfo.Role), GetRole(info), true),
-            new(nameof(IPScannerHostInfo.MDNSHostname), IfEnabled(options.MDNSEnabled, info.MDNSHostname), true),
-            new(nameof(IPScannerHostInfo.WebTitle), IfEnabled(IsWebPageRead(options), info.WebTitle), true),
-            new(nameof(IPScannerHostInfo.WebURL), IfEnabled(IsWebPageRead(options), info.WebURL), true),
-            new(nameof(IPScannerHostInfo.SNMPName), IfEnabled(options.SNMPEnabled, info.SNMPName), true),
-            new(nameof(IPScannerHostInfo.SNMPDescription), IfEnabled(options.SNMPEnabled, info.SNMPDescription), true),
-            new(nameof(IPScannerHostInfo.SNMPLocation), IfEnabled(options.SNMPEnabled, info.SNMPLocation), true),
-            new(nameof(IPScannerHostInfo.WebStatusCode), GetWebStatusCode(info, options)),
-            new(nameof(IPScannerHostInfo.WebServer), IfEnabled(IsWebPageRead(options), info.WebServer), true),
-            new(nameof(IPScannerHostInfo.WebPoweredBy), IfEnabled(IsWebPageRead(options), info.WebPoweredBy), true),
-            new(nameof(IPScannerHostInfo.WebRealm), IfEnabled(IsWebPageRead(options), info.WebRealm), true),
-            new(nameof(IPScannerHostInfo.WebRedirectURL), IfEnabled(IsWebPageRead(options), info.WebRedirectURL), true),
-            new("WebCertificateSubject", certificate?.Subject, true),
-            new("WebCertificateIssuer", certificate?.Issuer, true),
-            new("WebCertificateNotAfter", certificate == null
-                ? null
-                : DateTimeHelper.DateTimeToFullDateTimeString(certificate.NotAfter.ToLocalTime())),
-            new("WebCertificateSelfSigned", certificate?.IsSelfSigned),
+            new(nameof(IPScannerHostInfo.DNSHostname), x => x.DNSHostname, true),
+            new(nameof(IPScannerHostInfo.DetectedBy), GetDetectedBy, true),
+            new(nameof(IPScannerHostInfo.OSGuess), x => GetOSGuess(x, options)),
+            new(nameof(IPScannerHostInfo.Role), GetRole, true),
+            new(nameof(IPScannerHostInfo.MDNSHostname), IfEnabled(options.MDNSEnabled, x => x.MDNSHostname), true),
+            new(nameof(IPScannerHostInfo.WebTitle), IfEnabled(isWebPageRead, x => x.WebTitle), true),
+            new(nameof(IPScannerHostInfo.WebURL), IfEnabled(isWebPageRead, x => x.WebURL), true),
+            new(nameof(IPScannerHostInfo.SNMPName), IfEnabled(options.SNMPEnabled, x => x.SNMPName), true),
+            new(nameof(IPScannerHostInfo.SNMPDescription), IfEnabled(options.SNMPEnabled, x => x.SNMPDescription),
+                true),
+            new(nameof(IPScannerHostInfo.SNMPLocation), IfEnabled(options.SNMPEnabled, x => x.SNMPLocation), true),
+            new(nameof(IPScannerHostInfo.WebStatusCode), x => GetWebStatusCode(x, options)),
+            new(nameof(IPScannerHostInfo.WebServer), IfEnabled(isWebPageRead, x => x.WebServer), true),
+            new(nameof(IPScannerHostInfo.WebPoweredBy), IfEnabled(isWebPageRead, x => x.WebPoweredBy), true),
+            new(nameof(IPScannerHostInfo.WebRealm), IfEnabled(isWebPageRead, x => x.WebRealm), true),
+            new(nameof(IPScannerHostInfo.WebRedirectURL), IfEnabled(isWebPageRead, x => x.WebRedirectURL), true),
+            new("WebCertificateSubject", IfCertificate(x => x.Subject), true),
+            new("WebCertificateIssuer", IfCertificate(x => x.Issuer), true),
+            new("WebCertificateNotAfter", IfCertificate(x => x.NotAfter.ToLocalTime())),
+            new("WebCertificateSelfSigned", IfCertificate(x => x.IsSelfSigned)),
             // Change since the previous scan of the same input (empty without a previous scan / change)
-            new(nameof(IPScannerHostInfo.Change),
-                info.Change == IPScannerHostChange.None ? null : info.Change.ToString()),
-            new(nameof(IPScannerHostInfo.PreviousMACAddress), info.PreviousMACAddress),
+            new(nameof(IPScannerHostInfo.Change), x => x.Change == IPScannerHostChange.None ? null : x.Change),
+            new(nameof(IPScannerHostInfo.PreviousMACAddress), x => x.PreviousMACAddress),
             // SNMPv3 error of the host (e.g. "AuthenticationFailed"), empty without
             new(nameof(IPScannerHostInfo.SNMPError),
-                IfEnabled(options.SNMPEnabled, info.HasSNMPError ? info.SNMPError.ToString() : string.Empty), true),
+                IfEnabled(options.SNMPEnabled, x => x.HasSNMPError ? x.SNMPError.ToString() : string.Empty), true),
             // Windows host information (SMB / NTLM, NetApi)
             new("WindowsOS", IfWindows(x => x.OS), true),
             new("WindowsEdition", IfWindows(x => x.Edition), true),
@@ -140,7 +131,8 @@ public static partial class ExportManager
             // Seconds (time of the host minus the local time)
             new("WindowsTimeOffset",
                 IfWindowsValue(x => x.TimeOffset is { } offset ? Math.Round(offset.TotalSeconds, 3) : null)),
-            new("WindowsUsers", IfWindows(x => x.Users == null ? string.Empty : string.Join("; ", x.Users)), true),
+            new("WindowsUsers", IfWindows(x => x.Users == null ? string.Empty : string.Join(ListSeparator, x.Users)),
+                true),
             new("WindowsDescription", IfWindows(x => x.Description), true),
             // Win32 error of the NetApi requests (e.g. 5 = access denied, 1326 = wrong username or password)
             new("WindowsError", IfWindowsValue(x => x.Error == 0 ? null : x.Error)),
@@ -148,113 +140,6 @@ public static partial class ExportManager
             new("SMBSigningRequired", IfWindowsValue(x => x.SMB?.SigningRequired)),
             new("SMBServerGuid", IfWindows(x => x.SMB?.ServerGuid.ToString()))
         ];
-    }
-
-    /// <summary>
-    ///     Creates a CSV file from the given <see cref="IPScannerHostInfo" /> collection.
-    /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}" /> to export.</param>
-    /// <param name="options">Options of the scan the hosts are from.</param>
-    /// <param name="filePath">Path to the export file.</param>
-    private static void CreateCsv(IEnumerable<IPScannerHostInfo> collection, IPScannerResultOptions options,
-        string filePath)
-    {
-        var stringBuilder = new StringBuilder();
-
-        stringBuilder.AppendLine(string.Join(",", GetFieldNames()));
-
-        foreach (var info in collection)
-        {
-            // Skip if critical data is null
-            if (info?.PingInfo == null)
-                continue;
-
-            stringBuilder.AppendLine(string.Join(",", GetFields(info, options).Select(field =>
-            {
-                var value = field.Value is List<PortInfo> ports
-                    ? string.Join(";", ports.Select(port =>
-                        $"{port.Port}/{port.LookupInfo.Protocol}/{port.LookupInfo.Service}/{port.LookupInfo.Description}/{port.State}"))
-                    // Invariant: a decimal comma would split the column (e.g. WindowsTimeOffset)
-                    : Convert.ToString(field.Value, CultureInfo.InvariantCulture);
-
-                return field.IsQuoted ? CsvHelper.QuoteString(value) : value;
-            })));
-        }
-
-        File.WriteAllText(filePath, stringBuilder.ToString());
-    }
-
-    /// <summary>
-    ///     Gets the names of the exported columns (header of the CSV file, also without hosts) - they don't depend on
-    ///     the values.
-    /// </summary>
-    private static IEnumerable<string> GetFieldNames()
-    {
-        var placeholder = new IPScannerHostInfo(IPAddress.None, false, new PingInfo(), false, [],
-            new NetBIOSInfo(IPAddress.None));
-
-        return GetFields(placeholder, new IPScannerResultOptions(false, false, false, false, false, false, false, false,
-            false, false)).Select(x => x.Name);
-    }
-
-    /// <summary>
-    ///     Creates a XML file from the given <see cref="IPScannerHostInfo" /> collection.
-    /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}" /> to export.</param>
-    /// <param name="options">Options of the scan the hosts are from.</param>
-    /// <param name="filePath">Path to the export file.</param>
-    private static void CreateXml(IEnumerable<IPScannerHostInfo> collection, IPScannerResultOptions options,
-        string filePath)
-    {
-        var document = new XDocument(DefaultXDeclaration,
-            new XElement(ApplicationName.IPScanner.ToString(),
-                new XElement(nameof(IPScannerHostInfo) + "s",
-                    from info in collection
-                    where info?.PingInfo != null
-                    select new XElement(nameof(IPScannerHostInfo),
-                        from field in GetFields(info, options)
-                        // One element per port, no element for the list
-                        from element in field.Value is List<PortInfo> ports
-                            ? ports.Select(port => new XElement(nameof(PortInfo),
-                                new XElement(nameof(PortInfo.Port), port.Port),
-                                new XElement(nameof(PortInfo.LookupInfo.Protocol), port.LookupInfo.Protocol),
-                                new XElement(nameof(PortInfo.LookupInfo.Service), port.LookupInfo.Service),
-                                new XElement(nameof(PortInfo.LookupInfo.Description), port.LookupInfo.Description),
-                                new XElement(nameof(PortInfo.State), port.State)))
-                            : [new XElement(field.Name, field.Value)]
-                        select element))));
-
-        document.Save(filePath);
-    }
-
-    /// <summary>
-    ///     Creates a JSON file from the given <see cref="IPScannerHostInfo" /> collection.
-    /// </summary>
-    /// <param name="collection">Objects as <see cref="IReadOnlyList{HostInfo}" /> to export.</param>
-    /// <param name="options">Options of the scan the hosts are from.</param>
-    /// <param name="filePath">Path to the export file.</param>
-    private static void CreateJson(IReadOnlyList<IPScannerHostInfo> collection, IPScannerResultOptions options,
-        string filePath)
-    {
-        var jsonData = collection
-            .Where(info => info?.PingInfo != null)
-            .Select(info => GetFields(info, options).ToDictionary(x => x.Name, x => x.Value switch
-            {
-                List<PortInfo> ports => ports.Select(port => new
-                {
-                    port.Port,
-                    Protocol = port.LookupInfo.Protocol.ToString(),
-                    port.LookupInfo.Service,
-                    port.LookupInfo.Description,
-                    State = port.State.ToString()
-                }).ToArray(),
-                // As text, like in the CSV / XML file (not the number of the enum)
-                Enum or IPAddress => x.Value.ToString(),
-                _ => x.Value
-            }))
-            .ToArray();
-
-        File.WriteAllText(filePath, JsonConvert.SerializeObject(jsonData, Formatting.Indented));
     }
 
     /// <summary>
@@ -361,4 +246,4 @@ public static partial class ExportManager
 
         return info.IsAnyPortOpen ? PortState.Open : PortState.Closed;
     }
-}
+}

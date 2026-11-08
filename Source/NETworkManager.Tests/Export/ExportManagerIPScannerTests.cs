@@ -6,10 +6,12 @@ using System.Net.NetworkInformation;
 using System.Xml.Linq;
 using NETworkManager.Models.Export;
 using NETworkManager.Models.Network;
+using NETworkManager.Models.Lookup;
 using Newtonsoft.Json.Linq;
 using Xunit;
+using static NETworkManager.Tests.Export.ExportTestHelper;
 
-namespace NETworkManager.Tests.Network;
+namespace NETworkManager.Tests.Export;
 
 public class ExportManagerIPScannerTests
 {
@@ -169,5 +171,85 @@ public class ExportManagerIPScannerTests
         var host = (JObject)JArray.Parse(Export(ExportFileType.Json, CreateHost())).Single();
 
         Assert.Equal(CsvHeader.Split(','), host.Properties().Select(x => x.Name));
+    }
+
+    private static IPScannerHostInfo CreateHostWithPorts()
+    {
+        var ipAddress = IPAddress.Parse("10.0.0.1");
+
+        return new IPScannerHostInfo(ipAddress, true,
+            new PingInfo(new DateTime(2026, 11, 8, 10, 15, 30, 123), ipAddress, null, 32, 4, 64, IPStatus.Success), true,
+            [
+                new PortInfo(80, new PortLookupInfo(80, TransportProtocol.Tcp, "http", "World Wide Web, HTTP"),
+                    PortState.Open),
+                new PortInfo(443, new PortLookupInfo(443, TransportProtocol.Tcp, "https", "TLS"), PortState.Closed)
+            ], new NetBIOSInfo(ipAddress));
+    }
+
+    [Fact]
+    public void Ping_TimeInMilliseconds()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t, [CreateHostWithPorts()], AllEnabled));
+
+        Assert.Equal("2026-11-08 10:15:30.123", files.CsvValue("Timestamp"));
+        Assert.Equal("4", files.CsvValue("Time"));
+        Assert.Equal("4", files.XmlValue("Time"));
+        Assert.Equal(4, (long)files.JsonValue("Time"));
+        Assert.Equal(64, (int)files.JsonValue("TTL"));
+    }
+
+    [Fact]
+    public void Ping_NoReply_TimeTTLBytesEmpty()
+    {
+        var ipAddress = IPAddress.Parse("10.0.0.2");
+        var host = new IPScannerHostInfo(ipAddress, false, new PingInfo(DateTime.Now, ipAddress, IPStatus.TimedOut),
+            false, [], new NetBIOSInfo(ipAddress));
+
+        var files = ExportAll((f, t) => ExportManager.Export(f, t, [host], AllEnabled));
+
+        foreach (var name in new[] { "Time", "TTL", "Bytes" })
+        {
+            Assert.Equal("", files.CsvValue(name));
+            Assert.Equal("", files.XmlValue(name));
+            Assert.Equal(JTokenType.Null, files.JsonValue(name).Type);
+        }
+
+        Assert.Equal("TimedOut", files.CsvValue("PingStatus"));
+    }
+
+    [Fact]
+    public void Ports_AllFormats()
+    {
+        var files = ExportAll((f, t) => ExportManager.Export(f, t, [CreateHostWithPorts()], AllEnabled));
+
+        Assert.Equal(CsvHeader.Split(',').Length, files.CsvRows[0].Count);
+        Assert.Equal("80/Tcp/http/World Wide Web, HTTP/Open;443/Tcp/https/TLS/Closed", files.CsvValue("Ports"));
+
+        // XML: one element per port (no element for the list)
+        var ports = files.XmlItems[0].Elements(nameof(PortInfo)).ToList();
+        Assert.Equal(2, ports.Count);
+        Assert.Equal(["Port", "Protocol", "Service", "Description", "State"],
+            ports[0].Elements().Select(x => x.Name.LocalName));
+        Assert.Equal("Tcp", ports[0].Element("Protocol")!.Value);
+
+        // JSON: array of objects
+        var json = (JArray)files.JsonValue("Ports");
+        Assert.Equal(2, json.Count);
+        Assert.Equal(80, (int)json[0]["Port"]!);
+        Assert.Equal("Tcp", (string)json[0]["Protocol"]);
+        Assert.Equal("Open", (string)json[0]["State"]);
+    }
+
+    [Fact]
+    public void Ports_PortScanDisabled_Empty()
+    {
+        var options = AllEnabled with { PortScanEnabled = false };
+
+        var files = ExportAll((f, t) => ExportManager.Export(f, t, [CreateHostWithPorts()], options));
+
+        Assert.Equal("", files.CsvValue("Ports"));
+        Assert.Equal("", files.CsvValue("PortStatus"));
+        Assert.Empty(files.XmlItems[0].Elements(nameof(PortInfo)));
+        Assert.Empty((JArray)files.JsonValue("Ports"));
     }
 }
