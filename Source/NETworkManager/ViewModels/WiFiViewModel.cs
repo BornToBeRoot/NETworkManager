@@ -915,14 +915,13 @@ public class WiFiViewModel : ViewModelBase
                         // Split into the lower (1-125) and upper (129-233) chart by the channels the network covers
                         // (channel-number space, 5 MHz per unit). A network that crosses the split (e.g. 320 MHz
                         // around channel 127 covers 95 - 159) is drawn in both charts.
-                        var centerChannel = FrequencyToChannelAxis(
-                            network.ChannelBandwidthCenterFrequencyInGigahertz * 1000, WiFiRadio.GHz6);
-                        var halfWidth = network.ChannelBandwidth / 10.0;
+                        var (lower, upper) = WiFiChannelAxis.GetSixGHzCharts(
+                            network.ChannelBandwidthCenterFrequencyInGigahertz * 1000, network.ChannelBandwidth);
 
-                        if (centerChannel - halfWidth < SixGHzSplitChannel)
+                        if (lower)
                             AddToChart(Chart6GHzLower, network);
 
-                        if (centerChannel + halfWidth > SixGHzSplitChannel)
+                        if (upper)
                             AddToChart(Chart6GHzUpper, network);
 
                         break;
@@ -1012,19 +1011,6 @@ public class WiFiViewModel : ViewModelBase
     // Channel 2 (5935 MHz) is below channel 1, at -3 on the axis - not labeled (the tooltip shows it).
     private static readonly HashSet<int> ValidChannels6GHz = BuildChannelSet(1, 233, 4);
 
-    // Channel that splits the 6 GHz band into the lower (1-125) and upper (129-233) chart. 127 sits
-    // cleanly between the operating channels 125 and 129.
-    private const int SixGHzSplitChannel = 127;
-
-    // The 5 GHz band has a large unused range between channel 64 (UNII-2) and channel 100
-    // (UNII-2 Extended). On a frequency-linear axis this would render as dead space, so it is
-    // compressed: channels above 64 are shifted left, leaving only a small visual gap that still
-    // provides room for the channel-width trapezoids.
-    private const int FiveGHzGapStartChannel = 64;
-    private const int FiveGHzGapEndChannel = 100;
-    private const int FiveGHzGapDisplayUnits = 16;
-    private const int FiveGHzGapShift = FiveGHzGapEndChannel - FiveGHzGapStartChannel - FiveGHzGapDisplayUnits;
-
     private static HashSet<int> BuildChannelSet(int first, int last, int step)
     {
         var set = new HashSet<int>();
@@ -1052,23 +1038,22 @@ public class WiFiViewModel : ViewModelBase
         // (min, max) in display space. The lower bound is extended below the first channel so the
         // left flank of its trapezoid reaches the baseline instead of being clipped. The 5 GHz
         // upper bound is reduced because the 64..100 dead zone is compressed.
-        Chart2Dot4GHz = new WiFiChannelChart(BuildXAxes(-2, 16, ValidChannels2Dot4GHz, false, labelColor),
+        Chart2Dot4GHz = new WiFiChannelChart(BuildXAxes(-2, 16, ValidChannels2Dot4GHz, WiFiRadio.GHz2dot4, labelColor),
             BuildYAxes(labelColor, separatorColor), BuildSections());
-        Chart5GHz = new WiFiChannelChart(BuildXAxes(30, 160, ValidChannels5GHz, true, labelColor),
+        Chart5GHz = new WiFiChannelChart(BuildXAxes(30, 160, ValidChannels5GHz, WiFiRadio.GHz5, labelColor),
             BuildYAxes(labelColor, separatorColor), BuildSections());
-        Chart6GHzLower = new WiFiChannelChart(BuildXAxes(-6, 128, ValidChannels6GHz, false, labelColor),
+        Chart6GHzLower = new WiFiChannelChart(BuildXAxes(-6, 128, ValidChannels6GHz, WiFiRadio.GHz6, labelColor),
             BuildYAxes(labelColor, separatorColor), BuildSections());
-        Chart6GHzUpper = new WiFiChannelChart(BuildXAxes(126, 236, ValidChannels6GHz, false, labelColor),
+        Chart6GHzUpper = new WiFiChannelChart(BuildXAxes(126, 236, ValidChannels6GHz, WiFiRadio.GHz6, labelColor),
             BuildYAxes(labelColor, separatorColor), BuildSections());
     }
 
     /// <summary>
     ///     Builds an X-axis in channel-number space (which is linear with the channel frequency).
     ///     Only channels contained in <paramref name="validChannels" /> are labeled; all other tick
-    ///     positions stay blank. When <paramref name="applyFiveGHzGap" /> is set, the 5 GHz gap shift
-    ///     is reversed before the label lookup.
+    ///     positions stay blank (see <see cref="WiFiChannelAxis" />).
     /// </summary>
-    private static Axis[] BuildXAxes(double min, double max, HashSet<int> validChannels, bool applyFiveGHzGap,
+    private static Axis[] BuildXAxes(double min, double max, HashSet<int> validChannels, WiFiRadio radio,
         SKColor labelColor)
     {
         return
@@ -1084,10 +1069,7 @@ public class WiFiViewModel : ViewModelBase
                 ForceStepToMin = true,
                 Labeler = value =>
                 {
-                    var channel = (int)Math.Round(value);
-
-                    if (applyFiveGHzGap && channel > FiveGHzGapStartChannel)
-                        channel += FiveGHzGapShift;
+                    var channel = WiFiChannelAxis.PositionToChannel((int)Math.Round(value), radio);
 
                     return validChannels.Contains(channel) ? channel.ToString() : string.Empty;
                 },
@@ -1166,9 +1148,9 @@ public class WiFiViewModel : ViewModelBase
         var color = ChartPalette[colorIndex % ChartPalette.Length];
 
         double dbm = network.AvailableNetwork.NetworkRssiInDecibelMilliwatts;
-        var center = ChannelNumberToDisplay(
-            FrequencyToChannelAxis(network.ChannelBandwidthCenterFrequencyInGigahertz * 1000, network.Radio),
-            network.Radio);
+        var center = WiFiChannelAxis.ChannelToPosition(
+            WiFiChannelAxis.FrequencyToChannel(network.ChannelBandwidthCenterFrequencyInGigahertz * 1000,
+                network.Radio), network.Radio);
 
         // Channel-number space uses 5 MHz per unit, so a bandwidth in MHz spans bandwidth/5 units.
         var bandwidth = network.ChannelBandwidth;
@@ -1332,35 +1314,6 @@ public class WiFiViewModel : ViewModelBase
             WiFiNetworkChange.Gone => NotificationStatus.Down,
             _ => NotificationStatus.Changed
         };
-    }
-
-    /// <summary>
-    ///     Converts a channel center frequency (MHz) to channel-number space for the chart X axis.
-    ///     This mapping is linear with frequency (5 MHz per unit).
-    /// </summary>
-    private static double FrequencyToChannelAxis(double frequencyMHz, WiFiRadio radio)
-    {
-        return radio switch
-        {
-            // Channel 14 is at 2484 MHz and does not follow the standard ch×5 + 2407 spacing.
-            WiFiRadio.GHz2dot4 => (int)Math.Round(frequencyMHz) == 2484 ? 14.0 : (frequencyMHz - 2407) / 5.0,
-            WiFiRadio.GHz5 => (frequencyMHz - 5000) / 5.0,
-            // Channel 2 is at 5935 MHz, below channel 1 (5955 MHz) - drawn at its real position (-3)
-            WiFiRadio.GHz6 => (frequencyMHz - 5950) / 5.0,
-            _ => 0
-        };
-    }
-
-    /// <summary>
-    ///     Maps a channel number to its display position on the X axis. For 5 GHz the unused
-    ///     64..100 range is compressed so it does not render as dead space.
-    /// </summary>
-    private static double ChannelNumberToDisplay(double channelNumber, WiFiRadio radio)
-    {
-        if (radio == WiFiRadio.GHz5 && channelNumber > FiveGHzGapStartChannel)
-            return channelNumber - FiveGHzGapShift;
-
-        return channelNumber;
     }
 
     private void Connect()
