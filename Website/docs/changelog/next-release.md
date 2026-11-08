@@ -192,6 +192,7 @@ Release date: **xx.xx.2026**
 
 - Added **RDAP...** to the context menu to query the registration data of the IP address, hostname or AS number of a hop in the [**RDAP**](../application/rdap.md) tool. [#3642](https://github.com/BornToBeRoot/NETworkManager/pull/3642)
 - The export contains the region name shown in the grid (`RegionName`, e.g. `Bavaria`) after the region code (`Region`, e.g. `BY`), like the **IP Geolocation** export. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
+- **Export...** exports the hops in the order shown (by hop), the selected hops in the order shown instead of the order they were selected. The file is written in the background, so the window stays responsive. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **DNS Lookup**
 
