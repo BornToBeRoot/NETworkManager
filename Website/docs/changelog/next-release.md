@@ -187,6 +187,7 @@ Release date: **xx.xx.2026**
 - IP addresses can be excluded with `!` in the host input (also in profiles and the run command), e.g. `10.0.0.0/24; !10.0.0.1; !10.0.0.200-254`: IP addresses, ranges, subnets and hostnames (nothing is scanned if an excluded hostname can't be resolved). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - The notification shows the tool in its header (icon and name), a click opens the **Ping Monitor**; down uses the red of the application. The message is a line with the IP address and the status in its color (e.g. `10.0.0.1 · Up`) like the notifications of the **IP Scanner** and the **Port Scanner** (was `Host is up`). [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
 - **Play sound on status change** is off by default (the popup stays on); an existing setting is kept. [#3685](https://github.com/BornToBeRoot/NETworkManager/pull/3685)
+- **Export...** writes the file in the background, so the window stays responsive with a long history. The history is only updated on the UI thread, so an export while pinging can no longer fail or miss results. [#3696](https://github.com/BornToBeRoot/NETworkManager/pull/3696)
 
 **Traceroute**
 

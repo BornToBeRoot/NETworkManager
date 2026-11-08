@@ -640,8 +640,10 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType,
-                    new ObservableCollection<PingInfo>(_pingInfoList));
+                // Copied on the UI thread (the history is updated there while pinging), exported in the background
+                var results = _pingInfoList.ToList();
+
+                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, results));
             }
             catch (Exception ex)
             {
@@ -765,9 +767,12 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
             if (_sessionId != capturedSession)
                 return;
 
+            // Add to history - on the UI thread, like every other access to it (export, GoLiveAction)
+            _pingInfoList.Add(e.Args);
+
             // While the user is inspecting the chart (zoomed/panned, i.e. not live), keep
             // the chart frozen: ignore new samples here so the view does not move and the
-            // buffer does not grow. The sample is still recorded in the history below and
+            // buffer does not grow. The sample is still recorded in the history above and
             // becomes visible again when the user returns to live mode (see GoLiveAction).
             if (!IsLiveMode)
                 return;
@@ -779,9 +784,6 @@ public class PingMonitorViewModel : ViewModelBase, IPingMonitorHostStatus
             UpdateXAxisWindow(timeInfo.DateTime);
             UpdateYAxis();
         });
-
-        // Add to history
-        _pingInfoList.Add(e.Args);
     }
 
     /// <summary>
