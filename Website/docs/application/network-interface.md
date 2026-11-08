@@ -138,7 +138,7 @@ Open the tool with `networkinterface`. The command accepts no target and no prof
 
 ## Profile
 
-Selecting a profile fills in its values on the **Configure** tab, where they can be adjusted before **Apply**. **Apply** in the context menu of a profile applies the profile directly.
+Selecting a profile fills in its values on the **Configure** tab, where they can be adjusted before **Apply**. Double-click a profile (or press `Enter`) to fill in its values again, e.g. after **Reset**. **Apply** in the context menu of a profile applies the profile directly.
 
 ### Bind to network interface
 

@@ -512,15 +512,7 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             // selected again) when the view becomes visible, on search / filter and when a profile changes: this
             // must not overwrite the values entered on the Configure tab or switch the network interface.
             if (value != null && !IsProfileSelectedByCode)
-            {
-                // Select the network interface the profile is bound to (if it exists on this computer)
-                var boundNetworkInterface = GetBoundNetworkInterface(value);
-
-                if (boundNetworkInterface != null)
-                    SelectedNetworkInterface = boundNetworkInterface;
-
-                SetConfigurationFromProfile(value);
-            }
+                LoadProfile(value);
 
             base.SelectedProfile = value;
         }
@@ -889,6 +881,15 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     {
         _ = ApplyConfiguration();
     }
+
+    /// <summary>
+    /// Gets the command to load the selected profile again (double-click / Enter in the profile list): selects its
+    /// network interface and fills in its values, e.g. after Reset or if the profile was selected automatically
+    /// (clicking the selected profile doesn't change the selection).
+    /// </summary>
+    public ICommand LoadProfileCommand => new RelayCommand(_ => LoadProfile(SelectedProfile), LoadProfile_CanExecute);
+
+    private bool LoadProfile_CanExecute(object parameter) => SelectedProfile != null;
 
     /// <summary>
     /// Gets the command to apply the profile configuration.
@@ -1298,6 +1299,20 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             ConfigPrimaryDNSServer = dnsServers.Count > 0 ? dnsServers[0].ToString() : string.Empty;
             ConfigSecondaryDNSServer = dnsServers.Count > 1 ? dnsServers[1].ToString() : string.Empty;
         }
+    }
+
+    /// <summary>
+    /// Selects the network interface the profile is bound to (if it exists on this computer) and fills in the values
+    /// of the profile on the Configure tab.
+    /// </summary>
+    private void LoadProfile(ProfileInfo profile)
+    {
+        var boundNetworkInterface = GetBoundNetworkInterface(profile);
+
+        if (boundNetworkInterface != null)
+            SelectedNetworkInterface = boundNetworkInterface;
+
+        SetConfigurationFromProfile(profile);
     }
 
     /// <summary>
