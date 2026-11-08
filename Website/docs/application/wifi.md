@@ -108,7 +108,7 @@ The status of the connection (`Connecting to ...`, the result or the error) is s
 
 ### Export
 
-**Export...** exports the networks as CSV, XML or JSON: **all** exports the networks shown (filtered by band and search) in the order shown, **selected** the selected networks in the order shown. Columns / elements: `Bssid`, `Ssid`, `ChannelCenterFrequencyInKilohertz`, `SignalBars`, `IsWiFiDirect`, `NetworkRssiInDecibelMilliwatts`, `PhyKind`, `NetworkKind`, `NetworkAuthenticationType`, `NetworkEncryptionType`, `BeaconInterval`, `Uptime`, `IsConnected`, `Security`, `Channel`, `ChannelWidth` (MHz), `ChannelWidthEstimated`, `Vendor` and `Change`.
+**Export...** exports the networks as CSV, XML or JSON: **all** exports the networks shown (filtered by band and search) in the order shown, **selected** the selected networks in the order shown. Columns / elements in the order of the grid: `Ssid`, `IsConnected`, `Security`, `ChannelCenterFrequencyInKilohertz`, `Channel`, `ChannelWidth` (MHz), `ChannelWidthEstimated`, `SignalBars`, `NetworkRssiInDecibelMilliwatts`, `NetworkAuthenticationType`, `NetworkEncryptionType`, `Bssid`, `Vendor`, `PhyKind`, `NetworkKind`, `IsWiFiDirect`, `BeaconInterval`, `Uptime` and `Change`, see [Export format](../faq/export-format.md).
 
 ### Keyboard shortcuts
 

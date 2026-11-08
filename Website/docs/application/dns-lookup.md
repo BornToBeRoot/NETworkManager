@@ -66,7 +66,7 @@ The DNS server can be selected from a list of configured servers or you can ente
 | Action        | Description                                      |
 | ------------- | ------------------------------------------------ |
 | **Copy**      | Copies the selected information to the clipboard |
-| **Export...** | Exports the selected or all results to a file    |
+| **Export...** | Exports the results shown (all or the selected ones) to a file in the order shown, see [Export format](../faq/export-format.md) |
 
 ## Profile
 

@@ -54,7 +54,7 @@ Multiple entries can be selected (`Ctrl` / `Shift` + click) to enable, disable, 
 | **Copy as** | Opens the dialog pre-filled with the selected entry to create a new entry based on it (single entry only) |
 | **Delete** | Removes the selected entry or entries (after confirmation) |
 | **Copy** | Copies the entry information to the clipboard (single entry only) |
-| **Export** | Exports the selected entries (or all entries) to a file |
+| **Export** | Exports the entries shown (all or the selected ones) to a file in the order shown, see [Export format](../faq/export-format.md) |
 
 ### Keyboard shortcuts
 

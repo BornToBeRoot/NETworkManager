@@ -17,6 +17,10 @@ Most tools can export their results with **Export...** (selected or all results)
 
 The CSV columns, the XML elements and the JSON keys have the same names and order. The columns are in a logical order: like they are shown in the tool, related values next to each other (e.g. the ping or the web page values of the **IP Scanner**). A new column is added where it belongs, so a script should read the columns by name (CSV header, XML element, JSON key) instead of by position.
 
+## Which results are exported?
+
+**Export...** exports what is shown in the result: **All** exports the results shown (e.g. filtered by the search) in the order shown (sorting, grouping), **Selected** the selected results in the order shown (not in the order they were selected).
+
 ## How are the values formatted?
 
 | Value                   | Format                                                                                                                                                                       |

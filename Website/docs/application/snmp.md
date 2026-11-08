@@ -46,7 +46,7 @@ Multiple OIDs (`.1.3.6.1.2.1.1; .1.3.6.1.2.1.2`) can be specified when using the
 | Action        | Description                                     |
 | ------------- | ----------------------------------------------- |
 | **Copy**      | Copy the selected information to the clipboard. |
-| **Export...** | Export the selected or all results to a file.   |
+| **Export...** | Exports the results shown (all or the selected ones) to a file in the order shown, see [Export format](../faq/export-format.md) |
 
 ## Profile
 
