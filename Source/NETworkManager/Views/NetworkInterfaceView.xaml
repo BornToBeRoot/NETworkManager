@@ -1453,6 +1453,25 @@
                                         </MenuItem>
                                     </mah:DropDownButton.Items>
                                 </mah:DropDownButton>
+                                <Button HorizontalAlignment="Left" Command="{Binding ResetConfigurationCommand}"
+                                        Style="{StaticResource ImageWithTextButton}" Margin="0,0,10,10">
+                                    <Button.Content>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Style="{StaticResource ButtonWithImageRectangle}">
+                                                <Rectangle.OpacityMask>
+                                                    <VisualBrush Stretch="Uniform"
+                                                                 Visual="{iconPacks:Material Kind=Restore}" />
+                                                </Rectangle.OpacityMask>
+                                            </Rectangle>
+                                            <TextBlock Grid.Column="1" Text="{x:Static localization:Strings.Reset}"
+                                                       Style="{StaticResource ButtonWithImageTextBlock}" />
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
                                 <Button HorizontalAlignment="Left" Command="{Binding AddProfileFromConfigurationCommand}"
                                         Style="{StaticResource ImageWithTextButton}" Margin="0,0,10,10">
                                     <Button.Content>

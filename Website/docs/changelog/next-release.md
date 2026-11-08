@@ -76,6 +76,7 @@ Release date: **xx.xx.2026**
 - Members of the **Network Configuration Operators** group can now change the network configuration (IP address, DNS servers, release/renew) without being an administrator. NETworkManager has to run elevated (**Restart as Administrator**, confirm with your own credentials). The hint is now also shown as tooltip on **Apply** in the profile context menu. [#3606](https://github.com/BornToBeRoot/NETworkManager/issues/3606)
 - The tooltip of a profile shows the bound network interface and the IP address / subnet mask (or **Obtain an IP address automatically**) instead of the host, which is not used by **Network Interface**. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - **Add profile...** on the **Configure** tab creates a profile with the shown configuration, bound to the selected network interface, e.g. to save the current configuration and apply it again later. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- **Reset** on the **Configure** tab shows the current configuration of the selected network adapter again, e.g. after a profile was selected. Static values of a previously selected adapter are no longer shown for an adapter that uses DHCP. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **WiFi**
 

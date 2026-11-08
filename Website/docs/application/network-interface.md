@@ -100,6 +100,7 @@ If a change fails (e.g. due to missing permissions), the error message of Window
 | **Release & Renew > IPv6 > Renew**                | Renews the IPv6 address via DHCPv6 for the selected adapter (`ipconfig /renew6 <ADAPTER>`)                                               |
 | **Additional config... > Add IPv4 address...**    | Opens a dialog to add an IPv4 address with a subnet mask or CIDR to the selected adapter                                                 |
 | **Additional config... > Remove IPv4 address...** | Opens a dialog to remove an IPv4 address from the selected adapter                                                                       |
+| **Reset**                                         | Shows the current configuration of the selected adapter again (e.g. after a profile was selected or values were changed) |
 | **Add profile...**                                | Opens the profile dialog with the IP and DNS configuration of this tab, bound to the selected adapter (see [Bind to network interface](#bind-to-network-interface)) |
 | **Apply**                                         | Applies the IP and DNS configuration to the selected adapter                                                                             |
 
