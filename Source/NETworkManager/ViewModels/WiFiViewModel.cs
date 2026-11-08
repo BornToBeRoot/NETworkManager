@@ -1359,6 +1359,16 @@ public class WiFiViewModel : ViewModelBase
         await ScanAsync(SelectedAdapter, true, GlobalStaticConfiguration.ApplicationUIRefreshInterval);
     }
 
+    /// <summary>
+    ///     Gets the selected networks in the order they are shown in the grid (not in the order they were selected).
+    /// </summary>
+    private List<WiFiNetworkInfo> GetSelectedNetworksInGridOrder()
+    {
+        var selectedNetworks = new HashSet<WiFiNetworkInfo>(SelectedNetworks.Cast<WiFiNetworkInfo>());
+
+        return NetworksView.Cast<WiFiNetworkInfo>().Where(selectedNetworks.Contains).ToList();
+    }
+
     private Task Export()
     {
         var childWindow = new ExportChildWindow();
@@ -1370,11 +1380,13 @@ public class WiFiViewModel : ViewModelBase
 
             try
             {
-                ExportManager.Export(instance.FilePath, instance.FileType,
-                    instance.ExportAll
-                        ? Networks
-                        : new ObservableCollection<WiFiNetworkInfo>(SelectedNetworks.Cast<WiFiNetworkInfo>()
-                            .ToArray()));
+                // The networks shown in the grid (band filter, search) in their order. Copied on the UI thread, exported
+                // in the background
+                var networks = instance.ExportAll
+                    ? NetworksView.Cast<WiFiNetworkInfo>().ToList()
+                    : GetSelectedNetworksInGridOrder();
+
+                await Task.Run(() => ExportManager.Export(instance.FilePath, instance.FileType, networks));
             }
             catch (Exception ex)
             {
