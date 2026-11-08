@@ -186,6 +186,25 @@
                                                                 Binding="{Binding Data.NetworkInterface_Enabled, Source={StaticResource BindingProxy}}"
                                                                 Value="True" />
                                                             <Condition
+                                                                Binding="{Binding Data.NetworkInterface_BindToInterface, Source={StaticResource BindingProxy}}"
+                                                                Value="True" />
+                                                            <Condition
+                                                                Binding="{Binding Data.NetworkInterface_SelectedInterface, Source={StaticResource BindingProxy}}"
+                                                                Value="{x:Null}" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <MultiDataTrigger.Setters>
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </MultiDataTrigger.Setters>
+                                                    </MultiDataTrigger>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition
+                                                                Binding="{Binding (profiles:ProfileViewInfo.Name)}"
+                                                                Value="{x:Static profiles:ProfileName.NetworkInterface}" />
+                                                            <Condition
+                                                                Binding="{Binding Data.NetworkInterface_Enabled, Source={StaticResource BindingProxy}}"
+                                                                Value="True" />
+                                                            <Condition
                                                                 Binding="{Binding Data.NetworkInterface_EnableStaticIPAddress, Source={StaticResource BindingProxy}}"
                                                                 Value="True" />
                                                             <Condition
@@ -1368,6 +1387,41 @@
                 <TabItem Header="{x:Static Member=localization:Strings.NetworkInterface}">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                         <StackPanel IsEnabled="{Binding NetworkInterface_Enabled}">
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="34" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Column="0"
+                                          Content="{x:Static localization:Strings.BindToNetworkInterface}"
+                                          IsChecked="{Binding NetworkInterface_BindToInterface}"
+                                          Style="{StaticResource DefaultCheckBox}" />
+                                <ComboBox x:Name="ComboBoxNetworkInterfaceBindToInterface" Grid.Column="2"
+                                          ItemsSource="{Binding NetworkInterface_Interfaces}"
+                                          SelectedItem="{Binding NetworkInterface_SelectedInterface}"
+                                          IsEnabled="{Binding NetworkInterface_BindToInterface}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Name}"
+                                                           Style="{StaticResource DefaultTextBlock}" />
+                                                <TextBlock Text="{Binding Description}"
+                                                           Style="{StaticResource InfoTextBlock}"
+                                                           TextTrimming="CharacterEllipsis" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <Rectangle Grid.Column="3" Width="24" Height="24"
+                                           ToolTip="{x:Static localization:Strings.HelpMessage_BindToNetworkInterface}"
+                                           Style="{StaticResource HelpImageRectangle}" Margin="10,0,0,0">
+                                    <Rectangle.Resources>
+                                        <Style TargetType="{x:Type ToolTip}" BasedOn="{StaticResource HelpToolTip}" />
+                                    </Rectangle.Resources>
+                                </Rectangle>
+                            </Grid>
                             <RadioButton x:Name="RadioButtonEnableDynamicIPAddress"
                                          GroupName="NetworkInterface_IPAddressConfig"
                                          IsChecked="{Binding NetworkInterface_EnableDynamicIPAddress}"
@@ -3767,6 +3821,16 @@
                                 </MultiDataTrigger.Setters>
                             </MultiDataTrigger>
                             <!-- Network Interface -->
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />
+                                    <Condition Binding="{Binding NetworkInterface_BindToInterface}" Value="True" />
+                                    <Condition Binding="{Binding NetworkInterface_SelectedInterface}" Value="{x:Null}" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="IsEnabled" Value="False" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding NetworkInterface_Enabled}" Value="True" />

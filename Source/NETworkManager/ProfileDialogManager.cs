@@ -41,6 +41,13 @@ public static class ProfileDialogManager
 
             // Network Interface
             NetworkInterface_Enabled = instance.NetworkInterface_Enabled,
+            NetworkInterface_BindToInterface = instance.NetworkInterface_BindToInterface,
+            NetworkInterface_InterfaceId = instance.NetworkInterface_BindToInterface
+                ? instance.NetworkInterface_SelectedInterface?.Id
+                : null,
+            NetworkInterface_InterfaceName = instance.NetworkInterface_BindToInterface
+                ? instance.NetworkInterface_SelectedInterface?.Name
+                : null,
             NetworkInterface_EnableStaticIPAddress = instance.NetworkInterface_EnableStaticIPAddress,
             NetworkInterface_IPAddress = instance.NetworkInterface_IPAddress?.Trim(),
             NetworkInterface_Gateway = instance.NetworkInterface_Gateway?.Trim(),

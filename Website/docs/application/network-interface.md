@@ -132,6 +132,18 @@ netsh interface ipv4 set interface interface="Ethernet" dhcpstaticipcoexistence=
 
 ## Profile
 
+Selecting a profile fills in its values on the **Configure** tab, where they can be adjusted before **Apply**. **Apply** in the context menu of a profile applies the profile directly.
+
+### Bind to network interface
+
+Apply the profile always to the selected network interface instead of the one selected in the **Network Interface** tool. Selecting the profile also selects the network interface, so the result can be checked on the **Information** tab after **Apply**.
+
+The network interface is identified by its ID, which is unique per computer (the name, e.g. `Ethernet`, is not). If the network interface is not found on this computer (e.g. the profile file is used on another computer or the adapter was removed), **Apply** shows the name and ID of the missing network interface and asks whether the profile should be applied to the selected network interface instead. To fix this, edit the profile and select another network interface or disable this option.
+
+**Type:** `Boolean` + network interface
+
+**Default:** `Disabled`
+
 ### Obtain an IP address automatically
 
 Obtain an IP address automatically from a DHCP server for the selected network adapter.

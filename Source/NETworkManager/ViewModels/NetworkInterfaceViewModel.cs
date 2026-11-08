@@ -501,6 +501,12 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             {
                 _prefilledProfile = value;
 
+                // Select the network interface the profile is bound to (if it exists on this computer)
+                var boundNetworkInterface = GetBoundNetworkInterface(value);
+
+                if (boundNetworkInterface != null)
+                    SelectedNetworkInterface = boundNetworkInterface;
+
                 ConfigEnableDynamicIPAddress = !value.NetworkInterface_EnableStaticIPAddress;
                 ConfigEnableStaticIPAddress = value.NetworkInterface_EnableStaticIPAddress;
                 ConfigIPAddress = value.NetworkInterface_IPAddress;
@@ -904,10 +910,12 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         ConfigureCommands_CanExecute(parameter) && CanConfigure;
 
     /// <summary>
-    /// Apply the selected profile (profile context menu): same conditions as the Apply button.
+    /// Apply the selected profile (profile context menu): same conditions as the Apply button. A profile bound to a
+    /// network interface doesn't depend on the selected one (checked when it is applied).
     /// </summary>
     private bool ApplyProfile_CanExecute(object parameter) =>
-        ApplyConfiguration_CanExecute(parameter) && SelectedProfile != null;
+        ConfigureCommands_CanExecute(parameter) && SelectedProfile != null &&
+        (SelectedProfile.NetworkInterface_BindToInterface || CanConfigure);
 
     /// <summary>
     /// Gets the command to restart the application with administrator privileges.
@@ -1194,13 +1202,81 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
             ConfigPrimaryDNSServer, ConfigSecondaryDNSServer));
     }
 
-    private Task ApplyConfigurationFromProfile()
+    private async Task ApplyConfigurationFromProfile()
     {
-        return ApplyConfigurationAsync(NetworkInterfaceConfig.Create(SelectedNetworkInterface.Name,
-            SelectedProfile.NetworkInterface_EnableStaticIPAddress, SelectedProfile.NetworkInterface_IPAddress,
-            SelectedProfile.NetworkInterface_Subnetmask, SelectedProfile.NetworkInterface_Gateway,
-            SelectedProfile.NetworkInterface_EnableStaticDNS, SelectedProfile.NetworkInterface_PrimaryDNSServer,
-            SelectedProfile.NetworkInterface_SecondaryDNSServer));
+        var profile = SelectedProfile;
+        var networkInterface = SelectedNetworkInterface;
+
+        // Profile bound to a network interface (matched by ID only, the name is not unique)
+        if (profile.NetworkInterface_BindToInterface)
+        {
+            var boundNetworkInterface = GetBoundNetworkInterface(profile);
+
+            if (boundNetworkInterface == null)
+            {
+                if (!await ConfirmApplyToSelectedNetworkInterface(profile))
+                    return;
+            }
+            else
+            {
+                // Select it, so the result can be checked on the Information tab
+                SelectedNetworkInterface = boundNetworkInterface;
+                networkInterface = boundNetworkInterface;
+            }
+        }
+
+        if (networkInterface is not { IsOperational: true })
+        {
+            StatusMessage = Strings.ConnectTheNetworkCardToConfigureIt;
+            IsStatusMessageDisplayed = true;
+            return;
+        }
+
+        await ApplyConfigurationAsync(NetworkInterfaceConfig.Create(networkInterface.Name,
+            profile.NetworkInterface_EnableStaticIPAddress, profile.NetworkInterface_IPAddress,
+            profile.NetworkInterface_Subnetmask, profile.NetworkInterface_Gateway,
+            profile.NetworkInterface_EnableStaticDNS, profile.NetworkInterface_PrimaryDNSServer,
+            profile.NetworkInterface_SecondaryDNSServer));
+    }
+
+    /// <summary>
+    /// Gets the network interface a profile is bound to, or <see langword="null" /> if the profile is not bound or the
+    /// network interface is not found on this computer.
+    /// </summary>
+    private NetworkInterfaceInfo GetBoundNetworkInterface(ProfileInfo profile)
+    {
+        if (!profile.NetworkInterface_BindToInterface || string.IsNullOrEmpty(profile.NetworkInterface_InterfaceId))
+            return null;
+
+        return NetworkInterfaces.FirstOrDefault(x => x.Id == profile.NetworkInterface_InterfaceId);
+    }
+
+    /// <summary>
+    /// The network interface of the profile is not found on this computer: ask whether the profile should be applied
+    /// to the selected network interface instead (only if it can be configured).
+    /// </summary>
+    /// <returns><see langword="true" /> to apply the profile to the selected network interface.</returns>
+    private async Task<bool> ConfirmApplyToSelectedNetworkInterface(ProfileInfo profile)
+    {
+        var message = string.Format(Strings.NetworkInterfaceOfProfileXNotFoundOnThisComputer, profile.Name) +
+                      Environment.NewLine + Environment.NewLine +
+                      $"{Strings.Name}: {profile.NetworkInterface_InterfaceName}" + Environment.NewLine +
+                      $"{Strings.ID}: {profile.NetworkInterface_InterfaceId}" + Environment.NewLine +
+                      Environment.NewLine;
+
+        if (SelectedNetworkInterface is not { IsOperational: true })
+        {
+            await DialogHelper.ShowMessageAsync(Application.Current.MainWindow, Strings.NetworkInterfaceNotFound,
+                message + Strings.HelpMessage_FixNetworkInterfaceOfProfile, ChildWindowIcon.Warn);
+
+            return false;
+        }
+
+        return await DialogHelper.ShowConfirmationMessageAsync(Application.Current.MainWindow,
+            Strings.NetworkInterfaceNotFound,
+            message + string.Format(Strings.ApplyProfileToSelectedNetworkInterfaceXInstead,
+                SelectedNetworkInterface.Name) + Environment.NewLine + Environment.NewLine +
+            Strings.HelpMessage_FixNetworkInterfaceOfProfile, ChildWindowIcon.Warn, Strings.Apply);
     }
 
     private async Task ApplyConfigurationAsync(NetworkInterfaceConfig config)

@@ -1240,6 +1240,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply the profile to the selected network interface &quot;{0}&quot; instead?.
+        /// </summary>
+        public static string ApplyProfileToSelectedNetworkInterfaceXInstead {
+            get {
+                return ResourceManager.GetString("ApplyProfileToSelectedNetworkInterfaceXInstead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Apply theme to PowerShell console.
         /// </summary>
         public static string ApplyThemeToPowerShellConsole {
@@ -1506,6 +1515,15 @@ namespace NETworkManager.Localization.Resources {
         public static string BetaFeatureMessage {
             get {
                 return ResourceManager.GetString("BetaFeatureMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bind to network interface.
+        /// </summary>
+        public static string BindToNetworkInterface {
+            get {
+                return ResourceManager.GetString("BindToNetworkInterface", resourceCulture);
             }
         }
         
@@ -5941,6 +5959,15 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The profile is always applied to this network interface (not to the one selected in Network Interface), selecting the profile also selects the network interface. The network interface is identified by its ID, which is unique per computer: on another computer, select the network interface again or disable this option..
+        /// </summary>
+        public static string HelpMessage_BindToNetworkInterface {
+            get {
+                return ResourceManager.GetString("HelpMessage_BindToNetworkInterface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The DNS resolver is determined via ip-api.com.
         ///
         ///URL: https://edns.ip-api.com/.
@@ -6044,6 +6071,15 @@ namespace NETworkManager.Localization.Resources {
         public static string HelpMessage_FirewallShowAllRules {
             get {
                 return ResourceManager.GetString("HelpMessage_FirewallShowAllRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To fix this, edit the profile and select another network interface or disable &quot;Bind to network interface&quot;..
+        /// </summary>
+        public static string HelpMessage_FixNetworkInterfaceOfProfile {
+            get {
+                return ResourceManager.GetString("HelpMessage_FixNetworkInterfaceOfProfile", resourceCulture);
             }
         }
         
@@ -8500,6 +8536,24 @@ namespace NETworkManager.Localization.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Network interface not found.
+        /// </summary>
+        public static string NetworkInterfaceNotFound {
+            get {
+                return ResourceManager.GetString("NetworkInterfaceNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The network interface of the profile &quot;{0}&quot; was not found on this computer:.
+        /// </summary>
+        public static string NetworkInterfaceOfProfileXNotFoundOnThisComputer {
+            get {
+                return ResourceManager.GetString("NetworkInterfaceOfProfileXNotFoundOnThisComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Network kind.
         /// </summary>
         public static string NetworkKind {
@@ -8812,6 +8866,15 @@ namespace NETworkManager.Localization.Resources {
         public static string Note {
             get {
                 return ResourceManager.GetString("Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not found on this computer.
+        /// </summary>
+        public static string NotFoundOnThisComputer {
+            get {
+                return ResourceManager.GetString("NotFoundOnThisComputer", resourceCulture);
             }
         }
         
