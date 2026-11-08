@@ -913,6 +913,21 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
     }
 
     /// <summary>
+    /// Gets the command to reset the Configure tab to the current configuration of the selected network interface
+    /// (e.g. after a profile was selected or values were changed).
+    /// </summary>
+    public ICommand ResetConfigurationCommand => new RelayCommand(_ => ResetConfigurationAction(),
+        ResetConfiguration_CanExecute);
+
+    private bool ResetConfiguration_CanExecute(object parameter) =>
+        SelectedNetworkInterface != null && !IsConfigurationRunning;
+
+    private void ResetConfigurationAction()
+    {
+        SetConfigurationDefaults(SelectedNetworkInterface);
+    }
+
+    /// <summary>
     /// Gets the command to add a profile with the configuration of the Configure tab, bound to the selected network
     /// interface.
     /// </summary>
@@ -1236,6 +1251,11 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         if (info.DhcpEnabled)
         {
             ConfigEnableDynamicIPAddress = true;
+
+            // Values of another interface or profile don't belong to this one (same as the Windows dialog: empty)
+            ConfigIPAddress = string.Empty;
+            ConfigSubnetmask = string.Empty;
+            ConfigGateway = string.Empty;
         }
         else
         {
@@ -1250,6 +1270,9 @@ public class NetworkInterfaceViewModel : ProfileHostViewModelBase
         if (info.DNSAutoconfigurationEnabled)
         {
             ConfigEnableDynamicDNS = true;
+
+            ConfigPrimaryDNSServer = string.Empty;
+            ConfigSecondaryDNSServer = string.Empty;
         }
         else
         {
