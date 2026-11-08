@@ -77,6 +77,7 @@ Release date: **xx.xx.2026**
 - The tooltip of a profile shows the bound network interface and the IP address / subnet mask (or **Obtain an IP address automatically**) instead of the host, which is not used by **Network Interface**. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - **Add profile...** on the **Configure** tab creates a profile with the shown configuration, bound to the selected network interface, e.g. to save the current configuration and apply it again later. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - **Reset** on the **Configure** tab shows the current configuration of the selected network adapter again, e.g. after a profile was selected. Static values of a previously selected adapter are no longer shown for an adapter that uses DHCP. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Double-click a profile (or press `Enter`) to fill in its values on the **Configure** tab again, e.g. after **Reset** or if the profile was selected automatically. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **WiFi**
 

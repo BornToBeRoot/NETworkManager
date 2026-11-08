@@ -1600,6 +1600,7 @@
                           Style="{StaticResource VerticalGridSplitter}" />
             <hostControls:ProfileExpanderPanel Grid.Column="2" Grid.Row="0"
                                                 ProfileItemTemplate="{StaticResource ResourceKey=NetworkInterfaceProfileItemTemplate}"
+                                                RunProfileCommand="{Binding Path=LoadProfileCommand}"
                                                 ProfileContextMenuExtraItems="{StaticResource ResourceKey=NetworkInterfaceProfileContextMenuExtraItems}" />
         </Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
