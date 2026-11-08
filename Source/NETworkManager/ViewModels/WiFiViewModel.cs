@@ -91,6 +91,7 @@ public class WiFiViewModel : ViewModelBase
 
             field = value;
             OnPropertyChanged();
+            OnPropertyChanged(nameof(CanChangeAdapter));
         }
     }
 
@@ -135,10 +136,12 @@ public class WiFiViewModel : ViewModelBase
     }
 
     /// <summary>
-    ///     Gets whether another adapter can be selected: not while the networks are scanned (the result of the previous
-    ///     adapter could arrive after the one of the new adapter) or a connection is made.
+    ///     Gets whether another adapter can be selected: not while the adapters are reloaded (the reloaded adapter is
+    ///     selected afterwards), the networks are scanned (the result of the previous adapter could arrive after the one
+    ///     of the new adapter) or a connection is made.
     /// </summary>
-    public bool CanChangeAdapter => !IsNetworksLoading && !IsBackgroundSearchRunning && !IsConnecting;
+    public bool CanChangeAdapter => !IsAdaptersLoading && !IsNetworksLoading && !IsBackgroundSearchRunning &&
+                                    !IsConnecting;
 
     public bool IsNetworksLoading
     {
