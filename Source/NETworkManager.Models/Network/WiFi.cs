@@ -84,13 +84,27 @@ public static class WiFi
         // Scan network adapter async
         await adapter.ScanAsync();
 
-        // Try to get the current connected Wi-Fi network of this network adapter
-        var (_, bssid) = TryGetConnectedNetworkFromWiFiAdapter(adapter.NetworkAdapter.NetworkAdapterId.ToString());
+        // The rest (native calls, vendor lookups) runs in the background - the caller continues on the UI thread
+        // after ScanAsync
+        return await Task.Run(() => CreateScanInfo(adapter));
+    }
+
+    /// <summary>
+    ///     Creates the result of a scan from the network report of the adapter.
+    /// </summary>
+    /// <param name="adapter">WiFi adapter as <see cref="WiFiAdapter" /> after the scan.</param>
+    /// <returns>A report as <see cref="WiFiNetworkScanInfo" /> including a list of <see cref="WiFiNetworkInfo" />.</returns>
+    private static WiFiNetworkScanInfo CreateScanInfo(WiFiAdapter adapter)
+    {
+        var adapterId = adapter.NetworkAdapter.NetworkAdapterId;
+
+        // BSSID of the network this adapter is connected to (null if not connected or not read)
+        var bssid = WlanApi.GetConnectedBssid(adapterId);
 
         // The WinRT API does not expose the channel bandwidth (and its center), so it is read from the
         // native BSS list (wlanapi.dll) and matched by BSSID below. Failures yield an empty map and we
         // fall back to a heuristic per network.
-        var channels = WlanApi.GetBssChannels(adapter.NetworkAdapter.NetworkAdapterId);
+        var channels = WlanApi.GetBssChannels(adapterId);
 
         var wifiNetworkInfos = new List<WiFiNetworkInfo>();
 
@@ -115,7 +129,7 @@ public static class WiFi
                 IsHidden = string.IsNullOrEmpty(availableNetwork.Ssid),
                 IsConnected = availableNetwork.Bssid.Equals(bssid, StringComparison.OrdinalIgnoreCase),
                 NetworkAuthenticationType = GetHumanReadableNetworkAuthenticationType(availableNetwork.SecuritySettings.NetworkAuthenticationType),
-                Vendor = (await OUILookup.LookupByMacAddressAsync(availableNetwork.Bssid)).FirstOrDefault()?.Vendor ?? "-/-",
+                Vendor = OUILookup.LookupByMacAddress(availableNetwork.Bssid).FirstOrDefault()?.Vendor ?? "-/-",
                 PhyKind = GetHumanReadablePhyKind(availableNetwork.PhyKind)
             };
 
@@ -124,75 +138,10 @@ public static class WiFi
 
         return new WiFiNetworkScanInfo
         {
-            NetworkAdapterId = adapter.NetworkAdapter.NetworkAdapterId,
+            NetworkAdapterId = adapterId,
             WiFiNetworkInfos = wifiNetworkInfos,
             Timestamp = adapter.NetworkReport.Timestamp.LocalDateTime
         };
-    }
-
-    /// <summary>
-    ///     Try to get the current connected Wi-Fi network (SSID and BSSID) of a network adapter from
-    ///     netsh.exe.
-    ///     Calling netsh.exe and parsing the output feels so dirty, but Microsoft's API returns only
-    ///     the WLAN profile and the SSID of the connected network. The BSSID is needed to find a
-    ///     specific access point among several.
-    /// </summary>
-    /// <param name="adapterId">GUID of the Wi-Fi network adapter.</param>
-    /// <returns>SSID and BSSID of the connected Wi-Fi network. Values are null if not detected.</returns>
-    // ReSharper disable once UnusedTupleComponentInReturnValue
-    private static (string SSID, string BSSID) TryGetConnectedNetworkFromWiFiAdapter(string adapterId)
-    {
-        string ssid = null;
-        string bssid = null;
-
-        using (var powerShell = System.Management.Automation.PowerShell.Create())
-        {
-            powerShell.AddScript("netsh wlan show interfaces");
-
-            var psOutputs = powerShell.Invoke();
-
-            /*
-            if (powerShell.Streams.Error.Count > 0) { // Handle error? }
-            if (powerShell.Streams.Warning.Count > 0) { // Handle warning? }
-            */
-
-            /* Each object looks like this:
-             *
-             * Name : Wireless
-             * Description : Intel ...
-             * GUID : 90d8...
-             * SSID : Devices
-             * BSSID : 6a:d7:...
-             */
-
-            var foundAdapter = false;
-
-            foreach (var outputItem in psOutputs)
-            {
-                // Find line with the network adapter id...
-                if (outputItem.ToString().Contains(adapterId, StringComparison.OrdinalIgnoreCase))
-                    foundAdapter = true;
-
-                // ...and skip all lines until we found it.
-                if (!foundAdapter)
-                    continue;
-
-                // Extract SSID from the line
-                if (outputItem.ToString().Contains(" SSID ", StringComparison.OrdinalIgnoreCase))
-                    ssid = outputItem.ToString().Split(':')[1].Trim();
-
-                // Extract BSSID from the line
-                if (outputItem.ToString().Contains(" BSSID ", StringComparison.OrdinalIgnoreCase))
-                    bssid = outputItem.ToString().Split(':', 2)[1].Trim();
-
-                // Break if we got the values, otherwise we might overwrite them
-                // with values from another adapter.
-                if (!string.IsNullOrEmpty(ssid) && !string.IsNullOrEmpty(bssid))
-                    break;
-            }
-        }
-
-        return (ssid, bssid);
     }
 
     /// <summary>

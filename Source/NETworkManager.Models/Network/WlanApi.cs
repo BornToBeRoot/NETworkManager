@@ -26,6 +26,13 @@ public static class WlanApi
     private const uint WlanApiVersion2 = 0x00000002;
     private const uint ErrorSuccess = 0;
 
+    // WLAN_INTF_OPCODE wlan_intf_opcode_current_connection: WLAN_CONNECTION_ATTRIBUTES of the interface.
+    private const uint WlanIntfOpcodeCurrentConnection = 7;
+
+    // Offset of WLAN_ASSOCIATION_ATTRIBUTES.dot11Bssid in WLAN_CONNECTION_ATTRIBUTES: isState (4), wlanConnectionMode
+    // (4), strProfileName (WCHAR[256] = 512), dot11Ssid (4 + 32), dot11BssType (4).
+    private const int ConnectionAttributesBssidOffset = 4 + 4 + 512 + 36 + 4;
+
     // 802.11 information element identifiers.
     private const byte EidHtOperation = 61;
     private const byte EidVhtOperation = 192;
@@ -65,6 +72,10 @@ public static class WlanApi
     private static extern uint WlanGetNetworkBssList(IntPtr hClientHandle, ref Guid pInterfaceGuid,
         IntPtr pDot11Ssid, DOT11_BSS_TYPE dot11BssType, [MarshalAs(UnmanagedType.Bool)] bool bSecurityEnabled,
         IntPtr pReserved, out IntPtr ppWlanBssList);
+
+    [DllImport("wlanapi.dll")]
+    private static extern uint WlanQueryInterface(IntPtr hClientHandle, ref Guid pInterfaceGuid, uint opCode,
+        IntPtr pReserved, out uint pdwDataSize, out IntPtr ppData, IntPtr pWlanOpcodeValueType);
 
     [DllImport("wlanapi.dll")]
     private static extern uint WlanEnumInterfaces(IntPtr hClientHandle, IntPtr pReserved,
@@ -174,6 +185,57 @@ public static class WlanApi
         }
 
         return result;
+    }
+
+    /// <summary>
+    ///     Returns the BSSID (lowercase, colon-separated, e.g. <c>aa:bb:cc:dd:ee:ff</c>) of the access point the
+    ///     given Wi-Fi interface is connected to.
+    /// </summary>
+    /// <param name="interfaceGuid">GUID of the Wi-Fi interface (<c>NetworkAdapter.NetworkAdapterId</c>).</param>
+    /// <returns>The BSSID, or null if the interface is not connected or it could not be read.</returns>
+    public static string GetConnectedBssid(Guid interfaceGuid)
+    {
+        var clientHandle = IntPtr.Zero;
+        var dataPtr = IntPtr.Zero;
+
+        try
+        {
+            var ret = WlanOpenHandle(WlanApiVersion2, IntPtr.Zero, out _, out clientHandle);
+
+            if (ret != ErrorSuccess)
+            {
+                Log.Warn($"WlanOpenHandle failed with error code {ret}.");
+                return null;
+            }
+
+            var guid = interfaceGuid;
+
+            // Fails with ERROR_INVALID_STATE (5023) if the interface is not connected
+            ret = WlanQueryInterface(clientHandle, ref guid, WlanIntfOpcodeCurrentConnection, IntPtr.Zero,
+                out var dataSize, out dataPtr, IntPtr.Zero);
+
+            if (ret != ErrorSuccess || dataPtr == IntPtr.Zero || dataSize < ConnectionAttributesBssidOffset + 6)
+                return null;
+
+            var bssid = new byte[6];
+            Marshal.Copy(IntPtr.Add(dataPtr, ConnectionAttributesBssidOffset), bssid, 0, 6);
+
+            return FormatBssid(bssid);
+        }
+        catch (Exception ex)
+        {
+            Log.Error("Error while reading the connected Wi-Fi network via wlanapi.dll.", ex);
+
+            return null;
+        }
+        finally
+        {
+            if (dataPtr != IntPtr.Zero)
+                WlanFreeMemory(dataPtr);
+
+            if (clientHandle != IntPtr.Zero)
+                WlanCloseHandle(clientHandle, IntPtr.Zero);
+        }
     }
 
     /// <summary>

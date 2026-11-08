@@ -220,6 +220,7 @@ Release date: **xx.xx.2026**
 - An unknown security or PHY kind is shown as `-/-` (like an unknown vendor) instead of the untranslated text `Unknown`. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - The export contains the values shown in the grid that were missing: `IsConnected`, `Security`, `Channel`, `ChannelWidth` (MHz), `ChannelWidthEstimated` and `Vendor` (appended as the last columns / elements). [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - **Export...** > all exports the networks shown in the grid (filtered by band and search) in the order shown, the selected networks are exported in the order shown too. The file is written in the background. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Scanning the networks (also **Automatically update every**) no longer freezes the window briefly: the connected network is read from the WiFi API instead of `netsh` via PowerShell, and the vendor lookups run in the background. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 
@@ -311,6 +312,7 @@ Release date: **xx.xx.2026**
 - Fixed the icon of the adapter selection (connected / disconnected) keeping the state of when the adapters were loaded. It is updated after each scan, e.g. after connecting or disconnecting. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed `F5` scanning and **Automatically update every** refreshing the networks behind an open dialog (e.g. **Connect...** or **Export...**). The auto refresh waits until the dialog is closed. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 - Fixed the CSV export breaking the row of a network whose SSID contains a comma or a quote. SSID, security and vendor are quoted. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
+- Fixed a network being marked as **Connected** that the selected adapter isn't connected to, if the computer has several WiFi adapters and the selected one was disconnected. An error while reading the connected network no longer ends the scan. [#PR](https://github.com/BornToBeRoot/NETworkManager/pull/PR)
 
 **Dashboard**
 
