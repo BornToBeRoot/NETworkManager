@@ -284,8 +284,8 @@ public static class WiFi
     ///     Get the Wi-Fi channel from channel frequency.
     /// </summary>
     /// <param name="gigahertz">Input like 2.422 or 5.240.</param>
-    /// <returns>Wi-Fi channel like 3 or 48.</returns>
-    private static int GetChannelFromChannelFrequency(double gigahertz)
+    /// <returns>Wi-Fi channel like 3 or 48, -1 if the frequency is not a channel.</returns>
+    public static int GetChannelFromChannelFrequency(double gigahertz)
     {
         // Convert to integer MHz to avoid floating-point precision issues from the
         // kilohertz / 1_000_000.0 conversion in ConvertChannelFrequencyToGigahertz.
@@ -297,11 +297,14 @@ public static class WiFi
         if (mhz == 2484)
             return 14;
 
-        // 5 GHz: channels follow f = 5000 + ch×5 MHz
-        if (mhz is >= 5180 and <= 5825)
+        // 5 GHz: channels 32-177 follow f = 5000 + ch×5 MHz (169-177 = UNII-4)
+        if (mhz is >= 5160 and <= 5885)
             return (mhz - 5000) / 5;
 
-        // 6 GHz: channels 1-233 follow f = 5950 + ch×5 MHz
+        // 6 GHz: channel 2 is at 5935 MHz, channels 1-233 follow f = 5950 + ch×5 MHz
+        if (mhz == 5935)
+            return 2;
+
         if (mhz is >= 5955 and <= 7115)
             return (mhz - 5950) / 5;
 
@@ -323,12 +326,12 @@ public static class WiFi
     /// </summary>
     /// <param name="gigahertz">Frequency in gigahertz like 2.412 or 5.180.</param>
     /// <returns>Radio like 2.4 GHz, 5 GHz, etc. as <see cref="WiFiRadio" />.</returns>
-    private static WiFiRadio GetWiFiRadioFromChannelFrequency(double gigahertz)
+    public static WiFiRadio GetWiFiRadioFromChannelFrequency(double gigahertz)
     {
         return gigahertz switch
         {
             >= 2.412 and <= 2.484 => WiFiRadio.GHz2dot4,
-            >= 5.180 and <= 5.825 => WiFiRadio.GHz5,
+            >= 5.160 and <= 5.885 => WiFiRadio.GHz5,
             >= 5.925 and <= 7.125 => WiFiRadio.GHz6,
             _ => WiFiRadio.Unknown
         };

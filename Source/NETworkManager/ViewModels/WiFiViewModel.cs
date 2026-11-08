@@ -881,16 +881,17 @@ public class WiFiViewModel : ViewModelBase
     // 2.4 GHz operating channels are 1, 2, 3, ... 14 (every channel number), labeled with the channel
     private static readonly HashSet<int> ValidChannels2Dot4GHz = BuildChannelSet(1, 14, 1);
 
-    // 5 GHz operating channels are 36 - 64 and 100 - 144 (every 4 in channel-number space) and 149 - 165 (UNII-3,
+    // 5 GHz operating channels are 36 - 64 and 100 - 144 (every 4 in channel-number space) and 149 - 177 (UNII-3 / -4,
     // odd channel numbers), labeled with the channel
     private static readonly HashSet<int> ValidChannels5GHz =
     [
         .. BuildChannelSet(36, 64, 4),
         .. BuildChannelSet(100, 144, 4),
-        .. BuildChannelSet(149, 165, 4)
+        .. BuildChannelSet(149, 177, 4)
     ];
 
-    // 6 GHz operating channels are 1, 5, 9, ... 233 (every 4 in channel-number space), labeled with the
+    // 6 GHz operating channels are 1, 5, 9, ... 233 (every 4 in channel-number space), labeled with the channel.
+    // Channel 2 (5935 MHz) is below channel 1, at -3 on the axis - not labeled (the tooltip shows it).
     private static readonly HashSet<int> ValidChannels6GHz = BuildChannelSet(1, 233, 4);
 
     // Channel that splits the 6 GHz band into the lower (1-125) and upper (129-233) chart. 127 sits
@@ -934,8 +935,8 @@ public class WiFiViewModel : ViewModelBase
         // left flank of its trapezoid reaches the baseline instead of being clipped. The 5 GHz
         // upper bound is reduced because the 64..100 dead zone is compressed.
         Radio2Dot4GHzXAxes = BuildXAxes(-2, 16, ValidChannels2Dot4GHz, false, labelColor);
-        Radio5GHzXAxes = BuildXAxes(30, 152, ValidChannels5GHz, true, labelColor);
-        Radio6GHzLowerXAxes = BuildXAxes(-2, 128, ValidChannels6GHz, false, labelColor);
+        Radio5GHzXAxes = BuildXAxes(30, 160, ValidChannels5GHz, true, labelColor);
+        Radio6GHzLowerXAxes = BuildXAxes(-6, 128, ValidChannels6GHz, false, labelColor);
         Radio6GHzUpperXAxes = BuildXAxes(126, 236, ValidChannels6GHz, false, labelColor);
 
         Radio2Dot4GHzYAxes = BuildYAxes(labelColor, separatorColor);
@@ -1122,6 +1123,7 @@ public class WiFiViewModel : ViewModelBase
             // Channel 14 is at 2484 MHz and does not follow the standard ch×5 + 2407 spacing.
             WiFiRadio.GHz2dot4 => (int)Math.Round(frequencyMHz) == 2484 ? 14.0 : (frequencyMHz - 2407) / 5.0,
             WiFiRadio.GHz5 => (frequencyMHz - 5000) / 5.0,
+            // Channel 2 is at 5935 MHz, below channel 1 (5955 MHz) - drawn at its real position (-3)
             WiFiRadio.GHz6 => (frequencyMHz - 5950) / 5.0,
             _ => 0
         };
