@@ -18,7 +18,7 @@
         <converters:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityCollapsedConverter" />
         <converters:NullableDoubleToStringConverter x:Key="NullableDoubleToStringConverter" />
     </UserControl.Resources>
-    <Border BorderThickness="1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
+    <Border Style="{StaticResource CardBorder}">
         <Grid Margin="10">
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />

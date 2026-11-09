@@ -64,6 +64,8 @@
     </Style>
 
     <Style x:Key="TextBlockAsTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+        <!-- Looks like text: no background (e.g. on a card) -->
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="IsReadOnly" Value="True" />
         <Setter Property="BorderThickness" Value="0" />

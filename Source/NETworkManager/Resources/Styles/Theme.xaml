@@ -14,6 +14,8 @@
     <!-- Element inside a control with a 1 px border, e.g. the button of a drop-down button -->
     <CornerRadius x:Key="CornerRadius.Control.Inner">3</CornerRadius>
     <CornerRadius x:Key="CornerRadius.Overlay">8</CornerRadius>
+    <!-- Cards, e.g. Dashboard widgets, Ping Monitor hosts -->
+    <CornerRadius x:Key="CornerRadius.Card">8</CornerRadius>
 
     <!--
         Keyboard focus (Tab): gray ring with a gap of 1 px around the control, rounded like the controls. Replaces

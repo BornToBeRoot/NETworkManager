@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Card: a group of values on its own (e.g. Dashboard widget), rounded with a subtle background -->
+    <Style x:Key="CardBorder" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{DynamicResource Brushes.Surface.Card}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource CornerRadius.Card}" />
+    </Style>
+</ResourceDictionary>

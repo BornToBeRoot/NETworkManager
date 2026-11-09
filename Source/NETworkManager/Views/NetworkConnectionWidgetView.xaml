@@ -28,7 +28,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Border Grid.Column="0" BorderThickness="1,1,0,1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
+        <!-- One card in three parts (computer, router, internet): rounded on the outside -->
+        <Border Grid.Column="0" Style="{StaticResource CardBorder}" BorderThickness="1,1,0,1" CornerRadius="8,0,0,8">
             <Grid Margin="10">
                 <Grid.Resources>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CenterTextBlock}" />
@@ -91,7 +92,7 @@
                 </Grid>
             </Grid>
         </Border>
-        <Border Grid.Column="1" BorderThickness="0,1,0,1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
+        <Border Grid.Column="1" Style="{StaticResource CardBorder}" BorderThickness="0,1,0,1" CornerRadius="0">
             <Grid Margin="10">
                 <Grid>
                     <Grid.Resources>
@@ -154,7 +155,7 @@
                 </Grid>
             </Grid>
         </Border>
-        <Border Grid.Column="2" BorderThickness="0,1,1,1" BorderBrush="{DynamicResource MahApps.Brushes.Gray8}">
+        <Border Grid.Column="2" Style="{StaticResource CardBorder}" BorderThickness="0,1,1,1" CornerRadius="0,8,8,0">
             <Grid Margin="10">
                 <Grid>
                     <Grid.Resources>
