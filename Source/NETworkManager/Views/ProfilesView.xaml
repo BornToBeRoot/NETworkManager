@@ -223,11 +223,13 @@
                     </Button>
                     <Popup PlacementTarget="{Binding ElementName=ButtonProfileFilter}"
                            Placement="Bottom" StaysOpen="False"
+                           AllowsTransparency="True"
                            IsOpen="{Binding ProfileFilterIsOpen}"
                            Width="220">
                         <Border Background="{DynamicResource MahApps.Brushes.Window.Background}"
                                 BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
-                                BorderThickness="1">
+                                BorderThickness="1"
+                                CornerRadius="{StaticResource CornerRadius.Overlay}">
                             <Grid Margin="10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />

@@ -276,6 +276,7 @@
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Border x:Name="Border"
                                     Background="{DynamicResource MahApps.Brushes.Gray10}"
+                                    CornerRadius="{StaticResource CornerRadius.Control}"
                                     Padding="10,0">
                                 <Grid>
                                     <Grid.ColumnDefinitions>

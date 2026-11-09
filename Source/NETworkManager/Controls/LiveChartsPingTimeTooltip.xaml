@@ -6,7 +6,8 @@
              mc:Ignorable="d">
     <Border Background="{DynamicResource MahApps.Brushes.Window.Background}"
             BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
-            BorderThickness="1">
+            BorderThickness="1"
+            CornerRadius="{StaticResource CornerRadius.Control}">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

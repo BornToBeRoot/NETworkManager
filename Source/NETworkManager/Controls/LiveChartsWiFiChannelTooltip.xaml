@@ -7,6 +7,7 @@
     <Border Background="{DynamicResource MahApps.Brushes.Window.Background}"
             BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
             BorderThickness="1"
+            CornerRadius="{StaticResource CornerRadius.Control}"
             IsHitTestVisible="False">
         <ItemsControl Margin="10" ItemsSource="{Binding TooltipEntries}">
             <ItemsControl.ItemTemplate>
