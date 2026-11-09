@@ -10,7 +10,19 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Fill="{DynamicResource MahApps.Brushes.Gray8}" Opacity="0.5" Margin="3" />
+                    <Rectangle Fill="{DynamicResource MahApps.Brushes.Gray5}" Margin="3" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Drag preview of the gap splitter (6 wide, see VerticalGapGridSplitter): a 2 px line in the middle of the gap
+         (the margin of 3 of the default preview would leave nothing) -->
+    <Style x:Key="GridSplitterGapPreviewStyle" TargetType="{x:Type Control}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Fill="{DynamicResource MahApps.Brushes.Gray5}" Margin="2,0" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -69,6 +81,7 @@
         <Setter Property="Margin" Value="0" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="PreviewStyle" Value="{StaticResource GridSplitterGapPreviewStyle}" />
     </Style>
     
     <Style x:Key="HorizontalGridSplitter" TargetType="{x:Type GridSplitter}">
