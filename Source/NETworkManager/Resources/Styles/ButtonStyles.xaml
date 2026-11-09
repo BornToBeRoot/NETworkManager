@@ -10,6 +10,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
         <Setter Property="mah:ControlsHelper.CornerRadius" Value="{StaticResource CornerRadius.Control}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual.Ring}" />
         <Style.Triggers>
             <!-- Disabled: keep the background (also of HighlightedButton) and the foreground (MahApps Flat sets Gray2),
                  dim the button instead, like the inputs -->

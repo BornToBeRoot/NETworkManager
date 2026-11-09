@@ -14,4 +14,25 @@
     <!-- Element inside a control with a 1 px border, e.g. the button of a drop-down button -->
     <CornerRadius x:Key="CornerRadius.Control.Inner">3</CornerRadius>
     <CornerRadius x:Key="CornerRadius.Overlay">8</CornerRadius>
+
+    <!--
+        Keyboard focus (Tab): accent ring with a gap of 1 px around the control, rounded like the controls. Replaces
+        the dotted rectangle of MahApps (buttons) and the system default (e.g. CheckBox, RadioButton, list items).
+        Only shown for keyboard navigation, not when clicking.
+    -->
+    <Style x:Key="FocusVisual.Ring">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border Margin="-3"
+                            BorderThickness="2"
+                            CornerRadius="6"
+                            BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
+                            SnapsToDevicePixels="True" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="{x:Static SystemParameters.FocusVisualStyleKey}" BasedOn="{StaticResource FocusVisual.Ring}" />
 </ResourceDictionary>
