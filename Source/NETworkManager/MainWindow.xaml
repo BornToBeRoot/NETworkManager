@@ -670,16 +670,37 @@
                                                             <Setter Property="ToolTip" Value="{x:Null}" />
                                                         </MultiDataTrigger.Setters>
                                                     </MultiDataTrigger>
-                                                    <DataTrigger
-                                                        Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}"
-                                                        Value="True">
-                                                        <Setter Property="Background"
-                                                                Value="{DynamicResource MahApps.Brushes.Gray8}" />
-                                                    </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Grid.Style>
-                                        <Rectangle Grid.Column="0" Width="4" Height="48" HorizontalAlignment="Left">
+                                        <!-- Pill behind the item (mouse over / selected), inset so the icon stays centered in
+                                             the collapsed navigation -->
+                                        <Border Grid.Column="0" Grid.ColumnSpan="2" Margin="4,2"
+                                                CornerRadius="{StaticResource CornerRadius.Control}">
+                                            <Border.Style>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="Background" Value="Transparent" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger
+                                                            Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}"
+                                                            Value="True">
+                                                            <Setter Property="Background"
+                                                                    Value="{DynamicResource Brushes.Control.MouseOver}" />
+                                                        </DataTrigger>
+                                                        <DataTrigger
+                                                            Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}"
+                                                            Value="True">
+                                                            <Setter Property="Background"
+                                                                    Value="{DynamicResource Brushes.Control.Pressed}" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                        </Border>
+                                        <!-- Accent indicator of the selected item, inside the pill -->
+                                        <Rectangle Grid.Column="0" Width="3" Height="18" Margin="4,0,0,0"
+                                                   RadiusX="1.5" RadiusY="1.5"
+                                                   HorizontalAlignment="Left" VerticalAlignment="Center">
                                             <Rectangle.Style>
                                                 <Style TargetType="{x:Type Rectangle}">
                                                     <Style.Triggers>
@@ -738,7 +759,7 @@
                                                             Binding="{Binding Path=IsSelected,RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}"
                                                             Value="True">
                                                             <Setter Property="Foreground"
-                                                                    Value="{DynamicResource MahApps.Brushes.Accent}" />
+                                                                    Value="{DynamicResource MahApps.Brushes.ThemeForeground}" />
                                                         </DataTrigger>
                                                         <DataTrigger
                                                             Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.ApplicationViewIsExpanded}"
