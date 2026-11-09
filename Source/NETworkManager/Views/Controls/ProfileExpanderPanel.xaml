@@ -365,6 +365,21 @@
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="{x:Type TypeName=ListBoxItem}"
                                BasedOn="{StaticResource ResourceKey=MahApps.Styles.ListBoxItem}">
+                            <!-- On the profile panel like the navigation: transparent, subtle tint on mouse over /
+                                 selected with the normal text (MahApps: theme background, accent + white text) -->
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="mah:ItemHelper.HoverBackgroundBrush" Value="{DynamicResource Brushes.Control.MouseOver}" />
+                            <Setter Property="mah:ItemHelper.SelectedBackgroundBrush" Value="{DynamicResource Brushes.Control.Pressed}" />
+                            <Setter Property="mah:ItemHelper.ActiveSelectionBackgroundBrush" Value="{DynamicResource Brushes.Control.Pressed}" />
+                            <Setter Property="mah:ItemHelper.HoverSelectedBackgroundBrush" Value="{DynamicResource Brushes.Button.Pressed}" />
+                            <Setter Property="mah:ItemHelper.MouseLeftButtonPressedBackgroundBrush" Value="{DynamicResource Brushes.Button.Pressed}" />
+                            <Setter Property="mah:ItemHelper.MouseRightButtonPressedBackgroundBrush" Value="{DynamicResource Brushes.Button.Pressed}" />
+                            <Setter Property="mah:ItemHelper.HoverForegroundBrush" Value="{DynamicResource MahApps.Brushes.Text}" />
+                            <Setter Property="mah:ItemHelper.SelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Text}" />
+                            <Setter Property="mah:ItemHelper.ActiveSelectionForegroundBrush" Value="{DynamicResource MahApps.Brushes.Text}" />
+                            <Setter Property="mah:ItemHelper.HoverSelectedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Text}" />
+                            <Setter Property="mah:ItemHelper.MouseLeftButtonPressedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Text}" />
+                            <Setter Property="mah:ItemHelper.MouseRightButtonPressedForegroundBrush" Value="{DynamicResource MahApps.Brushes.Text}" />
                             <Setter Property="ContextMenu">
                                 <Setter.Value>
                                     <!-- The tool's view model (like the panel's own DataContext), not the profile of the
