@@ -64,7 +64,7 @@
             </MenuItem>
             <MenuItem Header="{x:Static Member=localization:Strings.Close}" Command="{Binding Path=CloseApplicationCommand}">
                 <MenuItem.Icon>
-                    <Rectangle Width="16" Height="16" Fill="Red">
+                    <Rectangle Width="16" Height="16" Fill="{DynamicResource Brushes.Status.Error}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=WindowClose}" />
                         </Rectangle.OpacityMask>
@@ -240,7 +240,7 @@
                                 <Setter Property="Fill" Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                                        <Setter Property="Fill" Value="#b95353" />
+                                        <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

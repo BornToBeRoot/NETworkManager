@@ -127,7 +127,7 @@
                 <Rectangle Grid.Column="2"
                            Margin="5,0"
                            Width="16" Height="16"
-                           Fill="#badc58"
+                           Fill="{DynamicResource Brushes.Status.Success}"
                            Visibility="{Binding IsValid, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=CheckCircleOutline}" />

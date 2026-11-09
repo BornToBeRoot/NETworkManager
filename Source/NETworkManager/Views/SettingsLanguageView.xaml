@@ -56,7 +56,7 @@
                             <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding NativeName}"
                                        Style="{StaticResource DefaultTextBlock}" />
                         </Grid>
-                        <Border Grid.Column="3" Grid.Row="0" BorderThickness="1" BorderBrush="#badc58" Padding="10,5"
+                        <Border Grid.Column="3" Grid.Row="0" BorderThickness="1" BorderBrush="{DynamicResource Brushes.Status.Success}" Padding="10,5"
                                 VerticalAlignment="Center" HorizontalAlignment="Right"
                                 Visibility="{Binding IsOfficial, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
                             <StackPanel Orientation="Horizontal">
@@ -68,12 +68,12 @@
                                     <Rectangle.Style>
                                         <Style TargetType="{x:Type Rectangle}">
                                             <Setter Property="OpacityMask" Value="{StaticResource VisualClear}" />
-                                            <Setter Property="Fill" Value="#badc58" />
+                                            <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Success}" />
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
                                 <TextBlock Text="{x:Static localization:Strings.Official}" VerticalAlignment="Center"
-                                           Foreground="#badc58" Style="{StaticResource DefaultTextBlock}"
+                                           Foreground="{DynamicResource Brushes.Status.Success}" Style="{StaticResource DefaultTextBlock}"
                                            Margin="10,0,0,0" />
                             </StackPanel>
                         </Border>

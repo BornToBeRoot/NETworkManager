@@ -7,11 +7,11 @@
     <ControlTemplate x:Key="DefaultErrorTemplate">
         <!--
          <Grid>
-            <Border BorderBrush="#b95353" BorderThickness="1"> 
+            <Border BorderBrush="{DynamicResource Brushes.Status.Error}" BorderThickness="1"> 
           -->
         <Grid>
             <Polygon x:Name="ToolTipCorner" Grid.ZIndex="1" Margin="0" Points="12,12 12,0 0,0"
-                     Fill="#b95353" HorizontalAlignment="Right"
+                     Fill="{DynamicResource Brushes.Status.Error}" HorizontalAlignment="Right"
                      VerticalAlignment="Top" IsHitTestVisible="True" />
             <AdornedElementPlaceholder x:Name="Adorner" />
             <Popup PlacementTarget="{Binding ElementName=Adorner}" PopupAnimation="Fade" HorizontalOffset="5">

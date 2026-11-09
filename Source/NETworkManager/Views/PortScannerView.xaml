@@ -942,13 +942,13 @@
                                     <Setter TargetName="ChangeText" Property="Foreground" Value="{DynamicResource MahApps.Brushes.Gray5}" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Change}" Value="{x:Static network:PortScannerPortChange.Closed}">
-                                    <Setter TargetName="ChangeIcon" Property="Fill" Value="#b95353" />
+                                    <Setter TargetName="ChangeIcon" Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
                                     <Setter TargetName="ChangeIcon" Property="OpacityMask">
                                         <Setter.Value>
                                             <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Minus}" />
                                         </Setter.Value>
                                     </Setter>
-                                    <Setter TargetName="ChangeText" Property="Foreground" Value="#b95353" />
+                                    <Setter TargetName="ChangeText" Property="Foreground" Value="{DynamicResource Brushes.Status.Error}" />
                                 </DataTrigger>
                             </DataTemplate.Triggers>
                         </DataTemplate>

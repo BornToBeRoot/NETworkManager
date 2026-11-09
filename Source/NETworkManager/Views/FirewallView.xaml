@@ -523,14 +523,14 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate DataType="{x:Type firewall:FirewallRule}">
                                         <Rectangle x:Name="ActionIcon" Width="16" Height="16"
-                                                   Fill="#b95353">
+                                                   Fill="{DynamicResource Brushes.Status.Error}">
                                             <Rectangle.OpacityMask>
                                                 <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Close}" />
                                             </Rectangle.OpacityMask>
                                         </Rectangle>
                                         <DataTemplate.Triggers>
                                             <DataTrigger Binding="{Binding (firewall:FirewallRule.Action)}" Value="{x:Static firewall:FirewallRuleAction.Allow}">
-                                                <Setter TargetName="ActionIcon" Property="Fill" Value="#badc58" />
+                                                <Setter TargetName="ActionIcon" Property="Fill" Value="{DynamicResource Brushes.Status.Success}" />
                                                 <Setter TargetName="ActionIcon" Property="OpacityMask">
                                                     <Setter.Value>
                                                         <VisualBrush Stretch="Uniform" Visual="{iconPacks:Material Kind=Check}" />
@@ -549,11 +549,11 @@
                                     <DataTemplate DataType="{x:Type firewall:FirewallRule}">
                                         <TextBlock x:Name="ActionText"
                                                    Text="{Binding (firewall:FirewallRule.Action), Converter={StaticResource FirewallRuleActionToStringConverter}}"
-                                                   Foreground="#b95353"
+                                                   Foreground="{DynamicResource Brushes.Status.Error}"
                                                    VerticalAlignment="Center" />
                                         <DataTemplate.Triggers>
                                             <DataTrigger Binding="{Binding (firewall:FirewallRule.Action)}" Value="{x:Static firewall:FirewallRuleAction.Allow}">
-                                                <Setter TargetName="ActionText" Property="Foreground" Value="#badc58" />
+                                                <Setter TargetName="ActionText" Property="Foreground" Value="{DynamicResource Brushes.Status.Success}" />
                                             </DataTrigger>
                                         </DataTemplate.Triggers>
                                     </DataTemplate>

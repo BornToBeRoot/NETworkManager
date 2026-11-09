@@ -47,6 +47,21 @@ public static class AppearanceManager
     public const string ControlPressedBrushKey = "Brushes.Control.Pressed";
 
     /// <summary>
+    ///     Resource key of the status color "success" (e.g. host up, port open, firewall rule allows).
+    /// </summary>
+    public const string StatusSuccessBrushKey = "Brushes.Status.Success";
+
+    /// <summary>
+    ///     Resource key of the status color "warning" (e.g. changed since the last scan, warning icon).
+    /// </summary>
+    public const string StatusWarningBrushKey = "Brushes.Status.Warning";
+
+    /// <summary>
+    ///     Resource key of the status color "error" (e.g. host down, port closed, error icon, validation error).
+    /// </summary>
+    public const string StatusErrorBrushKey = "Brushes.Status.Error";
+
+    /// <summary>
     ///     Name of the folder inside the application directory where the custom themes are stored.
     /// </summary>
     private const string ThemeFolderName = "Themes";
@@ -164,6 +179,33 @@ public static class AppearanceManager
     }
 
     /// <summary>
+    ///     Set the status colors (success, warning, error) for a dark or light theme (also custom themes, based on their
+    ///     base color scheme). The dark colors are the original colors of the application, the light ones are darker
+    ///     to be readable on a white background (contrast ≥ 4:1).
+    /// </summary>
+    /// <param name="theme">Theme that was applied.</param>
+    private static void ApplyStatusBrushes(Theme theme)
+    {
+        var isDark = theme.BaseColorScheme == ThemeManager.BaseColorDark;
+
+        var appResources = System.Windows.Application.Current.Resources;
+
+        appResources[StatusSuccessBrushKey] = CreateFrozenBrush(isDark ? "#badc58" : "#558b16");
+        appResources[StatusWarningBrushKey] = CreateFrozenBrush(isDark ? "#f1b856" : "#b06d00");
+        appResources[StatusErrorBrushKey] = CreateFrozenBrush("#b95353");
+    }
+
+    /// <summary>
+    ///     Create a frozen brush from a color string (e.g. "#badc58").
+    /// </summary>
+    /// <param name="color">Color as string.</param>
+    /// <returns>Frozen brush.</returns>
+    private static SolidColorBrush CreateFrozenBrush(string color)
+    {
+        return CreateFrozenBrush((Color)ColorConverter.ConvertFromString(color), 1);
+    }
+
+    /// <summary>
     ///     Create a frozen brush with the given color and opacity.
     /// </summary>
     /// <param name="color">Color of the brush.</param>
@@ -221,6 +263,7 @@ public static class AppearanceManager
     private static void Current_ThemeChanged(object sender, ThemeChangedEventArgs e)
     {
         ApplyControlStateBrushes(e.NewTheme);
+        ApplyStatusBrushes(e.NewTheme);
         ApplyCustomThemeFixes(e.NewTheme.Name);
     }
     #endregion

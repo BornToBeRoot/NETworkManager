@@ -118,7 +118,7 @@
                                     </MultiDataTrigger.Conditions>
                                     <MultiDataTrigger.Setters>
                                         <Setter Property="OpacityMask" Value="{StaticResource VisualConnected}" />
-                                        <Setter Property="Fill" Value="#badc58" />
+                                        <Setter Property="Fill" Value="{DynamicResource Brushes.Status.Success}" />
                                     </MultiDataTrigger.Setters>
                                 </MultiDataTrigger>
                                 <MultiDataTrigger>

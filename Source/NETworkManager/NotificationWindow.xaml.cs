@@ -1,6 +1,7 @@
 using MahApps.Metro.IconPacks;
 using NETworkManager.Localization;
 using NETworkManager.Models;
+using NETworkManager.Settings;
 using NETworkManager.Utilities;
 using System;
 using System.Collections.Generic;
@@ -133,10 +134,18 @@ public partial class NotificationWindow : INotifyPropertyChanged
 
     #region Methods
 
-    // Colors of the application (status icons, "Since last scan" of the scanners)
-    private static readonly Color UpColor = (Color)ColorConverter.ConvertFromString("#badc58");
-    private static readonly Color DownColor = (Color)ColorConverter.ConvertFromString("#b95353");
-    private static readonly Color ChangedColor = (Color)ColorConverter.ConvertFromString("#f1b856");
+    /// <summary>
+    /// Gets a status color of the current theme (status icons, "Since last scan" of the scanners), see
+    /// <see cref="AppearanceManager"/>.
+    /// </summary>
+    /// <param name="key">Resource key of the status brush.</param>
+    /// <returns>Color of the brush, gray if it is not found.</returns>
+    private static Color GetStatusColor(string key)
+    {
+        return System.Windows.Application.Current.TryFindResource(key) is SolidColorBrush brush
+            ? brush.Color
+            : Colors.Gray;
+    }
 
     /// <summary>
     /// Gets the icon and its brush of a status: up green, down red, up and down half green / half red (split along the
@@ -167,16 +176,19 @@ public partial class NotificationWindow : INotifyPropertyChanged
     /// <returns>Frozen brush.</returns>
     private static Brush GetStatusBrush(NotificationStatus status)
     {
+        var upColor = GetStatusColor(AppearanceManager.StatusSuccessBrushKey);
+        var downColor = GetStatusColor(AppearanceManager.StatusErrorBrushKey);
+
         Brush brush = status switch
         {
-            NotificationStatus.Up => new SolidColorBrush(UpColor),
-            NotificationStatus.Down => new SolidColorBrush(DownColor),
+            NotificationStatus.Up => new SolidColorBrush(upColor),
+            NotificationStatus.Down => new SolidColorBrush(downColor),
             NotificationStatus.UpAndDown => new LinearGradientBrush(new GradientStopCollection
             {
                 // Two stops at the same offset: a sharp diagonal edge instead of a gradient
-                new(UpColor, 0), new(UpColor, 0.5), new(DownColor, 0.5), new(DownColor, 1)
+                new(upColor, 0), new(upColor, 0.5), new(downColor, 0.5), new(downColor, 1)
             }, new Point(0, 0), new Point(1, 1)),
-            _ => new SolidColorBrush(ChangedColor)
+            _ => new SolidColorBrush(GetStatusColor(AppearanceManager.StatusWarningBrushKey))
         };
 
         brush.Freeze();

@@ -35,7 +35,7 @@
 
     <Style x:Key="ErrorTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">
         <Setter Property="TextWrapping" Value="Wrap" />
-        <Setter Property="Foreground" Value="#b95353" />
+        <Setter Property="Foreground" Value="{DynamicResource Brushes.Status.Error}" />
     </Style>
 
     <Style x:Key="MessageTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource DefaultTextBlock}">

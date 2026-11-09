@@ -702,7 +702,7 @@
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.Change)}"
                                                                          Value="{x:Static network:WiFiNetworkChange.Gone}">
-                                                                <Setter TargetName="ChangeIcon" Property="Fill" Value="#b95353" />
+                                                                <Setter TargetName="ChangeIcon" Property="Fill" Value="{DynamicResource Brushes.Status.Error}" />
                                                                 <Setter TargetName="ChangeIcon" Property="OpacityMask">
                                                                     <Setter.Value>
                                                                         <VisualBrush Stretch="Uniform"
@@ -710,11 +710,11 @@
                                                                     </Setter.Value>
                                                                 </Setter>
                                                                 <Setter TargetName="ChangeText" Property="Foreground"
-                                                                        Value="#b95353" />
+                                                                        Value="{DynamicResource Brushes.Status.Error}" />
                                                             </DataTrigger>
                                                             <DataTrigger Binding="{Binding Path=(network:WiFiNetworkInfo.Change)}"
                                                                          Value="{x:Static network:WiFiNetworkChange.Changed}">
-                                                                <Setter TargetName="ChangeIcon" Property="Fill" Value="#f1b856" />
+                                                                <Setter TargetName="ChangeIcon" Property="Fill" Value="{DynamicResource Brushes.Status.Warning}" />
                                                                 <Setter TargetName="ChangeIcon" Property="OpacityMask">
                                                                     <Setter.Value>
                                                                         <VisualBrush Stretch="Uniform"
@@ -722,7 +722,7 @@
                                                                     </Setter.Value>
                                                                 </Setter>
                                                                 <Setter TargetName="ChangeText" Property="Foreground"
-                                                                        Value="#f1b856" />
+                                                                        Value="{DynamicResource Brushes.Status.Warning}" />
                                                                 <!-- Channel, width and security of the previous scan -->
                                                                 <Setter TargetName="ChangePanel" Property="ToolTip"
                                                                         Value="{Binding Path=., Converter={StaticResource WiFiNetworkChangeToStringConverter}, ConverterParameter=ToolTip}" />
