@@ -609,7 +609,8 @@
                                           ToolTipService.IsEnabled="True">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="48" />
-                                            <ColumnDefinition Width="Auto" />
+                                            <!-- * (not Auto): the pill spans both columns and covers the whole row -->
+                                            <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.Resources>
                                             <Style TargetType="{x:Type ToolTip}">
