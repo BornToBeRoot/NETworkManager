@@ -47,6 +47,11 @@ public static class AppearanceManager
     public const string ControlPressedBrushKey = "Brushes.Control.Pressed";
 
     /// <summary>
+    ///     Resource key of the border of an input (e.g. TextBox, ComboBox) when the mouse is over it.
+    /// </summary>
+    public const string ControlBorderMouseOverBrushKey = "Brushes.Control.Border.MouseOver";
+
+    /// <summary>
     ///     Resource key of the status color "success" (e.g. host up, port open, firewall rule allows).
     /// </summary>
     public const string StatusSuccessBrushKey = "Brushes.Status.Success";
@@ -163,7 +168,8 @@ public static class AppearanceManager
     }
 
     /// <summary>
-    ///     Set the backgrounds of controls (e.g. buttons, ComboBox) for mouse over and pressed: the foreground color of
+    ///     Set the backgrounds of controls (e.g. buttons, ComboBox) for mouse over and pressed and the border of inputs
+    ///     for mouse over: the foreground color of
     ///     the theme with a low opacity, a subtle tint in every theme (also custom themes) instead of the light gray of
     ///     MahApps (Gray9, Gray7, Gray5), which stands out in the dark theme.
     /// </summary>
@@ -176,6 +182,7 @@ public static class AppearanceManager
 
         appResources[ControlMouseOverBrushKey] = CreateFrozenBrush(foreground, 0.08);
         appResources[ControlPressedBrushKey] = CreateFrozenBrush(foreground, 0.12);
+        appResources[ControlBorderMouseOverBrushKey] = CreateFrozenBrush(foreground, 0.35);
     }
 
     /// <summary>
