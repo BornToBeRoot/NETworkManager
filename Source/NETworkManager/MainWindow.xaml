@@ -147,10 +147,6 @@
                       Focusable="False"
                       VerticalAlignment="Center"
                       Height="30">
-                <ComboBox.Resources>
-                    <!-- ReSharper disable once Xaml.RedundantResource - Override MahApps default style -->
-                    <SolidColorBrush x:Key="MahApps.Brushes.Control.Disabled" Color="{DynamicResource ResourceKey=MahApps.Colors.Gray8}" />
-                </ComboBox.Resources>
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
