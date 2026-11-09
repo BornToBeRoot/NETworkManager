@@ -77,14 +77,25 @@
         </Setter>
     </Style>
 
+    <!-- Settings entry at the bottom of the navigation: rounded pill on mouse over, like the application list -->
     <Style x:Key="SettingsButton" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid Background="{TemplateBinding Background}">
+                        <Border x:Name="Pill" Margin="4,2" Background="Transparent"
+                                CornerRadius="{StaticResource CornerRadius.Control}" />
                         <ContentPresenter VerticalAlignment="Center" />
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Pill" Property="Background" Value="{DynamicResource Brushes.Control.MouseOver}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Pill" Property="Background" Value="{DynamicResource Brushes.Control.Pressed}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
