@@ -67,7 +67,7 @@
                                     MinWidth="200"
                                     SortMemberPath="Name"
                                     Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Ports}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.Ports}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (network:PortProfileInfo.Ports)}"
                                     SortMemberPath="Ports"
                                     MinWidth="200" />

@@ -84,11 +84,11 @@
                 </ContextMenu>
             </controls:MultiSelectDataGrid.Resources>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Server}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.Server}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                   Binding="{Binding (network:ServerConnectionInfo.Server)}"
                                   SortMemberPath="Server"
                                   Width="250" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Port}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                   SortMemberPath="Port"
                                   Binding="{Binding (network:ServerConnectionInfo.Port)}"
                                   MinWidth="150" />

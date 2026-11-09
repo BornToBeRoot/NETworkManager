@@ -247,7 +247,7 @@
                 </GroupStyle>
             </controls:MultiSelectDataGrid.GroupStyle>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.DomainName}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.DomainName}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding Path=(network:DNSLookupRecordInfo.DomainName)}"
                                     SortMemberPath="DomainName"
                                     MinWidth="200" />
@@ -263,7 +263,7 @@
                                     Binding="{Binding Path=(network:DNSLookupRecordInfo.RecordType)}"
                                     SortMemberPath="RecordType"
                                     MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Result}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.Result}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding Path=(network:DNSLookupRecordInfo.Result)}"
                                     SortMemberPath="Result"
                                     MinWidth="200">

@@ -176,19 +176,19 @@
                         <DataGridTextColumn Header="{x:Static Member=localization:Strings.Protocol}"
                                             Binding="{Binding Path=(network:ConnectionInfo.Protocol)}"
                                             SortMemberPath="Protocol" MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.LocalIPAddress}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.LocalIPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding Path=(network:ConnectionInfo.LocalIPAddress)}"
                                             SortMemberPath="LocalIPAddress" MinWidth="150" />
-                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.LocalPort}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.LocalPort}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding Path=(network:ConnectionInfo.LocalPort)}"
                                             SortMemberPath="LocalPort" MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemoteIPAddress}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemoteIPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding Path=(network:ConnectionInfo.RemoteIPAddress)}"
                                             SortMemberPath="RemoteIPAddress" MinWidth="150" />
-                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemotePort}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemotePort}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding Path=(network:ConnectionInfo.RemotePort)}"
                                             SortMemberPath="RemotePort" MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemoteHostname}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.RemoteHostname}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding Path=(network:ConnectionInfo.RemoteHostname)}"
                                             SortMemberPath="RemoteHostname" MinWidth="100" />
                         <DataGridTextColumn Header="{x:Static Member=localization:Strings.State}"

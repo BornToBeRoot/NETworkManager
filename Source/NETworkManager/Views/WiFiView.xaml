@@ -802,7 +802,7 @@
                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.AvailableNetwork).SecuritySettings.NetworkEncryptionType}"
                                                 SortMemberPath="AvailableNetwork.SecuritySettings.NetworkEncryptionType"
                                                 MinWidth="100" />
-                                            <DataGridTextColumn Header="{x:Static Member=localization:Strings.BSSID}"
+                                            <DataGridTextColumn Header="{x:Static Member=localization:Strings.BSSID}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                                                 Binding="{Binding Path=(network:WiFiNetworkInfo.Bssid)}"
                                                                 SortMemberPath="Bssid"
                                                                 MinWidth="140" />

@@ -165,7 +165,7 @@
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.Port}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (lookup:PortLookupInfo.Number)}" SortMemberPath="Number"
                                     MinWidth="100" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.Protocol}"

@@ -158,7 +158,7 @@
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (lookup:OUIInfo.MACAddress)}"
                                     SortMemberPath="MACAddress"
                                     MinWidth="150" />

@@ -38,7 +38,7 @@
                                 Binding="{Binding Path=(network:SNMPOIDProfileInfo.Name)}"
                                 SortMemberPath="Name"
                                 MinWidth="150" />
-                    <DataGridTextColumn Header="{x:Static Member=localization:Strings.OID}"
+                    <DataGridTextColumn Header="{x:Static Member=localization:Strings.OID}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                 Binding="{Binding Path=(network:SNMPOIDProfileInfo.OID)}"
                                 SortMemberPath="OID"
                                 MinWidth="150"

@@ -567,7 +567,7 @@
                                                 MinWidth="80" />
 
                             <!-- Local IP addresses -->
-                            <DataGridTextColumn Header="{x:Static localization:Strings.LocalIPAddress}"
+                            <DataGridTextColumn Header="{x:Static localization:Strings.LocalIPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                                 SortMemberPath="LocalAddressesDisplay"
                                                 MinWidth="120">
                                 <DataGridTextColumn.Binding>
@@ -580,7 +580,7 @@
                             </DataGridTextColumn>
 
                             <!-- Local ports -->
-                            <DataGridTextColumn Header="{x:Static localization:Strings.LocalPort}"
+                            <DataGridTextColumn Header="{x:Static localization:Strings.LocalPort}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                                 SortMemberPath="LocalPortsDisplay"
                                                 MinWidth="100">
                                 <DataGridTextColumn.Binding>
@@ -593,7 +593,7 @@
                             </DataGridTextColumn>
                             
                             <!-- Remote IP addresses -->
-                            <DataGridTextColumn Header="{x:Static localization:Strings.RemoteIPAddress}"
+                            <DataGridTextColumn Header="{x:Static localization:Strings.RemoteIPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                                 SortMemberPath="RemoteAddressesDisplay"
                                                 MinWidth="120">
                                 <DataGridTextColumn.Binding>
@@ -606,7 +606,7 @@
                             </DataGridTextColumn>
 
                             <!-- Remote ports -->
-                            <DataGridTextColumn Header="{x:Static localization:Strings.RemotePort}"
+                            <DataGridTextColumn Header="{x:Static localization:Strings.RemotePort}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                                 SortMemberPath="RemotePortsDisplay"
                                                 MinWidth="100">
                                 <DataGridTextColumn.Binding>

@@ -897,16 +897,16 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding IPAddress, Converter={StaticResource IPAddressToStringConverter}}"
                                     SortMemberPath="IPAddress"
                                     MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding Hostname, Converter={StaticResource StringNullOrEmptyToStringConverter}}"
                                     SortMemberPath="Hostname"
                                     Visibility="{Binding Path=Data.ScanOptions.ResolveHostname, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Port}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.Port}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding Port}"
                                     SortMemberPath="Port"
                                     MinWidth="80" />

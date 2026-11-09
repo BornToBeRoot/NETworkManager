@@ -102,7 +102,7 @@
                                                wpfHelpers:DataGridHelper.IsFillColumn="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate DataType="{x:Type TypeName=viewModels:ImportCandidateItem}">
-                                    <TextBlock Text="{Binding Path=Host}" />
+                                    <TextBlock Text="{Binding Path=Host}" FontFamily="{StaticResource Fonts.Family.Mono}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

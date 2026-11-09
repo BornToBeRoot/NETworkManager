@@ -284,11 +284,11 @@
                                                 Binding="{Binding Path=(hostsFileEditor:HostsFileEntry.IsEnabled)}"
                                                 SortMemberPath="IsEnabled"
                                                 MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.IPAddress}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.IPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding Path=(hostsFileEditor:HostsFileEntry.IPAddress)}"
                                             SortMemberPath="IPAddress"
                                             MinWidth="150" />
-                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.Hostname}"
+                        <DataGridTextColumn Header="{x:Static Member=localization:Strings.Hostname}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding Path=(hostsFileEditor:HostsFileEntry.Hostname)}"
                                             SortMemberPath="Hostname"
                                             MinWidth="200" />

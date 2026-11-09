@@ -293,7 +293,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="{x:Static localization:Strings.Name}"
                                                 Binding="{Binding Name}" MinWidth="250" />
-                            <DataGridTextColumn Header="{x:Static localization:Strings.IPAddresses}"
+                            <DataGridTextColumn Header="{x:Static localization:Strings.IPAddresses}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                                 Binding="{Binding IPAddresses}" MinWidth="200"
                                                 ElementStyle="{StaticResource RDAPWrapColumnStyle}" />
                         </DataGrid.Columns>
@@ -325,7 +325,7 @@
                                                 Binding="{Binding Algorithm}" MinWidth="80" />
                             <DataGridTextColumn Header="{x:Static localization:Strings.DigestType}"
                                                 Binding="{Binding DigestType}" MinWidth="80" />
-                            <DataGridTextColumn Header="{x:Static localization:Strings.Digest}"
+                            <DataGridTextColumn Header="{x:Static localization:Strings.Digest}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                                 Binding="{Binding Digest}" MinWidth="200"
                                                 ElementStyle="{StaticResource RDAPWrapColumnStyle}" />
                         </DataGrid.Columns>
@@ -355,7 +355,7 @@
                                                 Binding="{Binding Handle}" MinWidth="150" />
                             <DataGridTextColumn Header="{x:Static localization:Strings.Name}"
                                                 Binding="{Binding Name}" MinWidth="150" />
-                            <DataGridTextColumn Header="{x:Static localization:Strings.Range}"
+                            <DataGridTextColumn Header="{x:Static localization:Strings.Range}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                                 Binding="{Binding Range}" MinWidth="200"
                                                 ElementStyle="{StaticResource RDAPWrapColumnStyle}"
                                                 wpfHelpers:DataGridHelper.IsFillColumn="True" />
@@ -388,7 +388,7 @@
                                                 Binding="{Binding Handle}" MinWidth="150" />
                             <DataGridTextColumn Header="{x:Static localization:Strings.Name}"
                                                 Binding="{Binding Name}" MinWidth="150" />
-                            <DataGridTextColumn Header="{x:Static localization:Strings.Range}"
+                            <DataGridTextColumn Header="{x:Static localization:Strings.Range}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                                 Binding="{Binding Range}" MinWidth="200"
                                                 ElementStyle="{StaticResource RDAPWrapColumnStyle}"
                                                 wpfHelpers:DataGridHelper.IsFillColumn="True" />

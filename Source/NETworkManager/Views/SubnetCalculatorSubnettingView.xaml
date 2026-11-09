@@ -219,29 +219,29 @@
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.NetworkAddress}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.NetworkAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (network:IPNetworkInfo.Network), Converter={StaticResource IPAddressToStringConverter}}"
                                     SortMemberPath="NetworkInt32"
                                     MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Broadcast}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.Broadcast}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (network:IPNetworkInfo.Broadcast), Converter={StaticResource IPAddressToStringConverter}}"
                                     SortMemberPath="BroadcastInt32"
                                     MinWidth="150" />
                 <DataGridTextColumn Header="{x:Static localization:Strings.IPAddresses}"
                                     Binding="{Binding (network:IPNetworkInfo.Total), Converter={StaticResource BigIntegerToStringConverter}}"
                                     SortMemberPath="Total" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.SubnetMask}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.SubnetMask}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (network:IPNetworkInfo.Netmask), Converter={StaticResource IPAddressToStringConverter}}"
                                     SortMemberPath="NetmaskInt32" MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.CIDR}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.CIDR}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (network:IPNetworkInfo.Cidr)}"
                                     SortMemberPath="Cidr"
                                     MinWidth="80" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.FirstUsableIPAddress}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.FirstUsableIPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (network:IPNetworkInfo.FirstUsable), Converter={StaticResource IPAddressToStringConverter}}"
                                     SortMemberPath="FirstUsableInt32"
                                     MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.LastUsableIPAddress}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.LastUsableIPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (network:IPNetworkInfo.LastUsable), Converter={StaticResource IPAddressToStringConverter}}"
                                     SortMemberPath="LastUsableInt32"
                                     MinWidth="150" />

@@ -1107,11 +1107,11 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding PingInfo.IPAddress}"
                                     SortMemberPath="PingInfo.IPAddress"
                                     MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.Hostname}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     SortMemberPath="Hostname"
                                     MinWidth="150">
                     <DataGridTextColumn.Binding>
@@ -1231,7 +1231,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <!-- Port numbers ("..." while running), with service in the tooltip; sorted by the number of open ports -->
-                <DataGridTextColumn Header="{x:Static localization:Strings.OpenPorts}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.OpenPorts}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     SortMemberPath="OpenPortCount"
                                     Visibility="{Binding Path=Data.ScanOptions.PortScanEnabled, Source={StaticResource BindingProxy}, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="120">
@@ -1351,7 +1351,7 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.MACAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     SortMemberPath="MACAddress"
                                     MinWidth="150">
                     <DataGridTextColumn.Binding>

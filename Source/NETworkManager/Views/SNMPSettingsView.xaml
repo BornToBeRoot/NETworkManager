@@ -51,7 +51,7 @@
                                     SortMemberPath="Name"
                                     MinWidth="200"
                                     Width="Auto" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.OID}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.OID}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (network:SNMPOIDProfileInfo.OID)}"
                                     SortMemberPath="OID"
                                     MinWidth="200"

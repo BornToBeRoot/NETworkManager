@@ -195,11 +195,11 @@
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
             <controls:MultiSelectDataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Server}"
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Server}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding Path=(network:SNTPLookupInfo.Server)}"
                                     SortMemberPath="Server"
                                     MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static Member=localization:Strings.IPEndPoint}"
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.IPEndPoint}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding Path=(network:SNTPLookupInfo.IPEndPoint)}"
                                     SortMemberPath="IPEndPoint"
                                     MinWidth="150" />

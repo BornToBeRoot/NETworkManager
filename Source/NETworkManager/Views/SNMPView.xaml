@@ -684,7 +684,7 @@
                 </Style>
             </controls:MultiSelectDataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{x:Static localization:Strings.OID}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.OID}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (network:SNMPInfo.OID)}"
                                     SortMemberPath="OID"
                                     MinWidth="200" />

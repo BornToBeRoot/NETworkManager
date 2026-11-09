@@ -51,7 +51,7 @@
                                     Binding="{Binding (network:DNSServerConnectionInfoProfile.Name)}"
                                     SortMemberPath="Name"
                                     MinWidth="200" />
-                <DataGridTextColumn Header="{x:Static localization:Strings.DNSServers}"
+                <DataGridTextColumn Header="{x:Static localization:Strings.DNSServers}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (network:DNSServerConnectionInfoProfile.Servers), Converter={StaticResource ListServerConnectionInfoToStringConverter}}"
                                     CanUserSort="False"
                                     MinWidth="250" />

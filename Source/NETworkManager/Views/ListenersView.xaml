@@ -148,11 +148,11 @@
                                             Binding="{Binding (network:ListenerInfo.Protocol)}"
                                             SortMemberPath="Protocol"
                                             MinWidth="100" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}"
+                        <DataGridTextColumn Header="{x:Static localization:Strings.IPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding (network:ListenerInfo.IPAddress)}"
                                             SortMemberPath="IPAddress"
                                             MinWidth="150" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.Port}"
+                        <DataGridTextColumn Header="{x:Static localization:Strings.Port}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding (network:ListenerInfo.Port)}"
                                             SortMemberPath="Port"
                                             MinWidth="100" />

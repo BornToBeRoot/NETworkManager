@@ -512,10 +512,10 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{x:Static Member=localization:Strings.IPAddress}"
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.IPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (network:TracerouteHopInfo.IPAddress), Converter={StaticResource ResourceKey=IPAddressToStringConverter}}"
                                     MinWidth="150" />
-                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Hostname}"
+                <DataGridTextColumn Header="{x:Static Member=localization:Strings.Hostname}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                     Binding="{Binding (network:TracerouteHopInfo.Hostname), Converter={StaticResource ResourceKey=StringNullOrEmptyToStringConverter}}"
                                     Visibility="{Binding Source={x:Static Member=settings:SettingsManager.Current}, Path=Traceroute_ResolveHostname, Converter={StaticResource ResourceKey=BooleanToVisibilityCollapsedConverter}}"
                                     MinWidth="150"

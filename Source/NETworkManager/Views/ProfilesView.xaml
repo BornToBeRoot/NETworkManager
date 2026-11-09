@@ -417,7 +417,7 @@
                         <DataGridTextColumn Header="{x:Static localization:Strings.Name}"
                                             Binding="{Binding (profiles:ProfileInfo.Name)}" SortMemberPath="Name"
                                             MinWidth="150" Width="Auto" />
-                        <DataGridTextColumn Header="{x:Static localization:Strings.Host}"
+                        <DataGridTextColumn Header="{x:Static localization:Strings.Host}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                             Binding="{Binding (profiles:ProfileInfo.Host)}" SortMemberPath="Host"
                                             MinWidth="150" Width="Auto" />
                         <DataGridCheckBoxColumn ElementStyle="{StaticResource MahApps.Styles.CheckBox.DataGrid}"
