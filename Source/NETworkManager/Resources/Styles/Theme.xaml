@@ -16,7 +16,7 @@
     <CornerRadius x:Key="CornerRadius.Overlay">8</CornerRadius>
 
     <!--
-        Keyboard focus (Tab): accent ring with a gap of 1 px around the control, rounded like the controls. Replaces
+        Keyboard focus (Tab): gray ring with a gap of 1 px around the control, rounded like the controls. Replaces
         the dotted rectangle of MahApps (buttons) and the system default (e.g. CheckBox, RadioButton, list items).
         Only shown for keyboard navigation, not when clicking.
     -->
@@ -27,7 +27,7 @@
                     <Border Margin="-3"
                             BorderThickness="2"
                             CornerRadius="6"
-                            BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
+                            BorderBrush="{DynamicResource MahApps.Brushes.Gray5}"
                             SnapsToDevicePixels="True" />
                 </ControlTemplate>
             </Setter.Value>
