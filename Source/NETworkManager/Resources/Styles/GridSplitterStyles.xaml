@@ -10,7 +10,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Fill="{DynamicResource MahApps.Brushes.Gray5}" Margin="3" />
+                    <Rectangle Fill="{DynamicResource Brushes.Control.Border.MouseOver}" Margin="3" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -22,7 +22,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Fill="{DynamicResource MahApps.Brushes.Gray5}" Margin="2,0" />
+                    <Rectangle Fill="{DynamicResource Brushes.Control.Border.MouseOver}" Margin="2,0" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
