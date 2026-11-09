@@ -1328,7 +1328,7 @@
                                             <Border Margin="0,5,10,5" Padding="5"
                                                     BorderThickness="1"
                                                     BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
-                                                    CornerRadius="5">
+                                                    CornerRadius="{StaticResource CornerRadius.Control}">
                                                 <StackPanel Orientation="Horizontal">
                                                     <TextBlock Text="{Binding .}"
                                                                Style="{StaticResource InfoTextBlock}" />
@@ -2765,7 +2765,7 @@
                                                            Style="{StaticResource DefaultTextBlock}"
                                                            TextWrapping="Wrap" Margin="0,0,0,8" />
                                                 <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
-                                                        BorderThickness="1" CornerRadius="2">
+                                                        BorderThickness="1" CornerRadius="{StaticResource CornerRadius.Control}">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="Auto" />
@@ -3135,7 +3135,7 @@
                                                            Style="{StaticResource DefaultTextBlock}"
                                                            TextWrapping="Wrap" Margin="0,0,0,8" />
                                                 <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
-                                                        BorderThickness="1" CornerRadius="2">
+                                                        BorderThickness="1" CornerRadius="{StaticResource CornerRadius.Control}">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="Auto" />
@@ -3302,7 +3302,7 @@
                                                            Style="{StaticResource DefaultTextBlock}"
                                                            TextWrapping="Wrap" Margin="0,0,0,8" />
                                                 <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
-                                                        BorderThickness="1" CornerRadius="2">
+                                                        BorderThickness="1" CornerRadius="{StaticResource CornerRadius.Control}">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="Auto" />

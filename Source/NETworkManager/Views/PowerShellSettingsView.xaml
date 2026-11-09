@@ -60,7 +60,7 @@
                                        Style="{StaticResource DefaultTextBlock}"
                                        TextWrapping="Wrap" Margin="0,0,0,8" />
                             <Border BorderBrush="{DynamicResource MahApps.Brushes.Gray8}"
-                                    BorderThickness="1" CornerRadius="2">
+                                    BorderThickness="1" CornerRadius="{StaticResource CornerRadius.Control}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />

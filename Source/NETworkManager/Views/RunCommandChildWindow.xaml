@@ -196,7 +196,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type networkManager:RunCommandChip}">
                     <Border Background="{DynamicResource MahApps.Brushes.Gray10}"
-                            CornerRadius="3"
+                            CornerRadius="{StaticResource CornerRadius.Control}"
                             Padding="6,2"
                             Margin="0,0,5,5">
                         <StackPanel Orientation="Horizontal">

@@ -617,7 +617,7 @@
                                                         <ControlTemplate TargetType="{x:Type ToolTip}">
                                                             <Grid Height="36" Margin="0,6">
                                                                 <Border x:Name="border"
-                                                                        CornerRadius="3"
+                                                                        CornerRadius="{StaticResource CornerRadius.Control}"
                                                                         BorderThickness="1"
                                                                         BorderBrush="{DynamicResource ResourceKey=MahApps.Brushes.Gray8}"
                                                                         Background="{DynamicResource  ResourceKey=MahApps.Brushes.Window.Background}">
