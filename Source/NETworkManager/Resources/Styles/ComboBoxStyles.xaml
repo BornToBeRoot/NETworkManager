@@ -67,6 +67,12 @@
                                 <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
                                     <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource Brushes.Control.Pressed}" />
                                 </Trigger>
+                                <!-- Read-only (e.g. while a scan is running): the drop-down can't be opened, see
+                                     ComboBoxReadOnlyBehavior -->
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=IsReadOnly}" Value="True">
+                                    <Setter Property="IsHitTestVisible" Value="False" />
+                                    <Setter TargetName="Arrow" Property="Opacity" Value="0.55" />
+                                </DataTrigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
@@ -78,12 +84,14 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
+        <Setter Property="controls:ComboBoxReadOnlyBehavior.PreventSelectionWhenReadOnly" Value="True" />
         <Style.Triggers>
             <!-- Not editable: subtle mouse over background instead of Gray9 of MahApps (a style trigger wins over the
                  trigger of the template) -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsEditable" Value="False" />
+                    <Condition Property="IsReadOnly" Value="False" />
                     <Condition Property="IsMouseOver" Value="True" />
                 </MultiTrigger.Conditions>
                 <Setter Property="Background" Value="{DynamicResource Brushes.Control.MouseOver}" />
