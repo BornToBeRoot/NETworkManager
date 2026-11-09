@@ -596,6 +596,7 @@
                                   SelectionChanged="ListViewApplication_OnSelectionChanged"
                                   SelectionMode="Single"
                                   Background="Transparent"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                   BorderThickness="0"
                                   dd:DragDrop.IsDragSource="True"
                                   dd:DragDrop.IsDropTarget="True">
@@ -807,12 +808,15 @@
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Setter Property="SnapsToDevicePixels" Value="True" />
+                                    <!-- Full width (expanded navigation): the pill covers the whole row, not only the text -->
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type ListViewItem}">
                                                 <Border Background="Transparent" BorderThickness="0">
                                                     <Grid>
-                                                        <ContentPresenter x:Name="contentPresenter" />
+                                                        <ContentPresenter x:Name="contentPresenter"
+                                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                                                     </Grid>
                                                 </Border>
                                             </ControlTemplate>
