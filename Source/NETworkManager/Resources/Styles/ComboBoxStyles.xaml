@@ -4,11 +4,21 @@
                     xmlns:controls="clr-namespace:NETworkManager.Controls;assembly=NETworkManager.Controls"
                     xmlns:converters="clr-namespace:NETworkManager.Converters;assembly=NETworkManager.Converters">
     <Style x:Key="DefaultComboBox" TargetType="{x:Type ComboBox}" BasedOn="{StaticResource MahApps.Styles.ComboBox}">
+        <Style.Resources>
+            <!-- Disabled: hide the semi-transparent white overlay of MahApps (washed out, especially in the dark theme)
+                 and dim the control instead, see trigger -->
+            <SolidColorBrush x:Key="MahApps.Brushes.Control.Disabled" Color="Transparent" />
+        </Style.Resources>
         <Setter Property="FontSize" Value="14" />
         <!--<Setter Property="BorderThickness" Value="0,0,0,1" />-->
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.55" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource DefaultComboBox}" />
