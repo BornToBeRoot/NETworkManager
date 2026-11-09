@@ -108,7 +108,7 @@
         <TextBlock Text="{x:Static localization:Strings.Port}" Style="{StaticResource CenterTextBlock}"
                    Margin="0,0,0,10" />
         <TextBox Width="150" HorizontalAlignment="Left"
-                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort161}"
+                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort161}" FontFamily="{StaticResource Fonts.Family.Mono}"
                  Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="Port" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">

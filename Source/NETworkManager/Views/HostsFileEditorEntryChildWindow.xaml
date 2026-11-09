@@ -59,7 +59,7 @@
                      Grid.Column="2" Grid.Row="1"
                      Visibility="{Binding IsBulkEdit, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
                      Margin="0,0,0,10"
-                     mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Address}">
+                     mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Address}" FontFamily="{StaticResource Fonts.Family.Mono}">
                 <TextBox.Text>
                     <Binding Path="IPAddress" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -77,7 +77,7 @@
                      Grid.Column="2" Grid.Row="2"
                      Visibility="{Binding IsBulkEdit, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
                      Margin="0,0,0,10"
-                     mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}">
+                     mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}" FontFamily="{StaticResource Fonts.Family.Mono}">
                 <TextBox.Text>
                     <Binding Path="Hostname" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

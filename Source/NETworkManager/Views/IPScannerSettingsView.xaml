@@ -65,7 +65,7 @@
                        Margin="0,0,0,10" />
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <TextBox x:Name="TextBoxPortScanPorts"
-                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}"
+                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}" FontFamily="{StaticResource Fonts.Family.Mono}"
                          Width="250">
                     <TextBox.Text>
                         <Binding Path="PortScanPorts" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -220,7 +220,7 @@
                            Margin="0,0,0,10" />
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <TextBox x:Name="TextBoxWebPagePorts"
-                             mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleWebserverPorts}"
+                             mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleWebserverPorts}" FontFamily="{StaticResource Fonts.Family.Mono}"
                              Width="250">
                         <TextBox.Text>
                             <Binding Path="WebPagePorts" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">

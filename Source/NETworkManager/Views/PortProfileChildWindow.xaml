@@ -37,7 +37,7 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
             <TextBox x:Name="TextBoxName" Grid.Column="2" Grid.Row="0"
-             mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGroupServers}">
+             mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGroupServers}" FontFamily="{StaticResource Fonts.Family.Mono}">
                 <TextBox.Resources>
                     <wpfHelpers:BindingProxy x:Key="BindingProxy" Data="{Binding}" />
                 </TextBox.Resources>
@@ -59,7 +59,7 @@
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="2" Text="{x:Static localization:Strings.Ports}" />
             <TextBox x:Name="TextBoxPorts" Grid.Column="2" Grid.Row="2"
-             mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}">
+             mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}" FontFamily="{StaticResource Fonts.Family.Mono}">
                 <TextBox.Text>
                     <Binding Path="Ports" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

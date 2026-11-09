@@ -515,7 +515,7 @@
                                 <TextBlock Grid.Column="0" Grid.Row="0" Text="{x:Static localization:Strings.Name}" />
                                 <TextBox x:Name="TextBoxName"
                                          Grid.Column="2" Grid.Row="0"
-                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGroupServers}">
+                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGroupServers}" FontFamily="{StaticResource Fonts.Family.Mono}">
                                     <TextBox.Text>
                                         <Binding Path="Name" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
@@ -604,7 +604,7 @@
                                           TextSearch.TextPath="Text"
                                           ItemTemplate="{StaticResource InputSuggestionTemplate}"
                                           controls:ComboBoxListCompletionBehavior.Items="{Binding PortScanner_PortProfileNames}"
-                                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}"
+                                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                           Style="{StaticResource HistoryComboBox}">
                                     <ComboBox.GroupStyle>
                                         <GroupStyle HeaderTemplate="{StaticResource ComboBoxGroupHeaderTemplate}" />
@@ -863,7 +863,7 @@
                                           IsChecked="{Binding RemoteDesktop_OverridePort}"
                                           Style="{StaticResource DefaultCheckBox}" />
                                 <TextBox Grid.Column="2" Grid.Row="12" x:Name="TextBoxRemoteDesktopPort"
-                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort3389}"
+                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort3389}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                          IsEnabled="{Binding RemoteDesktop_OverridePort}"
                                          Style="{StaticResource DefaultTextBox}">
                                     <TextBox.Text>
@@ -917,7 +917,7 @@
                                            VerticalAlignment="Center" Style="{StaticResource DisabledTextBlock}" />
                                 <TextBox x:Name="TextBoxRemoteDesktopGatewayServerHostname" 
                                          Grid.Column="2" Grid.Row="22"
-                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGatewayDomain}">
+                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleGatewayDomain}" FontFamily="{StaticResource Fonts.Family.Mono}">
                                     <TextBox.Style>
                                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                                             <Setter Property="IsEnabled" Value="False" />
@@ -1700,7 +1700,7 @@
                                           Style="{StaticResource DefaultCheckBox}" />
                                 <TextBox x:Name="TextBoxTigerVNCPort" Grid.Column="2" Grid.Row="4"
                                          IsEnabled="{Binding TigerVNC_OverridePort}"
-                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort5900}">
+                                         mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort5900}" FontFamily="{StaticResource Fonts.Family.Mono}">
                                     <TextBox.Text>
                                         <Binding Path="TigerVNC_Port" Mode="TwoWay"
                                                  UpdateSourceTrigger="PropertyChanged">

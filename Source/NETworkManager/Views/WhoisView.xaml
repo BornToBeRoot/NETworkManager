@@ -47,7 +47,7 @@
                                VerticalAlignment="Center" />
                     <ComboBox Grid.Column="2"
                               x:Name="ComboBoxDomain" ItemsSource="{Binding WebsiteUriHistoryView}"
-                              mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleDomain}"
+                              mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleDomain}" FontFamily="{StaticResource Fonts.Family.Mono}"
                               IsReadOnly="{Binding IsRunning}"
                               Style="{StaticResource HistoryComboBox}">
                         <ComboBox.Text>
@@ -133,7 +133,7 @@
                          VerticalAlignment="Stretch"
                          VerticalContentAlignment="Top"
                          VerticalScrollBarVisibility="Auto"                         
-                         Text="{Binding Result}"                         
+                         Text="{Binding Result}" FontFamily="{StaticResource Fonts.Family.Mono}"
                          IsReadOnly="True">
                     <TextBox.Style>
                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource ConsoleTextBox}">

@@ -13,7 +13,7 @@
         <TextBlock Text="{x:Static localization:Strings.Port}" Style="{StaticResource DefaultTextBlock}"
                    Margin="0,0,0,10" />
         <TextBox Width="80" HorizontalAlignment="Left" Style="{StaticResource DefaultTextBox}"
-                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort7}">
+                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort7}" FontFamily="{StaticResource Fonts.Family.Mono}">
             <TextBox.Text>
                 <Binding Path="DefaultPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>

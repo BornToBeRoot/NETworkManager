@@ -21,7 +21,7 @@
             </Rectangle>
         </StackPanel>
         <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10"
-                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Address}"
+                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Address}" FontFamily="{StaticResource Fonts.Family.Mono}"
                  Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="PublicIPv4Address" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -43,7 +43,7 @@
             </Rectangle>
         </StackPanel>
         <TextBox Width="250" HorizontalAlignment="Left" Margin="0,0,0,10"
-                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv6Address}"
+                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv6Address}" FontFamily="{StaticResource Fonts.Family.Mono}"
                  Style="{StaticResource DefaultTextBox}">
             <TextBox.Text>
                 <Binding Path="PublicIPv6Address" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -78,7 +78,7 @@
             </Rectangle>
         </StackPanel>
         <TextBox Width="250" HorizontalAlignment="Left"
-                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePublicIPv4AddressAPI}"
+                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePublicIPv4AddressAPI}" FontFamily="{StaticResource Fonts.Family.Mono}"
                  Margin="0,0,0,10">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
@@ -118,7 +118,7 @@
             </Rectangle>
         </StackPanel>
         <TextBox Width="250" HorizontalAlignment="Left"
-                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePublicIPv6AddressAPI}"
+                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePublicIPv6AddressAPI}" FontFamily="{StaticResource Fonts.Family.Mono}"
                  Margin="0,0,0,10">
             <TextBox.Style>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">

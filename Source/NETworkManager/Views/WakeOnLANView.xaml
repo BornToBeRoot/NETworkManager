@@ -92,7 +92,7 @@
                         <ComboBox Grid.Column="2" Grid.Row="0"
                                   x:Name="ComboBoxMACAddress"
                                   ItemsSource="{Binding MACAddressHistoryView}"
-                                  mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddress}"
+                                  mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleMACAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                   IsReadOnly="{Binding IsRunning}"
                                   Style="{StaticResource HistoryComboBox}">
                             <ComboBox.InputBindings>
@@ -113,7 +113,7 @@
                         <ComboBox Grid.Column="6" Grid.Row="0"
                                   x:Name="ComboBoxBroadcast"
                                   ItemsSource="{Binding BroadcastHistoryView}"
-                                  mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Broadcast}"
+                                  mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Broadcast}" FontFamily="{StaticResource Fonts.Family.Mono}"
                                   IsReadOnly="{Binding IsRunning}"
                                   Style="{StaticResource HistoryComboBox}">
                             <ComboBox.InputBindings>

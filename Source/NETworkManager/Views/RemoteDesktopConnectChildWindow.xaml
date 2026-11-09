@@ -63,7 +63,7 @@
             </TextBox>
             <TextBlock Grid.Column="0" Grid.Row="1" Text="{x:Static localization:Strings.Host}" />
             <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding HostHistoryView}"
-                mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostWithRDPPort}"
+                mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostWithRDPPort}" FontFamily="{StaticResource Fonts.Family.Mono}"
                 IsEnabled="{Binding ConnectAs, Converter={StaticResource BooleanReverseConverter}}"
                 Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>

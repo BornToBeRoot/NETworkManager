@@ -69,7 +69,7 @@
                       x:Name="ComboBoxHost"
                       Height="{Binding ElementName=ComboBoxOid, Path=ActualHeight}"
                       ItemsSource="{Binding HostHistoryView}"
-                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}"
+                      mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                       IsReadOnly="{Binding IsRunning}"
                       Style="{StaticResource HistoryComboBox}">
                 <ComboBox.Text>
@@ -100,7 +100,7 @@
             <ComboBox Grid.Column="2" Grid.Row="2"
                       Grid.ColumnSpan="3"
                       x:Name="ComboBoxOid"
-                      ItemsSource="{Binding OidHistoryView}"
+                      ItemsSource="{Binding OidHistoryView}" FontFamily="{StaticResource Fonts.Family.Mono}"
                       IsReadOnly="{Binding IsRunning}">
                 <ComboBox.Style>
                     <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource HistoryComboBox}">

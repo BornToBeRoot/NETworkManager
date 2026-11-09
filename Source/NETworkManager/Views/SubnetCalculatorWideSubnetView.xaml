@@ -48,7 +48,7 @@
                           x:Name="ComboBoxSubnet1"
                           ItemsSource="{Binding Subnet1HistoryView}"
                           IsReadOnly="{Binding IsRunning}"
-                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Subnet}"
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Subnet}" FontFamily="{StaticResource Fonts.Family.Mono}"
                           Style="{StaticResource HistoryComboBox}"
                           Height="{Binding ElementName=ComboBoxSubnet2, Path=ActualHeight}">
                     <ComboBox.Text>
@@ -67,7 +67,7 @@
                           x:Name="ComboBoxSubnet2"
                           ItemsSource="{Binding Subnet2HistoryView}"
                           IsReadOnly="{Binding IsRunning}"
-                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Subnet2}"
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4Subnet2}" FontFamily="{StaticResource Fonts.Family.Mono}"
                           Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Subnet2" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">

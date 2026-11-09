@@ -48,7 +48,7 @@
                 <ComboBox Grid.Column="2"
                           x:Name="TextBoxSearch"
                           ItemsSource="{Binding SearchHistoryView}"
-                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortPortRangeOrService}"
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortPortRangeOrService}" FontFamily="{StaticResource Fonts.Family.Mono}"
                           IsReadOnly="{Binding IsRunning}"
                           Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>

@@ -99,7 +99,7 @@
             <TextBlock Grid.Column="0" Grid.Row="4" Text="{x:Static localization:Strings.LdapPort}" />
             <TextBox x:Name="TextBoxLdapPort" Grid.Column="2" Grid.Row="4"
                      HorizontalAlignment="Left" Width="120"
-                     mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleActiveDirectoryPort}"
+                     mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleActiveDirectoryPort}" FontFamily="{StaticResource Fonts.Family.Mono}"
                      Style="{StaticResource DefaultTextBox}">
                 <TextBox.Text>
                     <Binding Path="LdapPort" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">

@@ -505,7 +505,7 @@
                            VerticalAlignment="Center" />
                 <ComboBox Grid.Column="2"
                           x:Name="ComboBoxQuery" ItemsSource="{Binding QueryHistoryView}"
-                          mah:TextBoxHelper.Watermark="{Binding QueryType, Converter={StaticResource RDAPQueryTypeToWatermarkConverter}}"
+                          mah:TextBoxHelper.Watermark="{Binding QueryType, Converter={StaticResource RDAPQueryTypeToWatermarkConverter}}" FontFamily="{StaticResource Fonts.Family.Mono}"
                           IsReadOnly="{Binding IsRunning}"
                           Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
@@ -649,7 +649,7 @@
                      VerticalContentAlignment="Top"
                      VerticalScrollBarVisibility="Auto"
                      HorizontalScrollBarVisibility="Auto"
-                     Text="{Binding RawJSON, Mode=OneWay}"
+                     Text="{Binding RawJSON, Mode=OneWay}" FontFamily="{StaticResource Fonts.Family.Mono}"
                      IsReadOnly="True"
                      Style="{StaticResource ConsoleTextBox}"
                      ContextMenu="{StaticResource CopyExportContextMenu}"

@@ -50,7 +50,7 @@
                                VerticalAlignment="Center" />
                     <ComboBox Grid.Column="2"
                               x:Name="ComboBoxHost" ItemsSource="{Binding HostHistoryView}"
-                              mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleFqdnOrIPAddressPublic}"
+                              mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleFqdnOrIPAddressPublic}" FontFamily="{StaticResource Fonts.Family.Mono}"
                               IsReadOnly="{Binding IsRunning}"
                               Style="{StaticResource HistoryComboBox}">
                         <ComboBox.Text>

@@ -98,7 +98,7 @@
         <mah:ToggleSwitch Header="{x:Static localization:Strings.UseCustomDNSSuffix}"
                           IsEnabled="{Binding AddDNSSuffix}" IsOn="{Binding UseCustomDNSSuffix}" Margin="0,0,0,10" />
         <TextBox Width="250" HorizontalAlignment="Left"
-                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSuffix}" Margin="0,0,0,10">
+                 mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleSuffix}" FontFamily="{StaticResource Fonts.Family.Mono}" Margin="0,0,0,10">
             <TextBox.Resources>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                     <Setter Property="IsEnabled" Value="False" />

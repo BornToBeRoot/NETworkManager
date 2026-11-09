@@ -61,7 +61,7 @@
                 </TextBlock.Style>
             </TextBlock>
             <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HostHistoryView}"
-               mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}"
+               mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostname}" FontFamily="{StaticResource Fonts.Family.Mono}"
                IsEnabled="{Binding EnableRemoteConsole}"
                Visibility="{Binding EnableRemoteConsole, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                Style="{StaticResource EditableComboBox}">

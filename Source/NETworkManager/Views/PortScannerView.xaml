@@ -65,7 +65,7 @@
                 <ComboBox Grid.Column="2" Grid.Row="0"
                           x:Name="ComboBoxHost"
                           ItemsSource="{Binding HostHistoryView}"
-                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}"
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostRange}" FontFamily="{StaticResource Fonts.Family.Mono}"
                           IsReadOnly="{Binding Path=IsRunning}"
                           controls:ComboBoxPasteBehavior.ConvertMultilineToSemicolon="True"
                           Style="{StaticResource HistoryComboBox}">
@@ -88,7 +88,7 @@
                           TextSearch.TextPath="Text"
                           ItemTemplate="{StaticResource InputSuggestionTemplate}"
                           controls:ComboBoxListCompletionBehavior.Items="{Binding PortProfileNames}"
-                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}"
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePortScanRange}" FontFamily="{StaticResource Fonts.Family.Mono}"
                           IsReadOnly="{Binding Path=IsRunning}"
                           controls:ComboBoxPasteBehavior.ConvertMultilineToSemicolon="True"
                           Style="{StaticResource HistoryComboBox}">

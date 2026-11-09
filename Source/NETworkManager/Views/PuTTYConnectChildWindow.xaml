@@ -76,7 +76,7 @@
                 </TextBlock.Style>
             </TextBlock>
             <ComboBox x:Name="ComboBoxHost" Grid.Column="2" Grid.Row="2" ItemsSource="{Binding HostHistoryView}"
-                mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}"
+                mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameOrIPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                 Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
                 Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>
@@ -115,7 +115,7 @@
                 </TextBlock.Style>
             </TextBlock>
             <ComboBox x:Name="ComboBoxPort" Grid.Column="2" Grid.Row="4" ItemsSource="{Binding PortHistoryView}"
-                mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort22}"
+                mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExamplePort22}" FontFamily="{StaticResource Fonts.Family.Mono}"
                 Visibility="{Binding UseSerial, Converter={StaticResource BooleanReverseToVisibilityCollapsedConverter}}"
                 Style="{StaticResource EditableComboBox}">
                 <ComboBox.Text>

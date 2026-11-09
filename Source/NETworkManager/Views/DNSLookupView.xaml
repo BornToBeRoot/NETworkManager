@@ -57,7 +57,7 @@
                 <ComboBox Grid.Column="2" Grid.Row="0"
                           x:Name="ComboBoxHost"
                           ItemsSource="{Binding HostHistoryView}"
-                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameAndOrIPAddress}"
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleHostnameAndOrIPAddress}" FontFamily="{StaticResource Fonts.Family.Mono}"
                           IsReadOnly="{Binding IsRunning}"
                           Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>

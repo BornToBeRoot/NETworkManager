@@ -54,7 +54,7 @@
                           Height="{Binding ElementName=ComboBoxNewSubnetmask, Path=ActualHeight}"
                           ItemsSource="{Binding SubnetHistoryView}"
                           IsReadOnly="{Binding IsRunning}"
-                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4IPv6Subnet}"
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4IPv6Subnet}" FontFamily="{StaticResource Fonts.Family.Mono}"
                           Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="Subnet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
@@ -72,7 +72,7 @@
                           x:Name="ComboBoxNewSubnetmask"
                           ItemsSource="{Binding NewSubnetmaskHistoryView}"
                           IsReadOnly="{Binding IsRunning}"
-                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4SubnetmaskIPv6CIDR}"
+                          mah:TextBoxHelper.Watermark="{x:Static localization:StaticStrings.ExampleIPv4SubnetmaskIPv6CIDR}" FontFamily="{StaticResource Fonts.Family.Mono}"
                           Style="{StaticResource HistoryComboBox}">
                     <ComboBox.Text>
                         <Binding Path="NewSubnetmask" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
