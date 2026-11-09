@@ -11,6 +11,7 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{StaticResource CornerRadius.Control}" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.55" />

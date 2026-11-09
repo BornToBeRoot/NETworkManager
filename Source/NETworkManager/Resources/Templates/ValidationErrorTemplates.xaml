@@ -10,9 +10,10 @@
             <Border BorderBrush="{DynamicResource Brushes.Status.Error}" BorderThickness="1"> 
           -->
         <Grid>
-            <Polygon x:Name="ToolTipCorner" Grid.ZIndex="1" Margin="0" Points="12,12 12,0 0,0"
-                     Fill="{DynamicResource Brushes.Status.Error}" HorizontalAlignment="Right"
-                     VerticalAlignment="Top" IsHitTestVisible="True" />
+            <!-- Triangle in the top right corner, rounded like the corner of the inputs (CornerRadius.Control) -->
+            <Path x:Name="ToolTipCorner" Grid.ZIndex="1" Margin="0" Data="M 0,0 H 8 A 4,4 0 0 1 12,4 V 12 Z"
+                  Fill="{DynamicResource Brushes.Status.Error}" HorizontalAlignment="Right"
+                  VerticalAlignment="Top" IsHitTestVisible="True" />
             <AdornedElementPlaceholder x:Name="Adorner" />
             <Popup PlacementTarget="{Binding ElementName=Adorner}" PopupAnimation="Fade" HorizontalOffset="5">
                 <Popup.Style>

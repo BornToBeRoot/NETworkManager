@@ -14,6 +14,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{StaticResource CornerRadius.Control}" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Opacity" Value="0.55" />
@@ -74,6 +75,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="ContextMenu" Value="{StaticResource CutCopyPasteContextMenu}" />
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{StaticResource CornerRadius.Control}" />
         <Setter Property="mah:TextBoxHelper.ButtonContentTemplate">
             <Setter.Value>
                 <DataTemplate>

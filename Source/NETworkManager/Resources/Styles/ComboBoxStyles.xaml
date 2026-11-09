@@ -38,10 +38,13 @@
                                         IsTabStop="False"
                                         Style="{DynamicResource MahApps.Styles.Button.Chromeless}"
                                         Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(mah:TextBoxHelper.ClearTextButton), Converter={StaticResource ComboBoxBooleanToVisibilityConverter}}" />
-                                <Grid x:Name="BtnArrowBackground"
-                                      Grid.Column="2"
-                                      Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
-                                      Background="Transparent">
+                                <!-- Border instead of Grid (MahApps): the mouse over background follows the rounded
+                                     corners of the ComboBox on the right -->
+                                <Border x:Name="BtnArrowBackground"
+                                        Grid.Column="2"
+                                        Width="{TemplateBinding mah:TextBoxHelper.ButtonWidth}"
+                                        CornerRadius="0,3,3,0"
+                                        Background="Transparent">
                                     <Path x:Name="Arrow"
                                           Width="8"
                                           Height="4"
@@ -51,7 +54,7 @@
                                           IsHitTestVisible="false"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           Stretch="Uniform" />
-                                </Grid>
+                                </Border>
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger SourceName="BtnArrowBackground" Property="IsMouseOver" Value="True">
@@ -85,6 +88,7 @@
         <Setter Property="mah:ControlsHelper.FocusBorderBrush" Value="{DynamicResource MahApps.Brushes.Gray8}" />
         <Setter Property="Validation.ErrorTemplate" Value="{StaticResource DefaultErrorTemplate}" />
         <Setter Property="controls:ComboBoxReadOnlyBehavior.PreventSelectionWhenReadOnly" Value="True" />
+        <Setter Property="mah:ControlsHelper.CornerRadius" Value="{StaticResource CornerRadius.Control}" />
         <Style.Triggers>
             <!-- Not editable: subtle mouse over background instead of Gray9 of MahApps (a style trigger wins over the
                  trigger of the template) -->

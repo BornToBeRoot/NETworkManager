@@ -8,4 +8,10 @@
     <!-- Monospace font (console output, run command, MAC addresses). Cascadia Mono ships with Windows 11,
          Windows 10 falls back to Consolas. -->
     <FontFamily x:Key="Fonts.Family.Mono">Cascadia Mono, Consolas</FontFamily>
+
+    <!-- Corner radius of controls (buttons, inputs, tooltips) and of overlays (menus) -->
+    <CornerRadius x:Key="CornerRadius.Control">4</CornerRadius>
+    <!-- Element inside a control with a 1 px border, e.g. the button of a drop-down button -->
+    <CornerRadius x:Key="CornerRadius.Control.Inner">3</CornerRadius>
+    <CornerRadius x:Key="CornerRadius.Overlay">8</CornerRadius>
 </ResourceDictionary>
