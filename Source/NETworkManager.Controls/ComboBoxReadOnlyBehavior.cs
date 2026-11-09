@@ -19,6 +19,16 @@ namespace NETworkManager.Controls;
 /// </summary>
 public static class ComboBoxReadOnlyBehavior
 {
+    /// <summary>
+    /// An editable ComboBox selects the next / previous entry in its own <c>OnPreviewKeyDown</c>, which runs before
+    /// handlers added to the instance. A class handler of <see cref="ComboBox"/> runs before it.
+    /// </summary>
+    static ComboBoxReadOnlyBehavior()
+    {
+        EventManager.RegisterClassHandler(typeof(ComboBox), Keyboard.PreviewKeyDownEvent,
+            new KeyEventHandler(ComboBox_PreviewKeyDown));
+    }
+
     public static readonly DependencyProperty PreventSelectionWhenReadOnlyProperty =
         DependencyProperty.RegisterAttached(
             "PreventSelectionWhenReadOnly",
@@ -40,13 +50,11 @@ public static class ComboBoxReadOnlyBehavior
 
         if ((bool)e.NewValue)
         {
-            comboBox.PreviewKeyDown += ComboBox_PreviewKeyDown;
             comboBox.PreviewTextInput += ComboBox_PreviewTextInput;
             comboBox.DropDownOpened += ComboBox_DropDownOpened;
         }
         else
         {
-            comboBox.PreviewKeyDown -= ComboBox_PreviewKeyDown;
             comboBox.PreviewTextInput -= ComboBox_PreviewTextInput;
             comboBox.DropDownOpened -= ComboBox_DropDownOpened;
         }
@@ -54,7 +62,7 @@ public static class ComboBoxReadOnlyBehavior
 
     private static void ComboBox_PreviewKeyDown(object sender, KeyEventArgs e)
     {
-        if (sender is not ComboBox { IsReadOnly: true } comboBox)
+        if (sender is not ComboBox { IsReadOnly: true } comboBox || !GetPreventSelectionWhenReadOnly(comboBox))
             return;
 
         var key = e.Key == Key.System ? e.SystemKey : e.Key;
