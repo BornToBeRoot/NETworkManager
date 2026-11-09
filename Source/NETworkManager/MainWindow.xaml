@@ -395,29 +395,32 @@
                                     ToolTip="{x:Static localization:Strings.ExpandAndOpenSearchDots}"
                                     Focusable="False">
                                 <Button.Style>
+                                    <!-- Hidden while the search box is shown (same conditions as the search box below).
+                                         The search box was opaque and covered it, it is transparent now. -->
                                     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CleanButton}">
+                                        <Setter Property="Visibility" Value="Visible" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ApplicationViewIsExpanded}" Value="False">
-                                                <Setter Property="Visibility" Value="Visible" />
+                                            <DataTrigger Binding="{Binding ApplicationViewIsExpanded}" Value="True">
+                                                <Setter Property="Visibility" Value="Collapsed" />
                                             </DataTrigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding ApplicationViewIsOpen}" Value="False" />
+                                                    <Condition Binding="{Binding ApplicationViewIsOpen}" Value="True" />
                                                     <Condition Binding="{Binding TextBoxApplicationSearchIsFocused}"
-                                                               Value="False" />
+                                                               Value="True" />
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.Setters>
-                                                    <Setter Property="Visibility" Value="Visible" />
+                                                    <Setter Property="Visibility" Value="Collapsed" />
                                                 </MultiDataTrigger.Setters>
                                             </MultiDataTrigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding ApplicationViewIsOpen}" Value="False" />
+                                                    <Condition Binding="{Binding ApplicationViewIsOpen}" Value="True" />
                                                     <Condition Binding="{Binding ApplicationViewIsMouseOver}"
-                                                               Value="False" />
+                                                               Value="True" />
                                                 </MultiDataTrigger.Conditions>
                                                 <MultiDataTrigger.Setters>
-                                                    <Setter Property="Visibility" Value="Visible" />
+                                                    <Setter Property="Visibility" Value="Collapsed" />
                                                 </MultiDataTrigger.Setters>
                                             </MultiDataTrigger>
                                         </Style.Triggers>
